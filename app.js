@@ -1,7 +1,13 @@
 const DATA = window.SUPPLEMENTAL_PAPERS || [];
 const PAGES = window.PAGE_CONTENT || {};
 const NAV_GROUPS = window.NAV_GROUPS || [];
-const AWESOME_URL = "https://raw.githubusercontent.com/selfimproving-agent/Awesome-Self-Improving-Agents/main/README.md";
+const AWESOME_URLS = [
+  "https://api.github.com/repos/selfimproving-agent/Awesome-Self-Improving-Agents/contents/README.md",
+  "https://raw.githubusercontent.com/selfimproving-agent/Awesome-Self-Improving-Agents/main/README.md",
+  "https://cdn.jsdelivr.net/gh/selfimproving-agent/Awesome-Self-Improving-Agents@main/README.md",
+];
+const CATALOG_CACHE_KEY = "agent-evolution-upstream-catalog-v1";
+const CATALOG_CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
 const pageId = document.body.dataset.page || "home";
 let language = localStorage.getItem("agent-evolution-language") || "en";
 let catalog = [];
@@ -113,12 +119,38 @@ function mergeCatalog(primary, supplemental) {
   });
   return [...map.values()].sort((a, b) => (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title));
 }
+async function fetchCatalogMarkdown() {
+  const failures = [];
+  for (const url of AWESOME_URLS) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 18000);
+    try {
+      const response = await fetch(url, { cache: "no-store", signal: controller.signal, headers: { "Accept": "text/plain, application/vnd.github+json" } });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (url.includes("api.github.com")) {
+        const payload = await response.json();
+        if (!payload.content) throw new Error("GitHub API response has no content");
+        return decodeURIComponent(escape(atob(payload.content.replace(/\s/g, ""))));
+      }
+      return await response.text();
+    } catch (error) {
+      failures.push(`${url}: ${error.message || error}`);
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  throw new Error(failures.join(" | "));
+}
 async function loadCatalog() {
   let upstream = [];
   try {
-    const response = await fetch(AWESOME_URL, { cache: "no-store" });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    upstream = parseAwesomeMarkdown(await response.text());
+    const cached = JSON.parse(localStorage.getItem(CATALOG_CACHE_KEY) || "null");
+    if (cached && Array.isArray(cached.records) && Date.now() - cached.savedAt < CATALOG_CACHE_MAX_AGE) {
+      upstream = cached.records;
+    } else {
+      upstream = parseAwesomeMarkdown(await fetchCatalogMarkdown());
+      localStorage.setItem(CATALOG_CACHE_KEY, JSON.stringify({ savedAt: Date.now(), records: upstream }));
+    }
   } catch (error) {
     console.warn("Live literature synchronization failed; using curated snapshot.", error);
   }
