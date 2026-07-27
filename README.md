@@ -18,3 +18,5 @@ A CVPR-oriented research website mapping self-evolving visual and multimodal age
 - GroundEvo experiment roadmap
 
 The site is a dependency-free static page. Open `index.html` directly or publish the repository root with GitHub Pages.
+
+Deployment initialized after GitHub Pages was enabled.
