@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-07-28 · Lifecycle-wide 34-idea iteration
+
+- Expanded the formulation pool from 55 to 69 and audited every proposal across five agent modules and five lifecycle stages.
+- Generated fourteen new lifecycle-oriented formulations; retained AmplificationGuard-X, CapabilityLease-Evo, ConfidenceFlow-Evo, and PluralLineage-Evo.
+- Merged PopulationImmunity-MAS, ServeStageGuard-Evo, QuarantineCommit-Evo, EvidenceExpiry-Evo, StopRule-Evo, UpdateAssurance-Evo, PermissionDrift-Evo, and RollbackOrder-Evo into broader directions.
+- Rejected generic runtime attestation and generic uncertainty-aware agents because direct capability-governance and trajectory-uncertainty methods already exist.
+- Folded DeleteCascade-Evo into EvoProvenance-V and DiversityGuard-MAS into PluralLineage-Evo / CrossAgentTransfer-V, producing 34 standalone directions, 18 merged sub-directions, and 17 rejected formulations.
+- Re-ranked all directions with collision margin and pilot readiness, added High/Medium/Low rank-confidence labels, and changed tiers to A ranks 1–12, B ranks 13–26, and C ranks 27–34.
+- Added separate Visual/CVPR, Systems/Security, Benchmark/Analysis, and Long-horizon Learning rankings instead of relying only on one heterogeneous global rank.
+- Added literature on lineage-persistent attack amplification, capability-permission separation, pre-action authorization, dynamic capability binding, trajectory uncertainty, evidence provenance, and active video observation.
+- Added module–lifecycle safety evaluation, lineage amplification factor, permission drift rate, confidence retention, lineage portfolio regret, and recovery-completeness metrics.
+- Updated the research agenda, candidate-idea summary, review log, README, bibliography, and citation map for the third-round audit.
+
 ## 2026-07-28 · 32-idea expansion and full re-ranking
 
 - Generated a new batch of 16 formulations after the first 24-direction audit.
