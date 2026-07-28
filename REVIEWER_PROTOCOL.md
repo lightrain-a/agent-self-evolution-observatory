@@ -47,8 +47,8 @@ The adversarial reviewer should try to reject the paper using these hypotheses:
 2. A stronger visual critic matches the method.
 3. Counterfactual changes alter task difficulty, not only causal evidence.
 4. The controlled GUI result does not generalize.
-5. The update router has no identifiable ground truth.
-6. The paper bundles too many components.
+5. The diagnostic identifies a causal factor but does not improve future tasks.
+6. The benchmark generator leaks transformation templates that the gate can memorize.
 7. Accuracy improves while visual grounding silently degrades.
 8. Verification cost exceeds the future benefit.
 
@@ -66,4 +66,4 @@ Consensus means no blocking objection remains. It does not require identical imp
 
 ## Current external-agent status
 
-The configured CodexFlow service at `127.0.0.1:4318` is currently unavailable. Literature-collision, taxonomy, venue-fit, reliability, and experiment-skeptic reviews have been performed as role-separated review passes, but they are not represented as independent external-agent consensus. Once CodexFlow is available, four independent sessions must execute the roles above and their reports must be committed to this repository.
+The configured CodexFlow service at `127.0.0.1:4318` is currently unavailable, and the installed Claude CLI has invalid authentication. Literature-collision, taxonomy, venue-fit, reliability, experiment-skeptic, and 2026-frontier collision reviews have been performed as role-separated review passes, but they are not represented as independent external-agent consensus. The first-paper scope is frozen as **GroundEvo-Admission**, a visual causal lesson-admission study; memory–skill–parameter routing remains a later roadmap. Once external agents are available, four independent sessions must execute the roles above and their reports must be committed to this repository.
