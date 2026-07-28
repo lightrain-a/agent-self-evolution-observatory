@@ -51,15 +51,23 @@ The current site contains 23 main pages.
 - Live bibliography
 - Long-term research agenda
 
-### CVPR paper workspace
+### Research structure
 
-- Problem formulation
-- Thirty-four fully ranked candidate ideas retained from a 69-formulation lifecycle audit
-- Seventeen explicitly rejected formulations and eighteen merged sub-directions with collision reasons
-- Friday direction decision board with a global rank, four track-specific ranks, confidence labels, and unified Go/Stop criteria
-- Benchmark and staged experiments
-- Thesis, contribution ladder, and roadmap
-- Review status and unresolved objections
+- Ten stable research directions with explicit scientific boundaries
+- A bilingual 1920×1080 direction map covering all thirty-four retained paper ideas
+- Field taxonomy and mechanism pages kept separate from paper selection
+
+### Paper idea portfolio
+
+- Thirty-four concrete paper ideas retained from a 69-formulation lifecycle audit
+- Every idea includes a thesis, minimum experiment, strongest baseline, and Go/Stop boundary
+- Global, within-direction, and four track-specific rankings
+- Seventeen rejected formulations and eighteen merged sub-questions with collision reasons
+
+### Selected paper workspace
+
+- Problem formulation, benchmark and staged experiments
+- Thesis, contribution ladder, roadmap, review status, and unresolved objections
 
 ## Literature corpus
 
@@ -88,7 +96,7 @@ The broader roadmap is **GroundEvo: Causally-Grounded Multilevel Self-Evolution 
 
 The first falsifiable study asks whether visual agents admit spurious lessons from successful and failed trajectories, and whether active visual re-observation plus minimal environment counterfactual replay improves persistent-memory admission, lowers harmful commits, and preserves future-task gain under matched cost.
 
-The current Friday portfolio starts from 69 formulations and retains 34 standalone directions after three review rounds. The latest round maps proposals across five agent modules and five lifecycle stages, adds collision margin and pilot readiness to the global score, and labels ranking confidence. Eighteen formulations are merged into broader directions and seventeen are rejected.
+The current hierarchy contains **10 research directions** and **34 concrete paper ideas**. The 69-formulation audit applies three review rounds to paper ideas: literature collision and identifiability, paper-strength scoring, and module–lifecycle coverage. Eighteen formulations are merged as sub-questions or evaluation axes and seventeen are rejected. Research directions are structural categories and are not globally ranked.
 
 **Tier A, ranks 1–12:** NegEvoBench-V, ScopeGuard-V, GroundEvo-Admission, AmplificationGuard-X, EvoContract-V, ViMEvo-Repair, RelianceGuard-V, CapabilityLease-Evo, EvoFirewall-V, InteractionGuard-V, PerformativeEvo-V, and ConfidenceFlow-Evo.
 
@@ -96,7 +104,7 @@ The current Friday portfolio starts from 69 formulations and retains 34 standalo
 
 **Tier C, ranks 27–34:** ProcessCredit-V, EvoGC-X, MetaGuard-V, GoalGuard-Evo, SimEvo-CF, EvalRedQueen-V, UpdateRoute-V, and CrossAgentTransfer-V.
 
-The latest 14-formulation lifecycle batch retains AmplificationGuard-X, CapabilityLease-Evo, ConfidenceFlow-Evo, and PluralLineage-Evo. PopulationImmunity-MAS, ServeStageGuard-Evo, QuarantineCommit-Evo, EvidenceExpiry-Evo, StopRule-Evo, UpdateAssurance-Evo, PermissionDrift-Evo, and RollbackOrder-Evo are merged into broader directions. Generic runtime attestation and generic uncertainty-aware agents are rejected because direct methods already exist. DeleteCascade-Evo is folded into EvoProvenance-V, while DiversityGuard-MAS becomes an evaluation axis of PluralLineage-Evo and CrossAgentTransfer-V. The full global ranking, track-specific rankings, scores, confidence labels, collision analysis, and Go/Stop criteria are published on `direction-board.html`.
+The latest lifecycle batch retains the paper ideas AmplificationGuard-X, CapabilityLease-Evo, ConfidenceFlow-Evo, and PluralLineage-Evo. PopulationImmunity-MAS, ServeStageGuard-Evo, QuarantineCommit-Evo, EvidenceExpiry-Evo, StopRule-Evo, UpdateAssurance-Evo, PermissionDrift-Evo, and RollbackOrder-Evo are merged into broader ideas. Generic runtime attestation and generic uncertainty-aware agents are rejected because direct methods already exist. The ten-direction hierarchy is published on `research-directions.html`; full paper plans are on `paper-ideas.html`; rankings are on `direction-board.html`.
 
 ## External-agent review status
 

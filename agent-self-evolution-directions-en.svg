@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+<title id="title">Agent self-evolution research directions and paper ideas</title>
+<desc id="desc">Ten research directions organize thirty-four concrete paper ideas, with a hierarchy from field to direction to paper idea to selected paper workspace.</desc>
+<defs>
+<style>
+.bg{fill:#fff}.title{font:700 34px Inter,Segoe UI,Arial,sans-serif;fill:#172033}.sub{font:16px Inter,Segoe UI,Arial,sans-serif;fill:#536079}.head{font:700 18px Inter,Segoe UI,Arial,sans-serif}.body{font:13px Inter,Segoe UI,Arial,sans-serif;fill:#344054}.tiny{font:11px Inter,Segoe UI,Arial,sans-serif;fill:#5b6678}.code{font:800 12px Inter,Segoe UI,Arial,sans-serif;fill:#fff}.card{fill:#fff;stroke:#dce3ee;stroke-width:1.5}.arrow{stroke:#7b88a2;stroke-width:2.5;fill:none;marker-end:url(#arr)}.pill{fill:#f7f8fb;stroke:#e1e6ef}.white{fill:#fff}.center{text-anchor:middle}
+</style>
+<marker id="arr" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#7b88a2"/></marker>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#172033" flood-opacity=".10"/></filter>
+</defs>
+<rect class="bg" width="1920" height="1080"/>
+<text x="960" y="45" class="title center">Agent Self-Evolution: 10 Research Directions → 34 Concrete Paper Ideas</text>
+<text x="960" y="74" class="sub center">A direction is a stable scientific subfield; an idea is a falsifiable paper plan with a method, experiment, baseline, and Go/Stop rule.</text>
+
+<!-- hierarchy -->
+<g filter="url(#shadow)">
+<rect x="150" y="105" width="310" height="92" rx="18" fill="#eef0ff" stroke="#cfd3ff"/>
+<text x="305" y="137" class="head center" fill="#4141a6">FIELD</text><text x="305" y="166" class="body center">Agent self-evolution</text>
+<rect x="560" y="105" width="310" height="92" rx="18" fill="#eef6ff" stroke="#c7dcf7"/>
+<text x="715" y="137" class="head center" fill="#215ea9">DIRECTION</text><text x="715" y="166" class="body center">Stable family of research questions</text>
+<rect x="970" y="105" width="310" height="92" rx="18" fill="#eef8f4" stroke="#c9eadf"/>
+<text x="1125" y="137" class="head center" fill="#087e5b">PAPER IDEA</text><text x="1125" y="166" class="body center">Concrete falsifiable paper plan</text>
+<rect x="1380" y="105" width="390" height="92" rx="18" fill="#fff7e8" stroke="#f0d9aa"/>
+<text x="1575" y="137" class="head center" fill="#8a5300">SELECTED PAPER WORKSPACE</text><text x="1575" y="166" class="body center">Problem · experiments · roadmap · review</text>
+</g>
+<path d="M460 151 H545" class="arrow"/><path d="M870 151 H955" class="arrow"/><path d="M1280 151 H1365" class="arrow"/>
+
+<!-- lifecycle -->
+<text x="65" y="245" class="head" fill="#344054">Persistent evolution lifecycle</text>
+<g>
+<rect x="65" y="266" width="330" height="58" rx="15" class="pill"/><text x="230" y="291" class="body center"><tspan font-weight="700">Experience / bootstrap</tspan><tspan x="230" dy="18" class="tiny">tasks, outcomes, peers, humans, tools</tspan></text>
+<rect x="430" y="266" width="330" height="58" rx="15" class="pill"/><text x="595" y="291" class="body center"><tspan font-weight="700">Propose</tspan><tspan x="595" dy="18" class="tiny">lesson, memory, skill, tool, workflow, model</tspan></text>
+<rect x="795" y="266" width="330" height="58" rx="15" class="pill"/><text x="960" y="291" class="body center"><tspan font-weight="700">Evaluate</tspan><tspan x="960" dy="18" class="tiny">causality, scope, interaction, safety, cost</tspan></text>
+<rect x="1160" y="266" width="330" height="58" rx="15" class="pill"/><text x="1325" y="291" class="body center"><tspan font-weight="700">Commit / rollback</tspan><tspan x="1325" dy="18" class="tiny">version, contract, provenance, authorization</tspan></text>
+<rect x="1525" y="266" width="330" height="58" rx="15" class="pill"/><text x="1690" y="291" class="body center"><tspan font-weight="700">Serve / monitor</tspan><tspan x="1690" dy="18" class="tiny">future tasks, drift, propagation, retirement</tspan></text>
+</g>
+<path d="M395 295 H415" class="arrow"/><path d="M760 295 H780" class="arrow"/><path d="M1125 295 H1145" class="arrow"/><path d="M1490 295 H1510" class="arrow"/>
+
+<!-- row 1 cards -->
+<g filter="url(#shadow)">
+<rect x="25" y="365" width="350" height="300" rx="18" class="card"/><rect x="25" y="365" width="350" height="46" rx="18" fill="#5b5bd6"/><text x="48" y="394" class="code">D1</text><text x="82" y="394" class="head white">Experience admission &amp; scope</text>
+<text x="48" y="438" class="tiny">Which experience deserves persistent learning?</text>
+<text x="48" y="474" class="body">• GroundEvo-Admission</text><text x="48" y="508" class="body">• ScopeGuard-V</text><text x="48" y="542" class="body">• EvoValue-V</text><text x="48" y="576" class="body">• ProcessCredit-V</text>
+<text x="48" y="630" class="tiny">Admission · applicability · acquisition value · credit</text>
+
+<rect x="397" y="365" width="350" height="300" rx="18" class="card"/><rect x="397" y="365" width="350" height="46" rx="18" fill="#2f6fd6"/><text x="420" y="394" class="code">D2</text><text x="454" y="394" class="head white">Memory lifecycle</text>
+<text x="420" y="438" class="tiny">How should memories be represented, repaired, and retired?</text>
+<text x="420" y="474" class="body">• ViMEvo-Repair</text><text x="420" y="508" class="body">• MemoryFormRouter-V</text><text x="420" y="542" class="body">• MultiRateEvo-V</text><text x="420" y="576" class="body">• EvoGC-X</text>
+<text x="420" y="630" class="tiny">Representation · repair · consolidation · garbage collection</text>
+
+<rect x="769" y="365" width="350" height="300" rx="18" class="card"/><rect x="769" y="365" width="350" height="46" rx="18" fill="#087e5b"/><text x="792" y="394" class="code">D3</text><text x="826" y="394" class="head white">Skill, tool &amp; permission lifecycle</text>
+<text x="792" y="438" class="tiny">How should reusable capabilities evolve safely?</text>
+<text x="792" y="474" class="body">• SkillProof-V</text><text x="792" y="508" class="body">• SkillUnlearn-V</text><text x="792" y="542" class="body">• CapabilityLease-Evo</text>
+<text x="792" y="630" class="tiny">Contracts · repair · retirement · re-authorization</text>
+
+<rect x="1141" y="365" width="350" height="300" rx="18" class="card"/><rect x="1141" y="365" width="350" height="46" rx="18" fill="#7c4dcc"/><text x="1164" y="394" class="code">D4</text><text x="1198" y="394" class="head white">Routing, contracts &amp; composition</text>
+<text x="1164" y="438" class="tiny">Which component changes, and will updates compose?</text>
+<text x="1164" y="474" class="body">• EvoContract-V</text><text x="1164" y="508" class="body">• InteractionGuard-V</text><text x="1164" y="542" class="body">• UpdateRoute-V</text>
+<text x="1164" y="630" class="tiny">Update surface · semantic compatibility · interference</text>
+
+<rect x="1513" y="365" width="382" height="300" rx="18" class="card"/><rect x="1513" y="365" width="382" height="46" rx="18" fill="#c56a1a"/><text x="1536" y="394" class="code">D5</text><text x="1570" y="394" class="head white">Embodiment &amp; world adaptation</text>
+<text x="1536" y="438" class="tiny">How should agents diagnose changing bodies and worlds?</text>
+<text x="1536" y="474" class="body">• EgoShift</text><text x="1536" y="508" class="body">• ExploreRepair-V</text><text x="1536" y="542" class="body">• WorldPatch-V</text><text x="1536" y="576" class="body">• SimEvo-CF</text>
+<text x="1536" y="630" class="tiny">Sensor drift · active exploration · world repair · environments</text>
+</g>
+
+<!-- row 2 cards -->
+<g filter="url(#shadow)">
+<rect x="25" y="690" width="350" height="300" rx="18" class="card"/><rect x="25" y="690" width="350" height="46" rx="18" fill="#a12f42"/><text x="48" y="719" class="code">D6</text><text x="82" y="719" class="head white">Negative-evolution evaluation</text>
+<text x="48" y="763" class="tiny">Which failures are hidden by average success?</text>
+<text x="48" y="799" class="body">• NegEvoBench-V</text><text x="48" y="833" class="body">• RelianceGuard-V</text><text x="48" y="867" class="body">• AuditInvariant-Evo</text><text x="48" y="901" class="body">• EvalRedQueen-V</text>
+<text x="48" y="955" class="tiny">Benchmarks · grounding drift · audit gap · evaluator debt</text>
+
+<rect x="397" y="690" width="350" height="300" rx="18" class="card"/><rect x="397" y="690" width="350" height="46" rx="18" fill="#b54708"/><text x="420" y="719" class="code">D7</text><text x="454" y="719" class="head white">Security, provenance &amp; propagation</text>
+<text x="420" y="763" class="tiny">How do harmful updates spread through descendants?</text>
+<text x="420" y="799" class="body">• AmplificationGuard-X</text><text x="420" y="833" class="body">• EvoFirewall-V</text><text x="420" y="867" class="body">• ConfidenceFlow-Evo</text><text x="420" y="901" class="body">• EvoProvenance-V</text>
+<text x="420" y="955" class="tiny">Poisoning · amplification · uncertainty · lineage</text>
+
+<rect x="769" y="690" width="350" height="300" rx="18" class="card"/><rect x="769" y="690" width="350" height="46" rx="18" fill="#8a5300"/><text x="792" y="719" class="code">D8</text><text x="826" y="719" class="head white">Cost, oversight &amp; meta-control</text>
+<text x="792" y="763" class="tiny">How should compute and human attention be allocated?</text>
+<text x="792" y="799" class="body">• BudgetEvolve-V</text><text x="792" y="833" class="body">• OversightBudget-Evo</text><text x="792" y="867" class="body">• MetaGuard-V</text>
+<text x="792" y="955" class="tiny">Budget allocation · escalation · controller calibration</text>
+
+<rect x="1141" y="690" width="350" height="300" rx="18" class="card"/><rect x="1141" y="690" width="350" height="46" rx="18" fill="#0f7780"/><text x="1164" y="719" class="code">D9</text><text x="1198" y="719" class="head white">Goals, personalization &amp; feedback</text>
+<text x="1164" y="763" class="tiny">How should goals and user models evolve?</text>
+<text x="1164" y="799" class="body">• GoalGuard-Evo</text><text x="1164" y="833" class="body">• PersonaShift-V</text><text x="1164" y="867" class="body">• PerformativeEvo-V</text>
+<text x="1164" y="955" class="tiny">Goal constraints · preference drift · endogenous shift</text>
+
+<rect x="1513" y="690" width="382" height="300" rx="18" class="card"/><rect x="1513" y="690" width="382" height="46" rx="18" fill="#4b6b88"/><text x="1536" y="719" class="code">D10</text><text x="1578" y="719" class="head white">Cross-agent &amp; plural lineages</text>
+<text x="1536" y="763" class="tiny">When should agents share, branch, merge, or retire?</text>
+<text x="1536" y="799" class="body">• CrossAgentTransfer-V</text><text x="1536" y="833" class="body">• PluralLineage-Evo</text>
+<text x="1536" y="955" class="tiny">Verified transfer · specialization · persistent branching</text>
+</g>
+<text x="35" y="1045" class="tiny">Agent Self-Evolution Observatory · Directions organize the field; paper ideas are concrete executable proposals.</text>
+</svg>

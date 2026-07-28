@@ -432,15 +432,59 @@ function renderSection(section, index) {
   const referenceNote = citations.length ? `<div class="section-reference-note"><span>${language === "zh" ? "代表文献" : "Representative references"}</span><span data-cite="${esc(citations.join("||"))}"></span></div>` : "";
   return `<section class="panel topic-section"><h2 id="${id}">${title}</h2>${section.intro ? `<p class="section-intro">${textOf(section.intro)}</p>` : ""}<div class="section-body">${textOf(section.body)}${referenceNote}</div></section>`;
 }
+function renderOverviewFigure(config, altText = "Agent self-evolution research map") {
+  if (!config?.overviewFigure) return "";
+  const src = textOf(config.overviewFigure.src);
+  if (!src) return "";
+  return `<figure class="overview-figure"><a href="${esc(src)}" target="_blank" rel="noopener"><img src="${esc(src)}" alt="${esc(altText)}"></a><figcaption>${textOf(config.overviewFigure.caption)}</figcaption></figure>`;
+}
+function portfolioDirections() { return window.RESEARCH_DIRECTIONS || []; }
+function portfolioIdeas() { return window.PAPER_IDEAS || []; }
+function portfolioTracks() { return window.PAPER_TRACKS || []; }
+function directionById(id) { return portfolioDirections().find((direction) => direction.id === id); }
+function ideaByName(name) { return portfolioIdeas().find((idea) => idea.name === name); }
+function ideaAnchor(name) { return `idea-${slugify(name)}`; }
+function renderDirectionMap(config) {
+  const directions = portfolioDirections();
+  const ideas = portfolioIdeas();
+  const cards = directions.map((direction) => {
+    const directionIdeas = direction.ideaIds.map(ideaByName).filter(Boolean).sort((a, b) => a.rank - b.rank);
+    return `<article class="direction-card" style="--direction-color:${esc(direction.color || "#5b5bd6")}"><div class="direction-card-head"><span class="direction-code">${esc(direction.code)}</span><span class="direction-count">${directionIdeas.length} ${language === "zh" ? "个 Idea" : "ideas"}</span></div><h3 id="${esc(direction.id)}">${textOf(direction.title)}</h3><p class="direction-question">${textOf(direction.question)}</p><div class="direction-boundary"><b>${language === "zh" ? "边界" : "Boundary"}</b>${textOf(direction.boundary)}</div><div class="idea-chip-list">${directionIdeas.map((idea) => `<a class="idea-chip" href="paper-ideas.html#${ideaAnchor(idea.name)}"><span>#${idea.rank}</span>${esc(idea.name)}</a>`).join("")}</div></article>`;
+  }).join("");
+  const stats = `<div class="grid direction-stats"><div class="stat"><b>${directions.length}</b><span>${language === "zh" ? "个研究方向" : "research directions"}</span></div><div class="stat"><b>${ideas.length}</b><span>${language === "zh" ? "个具体论文 Idea" : "concrete paper ideas"}</span></div><div class="stat"><b>${portfolioTracks().length}</b><span>${language === "zh" ? "类论文赛道" : "paper tracks"}</span></div></div>`;
+  return `${pageHeader(config)}${renderOverviewFigure(config, language === "zh" ? "Agent 自进化研究方向与论文 Idea 地图" : "Agent self-evolution direction and paper-idea map")}${stats}${(config.sections || []).map(renderSection).join("")}<section class="panel"><h2 id="direction-catalog">${language === "zh" ? "十个研究方向" : "Ten research directions"}</h2><p class="section-intro">${language === "zh" ? "方向用于组织稳定科学问题；每个名称标签跳转到对应的具体论文方案。" : "Directions organize stable scientific questions. Each labeled idea links to its concrete paper plan."}</p><div class="direction-grid">${cards}</div></section>`;
+}
+function renderIdeaPlanCard(idea) {
+  const direction = directionById(idea.directionId);
+  return `<article class="idea-plan-card" id="${ideaAnchor(idea.name)}"><div class="idea-card-top"><div><span class="idea-rank">#${idea.rank}</span><h3>${esc(idea.name)}</h3><a class="idea-direction-link" href="research-directions.html#${esc(idea.directionId)}">${direction ? `${esc(direction.code)} · ${textOf(direction.title)}` : ""}</a></div><div class="idea-score"><strong>${idea.score.toFixed(1)}</strong><span>${language === "zh" ? "总分" : "score"} · ${esc(idea.confidence)}</span></div></div><div class="idea-plan-grid"><div><b>${language === "zh" ? "论文命题" : "Paper thesis"}</b><p>${textOf(idea.thesis)}</p></div><div><b>${language === "zh" ? "最小实验" : "Minimum experiment"}</b><p>${textOf(idea.experiment)}</p></div><div><b>${language === "zh" ? "最强对照" : "Strongest comparison"}</b><p>${textOf(idea.baseline)}</p></div><div><b>Go</b><p>${textOf(idea.go)}</p></div><div><b>Stop</b><p>${textOf(idea.stop)}</p></div><div><b>${language === "zh" ? "最适赛道" : "Best track"}</b><p>${textOf(idea.track)} · ${language === "zh" ? `排序置信度 ${idea.confidence}` : `${idea.confidence} ranking confidence`}</p></div></div></article>`;
+}
+function renderIdeaPortfolio(config) {
+  const directions = portfolioDirections();
+  const ideas = portfolioIdeas();
+  const quick = directions.map((direction) => `<a class="framework-card" href="#portfolio-${esc(direction.id)}"><b>${esc(direction.code)} · ${textOf(direction.title)}</b><span>${direction.ideaIds.length} ${language === "zh" ? "个具体论文方案" : "concrete paper plans"}</span></a>`).join("");
+  const sections = directions.map((direction) => {
+    const rows = direction.ideaIds.map(ideaByName).filter(Boolean).sort((a, b) => a.rank - b.rank);
+    return `<section class="panel idea-direction-section"><div class="idea-direction-heading"><div><span class="direction-code">${esc(direction.code)}</span><h2 id="portfolio-${esc(direction.id)}">${textOf(direction.title)}</h2><p>${textOf(direction.question)}</p></div><a class="link-btn" href="research-directions.html#${esc(direction.id)}">${language === "zh" ? "查看方向定义" : "Direction definition"}</a></div><div class="idea-plan-list">${rows.map(renderIdeaPlanCard).join("")}</div></section>`;
+  }).join("");
+  return `${pageHeader(config)}<div class="grid direction-stats"><div class="stat"><b>${directions.length}</b><span>${language === "zh" ? "个方向" : "directions"}</span></div><div class="stat"><b>${ideas.length}</b><span>${language === "zh" ? "个论文 Idea" : "paper ideas"}</span></div><div class="stat"><b>${ideas.filter((idea) => idea.confidence === "H").length}</b><span>${language === "zh" ? "个高置信度 Idea" : "high-confidence ideas"}</span></div></div><div class="framework-grid idea-quick-nav">${quick}</div>${sections}`;
+}
+function renderIdeaRanking(config) {
+  const ideas = [...portfolioIdeas()].sort((a, b) => a.rank - b.rank);
+  const directions = portfolioDirections();
+  const globalRows = ideas.map((idea) => { const direction = directionById(idea.directionId); return `<tr><td><strong>${idea.rank}</strong></td><td><a href="paper-ideas.html#${ideaAnchor(idea.name)}"><strong>${esc(idea.name)}</strong></a></td><td>${direction ? `${esc(direction.code)} · ${textOf(direction.title)}` : ""}</td><td>${idea.score.toFixed(1)}</td><td>${esc(idea.confidence)}</td><td>${textOf(idea.track)}</td></tr>`; }).join("");
+  const withinDirections = directions.map((direction) => { const directionIdeas = direction.ideaIds.map(ideaByName).filter(Boolean).sort((a, b) => a.rank - b.rank); return `<article class="direction-rank-card"><h3>${esc(direction.code)} · ${textOf(direction.title)}</h3><ol>${directionIdeas.map((idea) => `<li><a href="paper-ideas.html#${ideaAnchor(idea.name)}">${esc(idea.name)}</a><span>#${idea.rank} · ${idea.score.toFixed(1)}</span></li>`).join("")}</ol></article>`; }).join("");
+  const tracks = portfolioTracks().map((track) => `<article class="track-rank-card"><h3>${textOf(track.title)}</h3><ol>${track.ideaNames.map((name, index) => { const idea = ideaByName(name); return idea ? `<li><span>${index + 1}</span><a href="paper-ideas.html#${ideaAnchor(idea.name)}">${esc(idea.name)}</a><small>#${idea.rank}</small></li>` : ""; }).join("")}</ol></article>`).join("");
+  return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}<section class="panel"><h2 id="global-idea-ranking">${language === "zh" ? "论文 Idea 总榜" : "Global paper-idea ranking"}</h2><table class="matrix comparison-table"><thead><tr><th>${language === "zh" ? "排名" : "Rank"}</th><th>Idea</th><th>${language === "zh" ? "研究方向" : "Research direction"}</th><th>${language === "zh" ? "得分" : "Score"}</th><th>${language === "zh" ? "置信度" : "Conf."}</th><th>${language === "zh" ? "最适赛道" : "Best track"}</th></tr></thead><tbody>${globalRows}</tbody></table></section><section class="panel"><h2 id="within-direction-ranking">${language === "zh" ? "方向内排序" : "Within-direction ranking"}</h2><p class="section-intro">${language === "zh" ? "这比跨方向总榜更适合决定同一个科学问题下先做哪个论文方案。" : "This view is more useful than the global table when choosing among papers that answer the same scientific question."}</p><div class="direction-rank-grid">${withinDirections}</div></section><section class="panel"><h2 id="track-ranking">${language === "zh" ? "按论文赛道排序" : "Track-specific ranking"}</h2><div class="track-rank-grid">${tracks}</div></section>`;
+}
 function renderHome(config) {
   const counts = {};
   catalog.forEach((p) => counts[p.updateTarget || "other"] = (counts[p.updateTarget || "other"] || 0) + 1);
   const featured = (config.featured || []).map((item) => `<a class="framework-card ${item.paper ? "paper-card" : ""}" href="${item.href}"><b>${textOf(item.title)}</b><span>${textOf(item.desc)}</span></a>`).join("");
-  const figure = config.overviewFigure ? `<figure class="overview-figure"><a href="${esc(config.overviewFigure.src)}" target="_blank" rel="noopener"><img src="${esc(config.overviewFigure.src)}" alt="Agent self-evolution knowledge map"></a><figcaption>${textOf(config.overviewFigure.caption)}</figcaption></figure>` : "";
+  const figure = renderOverviewFigure(config, language === "zh" ? "Agent 自进化知识地图" : "Agent self-evolution knowledge map");
   const sortedSurfaces = Object.entries(counts).sort((a, b) => b[1] - a[1]);
   const maxSurface = Math.max(1, ...sortedSurfaces.map(([, count]) => count));
   const distribution = `<section class="panel"><h2 id="live-landscape">${language === "zh" ? "动态研究分布" : "Live research landscape"}</h2><p class="section-intro">${language === "zh" ? "根据当前合并文献库自动统计；自动分类用于导航，核心专题仍经过人工核验。" : "Computed from the current merged corpus. Automatic categories support navigation; core topic synthesis remains manually reviewed."}</p><div class="distribution-list">${sortedSurfaces.map(([surface, count]) => `<a class="distribution-row" href="bibliography.html?method=${encodeURIComponent(surface)}#searchable-corpus"><span>${esc(surface)}</span><i><b style="width:${Math.max(4, count / maxSurface * 100)}%"></b></i><strong>${count}</strong></a>`).join("")}</div></section>`;
-  return `${pageHeader(config)}${figure}<div class="grid"><div class="stat"><b>${catalog.length || DATA.length}</b><span>${language === "zh" ? "篇去重后的研究条目" : "deduplicated research records"}</span></div><div class="stat"><b>${Object.keys(counts).length || 6}</b><span>${language === "zh" ? "类更新对象" : "update surfaces"}</span></div><div class="stat"><b>${(config.ideaCount || 4)}</b><span>${language === "zh" ? "个经过碰撞审查的 CVPR 方向" : "CVPR ideas after collision review"}</span></div></div>${distribution}<div class="framework-grid">${featured}</div>${(config.sections || []).map(renderSection).join("")}`;
+  return `${pageHeader(config)}${figure}<div class="grid"><div class="stat"><b>${catalog.length || DATA.length}</b><span>${language === "zh" ? "篇去重后的研究条目" : "deduplicated research records"}</span></div><div class="stat"><b>${portfolioDirections().length || 10}</b><span>${language === "zh" ? "个研究方向" : "research directions"}</span></div><div class="stat"><b>${(config.ideaCount || portfolioIdeas().length || 4)}</b><span>${language === "zh" ? "个具体论文 Idea" : "concrete paper ideas"}</span></div></div>${distribution}<div class="framework-grid">${featured}</div>${(config.sections || []).map(renderSection).join("")}`;
 }
 function renderDynamicResourceIndex(config, mode) {
   const isRepository = mode === "repositories";
@@ -563,12 +607,18 @@ function renderPaperList(query = "") {
 function renderGlobalSearch(query) {
   let box = document.getElementById("global-search-results");
   if (!query) { box?.remove(); return; }
-  const matches = catalog.filter((p) => [p.title,p.category,p.subcategory,p.updateTarget,p.signal].join(" ").toLowerCase().includes(query.toLowerCase())).slice(0, 18);
+  const q = query.toLowerCase();
+  const directionMatches = portfolioDirections().filter((direction) => [direction.code,textOf(direction.title),textOf(direction.question),textOf(direction.boundary)].join(" ").toLowerCase().includes(q)).slice(0, 10);
+  const ideaMatches = portfolioIdeas().filter((idea) => [idea.name,textOf(idea.thesis),textOf(idea.experiment),textOf(idea.track)].join(" ").toLowerCase().includes(q)).slice(0, 12);
+  const paperMatches = catalog.filter((p) => [p.title,p.category,p.subcategory,p.updateTarget,p.signal].join(" ").toLowerCase().includes(q)).slice(0, 12);
   if (!box) {
     box = document.createElement("section"); box.id = "global-search-results"; box.className = "panel";
     document.getElementById("dynamic-page")?.prepend(box);
   }
-  box.innerHTML = `<h2>${language === "zh" ? "全站论文检索" : "Global paper search"}</h2><div class="resource-list">${matches.length ? matches.map(paperCard).join("") : `<div class="empty">${language === "zh" ? "没有匹配条目。" : "No matching records."}</div>`}</div>`;
+  const directionsHtml = directionMatches.length ? `<h3>${language === "zh" ? "研究方向" : "Research directions"}</h3><div class="framework-grid">${directionMatches.map((direction) => `<a class="framework-card" href="research-directions.html#${esc(direction.id)}"><b>${esc(direction.code)} · ${textOf(direction.title)}</b><span>${textOf(direction.question)}</span></a>`).join("")}</div>` : "";
+  const ideasHtml = ideaMatches.length ? `<h3>${language === "zh" ? "论文 Idea" : "Paper ideas"}</h3><div class="framework-grid">${ideaMatches.map((idea) => { const direction = directionById(idea.directionId); return `<a class="framework-card paper-card" href="paper-ideas.html#${ideaAnchor(idea.name)}"><b>#${idea.rank} · ${esc(idea.name)}</b><span>${direction ? `${esc(direction.code)} · ${textOf(direction.title)}` : ""}</span></a>`; }).join("")}</div>` : "";
+  const papersHtml = paperMatches.length ? `<h3>${language === "zh" ? "文献" : "Literature"}</h3><div class="resource-list">${paperMatches.map(paperCard).join("")}</div>` : "";
+  box.innerHTML = `<h2>${language === "zh" ? "全站检索" : "Global search"}</h2>${directionsHtml}${ideasHtml}${papersHtml}${!directionMatches.length && !ideaMatches.length && !paperMatches.length ? `<div class="empty">${language === "zh" ? "没有匹配条目。" : "No matching records."}</div>` : ""}`;
   bindPaperCardEvents();
 }
 function findCitation(title) {
@@ -721,12 +771,13 @@ function renderPage() {
   let canonical = document.querySelector('link[rel="canonical"]');
   if (!canonical) { canonical = document.createElement("link"); canonical.rel = "canonical"; document.head.appendChild(canonical); }
   canonical.href = `https://agent-evolution.lightrain.asia/${pageId === "home" ? "" : `${pageId}.html`}`;
+  const socialImage = config.overviewFigure ? `https://agent-evolution.lightrain.asia/${textOf(config.overviewFigure.src)}` : "https://agent-evolution.lightrain.asia/knowledge-map.svg";
   const socialMeta = {
     "og:title": document.title,
     "og:description": description.content,
     "og:url": canonical.href,
     "og:type": pageId === "bibliography" ? "website" : "article",
-    "og:image": "https://agent-evolution.lightrain.asia/knowledge-map.svg",
+    "og:image": socialImage,
     "twitter:card": "summary_large_image",
     "twitter:title": document.title,
     "twitter:description": description.content,
@@ -743,10 +794,13 @@ function renderPage() {
   document.head.appendChild(structured);
   renderFooter();
   if (pageId === "home") root.innerHTML = renderHome(config);
+  else if (pageId === "research-directions") root.innerHTML = renderDirectionMap(config);
+  else if (pageId === "paper-ideas") root.innerHTML = renderIdeaPortfolio(config);
+  else if (pageId === "direction-board") root.innerHTML = renderIdeaRanking(config);
   else if (pageId === "bibliography") root.innerHTML = renderBibliography(config);
   else if (pageId === "repositories") root.innerHTML = renderDynamicResourceIndex(config, "repositories");
   else if (pageId === "datasets-benchmarks") root.innerHTML = renderDynamicResourceIndex(config, "benchmarks");
-  else root.innerHTML = `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}`;
+  else root.innerHTML = `${pageHeader(config)}${renderOverviewFigure(config)}${(config.sections || []).map(renderSection).join("")}`;
   document.querySelector(".language-toggle")?.replaceChildren(document.createTextNode(language === "en" ? "中文" : "English"));
   bindPageEvents();
   if (pageId === "bibliography") renderPaperList(document.getElementById("site-search")?.value || "");

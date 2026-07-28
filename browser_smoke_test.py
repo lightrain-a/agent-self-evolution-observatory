@@ -88,7 +88,7 @@ def main() -> None:
               corpus: Number(document.querySelector('.stat b')?.textContent || 0)
             };""",
         )
-        require(home["nav"] == 23, f"expected 23 navigation targets, got {home['nav']}")
+        require(home["nav"] == 24, f"expected 24 navigation targets, got {home['nav']}")
         require(home["figure"], "knowledge-map figure is missing")
         require(home["distribution"] >= 6, "live update-surface distribution is missing")
         require(home["missing"] == 0, "home contains unresolved citations")
@@ -138,8 +138,6 @@ def main() -> None:
             "/repositories.html": 4,
             "/research-agenda.html": 6,
             "/visual-multimodal.html": 6,
-            "/paper-ideas.html": 10,
-            "/direction-board.html": 7,
         }
         for page, minimum in expected_sections.items():
             navigate(page, 7)
@@ -155,20 +153,51 @@ def main() -> None:
             require(result["sections"] >= minimum, f"{page} has too few sections")
             require(result["missing"] == 0, f"{page} contains unresolved citations")
 
-        navigate("/direction-board.html", 7)
-        portfolio = execute(
+        navigate("/research-directions.html", 7)
+        direction_map = execute(
             session_id,
-            """const sections=[...document.querySelectorAll('.topic-section')]; return {
-              retained: sections[2]?.querySelectorAll('tbody tr').length || 0,
-              rejected: sections[1]?.querySelectorAll('tbody tr').length || 0,
-              tierCards: [...sections.slice(3,6)].reduce((n,s)=>n+s.querySelectorAll('.property-card').length,0),
+            """return {
+              directions: document.querySelectorAll('.direction-card').length,
+              chips: document.querySelectorAll('.idea-chip').length,
+              src: document.querySelector('.overview-figure img')?.getAttribute('src') || '',
               text: document.body.textContent || ''
             };""",
         )
-        require(portfolio["retained"] == 20, f"expected 20 retained ideas, got {portfolio['retained']}")
-        require(portfolio["rejected"] == 14, f"expected 14 rejected formulations, got {portfolio['rejected']}")
-        require(portfolio["tierCards"] == 20, f"expected 20 tier cards, got {portfolio['tierCards']}")
-        require("RelianceGuard-V" in portfolio["text"] and "DiversityGuard-MAS" in portfolio["text"], "20-idea portfolio is incomplete")
+        require(direction_map["directions"] == 10, f"expected 10 directions, got {direction_map['directions']}")
+        require(direction_map["chips"] == 34, f"expected 34 idea mappings, got {direction_map['chips']}")
+        require(direction_map["src"].endswith("agent-self-evolution-directions-en.svg"), "English direction figure is not active")
+        execute(session_id, "document.querySelector('.language-toggle')?.click();")
+        time.sleep(1)
+        zh_src = execute(session_id, "return document.querySelector('.overview-figure img')?.getAttribute('src') || ''")
+        require(zh_src.endswith("agent-self-evolution-directions-zh.svg"), "Chinese direction figure did not switch")
+
+        navigate("/paper-ideas.html", 7)
+        idea_portfolio = execute(
+            session_id,
+            """return {
+              directions: document.querySelectorAll('.idea-direction-section').length,
+              ideas: document.querySelectorAll('.idea-plan-card').length,
+              thesis: document.body.textContent.includes('Paper thesis') || document.body.textContent.includes('论文命题')
+            };""",
+        )
+        require(idea_portfolio["directions"] == 10, f"expected 10 idea groups, got {idea_portfolio['directions']}")
+        require(idea_portfolio["ideas"] == 34, f"expected 34 concrete ideas, got {idea_portfolio['ideas']}")
+        require(idea_portfolio["thesis"], "idea cards are missing paper-plan fields")
+
+        navigate("/direction-board.html", 7)
+        ranking = execute(
+            session_id,
+            """return {
+              rows: document.querySelectorAll('#global-idea-ranking + table tbody tr, #global-idea-ranking ~ table tbody tr').length,
+              directionCards: document.querySelectorAll('.direction-rank-card').length,
+              trackCards: document.querySelectorAll('.track-rank-card').length,
+              text: document.body.textContent || ''
+            };""",
+        )
+        require(ranking["rows"] == 34, f"expected 34 ranked ideas, got {ranking['rows']}")
+        require(ranking["directionCards"] == 10, f"expected 10 within-direction rankings, got {ranking['directionCards']}")
+        require(ranking["trackCards"] == 4, f"expected 4 track rankings, got {ranking['trackCards']}")
+        require("GroundEvo-Admission" in ranking["text"] and "PluralLineage-Evo" in ranking["text"], "idea ranking is incomplete")
 
         request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844, "x": 0, "y": 0})
         navigate("/index.html", 5)

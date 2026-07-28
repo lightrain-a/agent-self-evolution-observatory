@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-07-28 · Direction/Idea hierarchy reconstruction
+
+- Replaced the incorrect flat “34 directions” model with a four-level hierarchy: field → research direction → concrete paper idea → selected-paper workspace.
+- Defined ten stable research directions and mapped all thirty-four retained paper ideas to exactly one direction.
+- Added `research-directions.html` as the canonical direction map; converted `paper-ideas.html` into a concrete paper-plan portfolio and `direction-board.html` into an Idea-only ranking board.
+- Added bilingual 1920×1080 overview figures that switch with page language and contain all ten directions and all thirty-four ideas.
+- Centralized direction and idea metadata in `portfolio-data.js`, including thesis, minimum experiment, strongest baseline, Go/Stop boundary, global rank, confidence, and paper track.
+- Added global, within-direction, and track-specific Idea rankings without ranking research directions themselves.
+- Extended global search to return research directions, paper ideas, and literature separately.
+- Added automated checks for ten unique directions, thirty-four unique ranks, one-to-one Idea-to-direction mapping, and complete bilingual figure coverage.
+
 ## 2026-07-28 · Lifecycle-wide 34-idea iteration
 
 - Expanded the formulation pool from 55 to 69 and audited every proposal across five agent modules and five lifecycle stages.

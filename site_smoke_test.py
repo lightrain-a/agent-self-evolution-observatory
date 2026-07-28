@@ -7,10 +7,12 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-EXPECTED_MAIN_PAGES = 23
+EXPECTED_MAIN_PAGES = 24
 REQUIRED_STATIC = [
     "CNAME", ".nojekyll", "style.css", "app.js", "data.js", "favicon.svg",
     "robots.txt", "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
+    "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
+    "portfolio-data.js", "content-research-directions.js", "content-idea-portfolio.js",
     "catalog_audit.py", "browser_smoke_test.py", "CHANGELOG.md",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
@@ -61,6 +63,31 @@ def main() -> None:
     for page_id in page_ids.values():
         if f'"{page_id}"' not in combined:
             fail(f"no content configuration found for {page_id}")
+
+    portfolio_text = (ROOT / "portfolio-data.js").read_text(encoding="utf-8")
+    direction_ids = re.findall(r'^\s*id:"([a-z0-9-]+)",\s*code:"D\d+"', portfolio_text, re.MULTILINE)
+    idea_names = re.findall(r'^  \{name:"([^"]+)",directionId:"([a-z0-9-]+)",rank:(\d+)', portfolio_text, re.MULTILINE)
+    if len(direction_ids) != 10 or len(set(direction_ids)) != 10:
+        fail(f"expected 10 unique research directions, found {len(direction_ids)}")
+    if len(idea_names) != 34:
+        fail(f"expected 34 paper ideas, found {len(idea_names)}")
+    names = [name for name, _, _ in idea_names]
+    ranks = sorted(int(rank) for _, _, rank in idea_names)
+    if len(set(names)) != 34 or ranks != list(range(1, 35)):
+        fail("paper ideas must have unique names and ranks 1-34")
+    unknown_directions = sorted({direction for _, direction, _ in idea_names} - set(direction_ids))
+    if unknown_directions:
+        fail(f"ideas reference unknown directions: {unknown_directions}")
+    mapped_names = []
+    for block in re.findall(r'ideaIds:\[([^\]]*)\]', portfolio_text):
+        mapped_names.extend(re.findall(r'"([^"]+)"', block))
+    if sorted(mapped_names) != sorted(names) or len(mapped_names) != len(set(mapped_names)):
+        fail("each paper idea must appear exactly once in the direction mapping")
+    for figure_name in ["agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg"]:
+        figure_text = (ROOT / figure_name).read_text(encoding="utf-8")
+        missing_ideas = [name for name in names if name not in figure_text]
+        if missing_ideas:
+            fail(f"{figure_name} is missing ideas: {missing_ideas}")
 
     data_text = (ROOT / "data.js").read_text(encoding="utf-8")
     nav_targets = sorted(set(re.findall(r'\["([a-z0-9-]+\.html)"', data_text)))

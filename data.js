@@ -1,15 +1,18 @@
 window.NAV_GROUPS = [
-  { title:{en:"Next Paper",zh:"下一篇论文"}, open:true, pages:[
+  { title:{en:"Research Structure",zh:"研究结构"}, open:true, pages:[
+    ["foundations.html",{en:"Definitions & History",zh:"定义与历史"}],
+    ["taxonomy.html",{en:"Field Taxonomy",zh:"领域分类体系"}],
+    ["research-directions.html",{en:"Research Direction Map",zh:"研究方向地图"}],
+  ]},
+  { title:{en:"Paper Ideas",zh:"论文 Idea"}, open:true, pages:[
+    ["paper-ideas.html",{en:"Concrete Idea Portfolio",zh:"具体 Idea 候选池"}],
+    ["direction-board.html",{en:"Idea Ranking Board",zh:"Idea 排名决策板"}],
+  ]},
+  { title:{en:"Selected Paper Workspace",zh:"选中论文工作区"}, pages:[
     ["paper-problem.html",{en:"Problem Formulation",zh:"问题定义"}],
-    ["paper-ideas.html",{en:"Candidate Ideas",zh:"候选方向"}],
-    ["direction-board.html",{en:"34-Idea Friday Board",zh:"34 个方向决策板"}],
     ["paper-experiments.html",{en:"Benchmark & Experiments",zh:"基准与实验"}],
     ["paper-roadmap.html",{en:"Thesis & Roadmap",zh:"论文主线与路线图"}],
     ["review-log.html",{en:"Review & Iteration Log",zh:"评审与迭代记录"}],
-  ]},
-  { title:{en:"Foundations",zh:"基础"}, pages:[
-    ["foundations.html",{en:"Definitions & History",zh:"定义与历史"}],
-    ["taxonomy.html",{en:"Knowledge Map & Taxonomy",zh:"知识地图与分类"}],
   ]},
   { title:{en:"Evolution Mechanisms",zh:"进化机制"}, pages:[
     ["model-improvement.html",{en:"Foundation-model Improvement",zh:"基础模型更新"}],
@@ -141,13 +144,13 @@ window.PAGE_CONTENT = {
   title:{en:"From retrying to learning: a mechanism-first map of self-evolving agents",zh:"从“多试几次”到“真正学会”：Agent 自进化机制地图"},
   lead:{en:"A bilingual, continuously synchronized research observatory covering foundation-model updates, prompts, memory, tools, workflows, visual agents, embodied systems, evaluation, and a CVPR-oriented paper workspace.",zh:"一个持续同步的双语研究站，覆盖基础模型更新、提示词、记忆、工具、工作流、视觉 Agent、具身系统、评测，以及面向 CVPR 的论文工作区。"},
   callout:{en:"Core rule: an agent is self-evolving only when experience is converted into a persistent update and the update is evaluated on future tasks. More retries, longer context, or a larger inference budget are not sufficient.",zh:"核心判据：只有当经验被转化为持久更新，并在未来任务上验证时，才称为 Agent 自进化。增加重试、上下文长度或推理预算并不充分。"},
-  overviewFigure:{src:"knowledge-map.svg",caption:{en:"Mechanism-first overview: experience is diagnosed and verified before an update router changes memory, skills, workflow, world model, or parameters; every persistent change passes future-task and rollback gates.",zh:"机制优先总览：经验先经过诊断和验证，再由路由器选择更新记忆、技能、工作流、世界模型或参数；所有持久变化都必须通过后续任务与回滚门控。"}},
+  overviewFigure:{src:{en:"agent-self-evolution-directions-en.svg",zh:"agent-self-evolution-directions-zh.svg"},caption:{en:"The site-wide hierarchy: ten research directions organize thirty-four concrete paper ideas. The figure switches automatically with the page language.",zh:"全站统一层级：十个研究方向组织三十四个具体论文 Idea；图片会随网页语言自动切换。"}},
   ideaCount:34,
   featured:[
-    {href:"paper-problem.html",paper:true,title:{en:"Next Paper · Problem",zh:"下一篇论文 · 问题"},desc:{en:"Why unverified visual experience causes spurious self-evolution.",zh:"为什么未经验证的视觉经验会导致伪进化。"}},
-    {href:"paper-ideas.html",paper:true,title:{en:"Candidate Ideas",zh:"候选方向"},desc:{en:"Thirty-four ranked directions retained from a 69-formulation lifecycle audit.",zh:"从 69 个候选表述的生命周期审查中保留并排序的 34 个方向。"}},
-    {href:"direction-board.html",paper:true,title:{en:"34-Idea Friday Board",zh:"34 个方向决策板"},desc:{en:"A global ranking, four track-specific rankings, merged and rejected formulations, confidence labels, and unified pilot/stop criteria.",zh:"总榜、四类赛道榜、合并与淘汰表述、排序置信度，以及统一 Pilot／停止条件。"}},
-    {href:"taxonomy.html",title:{en:"Knowledge Map",zh:"知识地图"},desc:{en:"Update target × feedback source × timescale × commitment gate.",zh:"更新对象 × 反馈来源 × 时间尺度 × 提交门控。"}},
+    {href:"research-directions.html",paper:true,title:{en:"Research Direction Map",zh:"研究方向地图"},desc:{en:"Ten stable subfields and the complete mapping of all thirty-four paper ideas.",zh:"十个稳定小方向及全部三十四个论文 Idea 的完整映射。"}},
+    {href:"paper-ideas.html",paper:true,title:{en:"Concrete Idea Portfolio",zh:"具体 Idea 候选池"},desc:{en:"Every idea includes a thesis, minimum experiment, strongest baseline, and Go/Stop boundary.",zh:"每个 Idea 都包含论文命题、最小实验、最强基线和 Go／Stop 边界。"}},
+    {href:"direction-board.html",paper:true,title:{en:"Idea Ranking Board",zh:"Idea 排名决策板"},desc:{en:"Global, within-direction, and track-specific rankings for concrete paper plans.",zh:"针对具体论文方案的总榜、方向内排序与赛道榜。"}},
+    {href:"paper-problem.html",paper:true,title:{en:"Selected Paper Workspace",zh:"选中论文工作区"},desc:{en:"Problem, experiments, and roadmap for the one idea currently chosen for execution.",zh:"只服务于当前选中 Idea 的问题、实验与路线图。"}},
     {href:"model-improvement.html",title:{en:"Foundation-model Improvement",zh:"基础模型更新"},desc:{en:"Self-generated demonstrations, self-reward, environment RL, and test-time learning.",zh:"自生成示范、自奖励、环境强化学习与测试时学习。"}},
     {href:"memory-evolution.html",title:{en:"Memory Evolution",zh:"记忆进化"},desc:{en:"Memory objects, structures, processing, consolidation, and contamination.",zh:"记忆对象、结构、处理、整合与污染。"}},
     {href:"visual-multimodal.html",title:{en:"Visual & Multimodal Agents",zh:"视觉与多模态 Agent"},desc:{en:"VLM self-play, video agents, visual tools, critics, editing, and generation.",zh:"VLM 自博弈、视频 Agent、视觉工具、critic、编辑与生成。"}},
@@ -157,7 +160,7 @@ window.PAGE_CONTENT = {
   sections:[
     {title:{en:"What this observatory adds",zh:"这个研究站解决什么"},body:{en:`<div class="property-grid"><div class="property-card"><b>Strict scope</b><span>Separates self-correction, test-time search, scaffold evolution, and parameter evolution.</span></div><div class="property-card"><b>Mechanism-first taxonomy</b><span>Classifies the committed update instead of trusting the word “evolving” in a title.</span></div><div class="property-card"><b>Living coverage</b><span>Synchronizes the survey-maintained catalog and deduplicates a CVPR-focused visual supplement.</span></div><div class="property-card"><b>Paper workspace</b><span>Tracks idea collisions, falsifiable hypotheses, experiments, stop conditions, and reviewer objections.</span></div></div>`,zh:`<div class="property-grid"><div class="property-card"><b>严格范围</b><span>区分自纠错、测试时搜索、scaffold 进化与参数进化。</span></div><div class="property-card"><b>机制优先分类</b><span>依据实际提交的更新分类，而不是相信标题中的 evolving。</span></div><div class="property-card"><b>动态覆盖</b><span>同步综述维护的文献目录，并与面向 CVPR 的视觉补充集去重。</span></div><div class="property-card"><b>论文工作区</b><span>记录 idea 碰撞、可证伪假设、实验、停止条件与审稿质疑。</span></div></div>`}},
     {title:{en:"What the literature already establishes",zh:"现有文献已经能够确认什么"},body:{en:`<div class="property-grid"><div class="property-card"><b>Evolution is not limited to weights</b><span>Prompts, memory, skills, tools, workflows, evaluators, and world models are persistent update surfaces.</span></div><div class="property-card"><b>Self-generated experience is useful but noisy</b><span>Questioners, critics, and judges can improve an agent while also creating invalid tasks and self-confirming feedback.</span></div><div class="property-card"><b>Memory needs a lifecycle</b><span>Writing more memories without revision, provenance, and retirement can reduce reliability.</span></div><div class="property-card"><b>Visual critique is not ground truth</b><span>A fluent correction may still rely on the wrong region, frame, or object state.</span></div><div class="property-card"><b>Skills require contracts</b><span>Reusable procedures need preconditions, postconditions, tests, compatibility, and rollback.</span></div><div class="property-card"><b>Longitudinal evidence is still rare</b><span>Most papers report post-update averages rather than version trajectories, harmful updates, and delayed regressions.</span></div></div>`,zh:`<div class="property-grid"><div class="property-card"><b>进化不只发生在模型参数</b><span>提示词、记忆、技能、工具、工作流、评价器和世界模型都是持久更新表面。</span></div><div class="property-card"><b>自生成经验有用但噪声很大</b><span>提问者、critic 和 judge 能提升 Agent，也会产生无效任务和自我确认反馈。</span></div><div class="property-card"><b>记忆必须具有生命周期</b><span>如果缺少修订、溯源和退役，写入更多记忆反而会降低可靠性。</span></div><div class="property-card"><b>视觉 critique 不是事实标签</b><span>语言流畅的纠错仍可能依赖错误区域、帧或物体状态。</span></div><div class="property-card"><b>技能需要契约</b><span>可复用程序需要前置条件、后置条件、测试、兼容性和回滚。</span></div><div class="property-card"><b>纵向证据仍然稀缺</b><span>多数论文只报告更新后均值，而不报告版本轨迹、有害更新和延迟回退。</span></div></div>`}},
-    {title:{en:"Recommended reading paths",zh:"推荐阅读路径"},body:{en:`<table class="matrix"><thead><tr><th>Goal</th><th>Path</th></tr></thead><tbody><tr><td>Understand the field</td><td>Definitions → Taxonomy → Mechanism pages → Evaluation</td></tr><tr><td>Prepare a CVPR paper</td><td>Problem → Candidate Ideas → Experiments → Roadmap → Review Log</td></tr><tr><td>Find a specific method</td><td>Use the top search box or the live bibliography filters</td></tr><tr><td>Audit completeness</td><td>Coverage & Search Protocol → Bibliography → Review Log</td></tr></tbody></table>`,zh:`<table class="matrix"><thead><tr><th>目标</th><th>路径</th></tr></thead><tbody><tr><td>理解领域</td><td>定义 → 分类 → 各机制页面 → 评测</td></tr><tr><td>准备 CVPR 论文</td><td>问题 → 候选方向 → 实验 → 路线图 → 评审记录</td></tr><tr><td>查找具体方法</td><td>使用顶部检索或动态文献库筛选器</td></tr><tr><td>核查覆盖完整性</td><td>覆盖与检索协议 → 文献库 → 评审记录</td></tr></tbody></table>`}}
+    {title:{en:"Recommended reading paths",zh:"推荐阅读路径"},body:{en:`<table class="matrix"><thead><tr><th>Goal</th><th>Path</th></tr></thead><tbody><tr><td>Understand the field</td><td>Definitions → Field Taxonomy → Research Direction Map → Mechanism pages</td></tr><tr><td>Select a paper</td><td>Research Direction Map → Concrete Idea Portfolio → Idea Ranking Board</td></tr><tr><td>Execute the selected idea</td><td>Problem → Experiments → Roadmap → Review Log</td></tr><tr><td>Audit literature coverage</td><td>Coverage Protocol → Bibliography → Review Log</td></tr></tbody></table>`,zh:`<table class="matrix"><thead><tr><th>目标</th><th>路径</th></tr></thead><tbody><tr><td>理解领域</td><td>定义 → 领域分类 → 研究方向地图 → 各机制页面</td></tr><tr><td>选择论文</td><td>研究方向地图 → 具体 Idea 候选池 → Idea 排名决策板</td></tr><tr><td>执行选中 Idea</td><td>问题 → 实验 → 路线图 → 评审记录</td></tr><tr><td>核查文献覆盖</td><td>覆盖协议 → 文献库 → 评审记录</td></tr></tbody></table>`}}
   ]
 },
 "foundations":{
