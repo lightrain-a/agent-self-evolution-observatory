@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Headless Firefox smoke test for dynamic observatory behavior.
+"""Headless browser smoke test for dynamic observatory behavior.
 
-Requires Firefox and geckodriver. The test starts a local static server, executes
-real page JavaScript, and checks dynamic catalog loading, maps, filtering,
-pagination, linked pages, and mobile navigation.
+Uses Firefox/geckodriver when available and falls back to Edge/msedgedriver.
+The test starts a local static server, executes real page JavaScript, and checks
+catalog loading, consolidated hubs, redirects, filtering, and mobile navigation.
 """
 from __future__ import annotations
 
@@ -11,6 +11,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import time
 import urllib.request
 from pathlib import Path
@@ -45,23 +46,8 @@ def require(condition: bool, message: str) -> None:
 def main() -> None:
     firefox = shutil.which("firefox")
     geckodriver = shutil.which("geckodriver")
-    if not firefox or not geckodriver:
-        raise SystemExit("SKIP: Firefox or geckodriver is unavailable")
-
-    httpd = subprocess.Popen(
-        ["python3", "-m", "http.server", str(HTTP_PORT), "--bind", "127.0.0.1"],
-        cwd=ROOT,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-    driver = subprocess.Popen(
-        [geckodriver, "--port", str(WEBDRIVER_PORT)],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-    session_id = ""
-    try:
-        time.sleep(2)
+    if firefox and geckodriver:
+        driver_command = [geckodriver, "--port", str(WEBDRIVER_PORT)]
         capabilities = {
             "capabilities": {
                 "alwaysMatch": {
@@ -70,6 +56,45 @@ def main() -> None:
                 }
             }
         }
+    else:
+        edge_candidates = [
+            Path(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"),
+            Path(r"C:\Program Files\Microsoft\Edge\Application\msedge.exe"),
+        ]
+        edge = next((path for path in edge_candidates if path.exists()), None)
+        driver_candidates = list((Path.home() / ".cache" / "selenium" / "msedgedriver" / "win64").glob("*/msedgedriver.exe"))
+        driver_candidates.sort(key=lambda path: tuple(int(part) for part in path.parent.name.split(".")), reverse=True)
+        edgedriver = driver_candidates[0] if driver_candidates else None
+        if not edge or not edgedriver:
+            raise SystemExit("SKIP: no supported headless browser and driver are available")
+        driver_command = [str(edgedriver), f"--port={WEBDRIVER_PORT}"]
+        capabilities = {
+            "capabilities": {
+                "alwaysMatch": {
+                    "browserName": "MicrosoftEdge",
+                    "acceptInsecureCerts": True,
+                    "ms:edgeOptions": {
+                        "binary": str(edge),
+                        "args": ["--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check"],
+                    },
+                }
+            }
+        }
+
+    httpd = subprocess.Popen(
+        [sys.executable, "-m", "http.server", str(HTTP_PORT), "--bind", "127.0.0.1"],
+        cwd=ROOT,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    driver = subprocess.Popen(
+        driver_command,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    session_id = ""
+    try:
+        time.sleep(2)
         session_id = request("POST", "/session", capabilities)["value"]["sessionId"]
         base = f"http://127.0.0.1:{HTTP_PORT}"
 
@@ -88,7 +113,7 @@ def main() -> None:
               corpus: Number(document.querySelector('.stat b')?.textContent || 0)
             };""",
         )
-        require(home["nav"] == 24, f"expected 24 navigation targets, got {home['nav']}")
+        require(home["nav"] == 9, f"expected 9 canonical navigation targets, got {home['nav']}")
         require(home["figure"], "knowledge-map figure is missing")
         require(home["distribution"] >= 6, "live update-surface distribution is missing")
         require(home["missing"] == 0, "home contains unresolved citations")
@@ -133,25 +158,34 @@ def main() -> None:
         after = execute(session_id, "return document.querySelectorAll('.reference-card').length")
         require(before == 80 and after == 160, f"pagination failed: {before} -> {after}")
 
-        expected_sections = {
-            "/datasets-benchmarks.html": 5,
-            "/repositories.html": 4,
-            "/research-agenda.html": 6,
-            "/visual-multimodal.html": 6,
+        expected_hubs = {
+            "/foundations.html": {"groups": 2, "sections": 8},
+            "/mechanisms.html": {"groups": 5, "sections": 26},
+            "/domains.html": {"groups": 3, "sections": 14},
+            "/evaluation.html": {"groups": 3, "sections": 16},
+            "/selected-paper.html": {"groups": 4, "sections": 20},
         }
-        for page, minimum in expected_sections.items():
+        for page, expected in expected_hubs.items():
             navigate(page, 7)
             result = execute(
                 session_id,
                 """return {
                   heading: document.querySelector('h1')?.textContent || '',
+                  groups: document.querySelectorAll('.merged-group').length,
                   sections: document.querySelectorAll('.topic-section').length,
+                  resources: document.querySelectorAll('.live-resource-panel').length,
+                  history: document.querySelectorAll('.history-overview-figure').length,
                   missing: document.querySelectorAll('.citation-missing').length
                 };""",
             )
             require(result["heading"], f"{page} has no heading")
-            require(result["sections"] >= minimum, f"{page} has too few sections")
+            require(result["groups"] == expected["groups"], f"{page} group count mismatch")
+            require(result["sections"] >= expected["sections"], f"{page} has too few sections")
             require(result["missing"] == 0, f"{page} contains unresolved citations")
+            if page == "/foundations.html":
+                require(result["history"] == 1, "foundations history figure is missing")
+            if page == "/evaluation.html":
+                require(result["resources"] == 2, "evaluation live resource indexes are incomplete")
 
         navigate("/research-directions.html", 7)
         direction_map = execute(
@@ -177,27 +211,30 @@ def main() -> None:
             """return {
               directions: document.querySelectorAll('.idea-direction-section').length,
               ideas: document.querySelectorAll('.idea-plan-card').length,
-              thesis: document.body.textContent.includes('Paper thesis') || document.body.textContent.includes('论文命题')
+              rows: document.querySelectorAll('#idea-ranking tbody tr').length,
+              directionCards: document.querySelectorAll('.direction-rank-card').length,
+              trackCards: document.querySelectorAll('.track-rank-card').length,
+              thesis: document.body.textContent.includes('Paper thesis') || document.body.textContent.includes('论文命题'),
+              text: document.body.textContent || ''
             };""",
         )
         require(idea_portfolio["directions"] == 10, f"expected 10 idea groups, got {idea_portfolio['directions']}")
         require(idea_portfolio["ideas"] == 34, f"expected 34 concrete ideas, got {idea_portfolio['ideas']}")
+        require(idea_portfolio["rows"] == 34, f"expected 34 ranked ideas, got {idea_portfolio['rows']}")
+        require(idea_portfolio["directionCards"] == 10, "within-direction rankings are incomplete")
+        require(idea_portfolio["trackCards"] == 4, "track rankings are incomplete")
         require(idea_portfolio["thesis"], "idea cards are missing paper-plan fields")
+        require("GroundEvo-Admission" in idea_portfolio["text"] and "PluralLineage-Evo" in idea_portfolio["text"], "idea portfolio is incomplete")
 
-        navigate("/direction-board.html", 7)
-        ranking = execute(
-            session_id,
-            """return {
-              rows: document.querySelectorAll('#global-idea-ranking + table tbody tr, #global-idea-ranking ~ table tbody tr').length,
-              directionCards: document.querySelectorAll('.direction-rank-card').length,
-              trackCards: document.querySelectorAll('.track-rank-card').length,
-              text: document.body.textContent || ''
-            };""",
-        )
-        require(ranking["rows"] == 34, f"expected 34 ranked ideas, got {ranking['rows']}")
-        require(ranking["directionCards"] == 10, f"expected 10 within-direction rankings, got {ranking['directionCards']}")
-        require(ranking["trackCards"] == 4, f"expected 4 track rankings, got {ranking['trackCards']}")
-        require("GroundEvo-Admission" in ranking["text"] and "PluralLineage-Evo" in ranking["text"], "idea ranking is incomplete")
+        redirect_checks = {
+            "/memory-evolution.html": "mechanisms.html#group-memory-evolution",
+            "/direction-board.html": "paper-ideas.html#idea-ranking",
+            "/paper-roadmap.html": "selected-paper.html#group-paper-roadmap",
+        }
+        for old_path, expected_suffix in redirect_checks.items():
+            navigate(old_path, 2)
+            redirected = execute(session_id, "return location.href")
+            require(redirected.endswith(expected_suffix), f"{old_path} did not redirect to {expected_suffix}")
 
         request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844, "x": 0, "y": 0})
         navigate("/index.html", 5)

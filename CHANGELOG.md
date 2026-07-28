@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-07-28 · Nine-page information architecture consolidation
+
+- Consolidated twenty-three public content entries into nine canonical high-density pages: home, foundations, mechanisms, domains, evaluation, directions, ideas, selected paper, and bibliography.
+- Merged definitions/history with taxonomy; five mechanism pages into one mechanism atlas; three application-domain pages into one domain hub; evaluation, benchmarks, environments, and repositories into one evidence/infrastructure hub.
+- Merged the direction map with the long-term agenda, the idea portfolio with all rankings, the four GroundEvo workspace pages into one selected-paper page, and the coverage protocol with the live bibliography.
+- Preserved nineteen historical URLs as `noindex` compatibility redirects to precise canonical section anchors.
+- Reduced the primary navigation to nine entries and rebuilt the sitemap around canonical pages only.
+- Added merged-page rendering, section-group quick navigation, dynamic benchmark/repository panels inside the evaluation hub, and canonical-page search routing.
+- Extended static QA to validate nine canonical pages, nineteen redirects, group coverage, sitemap scope, and redirect targets.
+- Added Edge WebDriver fallback to the browser smoke test and verified merged content, 661-paper loading, filtering, pagination, bilingual figures, all 34 ideas, redirects, and mobile navigation.
+
 ## 2026-07-28 · High-density historical overview figure
 
 - Replaced the short four-row history summary with a high-density, bilingual, page-native historical figure on `foundations.html`.

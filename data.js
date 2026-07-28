@@ -1,41 +1,20 @@
 window.NAV_GROUPS = [
-  { title:{en:"Research Structure",zh:"研究结构"}, open:true, pages:[
-    ["foundations.html",{en:"Definitions & History",zh:"定义与历史"}],
-    ["taxonomy.html",{en:"Field Taxonomy",zh:"领域分类体系"}],
-    ["research-directions.html",{en:"Research Direction Map",zh:"研究方向地图"}],
-  ]},
-  { title:{en:"Paper Ideas",zh:"论文 Idea"}, open:true, pages:[
-    ["paper-ideas.html",{en:"Concrete Idea Portfolio",zh:"具体 Idea 候选池"}],
-    ["direction-board.html",{en:"Idea Ranking Board",zh:"Idea 排名决策板"}],
-  ]},
-  { title:{en:"Selected Paper Workspace",zh:"选中论文工作区"}, pages:[
-    ["paper-problem.html",{en:"Problem Formulation",zh:"问题定义"}],
-    ["paper-experiments.html",{en:"Benchmark & Experiments",zh:"基准与实验"}],
-    ["paper-roadmap.html",{en:"Thesis & Roadmap",zh:"论文主线与路线图"}],
-    ["review-log.html",{en:"Review & Iteration Log",zh:"评审与迭代记录"}],
-  ]},
-  { title:{en:"Evolution Mechanisms",zh:"进化机制"}, pages:[
-    ["model-improvement.html",{en:"Foundation-model Improvement",zh:"基础模型更新"}],
-    ["prompt-evolution.html",{en:"Prompt & Context Evolution",zh:"提示词与上下文进化"}],
-    ["memory-evolution.html",{en:"Memory Evolution",zh:"记忆进化"}],
-    ["tool-evolution.html",{en:"Tool & Skill Evolution",zh:"工具与技能进化"}],
-    ["workflow-evolution.html",{en:"Workflow & Architecture",zh:"工作流与架构进化"}],
-  ]},
-  { title:{en:"Visual & Interactive Agents",zh:"视觉与交互 Agent"}, pages:[
-    ["visual-multimodal.html",{en:"Visual & Multimodal",zh:"视觉与多模态"}],
-    ["gui-web.html",{en:"GUI & Web Agents",zh:"GUI 与 Web Agent"}],
-    ["embodied-world.html",{en:"Embodied Agents & World Models",zh:"具身 Agent 与世界模型"}],
-  ]},
-  { title:{en:"Evaluation & Reliability",zh:"评测与可靠性"}, pages:[
-    ["evaluation-safety.html",{en:"Evaluation, Safety & Governance",zh:"评测、安全与治理"}],
-    ["datasets-benchmarks.html",{en:"Datasets, Environments & Benchmarks",zh:"数据、环境与基准"}],
-    ["coverage-method.html",{en:"Coverage & Search Protocol",zh:"覆盖范围与检索协议"}],
-  ]},
-  { title:{en:"Resources",zh:"资源"}, pages:[
-    ["repositories.html",{en:"Repositories & Systems",zh:"代码仓库与系统"}],
-    ["bibliography.html",{en:"Live Bibliography",zh:"动态文献库"}],
-    ["research-agenda.html",{en:"Long-term Research Agenda",zh:"长期研究议程"}],
+  { title:{en:"Start Here",zh:"开始阅读"}, open:true, pages:[
     ["index.html",{en:"Observatory Home",zh:"研究站首页"}],
+    ["foundations.html",{en:"Foundations, History & Taxonomy",zh:"定义、历史与分类"}],
+  ]},
+  { title:{en:"Field Atlas",zh:"领域图谱"}, open:true, pages:[
+    ["mechanisms.html",{en:"Evolution Mechanisms",zh:"进化机制总览"}],
+    ["domains.html",{en:"Visual & Interactive Domains",zh:"视觉与交互领域"}],
+    ["evaluation.html",{en:"Evaluation & Infrastructure",zh:"评测与基础设施"}],
+  ]},
+  { title:{en:"Research Planning",zh:"研究规划"}, open:true, pages:[
+    ["research-directions.html",{en:"Directions & Long-term Agenda",zh:"方向地图与长期议程"}],
+    ["paper-ideas.html",{en:"Paper Ideas & Rankings",zh:"论文 Idea 与排名"}],
+    ["selected-paper.html",{en:"Selected Paper Workspace",zh:"选中论文工作区"}],
+  ]},
+  { title:{en:"Literature",zh:"文献"}, pages:[
+    ["bibliography.html",{en:"Coverage & Live Bibliography",zh:"覆盖协议与动态文献库"}],
   ]},
 ];
 
@@ -160,20 +139,19 @@ window.PAGE_CONTENT = {
   overviewFigure:{src:{en:"agent-self-evolution-directions-en.svg",zh:"agent-self-evolution-directions-zh.svg"},caption:{en:"The site-wide hierarchy: ten research directions organize thirty-four concrete paper ideas. The figure switches automatically with the page language.",zh:"全站统一层级：十个研究方向组织三十四个具体论文 Idea；图片会随网页语言自动切换。"}},
   ideaCount:34,
   featured:[
-    {href:"research-directions.html",paper:true,title:{en:"Research Direction Map",zh:"研究方向地图"},desc:{en:"Ten stable subfields and the complete mapping of all thirty-four paper ideas.",zh:"十个稳定小方向及全部三十四个论文 Idea 的完整映射。"}},
-    {href:"paper-ideas.html",paper:true,title:{en:"Concrete Idea Portfolio",zh:"具体 Idea 候选池"},desc:{en:"Every idea includes a thesis, minimum experiment, strongest baseline, and Go/Stop boundary.",zh:"每个 Idea 都包含论文命题、最小实验、最强基线和 Go／Stop 边界。"}},
-    {href:"direction-board.html",paper:true,title:{en:"Idea Ranking Board",zh:"Idea 排名决策板"},desc:{en:"Global, within-direction, and track-specific rankings for concrete paper plans.",zh:"针对具体论文方案的总榜、方向内排序与赛道榜。"}},
-    {href:"paper-problem.html",paper:true,title:{en:"Selected Paper Workspace",zh:"选中论文工作区"},desc:{en:"Problem, experiments, and roadmap for the one idea currently chosen for execution.",zh:"只服务于当前选中 Idea 的问题、实验与路线图。"}},
-    {href:"model-improvement.html",title:{en:"Foundation-model Improvement",zh:"基础模型更新"},desc:{en:"Self-generated demonstrations, self-reward, environment RL, and test-time learning.",zh:"自生成示范、自奖励、环境强化学习与测试时学习。"}},
-    {href:"memory-evolution.html",title:{en:"Memory Evolution",zh:"记忆进化"},desc:{en:"Memory objects, structures, processing, consolidation, and contamination.",zh:"记忆对象、结构、处理、整合与污染。"}},
-    {href:"visual-multimodal.html",title:{en:"Visual & Multimodal Agents",zh:"视觉与多模态 Agent"},desc:{en:"VLM self-play, video agents, visual tools, critics, editing, and generation.",zh:"VLM 自博弈、视频 Agent、视觉工具、critic、编辑与生成。"}},
-    {href:"evaluation-safety.html",title:{en:"Evaluation & Reliability",zh:"评测与可靠性"},desc:{en:"Persistent gain, transfer, forgetting, harmful updates, cost, and autonomy.",zh:"持久收益、迁移、遗忘、有害更新、成本与自主性。"}},
-    {href:"bibliography.html",title:{en:"Live Bibliography",zh:"动态文献库"},desc:{en:"Live synchronization with the survey-maintained Awesome list plus a curated visual supplement.",zh:"实时同步综述配套 Awesome 列表，并补充人工核验的视觉论文。"}},
+    {href:"foundations.html",title:{en:"Foundations, History & Taxonomy",zh:"定义、历史与分类"},desc:{en:"Field boundary, published-paper history, and four-axis taxonomy in one dense starting page.",zh:"在一个高密度入口中统一领域边界、已发表论文历史和四轴分类。"}},
+    {href:"mechanisms.html",title:{en:"Evolution Mechanism Atlas",zh:"进化机制总览"},desc:{en:"Parameters, prompts, memory, skills/tools, workflows, and their failure modes.",zh:"参数、提示词、记忆、技能工具、工作流及其失败模式。"}},
+    {href:"domains.html",title:{en:"Visual & Interactive Domains",zh:"视觉与交互领域"},desc:{en:"Visual/multimodal, GUI/web, and embodied agents compared on one page.",zh:"在一个页面中对齐视觉多模态、GUI/Web 与具身 Agent。"}},
+    {href:"evaluation.html",title:{en:"Evaluation & Infrastructure",zh:"评测与基础设施"},desc:{en:"Longitudinal evidence, safety, benchmarks, datasets, environments, and repositories.",zh:"纵向证据、安全、基准、数据、环境与代码资源。"}},
+    {href:"research-directions.html",paper:true,title:{en:"Directions & Long-term Agenda",zh:"方向地图与长期议程"},desc:{en:"Ten stable directions, thirty-four ideas, dependencies, and staged priorities.",zh:"十个稳定方向、三十四个 Idea、方向依赖与分阶段优先级。"}},
+    {href:"paper-ideas.html",paper:true,title:{en:"Paper Ideas & Rankings",zh:"论文 Idea 与排名"},desc:{en:"Concrete plans, minimum pilots, stop rules, global ranking, and track rankings.",zh:"具体方案、最小 Pilot、停止条件、总榜与赛道榜。"}},
+    {href:"selected-paper.html",paper:true,title:{en:"Selected Paper Workspace",zh:"选中论文工作区"},desc:{en:"Problem, experiments, roadmap, and review for GroundEvo-Admission.",zh:"GroundEvo-Admission 的问题、实验、路线图与评审。"}},
+    {href:"bibliography.html",title:{en:"Coverage & Live Bibliography",zh:"覆盖协议与动态文献库"},desc:{en:"Search protocol, interactive maps, exports, and the synchronized paper corpus.",zh:"检索协议、交互地图、导出工具与同步文献语料。"}},
   ],
   sections:[
     {title:{en:"What this observatory adds",zh:"这个研究站解决什么"},body:{en:`<div class="property-grid"><div class="property-card"><b>Strict scope</b><span>Separates self-correction, test-time search, scaffold evolution, and parameter evolution.</span></div><div class="property-card"><b>Mechanism-first taxonomy</b><span>Classifies the committed update instead of trusting the word “evolving” in a title.</span></div><div class="property-card"><b>Living coverage</b><span>Synchronizes the survey-maintained catalog and deduplicates a CVPR-focused visual supplement.</span></div><div class="property-card"><b>Paper workspace</b><span>Tracks idea collisions, falsifiable hypotheses, experiments, stop conditions, and reviewer objections.</span></div></div>`,zh:`<div class="property-grid"><div class="property-card"><b>严格范围</b><span>区分自纠错、测试时搜索、scaffold 进化与参数进化。</span></div><div class="property-card"><b>机制优先分类</b><span>依据实际提交的更新分类，而不是相信标题中的 evolving。</span></div><div class="property-card"><b>动态覆盖</b><span>同步综述维护的文献目录，并与面向 CVPR 的视觉补充集去重。</span></div><div class="property-card"><b>论文工作区</b><span>记录 idea 碰撞、可证伪假设、实验、停止条件与审稿质疑。</span></div></div>`}},
     {title:{en:"What the literature already establishes",zh:"现有文献已经能够确认什么"},body:{en:`<div class="property-grid"><div class="property-card"><b>Evolution is not limited to weights</b><span>Prompts, memory, skills, tools, workflows, evaluators, and world models are persistent update surfaces.</span></div><div class="property-card"><b>Self-generated experience is useful but noisy</b><span>Questioners, critics, and judges can improve an agent while also creating invalid tasks and self-confirming feedback.</span></div><div class="property-card"><b>Memory needs a lifecycle</b><span>Writing more memories without revision, provenance, and retirement can reduce reliability.</span></div><div class="property-card"><b>Visual critique is not ground truth</b><span>A fluent correction may still rely on the wrong region, frame, or object state.</span></div><div class="property-card"><b>Skills require contracts</b><span>Reusable procedures need preconditions, postconditions, tests, compatibility, and rollback.</span></div><div class="property-card"><b>Longitudinal evidence is still rare</b><span>Most papers report post-update averages rather than version trajectories, harmful updates, and delayed regressions.</span></div></div>`,zh:`<div class="property-grid"><div class="property-card"><b>进化不只发生在模型参数</b><span>提示词、记忆、技能、工具、工作流、评价器和世界模型都是持久更新表面。</span></div><div class="property-card"><b>自生成经验有用但噪声很大</b><span>提问者、critic 和 judge 能提升 Agent，也会产生无效任务和自我确认反馈。</span></div><div class="property-card"><b>记忆必须具有生命周期</b><span>如果缺少修订、溯源和退役，写入更多记忆反而会降低可靠性。</span></div><div class="property-card"><b>视觉 critique 不是事实标签</b><span>语言流畅的纠错仍可能依赖错误区域、帧或物体状态。</span></div><div class="property-card"><b>技能需要契约</b><span>可复用程序需要前置条件、后置条件、测试、兼容性和回滚。</span></div><div class="property-card"><b>纵向证据仍然稀缺</b><span>多数论文只报告更新后均值，而不报告版本轨迹、有害更新和延迟回退。</span></div></div>`}},
-    {title:{en:"Recommended reading paths",zh:"推荐阅读路径"},body:{en:`<table class="matrix"><thead><tr><th>Goal</th><th>Path</th></tr></thead><tbody><tr><td>Understand the field</td><td>Definitions → Field Taxonomy → Research Direction Map → Mechanism pages</td></tr><tr><td>Select a paper</td><td>Research Direction Map → Concrete Idea Portfolio → Idea Ranking Board</td></tr><tr><td>Execute the selected idea</td><td>Problem → Experiments → Roadmap → Review Log</td></tr><tr><td>Audit literature coverage</td><td>Coverage Protocol → Bibliography → Review Log</td></tr></tbody></table>`,zh:`<table class="matrix"><thead><tr><th>目标</th><th>路径</th></tr></thead><tbody><tr><td>理解领域</td><td>定义 → 领域分类 → 研究方向地图 → 各机制页面</td></tr><tr><td>选择论文</td><td>研究方向地图 → 具体 Idea 候选池 → Idea 排名决策板</td></tr><tr><td>执行选中 Idea</td><td>问题 → 实验 → 路线图 → 评审记录</td></tr><tr><td>核查文献覆盖</td><td>覆盖协议 → 文献库 → 评审记录</td></tr></tbody></table>`}}
+    {title:{en:"Recommended reading paths",zh:"推荐阅读路径"},body:{en:`<table class="matrix"><thead><tr><th>Goal</th><th>Path</th></tr></thead><tbody><tr><td>Understand the field</td><td>Foundations → Mechanisms → Domains → Evaluation</td></tr><tr><td>Select a paper</td><td>Directions & Agenda → Paper Ideas & Rankings</td></tr><tr><td>Execute the selected idea</td><td>Selected Paper Workspace</td></tr><tr><td>Audit literature coverage</td><td>Coverage & Live Bibliography</td></tr></tbody></table>`,zh:`<table class="matrix"><thead><tr><th>目标</th><th>路径</th></tr></thead><tbody><tr><td>理解领域</td><td>定义历史分类 → 进化机制 → 应用领域 → 评测基础设施</td></tr><tr><td>选择论文</td><td>方向地图与长期议程 → 论文 Idea 与排名</td></tr><tr><td>执行选中 Idea</td><td>选中论文工作区</td></tr><tr><td>核查文献覆盖</td><td>覆盖协议与动态文献库</td></tr></tbody></table>`}}
   ]
 },
 "foundations":{

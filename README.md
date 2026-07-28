@@ -18,57 +18,19 @@ The site follows the same research-observatory framework as the LLM Distillation
 - a separate next-paper workspace;
 - explicit QA and coverage protocols.
 
-The current site contains 23 main pages.
+The public information architecture now contains **9 canonical pages** and **19 compatibility redirects** for historical URLs.
 
-### Foundations
+1. `index.html` — observatory home and reading paths.
+2. `foundations.html` — definitions, published-paper history, and four-axis taxonomy.
+3. `mechanisms.html` — parameter, prompt, memory, skill/tool, and workflow evolution.
+4. `domains.html` — visual/multimodal, GUI/web, and embodied/world-model agents.
+5. `evaluation.html` — evaluation, safety, governance, benchmarks, environments, and repositories.
+6. `research-directions.html` — ten stable directions and the long-term agenda.
+7. `paper-ideas.html` — thirty-four concrete paper plans plus global, within-direction, and track rankings.
+8. `selected-paper.html` — GroundEvo problem, experiments, roadmap, and review log.
+9. `bibliography.html` — coverage protocol, interactive maps, exports, and live bibliography.
 
-- Definitions and history
-- Four-axis knowledge map and taxonomy
-
-### Evolution mechanisms
-
-- Foundation-model parameter improvement
-- Prompt and context evolution
-- Memory evolution
-- Tool and skill evolution
-- Workflow and architecture evolution
-
-### Visual and interactive agents
-
-- Visual and multimodal agents
-- GUI and web agents
-- Embodied agents and world models
-
-### Evaluation and reliability
-
-- Evaluation, safety, governance, and rollback
-- Datasets, environments, and longitudinal benchmarks
-- Coverage and search protocol
-
-### Resources
-
-- Repositories and reproducible systems
-- Live bibliography
-- Long-term research agenda
-
-### Research structure
-
-- Ten stable research directions with explicit scientific boundaries
-- A bilingual 1920×1080 direction map covering all thirty-four retained paper ideas
-- A high-density bilingual historical overview with six phases, thirty capability cells, ten direction-formation rows, twenty-three published milestones, paradigm shifts, enabling factors, and open problems
-- Field taxonomy and mechanism pages kept separate from paper selection
-
-### Paper idea portfolio
-
-- Thirty-four concrete paper ideas retained from a 69-formulation lifecycle audit
-- Every idea includes a thesis, minimum experiment, strongest baseline, and Go/Stop boundary
-- Global, within-direction, and four track-specific rankings
-- Seventeen rejected formulations and eighteen merged sub-questions with collision reasons
-
-### Selected paper workspace
-
-- Problem formulation, benchmark and staged experiments
-- Thesis, contribution ladder, roadmap, review status, and unresolved objections
+Former topic URLs such as `memory-evolution.html` and `paper-roadmap.html` remain as `noindex` compatibility pages that redirect to the matching section of a canonical hub.
 
 ## Literature corpus
 
@@ -89,7 +51,7 @@ It merges and normalizes these records with a manually verified visual/CVPR core
 - JSON, CSV, and generic BibTeX export;
 - per-record citation copying and print layout.
 
-The site does **not** claim literal mathematical completeness. It targets comprehensive and auditable coverage under the inclusion, exclusion, source, deduplication, and publication-status protocol documented on `coverage-method.html`.
+The site does **not** claim literal mathematical completeness. It targets comprehensive and auditable coverage under the inclusion, exclusion, source, deduplication, and publication-status protocol documented on `bibliography.html#group-coverage-method`.
 
 ## Current research direction
 
@@ -105,11 +67,11 @@ The current hierarchy contains **10 research directions** and **34 concrete pape
 
 **Tier C, ranks 27–34:** ProcessCredit-V, EvoGC-X, MetaGuard-V, GoalGuard-Evo, SimEvo-CF, EvalRedQueen-V, UpdateRoute-V, and CrossAgentTransfer-V.
 
-The latest lifecycle batch retains the paper ideas AmplificationGuard-X, CapabilityLease-Evo, ConfidenceFlow-Evo, and PluralLineage-Evo. PopulationImmunity-MAS, ServeStageGuard-Evo, QuarantineCommit-Evo, EvidenceExpiry-Evo, StopRule-Evo, UpdateAssurance-Evo, PermissionDrift-Evo, and RollbackOrder-Evo are merged into broader ideas. Generic runtime attestation and generic uncertainty-aware agents are rejected because direct methods already exist. The ten-direction hierarchy is published on `research-directions.html`; full paper plans are on `paper-ideas.html`; rankings are on `direction-board.html`.
+The latest lifecycle batch retains the paper ideas AmplificationGuard-X, CapabilityLease-Evo, ConfidenceFlow-Evo, and PluralLineage-Evo. PopulationImmunity-MAS, ServeStageGuard-Evo, QuarantineCommit-Evo, EvidenceExpiry-Evo, StopRule-Evo, UpdateAssurance-Evo, PermissionDrift-Evo, and RollbackOrder-Evo are merged into broader ideas. Generic runtime attestation and generic uncertainty-aware agents are rejected because direct methods already exist. The ten-direction hierarchy and long-term agenda are published on `research-directions.html`; full paper plans and rankings are on `paper-ideas.html`.
 
 ## External-agent review status
 
-The configured CodexFlow service at `127.0.0.1:4318` and the installed Claude CLI are currently unavailable because the service or authentication is invalid. The repository therefore distinguishes completed role-separated audits—including the 2026 frontier-collision pass that froze GroundEvo-Admission—from independent external-agent consensus. See `REVIEWER_PROTOCOL.md` and `review-log.html`.
+The configured CodexFlow service at `127.0.0.1:4318` and the installed Claude CLI are currently unavailable because the service or authentication is invalid. The repository therefore distinguishes completed role-separated audits—including the 2026 frontier-collision pass that froze GroundEvo-Admission—from independent external-agent consensus. See `REVIEWER_PROTOCOL.md` and `selected-paper.html#group-review-log`.
 
 ## Quality assurance
 
@@ -125,7 +87,7 @@ Run the online literature and citation audit:
 python3 catalog_audit.py
 ```
 
-Run the real-browser interaction test when Firefox and geckodriver are available:
+Run the real-browser interaction test. It uses Firefox/geckodriver when available and automatically falls back to Edge/msedgedriver:
 
 ```bash
 python3 browser_smoke_test.py
@@ -133,14 +95,14 @@ python3 browser_smoke_test.py
 
 The checks cover:
 
-- all 23 main HTML pages;
-- navigation targets and content configurations;
+- 9 canonical pages and 19 compatibility redirects;
+- navigation targets, merged content groups, and redirect anchors;
 - JavaScript syntax;
 - sitemap, CNAME, favicon, manifest, robots, and 404 resources;
 - upstream catalog counts and deduplication;
 - missing URLs and unresolved topic-page citations;
 - dynamic catalog loading, three bibliography maps, filters, URL state, and pagination;
-- knowledge-map rendering, linked resource pages, and mobile navigation.
+- history and direction figures, merged hub rendering, linked resources, legacy redirects, and mobile navigation.
 
 ## Deployment
 
