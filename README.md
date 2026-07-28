@@ -54,8 +54,8 @@ The current site contains 23 main pages.
 ### CVPR paper workspace
 
 - Problem formulation
-- Twenty-four self-checked candidate ideas retained from a 39-formulation audit
-- Fourteen explicitly rejected formulations with collision reasons
+- Thirty-two fully ranked candidate ideas retained from a 55-formulation audit
+- Fifteen explicitly rejected formulations and eight merged sub-directions with collision reasons
 - Friday direction decision board with unified Go/Stop criteria
 - Benchmark and staged experiments
 - Thesis, contribution ladder, and roadmap
@@ -88,15 +88,15 @@ The broader roadmap is **GroundEvo: Causally-Grounded Multilevel Self-Evolution 
 
 The first falsifiable study asks whether visual agents admit spurious lessons from successful and failed trajectories, and whether active visual re-observation plus minimal environment counterfactual replay improves persistent-memory admission, lowers harmful commits, and preserves future-task gain under matched cost.
 
-The current Friday portfolio retains twenty-four standalone directions after direct-collision, scientific-variable, main-table, minimum-demo, and failure-value checks. A fifth newly identified gap, EvoDebt, is folded into NegEvoBench-V as a longitudinal benchmark axis rather than counted as a separate direction.
+The current Friday portfolio starts from 55 formulations and retains 32 standalone directions after two review rounds. Round 1 checks direct literature collision and scientific identifiability. Round 2 scores novelty, normal-setting main-table strength, visual/venue fit, feasibility, failure value, and resource efficiency. Eight additional formulations are merged into existing directions, including EvoDebt as a longitudinal axis of NegEvoBench-V; fifteen formulations are rejected.
 
-**Tier A:** GroundEvo-Admission, NegEvoBench-V, ViMEvo-Repair, EgoShift, RelianceGuard-V, EvoValue-V, EvoContract-V, and EvoFirewall-V.
+**Tier A, ranks 1–10:** NegEvoBench-V, ScopeGuard-V, GroundEvo-Admission, EvoContract-V, ViMEvo-Repair, RelianceGuard-V, EvoFirewall-V, PerformativeEvo-V, InteractionGuard-V, and EvoValue-V.
 
-**Tier B:** MemoryFormRouter-V, SkillProof-V, SkillUnlearn-V, UpdateRoute-V, BudgetEvolve-V, WorldPatch-V, SimEvo-CF, ExploreRepair-V, MetaGuard-V, and MultiRateEvo-V.
+**Tier B, ranks 11–23:** EgoShift, OversightBudget-Evo, MultiRateEvo-V, MemoryFormRouter-V, BudgetEvolve-V, AuditInvariant-Evo, SkillUnlearn-V, ExploreRepair-V, WorldPatch-V, EvoProvenance-V, SkillProof-V, PersonaShift-V, and ProcessCredit-V.
 
-**Tier C:** EvalRedQueen-V, EvoProvenance-V, ProcessCredit-V, CrossAgentTransfer-V, PersonaShift-V, and DiversityGuard-MAS.
+**Tier C, ranks 24–32:** EvoGC-X, DeleteCascade-Evo, MetaGuard-V, GoalGuard-Evo, SimEvo-CF, EvalRedQueen-V, UpdateRoute-V, CrossAgentTransfer-V, and DiversityGuard-MAS.
 
-The same page records fourteen removed generic formulations—visual self-play, generic critic correction, generic multimodal memory, generic personalization memory, generic macro-tools, generic dynamic GraphRAG, generic world-model evolution, generic evaluator co-evolution, generic pairwise gates, generic decentralized memory, generic evolution protocols, generic environment co-evolution, generic process-reward evolution, and generic release engineering. The full comparison is published on `direction-board.html`.
+The new 16-formulation batch retains ScopeGuard-V, InteractionGuard-V, PerformativeEvo-V, AuditInvariant-Evo, OversightBudget-Evo, GoalGuard-Evo, EvoGC-X, and DeleteCascade-Evo. BranchMerge-Evo, ShadowEvo, TrustDecay-Evo, FederatedEvo, ParetoGuard-Evo, ModelSwap-Evo, and EvalDebt are merged into broader existing directions; CapabilityPhase-Evo is rejected as currently unidentifiable. The full ranking, scores, collision analysis, and Go/Stop criteria are published on `direction-board.html`.
 
 ## External-agent review status
 

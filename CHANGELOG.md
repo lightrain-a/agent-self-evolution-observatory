@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-07-28 · 32-idea expansion and full re-ranking
+
+- Generated a new batch of 16 formulations after the first 24-direction audit.
+- Retained eight standalone directions: ScopeGuard-V, InteractionGuard-V, PerformativeEvo-V, AuditInvariant-Evo, OversightBudget-Evo, GoalGuard-Evo, EvoGC-X, and DeleteCascade-Evo.
+- Merged BranchMerge-Evo, ShadowEvo, TrustDecay-Evo, FederatedEvo, ParetoGuard-Evo, ModelSwap-Evo, and EvalDebt into broader existing directions; rejected CapabilityPhase-Evo as currently unidentifiable.
+- Expanded the audit to 55 formulations: 32 standalone directions, eight merged sub-directions, and fifteen rejected formulations.
+- Re-ranked every retained direction with a frozen composite score: novelty 25%, main-table identifiability 25%, visual/venue fit 15%, feasibility 15%, failure value 10%, and resource efficiency 10%.
+- Reorganized the Friday Board into Tier A ranks 1–10, Tier B ranks 11–23, and Tier C ranks 24–32, with a unique rank and Go/Stop boundary for every direction.
+- Added recent literature on concurrent agent updates, human oversight capacity, monitoring awareness, goal evolution, self-evolving software agents, and endogenous/performative distribution shift.
+- Updated the long-term agenda and review log to record the two-round portfolio audit and evidence-only re-ranking rule.
+
 ## 2026-07-28 · Observatory parity and corpus expansion
 
 - Added datasets, environments, and benchmarks page.
