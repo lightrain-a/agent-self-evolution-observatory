@@ -7,7 +7,7 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-EXPECTED_MAIN_PAGES = 22
+EXPECTED_MAIN_PAGES = 23
 REQUIRED_STATIC = [
     "CNAME", ".nojekyll", "style.css", "app.js", "data.js", "favicon.svg",
     "robots.txt", "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",

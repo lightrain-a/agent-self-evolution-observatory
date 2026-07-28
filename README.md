@@ -18,7 +18,7 @@ The site follows the same research-observatory framework as the LLM Distillation
 - a separate next-paper workspace;
 - explicit QA and coverage protocols.
 
-The current site contains 22 main pages.
+The current site contains 23 main pages.
 
 ### Foundations
 
@@ -54,7 +54,8 @@ The current site contains 22 main pages.
 ### CVPR paper workspace
 
 - Problem formulation
-- Candidate ideas and collision history
+- Eight candidate ideas and collision history
+- Friday direction decision board with unified Go/Stop criteria
 - Benchmark and staged experiments
 - Thesis, contribution ladder, and roadmap
 - Review status and unresolved objections
@@ -86,11 +87,18 @@ The broader roadmap is **GroundEvo: Causally-Grounded Multilevel Self-Evolution 
 
 The first falsifiable study asks whether visual agents admit spurious lessons from successful and failed trajectories, and whether active visual re-observation plus minimal environment counterfactual replay improves persistent-memory admission, lowers harmful commits, and preserves future-task gain under matched cost.
 
-Retained alternatives:
+The current Friday candidate pool contains eight directions:
 
+- **GroundEvo-Admission:** visual causal lesson admission;
+- **NegEvoBench-V:** benchmark for harmful visual self-evolution and hidden grounding drift;
+- **ViMEvo-Repair:** evidence-preserving visual memory with stale-state repair;
 - **EgoShift:** embodiment-drift diagnosis and self-calibration;
-- **ViMEvo:** evidence-preserving self-evolving visual memory;
-- **MetaEvolve-V:** failure-conditioned update-surface routing, retained as a later GroundEvo extension.
+- **EvoValue-V:** budget-aware selection of experiences worth verifying;
+- **SkillProof-V:** visual skill contracts with pre/postconditions and counterexamples;
+- **UpdateRoute-V:** failure-conditioned routing among no update, memory, skill, and LoRA;
+- **SimEvo-CF:** co-evolving counterfactual visual environments and agents.
+
+The unified comparison is published on `direction-board.html`.
 
 ## External-agent review status
 
@@ -118,7 +126,7 @@ python3 browser_smoke_test.py
 
 The checks cover:
 
-- all 22 main HTML pages;
+- all 23 main HTML pages;
 - navigation targets and content configurations;
 - JavaScript syntax;
 - sitemap, CNAME, favicon, manifest, robots, and 404 resources;

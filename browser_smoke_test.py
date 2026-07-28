@@ -88,7 +88,7 @@ def main() -> None:
               corpus: Number(document.querySelector('.stat b')?.textContent || 0)
             };""",
         )
-        require(home["nav"] == 22, f"expected 22 navigation targets, got {home['nav']}")
+        require(home["nav"] == 23, f"expected 23 navigation targets, got {home['nav']}")
         require(home["figure"], "knowledge-map figure is missing")
         require(home["distribution"] >= 6, "live update-surface distribution is missing")
         require(home["missing"] == 0, "home contains unresolved citations")
@@ -138,7 +138,8 @@ def main() -> None:
             "/repositories.html": 4,
             "/research-agenda.html": 6,
             "/visual-multimodal.html": 6,
-            "/paper-ideas.html": 6,
+            "/paper-ideas.html": 10,
+            "/direction-board.html": 7,
         }
         for page, minimum in expected_sections.items():
             navigate(page, 7)
