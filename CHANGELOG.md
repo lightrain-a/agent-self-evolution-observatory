@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-07-29 · Importance and comparative advantage for every Idea
+
+- Added `idea-comparisons.js` with bilingual research-importance and comparative-advantage records for all thirty-four paper ideas.
+- Required every Idea to explain why the problem matters for trustworthy self-evolution and under what conditions the design is better suited than the strongest existing alternatives.
+- Kept comparative advantages explicitly conditional and testable rather than claiming empirical superiority before the minimum pilot.
+- Extended Idea cards, global search, static one-to-one coverage checks, and real-browser tests for the two new fields.
+
 ## 2026-07-28 · Complete reasoning schema for all paper ideas
 
 - Added `idea-explanations.js` with bilingual reasoning records for all thirty-four retained paper ideas.

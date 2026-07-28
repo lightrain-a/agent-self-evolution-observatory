@@ -59,7 +59,7 @@ The broader roadmap is **GroundEvo: Causally-Grounded Multilevel Self-Evolution 
 
 The first falsifiable study asks whether visual agents admit spurious lessons from successful and failed trajectories, and whether active visual re-observation plus minimal environment counterfactual replay improves persistent-memory admission, lowers harmful commits, and preserves future-task gain under matched cost.
 
-The current hierarchy contains **10 research directions** and **34 concrete paper ideas**. The 69-formulation audit applies three review rounds to paper ideas: literature collision and identifiability, paper-strength scoring, and module–lifecycle coverage. Eighteen formulations are merged as sub-questions or evaluation axes and seventeen are rejected. Research directions are structural categories and are not globally ranked.
+The current hierarchy contains **10 research directions** and **34 concrete paper ideas**. Every idea separately states its purpose/problem, core idea, rationale, method logic, research importance, and conditional comparative advantage, followed by a minimum experiment, strongest baseline, and Go/Stop boundary. The 69-formulation audit applies three review rounds to paper ideas: literature collision and identifiability, paper-strength scoring, and module–lifecycle coverage. Eighteen formulations are merged as sub-questions or evaluation axes and seventeen are rejected. Research directions are structural categories and are not globally ranked.
 
 Every retained idea has a bilingual reasoning record in `idea-explanations.js` that separately states: **purpose/problem**, **core idea**, **rationale**, and **method logic**. The card then fixes its minimum experiment, strongest comparison, Go/Stop boundary, one-line thesis, rank, confidence, and paper track.
 
@@ -100,7 +100,7 @@ The checks cover:
 - 9 canonical pages and 19 compatibility redirects;
 - navigation targets, merged content groups, and redirect anchors;
 - all 34 bilingual Idea reasoning records and their four mandatory fields;
-- JavaScript syntax;
+- JavaScript syntax and one-to-one bilingual coverage of all six Idea reasoning fields;
 - sitemap, CNAME, favicon, manifest, robots, and 404 resources;
 - upstream catalog counts and deduplication;
 - missing URLs and unresolved topic-page citations;

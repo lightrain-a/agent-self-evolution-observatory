@@ -44,7 +44,7 @@ REQUIRED_STATIC = [
     "content-consolidated.js", "redirect.js", "favicon.svg", "robots.txt",
     "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
-    "portfolio-data.js", "idea-explanations.js", "history-figure-data.js", "catalog_audit.py",
+    "portfolio-data.js", "idea-explanations.js", "idea-comparisons.js", "history-figure-data.js", "catalog_audit.py",
     "browser_smoke_test.py", "CHANGELOG.md",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
@@ -125,6 +125,17 @@ def main() -> None:
     required_fields = ("purpose", "core", "rationale", "logic")
     for name, block in explanation_blocks:
         for field in required_fields:
+            match = re.search(rf'{field}:\{{en:"([^"]+)",zh:"([^"]+)"\}}', block)
+            if not match or not match.group(1).strip() or not match.group(2).strip():
+                fail(f"idea {name} is missing bilingual {field}")
+
+    comparisons_text = (ROOT / "idea-comparisons.js").read_text(encoding="utf-8")
+    comparison_blocks = re.findall(r'^  "([^"]+)": \{\n(.*?)(?=^  "[^"]+": \{|^\};)', comparisons_text, re.MULTILINE | re.DOTALL)
+    comparison_names = [name for name, _ in comparison_blocks]
+    if sorted(comparison_names) != sorted(names) or len(comparison_names) != len(set(comparison_names)):
+        fail("each paper idea must have exactly one importance/advantage block")
+    for name, block in comparison_blocks:
+        for field in ("importance", "advantage"):
             match = re.search(rf'{field}:\{{en:"([^"]+)",zh:"([^"]+)"\}}', block)
             if not match or not match.group(1).strip() or not match.group(2).strip():
                 fail(f"idea {name} is missing bilingual {field}")

@@ -219,6 +219,8 @@ def main() -> None:
               core: document.body.textContent.includes('Core idea') || document.body.textContent.includes('核心思想'),
               rationale: document.body.textContent.includes('Why it is reasonable') || document.body.textContent.includes('合理性'),
               logic: document.body.textContent.includes('Method logic') || document.body.textContent.includes('方法逻辑'),
+              importance: document.body.textContent.includes('Why it matters') || document.body.textContent.includes('研究重要性'),
+              advantage: document.body.textContent.includes('Comparative advantage') || document.body.textContent.includes('相对优势'),
               thesis: document.body.textContent.includes('One-line thesis') || document.body.textContent.includes('一句话命题'),
               text: document.body.textContent || ''
             };""",
@@ -230,6 +232,7 @@ def main() -> None:
         require(idea_portfolio["trackCards"] == 4, "track rankings are incomplete")
         require(idea_portfolio["arguments"] == 34, "idea reasoning blocks are incomplete")
         require(idea_portfolio["purpose"] and idea_portfolio["core"] and idea_portfolio["rationale"] and idea_portfolio["logic"], "idea cards are missing required reasoning fields")
+        require(idea_portfolio["importance"] and idea_portfolio["advantage"], "idea cards are missing importance or comparative advantage")
         require(idea_portfolio["thesis"], "idea cards are missing validation fields")
         require("GroundEvo-Admission" in idea_portfolio["text"] and "PluralLineage-Evo" in idea_portfolio["text"], "idea portfolio is incomplete")
 
