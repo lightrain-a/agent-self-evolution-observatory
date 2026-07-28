@@ -12,7 +12,7 @@ REQUIRED_STATIC = [
     "CNAME", ".nojekyll", "style.css", "app.js", "data.js", "favicon.svg",
     "robots.txt", "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
-    "portfolio-data.js", "content-research-directions.js", "content-idea-portfolio.js",
+    "portfolio-data.js", "history-figure-data.js", "content-research-directions.js", "content-idea-portfolio.js",
     "catalog_audit.py", "browser_smoke_test.py", "CHANGELOG.md",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
@@ -89,7 +89,33 @@ def main() -> None:
         if missing_ideas:
             fail(f"{figure_name} is missing ideas: {missing_ideas}")
 
+    history_text = (ROOT / "history-figure-data.js").read_text(encoding="utf-8")
+    history_counts = {
+        "stages": len(re.findall(r'^\s*code:"P\d"', history_text, re.MULTILINE)),
+        "capabilities": len(re.findall(r'^\s*\{name:\{en:', history_text, re.MULTILINE)),
+        "directions": len(re.findall(r'^\s*\{code:"D\d+",title:', history_text, re.MULTILINE)),
+        "milestones": len(re.findall(r'^\s*\{year:\d{4},short:', history_text, re.MULTILINE)),
+        "shifts": len(re.findall(r'^\s*\{from:\{en:', history_text, re.MULTILINE)),
+        "enablers": len(re.findall(r'^\s*\{title:\{en:', history_text, re.MULTILINE)),
+        "ladder": len(re.findall(r'^\s*\{level:"L\d"', history_text, re.MULTILINE)),
+    }
+    expected_history = {"stages": 6, "capabilities": 5, "directions": 10, "milestones": 23, "shifts": 7, "ladder": 5}
+    for key, expected in expected_history.items():
+        if history_counts[key] != expected:
+            fail(f"history figure expected {expected} {key}, found {history_counts[key]}")
+    foundations_html = (ROOT / "foundations.html").read_text(encoding="utf-8")
+    if 'src="history-figure-data.js"' not in foundations_html:
+        fail("foundations.html must load history-figure-data.js")
+    app_text = (ROOT / "app.js").read_text(encoding="utf-8")
+    for marker in ["history-overview-figure", "history-stage-grid", "history-capabilities", "history-milestone-grid"]:
+        if marker not in app_text:
+            fail(f"history renderer is missing {marker}")
+
     data_text = (ROOT / "data.js").read_text(encoding="utf-8")
+    milestone_titles = re.findall(r'^\s*\{year:\d{4},short:"[^"]+",title:"([^"]+)"', history_text, re.MULTILINE)
+    missing_milestones = [title for title in milestone_titles if f'title:"{title}"' not in data_text]
+    if missing_milestones:
+        fail(f"history milestones are missing from curated bibliography: {missing_milestones}")
     nav_targets = sorted(set(re.findall(r'\["([a-z0-9-]+\.html)"', data_text)))
     missing_nav = [target for target in nav_targets if not (ROOT / target).exists()]
     if missing_nav:

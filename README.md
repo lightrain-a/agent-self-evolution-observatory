@@ -55,6 +55,7 @@ The current site contains 23 main pages.
 
 - Ten stable research directions with explicit scientific boundaries
 - A bilingual 1920×1080 direction map covering all thirty-four retained paper ideas
+- A high-density bilingual historical overview with six phases, thirty capability cells, ten direction-formation rows, twenty-three published milestones, paradigm shifts, enabling factors, and open problems
 - Field taxonomy and mechanism pages kept separate from paper selection
 
 ### Paper idea portfolio
@@ -76,7 +77,7 @@ The bibliography synchronizes two complementary survey-maintained catalogs in th
 1. `selfimproving-agent/Awesome-Self-Improving-Agents`
 2. `FrontisAI/Awesome-Self-Improving-Agents`
 
-It merges and normalizes these records with a manually verified visual/CVPR core set. The live interface includes:
+It merges and normalizes these records with a manually verified visual/CVPR core set. The historical figure additionally prioritizes formally published conference and journal papers, while preprint-only frontier work stays in the searchable bibliography rather than the historical spine. The live interface includes:
 
 - method × publication-year heatmap;
 - publication-type × year heatmap;

@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-07-28 · High-density historical overview figure
+
+- Replaced the short four-row history summary with a high-density, bilingual, page-native historical figure on `foundations.html`.
+- Added six historical phases, a five-by-six capability maturity matrix, formation timelines for ten research directions, a five-level historical claim ladder, seven paradigm shifts, six enabling factors, and eight open problems.
+- Added twenty-three formally published milestone papers spanning NeurIPS 2017 through CVPR 2026; preprint-only frontier work remains outside the historical spine.
+- Added `history-figure-data.js` as the single bilingual data source for the figure, keeping milestones, stage descriptions, and direction formation auditable.
+- Added curated bibliography records for Transformer, BERT, GPT-3, chain-of-thought prompting, STaR, ReAct, Self-Instruct, Toolformer, Reflexion, Self-Refine, OPRO, Retroformer, and Voyager.
+- Added offline Edge rendering checks confirming 6 stages, 30 capability cells, 10 directions, 23 milestones, 5 claim levels, and zero unresolved citations.
+- Extended static QA so missing history stages, directions, milestones, bibliography records, or renderer components fail the site audit.
+
 ## 2026-07-28 · Direction/Idea hierarchy reconstruction
 
 - Replaced the incorrect flat “34 directions” model with a four-level hierarchy: field → research direction → concrete paper idea → selected-paper workspace.
