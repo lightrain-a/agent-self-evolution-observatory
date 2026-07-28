@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 import subprocess
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -44,7 +45,8 @@ REQUIRED_STATIC = [
     "content-consolidated.js", "redirect.js", "favicon.svg", "robots.txt",
     "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
-    "portfolio-data.js", "idea-explanations.js", "idea-comparisons.js", "history-figure-data.js", "catalog_audit.py",
+    "agent-self-evolution-history-en.svg", "agent-self-evolution-history-zh.svg",
+    "portfolio-data.js", "direction-guide-data.js", "idea-explanations.js", "idea-comparisons.js", "history-figure-data.js", "catalog_audit.py",
     "browser_smoke_test.py", "CHANGELOG.md",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
@@ -117,6 +119,19 @@ def main() -> None:
     if sorted(mapped_names) != sorted(names) or len(mapped_names) != len(set(mapped_names)):
         fail("each paper idea must appear exactly once in the direction mapping")
 
+    direction_guide_text = (ROOT / "direction-guide-data.js").read_text(encoding="utf-8")
+    if len(re.findall(r'id:"(?:learn|commit|adapt|govern)"', direction_guide_text)) != 4:
+        fail("direction guide must contain four macro questions")
+    for direction_id in direction_ids:
+        marker = f'"{direction_id}":{{'
+        if marker not in direction_guide_text:
+            fail(f"direction guide is missing {direction_id}")
+        block = direction_guide_text.split(marker, 1)[1].split("\n    }", 1)[0]
+        for field in ("plain", "object", "example", "distinction"):
+            match = re.search(rf'{field}:\{{en:"([^"]+)",zh:"([^"]+)"\}}', block)
+            if not match or not match.group(1).strip() or not match.group(2).strip():
+                fail(f"direction {direction_id} is missing bilingual {field}")
+
     explanations_text = (ROOT / "idea-explanations.js").read_text(encoding="utf-8")
     explanation_blocks = re.findall(r'^  "([^"]+)": \{\n(.*?)(?=^  "[^"]+": \{|^\};)', explanations_text, re.MULTILINE | re.DOTALL)
     explanation_names = [name for name, _ in explanation_blocks]
@@ -154,6 +169,18 @@ def main() -> None:
     missing_milestones = [title for title in milestones if title not in data_text]
     if missing_milestones:
         fail(f"history milestones missing from curated bibliography: {missing_milestones}")
+    for figure_name, method_label in [("agent-self-evolution-history-en.svg", "Update:"), ("agent-self-evolution-history-zh.svg", "更新：")]:
+        figure_path = ROOT / figure_name
+        try:
+            root = ET.parse(figure_path).getroot()
+        except ET.ParseError as error:
+            fail(f"invalid SVG {figure_name}: {error}")
+        milestone_nodes = root.findall(".//*[@data-milestone]")
+        figure_text = figure_path.read_text(encoding="utf-8")
+        if len(milestone_nodes) != 23:
+            fail(f"{figure_name} must contain 23 milestone method cards")
+        if figure_text.count(method_label) < 23:
+            fail(f"{figure_name} must describe the update target for every milestone")
 
     nav_targets = sorted(set(re.findall(r'\["([a-z0-9-]+\.html)"', data_text.split("window.SUPPLEMENTAL_PAPERS", 1)[0])))
     if set(nav_targets) != set(CANONICAL_PAGES):

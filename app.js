@@ -389,6 +389,10 @@ function indexCatalog(records) {
   });
 }
 async function loadCatalog() {
+  citationIndex = new Map();
+  catalog = indexCatalog(mergeCatalog([], DATA));
+  updateCounter();
+  renderPage();
   let upstream = [];
   try {
     const cached = JSON.parse(localStorage.getItem(CATALOG_CACHE_KEY) || "null");
@@ -451,15 +455,15 @@ function renderMergedGroups(groups = []) {
 }
 function renderMergedHub(config) {
   const groups = config.groups || [];
-  const history = config.historyOverview ? renderHistoryFigure() : "";
+  const overview = config.overviewFigure ? renderOverviewFigure(config, language === "zh" ? "Agent 自进化历史、能力、方向与代表方法总览" : "Agent self-evolution history, capabilities, directions, and representative methods") : (config.historyOverview ? renderHistoryFigure() : "");
   const resources = (config.resourceModes || []).map((mode) => renderResourceIndexSection(mode)).join("");
-  return `${pageHeader(config)}${history}${renderGroupNav(groups)}${renderMergedGroups(groups)}${resources}`;
+  return `${pageHeader(config)}${overview}${renderGroupNav(groups)}${renderMergedGroups(groups)}${resources}`;
 }
 function renderOverviewFigure(config, altText = "Agent self-evolution research map") {
   if (!config?.overviewFigure) return "";
   const src = textOf(config.overviewFigure.src);
   if (!src) return "";
-  return `<figure class="overview-figure"><a href="${esc(src)}" target="_blank" rel="noopener"><img src="${esc(src)}" alt="${esc(altText)}"></a><figcaption>${textOf(config.overviewFigure.caption)}</figcaption></figure>`;
+  return `<figure class="overview-figure"><a href="${esc(src)}" target="_blank" rel="noopener"><img src="${esc(src)}" alt="${esc(altText)}"></a><figcaption><span>${textOf(config.overviewFigure.caption)}</span><a class="link-btn figure-source-link" href="${esc(src)}" target="_blank" rel="noopener">${language === "zh" ? "打开独立 SVG ↗" : "Open standalone SVG ↗"}</a></figcaption></figure>`;
 }
 function portfolioDirections() { return window.RESEARCH_DIRECTIONS || []; }
 function portfolioIdeas() { return window.PAPER_IDEAS || []; }
@@ -467,15 +471,24 @@ function portfolioTracks() { return window.PAPER_TRACKS || []; }
 function directionById(id) { return portfolioDirections().find((direction) => direction.id === id); }
 function ideaByName(name) { return portfolioIdeas().find((idea) => idea.name === name); }
 function ideaAnchor(name) { return `idea-${slugify(name)}`; }
+function directionGuideData() { return window.DIRECTION_GUIDE || { macroGroups:[], directions:{} }; }
+function directionGuide(id) { return directionGuideData().directions?.[id] || {}; }
+function renderDirectionPrimer() {
+  const guide = directionGuideData();
+  const macroCards = (guide.macroGroups || []).map((group) => `<article class="direction-macro-card"><span>${esc(group.code)}</span><h3>${textOf(group.title)}</h3><p>${textOf(group.plain)}</p><div>${(group.directionIds || []).map((id) => { const direction = directionById(id); return direction ? `<a href="#${esc(id)}">${esc(direction.code)} · ${textOf(direction.title)}</a>` : ""; }).join("")}</div></article>`).join("");
+  const exampleRows = portfolioDirections().map((direction) => { const detail = directionGuide(direction.id); return `<tr><th>${esc(direction.code)}</th><td><a href="#${esc(direction.id)}"><strong>${textOf(direction.title)}</strong></a><span>${textOf(detail.plain)}</span></td><td>${textOf(detail.example)}</td></tr>`; }).join("");
+  return `<section class="panel direction-primer"><h2 id="four-big-questions">${language === "zh" ? "先用四个大问题理解整个领域" : "Start with four big questions"}</h2><p class="section-intro">${language === "zh" ? "十个方向不是十种互相竞争的方法，而是自进化生命周期中四类大问题的进一步拆分。" : "The ten directions are not ten competing methods. They decompose four large questions across the evolution lifecycle."}</p><div class="direction-macro-grid">${macroCards}</div></section><section class="panel direction-running-example"><h2 id="running-example">${textOf(guide.runningExample?.title)}</h2><p class="section-intro">${textOf(guide.runningExample?.intro)}</p><div class="history-table-scroll"><table class="matrix"><thead><tr><th>ID</th><th>${language === "zh" ? "这个方向在研究什么" : "What the direction studies"}</th><th>${language === "zh" ? "在这个案例中会问什么" : "Question in this example"}</th></tr></thead><tbody>${exampleRows}</tbody></table></div></section>`;
+}
 function renderDirectionMap(config) {
   const directions = portfolioDirections();
   const ideas = portfolioIdeas();
   const cards = directions.map((direction) => {
     const directionIdeas = direction.ideaIds.map(ideaByName).filter(Boolean).sort((a, b) => a.rank - b.rank);
-    return `<article class="direction-card" style="--direction-color:${esc(direction.color || "#5b5bd6")}"><div class="direction-card-head"><span class="direction-code">${esc(direction.code)}</span><span class="direction-count">${directionIdeas.length} ${language === "zh" ? "个 Idea" : "ideas"}</span></div><h3 id="${esc(direction.id)}">${textOf(direction.title)}</h3><p class="direction-question">${textOf(direction.question)}</p><div class="direction-boundary"><b>${language === "zh" ? "边界" : "Boundary"}</b>${textOf(direction.boundary)}</div><div class="idea-chip-list">${directionIdeas.map((idea) => `<a class="idea-chip" href="paper-ideas.html#${ideaAnchor(idea.name)}"><span>#${idea.rank}</span>${esc(idea.name)}</a>`).join("")}</div></article>`;
+    const detail = directionGuide(direction.id);
+    return `<article class="direction-card" style="--direction-color:${esc(direction.color || "#5b5bd6")}"><div class="direction-card-head"><span class="direction-code">${esc(direction.code)}</span><span class="direction-count">${directionIdeas.length} ${language === "zh" ? "个 Idea" : "ideas"}</span></div><h3 id="${esc(direction.id)}">${textOf(direction.title)}</h3><p class="direction-question">${textOf(direction.question)}</p><div class="direction-plain"><b>${language === "zh" ? "通俗理解" : "In plain language"}</b><span>${textOf(detail.plain)}</span></div><div class="direction-explanation-grid"><div><b>${language === "zh" ? "主要研究对象" : "Main object"}</b><p>${textOf(detail.object)}</p></div><div><b>${language === "zh" ? "典型例子" : "Typical example"}</b><p>${textOf(detail.example)}</p></div><div><b>${language === "zh" ? "与邻近方向的区别" : "Difference from neighbors"}</b><p>${textOf(detail.distinction)}</p></div><div><b>${language === "zh" ? "科学边界" : "Scientific boundary"}</b><p>${textOf(direction.boundary)}</p></div></div><div class="idea-chip-list">${directionIdeas.map((idea) => `<a class="idea-chip" href="paper-ideas.html#${ideaAnchor(idea.name)}"><span>#${idea.rank}</span>${esc(idea.name)}</a>`).join("")}</div></article>`;
   }).join("");
   const stats = `<div class="grid direction-stats"><div class="stat"><b>${directions.length}</b><span>${language === "zh" ? "个研究方向" : "research directions"}</span></div><div class="stat"><b>${ideas.length}</b><span>${language === "zh" ? "个具体论文 Idea" : "concrete paper ideas"}</span></div><div class="stat"><b>${portfolioTracks().length}</b><span>${language === "zh" ? "类论文赛道" : "paper tracks"}</span></div></div>`;
-  return `${pageHeader(config)}${renderOverviewFigure(config, language === "zh" ? "Agent 自进化研究方向与论文 Idea 地图" : "Agent self-evolution direction and paper-idea map")}${stats}${(config.sections || []).map(renderSection).join("")}<section class="panel"><h2 id="direction-catalog">${language === "zh" ? "十个研究方向" : "Ten research directions"}</h2><p class="section-intro">${language === "zh" ? "方向用于组织稳定科学问题；每个名称标签跳转到对应的具体论文方案。" : "Directions organize stable scientific questions. Each labeled idea links to its concrete paper plan."}</p><div class="direction-grid">${cards}</div></section>${renderGroupNav(config.groupsAfter || [])}${renderMergedGroups(config.groupsAfter || [])}`;
+  return `${pageHeader(config)}${renderDirectionPrimer()}${renderOverviewFigure(config, language === "zh" ? "Agent 自进化研究方向与论文 Idea 地图" : "Agent self-evolution direction and paper-idea map")}${stats}${(config.sections || []).map(renderSection).join("")}<section class="panel"><h2 id="direction-catalog">${language === "zh" ? "十个研究方向的详细解释" : "Detailed guide to the ten directions"}</h2><p class="section-intro">${language === "zh" ? "每个方向都给出通俗理解、主要研究对象、典型例子、与邻近方向的区别，以及对应的论文 Idea。" : "Each direction includes a plain-language definition, its research object, a typical example, its boundary from neighboring directions, and its paper ideas."}</p><div class="direction-grid">${cards}</div></section>${renderGroupNav(config.groupsAfter || [])}${renderMergedGroups(config.groupsAfter || [])}`;
 }
 function ideaExplanation(name) { return (window.IDEA_EXPLANATIONS || {})[name] || {}; }
 function ideaComparison(name) { return (window.IDEA_COMPARISONS || {})[name] || {}; }

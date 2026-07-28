@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-07-29 · Paper-ready history SVG and beginner direction guide
+
+- Replaced the page-native historical overview with bilingual standalone SVG files: `agent-self-evolution-history-en.svg` and `agent-self-evolution-history-zh.svg`.
+- Preserved six historical phases, capability growth, ten direction families, and paradigm shifts in a 2400×1600 vector layout suitable for direct paper embedding.
+- Reorganized the twenty-three formally published milestones into five method-family swimlanes and added a concise method action, update target, and feedback signal to every milestone card.
+- Added `direction-guide-data.js`, which groups the ten directions under four beginner questions: what to learn, what experience should become, what is changing around the agent, and how evolution remains controlled.
+- Added a running GUI-agent example, plain-language definitions, research objects, typical cases, neighboring-direction boundaries, and a glossary for memory, skills, workflows, world models, provenance, meta-control, and lineage.
+- Added visible standalone-SVG links plus static XML, milestone-count, bilingual direction-guide, and real-browser rendering checks.
+
 ## 2026-07-29 · Importance and comparative advantage for every Idea
 
 - Added `idea-comparisons.js` with bilingual research-importance and comparative-advantage records for all thirty-four paper ideas.

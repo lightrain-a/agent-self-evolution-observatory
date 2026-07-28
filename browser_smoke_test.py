@@ -174,7 +174,7 @@ def main() -> None:
                   groups: document.querySelectorAll('.merged-group').length,
                   sections: document.querySelectorAll('.topic-section').length,
                   resources: document.querySelectorAll('.live-resource-panel').length,
-                  history: document.querySelectorAll('.history-overview-figure').length,
+                  historySrc: document.querySelector('.overview-figure img')?.getAttribute('src') || '',
                   missing: document.querySelectorAll('.citation-missing').length
                 };""",
             )
@@ -183,7 +183,7 @@ def main() -> None:
             require(result["sections"] >= expected["sections"], f"{page} has too few sections")
             require(result["missing"] == 0, f"{page} contains unresolved citations")
             if page == "/foundations.html":
-                require(result["history"] == 1, "foundations history figure is missing")
+                require(result["historySrc"].endswith("agent-self-evolution-history-en.svg"), "foundations history SVG is missing")
             if page == "/evaluation.html":
                 require(result["resources"] == 2, "evaluation live resource indexes are incomplete")
 
@@ -193,12 +193,18 @@ def main() -> None:
             """return {
               directions: document.querySelectorAll('.direction-card').length,
               chips: document.querySelectorAll('.idea-chip').length,
+              macroCards: document.querySelectorAll('.direction-macro-card').length,
+              explanationGrids: document.querySelectorAll('.direction-explanation-grid').length,
+              exampleRows: document.querySelectorAll('.direction-running-example tbody tr').length,
               src: document.querySelector('.overview-figure img')?.getAttribute('src') || '',
               text: document.body.textContent || ''
             };""",
         )
         require(direction_map["directions"] == 10, f"expected 10 directions, got {direction_map['directions']}")
         require(direction_map["chips"] == 34, f"expected 34 idea mappings, got {direction_map['chips']}")
+        require(direction_map["macroCards"] == 4, "four-question direction primer is incomplete")
+        require(direction_map["explanationGrids"] == 10, "plain-language direction explanations are incomplete")
+        require(direction_map["exampleRows"] == 10, "running example does not cover all directions")
         require(direction_map["src"].endswith("agent-self-evolution-directions-en.svg"), "English direction figure is not active")
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)

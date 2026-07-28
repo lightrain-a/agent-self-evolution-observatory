@@ -21,11 +21,11 @@ The site follows the same research-observatory framework as the LLM Distillation
 The public information architecture now contains **9 canonical pages** and **19 compatibility redirects** for historical URLs.
 
 1. `index.html` — observatory home and reading paths.
-2. `foundations.html` — definitions, published-paper history, and four-axis taxonomy.
+2. `foundations.html` — definitions, four-axis taxonomy, and a bilingual paper-ready history SVG (`agent-self-evolution-history-en.svg` / `agent-self-evolution-history-zh.svg`).
 3. `mechanisms.html` — parameter, prompt, memory, skill/tool, and workflow evolution.
 4. `domains.html` — visual/multimodal, GUI/web, and embodied/world-model agents.
 5. `evaluation.html` — evaluation, safety, governance, benchmarks, environments, and repositories.
-6. `research-directions.html` — ten stable directions and the long-term agenda.
+6. `research-directions.html` — four beginner-level questions, a running example, plain-language explanations of ten stable directions, and the long-term agenda.
 7. `paper-ideas.html` — thirty-four concrete paper plans plus global, within-direction, and track rankings.
 8. `selected-paper.html` — GroundEvo problem, experiments, roadmap, and review log.
 9. `bibliography.html` — coverage protocol, interactive maps, exports, and live bibliography.
@@ -39,7 +39,7 @@ The bibliography synchronizes two complementary survey-maintained catalogs in th
 1. `selfimproving-agent/Awesome-Self-Improving-Agents`
 2. `FrontisAI/Awesome-Self-Improving-Agents`
 
-It merges and normalizes these records with a manually verified visual/CVPR core set. The historical figure additionally prioritizes formally published conference and journal papers, while preprint-only frontier work stays in the searchable bibliography rather than the historical spine. The live interface includes:
+It merges and normalizes these records with a manually verified visual/CVPR core set. The bilingual 2400×1600 history SVG prioritizes formally published conference and journal papers, groups twenty-three milestones into five method families, and states each method's core action, update target, and feedback signal; preprint-only frontier work stays in the searchable bibliography rather than the historical spine. The live interface includes:
 
 - method × publication-year heatmap;
 - publication-type × year heatmap;
@@ -59,7 +59,7 @@ The broader roadmap is **GroundEvo: Causally-Grounded Multilevel Self-Evolution 
 
 The first falsifiable study asks whether visual agents admit spurious lessons from successful and failed trajectories, and whether active visual re-observation plus minimal environment counterfactual replay improves persistent-memory admission, lowers harmful commits, and preserves future-task gain under matched cost.
 
-The current hierarchy contains **10 research directions** and **34 concrete paper ideas**. Every idea separately states its purpose/problem, core idea, rationale, method logic, research importance, and conditional comparative advantage, followed by a minimum experiment, strongest baseline, and Go/Stop boundary. The 69-formulation audit applies three review rounds to paper ideas: literature collision and identifiability, paper-strength scoring, and module–lifecycle coverage. Eighteen formulations are merged as sub-questions or evaluation axes and seventeen are rejected. Research directions are structural categories and are not globally ranked.
+The current hierarchy contains **10 research directions** and **34 concrete paper ideas**. For new readers, the ten directions are first grouped into four questions—what to learn, what experience should become, what is changing around the agent, and how evolution remains controlled—and then explained through one GUI-agent example and a plain-language glossary. Every idea separately states its purpose/problem, core idea, rationale, method logic, research importance, and conditional comparative advantage, followed by a minimum experiment, strongest baseline, and Go/Stop boundary. The 69-formulation audit applies three review rounds to paper ideas: literature collision and identifiability, paper-strength scoring, and module–lifecycle coverage. Eighteen formulations are merged as sub-questions or evaluation axes and seventeen are rejected. Research directions are structural categories and are not globally ranked.
 
 Every retained idea has a bilingual reasoning record in `idea-explanations.js` that separately states: **purpose/problem**, **core idea**, **rationale**, and **method logic**. The card then fixes its minimum experiment, strongest comparison, Go/Stop boundary, one-line thesis, rank, confidence, and paper track.
 
