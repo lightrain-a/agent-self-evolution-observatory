@@ -54,7 +54,8 @@ The current site contains 23 main pages.
 ### CVPR paper workspace
 
 - Problem formulation
-- Eight candidate ideas and collision history
+- Twenty self-checked candidate ideas retained from a 34-formulation pool
+- Fourteen explicitly rejected formulations with collision reasons
 - Friday direction decision board with unified Go/Stop criteria
 - Benchmark and staged experiments
 - Thesis, contribution ladder, and roadmap
@@ -87,18 +88,15 @@ The broader roadmap is **GroundEvo: Causally-Grounded Multilevel Self-Evolution 
 
 The first falsifiable study asks whether visual agents admit spurious lessons from successful and failed trajectories, and whether active visual re-observation plus minimal environment counterfactual replay improves persistent-memory admission, lowers harmful commits, and preserves future-task gain under matched cost.
 
-The current Friday candidate pool contains eight directions:
+The current Friday portfolio retains twenty directions after direct-collision, scientific-variable, main-table, minimum-demo, and failure-value checks.
 
-- **GroundEvo-Admission:** visual causal lesson admission;
-- **NegEvoBench-V:** benchmark for harmful visual self-evolution and hidden grounding drift;
-- **ViMEvo-Repair:** evidence-preserving visual memory with stale-state repair;
-- **EgoShift:** embodiment-drift diagnosis and self-calibration;
-- **EvoValue-V:** budget-aware selection of experiences worth verifying;
-- **SkillProof-V:** visual skill contracts with pre/postconditions and counterexamples;
-- **UpdateRoute-V:** failure-conditioned routing among no update, memory, skill, and LoRA;
-- **SimEvo-CF:** co-evolving counterfactual visual environments and agents.
+**Tier A:** GroundEvo-Admission, NegEvoBench-V, ViMEvo-Repair, EgoShift, RelianceGuard-V, and EvoValue-V.
 
-The unified comparison is published on `direction-board.html`.
+**Tier B:** MemoryFormRouter-V, SkillProof-V, SkillUnlearn-V, UpdateRoute-V, BudgetEvolve-V, WorldPatch-V, SimEvo-CF, and ExploreRepair-V.
+
+**Tier C:** EvalRedQueen-V, EvoProvenance-V, ProcessCredit-V, CrossAgentTransfer-V, PersonaShift-V, and DiversityGuard-MAS.
+
+The same page records fourteen removed generic formulations—visual self-play, generic critic correction, generic multimodal memory, generic personalization memory, generic macro-tools, generic dynamic GraphRAG, generic world-model evolution, generic evaluator co-evolution, generic pairwise gates, generic decentralized memory, generic evolution protocols, generic environment co-evolution, generic process-reward evolution, and generic release engineering. The full comparison is published on `direction-board.html`.
 
 ## External-agent review status
 

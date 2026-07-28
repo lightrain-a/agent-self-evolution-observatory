@@ -155,6 +155,21 @@ def main() -> None:
             require(result["sections"] >= minimum, f"{page} has too few sections")
             require(result["missing"] == 0, f"{page} contains unresolved citations")
 
+        navigate("/direction-board.html", 7)
+        portfolio = execute(
+            session_id,
+            """const sections=[...document.querySelectorAll('.topic-section')]; return {
+              retained: sections[2]?.querySelectorAll('tbody tr').length || 0,
+              rejected: sections[1]?.querySelectorAll('tbody tr').length || 0,
+              tierCards: [...sections.slice(3,6)].reduce((n,s)=>n+s.querySelectorAll('.property-card').length,0),
+              text: document.body.textContent || ''
+            };""",
+        )
+        require(portfolio["retained"] == 20, f"expected 20 retained ideas, got {portfolio['retained']}")
+        require(portfolio["rejected"] == 14, f"expected 14 rejected formulations, got {portfolio['rejected']}")
+        require(portfolio["tierCards"] == 20, f"expected 20 tier cards, got {portfolio['tierCards']}")
+        require("RelianceGuard-V" in portfolio["text"] and "DiversityGuard-MAS" in portfolio["text"], "20-idea portfolio is incomplete")
+
         request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844, "x": 0, "y": 0})
         navigate("/index.html", 5)
         mobile = execute(
