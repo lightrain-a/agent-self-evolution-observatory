@@ -44,7 +44,7 @@ REQUIRED_STATIC = [
     "content-consolidated.js", "redirect.js", "favicon.svg", "robots.txt",
     "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
-    "portfolio-data.js", "history-figure-data.js", "catalog_audit.py",
+    "portfolio-data.js", "idea-explanations.js", "history-figure-data.js", "catalog_audit.py",
     "browser_smoke_test.py", "CHANGELOG.md",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
@@ -116,6 +116,18 @@ def main() -> None:
         mapped_names.extend(re.findall(r'"([^"]+)"', block))
     if sorted(mapped_names) != sorted(names) or len(mapped_names) != len(set(mapped_names)):
         fail("each paper idea must appear exactly once in the direction mapping")
+
+    explanations_text = (ROOT / "idea-explanations.js").read_text(encoding="utf-8")
+    explanation_blocks = re.findall(r'^  "([^"]+)": \{\n(.*?)(?=^  "[^"]+": \{|^\};)', explanations_text, re.MULTILINE | re.DOTALL)
+    explanation_names = [name for name, _ in explanation_blocks]
+    if sorted(explanation_names) != sorted(names) or len(explanation_names) != len(set(explanation_names)):
+        fail("each paper idea must have exactly one explanation block")
+    required_fields = ("purpose", "core", "rationale", "logic")
+    for name, block in explanation_blocks:
+        for field in required_fields:
+            match = re.search(rf'{field}:\{{en:"([^"]+)",zh:"([^"]+)"\}}', block)
+            if not match or not match.group(1).strip() or not match.group(2).strip():
+                fail(f"idea {name} is missing bilingual {field}")
 
     history_text = (ROOT / "history-figure-data.js").read_text(encoding="utf-8")
     if len(re.findall(r'^\s*\{?\s*code:"P\d"', history_text, re.MULTILINE)) != 6:

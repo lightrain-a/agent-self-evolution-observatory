@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-07-28 · Complete reasoning schema for all paper ideas
+
+- Added `idea-explanations.js` with bilingual reasoning records for all thirty-four retained paper ideas.
+- Required every idea to answer four distinct questions: purpose/problem, core idea, why the idea is reasonable, and method logic.
+- Reorganized each Idea card into a research-argument layer and a separate validation layer containing the minimum experiment, strongest comparison, Go/Stop boundary, one-line thesis, rank, confidence, and paper track.
+- Extended Idea search to cover the new reasoning fields.
+- Added static checks for one-to-one explanation coverage and non-empty English/Chinese fields, plus real-browser checks for all thirty-four rendered reasoning blocks.
+
 ## 2026-07-28 · Nine-page information architecture consolidation
 
 - Consolidated twenty-three public content entries into nine canonical high-density pages: home, foundations, mechanisms, domains, evaluation, directions, ideas, selected paper, and bibliography.

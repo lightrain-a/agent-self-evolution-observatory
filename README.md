@@ -61,6 +61,8 @@ The first falsifiable study asks whether visual agents admit spurious lessons fr
 
 The current hierarchy contains **10 research directions** and **34 concrete paper ideas**. The 69-formulation audit applies three review rounds to paper ideas: literature collision and identifiability, paper-strength scoring, and module–lifecycle coverage. Eighteen formulations are merged as sub-questions or evaluation axes and seventeen are rejected. Research directions are structural categories and are not globally ranked.
 
+Every retained idea has a bilingual reasoning record in `idea-explanations.js` that separately states: **purpose/problem**, **core idea**, **rationale**, and **method logic**. The card then fixes its minimum experiment, strongest comparison, Go/Stop boundary, one-line thesis, rank, confidence, and paper track.
+
 **Tier A, ranks 1–12:** NegEvoBench-V, ScopeGuard-V, GroundEvo-Admission, AmplificationGuard-X, EvoContract-V, ViMEvo-Repair, RelianceGuard-V, CapabilityLease-Evo, EvoFirewall-V, InteractionGuard-V, PerformativeEvo-V, and ConfidenceFlow-Evo.
 
 **Tier B, ranks 13–26:** EvoValue-V, EgoShift, OversightBudget-Evo, MultiRateEvo-V, MemoryFormRouter-V, BudgetEvolve-V, AuditInvariant-Evo, PluralLineage-Evo, SkillUnlearn-V, ExploreRepair-V, WorldPatch-V, EvoProvenance-V, SkillProof-V, and PersonaShift-V.
@@ -97,6 +99,7 @@ The checks cover:
 
 - 9 canonical pages and 19 compatibility redirects;
 - navigation targets, merged content groups, and redirect anchors;
+- all 34 bilingual Idea reasoning records and their four mandatory fields;
 - JavaScript syntax;
 - sitemap, CNAME, favicon, manifest, robots, and 404 resources;
 - upstream catalog counts and deduplication;
