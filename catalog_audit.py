@@ -21,11 +21,23 @@ def normalize(title: str) -> str:
 
 
 def fetch_readme(repo: str) -> str:
-    url = f"https://api.github.com/repos/{repo}/contents/README.md"
-    request = urllib.request.Request(url, headers={"User-Agent": "agent-evolution-observatory-audit"})
-    with urllib.request.urlopen(request, timeout=90) as response:
-        payload = json.load(response)
-    return base64.b64decode(payload["content"]).decode("utf-8")
+    sources = [
+        (f"https://api.github.com/repos/{repo}/contents/README.md", "api"),
+        (f"https://raw.githubusercontent.com/{repo}/main/README.md", "raw"),
+        (f"https://cdn.jsdelivr.net/gh/{repo}@main/README.md", "raw"),
+    ]
+    errors: list[str] = []
+    for url, mode in sources:
+        request = urllib.request.Request(url, headers={"User-Agent": "agent-evolution-observatory-audit"})
+        try:
+            with urllib.request.urlopen(request, timeout=90) as response:
+                if mode == "api":
+                    payload = json.load(response)
+                    return base64.b64decode(payload["content"]).decode("utf-8")
+                return response.read().decode("utf-8")
+        except Exception as exc:  # Network and rate-limit fallbacks are intentional here.
+            errors.append(f"{url}: {exc}")
+    raise RuntimeError(f"Unable to fetch {repo} README via any source: {' | '.join(errors)}")
 
 
 def parse_survey(markdown: str) -> list[dict[str, object]]:

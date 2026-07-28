@@ -19,9 +19,11 @@
 - Added online catalog and citation audit script plus headless Firefox browser QA.
 - Added dynamic repository and benchmark/environment indexes extracted from the full corpus.
 - Added a 2026 frontier-collision review against counterfactual trace auditing, skill–tool co-evolution, memory skills, longitudinal evaluation, calibration-free VLA, memory benchmarks, and environment co-evolution.
-- Generated a 34-formulation direction pool, removed 14 generic or directly collided formulations, and retained 20 self-checked ideas across experience admission, memory, skills, embodied adaptation, world models, evaluation, governance, personalization, and multi-agent evolution.
+- Expanded the direction audit from 34 to 39 formulations, removed 14 generic or directly collided formulations, retained 24 standalone ideas, and folded EvoDebt into NegEvoBench-V as a longitudinal benchmark axis.
 - Expanded the Friday Direction Board to three tiers with unified novelty, CVPR fit, feasibility, compute, minimum-demo, Go, and Stop comparisons.
-- Added the new retained directions RelianceGuard-V, MemoryFormRouter-V, SkillUnlearn-V, BudgetEvolve-V, WorldPatch-V, ExploreRepair-V, EvalRedQueen-V, EvoProvenance-V, ProcessCredit-V, CrossAgentTransfer-V, PersonaShift-V, and DiversityGuard-MAS.
+- Added the new retained directions RelianceGuard-V, MemoryFormRouter-V, SkillUnlearn-V, BudgetEvolve-V, WorldPatch-V, ExploreRepair-V, EvalRedQueen-V, EvoProvenance-V, ProcessCredit-V, CrossAgentTransfer-V, PersonaShift-V, DiversityGuard-MAS, EvoContract-V, EvoFirewall-V, MetaGuard-V, and MultiRateEvo-V.
+- Added six July-frontier references covering self-evolution meta-skills, memory–skill co-evolution, evolvable harnesses, compositional and sleeper memory poisoning, and selective forgetting.
+- Added mechanism-level coverage for activation-time memory defense, semantic compatibility contracts, evolution-controller drift, multi-timescale consolidation, and delayed evolution debt.
 - Added an explicit rejected-formulation table covering generic visual self-play, critic correction, multimodal memory, personalization, macro-tools, dynamic GraphRAG, world models, evaluator co-evolution, pairwise gates, decentralized memory, protocols, environment co-evolution, process rewards, and release engineering.
 - Froze the first-paper scope as **GroundEvo-Admission: Visual Causal Lesson Admission**; multilevel update routing remains a later roadmap.
 - Upgraded site smoke tests from 19 to 23 main pages and from global script loading to page-specific dependency checks.

@@ -65,9 +65,11 @@ const PAGE_CITATIONS = {
   "memory-evolution": [
     ["ExpeL: LLM Agents Are Experiential Learners", "Agent Workflow Memory", "A-MEM: Agentic Memory for LLM Agents"],
     ["MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory", "EvolveMem: Self-Evolving Memory Architecture via AutoResearch for LLM Agents"],
-    ["UI-Mem: Self-Evolving Experience Memory for Online Reinforcement Learning in Mobile GUI Agents", "MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks"],
     ["MemEye: Visual-Centric Evaluation for Multimodal Agent Memory", "MemLens: Benchmarking Multimodal Long-Term Memory"],
-    ["MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents", "Contextual Memory Reweaving in Large Language Models Using Layered Latent State Reconstruction"],
+    ["UI-Mem: Self-Evolving Experience Memory for Online Reinforcement Learning in Mobile GUI Agents", "MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks", "Hidden Forgetting in Continual Multimodal Learning: When Accuracy Survives but Grounding Fails"],
+    ["MemPoison: Uncovering Persistent Memory Threats and Structural Blind Spots in LLM Agents", "Hidden in Memory: Sleeper Memory Poisoning in LLM Agents"],
+    ["MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents", "From Memory to Skills: Evidence-Grounded Co-Evolution Governance for Long-Horizon LLM Agents", "FSFM: A Biologically-Inspired Framework for Selective Forgetting of Agent Memory"],
+    ["EvoMemBench: Benchmarking Agent Memory from a Self-Evolving Perspective", "MemPoison: Uncovering Persistent Memory Threats and Structural Blind Spots in LLM Agents"],
   ],
   "tool-evolution": [
     ["Voyager: An Open-Ended Embodied Agent with Large Language Models", "SkillWeaver: Web Agents can Self-Improve by Discovering and Honing Skills"],
@@ -77,10 +79,12 @@ const PAGE_CITATIONS = {
     ["VASO: Formally Verifiable Self-Evolving Skills for Physical AI Agents", "Counterfactual Trace Auditing of LLM Agent Skills"],
   ],
   "workflow-evolution": [
-    ["Language Agents as Optimizable Graphs", "Automated Design of Agentic Systems", "AFlow: Automating Agentic Workflow Generation"],
-    ["AgentSquare: Automatic LLM Agent Search in Modular Design Space", "Multi-agent Architecture Search via Agentic Supernet"],
-    ["Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents", "MOSS: Self-Evolution through Source-Level Rewriting in Autonomous Agent Systems"],
-    ["The Red Queen Gödel Machine: Co-Evolving Agents and Their Evaluators", "Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams"],
+    ["Self-Improvements in Modern Agentic Systems: A Survey", "Agent Harness Engineering: A Survey"],
+    ["Language Agents as Optimizable Graphs", "Automated Design of Agentic Systems", "AFlow: Automating Agentic Workflow Generation", "Multi-agent Architecture Search via Agentic Supernet", "Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents"],
+    ["HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry", "Autogenesis: A Self-Evolving Agent Protocol"],
+    ["AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering", "Self-Evolving Agent Harnesses via Gated Semantic Quality-Diversity"],
+    ["Teaching LLMs to Self-Evolve: Cultivating Core Meta-Skills with Reinforcement Learning", "The Red Queen Gödel Machine: Co-Evolving Agents and Their Evaluators"],
+    ["Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams", "AFlow: Automating Agentic Workflow Generation"],
   ],
   "visual-multimodal": [
     ["VisPlay: Self-Evolving Vision-Language Models", "META: Meta Evolution of Tool Trajectory Adaptation for Long-Video Understanding", "EvoGraph-R1: Self-Evolving Multimodal Knowledge Hypergraphs for Agentic Retrieval"],
@@ -123,10 +127,11 @@ const PAGE_CITATIONS = {
   ],
   "research-agenda": [
     ["Counterfactual Trace Auditing of LLM Agent Skills", "EVE-Agent: Evidence-Verifiable Self-Evolving Agents"],
-    ["MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents", "SkillSmith: Co-Evolving Skills and Tools for Self-Improving Agent Systems"],
-    ["AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering", "Self-Evolving Agent Harnesses via Gated Semantic Quality-Diversity"],
+    ["MemSkill: Learning and Evolving Memory Skills for Self-Evolving Agents", "SkillSmith: Co-Evolving Skills and Tools for Self-Improving Agent Systems", "From Memory to Skills: Evidence-Grounded Co-Evolution Governance for Long-Horizon LLM Agents"],
+    ["AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering", "Self-Evolving Agent Harnesses via Gated Semantic Quality-Diversity", "Autogenesis: A Self-Evolving Agent Protocol", "HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry"],
     ["Self-evolving Embodied AI", "WorldEvolver: Self-Evolving World Models for LLM Agent Planning"],
     ["SEA-Eval: A Benchmark for Evaluating Self-Evolving Agents Beyond Episodic Assessment", "Hidden Forgetting in Continual Multimodal Learning: When Accuracy Survives but Grounding Fails"],
+    ["HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry", "MemPoison: Uncovering Persistent Memory Threats and Structural Blind Spots in LLM Agents", "Hidden in Memory: Sleeper Memory Poisoning in LLM Agents", "Teaching LLMs to Self-Evolve: Cultivating Core Meta-Skills with Reinforcement Learning", "From Memory to Skills: Evidence-Grounded Co-Evolution Governance for Long-Horizon LLM Agents", "FSFM: A Biologically-Inspired Framework for Selective Forgetting of Agent Memory"],
     ["VISCO: Benchmarking Fine-Grained Critique and Correction towards Self-Improvement in Visual Reasoning", "MemLens: Benchmarking Multimodal Long-Term Memory"],
   ],
   "paper-problem": [
@@ -149,11 +154,13 @@ const PAGE_CITATIONS = {
   "direction-board": [
     ["Self-Improvements in Modern Agentic Systems: A Survey", "A Survey of Self-Evolving Agents: What, When, How, and Where to Evolve", "Self-Improving Agents in the Era of Experience: A Survey of Self- to Meta-Evolution"],
     ["VisPlay: Self-Evolving Vision-Language Models", "WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning", "META: Meta Evolution of Tool Trajectory Adaptation for Long-Video Understanding", "EvoGraph-R1: Self-Evolving Multimodal Knowledge Hypergraphs for Agentic Retrieval", "The Red Queen Gödel Machine: Co-Evolving Agents and Their Evaluators", "AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering"],
-    ["SEA-Eval: A Benchmark for Evaluating Self-Evolving Agents Beyond Episodic Assessment", "EvoMemBench: Benchmarking Agent Memory from a Self-Evolving Perspective", "Self-evolving Embodied AI"],
-    ["Hidden Forgetting in Continual Multimodal Learning: When Accuracy Survives but Grounding Fails", "MemEye: Visual-Centric Evaluation for Multimodal Agent Memory", "From Fixed to Free Cameras: Calibration-Free View-Robust Vision-Language-Action Model", "Reward-Free Evolving Agents via Pairwise Validator"],
-    ["WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning", "ViLoMem: Agentic Learner with Grow-and-Refine Multimodal Semantic Memory", "VASO: Formally Verifiable Self-Evolving Skills for Physical AI Agents", "Self-Evolving World Models for LLM Agent Planning", "Explore with Long-term Memory: A Benchmark and Multimodal LLM-based Reinforcement Learning Framework for Embodied Exploration"],
+    ["HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry", "MemPoison: Uncovering Persistent Memory Threats and Structural Blind Spots in LLM Agents", "Hidden in Memory: Sleeper Memory Poisoning in LLM Agents", "Teaching LLMs to Self-Evolve: Cultivating Core Meta-Skills with Reinforcement Learning", "From Memory to Skills: Evidence-Grounded Co-Evolution Governance for Long-Horizon LLM Agents", "FSFM: A Biologically-Inspired Framework for Selective Forgetting of Agent Memory"],
+    ["SEA-Eval: A Benchmark for Evaluating Self-Evolving Agents Beyond Episodic Assessment", "EvoMemBench: Benchmarking Agent Memory from a Self-Evolving Perspective", "Self-evolving Embodied AI", "AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering"],
+    ["Hidden Forgetting in Continual Multimodal Learning: When Accuracy Survives but Grounding Fails", "MemEye: Visual-Centric Evaluation for Multimodal Agent Memory", "From Fixed to Free Cameras: Calibration-Free View-Robust Vision-Language-Action Model", "MemPoison: Uncovering Persistent Memory Threats and Structural Blind Spots in LLM Agents", "HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry"],
+    ["WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning", "ViLoMem: Agentic Learner with Grow-and-Refine Multimodal Semantic Memory", "VASO: Formally Verifiable Self-Evolving Skills for Physical AI Agents", "Self-Evolving World Models for LLM Agent Planning", "Explore with Long-term Memory: A Benchmark and Multimodal LLM-based Reinforcement Learning Framework for Embodied Exploration", "Teaching LLMs to Self-Evolve: Cultivating Core Meta-Skills with Reinforcement Learning", "From Memory to Skills: Evidence-Grounded Co-Evolution Governance for Long-Horizon LLM Agents"],
     ["The Red Queen Gödel Machine: Co-Evolving Agents and Their Evaluators", "Autogenesis: A Self-Evolving Agent Protocol", "Self-evolving LLM agents with in-distribution Optimization", "Self-Evolving Multi-Agent Systems via Decentralized Memory", "PersonaVLM: Long-Term Personalized Multimodal LLMs"],
-    ["A Comprehensive Survey of Self-Evolving AI Agents: A New Paradigm Bridging Foundation Models and Lifelong Agentic Systems", "AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering"],
+    ["AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering", "SEA-Eval: A Benchmark for Evaluating Self-Evolving Agents Beyond Episodic Assessment", "FSFM: A Biologically-Inspired Framework for Selective Forgetting of Agent Memory"],
+    ["A Comprehensive Survey of Self-Evolving AI Agents: A New Paradigm Bridging Foundation Models and Lifelong Agentic Systems", "Self-Improvements in Modern Agentic Systems: A Survey"],
   ],
   "paper-experiments": [
     ["VisualWebArena: Evaluating Multimodal Agents on Realistic Visual Web Tasks", "WebArena: A Realistic Web Environment for Building Autonomous Agents"],

@@ -54,7 +54,7 @@ The current site contains 23 main pages.
 ### CVPR paper workspace
 
 - Problem formulation
-- Twenty self-checked candidate ideas retained from a 34-formulation pool
+- Twenty-four self-checked candidate ideas retained from a 39-formulation audit
 - Fourteen explicitly rejected formulations with collision reasons
 - Friday direction decision board with unified Go/Stop criteria
 - Benchmark and staged experiments
@@ -88,11 +88,11 @@ The broader roadmap is **GroundEvo: Causally-Grounded Multilevel Self-Evolution 
 
 The first falsifiable study asks whether visual agents admit spurious lessons from successful and failed trajectories, and whether active visual re-observation plus minimal environment counterfactual replay improves persistent-memory admission, lowers harmful commits, and preserves future-task gain under matched cost.
 
-The current Friday portfolio retains twenty directions after direct-collision, scientific-variable, main-table, minimum-demo, and failure-value checks.
+The current Friday portfolio retains twenty-four standalone directions after direct-collision, scientific-variable, main-table, minimum-demo, and failure-value checks. A fifth newly identified gap, EvoDebt, is folded into NegEvoBench-V as a longitudinal benchmark axis rather than counted as a separate direction.
 
-**Tier A:** GroundEvo-Admission, NegEvoBench-V, ViMEvo-Repair, EgoShift, RelianceGuard-V, and EvoValue-V.
+**Tier A:** GroundEvo-Admission, NegEvoBench-V, ViMEvo-Repair, EgoShift, RelianceGuard-V, EvoValue-V, EvoContract-V, and EvoFirewall-V.
 
-**Tier B:** MemoryFormRouter-V, SkillProof-V, SkillUnlearn-V, UpdateRoute-V, BudgetEvolve-V, WorldPatch-V, SimEvo-CF, and ExploreRepair-V.
+**Tier B:** MemoryFormRouter-V, SkillProof-V, SkillUnlearn-V, UpdateRoute-V, BudgetEvolve-V, WorldPatch-V, SimEvo-CF, ExploreRepair-V, MetaGuard-V, and MultiRateEvo-V.
 
 **Tier C:** EvalRedQueen-V, EvoProvenance-V, ProcessCredit-V, CrossAgentTransfer-V, PersonaShift-V, and DiversityGuard-MAS.
 
