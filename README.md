@@ -18,7 +18,16 @@ The site follows the same research-observatory framework as the LLM Distillation
 - a separate next-paper workspace;
 - explicit QA and coverage protocols.
 
-The public information architecture now contains **9 canonical pages** and **19 compatibility redirects** for historical URLs.
+The public information architecture now contains **9 canonical pages** and **19 compatibility redirects** for historical URLs. Every canonical page uses a page-specific semantic hierarchy rather than a flat list:
+
+```text
+H1 · canonical page
+└── H2 · chapter / main question
+    └── H3 · method family, domain, direction cluster, or evidence block
+        └── H4 · concrete research question or subsection
+```
+
+The hierarchy and recommended reading order are defined centrally in `page-architecture-data.js`. The sidebar renders a nested H2/H3/H4 tree and deliberately excludes individual bibliography cards from the table of contents.
 
 1. `index.html` — observatory home and reading paths.
 2. `foundations.html` — definitions, four-axis taxonomy, and a bilingual paper-ready history SVG (`agent-self-evolution-history-en.svg` / `agent-self-evolution-history-zh.svg`).
@@ -108,10 +117,16 @@ Run the real-browser interaction test. It uses Firefox/geckodriver when availabl
 python3 browser_smoke_test.py
 ```
 
+Run the deterministic page-hierarchy test. It renders each canonical page in an independent Edge process, avoiding one long browser session:
+
+```bash
+python3 hierarchy_smoke_test.py
+```
+
 The checks cover:
 
 - 9 canonical pages and 19 compatibility redirects;
-- navigation targets, merged content groups, and redirect anchors;
+- navigation targets, merged content groups, redirect anchors, and the page-specific chapter configuration;
 - all 34 bilingual Idea reasoning records and their four mandatory fields;
 - JavaScript syntax and one-to-one bilingual coverage of all six Idea reasoning fields;
 - sitemap, CNAME, favicon, manifest, robots, and 404 resources;
@@ -119,6 +134,7 @@ The checks cover:
 - missing URLs and unresolved topic-page citations;
 - venue-tier ranking configuration, the dated citation snapshot, four ranking modes, and all 24 bilingual top-paper analyses;
 - dynamic catalog loading, three bibliography maps, sorting, filters, URL state, and pagination;
+- exact H2/H3/H4 and nested-TOC counts for all nine canonical pages;
 - history and direction figures, merged hub rendering, linked resources, legacy redirects, and mobile navigation.
 
 ## Deployment

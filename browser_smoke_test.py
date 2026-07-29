@@ -94,8 +94,18 @@ def main() -> None:
     )
     session_id = ""
     try:
-        time.sleep(2)
-        session_id = request("POST", "/session", capabilities)["value"]["sessionId"]
+        last_session_error: Exception | None = None
+        for attempt in range(3):
+            time.sleep(2 + attempt)
+            try:
+                session_id = request("POST", "/session", capabilities)["value"]["sessionId"]
+                break
+            except Exception as error:
+                last_session_error = error
+                if driver.poll() is not None:
+                    driver = subprocess.Popen(driver_command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if not session_id:
+            raise RuntimeError(f"unable to create browser session after retries: {last_session_error}")
         base = f"http://127.0.0.1:{HTTP_PORT}"
 
         def navigate(path: str, wait: float = 5) -> None:

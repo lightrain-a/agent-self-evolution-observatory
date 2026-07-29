@@ -46,10 +46,10 @@ REQUIRED_STATIC = [
     "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
     "agent-self-evolution-history-en.svg", "agent-self-evolution-history-zh.svg",
-    "portfolio-data.js", "direction-guide-data.js", "idea-explanations.js", "idea-comparisons.js",
+    "portfolio-data.js", "direction-guide-data.js", "page-architecture-data.js", "idea-explanations.js", "idea-comparisons.js",
     "paper-analysis-data.js", "top-paper-analysis-data.js", "citation-ranking-data.js",
     "history-figure-data.js", "catalog_audit.py", "build_citation_cache.py",
-    "browser_smoke_test.py", "CHANGELOG.md",
+    "browser_smoke_test.py", "hierarchy_smoke_test.py", "CHANGELOG.md",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
 
@@ -79,6 +79,8 @@ def main() -> None:
         scripts = re.findall(r'<script\s+src="([^"]+)"', text)
         if "data.js" not in scripts or "app.js" not in scripts:
             fail(f"{filename} must load data.js and app.js")
+        if "page-architecture-data.js" not in scripts:
+            fail(f"{filename} must load page-architecture-data.js")
         for script in scripts:
             referenced_scripts.add(script)
             if not (ROOT / script).exists():
@@ -100,6 +102,26 @@ def main() -> None:
         subprocess.run(["node", "--check", str(path)], check=True)
 
     combined = "\n".join(path.read_text(encoding="utf-8") for path in js_files if path.name != "app.js")
+    architecture_text = (ROOT / "page-architecture-data.js").read_text(encoding="utf-8")
+    expected_chapter_ids = {
+        "home": ["understand-field", "select-research", "execute-audit"],
+        "foundations": ["boundary-history", "taxonomy-evidence"],
+        "mechanisms": ["model-internal", "externalized-experience", "system-level"],
+        "domains": ["multimodal-reasoning", "digital-interaction", "physical-world"],
+        "evaluation": ["validity-safety", "tasks-benchmarks", "reproducibility"],
+        "research-directions": ["orientation", "landscape", "direction-clusters", "long-term-agenda"],
+        "paper-ideas": ["selection-framework", "idea-portfolio", "idea-ranking"],
+        "selected-paper": ["problem-scope", "evidence-experiments", "narrative-execution", "review-gates"],
+        "bibliography": ["coverage-protocol", "ranking-reading", "field-maps", "search-corpus"],
+    }
+    for page_id, chapter_ids in expected_chapter_ids.items():
+        for chapter_id in chapter_ids:
+            if architecture_text.count(f'id:"{chapter_id}"') != 1:
+                fail(f"page architecture {page_id} is missing unique chapter {chapter_id}")
+    app_text = (ROOT / "app.js").read_text(encoding="utf-8")
+    for marker in ["renderArchitectureOverview", "renderCustomChapter", "#dynamic-page h4", "toc-level-${node.level}"]:
+        if marker not in app_text:
+            fail(f"hierarchical renderer is missing {marker}")
     for page_id in CANONICAL_PAGES.values():
         if page_id != "home" and f'"{page_id}"' not in combined and f'.{page_id}' not in combined:
             fail(f"no content configuration found for canonical page {page_id}")

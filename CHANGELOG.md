@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-07-29 · Page-specific multilevel information architecture
+
+- Added `page-architecture-data.js` as the single bilingual chapter model for all nine canonical pages.
+- Replaced flat merged-page headings with a semantic hierarchy: H1 page → H2 chapter/main question → H3 method family or domain → H4 concrete research question.
+- Reorganized `mechanisms.html` into model-internal adaptation, externalized experience/capability, and system-level self-design, while preserving all original method sections and historical anchors.
+- Added page-specific chapter flows to Foundations, Domains, Evaluation, Research Directions, Paper Ideas, Selected Paper, Bibliography, and the Home page.
+- Grouped the ten research directions and thirty-four paper ideas beneath the same four lifecycle questions instead of presenting them as unrelated parallel labels.
+- Rebuilt the sidebar table of contents as a nested H2/H3/H4 tree and excluded individual bibliography cards from TOC generation.
+- Added `hierarchy_smoke_test.py`, which renders each canonical page in an independent Edge process and verifies exact chapter and TOC-depth counts.
+- Extended static QA to require the architecture configuration and all canonical pages to load it while preserving nineteen compatibility redirect anchors.
+
 ## 2026-07-29 · Venue/citation literature ranking and curated top-paper analyses
 
 - Added a total ordering for the full bibliography: flagship peer-reviewed venues first, then other peer-reviewed publications, arXiv/preprints, and other records.

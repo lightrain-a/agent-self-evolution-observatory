@@ -15,6 +15,11 @@
   window.CONSOLIDATED_SOURCE_PAGES = sources;
 
   const group = (sourceId, title) => ({ sourceId, config: sources[sourceId], title });
+  const architecture = (pageId) => (window.PAGE_ARCHITECTURES || {})[pageId] || { chapters:[] };
+  const chaptersFor = (pageId) => architecture(pageId).chapters.map((chapter) => ({
+    ...chapter,
+    groups:(chapter.sourceIds || []).map((sourceId) => group(sourceId))
+  }));
 
   pages.foundations = {
     eyebrow:{en:"Foundations",zh:"基础总览"},
@@ -23,7 +28,7 @@
     callout:{en:"Read this page first: it separates retry and self-correction from persistent evolution, then explains how update surfaces, feedback signals, timescales, and release gates emerged.",zh:"建议从本页开始：先区分重试、自纠错与持久进化，再理解更新对象、反馈信号、时间尺度和发布门控如何形成。"},
     overviewFigure:{src:{en:"agent-self-evolution-history-en.svg",zh:"agent-self-evolution-history-zh.svg"},caption:{en:"Standalone vector overview for paper embedding. Milestones are grouped by method family and state the method action, update target, and feedback signal.",zh:"可直接嵌入论文的独立矢量总览图。正式发表里程碑按方法族组织，并标明核心做法、更新对象与反馈来源。"}},
     renderMode:"merged-hub",
-    groups:[group("foundations"), group("taxonomy")]
+    chapters:chaptersFor("foundations")
   };
 
   pages.mechanisms = {
@@ -32,10 +37,7 @@
     lead:{en:"A unified mechanism atlas organized by the persistent object being changed, the learning signal, the commitment gate, and the dominant failure mode.",zh:"按照被持久修改的对象、学习信号、提交门控和主要失败模式组织的统一机制图谱。"},
     callout:{en:"The five mechanism families are adjacent, not interchangeable. A good paper must state which surface changes and why a smaller intervention is insufficient.",zh:"五类机制彼此相邻但不可混用。可信论文必须说明究竟更新哪个表面，以及为什么更小的干预不足。"},
     renderMode:"merged-hub",
-    groups:[
-      group("model-improvement"), group("prompt-evolution"), group("memory-evolution"),
-      group("tool-evolution"), group("workflow-evolution")
-    ]
+    chapters:chaptersFor("mechanisms")
   };
 
   pages.domains = {
@@ -44,7 +46,7 @@
     lead:{en:"Three application domains share multimodal perception and interaction, but differ in state observability, action cost, embodiment, and the evidence needed for persistent improvement.",zh:"三个应用领域都依赖多模态感知与交互，但在状态可观测性、动作成本、具身约束和持久改进证据上存在关键差异。"},
     callout:{en:"The page keeps domain-specific benchmarks and failure modes visible while making their shared visual-memory, tool, world-model, and adaptation mechanisms comparable.",zh:"本页保留各领域特有的基准与失败模式，同时对齐视觉记忆、工具、世界模型和适应机制。"},
     renderMode:"merged-hub",
-    groups:[group("visual-multimodal"), group("gui-web"), group("embodied-world")]
+    chapters:chaptersFor("domains")
   };
 
   pages.evaluation = {
@@ -53,8 +55,7 @@
     lead:{en:"A single evidence page connects longitudinal evaluation, negative evolution, governance, benchmark construction, datasets, environments, repositories, and reproduction readiness.",zh:"一个证据页面统一连接纵向评测、负向进化、安全治理、基准构建、数据环境、代码仓库与复现成熟度。"},
     callout:{en:"Evaluation is not an appendix to self-evolution: the release gate, task stream, statistical unit, and rollback protocol define whether an update counts as genuine improvement.",zh:"评测不是自进化的附录：发布门控、任务流、统计单位和回滚协议共同决定一次更新能否被视为真实改进。"},
     renderMode:"merged-hub",
-    resourceModes:["benchmarks","repositories"],
-    groups:[group("evaluation-safety"), group("datasets-benchmarks"), group("repositories")]
+    chapters:chaptersFor("evaluation")
   };
 
   if (sources.bibliography) {
@@ -88,6 +89,6 @@
     lead:{en:"The currently selected idea is handled as one complete paper workspace rather than four disconnected pages.",zh:"当前选中的 Idea 以一个完整论文工作区呈现，不再拆成四个相互割裂的页面。"},
     callout:{en:"This workspace is specific to GroundEvo-Admission. Choosing another idea should create a new workspace rather than silently mixing claims and experiments.",zh:"该工作区只服务于 GroundEvo-Admission。若选择其他 Idea，应建立新的工作区，而不是悄悄混合主张和实验。"},
     renderMode:"merged-hub",
-    groups:[group("paper-problem"), group("paper-experiments"), group("paper-roadmap"), group("review-log")]
+    chapters:chaptersFor("selected-paper")
   };
 })();
