@@ -49,6 +49,8 @@ It merges and normalizes these records with a manually verified visual/CVPR core
 - global full-text search;
 - linked numbered references from topic pages;
 - JSON, CSV, and generic BibTeX export;
+- a collapsible six-part analysis for every paper: purpose/problem, core idea, rationale, method logic, importance, and conditional comparative advantage;
+- paper-specific method notes for key milestones, with conservative summary- or metadata-derived fallbacks for the long tail;
 - per-record citation copying and print layout.
 
 The site does **not** claim literal mathematical completeness. It targets comprehensive and auditable coverage under the inclusion, exclusion, source, deduplication, and publication-status protocol documented on `bibliography.html#group-coverage-method`.
@@ -61,7 +63,7 @@ The first falsifiable study asks whether visual agents admit spurious lessons fr
 
 The current hierarchy contains **10 research directions** and **34 concrete paper ideas**. For new readers, the ten directions are first grouped into four questions—what to learn, what experience should become, what is changing around the agent, and how evolution remains controlled—and then explained through one GUI-agent example and a plain-language glossary. Every idea separately states its purpose/problem, core idea, rationale, method logic, research importance, and conditional comparative advantage, followed by a minimum experiment, strongest baseline, and Go/Stop boundary. The 69-formulation audit applies three review rounds to paper ideas: literature collision and identifiability, paper-strength scoring, and module–lifecycle coverage. Eighteen formulations are merged as sub-questions or evaluation axes and seventeen are rejected. Research directions are structural categories and are not globally ranked.
 
-Every retained idea has a bilingual reasoning record in `idea-explanations.js` that separately states: **purpose/problem**, **core idea**, **rationale**, and **method logic**. The card then fixes its minimum experiment, strongest comparison, Go/Stop boundary, one-line thesis, rank, confidence, and paper track.
+Every retained idea has bilingual reasoning and comparison records that separately state: **purpose/problem**, **core idea**, **rationale**, **method logic**, **research importance**, and **conditional comparative advantage**. The card then fixes its minimum experiment, strongest comparison, Go/Stop boundary, one-line thesis, rank, confidence, and paper track.
 
 **Tier A, ranks 1–12:** NegEvoBench-V, ScopeGuard-V, GroundEvo-Admission, AmplificationGuard-X, EvoContract-V, ViMEvo-Repair, RelianceGuard-V, CapabilityLease-Evo, EvoFirewall-V, InteractionGuard-V, PerformativeEvo-V, and ConfidenceFlow-Evo.
 

@@ -613,7 +613,8 @@ function renderBibliography(config) {
   const visionCount = catalog.filter((p) => p.vision).length;
   const publishedCount = catalog.filter((p) => publicationType(p) === "Published").length;
   const sourceCount = new Set(catalog.flatMap((p) => String(p.source || "").split("+")).filter(Boolean)).size;
-  return `${pageHeader(config)}${renderGroupNav(config.groupsBefore || [])}${renderMergedGroups(config.groupsBefore || [])}<div class="integrity-status ${catalog.length > DATA.length ? "pass" : "warn"}"><strong>${catalog.length > DATA.length ? "LIVE" : "SNAPSHOT"}</strong><span>${catalog.length > DATA.length ? (language === "zh" ? "已同步两个综述配套目录，并与人工核验的视觉/CVPR 补充集去重。" : "Live-synced from two survey-maintained catalogs and deduplicated with the curated visual/CVPR supplement.") : (language === "zh" ? "上游同步失败，当前显示人工核验快照。" : "Upstream sync failed; showing the curated snapshot.")}</span></div><div class="grid bibliography-stats"><div class="stat"><b>${catalog.length}</b><span>${language === "zh" ? "篇去重条目" : "deduplicated records"}</span></div><div class="stat"><b>${publishedCount}</b><span>${language === "zh" ? "篇自动识别为正式发表" : "records classified as published"}</span></div><div class="stat"><b>${visionCount}</b><span>${language === "zh" ? "篇视觉/多模态相关" : "vision/multimodal records"}</span></div><div class="stat"><b>${sourceCount}</b><span>${language === "zh" ? "类文献来源" : "source streams"}</span></div></div>${renderTimelineMap()}${renderPublicationTypeMap()}${renderSignalMatrix()}${renderMilestoneTimeline()}<section class="panel"><div class="paper-figure-heading"><div><h2 id="searchable-corpus">${language === "zh" ? "可检索文献语料库" : "Searchable literature corpus"}</h2><p class="section-intro">${language === "zh" ? "筛选结果可直接导出、打印或生成可分享链接。" : "The current filtered set can be exported, printed, or shared through a filter-preserving URL."}</p></div><div class="export-actions"><button class="link-btn export-btn" data-export="json">JSON</button><button class="link-btn export-btn" data-export="csv">CSV</button><button class="link-btn export-btn" data-export="bibtex">BibTeX</button><button class="link-btn" id="copy-filter-link">${language === "zh" ? "复制筛选链接" : "Copy filter link"}</button><button class="link-btn" id="print-page">${language === "zh" ? "打印" : "Print"}</button><button class="link-btn" id="reset-filters">${language === "zh" ? "重置" : "Reset"}</button></div></div><div class="bibliography-controls"><select id="year-filter">${yearOptions}</select><select id="publication-filter">${publicationOptions}</select><select id="signal-filter">${signalOptions}</select><label class="toggle-filter"><input id="vision-filter" type="checkbox" ${visionOnly ? "checked" : ""}> ${language === "zh" ? "仅视觉/多模态" : "Vision/multimodal only"}</label></div><div class="filters">${filters}</div><div id="bibliography-list" class="resource-list"></div></section>`;
+  const analysisGuide = `<section class="panel paper-analysis-guide"><h2 id="paper-reading-schema">${language === "zh" ? "每篇论文的六项阅读框架" : "Six-part reading framework for every paper"}</h2><p class="section-intro">${language === "zh" ? "每个文献卡片都可展开查看：目的／问题、核心思想、合理性、方法逻辑、重要性和相对优势。相对优势表示设计上更适合什么条件，不等于未经实验验证的绝对领先。" : "Every paper card expands into purpose/problem, core idea, rationale, method logic, importance, and comparative advantage. Comparative advantage describes conditions where a design may be better suited; it is not an unverified claim of absolute superiority."}</p><div class="property-grid"><div class="property-card"><b>${language === "zh" ? "核心方法注释" : "Core method note"}</b><span>${language === "zh" ? "关键里程碑论文具有针对该论文单独整理的方法描述。" : "Key milestone papers have a paper-specific method description."}</span></div><div class="property-card"><b>${language === "zh" ? "基于已有摘要归纳" : "Summary-derived"}</b><span>${language === "zh" ? "依据人工补充的简短摘要、更新对象和反馈信号组织六项解释。" : "Uses the curated short summary, update surface, and feedback signal."}</span></div><div class="property-card"><b>${language === "zh" ? "基于元数据保守归纳" : "Metadata-derived"}</b><span>${language === "zh" ? "长尾论文仅依据标题与目录元数据保守归纳；引用方法细节前必须回看原文。" : "Long-tail papers use conservative title and catalog metadata; consult the original paper before citing method details."}</span></div><div class="property-card"><b>${language === "zh" ? "导出" : "Export"}</b><span>${language === "zh" ? "JSON 与 CSV 会同时导出六项结构化解释和归纳依据。" : "JSON and CSV exports include all six fields and the analysis basis."}</span></div></div></section>`;
+  return `${pageHeader(config)}${renderGroupNav(config.groupsBefore || [])}${renderMergedGroups(config.groupsBefore || [])}<div class="integrity-status ${catalog.length > DATA.length ? "pass" : "warn"}"><strong>${catalog.length > DATA.length ? "LIVE" : "SNAPSHOT"}</strong><span>${catalog.length > DATA.length ? (language === "zh" ? "已同步两个综述配套目录，并与人工核验的视觉/CVPR 补充集去重。" : "Live-synced from two survey-maintained catalogs and deduplicated with the curated visual/CVPR supplement.") : (language === "zh" ? "上游同步失败，当前显示人工核验快照。" : "Upstream sync failed; showing the curated snapshot.")}</span></div><div class="grid bibliography-stats"><div class="stat"><b>${catalog.length}</b><span>${language === "zh" ? "篇去重条目" : "deduplicated records"}</span></div><div class="stat"><b>${publishedCount}</b><span>${language === "zh" ? "篇自动识别为正式发表" : "records classified as published"}</span></div><div class="stat"><b>${visionCount}</b><span>${language === "zh" ? "篇视觉/多模态相关" : "vision/multimodal records"}</span></div><div class="stat"><b>${sourceCount}</b><span>${language === "zh" ? "类文献来源" : "source streams"}</span></div></div>${analysisGuide}${renderTimelineMap()}${renderPublicationTypeMap()}${renderSignalMatrix()}${renderMilestoneTimeline()}<section class="panel"><div class="paper-figure-heading"><div><h2 id="searchable-corpus">${language === "zh" ? "可检索文献语料库" : "Searchable literature corpus"}</h2><p class="section-intro">${language === "zh" ? "筛选结果可直接导出、打印或生成可分享链接。" : "The current filtered set can be exported, printed, or shared through a filter-preserving URL."}</p></div><div class="export-actions"><button class="link-btn export-btn" data-export="json">JSON</button><button class="link-btn export-btn" data-export="csv">CSV</button><button class="link-btn export-btn" data-export="bibtex">BibTeX</button><button class="link-btn" id="copy-filter-link">${language === "zh" ? "复制筛选链接" : "Copy filter link"}</button><button class="link-btn" id="print-page">${language === "zh" ? "打印" : "Print"}</button><button class="link-btn" id="reset-filters">${language === "zh" ? "重置" : "Reset"}</button></div></div><div class="bibliography-controls"><select id="year-filter">${yearOptions}</select><select id="publication-filter">${publicationOptions}</select><select id="signal-filter">${signalOptions}</select><label class="toggle-filter"><input id="vision-filter" type="checkbox" ${visionOnly ? "checked" : ""}> ${language === "zh" ? "仅视觉/多模态" : "Vision/multimodal only"}</label></div><div class="filters">${filters}</div><div id="bibliography-list" class="resource-list"></div></section>`;
 }
 function citationText(p) {
   const venue = p.venue || "";
@@ -632,19 +633,164 @@ function downloadBlob(filename, content, type = "text/plain;charset=utf-8") {
 }
 function exportBibliography(format) {
   const query = (document.getElementById("site-search")?.value || "").trim().toLowerCase();
-  const rows = bibliographySubset().filter((p) => !query || [p.title,p.venue,p.category,p.subcategory,p.updateTarget,p.signal,publicationType(p)].join(" ").toLowerCase().includes(query));
-  if (format === "json") return downloadBlob("agent-self-evolution-bibliography.json", JSON.stringify(rows, null, 2), "application/json;charset=utf-8");
+  const rows = bibliographySubset().filter((p) => !query || paperSearchText(p).includes(query));
+  const enriched = rows.map((p) => {
+    const analysis = paperAnalysis(p);
+    return {...p, analysisBasis:paperAnalysisLabel(analysis), purpose:analysis.purpose, coreIdea:analysis.core, rationale:analysis.rationale, methodLogic:analysis.logic, importance:analysis.importance, comparativeAdvantage:analysis.advantage};
+  });
+  if (format === "json") return downloadBlob("agent-self-evolution-bibliography.json", JSON.stringify(enriched, null, 2), "application/json;charset=utf-8");
   if (format === "bibtex") return downloadBlob("agent-self-evolution-bibliography.bib", rows.map(bibtexEntry).join("\n\n"));
-  const fields = ["year","title","venue","category","subcategory","updateTarget","signal","vision","url","repo"];
-  const csv = [fields.join(","), ...rows.map((p) => fields.map((field) => `"${String(p[field] ?? "").replace(/"/g, '""')}"`).join(","))].join("\n");
+  const fields = ["year","title","venue","category","subcategory","updateTarget","signal","vision","analysisBasis","purpose","coreIdea","rationale","methodLogic","importance","comparativeAdvantage","url","repo"];
+  const csv = [fields.join(","), ...enriched.map((p) => fields.map((field) => `"${String(p[field] ?? "").replace(/"/g, '""')}"`).join(","))].join("\n");
   downloadBlob("agent-self-evolution-bibliography.csv", csv, "text/csv;charset=utf-8");
+}
+function paperMethodNote(record) {
+  return (window.PAPER_METHOD_NOTES || {})[record.title] || null;
+}
+function paperKind(record) {
+  const text = `${record.title || ""} ${record.category || ""} ${record.subcategory || ""}`.toLowerCase();
+  if (/survey|review|taxonomy|perspective/.test(text)) return "survey";
+  if (/benchmark|evaluation|arena|testbed|dataset/.test(text)) return "benchmark";
+  return "method";
+}
+function paperAnalysisFamily(record) {
+  const text = `${record.updateTarget || ""} ${record.category || ""} ${record.subcategory || ""}`.toLowerCase();
+  if (/prompt|context|instruction|reasoning trace/.test(text)) return "prompt";
+  if (/memory|retrieval|experience|graph/.test(text)) return "memory";
+  if (/tool|skill|api|code/.test(text)) return "tool";
+  if (/workflow|scaffold|architecture|agent graph|harness/.test(text)) return "workflow";
+  if (/world|embodied|robot|environment|navigation|gui|web/.test(text)) return "world";
+  if (/evaluator|critic|reward|verification|safety|benchmark/.test(text)) return "evaluation";
+  if (/model|parameter|training|reinforcement|fine-tun|adapter|lora/.test(text)) return "parameter";
+  return "general";
+}
+function paperTargetLabel(record) {
+  const raw = record.updateTarget || (language === "zh" ? "Agent 组件" : "agent component");
+  if (language !== "zh") return raw;
+  const key = String(raw).toLowerCase();
+  if (/model parameter/.test(key)) return "模型参数";
+  if (/prompt|context/.test(key)) return "提示词／上下文";
+  if (/memory/.test(key)) return "记忆";
+  if (/tool|skill/.test(key)) return "工具／技能";
+  if (/workflow|scaffold|architecture/.test(key)) return "工作流／系统结构";
+  if (/world|environment/.test(key)) return "世界模型／环境状态";
+  if (/evaluator|reward/.test(key)) return "评价器／奖励";
+  return raw;
+}
+function paperSignalLabel(record) {
+  const family = signalFamily(record);
+  if (language !== "zh") return record.signal || family;
+  const labels = {
+    "verification/tests":"可验证测试",
+    "critique/evaluation":"批评与评价",
+    "environment interaction":"环境交互",
+    "scalar/preference reward":"标量或偏好奖励",
+    "population/self-play":"群体反馈或自博弈",
+    "experience reuse":"经验复用",
+    "self-generated artifact":"自生成数据或轨迹",
+  };
+  return labels[family] || record.signal || family;
+}
+function paperAnalysis(record) {
+  const kind = paperKind(record);
+  const family = paperAnalysisFamily(record);
+  const target = paperTargetLabel(record);
+  const signal = paperSignalLabel(record);
+  const summary = language === "zh" ? (record.summaryZh || record.summary || "") : (record.summary || record.summaryZh || "");
+  const note = paperMethodNote(record);
+  const topic = record.subcategory || record.category || record.title;
+  const familyText = {
+    parameter:{
+      rationale:{en:"When feedback captures a stable and recurring pattern, parameter updates can amortize the improvement across many future tasks.",zh:"当反馈反映稳定且会重复出现的规律时，参数更新可以把一次学习成本摊销到大量后续任务。"},
+      importance:{en:"Parameter-level methods determine whether self-improvement becomes a reusable model capability rather than a one-session workaround.",zh:"参数级方法决定自我改进能否成为可复用模型能力，而不是一次会话中的临时补丁。"},
+      advantage:{en:"Compared with prompt-only or memory-only changes, this family can produce broader and more persistent transfer when sufficient reliable data and compute are available.",zh:"相较仅修改提示词或记忆，当可靠数据和算力充足时，这类方法可能获得更广、更持久的迁移。"}
+    },
+    prompt:{
+      rationale:{en:"Instructions and reasoning traces strongly control model behavior and can be searched or revised without changing model weights.",zh:"指令和推理轨迹会显著控制模型行为，而且可以在不修改模型权重的情况下搜索和修订。"},
+      importance:{en:"Prompt-level evolution is a low-cost route for testing whether a behavior change requires training at all.",zh:"提示词级进化是检验某种行为变化是否真的需要训练的低成本路径。"},
+      advantage:{en:"Compared with parameter updates, it is usually cheaper, faster, easier to inspect, and easier to roll back, although its persistence and capacity may be lower.",zh:"相较参数更新，它通常更便宜、更快、更容易检查和回滚，但持久性与容量可能较低。"}
+    },
+    memory:{
+      rationale:{en:"Cross-episode memory lets specific experience influence later tasks while keeping the learned artifact inspectable and replaceable.",zh:"跨回合记忆能够让具体经验影响后续任务，同时保持学习产物可检查、可替换。"},
+      importance:{en:"Memory is the main bridge between one-off interaction and persistent agent behavior without requiring full retraining.",zh:"记忆是不进行完整重训练时，把一次性交互转化为持久 Agent 行为的主要桥梁。"},
+      advantage:{en:"Compared with fine-tuning, memory updates are more targeted and reversible; compared with retry-only methods, they can affect future tasks.",zh:"相较微调，记忆更新更定向且更可逆；相较仅重试的方法，它能够影响未来任务。"}
+    },
+    tool:{
+      rationale:{en:"Repeated procedures can be externalized as executable artifacts and tested independently from the language model that invokes them.",zh:"重复流程可以外化为可执行产物，并与调用它的语言模型分开测试。"},
+      importance:{en:"Tool and skill evolution turns verbal knowledge into reusable operational capability.",zh:"工具与技能进化把语言知识转化为可复用的实际操作能力。"},
+      advantage:{en:"Compared with natural-language memory, executable skills provide clearer interfaces, direct tests, and more predictable reuse.",zh:"相较自然语言记忆，可执行技能具有更清晰的接口、直接测试方式和更可预测的复用。"}
+    },
+    workflow:{
+      rationale:{en:"Many agent failures arise from coordination, routing, or control-flow choices rather than insufficient base-model capability.",zh:"许多 Agent 失败来自协调、路由或控制流选择，而不是基础模型能力不足。"},
+      importance:{en:"Workflow-level research expands self-evolution from improving one component to redesigning the agent system itself.",zh:"工作流级研究把自进化从改进单一组件扩展到重新设计整个 Agent 系统。"},
+      advantage:{en:"Compared with model-only improvement, it can exploit existing components more efficiently and localize which system interaction needs to change.",zh:"相较只改模型，它能够更高效地利用现有组件，并定位究竟是哪种系统交互需要变化。"}
+    },
+    world:{
+      rationale:{en:"Interaction exposes state changes, action effects, and environment dynamics that cannot be recovered from text-only self-critique.",zh:"环境交互能够揭示文本自我批评无法获得的状态变化、动作效果与环境动力学。"},
+      importance:{en:"Grounded adaptation is necessary when the agent acts in websites, visual worlds, or physical environments that change over time.",zh:"当 Agent 在会变化的网站、视觉世界或物理环境中行动时，基于真实环境的适应是必要的。"},
+      advantage:{en:"Compared with text-only reflection, this family uses observable world feedback and can distinguish reasoning errors from environment or embodiment changes.",zh:"相较纯文本反思，这类方法利用可观测世界反馈，并能区分推理错误与环境或具身变化。"}
+    },
+    evaluation:{
+      rationale:{en:"The evolution policy can only improve reliably when its feedback and measurements expose the failures that matter.",zh:"只有反馈与测量能够暴露真正重要的失败时，进化策略才可能可靠改进。"},
+      importance:{en:"Evaluation defines what counts as improvement and prevents harmful updates from being hidden by average success.",zh:"评测决定什么才算改进，并防止有害更新被平均成功率掩盖。"},
+      advantage:{en:"Compared with one-off task scores, dedicated evaluation methods provide controlled failure cases, comparable metrics, and evidence for release decisions.",zh:"相较一次性任务分数，专门评测方法能够提供受控失败案例、可比较指标和发布决策证据。"}
+    },
+    general:{
+      rationale:{en:"The paper isolates a concrete update object and feedback source, making the proposed improvement mechanism testable rather than treating self-improvement as a single undifferentiated process.",zh:"该论文隔离了具体更新对象与反馈来源，使改进机制可以被检验，而不是把自我改进视为不可区分的整体过程。"},
+      importance:{en:"It contributes to identifying which parts of an agent can change persistently and under what evidence.",zh:"它有助于识别 Agent 的哪些部分能够持久变化，以及这种变化需要什么证据。"},
+      advantage:{en:"Its potential advantage is a more explicit and auditable update pathway than generic retry or undifferentiated self-improvement loops.",zh:"其潜在优势是更新路径比通用重试或未分层的自我改进闭环更明确、更可审计。"}
+    }
+  }[family];
+  if (kind === "survey") {
+    return {
+      basis:"derived",
+      purpose:language === "zh" ? `梳理 ${topic} 中分散的概念、方法与证据边界，建立可比较的研究框架。` : `Organize fragmented concepts, methods, and evidence boundaries in ${topic} into a comparable framework.`,
+      core:summary || (language === "zh" ? "系统收集相关工作，建立分类体系，并比较不同方法的更新对象、反馈来源、评测方式与局限。" : "Systematically collect related work, build a taxonomy, and compare update targets, feedback sources, evaluation practices, and limitations."),
+      rationale:language === "zh" ? "当术语和评测口径分散时，统一分类能够暴露方法之间真正可比和不可比的部分。" : "When terminology and evaluation practices are fragmented, a shared taxonomy reveals what is and is not genuinely comparable.",
+      logic:language === "zh" ? "定义检索范围 → 收集并去重论文 → 按统一维度编码 → 比较方法与证据 → 总结缺口和研究议程。" : "Define scope → collect and deduplicate papers → code them with shared dimensions → compare methods and evidence → identify gaps and an agenda.",
+      importance:language === "zh" ? "综述为领域提供共同语言，降低重复造轮子和错误比较的风险。" : "A survey supplies common language for the field and reduces duplicated work and invalid comparisons.",
+      advantage:language === "zh" ? "相较单篇方法论文，它提供跨方法的全局视角；但它不替代具体方法的实验验证。" : "Compared with a single method paper, it provides a field-wide view, but it does not replace empirical validation of individual methods."
+    };
+  }
+  if (kind === "benchmark") {
+    return {
+      basis:note ? "curated" : "derived",
+      purpose:language === "zh" ? `解决现有评测无法充分衡量 ${topic} 的问题。` : `Address the lack of adequate measurement for ${topic}.`,
+      core:textOf(note) || summary || (language === "zh" ? `围绕 ${topic} 构造任务、失败类型和指标，并在统一设置下比较系统。` : `Construct tasks, failure types, and metrics for ${topic}, then compare systems under a shared protocol.`),
+      rationale:familyText.rationale[language],
+      logic:language === "zh" ? `定义目标能力或失败 → 构造受控数据与任务 → 运行被测系统 → 计算统一指标 → 分析能力边界与失败来源。` : `Define the target capability or failure → construct controlled data and tasks → run evaluated systems → compute shared metrics → analyze capability boundaries and failure sources.`,
+      importance:familyText.importance[language],
+      advantage:familyText.advantage[language]
+    };
+  }
+  return {
+    basis:note ? "curated" : (summary ? "summary" : "derived"),
+    purpose:language === "zh" ? `该论文面向 ${topic}，试图改进 ${target} 在 Agent 自进化过程中的学习或使用方式。` : `The paper targets ${topic}, aiming to improve how ${target} is learned or used during agent self-evolution.`,
+    core:textOf(note) || summary || (language === "zh" ? `把 ${target} 作为主要更新对象，并使用 ${signal} 驱动候选变化。` : `Treat ${target} as the main update surface and use ${signal} to drive candidate changes.`),
+    rationale:familyText.rationale[language],
+    logic:language === "zh" ? `收集 ${signal} → 生成针对 ${target} 的候选更新 → 在任务或留出数据上评估 → 保留、修订或拒绝更新 → 在后续任务中验证持久收益。` : `Collect ${signal} → propose a change to ${target} → evaluate it on tasks or held-out data → retain, revise, or reject the update → verify persistent benefit on later tasks.`,
+    importance:familyText.importance[language],
+    advantage:familyText.advantage[language]
+  };
+}
+function paperAnalysisLabel(analysis) {
+  if (analysis.basis === "curated") return language === "zh" ? "核心方法注释" : "core method note";
+  if (analysis.basis === "summary") return language === "zh" ? "基于已有摘要归纳" : "derived from available summary";
+  return language === "zh" ? "基于元数据保守归纳" : "conservative metadata-derived overview";
+}
+function paperSearchText(record) {
+  const analysis = paperAnalysis(record);
+  return [record.title,record.venue,record.category,record.subcategory,record.updateTarget,record.signal,publicationType(record),analysis.purpose,analysis.core,analysis.rationale,analysis.logic,analysis.importance,analysis.advantage].join(" ").toLowerCase();
 }
 function paperCard(p) {
   const summary = language === "zh" ? (p.summaryZh || p.summary || "") : (p.summary || p.summaryZh || "");
   const refNo = p.refNo || catalog.indexOf(p) + 1;
   const slug = p.slug || slugify(p.title);
   const type = publicationType(p);
-  return `<article class="card reference-card" id="ref-${slug}" data-search="${esc([p.title,p.venue,p.category,p.subcategory,p.updateTarget,p.signal,type].join(" ").toLowerCase())}"><div class="card-top"><div><h3><a class="ref-number" href="#ref-${slug}">[${refNo}]</a> ${esc(p.title)}</h3><div class="meta">${esc(String(p.year || ""))} · ${esc(p.venue || "Unknown venue")} · ${esc(p.category || "Unclassified")}</div></div><div class="badges"><span class="badge publication-type">${esc(type)}</span><span class="badge ${p.vision ? "vision" : ""}">${p.vision ? "vision/multimodal" : "general"}</span><span class="badge ${p.updateTarget === "model parameters" ? "model" : "scaffold"}">${esc(p.updateTarget || "agent component")}</span><span class="badge">${esc(p.signal || "feedback")}</span></div></div>${summary ? `<p>${esc(summary)}</p>` : ""}<div class="links"><a class="link-btn" href="${esc(p.url)}" target="_blank" rel="noopener">${language === "zh" ? "论文" : "Paper"}</a>${p.repo ? `<a class="link-btn repo" href="${esc(p.repo)}" target="_blank" rel="noopener">${language === "zh" ? "代码" : "Code"}</a>` : ""}<button class="link-btn copy-citation" type="button" data-record="${encodeURIComponent(slug)}">${language === "zh" ? "复制引用" : "Copy citation"}</button><a class="link-btn cite-link" href="bibliography.html?paper=${encodeURIComponent(slug)}#ref-${slug}">${language === "zh" ? "引用定位" : "Reference"}</a></div></article>`;
+  const analysis = paperAnalysis(p);
+  const requested = new URLSearchParams(location.search).get("paper") === slug;
+  const analysisSearch = [analysis.purpose,analysis.core,analysis.rationale,analysis.logic,analysis.importance,analysis.advantage].join(" ");
+  return `<article class="card reference-card" id="ref-${slug}" data-search="${esc([p.title,p.venue,p.category,p.subcategory,p.updateTarget,p.signal,type,analysisSearch].join(" ").toLowerCase())}"><div class="card-top"><div><h3><a class="ref-number" href="#ref-${slug}">[${refNo}]</a> ${esc(p.title)}</h3><div class="meta">${esc(String(p.year || ""))} · ${esc(p.venue || "Unknown venue")} · ${esc(p.category || "Unclassified")}</div></div><div class="badges"><span class="badge publication-type">${esc(type)}</span><span class="badge ${p.vision ? "vision" : ""}">${p.vision ? "vision/multimodal" : "general"}</span><span class="badge ${p.updateTarget === "model parameters" ? "model" : "scaffold"}">${esc(p.updateTarget || "agent component")}</span><span class="badge">${esc(p.signal || "feedback")}</span></div></div>${summary ? `<p>${esc(summary)}</p>` : ""}<details class="paper-analysis" ${requested ? "open" : ""}><summary><span>${language === "zh" ? "六项论文梳理" : "Six-part paper analysis"}</span><small>${paperAnalysisLabel(analysis)}</small></summary><div class="paper-analysis-disclaimer">${analysis.basis === "curated" ? (language === "zh" ? "核心方法描述已针对该论文单独整理；其余字段仍是面向快速阅读的压缩解释。" : "The core method description is paper-specific; the other fields remain compressed reading aids.") : (language === "zh" ? "该概览依据标题、目录分类、更新对象、反馈信号和已有摘要自动归纳；准确引用方法细节时仍应回看原文。" : "This overview is derived from the title, catalog taxonomy, update surface, feedback signal, and available summary. Consult the paper before citing method details.")}</div><div class="paper-analysis-grid"><div><b>${language === "zh" ? "目的／问题" : "Purpose / problem"}</b><p>${esc(analysis.purpose)}</p></div><div><b>${language === "zh" ? "核心思想" : "Core idea"}</b><p>${esc(analysis.core)}</p></div><div><b>${language === "zh" ? "合理性" : "Why it is reasonable"}</b><p>${esc(analysis.rationale)}</p></div><div><b>${language === "zh" ? "方法逻辑" : "Method logic"}</b><p>${esc(analysis.logic)}</p></div><div><b>${language === "zh" ? "重要性" : "Why it matters"}</b><p>${esc(analysis.importance)}</p></div><div><b>${language === "zh" ? "相对优势" : "Comparative advantage"}</b><p>${esc(analysis.advantage)}</p></div></div></details><div class="links"><a class="link-btn" href="${esc(p.url)}" target="_blank" rel="noopener">${language === "zh" ? "论文" : "Paper"}</a>${p.repo ? `<a class="link-btn repo" href="${esc(p.repo)}" target="_blank" rel="noopener">${language === "zh" ? "代码" : "Code"}</a>` : ""}<button class="link-btn copy-citation" type="button" data-record="${encodeURIComponent(slug)}">${language === "zh" ? "复制引用" : "Copy citation"}</button><a class="link-btn cite-link" href="bibliography.html?paper=${encodeURIComponent(slug)}#ref-${slug}">${language === "zh" ? "引用定位" : "Reference"}</a></div></article>`;
 }
 function bindPaperCardEvents() {
   document.querySelectorAll(".copy-citation").forEach((button) => button.addEventListener("click", async () => {
@@ -665,7 +811,7 @@ function renderPaperList(query = "") {
   const list = document.getElementById("bibliography-list");
   if (!list) return;
   const q = query.trim().toLowerCase();
-  const filtered = bibliographySubset().filter((p) => !q || [p.title,p.venue,p.category,p.subcategory,p.updateTarget,p.signal,publicationType(p)].join(" ").toLowerCase().includes(q));
+  const filtered = bibliographySubset().filter((p) => !q || paperSearchText(p).includes(q));
   const requested = new URLSearchParams(location.search).get("paper");
   if (requested) {
     const requestedIndex = filtered.findIndex((p) => p.slug === requested);
@@ -685,7 +831,7 @@ function renderGlobalSearch(query) {
   const q = query.toLowerCase();
   const directionMatches = portfolioDirections().filter((direction) => [direction.code,textOf(direction.title),textOf(direction.question),textOf(direction.boundary)].join(" ").toLowerCase().includes(q)).slice(0, 10);
   const ideaMatches = portfolioIdeas().filter((idea) => { const explanation = ideaExplanation(idea.name); const comparison = ideaComparison(idea.name); return [idea.name,textOf(explanation.purpose),textOf(explanation.core),textOf(explanation.rationale),textOf(explanation.logic),textOf(comparison.importance),textOf(comparison.advantage),textOf(idea.thesis),textOf(idea.experiment),textOf(idea.track)].join(" ").toLowerCase().includes(q); }).slice(0, 12);
-  const paperMatches = catalog.filter((p) => [p.title,p.category,p.subcategory,p.updateTarget,p.signal].join(" ").toLowerCase().includes(q)).slice(0, 12);
+  const paperMatches = catalog.filter((p) => paperSearchText(p).includes(q)).slice(0, 12);
   if (!box) {
     box = document.createElement("section"); box.id = "global-search-results"; box.className = "panel";
     document.getElementById("dynamic-page")?.prepend(box);
@@ -895,6 +1041,8 @@ function bindSearch() {
   });
 }
 
+citationIndex = new Map();
+catalog = indexCatalog(mergeCatalog([], DATA));
 renderShell();
 renderPage();
 bindSearch();

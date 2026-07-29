@@ -18,6 +18,6 @@ Object.assign(window.PAGE_CONTENT,{
   eyebrow:{en:"Resources · Living Corpus",zh:"资源 · 动态语料库"},
   title:{en:"Live bibliography of self-evolving agents",zh:"Agent 自进化动态文献库"},
   lead:{en:"Search and filter the deduplicated literature corpus. The long tail is synchronized from the survey-maintained Awesome list; visual and CVPR-critical records are manually supplemented and corrected.",zh:"检索和筛选去重后的文献语料。长尾实时同步综述维护的 Awesome 列表；视觉与 CVPR 关键条目由人工补充和校正。"},
-  callout:{en:"Use mechanism pages for reviewed synthesis and this page for exhaustive navigation. Automatic tags are aids, not authoritative labels.",zh:"机制专题页用于经过审查的综合分析；本页用于尽可能全面的文献导航。自动标签仅是辅助，并非权威分类。"}
+  callout:{en:"Every paper card includes a six-part reading aid. Paper-specific method notes are distinguished from summary- or metadata-derived overviews; consult the original paper before citing technical details.",zh:"每篇论文卡片都提供六项阅读梳理。论文专属方法注释会与基于摘要或元数据的自动归纳明确区分；引用技术细节前仍应回看原文。"}
 }
 });

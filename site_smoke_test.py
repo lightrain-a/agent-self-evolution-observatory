@@ -46,7 +46,7 @@ REQUIRED_STATIC = [
     "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
     "agent-self-evolution-history-en.svg", "agent-self-evolution-history-zh.svg",
-    "portfolio-data.js", "direction-guide-data.js", "idea-explanations.js", "idea-comparisons.js", "history-figure-data.js", "catalog_audit.py",
+    "portfolio-data.js", "direction-guide-data.js", "idea-explanations.js", "idea-comparisons.js", "paper-analysis-data.js", "history-figure-data.js", "catalog_audit.py",
     "browser_smoke_test.py", "CHANGELOG.md",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
@@ -181,6 +181,18 @@ def main() -> None:
             fail(f"{figure_name} must contain 23 milestone method cards")
         if figure_text.count(method_label) < 23:
             fail(f"{figure_name} must describe the update target for every milestone")
+
+    paper_analysis_text = (ROOT / "paper-analysis-data.js").read_text(encoding="utf-8")
+    method_note_titles = re.findall(r'^  "([^"]+)": \{', paper_analysis_text, re.MULTILINE)
+    if len(method_note_titles) < 23 or len(method_note_titles) != len(set(method_note_titles)):
+        fail("paper analysis data must contain at least 23 unique paper-specific method notes")
+    missing_method_notes = [title for title in method_note_titles if title not in data_text]
+    if missing_method_notes:
+        fail(f"paper-specific method notes missing from curated bibliography: {missing_method_notes}")
+    app_text = (ROOT / "app.js").read_text(encoding="utf-8")
+    for marker in ["Purpose / problem", "Core idea", "Why it is reasonable", "Method logic", "Why it matters", "Comparative advantage"]:
+        if marker not in app_text:
+            fail(f"paper-card analysis renderer is missing {marker}")
 
     nav_targets = sorted(set(re.findall(r'\["([a-z0-9-]+\.html)"', data_text.split("window.SUPPLEMENTAL_PAPERS", 1)[0])))
     if set(nav_targets) != set(CANONICAL_PAGES):

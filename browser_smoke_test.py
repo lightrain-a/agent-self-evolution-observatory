@@ -102,7 +102,19 @@ def main() -> None:
             request("POST", f"/session/{session_id}/url", {"url": base + path})
             time.sleep(wait)
 
-        navigate("/index.html", 8)
+        def wait_until(script: str, timeout: float = 45, interval: float = 0.5) -> bool:
+            deadline = time.time() + timeout
+            while time.time() < deadline:
+                try:
+                    if execute(session_id, script):
+                        return True
+                except Exception:
+                    pass
+                time.sleep(interval)
+            return False
+
+        navigate("/index.html", 2)
+        require(wait_until("return Number(document.querySelector('.stat b')?.textContent || 0) > 500 && document.querySelectorAll('.citation-missing').length === 0;"), "live catalog did not finish loading on home")
         home = execute(
             session_id,
             """return {
@@ -130,6 +142,10 @@ def main() -> None:
               signalMap: !!document.querySelector('#surface-signal-map'),
               exports: document.querySelectorAll('.export-btn').length,
               filters: document.querySelectorAll('.bibliography-controls select').length,
+              analyses: document.querySelectorAll('.paper-analysis').length,
+              analysisFields: document.querySelectorAll('.paper-analysis-grid > div').length,
+              analysisGuide: !!document.querySelector('#paper-reading-schema'),
+              coreNotes: [...document.querySelectorAll('.paper-analysis summary small')].filter(x=>x.textContent.includes('core method note')||x.textContent.includes('核心方法注释')).length,
               missing: document.querySelectorAll('.citation-missing').length
             };""",
         )
@@ -138,7 +154,23 @@ def main() -> None:
         require(bibliography["methodMap"] and bibliography["publicationMap"] and bibliography["signalMap"], "one or more bibliography maps are missing")
         require(bibliography["exports"] == 3, "bibliography exports are incomplete")
         require(bibliography["filters"] == 3, "bibliography select filters are incomplete")
+        require(bibliography["analyses"] == 80 and bibliography["analysisFields"] == 480, "paper analyses are incomplete on the initial bibliography page")
+        require(bibliography["analysisGuide"], "paper analysis reading guide is missing")
         require(bibliography["missing"] == 0, "bibliography contains unresolved citations")
+
+        navigate("/bibliography.html?paper=visplay-self-evolving-vision-language-models#ref-visplay-self-evolving-vision-language-models", 7)
+        specific_analysis = execute(
+            session_id,
+            """const card=document.querySelector('#ref-visplay-self-evolving-vision-language-models'); return {
+              found: !!card,
+              open: !!card?.querySelector('.paper-analysis[open]'),
+              label: card?.querySelector('.paper-analysis summary small')?.textContent || '',
+              fields: card?.querySelectorAll('.paper-analysis-grid > div').length || 0
+            };""",
+        )
+        require(specific_analysis["found"] and specific_analysis["open"], "requested paper analysis did not open")
+        require(specific_analysis["fields"] == 6, "requested paper analysis is missing fields")
+        require("core method note" in specific_analysis["label"] or "核心方法注释" in specific_analysis["label"], "paper-specific method note is not rendered")
 
         clicked = execute(
             session_id,

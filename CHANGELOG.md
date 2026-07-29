@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-07-29 · Six-part analysis for every paper
+
+- Added a collapsible six-part reading structure to every bibliography card: purpose/problem, core idea, rationale, method logic, importance, and conditional comparative advantage.
+- Added `paper-analysis-data.js` with paper-specific method notes for key published milestones.
+- Added conservative summary-derived and metadata-derived fallbacks for the synchronized long tail, with an explicit warning to consult the original paper before citing method details.
+- Extended global search plus JSON and CSV exports to include the six structured analysis fields and the analysis basis.
+- Added an analysis-reading guide to the bibliography, static checks for method-note coverage and renderer fields, and real-browser checks for all six fields on the first eighty papers plus a directly opened VisPlay record.
+- Initialized the curated catalog before first paint and changed the browser test to wait for the actual live-catalog condition rather than a fixed delay.
+
 ## 2026-07-29 · Paper-ready history SVG and beginner direction guide
 
 - Replaced the page-native historical overview with bilingual standalone SVG files: `agent-self-evolution-history-en.svg` and `agent-self-evolution-history-zh.svg`.
