@@ -232,6 +232,10 @@ def main() -> None:
             fail(f"citation ranking config is missing sort mode {sort_id}")
     if len(re.findall(r'label:"[^"]+",pattern:', ranking_text)) < 15:
         fail("citation ranking config must define at least 15 top-venue patterns")
+    role_ids = re.findall(r'\{id:"([a-z-]+)",rank:\d+,title:', ranking_text)
+    expected_roles = ["field-overview", "core-evolution", "evaluation-governance", "enabling-mechanism", "agent-foundation", "model-foundation", "adjacent"]
+    if role_ids != expected_roles:
+        fail(f"reading-role order is incomplete or unstable: {role_ids}")
     if ranking_text.count("citationCount:") < 20 or "snapshotUpdatedAt:" not in ranking_text:
         fail("citation ranking config must contain a dated deployment snapshot for at least 20 core papers")
     bibliography_html = (ROOT / "bibliography.html").read_text(encoding="utf-8")
@@ -239,12 +243,16 @@ def main() -> None:
     script_positions = [bibliography_html.find(f'src="{name}"') for name in required_bibliography_scripts]
     if any(position < 0 for position in script_positions) or script_positions != sorted(script_positions):
         fail("bibliography must load ranking and analysis scripts before app.js")
+    for filename in CANONICAL_PAGES:
+        html = (ROOT / filename).read_text(encoding="utf-8")
+        if html.find('src="citation-ranking-data.js"') < 0 or html.find('src="citation-ranking-data.js"') > html.find('src="app.js"'):
+            fail(f"{filename} must load citation-ranking-data.js before app.js for stable reference numbering")
 
     app_text = (ROOT / "app.js").read_text(encoding="utf-8")
     for marker in ["Problem motivation", "Comparative advantage", "Core intuition", "Why it should work", "Method flow", "Experimental validation"]:
         if marker not in app_text:
             fail(f"paper-card analysis renderer is missing {marker}")
-    for marker in ["sortBibliographyRecords", "publicationTier", "bibliography-sort", "citation-ranking-status", "citationCount"]:
+    for marker in ["sortBibliographyRecords", "publicationTier", "readingRoleInfo", "renderRecommendedPaperGroups", "bibliography-sort", "citation-ranking-status", "citationCount"]:
         if marker not in app_text:
             fail(f"literature ranking implementation is missing {marker}")
 

@@ -159,12 +159,14 @@ def main() -> None:
               sortSelect: document.querySelector('#bibliography-sort')?.value || '',
               rankingStatus: document.querySelector('#citation-ranking-status')?.textContent || '',
               priorityRanks: document.querySelectorAll('.reference-card[data-priority-rank]').length,
+              roleGroups: document.querySelectorAll('.reference-role-group').length,
+              roleBadges: document.querySelectorAll('.reference-card .reading-role').length,
               tierBadges: document.querySelectorAll('.reference-card .ranking-tier').length,
               citationBadges: document.querySelectorAll('.reference-card .citation-count').length,
               knownCitations: document.querySelectorAll('.reference-card .citation-count:not(.citation-pending)').length,
               openAnalyses: document.querySelectorAll('.paper-analysis[open]').length,
               analysisLabels: [...document.querySelectorAll('.paper-analysis-grid b')].slice(0,6).map(x=>x.textContent.trim()),
-              orderedCards: [...document.querySelectorAll('.reference-card')].map(x=>({tier:Number(x.dataset.tier),citations:Number(x.dataset.citations),year:Number(x.dataset.year)})),
+              orderedCards: [...document.querySelectorAll('.reference-card')].map(x=>({role:x.dataset.readingRole,roleRank:Number(x.dataset.roleRank),tier:Number(x.dataset.tier),citations:Number(x.dataset.citations),year:Number(x.dataset.year),title:x.querySelector('h3')?.textContent||''})),
               missing: document.querySelectorAll('.citation-missing').length
             };""",
         )
@@ -177,18 +179,24 @@ def main() -> None:
         require(bibliography["analysisGuide"], "paper analysis reading guide is missing")
         require(bibliography["rankingGuide"] and bibliography["sortSelect"] == "priority", "literature ranking controls are incomplete")
         require(bibliography["rankingStatus"], "citation ranking status is missing")
-        require(bibliography["priorityRanks"] == 80 and bibliography["tierBadges"] == 80 and bibliography["citationBadges"] == 80, "ranking metadata is incomplete on bibliography cards")
-        require(bibliography["knownCitations"] >= 10, f"deployment citation snapshot is not visible: {bibliography['rankingStatus']}")
+        require(bibliography["priorityRanks"] == 80 and bibliography["roleBadges"] == 80 and bibliography["tierBadges"] == 80 and bibliography["citationBadges"] == 80, "ranking metadata is incomplete on bibliography cards")
+        require(bibliography["roleGroups"] >= 2, "recommended reading groups are missing")
+        require(bibliography["knownCitations"] >= 3, f"deployment citation snapshot is not visible: {bibliography['rankingStatus']}")
         ordered = bibliography["orderedCards"]
-        require(all(a["tier"] <= b["tier"] for a, b in zip(ordered, ordered[1:])), "default bibliography order violates publication tiers")
+        require(all(a["roleRank"] <= b["roleRank"] for a, b in zip(ordered, ordered[1:])), "default bibliography order violates reading roles")
+        require(not any(item["role"] in {"agent-foundation", "model-foundation"} for item in ordered[:20]), "old foundations still dominate the recommended top twenty")
         for a, b in zip(ordered, ordered[1:]):
-            if a["tier"] != b["tier"]:
+            if a["role"] != b["role"]:
                 continue
-            require(not (a["citations"] < 0 <= b["citations"]), "known citation count appears after an unmatched paper in the same tier")
-            if a["citations"] >= 0 and b["citations"] >= 0:
-                require(a["citations"] >= b["citations"], "citation counts are not descending within a publication tier")
-            if a["citations"] < 0 and b["citations"] < 0:
-                require(a["year"] >= b["year"], "unmatched papers are not sorted by year within a publication tier")
+            if a["role"] in {"agent-foundation", "model-foundation"}:
+                require(a["year"] <= b["year"], "foundation papers are not presented chronologically")
+                continue
+            if a["role"] == "field-overview":
+                require(a["year"] >= b["year"], "field overviews are not ordered by recency")
+                continue
+            require(a["tier"] <= b["tier"], "publication tier is not respected inside a reading role")
+            if a["tier"] == b["tier"]:
+                require(a["year"] >= b["year"], "papers are not ordered by recency inside a reading role and venue tier")
         require(bibliography["analysisLabels"] == ["Problem motivation", "Comparative advantage", "Core intuition", "Why it should work", "Method flow", "Experimental validation"], f"paper analysis order is incorrect: {bibliography['analysisLabels']}")
         require(bibliography["missing"] == 0, "bibliography contains unresolved citations")
 

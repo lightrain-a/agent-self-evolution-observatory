@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-07-30 · Role-aware bibliography order
+
+- Replaced the citation-dominated default bibliography order with a recommended reading sequence based on each paper's role in Agent self-evolution.
+- Added seven visible reading layers: recent field overviews, direct self-evolution methods, evaluation/safety/governance, enabling mechanisms, agent foundations, foundation-model precursors, and adjacent resources.
+- Within a layer, peer-reviewed status and recency now precede citation count; total citations remain available as a separate historical-influence view.
+- Moved Transformer, BERT, GPT-3, ReAct, and similar precursors out of the default top results while retaining them in chronological foundation sections.
+- Aligned stable reference numbers with the recommended order across all canonical pages by loading the same ranking configuration before citation indexing.
+- Added reading-role badges, grouped bibliography headers, role-aware JSON/CSV export fields, and browser assertions that old foundations do not dominate the top twenty.
+
 ## 2026-07-29 · Page-specific multilevel information architecture
 
 - Added `page-architecture-data.js` as the single bilingual chapter model for all nine canonical pages.

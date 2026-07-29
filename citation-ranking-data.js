@@ -2,8 +2,20 @@ window.CITATION_RANKING_CONFIG = {
   sourceName:"OpenAlex snapshot",
   mailto:"contact@lightrain.asia",
   snapshotUpdatedAt:"2026-07-29T09:00:00Z",
-  cacheVersion:"v1",
+  cacheVersion:"v2",
   cacheMaxAgeDays:7,
+  readingRoles:[
+    {id:"field-overview",rank:0,title:{en:"Start here · field overviews",zh:"从这里开始 · 领域综述"},description:{en:"Recent surveys and taxonomies that define the field boundary, terminology, and research map.",zh:"用于建立领域边界、共同术语和研究地图的近期综述与分类工作。"}},
+    {id:"core-evolution",rank:1,title:{en:"Current core · direct self-evolution",zh:"当前核心 · 直接自进化方法"},description:{en:"Methods that explicitly create, commit, or maintain persistent agent updates.",zh:"显式生成、提交或维护持久 Agent 更新的核心方法。"}},
+    {id:"evaluation-governance",rank:2,title:{en:"Evaluation, safety, and governance",zh:"评测、安全与治理"},description:{en:"Longitudinal benchmarks, verification, security, provenance, and release control.",zh:"纵向基准、验证、安全、溯源和发布控制。"}},
+    {id:"enabling-mechanism",rank:3,title:{en:"Enabling mechanisms",zh:"关键支撑机制"},description:{en:"Memory, skills, tools, workflow search, online learning, and environment adaptation that enable persistent improvement.",zh:"支撑持久改进的记忆、技能、工具、工作流搜索、在线学习和环境适应机制。"}},
+    {id:"agent-foundation",rank:4,title:{en:"Agent foundations",zh:"Agent 前置基础"},description:{en:"Reasoning, acting, tool use, self-correction, and instruction bootstrapping that enabled later evolving agents.",zh:"支撑后续自进化 Agent 的推理、行动、工具使用、自纠错和指令自举工作。"}},
+    {id:"model-foundation",rank:5,title:{en:"Foundation-model precursors",zh:"基础模型前置工作"},description:{en:"Transformer, pretraining, and in-context learning foundations; historically important but not direct self-evolution methods.",zh:"Transformer、预训练和上下文学习基础；历史影响大，但不是直接的 Agent 自进化方法。"}},
+    {id:"adjacent",rank:6,title:{en:"Adjacent work and resources",zh:"邻接工作与资源"},description:{en:"Related scholarly records, engineering reports, repositories, and boundary cases.",zh:"相关学术条目、工程报告、代码仓库和边界工作。"}}
+  ],
+  directEvolutionPattern:"self[- ]?(evolv|improv)|evolution|continual harness|agentdevel|autogenesis|experience[- ]driven|lifelong agent|open[- ]ended agent",
+  evaluationPattern:"benchmark|evaluation|safety|security|verification|verifiable|governance|provenance|audit|rollback|poison|forgetting|reliab",
+  enablingCategories:["memory","tool & skill","workflow","embodied","visual & multimodal","gui & web","world models","multi-agent","prompt"],
   topVenuePatterns:[
     {label:"NeurIPS",pattern:"\\bneurips\\b|neural information processing systems"},
     {label:"ICML",pattern:"\\bicml\\b|international conference on machine learning"},
@@ -49,9 +61,9 @@ window.CITATION_RANKING_CONFIG = {
     "evograph r1 self evolving multimodal knowledge hypergraphs for agentic retrieval":{citationCount:0,openAlexId:"https://openalex.org/W7168338755",matchedTitle:"EvoGraph-R1: Self-Evolving Multimodal Knowledge Hypergraphs for Agentic Retrieval",matchedYear:2026,matchedVenue:"CVPR",matchScore:1,fetchedAt:"2026-07-29T09:00:00Z"}
   },
   sortModes:[
-    {id:"priority",title:{en:"Research priority",zh:"综合优先级"}},
-    {id:"citations",title:{en:"Citation count",zh:"纯引用量"}},
-    {id:"venue",title:{en:"Venue tier",zh:"发表层级"}},
-    {id:"recent",title:{en:"Most recent",zh:"最新发表"}}
+    {id:"priority",title:{en:"Recommended reading order",zh:"推荐阅读顺序"}},
+    {id:"recent",title:{en:"Current frontier / most recent",zh:"当前前沿／最新发表"}},
+    {id:"citations",title:{en:"Historical influence / citations",zh:"历史影响／引用量"}},
+    {id:"venue",title:{en:"Venue tier",zh:"发表层级"}}
   ]
 };

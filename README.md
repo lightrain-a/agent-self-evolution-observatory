@@ -54,13 +54,14 @@ It merges and normalizes these records with a manually verified visual/CVPR core
 - publication-type × year heatmap;
 - update-surface × feedback-signal matrix;
 - year, method, feedback, publication status, and vision filters;
-- four ranking modes: research priority, citation count, venue tier, and recency;
-- default total ordering: flagship venue → other peer-reviewed publication → arXiv/preprint → other records; matched papers are ordered by citation count inside each tier, while unmatched papers follow by year;
+- four ranking modes: recommended reading order, current frontier/recency, historical influence/citations, and venue tier;
+- default role-aware ordering: recent field overviews → direct self-evolution methods → evaluation/safety/governance → enabling mechanisms → agent foundations → foundation-model precursors → adjacent resources;
+- within each role, peer-reviewed and recent work is prioritized; citation count is only a tie-breaker, while Agent/model foundations are shown chronologically;
 - a dated OpenAlex citation snapshot for 21 high-priority papers, with unmatched records explicitly marked rather than treated as zero-citation papers;
 - filter-preserving share links and paginated rendering;
 - global full-text search;
 - linked numbered references from topic pages;
-- JSON, CSV, and generic BibTeX export, including priority rank, venue tier, citation metadata, and the six analysis fields;
+- JSON, CSV, and generic BibTeX export, including recommended rank, reading role, venue tier, citation metadata, and the six analysis fields;
 - a collapsible six-part analysis for every paper in the order: problem motivation, comparative advantage, core intuition, rationale, method flow, and experimental validation;
 - fully paper-specific bilingual six-part analyses for 24 high-priority milestones, with conservative summary- or metadata-derived fallbacks for the long tail;
 - per-record citation copying and print layout.

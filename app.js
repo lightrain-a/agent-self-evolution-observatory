@@ -23,7 +23,7 @@ const CATALOG_SOURCES = [
 ];
 const CATALOG_CACHE_KEY = "agent-evolution-upstream-catalog-v2";
 const CATALOG_CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
-const CITATION_CONFIG = window.CITATION_RANKING_CONFIG || {sourceName:"OpenAlex",cacheVersion:"v1",cacheMaxAgeDays:7,topVenuePatterns:[],sortModes:[]};
+const CITATION_CONFIG = window.CITATION_RANKING_CONFIG || {sourceName:"OpenAlex",cacheVersion:"v2",cacheMaxAgeDays:7,topVenuePatterns:[],readingRoles:[],enablingCategories:[],sortModes:[]};
 const CITATION_CACHE_KEY = `agent-evolution-citations-${CITATION_CONFIG.cacheVersion || "v1"}`;
 const CITATION_CACHE_MAX_AGE = (CITATION_CONFIG.cacheMaxAgeDays || 7) * 24 * 60 * 60 * 1000;
 const pageId = document.body.dataset.page || "home";
@@ -406,6 +406,29 @@ function publicationTierLabel(record) {
   };
   return textOf(labels[type] || labels.Other);
 }
+function readingRoleInfo(record) {
+  const roles = CITATION_CONFIG.readingRoles || [];
+  const findRole = (id) => roles.find((role) => role.id === id) || {id,rank:99,title:{en:id,zh:id},description:{en:"",zh:""}};
+  const category = String(record.category || "").toLowerCase();
+  const subcategory = String(record.subcategory || "").toLowerCase();
+  const title = String(record.title || "").toLowerCase();
+  const text = `${title} ${category} ${subcategory}`;
+  const titleAndTask = `${title} ${subcategory}`;
+  if (category === "foundations") return findRole("model-foundation");
+  if (category === "agent foundations") return findRole("agent-foundation");
+  if (category === "survey" || /\bsurvey\b|taxonomy|systematic review/.test(title)) return findRole("field-overview");
+  const evaluationPattern = CITATION_CONFIG.evaluationPattern || "benchmark|evaluation|safety|security|verification|governance|provenance|audit|rollback";
+  try { if (new RegExp(evaluationPattern, "i").test(text)) return findRole("evaluation-governance"); }
+  catch (error) { console.warn("Invalid evaluation reading-role pattern", error); }
+  const directPattern = CITATION_CONFIG.directEvolutionPattern || "self[- ]?(evolv|improv)|evolution";
+  try { if (new RegExp(directPattern, "i").test(titleAndTask)) return findRole("core-evolution"); }
+  catch (error) { console.warn("Invalid direct-evolution reading-role pattern", error); }
+  const enabling = (CITATION_CONFIG.enablingCategories || []).map((value) => String(value).toLowerCase());
+  if (enabling.some((value) => category.includes(value)) || /memory|skill|tool|workflow|agent graph|world model|online curriculum|reflection|critic|prompt optim/.test(text)) return findRole("enabling-mechanism");
+  return findRole("adjacent");
+}
+function readingRoleRank(record) { return Number(readingRoleInfo(record).rank ?? 99); }
+function readingRoleLabel(record) { return textOf(readingRoleInfo(record).title); }
 function compareCitationValues(a, b) {
   const ac = citationCount(a), bc = citationCount(b);
   if (ac === null && bc !== null) return 1;
@@ -413,11 +436,22 @@ function compareCitationValues(a, b) {
   if (ac !== null && bc !== null && ac !== bc) return bc - ac;
   return 0;
 }
+function compareRecommendedWithinRole(a, b, roleId) {
+  if (roleId === "model-foundation" || roleId === "agent-foundation") {
+    return (a.year || 0) - (b.year || 0) || publicationTier(a) - publicationTier(b) || compareCitationValues(a, b) || a.title.localeCompare(b.title);
+  }
+  if (roleId === "field-overview") {
+    return (b.year || 0) - (a.year || 0) || publicationTier(a) - publicationTier(b) || compareCitationValues(a, b) || a.title.localeCompare(b.title);
+  }
+  return publicationTier(a) - publicationTier(b) || (b.year || 0) - (a.year || 0) || compareCitationValues(a, b) || a.title.localeCompare(b.title);
+}
 function compareBibliographyRecords(a, b, mode = bibliographySort) {
-  if (mode === "citations") return compareCitationValues(a, b) || publicationTier(a) - publicationTier(b) || (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title);
-  if (mode === "venue") return publicationTier(a) - publicationTier(b) || compareCitationValues(a, b) || (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title);
-  if (mode === "recent") return (b.year || 0) - (a.year || 0) || publicationTier(a) - publicationTier(b) || compareCitationValues(a, b) || a.title.localeCompare(b.title);
-  return publicationTier(a) - publicationTier(b) || compareCitationValues(a, b) || (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title);
+  if (mode === "citations") return compareCitationValues(a, b) || readingRoleRank(a) - readingRoleRank(b) || publicationTier(a) - publicationTier(b) || (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title);
+  if (mode === "venue") return publicationTier(a) - publicationTier(b) || readingRoleRank(a) - readingRoleRank(b) || (b.year || 0) - (a.year || 0) || compareCitationValues(a, b) || a.title.localeCompare(b.title);
+  if (mode === "recent") return (b.year || 0) - (a.year || 0) || readingRoleRank(a) - readingRoleRank(b) || publicationTier(a) - publicationTier(b) || compareCitationValues(a, b) || a.title.localeCompare(b.title);
+  const roleDelta = readingRoleRank(a) - readingRoleRank(b);
+  if (roleDelta) return roleDelta;
+  return compareRecommendedWithinRole(a, b, readingRoleInfo(a).id);
 }
 function sortBibliographyRecords(records, mode = bibliographySort) {
   return [...records].sort((a, b) => compareBibliographyRecords(a, b, mode));
@@ -576,7 +610,7 @@ async function fetchCatalogMarkdown(source) {
   throw new Error(`${source.name}: ${failures.join(" | ")}`);
 }
 function indexCatalog(records) {
-  return records.map((record, index) => ({ ...record, refNo: index + 1, slug: slugify(record.title) })).map((record) => {
+  return sortBibliographyRecords(records, "priority").map((record, index) => ({ ...record, refNo: index + 1, slug: slugify(record.title) })).map((record) => {
     citationIndex.set(normalizeTitle(record.title), record);
     return record;
   });
@@ -838,7 +872,8 @@ function renderBibliography(config) {
   const sourceCount = new Set(catalog.flatMap((p) => String(p.source || "").split("+")).filter(Boolean)).size;
   const coverage = citationCoverage();
   const sortOptions = (CITATION_CONFIG.sortModes || []).map((mode) => `<option value="${esc(mode.id)}" ${bibliographySort === mode.id ? "selected" : ""}>${textOf(mode.title)}</option>`).join("");
-  const rankingGuide = `<section class="panel citation-ranking-guide"><h3 id="literature-ranking">${language === "zh" ? "文献优先级排序" : "Literature priority ranking"}</h3><p class="section-intro">${language === "zh" ? "默认顺序为：顶会／顶刊正式发表 → 其他正式发表 → arXiv／预印本 → 其他条目；每一层中，已匹配引用量的论文按引用量降序，未匹配论文排在其后并按年份排序。也可以切换到纯引用量、发表层级或最新发表排序。引用量使用部署时生成的 OpenAlex 快照，未匹配条目不会被误记为 0。" : "The default order is: flagship peer-reviewed venue → other peer-reviewed publication → arXiv/preprint → other records. Within each tier, papers with matched citation counts are sorted by citations; unmatched papers follow by year. You can switch to citation-only, venue-only, or recency sorting. Citation counts use a deployment-time OpenAlex snapshot, and unmatched records are never treated as zero-citation papers."}</p><div class="citation-ranking-controls"><label><span>${language === "zh" ? "排序方式" : "Sort mode"}</span><select id="bibliography-sort">${sortOptions}</select></label><div id="citation-ranking-status" class="citation-ranking-status"><strong>${CITATION_CONFIG.sourceName || "OpenAlex snapshot"}</strong><span>${language === "zh" ? `引用覆盖 ${coverage.matched}/${coverage.total}` : `${coverage.matched}/${coverage.total} citation matches`}</span></div></div><div class="citation-tier-legend"><span><b>1</b>${language === "zh" ? "顶会／顶刊" : "top venue"}</span><span><b>2</b>${language === "zh" ? "其他正式发表" : "other published"}</span><span><b>3</b>${language === "zh" ? "arXiv／预印本" : "preprint"}</span><span><b>4</b>${language === "zh" ? "其他资源" : "other resources"}</span></div></section>`;
+  const roleLegend = (CITATION_CONFIG.readingRoles || []).map((role) => `<span><b>${Number(role.rank || 0) + 1}</b>${textOf(role.title)}</span>`).join("");
+  const rankingGuide = `<section class="panel citation-ranking-guide"><h3 id="literature-ranking">${language === "zh" ? "推荐阅读顺序与排序方式" : "Recommended reading order and sort modes"}</h3><p class="section-intro">${language === "zh" ? "默认顺序按论文在 Agent 自进化研究中的角色组织，而不是让总引用量主导：先读近期领域综述，再读直接自进化方法、评测与治理、关键支撑机制，最后回看 Agent 前置与基础模型前置工作。每一角色层内优先正式发表和较新的论文，引用量只作为辅助信号。纯引用量模式保留用于查看历史影响力。" : "The default order follows each paper's role in agent self-evolution rather than letting total citations dominate: recent field overviews first, then direct self-evolution methods, evaluation and governance, enabling mechanisms, agent foundations, and foundation-model precursors. Within each role, peer-reviewed and recent work is prioritized; citations are only a supporting signal. Citation-only mode remains available for historical influence."}</p><div class="citation-ranking-controls"><label><span>${language === "zh" ? "排序方式" : "Sort mode"}</span><select id="bibliography-sort">${sortOptions}</select></label><div id="citation-ranking-status" class="citation-ranking-status"><strong>${CITATION_CONFIG.sourceName || "OpenAlex snapshot"}</strong><span>${language === "zh" ? `引用覆盖 ${coverage.matched}/${coverage.total}` : `${coverage.matched}/${coverage.total} citation matches`}</span></div></div><div class="reading-role-legend">${roleLegend}</div><div class="ranking-secondary-note">${language === "zh" ? "角色层内部：正式发表优先 → 年份较新优先 → 引用量辅助；Agent 与模型基础层按历史时间顺序排列。" : "Within a role: peer-reviewed first → newer work first → citations as a tie-breaker. Agent and model foundations are shown chronologically."}</div></section>`;
   const analysisGuide = `<section class="panel paper-analysis-guide"><h3 id="paper-reading-schema">${language === "zh" ? "每篇论文的六项阅读框架" : "Six-part reading framework for every paper"}</h3><p class="section-intro">${language === "zh" ? "每个文献卡片都可展开查看：目的／问题、核心思想、合理性、方法逻辑、重要性和相对优势。相对优势表示设计上更适合什么条件，不等于未经实验验证的绝对领先。" : "Every paper card expands into purpose/problem, core idea, rationale, method logic, importance, and comparative advantage. Comparative advantage describes conditions where a design may be better suited; it is not an unverified claim of absolute superiority."}</p><div class="property-grid"><div class="property-card"><b>${language === "zh" ? "核心方法注释" : "Core method note"}</b><span>${language === "zh" ? "关键里程碑论文具有针对该论文单独整理的方法描述。" : "Key milestone papers have a paper-specific method description."}</span></div><div class="property-card"><b>${language === "zh" ? "基于已有摘要归纳" : "Summary-derived"}</b><span>${language === "zh" ? "依据人工补充的简短摘要、更新对象和反馈信号组织六项解释。" : "Uses the curated short summary, update surface, and feedback signal."}</span></div><div class="property-card"><b>${language === "zh" ? "基于元数据保守归纳" : "Metadata-derived"}</b><span>${language === "zh" ? "长尾论文仅依据标题与目录元数据保守归纳；引用方法细节前必须回看原文。" : "Long-tail papers use conservative title and catalog metadata; consult the original paper before citing method details."}</span></div><div class="property-card"><b>${language === "zh" ? "导出" : "Export"}</b><span>${language === "zh" ? "JSON 与 CSV 会同时导出六项结构化解释和归纳依据。" : "JSON and CSV exports include all six fields and the analysis basis."}</span></div></div></section>`;
   const chapters = pageArchitecture("bibliography").chapters || [];
   const statusAndStats = `<div class="integrity-status ${catalog.length > DATA.length ? "pass" : "warn"}"><strong>${catalog.length > DATA.length ? "LIVE" : "SNAPSHOT"}</strong><span>${catalog.length > DATA.length ? (language === "zh" ? "已同步两个综述配套目录，并与人工核验的视觉/CVPR 补充集去重。" : "Live-synced from two survey-maintained catalogs and deduplicated with the curated visual/CVPR supplement.") : (language === "zh" ? "上游同步失败，当前显示人工核验快照。" : "Upstream sync failed; showing the curated snapshot.")}</span></div><div class="grid bibliography-stats"><div class="stat"><b>${catalog.length}</b><span>${language === "zh" ? "篇去重条目" : "deduplicated records"}</span></div><div class="stat"><b>${publishedCount}</b><span>${language === "zh" ? "篇自动识别为正式发表" : "records classified as published"}</span></div><div class="stat"><b>${visionCount}</b><span>${language === "zh" ? "篇视觉/多模态相关" : "vision/multimodal records"}</span></div><div class="stat"><b>${sourceCount}</b><span>${language === "zh" ? "类文献来源" : "source streams"}</span></div></div>`;
@@ -869,11 +904,11 @@ function exportBibliography(format) {
   const rows = sortBibliographyRecords(bibliographySubset().filter((p) => !query || paperSearchText(p).includes(query)));
   const enriched = rows.map((p, index) => {
     const analysis = paperAnalysis(p);
-    return {...p, priorityRank:index + 1, publicationTier:publicationTierLabel(p), citationCount:citationCount(p), citationSource:CITATION_CONFIG.sourceName || "OpenAlex", citationMatchedTitle:citationMetadata(p)?.matchedTitle || "", citationMatchScore:citationMetadata(p)?.matchScore ?? "", analysisBasis:paperAnalysisLabel(analysis), problemMotivation:analysis.purpose, comparativeAdvantage:analysis.advantage, coreIntuition:analysis.core, rationale:analysis.rationale, methodFlow:analysis.logic, experimentalValidation:analysis.validation};
+    return {...p, priorityRank:index + 1, readingRole:readingRoleLabel(p), readingRoleRank:readingRoleRank(p), publicationTier:publicationTierLabel(p), citationCount:citationCount(p), citationSource:CITATION_CONFIG.sourceName || "OpenAlex", citationMatchedTitle:citationMetadata(p)?.matchedTitle || "", citationMatchScore:citationMetadata(p)?.matchScore ?? "", analysisBasis:paperAnalysisLabel(analysis), problemMotivation:analysis.purpose, comparativeAdvantage:analysis.advantage, coreIntuition:analysis.core, rationale:analysis.rationale, methodFlow:analysis.logic, experimentalValidation:analysis.validation};
   });
   if (format === "json") return downloadBlob("agent-self-evolution-bibliography.json", JSON.stringify(enriched, null, 2), "application/json;charset=utf-8");
   if (format === "bibtex") return downloadBlob("agent-self-evolution-bibliography.bib", rows.map(bibtexEntry).join("\n\n"));
-  const fields = ["priorityRank","publicationTier","citationCount","citationSource","citationMatchedTitle","citationMatchScore","year","title","venue","category","subcategory","updateTarget","signal","vision","analysisBasis","problemMotivation","comparativeAdvantage","coreIntuition","rationale","methodFlow","experimentalValidation","url","repo"];
+  const fields = ["priorityRank","readingRole","readingRoleRank","publicationTier","citationCount","citationSource","citationMatchedTitle","citationMatchScore","year","title","venue","category","subcategory","updateTarget","signal","vision","analysisBasis","problemMotivation","comparativeAdvantage","coreIntuition","rationale","methodFlow","experimentalValidation","url","repo"];
   const csv = [fields.join(","), ...enriched.map((p) => fields.map((field) => `"${String(p[field] ?? "").replace(/"/g, '""')}"`).join(","))].join("\n");
   downloadBlob("agent-self-evolution-bibliography.csv", csv, "text/csv;charset=utf-8");
 }
@@ -1041,9 +1076,10 @@ function paperCard(p, priorityRank = null) {
   const citations = citationCount(p);
   const citationMeta = citationMetadata(p);
   const tierLabel = publicationTierLabel(p);
+  const role = readingRoleInfo(p);
   const requested = new URLSearchParams(location.search).get("paper") === slug;
   const analysisSearch = [analysis.purpose,analysis.advantage,analysis.core,analysis.rationale,analysis.logic,analysis.validation,analysis.importance].join(" ");
-  return `<article class="card reference-card" id="ref-${slug}" data-tier="${publicationTier(p)}" data-citations="${citations === null ? -1 : citations}" data-year="${p.year || 0}" data-priority-rank="${priorityRank || ""}" data-search="${esc([p.title,p.venue,p.category,p.subcategory,p.updateTarget,p.signal,type,analysisSearch].join(" ").toLowerCase())}"><div class="card-top"><div>${priorityRank ? `<div class="paper-priority-rank">${language === "zh" ? "优先级" : "priority"} #${priorityRank}</div>` : ""}<h3 data-toc="false"><a class="ref-number" href="#ref-${slug}">[${refNo}]</a> ${esc(p.title)}</h3><div class="meta">${esc(String(p.year || ""))} · ${esc(p.venue || "Unknown venue")} · ${esc(p.category || "Unclassified")}</div></div><div class="badges"><span class="badge ranking-tier">${esc(tierLabel)}</span><span class="badge citation-count ${citations === null ? "citation-pending" : ""}">${citations === null ? (language === "zh" ? "引用量待匹配" : "citations pending") : `${citations.toLocaleString(language === "zh" ? "zh-CN" : "en-US")} ${language === "zh" ? "次引用" : "citations"}`}</span><span class="badge publication-type">${esc(type)}</span><span class="badge ${p.vision ? "vision" : ""}">${p.vision ? "vision/multimodal" : "general"}</span><span class="badge ${p.updateTarget === "model parameters" ? "model" : "scaffold"}">${esc(p.updateTarget || "agent component")}</span><span class="badge">${esc(p.signal || "feedback")}</span></div></div>${citationMeta ? `<div class="citation-source-note">${language === "zh" ? "引用数据" : "Citation data"}: ${esc(CITATION_CONFIG.sourceName || "OpenAlex")} · ${language === "zh" ? "匹配" : "match"} ${Math.round((citationMeta.matchScore || 0) * 100)}%</div>` : ""}${summary ? `<p>${esc(summary)}</p>` : ""}<details class="paper-analysis" ${requested || (priorityRank !== null && priorityRank <= 12 && analysis.basis === "curated-full") ? "open" : ""}><summary><span>${language === "zh" ? "六项论文梳理" : "Six-part paper analysis"}</span><small>${paperAnalysisLabel(analysis)}</small></summary><div class="paper-analysis-disclaimer">${analysis.basis === "curated-full" ? (language === "zh" ? "六项内容已针对该论文单独整理；仍建议在正式引用具体实验数字前回看原文。" : "All six fields are paper-specific; consult the original paper before citing exact experimental numbers.") : analysis.basis === "curated" ? (language === "zh" ? "核心方法描述已针对该论文单独整理；其余字段仍是面向快速阅读的压缩解释。" : "The core method description is paper-specific; the other fields remain compressed reading aids.") : (language === "zh" ? "该概览依据标题、目录分类、更新对象、反馈信号和已有摘要自动归纳；准确引用方法细节时仍应回看原文。" : "This overview is derived from the title, catalog taxonomy, update surface, feedback signal, and available summary. Consult the paper before citing method details.")}</div><div class="paper-analysis-grid"><div><b>${language === "zh" ? "问题动机（含重要性）" : "Problem motivation"}</b><p>${esc(analysis.purpose)}</p>${analysis.basis === "curated-full" ? "" : `<small>${esc(analysis.importance || "")}</small>`}</div><div><b>${language === "zh" ? "相对优势" : "Comparative advantage"}</b><p>${esc(analysis.advantage)}</p></div><div><b>${language === "zh" ? "核心直觉" : "Core intuition"}</b><p>${esc(analysis.core)}</p></div><div><b>${language === "zh" ? "成立依据" : "Why it should work"}</b><p>${esc(analysis.rationale)}</p></div><div><b>${language === "zh" ? "方法流程" : "Method flow"}</b><p>${esc(analysis.logic)}</p></div><div><b>${language === "zh" ? "实验验证" : "Experimental validation"}</b><p>${esc(analysis.validation || "")}</p></div></div></details><div class="links"><a class="link-btn" href="${esc(p.url)}" target="_blank" rel="noopener">${language === "zh" ? "论文" : "Paper"}</a>${p.repo ? `<a class="link-btn repo" href="${esc(p.repo)}" target="_blank" rel="noopener">${language === "zh" ? "代码" : "Code"}</a>` : ""}<button class="link-btn copy-citation" type="button" data-record="${encodeURIComponent(slug)}">${language === "zh" ? "复制引用" : "Copy citation"}</button><a class="link-btn cite-link" href="bibliography.html?paper=${encodeURIComponent(slug)}#ref-${slug}">${language === "zh" ? "引用定位" : "Reference"}</a></div></article>`;
+  return `<article class="card reference-card" id="ref-${slug}" data-reading-role="${esc(role.id)}" data-role-rank="${readingRoleRank(p)}" data-tier="${publicationTier(p)}" data-citations="${citations === null ? -1 : citations}" data-year="${p.year || 0}" data-priority-rank="${priorityRank || ""}" data-search="${esc([p.title,p.venue,p.category,p.subcategory,p.updateTarget,p.signal,type,analysisSearch].join(" ").toLowerCase())}"><div class="card-top"><div>${priorityRank ? `<div class="paper-priority-rank">${language === "zh" ? "推荐序号" : "reading order"} #${priorityRank}</div>` : ""}<h3 data-toc="false"><a class="ref-number" href="#ref-${slug}">[${refNo}]</a> ${esc(p.title)}</h3><div class="meta">${esc(String(p.year || ""))} · ${esc(p.venue || "Unknown venue")} · ${esc(p.category || "Unclassified")}</div></div><div class="badges"><span class="badge reading-role">${esc(textOf(role.title))}</span><span class="badge ranking-tier">${esc(tierLabel)}</span><span class="badge citation-count ${citations === null ? "citation-pending" : ""}">${citations === null ? (language === "zh" ? "引用量待匹配" : "citations pending") : `${citations.toLocaleString(language === "zh" ? "zh-CN" : "en-US")} ${language === "zh" ? "次引用" : "citations"}`}</span><span class="badge publication-type">${esc(type)}</span><span class="badge ${p.vision ? "vision" : ""}">${p.vision ? "vision/multimodal" : "general"}</span><span class="badge ${p.updateTarget === "model parameters" ? "model" : "scaffold"}">${esc(p.updateTarget || "agent component")}</span><span class="badge">${esc(p.signal || "feedback")}</span></div></div>${citationMeta ? `<div class="citation-source-note">${language === "zh" ? "引用数据" : "Citation data"}: ${esc(CITATION_CONFIG.sourceName || "OpenAlex")} · ${language === "zh" ? "匹配" : "match"} ${Math.round((citationMeta.matchScore || 0) * 100)}%</div>` : ""}${summary ? `<p>${esc(summary)}</p>` : ""}<details class="paper-analysis" ${requested || (priorityRank !== null && priorityRank <= 12 && analysis.basis === "curated-full") ? "open" : ""}><summary><span>${language === "zh" ? "六项论文梳理" : "Six-part paper analysis"}</span><small>${paperAnalysisLabel(analysis)}</small></summary><div class="paper-analysis-disclaimer">${analysis.basis === "curated-full" ? (language === "zh" ? "六项内容已针对该论文单独整理；仍建议在正式引用具体实验数字前回看原文。" : "All six fields are paper-specific; consult the original paper before citing exact experimental numbers.") : analysis.basis === "curated" ? (language === "zh" ? "核心方法描述已针对该论文单独整理；其余字段仍是面向快速阅读的压缩解释。" : "The core method description is paper-specific; the other fields remain compressed reading aids.") : (language === "zh" ? "该概览依据标题、目录分类、更新对象、反馈信号和已有摘要自动归纳；准确引用方法细节时仍应回看原文。" : "This overview is derived from the title, catalog taxonomy, update surface, feedback signal, and available summary. Consult the paper before citing method details.")}</div><div class="paper-analysis-grid"><div><b>${language === "zh" ? "问题动机（含重要性）" : "Problem motivation"}</b><p>${esc(analysis.purpose)}</p>${analysis.basis === "curated-full" ? "" : `<small>${esc(analysis.importance || "")}</small>`}</div><div><b>${language === "zh" ? "相对优势" : "Comparative advantage"}</b><p>${esc(analysis.advantage)}</p></div><div><b>${language === "zh" ? "核心直觉" : "Core intuition"}</b><p>${esc(analysis.core)}</p></div><div><b>${language === "zh" ? "成立依据" : "Why it should work"}</b><p>${esc(analysis.rationale)}</p></div><div><b>${language === "zh" ? "方法流程" : "Method flow"}</b><p>${esc(analysis.logic)}</p></div><div><b>${language === "zh" ? "实验验证" : "Experimental validation"}</b><p>${esc(analysis.validation || "")}</p></div></div></details><div class="links"><a class="link-btn" href="${esc(p.url)}" target="_blank" rel="noopener">${language === "zh" ? "论文" : "Paper"}</a>${p.repo ? `<a class="link-btn repo" href="${esc(p.repo)}" target="_blank" rel="noopener">${language === "zh" ? "代码" : "Code"}</a>` : ""}<button class="link-btn copy-citation" type="button" data-record="${encodeURIComponent(slug)}">${language === "zh" ? "复制引用" : "Copy citation"}</button><a class="link-btn cite-link" href="bibliography.html?paper=${encodeURIComponent(slug)}#ref-${slug}">${language === "zh" ? "引用定位" : "Reference"}</a></div></article>`;
 }
 function bindPaperCardEvents() {
   document.querySelectorAll(".copy-citation").forEach((button) => button.addEventListener("click", async () => {
@@ -1060,6 +1096,26 @@ function bindPaperCardEvents() {
     }
   }));
 }
+function renderRecommendedPaperGroups(visible, filtered) {
+  const counts = filtered.reduce((acc, paper) => {
+    const role = readingRoleInfo(paper);
+    acc[role.id] = (acc[role.id] || 0) + 1;
+    return acc;
+  }, {});
+  let currentRole = "";
+  let html = "";
+  visible.forEach((paper, index) => {
+    const role = readingRoleInfo(paper);
+    if (role.id !== currentRole) {
+      if (currentRole) html += "</div></section>";
+      currentRole = role.id;
+      html += `<section class="reference-role-group" data-reading-role="${esc(role.id)}"><header class="reference-role-header"><span>${String((role.rank ?? 0) + 1).padStart(2,"0")}</span><div><h4 data-toc="false">${textOf(role.title)}</h4><p>${textOf(role.description)}</p></div><strong>${counts[role.id] || 0}</strong></header><div class="reference-role-list">`;
+    }
+    html += paperCard(paper, index + 1);
+  });
+  if (currentRole) html += "</div></section>";
+  return html;
+}
 function renderPaperList(query = "") {
   const list = document.getElementById("bibliography-list");
   if (!list) return;
@@ -1072,7 +1128,8 @@ function renderPaperList(query = "") {
   }
   const visible = filtered.slice(0, bibliographyLimit);
   const remaining = Math.max(0, filtered.length - visible.length);
-  list.innerHTML = filtered.length ? `${visible.map((paper, index) => paperCard(paper, index + 1)).join("")}${remaining ? `<button id="load-more-papers" class="load-more">${language === "zh" ? `继续加载 ${Math.min(80, remaining)} 篇（剩余 ${remaining}）` : `Load ${Math.min(80, remaining)} more (${remaining} remaining)`}</button>` : ""}` : `<div class="empty">${language === "zh" ? "没有匹配条目。" : "No matching records."}</div>`;
+  const cards = bibliographySort === "priority" ? renderRecommendedPaperGroups(visible, filtered) : visible.map((paper, index) => paperCard(paper, index + 1)).join("");
+  list.innerHTML = filtered.length ? `${cards}${remaining ? `<button id="load-more-papers" class="load-more">${language === "zh" ? `继续加载 ${Math.min(80, remaining)} 篇（剩余 ${remaining}）` : `Load ${Math.min(80, remaining)} more (${remaining} remaining)`}</button>` : ""}` : `<div class="empty">${language === "zh" ? "没有匹配条目。" : "No matching records."}</div>`;
   bindPaperCardEvents();
   document.getElementById("load-more-papers")?.addEventListener("click", () => { bibliographyLimit += 80; renderPaperList(query); });
   updateCounter(filtered.length === catalog.length ? (language === "zh" ? ` · 已加载 ${visible.length}` : ` · loaded ${visible.length}`) : (language === "zh" ? ` · 匹配 ${filtered.length}，已加载 ${visible.length}` : ` · ${filtered.length} matches, ${visible.length} loaded`));
