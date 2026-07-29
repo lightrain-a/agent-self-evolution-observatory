@@ -45,12 +45,15 @@ It merges and normalizes these records with a manually verified visual/CVPR core
 - publication-type × year heatmap;
 - update-surface × feedback-signal matrix;
 - year, method, feedback, publication status, and vision filters;
+- four ranking modes: research priority, citation count, venue tier, and recency;
+- default total ordering: flagship venue → other peer-reviewed publication → arXiv/preprint → other records; matched papers are ordered by citation count inside each tier, while unmatched papers follow by year;
+- a dated OpenAlex citation snapshot for 21 high-priority papers, with unmatched records explicitly marked rather than treated as zero-citation papers;
 - filter-preserving share links and paginated rendering;
 - global full-text search;
 - linked numbered references from topic pages;
-- JSON, CSV, and generic BibTeX export;
-- a collapsible six-part analysis for every paper: purpose/problem, core idea, rationale, method logic, importance, and conditional comparative advantage;
-- paper-specific method notes for key milestones, with conservative summary- or metadata-derived fallbacks for the long tail;
+- JSON, CSV, and generic BibTeX export, including priority rank, venue tier, citation metadata, and the six analysis fields;
+- a collapsible six-part analysis for every paper in the order: problem motivation, comparative advantage, core intuition, rationale, method flow, and experimental validation;
+- fully paper-specific bilingual six-part analyses for 24 high-priority milestones, with conservative summary- or metadata-derived fallbacks for the long tail;
 - per-record citation copying and print layout.
 
 The site does **not** claim literal mathematical completeness. It targets comprehensive and auditable coverage under the inclusion, exclusion, source, deduplication, and publication-status protocol documented on `bibliography.html#group-coverage-method`.
@@ -91,6 +94,14 @@ Run the online literature and citation audit:
 python3 catalog_audit.py
 ```
 
+Generate a reviewable OpenAlex citation-cache chunk when the API budget is available:
+
+```bash
+python3 build_citation_cache.py --start 0 --limit 100 --chunk-id 0
+```
+
+The script prints JavaScript to standard output and never overwrites repository files. Title/year matches must be reviewed before extending the committed snapshot.
+
 Run the real-browser interaction test. It uses Firefox/geckodriver when available and automatically falls back to Edge/msedgedriver:
 
 ```bash
@@ -106,7 +117,8 @@ The checks cover:
 - sitemap, CNAME, favicon, manifest, robots, and 404 resources;
 - upstream catalog counts and deduplication;
 - missing URLs and unresolved topic-page citations;
-- dynamic catalog loading, three bibliography maps, filters, URL state, and pagination;
+- venue-tier ranking configuration, the dated citation snapshot, four ranking modes, and all 24 bilingual top-paper analyses;
+- dynamic catalog loading, three bibliography maps, sorting, filters, URL state, and pagination;
 - history and direction figures, merged hub rendering, linked resources, legacy redirects, and mobile navigation.
 
 ## Deployment

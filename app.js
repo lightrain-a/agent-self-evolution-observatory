@@ -23,6 +23,9 @@ const CATALOG_SOURCES = [
 ];
 const CATALOG_CACHE_KEY = "agent-evolution-upstream-catalog-v2";
 const CATALOG_CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
+const CITATION_CONFIG = window.CITATION_RANKING_CONFIG || {sourceName:"OpenAlex",cacheVersion:"v1",cacheMaxAgeDays:7,topVenuePatterns:[],sortModes:[]};
+const CITATION_CACHE_KEY = `agent-evolution-citations-${CITATION_CONFIG.cacheVersion || "v1"}`;
+const CITATION_CACHE_MAX_AGE = (CITATION_CONFIG.cacheMaxAgeDays || 7) * 24 * 60 * 60 * 1000;
 const pageId = document.body.dataset.page || "home";
 const initialQuery = new URLSearchParams(location.search);
 let language = localStorage.getItem("agent-evolution-language") || "en";
@@ -32,8 +35,11 @@ let activeYear = initialQuery.get("year") || "all";
 let activePublicationType = initialQuery.get("publication") || "all";
 let activeSignal = initialQuery.get("signal") || "all";
 let visionOnly = initialQuery.get("vision") === "1";
+let bibliographySort = initialQuery.get("sort") || localStorage.getItem("agent-evolution-bibliography-sort") || "priority";
 let bibliographyLimit = 80;
 let citationIndex = new Map();
+let citationCache = loadCitationCache();
+let citationRefreshState = {running:false,total:0,completed:0,matched:0,failed:0,startedAt:null};
 const PAGE_CITATIONS = {
   "home": [
     ["Self-Improvements in Modern Agentic Systems: A Survey", "A Survey of Self-Evolving Agents: What, When, How, and Where to Evolve"],
@@ -340,6 +346,193 @@ function publicationType(record) {
   if (/cvpr|iccv|eccv|iclr|icml|neurips|aaai|acl|emnlp|colm|kdd|www|rss|uist|tmrl|tmlr|pmlr|openreview/.test(venue) || /openaccess\.thecvf|aclanthology|proceedings\.mlr|proceedings\.iclr/.test(url)) return "Published";
   return "Other";
 }
+function loadCitationCache() {
+  const staticChunks = Array.isArray(window.CITATION_CACHE_CHUNKS) ? window.CITATION_CACHE_CHUNKS : [];
+  const staticRecords = {...(CITATION_CONFIG.seedRecords || {})};
+  let staticUpdatedAt = CITATION_CONFIG.snapshotUpdatedAt || null;
+  staticChunks.forEach((chunk) => {
+    Object.assign(staticRecords, chunk?.records || {});
+    if (chunk?.updatedAt && (!staticUpdatedAt || Date.parse(chunk.updatedAt) > Date.parse(staticUpdatedAt))) staticUpdatedAt = chunk.updatedAt;
+  });
+  try {
+    const cached = JSON.parse(localStorage.getItem(CITATION_CACHE_KEY) || "null");
+    if (cached && cached.records && typeof cached.records === "object") {
+      return {source:CITATION_CONFIG.sourceName || "OpenAlex",updatedAt:cached.updatedAt || staticUpdatedAt,records:{...staticRecords,...cached.records}};
+    }
+  } catch (error) {
+    console.warn("Citation cache could not be read", error);
+  }
+  return {source:CITATION_CONFIG.sourceName || "OpenAlex",updatedAt:staticUpdatedAt,records:staticRecords};
+}
+function saveCitationCache() {
+  citationCache.source = CITATION_CONFIG.sourceName || "OpenAlex";
+  citationCache.updatedAt = new Date().toISOString();
+  try { localStorage.setItem(CITATION_CACHE_KEY, JSON.stringify(citationCache)); }
+  catch (error) { console.warn("Citation cache could not be saved", error); }
+}
+function citationMetadata(record) {
+  return citationCache.records?.[normalizeTitle(record.title)] || null;
+}
+function citationCount(record) {
+  const value = citationMetadata(record)?.citationCount;
+  return Number.isFinite(value) ? value : null;
+}
+function topVenueInfo(record) {
+  const text = `${record.venue || ""} ${citationMetadata(record)?.matchedVenue || ""}`.toLowerCase();
+  for (const entry of CITATION_CONFIG.topVenuePatterns || []) {
+    try { if (new RegExp(entry.pattern, "i").test(text)) return entry; }
+    catch (error) { console.warn("Invalid top-venue pattern", entry, error); }
+  }
+  return null;
+}
+function publicationTier(record) {
+  if (topVenueInfo(record) && publicationType(record) === "Published") return 0;
+  const type = publicationType(record);
+  if (type === "Published") return 1;
+  if (type === "Preprint") return 2;
+  if (type === "Other") return 3;
+  return 4;
+}
+function publicationTierLabel(record) {
+  const top = topVenueInfo(record);
+  if (top && publicationType(record) === "Published") return language === "zh" ? `顶会／顶刊 · ${top.label}` : `top venue · ${top.label}`;
+  const type = publicationType(record);
+  const labels = {
+    Published:{en:"peer-reviewed publication",zh:"其他正式发表"},
+    Preprint:{en:"preprint / arXiv",zh:"预印本／arXiv"},
+    Other:{en:"other scholarly record",zh:"其他学术条目"},
+    Repository:{en:"repository",zh:"代码仓库"},
+    "Blog/Report":{en:"report / blog",zh:"报告／博客"},
+  };
+  return textOf(labels[type] || labels.Other);
+}
+function compareCitationValues(a, b) {
+  const ac = citationCount(a), bc = citationCount(b);
+  if (ac === null && bc !== null) return 1;
+  if (ac !== null && bc === null) return -1;
+  if (ac !== null && bc !== null && ac !== bc) return bc - ac;
+  return 0;
+}
+function compareBibliographyRecords(a, b, mode = bibliographySort) {
+  if (mode === "citations") return compareCitationValues(a, b) || publicationTier(a) - publicationTier(b) || (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title);
+  if (mode === "venue") return publicationTier(a) - publicationTier(b) || compareCitationValues(a, b) || (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title);
+  if (mode === "recent") return (b.year || 0) - (a.year || 0) || publicationTier(a) - publicationTier(b) || compareCitationValues(a, b) || a.title.localeCompare(b.title);
+  return publicationTier(a) - publicationTier(b) || compareCitationValues(a, b) || (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title);
+}
+function sortBibliographyRecords(records, mode = bibliographySort) {
+  return [...records].sort((a, b) => compareBibliographyRecords(a, b, mode));
+}
+function citationCoverage(records = catalog) {
+  const matched = records.filter((record) => citationCount(record) !== null).length;
+  return {matched,total:records.length,ratio:records.length ? matched / records.length : 0};
+}
+function titleMatchScore(query, candidate, queryYear, candidateYear) {
+  const q = normalizeTitle(query), c = normalizeTitle(candidate);
+  if (!q || !c) return 0;
+  if (q === c) return 1;
+  const qTokens = new Set(q.split(/\s+/)), cTokens = new Set(c.split(/\s+/));
+  const overlap = [...qTokens].filter((token) => cTokens.has(token)).length;
+  const union = new Set([...qTokens, ...cTokens]).size || 1;
+  let score = overlap / union;
+  if (q.includes(c) || c.includes(q)) score = Math.max(score, Math.min(q.length, c.length) / Math.max(q.length, c.length));
+  if (queryYear && candidateYear) {
+    const gap = Math.abs(Number(queryYear) - Number(candidateYear));
+    if (gap === 0) score += .04;
+    else if (gap > 2) score -= .12;
+  }
+  return Math.max(0, Math.min(1, score));
+}
+async function fetchOpenAlexCitation(record, retries = 3) {
+  const params = new URLSearchParams({search:record.title,"per-page":"5",select:"id,display_name,cited_by_count,publication_year,primary_location",mailto:CITATION_CONFIG.mailto || "contact@lightrain.asia"});
+  for (let attempt = 0; attempt < retries; attempt += 1) {
+    try {
+      const response = await fetch(`https://api.openalex.org/works?${params.toString()}`, {headers:{Accept:"application/json"}});
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const payload = await response.json();
+      const candidates = (payload.results || []).map((candidate) => ({candidate,score:titleMatchScore(record.title,candidate.display_name,record.year,candidate.publication_year)})).sort((a,b) => b.score - a.score);
+      const best = candidates[0];
+      if (!best || best.score < .78) return {matched:false};
+      return {matched:true,citationCount:Number(best.candidate.cited_by_count || 0),openAlexId:best.candidate.id,matchedTitle:best.candidate.display_name,matchedYear:best.candidate.publication_year,matchedVenue:best.candidate.primary_location?.source?.display_name || "",matchScore:Number(best.score.toFixed(3)),fetchedAt:new Date().toISOString()};
+    } catch (error) {
+      if (attempt === retries - 1) return {matched:false,error:String(error)};
+      await new Promise((resolve) => setTimeout(resolve, 600 * (attempt + 1)));
+    }
+  }
+  return {matched:false};
+}
+async function refreshCitationMetadata({force=false} = {}) {
+  if (citationRefreshState.running || !catalog.length) return;
+  const now = Date.now();
+  const pending = [...catalog].sort((a, b) => {
+    const aCore = (window.TOP_PAPER_ANALYSES || {})[a.title] ? 0 : 1;
+    const bCore = (window.TOP_PAPER_ANALYSES || {})[b.title] ? 0 : 1;
+    return aCore - bCore || publicationTier(a) - publicationTier(b) || (b.year || 0) - (a.year || 0) || a.title.localeCompare(b.title);
+  }).filter((record) => {
+    const cached = citationMetadata(record);
+    if (force || !cached) return true;
+    const fetched = Date.parse(cached.fetchedAt || "");
+    return !Number.isFinite(fetched) || now - fetched > CITATION_CACHE_MAX_AGE;
+  });
+  citationRefreshState = {running:true,total:pending.length,completed:0,matched:0,failed:0,startedAt:new Date().toISOString()};
+  updateCitationStatus();
+  let cursor = 0;
+  const workers = Array.from({length:Math.min(6, pending.length)}, async () => {
+    while (cursor < pending.length) {
+      const index = cursor++;
+      const record = pending[index];
+      const result = await fetchOpenAlexCitation(record);
+      citationRefreshState.completed += 1;
+      if (result.matched) {
+        citationCache.records[normalizeTitle(record.title)] = result;
+        citationRefreshState.matched += 1;
+        updateCitationCard(record);
+      } else citationRefreshState.failed += 1;
+      if (citationRefreshState.completed % 20 === 0 || citationRefreshState.completed === pending.length) {
+        saveCitationCache();
+        updateCitationStatus();
+      }
+      if (citationRefreshState.completed % 100 === 0 || citationRefreshState.completed === pending.length) {
+        if (pageId === "bibliography") renderPaperList(document.getElementById("site-search")?.value || "");
+      }
+      await new Promise((resolve) => setTimeout(resolve, 80));
+    }
+  });
+  await Promise.all(workers);
+  citationRefreshState.running = false;
+  saveCitationCache();
+  updateCitationStatus();
+  if (pageId === "bibliography") renderPaperList(document.getElementById("site-search")?.value || "");
+}
+function updateCitationStatus() {
+  const node = document.getElementById("citation-ranking-status");
+  if (!node) return;
+  const coverage = citationCoverage();
+  if (citationRefreshState.running) {
+    node.innerHTML = `<strong>${language === "zh" ? "引用量匹配中" : "Matching citations"}</strong><span>${citationRefreshState.completed}/${citationRefreshState.total} · ${language === "zh" ? `当前覆盖 ${coverage.matched}/${coverage.total}` : `coverage ${coverage.matched}/${coverage.total}`}</span>`;
+    return;
+  }
+  const updated = citationCache.updatedAt ? new Date(citationCache.updatedAt).toLocaleDateString(language === "zh" ? "zh-CN" : "en-US") : (language === "zh" ? "尚未更新" : "not updated");
+  node.innerHTML = `<strong>${CITATION_CONFIG.sourceName || "OpenAlex"}</strong><span>${language === "zh" ? `引用覆盖 ${coverage.matched}/${coverage.total} · 更新 ${updated}` : `${coverage.matched}/${coverage.total} citation matches · updated ${updated}`}</span>`;
+}
+function updateCitationCard(record) {
+  const metadata = citationMetadata(record);
+  if (!metadata) return;
+  const card = document.getElementById(`ref-${record.slug || slugify(record.title)}`);
+  if (!card) return;
+  card.dataset.citations = String(metadata.citationCount ?? -1);
+  const badge = card.querySelector(".citation-count");
+  if (badge) {
+    badge.classList.remove("citation-pending");
+    badge.textContent = `${Number(metadata.citationCount || 0).toLocaleString(language === "zh" ? "zh-CN" : "en-US")} ${language === "zh" ? "次引用" : "citations"}`;
+  }
+  let note = card.querySelector(".citation-source-note");
+  if (!note) {
+    note = document.createElement("div");
+    note.className = "citation-source-note";
+    card.querySelector(".card-top")?.insertAdjacentElement("afterend", note);
+  }
+  note.textContent = `${language === "zh" ? "引用数据" : "Citation data"}: ${CITATION_CONFIG.sourceName || "OpenAlex"} · ${language === "zh" ? "匹配" : "match"} ${Math.round((metadata.matchScore || 0) * 100)}%`;
+}
 function signalFamily(record) {
   const text = `${record.signal || ""} ${record.category || ""} ${record.subcategory || ""}`.toLowerCase();
   if (/counterfactual|formal|test|verification|validity|unit test|sealed/.test(text)) return "verification/tests";
@@ -565,7 +758,8 @@ function renderResourceIndexSection(mode) {
   const summary = Object.entries(grouped).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([key, count]) => `<div class="stat"><b>${count}</b><span>${esc(key)}</span></div>`).join("");
   const title = isRepository ? (language === "zh" ? "动态代码仓库索引" : "Live repository index") : (language === "zh" ? "动态基准与环境索引" : "Live benchmark and environment index");
   const intro = isRepository ? (language === "zh" ? "从合并文献语料中自动抽取带公开代码链接的条目。仓库可用不代表完整复现，需结合上方复现等级审查。" : "Automatically extracts records with public code links from the merged corpus. Repository availability does not imply full reproduction; use the reproduction-readiness criteria above.") : (language === "zh" ? "从合并语料中抽取 benchmark、arena、gym、environment、dataset 与 evaluation 相关条目。" : "Extracts benchmark, arena, gym, environment, dataset, and evaluation records from the merged corpus.");
-  return `<section class="panel live-resource-panel" id="live-${mode}-index"><h2>${title}</h2><p class="section-intro">${intro}</p><div class="grid resource-index-stats">${summary}</div><div class="resource-list">${rows.length ? rows.slice(0, 80).map(paperCard).join("") : `<div class="empty">${language === "zh" ? "动态语料尚未加载。" : "The live corpus has not loaded yet."}</div>`}</div>${rows.length > 80 ? `<p class="resource-index-note">${language === "zh" ? `当前展示前 80 条，共 ${rows.length} 条；完整检索请进入文献库。` : `Showing the first 80 of ${rows.length} records; use the bibliography for the complete searchable set.`}</p>` : ""}</section>`;
+  const rankedRows = sortBibliographyRecords(rows);
+  return `<section class="panel live-resource-panel" id="live-${mode}-index"><h2>${title}</h2><p class="section-intro">${intro}</p><div class="grid resource-index-stats">${summary}</div><div class="resource-list">${rankedRows.length ? rankedRows.slice(0, 80).map((paper, index) => paperCard(paper, index + 1)).join("") : `<div class="empty">${language === "zh" ? "动态语料尚未加载。" : "The live corpus has not loaded yet."}</div>`}</div>${rows.length > 80 ? `<p class="resource-index-note">${language === "zh" ? `当前展示前 80 条，共 ${rows.length} 条；完整检索请进入文献库。` : `Showing the first 80 of ${rows.length} records; use the bibliography for the complete searchable set.`}</p>` : ""}</section>`;
 }
 function renderDynamicResourceIndex(config, mode) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderResourceIndexSection(mode)}`;
@@ -613,8 +807,11 @@ function renderBibliography(config) {
   const visionCount = catalog.filter((p) => p.vision).length;
   const publishedCount = catalog.filter((p) => publicationType(p) === "Published").length;
   const sourceCount = new Set(catalog.flatMap((p) => String(p.source || "").split("+")).filter(Boolean)).size;
+  const coverage = citationCoverage();
+  const sortOptions = (CITATION_CONFIG.sortModes || []).map((mode) => `<option value="${esc(mode.id)}" ${bibliographySort === mode.id ? "selected" : ""}>${textOf(mode.title)}</option>`).join("");
+  const rankingGuide = `<section class="panel citation-ranking-guide"><h2 id="literature-ranking">${language === "zh" ? "文献优先级排序" : "Literature priority ranking"}</h2><p class="section-intro">${language === "zh" ? "默认顺序为：顶会／顶刊正式发表 → 其他正式发表 → arXiv／预印本 → 其他条目；每一层中，已匹配引用量的论文按引用量降序，未匹配论文排在其后并按年份排序。也可以切换到纯引用量、发表层级或最新发表排序。引用量使用部署时生成的 OpenAlex 快照，未匹配条目不会被误记为 0。" : "The default order is: flagship peer-reviewed venue → other peer-reviewed publication → arXiv/preprint → other records. Within each tier, papers with matched citation counts are sorted by citations; unmatched papers follow by year. You can switch to citation-only, venue-only, or recency sorting. Citation counts use a deployment-time OpenAlex snapshot, and unmatched records are never treated as zero-citation papers."}</p><div class="citation-ranking-controls"><label><span>${language === "zh" ? "排序方式" : "Sort mode"}</span><select id="bibliography-sort">${sortOptions}</select></label><div id="citation-ranking-status" class="citation-ranking-status"><strong>${CITATION_CONFIG.sourceName || "OpenAlex snapshot"}</strong><span>${language === "zh" ? `引用覆盖 ${coverage.matched}/${coverage.total}` : `${coverage.matched}/${coverage.total} citation matches`}</span></div></div><div class="citation-tier-legend"><span><b>1</b>${language === "zh" ? "顶会／顶刊" : "top venue"}</span><span><b>2</b>${language === "zh" ? "其他正式发表" : "other published"}</span><span><b>3</b>${language === "zh" ? "arXiv／预印本" : "preprint"}</span><span><b>4</b>${language === "zh" ? "其他资源" : "other resources"}</span></div></section>`;
   const analysisGuide = `<section class="panel paper-analysis-guide"><h2 id="paper-reading-schema">${language === "zh" ? "每篇论文的六项阅读框架" : "Six-part reading framework for every paper"}</h2><p class="section-intro">${language === "zh" ? "每个文献卡片都可展开查看：目的／问题、核心思想、合理性、方法逻辑、重要性和相对优势。相对优势表示设计上更适合什么条件，不等于未经实验验证的绝对领先。" : "Every paper card expands into purpose/problem, core idea, rationale, method logic, importance, and comparative advantage. Comparative advantage describes conditions where a design may be better suited; it is not an unverified claim of absolute superiority."}</p><div class="property-grid"><div class="property-card"><b>${language === "zh" ? "核心方法注释" : "Core method note"}</b><span>${language === "zh" ? "关键里程碑论文具有针对该论文单独整理的方法描述。" : "Key milestone papers have a paper-specific method description."}</span></div><div class="property-card"><b>${language === "zh" ? "基于已有摘要归纳" : "Summary-derived"}</b><span>${language === "zh" ? "依据人工补充的简短摘要、更新对象和反馈信号组织六项解释。" : "Uses the curated short summary, update surface, and feedback signal."}</span></div><div class="property-card"><b>${language === "zh" ? "基于元数据保守归纳" : "Metadata-derived"}</b><span>${language === "zh" ? "长尾论文仅依据标题与目录元数据保守归纳；引用方法细节前必须回看原文。" : "Long-tail papers use conservative title and catalog metadata; consult the original paper before citing method details."}</span></div><div class="property-card"><b>${language === "zh" ? "导出" : "Export"}</b><span>${language === "zh" ? "JSON 与 CSV 会同时导出六项结构化解释和归纳依据。" : "JSON and CSV exports include all six fields and the analysis basis."}</span></div></div></section>`;
-  return `${pageHeader(config)}${renderGroupNav(config.groupsBefore || [])}${renderMergedGroups(config.groupsBefore || [])}<div class="integrity-status ${catalog.length > DATA.length ? "pass" : "warn"}"><strong>${catalog.length > DATA.length ? "LIVE" : "SNAPSHOT"}</strong><span>${catalog.length > DATA.length ? (language === "zh" ? "已同步两个综述配套目录，并与人工核验的视觉/CVPR 补充集去重。" : "Live-synced from two survey-maintained catalogs and deduplicated with the curated visual/CVPR supplement.") : (language === "zh" ? "上游同步失败，当前显示人工核验快照。" : "Upstream sync failed; showing the curated snapshot.")}</span></div><div class="grid bibliography-stats"><div class="stat"><b>${catalog.length}</b><span>${language === "zh" ? "篇去重条目" : "deduplicated records"}</span></div><div class="stat"><b>${publishedCount}</b><span>${language === "zh" ? "篇自动识别为正式发表" : "records classified as published"}</span></div><div class="stat"><b>${visionCount}</b><span>${language === "zh" ? "篇视觉/多模态相关" : "vision/multimodal records"}</span></div><div class="stat"><b>${sourceCount}</b><span>${language === "zh" ? "类文献来源" : "source streams"}</span></div></div>${analysisGuide}${renderTimelineMap()}${renderPublicationTypeMap()}${renderSignalMatrix()}${renderMilestoneTimeline()}<section class="panel"><div class="paper-figure-heading"><div><h2 id="searchable-corpus">${language === "zh" ? "可检索文献语料库" : "Searchable literature corpus"}</h2><p class="section-intro">${language === "zh" ? "筛选结果可直接导出、打印或生成可分享链接。" : "The current filtered set can be exported, printed, or shared through a filter-preserving URL."}</p></div><div class="export-actions"><button class="link-btn export-btn" data-export="json">JSON</button><button class="link-btn export-btn" data-export="csv">CSV</button><button class="link-btn export-btn" data-export="bibtex">BibTeX</button><button class="link-btn" id="copy-filter-link">${language === "zh" ? "复制筛选链接" : "Copy filter link"}</button><button class="link-btn" id="print-page">${language === "zh" ? "打印" : "Print"}</button><button class="link-btn" id="reset-filters">${language === "zh" ? "重置" : "Reset"}</button></div></div><div class="bibliography-controls"><select id="year-filter">${yearOptions}</select><select id="publication-filter">${publicationOptions}</select><select id="signal-filter">${signalOptions}</select><label class="toggle-filter"><input id="vision-filter" type="checkbox" ${visionOnly ? "checked" : ""}> ${language === "zh" ? "仅视觉/多模态" : "Vision/multimodal only"}</label></div><div class="filters">${filters}</div><div id="bibliography-list" class="resource-list"></div></section>`;
+  return `${pageHeader(config)}${renderGroupNav(config.groupsBefore || [])}${renderMergedGroups(config.groupsBefore || [])}<div class="integrity-status ${catalog.length > DATA.length ? "pass" : "warn"}"><strong>${catalog.length > DATA.length ? "LIVE" : "SNAPSHOT"}</strong><span>${catalog.length > DATA.length ? (language === "zh" ? "已同步两个综述配套目录，并与人工核验的视觉/CVPR 补充集去重。" : "Live-synced from two survey-maintained catalogs and deduplicated with the curated visual/CVPR supplement.") : (language === "zh" ? "上游同步失败，当前显示人工核验快照。" : "Upstream sync failed; showing the curated snapshot.")}</span></div><div class="grid bibliography-stats"><div class="stat"><b>${catalog.length}</b><span>${language === "zh" ? "篇去重条目" : "deduplicated records"}</span></div><div class="stat"><b>${publishedCount}</b><span>${language === "zh" ? "篇自动识别为正式发表" : "records classified as published"}</span></div><div class="stat"><b>${visionCount}</b><span>${language === "zh" ? "篇视觉/多模态相关" : "vision/multimodal records"}</span></div><div class="stat"><b>${sourceCount}</b><span>${language === "zh" ? "类文献来源" : "source streams"}</span></div></div>${rankingGuide}${analysisGuide}${renderTimelineMap()}${renderPublicationTypeMap()}${renderSignalMatrix()}${renderMilestoneTimeline()}<section class="panel"><div class="paper-figure-heading"><div><h2 id="searchable-corpus">${language === "zh" ? "可检索文献语料库" : "Searchable literature corpus"}</h2><p class="section-intro">${language === "zh" ? "筛选结果可直接导出、打印或生成可分享链接。" : "The current filtered set can be exported, printed, or shared through a filter-preserving URL."}</p></div><div class="export-actions"><button class="link-btn export-btn" data-export="json">JSON</button><button class="link-btn export-btn" data-export="csv">CSV</button><button class="link-btn export-btn" data-export="bibtex">BibTeX</button><button class="link-btn" id="copy-filter-link">${language === "zh" ? "复制筛选链接" : "Copy filter link"}</button><button class="link-btn" id="print-page">${language === "zh" ? "打印" : "Print"}</button><button class="link-btn" id="reset-filters">${language === "zh" ? "重置" : "Reset"}</button></div></div><div class="bibliography-controls"><select id="year-filter">${yearOptions}</select><select id="publication-filter">${publicationOptions}</select><select id="signal-filter">${signalOptions}</select><label class="toggle-filter"><input id="vision-filter" type="checkbox" ${visionOnly ? "checked" : ""}> ${language === "zh" ? "仅视觉/多模态" : "Vision/multimodal only"}</label></div><div class="filters">${filters}</div><div id="bibliography-list" class="resource-list"></div></section>`;
 }
 function citationText(p) {
   const venue = p.venue || "";
@@ -633,14 +830,14 @@ function downloadBlob(filename, content, type = "text/plain;charset=utf-8") {
 }
 function exportBibliography(format) {
   const query = (document.getElementById("site-search")?.value || "").trim().toLowerCase();
-  const rows = bibliographySubset().filter((p) => !query || paperSearchText(p).includes(query));
-  const enriched = rows.map((p) => {
+  const rows = sortBibliographyRecords(bibliographySubset().filter((p) => !query || paperSearchText(p).includes(query)));
+  const enriched = rows.map((p, index) => {
     const analysis = paperAnalysis(p);
-    return {...p, analysisBasis:paperAnalysisLabel(analysis), purpose:analysis.purpose, coreIdea:analysis.core, rationale:analysis.rationale, methodLogic:analysis.logic, importance:analysis.importance, comparativeAdvantage:analysis.advantage};
+    return {...p, priorityRank:index + 1, publicationTier:publicationTierLabel(p), citationCount:citationCount(p), citationSource:CITATION_CONFIG.sourceName || "OpenAlex", citationMatchedTitle:citationMetadata(p)?.matchedTitle || "", citationMatchScore:citationMetadata(p)?.matchScore ?? "", analysisBasis:paperAnalysisLabel(analysis), problemMotivation:analysis.purpose, comparativeAdvantage:analysis.advantage, coreIntuition:analysis.core, rationale:analysis.rationale, methodFlow:analysis.logic, experimentalValidation:analysis.validation};
   });
   if (format === "json") return downloadBlob("agent-self-evolution-bibliography.json", JSON.stringify(enriched, null, 2), "application/json;charset=utf-8");
   if (format === "bibtex") return downloadBlob("agent-self-evolution-bibliography.bib", rows.map(bibtexEntry).join("\n\n"));
-  const fields = ["year","title","venue","category","subcategory","updateTarget","signal","vision","analysisBasis","purpose","coreIdea","rationale","methodLogic","importance","comparativeAdvantage","url","repo"];
+  const fields = ["priorityRank","publicationTier","citationCount","citationSource","citationMatchedTitle","citationMatchScore","year","title","venue","category","subcategory","updateTarget","signal","vision","analysisBasis","problemMotivation","comparativeAdvantage","coreIntuition","rationale","methodFlow","experimentalValidation","url","repo"];
   const csv = [fields.join(","), ...enriched.map((p) => fields.map((field) => `"${String(p[field] ?? "").replace(/"/g, '""')}"`).join(","))].join("\n");
   downloadBlob("agent-self-evolution-bibliography.csv", csv, "text/csv;charset=utf-8");
 }
@@ -698,6 +895,19 @@ function paperAnalysis(record) {
   const signal = paperSignalLabel(record);
   const summary = language === "zh" ? (record.summaryZh || record.summary || "") : (record.summary || record.summaryZh || "");
   const note = paperMethodNote(record);
+  const topAnalysis = (window.TOP_PAPER_ANALYSES || {})[record.title];
+  if (topAnalysis) {
+    return {
+      basis:"curated-full",
+      purpose:textOf(topAnalysis.problem),
+      advantage:textOf(topAnalysis.advantage),
+      core:textOf(topAnalysis.intuition),
+      rationale:textOf(topAnalysis.rationale),
+      logic:textOf(topAnalysis.flow),
+      validation:textOf(topAnalysis.validation),
+      importance:textOf(topAnalysis.problem)
+    };
+  }
   const topic = record.subcategory || record.category || record.title;
   const familyText = {
     parameter:{
@@ -749,7 +959,8 @@ function paperAnalysis(record) {
       rationale:language === "zh" ? "当术语和评测口径分散时，统一分类能够暴露方法之间真正可比和不可比的部分。" : "When terminology and evaluation practices are fragmented, a shared taxonomy reveals what is and is not genuinely comparable.",
       logic:language === "zh" ? "定义检索范围 → 收集并去重论文 → 按统一维度编码 → 比较方法与证据 → 总结缺口和研究议程。" : "Define scope → collect and deduplicate papers → code them with shared dimensions → compare methods and evidence → identify gaps and an agenda.",
       importance:language === "zh" ? "综述为领域提供共同语言，降低重复造轮子和错误比较的风险。" : "A survey supplies common language for the field and reduces duplicated work and invalid comparisons.",
-      advantage:language === "zh" ? "相较单篇方法论文，它提供跨方法的全局视角；但它不替代具体方法的实验验证。" : "Compared with a single method paper, it provides a field-wide view, but it does not replace empirical validation of individual methods."
+      advantage:language === "zh" ? "相较单篇方法论文，它提供跨方法的全局视角；但它不替代具体方法的实验验证。" : "Compared with a single method paper, it provides a field-wide view, but it does not replace empirical validation of individual methods.",
+      validation:language === "zh" ? "核查检索协议、覆盖范围、去重规则、分类一致性和关键结论是否由正式来源支持，并与其他综述的覆盖差异比较。" : "Audit the search protocol, coverage, deduplication, taxonomy consistency, and source support for key claims, then compare coverage with other surveys."
     };
   }
   if (kind === "benchmark") {
@@ -760,7 +971,8 @@ function paperAnalysis(record) {
       rationale:familyText.rationale[language],
       logic:language === "zh" ? `定义目标能力或失败 → 构造受控数据与任务 → 运行被测系统 → 计算统一指标 → 分析能力边界与失败来源。` : `Define the target capability or failure → construct controlled data and tasks → run evaluated systems → compute shared metrics → analyze capability boundaries and failure sources.`,
       importance:familyText.importance[language],
-      advantage:familyText.advantage[language]
+      advantage:familyText.advantage[language],
+      validation:language === "zh" ? `在统一任务、失败类型和指标上运行多种代表系统，报告总体结果、分组结果、评价一致性和基准设计消融。` : `Run representative systems under shared tasks, failure types, and metrics; report aggregate and subgroup results, evaluator agreement, and benchmark-design ablations.`
     };
   }
   return {
@@ -770,27 +982,32 @@ function paperAnalysis(record) {
     rationale:familyText.rationale[language],
     logic:language === "zh" ? `收集 ${signal} → 生成针对 ${target} 的候选更新 → 在任务或留出数据上评估 → 保留、修订或拒绝更新 → 在后续任务中验证持久收益。` : `Collect ${signal} → propose a change to ${target} → evaluate it on tasks or held-out data → retain, revise, or reject the update → verify persistent benefit on later tasks.`,
     importance:familyText.importance[language],
-    advantage:familyText.advantage[language]
+    advantage:familyText.advantage[language],
+    validation:language === "zh" ? `在留出或后续任务上与最强同类方法比较 ${target} 的收益、成本和回退；同时消融关键更新步骤、反馈来源和提交门控。` : `Compare gains, cost, and regressions for ${target} against the strongest same-family baselines on held-out or later tasks, with ablations of the update step, feedback source, and commitment gate.`
   };
 }
 function paperAnalysisLabel(analysis) {
+  if (analysis.basis === "curated-full") return language === "zh" ? "人工核验六项分析" : "curated six-part analysis";
   if (analysis.basis === "curated") return language === "zh" ? "核心方法注释" : "core method note";
   if (analysis.basis === "summary") return language === "zh" ? "基于已有摘要归纳" : "derived from available summary";
   return language === "zh" ? "基于元数据保守归纳" : "conservative metadata-derived overview";
 }
 function paperSearchText(record) {
   const analysis = paperAnalysis(record);
-  return [record.title,record.venue,record.category,record.subcategory,record.updateTarget,record.signal,publicationType(record),analysis.purpose,analysis.core,analysis.rationale,analysis.logic,analysis.importance,analysis.advantage].join(" ").toLowerCase();
+  return [record.title,record.venue,record.category,record.subcategory,record.updateTarget,record.signal,publicationType(record),analysis.purpose,analysis.advantage,analysis.core,analysis.rationale,analysis.logic,analysis.validation,analysis.importance].join(" ").toLowerCase();
 }
-function paperCard(p) {
+function paperCard(p, priorityRank = null) {
   const summary = language === "zh" ? (p.summaryZh || p.summary || "") : (p.summary || p.summaryZh || "");
   const refNo = p.refNo || catalog.indexOf(p) + 1;
   const slug = p.slug || slugify(p.title);
   const type = publicationType(p);
   const analysis = paperAnalysis(p);
+  const citations = citationCount(p);
+  const citationMeta = citationMetadata(p);
+  const tierLabel = publicationTierLabel(p);
   const requested = new URLSearchParams(location.search).get("paper") === slug;
-  const analysisSearch = [analysis.purpose,analysis.core,analysis.rationale,analysis.logic,analysis.importance,analysis.advantage].join(" ");
-  return `<article class="card reference-card" id="ref-${slug}" data-search="${esc([p.title,p.venue,p.category,p.subcategory,p.updateTarget,p.signal,type,analysisSearch].join(" ").toLowerCase())}"><div class="card-top"><div><h3><a class="ref-number" href="#ref-${slug}">[${refNo}]</a> ${esc(p.title)}</h3><div class="meta">${esc(String(p.year || ""))} · ${esc(p.venue || "Unknown venue")} · ${esc(p.category || "Unclassified")}</div></div><div class="badges"><span class="badge publication-type">${esc(type)}</span><span class="badge ${p.vision ? "vision" : ""}">${p.vision ? "vision/multimodal" : "general"}</span><span class="badge ${p.updateTarget === "model parameters" ? "model" : "scaffold"}">${esc(p.updateTarget || "agent component")}</span><span class="badge">${esc(p.signal || "feedback")}</span></div></div>${summary ? `<p>${esc(summary)}</p>` : ""}<details class="paper-analysis" ${requested ? "open" : ""}><summary><span>${language === "zh" ? "六项论文梳理" : "Six-part paper analysis"}</span><small>${paperAnalysisLabel(analysis)}</small></summary><div class="paper-analysis-disclaimer">${analysis.basis === "curated" ? (language === "zh" ? "核心方法描述已针对该论文单独整理；其余字段仍是面向快速阅读的压缩解释。" : "The core method description is paper-specific; the other fields remain compressed reading aids.") : (language === "zh" ? "该概览依据标题、目录分类、更新对象、反馈信号和已有摘要自动归纳；准确引用方法细节时仍应回看原文。" : "This overview is derived from the title, catalog taxonomy, update surface, feedback signal, and available summary. Consult the paper before citing method details.")}</div><div class="paper-analysis-grid"><div><b>${language === "zh" ? "目的／问题" : "Purpose / problem"}</b><p>${esc(analysis.purpose)}</p></div><div><b>${language === "zh" ? "核心思想" : "Core idea"}</b><p>${esc(analysis.core)}</p></div><div><b>${language === "zh" ? "合理性" : "Why it is reasonable"}</b><p>${esc(analysis.rationale)}</p></div><div><b>${language === "zh" ? "方法逻辑" : "Method logic"}</b><p>${esc(analysis.logic)}</p></div><div><b>${language === "zh" ? "重要性" : "Why it matters"}</b><p>${esc(analysis.importance)}</p></div><div><b>${language === "zh" ? "相对优势" : "Comparative advantage"}</b><p>${esc(analysis.advantage)}</p></div></div></details><div class="links"><a class="link-btn" href="${esc(p.url)}" target="_blank" rel="noopener">${language === "zh" ? "论文" : "Paper"}</a>${p.repo ? `<a class="link-btn repo" href="${esc(p.repo)}" target="_blank" rel="noopener">${language === "zh" ? "代码" : "Code"}</a>` : ""}<button class="link-btn copy-citation" type="button" data-record="${encodeURIComponent(slug)}">${language === "zh" ? "复制引用" : "Copy citation"}</button><a class="link-btn cite-link" href="bibliography.html?paper=${encodeURIComponent(slug)}#ref-${slug}">${language === "zh" ? "引用定位" : "Reference"}</a></div></article>`;
+  const analysisSearch = [analysis.purpose,analysis.advantage,analysis.core,analysis.rationale,analysis.logic,analysis.validation,analysis.importance].join(" ");
+  return `<article class="card reference-card" id="ref-${slug}" data-tier="${publicationTier(p)}" data-citations="${citations === null ? -1 : citations}" data-year="${p.year || 0}" data-priority-rank="${priorityRank || ""}" data-search="${esc([p.title,p.venue,p.category,p.subcategory,p.updateTarget,p.signal,type,analysisSearch].join(" ").toLowerCase())}"><div class="card-top"><div>${priorityRank ? `<div class="paper-priority-rank">${language === "zh" ? "优先级" : "priority"} #${priorityRank}</div>` : ""}<h3><a class="ref-number" href="#ref-${slug}">[${refNo}]</a> ${esc(p.title)}</h3><div class="meta">${esc(String(p.year || ""))} · ${esc(p.venue || "Unknown venue")} · ${esc(p.category || "Unclassified")}</div></div><div class="badges"><span class="badge ranking-tier">${esc(tierLabel)}</span><span class="badge citation-count ${citations === null ? "citation-pending" : ""}">${citations === null ? (language === "zh" ? "引用量待匹配" : "citations pending") : `${citations.toLocaleString(language === "zh" ? "zh-CN" : "en-US")} ${language === "zh" ? "次引用" : "citations"}`}</span><span class="badge publication-type">${esc(type)}</span><span class="badge ${p.vision ? "vision" : ""}">${p.vision ? "vision/multimodal" : "general"}</span><span class="badge ${p.updateTarget === "model parameters" ? "model" : "scaffold"}">${esc(p.updateTarget || "agent component")}</span><span class="badge">${esc(p.signal || "feedback")}</span></div></div>${citationMeta ? `<div class="citation-source-note">${language === "zh" ? "引用数据" : "Citation data"}: ${esc(CITATION_CONFIG.sourceName || "OpenAlex")} · ${language === "zh" ? "匹配" : "match"} ${Math.round((citationMeta.matchScore || 0) * 100)}%</div>` : ""}${summary ? `<p>${esc(summary)}</p>` : ""}<details class="paper-analysis" ${requested || (priorityRank !== null && priorityRank <= 12 && analysis.basis === "curated-full") ? "open" : ""}><summary><span>${language === "zh" ? "六项论文梳理" : "Six-part paper analysis"}</span><small>${paperAnalysisLabel(analysis)}</small></summary><div class="paper-analysis-disclaimer">${analysis.basis === "curated-full" ? (language === "zh" ? "六项内容已针对该论文单独整理；仍建议在正式引用具体实验数字前回看原文。" : "All six fields are paper-specific; consult the original paper before citing exact experimental numbers.") : analysis.basis === "curated" ? (language === "zh" ? "核心方法描述已针对该论文单独整理；其余字段仍是面向快速阅读的压缩解释。" : "The core method description is paper-specific; the other fields remain compressed reading aids.") : (language === "zh" ? "该概览依据标题、目录分类、更新对象、反馈信号和已有摘要自动归纳；准确引用方法细节时仍应回看原文。" : "This overview is derived from the title, catalog taxonomy, update surface, feedback signal, and available summary. Consult the paper before citing method details.")}</div><div class="paper-analysis-grid"><div><b>${language === "zh" ? "问题动机（含重要性）" : "Problem motivation"}</b><p>${esc(analysis.purpose)}</p>${analysis.basis === "curated-full" ? "" : `<small>${esc(analysis.importance || "")}</small>`}</div><div><b>${language === "zh" ? "相对优势" : "Comparative advantage"}</b><p>${esc(analysis.advantage)}</p></div><div><b>${language === "zh" ? "核心直觉" : "Core intuition"}</b><p>${esc(analysis.core)}</p></div><div><b>${language === "zh" ? "成立依据" : "Why it should work"}</b><p>${esc(analysis.rationale)}</p></div><div><b>${language === "zh" ? "方法流程" : "Method flow"}</b><p>${esc(analysis.logic)}</p></div><div><b>${language === "zh" ? "实验验证" : "Experimental validation"}</b><p>${esc(analysis.validation || "")}</p></div></div></details><div class="links"><a class="link-btn" href="${esc(p.url)}" target="_blank" rel="noopener">${language === "zh" ? "论文" : "Paper"}</a>${p.repo ? `<a class="link-btn repo" href="${esc(p.repo)}" target="_blank" rel="noopener">${language === "zh" ? "代码" : "Code"}</a>` : ""}<button class="link-btn copy-citation" type="button" data-record="${encodeURIComponent(slug)}">${language === "zh" ? "复制引用" : "Copy citation"}</button><a class="link-btn cite-link" href="bibliography.html?paper=${encodeURIComponent(slug)}#ref-${slug}">${language === "zh" ? "引用定位" : "Reference"}</a></div></article>`;
 }
 function bindPaperCardEvents() {
   document.querySelectorAll(".copy-citation").forEach((button) => button.addEventListener("click", async () => {
@@ -811,7 +1028,7 @@ function renderPaperList(query = "") {
   const list = document.getElementById("bibliography-list");
   if (!list) return;
   const q = query.trim().toLowerCase();
-  const filtered = bibliographySubset().filter((p) => !q || paperSearchText(p).includes(q));
+  const filtered = sortBibliographyRecords(bibliographySubset().filter((p) => !q || paperSearchText(p).includes(q)));
   const requested = new URLSearchParams(location.search).get("paper");
   if (requested) {
     const requestedIndex = filtered.findIndex((p) => p.slug === requested);
@@ -819,7 +1036,7 @@ function renderPaperList(query = "") {
   }
   const visible = filtered.slice(0, bibliographyLimit);
   const remaining = Math.max(0, filtered.length - visible.length);
-  list.innerHTML = filtered.length ? `${visible.map(paperCard).join("")}${remaining ? `<button id="load-more-papers" class="load-more">${language === "zh" ? `继续加载 ${Math.min(80, remaining)} 篇（剩余 ${remaining}）` : `Load ${Math.min(80, remaining)} more (${remaining} remaining)`}</button>` : ""}` : `<div class="empty">${language === "zh" ? "没有匹配条目。" : "No matching records."}</div>`;
+  list.innerHTML = filtered.length ? `${visible.map((paper, index) => paperCard(paper, index + 1)).join("")}${remaining ? `<button id="load-more-papers" class="load-more">${language === "zh" ? `继续加载 ${Math.min(80, remaining)} 篇（剩余 ${remaining}）` : `Load ${Math.min(80, remaining)} more (${remaining} remaining)`}</button>` : ""}` : `<div class="empty">${language === "zh" ? "没有匹配条目。" : "No matching records."}</div>`;
   bindPaperCardEvents();
   document.getElementById("load-more-papers")?.addEventListener("click", () => { bibliographyLimit += 80; renderPaperList(query); });
   updateCounter(filtered.length === catalog.length ? (language === "zh" ? ` · 已加载 ${visible.length}` : ` · loaded ${visible.length}`) : (language === "zh" ? ` · 匹配 ${filtered.length}，已加载 ${visible.length}` : ` · ${filtered.length} matches, ${visible.length} loaded`));
@@ -831,7 +1048,7 @@ function renderGlobalSearch(query) {
   const q = query.toLowerCase();
   const directionMatches = portfolioDirections().filter((direction) => [direction.code,textOf(direction.title),textOf(direction.question),textOf(direction.boundary)].join(" ").toLowerCase().includes(q)).slice(0, 10);
   const ideaMatches = portfolioIdeas().filter((idea) => { const explanation = ideaExplanation(idea.name); const comparison = ideaComparison(idea.name); return [idea.name,textOf(explanation.purpose),textOf(explanation.core),textOf(explanation.rationale),textOf(explanation.logic),textOf(comparison.importance),textOf(comparison.advantage),textOf(idea.thesis),textOf(idea.experiment),textOf(idea.track)].join(" ").toLowerCase().includes(q); }).slice(0, 12);
-  const paperMatches = catalog.filter((p) => paperSearchText(p).includes(q)).slice(0, 12);
+  const paperMatches = sortBibliographyRecords(catalog.filter((p) => paperSearchText(p).includes(q))).slice(0, 12);
   if (!box) {
     box = document.createElement("section"); box.id = "global-search-results"; box.className = "panel";
     document.getElementById("dynamic-page")?.prepend(box);
@@ -863,12 +1080,13 @@ function hydrateCitations(root = document) {
 }
 function currentFilterUrl() {
   const url = new URL(location.href);
-  ["method","year","publication","signal","vision","paper","q"].forEach((key) => url.searchParams.delete(key));
+  ["method","year","publication","signal","vision","sort","paper","q"].forEach((key) => url.searchParams.delete(key));
   if (activeFilter !== "all") url.searchParams.set("method", activeFilter);
   if (activeYear !== "all") url.searchParams.set("year", activeYear);
   if (activePublicationType !== "all") url.searchParams.set("publication", activePublicationType);
   if (activeSignal !== "all") url.searchParams.set("signal", activeSignal);
   if (visionOnly) url.searchParams.set("vision", "1");
+  if (bibliographySort !== "priority") url.searchParams.set("sort", bibliographySort);
   const query = document.getElementById("site-search")?.value.trim();
   if (query) url.searchParams.set("q", query);
   url.hash = "searchable-corpus";
@@ -959,6 +1177,11 @@ function bindPageEvents() {
     visionOnly = Boolean(event.target.checked);
     refreshBibliography();
   });
+  document.getElementById("bibliography-sort")?.addEventListener("change", (event) => {
+    bibliographySort = event.target.value || "priority";
+    localStorage.setItem("agent-evolution-bibliography-sort", bibliographySort);
+    refreshBibliography();
+  });
   document.querySelectorAll(".export-btn").forEach((button) => button.addEventListener("click", () => exportBibliography(button.dataset.export || "json")));
   document.getElementById("copy-filter-link")?.addEventListener("click", async (event) => {
     try {
@@ -1028,6 +1251,7 @@ function renderPage() {
   if (pageId === "bibliography") renderPaperList(document.getElementById("site-search")?.value || "");
   bindPaperCardEvents();
   hydrateCitations(root);
+  updateCitationStatus();
   buildToc();
 }
 

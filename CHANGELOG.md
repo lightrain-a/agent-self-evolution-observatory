@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-07-29 · Venue/citation literature ranking and curated top-paper analyses
+
+- Added a total ordering for the full bibliography: flagship peer-reviewed venues first, then other peer-reviewed publications, arXiv/preprints, and other records.
+- Added four switchable ranking modes: research priority, citation count, venue tier, and recency; non-default sort state is preserved in shareable URLs.
+- Added `citation-ranking-data.js` with a dated OpenAlex snapshot for twenty-one high-priority papers, including an exact DOI match for BERT. Unmatched papers remain explicitly pending and are never treated as zero-citation papers.
+- Added venue-tier badges, citation badges, priority ranks, citation source/match metadata, coverage reporting, and citation-aware JSON/CSV exports.
+- Added `top-paper-analysis-data.js` with paper-specific bilingual analyses for twenty-four milestone papers in the required order: problem motivation → comparative advantage → core intuition → rationale → method flow → experimental validation.
+- Reordered every bibliography card to use the same six-part reading sequence; the first twelve curated priority papers open automatically, while long-tail records retain visibly labeled conservative fallbacks.
+- Added `build_citation_cache.py` for reviewable, chunked OpenAlex snapshot generation without overwriting repository files.
+- Extended static and Edge tests for venue patterns, citation snapshot coverage, ranking order, sort switching, all twenty-four bilingual analyses, export fields, and the first eighty ranked paper cards.
+
 ## 2026-07-29 · Six-part analysis for every paper
 
 - Added a collapsible six-part reading structure to every bibliography card: purpose/problem, core idea, rationale, method logic, importance, and conditional comparative advantage.

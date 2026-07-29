@@ -46,7 +46,9 @@ REQUIRED_STATIC = [
     "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
     "agent-self-evolution-history-en.svg", "agent-self-evolution-history-zh.svg",
-    "portfolio-data.js", "direction-guide-data.js", "idea-explanations.js", "idea-comparisons.js", "paper-analysis-data.js", "history-figure-data.js", "catalog_audit.py",
+    "portfolio-data.js", "direction-guide-data.js", "idea-explanations.js", "idea-comparisons.js",
+    "paper-analysis-data.js", "top-paper-analysis-data.js", "citation-ranking-data.js",
+    "history-figure-data.js", "catalog_audit.py", "build_citation_cache.py",
     "browser_smoke_test.py", "CHANGELOG.md",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
@@ -189,10 +191,40 @@ def main() -> None:
     missing_method_notes = [title for title in method_note_titles if title not in data_text]
     if missing_method_notes:
         fail(f"paper-specific method notes missing from curated bibliography: {missing_method_notes}")
+
+    top_analysis_text = (ROOT / "top-paper-analysis-data.js").read_text(encoding="utf-8")
+    top_blocks = re.findall(r'^  "([^"]+)": \{\n(.*?)(?=^  "[^"]+": \{|^\};)', top_analysis_text, re.MULTILINE | re.DOTALL)
+    if len(top_blocks) != 24 or len({title for title, _ in top_blocks}) != 24:
+        fail("top-paper analysis must contain exactly 24 unique paper analyses")
+    for title, block in top_blocks:
+        if title not in data_text:
+            fail(f"top-paper analysis missing from curated bibliography: {title}")
+        for field in ("problem", "advantage", "intuition", "rationale", "flow", "validation"):
+            match = re.search(rf'{field}:\{{en:"([^"]+)",zh:"([^"]+)"\}}', block)
+            if not match or not match.group(1).strip() or not match.group(2).strip():
+                fail(f"top paper {title} is missing bilingual {field}")
+
+    ranking_text = (ROOT / "citation-ranking-data.js").read_text(encoding="utf-8")
+    for sort_id in ("priority", "citations", "venue", "recent"):
+        if f'id:"{sort_id}"' not in ranking_text:
+            fail(f"citation ranking config is missing sort mode {sort_id}")
+    if len(re.findall(r'label:"[^"]+",pattern:', ranking_text)) < 15:
+        fail("citation ranking config must define at least 15 top-venue patterns")
+    if ranking_text.count("citationCount:") < 20 or "snapshotUpdatedAt:" not in ranking_text:
+        fail("citation ranking config must contain a dated deployment snapshot for at least 20 core papers")
+    bibliography_html = (ROOT / "bibliography.html").read_text(encoding="utf-8")
+    required_bibliography_scripts = ["citation-ranking-data.js", "paper-analysis-data.js", "top-paper-analysis-data.js", "app.js"]
+    script_positions = [bibliography_html.find(f'src="{name}"') for name in required_bibliography_scripts]
+    if any(position < 0 for position in script_positions) or script_positions != sorted(script_positions):
+        fail("bibliography must load ranking and analysis scripts before app.js")
+
     app_text = (ROOT / "app.js").read_text(encoding="utf-8")
-    for marker in ["Purpose / problem", "Core idea", "Why it is reasonable", "Method logic", "Why it matters", "Comparative advantage"]:
+    for marker in ["Problem motivation", "Comparative advantage", "Core intuition", "Why it should work", "Method flow", "Experimental validation"]:
         if marker not in app_text:
             fail(f"paper-card analysis renderer is missing {marker}")
+    for marker in ["sortBibliographyRecords", "publicationTier", "bibliography-sort", "citation-ranking-status", "citationCount"]:
+        if marker not in app_text:
+            fail(f"literature ranking implementation is missing {marker}")
 
     nav_targets = sorted(set(re.findall(r'\["([a-z0-9-]+\.html)"', data_text.split("window.SUPPLEMENTAL_PAPERS", 1)[0])))
     if set(nav_targets) != set(CANONICAL_PAGES):

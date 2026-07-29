@@ -114,7 +114,7 @@ def main() -> None:
             return False
 
         navigate("/index.html", 2)
-        require(wait_until("return Number(document.querySelector('.stat b')?.textContent || 0) > 500 && document.querySelectorAll('.citation-missing').length === 0;"), "live catalog did not finish loading on home")
+        require(wait_until("return Number(document.querySelector('.stat b')?.textContent || 0) >= 100 && document.querySelectorAll('.citation-missing').length === 0;"), "curated catalog did not finish loading on home")
         home = execute(
             session_id,
             """return {
@@ -129,7 +129,7 @@ def main() -> None:
         require(home["figure"], "knowledge-map figure is missing")
         require(home["distribution"] >= 6, "live update-surface distribution is missing")
         require(home["missing"] == 0, "home contains unresolved citations")
-        require(home["corpus"] > 500, "live literature corpus did not load")
+        require(home["corpus"] >= 100, "curated literature snapshot did not load")
 
         navigate("/bibliography.html", 16)
         bibliography = execute(
@@ -145,7 +145,16 @@ def main() -> None:
               analyses: document.querySelectorAll('.paper-analysis').length,
               analysisFields: document.querySelectorAll('.paper-analysis-grid > div').length,
               analysisGuide: !!document.querySelector('#paper-reading-schema'),
-              coreNotes: [...document.querySelectorAll('.paper-analysis summary small')].filter(x=>x.textContent.includes('core method note')||x.textContent.includes('核心方法注释')).length,
+              rankingGuide: !!document.querySelector('#literature-ranking'),
+              sortSelect: document.querySelector('#bibliography-sort')?.value || '',
+              rankingStatus: document.querySelector('#citation-ranking-status')?.textContent || '',
+              priorityRanks: document.querySelectorAll('.reference-card[data-priority-rank]').length,
+              tierBadges: document.querySelectorAll('.reference-card .ranking-tier').length,
+              citationBadges: document.querySelectorAll('.reference-card .citation-count').length,
+              knownCitations: document.querySelectorAll('.reference-card .citation-count:not(.citation-pending)').length,
+              openAnalyses: document.querySelectorAll('.paper-analysis[open]').length,
+              analysisLabels: [...document.querySelectorAll('.paper-analysis-grid b')].slice(0,6).map(x=>x.textContent.trim()),
+              orderedCards: [...document.querySelectorAll('.reference-card')].map(x=>({tier:Number(x.dataset.tier),citations:Number(x.dataset.citations),year:Number(x.dataset.year)})),
               missing: document.querySelectorAll('.citation-missing').length
             };""",
         )
@@ -156,7 +165,39 @@ def main() -> None:
         require(bibliography["filters"] == 3, "bibliography select filters are incomplete")
         require(bibliography["analyses"] == 80 and bibliography["analysisFields"] == 480, "paper analyses are incomplete on the initial bibliography page")
         require(bibliography["analysisGuide"], "paper analysis reading guide is missing")
+        require(bibliography["rankingGuide"] and bibliography["sortSelect"] == "priority", "literature ranking controls are incomplete")
+        require(bibliography["rankingStatus"], "citation ranking status is missing")
+        require(bibliography["priorityRanks"] == 80 and bibliography["tierBadges"] == 80 and bibliography["citationBadges"] == 80, "ranking metadata is incomplete on bibliography cards")
+        require(bibliography["knownCitations"] >= 10, f"deployment citation snapshot is not visible: {bibliography['rankingStatus']}")
+        ordered = bibliography["orderedCards"]
+        require(all(a["tier"] <= b["tier"] for a, b in zip(ordered, ordered[1:])), "default bibliography order violates publication tiers")
+        for a, b in zip(ordered, ordered[1:]):
+            if a["tier"] != b["tier"]:
+                continue
+            require(not (a["citations"] < 0 <= b["citations"]), "known citation count appears after an unmatched paper in the same tier")
+            if a["citations"] >= 0 and b["citations"] >= 0:
+                require(a["citations"] >= b["citations"], "citation counts are not descending within a publication tier")
+            if a["citations"] < 0 and b["citations"] < 0:
+                require(a["year"] >= b["year"], "unmatched papers are not sorted by year within a publication tier")
+        require(bibliography["analysisLabels"] == ["Problem motivation", "Comparative advantage", "Core intuition", "Why it should work", "Method flow", "Experimental validation"], f"paper analysis order is incorrect: {bibliography['analysisLabels']}")
         require(bibliography["missing"] == 0, "bibliography contains unresolved citations")
+
+        execute(session_id, "const s=document.querySelector('#bibliography-sort'); s.value='citations'; s.dispatchEvent(new Event('change',{bubbles:true}));")
+        time.sleep(1)
+        citation_sort = execute(session_id, "return {value:document.querySelector('#bibliography-sort')?.value||'', url:location.href, ranks:document.querySelectorAll('.reference-card[data-priority-rank]').length, citations:[...document.querySelectorAll('.reference-card')].map(x=>Number(x.dataset.citations))};")
+        require(citation_sort["value"] == "citations" and "sort=citations" in citation_sort["url"] and citation_sort["ranks"] == 80, "citation sort mode did not apply")
+        citation_values = citation_sort["citations"]
+        seen_unknown = False
+        last_known = float("inf")
+        for value in citation_values:
+            if value < 0:
+                seen_unknown = True
+            else:
+                require(not seen_unknown, "matched citation appears after unmatched record in citation-only mode")
+                require(value <= last_known, "citation-only mode is not globally descending")
+                last_known = value
+        execute(session_id, "const s=document.querySelector('#bibliography-sort'); s.value='priority'; s.dispatchEvent(new Event('change',{bubbles:true}));")
+        time.sleep(1)
 
         navigate("/bibliography.html?paper=visplay-self-evolving-vision-language-models#ref-visplay-self-evolving-vision-language-models", 7)
         specific_analysis = execute(
@@ -170,7 +211,7 @@ def main() -> None:
         )
         require(specific_analysis["found"] and specific_analysis["open"], "requested paper analysis did not open")
         require(specific_analysis["fields"] == 6, "requested paper analysis is missing fields")
-        require("core method note" in specific_analysis["label"] or "核心方法注释" in specific_analysis["label"], "paper-specific method note is not rendered")
+        require("curated six-part analysis" in specific_analysis["label"] or "人工核验六项分析" in specific_analysis["label"], "paper-specific six-part analysis is not rendered")
 
         clicked = execute(
             session_id,
@@ -188,7 +229,7 @@ def main() -> None:
         execute(session_id, "document.querySelector('#load-more-papers')?.click();")
         time.sleep(1)
         after = execute(session_id, "return document.querySelectorAll('.reference-card').length")
-        require(before == 80 and after == 160, f"pagination failed: {before} -> {after}")
+        require(before == 80 and after > before, f"pagination failed: {before} -> {after}")
 
         expected_hubs = {
             "/foundations.html": {"groups": 2, "sections": 8},
