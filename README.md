@@ -34,7 +34,7 @@ The hierarchy and recommended reading order are defined centrally in `page-archi
 3. `mechanisms.html` — parameter, prompt, memory, skill/tool, and workflow evolution.
 4. `domains.html` — visual/multimodal, GUI/web, and embodied/world-model agents.
 5. `evaluation.html` — evaluation, safety, governance, benchmarks, environments, and repositories.
-6. `research-directions.html` — four beginner-level questions, a running example, plain-language explanations of ten stable directions, and the long-term agenda.
+6. `research-directions.html` — four beginner-level questions, a running example, plain-language explanations of ten stable directions, thirty representative literature cards with one-line methods, and the long-term agenda.
 7. `paper-ideas.html` — thirty-four concrete paper plans plus global, within-direction, and track rankings.
 8. `selected-paper.html` — GroundEvo problem, experiments, roadmap, and review log.
 9. `bibliography.html` — coverage protocol, interactive maps, exports, and live bibliography.
@@ -74,7 +74,7 @@ The broader roadmap is **GroundEvo: Causally-Grounded Multilevel Self-Evolution 
 
 The first falsifiable study asks whether visual agents admit spurious lessons from successful and failed trajectories, and whether active visual re-observation plus minimal environment counterfactual replay improves persistent-memory admission, lowers harmful commits, and preserves future-task gain under matched cost.
 
-The current hierarchy contains **10 research directions** and **34 concrete paper ideas**. For new readers, the ten directions are first grouped into four questions—what to learn, what experience should become, what is changing around the agent, and how evolution remains controlled—and then explained through one GUI-agent example and a plain-language glossary. Every idea separately states its purpose/problem, core idea, rationale, method logic, research importance, and conditional comparative advantage, followed by a minimum experiment, strongest baseline, and Go/Stop boundary. The 69-formulation audit applies three review rounds to paper ideas: literature collision and identifiability, paper-strength scoring, and module–lifecycle coverage. Eighteen formulations are merged as sub-questions or evaluation axes and seventeen are rejected. Research directions are structural categories and are not globally ranked.
+The current hierarchy contains **10 research directions** and **34 concrete paper ideas**. For new readers, the ten directions are first grouped into four questions—what to learn, what experience should become, what is changing around the agent, and how evolution remains controlled—and then explained through one GUI-agent example, a plain-language glossary, and three representative papers per direction. Each paper record gives its venue/year, one-line method, direction fit, and a linked citation to the full six-part bibliography analysis. Every idea separately states its purpose/problem, core idea, rationale, method logic, research importance, and conditional comparative advantage, followed by a minimum experiment, strongest baseline, and Go/Stop boundary. The 69-formulation audit applies three review rounds to paper ideas: literature collision and identifiability, paper-strength scoring, and module–lifecycle coverage. Eighteen formulations are merged as sub-questions or evaluation axes and seventeen are rejected. Research directions are structural categories and are not globally ranked.
 
 Every retained idea has bilingual reasoning and comparison records that separately state: **purpose/problem**, **core idea**, **rationale**, **method logic**, **research importance**, and **conditional comparative advantage**. The card then fixes its minimum experiment, strongest comparison, Go/Stop boundary, one-line thesis, rank, confidence, and paper track.
 
@@ -136,7 +136,8 @@ The checks cover:
 - venue-tier ranking configuration, the dated citation snapshot, four ranking modes, and all 24 bilingual top-paper analyses;
 - dynamic catalog loading, three bibliography maps, sorting, filters, URL state, and pagination;
 - exact H2/H3/H4 and nested-TOC counts for all nine canonical pages;
-- history and direction figures, merged hub rendering, linked resources, legacy redirects, and mobile navigation.
+- history and direction figures, including twenty literature citations inside the bilingual direction SVG and thirty linked evidence cards on the page;
+- merged hub rendering, linked resources, legacy redirects, and mobile navigation.
 
 ## Deployment
 

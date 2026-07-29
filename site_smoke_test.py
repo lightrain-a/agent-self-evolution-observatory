@@ -46,7 +46,7 @@ REQUIRED_STATIC = [
     "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
     "agent-self-evolution-history-en.svg", "agent-self-evolution-history-zh.svg",
-    "portfolio-data.js", "direction-guide-data.js", "page-architecture-data.js", "idea-explanations.js", "idea-comparisons.js",
+    "portfolio-data.js", "direction-guide-data.js", "direction-literature-data.js", "page-architecture-data.js", "idea-explanations.js", "idea-comparisons.js",
     "paper-analysis-data.js", "top-paper-analysis-data.js", "citation-ranking-data.js",
     "history-figure-data.js", "catalog_audit.py", "build_citation_cache.py",
     "browser_smoke_test.py", "hierarchy_smoke_test.py", "CHANGELOG.md",
@@ -155,6 +155,34 @@ def main() -> None:
             match = re.search(rf'{field}:\{{en:"([^"]+)",zh:"([^"]+)"\}}', block)
             if not match or not match.group(1).strip() or not match.group(2).strip():
                 fail(f"direction {direction_id} is missing bilingual {field}")
+
+    direction_literature_text = (ROOT / "direction-literature-data.js").read_text(encoding="utf-8")
+    literature_direction_ids = re.findall(r'^  "([a-z0-9-]+)": \[', direction_literature_text, re.MULTILINE)
+    if sorted(literature_direction_ids) != sorted(direction_ids) or len(literature_direction_ids) != 10:
+        fail("direction literature must cover all ten research directions exactly once")
+    literature_titles = re.findall(r'^      title:"([^"]+)"', direction_literature_text, re.MULTILINE)
+    if len(literature_titles) != 30:
+        fail("direction literature must contain exactly thirty representative paper records")
+    if len(re.findall(r'method:\{en:"[^"]+",zh:"[^"]+"\}', direction_literature_text)) != 30:
+        fail("every representative paper must have a bilingual one-line method")
+    if len(re.findall(r'fit:\{en:"[^"]+",zh:"[^"]+"\}', direction_literature_text)) != 30:
+        fail("every representative paper must explain its bilingual direction fit")
+    curated_text = (ROOT / "data.js").read_text(encoding="utf-8")
+    missing_direction_papers = [title for title in literature_titles if title not in curated_text]
+    if missing_direction_papers:
+        fail(f"direction literature papers missing from curated bibliography: {missing_direction_papers}")
+    direction_page = (ROOT / "research-directions.html").read_text(encoding="utf-8")
+    script_order = [direction_page.find('src="direction-guide-data.js"'), direction_page.find('src="direction-literature-data.js"'), direction_page.find('src="app.js"')]
+    if any(position < 0 for position in script_order) or script_order != sorted(script_order):
+        fail("research directions page must load direction literature before app.js")
+
+    for figure_name in ("agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg"):
+        try:
+            figure_root = ET.parse(ROOT / figure_name).getroot()
+        except ET.ParseError as error:
+            fail(f"invalid SVG {figure_name}: {error}")
+        if len(figure_root.findall('.//*[@data-paper]')) != 20:
+            fail(f"{figure_name} must cite two representative papers for each of ten directions")
 
     explanations_text = (ROOT / "idea-explanations.js").read_text(encoding="utf-8")
     explanation_blocks = re.findall(r'^  "([^"]+)": \{\n(.*?)(?=^  "[^"]+": \{|^\};)', explanations_text, re.MULTILINE | re.DOTALL)

@@ -717,10 +717,18 @@ function ideaByName(name) { return portfolioIdeas().find((idea) => idea.name ===
 function ideaAnchor(name) { return `idea-${slugify(name)}`; }
 function directionGuideData() { return window.DIRECTION_GUIDE || { macroGroups:[], directions:{} }; }
 function directionGuide(id) { return directionGuideData().directions?.[id] || {}; }
+function directionLiterature(id) { return (window.DIRECTION_LITERATURE || {})[id] || []; }
+function directionPaperHref(title) { const slug = slugify(title); return `bibliography.html?paper=${encodeURIComponent(slug)}#ref-${slug}`; }
+function renderDirectionLiterature(direction) {
+  const papers = directionLiterature(direction.id);
+  if (!papers.length) return "";
+  const rows = papers.map((paper) => `<article class="direction-paper-evidence"><header><span data-cite="${esc(paper.title)}"></span><a href="${directionPaperHref(paper.title)}"><strong>${esc(paper.short || paper.title)}</strong></a><small>${esc(String(paper.year || ""))} · ${esc(paper.venue || "")}</small></header><p>${textOf(paper.method)}</p><div><b>${language === "zh" ? "方向关联" : "Why here"}</b>${textOf(paper.fit)}</div></article>`).join("");
+  return `<section class="direction-literature"><h5>${language === "zh" ? "代表论文与一句话方法" : "Representative papers and one-line methods"}</h5><p class="direction-literature-note">${language === "zh" ? "这些论文用于支撑方向边界；点击论文名可进入完整六项论文梳理。" : "These papers ground the direction boundary; open a title for the full six-part analysis."}</p><div class="direction-paper-list">${rows}</div></section>`;
+}
 function renderDirectionCard(direction) {
   const directionIdeas = direction.ideaIds.map(ideaByName).filter(Boolean).sort((a, b) => a.rank - b.rank);
   const detail = directionGuide(direction.id);
-  return `<article class="direction-card" style="--direction-color:${esc(direction.color || "#5b5bd6")}"><div class="direction-card-head"><span class="direction-code">${esc(direction.code)}</span><span class="direction-count">${directionIdeas.length} ${language === "zh" ? "个 Idea" : "ideas"}</span></div><h4 id="${esc(direction.id)}">${textOf(direction.title)}</h4><p class="direction-question">${textOf(direction.question)}</p><div class="direction-plain"><b>${language === "zh" ? "通俗理解" : "In plain language"}</b><span>${textOf(detail.plain)}</span></div><div class="direction-explanation-grid"><div><b>${language === "zh" ? "主要研究对象" : "Main object"}</b><p>${textOf(detail.object)}</p></div><div><b>${language === "zh" ? "典型例子" : "Typical example"}</b><p>${textOf(detail.example)}</p></div><div><b>${language === "zh" ? "与邻近方向的区别" : "Difference from neighbors"}</b><p>${textOf(detail.distinction)}</p></div><div><b>${language === "zh" ? "科学边界" : "Scientific boundary"}</b><p>${textOf(direction.boundary)}</p></div></div><div class="idea-chip-list">${directionIdeas.map((idea) => `<a class="idea-chip" href="paper-ideas.html#${ideaAnchor(idea.name)}"><span>#${idea.rank}</span>${esc(idea.name)}</a>`).join("")}</div></article>`;
+  return `<article class="direction-card" style="--direction-color:${esc(direction.color || "#5b5bd6")}"><div class="direction-card-head"><span class="direction-code">${esc(direction.code)}</span><span class="direction-count">${directionIdeas.length} ${language === "zh" ? "个 Idea" : "ideas"}</span></div><h4 id="${esc(direction.id)}">${textOf(direction.title)}</h4><p class="direction-question">${textOf(direction.question)}</p><div class="direction-plain"><b>${language === "zh" ? "通俗理解" : "In plain language"}</b><span>${textOf(detail.plain)}</span></div><div class="direction-explanation-grid"><div><b>${language === "zh" ? "主要研究对象" : "Main object"}</b><p>${textOf(detail.object)}</p></div><div><b>${language === "zh" ? "典型例子" : "Typical example"}</b><p>${textOf(detail.example)}</p></div><div><b>${language === "zh" ? "与邻近方向的区别" : "Difference from neighbors"}</b><p>${textOf(detail.distinction)}</p></div><div><b>${language === "zh" ? "科学边界" : "Scientific boundary"}</b><p>${textOf(direction.boundary)}</p></div></div>${renderDirectionLiterature(direction)}<div class="idea-chip-list">${directionIdeas.map((idea) => `<a class="idea-chip" href="paper-ideas.html#${ideaAnchor(idea.name)}"><span>#${idea.rank}</span>${esc(idea.name)}</a>`).join("")}</div></article>`;
 }
 function renderDirectionMap(config) {
   const directions = portfolioDirections();
@@ -1139,7 +1147,7 @@ function renderGlobalSearch(query) {
   let box = document.getElementById("global-search-results");
   if (!query) { box?.remove(); return; }
   const q = query.toLowerCase();
-  const directionMatches = portfolioDirections().filter((direction) => [direction.code,textOf(direction.title),textOf(direction.question),textOf(direction.boundary)].join(" ").toLowerCase().includes(q)).slice(0, 10);
+  const directionMatches = portfolioDirections().filter((direction) => { const evidence = directionLiterature(direction.id).flatMap((paper) => [paper.title,paper.short,textOf(paper.method),textOf(paper.fit)]); return [direction.code,textOf(direction.title),textOf(direction.question),textOf(direction.boundary),...evidence].join(" ").toLowerCase().includes(q); }).slice(0, 10);
   const ideaMatches = portfolioIdeas().filter((idea) => { const explanation = ideaExplanation(idea.name); const comparison = ideaComparison(idea.name); return [idea.name,textOf(explanation.purpose),textOf(explanation.core),textOf(explanation.rationale),textOf(explanation.logic),textOf(comparison.importance),textOf(comparison.advantage),textOf(idea.thesis),textOf(idea.experiment),textOf(idea.track)].join(" ").toLowerCase().includes(q); }).slice(0, 12);
   const paperMatches = sortBibliographyRecords(catalog.filter((p) => paperSearchText(p).includes(q))).slice(0, 12);
   if (!box) {

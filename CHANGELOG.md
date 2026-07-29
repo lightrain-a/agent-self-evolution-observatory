@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-07-30 · Evidence-backed direction map
+
+- Added `direction-literature-data.js` with three representative papers for each of the ten research directions.
+- Required every representative record to state the exact paper title, year/venue, a bilingual one-line method description, and why the paper supports that direction.
+- Added thirty linked literature-evidence cards to `research-directions.html`; citation numbers are generated from the current bibliography order and each title opens the full six-part paper analysis.
+- Reworked both standalone direction SVGs so every direction cites two representative papers and summarizes their methods instead of listing only proposed Ideas.
+- Preserved the thirty-four Idea portfolio on the Paper Ideas page while making the field map evidence-backed rather than purely taxonomic.
+- Extended global search, static checks, XML validation, and real-browser tests for ten evidence sections, thirty paper cards, twenty SVG paper citations, bilingual content, and zero unresolved references.
+
 ## 2026-07-30 · Role-aware bibliography order
 
 - Replaced the citation-dominated default bibliography order with a recommended reading sequence based on each paper's role in Agent self-evolution.

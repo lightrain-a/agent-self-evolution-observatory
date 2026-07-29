@@ -287,6 +287,12 @@ def main() -> None:
               macroCards: document.querySelectorAll('.direction-macro-card').length,
               explanationGrids: document.querySelectorAll('.direction-explanation-grid').length,
               exampleRows: document.querySelectorAll('.direction-running-example tbody tr').length,
+              evidenceSections: document.querySelectorAll('.direction-literature').length,
+              evidencePapers: document.querySelectorAll('.direction-paper-evidence').length,
+              evidenceCitations: document.querySelectorAll('.direction-paper-evidence .inline-citations a').length,
+              evidenceMethods: document.querySelectorAll('.direction-paper-evidence > p').length,
+              evidenceFits: document.querySelectorAll('.direction-paper-evidence > div').length,
+              missing: document.querySelectorAll('.citation-missing').length,
               src: document.querySelector('.overview-figure img')?.getAttribute('src') || '',
               text: document.body.textContent || ''
             };""",
@@ -296,11 +302,15 @@ def main() -> None:
         require(direction_map["macroCards"] == 4, "four-question direction primer is incomplete")
         require(direction_map["explanationGrids"] == 10, "plain-language direction explanations are incomplete")
         require(direction_map["exampleRows"] == 10, "running example does not cover all directions")
+        require(direction_map["evidenceSections"] == 10 and direction_map["evidencePapers"] == 30, "representative literature does not cover all directions")
+        require(direction_map["evidenceCitations"] == 30 and direction_map["evidenceMethods"] == 30 and direction_map["evidenceFits"] == 30, "direction literature cards are incomplete")
+        require(direction_map["missing"] == 0, "direction literature contains unresolved citations")
         require(direction_map["src"].endswith("agent-self-evolution-directions-en.svg"), "English direction figure is not active")
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
-        zh_src = execute(session_id, "return document.querySelector('.overview-figure img')?.getAttribute('src') || ''")
-        require(zh_src.endswith("agent-self-evolution-directions-zh.svg"), "Chinese direction figure did not switch")
+        zh_state = execute(session_id, "return {src:document.querySelector('.overview-figure img')?.getAttribute('src')||'', text:document.querySelector('.direction-literature')?.textContent||''};")
+        require(zh_state["src"].endswith("agent-self-evolution-directions-zh.svg"), "Chinese direction figure did not switch")
+        require("代表论文" in zh_state["text"] and "方向关联" in zh_state["text"], "Chinese direction literature did not switch")
 
         navigate("/paper-ideas.html", 7)
         idea_portfolio = execute(
