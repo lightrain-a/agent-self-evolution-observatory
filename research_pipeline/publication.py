@@ -27,7 +27,7 @@ WEEKLY_ARTIFACTS = DAILY_ARTIFACTS + (
     "generated/s2-literature.js",
 )
 VOLATILE_KEYS = {
-    "generated_at", "retrieved_at", "started_at", "completed_at", "updated_at",
+    "created_at", "generated_at", "retrieved_at", "started_at", "completed_at", "updated_at",
 }
 PUBLICATION_OK_STATES = frozenset({"published", "unchanged", "deferred", "recovered"})
 

@@ -31,9 +31,9 @@ class PublicationTest(unittest.TestCase):
         self.assertNotIn("completed_at", normalized["pilot_registry"]["phases"][0]["result"])
 
     def test_generated_js_digest_ignores_volatile_cycle_metadata(self) -> None:
-        left = 'window.RESEARCH_SYSTEM_STATE = {"generated_at":"a","automation":{"daily":{"schedule":"02:15"},"latest_report":{"status":"pass","completed_at":"a"}},"pilot_registry":{"phases":[{"metrics":{"gain":1}}]}};\n'
-        right = 'window.RESEARCH_SYSTEM_STATE = {"generated_at":"b","automation":{"daily":{"schedule":"02:15"},"latest_report":{"status":"deferred","completed_at":"b"}},"pilot_registry":{"phases":[{"metrics":{"gain":1}}]}};\n'
-        changed = 'window.RESEARCH_SYSTEM_STATE = {"generated_at":"b","automation":{"daily":{"schedule":"02:15"},"latest_report":{"status":"pass","completed_at":"b"}},"pilot_registry":{"phases":[{"metrics":{"gain":2}}]}};\n'
+        left = 'window.RESEARCH_SYSTEM_STATE = {"generated_at":"a","automation":{"daily":{"schedule":"02:15"},"latest_report":{"status":"pass","completed_at":"a"}},"lineage":{"nodes":[{"created_at":"a","id":"idea-a"}]},"pilot_registry":{"phases":[{"metrics":{"gain":1}}]}};\n'
+        right = 'window.RESEARCH_SYSTEM_STATE = {"generated_at":"b","automation":{"daily":{"schedule":"02:15"},"latest_report":{"status":"deferred","completed_at":"b"}},"lineage":{"nodes":[{"created_at":"b","id":"idea-a"}]},"pilot_registry":{"phases":[{"metrics":{"gain":1}}]}};\n'
+        changed = 'window.RESEARCH_SYSTEM_STATE = {"generated_at":"b","automation":{"daily":{"schedule":"02:15"},"latest_report":{"status":"pass","completed_at":"b"}},"lineage":{"nodes":[{"created_at":"b","id":"idea-a"}]},"pilot_registry":{"phases":[{"metrics":{"gain":2}}]}};\n'
         self.assertEqual(
             _normalized_text_digest("generated/research-system-state.js", left),
             _normalized_text_digest("generated/research-system-state.js", right),
