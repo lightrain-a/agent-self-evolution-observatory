@@ -351,10 +351,16 @@ def main() -> None:
               importance: document.body.textContent.includes('Research importance') || document.body.textContent.includes('研究重要性'),
               advantage: document.body.textContent.includes('Comparative advantage') || document.body.textContent.includes('相对优势'),
               pilot: document.body.textContent.includes('Decisive pilot') || document.body.textContent.includes('决定性 Pilot'),
+              auditActor: document.querySelector('.published-audit-table tbody tr td:nth-child(2) p')?.textContent || '',
+              auditApi: document.querySelector('.published-audit-table tbody tr td:nth-child(3) p')?.textContent || '',
+              auditVerification: document.querySelector('.published-audit-table tbody tr .verification-badge')?.textContent || '',
               text: document.body.textContent || ''
             };""",
         )
         require(idea_portfolio["publishedAuditRows"] == 12, f"expected 12 published-paper substrate audits, got {idea_portfolio['publishedAuditRows']}")
+        require("主工具使用对比以 GPT-3.5 为规划模型" in idea_portfolio["auditActor"], f"published audit actor did not switch to Chinese: {idea_portfolio['auditActor']}")
+        require("商业 API" in idea_portfolio["auditApi"], f"published audit API role did not switch to Chinese: {idea_portfolio['auditApi']}")
+        require("官方材料已核验" in idea_portfolio["auditVerification"], f"published audit verification label did not switch to Chinese: {idea_portfolio['auditVerification']}")
         require(idea_portfolio["experimentProtocols"] == 42, f"expected 42 executable experiment protocols, got {idea_portfolio['experimentProtocols']}")
         require(idea_portfolio["protocolPhases"] == 126, f"expected 126 P0/P1/P2 phase cards, got {idea_portfolio['protocolPhases']}")
         require(idea_portfolio["protocolModels"] == 252, f"expected six model/API fields per idea, got {idea_portfolio['protocolModels']}")
@@ -378,6 +384,12 @@ def main() -> None:
         require(idea_portfolio["purpose"] and idea_portfolio["core"] and idea_portfolio["rationale"] and idea_portfolio["logic"], "idea dossiers are missing required reasoning fields")
         require(idea_portfolio["importance"] and idea_portfolio["advantage"] and idea_portfolio["pilot"], "idea dossiers are missing importance, advantage, or pilot evidence")
         require("GroundEvo-Admission" in idea_portfolio["text"] and "PluralLineage-Evo" in idea_portfolio["text"], "idea portfolio is incomplete")
+        execute(session_id, "document.querySelector('.language-toggle')?.click();")
+        time.sleep(1)
+        audit_english = execute(session_id, "return {actor:document.querySelector('.published-audit-table tbody tr td:nth-child(2) p')?.textContent||'', api:document.querySelector('.published-audit-table tbody tr td:nth-child(3) p')?.textContent||'', verification:document.querySelector('.published-audit-table tbody tr .verification-badge')?.textContent||''};")
+        require("GPT-3.5 in the main tool-use comparison" in audit_english["actor"], f"published audit actor did not switch back to English: {audit_english['actor']}")
+        require("commercial API models" in audit_english["api"], f"published audit API role did not switch back to English: {audit_english['api']}")
+        require("Verified from official sources" in audit_english["verification"], f"published audit verification label did not switch back to English: {audit_english['verification']}")
         cvpr_filter = execute(session_id, """const b=[...document.querySelectorAll('.cvpr-filter-btn')].find(x=>x.dataset.cvprFilterType==='budget'&&x.dataset.cvprFilterValue==='16'); b?.click(); const expected=(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).filter(x=>Number(x.budget?.gpu_hours||0)<=16).length; const visible=[...document.querySelectorAll('.cvpr-filter-target')].filter(x=>!x.closest('[id^=\"cvpr-\"]')?.classList.contains('cvpr-filter-hidden')).length; return {expected,visible};""")
         require(cvpr_filter["visible"] == cvpr_filter["expected"] and cvpr_filter["visible"] > 0, f"CVPR budget filter failed: {cvpr_filter}")
         cvpr_track = execute(session_id, """const b=[...document.querySelectorAll('.cvpr-filter-btn')].find(x=>x.dataset.cvprFilterType==='track'&&x.dataset.cvprFilterValue==='video'); b?.click(); const expected=(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).filter(x=>x.track_id==='video'&&Number(x.budget?.gpu_hours||0)<=16).length; const visible=[...document.querySelectorAll('.cvpr-filter-target')].filter(x=>!x.closest('[id^=\"cvpr-\"]')?.classList.contains('cvpr-filter-hidden')).length; return {expected,visible};""")

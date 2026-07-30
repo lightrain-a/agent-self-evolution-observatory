@@ -922,9 +922,19 @@ function substrateLabel(value) {
   };
   return textOf(labels[value] || {zh:value,en:value});
 }
+function verificationLabel(value) {
+  const labels = {
+    "verified-official":{zh:"官方材料已核验",en:"Verified from official sources"},
+    "verified-with-open-variant-pending":{zh:"方法已核验，开源版本待确认",en:"Method verified; open variant pending"},
+    "partial-official":{zh:"部分官方信息已核验",en:"Partially verified from official sources"},
+    "verified-official-code":{zh:"官方论文与代码已核验",en:"Verified from official paper and code"},
+    "verified-method-exact-checkpoint-pending":{zh:"方法已核验，精确 checkpoint 待确认",en:"Method verified; exact checkpoint pending"},
+  };
+  return textOf(labels[value] || {zh:value,en:value});
+}
 function renderPublishedExperimentAudit() {
   const audit = publishedExperimentAudit();
-  const rows = (audit.papers || []).map((paper) => `<tr><td><a href="${esc(paper.source)}" target="_blank" rel="noopener"><strong>${esc(paper.title)}</strong></a><small>${esc(paper.venue)}</small></td><td><span class="substrate-badge">${esc(substrateLabel(paper.substrate))}</span><p>${esc(paper.actor)}</p></td><td><p>${esc(paper.api_role)}</p></td><td><p>${esc(paper.parameter_updates)}</p></td><td><p>${esc(paper.data)}</p><small>${esc(paper.hardware)}</small></td><td><span class="verification-badge">${esc(paper.verification)}</span><p>${textOf(paper.implication)}</p></td></tr>`).join("");
+  const rows = (audit.papers || []).map((paper) => `<tr><td><a href="${esc(paper.source)}" target="_blank" rel="noopener"><strong>${esc(paper.title)}</strong></a><small>${esc(paper.venue)}</small></td><td><span class="substrate-badge">${esc(substrateLabel(paper.substrate))}</span><p>${esc(textOf(paper.actor))}</p></td><td><p>${esc(textOf(paper.api_role))}</p></td><td><p>${esc(textOf(paper.parameter_updates))}</p></td><td><p>${esc(textOf(paper.data))}</p><small>${esc(textOf(paper.hardware))}</small></td><td><span class="verification-badge">${esc(verificationLabel(paper.verification))}</span><p>${textOf(paper.implication)}</p></td></tr>`).join("");
   return `<section class="panel published-audit-panel"><div class="idea-panel-heading"><div><h3 id="published-experiment-substrate-audit">${language === "zh" ? "已发表视觉自进化论文：模型、API 与训练基座审计" : "Published visual self-evolution papers: model, API, and training substrate audit"}</h3><p class="section-intro">${language === "zh" ? "只陈述能够从正式论文、项目页或作者代码核验的事实；没有明确报告的模型版本与硬件保持 unknown。API、开源权重、参数训练和外部闭源工具分别统计，避免把“用了 GPT”误写成整篇论文都依赖 API。" : "Only facts traceable to official papers, project pages, or author code are stated. Unreported model variants and hardware remain unknown. API access, open weights, parameter training, and proprietary external tools are tracked separately."}</p></div><strong>${audit.summary?.papers || 0} ${language === "zh" ? "篇论文" : "papers"}</strong></div><div class="advisor-table-scroll"><table class="matrix published-audit-table"><thead><tr><th>${language === "zh" ? "论文" : "Paper"}</th><th>${language === "zh" ? "主模型／基座" : "Actor / substrate"}</th><th>${language === "zh" ? "API 角色" : "API role"}</th><th>${language === "zh" ? "更新什么" : "What is updated"}</th><th>${language === "zh" ? "数据与硬件" : "Data and hardware"}</th><th>${language === "zh" ? "低资源启示" : "Low-resource implication"}</th></tr></thead><tbody>${rows}</tbody></table></div><div class="published-audit-conclusion"><b>${language === "zh" ? "统一结论" : "Design conclusion"}</b><span>${language === "zh" ? "主结果采用本地开源权重；第二个开源架构验证迁移；商业 API 只作为可选上界／Judge，且不能成为唯一评测器。" : "Use local open weights for the primary result, a second open architecture for transfer, and commercial APIs only as optional ceilings/judges—not the sole evaluator."}</span></div></section>`;
 }
 function renderCvprExperimentProtocol(idea) {

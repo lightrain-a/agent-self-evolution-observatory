@@ -250,6 +250,133 @@ PAPERS: tuple[dict[str, Any], ...] = (
 )
 
 
+# Chinese translations for all explanatory audit fields. Formal paper titles,
+# model names, benchmark names, and venues remain in their original form.
+ZH_FIELDS: dict[str, dict[str, str]] = {
+    "clova-2024": {
+        "actor": "主工具使用对比以 GPT-3.5 为规划模型；论文还评测了 Llama2-7B 和 GPT-4。",
+        "critic_or_judge": "同一 LLM 闭环负责反思，任务专用视觉工具提供可执行反馈。",
+        "api_role": "GPT-3.5-turbo 和 GPT-4 属于商业 API；LIST 工具使用 text-davinci-002；Llama2-7B 是开源权重替代方案。",
+        "parameter_updates": "不对 LLM 做全量微调。系统保存正确/错误 demonstrations 进行上下文更新；视觉工具骨干保持冻结，只优化 soft prompts。",
+        "data": "GQA、NLVRv2，以及人工收集的图像编辑和事实知识任务。",
+        "hardware": "已检查的官方正文没有明确报告硬件。",
+        "code": "官方项目页和代码均已公开。",
+    },
+    "virep-2024": {
+        "actor": "使用开源代码 LLM 进行视觉程序合成自训练；复现前需从官方配置确认精确 checkpoint 版本。",
+        "critic_or_judge": "使用稀疏二元执行奖励和过滤式行为克隆；少于 50 条人工修正用于扩展训练。",
+        "api_role": "核心方法旨在避免依赖 GPT-4 这类强商业程序生成器。",
+        "parameter_updates": "通过强化式自训练／过滤式行为克隆更新代码模型。",
+        "data": "目标检测、组合式 VQA 和图文检索任务。",
+        "hardware": "精确运行硬件需进一步核对官方 PDF 或配置。",
+        "code": "官方项目页已公开。",
+    },
+    "se-vcl-2025": {
+        "actor": "由视觉概念库和下游视觉推理系统组成；精确基础模型 checkpoint 需从官方配置中确认。",
+        "critic_or_judge": "使用视觉语言 Critic 评估并修订概念。",
+        "api_role": "官方摘要确认使用 VLM Critic，但不能据此判断所有 Critic 都是 API 托管还是本地模型。",
+        "parameter_updates": "主要进化对象是概念库，而不是不受限制地训练完整骨干。",
+        "data": "论文报告的视觉概念学习与下游识别／推理基准。",
+        "hardware": "已检查的官方摘要和项目元数据没有明确报告硬件。",
+        "code": "复现时应使用作者官方仓库；若论文页未链接仓库，则精确可用性仍标记为待确认。",
+    },
+    "visco-2025": {
+        "actor": "发布的评测支持 GPT-4o、Claude-3.5-Sonnet、Gemini-1.5-Pro 等闭源模型，也支持 Qwen2-VL、Molmo、InternVL2、LLaVA、NVLM 和 Llama-3.2-Vision 等本地开源 LVLM。",
+        "critic_or_judge": "LookBack 是推理时提示策略；发布的 explanation-F1 评测器默认使用 OpenAI API 模型，除非替换为本地评测器。",
+        "api_role": "商业 API 是被评测的一类模型，也被辅助评测器使用；开源模型可通过 vLLM、lmdeploy 或 sglang 本地运行。",
+        "parameter_updates": "Benchmark 和 LookBack 都不要求训练骨干参数。",
+        "data": "1,645 个问答对和 5,604 条细粒度步骤标注。",
+        "hardware": "本地部署需求取决于所选 LVLM，不存在统一硬件配置。",
+        "code": "官方 GitHub 仓库已公开。",
+    },
+    "critic-v-2025": {
+        "actor": "将推理 VLM 与独立 Critic 配对；精确的 reasoner／critic checkpoint 应以官方代码和配置为准。",
+        "critic_or_judge": "Critic 使用规则奖励排序后的偏好 critique 数据进行 DPO 训练。",
+        "api_role": "GPT-4V 作为对比模型；方法核心是独立训练 Critic，而不是仅依赖 API 的提示闭环。",
+        "parameter_updates": "Critic 参数通过 DPO 更新，不属于纯推理时方法。",
+        "data": "论文描述的多模态推理与 critique 数据。",
+        "hardware": "精确硬件需进一步核对官方附录或配置。",
+        "code": "应使用官方论文／项目材料；当前精确仓库可用性仍标记为待确认。",
+    },
+    "grounding-correction-2025": {
+        "actor": "官方研究评测 GPT-4V／GPT-4o 及其他 LVLM；纠正流程基于 Prompt，且与具体模型无关。",
+        "critic_or_judge": "模型执行迭代式二元验证与纠正。",
+        "api_role": "GPT 模型需要商业 API，但方法结构本身不强制依赖 API。",
+        "parameter_updates": "不进行微调、架构修改或外部训练数据注入。",
+        "data": "论文报告的语义 grounding 评测集。",
+        "hardware": "托管 GPT 运行不涉及本地硬件；本地模型硬件取决于所选开源 checkpoint。",
+        "code": "官方 CVF／arXiv 材料已公开。",
+    },
+    "phoenix-2025": {
+        "actor": "将运动条件扩散策略与 MLLM 驱动的动作调整模块结合；精确 MLLM checkpoint 需从官方配置确认。",
+        "critic_or_judge": "基于运动的自反思提供纠正信号。",
+        "api_role": "精确 MLLM 是否调用 API 仍需核对官方配置；策略本身经过训练并可本地执行。",
+        "parameter_updates": "扩散策略／持续学习组件需要训练，不是免训练方法。",
+        "data": "RoboMimic 仿真和真实机器人实验。",
+        "hardware": "精确训练硬件仍待官方附录或配置核验。",
+        "code": "作者官方 GitHub 仓库已公开。",
+    },
+    "vadar-2025": {
+        "actor": "多个协作 LLM Agent 生成并调用动态 Python 视觉 API；精确 LLM 版本需从官方论文或配置确认。",
+        "critic_or_judge": "执行结果和专职 Agent 为 API 创建与调用提供反馈。",
+        "api_role": "官方摘要确认使用 LLM 程序合成，但无法单独判断所有主实验使用托管 API 还是本地开源权重。",
+        "parameter_updates": "主要进化对象是动态 API／程序库，而不是训练完整基础模型。",
+        "data": "Omni3D-Bench、CLEVR、GQA 和 VSI-Bench。",
+        "hardware": "硬件需进一步核对官方附录或配置。",
+        "code": "官方项目页已公开。",
+    },
+    "visplay-2026": {
+        "actor": "以 Qwen2.5-VL 和 MiMo-VL 系列作为可训练 Questioner／Reasoner 基座。",
+        "critic_or_judge": "自博弈难度／多样性奖励和可验证任务信号用于指导 GRPO。",
+        "api_role": "核心训练闭环不需要商业模型 API。",
+        "parameter_updates": "在大规模无标注图像上用 GRPO 联合优化 Questioner 和 Reasoner。",
+        "data": "大规模无标注图像和多模态推理评测集。",
+        "hardware": "属于高资源分布式训练；复现前应从官方附录复制精确配置。",
+        "code": "官方 GitHub 仓库已公开。",
+    },
+    "jarvisevo-2026": {
+        "actor": "发布的 JarvisEvo-8B Editor／Evaluator 系统结合 Qwen-Image-Edit 和 Adobe Lightroom 工具空间。",
+        "critic_or_judge": "项目报告通过 SFT／SEPO／RFT 等阶段优化 Editor–Evaluator 双闭环。",
+        "api_role": "发布的 8B 模型不要求商业 LLM API，但 Adobe Lightroom 是闭源软件依赖。",
+        "parameter_updates": "Editor／Evaluator 系统需要训练，不属于纯推理时方法。",
+        "data": "项目发布或描述的 ArtEdit-Bench 与图像编辑数据。",
+        "hardware": "精确训练硬件应以官方附录为准；发布说明中推理权重约为 17 GB。",
+        "code": "官方 GitHub 仓库和模型权重按其许可证公开。",
+    },
+    "octot2i-2026": {
+        "actor": "Agent 路由器在多个文生图工具间选择，并维护持续进化的能力知识库。",
+        "critic_or_judge": "propose–solve–evaluate–learn 闭环评估工具能力和路由结果。",
+        "api_role": "每个工具的精确 API／开源权重组成仍待官方全文和发布材料确认。",
+        "parameter_updates": "能力知识库／路由器持续进化，完整生成器训练不是核心贡献。",
+        "data": "论文描述的文生图 Prompt、质量与效率评测。",
+        "hardware": "硬件需进一步核对官方补充材料或配置。",
+        "code": "论文声明了发布计划；复现时应使用作者官方版本。",
+    },
+    "evograph-r1-2026": {
+        "actor": "多模态 Agent 在动态超图上选择 GraphRetrieve、WebSearch、GraphEdit 和 Answer 动作。",
+        "critic_or_judge": "检索与图编辑结果构成进化信号。",
+        "api_role": "Web 搜索是外部服务／工具；精确基础模型和 API 选择仍待官方补充材料核验。",
+        "parameter_updates": "主要进化状态是多模态图，而不一定更新基础模型权重。",
+        "data": "论文报告的 Agentic 多模态检索基准。",
+        "hardware": "硬件需进一步核对官方附录或配置。",
+        "code": "复现时应使用官方 CVF／项目发布版本。",
+    },
+}
+
+LOCALIZED_FIELDS = (
+    "actor", "critic_or_judge", "api_role", "parameter_updates",
+    "data", "hardware", "code",
+)
+
+
+def _localized_paper(paper: dict[str, Any]) -> dict[str, Any]:
+    result = dict(paper)
+    translations = ZH_FIELDS.get(str(paper["id"]), {})
+    for key in LOCALIZED_FIELDS:
+        result[key] = bi(translations.get(key, str(paper[key])), str(paper[key]))
+    return result
+
+
 def build_payload() -> dict[str, Any]:
     counts: dict[str, int] = {}
     for paper in PAPERS:
@@ -258,15 +385,24 @@ def build_payload() -> dict[str, Any]:
         "schema_version": "1.0",
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "policy": {
-            "source_rule": "Official paper/project/author code only; unknown fields are not inferred.",
-            "interpretation": "API access, open weights, parameter training, and external software/tools are reported separately.",
+            "source_rule": bi(
+                "只使用正式论文、项目页或作者代码；未报告字段不做推断。",
+                "Official paper/project/author code only; unknown fields are not inferred.",
+            ),
+            "interpretation": bi(
+                "分别报告 API、开源权重、参数训练和外部软件／工具依赖。",
+                "API access, open weights, parameter training, and external software/tools are reported separately.",
+            ),
         },
         "summary": {
             "papers": len(PAPERS),
             "substrate_counts": counts,
-            "primary_recommendation": "Open-weight primary results, second open architecture for transfer, commercial API only as optional ceiling/judge.",
+            "primary_recommendation": bi(
+                "主结果使用开源权重；第二个开源架构验证迁移；商业 API 仅作为可选上界或 Judge。",
+                "Open-weight primary results, second open architecture for transfer, commercial API only as optional ceiling/judge.",
+            ),
         },
-        "papers": list(PAPERS),
+        "papers": [_localized_paper(paper) for paper in PAPERS],
     }
 
 
@@ -283,8 +419,12 @@ def validate(payload: dict[str, Any]) -> list[str]:
             errors.append(f"duplicate paper id: {paper.get('id')}")
         seen.add(str(paper.get("id")))
         for key in required:
-            if not paper.get(key):
+            value = paper.get(key)
+            if not value:
                 errors.append(f"missing {key}: {paper.get('id')}")
+            if key in LOCALIZED_FIELDS or key == "implication":
+                if not isinstance(value, dict) or not value.get("zh") or not value.get("en"):
+                    errors.append(f"missing bilingual {key}: {paper.get('id')}")
     if len(payload.get("papers", [])) < 10:
         errors.append("fewer than ten audited papers")
     return errors
