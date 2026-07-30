@@ -2,7 +2,13 @@ from __future__ import annotations
 
 import unittest
 
-from .publication import DAILY_ARTIFACTS, PUBLICATION_OK_STATES, WEEKLY_ARTIFACTS, _normalize
+from .publication import (
+    DAILY_ARTIFACTS,
+    PUBLICATION_OK_STATES,
+    WEEKLY_ARTIFACTS,
+    _normalize,
+    _normalized_text_digest,
+)
 
 
 class PublicationTest(unittest.TestCase):
@@ -23,6 +29,19 @@ class PublicationTest(unittest.TestCase):
         self.assertNotIn("latest_report", normalized["automation"])
         self.assertEqual(normalized["pilot_registry"]["phases"][0]["result"]["metrics"]["gain"], 1)
         self.assertNotIn("completed_at", normalized["pilot_registry"]["phases"][0]["result"])
+
+    def test_generated_js_digest_ignores_volatile_cycle_metadata(self) -> None:
+        left = 'window.RESEARCH_SYSTEM_STATE = {"generated_at":"a","automation":{"daily":{"schedule":"02:15"},"latest_report":{"status":"pass","completed_at":"a"}},"pilot_registry":{"phases":[{"metrics":{"gain":1}}]}};\n'
+        right = 'window.RESEARCH_SYSTEM_STATE = {"generated_at":"b","automation":{"daily":{"schedule":"02:15"},"latest_report":{"status":"deferred","completed_at":"b"}},"pilot_registry":{"phases":[{"metrics":{"gain":1}}]}};\n'
+        changed = 'window.RESEARCH_SYSTEM_STATE = {"generated_at":"b","automation":{"daily":{"schedule":"02:15"},"latest_report":{"status":"pass","completed_at":"b"}},"pilot_registry":{"phases":[{"metrics":{"gain":2}}]}};\n'
+        self.assertEqual(
+            _normalized_text_digest("generated/research-system-state.js", left),
+            _normalized_text_digest("generated/research-system-state.js", right),
+        )
+        self.assertNotEqual(
+            _normalized_text_digest("generated/research-system-state.js", left),
+            _normalized_text_digest("generated/research-system-state.js", changed),
+        )
 
     def test_daily_publication_is_state_only(self) -> None:
         self.assertEqual(

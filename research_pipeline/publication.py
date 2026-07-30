@@ -27,7 +27,7 @@ WEEKLY_ARTIFACTS = DAILY_ARTIFACTS + (
     "generated/s2-literature.js",
 )
 VOLATILE_KEYS = {
-    "generated_at", "started_at", "completed_at", "updated_at",
+    "generated_at", "retrieved_at", "started_at", "completed_at", "updated_at",
 }
 PUBLICATION_OK_STATES = frozenset({"published", "unchanged", "deferred", "recovered"})
 
@@ -58,27 +58,39 @@ def _normalize(value: Any, *, root: bool = False) -> Any:
                 automation.pop("latest_report", None)
                 normalized[key] = _normalize(automation)
                 continue
-            if key in {"source_path", "result_dir"}:
+            if key in {"source_path", "result_dir", "cache_dir"}:
                 continue
             normalized[key] = _normalize(item)
         return normalized
     if isinstance(value, list):
-        return [_normalize(item) for item in value]
+        return [_normalize(item, root=root) for item in value]
     return value
 
 
-def _normalized_json_digest(path: Path) -> str:
-    payload = json.loads(path.read_text(encoding="utf-8"))
+def _normalized_payload_digest(payload: Any) -> str:
     normalized = _normalize(payload, root=True)
     encoded = json.dumps(normalized, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
 
 
-def _normalized_js_digest(path: Path) -> str:
-    text = path.read_text(encoding="utf-8")
-    text = re.sub(r'"(?:generated_at|started_at|completed_at|updated_at|retrieved_at)":"[^"]*"', '"volatile":""', text)
-    text = re.sub(r'"cache_dir":"[^"]*"', '"cache_dir":"<cache>"', text)
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+def _normalized_text_digest(relative: str, text: str) -> str:
+    if relative.endswith(".json"):
+        return _normalized_payload_digest(json.loads(text))
+    parsed_payloads: list[Any] = []
+    for line in text.splitlines():
+        if " = " not in line or not line.rstrip().endswith(";"):
+            continue
+        _, raw_payload = line.split(" = ", 1)
+        try:
+            parsed_payloads.append(json.loads(raw_payload.strip().removesuffix(";")))
+        except json.JSONDecodeError:
+            parsed_payloads = []
+            break
+    if parsed_payloads:
+        return _normalized_payload_digest(parsed_payloads)
+    fallback = re.sub(r'"(?:generated_at|retrieved_at|started_at|completed_at|updated_at)":"[^"]*"', '"volatile":""', text)
+    fallback = re.sub(r'"cache_dir":"[^"]*"', '"cache_dir":"<cache>"', fallback)
+    return hashlib.sha256(fallback.encode("utf-8")).hexdigest()
 
 
 def _artifact_digest(paths: tuple[str, ...]) -> str:
@@ -87,7 +99,17 @@ def _artifact_digest(paths: tuple[str, ...]) -> str:
         path = PROJECT_ROOT / relative
         if not path.exists():
             raise FileNotFoundError(path)
-        digests.append(_normalized_json_digest(path) if path.suffix == ".json" else _normalized_js_digest(path))
+        digests.append(_normalized_text_digest(relative, path.read_text(encoding="utf-8")))
+    return hashlib.sha256("\n".join(digests).encode("utf-8")).hexdigest()
+
+
+def _head_artifact_digest(paths: tuple[str, ...]) -> str | None:
+    digests: list[str] = []
+    for relative in paths:
+        completed = _run("git", "show", f"HEAD:{relative}", check=False)
+        if completed.returncode != 0:
+            return None
+        digests.append(_normalized_text_digest(relative, completed.stdout))
     return hashlib.sha256("\n".join(digests).encode("utf-8")).hexdigest()
 
 
@@ -175,9 +197,17 @@ def publish_generated_state(*, mode: str) -> dict[str, Any]:
     digest = _artifact_digest(artifacts)
     digest_file = state_dir / f"published-{mode}-digest.txt"
     previous = digest_file.read_text(encoding="utf-8").strip() if digest_file.exists() else ""
-    if previous == digest:
+    head_digest = _head_artifact_digest(artifacts)
+    if previous == digest or head_digest == digest:
         _restore(tuple(path for path in artifacts if (PROJECT_ROOT / path).exists()))
-        return {"status": "unchanged", "digest": digest, "artifacts": list(artifacts)}
+        digest_file.write_text(digest + "\n", encoding="utf-8")
+        return {
+            "status": "unchanged",
+            "digest": digest,
+            "artifacts": list(artifacts),
+            "matched": "stored-digest" if previous == digest else "HEAD",
+            "recovered_previous_push": recovered,
+        }
 
     identity = _ensure_git_identity()
     _run("git", "add", "--", *artifacts, check=True)

@@ -8,6 +8,7 @@
 - Added a P0/P1/P2 pilot registry with a validated result schema and automatic planned/revise/pilot-ready/selected-ready/stop state transitions.
 - Added a blocker-to-operator repair queue and optional bounded project-web-GPT repair reviews; no reviewer or provider can self-approve a candidate.
 - Added fail-safe daily and weekly automation cycles, systemd timers, exclusive locks, `/data` run reports, conservative literature retry limits, and previous-snapshot preservation on partial failure.
+- Added repository-scoped Ed25519 deploy-key publication with pinned GitHub host fingerprint, normalized-content hashing, pending-push recovery, bounded Git timeouts, and deferred retry on transient network failure.
 - Added an online automation dashboard showing component status, evidence coverage, collision pairs, repair queue, and pilot-result feedback.
 - Intentionally kept unrestricted autonomous code execution disabled; controlled experiment results can still flow back automatically.
 
