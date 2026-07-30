@@ -316,6 +316,14 @@ def main() -> None:
         idea_portfolio = execute(
             session_id,
             """return {
+              automationComponents: document.querySelectorAll('.automation-component').length,
+              automationStats: document.querySelectorAll('.automation-stats .stat').length,
+              automationCollisionRows: document.querySelectorAll('.automation-collision-table tbody tr').length,
+              automationRepairRows: document.querySelectorAll('.automation-repair-list li').length,
+              automationHealth: document.querySelector('.system-health')?.textContent || '',
+              automationStatePapers: Number(window.RESEARCH_SYSTEM_STATE?.summary?.papers || 0),
+              automationEvidenceNodes: Number(window.RESEARCH_SYSTEM_STATE?.summary?.evidence_nodes || 0),
+              automationPilotPhases: Number(window.RESEARCH_SYSTEM_STATE?.pilot_registry?.summary?.phases || 0),
               iclrAuditRows: document.querySelectorAll('.iclr-audit-panel .published-audit-table tbody tr').length,
               visualAuditRows: document.querySelectorAll('.cvpr-followup-archive .published-audit-table tbody tr').length,
               iclrProtocols: document.querySelectorAll('.iclr-idea-card .cvpr-experiment-protocol').length,
@@ -371,6 +379,12 @@ def main() -> None:
               text: document.body.textContent || ''
             };""",
         )
+        require(idea_portfolio["automationComponents"] == 6, f"expected six reference-architecture components, got {idea_portfolio['automationComponents']}")
+        require(idea_portfolio["automationStats"] == 6, f"expected six automation statistics, got {idea_portfolio['automationStats']}")
+        require(idea_portfolio["automationCollisionRows"] > 0 and idea_portfolio["automationRepairRows"] > 0, "automation collision or repair queue did not render")
+        require("healthy" in idea_portfolio["automationHealth"].lower(), f"research system health is not visible: {idea_portfolio['automationHealth']}")
+        require(idea_portfolio["automationStatePapers"] >= 200 and idea_portfolio["automationEvidenceNodes"] > idea_portfolio["automationStatePapers"], "automation evidence graph is incomplete")
+        require(idea_portfolio["automationPilotPhases"] == 78, f"expected 78 registered pilot phases, got {idea_portfolio['automationPilotPhases']}")
         require(idea_portfolio["iclrAuditRows"] == 12, f"expected 12 ICLR experiment-substrate audits, got {idea_portfolio['iclrAuditRows']}")
         require(idea_portfolio["visualAuditRows"] == 12, f"expected 12 preserved visual-paper audits, got {idea_portfolio['visualAuditRows']}")
         require("语言 Agent 与一个可训练 retrospective model 配对" in idea_portfolio["auditActor"], f"ICLR audit actor did not switch to Chinese: {idea_portfolio['auditActor']}")

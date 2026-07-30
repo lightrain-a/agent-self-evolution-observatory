@@ -1,0 +1,17 @@
+[Unit]
+Description=Agent Evolution Observatory weekly literature and review cycle
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/home/wyt/code/agent-self-evolution-observatory
+ExecStart=/usr/bin/bash scripts/on-52.sh python3 -m research_pipeline.automation_cycle --mode weekly --sync-literature --web-review-limit 2
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=6
+TimeoutStartSec=2h
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,17 @@
+[Unit]
+Description=Agent Evolution Observatory daily deterministic research cycle
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/home/wyt/code/agent-self-evolution-observatory
+ExecStart=/usr/bin/bash scripts/on-52.sh python3 -m research_pipeline.automation_cycle --mode daily
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=6
+TimeoutStartSec=30min
+
+[Install]
+WantedBy=multi-user.target

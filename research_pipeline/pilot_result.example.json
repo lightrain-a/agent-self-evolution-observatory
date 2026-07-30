@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "idea_id": "regression-gated-self-evolution",
+  "phase": "P0",
+  "result": "pass",
+  "code_commit": "replace-with-git-commit",
+  "config_hash": "replace-with-config-sha256",
+  "datasets": ["ALFWorld"],
+  "models": ["Qwen2.5-7B-Instruct", "Llama-3.1-8B-Instruct"],
+  "seeds": [1, 2, 3],
+  "metrics": {
+    "current_task_gain": 0.0,
+    "future_task_gain": 0.0,
+    "worst_regression": 0.0,
+    "admission_precision": 0.0,
+    "out_of_loop_gain": 0.0
+  },
+  "cost": {
+    "gpu_hours": 0.0,
+    "model_calls": 0,
+    "tokens": 0,
+    "wall_clock_hours": 0.0
+  },
+  "diagnosis": "State the observed phenomenon and the strongest alternative explanation checked.",
+  "next_action": "execute-P1",
+  "completed_at": "2026-07-30T00:00:00Z"
+}

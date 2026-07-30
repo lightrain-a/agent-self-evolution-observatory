@@ -29,6 +29,9 @@ from .live_pipeline import (
 )
 from .pipeline import ROOT, build_snapshot, write_snapshot
 from .query_planner import DEFAULT_SCOPE_PATH
+from .research_system import DEFAULT_JS as DEFAULT_SYSTEM_JS
+from .research_system import DEFAULT_JSON as DEFAULT_SYSTEM_JSON
+from .research_system import build_research_system_state, validate_state, write_research_system_state
 
 
 def parse_args() -> argparse.Namespace:
@@ -40,6 +43,12 @@ def parse_args() -> argparse.Namespace:
     storage = parser.add_argument_group("Research storage")
     storage.add_argument("--storage-status", action="store_true", help="Show code/data paths and disk capacity without exposing secrets.")
     storage.add_argument("--init-storage", action="store_true", help="Create the configured corpus, dataset, paper, index, run, cache, lock, and site-artifact directories.")
+
+    system = parser.add_argument_group("Continuous research system")
+    system.add_argument("--build-research-system", action="store_true", help="Build evidence graph, collision analysis, lineage, pilot registry, and repair queue.")
+    system.add_argument("--research-system-status", action="store_true", help="Show safe automation-component and health summaries.")
+    system.add_argument("--research-system-json", type=Path, default=DEFAULT_SYSTEM_JSON)
+    system.add_argument("--research-system-js", type=Path, default=DEFAULT_SYSTEM_JS)
 
     iclr = parser.add_argument_group("ICLR-first low-resource idea bank")
     iclr.add_argument("--build-iclr-bank", action="store_true", help="Validate and export the ICLR-first self-evolution idea bank.")
@@ -81,6 +90,16 @@ def parse_args() -> argparse.Namespace:
 def _print_storage_status() -> None:
     settings = StorageSettings.from_env()
     print(json.dumps(settings.safe_summary(), ensure_ascii=False, indent=2))
+
+
+def _print_research_system_status() -> None:
+    state = build_research_system_state()
+    print(json.dumps({
+        "summary": state["summary"],
+        "health": state["health"],
+        "components": state["components"],
+        "validation_errors": validate_state(state),
+    }, ensure_ascii=False, indent=2))
 
 
 def _print_iclr_status() -> None:
@@ -160,6 +179,18 @@ def main() -> None:
         print(f"Initialized research storage at {storage.data_root}")
     if args.storage_status:
         _print_storage_status()
+    if args.research_system_status:
+        _print_research_system_status()
+    if args.build_research_system:
+        state = write_research_system_state(args.research_system_json, args.research_system_js)
+        print(
+            "Research system complete: "
+            f"{state['summary']['evidence_nodes']} evidence nodes, "
+            f"{state['summary']['collision_flags']} collision flags, "
+            f"{state['summary']['repair_queue']} queued repairs."
+        )
+        print(f"Wrote {args.research_system_json}")
+        print(f"Wrote {args.research_system_js}")
     if args.iclr_status:
         _print_iclr_status()
     if args.build_iclr_bank:
@@ -221,7 +252,7 @@ def main() -> None:
 
     utility_only = (
         (
-            args.init_storage or args.storage_status
+            args.init_storage or args.storage_status or args.research_system_status or args.build_research_system
             or args.iclr_status or args.build_iclr_bank or args.iclr_audit_status or args.build_iclr_audit
             or args.cvpr_status or args.build_cvpr_bank
             or args.published_audit_status or args.build_published_audit or args.s2_status

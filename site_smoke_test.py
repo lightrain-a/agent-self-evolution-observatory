@@ -2,6 +2,7 @@
 """Static integrity checks for the consolidated Agent Self-Evolution Observatory."""
 from __future__ import annotations
 
+import json
 import re
 import subprocess
 import xml.etree.ElementTree as ET
@@ -175,6 +176,28 @@ def main() -> None:
     script_order = [direction_page.find('src="direction-guide-data.js"'), direction_page.find('src="direction-literature-data.js"'), direction_page.find('src="app.js"')]
     if any(position < 0 for position in script_order) or script_order != sorted(script_order):
         fail("research directions page must load direction literature before app.js")
+
+    idea_page = (ROOT / "paper-ideas.html").read_text(encoding="utf-8")
+    system_script_order = [
+        idea_page.find('src="generated/iclr-low-resource-ideas.js"'),
+        idea_page.find('src="generated/research-system-state.js"'),
+        idea_page.find('src="app.js"'),
+    ]
+    if any(position < 0 for position in system_script_order) or system_script_order != sorted(system_script_order):
+        fail("paper ideas page must load the research-system state after the ICLR bank and before app.js")
+    state_path = ROOT / "generated" / "research-system-state.json"
+    if not state_path.exists():
+        fail("research-system-state.json is missing")
+    research_state = json.loads(state_path.read_text(encoding="utf-8"))
+    if research_state.get("health", {}).get("status") != "healthy":
+        fail("continuous research system is not healthy")
+    summary = research_state.get("summary") or {}
+    if summary.get("papers", 0) < 200 or summary.get("evidence_nodes", 0) <= summary.get("papers", 0):
+        fail("continuous research evidence graph is incomplete")
+    if research_state.get("collision_engine", {}).get("summary", {}).get("pairwise_comparisons") != 406:
+        fail("collision engine did not compare all 29 structured ICLR candidates")
+    if research_state.get("pilot_registry", {}).get("summary", {}).get("phases") != 78:
+        fail("pilot registry must contain P0/P1/P2 for all 26 passed ICLR ideas")
 
     for figure_name in ("agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg"):
         try:

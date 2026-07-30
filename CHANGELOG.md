@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-07-30 · Continuous self-calibrating research system
+
+- Added a running evidence graph connecting 281 papers, planned queries, claims, mechanisms, tracks, datasets, models, and 29 structured ICLR candidates.
+- Added a hybrid problem/mechanism/experiment collision engine that evaluates all 406 candidate pairs and exposes duplicate, near-duplicate, shared-problem, shared-mechanism, and merge-candidate relations.
+- Added non-destructive Idea lineage with track roots, generation operators, programmatic reviews, project-scoped web-GPT reviews, blocked branches, and early-rejection provenance.
+- Added a P0/P1/P2 pilot registry with a validated result schema and automatic planned/revise/pilot-ready/selected-ready/stop state transitions.
+- Added a blocker-to-operator repair queue and optional bounded project-web-GPT repair reviews; no reviewer or provider can self-approve a candidate.
+- Added fail-safe daily and weekly automation cycles, systemd timers, exclusive locks, `/data` run reports, conservative literature retry limits, and previous-snapshot preservation on partial failure.
+- Added an online automation dashboard showing component status, evidence coverage, collision pairs, repair queue, and pilot-result feedback.
+- Intentionally kept unrestricted autonomous code execution disabled; controlled experiment results can still flow back automatically.
+
 ## 2026-07-30 · ICLR-first automatic research pipeline
 
 - Changed the primary venue from CVPR to ICLR and kept the existing visual bank as a folded CVPR follow-up archive.

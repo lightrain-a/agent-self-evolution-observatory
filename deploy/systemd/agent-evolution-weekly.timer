@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Agent Evolution Observatory literature/review cycle weekly
+
+[Timer]
+OnCalendar=Mon *-*-* 03:15:00
+Persistent=true
+RandomizedDelaySec=30min
+Unit=agent-evolution-weekly.service
+
+[Install]
+WantedBy=timers.target
