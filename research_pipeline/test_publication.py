@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from .publication import DAILY_ARTIFACTS, WEEKLY_ARTIFACTS, _normalize
+from .publication import DAILY_ARTIFACTS, PUBLICATION_OK_STATES, WEEKLY_ARTIFACTS, _normalize
 
 
 class PublicationTest(unittest.TestCase):
@@ -29,6 +29,10 @@ class PublicationTest(unittest.TestCase):
             DAILY_ARTIFACTS,
             ("generated/research-system-state.json", "generated/research-system-state.js"),
         )
+
+    def test_transient_network_deferral_is_non_fatal(self) -> None:
+        self.assertIn("deferred", PUBLICATION_OK_STATES)
+        self.assertNotIn("blocked", PUBLICATION_OK_STATES)
 
     def test_weekly_publication_includes_literature_and_banks(self) -> None:
         self.assertTrue(set(DAILY_ARTIFACTS).issubset(WEEKLY_ARTIFACTS))

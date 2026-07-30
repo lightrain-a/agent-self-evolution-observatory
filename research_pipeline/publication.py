@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import subprocess
 from datetime import datetime, timezone
@@ -28,11 +29,12 @@ WEEKLY_ARTIFACTS = DAILY_ARTIFACTS + (
 VOLATILE_KEYS = {
     "generated_at", "started_at", "completed_at", "updated_at",
 }
+PUBLICATION_OK_STATES = frozenset({"published", "unchanged", "deferred", "recovered"})
 
 
-def _run(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
+def _run(*args: str, check: bool = True, timeout: float | None = None) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        list(args), cwd=PROJECT_ROOT, text=True, capture_output=True, check=check,
+        list(args), cwd=PROJECT_ROOT, text=True, capture_output=True, check=check, timeout=timeout,
     )
 
 
@@ -105,6 +107,44 @@ def _ensure_git_identity() -> dict[str, str]:
     return {"name": name, "email": email}
 
 
+def _push_with_timeout() -> subprocess.CompletedProcess[str]:
+    return _run(
+        "git", "-c", "http.proxy=", "-c", "https.proxy=", "push", "origin", "main",
+        check=True, timeout=float(os.getenv("AUTOMATION_GIT_PUSH_TIMEOUT", "90")),
+    )
+
+
+def _recover_pending_push(local: str, remote: str) -> dict[str, Any] | None:
+    counts = _run("git", "rev-list", "--left-right", "--count", "origin/main...HEAD", check=True).stdout.strip().split()
+    if len(counts) != 2:
+        return {"status": "blocked", "reason": "unable to determine branch divergence", "local": local, "remote": remote}
+    remote_only, local_only = (int(counts[0]), int(counts[1]))
+    if remote_only == 0 and local_only > 0:
+        try:
+            push = _push_with_timeout()
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
+            detail = getattr(error, "stderr", "") or str(error)
+            return {
+                "status": "deferred", "reason": "pending local commit still cannot be pushed",
+                "local_ahead": local_only, "commit": _run("git", "rev-parse", "--short", "HEAD").stdout.strip(),
+                "detail": str(detail)[-2000:],
+            }
+        return {
+            "status": "recovered", "reason": "previous pending commit pushed",
+            "local_ahead": local_only, "commit": _run("git", "rev-parse", "--short", "HEAD").stdout.strip(),
+            "push": push.stdout[-1000:] + push.stderr[-1000:],
+        }
+    if local_only == 0 and remote_only > 0:
+        return {
+            "status": "deferred", "reason": "origin/main advanced; manual fast-forward required before publication",
+            "remote_ahead": remote_only, "local": local, "remote": remote,
+        }
+    return {
+        "status": "blocked", "reason": "local and origin/main have diverged",
+        "local_ahead": local_only, "remote_ahead": remote_only, "local": local, "remote": remote,
+    }
+
+
 def publish_generated_state(*, mode: str) -> dict[str, Any]:
     storage = StorageSettings.from_env()
     state_dir = storage.run_dir / "automation"
@@ -116,11 +156,21 @@ def publish_generated_state(*, mode: str) -> dict[str, Any]:
     if disallowed:
         return {"status": "blocked", "reason": "non-generated working-tree changes", "paths": disallowed}
 
-    _run("git", "-c", "http.proxy=", "-c", "https.proxy=", "fetch", "origin", "main", check=True)
+    try:
+        _run(
+            "git", "-c", "http.proxy=", "-c", "https.proxy=", "fetch", "origin", "main",
+            check=True, timeout=float(os.getenv("AUTOMATION_GIT_FETCH_TIMEOUT", "60")),
+        )
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
+        detail = getattr(error, "stderr", "") or str(error)
+        return {"status": "deferred", "reason": "git fetch unavailable", "detail": str(detail)[-2000:]}
     local = _run("git", "rev-parse", "HEAD").stdout.strip()
     remote = _run("git", "rev-parse", "origin/main").stdout.strip()
+    recovered: dict[str, Any] | None = None
     if local != remote:
-        return {"status": "blocked", "reason": "local branch is not aligned with origin/main", "local": local, "remote": remote}
+        recovered = _recover_pending_push(local, remote)
+        if recovered and recovered.get("status") != "recovered":
+            return recovered
 
     digest = _artifact_digest(artifacts)
     digest_file = state_dir / f"published-{mode}-digest.txt"
@@ -138,7 +188,16 @@ def publish_generated_state(*, mode: str) -> dict[str, Any]:
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     message = f"Automated {mode} research state update {stamp}"
     _run("git", "commit", "-m", message, check=True)
-    push = _run("git", "-c", "http.proxy=", "-c", "https.proxy=", "push", "origin", "main", check=True)
+    try:
+        push = _push_with_timeout()
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
+        detail = getattr(error, "stderr", "") or str(error)
+        return {
+            "status": "deferred",
+            "reason": "commit created but push is pending",
+            "commit": _run("git", "rev-parse", "--short", "HEAD").stdout.strip(),
+            "detail": str(detail)[-2000:],
+        }
     digest_file.write_text(digest + "\n", encoding="utf-8")
     return {
         "status": "published",
@@ -147,4 +206,5 @@ def publish_generated_state(*, mode: str) -> dict[str, Any]:
         "commit": _run("git", "rev-parse", "--short", "HEAD").stdout.strip(),
         "push": push.stdout[-1000:] + push.stderr[-1000:],
         "identity": identity,
+        "recovered_previous_push": recovered,
     }

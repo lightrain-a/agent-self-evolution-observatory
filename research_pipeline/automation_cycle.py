@@ -18,7 +18,7 @@ from .iclr_idea_factory import write_iclr_idea_bank
 from .live_pipeline import sync_semantic_scholar
 from .published_experiment_audit import write_audit as write_published_audit
 from .research_system import write_research_system_state
-from .publication import publish_generated_state
+from .publication import PUBLICATION_OK_STATES, publish_generated_state
 
 
 def _now() -> str:
@@ -89,7 +89,7 @@ def run_cycle(
         publication_started = time.time()
         try:
             publication_result = publish_generated_state(mode=mode)
-            publication_status = "pass" if publication_result.get("status") in {"published", "unchanged"} else "fail"
+            publication_status = "pass" if publication_result.get("status") in PUBLICATION_OK_STATES else "fail"
             publication = {
                 "name": "publish-generated-state",
                 "status": publication_status,
