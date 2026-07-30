@@ -18,7 +18,7 @@ EXPECTATIONS = {
     "domains": (3, 4, 3, 14),
     "evaluation": (3, 4, 5, 16),
     "research-directions": (4, 5, 9, 23),
-    "paper-ideas": (3, 4, 8, 24),
+    "paper-ideas": (4, 5, 11, 14),
     "selected-paper": (4, 5, 5, 20),
     "bibliography": (4, 5, 8, 6),
 }

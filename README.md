@@ -35,7 +35,7 @@ The hierarchy and recommended reading order are defined centrally in `page-archi
 4. `domains.html` — visual/multimodal, GUI/web, and embodied/world-model agents.
 5. `evaluation.html` — evaluation, safety, governance, benchmarks, environments, and repositories.
 6. `research-directions.html` — four beginner-level questions, a running example, plain-language explanations of ten stable directions, thirty representative literature cards with one-line methods, and the long-term agenda.
-7. `paper-ideas.html` — thirty-four concrete paper plans plus global, within-direction, and track rankings.
+7. `paper-ideas.html` — an evidence-to-idea backend map, advisor comparison board, twelve-item shortlist, complete reasoning dossiers, reviewer gates, decisive pilots, and a traceable archive of all thirty-four ideas.
 8. `selected-paper.html` — GroundEvo problem, experiments, roadmap, and review log.
 9. `bibliography.html` — coverage protocol, interactive maps, exports, and live bibliography.
 
@@ -76,19 +76,54 @@ The first falsifiable study asks whether visual agents admit spurious lessons fr
 
 The current hierarchy contains **10 research directions** and **34 concrete paper ideas**. For new readers, the ten directions are first grouped into four questions—what to learn, what experience should become, what is changing around the agent, and how evolution remains controlled—and then explained through one GUI-agent example, a plain-language glossary, and three representative papers per direction. Each paper record gives its venue/year, one-line method, direction fit, and a linked citation to the full six-part bibliography analysis. Every idea separately states its purpose/problem, core idea, rationale, method logic, research importance, and conditional comparative advantage, followed by a minimum experiment, strongest baseline, and Go/Stop boundary. The 69-formulation audit applies three review rounds to paper ideas: literature collision and identifiability, paper-strength scoring, and module–lifecycle coverage. Eighteen formulations are merged as sub-questions or evaluation axes and seventeen are rejected. Research directions are structural categories and are not globally ranked.
 
-Every retained idea has bilingual reasoning and comparison records that separately state: **purpose/problem**, **core idea**, **rationale**, **method logic**, **research importance**, and **conditional comparative advantage**. The card then fixes its minimum experiment, strongest comparison, Go/Stop boundary, one-line thesis, rank, confidence, and paper track.
+Every retained idea has bilingual reasoning and comparison records that separately state: **purpose/problem**, **core idea**, **rationale**, **method logic**, **research importance**, and **conditional comparative advantage**. It also fixes the strongest comparison, minimum experiment, decisive metric, Go/Stop boundary, paper track, and unresolved risk.
 
-**Tier A, ranks 1–12:** NegEvoBench-V, ScopeGuard-V, GroundEvo-Admission, AmplificationGuard-X, EvoContract-V, ViMEvo-Repair, RelianceGuard-V, CapabilityLease-Evo, EvoFirewall-V, InteractionGuard-V, PerformativeEvo-V, and ConfidenceFlow-Evo.
+The primary selection interface is no longer the old decimal-score table. The page now combines the historical twelve-Idea advisor shortlist with a larger low-resource CVPR bank: 61 raw formulations are reduced to 42 passed candidates, one structured block, and eighteen early rejections. Every passed candidate exposes five review dimensions, a complete actor/critic/API configuration, disjoint discovery/calibration/test splits, P0/P1/P2 execution phases, matched baselines, compute and call budgets, a decisive main table, ablations, and Go/Stop rules. Legacy ranks remain visible only for decision traceability.
 
-**Tier B, ranks 13–26:** EvoValue-V, EgoShift, OversightBudget-Evo, MultiRateEvo-V, MemoryFormRouter-V, BudgetEvolve-V, AuditInvariant-Evo, PluralLineage-Evo, SkillUnlearn-V, ExploreRepair-V, WorldPatch-V, EvoProvenance-V, SkillProof-V, and PersonaShift-V.
+The latest lifecycle batch retains the paper ideas AmplificationGuard-X, CapabilityLease-Evo, ConfidenceFlow-Evo, and PluralLineage-Evo. PopulationImmunity-MAS, ServeStageGuard-Evo, QuarantineCommit-Evo, EvidenceExpiry-Evo, StopRule-Evo, UpdateAssurance-Evo, PermissionDrift-Evo, and RollbackOrder-Evo are merged into broader ideas. Generic runtime attestation and generic uncertainty-aware agents are rejected because direct methods already exist. The ten-direction hierarchy and long-term agenda are published on `research-directions.html`; the evidence-gated decision lab and complete candidate archive are on `paper-ideas.html`.
 
-**Tier C, ranks 27–34:** ProcessCredit-V, EvoGC-X, MetaGuard-V, GoalGuard-Evo, SimEvo-CF, EvalRedQueen-V, UpdateRoute-V, and CrossAgentTransfer-V.
+## Evidence-gated literature-to-idea backend
 
-The latest lifecycle batch retains the paper ideas AmplificationGuard-X, CapabilityLease-Evo, ConfidenceFlow-Evo, and PluralLineage-Evo. PopulationImmunity-MAS, ServeStageGuard-Evo, QuarantineCommit-Evo, EvidenceExpiry-Evo, StopRule-Evo, UpdateAssurance-Evo, PermissionDrift-Evo, and RollbackOrder-Evo are merged into broader ideas. Generic runtime attestation and generic uncertainty-aware agents are rejected because direct methods already exist. The ten-direction hierarchy and long-term agenda are published on `research-directions.html`; full paper plans and rankings are on `paper-ideas.html`.
+The deterministic backend in `research_pipeline/` normalizes the existing literature and idea assets into one auditable schema. It combines reusable mechanisms from ResearchAgent, Nova, STORM, AI-Researcher, Scideator, MOOSE-Chem, Deep-Ideation, CycleResearcher, PaperQA/OpenScholar, and AI-Scientist-style experiment search without treating any single agent output as an acceptance decision.
+
+```text
+research scope and assets
+  -> five-route query planning
+  -> citation / concept / full-text evidence graph
+  -> structured paper facets and claim-evidence records
+  -> gap and contradiction mining
+  -> eight named idea-generation operators
+  -> semantic deduplication and branch preservation
+  -> four-way novelty collision search
+  -> five independent reviewer gates
+  -> bounded falsification pilot
+  -> advisor shortlist / hold / stop decision
+```
+
+Provider contracts in `research_pipeline/providers.py` define swappable interfaces for query planning, literature retrieval, facet extraction, gap mining, idea synthesis, novelty checking, review, pilot planning, and final gate decisions. Semantic Scholar is now connected through the ignored server `.env`, while OpenAlex, local-PDF, embedding, and LLM providers can still be added without changing the browser-facing idea schema.
+
+On `10.42.8.52`, the Git checkout remains under `/home/wyt/code/agent-self-evolution-observatory`, while corpora, datasets, PDFs, indexes, caches, and experiment runs are stored under `/data/wyt/agent-self-evolution-observatory` on the local 33 TB data disk. Small browser snapshots remain beside the code for deployment.
+
+Validate storage, live literature, or the current snapshot:
+
+```bash
+python -m research_pipeline --storage-status
+python -m research_pipeline --init-storage
+python -m research_pipeline --s2-status
+python -m research_pipeline --sync-s2
+python -m research_pipeline --cvpr-status
+python -m research_pipeline --build-cvpr-bank
+python -m research_pipeline --published-audit-status
+python -m research_pipeline --build-published-audit
+python -m research_pipeline --check
+python -m research_pipeline
+```
+
+The deployment snapshots under `generated/` include the evidence-gated pipeline, the 42-candidate low-resource CVPR bank, a twelve-paper published experiment-substrate audit, and a Semantic Scholar snapshot currently covering 149 deduplicated papers from sixteen planned queries. Bulk corpora and provider caches remain outside Git.
 
 ## External-agent review status
 
-The configured CodexFlow service at `127.0.0.1:4318` and the installed Claude CLI are currently unavailable because the service or authentication is invalid. The repository therefore distinguishes completed role-separated audits—including the 2026 frontier-collision pass that froze GroundEvo-Admission—from independent external-agent consensus. See `REVIEWER_PROTOCOL.md` and `selected-paper.html#group-review-log`.
+CodexFlow remains unavailable because account connection fails. Oracle Browser mode is configured to open all web-GPT reviews inside one dedicated ChatGPT project. A strict project-scoped GPT review has already produced one PASS, one REVISE-and-fix, and one BLOCK decision; these verdicts and their exact blocking reasons are stored in the idea-bank artifact instead of being treated as generic consensus.
 
 ## Quality assurance
 
@@ -128,7 +163,9 @@ The checks cover:
 
 - 9 canonical pages and 19 compatibility redirects;
 - navigation targets, merged content groups, redirect anchors, and the page-specific chapter configuration;
-- all 34 bilingual Idea reasoning records and their four mandatory fields;
+- all 34 bilingual Idea reasoning records and their six mandatory argument fields;
+- the eight-stage backend map, four-stage candidate funnel, eight generation operators, five reviewer gates, twelve historical advisor dossiers, the complete 34-idea archive, and interactive advisor filtering;
+- 42 executable low-resource CVPR protocols, one structured block, 18 early rejections, 12 published experiment-substrate audits, and project-scoped web-GPT verdicts;
 - JavaScript syntax and one-to-one bilingual coverage of all six Idea reasoning fields;
 - sitemap, CNAME, favicon, manifest, robots, and 404 resources;
 - upstream catalog counts and deduplication;

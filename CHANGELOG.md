@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-07-30 · Live low-resource CVPR Idea laboratory
+
+- Connected Semantic Scholar through an ignored local key and exported a deployment snapshot with 149 deduplicated papers from sixteen topic, failure, mechanism, analogy, seed, citation, and reference queries.
+- Added a 61-formulation low-resource CVPR funnel with 42 passed candidates, one structured block, and eighteen early rejections.
+- Added a complete execution protocol to every passed Idea: actor, cross-model architecture, critic, visual tools, optional API role, update scope, disjoint data splits, P0/P1/P2 phases, controls, repeats, budgets, decisive main table, ablations, artifacts, and Go/Stop conditions.
+- Added a twelve-paper audit of published visual-agent experiment substrates, separating API-only, open-weight, and hybrid systems while preserving unknown hardware or version details as unknown.
+- Routed Oracle Browser reviews into one dedicated ChatGPT project and stored the resulting PASS, REVISE, and BLOCK verdicts in the generated Idea artifact.
+- Added server/data-disk separation, local secret templates, provider caching and rate limiting, project-scoped web-GPT tooling, nineteen backend tests, static QA, and real-browser assertions for all new views.
+
+## 2026-07-30 · Evidence-gated paper Idea decision lab
+
+- Added `research_pipeline/`, a deterministic literature-to-Idea backend with typed schemas, eight controlled generation operators, five independent reviewer roles, bounded pilot gates, and explicit advance/investigate/hold/stop decisions.
+- Added swappable provider contracts for query planning, literature retrieval, facet extraction, gap mining, idea synthesis, four-way novelty collision search, review, pilot planning, and final gate decisions.
+- Rebuilt `paper-ideas.html` around an eight-stage backend map, a four-stage candidate funnel, a twelve-Idea advisor shortlist, and a complete archive of all thirty-four retained candidates.
+- Replaced the decimal-score-first presentation with evidence stages; legacy ranks and scores remain only as traceability metadata.
+- Added complete advisor dossiers that state purpose/problem, core idea, rationale, method logic, research importance, conditional comparative advantage, nearest literature, unresolved collision, strongest baseline, decisive pilot, and Go/Stop evidence.
+- Added interactive filters for selected, novelty-check, reviewer-check, and visual/CVPR candidates, while preserving bilingual content and stable anchors.
+- Extended static, hierarchy, and real-browser tests for the backend stages, generation operators, reviewers, shortlist dossiers, literature neighborhoods, filtering, archive completeness, and all existing site behavior.
+
 ## 2026-07-30 · Evidence-backed direction map
 
 - Added `direction-literature-data.js` with three representative papers for each of the ten research directions.

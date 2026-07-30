@@ -43,9 +43,10 @@ window.PAGE_ARCHITECTURES = {
   },
   "paper-ideas":{
     chapters:[
-      {id:"selection-framework",title:{en:"I · Selection and falsification framework",zh:"第一章 · 选择与证伪框架"},question:{en:"What information must every paper idea provide before resources are committed?",zh:"在投入资源前，每个论文 Idea 必须说明哪些信息？"}},
-      {id:"idea-portfolio",title:{en:"II · Concrete idea portfolio",zh:"第二章 · 具体 Idea 候选池"},question:{en:"How do thirty-four paper ideas distribute across four lifecycle questions and ten directions?",zh:"三十四个论文 Idea 如何分布在四个生命周期问题和十个方向中？"}},
-      {id:"idea-ranking",title:{en:"III · Ranking and project decisions",zh:"第三章 · 排名与项目决策"},question:{en:"How should ideas be compared globally, within one direction, and within one venue track?",zh:"如何在总榜、方向内部和会议赛道内部比较 Idea？"}}
+      {id:"evidence-pipeline",title:{en:"I · Evidence-to-idea pipeline",zh:"第一章 · 从证据到 Idea 的生成管线"},question:{en:"How are literature evidence, research gaps, idea operators, reviewers, and pilot gates connected?",zh:"文献证据、研究空缺、Idea 算子、评审与 Pilot 门槛如何连接？"}},
+      {id:"advisor-board",title:{en:"II · Advisor decision board",zh:"第二章 · 师兄与老师决策板"},question:{en:"Which candidates deserve immediate expert attention, and what remains unresolved for each one?",zh:"哪些候选值得优先由师兄和老师判断，每个候选还缺什么证据？"}},
+      {id:"shortlist-dossiers",title:{en:"III · Shortlist evidence dossiers",zh:"第三章 · 短名单完整论证卡"},question:{en:"For each shortlisted idea, what is the problem, mechanism, rationale, method logic, importance, advantage, and decisive pilot?",zh:"每个短名单 Idea 的问题、机制、合理性、方法逻辑、重要性、优势与决定性 Pilot 分别是什么？"}},
+      {id:"candidate-archive",title:{en:"IV · Candidate archive and traceable ranking",zh:"第四章 · 完整候选归档与可追溯排序"},question:{en:"How are all retained ideas, held candidates, legacy scores, and direction-level decisions preserved for audit?",zh:"如何保留全部 Idea、暂缓候选、旧评分与方向决策供后续追溯？"}}
     ]
   },
   "selected-paper":{

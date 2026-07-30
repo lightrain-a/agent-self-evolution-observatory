@@ -1,0 +1,59 @@
+{
+  "topic": {
+    "en": "Self-evolving agents, especially visual, multimodal, embodied, and tool-using agents",
+    "zh": "Agent 自进化，重点关注视觉、多模态、具身与工具使用 Agent"
+  },
+  "target_venue": "CVPR / ICCV / ECCV / ICLR",
+  "target_domains": [
+    "vision-language models",
+    "multimodal agents",
+    "embodied AI",
+    "agent memory",
+    "tool and skill evolution",
+    "safe continual self-improvement"
+  ],
+  "available_assets": [
+    "existing literature observatory and structured bibliography",
+    "vision-language and embodied-agent research experience",
+    "multi-GPU experimental servers",
+    "existing VLA, LVLM fingerprinting, and process-safety projects"
+  ],
+  "hard_constraints": [
+    "Ideas must expose a concrete visual or interactive problem rather than generic agent orchestration",
+    "The central mechanism must be identifiable against a strong simple baseline",
+    "A bounded pilot must be able to falsify the key intuition before full-scale training",
+    "The main experiment must directly establish the claimed advantage"
+  ],
+  "seed_papers": [
+    "A Survey of Self-Evolving Agents: What, When, How, and Where to Evolve",
+    "Self-Improvements in Modern Agentic Systems: A Survey",
+    "VisPlay: Self-Evolving Vision-Language Models",
+    "CLOVA: A Closed-Loop Visual Assistant with Tool Usage and Update"
+  ],
+  "year_range": "2022-2026",
+  "fields_of_study": [
+    "Computer Science"
+  ],
+  "query_hints": {
+    "topic": [
+      "self evolving agents continual self improvement",
+      "self improving vision language models multimodal agents",
+      "self evolving embodied agents visual navigation robotics"
+    ],
+    "failure": [
+      "self improving agents failure modes safety evaluation forgetting",
+      "visual self correction critic shared errors multimodal reasoning",
+      "agent memory skill evolution poisoning drift regression"
+    ],
+    "mechanism": [
+      "causal attribution intervention agent trajectories learning",
+      "continual learning memory consolidation skill discovery autonomous agents",
+      "runtime verification regression testing evolving autonomous agents"
+    ],
+    "analogy": [
+      "software evolution provenance regression validation autonomous systems",
+      "open ended learning quality diversity population based training agents",
+      "control recovery monitoring sequential decision systems interventions"
+    ]
+  }
+}

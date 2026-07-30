@@ -1,4 +1,4 @@
-const DATA = window.SUPPLEMENTAL_PAPERS || [];
+const DATA = [...(window.S2_LIVE_PAPERS || []), ...(window.SUPPLEMENTAL_PAPERS || [])];
 const PAGES = window.PAGE_CONTENT || {};
 const NAV_GROUPS = window.NAV_GROUPS || [];
 const CATALOG_SOURCES = [
@@ -213,7 +213,15 @@ function setLanguage(next) {
 
 function renderFooter() {
   const footer = document.querySelector(".footer");
-  if (footer) footer.innerHTML = `${language === "zh" ? "Agent 自进化研究站" : "Agent Self-Evolution Observatory"} · <a href="bibliography.html#group-coverage-method">${language === "zh" ? "覆盖协议" : "Coverage protocol"}</a> · <a href="bibliography.html">${language === "zh" ? "动态文献库" : "Live bibliography"}</a> · <a href="https://github.com/lightrain-a/agent-self-evolution-observatory" target="_blank" rel="noopener">GitHub</a> · 28 July 2026`;
+  if (footer) footer.innerHTML = `${language === "zh" ? "Agent 自进化研究站" : "Agent Self-Evolution Observatory"} · <a href="bibliography.html#group-coverage-method">${language === "zh" ? "覆盖协议" : "Coverage protocol"}</a> · <a href="bibliography.html">${language === "zh" ? "动态文献库" : "Live bibliography"}</a> · <a href="https://www.semanticscholar.org/product/api" target="_blank" rel="noopener">${language === "zh" ? "文献元数据由 Semantic Scholar 提供" : "Literature metadata powered by Semantic Scholar"}</a> · <a href="https://github.com/lightrain-a/agent-self-evolution-observatory" target="_blank" rel="noopener">GitHub</a> · 30 July 2026`;
+}
+function renderSemanticScholarStatus() {
+  const meta = window.S2_LITERATURE_META;
+  if (!meta) return `<div class="integrity-status warn s2-provider-status"><strong>S2 SNAPSHOT</strong><span>${language === "zh" ? "尚未加载 Semantic Scholar 同步快照；当前仍可使用人工文献库。" : "No Semantic Scholar sync snapshot is loaded; the curated literature corpus remains available."}</span></div>`;
+  const stats = meta.statistics || {};
+  const retrieved = meta.retrieved_at ? new Date(meta.retrieved_at).toLocaleString(language === "zh" ? "zh-CN" : "en-US") : (language === "zh" ? "未知" : "unknown");
+  const expanded = meta.seed_expansion?.expanded_count || 0;
+  return `<div class="integrity-status pass s2-provider-status"><strong>S2 LIVE</strong><span>${language === "zh" ? `已同步 ${stats.paper_count || 0} 篇候选文献，覆盖 ${stats.query_count || 0} 条五路检索，并通过引用图补充 ${expanded} 篇；更新时间 ${retrieved}。这些结果用于发现最近工作，不自动等同于新颖性判断。` : `${stats.paper_count || 0} candidate papers from ${stats.query_count || 0} five-route queries, including ${expanded} citation-graph additions; updated ${retrieved}. These matches support discovery and do not constitute an automatic novelty verdict.`}</span></div>`;
 }
 function renderShell() {
   if (!document.querySelector('link[rel="icon"]')) document.head.insertAdjacentHTML("beforeend", '<link rel="icon" href="favicon.svg" type="image/svg+xml">');
@@ -609,6 +617,25 @@ async function fetchCatalogMarkdown(source) {
   }
   throw new Error(`${source.name}: ${failures.join(" | ")}`);
 }
+async function fetchSemanticScholarSnapshot() {
+  try {
+    const response = await fetch("generated/semantic-scholar-corpus.json", { cache: "no-store", headers: { "Accept": "application/json" } });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const payload = await response.json();
+    const siteRecords = Array.isArray(payload.site_records) ? payload.site_records : [];
+    window.S2_LITERATURE_META = {
+      schema_version: payload.schema_version,
+      retrieved_at: payload.retrieved_at,
+      provider: payload.provider,
+      statistics: payload.statistics,
+      seed_expansion: payload.seed_expansion,
+    };
+    return siteRecords;
+  } catch (error) {
+    console.warn("Semantic Scholar snapshot is unavailable; using the curated corpus.", error);
+    return [];
+  }
+}
 function indexCatalog(records) {
   return sortBibliographyRecords(records, "priority").map((record, index) => ({ ...record, refNo: index + 1, slug: slugify(record.title) })).map((record) => {
     citationIndex.set(normalizeTitle(record.title), record);
@@ -621,6 +648,7 @@ async function loadCatalog() {
   updateCounter();
   renderPage();
   let upstream = [];
+  let semanticScholar = [];
   try {
     const cached = JSON.parse(localStorage.getItem(CATALOG_CACHE_KEY) || "null");
     if (cached && Array.isArray(cached.records) && Date.now() - cached.savedAt < CATALOG_CACHE_MAX_AGE) {
@@ -641,8 +669,9 @@ async function loadCatalog() {
   } catch (error) {
     console.warn("Live literature synchronization failed; using curated snapshot.", error);
   }
+  semanticScholar = await fetchSemanticScholarSnapshot();
   citationIndex = new Map();
-  catalog = indexCatalog(mergeCatalog(upstream, DATA));
+  catalog = indexCatalog(mergeCatalog(upstream, [...semanticScholar, ...DATA]));
   updateCounter();
   renderPage();
 }
@@ -747,11 +776,121 @@ function renderDirectionMap(config) {
 }
 function ideaExplanation(name) { return (window.IDEA_EXPLANATIONS || {})[name] || {}; }
 function ideaComparison(name) { return (window.IDEA_COMPARISONS || {})[name] || {}; }
+function ideaPipelineMeta() { return window.IDEA_PIPELINE_META || {funnel:[],operators:[],reviewers:[],advisorShortlist:[],stages:{},warnings:[]}; }
+function advisorIdeaNames() { return new Set(ideaPipelineMeta().advisorShortlist || []); }
+function ideaIsVisual(idea) {
+  const direction = directionById(idea.directionId);
+  const value = `${textOf(idea.track)} ${idea.directionId} ${textOf(direction?.boundary || {})}`.toLowerCase();
+  return /visual|cvpr|multimodal|embodied|vision|视觉|具身/.test(value);
+}
+function ideaDecisionState(idea) {
+  const meta = ideaPipelineMeta();
+  let stage = "review";
+  if (idea.name === meta.selectedIdea) stage = "selected";
+  else if ((meta.advisorShortlist || []).includes(idea.name) && idea.confidence === "H" && ideaIsVisual(idea)) stage = "collision-check";
+  else if (!(meta.advisorShortlist || []).includes(idea.name) && idea.confidence === "L") stage = "archived";
+  const stageMeta = meta.stages?.[stage] || {label:{en:stage,zh:stage},tone:"review"};
+  const decision = stage === "selected" ? "advance" : stage === "archived" ? "hold" : "investigate";
+  return {stage,decision,tone:stageMeta.tone || "review",label:textOf(stageMeta.label || {en:stage,zh:stage})};
+}
+function renderIdeaBackendArchitecture() {
+  const stages = language === "zh" ? [
+    ["01","检索规划","主题、引用、失败模式、机制与跨领域五路查询"],
+    ["02","证据图谱","论文六项卡、Claim–Evidence、引用邻域与概念实体"],
+    ["03","空缺实验室","限制、矛盾、假设、缺失单元与目标—评测错位"],
+    ["04","受控生成","一次只应用一个 Idea 算子，并保留父节点与生成理由"],
+    ["05","碰撞检索","分别检查相同问题、机制、组合和实验设计"],
+    ["06","独立评审","新颖性、成立性、主表、可行性与 CVPR 契合分别审查"],
+    ["07","最小证伪","先跑能推翻 Idea 的 Pilot，再决定是否开发完整方法"],
+    ["08","导师决策","只展示短名单、未决证据、资源需求与 Go／Stop"],
+  ] : [
+    ["01","Query planning","Topic, citation, failure-mode, mechanism, and cross-domain searches"],
+    ["02","Evidence graph","Six-part paper cards, claim–evidence links, citations, and entities"],
+    ["03","Gap laboratory","Limitations, contradictions, assumptions, missing cells, and metric mismatch"],
+    ["04","Controlled generation","Apply one named operator and preserve its parent evidence and rationale"],
+    ["05","Collision search","Check the same problem, mechanism, combination, and experiment separately"],
+    ["06","Independent review","Novelty, validity, main table, feasibility, and CVPR fit are reviewed separately"],
+    ["07","Minimal falsification","Run the pilot most capable of disproving the idea before full development"],
+    ["08","Advisor decision","Expose only shortlist, missing evidence, resource needs, and Go/Stop"],
+  ];
+  return `<section class="panel"><h3 id="backend-pipeline-architecture">${language === "zh" ? "后端架构：从论文到可立项 Idea" : "Backend architecture: from papers to project-ready ideas"}</h3><p class="section-intro">${language === "zh" ? "每一阶段都有独立输入、输出和阻断条件；生成 Agent 无权直接把 Idea 标记为通过。" : "Every stage has explicit inputs, outputs, and blocking conditions. A generation agent cannot directly mark an idea as accepted."}</p><div class="idea-backend-flow">${stages.map(([code,title,desc]) => `<article><span>${code}</span><div><b>${title}</b><p>${desc}</p></div></article>`).join("")}</div></section>`;
+}
+function renderIdeaFunnel() {
+  const stages = ideaPipelineMeta().funnel || [];
+  return `<section class="panel idea-pipeline-panel"><div class="idea-panel-heading"><div><h3 id="candidate-funnel">${language === "zh" ? "候选漏斗：发散生成与收敛筛选分离" : "Candidate funnel: separate generation from selection"}</h3><p class="section-intro">${language === "zh" ? "后端保留高召回候选，但只有通过结构完整性、文献碰撞、独立评审和有界 Pilot 的方案才进入资源决策。" : "The backend keeps a high-recall pool, but only candidates that pass structural completeness, literature collision, independent review, and a bounded pilot enter resource allocation."}</p></div><span class="architecture-version">${esc(ideaPipelineMeta().architectureVersion || "")}</span></div><div class="idea-funnel">${stages.map((stage,index) => `<article class="idea-funnel-stage"><span>${String(index + 1).padStart(2,"0")}</span><strong>${stage.count}</strong><b>${textOf(stage.label)}</b><small>${textOf(stage.desc)}</small></article>`).join("<i>→</i>")}</div></section>`;
+}
+function renderIdeaOperators() {
+  const operators = ideaPipelineMeta().operators || [];
+  return `<section class="panel"><h3 id="idea-generation-operators">${language === "zh" ? "八类受控 Idea 生成算子" : "Eight controlled idea-generation operators"}</h3><p class="section-intro">${language === "zh" ? "每次只应用一个命名算子，并记录它使用了哪类文献证据，避免无约束脑暴和模块拼接。" : "Each proposal applies one named operator and records the evidence it used, avoiding unconstrained brainstorming and module stacking."}</p><div class="idea-operator-grid">${operators.map((operator,index) => `<article><span>${index + 1}</span><div><b>${textOf(operator.name)}</b><p>${textOf(operator.question)}</p></div></article>`).join("")}</div></section>`;
+}
+function renderReviewerPipeline() {
+  const reviewers = ideaPipelineMeta().reviewers || [];
+  return `<section class="panel"><h3 id="independent-review-gates">${language === "zh" ? "独立 Reviewer 门槛" : "Independent reviewer gates"}</h3><p class="section-intro">${language === "zh" ? "Reviewer 不是共同润色同一个答案，而是分别寻找能够阻断立项的证据；每项质疑都必须转成可执行补充实验或停止条件。" : "Reviewers do not jointly polish one answer. Each searches for evidence that can block the project, and every objection must become an executable test or Stop condition."}</p><div class="reviewer-gate-grid">${reviewers.map((reviewer) => `<article><span>${esc(reviewer.key.slice(0,2).toUpperCase())}</span><div><b>${textOf(reviewer.name)}</b><p>${textOf(reviewer.question)}</p></div></article>`).join("")}</div></section>`;
+}
+function ideaGateStatus(idea, key) {
+  const selected = idea.name === ideaPipelineMeta().selectedIdea;
+  if (key === "novelty") return selected ? "pass" : "pending";
+  if (key === "scientific") return idea.confidence === "L" ? "revise" : "pass";
+  if (key === "experiment") return idea.rank <= 20 ? "pass" : "revise";
+  if (key === "feasibility") return idea.confidence === "H" || selected ? "pass" : "revise";
+  if (key === "venue") return ideaIsVisual(idea) ? "pass" : "revise";
+  return "pending";
+}
+function renderIdeaGateStrip(idea) {
+  const labels = language === "zh" ? {novelty:"碰撞",scientific:"成立性",experiment:"主表",feasibility:"Pilot",venue:"CVPR"} : {novelty:"Collision",scientific:"Validity",experiment:"Main table",feasibility:"Pilot",venue:"CVPR"};
+  return `<div class="idea-gate-strip">${Object.keys(labels).map((key) => { const status = ideaGateStatus(idea,key); return `<span class="gate-${status}"><i>${status === "pass" ? "✓" : status === "pending" ? "?" : "!"}</i>${labels[key]}</span>`; }).join("")}</div>`;
+}
+function renderIdeaEvidenceNeighborhood(idea) {
+  const papers = directionLiterature(idea.directionId).slice(0,3);
+  const comparison = ideaComparison(idea.name);
+  if (!papers.length) return `<div class="idea-evidence-empty">${language === "zh" ? "尚未绑定直接近邻论文。" : "No direct neighboring papers are bound yet."}</div>`;
+  return `<div class="idea-evidence-list">${papers.map((paper) => `<article><header><span data-cite="${esc(paper.title)}"></span><a href="${directionPaperHref(paper.title)}"><b>${esc(paper.short || paper.title)}</b></a><small>${esc(String(paper.year || ""))} · ${esc(paper.venue || "")}</small></header><p>${textOf(paper.method)}</p></article>`).join("")}</div><div class="idea-collision-note"><b>${language === "zh" ? "待核验的精确差异" : "Exact difference still to verify"}</b><span>${textOf(comparison.advantage)}</span></div>`;
+}
+function renderAdvisorDecisionTable(ideas) {
+  const rows = ideas.map((idea) => {
+    const state = ideaDecisionState(idea);
+    const explanation = ideaExplanation(idea.name);
+    const comparison = ideaComparison(idea.name);
+    return `<tr class="idea-filter-target" data-idea-stage="${esc(state.stage)}" data-idea-track="${ideaIsVisual(idea) ? "visual" : "general"}"><td><span class="idea-stage-badge tone-${esc(state.tone)}">${esc(state.label)}</span></td><td><a href="#${ideaAnchor(idea.name)}"><strong>${esc(idea.name)}</strong></a><small>${textOf(idea.thesis)}</small></td><td>${textOf(explanation.purpose)}</td><td>${textOf(explanation.core)}</td><td>${textOf(comparison.advantage)}</td><td>${textOf(idea.go)}</td></tr>`;
+  }).join("");
+  return `<div class="advisor-table-scroll"><table class="matrix advisor-decision-table"><thead><tr><th>${language === "zh" ? "阶段" : "Stage"}</th><th>Idea</th><th>${language === "zh" ? "要解决的问题" : "Problem"}</th><th>${language === "zh" ? "核心机制" : "Core mechanism"}</th><th>${language === "zh" ? "相对优势" : "Comparative advantage"}</th><th>${language === "zh" ? "Go 证据" : "Go evidence"}</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+function renderAdvisorBoard(ideas) {
+  const meta = ideaPipelineMeta();
+  const filters = [
+    ["all",language === "zh" ? "全部短名单" : "All shortlist"],
+    ["selected",language === "zh" ? "已选中" : "Selected"],
+    ["collision-check",language === "zh" ? "待新颖性核验" : "Novelty check"],
+    ["review",language === "zh" ? "待 Reviewer 判断" : "Reviewer check"],
+    ["visual",language === "zh" ? "视觉／CVPR" : "Visual / CVPR"],
+  ];
+  return `<section class="panel advisor-board"><div class="idea-panel-heading"><div><h3 id="advisor-comparison-board">${language === "zh" ? "师兄与老师横向决策板" : "Advisor comparison board"}</h3><p class="section-intro">${language === "zh" ? "先横向比较问题、机制、优势和决定性证据，再打开下方完整论证卡。这里的阶段是资源决策，不是论文质量结论。" : "Compare the problem, mechanism, advantage, and decisive evidence first, then open the full dossiers below. Stages are resource decisions, not paper-quality claims."}</p></div><strong>${ideas.length} ${language === "zh" ? "个优先候选" : "priority candidates"}</strong></div><div class="idea-board-filters">${filters.map(([key,label],index) => `<button class="idea-board-filter ${index === 0 ? "active" : ""}" data-idea-filter="${key}">${label}</button>`).join("")}</div>${renderAdvisorDecisionTable(ideas)}${(meta.warnings || []).map((warning) => `<div class="idea-board-warning">${textOf(warning)}</div>`).join("")}</section>`;
+}
+function renderAdvisorDossier(idea, index) {
+  const direction = directionById(idea.directionId);
+  const explanation = ideaExplanation(idea.name);
+  const comparison = ideaComparison(idea.name);
+  const state = ideaDecisionState(idea);
+  return `<details class="idea-dossier idea-filter-target" id="${ideaAnchor(idea.name)}" data-idea-stage="${esc(state.stage)}" data-idea-track="${ideaIsVisual(idea) ? "visual" : "general"}" ${index < 3 ? "open" : ""}><summary><div><span class="idea-stage-badge tone-${esc(state.tone)}">${esc(state.label)}</span><b>${esc(idea.name)}</b><small>${direction ? `${esc(direction.code)} · ${textOf(direction.title)}` : ""}</small></div><p>${textOf(idea.thesis)}</p></summary><div class="idea-dossier-body">${renderIdeaGateStrip(idea)}<div class="idea-dossier-grid"><section><h4 data-toc="false">${language === "zh" ? "1 · 目的／要解决的问题" : "1 · Purpose / problem"}</h4><p>${textOf(explanation.purpose)}</p></section><section><h4 data-toc="false">${language === "zh" ? "2 · 核心思想" : "2 · Core idea"}</h4><p>${textOf(explanation.core)}</p></section><section><h4 data-toc="false">${language === "zh" ? "3 · 为什么合理" : "3 · Why it is reasonable"}</h4><p>${textOf(explanation.rationale)}</p></section><section><h4 data-toc="false">${language === "zh" ? "4 · 方法逻辑" : "4 · Method logic"}</h4><p>${textOf(explanation.logic)}</p></section><section><h4 data-toc="false">${language === "zh" ? "5 · 研究重要性" : "5 · Research importance"}</h4><p>${textOf(comparison.importance)}</p></section><section><h4 data-toc="false">${language === "zh" ? "6 · 相对优势" : "6 · Comparative advantage"}</h4><p>${textOf(comparison.advantage)}</p></section></div><div class="idea-decision-evidence"><section><h4 data-toc="false">${language === "zh" ? "最近论文与碰撞边界" : "Nearest literature and collision boundary"}</h4>${renderIdeaEvidenceNeighborhood(idea)}</section><section><h4 data-toc="false">${language === "zh" ? "决定性 Pilot" : "Decisive pilot"}</h4><dl><dt>${language === "zh" ? "最小实验" : "Minimum experiment"}</dt><dd>${textOf(idea.experiment)}</dd><dt>${language === "zh" ? "最强对照" : "Strongest comparison"}</dt><dd>${textOf(idea.baseline)}</dd><dt>Go</dt><dd>${textOf(idea.go)}</dd><dt>Stop</dt><dd>${textOf(idea.stop)}</dd></dl></section></div><div class="idea-unresolved-risk"><b>${language === "zh" ? "当前最关键未决风险" : "Most important unresolved risk"}</b><span>${textOf(idea.stop)}</span></div></div></details>`;
+}
+function renderShortlistDossiers(ideas) {
+  return `<section class="shortlist-dossiers"><div class="shortlist-intro"><h3 id="advisor-shortlist-dossiers">${language === "zh" ? "逐个 Idea 完整论证卡" : "Complete evidence dossier for each idea"}</h3><p>${language === "zh" ? "默认展开前三项；其余候选按需打开。所有“优势”均是待实验验证的条件性优势。" : "The first three are expanded by default. Every stated advantage is conditional and remains to be tested."}</p></div>${ideas.map(renderAdvisorDossier).join("")}</section>`;
+}
+function renderCandidateArchive(ideas) {
+  const shortlist = advisorIdeaNames();
+  const directionSections = portfolioDirections().map((direction) => {
+    const rows = direction.ideaIds.map(ideaByName).filter(Boolean).sort((a,b) => a.rank - b.rank);
+    const content = rows.map((idea) => shortlist.has(idea.name) ? `<a class="archive-shortlist-link" href="#${ideaAnchor(idea.name)}"><span>${language === "zh" ? "短名单" : "Shortlist"}</span><b>${esc(idea.name)}</b><small>#${idea.rank} · ${esc(idea.confidence)}</small></a>` : renderIdeaPlanCard(idea)).join("");
+    return `<details class="idea-archive-direction"><summary><div><span>${esc(direction.code)}</span><b>${textOf(direction.title)}</b></div><small>${rows.length} ${language === "zh" ? "个 Idea" : "ideas"}</small></summary><div class="idea-archive-body">${content}</div></details>`;
+  }).join("");
+  return `<section class="panel"><h3 id="complete-candidate-archive">${language === "zh" ? "34 个保留 Idea 完整归档" : "Complete archive of 34 retained ideas"}</h3><p class="section-intro">${language === "zh" ? "短名单之外的候选仍完整保留，避免一次筛选永久丢失潜在线索。旧排名和小数分数仅用于追溯历史决策，不直接决定是否立项。" : "Candidates outside the shortlist remain fully preserved so one selection round does not destroy useful branches. Legacy ranks and decimal scores are traceability metadata only."}</p>${directionSections}</section>${renderIdeaRankingPanels()}`;
+}
 function renderIdeaPlanCard(idea) {
   const direction = directionById(idea.directionId);
   const explanation = ideaExplanation(idea.name);
   const comparison = ideaComparison(idea.name);
-  return `<article class="idea-plan-card" id="${ideaAnchor(idea.name)}"><div class="idea-card-top"><div><span class="idea-rank">#${idea.rank}</span><h5>${esc(idea.name)}</h5><a class="idea-direction-link" href="research-directions.html#${esc(idea.directionId)}">${direction ? `${esc(direction.code)} · ${textOf(direction.title)}` : ""}</a></div><div class="idea-score"><strong>${idea.score.toFixed(1)}</strong><span>${language === "zh" ? "总分" : "score"} · ${esc(idea.confidence)}</span></div></div><div class="idea-section-title">${language === "zh" ? "研究论证" : "Research argument"}</div><div class="idea-plan-grid idea-argument-grid"><div><b>${language === "zh" ? "目的／要解决的问题" : "Purpose / problem"}</b><p>${textOf(explanation.purpose)}</p></div><div><b>${language === "zh" ? "核心思想" : "Core idea"}</b><p>${textOf(explanation.core)}</p></div><div><b>${language === "zh" ? "合理性" : "Why it is reasonable"}</b><p>${textOf(explanation.rationale)}</p></div><div><b>${language === "zh" ? "方法逻辑" : "Method logic"}</b><p>${textOf(explanation.logic)}</p></div><div><b>${language === "zh" ? "研究重要性" : "Why it matters"}</b><p>${textOf(comparison.importance)}</p></div><div><b>${language === "zh" ? "相对优势" : "Comparative advantage"}</b><p>${textOf(comparison.advantage)}</p></div></div><div class="idea-section-title">${language === "zh" ? "实验验证" : "Validation plan"}</div><div class="idea-plan-grid"><div><b>${language === "zh" ? "最小实验" : "Minimum experiment"}</b><p>${textOf(idea.experiment)}</p></div><div><b>${language === "zh" ? "最强对照" : "Strongest comparison"}</b><p>${textOf(idea.baseline)}</p></div><div><b>Go</b><p>${textOf(idea.go)}</p></div><div><b>Stop</b><p>${textOf(idea.stop)}</p></div><div><b>${language === "zh" ? "最适赛道" : "Best track"}</b><p>${textOf(idea.track)} · ${language === "zh" ? `排序置信度 ${idea.confidence}` : `${idea.confidence} ranking confidence`}</p></div><div><b>${language === "zh" ? "一句话命题" : "One-line thesis"}</b><p>${textOf(idea.thesis)}</p></div></div></article>`;
+  const state = ideaDecisionState(idea);
+  return `<article class="idea-plan-card" id="${ideaAnchor(idea.name)}"><div class="idea-card-top"><div><span class="idea-stage-badge tone-${esc(state.tone)}">${esc(state.label)}</span><h5>${esc(idea.name)}</h5><a class="idea-direction-link" href="research-directions.html#${esc(idea.directionId)}">${direction ? `${esc(direction.code)} · ${textOf(direction.title)}` : ""}</a></div><div class="idea-legacy-trace"><b>#${idea.rank}</b><span>${language === "zh" ? "旧排序" : "legacy rank"} · ${idea.score.toFixed(1)} · ${esc(idea.confidence)}</span></div></div><div class="idea-section-title">${language === "zh" ? "研究论证" : "Research argument"}</div><div class="idea-plan-grid idea-argument-grid"><div><b>${language === "zh" ? "目的／要解决的问题" : "Purpose / problem"}</b><p>${textOf(explanation.purpose)}</p></div><div><b>${language === "zh" ? "核心思想" : "Core idea"}</b><p>${textOf(explanation.core)}</p></div><div><b>${language === "zh" ? "合理性" : "Why it is reasonable"}</b><p>${textOf(explanation.rationale)}</p></div><div><b>${language === "zh" ? "方法逻辑" : "Method logic"}</b><p>${textOf(explanation.logic)}</p></div><div><b>${language === "zh" ? "研究重要性" : "Why it matters"}</b><p>${textOf(comparison.importance)}</p></div><div><b>${language === "zh" ? "相对优势" : "Comparative advantage"}</b><p>${textOf(comparison.advantage)}</p></div></div><div class="idea-section-title">${language === "zh" ? "实验验证" : "Validation plan"}</div><div class="idea-plan-grid"><div><b>${language === "zh" ? "最小实验" : "Minimum experiment"}</b><p>${textOf(idea.experiment)}</p></div><div><b>${language === "zh" ? "最强对照" : "Strongest comparison"}</b><p>${textOf(idea.baseline)}</p></div><div><b>Go</b><p>${textOf(idea.go)}</p></div><div><b>Stop</b><p>${textOf(idea.stop)}</p></div><div><b>${language === "zh" ? "最适赛道" : "Best track"}</b><p>${textOf(idea.track)} · ${language === "zh" ? `证据置信度 ${idea.confidence}` : `${idea.confidence} evidence confidence`}</p></div><div><b>${language === "zh" ? "一句话命题" : "One-line thesis"}</b><p>${textOf(idea.thesis)}</p></div></div></article>`;
 }
 function renderIdeaRankingPanels() {
   const ideas = [...portfolioIdeas()].sort((a, b) => a.rank - b.rank);
@@ -761,17 +900,72 @@ function renderIdeaRankingPanels() {
   const tracks = portfolioTracks().map((track) => `<article class="track-rank-card"><h4>${textOf(track.title)}</h4><ol>${track.ideaNames.map((name, index) => { const idea = ideaByName(name); return idea ? `<li><span>${index + 1}</span><a href="#${ideaAnchor(idea.name)}">${esc(idea.name)}</a><small>#${idea.rank}</small></li>` : ""; }).join("")}</ol></article>`).join("");
   return `<section class="panel" id="idea-ranking"><h3 id="global-idea-ranking">${language === "zh" ? "论文 Idea 总榜" : "Global paper-idea ranking"}</h3><p class="section-intro">${language === "zh" ? "总榜用于跨方向资源决策；方向内排序和赛道榜用于选择真正可执行的下一篇论文。" : "The global table supports cross-direction resource decisions; within-direction and track rankings are better for selecting the next executable paper."}</p><table class="matrix comparison-table"><thead><tr><th>${language === "zh" ? "排名" : "Rank"}</th><th>Idea</th><th>${language === "zh" ? "研究方向" : "Research direction"}</th><th>${language === "zh" ? "得分" : "Score"}</th><th>${language === "zh" ? "置信度" : "Conf."}</th><th>${language === "zh" ? "最适赛道" : "Best track"}</th></tr></thead><tbody>${globalRows}</tbody></table></section><section class="panel"><h3 id="within-direction-ranking">${language === "zh" ? "方向内排序" : "Within-direction ranking"}</h3><p class="section-intro">${language === "zh" ? "这比跨方向总榜更适合决定同一个科学问题下先做哪个论文方案。" : "This view is more useful than the global table when choosing among papers that answer the same scientific question."}</p><div class="direction-rank-grid">${withinDirections}</div></section><section class="panel"><h3 id="track-ranking">${language === "zh" ? "按论文赛道排序" : "Track-specific ranking"}</h3><div class="track-rank-grid">${tracks}</div></section>`;
 }
+function cvprIdeaBank() {
+  return window.CVPR_LOW_RESOURCE_IDEAS || {summary:{raw_candidates:0,passed:0,early_rejected:0,tracks:0},policy:{},tracks:{},passed_ideas:[],early_rejected:[]};
+}
+function publishedExperimentAudit() {
+  return window.PUBLISHED_EXPERIMENT_AUDIT || {summary:{papers:0},papers:[]};
+}
+function substrateLabel(value) {
+  const labels = {
+    hybrid:{zh:"API + 开源混合",en:"API + open hybrid"},
+    "open-weight":{zh:"开源权重训练",en:"Open-weight training"},
+    "open-or-hybrid-unknown-exact":{zh:"开源／混合待精确核验",en:"Open/hybrid exact setup pending"},
+    "trained-open-critic-exact-backbone-pending":{zh:"训练开源 Critic，骨干待核验",en:"Trained open critic; backbone pending"},
+    "api-and-model-agnostic-inference":{zh:"API 可用、方法推理时",en:"API-compatible inference-only"},
+    "trained-policy-plus-mllm":{zh:"训练策略 + MLLM",en:"Trained policy + MLLM"},
+    "llm-program-synthesis-exact-model-pending":{zh:"LLM 程序生成，模型待核验",en:"LLM program synthesis; model pending"},
+    "open-weight-high-resource-training":{zh:"开源权重高资源训练",en:"Open-weight high-resource training"},
+    "open-weight-model-plus-proprietary-tool":{zh:"开源模型 + 闭源工具",en:"Open model + proprietary tool"},
+    "multi-tool-router-exact-substrates-pending":{zh:"多工具路由，基座待核验",en:"Multi-tool router; substrates pending"},
+    "graph-and-web-tool-agent-exact-backbone-pending":{zh:"图与 Web 工具 Agent，骨干待核验",en:"Graph/web-tool agent; backbone pending"},
+  };
+  return textOf(labels[value] || {zh:value,en:value});
+}
+function renderPublishedExperimentAudit() {
+  const audit = publishedExperimentAudit();
+  const rows = (audit.papers || []).map((paper) => `<tr><td><a href="${esc(paper.source)}" target="_blank" rel="noopener"><strong>${esc(paper.title)}</strong></a><small>${esc(paper.venue)}</small></td><td><span class="substrate-badge">${esc(substrateLabel(paper.substrate))}</span><p>${esc(paper.actor)}</p></td><td><p>${esc(paper.api_role)}</p></td><td><p>${esc(paper.parameter_updates)}</p></td><td><p>${esc(paper.data)}</p><small>${esc(paper.hardware)}</small></td><td><span class="verification-badge">${esc(paper.verification)}</span><p>${textOf(paper.implication)}</p></td></tr>`).join("");
+  return `<section class="panel published-audit-panel"><div class="idea-panel-heading"><div><h3 id="published-experiment-substrate-audit">${language === "zh" ? "已发表视觉自进化论文：模型、API 与训练基座审计" : "Published visual self-evolution papers: model, API, and training substrate audit"}</h3><p class="section-intro">${language === "zh" ? "只陈述能够从正式论文、项目页或作者代码核验的事实；没有明确报告的模型版本与硬件保持 unknown。API、开源权重、参数训练和外部闭源工具分别统计，避免把“用了 GPT”误写成整篇论文都依赖 API。" : "Only facts traceable to official papers, project pages, or author code are stated. Unreported model variants and hardware remain unknown. API access, open weights, parameter training, and proprietary external tools are tracked separately."}</p></div><strong>${audit.summary?.papers || 0} ${language === "zh" ? "篇论文" : "papers"}</strong></div><div class="advisor-table-scroll"><table class="matrix published-audit-table"><thead><tr><th>${language === "zh" ? "论文" : "Paper"}</th><th>${language === "zh" ? "主模型／基座" : "Actor / substrate"}</th><th>${language === "zh" ? "API 角色" : "API role"}</th><th>${language === "zh" ? "更新什么" : "What is updated"}</th><th>${language === "zh" ? "数据与硬件" : "Data and hardware"}</th><th>${language === "zh" ? "低资源启示" : "Low-resource implication"}</th></tr></thead><tbody>${rows}</tbody></table></div><div class="published-audit-conclusion"><b>${language === "zh" ? "统一结论" : "Design conclusion"}</b><span>${language === "zh" ? "主结果采用本地开源权重；第二个开源架构验证迁移；商业 API 只作为可选上界／Judge，且不能成为唯一评测器。" : "Use local open weights for the primary result, a second open architecture for transfer, and commercial APIs only as optional ceilings/judges—not the sole evaluator."}</span></div></section>`;
+}
+function renderCvprExperimentProtocol(idea) {
+  const p = idea.experiment_protocol || {};
+  if (!p.actor) return "";
+  const data = p.data_protocol || {};
+  const phases = (p.phases || []).map((phase) => `<article><span>${esc(phase.id)}</span><div><b>${textOf(phase.title)}</b><p>${textOf(phase.setup)}</p><small><strong>Gate:</strong> ${textOf(phase.gate)}</small></div></article>`).join("");
+  const controls = (p.controls || []).map((item) => `<li>${textOf(item)}</li>`).join("");
+  const ablations = (p.ablations || []).map((item) => `<li>${textOf(item)}</li>`).join("");
+  return `<details class="cvpr-experiment-protocol" open><summary>${language === "zh" ? "实验执行协议：模型、API、数据划分与主表" : "Executable protocol: models, API, splits, and main table"}</summary><div class="protocol-model-grid"><section><b>Actor</b><p>${esc(p.actor)}</p></section><section><b>${language === "zh" ? "跨模型验证" : "Cross-model"}</b><p>${esc(p.cross_model)}</p></section><section><b>Critic / Verifier</b><p>${esc(p.critic_or_verifier)}</p></section><section><b>${language === "zh" ? "视觉工具" : "Visual tools"}</b><p>${esc(p.tool_models)}</p></section><section><b>${language === "zh" ? "商业 API" : "Commercial API"}</b><p>${textOf(p.commercial_api_role)}</p></section><section><b>${language === "zh" ? "参数更新范围" : "Parameter updates"}</b><p>${textOf(p.parameter_updates)}</p></section></div><div class="protocol-split-grid"><section><b>${language === "zh" ? "Discovery" : "Discovery"}</b><p>${textOf(data.discovery)}</p></section><section><b>Calibration</b><p>${textOf(data.calibration)}</p></section><section><b>${language === "zh" ? "冻结测试" : "Frozen test"}</b><p>${textOf(data.test)}</p></section></div><div class="protocol-phases">${phases}</div><div class="protocol-detail-grid"><section><b>${language === "zh" ? "对照组" : "Controls"}</b><ol>${controls}</ol></section><section><b>${language === "zh" ? "消融" : "Ablations"}</b><ol>${ablations}</ol></section><section><b>${language === "zh" ? "重复与调用预算" : "Repetitions and calls"}</b><p>${textOf(p.repetitions)}</p><p>${textOf(p.call_budget)}</p></section><section><b>${language === "zh" ? "算力预算" : "Compute budget"}</b><p>${textOf(p.compute_budget)}</p></section><section><b>${language === "zh" ? "决定性主表" : "Decisive main table"}</b><p>${textOf(p.main_table)}</p></section><section><b>Go / Stop</b><p><strong>Go:</strong> ${textOf(p.success_gate)}</p><p><strong>Stop:</strong> ${textOf(p.stop_gate)}</p></section></div></details>`;
+}
+function renderCvprIdeaCard(idea, index) {
+  const budget = idea.budget || {};
+  const reviews = idea.reviews || [];
+  const externalReviews = idea.external_reviews || [];
+  const topOpen = index < 5 ? "open" : "";
+  return `<details class="cvpr-idea-card cvpr-filter-target" data-cvpr-track="${esc(idea.track_id || "")}" data-cvpr-gpu-hours="${Number(budget.gpu_hours || 0)}" ${topOpen}><summary><div><span class="cvpr-rank">#${idea.rank}</span><b>${textOf(idea.title)}</b><small>${textOf(idea.track)}</small></div><div class="cvpr-budget"><strong>${budget.max_gpus || 0} GPU · ${budget.gpu_hours || 0}h</strong><span>${budget.wall_days || 0} ${language === "zh" ? "天 Pilot" : "day pilot"}</span></div></summary><div class="cvpr-idea-body"><div class="cvpr-six-grid"><section><h4 data-toc="false">${language === "zh" ? "目的／问题" : "Purpose / problem"}</h4><p>${textOf(idea.purpose)}</p></section><section><h4 data-toc="false">${language === "zh" ? "核心思想" : "Core idea"}</h4><p>${textOf(idea.core_idea)}</p></section><section><h4 data-toc="false">${language === "zh" ? "为什么合理" : "Why it is reasonable"}</h4><p>${textOf(idea.rationale)}</p></section><section><h4 data-toc="false">${language === "zh" ? "方法逻辑" : "Method logic"}</h4><p>${textOf(idea.method_logic)}</p></section><section><h4 data-toc="false">${language === "zh" ? "研究重要性" : "Research importance"}</h4><p>${textOf(idea.importance)}</p></section><section><h4 data-toc="false">${language === "zh" ? "相对优势" : "Comparative advantage"}</h4><p>${textOf(idea.comparative_advantage)}</p></section></div><div class="cvpr-proof-grid"><section><h4 data-toc="false">${language === "zh" ? "最近工作与碰撞边界" : "Nearest work and collision boundary"}</h4><p>${textOf(idea.collision_boundary)}</p><div class="cvpr-chip-row">${(idea.nearest_work || []).map((name) => `<span>${esc(name)}</span>`).join("")}</div></section><section><h4 data-toc="false">${language === "zh" ? "公开资产" : "Public assets"}</h4><p><b>${language === "zh" ? "数据集" : "Datasets"}:</b> ${(idea.datasets || []).map(esc).join(" · ")}</p><p><b>${language === "zh" ? "模型" : "Models"}:</b> ${(idea.models || []).map(esc).join(" · ")}</p></section><section><h4 data-toc="false">${language === "zh" ? "决定性 Pilot" : "Decisive pilot"}</h4><p>${textOf(idea.pilot)}</p><p><b>${language === "zh" ? "主指标" : "Primary metric"}:</b> ${textOf(idea.decisive_metric)}</p></section><section><h4 data-toc="false">${language === "zh" ? "最强对照与停止条件" : "Strongest baseline and Stop rule"}</h4><p>${textOf(idea.strongest_baseline)}</p><p class="cvpr-stop"><b>Stop:</b> ${textOf(idea.stop_condition)}</p></section></div>${renderCvprExperimentProtocol(idea)}${externalReviews.map((review) => `<div class="project-web-gpt-review verdict-${esc(review.verdict)}"><header><b>${language === "zh" ? "agent 项目网页版 GPT 严格审查" : "Agent-project web GPT strict review"}</b><span>${esc(String(review.verdict || "").toUpperCase())}</span></header><p>${esc(review.finding || "")}</p><small><strong>${language === "zh" ? "要求" : "Required action"}:</strong> ${esc(review.required_action || "")}</small></div>`).join("")}<div class="cvpr-review-strip">${reviews.map((review) => `<span class="cvpr-review-pass" title="${esc(review.finding || "")}"><i>✓</i>${esc(review.label)} <b>${review.score}/5</b></span>`).join("")}</div></div></details>`;
+}
+function renderCvprLowResourceBank() {
+  const bank = cvprIdeaBank();
+  const ideas = bank.passed_ideas || [];
+  if (!ideas.length) return `<section class="panel"><h3 id="cvpr-low-resource-bank">${language === "zh" ? "CVPR 低资源 Idea Bank" : "Low-resource CVPR idea bank"}</h3><div class="warning-box">${language === "zh" ? "候选数据尚未生成。请运行 python -m research_pipeline --build-cvpr-bank。" : "The idea artifact has not been generated. Run python -m research_pipeline --build-cvpr-bank."}</div></section>`;
+  const trackButtons = [["all",language === "zh" ? "全部方向" : "All tracks"], ...Object.entries(bank.tracks || {}).map(([key,label]) => [key,textOf(label)])];
+  const topRows = ideas.slice(0,15).map((idea) => `<tr><td><strong>#${idea.rank}</strong></td><td><a href="#cvpr-${esc(idea.id)}" class="cvpr-jump" data-cvpr-id="${esc(idea.id)}"><b>${textOf(idea.title)}</b></a><small>${textOf(idea.track)}</small></td><td>${textOf(idea.purpose)}</td><td>${textOf(idea.core_idea)}</td><td>${idea.budget.max_gpus} GPU · ${idea.budget.gpu_hours}h</td><td>${idea.priority}</td></tr>`).join("");
+  const earlyRejected = (bank.early_rejected || []).map((item) => `<li><b>${esc(item.title)}</b><span>${esc(item.reason)}</span></li>`);
+  const structuredBlocked = (bank.blocked_ideas || []).map((item) => `<li class="structured-blocked"><b>${textOf(item.title)}</b><span>${(item.blocking_reasons || []).map(esc).join("；")}</span></li>`);
+  const rejected = [...structuredBlocked, ...earlyRejected].join("");
+  return `<section class="panel cvpr-bank-panel"><div class="idea-panel-heading"><div><h3 id="cvpr-low-resource-bank">${language === "zh" ? "CVPR 低资源自审查 Idea Bank" : "Self-reviewed low-resource CVPR idea bank"}</h3><p class="section-intro">${language === "zh" ? "先由五类程序化 Reviewer 检查新颖性、视觉不可替代性、科学成立性、主表证据和低资源可行性；优先候选再由你指定 agent 项目中的网页版 GPT 严格复核。仅展示未被阻断、使用公开资产且 Pilot 不超过 2 张 GPU／48 GPU 小时的候选。" : "Five programmatic reviewers first check novelty, visual necessity, scientific validity, decisive evidence, and low-resource feasibility; priority candidates are then reviewed by web GPT inside the designated agent project. Only unblocked candidates using public assets within 2 GPUs / 48 GPU-hours are shown."}</p></div><strong>${ideas.length} ${language === "zh" ? "个通过项" : "passed ideas"}</strong></div><div class="grid cvpr-bank-stats"><div class="stat"><b>${bank.summary.raw_candidates}</b><span>${language === "zh" ? "个初始候选" : "raw candidates"}</span></div><div class="stat"><b>${ideas.length}</b><span>${language === "zh" ? "个五审通过" : "passed five reviews"}</span></div><div class="stat"><b>${bank.summary.blocked_after_structured_review || 0}</b><span>${language === "zh" ? "个结构化阻断" : "structured blocked"}</span></div><div class="stat"><b>${bank.summary.early_rejected}</b><span>${language === "zh" ? "个前置淘汰" : "early rejected"}</span></div><div class="stat"><b>${bank.summary.tracks}</b><span>${language === "zh" ? "个 CVPR 方向" : "CVPR tracks"}</span></div></div><div class="cvpr-filter-bar"><div class="cvpr-track-filters">${trackButtons.map(([key,label],index) => `<button class="cvpr-filter-btn ${index === 0 ? "active" : ""}" data-cvpr-filter-type="track" data-cvpr-filter-value="${esc(key)}">${esc(label)}</button>`).join("")}</div><div class="cvpr-budget-filters"><button class="cvpr-filter-btn active" data-cvpr-filter-type="budget" data-cvpr-filter-value="48">≤48 GPUh</button><button class="cvpr-filter-btn" data-cvpr-filter-type="budget" data-cvpr-filter-value="24">≤24 GPUh</button><button class="cvpr-filter-btn" data-cvpr-filter-type="budget" data-cvpr-filter-value="16">≤16 GPUh</button></div></div><div class="advisor-table-scroll"><table class="matrix cvpr-top-table"><thead><tr><th>${language === "zh" ? "排序" : "Rank"}</th><th>Idea</th><th>${language === "zh" ? "问题" : "Problem"}</th><th>${language === "zh" ? "机制" : "Mechanism"}</th><th>${language === "zh" ? "预算" : "Budget"}</th><th>${language === "zh" ? "优先值" : "Priority"}</th></tr></thead><tbody>${topRows}</tbody></table></div><div id="cvpr-idea-list" class="cvpr-idea-list">${ideas.map((idea,index) => `<div id="cvpr-${esc(idea.id)}">${renderCvprIdeaCard(idea,index)}</div>`).join("")}</div><details class="cvpr-rejected"><summary>${language === "zh" ? `查看 ${(bank.summary.early_rejected || 0) + (bank.summary.blocked_after_structured_review || 0)} 个被阻断／淘汰方向及原因` : `See ${(bank.summary.early_rejected || 0) + (bank.summary.blocked_after_structured_review || 0)} blocked/rejected directions and reasons`}</summary><ul>${rejected}</ul></details></section>`;
+}
+
 function renderIdeaPortfolio(config) {
-  const directions = portfolioDirections();
-  const ideas = portfolioIdeas();
+  const ideas = [...portfolioIdeas()].sort((a,b) => a.rank - b.rank);
   const chapters = pageArchitecture("paper-ideas").chapters || [];
-  const guide = directionGuideData();
-  const quick = directions.map((direction) => `<a class="framework-card" href="#portfolio-${esc(direction.id)}"><b>${esc(direction.code)} · ${textOf(direction.title)}</b><span>${direction.ideaIds.length} ${language === "zh" ? "个具体论文方案" : "concrete paper plans"}</span></a>`).join("");
-  const stats = `<div class="grid direction-stats"><div class="stat"><b>${directions.length}</b><span>${language === "zh" ? "个方向" : "directions"}</span></div><div class="stat"><b>${ideas.length}</b><span>${language === "zh" ? "个论文 Idea" : "paper ideas"}</span></div><div class="stat"><b>${ideas.filter((idea) => idea.confidence === "H").length}</b><span>${language === "zh" ? "个高置信度 Idea" : "high-confidence ideas"}</span></div></div>`;
-  const selection = `${stats}<div class="framework-grid idea-quick-nav">${quick}</div>${(config.sections || []).map((section, index) => renderSectionForPage(section, index, pageId, "idea-selection-section", 3)).join("")}`;
-  const portfolio = (guide.macroGroups || []).map((group) => { const groupDirections = (group.directionIds || []).map(directionById).filter(Boolean); const directionSections = groupDirections.map((direction) => { const rows = direction.ideaIds.map(ideaByName).filter(Boolean).sort((a, b) => a.rank - b.rank); return `<section class="panel idea-direction-section"><div class="idea-direction-heading"><div><span class="direction-code">${esc(direction.code)}</span><h4 id="portfolio-${esc(direction.id)}">${textOf(direction.title)}</h4><p>${textOf(direction.question)}</p></div><a class="link-btn" href="research-directions.html#${esc(direction.id)}">${language === "zh" ? "查看方向定义" : "Direction definition"}</a></div><div class="idea-plan-list">${rows.map(renderIdeaPlanCard).join("")}</div></section>`; }).join(""); return `<section class="idea-macro-cluster"><header><span>${esc(group.code)}</span><div><h3 id="idea-cluster-${esc(group.id)}">${textOf(group.title)}</h3><p>${textOf(group.plain)}</p></div></header>${directionSections}</section>`; }).join("");
-  const ranking = config.includeRanking ? renderIdeaRankingPanels() : "";
-  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderCustomChapter(chapters[0],0,selection)}${renderCustomChapter(chapters[1],1,portfolio)}${renderCustomChapter(chapters[2],2,ranking)}`;
+  const shortlist = (ideaPipelineMeta().advisorShortlist || []).map(ideaByName).filter(Boolean);
+  const pipeline = `${renderSemanticScholarStatus()}${renderIdeaBackendArchitecture()}${renderIdeaFunnel()}${renderIdeaOperators()}${renderReviewerPipeline()}${(config.sections || []).map((section,index) => renderSectionForPage(section,index,pageId,"idea-selection-section",3)).join("")}`;
+  const publishedAudit = renderPublishedExperimentAudit();
+  const cvprBank = renderCvprLowResourceBank();
+  const board = renderAdvisorBoard(shortlist);
+  const dossiers = renderShortlistDossiers(shortlist);
+  const archive = renderCandidateArchive(ideas);
+  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderCustomChapter(chapters[0],0,pipeline)}${renderCustomChapter(chapters[1],1,`${publishedAudit}${cvprBank}${board}`)}${renderCustomChapter(chapters[2],2,dossiers)}${renderCustomChapter(chapters[3],3,archive)}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;
@@ -885,7 +1079,7 @@ function renderBibliography(config) {
   const analysisGuide = `<section class="panel paper-analysis-guide"><h3 id="paper-reading-schema">${language === "zh" ? "每篇论文的六项阅读框架" : "Six-part reading framework for every paper"}</h3><p class="section-intro">${language === "zh" ? "每个文献卡片都可展开查看：目的／问题、核心思想、合理性、方法逻辑、重要性和相对优势。相对优势表示设计上更适合什么条件，不等于未经实验验证的绝对领先。" : "Every paper card expands into purpose/problem, core idea, rationale, method logic, importance, and comparative advantage. Comparative advantage describes conditions where a design may be better suited; it is not an unverified claim of absolute superiority."}</p><div class="property-grid"><div class="property-card"><b>${language === "zh" ? "核心方法注释" : "Core method note"}</b><span>${language === "zh" ? "关键里程碑论文具有针对该论文单独整理的方法描述。" : "Key milestone papers have a paper-specific method description."}</span></div><div class="property-card"><b>${language === "zh" ? "基于已有摘要归纳" : "Summary-derived"}</b><span>${language === "zh" ? "依据人工补充的简短摘要、更新对象和反馈信号组织六项解释。" : "Uses the curated short summary, update surface, and feedback signal."}</span></div><div class="property-card"><b>${language === "zh" ? "基于元数据保守归纳" : "Metadata-derived"}</b><span>${language === "zh" ? "长尾论文仅依据标题与目录元数据保守归纳；引用方法细节前必须回看原文。" : "Long-tail papers use conservative title and catalog metadata; consult the original paper before citing method details."}</span></div><div class="property-card"><b>${language === "zh" ? "导出" : "Export"}</b><span>${language === "zh" ? "JSON 与 CSV 会同时导出六项结构化解释和归纳依据。" : "JSON and CSV exports include all six fields and the analysis basis."}</span></div></div></section>`;
   const chapters = pageArchitecture("bibliography").chapters || [];
   const statusAndStats = `<div class="integrity-status ${catalog.length > DATA.length ? "pass" : "warn"}"><strong>${catalog.length > DATA.length ? "LIVE" : "SNAPSHOT"}</strong><span>${catalog.length > DATA.length ? (language === "zh" ? "已同步两个综述配套目录，并与人工核验的视觉/CVPR 补充集去重。" : "Live-synced from two survey-maintained catalogs and deduplicated with the curated visual/CVPR supplement.") : (language === "zh" ? "上游同步失败，当前显示人工核验快照。" : "Upstream sync failed; showing the curated snapshot.")}</span></div><div class="grid bibliography-stats"><div class="stat"><b>${catalog.length}</b><span>${language === "zh" ? "篇去重条目" : "deduplicated records"}</span></div><div class="stat"><b>${publishedCount}</b><span>${language === "zh" ? "篇自动识别为正式发表" : "records classified as published"}</span></div><div class="stat"><b>${visionCount}</b><span>${language === "zh" ? "篇视觉/多模态相关" : "vision/multimodal records"}</span></div><div class="stat"><b>${sourceCount}</b><span>${language === "zh" ? "类文献来源" : "source streams"}</span></div></div>`;
-  const coverageBody = `${renderGroupNav(config.groupsBefore || [])}${renderMergedGroups(config.groupsBefore || [])}${statusAndStats}`;
+  const coverageBody = `${renderGroupNav(config.groupsBefore || [])}${renderMergedGroups(config.groupsBefore || [])}${renderSemanticScholarStatus()}${statusAndStats}`;
   const rankingBody = `${rankingGuide}${analysisGuide}`;
   const mapsBody = `${renderTimelineMap()}${renderPublicationTypeMap()}${renderSignalMatrix()}${renderMilestoneTimeline()}`;
   const corpusBody = `<section class="panel"><div class="paper-figure-heading"><div><h3 id="searchable-corpus">${language === "zh" ? "可检索文献语料库" : "Searchable literature corpus"}</h3><p class="section-intro">${language === "zh" ? "筛选结果可直接导出、打印或生成可分享链接。" : "The current filtered set can be exported, printed, or shared through a filter-preserving URL."}</p></div><div class="export-actions"><button class="link-btn export-btn" data-export="json">JSON</button><button class="link-btn export-btn" data-export="csv">CSV</button><button class="link-btn export-btn" data-export="bibtex">BibTeX</button><button class="link-btn" id="copy-filter-link">${language === "zh" ? "复制筛选链接" : "Copy filter link"}</button><button class="link-btn" id="print-page">${language === "zh" ? "打印" : "Print"}</button><button class="link-btn" id="reset-filters">${language === "zh" ? "重置" : "Reset"}</button></div></div><div class="bibliography-controls"><select id="year-filter">${yearOptions}</select><select id="publication-filter">${publicationOptions}</select><select id="signal-filter">${signalOptions}</select><label class="toggle-filter"><input id="vision-filter" type="checkbox" ${visionOnly ? "checked" : ""}> ${language === "zh" ? "仅视觉/多模态" : "Vision/multimodal only"}</label></div><div class="filters">${filters}</div><div id="bibliography-list" class="resource-list"></div></section>`;
@@ -1215,6 +1409,33 @@ function buildToc() {
   container.innerHTML = headings.length ? `<div class="toc-title">${language === "zh" ? "本页多级目录" : "Page hierarchy"}</div><nav class="toc-tree" aria-label="${language === "zh" ? "页内多级目录" : "Hierarchical page contents"}">${renderNodes(root)}</nav>` : "";
 }
 function bindPageEvents() {
+  const applyCvprFilters = () => {
+    const track = document.querySelector('.cvpr-filter-btn.active[data-cvpr-filter-type="track"]')?.dataset.cvprFilterValue || "all";
+    const budget = Number(document.querySelector('.cvpr-filter-btn.active[data-cvpr-filter-type="budget"]')?.dataset.cvprFilterValue || 48);
+    document.querySelectorAll(".cvpr-filter-target").forEach((target) => {
+      const trackMatch = track === "all" || target.dataset.cvprTrack === track;
+      const budgetMatch = Number(target.dataset.cvprGpuHours || 0) <= budget;
+      target.closest('[id^="cvpr-"]')?.classList.toggle("cvpr-filter-hidden", !(trackMatch && budgetMatch));
+    });
+  };
+  document.querySelectorAll(".cvpr-filter-btn").forEach((button) => button.addEventListener("click", () => {
+    const type = button.dataset.cvprFilterType;
+    document.querySelectorAll(`.cvpr-filter-btn[data-cvpr-filter-type="${type}"]`).forEach((item) => item.classList.toggle("active", item === button));
+    applyCvprFilters();
+  }));
+  document.querySelectorAll(".cvpr-jump").forEach((link) => link.addEventListener("click", () => {
+    const target = document.getElementById(`cvpr-${link.dataset.cvprId || ""}`);
+    const details = target?.querySelector("details");
+    if (details) details.open = true;
+  }));
+  document.querySelectorAll(".idea-board-filter").forEach((button) => button.addEventListener("click", () => {
+    const filter = button.dataset.ideaFilter || "all";
+    document.querySelectorAll(".idea-board-filter").forEach((item) => item.classList.toggle("active", item === button));
+    document.querySelectorAll(".idea-filter-target").forEach((target) => {
+      const visible = filter === "all" || target.dataset.ideaStage === filter || (filter === "visual" && target.dataset.ideaTrack === "visual");
+      target.classList.toggle("idea-filter-hidden", !visible);
+    });
+  }));
   const refreshBibliography = (syncUrl = true, resetLimit = true) => {
     if (pageId !== "bibliography") return;
     if (resetLimit) bibliographyLimit = 80;

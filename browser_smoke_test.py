@@ -316,32 +316,74 @@ def main() -> None:
         idea_portfolio = execute(
             session_id,
             """return {
-              directions: document.querySelectorAll('.idea-direction-section').length,
-              ideas: document.querySelectorAll('.idea-plan-card').length,
+              publishedAuditRows: document.querySelectorAll('.published-audit-table tbody tr').length,
+              experimentProtocols: document.querySelectorAll('.cvpr-experiment-protocol').length,
+              protocolPhases: document.querySelectorAll('.protocol-phases article').length,
+              protocolModels: document.querySelectorAll('.protocol-model-grid section').length,
+              projectWebReviews: document.querySelectorAll('.project-web-gpt-review').length,
+              structuredBlocked: document.querySelectorAll('.structured-blocked').length,
+              backendStages: document.querySelectorAll('.idea-backend-flow article').length,
+              funnelStages: document.querySelectorAll('.idea-funnel-stage').length,
+              operators: document.querySelectorAll('.idea-operator-grid article').length,
+              reviewers: document.querySelectorAll('.reviewer-gate-grid article').length,
+              cvprCards: document.querySelectorAll('.cvpr-idea-card').length,
+              cvprReviews: document.querySelectorAll('.cvpr-review-pass').length,
+              cvprTrackFilters: document.querySelectorAll('.cvpr-filter-btn[data-cvpr-filter-type="track"]').length,
+              cvprBudgetFilters: document.querySelectorAll('.cvpr-filter-btn[data-cvpr-filter-type="budget"]').length,
+              cvprTopRows: document.querySelectorAll('.cvpr-top-table tbody tr').length,
+              cvprRejected: document.querySelectorAll('.cvpr-rejected li').length,
+              cvprMaxGpus: Math.max(...(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).map(x=>Number(x.budget?.max_gpus||0))),
+              cvprMaxHours: Math.max(...(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).map(x=>Number(x.budget?.gpu_hours||0))),
+              filters: document.querySelectorAll('.idea-board-filter').length,
+              dossiers: document.querySelectorAll('.idea-dossier').length,
+              dossierFields: document.querySelectorAll('.idea-dossier-grid section').length,
+              evidenceCards: document.querySelectorAll('.idea-evidence-list article').length,
+              archiveDirections: document.querySelectorAll('.idea-archive-direction').length,
+              archiveIdeas: document.querySelectorAll('.idea-plan-card').length,
+              archiveShortlist: document.querySelectorAll('.archive-shortlist-link').length,
               rows: document.querySelectorAll('#idea-ranking tbody tr').length,
               directionCards: document.querySelectorAll('.direction-rank-card').length,
               trackCards: document.querySelectorAll('.track-rank-card').length,
-              arguments: document.querySelectorAll('.idea-argument-grid').length,
               purpose: document.body.textContent.includes('Purpose / problem') || document.body.textContent.includes('目的／要解决的问题'),
               core: document.body.textContent.includes('Core idea') || document.body.textContent.includes('核心思想'),
-              rationale: document.body.textContent.includes('Why it is reasonable') || document.body.textContent.includes('合理性'),
+              rationale: document.body.textContent.includes('Why it is reasonable') || document.body.textContent.includes('为什么合理'),
               logic: document.body.textContent.includes('Method logic') || document.body.textContent.includes('方法逻辑'),
-              importance: document.body.textContent.includes('Why it matters') || document.body.textContent.includes('研究重要性'),
+              importance: document.body.textContent.includes('Research importance') || document.body.textContent.includes('研究重要性'),
               advantage: document.body.textContent.includes('Comparative advantage') || document.body.textContent.includes('相对优势'),
-              thesis: document.body.textContent.includes('One-line thesis') || document.body.textContent.includes('一句话命题'),
+              pilot: document.body.textContent.includes('Decisive pilot') || document.body.textContent.includes('决定性 Pilot'),
               text: document.body.textContent || ''
             };""",
         )
-        require(idea_portfolio["directions"] == 10, f"expected 10 idea groups, got {idea_portfolio['directions']}")
-        require(idea_portfolio["ideas"] == 34, f"expected 34 concrete ideas, got {idea_portfolio['ideas']}")
-        require(idea_portfolio["rows"] == 34, f"expected 34 ranked ideas, got {idea_portfolio['rows']}")
-        require(idea_portfolio["directionCards"] == 10, "within-direction rankings are incomplete")
-        require(idea_portfolio["trackCards"] == 4, "track rankings are incomplete")
-        require(idea_portfolio["arguments"] == 34, "idea reasoning blocks are incomplete")
-        require(idea_portfolio["purpose"] and idea_portfolio["core"] and idea_portfolio["rationale"] and idea_portfolio["logic"], "idea cards are missing required reasoning fields")
-        require(idea_portfolio["importance"] and idea_portfolio["advantage"], "idea cards are missing importance or comparative advantage")
-        require(idea_portfolio["thesis"], "idea cards are missing validation fields")
+        require(idea_portfolio["publishedAuditRows"] == 12, f"expected 12 published-paper substrate audits, got {idea_portfolio['publishedAuditRows']}")
+        require(idea_portfolio["experimentProtocols"] == 42, f"expected 42 executable experiment protocols, got {idea_portfolio['experimentProtocols']}")
+        require(idea_portfolio["protocolPhases"] == 126, f"expected 126 P0/P1/P2 phase cards, got {idea_portfolio['protocolPhases']}")
+        require(idea_portfolio["protocolModels"] == 252, f"expected six model/API fields per idea, got {idea_portfolio['protocolModels']}")
+        require(idea_portfolio["projectWebReviews"] == 2, f"expected two rendered project-web-GPT reviews among passed ideas, got {idea_portfolio['projectWebReviews']}")
+        require(idea_portfolio["structuredBlocked"] == 1, f"expected one structured blocked idea, got {idea_portfolio['structuredBlocked']}")
+        require(idea_portfolio["backendStages"] == 8, f"expected 8 backend stages, got {idea_portfolio['backendStages']}")
+        require(idea_portfolio["funnelStages"] == 4, f"expected 4 funnel stages, got {idea_portfolio['funnelStages']}")
+        require(idea_portfolio["operators"] == 8 and idea_portfolio["reviewers"] == 5, "idea generation or reviewer architecture is incomplete")
+        require(idea_portfolio["cvprCards"] == 42, f"expected 42 self-reviewed CVPR ideas, got {idea_portfolio['cvprCards']}")
+        require(idea_portfolio["cvprReviews"] == 210, "every passed CVPR idea must expose five programmatic review records")
+        require(idea_portfolio["cvprTrackFilters"] == 9 and idea_portfolio["cvprBudgetFilters"] == 3, "CVPR track or budget filters are incomplete")
+        require(idea_portfolio["cvprTopRows"] == 15 and idea_portfolio["cvprRejected"] == 19, "CVPR comparison table or rejection archive is incomplete")
+        require(idea_portfolio["cvprMaxGpus"] <= 2 and idea_portfolio["cvprMaxHours"] <= 48, "CVPR idea bank violates the low-resource policy")
+        require(idea_portfolio["filters"] == 5, "advisor filters are incomplete")
+        require(idea_portfolio["dossiers"] == 12 and idea_portfolio["dossierFields"] == 72, "advisor shortlist dossiers are incomplete")
+        require(idea_portfolio["evidenceCards"] == 36, "shortlist literature neighborhoods are incomplete")
+        require(idea_portfolio["archiveDirections"] == 10, "candidate archive does not cover all directions")
+        require(idea_portfolio["archiveIdeas"] + idea_portfolio["archiveShortlist"] == 34, "candidate archive does not preserve all 34 ideas")
+        require(idea_portfolio["rows"] == 34, f"expected 34 traceable ranked ideas, got {idea_portfolio['rows']}")
+        require(idea_portfolio["directionCards"] == 10 and idea_portfolio["trackCards"] == 4, "legacy traceability rankings are incomplete")
+        require(idea_portfolio["purpose"] and idea_portfolio["core"] and idea_portfolio["rationale"] and idea_portfolio["logic"], "idea dossiers are missing required reasoning fields")
+        require(idea_portfolio["importance"] and idea_portfolio["advantage"] and idea_portfolio["pilot"], "idea dossiers are missing importance, advantage, or pilot evidence")
         require("GroundEvo-Admission" in idea_portfolio["text"] and "PluralLineage-Evo" in idea_portfolio["text"], "idea portfolio is incomplete")
+        cvpr_filter = execute(session_id, """const b=[...document.querySelectorAll('.cvpr-filter-btn')].find(x=>x.dataset.cvprFilterType==='budget'&&x.dataset.cvprFilterValue==='16'); b?.click(); const expected=(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).filter(x=>Number(x.budget?.gpu_hours||0)<=16).length; const visible=[...document.querySelectorAll('.cvpr-filter-target')].filter(x=>!x.closest('[id^=\"cvpr-\"]')?.classList.contains('cvpr-filter-hidden')).length; return {expected,visible};""")
+        require(cvpr_filter["visible"] == cvpr_filter["expected"] and cvpr_filter["visible"] > 0, f"CVPR budget filter failed: {cvpr_filter}")
+        cvpr_track = execute(session_id, """const b=[...document.querySelectorAll('.cvpr-filter-btn')].find(x=>x.dataset.cvprFilterType==='track'&&x.dataset.cvprFilterValue==='video'); b?.click(); const expected=(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).filter(x=>x.track_id==='video'&&Number(x.budget?.gpu_hours||0)<=16).length; const visible=[...document.querySelectorAll('.cvpr-filter-target')].filter(x=>!x.closest('[id^=\"cvpr-\"]')?.classList.contains('cvpr-filter-hidden')).length; return {expected,visible};""")
+        require(cvpr_track["visible"] == cvpr_track["expected"], f"CVPR track filter failed: {cvpr_track}")
+        filter_result = execute(session_id, """const b=[...document.querySelectorAll('.idea-board-filter')].find(x=>x.dataset.ideaFilter==='selected'); b?.click(); return {hidden:document.querySelectorAll('.idea-filter-hidden').length, visible:[...document.querySelectorAll('.idea-filter-target')].filter(x=>!x.classList.contains('idea-filter-hidden')).length};""")
+        require(filter_result["hidden"] > 0 and filter_result["visible"] == 2, f"advisor filter failed: {filter_result}")
 
         redirect_checks = {
             "/memory-evolution.html": "mechanisms.html#group-memory-evolution",

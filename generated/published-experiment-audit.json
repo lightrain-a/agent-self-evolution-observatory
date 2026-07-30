@@ -1,0 +1,255 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-07-30T06:03:34+00:00",
+  "policy": {
+    "source_rule": "Official paper/project/author code only; unknown fields are not inferred.",
+    "interpretation": "API access, open weights, parameter training, and external software/tools are reported separately."
+  },
+  "summary": {
+    "papers": 12,
+    "substrate_counts": {
+      "hybrid": 2,
+      "open-weight": 1,
+      "open-or-hybrid-unknown-exact": 1,
+      "trained-open-critic-exact-backbone-pending": 1,
+      "api-and-model-agnostic-inference": 1,
+      "trained-policy-plus-mllm": 1,
+      "llm-program-synthesis-exact-model-pending": 1,
+      "open-weight-high-resource-training": 1,
+      "open-weight-model-plus-proprietary-tool": 1,
+      "multi-tool-router-exact-substrates-pending": 1,
+      "graph-and-web-tool-agent-exact-backbone-pending": 1
+    },
+    "primary_recommendation": "Open-weight primary results, second open architecture for transfer, commercial API only as optional ceiling/judge."
+  },
+  "papers": [
+    {
+      "id": "clova-2024",
+      "title": "CLOVA: A Closed-Loop Visual Assistant with Tool Usage and Update",
+      "venue": "CVPR 2024",
+      "substrate": "hybrid",
+      "actor": "GPT-3.5 in the main tool-use comparison; the paper also evaluates Llama2-7B and GPT-4.",
+      "critic_or_judge": "The same LLM loop provides reflection; task-specific visual tools provide executable feedback.",
+      "api_role": "GPT-3.5-turbo and GPT-4 are commercial API models; text-davinci-002 is used by the LIST tool. Llama2-7B is the open-weight alternative.",
+      "parameter_updates": "No full LLM fine-tuning. Correct/incorrect demonstrations are stored for in-context updates; visual-tool backbones stay frozen while soft prompts are tuned.",
+      "data": "GQA, NLVRv2, plus manually collected image-editing and factual-knowledge tasks.",
+      "hardware": "Unknown in the official main paper text inspected.",
+      "code": "Official project page and code are public.",
+      "source": "https://clova-tool.github.io/",
+      "verification": "verified-official",
+      "implication": {
+        "zh": "商业 API 不是闭环更新的唯一实现；低资源复现可使用本地开源规划器与冻结视觉工具，但必须单独报告 API 与开源规划器的差异。",
+        "en": "Commercial APIs are not the only implementation of closed-loop updating. A low-resource reproduction can use an open local planner and frozen visual tools, but API and open-planner results must be separated."
+      }
+    },
+    {
+      "id": "virep-2024",
+      "title": "Self-Training Large Language Models for Improved Visual Program Synthesis with Visual Reinforcement",
+      "venue": "CVPR 2024",
+      "substrate": "open-weight",
+      "actor": "An open code LLM is self-trained for visual program synthesis; the exact checkpoint variant must be taken from the released configuration before reproduction.",
+      "critic_or_judge": "Sparse binary execution reward and filtered behavioral cloning; fewer than 50 manually written corrections extend training.",
+      "api_role": "The core method is designed to avoid dependence on strong commercial program generators such as GPT-4.",
+      "parameter_updates": "The code model is updated through reinforced self-training / filtered behavioral cloning.",
+      "data": "Object detection, compositional VQA, and image-text retrieval tasks.",
+      "hardware": "Unknown until the official PDF/configuration is checked for the exact run.",
+      "code": "Official project page is public.",
+      "source": "https://zaidkhan.me/ViReP/",
+      "verification": "verified-with-open-variant-pending",
+      "implication": {
+        "zh": "若论文贡献依赖模型参数自进化，可以用 7B 级开源代码/VLM 做 LoRA 或小规模自训练；但当前低资源 Idea 更适合冻结主干，只更新小模块。",
+        "en": "When the contribution truly requires parameter self-evolution, a 7B open model can be adapted with LoRA or small-scale self-training. Most current low-resource ideas should still freeze the backbone and update only small components."
+      }
+    },
+    {
+      "id": "se-vcl-2025",
+      "title": "Self-Evolving Visual Concept Library using Vision-Language Critics",
+      "venue": "CVPR 2025",
+      "substrate": "open-or-hybrid-unknown-exact",
+      "actor": "A visual concept library and downstream visual reasoning system; exact foundation-model checkpoints must be read from the official configuration.",
+      "critic_or_judge": "Vision-language critics evaluate and refine concepts.",
+      "api_role": "The official abstract establishes VLM critics but does not by itself prove whether every reported critic is API-hosted or local.",
+      "parameter_updates": "The evolving object is the concept library rather than unrestricted full-backbone training.",
+      "data": "Visual concept learning and downstream recognition/reasoning benchmarks reported in the paper.",
+      "hardware": "Unknown from the official abstract/project metadata inspected.",
+      "code": "Use the official author repository when reproducing; exact availability is recorded as pending if the repository is not linked from the paper page.",
+      "source": "https://openaccess.thecvf.com/content/CVPR2025/html/Sehgal_Self-Evolving_Visual_Concept_Library_using_Vision-Language_Critics_CVPR_2025_paper.html",
+      "verification": "partial-official",
+      "implication": {
+        "zh": "把可进化对象限制为概念库、记忆或工具，比全量训练 VLM 更符合低资源设置；但 Critic 必须有本地可复现版本。",
+        "en": "Restricting evolution to a concept library, memory, or tools is more compatible with low-resource work than full VLM training, but a locally reproducible critic is required."
+      }
+    },
+    {
+      "id": "visco-2025",
+      "title": "VISCO: Benchmarking Fine-Grained Critique and Correction towards Self-Improvement in Visual Reasoning",
+      "venue": "CVPR 2025",
+      "substrate": "hybrid",
+      "actor": "The released evaluation supports proprietary GPT-4o, Claude-3.5-Sonnet, Gemini-1.5-Pro and many local open LVLMs including Qwen2-VL, Molmo, InternVL2, LLaVA, NVLM, and Llama-3.2-Vision families.",
+      "critic_or_judge": "LookBack is an inference-time prompting strategy; the released explanation-F1 evaluator uses an OpenAI API model unless replaced.",
+      "api_role": "Commercial APIs are one evaluated model group and are used by the provided assisted evaluator, but open models can be run locally through vLLM/lmdeploy/sglang.",
+      "parameter_updates": "Benchmarking and LookBack do not require backbone training.",
+      "data": "1,645 question-answer pairs with 5,604 fine-grained step annotations.",
+      "hardware": "Local serving requirements depend on the selected LVLM; no single universal hardware setting applies.",
+      "code": "Official GitHub repository is public.",
+      "source": "https://github.com/PlusLabNLP/VISCO",
+      "verification": "verified-official-code",
+      "implication": {
+        "zh": "主实验可以完全基于本地开源 Actor/Critic；商业 API 只作为上界或辅助评测，并必须同时报告调用次数、模型版本和替代的本地评测。",
+        "en": "The main experiment can use local open actors and critics. Commercial APIs should be optional ceilings or assisted evaluators, with call counts, fixed versions, and a local alternative reported."
+      }
+    },
+    {
+      "id": "critic-v-2025",
+      "title": "Critic-V: VLM Critics Help Catch VLM Errors in Multimodal Reasoning",
+      "venue": "CVPR 2025",
+      "substrate": "trained-open-critic-exact-backbone-pending",
+      "actor": "A reasoner VLM is paired with an independent critic; exact released reasoner/critic checkpoints should be taken from the official code/configuration.",
+      "critic_or_judge": "The critic is trained with DPO on preference critiques ranked by a rule-based reward.",
+      "api_role": "GPT-4V is an evaluated comparison; the method contribution is an independently trained critic rather than an API-only prompt loop.",
+      "parameter_updates": "Critic parameters are trained with DPO; this is not inference-only.",
+      "data": "Multimodal reasoning and critique data described in the paper.",
+      "hardware": "Unknown until the official appendix/configuration is checked.",
+      "code": "Official paper/project materials should be used; exact repository availability is marked pending here.",
+      "source": "https://arxiv.org/abs/2411.18203",
+      "verification": "verified-method-exact-checkpoint-pending",
+      "implication": {
+        "zh": "独立 Critic 能减少共享盲点，但训练 Critic 会增加成本。低资源方案应先比较冻结的异构开源 Critic，再决定是否需要小型 DPO/LoRA。",
+        "en": "An independent critic can reduce shared blind spots, but critic training adds cost. A low-resource study should first compare a frozen heterogeneous open critic before adding small DPO/LoRA training."
+      }
+    },
+    {
+      "id": "grounding-correction-2025",
+      "title": "Can Large Vision-Language Models Correct Semantic Grounding Errors By Themselves?",
+      "venue": "CVPR 2025",
+      "substrate": "api-and-model-agnostic-inference",
+      "actor": "The official study evaluates GPT-4V/GPT-4o and additional LVLMs; the correction procedure is prompt-based and model-agnostic.",
+      "critic_or_judge": "The model performs iterative binary verification and correction.",
+      "api_role": "GPT models require commercial APIs, but the method itself does not structurally require API access.",
+      "parameter_updates": "No fine-tuning, architecture change, or external training data.",
+      "data": "Semantic grounding evaluation sets reported in the paper.",
+      "hardware": "Not applicable to hosted GPT runs; local-model hardware depends on the selected open checkpoint.",
+      "code": "Official CVF/arXiv materials are public.",
+      "source": "https://arxiv.org/abs/2404.06510",
+      "verification": "verified-official",
+      "implication": {
+        "zh": "推理时自纠正非常省训练资源，但必须控制迭代调用预算，并证明收益来自视觉复核而非更多 token 或更多采样。",
+        "en": "Inference-time self-correction is training-efficient, but iteration budgets must be controlled and gains must be separated from simply using more tokens or samples."
+      }
+    },
+    {
+      "id": "phoenix-2025",
+      "title": "Phoenix: A Motion-based Self-Reflection Framework for Fine-grained Robotic Action Correction",
+      "venue": "CVPR 2025",
+      "substrate": "trained-policy-plus-mllm",
+      "actor": "A motion-conditioned diffusion policy is paired with an MLLM-driven motion-adjustment component; exact MLLM checkpoint should be verified from the official configuration.",
+      "critic_or_judge": "Motion-based self-reflection supplies corrective signals.",
+      "api_role": "Unknown for the exact MLLM until the official config is checked; the policy itself is trained and locally executable.",
+      "parameter_updates": "The diffusion policy/lifelong component is trained; this is not a training-free method.",
+      "data": "RoboMimic simulation and real-world robotic experiments.",
+      "hardware": "Exact training hardware remains pending official appendix/configuration verification.",
+      "code": "Official author GitHub repository is public.",
+      "source": "https://github.com/GeWu-Lab/Motion-based-Self-Reflection-Framework",
+      "verification": "partial-official",
+      "implication": {
+        "zh": "完整复现成本较高。我们的具身方向应先在公开轨迹与仿真重放上冻结 OpenVLA，只训练审计器或记忆门控。",
+        "en": "Full reproduction is costly. Our embodied work should first freeze OpenVLA and train only an auditor or memory gate on public trajectories and simulator replay."
+      }
+    },
+    {
+      "id": "vadar-2025",
+      "title": "Visual Agentic AI for Spatial Reasoning with a Dynamic API",
+      "venue": "CVPR 2025",
+      "substrate": "llm-program-synthesis-exact-model-pending",
+      "actor": "Collaborating LLM agents generate and use a dynamic Python visual API; exact LLM versions should be read from the official paper/configuration.",
+      "critic_or_judge": "Execution results and specialist agents provide feedback for API creation and use.",
+      "api_role": "The official abstract establishes LLM-based program synthesis but does not alone identify whether every main run is hosted API or local open weights.",
+      "parameter_updates": "The evolving artifact is the dynamic API/program library; full foundation-model training is not the central mechanism.",
+      "data": "Omni3D-Bench, CLEVR, GQA, and VSI-Bench.",
+      "hardware": "Unknown until official appendix/configuration verification.",
+      "code": "Official project page is public.",
+      "source": "https://glab-caltech.github.io/vadar/",
+      "verification": "partial-official",
+      "implication": {
+        "zh": "工具/API 进化可以冻结基础模型完成，但必须把程序生成器的 API 依赖作为变量，并提供本地开源规划器对照。",
+        "en": "Tool/API evolution can freeze the foundation model, but the program generator's API dependency must be treated as an experimental variable with a local open-planner control."
+      }
+    },
+    {
+      "id": "visplay-2026",
+      "title": "VisPlay: Self-Evolving Vision-Language Models",
+      "venue": "CVPR 2026",
+      "substrate": "open-weight-high-resource-training",
+      "actor": "Qwen2.5-VL and MiMo-VL model families are used as trainable questioner/reasoner substrates.",
+      "critic_or_judge": "Self-play difficulty/diversity rewards and verifiable task signals guide GRPO.",
+      "api_role": "Commercial model APIs are not required for the core training loop.",
+      "parameter_updates": "Questioner and reasoner are jointly optimized with GRPO on large unlabeled-image collections.",
+      "data": "Large-scale unlabeled images plus multimodal reasoning evaluations.",
+      "hardware": "High-resource distributed training; exact configuration should be copied from the official appendix before reproduction.",
+      "code": "Official GitHub repository is public.",
+      "source": "https://github.com/bruno686/VisPlay",
+      "verification": "verified-official",
+      "implication": {
+        "zh": "它证明全参数/强化学习式视觉自进化可以用开源权重完成，但不适合作为当前低资源复现目标；应作为高资源上界。",
+        "en": "It demonstrates open-weight RL-style visual self-evolution, but is unsuitable as the current low-resource reproduction target and should be treated as a high-resource ceiling."
+      }
+    },
+    {
+      "id": "jarvisevo-2026",
+      "title": "JarvisEvo: Towards a Self-Evolving Photo Editing Agent with Synergistic Editor-Evaluator Optimization",
+      "venue": "CVPR 2026",
+      "substrate": "open-weight-model-plus-proprietary-tool",
+      "actor": "The released JarvisEvo-8B editor/evaluator stack integrates Qwen-Image-Edit and an Adobe Lightroom tool space.",
+      "critic_or_judge": "A dual editor-evaluator loop is optimized with SFT/SEPO/RFT-style stages reported by the project.",
+      "api_role": "A commercial LLM API is not required for the released 8B model, but Adobe Lightroom is a proprietary software dependency.",
+      "parameter_updates": "The editor/evaluator system is trained; this is not inference-only.",
+      "data": "ArtEdit-Bench and editing data released/described by the project.",
+      "hardware": "Exact training hardware should be taken from the official appendix; inference weights are roughly 17 GB according to the release.",
+      "code": "Official GitHub repository and model weights are public under their stated license.",
+      "source": "https://github.com/LYL1015/JarvisEvo",
+      "verification": "verified-official-code",
+      "implication": {
+        "zh": "开源 8B 编辑 Agent 可本地验证，但闭源工具依赖仍需显式报告。低资源研究可用 SDXL/FLUX 与开源编辑工具替代。",
+        "en": "The open 8B editing agent can be evaluated locally, but proprietary tool dependencies must be disclosed. Low-resource work can substitute SDXL/FLUX and open editing tools."
+      }
+    },
+    {
+      "id": "octot2i-2026",
+      "title": "OctoT2I: A Self-Evolving Agentic Text-to-Image Router",
+      "venue": "CVPR 2026",
+      "substrate": "multi-tool-router-exact-substrates-pending",
+      "actor": "An agentic router selects among multiple text-to-image tools and maintains an evolving capability knowledge base.",
+      "critic_or_judge": "The propose-solve-evaluate-learn loop evaluates tool capability and routing outcomes.",
+      "api_role": "Exact API/open-weight composition of every tool is pending verification from the official full paper and release.",
+      "parameter_updates": "The capability knowledge base/router evolves; unrestricted full generator training is not the central contribution.",
+      "data": "Text-to-image prompts and quality/efficiency evaluations described in the paper.",
+      "hardware": "Unknown until official supplementary/configuration verification.",
+      "code": "The official paper indicates release status; use the author release when available.",
+      "source": "https://arxiv.org/abs/2606.01803",
+      "verification": "partial-official",
+      "implication": {
+        "zh": "路由和能力记忆可做低资源研究，但必须分别报告本地生成器与外部 API 工具的调用成本和可复现性。",
+        "en": "Routing and capability memory are low-resource research targets, but local generators and external API tools must have separate cost and reproducibility reporting."
+      }
+    },
+    {
+      "id": "evograph-r1-2026",
+      "title": "EvoGraph-R1: Self-Evolving Multimodal Knowledge Hypergraphs for Agentic Retrieval",
+      "venue": "CVPR 2026",
+      "substrate": "graph-and-web-tool-agent-exact-backbone-pending",
+      "actor": "A multimodal agent selects GraphRetrieve, WebSearch, GraphEdit, and Answer actions over a dynamic hypergraph.",
+      "critic_or_judge": "Retrieval and graph-edit outcomes provide the evolution signal.",
+      "api_role": "Web search is an external service/tool; exact foundation-model and API choices remain pending official supplementary verification.",
+      "parameter_updates": "The main evolving state is the multimodal graph rather than necessarily the foundation-model weights.",
+      "data": "Agentic multimodal retrieval benchmarks reported in the paper.",
+      "hardware": "Unknown until official appendix/configuration verification.",
+      "code": "Use the official CVF/project release when available.",
+      "source": "https://openaccess.thecvf.com/content/CVPR2026/html/Lin_EvoGraph-R1_Self-Evolving_Multimodal_Knowledge_Hypergraphs_for_Agentic_Retrieval_CVPR_2026_paper.html",
+      "verification": "partial-official",
+      "implication": {
+        "zh": "图或记忆状态进化比模型权重训练更省资源，但外部搜索服务、缓存与图版本必须进入实验成本和复现协议。",
+        "en": "Graph or memory-state evolution is cheaper than weight training, but external search services, caching, and graph versions must be included in cost and reproducibility protocols."
+      }
+    }
+  ]
+}
