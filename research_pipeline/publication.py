@@ -93,6 +93,18 @@ def _restore(paths: tuple[str, ...]) -> None:
     _run("git", "restore", "--", *paths, check=True)
 
 
+def _ensure_git_identity() -> dict[str, str]:
+    name = _run("git", "config", "--get", "user.name", check=False).stdout.strip()
+    email = _run("git", "config", "--get", "user.email", check=False).stdout.strip()
+    if not name:
+        name = "Agent Evolution Automation"
+        _run("git", "config", "--local", "user.name", name, check=True)
+    if not email:
+        email = "agent-evolution-bot@users.noreply.github.com"
+        _run("git", "config", "--local", "user.email", email, check=True)
+    return {"name": name, "email": email}
+
+
 def publish_generated_state(*, mode: str) -> dict[str, Any]:
     storage = StorageSettings.from_env()
     state_dir = storage.run_dir / "automation"
@@ -117,6 +129,7 @@ def publish_generated_state(*, mode: str) -> dict[str, Any]:
         _restore(tuple(path for path in artifacts if (PROJECT_ROOT / path).exists()))
         return {"status": "unchanged", "digest": digest, "artifacts": list(artifacts)}
 
+    identity = _ensure_git_identity()
     _run("git", "add", "--", *artifacts, check=True)
     staged = _run("git", "diff", "--cached", "--name-only").stdout.splitlines()
     if not staged:
@@ -133,4 +146,5 @@ def publish_generated_state(*, mode: str) -> dict[str, Any]:
         "artifacts": staged,
         "commit": _run("git", "rev-parse", "--short", "HEAD").stdout.strip(),
         "push": push.stdout[-1000:] + push.stderr[-1000:],
+        "identity": identity,
     }
