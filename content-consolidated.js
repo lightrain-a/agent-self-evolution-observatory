@@ -77,17 +77,17 @@
 
   if (sources["paper-ideas"]) {
     pages["paper-ideas"] = Object.assign({}, sources["paper-ideas"], {
-      title:{en:"Concrete paper ideas and decision rankings",zh:"具体论文 Idea 与决策排名"},
-      lead:{en:"All thirty-four concrete paper plans, their minimum experiments and stop rules, global ranking, within-direction ranking, and track-specific ranking are now presented together.",zh:"三十四个具体论文方案、最小实验与停止条件，以及总榜、方向内排序和赛道榜统一展示。"},
+      title:{en:"ICLR-first self-evolution mechanisms and paper decisions",zh:"ICLR-first Agent 自进化机制与论文决策"},
+      lead:{en:"The page leads with an ICLR literature audit, eight general learning-mechanism tracks, seven review gates, and twenty-six cross-domain low-resource candidates. The historical advisor board and CVPR visual specializations remain available as secondary evidence and follow-up directions.",zh:"页面首先展示 ICLR 文献基座审计、八个一般学习机制轨道、七维评审和二十六个跨域低资源候选；历史导师决策板与 CVPR 视觉专门化作为第二层证据和后续方向继续保留。"},
       includeRanking:true
     });
   }
 
   pages["selected-paper"] = {
-    eyebrow:{en:"Selected Paper Workspace",zh:"选中论文工作区"},
-    title:{en:"GroundEvo-Admission: problem, experiments, roadmap, and review",zh:"GroundEvo-Admission：问题、实验、路线图与评审"},
-    lead:{en:"The currently selected idea is handled as one complete paper workspace rather than four disconnected pages.",zh:"当前选中的 Idea 以一个完整论文工作区呈现，不再拆成四个相互割裂的页面。"},
-    callout:{en:"This workspace is specific to GroundEvo-Admission. Choosing another idea should create a new workspace rather than silently mixing claims and experiments.",zh:"该工作区只服务于 GroundEvo-Admission。若选择其他 Idea，应建立新的工作区，而不是悄悄混合主张和实验。"},
+    eyebrow:{en:"Selected ICLR Paper Workspace",zh:"选中 ICLR 论文工作区"},
+    title:{en:"Regression-Gated Self-Evolution: problem, experiments, roadmap, and review",zh:"Regression-Gated Self-Evolution：问题、实验、路线图与评审"},
+    lead:{en:"The ICLR-first direction is presented as one complete reviewer-oriented workspace: constrained-improvement formulation, matched-budget experiments, multi-round regression evidence, execution roadmap, and maturity gates.",zh:"ICLR-first 方向以一个完整 Reviewer-oriented 工作区呈现：受约束改进形式化、等预算实验、多轮回归证据、执行路线和成熟门槛。"},
+    callout:{en:"This workspace is specific to Regression-Gated Self-Evolution. GroundEvo and other visual mechanisms remain CVPR follow-ups rather than being mixed into the ICLR claim.",zh:"该工作区只服务于 Regression-Gated Self-Evolution。GroundEvo 与其他视觉机制保留为 CVPR 后续，不混入 ICLR 主张。"},
     renderMode:"merged-hub",
     chapters:chaptersFor("selected-paper")
   };

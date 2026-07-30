@@ -1,6 +1,6 @@
 # Evidence-Gated Literature-to-Idea Pipeline
 
-This directory turns the observatory from a static survey into a reproducible literature-to-paper-idea decision system.
+This directory turns the observatory from a static survey into a reproducible ICLR-first literature-to-paper-idea decision system, while preserving a secondary CVPR visual-specialization bank.
 
 ## Design sources
 
@@ -29,7 +29,7 @@ Research scope and assets
   -> eight controlled idea operators
   -> semantic deduplication
   -> four-way novelty collision search
-  -> independent reviewer tournament
+  -> seven-dimension ICLR reviewer tournament
   -> minimal falsification pilot
   -> advisor shortlist / hold / stop decision
 ```
@@ -60,14 +60,20 @@ python -m research_pipeline --storage-status
 python -m research_pipeline --init-storage
 python -m research_pipeline --s2-status
 python -m research_pipeline --sync-s2
+python -m research_pipeline --iclr-status
+python -m research_pipeline --build-iclr-bank
+python -m research_pipeline --iclr-audit-status
+python -m research_pipeline --build-iclr-audit
 python -m research_pipeline --check
 python -m research_pipeline
 ```
 
 Outputs:
 
-- `generated/idea-pipeline.json`: auditable backend artifact;
-- `generated/idea-pipeline-snapshot.js`: full browser-readable audit snapshot.
+- `generated/iclr-low-resource-ideas.json` / `.js`: ICLR-first mechanism bank;
+- `generated/iclr-experiment-audit.json` / `.js`: ICLR model/API/training substrate audit;
+- `generated/idea-pipeline.json`: historical auditable portfolio artifact;
+- `generated/cvpr-low-resource-ideas.json` / `.js`: secondary visual-specialization bank.
 
 The hand-curated `idea-pipeline-data.js` contains the compact advisor-board configuration and is intentionally not overwritten by the generator.
 
@@ -100,12 +106,12 @@ No provider may directly mark an idea as accepted. Only the gate engine can move
 
 Legacy scores and ranks remain available for traceability, but they are not the primary interface. The advisor view prioritizes:
 
-- visual necessity for CVPR;
-- importance of the failure;
-- exact novelty evidence;
-- mechanism identifiability;
-- one-table experimental proof;
-- feasibility with current assets;
-- value of a negative pilot result.
+- reality of persistent evolution rather than extra inference;
+- mechanistic specificity of the evolving object and update operator;
+- credit assignment and identifiability;
+- stability across multiple evolution rounds;
+- out-of-loop generalization across tasks, environments, tools, and model families;
+- feedback integrity under independent evidence;
+- matched interaction, token, model-call, training, and wall-clock budgets.
 
 A candidate can be held even when it sounds novel, and it can be advanced only with a concrete pilot and Stop condition.

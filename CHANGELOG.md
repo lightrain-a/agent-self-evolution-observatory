@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-07-30 · ICLR-first automatic research pipeline
+
+- Changed the primary venue from CVPR to ICLR and kept the existing visual bank as a folded CVPR follow-up archive.
+- Rebuilt `research_scope.json` around continual self-improvement, constrained updates, causal credit, memory consolidation, self-correction, curricula, workflows, evaluator evolution, and world models; the refreshed Semantic Scholar snapshot contains 281 deduplicated papers from 26 planned queries with no provider errors.
+- Added `iclr_idea_factory.py`: 41 raw formulations become 29 structured candidates, 26 seven-review passes, three structured blocks, and twelve early rejections across eight mechanism tracks.
+- Added `iclr_experiment_audit.py` with twelve published ICLR baselines covering Retroformer, OPRO, evolutionary prompt optimization, continual embodied learning, AFlow, WebRL, SCoRe, self-evolved rewards, WorfBench, world-model web agents, AgentRefine, and Flow.
+- Froze Regression-Gated Self-Evolution as the first-paper workspace and moved GroundEvo plus other visual mechanisms to CVPR follow-ups.
+- Required every ICLR candidate to distinguish persistent learning from extra inference, name the evolving object, support causal attribution, survive multi-round regression tests, generalize out of loop, use independently grounded feedback, and match interaction/token/call/training/wall-clock budgets.
+- Added ICLR/CVPR dual filtering, bilingual experiment audits, complete cross-domain P0/P1/P2 protocols, new backend tests, and real-browser assertions.
+
 ## 2026-07-30 · Live low-resource CVPR Idea laboratory
 
 - Connected Semantic Scholar through an ignored local key and exported a deployment snapshot with 149 deduplicated papers from sixteen topic, failure, mechanism, analogy, seed, citation, and reference queries.

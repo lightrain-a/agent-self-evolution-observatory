@@ -1,34 +1,43 @@
 {
   "topic": {
-    "en": "Self-evolving agents, especially visual, multimodal, embodied, and tool-using agents",
-    "zh": "Agent 自进化，重点关注视觉、多模态、具身与工具使用 Agent"
+    "en": "Self-evolving agents as a general machine-learning problem: constrained continual improvement, causal credit assignment, memory and skill consolidation, self-correction, curriculum evolution, workflow search, evaluator evolution, and world-model adaptation",
+    "zh": "把 Agent 自进化视为一般机器学习问题：受约束持续改进、因果归因、记忆与技能巩固、自纠正、课程进化、工作流搜索、评价器进化与世界模型适应"
   },
-  "target_venue": "CVPR / ICCV / ECCV / ICLR",
+  "target_venue": "ICLR",
   "target_domains": [
-    "vision-language models",
-    "multimodal agents",
-    "embodied AI",
-    "agent memory",
-    "tool and skill evolution",
-    "safe continual self-improvement"
+    "language and tool-using agents",
+    "web agents and workflow optimization",
+    "multimodal and visual agents",
+    "embodied agents and world models",
+    "agent memory and skill consolidation",
+    "self-correction and evaluator learning",
+    "continual and reinforcement learning",
+    "causal reasoning and constrained optimization"
   ],
   "available_assets": [
     "existing literature observatory and structured bibliography",
-    "vision-language and embodied-agent research experience",
-    "multi-GPU experimental servers",
-    "existing VLA, LVLM fingerprinting, and process-safety projects"
+    "project-scoped Oracle Browser reviews using the signed-in ChatGPT web UI",
+    "open-weight 7B to 8B language and vision-language models",
+    "multi-GPU experimental servers with a large local data disk",
+    "existing VLA, LVLM, web-agent, memory, and process-safety research assets"
   ],
   "hard_constraints": [
-    "Ideas must expose a concrete visual or interactive problem rather than generic agent orchestration",
-    "The central mechanism must be identifiable against a strong simple baseline",
-    "A bounded pilot must be able to falsify the key intuition before full-scale training",
-    "The main experiment must directly establish the claimed advantage"
+    "The main contribution must define a general learning problem or mechanism rather than a visual-only application trick",
+    "The evolving object and update operator must be explicit and identifiable against strong simple baselines",
+    "Persistent improvement must be separated from extra inference compute, retrieval, reranking, or test-set adaptation",
+    "Every update must be evaluated for regression, feedback integrity, out-of-loop generalization, and matched cost",
+    "A bounded pilot using no more than two GPUs and 48 GPU-hours must be able to falsify the key intuition",
+    "The main result must use open weights; commercial APIs may appear only as optional ceilings or audited judges"
   ],
   "seed_papers": [
-    "A Survey of Self-Evolving Agents: What, When, How, and Where to Evolve",
-    "Self-Improvements in Modern Agentic Systems: A Survey",
-    "VisPlay: Self-Evolving Vision-Language Models",
-    "CLOVA: A Closed-Loop Visual Assistant with Tool Usage and Update"
+    "Retroformer: Retrospective Large Language Agents with Policy Gradient Optimization",
+    "AFlow: Automating Agentic Workflow Generation",
+    "WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning",
+    "Training Language Models to Self-Correct via Reinforcement Learning",
+    "SELF-EVOLVED REWARD LEARNING FOR LLMS",
+    "Benchmarking Agentic Workflow Generation",
+    "Web Agents with World Models: Learning and Leveraging Environment Dynamics in Web Navigation",
+    "AgentRefine: Enhancing Agent Generalization through Refinement Tuning"
   ],
   "year_range": "2022-2026",
   "fields_of_study": [
@@ -36,24 +45,30 @@
   ],
   "query_hints": {
     "topic": [
-      "self evolving agents continual self improvement",
-      "self improving vision language models multimodal agents",
-      "self evolving embodied agents visual navigation robotics"
+      "self evolving agents continual self improvement learning mechanism",
+      "self improving language agents memory workflow curriculum reward model",
+      "agent self correction persistent learning open weight models",
+      "continual learning autonomous agents regression constrained improvement"
     ],
     "failure": [
-      "self improving agents failure modes safety evaluation forgetting",
-      "visual self correction critic shared errors multimodal reasoning",
-      "agent memory skill evolution poisoning drift regression"
+      "self improving agents collapse drift reward hacking negative transfer",
+      "agent memory interference harmful updates forgetting retrieval failure",
+      "self correction distribution mismatch confirmation bias evaluator contamination",
+      "workflow optimization overfitting held out generalization agent"
     ],
     "mechanism": [
-      "causal attribution intervention agent trajectories learning",
-      "continual learning memory consolidation skill discovery autonomous agents",
-      "runtime verification regression testing evolving autonomous agents"
+      "causal credit assignment failed trajectories agent learning",
+      "constrained policy improvement regression tests autonomous agents",
+      "curriculum generation failure frontier online reinforcement learning agents",
+      "memory consolidation counterexamples applicability boundaries agents",
+      "world model learning irreversible actions web embodied agents"
     ],
     "analogy": [
-      "software evolution provenance regression validation autonomous systems",
-      "open ended learning quality diversity population based training agents",
-      "control recovery monitoring sequential decision systems interventions"
+      "software continuous integration regression testing learned systems",
+      "safe policy improvement constrained reinforcement learning off policy evaluation",
+      "continual learning stability plasticity selective memory replay",
+      "causal intervention credit assignment sequential decision making",
+      "quality diversity population lineage open ended learning"
     ]
   }
 }

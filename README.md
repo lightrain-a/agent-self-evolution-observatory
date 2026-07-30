@@ -1,6 +1,6 @@
 # Agent Self-Evolution Observatory
 
-A bilingual, CVPR-oriented research observatory for self-evolving agents.
+A bilingual, ICLR-first research observatory for self-evolving agents, with CVPR visual specializations preserved as a secondary roadmap.
 
 - Website: <https://agent-evolution.lightrain.asia>
 - Repository: <https://github.com/lightrain-a/agent-self-evolution-observatory>
@@ -35,8 +35,8 @@ The hierarchy and recommended reading order are defined centrally in `page-archi
 4. `domains.html` — visual/multimodal, GUI/web, and embodied/world-model agents.
 5. `evaluation.html` — evaluation, safety, governance, benchmarks, environments, and repositories.
 6. `research-directions.html` — four beginner-level questions, a running example, plain-language explanations of ten stable directions, thirty representative literature cards with one-line methods, and the long-term agenda.
-7. `paper-ideas.html` — an evidence-to-idea backend map, advisor comparison board, twelve-item shortlist, complete reasoning dossiers, reviewer gates, decisive pilots, and a traceable archive of all thirty-four ideas.
-8. `selected-paper.html` — GroundEvo problem, experiments, roadmap, and review log.
+7. `paper-ideas.html` — an ICLR-first literature audit, eight mechanism tracks, seven review gates, twenty-six passed low-resource candidates, the historical advisor board, and a folded CVPR follow-up archive.
+8. `selected-paper.html` — Regression-Gated Self-Evolution problem formulation, matched-budget experiments, execution roadmap, and ICLR review gates.
 9. `bibliography.html` — coverage protocol, interactive maps, exports, and live bibliography.
 
 Former topic URLs such as `memory-evolution.html` and `paper-roadmap.html` remain as `noindex` compatibility pages that redirect to the matching section of a canonical hub.
@@ -48,7 +48,7 @@ The bibliography synchronizes two complementary survey-maintained catalogs in th
 1. `selfimproving-agent/Awesome-Self-Improving-Agents`
 2. `FrontisAI/Awesome-Self-Improving-Agents`
 
-It merges and normalizes these records with a manually verified visual/CVPR core set. The bilingual 2400×1600 history SVG prioritizes formally published conference and journal papers, groups twenty-three milestones into five method families, and states each method's core action, update target, and feedback signal; preprint-only frontier work stays in the searchable bibliography rather than the historical spine. The live interface includes:
+It merges and normalizes these records with a manually verified ICLR mechanism core and a secondary visual/CVPR follow-up set. The bilingual 2400×1600 history SVG prioritizes formally published conference and journal papers, groups twenty-three milestones into five method families, and states each method's core action, update target, and feedback signal; preprint-only frontier work stays in the searchable bibliography rather than the historical spine. The live interface includes:
 
 - method × publication-year heatmap;
 - publication-type × year heatmap;
@@ -70,17 +70,15 @@ The site does **not** claim literal mathematical completeness. It targets compre
 
 ## Current research direction
 
-The broader roadmap is **GroundEvo: Causally-Grounded Multilevel Self-Evolution for Visual Agents**. The frozen first-paper scope is **GroundEvo-Admission: Visual Causal Lesson Admission**.
+The primary target is now **ICLR**, with **CVPR as a secondary visual-specialization venue**. The frozen first-paper scope is **Regression-Gated Self-Evolution for Reliable Agent Improvement**.
 
-The first falsifiable study asks whether visual agents admit spurious lessons from successful and failed trajectories, and whether active visual re-observation plus minimal environment counterfactual replay improves persistent-memory admission, lowers harmful commits, and preserves future-task gain under matched cost.
+The first falsifiable study asks whether compact agent updates—prompts, memories, workflows, routers, or small modules—should be treated as constrained policy improvement. A candidate update is committed only after attributed replay shows that it fixes the target failure and a disjoint regression suite shows no unacceptable loss on mastered and out-of-loop capabilities under matched interaction, token, model-call, training, and wall-clock budgets.
 
-The current hierarchy contains **10 research directions** and **34 concrete paper ideas**. For new readers, the ten directions are first grouped into four questions—what to learn, what experience should become, what is changing around the agent, and how evolution remains controlled—and then explained through one GUI-agent example, a plain-language glossary, and three representative papers per direction. Each paper record gives its venue/year, one-line method, direction fit, and a linked citation to the full six-part bibliography analysis. Every idea separately states its purpose/problem, core idea, rationale, method logic, research importance, and conditional comparative advantage, followed by a minimum experiment, strongest baseline, and Go/Stop boundary. The 69-formulation audit applies three review rounds to paper ideas: literature collision and identifiability, paper-strength scoring, and module–lifecycle coverage. Eighteen formulations are merged as sub-questions or evaluation axes and seventeen are rejected. Research directions are structural categories and are not globally ranked.
+The automatic ICLR backend starts from **41 formulations**, structures **29 mechanism-level candidates**, passes **26** through seven review dimensions, blocks **3** after structured review, and rejects **12** before full development. The eight mechanism tracks are constrained continual evolution, failure credit and experience admission, memory and skill consolidation, self-correction and policy internalization, curriculum evolution, workflow and update-surface search, reward/evaluator evolution, and world-model/embodied adaptation.
 
-Every retained idea has bilingual reasoning and comparison records that separately state: **purpose/problem**, **core idea**, **rationale**, **method logic**, **research importance**, and **conditional comparative advantage**. It also fixes the strongest comparison, minimum experiment, decisive metric, Go/Stop boundary, paper track, and unresolved risk.
+Every passed ICLR candidate states the learning problem, evolving object, update operator, falsifiable hypothesis, nearest-work boundary, cross-domain assets, two-open-model protocol, disjoint discovery/calibration/test splits, P0/P1/P2 execution phases, matched controls, complete cost accounting, decisive multi-round main table, ablations, and Go/Stop rules. Seven explicit gates test reality of evolution, mechanistic specificity, credit assignment, update stability, out-of-loop generalization, feedback integrity, and efficiency/reproducibility.
 
-The primary selection interface is no longer the old decimal-score table. The page now combines the historical twelve-Idea advisor shortlist with a larger low-resource CVPR bank: 61 raw formulations are reduced to 42 passed candidates, one structured block, and eighteen early rejections. Every passed candidate exposes five review dimensions, a complete actor/critic/API configuration, disjoint discovery/calibration/test splits, P0/P1/P2 execution phases, matched baselines, compute and call budgets, a decisive main table, ablations, and Go/Stop rules. Legacy ranks remain visible only for decision traceability.
-
-The latest lifecycle batch retains the paper ideas AmplificationGuard-X, CapabilityLease-Evo, ConfidenceFlow-Evo, and PluralLineage-Evo. PopulationImmunity-MAS, ServeStageGuard-Evo, QuarantineCommit-Evo, EvidenceExpiry-Evo, StopRule-Evo, UpdateAssurance-Evo, PermissionDrift-Evo, and RollbackOrder-Evo are merged into broader ideas. Generic runtime attestation and generic uncertainty-aware agents are rejected because direct methods already exist. The ten-direction hierarchy and long-term agenda are published on `research-directions.html`; the evidence-gated decision lab and complete candidate archive are on `paper-ideas.html`.
+The previous thirty-four lifecycle ideas, twelve-item advisor board, forty-two passed visual candidates, one structured visual block, and eighteen early visual rejections remain available for traceability and CVPR follow-up. GroundEvo-Admission, long-video contradiction memory, visual reward-shortcut audits, and VLA recovery are no longer mixed into the first ICLR claim.
 
 ## Evidence-gated literature-to-idea backend
 
@@ -95,7 +93,7 @@ research scope and assets
   -> eight named idea-generation operators
   -> semantic deduplication and branch preservation
   -> four-way novelty collision search
-  -> five independent reviewer gates
+  -> seven ICLR reviewer gates
   -> bounded falsification pilot
   -> advisor shortlist / hold / stop decision
 ```
@@ -111,19 +109,21 @@ python -m research_pipeline --storage-status
 python -m research_pipeline --init-storage
 python -m research_pipeline --s2-status
 python -m research_pipeline --sync-s2
+python -m research_pipeline --iclr-status
+python -m research_pipeline --build-iclr-bank
+python -m research_pipeline --iclr-audit-status
+python -m research_pipeline --build-iclr-audit
 python -m research_pipeline --cvpr-status
 python -m research_pipeline --build-cvpr-bank
-python -m research_pipeline --published-audit-status
-python -m research_pipeline --build-published-audit
 python -m research_pipeline --check
 python -m research_pipeline
 ```
 
-The deployment snapshots under `generated/` include the evidence-gated pipeline, the 42-candidate low-resource CVPR bank, a twelve-paper published experiment-substrate audit, and a Semantic Scholar snapshot currently covering 149 deduplicated papers from sixteen planned queries. Bulk corpora and provider caches remain outside Git.
+The deployment snapshots under `generated/` include the ICLR-first 26-candidate mechanism bank, a twelve-paper ICLR experiment-substrate audit, the preserved 42-candidate CVPR visual bank, the historical evidence-gated portfolio, and a Semantic Scholar snapshot of 281 deduplicated papers from 26 planned ICLR-scope queries with zero provider errors. Bulk corpora and provider caches remain outside Git.
 
 ## External-agent review status
 
-CodexFlow remains unavailable because account connection fails. Oracle Browser mode is configured to open all web-GPT reviews inside one dedicated ChatGPT project. A strict project-scoped GPT review has already produced one PASS, one REVISE-and-fix, and one BLOCK decision; these verdicts and their exact blocking reasons are stored in the idea-bank artifact instead of being treated as generic consensus.
+CodexFlow remains unavailable because account connection fails. Oracle Browser mode opens all web-GPT reviews inside one dedicated ChatGPT project. A strict project-scoped ICLR area-chair review selected Regression-Gated Self-Evolution as the strongest low-resource thesis and fixed the seven review dimensions; previous visual PASS/REVISE/BLOCK verdicts remain stored in the secondary CVPR artifact rather than being treated as generic consensus.
 
 ## Quality assurance
 
@@ -164,7 +164,7 @@ The checks cover:
 - 9 canonical pages and 19 compatibility redirects;
 - navigation targets, merged content groups, redirect anchors, and the page-specific chapter configuration;
 - all 34 bilingual Idea reasoning records and their six mandatory argument fields;
-- the eight-stage backend map, four-stage candidate funnel, eight generation operators, five reviewer gates, twelve historical advisor dossiers, the complete 34-idea archive, and interactive advisor filtering;
+- the ICLR-first evidence pipeline, eight mechanism tracks, seven reviewer dimensions, twenty-six passed candidates, three structured blocks, twelve historical advisor dossiers, the complete 34-idea archive, and the folded CVPR follow-up bank;
 - 42 executable low-resource CVPR protocols, one structured block, 18 early rejections, 12 published experiment-substrate audits, and project-scoped web-GPT verdicts;
 - JavaScript syntax and one-to-one bilingual coverage of all six Idea reasoning fields;
 - sitemap, CNAME, favicon, manifest, robots, and 404 resources;

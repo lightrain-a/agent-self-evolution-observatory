@@ -110,7 +110,7 @@ def main() -> None:
         "domains": ["multimodal-reasoning", "digital-interaction", "physical-world"],
         "evaluation": ["validity-safety", "tasks-benchmarks", "reproducibility"],
         "research-directions": ["orientation", "landscape", "direction-clusters", "long-term-agenda"],
-        "paper-ideas": ["evidence-pipeline", "advisor-board", "shortlist-dossiers", "candidate-archive"],
+        "paper-ideas": ["iclr-pipeline", "iclr-decision", "historical-dossiers", "cvpr-followup"],
         "selected-paper": ["problem-scope", "evidence-experiments", "narrative-execution", "review-gates"],
         "bibliography": ["coverage-protocol", "ranking-reading", "field-maps", "search-corpus"],
     }

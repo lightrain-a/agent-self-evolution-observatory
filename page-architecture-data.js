@@ -43,18 +43,18 @@ window.PAGE_ARCHITECTURES = {
   },
   "paper-ideas":{
     chapters:[
-      {id:"evidence-pipeline",title:{en:"I · Evidence-to-idea pipeline",zh:"第一章 · 从证据到 Idea 的生成管线"},question:{en:"How are literature evidence, research gaps, idea operators, reviewers, and pilot gates connected?",zh:"文献证据、研究空缺、Idea 算子、评审与 Pilot 门槛如何连接？"}},
-      {id:"advisor-board",title:{en:"II · Advisor decision board",zh:"第二章 · 师兄与老师决策板"},question:{en:"Which candidates deserve immediate expert attention, and what remains unresolved for each one?",zh:"哪些候选值得优先由师兄和老师判断，每个候选还缺什么证据？"}},
-      {id:"shortlist-dossiers",title:{en:"III · Shortlist evidence dossiers",zh:"第三章 · 短名单完整论证卡"},question:{en:"For each shortlisted idea, what is the problem, mechanism, rationale, method logic, importance, advantage, and decisive pilot?",zh:"每个短名单 Idea 的问题、机制、合理性、方法逻辑、重要性、优势与决定性 Pilot 分别是什么？"}},
-      {id:"candidate-archive",title:{en:"IV · Candidate archive and traceable ranking",zh:"第四章 · 完整候选归档与可追溯排序"},question:{en:"How are all retained ideas, held candidates, legacy scores, and direction-level decisions preserved for audit?",zh:"如何保留全部 Idea、暂缓候选、旧评分与方向决策供后续追溯？"}}
+      {id:"iclr-pipeline",title:{en:"I · ICLR-first evidence and review pipeline",zh:"第一章 · ICLR-first 证据与评审管线"},question:{en:"How does the backend move from ICLR literature to general learning mechanisms, seven review gates, and falsifiable pilots?",zh:"后端如何从 ICLR 文献走向一般学习机制、七维评审与可证伪 Pilot？"}},
+      {id:"iclr-decision",title:{en:"II · ICLR experiment audit and decision bank",zh:"第二章 · ICLR 实验基座审计与决策池"},question:{en:"Which mechanism-level candidates deserve the first ICLR submission, and how should their experiments be executed?",zh:"哪些机制级候选值得优先投 ICLR，其实验应如何执行？"}},
+      {id:"historical-dossiers",title:{en:"III · Historical advisor dossiers",zh:"第三章 · 历史导师论证卡"},question:{en:"How do the previous twelve advisor candidates and selected visual direction remain traceable after the venue shift?",zh:"转向 ICLR 后，原十二个导师候选与视觉主线如何继续保留和追溯？"}},
+      {id:"cvpr-followup",title:{en:"IV · CVPR follow-up and complete archive",zh:"第四章 · CVPR 后续池与完整归档"},question:{en:"Which visual specializations remain valuable for CVPR after the general ICLR mechanism is established?",zh:"一般 ICLR 机制建立后，哪些视觉专门化方向适合继续投 CVPR？"}}
     ]
   },
   "selected-paper":{
     chapters:[
-      {id:"problem-scope",title:{en:"I · Problem and claim boundary",zh:"第一章 · 问题与主张边界"},question:{en:"What failure does GroundEvo-Admission address, and what can the first paper legitimately claim?",zh:"GroundEvo-Admission 解决什么失败，首篇论文可以合法主张什么？"},sourceIds:["paper-problem"]},
-      {id:"evidence-experiments",title:{en:"II · Evidence and experiments",zh:"第二章 · 证据与实验"},question:{en:"Which staged experiments can establish the intuition, causal mechanism, and practical value?",zh:"哪些分阶段实验能够验证直觉、因果机制和实际价值？"},sourceIds:["paper-experiments"]},
-      {id:"narrative-execution",title:{en:"III · Paper narrative and execution roadmap",zh:"第三章 · 论文叙事与执行路线"},question:{en:"How should the contribution ladder, main table, decision tree, and implementation plan fit together?",zh:"贡献阶梯、主表、决策树和实现计划应如何衔接？"},sourceIds:["paper-roadmap"]},
-      {id:"review-gates",title:{en:"IV · Review loop and maturity gates",zh:"第四章 · 评审闭环与成熟门槛"},question:{en:"Which objections remain unresolved, and what evidence is required before the direction is mature?",zh:"哪些质疑仍未解决，满足什么证据后方向才算成熟？"},sourceIds:["review-log"]}
+      {id:"problem-scope",title:{en:"I · ICLR learning problem and claim boundary",zh:"第一章 · ICLR 学习问题与主张边界"},question:{en:"Why is local repair not reliable self-evolution, and what can Regression-Gated Self-Evolution legitimately claim?",zh:"为什么局部修复不等于可靠自进化，Regression-Gated Self-Evolution 可以合法主张什么？"},sourceIds:["paper-problem"]},
+      {id:"evidence-experiments",title:{en:"II · Persistent-learning and regression experiments",zh:"第二章 · 持久学习与非回退实验"},question:{en:"Which matched-budget, multi-round experiments distinguish learning from extra inference and establish stability?",zh:"哪些等预算、多轮实验能够区分学习与额外推理并验证稳定性？"},sourceIds:["paper-experiments"]},
+      {id:"narrative-execution",title:{en:"III · ICLR narrative and execution roadmap",zh:"第三章 · ICLR 论文叙事与执行路线"},question:{en:"How do the constrained-improvement formulation, main table, four-week plan, and CVPR follow-ups fit together?",zh:"受约束改进形式化、主表、四周计划与 CVPR 后续如何衔接？"},sourceIds:["paper-roadmap"]},
+      {id:"review-gates",title:{en:"IV · ICLR review loop and maturity gates",zh:"第四章 · ICLR 评审闭环与成熟门槛"},question:{en:"Which learning-dynamics objections remain unresolved before submission?",zh:"投稿前还需解决哪些学习动力学质疑？"},sourceIds:["review-log"]}
     ]
   },
   bibliography:{

@@ -254,7 +254,7 @@ def main() -> None:
             "/mechanisms.html": {"groups": 5, "sections": 26},
             "/domains.html": {"groups": 3, "sections": 14},
             "/evaluation.html": {"groups": 3, "sections": 16},
-            "/selected-paper.html": {"groups": 4, "sections": 20},
+            "/selected-paper.html": {"groups": 4, "sections": 13},
         }
         for page, expected in expected_hubs.items():
             navigate(page, 7)
@@ -316,22 +316,36 @@ def main() -> None:
         idea_portfolio = execute(
             session_id,
             """return {
-              publishedAuditRows: document.querySelectorAll('.published-audit-table tbody tr').length,
-              experimentProtocols: document.querySelectorAll('.cvpr-experiment-protocol').length,
-              protocolPhases: document.querySelectorAll('.protocol-phases article').length,
-              protocolModels: document.querySelectorAll('.protocol-model-grid section').length,
-              projectWebReviews: document.querySelectorAll('.project-web-gpt-review').length,
-              structuredBlocked: document.querySelectorAll('.structured-blocked').length,
+              iclrAuditRows: document.querySelectorAll('.iclr-audit-panel .published-audit-table tbody tr').length,
+              visualAuditRows: document.querySelectorAll('.cvpr-followup-archive .published-audit-table tbody tr').length,
+              iclrProtocols: document.querySelectorAll('.iclr-idea-card .cvpr-experiment-protocol').length,
+              iclrProtocolPhases: document.querySelectorAll('.iclr-idea-card .protocol-phases article').length,
+              iclrProtocolModels: document.querySelectorAll('.iclr-idea-card .protocol-model-grid section').length,
+              iclrProjectWebReviews: document.querySelectorAll('.iclr-idea-card .project-web-gpt-review').length,
+              iclrStructuredBlocked: document.querySelectorAll('#iclr-low-resource-bank ~ * .structured-blocked, .iclr-bank-panel .structured-blocked').length,
+              iclrCards: document.querySelectorAll('.iclr-idea-card').length,
+              iclrReviews: document.querySelectorAll('.iclr-idea-card .cvpr-review-pass').length,
+              iclrTrackFilters: document.querySelectorAll('.iclr-filter-btn[data-iclr-filter-type="track"]').length,
+              iclrBudgetFilters: document.querySelectorAll('.iclr-filter-btn[data-iclr-filter-type="budget"]').length,
+              iclrTopRows: document.querySelectorAll('.iclr-top-table tbody tr').length,
+              iclrRejected: document.querySelectorAll('.iclr-bank-panel .cvpr-rejected li').length,
+              iclrMaxGpus: Math.max(...(window.ICLR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).map(x=>Number(x.budget?.max_gpus||0))),
+              iclrMaxHours: Math.max(...(window.ICLR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).map(x=>Number(x.budget?.gpu_hours||0))),
+              experimentProtocols: document.querySelectorAll('.cvpr-followup-archive .cvpr-experiment-protocol').length,
+              protocolPhases: document.querySelectorAll('.cvpr-followup-archive .protocol-phases article').length,
+              protocolModels: document.querySelectorAll('.cvpr-followup-archive .protocol-model-grid section').length,
+              projectWebReviews: document.querySelectorAll('.cvpr-followup-archive .project-web-gpt-review').length,
+              structuredBlocked: document.querySelectorAll('.cvpr-followup-archive .structured-blocked').length,
               backendStages: document.querySelectorAll('.idea-backend-flow article').length,
               funnelStages: document.querySelectorAll('.idea-funnel-stage').length,
               operators: document.querySelectorAll('.idea-operator-grid article').length,
               reviewers: document.querySelectorAll('.reviewer-gate-grid article').length,
-              cvprCards: document.querySelectorAll('.cvpr-idea-card').length,
-              cvprReviews: document.querySelectorAll('.cvpr-review-pass').length,
+              cvprCards: document.querySelectorAll('.cvpr-followup-archive .cvpr-idea-card').length,
+              cvprReviews: document.querySelectorAll('.cvpr-followup-archive .cvpr-review-pass').length,
               cvprTrackFilters: document.querySelectorAll('.cvpr-filter-btn[data-cvpr-filter-type="track"]').length,
               cvprBudgetFilters: document.querySelectorAll('.cvpr-filter-btn[data-cvpr-filter-type="budget"]').length,
-              cvprTopRows: document.querySelectorAll('.cvpr-top-table tbody tr').length,
-              cvprRejected: document.querySelectorAll('.cvpr-rejected li').length,
+              cvprTopRows: document.querySelectorAll('.cvpr-followup-archive .cvpr-top-table tbody tr').length,
+              cvprRejected: document.querySelectorAll('.cvpr-followup-archive .cvpr-rejected li').length,
               cvprMaxGpus: Math.max(...(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).map(x=>Number(x.budget?.max_gpus||0))),
               cvprMaxHours: Math.max(...(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).map(x=>Number(x.budget?.gpu_hours||0))),
               filters: document.querySelectorAll('.idea-board-filter').length,
@@ -351,24 +365,35 @@ def main() -> None:
               importance: document.body.textContent.includes('Research importance') || document.body.textContent.includes('研究重要性'),
               advantage: document.body.textContent.includes('Comparative advantage') || document.body.textContent.includes('相对优势'),
               pilot: document.body.textContent.includes('Decisive pilot') || document.body.textContent.includes('决定性 Pilot'),
-              auditActor: document.querySelector('.published-audit-table tbody tr td:nth-child(2) p')?.textContent || '',
-              auditApi: document.querySelector('.published-audit-table tbody tr td:nth-child(3) p')?.textContent || '',
-              auditVerification: document.querySelector('.published-audit-table tbody tr .verification-badge')?.textContent || '',
+              auditActor: document.querySelector('.iclr-audit-panel .published-audit-table tbody tr td:nth-child(2) p')?.textContent || '',
+              auditApi: document.querySelector('.iclr-audit-panel .published-audit-table tbody tr td:nth-child(3) p')?.textContent || '',
+              auditVerification: document.querySelector('.iclr-audit-panel .published-audit-table tbody tr .verification-badge')?.textContent || '',
               text: document.body.textContent || ''
             };""",
         )
-        require(idea_portfolio["publishedAuditRows"] == 12, f"expected 12 published-paper substrate audits, got {idea_portfolio['publishedAuditRows']}")
-        require("主工具使用对比以 GPT-3.5 为规划模型" in idea_portfolio["auditActor"], f"published audit actor did not switch to Chinese: {idea_portfolio['auditActor']}")
-        require("商业 API" in idea_portfolio["auditApi"], f"published audit API role did not switch to Chinese: {idea_portfolio['auditApi']}")
-        require("官方材料已核验" in idea_portfolio["auditVerification"], f"published audit verification label did not switch to Chinese: {idea_portfolio['auditVerification']}")
-        require(idea_portfolio["experimentProtocols"] == 42, f"expected 42 executable experiment protocols, got {idea_portfolio['experimentProtocols']}")
-        require(idea_portfolio["protocolPhases"] == 126, f"expected 126 P0/P1/P2 phase cards, got {idea_portfolio['protocolPhases']}")
-        require(idea_portfolio["protocolModels"] == 252, f"expected six model/API fields per idea, got {idea_portfolio['protocolModels']}")
-        require(idea_portfolio["projectWebReviews"] == 2, f"expected two rendered project-web-GPT reviews among passed ideas, got {idea_portfolio['projectWebReviews']}")
-        require(idea_portfolio["structuredBlocked"] == 1, f"expected one structured blocked idea, got {idea_portfolio['structuredBlocked']}")
+        require(idea_portfolio["iclrAuditRows"] == 12, f"expected 12 ICLR experiment-substrate audits, got {idea_portfolio['iclrAuditRows']}")
+        require(idea_portfolio["visualAuditRows"] == 12, f"expected 12 preserved visual-paper audits, got {idea_portfolio['visualAuditRows']}")
+        require("语言 Agent 与一个可训练 retrospective model 配对" in idea_portfolio["auditActor"], f"ICLR audit actor did not switch to Chinese: {idea_portfolio['auditActor']}")
+        require("API 不是" in idea_portfolio["auditApi"], f"ICLR audit API role did not switch to Chinese: {idea_portfolio['auditApi']}")
+        require("ICLR 官方摘要" in idea_portfolio["auditVerification"], f"ICLR audit verification label did not switch to Chinese: {idea_portfolio['auditVerification']}")
+        require(idea_portfolio["iclrCards"] == 26, f"expected 26 passed ICLR ideas, got {idea_portfolio['iclrCards']}")
+        require(idea_portfolio["iclrReviews"] == 182, f"expected 182 seven-dimension ICLR reviews, got {idea_portfolio['iclrReviews']}")
+        require(idea_portfolio["iclrProtocols"] == 26, f"expected 26 ICLR experiment protocols, got {idea_portfolio['iclrProtocols']}")
+        require(idea_portfolio["iclrProtocolPhases"] == 78, f"expected 78 ICLR P0/P1/P2 phase cards, got {idea_portfolio['iclrProtocolPhases']}")
+        require(idea_portfolio["iclrProtocolModels"] == 156, f"expected six model/API fields for each ICLR idea, got {idea_portfolio['iclrProtocolModels']}")
+        require(idea_portfolio["iclrProjectWebReviews"] == 1, f"expected one rendered ICLR project-web-GPT review, got {idea_portfolio['iclrProjectWebReviews']}")
+        require(idea_portfolio["iclrStructuredBlocked"] == 3, f"expected three structured ICLR blocks, got {idea_portfolio['iclrStructuredBlocked']}")
+        require(idea_portfolio["iclrTrackFilters"] == 9 and idea_portfolio["iclrBudgetFilters"] == 3, "ICLR track or budget filters are incomplete")
+        require(idea_portfolio["iclrTopRows"] == 15 and idea_portfolio["iclrRejected"] == 15, "ICLR comparison table or rejection archive is incomplete")
+        require(idea_portfolio["iclrMaxGpus"] <= 2 and idea_portfolio["iclrMaxHours"] <= 48, "ICLR idea bank violates the low-resource policy")
+        require(idea_portfolio["experimentProtocols"] == 42, f"expected 42 preserved CVPR protocols, got {idea_portfolio['experimentProtocols']}")
+        require(idea_portfolio["protocolPhases"] == 126, f"expected 126 preserved CVPR phase cards, got {idea_portfolio['protocolPhases']}")
+        require(idea_portfolio["protocolModels"] == 252, f"expected six model/API fields per CVPR idea, got {idea_portfolio['protocolModels']}")
+        require(idea_portfolio["projectWebReviews"] == 2, f"expected two preserved CVPR project-web-GPT reviews, got {idea_portfolio['projectWebReviews']}")
+        require(idea_portfolio["structuredBlocked"] == 1, f"expected one preserved CVPR structured block, got {idea_portfolio['structuredBlocked']}")
         require(idea_portfolio["backendStages"] == 8, f"expected 8 backend stages, got {idea_portfolio['backendStages']}")
-        require(idea_portfolio["funnelStages"] == 4, f"expected 4 funnel stages, got {idea_portfolio['funnelStages']}")
-        require(idea_portfolio["operators"] == 8 and idea_portfolio["reviewers"] == 5, "idea generation or reviewer architecture is incomplete")
+        require(idea_portfolio["funnelStages"] == 0, f"legacy funnel should not lead the ICLR-first page, got {idea_portfolio['funnelStages']}")
+        require(idea_portfolio["operators"] == 8 and idea_portfolio["reviewers"] == 7, "ICLR idea generation or reviewer architecture is incomplete")
         require(idea_portfolio["cvprCards"] == 42, f"expected 42 self-reviewed CVPR ideas, got {idea_portfolio['cvprCards']}")
         require(idea_portfolio["cvprReviews"] == 210, "every passed CVPR idea must expose five programmatic review records")
         require(idea_portfolio["cvprTrackFilters"] == 9 and idea_portfolio["cvprBudgetFilters"] == 3, "CVPR track or budget filters are incomplete")
@@ -386,10 +411,14 @@ def main() -> None:
         require("GroundEvo-Admission" in idea_portfolio["text"] and "PluralLineage-Evo" in idea_portfolio["text"], "idea portfolio is incomplete")
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
-        audit_english = execute(session_id, "return {actor:document.querySelector('.published-audit-table tbody tr td:nth-child(2) p')?.textContent||'', api:document.querySelector('.published-audit-table tbody tr td:nth-child(3) p')?.textContent||'', verification:document.querySelector('.published-audit-table tbody tr .verification-badge')?.textContent||''};")
-        require("GPT-3.5 in the main tool-use comparison" in audit_english["actor"], f"published audit actor did not switch back to English: {audit_english['actor']}")
-        require("commercial API models" in audit_english["api"], f"published audit API role did not switch back to English: {audit_english['api']}")
-        require("Verified from official sources" in audit_english["verification"], f"published audit verification label did not switch back to English: {audit_english['verification']}")
+        audit_english = execute(session_id, "return {actor:document.querySelector('.iclr-audit-panel .published-audit-table tbody tr td:nth-child(2) p')?.textContent||'', api:document.querySelector('.iclr-audit-panel .published-audit-table tbody tr td:nth-child(3) p')?.textContent||'', verification:document.querySelector('.iclr-audit-panel .published-audit-table tbody tr .verification-badge')?.textContent||''};")
+        require("language agent is paired with a trainable retrospective model" in audit_english["actor"].lower(), f"ICLR audit actor did not switch back to English: {audit_english['actor']}")
+        require("api access is not structurally required" in audit_english["api"].lower(), f"ICLR audit API role did not switch back to English: {audit_english['api']}")
+        require("official ICLR abstract" in audit_english["verification"], f"ICLR audit verification label did not switch back to English: {audit_english['verification']}")
+        iclr_filter = execute(session_id, """const b=[...document.querySelectorAll('.iclr-filter-btn')].find(x=>x.dataset.iclrFilterType==='budget'&&x.dataset.iclrFilterValue==='24'); b?.click(); const expected=(window.ICLR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).filter(x=>Number(x.budget?.gpu_hours||0)<=24).length; const visible=[...document.querySelectorAll('.iclr-filter-target')].filter(x=>!x.closest('[id^=\"iclr-\"]')?.classList.contains('cvpr-filter-hidden')).length; return {expected,visible};""")
+        require(iclr_filter["visible"] == iclr_filter["expected"] and iclr_filter["visible"] > 0, f"ICLR budget filter failed: {iclr_filter}")
+        iclr_track = execute(session_id, """const b=[...document.querySelectorAll('.iclr-filter-btn')].find(x=>x.dataset.iclrFilterType==='track'&&x.dataset.iclrFilterValue==='memory'); b?.click(); const expected=(window.ICLR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).filter(x=>x.track_id==='memory'&&Number(x.budget?.gpu_hours||0)<=24).length; const visible=[...document.querySelectorAll('.iclr-filter-target')].filter(x=>!x.closest('[id^=\"iclr-\"]')?.classList.contains('cvpr-filter-hidden')).length; return {expected,visible};""")
+        require(iclr_track["visible"] == iclr_track["expected"], f"ICLR track filter failed: {iclr_track}")
         cvpr_filter = execute(session_id, """const b=[...document.querySelectorAll('.cvpr-filter-btn')].find(x=>x.dataset.cvprFilterType==='budget'&&x.dataset.cvprFilterValue==='16'); b?.click(); const expected=(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).filter(x=>Number(x.budget?.gpu_hours||0)<=16).length; const visible=[...document.querySelectorAll('.cvpr-filter-target')].filter(x=>!x.closest('[id^=\"cvpr-\"]')?.classList.contains('cvpr-filter-hidden')).length; return {expected,visible};""")
         require(cvpr_filter["visible"] == cvpr_filter["expected"] and cvpr_filter["visible"] > 0, f"CVPR budget filter failed: {cvpr_filter}")
         cvpr_track = execute(session_id, """const b=[...document.querySelectorAll('.cvpr-filter-btn')].find(x=>x.dataset.cvprFilterType==='track'&&x.dataset.cvprFilterValue==='video'); b?.click(); const expected=(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).filter(x=>x.track_id==='video'&&Number(x.budget?.gpu_hours||0)<=16).length; const visible=[...document.querySelectorAll('.cvpr-filter-target')].filter(x=>!x.closest('[id^=\"cvpr-\"]')?.classList.contains('cvpr-filter-hidden')).length; return {expected,visible};""")

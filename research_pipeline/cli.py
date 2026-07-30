@@ -8,6 +8,14 @@ from .config import SemanticScholarSettings, StorageSettings
 from .cvpr_idea_factory import DEFAULT_JS as DEFAULT_CVPR_JS
 from .cvpr_idea_factory import DEFAULT_JSON as DEFAULT_CVPR_JSON
 from .cvpr_idea_factory import build_cvpr_idea_bank, validate_bank, write_cvpr_idea_bank
+from .iclr_idea_factory import DEFAULT_JS as DEFAULT_ICLR_JS
+from .iclr_idea_factory import DEFAULT_JSON as DEFAULT_ICLR_JSON
+from .iclr_idea_factory import build_iclr_idea_bank, validate_bank as validate_iclr_bank, write_iclr_idea_bank
+from .iclr_experiment_audit import DEFAULT_JS as DEFAULT_ICLR_AUDIT_JS
+from .iclr_experiment_audit import DEFAULT_JSON as DEFAULT_ICLR_AUDIT_JSON
+from .iclr_experiment_audit import build_payload as build_iclr_audit
+from .iclr_experiment_audit import validate as validate_iclr_audit
+from .iclr_experiment_audit import write_audit as write_iclr_audit
 from .published_experiment_audit import DEFAULT_JS as DEFAULT_AUDIT_JS
 from .published_experiment_audit import DEFAULT_JSON as DEFAULT_AUDIT_JSON
 from .published_experiment_audit import build_payload as build_published_audit
@@ -33,7 +41,17 @@ def parse_args() -> argparse.Namespace:
     storage.add_argument("--storage-status", action="store_true", help="Show code/data paths and disk capacity without exposing secrets.")
     storage.add_argument("--init-storage", action="store_true", help="Create the configured corpus, dataset, paper, index, run, cache, lock, and site-artifact directories.")
 
-    cvpr = parser.add_argument_group("CVPR low-resource idea bank")
+    iclr = parser.add_argument_group("ICLR-first low-resource idea bank")
+    iclr.add_argument("--build-iclr-bank", action="store_true", help="Validate and export the ICLR-first self-evolution idea bank.")
+    iclr.add_argument("--iclr-status", action="store_true", help="Show ICLR candidate counts, review gates, and top priorities.")
+    iclr.add_argument("--iclr-json", type=Path, default=DEFAULT_ICLR_JSON)
+    iclr.add_argument("--iclr-js", type=Path, default=DEFAULT_ICLR_JS)
+    iclr.add_argument("--build-iclr-audit", action="store_true", help="Export the ICLR experiment-substrate audit.")
+    iclr.add_argument("--iclr-audit-status", action="store_true", help="Show validation status for the ICLR experiment audit.")
+    iclr.add_argument("--iclr-audit-json", type=Path, default=DEFAULT_ICLR_AUDIT_JSON)
+    iclr.add_argument("--iclr-audit-js", type=Path, default=DEFAULT_ICLR_AUDIT_JS)
+
+    cvpr = parser.add_argument_group("Secondary CVPR visual-specialization bank")
     cvpr.add_argument("--build-cvpr-bank", action="store_true", help="Validate and export the self-reviewed low-resource CVPR idea bank.")
     cvpr.add_argument("--cvpr-status", action="store_true", help="Show safe counts and budget limits for the CVPR idea bank.")
     cvpr.add_argument("--cvpr-json", type=Path, default=DEFAULT_CVPR_JSON)
@@ -63,6 +81,28 @@ def parse_args() -> argparse.Namespace:
 def _print_storage_status() -> None:
     settings = StorageSettings.from_env()
     print(json.dumps(settings.safe_summary(), ensure_ascii=False, indent=2))
+
+
+def _print_iclr_status() -> None:
+    payload = build_iclr_idea_bank()
+    print(json.dumps({
+        "summary": payload["summary"],
+        "policy": payload["policy"],
+        "validation_errors": validate_iclr_bank(payload),
+        "top_candidates": [
+            {"rank": idea["rank"], "title": idea["title"], "track": idea["track"], "gpu_hours": idea["budget"]["gpu_hours"], "priority": idea["priority"]}
+            for idea in payload["passed_ideas"][:10]
+        ],
+    }, ensure_ascii=False, indent=2))
+
+
+def _print_iclr_audit_status() -> None:
+    payload = build_iclr_audit()
+    print(json.dumps({
+        "summary": payload["summary"],
+        "validation_errors": validate_iclr_audit(payload),
+        "papers": [{"id": paper["id"], "venue": paper["venue"], "substrate": paper["substrate"], "verification": paper["verification"]} for paper in payload["papers"]],
+    }, ensure_ascii=False, indent=2))
 
 
 def _print_cvpr_status() -> None:
@@ -120,6 +160,20 @@ def main() -> None:
         print(f"Initialized research storage at {storage.data_root}")
     if args.storage_status:
         _print_storage_status()
+    if args.iclr_status:
+        _print_iclr_status()
+    if args.build_iclr_bank:
+        payload = write_iclr_idea_bank(args.iclr_json, args.iclr_js)
+        print(f"ICLR idea bank complete: {payload['summary']['passed']} passed, {payload['summary']['blocked_after_structured_review']} structured blocked, {payload['summary']['early_rejected']} early rejected.")
+        print(f"Wrote {args.iclr_json}")
+        print(f"Wrote {args.iclr_js}")
+    if args.iclr_audit_status:
+        _print_iclr_audit_status()
+    if args.build_iclr_audit:
+        payload = write_iclr_audit(args.iclr_audit_json, args.iclr_audit_js)
+        print(f"ICLR experiment audit complete: {payload['summary']['papers']} papers.")
+        print(f"Wrote {args.iclr_audit_json}")
+        print(f"Wrote {args.iclr_audit_js}")
     if args.cvpr_status:
         _print_cvpr_status()
     if args.build_cvpr_bank:
@@ -167,7 +221,9 @@ def main() -> None:
 
     utility_only = (
         (
-            args.init_storage or args.storage_status or args.cvpr_status or args.build_cvpr_bank
+            args.init_storage or args.storage_status
+            or args.iclr_status or args.build_iclr_bank or args.iclr_audit_status or args.build_iclr_audit
+            or args.cvpr_status or args.build_cvpr_bank
             or args.published_audit_status or args.build_published_audit or args.s2_status
         )
         and not args.sync_s2
