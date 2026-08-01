@@ -51,6 +51,7 @@ REQUIRED_STATIC = [
     "paper-analysis-data.js", "top-paper-analysis-data.js", "citation-ranking-data.js",
     "history-figure-data.js", "catalog_audit.py", "build_citation_cache.py",
     "browser_smoke_test.py", "hierarchy_smoke_test.py", "CHANGELOG.md",
+    "content-review-external.js", "generated/iclr-external-reviews.json",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
 
@@ -198,6 +199,12 @@ def main() -> None:
         fail("collision engine did not compare all 29 structured ICLR candidates")
     if research_state.get("pilot_registry", {}).get("summary", {}).get("phases") != 78:
         fail("pilot registry must contain P0/P1/P2 for all 26 passed ICLR ideas")
+    external_review_store = json.loads((ROOT / "generated" / "iclr-external-reviews.json").read_text(encoding="utf-8"))
+    external_status = external_review_store.get("status", {})
+    if external_review_store.get("total_passed_ideas") != 26:
+        fail("external review store must track all 26 first-round-passed ICLR ideas")
+    if int(external_status.get("reviewed", 0)) + int(external_status.get("pending", 0)) != 26:
+        fail("external review reviewed/pending counts must sum to 26")
 
     for figure_name in ("agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg"):
         try:

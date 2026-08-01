@@ -49,6 +49,10 @@ class IclrIdeaBankTest(unittest.TestCase):
         self.assertTrue(all(left >= right for left, right in zip(priorities, priorities[1:])))
         reviewed = [idea for idea in self.ideas if idea["external_reviews"]]
         self.assertTrue(any(idea["id"] == "regression-gated-self-evolution" for idea in reviewed))
+        summary = self.payload["summary"]
+        self.assertEqual(summary["project_web_gpt_reviewed"], len(reviewed))
+        self.assertEqual(summary["project_web_gpt_pending"], len(self.ideas) - len(reviewed))
+        self.assertEqual(summary["project_web_gpt_complete"], len(reviewed) == len(self.ideas))
 
 
 if __name__ == "__main__":

@@ -106,6 +106,24 @@ The Semantic Scholar Academic Graph provider is now connected through `semantic_
 
 No provider may directly mark an idea as accepted. `research_system.py` composes the evidence graph, collision engine, lineage, pilot registry, and repair queue. `automation_cycle.py` runs a fail-safe daily or weekly cycle and records each step under the data-disk run directory. Only structured pilot results may move a candidate into `pilot-ready` or `selected-ready`, and every move remains traceable to evidence.
 
+## Independent review of all first-round ICLR passes
+
+The seven-dimension programmatic gate currently passes 26 ICLR ideas. These are not treated as externally confirmed. `iclr_external_review.py` sends every pending pass through the existing Code Oracle → signed-in ChatGPT web UI → exact Agent-project route, requires a strict JSON verdict, and persists each completed batch before rebuilding the public bank.
+
+Prepare the five default batches without invoking the browser:
+
+```bash
+python3 -m research_pipeline.iclr_external_review --batch-size 5
+```
+
+Execute them on the authoritative host that owns the authenticated Oracle/Chrome session:
+
+```bash
+./scripts/on-52.sh python3 -m research_pipeline.iclr_external_review --run --batch-size 5
+```
+
+The runner refuses other hosts. `generated/iclr-external-reviews.json` is the persistent source of truth, while `generated/iclr-low-resource-ideas.json` merges only stored results into the website. A failed batch cannot erase earlier reviews, and missing reviews remain pending rather than implicitly passing.
+
 ## Continuous automation and safety boundary
 
 The daily cycle rebuilds deterministic artifacts without network access. The weekly cycle may refresh Semantic Scholar and request at most two project-scoped web-GPT repair reviews. Both use exclusive locks and keep the previous valid snapshots if one step fails. The repository includes systemd service/timer files under `deploy/systemd/`.

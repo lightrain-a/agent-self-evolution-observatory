@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-07-30T11:04:53+00:00",
+  "generated_at": "2026-08-01T03:18:59+00:00",
   "target_venue": "ICLR",
   "secondary_venue": "CVPR",
   "review_mode": "iclr-seven-dimension-programmatic-plus-project-web-gpt",
@@ -28,7 +28,9 @@
     "blocked_after_structured_review": 3,
     "early_rejected": 12,
     "tracks": 8,
-    "project_web_gpt_reviewed": 1
+    "project_web_gpt_reviewed": 1,
+    "project_web_gpt_pending": 25,
+    "project_web_gpt_complete": false
   },
   "tracks": {
     "constrained": {
@@ -257,6 +259,7 @@
         {
           "reviewer": "agent-project-web-gpt-iclr-area-chair",
           "verdict": "pass",
+          "confidence": "high",
           "finding": "The strongest low-resource ICLR thesis is constrained policy improvement with disjoint regression tests, matched costs, and auditable commit/rollback.",
           "required_action": "Report persistent capability gain and regression after every evolution round under equal interaction, token, model-call, and training budgets.",
           "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-first-research-design.md"

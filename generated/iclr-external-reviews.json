@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-08-01T03:18:13Z",
+  "pipeline": "code-oracle -> signed-in ChatGPT web UI -> Agent project",
+  "required_host": "admin01-NF5468M5",
+  "total_passed_ideas": 26,
+  "status": {
+    "reviewed": 1,
+    "pending": 25,
+    "failed_batches": 0,
+    "complete": false,
+    "last_attempt": "2026-08-01T03:18:13Z",
+    "last_attempt_host": "ubuntu",
+    "last_attempt_result": "blocked_wrong_host"
+  },
+  "reviews": {
+    "regression-gated-self-evolution": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "verdict": "pass",
+        "confidence": "high",
+        "finding": "The strongest low-resource ICLR thesis is constrained policy improvement with disjoint regression tests, matched costs, and auditable commit/rollback.",
+        "required_action": "Report persistent capability gain and regression after every evolution round under equal interaction, token, model-call, and training budgets.",
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-first-research-design.md"
+      }
+    ]
+  }
+}

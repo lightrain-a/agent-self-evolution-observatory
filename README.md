@@ -135,7 +135,19 @@ Both cycles use exclusive locks, preserve the previous valid deployment snapshot
 
 ## External-agent review status
 
-CodexFlow remains unavailable because account connection fails. Oracle Browser mode opens all web-GPT reviews inside one dedicated ChatGPT project. A strict project-scoped ICLR area-chair review selected Regression-Gated Self-Evolution as the strongest low-resource thesis and fixed the seven review dimensions; previous visual PASS/REVISE/BLOCK verdicts remain stored in the secondary CVPR artifact rather than being treated as generic consensus.
+The ICLR programmatic first round currently passes 26 ideas. Independent Code Oracle → signed-in Agent-project ChatGPT review is tracked separately: one stored review exists for Regression-Gated Self-Evolution and twenty-five ideas remain pending. The current 69-server worker is not the authenticated browser host; a real batch invocation was rejected by the host guard because Oracle/Chrome is restricted to `admin01-NF5468M5`.
+
+The persistent review source is `generated/iclr-external-reviews.json`; daily ICLR-bank rebuilds merge it without erasing completed reviews or converting missing reports into passes. The batch module is `research_pipeline/iclr_external_review.py`:
+
+```bash
+# Prepare prompts only
+python3 -m research_pipeline.iclr_external_review --batch-size 5
+
+# Execute on the authoritative Oracle/browser host
+./scripts/on-52.sh python3 -m research_pipeline.iclr_external_review --run --batch-size 5
+```
+
+CodexFlow remains unavailable because account connection fails. Previous visual PASS/REVISE/BLOCK verdicts remain in the secondary CVPR artifact and are not treated as generic ICLR consensus.
 
 ## Quality assurance
 
@@ -176,7 +188,7 @@ The checks cover:
 - 9 canonical pages and 19 compatibility redirects;
 - navigation targets, merged content groups, redirect anchors, and the page-specific chapter configuration;
 - all 34 bilingual Idea reasoning records and their six mandatory argument fields;
-- the ICLR-first evidence pipeline, eight mechanism tracks, seven reviewer dimensions, twenty-six passed candidates, three structured blocks, twelve historical advisor dossiers, the complete 34-idea archive, and the folded CVPR follow-up bank;
+- the ICLR-first evidence pipeline, eight mechanism tracks, seven reviewer dimensions, twenty-six passed candidates, the persistent Oracle/web-GPT reviewed-versus-pending count, three structured blocks, twelve historical advisor dossiers, the complete 34-idea archive, and the folded CVPR follow-up bank;
 - 42 executable low-resource CVPR protocols, one structured block, 18 early rejections, 12 published experiment-substrate audits, and project-scoped web-GPT verdicts;
 - JavaScript syntax and one-to-one bilingual coverage of all six Idea reasoning fields;
 - sitemap, CNAME, favicon, manifest, robots, and 404 resources;

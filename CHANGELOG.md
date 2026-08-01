@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-01 · All-pass Oracle and Agent-project review queue
+
+- Identified the authoritative ICLR first-round portfolio as 26 seven-dimension passes, with one existing Agent-project web-GPT review and twenty-five pending independent reviews.
+- Added `research_pipeline/iclr_external_review.py` to batch every pending idea through Code Oracle and the signed-in ChatGPT Agent project using one strict official-source ICLR review contract.
+- Added atomic JSON parsing, per-batch persistence, resumable reviewed/pending accounting, host enforcement, and automatic ICLR-bank rebuilding after each successful batch.
+- Moved external reviews into `generated/iclr-external-reviews.json` so daily generated-bank refreshes cannot erase expensive reviewer results or silently treat missing reviews as passes.
+- Added website progress reporting and a current review-log chapter that distinguishes programmatic first-round passes, independent external review, consensus reconciliation, and P0/P1/P2 evidence.
+- Attempted a real batch run on the current worker; it correctly stopped at the host guard because the authenticated Oracle/Chrome session is restricted to `admin01-NF5468M5`. The published truth therefore remains 1 reviewed and 25 pending.
+- Added unit, static, and real-browser assertions for batch preparation, JSON validation, persistence, and reviewed-versus-pending counts.
+
 ## 2026-07-30 · Continuous self-calibrating research system
 
 - Added a running evidence graph connecting 281 papers, planned queries, claims, mechanisms, tracks, datasets, models, and 29 structured ICLR candidates.

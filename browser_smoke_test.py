@@ -266,7 +266,8 @@ def main() -> None:
                   sections: document.querySelectorAll('.topic-section').length,
                   resources: document.querySelectorAll('.live-resource-panel').length,
                   historySrc: document.querySelector('.overview-figure img')?.getAttribute('src') || '',
-                  missing: document.querySelectorAll('.citation-missing').length
+                  missing: document.querySelectorAll('.citation-missing').length,
+                  text: document.body.textContent || ''
                 };""",
             )
             require(result["heading"], f"{page} has no heading")
@@ -277,6 +278,9 @@ def main() -> None:
                 require(result["historySrc"].endswith("agent-self-evolution-history-en.svg"), "foundations history SVG is missing")
             if page == "/evaluation.html":
                 require(result["resources"] == 2, "evaluation live resource indexes are incomplete")
+            if page == "/selected-paper.html":
+                review_status_visible = ("1 of 26" in result["text"] and "25 remain pending" in result["text"]) or ("26 个首轮通过项中" in result["text"] and "25 个仍待复核" in result["text"])
+                require(review_status_visible, "selected-paper external review status is stale or missing")
 
         navigate("/research-directions.html", 7)
         direction_map = execute(
@@ -330,6 +334,9 @@ def main() -> None:
               iclrProtocolPhases: document.querySelectorAll('.iclr-idea-card .protocol-phases article').length,
               iclrProtocolModels: document.querySelectorAll('.iclr-idea-card .protocol-model-grid section').length,
               iclrProjectWebReviews: document.querySelectorAll('.iclr-idea-card .project-web-gpt-review').length,
+              iclrExternalProgress: document.querySelector('.external-review-progress')?.textContent || '',
+              iclrExternalReviewed: Number(window.ICLR_LOW_RESOURCE_IDEAS?.summary?.project_web_gpt_reviewed || 0),
+              iclrExternalPending: Number(window.ICLR_LOW_RESOURCE_IDEAS?.summary?.project_web_gpt_pending || 0),
               iclrStructuredBlocked: document.querySelectorAll('#iclr-low-resource-bank ~ * .structured-blocked, .iclr-bank-panel .structured-blocked').length,
               iclrCards: document.querySelectorAll('.iclr-idea-card').length,
               iclrReviews: document.querySelectorAll('.iclr-idea-card .cvpr-review-pass').length,
@@ -396,6 +403,8 @@ def main() -> None:
         require(idea_portfolio["iclrProtocolPhases"] == 78, f"expected 78 ICLR P0/P1/P2 phase cards, got {idea_portfolio['iclrProtocolPhases']}")
         require(idea_portfolio["iclrProtocolModels"] == 156, f"expected six model/API fields for each ICLR idea, got {idea_portfolio['iclrProtocolModels']}")
         require(idea_portfolio["iclrProjectWebReviews"] == 1, f"expected one rendered ICLR project-web-GPT review, got {idea_portfolio['iclrProjectWebReviews']}")
+        require(idea_portfolio["iclrExternalReviewed"] == 1 and idea_portfolio["iclrExternalPending"] == 25, f"external ICLR review counts are wrong: {idea_portfolio['iclrExternalReviewed']}/{idea_portfolio['iclrExternalPending']}")
+        require("1" in idea_portfolio["iclrExternalProgress"] and "25" in idea_portfolio["iclrExternalProgress"], f"external review progress is not rendered: {idea_portfolio['iclrExternalProgress']}")
         require(idea_portfolio["iclrStructuredBlocked"] == 3, f"expected three structured ICLR blocks, got {idea_portfolio['iclrStructuredBlocked']}")
         require(idea_portfolio["iclrTrackFilters"] == 9 and idea_portfolio["iclrBudgetFilters"] == 3, "ICLR track or budget filters are incomplete")
         require(idea_portfolio["iclrTopRows"] == 15 and idea_portfolio["iclrRejected"] == 15, "ICLR comparison table or rejection archive is incomplete")

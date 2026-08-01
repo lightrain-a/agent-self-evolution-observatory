@@ -10,6 +10,7 @@ from .config import PROJECT_ROOT
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "iclr-low-resource-ideas.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "iclr-low-resource-ideas.js"
+DEFAULT_EXTERNAL_REVIEW_JSON = PROJECT_ROOT / "generated" / "iclr-external-reviews.json"
 
 
 def bi(zh: str, en: str) -> dict[str, str]:
@@ -558,15 +559,40 @@ STRUCTURED_BLOCKS: dict[str, dict[str, str]] = {
     },
 }
 
-EXTERNAL_REVIEWS: dict[str, list[dict[str, Any]]] = {
+FALLBACK_EXTERNAL_REVIEWS: dict[str, list[dict[str, Any]]] = {
     "regression-gated-self-evolution": [{
         "reviewer":"agent-project-web-gpt-iclr-area-chair",
         "verdict":"pass",
+        "confidence":"high",
         "finding":"The strongest low-resource ICLR thesis is constrained policy improvement with disjoint regression tests, matched costs, and auditable commit/rollback.",
         "required_action":"Report persistent capability gain and regression after every evolution round under equal interaction, token, model-call, and training budgets.",
         "source_artifact":"/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-first-research-design.md",
     }],
 }
+
+
+def load_external_reviews(path: Path = DEFAULT_EXTERNAL_REVIEW_JSON) -> dict[str, list[dict[str, Any]]]:
+    """Load persistent Agent-project web-GPT reviews without losing the seed review.
+
+    The review store is deliberately separate from the generated idea bank so
+    daily bank rebuilds cannot erase expensive Oracle/browser review results.
+    """
+    reviews = {idea_id: [dict(item) for item in items] for idea_id, items in FALLBACK_EXTERNAL_REVIEWS.items()}
+    if not path.exists():
+        return reviews
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return reviews
+    stored = payload.get("reviews", payload)
+    if not isinstance(stored, dict):
+        return reviews
+    for idea_id, items in stored.items():
+        if isinstance(idea_id, str) and isinstance(items, list):
+            valid = [dict(item) for item in items if isinstance(item, dict)]
+            if valid:
+                reviews[idea_id] = valid
+    return reviews
 
 
 def _review(spec: IdeaSpec) -> tuple[bool, list[dict[str, Any]], list[str]]:
@@ -671,9 +697,9 @@ def _protocol(spec: IdeaSpec, fields: dict[str, dict[str, str]]) -> dict[str, An
     }
 
 
-def _priority(spec: IdeaSpec) -> float:
+def _priority(spec: IdeaSpec, external_reviews: dict[str, list[dict[str, Any]]]) -> float:
     weights = (1.15, 1.30, 1.20, 1.20, 1.15, 1.05, 1.00)
-    external_pass = any(review.get("verdict") == "pass" for review in EXTERNAL_REVIEWS.get(spec.id, []))
+    external_pass = any(review.get("verdict") == "pass" for review in external_reviews.get(spec.id, []))
     strategic_boost = {
         "regression-gated-self-evolution": 3.0,
         "causally-verified-experience-admission": 1.5,
@@ -690,6 +716,7 @@ def _priority(spec: IdeaSpec) -> float:
 
 
 def build_iclr_idea_bank() -> dict[str, Any]:
+    external_reviews = load_external_reviews()
     passed: list[dict[str, Any]] = []
     blocked: list[dict[str, Any]] = []
     for spec in IDEAS:
@@ -720,9 +747,9 @@ def build_iclr_idea_bank() -> dict[str, Any]:
             "operator":spec.operator,
             "scores":dict(zip(REVIEW_KEYS, spec.scores)),
             "reviews":reviews,
-            "external_reviews":EXTERNAL_REVIEWS.get(spec.id, []),
+            "external_reviews":external_reviews.get(spec.id, []),
             "experiment_protocol":_protocol(spec, fields),
-            "priority":_priority(spec),
+            "priority":_priority(spec, external_reviews),
             "status":"pass" if ok else "block",
             "blocking_reasons":blocks,
         }
@@ -754,7 +781,9 @@ def build_iclr_idea_bank() -> dict[str, Any]:
             "blocked_after_structured_review":len(blocked),
             "early_rejected":len(EARLY_REJECTED),
             "tracks":len(TRACKS),
-            "project_web_gpt_reviewed":sum(bool(EXTERNAL_REVIEWS.get(spec.id)) for spec in IDEAS),
+            "project_web_gpt_reviewed":sum(bool(external_reviews.get(item["id"])) for item in passed),
+            "project_web_gpt_pending":sum(not bool(external_reviews.get(item["id"])) for item in passed),
+            "project_web_gpt_complete":all(bool(external_reviews.get(item["id"])) for item in passed),
         },
         "tracks":{key:value["label"] for key,value in TRACKS.items()},
         "passed_ideas":passed,
