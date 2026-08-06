@@ -18,7 +18,7 @@ The site follows the same research-observatory framework as the LLM Distillation
 - a separate next-paper workspace;
 - explicit QA and coverage protocols.
 
-The public information architecture now contains **9 canonical pages** and **19 compatibility redirects** for historical URLs. Every canonical page uses a page-specific semantic hierarchy rather than a flat list:
+The public information architecture now contains **10 canonical pages** and **19 compatibility redirects** for historical URLs. Every canonical page uses a page-specific semantic hierarchy rather than a flat list:
 
 ```text
 H1 · canonical page
@@ -34,10 +34,11 @@ The hierarchy and recommended reading order are defined centrally in `page-archi
 3. `mechanisms.html` — parameter, prompt, memory, skill/tool, and workflow evolution.
 4. `domains.html` — visual/multimodal, GUI/web, and embodied/world-model agents.
 5. `evaluation.html` — evaluation, safety, governance, benchmarks, environments, and repositories.
-6. `research-directions.html` — four beginner-level questions, a running example, plain-language explanations of ten stable directions, thirty representative literature cards with one-line methods, and the long-term agenda.
-7. `paper-ideas.html` — an ICLR-first literature audit, eight mechanism tracks, seven review gates, twenty-six passed low-resource candidates, the historical advisor board, and a folded CVPR follow-up archive.
-8. `selected-paper.html` — Regression-Gated Self-Evolution problem formulation, matched-budget experiments, execution roadmap, and ICLR review gates.
-9. `bibliography.html` — coverage protocol, interactive maps, exports, and live bibliography.
+6. `system-overview.html` — advisor-facing live data flow from literature collection to evidence graph, idea generation, R1/R2 review, P0/P1/P2, and the current decision shortlist.
+7. `research-directions.html` — four beginner-level questions, a running example, plain-language explanations of ten stable directions, thirty representative literature cards with one-line methods, and the long-term agenda.
+8. `paper-ideas.html` — an ICLR-first literature audit, eight mechanism tracks, seven review gates, twenty-six passed low-resource candidates, the historical advisor board, and a folded CVPR follow-up archive.
+9. `selected-paper.html` — Regression-Gated Self-Evolution problem formulation, matched-budget experiments, execution roadmap, and ICLR review gates.
+10. `bibliography.html` — coverage protocol, interactive maps, exports, and live bibliography.
 
 Former topic URLs such as `memory-evolution.html` and `paper-roadmap.html` remain as `noindex` compatibility pages that redirect to the matching section of a canonical hub.
 
@@ -200,7 +201,7 @@ python3 hierarchy_smoke_test.py
 
 The checks cover:
 
-- 9 canonical pages and 19 compatibility redirects;
+- 10 canonical pages and 19 compatibility redirects;
 - navigation targets, merged content groups, redirect anchors, and the page-specific chapter configuration;
 - all 34 bilingual Idea reasoning records and their six mandatory argument fields;
 - the ICLR-first evidence pipeline, eight mechanism tracks, seven reviewer dimensions, twenty-six R1 passes, complete 26/26 Oracle/web-GPT review coverage, the 4 PASS / 10 REVISE / 12 BLOCK R2 distribution, and the separate 24-candidate internet-inspired expansion with 11/11 external reviews and a 1 PASS / 7 REVISE / 3 BLOCK verdict distribution;
@@ -213,7 +214,7 @@ The checks cover:
 - missing URLs and unresolved topic-page citations;
 - venue-tier ranking configuration, the dated citation snapshot, four ranking modes, and all 24 bilingual top-paper analyses;
 - dynamic catalog loading, three bibliography maps, sorting, filters, URL state, and pagination;
-- exact H2/H3/H4 and nested-TOC counts for all nine canonical pages;
+- exact H2/H3/H4 and nested-TOC counts for all ten canonical pages;
 - history and direction figures, including twenty literature citations inside the bilingual direction SVG and thirty linked evidence cards on the page;
 - merged hub rendering, linked resources, legacy redirects, and mobile navigation.
 

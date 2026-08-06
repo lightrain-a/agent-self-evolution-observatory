@@ -9,6 +9,7 @@ window.NAV_GROUPS = [
     ["evaluation.html",{en:"Evaluation & Infrastructure",zh:"评测与基础设施"}],
   ]},
   { title:{en:"Research Planning",zh:"研究规划"}, open:true, pages:[
+    ["system-overview.html",{en:"Research System & Current Ideas",zh:"科研系统与当前 Idea"}],
     ["research-directions.html",{en:"Directions & Long-term Agenda",zh:"方向地图与长期议程"}],
     ["paper-ideas.html",{en:"ICLR-first Paper Idea Lab",zh:"ICLR-first 论文 Idea 实验室"}],
     ["selected-paper.html",{en:"Selected ICLR Paper Workspace",zh:"选中 ICLR 论文工作区"}],
@@ -143,6 +144,7 @@ window.PAGE_CONTENT = {
     {href:"mechanisms.html",title:{en:"Evolution Mechanism Atlas",zh:"进化机制总览"},desc:{en:"Parameters, prompts, memory, skills/tools, workflows, and their failure modes.",zh:"参数、提示词、记忆、技能工具、工作流及其失败模式。"}},
     {href:"domains.html",title:{en:"Visual & Interactive Domains",zh:"视觉与交互领域"},desc:{en:"Visual/multimodal, GUI/web, and embodied agents compared on one page.",zh:"在一个页面中对齐视觉多模态、GUI/Web 与具身 Agent。"}},
     {href:"evaluation.html",title:{en:"Evaluation & Infrastructure",zh:"评测与基础设施"},desc:{en:"Longitudinal evidence, safety, benchmarks, datasets, environments, and repositories.",zh:"纵向证据、安全、基准、数据、环境与代码资源。"}},
+    {href:"system-overview.html",paper:true,title:{en:"Research System & Current Ideas",zh:"科研系统与当前 Idea"},desc:{en:"One advisor-facing page for the live literature corpus, evidence graph, idea-generation operators, R1/R2 review, pilot flow, and current shortlist.",zh:"面向师兄和老师的一页式入口：动态文献、证据图谱、Idea 生成算子、R1/R2 审查、Pilot 流程与当前短名单。"}},
     {href:"research-directions.html",paper:true,title:{en:"Directions & Long-term Agenda",zh:"方向地图与长期议程"},desc:{en:"Ten stable field directions, twenty-six ICLR-first mechanism candidates, and a preserved visual follow-up portfolio.",zh:"十个稳定领域方向、二十六个 ICLR-first 机制候选，以及完整保留的视觉后续候选池。"}},
     {href:"paper-ideas.html",paper:true,title:{en:"ICLR-first Paper Idea Lab",zh:"ICLR-first 论文 Idea 实验室"},desc:{en:"ICLR literature audit, eight mechanism tracks, seven review gates, cross-domain experiments, and a secondary CVPR visual bank.",zh:"ICLR 文献基座审计、八个机制轨道、七维评审、跨域实验，以及第二阶段 CVPR 视觉池。"}},
     {href:"selected-paper.html",paper:true,title:{en:"Selected ICLR Paper Workspace",zh:"选中 ICLR 论文工作区"},desc:{en:"Problem, experiments, roadmap, and review for Regression-Gated Self-Evolution.",zh:"Regression-Gated Self-Evolution 的问题、实验、路线图与评审。"}},

@@ -17,6 +17,7 @@ EXPECTATIONS = {
     "mechanisms": (3, 4, 6, 26),
     "domains": (3, 4, 3, 14),
     "evaluation": (3, 4, 5, 16),
+    "system-overview": (2, 3, 10, 0),
     "research-directions": (4, 5, 9, 23),
     "paper-ideas": (4, 5, 12, 14),
     "selected-paper": (4, 5, 5, 20),

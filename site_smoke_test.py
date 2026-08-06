@@ -15,6 +15,7 @@ CANONICAL_PAGES = {
     "mechanisms.html": "mechanisms",
     "domains.html": "domains",
     "evaluation.html": "evaluation",
+    "system-overview.html": "system-overview",
     "research-directions.html": "research-directions",
     "paper-ideas.html": "paper-ideas",
     "selected-paper.html": "selected-paper",
@@ -54,6 +55,7 @@ REQUIRED_STATIC = [
     "content-review-external.js", "generated/iclr-external-reviews.json",
     "machine-school-ideas-view.js", "generated/machine-school-inspired-ideas.json",
     "generated/machine-school-inspired-ideas.js", "generated/machine-school-external-reviews.json",
+    "content-system-overview.js", "system-overview-view.js", "system-overview.css",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
 
@@ -251,6 +253,25 @@ def main() -> None:
         fail("inspired external review must report 11 reviewed and zero pending")
     if inspired_status.get("verdict_counts") != {"pass": 1, "revise": 7, "block": 3, "unknown": 0}:
         fail("inspired external verdict distribution is inconsistent")
+
+    system_page = (ROOT / "system-overview.html").read_text(encoding="utf-8")
+    required_system_scripts = [
+        "generated/s2-literature.js",
+        "generated/research-system-state.js",
+        "generated/iclr-low-resource-ideas.js",
+        "generated/machine-school-inspired-ideas.js",
+        "content-system-overview.js",
+        "page-architecture-data.js",
+        "system-overview-view.js",
+        "app.js",
+    ]
+    system_positions = [system_page.find(f'src="{name}"') for name in required_system_scripts]
+    if any(position < 0 for position in system_positions) or system_positions != sorted(system_positions):
+        fail("system overview must load live literature, system state, both idea banks, and its renderer before app.js")
+    system_view = (ROOT / "system-overview-view.js").read_text(encoding="utf-8")
+    for marker in ("renderSystemDesign", "renderCurrentIdeas", "system-stage", "system-advisor-questions", "paper-ideas.html#iclr-low-resource-bank", "paper-ideas.html#machine-school-inspired-ideas"):
+        if marker not in system_view:
+            fail(f"system overview renderer is missing {marker}")
 
     for figure_name in ("agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg"):
         try:

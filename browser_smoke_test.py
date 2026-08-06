@@ -135,11 +135,42 @@ def main() -> None:
               corpus: Number(document.querySelector('.stat b')?.textContent || 0)
             };""",
         )
-        require(home["nav"] == 9, f"expected 9 canonical navigation targets, got {home['nav']}")
+        require(home["nav"] == 10, f"expected 10 canonical navigation targets, got {home['nav']}")
         require(home["figure"], "knowledge-map figure is missing")
         require(home["distribution"] >= 6, "live update-surface distribution is missing")
         require(home["missing"] == 0, "home contains unresolved citations")
         require(home["corpus"] >= 100, "curated literature snapshot did not load")
+
+        navigate("/system-overview.html", 5)
+        system_overview = execute(
+            session_id,
+            """return {
+              chapters: document.querySelectorAll('.page-chapter').length,
+              toc2: document.querySelectorAll('.toc-level-2').length,
+              toc3: document.querySelectorAll('.toc-level-3').length,
+              toc4: document.querySelectorAll('.toc-level-4').length,
+              stages: document.querySelectorAll('.system-stage').length,
+              stats: document.querySelectorAll('.system-stat').length,
+              sourceRoutes: document.querySelectorAll('.system-route-grid > div').length,
+              mainIdeas: document.querySelectorAll('.system-decision-summary .system-idea-card').length,
+              inspiredIdeas: document.querySelectorAll('.system-inspired-summary .system-idea-card').length,
+              passIdeas: document.querySelectorAll('.system-decision-summary .verdict-pass').length,
+              reviseIdeas: document.querySelectorAll('.system-decision-summary .verdict-revise').length,
+              advisorQuestions: document.querySelectorAll('.system-advisor-questions li').length,
+              links: [...document.querySelectorAll('a')].map(x=>x.getAttribute('href')||''),
+              text: document.body.textContent || ''
+            };""",
+        )
+        require(system_overview["chapters"] == 2, f"system overview must have two chapters, got {system_overview['chapters']}")
+        require((system_overview["toc2"], system_overview["toc3"], system_overview["toc4"]) == (3,10,0), f"system overview hierarchy is wrong: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
+        require(system_overview["stages"] == 8 and system_overview["stats"] == 8, "system data flow or live statistics are incomplete")
+        require(system_overview["sourceRoutes"] >= 7, "literature retrieval routes are incomplete")
+        require(system_overview["mainIdeas"] == 14, f"expected 4 PASS + 10 REVISE main ideas, got {system_overview['mainIdeas']}")
+        require(system_overview["inspiredIdeas"] == 8, f"expected 1 PASS + 7 REVISE inspired ideas, got {system_overview['inspiredIdeas']}")
+        require(system_overview["passIdeas"] == 4 and system_overview["reviseIdeas"] == 10, "main idea verdict groups are inconsistent")
+        require(system_overview["advisorQuestions"] == 4, "advisor questions are incomplete")
+        require("paper-ideas.html#iclr-low-resource-bank" in system_overview["links"] and "paper-ideas.html#machine-school-inspired-ideas" in system_overview["links"], "system overview does not link to both idea sections")
+        require("篇去重论文" in system_overview["text"] or "deduplicated papers" in system_overview["text"], "live research-system statistics are missing")
 
         navigate("/bibliography.html", 16)
         bibliography = execute(

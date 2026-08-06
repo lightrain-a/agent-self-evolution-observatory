@@ -2,7 +2,7 @@ window.PAGE_ARCHITECTURES = {
   home:{
     chapters:[
       {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, what can change, and where does the field come from?",zh:"什么算自进化、哪些对象可以变化，以及这个领域从哪里发展而来？"},links:["foundations.html","mechanisms.html","domains.html","evaluation.html"]},
-      {id:"select-research",title:{en:"Select a research direction",zh:"选择研究方向"},question:{en:"Which stable scientific problem and concrete paper idea should be pursued next?",zh:"下一步应该选择哪个稳定科学问题和具体论文 Idea？"},links:["research-directions.html","paper-ideas.html"]},
+      {id:"select-research",title:{en:"Select a research direction",zh:"选择研究方向"},question:{en:"How does the research system produce candidates, and which concrete paper idea should be pursued next?",zh:"科研系统如何产生候选，下一步又应该选择哪个具体论文 Idea？"},links:["system-overview.html","research-directions.html","paper-ideas.html"]},
       {id:"execute-audit",title:{en:"Execute and audit",zh:"执行与审计"},question:{en:"How is one selected paper developed, and how is its evidence traced back to the literature?",zh:"一个选中论文如何被执行，以及其证据如何追溯到文献？"},links:["selected-paper.html","bibliography.html"]}
     ]
   },
@@ -31,6 +31,12 @@ window.PAGE_ARCHITECTURES = {
       {id:"validity-safety",title:{en:"I · What counts as improvement?",zh:"第一章 · 什么才算改进？"},question:{en:"How should persistent gain, regression, negative evolution, safety, and rollback be measured?",zh:"如何测量持久收益、回退、负向进化、安全与回滚？"},sourceIds:["evaluation-safety"]},
       {id:"tasks-benchmarks",title:{en:"II · Where should evolution be tested?",zh:"第二章 · 应该在哪里测试进化？"},question:{en:"Which task streams, environments, datasets, and benchmarks expose genuine longitudinal behavior?",zh:"哪些任务流、环境、数据集和基准能够暴露真实纵向行为？"},sourceIds:["datasets-benchmarks"],resourceModes:["benchmarks"]},
       {id:"reproducibility",title:{en:"III · How can evidence be reproduced?",zh:"第三章 · 证据如何被复现？"},question:{en:"Which repositories, artifacts, version records, and reporting standards make claims auditable?",zh:"哪些代码仓库、研究工件、版本记录和报告标准能让主张可审计？"},sourceIds:["repositories"],resourceModes:["repositories"]}
+    ]
+  },
+  "system-overview":{
+    chapters:[
+      {id:"system-design",title:{en:"I · How the research system works",zh:"第一章 · 系统怎么做的"},question:{en:"How do literature, evidence, idea operators, reviews, and pilots form one traceable data flow?",zh:"文献、证据、Idea 算子、审查与 Pilot 如何构成一条可追踪的数据流？"}},
+      {id:"current-ideas",title:{en:"II · Current ideas and decision status",zh:"第二章 · 目前有哪些 Idea"},question:{en:"Which ideas passed, which require repair, which were blocked, and what should advisors decide next?",zh:"哪些 Idea 通过、哪些需要修改、哪些被停止，以及下一步希望师兄和老师判断什么？"}}
     ]
   },
   "research-directions":{

@@ -1663,6 +1663,7 @@ function renderPage() {
   document.head.appendChild(structured);
   renderFooter();
   if (pageId === "home") root.innerHTML = renderHome(config);
+  else if (pageId === "system-overview") root.innerHTML = window.renderSystemOverview ? window.renderSystemOverview(config) : renderMergedHub(config);
   else if (config.renderMode === "merged-hub") root.innerHTML = renderMergedHub(config);
   else if (pageId === "research-directions") root.innerHTML = renderDirectionMap(config);
   else if (pageId === "paper-ideas") root.innerHTML = renderIdeaPortfolio(config);
