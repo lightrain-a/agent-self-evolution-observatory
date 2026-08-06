@@ -55,7 +55,8 @@ REQUIRED_STATIC = [
     "content-review-external.js", "generated/iclr-external-reviews.json",
     "machine-school-ideas-view.js", "generated/machine-school-inspired-ideas.json",
     "generated/machine-school-inspired-ideas.js", "generated/machine-school-external-reviews.json",
-    "review-localizations.js", "solution-first-ideas-view.js",
+    "review-localizations.js", "idea-discovery-v4-view.js", "solution-first-ideas-view.js",
+    "generated/idea-discovery-v4.json", "generated/idea-discovery-v4.js", "generated/idea-discovery-v4-external-reviews.json",
     "generated/idea-discovery-v3.json", "generated/idea-discovery-v3.js", "generated/idea-discovery-v3-external-reviews.json",
     "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
     "content-system-overview.js", "system-overview-view.js", "system-overview.css",
@@ -189,9 +190,11 @@ def main() -> None:
     system_script_order = [
         idea_page.find('src="generated/iclr-low-resource-ideas.js"'),
         idea_page.find('src="generated/machine-school-inspired-ideas.js"'),
+        idea_page.find('src="generated/idea-discovery-v4.js"'),
         idea_page.find('src="generated/idea-discovery-v3.js"'),
         idea_page.find('src="generated/idea-discovery-v31.js"'),
         idea_page.find('src="review-localizations.js"'),
+        idea_page.find('src="idea-discovery-v4-view.js"'),
         idea_page.find('src="solution-first-ideas-view.js"'),
         idea_page.find('src="machine-school-ideas-view.js"'),
         idea_page.find('src="generated/research-system-state.js"'),
@@ -214,7 +217,11 @@ def main() -> None:
         fail("pilot registry must contain P0/P1/P2 for all 26 passed ICLR ideas")
     if (summary.get("solution_children"), summary.get("solution_shortlist"), summary.get("reviewer_repair_children"), summary.get("reviewer_repair_pass")) != (14,10,6,0):
         fail("research-system state must expose both v3 and v3.1 solution-first rounds")
+    if (summary.get("v4_candidates"), summary.get("v4_finalists"), summary.get("v4_revivals")) != (28,16,8):
+        fail("research-system state must expose the v4 composition and revival round")
     components = research_state.get("components", [])
+    if len(components) != 8:
+        fail(f"research-system state must expose eight backend components, got {len(components)}")
     graph_component = next((item for item in components if item.get("source") == "ResearchAgent"), {})
     if graph_component.get("component", {}).get("zh") != "引文与证据图谱":
         fail("citation/evidence component must be bilingual in the backend state")
@@ -260,6 +267,26 @@ def main() -> None:
         fail("Regression-Probe Half-Life must be the sole pilot-now inspired idea")
     if len(inspired_bank.get("teacher_shortlist", [])) != 8:
         fail("inspired-bank teacher shortlist must contain eight decision candidates")
+    discovery_v4 = json.loads((ROOT / "generated" / "idea-discovery-v4.json").read_text(encoding="utf-8"))
+    v4_summary = discovery_v4.get("summary", {})
+    if (v4_summary.get("raw_candidates"), v4_summary.get("discussion"), v4_summary.get("revival"), v4_summary.get("repair"), v4_summary.get("component"), v4_summary.get("tournament_finalists")) != (28, 14, 8, 4, 2, 16):
+        fail(f"unexpected Idea Discovery v4 structure: {v4_summary}")
+    if len(discovery_v4.get("repository_patterns", [])) != 11 or len(discovery_v4.get("workflow_stages", [])) != 9:
+        fail("Idea Discovery v4 must expose eleven repository patterns and nine workflow stages")
+    if len(discovery_v4.get("all_candidates", [])) != 28 or len(discovery_v4.get("tournament_finalists", [])) != 16:
+        fail("Idea Discovery v4 candidate or finalist list is incomplete")
+    if any(not item.get("composition_logic", {}).get("zh") or not item.get("mechanism_atoms") for item in discovery_v4.get("all_candidates", [])):
+        fail("Idea Discovery v4 contains an unstructured composition")
+    if any(not item.get("revival_condition", {}).get("zh") for item in discovery_v4.get("revival", [])):
+        fail("Idea Discovery v4 revival branches lack material revival conditions")
+    v4_external = json.loads((ROOT / "generated" / "idea-discovery-v4-external-reviews.json").read_text(encoding="utf-8"))
+    v4_status = v4_external.get("status", {})
+    if (v4_status.get("reviewed"), v4_status.get("pending")) != (v4_summary.get("external_reviewed"), v4_summary.get("external_pending")):
+        fail("Idea Discovery v4 review store and public summary disagree")
+    expected_v4_verdicts = {"pass": v4_summary.get("external_pass", 0), "revise": v4_summary.get("external_revise", 0), "block": v4_summary.get("external_block", 0), "unknown": v4_summary.get("external_pending", 0)}
+    if v4_status.get("verdict_counts") != expected_v4_verdicts:
+        fail(f"Idea Discovery v4 external verdict counts are inconsistent: {v4_status.get('verdict_counts')}")
+
     discovery_v3 = json.loads((ROOT / "generated" / "idea-discovery-v3.json").read_text(encoding="utf-8"))
     v3_summary = discovery_v3.get("summary", {})
     if (v3_summary.get("raw_children"), v3_summary.get("internal_shortlist"), v3_summary.get("repair"), v3_summary.get("external_reviewed"), v3_summary.get("external_revise"), v3_summary.get("external_block"), v3_summary.get("external_pass")) != (14, 10, 4, 10, 6, 4, 0):
@@ -290,6 +317,7 @@ def main() -> None:
         "generated/research-system-state.js",
         "generated/iclr-low-resource-ideas.js",
         "generated/machine-school-inspired-ideas.js",
+        "generated/idea-discovery-v4.js",
         "generated/idea-discovery-v3.js",
         "generated/idea-discovery-v31.js",
         "review-localizations.js",

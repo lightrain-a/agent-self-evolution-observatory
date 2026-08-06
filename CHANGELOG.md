@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-08-07 · Constrained composition and conditional revival (Idea Discovery v4)
+
+- Added a 28-candidate v4 bank with 14 new compositions, 8 conditional revivals, 4 repair candidates, and 2 retained component/baseline branches.
+- Replaced the implicit “known components imply weak novelty” rule with an atom-necessity audit: combinations are allowed when every atom closes a distinct link in a real failure loop and no capacity-matched simpler method reproduces the result.
+- Added eleven official GitHub workflow patterns, including HypoGeniC/HypoRefine, Open Co-Scientist, Virtual Scientists, autoresearch, autoresearch-agents, ScholarEval, and data-to-paper.
+- Completed independent Oracle/Agent-project reviews for all 16 tournament finalists: 5 PASS, 8 REVISE, and 3 BLOCK, with bilingual findings, actions, collision boundaries, and combination audits.
+- Identified five new PASS methods: Correction-Action Causal Compiler, Memory Interaction Clause Learner, Probe Mutation and Retirement Policy, Update-Composition Repair Compiler, and Monotone Applicability-Set Specializer v4.
+- Preserved all BLOCK branches as components, baselines, merge targets, or future revival paths rather than deleting them.
+- Added the v4 website panel, R2-ordered finalists, parent/revival traceability, mechanism atoms, composition logic, public assets, decisive pilots, and mobile rendering.
+- Integrated v4 into the CLI, weekly automation, publication manifest, unified research-system state, static tests, browser tests, and frontend-only build.
+
 ## 2026-08-07 · Solution-first idea discovery and evidence-graph explorer
 
 - Added an interactive Idea-centered citation/evidence graph backed by the real 555-node / 943-edge research graph, with selectable local neighborhoods, relation-aware edges, source links, and bilingual node details.

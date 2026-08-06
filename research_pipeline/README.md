@@ -155,6 +155,20 @@ Artifacts:
 
 Neither internal shortlist nor external REVISE changes the four formal R2 PASS ideas in the main ICLR bank.
 
+## Constrained composition and conditional revival (v4)
+
+`idea_discovery_v4.py` generates candidates from a real-problem bank, a mechanism-atom bank, and a structural compatibility graph. It permits one-to-three-atom combinations when each atom closes a different necessary link in the failure loop. Earlier REVISE/BLOCK ideas may re-enter only with an explicit revival condition that changes the learned object, independent supervision, deployment boundary, or executable hypothesis language.
+
+The first v4 bank contains 28 candidates: 14 discussion-ready new compositions, 8 conditional revivals, 4 repair candidates, and 2 retained components. Sixteen tournament finalists are reviewed by `solution_first_v4_external_review.py`, whose schema explicitly audits atom necessity, removable atoms, the simplest equivalent baseline, closed-loop completeness, and revival materiality. The completed external distribution is 5 PASS, 8 REVISE, and 3 BLOCK. BLOCK is a current standalone-paper verdict, not deletion.
+
+Artifacts:
+
+- `generated/idea-discovery-v4.json/js`;
+- `generated/idea-discovery-v4-external-reviews.json`;
+- `/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v4-web-gpt/`.
+
+The weekly automation cycle rebuilds v4 and publishes its full lineage. The main ICLR bank remains unchanged until a v4 PASS is explicitly promoted into a pilot protocol and receives P0/P1/P2 evidence.
+
 ## Continuous automation and safety boundary
 
 The daily cycle rebuilds deterministic artifacts without network access. The weekly cycle may refresh Semantic Scholar and request at most two project-scoped web-GPT repair reviews. Both use exclusive locks and keep the previous valid snapshots if one step fails. The repository includes systemd service/timer files under `deploy/systemd/`.

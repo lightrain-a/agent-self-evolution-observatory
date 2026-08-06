@@ -157,6 +157,8 @@ def main() -> None:
               boundaries: document.querySelectorAll('.system-boundary-card').length,
               boundaryRules: document.querySelectorAll('.system-boundary-card li').length,
               components: document.querySelectorAll('.system-components-panel tbody tr').length,
+              v4SummaryPanel: document.querySelectorAll('.system-v4-summary').length,
+              v4SummaryCounts: document.querySelectorAll('.system-v4-counts span').length,
               statusGuides: document.querySelectorAll('.system-status-grid article').length,
               evidenceExplorer: document.querySelectorAll('.system-evidence-explorer').length,
               evidenceOptions: document.querySelectorAll('#system-evidence-idea option').length,
@@ -177,7 +179,8 @@ def main() -> None:
         require(system_overview["stages"] == 10 and system_overview["stats"] == 8, "system data flow or live statistics are incomplete")
         require(system_overview["layers"] == 7 and system_overview["contracts"] == 10, "backend layers or stage data contracts are incomplete")
         require(system_overview["artifacts"] == 8 and system_overview["boundaries"] == 3 and system_overview["boundaryRules"] == 14, "artifact or automation-boundary documentation is incomplete")
-        require(system_overview["components"] == 7 and system_overview["statusGuides"] == 4, "component or idea-state documentation is incomplete")
+        require(system_overview["components"] == 8 and system_overview["statusGuides"] == 4, "component or idea-state documentation is incomplete")
+        require(system_overview["v4SummaryPanel"] == 1 and system_overview["v4SummaryCounts"] == 6, "Idea Discovery v4 summary is missing from the system overview")
         require(system_overview["evidenceExplorer"] == 1 and system_overview["evidenceOptions"] == 29, "evidence-graph explorer or idea selector is incomplete")
         require(system_overview["evidenceNodes"] >= 12 and system_overview["evidenceLines"] >= 11, "local evidence graph did not render enough real nodes or relations")
         require(system_overview["sourceRoutes"] >= 7, "literature retrieval routes are incomplete")
@@ -433,6 +436,20 @@ def main() -> None:
               inspiredShortlist: document.querySelectorAll('.machine-shortlist-item').length,
               inspiredSummary: window.MACHINE_SCHOOL_IDEAS?.summary || {},
               inspiredFirstTitle: window.MACHINE_SCHOOL_IDEAS?.passed_ideas?.[0]?.title?.en || '',
+              v4Panel: document.querySelectorAll('.v4-panel').length,
+              v4Stats: document.querySelectorAll('.v4-stats .stat').length,
+              v4Repos: document.querySelectorAll('.v4-repo-patterns article').length,
+              v4Stages: document.querySelectorAll('.v4-flow article').length,
+              v4Finalists: document.querySelectorAll('.v4-finalists a').length,
+              v4Cards: document.querySelectorAll('.v4-idea-card').length,
+              v4Discussion: document.querySelectorAll('.v4-group.tone-discussion .v4-idea-card').length,
+              v4Revival: document.querySelectorAll('.v4-group.tone-revival .v4-idea-card').length,
+              v4Repair: document.querySelectorAll('.v4-group.tone-repair .v4-idea-card').length,
+              v4Component: document.querySelectorAll('.v4-group.tone-component .v4-idea-card').length,
+              v4RevivalConditions: document.querySelectorAll('.v4-revival-condition').length,
+              v4Atoms: document.querySelectorAll('.v4-mechanism-atoms span').length,
+              v4RenderedReviews: document.querySelectorAll('.v4-review').length,
+              v4Summary: window.IDEA_DISCOVERY_V4?.summary || {},
               solutionPanel: document.querySelectorAll('.solution-v3-panel').length,
               solutionStats: document.querySelectorAll('.solution-v3-stats .stat').length,
               solutionRepos: document.querySelectorAll('.solution-v3-repos article').length,
@@ -496,7 +513,7 @@ def main() -> None:
               text: document.body.textContent || ''
             };""",
         )
-        require(idea_portfolio["automationComponents"] == 7, f"expected seven running/reference components, got {idea_portfolio['automationComponents']}")
+        require(idea_portfolio["automationComponents"] == 8, f"expected eight running/reference components, got {idea_portfolio['automationComponents']}")
         require(idea_portfolio["automationStats"] == 6, f"expected six automation statistics, got {idea_portfolio['automationStats']}")
         require(idea_portfolio["automationCollisionRows"] > 0 and idea_portfolio["automationRepairRows"] > 0, "automation collision or repair queue did not render")
         require("healthy" in idea_portfolio["automationHealth"].lower(), f"research system health is not visible: {idea_portfolio['automationHealth']}")
@@ -529,6 +546,11 @@ def main() -> None:
         require(idea_portfolio["inspiredShortlist"] == 8, f"expected eight teacher-discussion candidates, got {idea_portfolio['inspiredShortlist']}")
         require(idea_portfolio["inspiredSummary"].get("raw") == 24 and idea_portfolio["inspiredSummary"].get("external_reviewed") == 11, f"inspired data summary is wrong: {idea_portfolio['inspiredSummary']}")
         require(idea_portfolio["inspiredFirstTitle"] == "Regression-Probe Half-Life", f"wrong top inspired idea: {idea_portfolio['inspiredFirstTitle']}")
+        require(idea_portfolio["v4Panel"] == 1 and idea_portfolio["v4Stats"] == 6, "Idea Discovery v4 panel or statistics did not render")
+        require((idea_portfolio["v4Repos"], idea_portfolio["v4Stages"], idea_portfolio["v4Finalists"], idea_portfolio["v4Cards"]) == (11,9,16,28), f"Idea Discovery v4 workflow or candidate counts are wrong: {idea_portfolio['v4Repos']}/{idea_portfolio['v4Stages']}/{idea_portfolio['v4Finalists']}/{idea_portfolio['v4Cards']}")
+        require((idea_portfolio["v4Discussion"], idea_portfolio["v4Revival"], idea_portfolio["v4Repair"], idea_portfolio["v4Component"]) == (14,8,4,2), "Idea Discovery v4 status groups are inconsistent")
+        require(idea_portfolio["v4RevivalConditions"] == 8 and idea_portfolio["v4Atoms"] >= 28, "Idea Discovery v4 revival conditions or mechanism atoms are incomplete")
+        require(idea_portfolio["v4RenderedReviews"] == int(idea_portfolio["v4Summary"].get("external_reviewed", 0)), "Idea Discovery v4 rendered reviews disagree with the public summary")
         require(idea_portfolio["solutionPanel"] == 1 and idea_portfolio["solutionStats"] == 5, "solution-first v3 panel or statistics did not render")
         require((idea_portfolio["solutionRepos"], idea_portfolio["solutionStages"], idea_portfolio["solutionGates"], idea_portfolio["solutionShortlist"], idea_portfolio["solutionRepair"]) == (7,9,5,10,4), f"solution-first v3 counts are wrong: {idea_portfolio['solutionRepos']}/{idea_portfolio['solutionStages']}/{idea_portfolio['solutionGates']}/{idea_portfolio['solutionShortlist']}/{idea_portfolio['solutionRepair']}")
         require(idea_portfolio["solutionMechanisms"] == 14, "solution-first children must expose exact mechanisms")

@@ -15,6 +15,9 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(validate_state(self.state), [])
         self.assertEqual(self.state["summary"]["passed_ideas"], 26)
         self.assertGreaterEqual(self.state["summary"]["papers"], 200)
+        self.assertEqual(self.state["summary"]["v4_candidates"], 28)
+        self.assertEqual(self.state["summary"]["v4_finalists"], 16)
+        self.assertEqual(self.state["summary"]["v4_revivals"], 8)
 
     def test_evidence_graph_connects_papers_queries_and_ideas(self) -> None:
         graph = self.state["evidence_graph"]["summary"]
@@ -57,6 +60,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("AI-Researcher", sources)
         self.assertIn("MOOSE-Chem / Deep-Ideation", sources)
         self.assertIn("AI-Scientist-v2", sources)
+        self.assertTrue(any("Co-Scientist" in source for source in sources))
         disabled = [item for item in self.state["components"] if item["status"] == "intentionally-disabled"]
         self.assertEqual(len(disabled), 1)
 

@@ -17,6 +17,7 @@ from .iclr_experiment_audit import write_audit as write_iclr_audit
 from .iclr_idea_factory import write_iclr_idea_bank
 from .idea_discovery_v3 import write_idea_discovery_v3
 from .idea_discovery_v31 import write_idea_discovery_v31
+from .idea_discovery_v4 import write_idea_discovery_v4
 from .machine_school_idea_factory import write_machine_school_bank
 from .live_pipeline import sync_semantic_scholar
 from .published_experiment_audit import write_audit as write_published_audit
@@ -75,6 +76,7 @@ def run_cycle(
             report["steps"].append(_step("machine-school-inspired-bank", write_machine_school_bank))
             report["steps"].append(_step("solution-first-idea-discovery-v3", write_idea_discovery_v3))
             report["steps"].append(_step("reviewer-repaired-idea-discovery-v31", write_idea_discovery_v31))
+            report["steps"].append(_step("constrained-combination-idea-discovery-v4", write_idea_discovery_v4))
             report["steps"].append(_step("iclr-audit", write_iclr_audit))
             report["steps"].append(_step("cvpr-followup-bank", write_cvpr_idea_bank))
             report["steps"].append(_step("published-visual-audit", write_published_audit))

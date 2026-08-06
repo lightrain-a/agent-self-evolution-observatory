@@ -180,6 +180,24 @@ The first v3 round produced 14 solution-first children. Ten passed internal mech
 
 Persistent artifacts are `generated/idea-discovery-v3.json/js`, `generated/idea-discovery-v3-external-reviews.json`, `generated/idea-discovery-v31.json/js`, and `generated/idea-discovery-v31-external-reviews.json`.
 
+## Constrained-composition Idea Discovery v4
+
+V4 relaxes the earlier rule that treated familiar mechanism combinations as presumptively weak. A combination is now admissible when it closes a real failure loop and every atom addresses a distinct necessary link. Earlier REVISE/BLOCK ideas are also retained as conditional-revival branches rather than permanently deleted; revival requires a material change to the learned object, supervision, deployment boundary, or executable hypothesis language.
+
+The workflow adds official-repository patterns from HypoGeniC/HypoRefine, Open Co-Scientist, Virtual Scientists, autoresearch, autoresearch-agents, ScholarEval, and data-to-paper to the existing ResearchAgent, MOOSE-Chem, AI-Scientist-v2, and RD-Agent mechanisms. It builds a real-problem bank, a mechanism-atom bank, a structural compatibility graph, constrained one-to-three-atom compositions, conditional revivals, tournament/proximity selection, reduction challenges, resource grounding, and experiment-feedback recombination.
+
+The first v4 pool contains **28 candidates**: 14 new compositions, 8 conditional revivals, 4 repair candidates, and 2 component/baseline branches. Sixteen tournament finalists were independently reviewed through the Agent-project Oracle route. The final external distribution is **5 PASS, 8 REVISE, and 3 BLOCK**, where BLOCK means “not standalone now” rather than deletion.
+
+The five v4 PASS directions are:
+
+1. **Correction-Action Causal Compiler** — learn minimal typed correction-action combinations and compile applicability-bounded programs for unseen mixed failures;
+2. **Memory Interaction Clause Learner** — learn persistent compatibility, exclusion, and precedence clauses from controlled co-retrieval outcomes;
+3. **Probe Mutation and Retirement Policy** — manage a fixed-budget regression-probe portfolio through keep, mutate, merge, and retire decisions;
+4. **Update-Composition Repair Compiler** — learn reusable cross-surface compatibility clauses and compile preservation-maximizing repairs for unseen update compositions;
+5. **Monotone Applicability-Set Specializer v4** — minimally shrink executable applicability sets from counterexamples while preserving unaffected positive regions.
+
+All 28 candidates remain visible in `paper-ideas.html`; external BLOCK branches remain available as components, baselines, merge targets, or future revival paths. Persistent artifacts are `generated/idea-discovery-v4.json/js` and `generated/idea-discovery-v4-external-reviews.json`.
+
 ## Quality assurance
 
 Run static site integrity checks:
