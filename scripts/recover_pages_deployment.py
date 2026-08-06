@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Recover a failed GitHub Pages deployment after the legacy job completes.
+"""Deploy the frontend-only GitHub Pages artifact with recovery.
 
 This script runs only in GitHub Actions. It cancels stale internal Pages
- deployments extracted from failed workflow logs, creates a fresh deployment
-for the frontend-only artifact, and waits up to 30 minutes for completion.
+deployments extracted from prior workflow logs, creates a fresh deployment,
+refreshes the OIDC identity on every retry, and waits up to 30 minutes for
+completion.
 """
 from __future__ import annotations
 
@@ -170,15 +171,25 @@ def create_deployment(
     repository: str,
     artifact_id: int,
     build_sha: str,
-    identity_token: str,
 ) -> dict[str, Any]:
-    payload = {
-        "artifact_id": artifact_id,
-        "pages_build_version": build_sha,
-        "oidc_token": identity_token,
-    }
     last_message = ""
     for attempt in range(1, 31):
+        # A GitHub OIDC key rotation can invalidate a token that was minted only
+        # seconds earlier. Refresh the token on every deployment attempt instead
+        # of replaying one invalid token for the whole retry window.
+        try:
+            identity_token = oidc_token()
+        except Exception as error:
+            last_message = f"OIDC token request failed: {error}"
+            print(f"Create attempt {attempt}/30: {last_message}")
+            if attempt < 30:
+                time.sleep(20)
+            continue
+        payload = {
+            "artifact_id": artifact_id,
+            "pages_build_version": build_sha,
+            "oidc_token": identity_token,
+        }
         status, body = request(token, "POST", f"/repos/{repository}/pages/deployments", payload)
         response = json_body(body)
         if status == 201:
@@ -224,7 +235,7 @@ def main() -> int:
 
     cancel_stale_deployments(token, repository, source_run_id)
     artifact_id = current_artifact_id(token, repository, workflow_run_id)
-    deployment = create_deployment(token, repository, artifact_id, build_sha, oidc_token())
+    deployment = create_deployment(token, repository, artifact_id, build_sha)
     page_url = monitor_deployment(token, repository, deployment)
     output = os.environ.get("GITHUB_OUTPUT", "")
     if output:

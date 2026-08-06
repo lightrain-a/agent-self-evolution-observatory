@@ -1,36 +1,33 @@
-name: Recover failed GitHub Pages deployment
+name: Deploy frontend-only GitHub Pages
 
 on:
-  workflow_run:
-    workflows:
-      - pages build and deployment
-    types:
-      - completed
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
-  actions: read
+  actions: write
   contents: read
   pages: write
   id-token: write
 
 concurrency:
-  group: pages-fallback-deploy
-  cancel-in-progress: false
+  group: pages-frontend-only
+  cancel-in-progress: true
 
 jobs:
-  deploy:
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'failure'
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+  prepare:
     runs-on: ubuntu-latest
-    timeout-minutes: 50
+    timeout-minutes: 15
     steps:
-      - name: Checkout failed build commit
+      - name: Checkout current main
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Cancel generated Pages workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/cancel_legacy_pages_runs.py
 
       - name: Build frontend-only static site
         run: python3 scripts/build_static_site.py
@@ -43,10 +40,21 @@ jobs:
         with:
           path: _site
 
-      - name: Recover and deploy Pages artifact
+  deploy:
+    needs: prepare
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout deployment helpers
+        uses: actions/checkout@v4
+
+      - name: Recover locks and deploy frontend artifact
         id: deploy
         env:
           GH_TOKEN: ${{ github.token }}
-          BUILD_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
-          SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
+          BUILD_SHA: ${{ github.sha }}
+          SOURCE_RUN_ID: ""
         run: python3 scripts/recover_pages_deployment.py
