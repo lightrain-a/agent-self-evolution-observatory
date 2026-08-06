@@ -1,4 +1,4 @@
-name: Deploy static Pages with extended timeout
+name: Deploy static Pages through workflow source
 
 on:
   push:
@@ -16,7 +16,27 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  configure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Switch Pages publishing source to GitHub Actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          status=$(curl --silent --show-error --output /tmp/pages-update-response.json --write-out '%{http_code}' \
+            --request PUT \
+            --header 'Accept: application/vnd.github+json' \
+            --header "Authorization: Bearer ${GH_TOKEN}" \
+            --header 'X-GitHub-Api-Version: 2026-03-10' \
+            https://api.github.com/repos/${{ github.repository }}/pages \
+            --data '{"build_type":"workflow"}')
+          if [ "${status}" != "204" ]; then
+            echo "::error::Unable to switch the Pages source with GITHUB_TOKEN (HTTP ${status}). Repository admin action is required."
+            exit 1
+          fi
+
   deploy:
+    needs: configure
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
