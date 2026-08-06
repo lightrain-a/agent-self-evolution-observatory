@@ -11,6 +11,12 @@ from .cvpr_idea_factory import build_cvpr_idea_bank, validate_bank, write_cvpr_i
 from .iclr_idea_factory import DEFAULT_JS as DEFAULT_ICLR_JS
 from .iclr_idea_factory import DEFAULT_JSON as DEFAULT_ICLR_JSON
 from .iclr_idea_factory import build_iclr_idea_bank, validate_bank as validate_iclr_bank, write_iclr_idea_bank
+from .idea_discovery_v3 import DEFAULT_JS as DEFAULT_DISCOVERY_V3_JS
+from .idea_discovery_v3 import DEFAULT_JSON as DEFAULT_DISCOVERY_V3_JSON
+from .idea_discovery_v3 import build_idea_discovery_v3, validate as validate_discovery_v3, write_idea_discovery_v3
+from .idea_discovery_v31 import DEFAULT_JS as DEFAULT_DISCOVERY_V31_JS
+from .idea_discovery_v31 import DEFAULT_JSON as DEFAULT_DISCOVERY_V31_JSON
+from .idea_discovery_v31 import build_idea_discovery_v31, validate as validate_discovery_v31, write_idea_discovery_v31
 from .iclr_experiment_audit import DEFAULT_JS as DEFAULT_ICLR_AUDIT_JS
 from .iclr_experiment_audit import DEFAULT_JSON as DEFAULT_ICLR_AUDIT_JSON
 from .iclr_experiment_audit import build_payload as build_iclr_audit
@@ -68,6 +74,16 @@ def parse_args() -> argparse.Namespace:
     inspired.add_argument("--machine-school-status", action="store_true", help="Show internal and external screening counts for the inspired bank.")
     inspired.add_argument("--machine-school-json", type=Path, default=DEFAULT_MACHINE_SCHOOL_JSON)
     inspired.add_argument("--machine-school-js", type=Path, default=DEFAULT_MACHINE_SCHOOL_JS)
+
+    discovery = parser.add_argument_group("Solution-first Idea Discovery v3")
+    discovery.add_argument("--build-idea-discovery-v3", action="store_true", help="Build the solution-first method-child bank.")
+    discovery.add_argument("--idea-discovery-v3-status", action="store_true", help="Show solution-child, Pareto-front, and external-review counts.")
+    discovery.add_argument("--idea-discovery-v3-json", type=Path, default=DEFAULT_DISCOVERY_V3_JSON)
+    discovery.add_argument("--idea-discovery-v3-js", type=Path, default=DEFAULT_DISCOVERY_V3_JS)
+    discovery.add_argument("--build-idea-discovery-v31", action="store_true", help="Build the Reviewer-vector repair round.")
+    discovery.add_argument("--idea-discovery-v31-status", action="store_true", help="Show v3.1 repair and external-review counts.")
+    discovery.add_argument("--idea-discovery-v31-json", type=Path, default=DEFAULT_DISCOVERY_V31_JSON)
+    discovery.add_argument("--idea-discovery-v31-js", type=Path, default=DEFAULT_DISCOVERY_V31_JS)
 
     cvpr = parser.add_argument_group("Secondary CVPR visual-specialization bank")
     cvpr.add_argument("--build-cvpr-bank", action="store_true", help="Validate and export the self-reviewed low-resource CVPR idea bank.")
@@ -138,6 +154,39 @@ def _print_machine_school_status() -> None:
                 "gpu_hours": idea["budget"]["gpu_hours"],
             }
             for idea in payload["teacher_shortlist"]
+        ],
+    }, ensure_ascii=False, indent=2))
+
+
+def _print_idea_discovery_v3_status() -> None:
+    payload = build_idea_discovery_v3()
+    print(json.dumps({
+        "summary": payload["summary"],
+        "policy": payload["policy"],
+        "validation_errors": validate_discovery_v3(payload),
+        "pareto_front_ids": payload["pareto_front_ids"],
+        "shortlist": [
+            {"rank": idea["internal_rank"], "title": idea["title"], "parent_id": idea["parent_id"], "external_verdict": idea.get("external_verdict"), "mean_score": idea["mean_score"]}
+            for idea in payload["shortlist"]
+        ],
+    }, ensure_ascii=False, indent=2))
+
+
+def _print_idea_discovery_v31_status() -> None:
+    payload = build_idea_discovery_v31()
+    print(json.dumps({
+        "summary": payload["summary"],
+        "policy": payload["policy"],
+        "validation_errors": validate_discovery_v31(payload),
+        "children": [
+            {
+                "rank": idea["internal_rank"],
+                "title": idea["title"],
+                "parent_id": idea["parent_id"],
+                "external_verdict": idea.get("external_verdict"),
+                "mean_score": idea["mean_score"],
+            }
+            for idea in payload["children"]
         ],
     }, ensure_ascii=False, indent=2))
 
@@ -232,6 +281,20 @@ def main() -> None:
         print(f"Inspired idea bank complete: {payload['summary']['internal_pass']} pass, {payload['summary']['internal_revise']} revise, {payload['summary']['internal_reject']} reject.")
         print(f"Wrote {args.machine_school_json}")
         print(f"Wrote {args.machine_school_js}")
+    if args.idea_discovery_v3_status:
+        _print_idea_discovery_v3_status()
+    if args.build_idea_discovery_v3:
+        payload = write_idea_discovery_v3(args.idea_discovery_v3_json, args.idea_discovery_v3_js)
+        print(f"Idea Discovery v3 complete: {payload['summary']['raw_children']} children, {payload['summary']['internal_shortlist']} shortlisted, {payload['summary']['external_pass']} external PASS.")
+        print(f"Wrote {args.idea_discovery_v3_json}")
+        print(f"Wrote {args.idea_discovery_v3_js}")
+    if args.idea_discovery_v31_status:
+        _print_idea_discovery_v31_status()
+    if args.build_idea_discovery_v31:
+        payload = write_idea_discovery_v31(args.idea_discovery_v31_json, args.idea_discovery_v31_js)
+        print(f"Idea Discovery v3.1 complete: {payload['summary']['children']} children, {payload['summary']['external_revise']} external REVISE, {payload['summary']['external_block']} external BLOCK.")
+        print(f"Wrote {args.idea_discovery_v31_json}")
+        print(f"Wrote {args.idea_discovery_v31_js}")
     if args.iclr_audit_status:
         _print_iclr_audit_status()
     if args.build_iclr_audit:
@@ -289,6 +352,8 @@ def main() -> None:
             args.init_storage or args.storage_status or args.research_system_status or args.build_research_system
             or args.iclr_status or args.build_iclr_bank or args.iclr_audit_status or args.build_iclr_audit
             or args.machine_school_status or args.build_machine_school_bank
+            or args.idea_discovery_v3_status or args.build_idea_discovery_v3
+            or args.idea_discovery_v31_status or args.build_idea_discovery_v31
             or args.cvpr_status or args.build_cvpr_bank
             or args.published_audit_status or args.build_published_audit or args.s2_status
         )

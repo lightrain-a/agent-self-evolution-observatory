@@ -13,7 +13,7 @@ class PipelineSnapshotTest(unittest.TestCase):
     def test_expected_portfolio_and_architecture(self) -> None:
         self.assertEqual(len(self.snapshot.ideas), 34)
         self.assertEqual(len(self.snapshot.funnel), 4)
-        self.assertEqual(len(self.snapshot.generation_operators), 8)
+        self.assertEqual(len(self.snapshot.generation_operators), 14)
         self.assertEqual(len(self.snapshot.reviewer_roles), 5)
         self.assertEqual(self.snapshot.architecture_version, "2.1-s2-connected")
 

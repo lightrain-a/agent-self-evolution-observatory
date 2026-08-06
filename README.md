@@ -34,7 +34,7 @@ The hierarchy and recommended reading order are defined centrally in `page-archi
 3. `mechanisms.html` — parameter, prompt, memory, skill/tool, and workflow evolution.
 4. `domains.html` — visual/multimodal, GUI/web, and embodied/world-model agents.
 5. `evaluation.html` — evaluation, safety, governance, benchmarks, environments, and repositories.
-6. `system-overview.html` — advisor-facing live data flow from literature collection to evidence graph, idea generation, R1/R2 review, P0/P1/P2, and the current decision shortlist.
+6. `system-overview.html` — technical documentation for the live backend: literature ingestion, the interactive citation/evidence graph, idea generation, R1/R2 review, P0/P1/P2, automation boundaries, and current idea states.
 7. `research-directions.html` — four beginner-level questions, a running example, plain-language explanations of ten stable directions, thirty representative literature cards with one-line methods, and the long-term agenda.
 8. `paper-ideas.html` — an ICLR-first literature audit, eight mechanism tracks, seven review gates, twenty-six passed low-resource candidates, the historical advisor board, and a folded CVPR follow-up archive.
 9. `selected-paper.html` — Regression-Gated Self-Evolution problem formulation, matched-budget experiments, execution roadmap, and ICLR review gates.
@@ -90,7 +90,10 @@ research scope and assets
   -> multi-route query planning and citation expansion
   -> paper/query/claim/mechanism evidence graph
   -> structured gap and contradiction candidates
-  -> controlled idea operators
+  -> eight problem-discovery operators
+  -> independent mechanism-inspiration retrieval and concept-path bridging
+  -> multi-branch method-tree search and solution concretization
+  -> mechanism irreducibility, supervision-independence, and deployment-effect gates
   -> hybrid problem/mechanism/experiment deduplication
   -> idea lineage and non-destructive branch preservation
   -> seven ICLR reviewer gates
@@ -114,6 +117,8 @@ python -m research_pipeline --iclr-status
 python -m research_pipeline --build-iclr-bank
 python -m research_pipeline --machine-school-status
 python -m research_pipeline --build-machine-school-bank
+python -m research_pipeline --idea-discovery-v3-status
+python -m research_pipeline --build-idea-discovery-v3
 python -m research_pipeline --iclr-audit-status
 python -m research_pipeline --build-iclr-audit
 python -m research_pipeline --research-system-status
@@ -125,7 +130,7 @@ python -m research_pipeline --check
 python -m research_pipeline
 ```
 
-The deployment snapshots under `generated/` include the ICLR-first 26-candidate mechanism bank, the 24-candidate internet-inspired expansion with complete external reviews, a twelve-paper ICLR experiment-substrate audit, the preserved 42-candidate CVPR visual bank, the historical portfolio, and the current Semantic Scholar corpus. `research-system-state.json/js` additionally reports 489 evidence nodes, 607 evidence edges, all 406 pairwise comparisons among 29 structured candidates, 233 lineage edges, 78 registered pilot phases, and the current repair queue. Bulk corpora, caches, raw pilot results, and automation logs remain outside Git.
+The deployment snapshots under `generated/` include the ICLR-first 26-candidate mechanism bank, the 24-candidate internet-inspired expansion, the solution-first v3/v3.1 method trees and their complete external reviews, a twelve-paper ICLR experiment-substrate audit, the preserved 42-candidate CVPR visual bank, the historical portfolio, and the current Semantic Scholar corpus. `research-system-state.json/js` currently reports 555 evidence nodes, 943 evidence edges, all 406 pairwise comparisons among 29 structured candidates, 258 lineage edges, 78 registered pilot phases, 14 v3 method children, and 6 reviewer-repaired v3.1 children. Bulk corpora, caches, raw pilot results, and automation logs remain outside Git.
 
 ## Continuous operation
 
@@ -164,6 +169,16 @@ A user-supplied “machine school” metaphor was converted into six research va
 The sole direct `pilot-now` direction is **Regression-Probe Half-Life**: learn a probe-specific survival/decay model that predicts which regression tests retain future value across chronologically held-out agent versions. The teacher-discussion shortlist also retains seven repair-first alternatives: Version-Differential Failure Localization, Model-Swap Compatibility Certificate, Update-Aware Permission Downgrade, Cross-Form Capability Transfer Gap, Delayed Regression Exams, Privilege Recovery Curriculum, and Behavior-Triggered Privilege Lease.
 
 Persistent artifacts are `generated/machine-school-inspired-ideas.json/js` and `generated/machine-school-external-reviews.json`. The weekly automation cycle rebuilds and publishes the inspired bank without erasing stored external reviews. The public page keeps this new batch separate from the already audited 26-idea ICLR bank.
+
+## Solution-first Idea Discovery v3
+
+The first two idea rounds were strong at problem discovery but often weak at method invention. The v3 workflow therefore separates problem capsules from mechanism inspirations and adopts official-repository patterns from ResearchAgent, MOOSE-Chem, SciAgents, OmniScientist, AI-Scientist-v2, RD-Agent, and SciPIP. It adds six solution operators—mechanism-inspiration retrieval, concept-path bridging, reviewer-vector repair, method-tree search, experiment-feedback induction, and resource-grounded design—to the previous eight problem operators.
+
+The resulting workflow has nine stages and five mechanism gates. The most important new gate is irreducibility: a candidate is blocked before expensive review when the same inputs and logs can be consumed by a capacity-matched generic predictor, gate, contextual bandit, offline-RL learner, or rule learner. Candidates must also learn a new persistent object, use non-circular supervision, alter frozen future-task behavior, and support any claimed calibration or risk guarantee with enough independent units.
+
+The first v3 round produced 14 solution-first children. Ten passed internal mechanism screening, but independent R2 returned **0 PASS, 6 REVISE, and 4 BLOCK**. A v3.1 reviewer-vector repair round continued only the six REVISE children; it returned **0 PASS, 2 REVISE, and 4 BLOCK**. The two surviving boundaries are Restoration-Clause Learning and Conformal Effect-Transport Gate, both still requiring theory or an identifiable induction rule. These results do not change the four formal PASS ideas in the main bank and are published precisely to prevent internal specificity from being mistaken for novelty.
+
+Persistent artifacts are `generated/idea-discovery-v3.json/js`, `generated/idea-discovery-v3-external-reviews.json`, `generated/idea-discovery-v31.json/js`, and `generated/idea-discovery-v31-external-reviews.json`.
 
 ## Quality assurance
 

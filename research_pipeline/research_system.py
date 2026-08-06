@@ -8,6 +8,8 @@ from typing import Any
 from .config import PROJECT_ROOT, StorageSettings
 from .evidence_graph import build_evidence_graph
 from .iclr_idea_factory import build_iclr_idea_bank
+from .idea_discovery_v3 import build_idea_discovery_v3
+from .idea_discovery_v31 import build_idea_discovery_v31
 from .idea_collision import analyze_collisions
 from .idea_lineage import build_lineage
 from .live_pipeline import load_live_corpus
@@ -28,13 +30,16 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     lineage = state["lineage"]["summary"]
     pilots = state["pilot_registry"]["summary"]
     repairs = state["repair_queue"]["summary"]
+    discovery = state["idea_discovery_v3"]["summary"]
+    repaired = state["idea_discovery_v31"]["summary"]
     return [
-        {"source":"ResearchAgent", "component":"Citation and evidence graph", "status":"running", "evidence":f"{graph['nodes']} nodes / {graph['edges']} edges"},
-        {"source":"AI-Researcher", "component":"Hybrid semantic deduplication and collision filtering", "status":"running", "evidence":f"{collisions['pairwise_comparisons']} pair comparisons / {collisions['flagged_pairs']} flagged"},
-        {"source":"MOOSE-Chem / Deep-Ideation", "component":"Idea lineage and branch preservation", "status":"running", "evidence":f"{lineage['idea_nodes']} ideas / {lineage['edges']} lineage edges"},
-        {"source":"CycleResearcher", "component":"Role-separated review repair queue", "status":"running", "evidence":f"{repairs['queued_ideas']} repair candidates"},
-        {"source":"AI-Scientist-v2", "component":"Pilot registry and result feedback", "status":"running", "evidence":f"{pilots['phases']} phases / {pilots['valid_result_files']} executed results"},
-        {"source":"AI-Scientist-v2", "component":"Unrestricted autonomous code execution tree", "status":"intentionally-disabled", "evidence":"Only sandboxed/manual experiment execution is allowed; results can still flow back automatically."},
+        {"source":"ResearchAgent", "component":{"en":"Citation and evidence graph","zh":"引文与证据图谱"}, "status":"running", "evidence":{"en":f"{graph['nodes']} nodes / {graph['edges']} edges","zh":f"{graph['nodes']} 个节点 / {graph['edges']} 条边"}},
+        {"source":"AI-Researcher", "component":{"en":"Hybrid semantic deduplication and collision filtering","zh":"混合语义去重与碰撞过滤"}, "status":"running", "evidence":{"en":f"{collisions['pairwise_comparisons']} pair comparisons / {collisions['flagged_pairs']} flagged","zh":f"{collisions['pairwise_comparisons']} 组两两比较 / {collisions['flagged_pairs']} 个标记"}},
+        {"source":"MOOSE-Chem / Deep-Ideation", "component":{"en":"Idea lineage and branch preservation","zh":"Idea 谱系与分支保留"}, "status":"running", "evidence":{"en":f"{lineage['idea_nodes']} ideas / {lineage['edges']} lineage edges","zh":f"{lineage['idea_nodes']} 个 Idea / {lineage['edges']} 条谱系边"}},
+        {"source":"CycleResearcher", "component":{"en":"Role-separated review repair queue","zh":"角色分离的审查修订队列"}, "status":"running", "evidence":{"en":f"{repairs['queued_ideas']} repair candidates","zh":f"{repairs['queued_ideas']} 个修订候选"}},
+        {"source":"ResearchAgent / MOOSE-Chem / SciAgents / AI-Scientist-v2 / RD-Agent", "component":{"en":"Solution-first branch search","zh":"解决方案优先的分支搜索"}, "status":"running", "evidence":{"en":f"{discovery['raw_children']} v3 children / {discovery['external_revise']} R2 revise / {repaired['children']} v3.1 repairs","zh":f"{discovery['raw_children']} 个 v3 子节点 / {discovery['external_revise']} 个 R2 REVISE / {repaired['children']} 个 v3.1 修订"}},
+        {"source":"AI-Scientist-v2", "component":{"en":"Pilot registry and result feedback","zh":"Pilot 注册表与结果回流"}, "status":"running", "evidence":{"en":f"{pilots['phases']} phases / {pilots['valid_result_files']} executed results","zh":f"{pilots['phases']} 个阶段 / {pilots['valid_result_files']} 个已执行结果"}},
+        {"source":"AI-Scientist-v2", "component":{"en":"Unrestricted autonomous code execution tree","zh":"不受限制的自主代码执行树"}, "status":"intentionally-disabled", "evidence":{"en":"Only sandboxed/manual experiment execution is allowed; results can still flow back automatically.","zh":"只允许沙箱或人工确认后的实验执行；合法结果仍可自动回流。"}},
     ]
 
 
@@ -88,6 +93,8 @@ def build_research_system_state() -> dict[str, Any]:
     lineage = build_lineage(idea_bank, collision_engine)
     pilot_registry = build_pilot_registry(idea_bank)
     repair_queue = build_repair_queue(idea_bank, collision_engine, pilot_registry)
+    idea_discovery_v3 = build_idea_discovery_v3()
+    idea_discovery_v31 = build_idea_discovery_v31()
     latest_report_path = storage.run_dir / "automation" / "latest.json"
     latest_report = None
     if latest_report_path.exists():
@@ -117,12 +124,18 @@ def build_research_system_state() -> dict[str, Any]:
             "lineage_edges":lineage["summary"]["edges"],
             "pilot_results":pilot_registry["summary"]["valid_result_files"],
             "repair_queue":repair_queue["summary"]["queued_ideas"],
+            "solution_children":idea_discovery_v3["summary"]["raw_children"],
+            "solution_shortlist":idea_discovery_v3["summary"]["internal_shortlist"],
+            "reviewer_repair_children":idea_discovery_v31["summary"]["children"],
+            "reviewer_repair_pass":idea_discovery_v31["summary"]["external_pass"],
         },
         "evidence_graph":evidence_graph,
         "collision_engine":collision_engine,
         "lineage":lineage,
         "pilot_registry":pilot_registry,
         "repair_queue":repair_queue,
+        "idea_discovery_v3":idea_discovery_v3,
+        "idea_discovery_v31":idea_discovery_v31,
     }
     state["components"] = _component_manifest(state)
     state["health"] = _health(state, corpus)

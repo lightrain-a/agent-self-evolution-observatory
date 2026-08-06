@@ -23,7 +23,7 @@
         <section><b>${language === "zh" ? "最小 Pilot" : "Minimum pilot"}</b><p>${textOf(idea.pilot)}</p></section>
         <section><b>${language === "zh" ? "最强基线" : "Strongest baseline"}</b><p>${textOf(idea.strongest_baseline)}</p></section>
         <section><b>Stop</b><p>${textOf(idea.stop_condition)}</p></section>
-      </div>${review ? `<div class="project-web-gpt-review verdict-${esc(review.verdict)}"><header><b>${language === "zh" ? "Agent 项目网页版 GPT 独立审查" : "Agent-project web GPT independent review"}</b><span>${esc(String(review.verdict).toUpperCase())}</span></header><p>${esc(review.finding || "")}</p><small><strong>${language === "zh" ? "必须修改" : "Required action"}:</strong> ${esc(review.required_action || "")}</small></div>` : ""}</div>
+      </div>${review ? `<div class="project-web-gpt-review verdict-${esc(review.verdict)}"><header><b>${language === "zh" ? "Agent 项目网页版 GPT 独立审查" : "Agent-project web GPT independent review"}</b><span>${esc(String(review.verdict).toUpperCase())}</span></header><p>${esc(review.finding || "")}</p><small><strong>${language === "zh" ? "必须修改" : "Required action"}:</strong> ${esc(window.localizedReviewAction ? window.localizedReviewAction(idea.id, review, language) : (review.required_action || ""))}</small></div>` : ""}</div>
     </details>`;
   }
   function group(titleZh, titleEn, ideas, tone) {

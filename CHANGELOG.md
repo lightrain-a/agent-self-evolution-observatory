@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-07 · Solution-first idea discovery and evidence-graph explorer
+
+- Added an interactive Idea-centered citation/evidence graph backed by the real 555-node / 943-edge research graph, with selectable local neighborhoods, relation-aware edges, source links, and bilingual node details.
+- Made backend component names and evidence bilingual at the generated-state layer; added persistent Chinese required-action localization and required bilingual fields for future external reviews.
+- Audited official GitHub idea-generation mechanisms from ResearchAgent, MOOSE-Chem, SciAgents, OmniScientist, AI-Scientist-v2, RD-Agent, and SciPIP, then added six solution-invention operators to the existing eight problem operators.
+- Added a nine-stage solution-first workflow, multi-branch method trees, Reviewer-vector repair, public-resource grounding, experiment-feedback induction, and five mechanism-irreducibility gates.
+- Generated 14 v3 method children; independent R2 returned 0 PASS, 6 REVISE, and 4 BLOCK. Continued only the six REVISE children into v3.1; independent R2 returned 0 PASS, 2 REVISE, and 4 BLOCK.
+- Preserved Restoration-Clause Learning and Conformal Effect-Transport Gate as theory/identifiability repair directions; stopped generic predictor, contextual-bandit, offline-RL, diagnostic-controller, and rule-induction recombinations.
+- Added persistent v3/v3.1 artifacts, complete bilingual review records, CLI/automation/publication integration, frontend decision panels, and dedicated unit/static/real-browser assertions.
+
 ## 2026-08-06 · Technical research-system and idea overview
 
 - Reworked `system-overview.html` from an advisor-facing brief into technical documentation of the live backend and decision state.
@@ -8,7 +18,7 @@
 - Replaced the short automation note with complete bilingual cards for automatic execution, conditional automation, and human-controlled decisions, including failure recovery and static frontend publication.
 - Fixed the component table to read the actual `component`, `source`, `status`, and `evidence` fields from the generated system state.
 - Removed the advisor-message and advisor-question copy while preserving direct links to the main and supplementary Idea banks.
-- Extended static and real-browser tests to require seven layers, ten stages/contracts, eight artifacts, three automation-boundary categories, fourteen boundary rules, six backend components, and complete non-overflowing Chinese rendering.
+- Extended static and real-browser tests to require seven layers, ten stages/contracts, eight artifacts, three automation-boundary categories, fourteen boundary rules, seven backend components, and complete non-overflowing Chinese rendering.
 
 ## 2026-08-06 · Internet-inspired candidate expansion and self-screening
 

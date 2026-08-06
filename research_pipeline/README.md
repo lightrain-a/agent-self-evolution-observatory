@@ -138,6 +138,23 @@ Persistent artifacts:
 
 The weekly automation cycle rebuilds and publishes the inspired bank. Missing or malformed external responses remain pending and never count as passes.
 
+## Solution-first method discovery and reviewer repair
+
+`idea_discovery_v3.py` separates problem discovery from method invention. It records seven official GitHub system patterns, fourteen named idea operators, nine workflow stages, and five mechanism gates. A solution child must specify a changed assumption, exact persistent update surface, learning signal, independent ground truth, strongest irreducibility baseline, decisive pilot, and Stop rule.
+
+The first v3 pool contains 14 children. Ten passed internal screening and were reviewed by `solution_first_external_review.py`; the external result is 0 PASS, 6 REVISE, and 4 BLOCK. `idea_discovery_v31.py` then applies the actual bilingual reviewer vectors to only those six REVISE children. Its six repaired algorithms were audited by `solution_first_v31_external_review.py`; the result is 0 PASS, 2 REVISE, and 4 BLOCK. The blocked children are not regenerated under new names.
+
+The review outcome introduced a mechanism-irreducibility gate before external review. It blocks generic predictors, gates, contextual bandits, offline-RL controllers, and rule learners when a capacity-matched standard method can consume the same logs and reproduce the proposed effect. It also rejects circular verifier supervision, audit-only outputs that do not alter frozen future behavior, and calibration guarantees with insufficient independent units.
+
+Artifacts:
+
+- `generated/idea-discovery-v3.json/js` and `generated/idea-discovery-v3-external-reviews.json`;
+- `generated/idea-discovery-v31.json/js` and `generated/idea-discovery-v31-external-reviews.json`;
+- `/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v3-web-gpt/`;
+- `/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v31-web-gpt/`.
+
+Neither internal shortlist nor external REVISE changes the four formal R2 PASS ideas in the main ICLR bank.
+
 ## Continuous automation and safety boundary
 
 The daily cycle rebuilds deterministic artifacts without network access. The weekly cycle may refresh Semantic Scholar and request at most two project-scoped web-GPT repair reviews. Both use exclusive locks and keep the previous valid snapshots if one step fails. The repository includes systemd service/timer files under `deploy/systemd/`.

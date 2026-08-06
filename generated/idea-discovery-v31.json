@@ -1,0 +1,713 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-06T17:06:07+00:00",
+  "round": "v3.1",
+  "status": "external-reviewed",
+  "policy": {
+    "parents_only_from_v3_revise": true,
+    "blocked_parents_stopped": true,
+    "main_bank_unchanged": true,
+    "external_review_required_before_reconciliation": true
+  },
+  "summary": {
+    "children": 6,
+    "external_reviewed": 6,
+    "external_pending": 0,
+    "external_pass": 0,
+    "external_revise": 2,
+    "external_block": 4
+  },
+  "children": [
+    {
+      "id": "restoration-clause-learning",
+      "parent_id": "active-causal-minimal-rollback",
+      "title": {
+        "zh": "恢复子句学习",
+        "en": "Restoration-Clause Learning"
+      },
+      "internal_decision": "shortlist",
+      "problem": {
+        "zh": "当前回滚方法只定位一次故障集合，不能把本次干预转化为未来更新组合的持久约束。",
+        "en": "Current rollback methods localize one fault set but do not convert interventions into persistent constraints for future update compositions."
+      },
+      "changed_assumption": {
+        "zh": "回滚输出不再只是组件集合，而是可泛化到未来更新描述符的持久 no-good／compatibility 子句。",
+        "en": "Rollback outputs persistent no-good and compatibility clauses over update descriptors rather than only a component set."
+      },
+      "exact_mechanism": {
+        "zh": "以稀疏高阶因子图表示更新原子及交互，使用 Beta-Bernoulli 结果模型估计回归概率；按单位 rollout 的期望互信息选择启用／禁用干预；通过最小成本 0-1 解码器求解满足回归风险上界的回滚集合；成功恢复后把最小不满足核编译为带来源和置信度的更新兼容子句，约束未来 commit。",
+        "en": "Represent update atoms and interactions with a sparse higher-order factor graph and a Beta-Bernoulli outcome model; select enable/disable interventions by expected mutual information per rollout; decode the minimum-cost rollback set under a regression-risk bound; after restoration, compile the minimal unsatisfied core into provenance- and confidence-bearing compatibility clauses that constrain future commits."
+      },
+      "update_surface": "persistent update-compatibility clause registry",
+      "learning_signal": {
+        "zh": "组件组合的随机 rollout 成败、回归幅度和干预成本。",
+        "en": "Stochastic rollout success, regression magnitude, and intervention cost for update combinations."
+      },
+      "independent_ground_truth": {
+        "zh": "注入故障真值；真实历史中以独立回归集是否恢复为可观测真值，未来组合以子句是否提前阻断回退为真值。",
+        "en": "Planted fault truth; independent regression-suite restoration for real histories; future-composition regressions prevented by learned clauses."
+      },
+      "strongest_baseline": {
+        "zh": "ProbDD、PMA、Delta Debugging、Causal Agent Replay，以及拿到同一历史先验但不学习兼容子句的版本。",
+        "en": "ProbDD, PMA, delta debugging, Causal Agent Replay, and a matched-history variant that does not learn compatibility clauses."
+      },
+      "decisive_pilot": {
+        "zh": "第一阶段匹配干预预算定位当前故障；第二阶段冻结已学子句，在未见更新组合与第二模型上测量回退率、所需干预数和错误阻断率。",
+        "en": "Match intervention budgets for current localization, then freeze learned clauses and test regressions, interventions, and false blocks on unseen update combinations and a second model."
+      },
+      "stop_condition": {
+        "zh": "若同历史先验的 ProbDD/PMA 在未来组合上达到相同回退率，或子句错误阻断率超过 5%，则停止。",
+        "en": "Stop if ProbDD/PMA with the same history matches future-composition regression rate or clause false-block rate exceeds 5%."
+      },
+      "public_assets": [
+        "versioned update harness",
+        "ALFWorld",
+        "WebArena-Lite",
+        "two open models"
+      ],
+      "generation_mechanisms": [
+        "reviewer-vector-repair",
+        "method-tree-search",
+        "experiment-feedback-induction"
+      ],
+      "scores": {
+        "novelty": 4,
+        "specificity": 5,
+        "identifiability": 5,
+        "feasibility": 4,
+        "transfer": 5,
+        "cost_efficiency": 4
+      },
+      "mean_score": 4.5,
+      "external_review_status": "reviewed",
+      "internal_rank": 1,
+      "external_reviews": [
+        {
+          "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+          "review_date": "2026-08-07",
+          "verdict": "revise",
+          "confidence": "high",
+          "finding": "The changed assumption is material: rollback evidence becomes persistent constraints over future update compositions rather than a one-shot fault set. The update surface, independent regression signal, frozen-transfer test, and matched-budget ablation are credible. However, the central learning step is not yet mathematically identifiable. A stochastic Beta-Bernoulli factor posterior does not directly define a logical unsatisfied core, and the proposal does not specify the clause language, confidence semantics, generalization rule, or objective that converts noisy intervention outcomes into reusable higher-order prohibitions. Existing work already covers probabilistic delta debugging, intervention-based agent failure attribution, and persistent governed symbolic repair; the surviving thesis therefore depends entirely on a precise and demonstrably useful probabilistic clause-induction rule.",
+          "finding_zh": "该子方案对父问题作出了实质性改变：回滚证据不再只输出一次性的故障集合，而是转化为约束未来更新组合的持久规则。更新表面、独立回归信号、冻结迁移测试和预算匹配消融均较可信。但核心学习步骤尚未具备数学可识别性：随机的 Beta-Bernoulli 因子后验并不会自然产生逻辑上的不可满足核心，方案也未定义子句语言、置信度语义、泛化规则，以及如何把带噪干预结果转化为可复用的高阶禁止规则。现有工作已经覆盖概率式差分调试、基于干预的智能体故障归因和持久化受治理符号修复，因此剩余的方法论文主张完全取决于一个精确定义且确有增益的概率子句归纳规则。",
+          "required_action": "Replace the informal minimal-unsatisfied-core compilation with an explicit probabilistic clause-induction objective over a fixed typed descriptor language, including posterior updates, clause confidence and expiry, false-block control, and a comparison against a direct posterior-risk gate trained from exactly the same intervention history.",
+          "required_action_zh": "将非正式的“最小不可满足核心编译”替换为固定类型化描述符语言上的显式概率子句归纳目标，明确后验更新、子句置信度与失效机制、误阻断控制，并与使用完全相同干预历史训练的直接后验风险门控进行比较。",
+          "direct_collision": {
+            "status": "partial",
+            "closest_work": [
+              {
+                "title": "ANNEAL: Adapting LLM Agents via Governed Symbolic Patch Learning",
+                "venue_year": "arXiv, 2026-05-04; revised 2026-06-08",
+                "official_url": "[https://arxiv.org/abs/2605.16309](https://arxiv.org/abs/2605.16309)",
+                "overlap": "problem"
+              },
+              {
+                "title": "Causal Agent Replay: Counterfactual Attribution for LLM-Agent Failures",
+                "venue_year": "arXiv, 2026-06-06",
+                "official_url": "[https://arxiv.org/abs/2606.08275](https://arxiv.org/abs/2606.08275)",
+                "overlap": "mechanism"
+              },
+              {
+                "title": "Accelerating Delta Debugging through Probabilistic Monotonicity Assessment",
+                "venue_year": "EASE 2025",
+                "official_url": "[https://dl.acm.org/doi/10.1145/3756681.3756940](https://dl.acm.org/doi/10.1145/3756681.3756940)",
+                "overlap": "mechanism"
+              },
+              {
+                "title": "SKILL.nb: Selective Formalization and Gated Execution for Durable Agent Workflows",
+                "venue_year": "arXiv, 2026-06-06",
+                "official_url": "[https://arxiv.org/abs/2606.08049](https://arxiv.org/abs/2606.08049)",
+                "overlap": "experiment"
+              }
+            ],
+            "surviving_difference": "Learning confidence-bearing no-good and compatibility clauses over higher-order update descriptors from stochastic rollback interventions, then freezing those clauses to prevent regressions on unseen update compositions rather than merely repairing, gating, or localizing the current failure."
+          },
+          "iclr_fit": "conditional",
+          "strongest_baseline": "The same sparse interaction posterior and intervention history used as a direct composition-risk predictor and blocker, without compiling clauses, alongside PMA or ProbDD for current-fault localization.",
+          "decisive_pilot": "Under identical update histories and rollout budgets, train the proposed clause registry and a direct posterior-risk gate on one model and two task domains; freeze both and evaluate unseen higher-order update combinations on a second model, measuring prevented regressions, unnecessary interventions, false blocks, and calibration.",
+          "stop_rule": "Stop if the frozen clause registry fails to reduce unseen-composition regressions relative to the history-matched direct risk gate with a confidence interval excluding a meaningful gain, or if its upper 95% confidence bound on false-block rate exceeds 5%.",
+          "unknowns": [
+            "No official source establishes the proposed public versioned-update harness with typed compositional updates and planted higher-order faults across ALFWorld and WebArena-Lite.",
+            "The descriptor vocabulary and the rule for converting probabilistic outcomes into logical cores are unspecified.",
+            "The number of interventions required to identify sparse higher-order clauses under stochastic agent outcomes is unknown."
+          ],
+          "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v31-web-gpt/batch-01-of-02.response.md"
+        }
+      ],
+      "external_verdict": "revise",
+      "external_confidence": "high"
+    },
+    {
+      "id": "randomized-memory-action-policy",
+      "parent_id": "future-reuse-harm-predictor",
+      "title": {
+        "zh": "随机化记忆动作策略",
+        "en": "Randomized Memory-Action Policy"
+      },
+      "internal_decision": "shortlist",
+      "problem": {
+        "zh": "写入、摘要、隔离和删除对未来复用有不同潜在结果，但现有记忆准入只观察被选择动作。",
+        "en": "Write, summarize, quarantine, and drop have different future potential outcomes, while current admission observes only the chosen action."
+      },
+      "changed_assumption": {
+        "zh": "在检索发生前对候选条目动作进行受支持随机化，直接学习动作特异的未来复用效应。",
+        "en": "Randomize candidate-entry actions before retrieval exposure and directly learn action-specific future reuse effects."
+      },
+      "exact_mechanism": {
+        "zh": "使用分层探索策略在 write／summarize／quarantine／drop 间随机化；以跨拟合 doubly-robust 估计器学习每个动作的未来效用与伤害；用带支持约束的悲观策略目标最大化效用下界，并以固定 margin 和不确定性阈值执行动作或弃判。",
+        "en": "Randomize among write/summarize/quarantine/drop with stratified exploration; learn future utility and harm using cross-fitted doubly robust estimators; optimize a support-constrained pessimistic lower bound and execute or abstain with frozen margin and uncertainty thresholds."
+      },
+      "update_surface": "bounded memory-action policy and entry registry",
+      "learning_signal": {
+        "zh": "预检索随机动作、未来任务检索暴露、环境回报、回退和 Token 成本。",
+        "en": "Pre-retrieval randomized actions, future retrieval exposure, environment reward, regression, and token cost."
+      },
+      "independent_ground_truth": {
+        "zh": "随机化产生的动作特异潜在结果估计；留出时间任务上的环境真值。",
+        "en": "Randomization-supported action-specific potential outcomes and environment truth on chronological holdout tasks."
+      },
+      "strongest_baseline": {
+        "zh": "A-MAC、未来效用保留、风险敏感 contextual bandit、成功即写入和只删除策略。",
+        "en": "A-MAC, future-utility retention, risk-sensitive contextual bandits, success-only write, and deletion-only policies."
+      },
+      "decisive_pilot": {
+        "zh": "固定探索、记忆容量、检索次数和 Token 预算，在两个任务域训练并冻结到第三任务域；主表报告效用下界、负迁移和有效覆盖。",
+        "en": "Fix exploration, capacity, retrieval, and token budgets; train on two domains and freeze to a third; report utility lower bound, negative transfer, and valid coverage."
+      },
+      "stop_condition": {
+        "zh": "若悲观策略不优于标准 contextual bandit，或跨域有效覆盖低于 40%，则停止。",
+        "en": "Stop if the pessimistic policy does not beat a standard contextual bandit or cross-domain valid coverage is below 40%."
+      },
+      "public_assets": [
+        "ALFWorld",
+        "WebArena-Lite",
+        "ToolBench subset",
+        "two open models"
+      ],
+      "generation_mechanisms": [
+        "reviewer-vector-repair",
+        "resource-grounded-design"
+      ],
+      "scores": {
+        "novelty": 4,
+        "specificity": 5,
+        "identifiability": 5,
+        "feasibility": 3,
+        "transfer": 4,
+        "cost_efficiency": 3
+      },
+      "mean_score": 4.0,
+      "external_review_status": "reviewed",
+      "internal_rank": 2,
+      "external_reviews": [
+        {
+          "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+          "review_date": "2026-08-07",
+          "verdict": "block",
+          "confidence": "high",
+          "finding": "The proposal is statistically coherent and improves identification over an observational future-harm predictor, but it does not supply a new memory-learning mechanism. Randomizing a finite action set, estimating action values with cross-fitted doubly robust estimators, and optimizing a support-constrained pessimistic policy are standard contextual-bandit and offline-policy-learning components. Recent memory systems already formulate memory operations as learned actions, use contextual-bandit exploration and delayed credit, include summarize or forget operations, and make abstention or non-use first-class decisions. Applying a canonical causal-policy stack to write, summarize, quarantine, and drop is therefore a direct recombination rather than a standalone ICLR method invention.",
+          "finding_zh": "该方案在统计上是连贯的，也比观察式未来危害预测器具有更强的可识别性，但它没有提出新的记忆学习机制。对有限动作集合进行随机化、使用交叉拟合双重稳健估计器估计动作价值，再优化受支持集约束的悲观策略，均属于标准的上下文赌博机和离线策略学习组件。近期记忆系统已经把记忆操作建模为可学习动作，采用上下文赌博机探索和延迟信用分配，包含摘要或遗忘操作，并将弃权或不使用记忆作为一等决策。因此，把经典因果策略学习流程应用于写入、摘要、隔离和删除，属于已有方法的直接重组，而不是独立的 ICLR 方法发明。",
+          "required_action": "Replace the generic bandit formulation with a memory-specific causal mechanism that identifies retrieval-mediated delayed effects and interference among entries, and demonstrate an estimator or learning rule that cannot be reduced to a standard doubly robust contextual-bandit learner on the same randomized logs.",
+          "required_action_zh": "用记忆特有的因果机制替换通用赌博机建模，使其能够识别由后续检索介导的延迟效应和不同记忆条目之间的干扰，并证明所提出的估计器或学习规则不能被相同随机日志上的标准双重稳健上下文赌博机学习器替代。",
+          "direct_collision": {
+            "status": "direct",
+            "closest_work": [
+              {
+                "title": "Memory as a Controlled Process: Learned Adaptive Memory Management for LLM Agents",
+                "venue_year": "arXiv, 2026-07-15",
+                "official_url": "[https://arxiv.org/abs/2607.13591](https://arxiv.org/abs/2607.13591)",
+                "overlap": "combination"
+              },
+              {
+                "title": "Learning When to Remember: Risk-Sensitive Contextual Bandits for Abstention-Aware Memory Retrieval in LLM-Based Coding Agents",
+                "venue_year": "arXiv, 2026-04-30",
+                "official_url": "[https://arxiv.org/abs/2604.27283](https://arxiv.org/abs/2604.27283)",
+                "overlap": "mechanism"
+              },
+              {
+                "title": "Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents",
+                "venue_year": "arXiv, 2026-01-05",
+                "official_url": "[https://arxiv.org/abs/2601.01885](https://arxiv.org/abs/2601.01885)",
+                "overlap": "problem"
+              },
+              {
+                "title": "Memex(RL): Scaling Long-Horizon LLM Agents via Indexed Experience Memory",
+                "venue_year": "arXiv, 2026-03-04",
+                "official_url": "[https://arxiv.org/abs/2603.04257](https://arxiv.org/abs/2603.04257)",
+                "overlap": "combination"
+              }
+            ],
+            "surviving_difference": ""
+          },
+          "iclr_fit": "weak",
+          "strongest_baseline": "MemCon extended to the same write, summarize, quarantine, and drop action set and trained from identical randomized histories, together with a generic cross-fitted doubly robust pessimistic contextual-bandit policy learner.",
+          "decisive_pilot": "Generate one shared stratified-randomization log under fixed capacity, retrieval, interaction, and token budgets; train the proposed policy, a generic doubly robust pessimistic learner, and MemCon-style UCB control from that same log, then freeze all policies for a third-domain and second-model evaluation.",
+          "stop_rule": "Stop if the proposed policy does not improve pessimistic lower-bound utility or valid coverage over the generic doubly robust learner under paired bootstrap confidence intervals, or if frozen third-domain valid coverage remains below 40%.",
+          "unknowns": [
+            "It is unclear whether quarantine has operational consequences distinct from temporary non-retrieval or drop.",
+            "Sequential memory entries may violate the no-interference and stationarity assumptions required by the stated action-specific potential-outcome estimators.",
+            "The sample size needed to maintain overlap across four actions after conditioning on future retrieval exposure is unspecified."
+          ],
+          "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v31-web-gpt/batch-01-of-02.response.md"
+        }
+      ],
+      "external_verdict": "block",
+      "external_confidence": "high"
+    },
+    {
+      "id": "placebo-calibrated-memory-effects",
+      "parent_id": "replicated-effect-memory-gate",
+      "title": {
+        "zh": "安慰剂校准的记忆效应模型",
+        "en": "Placebo-Calibrated Memory Effects"
+      },
+      "internal_decision": "shortlist",
+      "problem": {
+        "zh": "无记忆对照无法区分语义帮助与单纯增加上下文、位置或执行难度的效应。",
+        "en": "A no-memory control cannot separate semantic help from context-length, position, or execution-difficulty effects."
+      },
+      "changed_assumption": {
+        "zh": "使用预注册、Token 与位置匹配、任务不相交的无关记忆作为负对照，并把负对照泄漏显式纳入后验。",
+        "en": "Use preregistered token/position-matched task-disjoint irrelevant memories as negative controls and model placebo leakage explicitly."
+      },
+      "exact_mechanism": {
+        "zh": "对成功率使用 motif 随机截距的 Beta-Binomial 分层模型，对连续回报使用共享方差层次模型；估计 retrieved−no-memory 的总效应与 placebo−no-memory 的非语义效应，语义效应为二者差；仅当伤害后验超过阈值且 placebo 校准误差在界内时隔离或删除，否则弃判。",
+        "en": "Use a Beta-Binomial hierarchical model with motif random intercepts for success and a shared-variance hierarchy for continuous reward; estimate total retrieved-minus-none and nonsemantic placebo-minus-none effects, defining semantic effect as their difference; quarantine/delete only when harm posterior exceeds a frozen threshold and placebo calibration error is bounded, otherwise abstain."
+      },
+      "update_surface": "memory effect posterior and quarantine registry",
+      "learning_signal": {
+        "zh": "检索、无记忆和受控无关记忆三臂的 matched future-task replay。",
+        "en": "Matched future-task replay under retrieved, no-memory, and controlled irrelevant-memory arms."
+      },
+      "independent_ground_truth": {
+        "zh": "预注册安慰剂池的任务不相交性、环境回报和跨 seed 重复效应。",
+        "en": "Preregistered task-disjoint placebo pool, environment rewards, and cross-seed replicated effects."
+      },
+      "strongest_baseline": {
+        "zh": "两臂经验贝叶斯、SkillCAT、普通三臂均值差、A-MAC。",
+        "en": "Two-arm empirical Bayes, SkillCAT, ordinary three-arm mean differences, and A-MAC."
+      },
+      "decisive_pilot": {
+        "zh": "冻结安慰剂池、似然、先验和阈值，在第二模型和第二任务域复用；匹配总回放、上下文和存储预算。",
+        "en": "Freeze placebo pool, likelihood, prior, and thresholds, then reuse on a second model/domain under matched replay, context, and storage budgets."
+      },
+      "stop_condition": {
+        "zh": "若受控安慰剂不改变伤害归因，或第二模型上不优于两臂经验贝叶斯，则停止。",
+        "en": "Stop if controlled placebo does not change harm attribution or fails to beat two-arm empirical Bayes on a second model."
+      },
+      "public_assets": [
+        "ALFWorld",
+        "WebArena-Lite",
+        "task-disjoint placebo generator"
+      ],
+      "generation_mechanisms": [
+        "reviewer-vector-repair",
+        "resource-grounded-design"
+      ],
+      "scores": {
+        "novelty": 4,
+        "specificity": 5,
+        "identifiability": 5,
+        "feasibility": 4,
+        "transfer": 4,
+        "cost_efficiency": 3
+      },
+      "mean_score": 4.167,
+      "external_review_status": "reviewed",
+      "internal_rank": 3,
+      "external_reviews": [
+        {
+          "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+          "review_date": "2026-08-07",
+          "verdict": "block",
+          "confidence": "high",
+          "finding": "This remains an evaluation and gating procedure rather than a new learning mechanism. The hierarchical posterior and three replay arms are concrete, but defining semantic effect as retrieved-minus-none minus placebo-minus-none is causally valid only if the placebo is exchangeable with the real memory for every nonsemantic pathway and if semantic and nonsemantic effects do not interact. Token, position, and task-disjoint matching do not establish those assumptions; an irrelevant memory can change reasoning, difficulty, attention, or tool behavior in content-dependent ways. Controlled intervention-based memory selection and quantified irrelevant-context effects are already covered by recent work, while the proposed persistent state is only a posterior-triggered quarantine registry.",
+          "finding_zh": "该方案仍然属于评估与门控流程，而不是新的学习机制。层次后验和三种重放实验臂较为具体，但把语义效应定义为“真实记忆相对无记忆的效应减去安慰剂相对无记忆的效应”，只有在安慰剂与真实记忆对所有非语义作用路径均可交换，且语义效应与非语义效应不存在交互时才具有因果有效性。令牌数、位置和任务不相交匹配无法保证这些假设；无关记忆仍可能以内容相关方式改变推理、难度、注意力或工具行为。近期工作已经覆盖基于受控干预的记忆选择和无关上下文效应量化，而该方案的持久状态仅是由后验阈值触发的隔离登记表。",
+          "required_action": "Replace the single irrelevant-placebo subtraction with a randomized factorial intervention that independently manipulates semantic content and surface/context properties, state the identification assumptions, and learn a transferable correction or decision model whose contribution is tested beyond the controlled audit.",
+          "required_action_zh": "用随机析因干预替换单一无关安慰剂相减，使语义内容与表面或上下文属性能够被独立操纵，明确因果识别假设，并学习一个可迁移的校正或决策模型，使其贡献能够在受控审计之外接受检验。",
+          "direct_collision": {
+            "status": "direct",
+            "closest_work": [
+              {
+                "title": "Causal Intervention-Based Memory Selection for Long-Horizon LLM Agents",
+                "venue_year": "arXiv, 2026-05-17",
+                "official_url": "[https://arxiv.org/abs/2605.17641](https://arxiv.org/abs/2605.17641)",
+                "overlap": "problem"
+              },
+              {
+                "title": "The Distracting Effect: Understanding Irrelevant Passages in RAG",
+                "venue_year": "arXiv, 2025-05-11",
+                "official_url": "[https://arxiv.org/abs/2505.06914](https://arxiv.org/abs/2505.06914)",
+                "overlap": "experiment"
+              },
+              {
+                "title": "How Is LLM Reasoning Distracted by Irrelevant Context? An Analysis Using a Controlled Benchmark",
+                "venue_year": "EMNLP 2025",
+                "official_url": "[https://aclanthology.org/2025.emnlp-main.674/](https://aclanthology.org/2025.emnlp-main.674/)",
+                "overlap": "experiment"
+              },
+              {
+                "title": "Making Retrieval-Augmented Language Models Robust to Irrelevant Context",
+                "venue_year": "ICLR 2024",
+                "official_url": "[https://openreview.net/forum?id=ZS4m74kZpH](https://openreview.net/forum?id=ZS4m74kZpH)",
+                "overlap": "problem"
+              }
+            ],
+            "surviving_difference": ""
+          },
+          "iclr_fit": "weak",
+          "strongest_baseline": "Causal Memory Intervention evaluated with the same real, irrelevant, harmful, and no-memory arms and replay budget, plus an ordinary three-arm hierarchical Bayesian difference estimator.",
+          "decisive_pilot": "Randomize four matched arms—real memory, a surface-matched semantic permutation, a task-disjoint irrelevant memory, and no memory—at identical token positions and replay budgets; fit on one domain, freeze all thresholds, and compare downstream quarantine decisions against Causal Memory Intervention on a second model and domain.",
+          "stop_rule": "Stop if estimated semantic effects change materially across independently generated placebo pools, if placebo calibration fails a preregistered negative-control test, or if quarantine utility and false-quarantine rate do not improve over Causal Memory Intervention and ordinary three-arm estimation.",
+          "unknowns": [
+            "No independently verified construction is given for ensuring that generated placebo memories are semantically inert for each evaluated model.",
+            "The randomization unit, replay ordering, and treatment of dependence across repeated tasks and memory entries are unspecified.",
+            "The proposed Beta-Binomial hierarchy may not be identifiable at the intended low-resource sample size once motif random effects and placebo leakage are included."
+          ],
+          "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v31-web-gpt/batch-01-of-02.response.md"
+        }
+      ],
+      "external_verdict": "block",
+      "external_confidence": "high"
+    },
+    {
+      "id": "conformal-effect-transport-gate",
+      "parent_id": "cross-task-effect-transport-certificate",
+      "title": {
+        "zh": "Conformal 效应迁移门控",
+        "en": "Conformal Effect-Transport Gate"
+      },
+      "internal_decision": "shortlist",
+      "problem": {
+        "zh": "经验效应在源任务上可估计，但目标任务族没有标签且支持可能不重叠。",
+        "en": "Lesson effects are estimable on source tasks, while target families are unlabeled and may lack support overlap."
+      },
+      "changed_assumption": {
+        "zh": "只在可证明支持重叠的区域输出效应符号，并对错误迁移提供有限样本风险控制。",
+        "en": "Predict effect sign only within verified support overlap and provide finite-sample risk control for harmful transfer."
+      },
+      "exact_mechanism": {
+        "zh": "用交叉拟合 R-learner 估计条目处理效应；通过跨环境 IRM 惩罚学习不变状态—约束表示；以密度比和最近邻半径执行 positivity／support 检查；在源环境 leave-one-family-out 残差上校准 conformal 风险集合，部署时仅在效应符号风险低于冻结 α 时准入。",
+        "en": "Estimate entry-level effects with a cross-fitted R-learner; learn invariant state-constraint representations with an across-environment IRM penalty; enforce positivity/support using density ratios and neighbor radii; calibrate conformal risk sets on leave-one-family-out source residuals and admit only when frozen sign-error risk is below alpha."
+      },
+      "update_surface": "lesson transport certificate and admission registry",
+      "learning_signal": {
+        "zh": "源任务族中的随机化或 matched replay、环境描述和条目效应。",
+        "en": "Randomized or matched replay, environment descriptors, and entry effects in source families."
+      },
+      "independent_ground_truth": {
+        "zh": "完全留出任务族的效应符号；部署不读取目标标签或额外 replay。",
+        "en": "Effect sign on fully held-out task families with no target labels or deployment replay."
+      },
+      "strongest_baseline": {
+        "zh": "带 conformal 弃判的 R-learner、语义相似度、SkillCAT、可迁移记忆方法。",
+        "en": "Conformal-abstaining R-learner, semantic similarity, SkillCAT, and transferable-memory methods."
+      },
+      "decisive_pilot": {
+        "zh": "四源任务族 leave-one-out 校准，第五任务族与第二模型双重冻结；相同记忆与 replay 预算下测符号错误风险和覆盖。",
+        "en": "Use leave-one-out calibration on four source families and double-freeze to a fifth family and second model; measure sign-error risk and coverage under matched budgets."
+      },
+      "stop_condition": {
+        "zh": "若有限样本风险上界失效，或在覆盖≥40% 时不优于 conformal R-learner，则停止。",
+        "en": "Stop if finite-sample risk control fails or it does not beat conformal R-learning at at least 40% coverage."
+      },
+      "public_assets": [
+        "four source task families",
+        "one held-out family",
+        "two open models"
+      ],
+      "generation_mechanisms": [
+        "reviewer-vector-repair",
+        "concept-path-bridging"
+      ],
+      "scores": {
+        "novelty": 4,
+        "specificity": 5,
+        "identifiability": 5,
+        "feasibility": 2,
+        "transfer": 5,
+        "cost_efficiency": 2
+      },
+      "mean_score": 3.833,
+      "external_review_status": "reviewed",
+      "internal_rank": 4,
+      "external_reviews": [
+        {
+          "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+          "review_date": "2026-08-07",
+          "verdict": "revise",
+          "confidence": "high",
+          "finding": "The child is materially more precise and retains a potentially distinct selective effect-transport thesis, but its certificate is not currently valid or experimentally identifiable. Four leave-one-family-out residuals provide family-level conformal resolution no finer than 1/(4+1)=0.20; IRM, density ratios, and neighbor support do not make an unseen family exchangeable with source families; and the true effect sign on a held-out family cannot be evaluated without post-freeze target outcomes. The current method is therefore an unproved composition of conformal treatment-effect learning, cross-task conformal calibration, transfer learning, and covariate-shift risk control rather than a demonstrated new guarantee.",
+          "finding_zh": "该子方案明显更具体，也保留了一个可能独立成立的选择性效应迁移命题，但当前证书既缺乏有效保证，也无法按所述方式完成实验识别。四个留一任务族残差在任务族层面的保形误差分辨率最多只能达到 1/(4+1)=0.20；IRM、密度比和邻域支持检查不能使未知任务族自动与源任务族可交换；而且若没有冻结后的目标任务族结果，就无法验证其真实效应符号。因此，当前方法仍是保形处理效应学习、跨任务保形校准、迁移学习和协变量偏移风险控制的未证明组合，而不是已经成立的新保证。",
+          "required_action": "Replace the current calibration and evaluation protocol with a formally stated hierarchical family-exchangeability or bounded-shift guarantee using enough calibration families, followed by post-freeze randomized target-family evaluation against the exact weighted-conformal R-learner composition.",
+          "required_action_zh": "用具有足够校准任务族的分层任务族可交换性或有界分布偏移保证，替换当前校准与评测协议，并在全部冻结后通过随机化目标任务族实验，与完全对应的加权保形 R-learner 组合进行比较。",
+          "direct_collision": {
+            "status": "partial",
+            "closest_work": [
+              {
+                "title": "Conformal Meta-learners for Predictive Inference of Individual Treatment Effects",
+                "venue_year": "NeurIPS/2023",
+                "official_url": "[https://proceedings.neurips.cc/paper_files/paper/2023/hash/94ab02a30b0e4a692a42ccd0b4c55399-Abstract-Conference.html](https://proceedings.neurips.cc/paper_files/paper/2023/hash/94ab02a30b0e4a692a42ccd0b4c55399-Abstract-Conference.html)",
+                "overlap": "mechanism"
+              },
+              {
+                "title": "Few-Shot Conformal Prediction with Auxiliary Tasks",
+                "venue_year": "ICML/2021",
+                "official_url": "[https://proceedings.mlr.press/v139/fisch21a.html](https://proceedings.mlr.press/v139/fisch21a.html)",
+                "overlap": "combination"
+              },
+              {
+                "title": "High Probability Risk Control Under Covariate Shift",
+                "venue_year": "COPA/PMLR 2025",
+                "official_url": "[https://proceedings.mlr.press/v266/almeida25a.html](https://proceedings.mlr.press/v266/almeida25a.html)",
+                "overlap": "mechanism"
+              },
+              {
+                "title": "Transfer learning for individual treatment effect estimation",
+                "venue_year": "UAI/2023",
+                "official_url": "[https://proceedings.mlr.press/v216/aloui23a.html](https://proceedings.mlr.press/v216/aloui23a.html)",
+                "overlap": "problem"
+              }
+            ],
+            "surviving_difference": "Selective admission of lesson-effect signs across task families using both causal-support checks and a second-model freeze remains a potentially distinct boundary, but only if supported by a valid family-level risk theorem and independent target-family outcomes."
+          },
+          "iclr_fit": "conditional",
+          "strongest_baseline": "A cross-fitted R-learner using the identical representation and support gate, calibrated with weighted conformal risk control and meta-conformal task calibration.",
+          "decisive_pilot": "Pre-register alpha and the family-level exchangeability or shift assumptions, calibrate on enough source families, freeze every learned component, and evaluate hidden randomized effects on a new family and second model while matching source replays, model calls, admission coverage, and training budget.",
+          "stop_rule": "Stop if empirical sign error exceeds the promised finite-sample bound in any pre-specified held-out family or model, or if coverage-adjusted risk does not improve over the composed baseline at at least 40% admission coverage.",
+          "unknowns": [
+            "The identities, sizes, and accessibility of the proposed source and target task families are unspecified.",
+            "It is not established whether source entry effects come from randomized interventions or defensible matched designs.",
+            "The intended alpha level and the number of independent family-level calibration residuals are unspecified.",
+            "The proposal does not explain how held-out effect signs will be measured while simultaneously claiming no target labels or target replay."
+          ],
+          "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v31-web-gpt/batch-02-of-02.response.md"
+        }
+      ],
+      "external_verdict": "revise",
+      "external_confidence": "high"
+    },
+    {
+      "id": "verified-risk-predicate-grammar",
+      "parent_id": "simulator-distilled-risk-memory",
+      "title": {
+        "zh": "验证器约束的风险谓词语法",
+        "en": "Verifier-Constrained Risk-Predicate Grammar"
+      },
+      "internal_decision": "shortlist",
+      "problem": {
+        "zh": "反事实安全轨迹可以由模拟器验证，但自由文本记忆无法保证可靠性、最小性或冲突一致性。",
+        "en": "Counterfactual safety traces can be verified, but free-text memory does not guarantee reliability, minimality, or conflict consistency."
+      },
+      "changed_assumption": {
+        "zh": "持久更新对象是固定 DSL 中可执行、可验证、带弃权的风险谓词语法，而不是自然语言经验。",
+        "en": "The persistent update is an executable, verifiable, abstaining risk-predicate grammar in a fixed DSL rather than free-text experience."
+      },
+      "exact_mechanism": {
+        "zh": "预定义状态谓词、动作谓词和时序窗口 DSL；优化 MDL 目标：谓词复杂度 + λ_FN·验证器假阴性 + λ_FP·验证器假阳性；用逐步约束添加生成候选，以独立转移验证器接受；冲突按条件蕴含形成 specificity lattice，仅在唯一最具体规则存在时执行，否则弃判。",
+        "en": "Define a DSL of state predicates, action predicates, and temporal windows; optimize an MDL objective combining grammar complexity, verifier false negatives, and false positives; generate candidates by incremental constraint addition and accept them with an independent transition verifier; resolve conflicts through an implication-based specificity lattice and abstain unless a unique most-specific rule exists."
+      },
+      "update_surface": "versioned executable risk grammar",
+      "learning_signal": {
+        "zh": "反事实状态替换、动作后果、验证器标签和谓词复杂度。",
+        "en": "Counterfactual state substitutions, action outcomes, verifier labels, and predicate complexity."
+      },
+      "independent_ground_truth": {
+        "zh": "独立转移验证器；跨 seed 与跨转移系统的安全违反和弃判。",
+        "en": "Independent transition verifier and safety violations/abstention across seeds and transition systems."
+      },
+      "strongest_baseline": {
+        "zh": "CLIN、Memory-as-a-Tool、ICAL、决策树规则、无压缩验证轨迹库。",
+        "en": "CLIN, Memory-as-a-Tool, ICAL, decision-tree rules, and an uncompressed verified-trace store."
+      },
+      "decisive_pilot": {
+        "zh": "在一个系统归纳语法，冻结 DSL、λ 和冲突规则，迁移到第二转移系统且关闭模拟器；匹配记忆和推理 Token。",
+        "en": "Induce on one system, freeze DSL/lambdas/conflict rules, transfer to a second transition system with simulator disabled, and match memory/inference tokens."
+      },
+      "stop_condition": {
+        "zh": "若第二系统上安全召回不优于验证轨迹检索，或规则弃判率>50%，则停止。",
+        "en": "Stop if safety recall on the second system does not beat verified-trace retrieval or abstention exceeds 50%."
+      },
+      "public_assets": [
+        "PDDL-style transition verifier",
+        "two transition systems",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "generation_mechanisms": [
+        "reviewer-vector-repair",
+        "resource-grounded-design",
+        "concept-path-bridging"
+      ],
+      "scores": {
+        "novelty": 5,
+        "specificity": 5,
+        "identifiability": 5,
+        "feasibility": 4,
+        "transfer": 4,
+        "cost_efficiency": 4
+      },
+      "mean_score": 4.5,
+      "external_review_status": "reviewed",
+      "internal_rank": 5,
+      "external_reviews": [
+        {
+          "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+          "review_date": "2026-08-07",
+          "verdict": "block",
+          "confidence": "high",
+          "finding": "This is directly covered as a recombination of existing rule-learning and agent-guardrail mechanisms. AutoSpec already evolves safety rules from labeled traces through counterexample-guided inductive logic programming and candidate verification; AgentSpec supplies an executable safety DSL; and ShieldAgent constructs verifiable action-rule circuits and uses executable formal verification. MDL compression, a specificity lattice, and abstention modify this established pipeline but do not define a new learning mechanism. The proposed ground truth is also circular if the same transition verifier supplies induction labels, candidate acceptance, and final evaluation.",
+          "finding_zh": "该方案属于现有规则学习与智能体护栏机制的直接重组。AutoSpec 已经利用带标签轨迹、反例引导的归纳逻辑编程和候选验证持续演化安全规则；AgentSpec 提供可执行安全 DSL；ShieldAgent 则构造可验证的动作规则电路并执行形式化验证。加入 MDL 压缩、特异性格结构和弃判机制，只是在修改已有流水线，并未形成新的学习机制。如果同一个状态转移验证器同时提供归纳标签、候选规则接纳依据和最终评测标签，其所谓独立真值还会形成循环监督。",
+          "required_action": "Replace the learned object or supervision loop with a mechanism that cannot be reduced to verified rule induction, and evaluate it using a separate transition oracle that is never used for candidate generation or acceptance.",
+          "required_action_zh": "必须更换学习对象或监督闭环，使其不能被归约为可验证规则归纳，并使用从未参与候选生成或接纳的独立状态转移预言机完成评测。",
+          "direct_collision": {
+            "status": "direct",
+            "closest_work": [
+              {
+                "title": "AutoSpec: Safety Rule Evolution for LLM Agents via Inductive Logic Programming",
+                "venue_year": "arXiv/2026-06-23",
+                "official_url": "[https://arxiv.org/abs/2606.24245](https://arxiv.org/abs/2606.24245)",
+                "overlap": "mechanism"
+              },
+              {
+                "title": "ShieldAgent: Shielding Agents via Verifiable Safety Policy Reasoning",
+                "venue_year": "ICML/2025",
+                "official_url": "[https://proceedings.mlr.press/v267/chen25ae.html](https://proceedings.mlr.press/v267/chen25ae.html)",
+                "overlap": "combination"
+              },
+              {
+                "title": "AgentSpec: Customizable Runtime Enforcement for Safe and Reliable LLM Agents",
+                "venue_year": "ICSE/2026",
+                "official_url": "[https://arxiv.org/abs/2503.18666](https://arxiv.org/abs/2503.18666)",
+                "overlap": "mechanism"
+              }
+            ],
+            "surviving_difference": ""
+          },
+          "iclr_fit": "weak",
+          "strongest_baseline": "AutoSpec instantiated on the identical DSL, traces, annotations, and transition verifier, with AgentSpec or ShieldAgent enforcement and an uncompressed verified-trace-store ablation.",
+          "decisive_pilot": "Induce rules on transition system A and freeze them for system B; under identical verifier calls, memory size, candidate budget, and inference tokens, compare the MDL grammar with AutoSpec and ShieldAgent-style rule circuits using unsafe states and outcomes enumerated by a separate transition oracle.",
+          "stop_rule": "Stop if the grammar does not improve both violation recall and false-positive rate over AutoSpec at matched abstention and grammar size, or if any gain disappears when evaluation is switched to the external oracle.",
+          "unknowns": [
+            "No exact DSL, predicate vocabulary, temporal semantics, or MDL coding scheme is supplied.",
+            "The claimed transition verifier is not identified, and its independence from training and evaluation is unverified.",
+            "The two proposed transition systems and their public implementations are unspecified.",
+            "It is unclear whether counterfactual state substitutions are reachable under the actual transition dynamics."
+          ],
+          "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v31-web-gpt/batch-02-of-02.response.md"
+        }
+      ],
+      "external_verdict": "block",
+      "external_confidence": "high"
+    },
+    {
+      "id": "paired-regret-update-policy",
+      "parent_id": "counterfactual-evolution-decision-controller",
+      "title": {
+        "zh": "配对后悔更新策略",
+        "en": "Paired-Regret Update Policy"
+      },
+      "internal_decision": "shortlist",
+      "problem": {
+        "zh": "标准离线控制器不能利用同一进化状态下 continue／commit／rollback／stop 的完整配对结果。",
+        "en": "Standard offline controllers do not exploit complete paired outcomes for continue/commit/rollback/stop from the same evolution state."
+      },
+      "changed_assumption": {
+        "zh": "学习目标从值函数拟合改为同状态动作对之间的后悔上界，并禁止数据支持外动作。",
+        "en": "Replace value fitting with within-state pairwise regret bounds and forbid unsupported actions."
+      },
+      "exact_mechanism": {
+        "zh": "对每个冻结状态—候选序列执行四动作得到 Y_a；训练共享表示和成对后悔 r(a,b|s)=Y_b−Y_a，使用非对称 Huber 排序损失；策略选择最小悲观后悔上界的动作，并施加 kNN 支持半径与回退风险约束；所有阈值在校准流冻结。",
+        "en": "Execute all four actions for each frozen state-candidate sequence to obtain Y_a; train shared representations and pairwise regrets r(a,b|s)=Y_b−Y_a with an asymmetric Huber ranking loss; choose the action minimizing a pessimistic regret bound under kNN support and regression-risk constraints; freeze thresholds on a calibration stream."
+      },
+      "update_surface": "persistent evolution decision policy",
+      "learning_signal": {
+        "zh": "同一状态和候选序列下四动作的配对结果、成本和未来回退。",
+        "en": "Paired outcomes, costs, and future regressions for four actions from the same state/candidate sequence."
+      },
+      "independent_ground_truth": {
+        "zh": "独立冻结任务流上的真实累计效用、最坏回退和候选不变性。",
+        "en": "True cumulative utility, worst regression, and candidate invariance on a frozen independent stream."
+      },
+      "strongest_baseline": {
+        "zh": "CQL/IQL 类离线 RL、阈值策略、Bandit、固定轮数和标准 pairwise ranking。",
+        "en": "CQL/IQL-style offline RL, thresholds, bandits, fixed rounds, and standard pairwise ranking."
+      },
+      "decisive_pilot": {
+        "zh": "在一个更新表面生成完整四动作数据，固定候选序列；跨第二模型和任务域冻结，比较同等数据支持下的 regret 与回退。",
+        "en": "Generate complete four-action data for one update surface with fixed candidate sequences; freeze across a second model/domain and compare regret/regression under identical support."
+      },
+      "stop_condition": {
+        "zh": "若不优于标准离线 RL 或阈值策略，或收益依赖重新生成候选，则停止。",
+        "en": "Stop if it does not beat standard offline RL or thresholds, or if gains require regenerated candidates."
+      },
+      "public_assets": [
+        "complete four-action replay dataset",
+        "two open models",
+        "two task domains"
+      ],
+      "generation_mechanisms": [
+        "reviewer-vector-repair",
+        "experiment-feedback-induction"
+      ],
+      "scores": {
+        "novelty": 4,
+        "specificity": 5,
+        "identifiability": 5,
+        "feasibility": 3,
+        "transfer": 4,
+        "cost_efficiency": 3
+      },
+      "mean_score": 4.0,
+      "external_review_status": "reviewed",
+      "internal_rank": 6,
+      "external_reviews": [
+        {
+          "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+          "review_date": "2026-08-07",
+          "verdict": "block",
+          "confidence": "high",
+          "finding": "The complete-outcome data assumption is materially different from ordinary offline control, but the proposed learner is not a new mechanism. When every Y_a is observed for the same state, r(a,b)=Y_b-Y_a is an algebraically redundant reparameterization of multi-output outcome regression. Enforcing antisymmetry and cycle consistency collapses the pairwise model back to scalar utilities, while omitting those constraints permits cyclic and incoherent decisions. Regret-focused losses, counterfactual pairwise comparisons, pessimistic bounds, and support-aware policy selection are already established. Moreover, forcing a fixed future candidate sequence across continue, commit, rollback, and stop may produce invalid counterfactual labels when those actions change subsequent candidates.",
+          "finding_zh": "完整动作结果这一数据假设确实不同于普通离线控制，但所提出的学习器并不是新机制。当同一状态下每个动作的 Y_a 都已观测时，r(a,b)=Y_b−Y_a 只是多输出结果回归的代数冗余重参数化。若强制反对称性和环一致性，成对模型会退化回标量效用模型；若不强制，则可能产生循环且不一致的决策。面向遗憾的损失、反事实成对比较、悲观界和支持感知的策略选择均已有直接先例。此外，当继续、提交、回滚和停止会改变后续候选时，强行固定未来候选序列可能产生无效的反事实标签。",
+          "required_action": "Replace complete-outcome pairwise regression with a genuinely non-equivalent partial-feedback or structurally constrained regret estimator, and establish its advantage over a capacity-matched scalar full-information policy learner.",
+          "required_action_zh": "必须用真正无法等价归约的部分反馈估计器或结构化遗憾估计器替换完整结果的成对回归，并证明其相对于容量匹配的标量全信息策略学习器具有独立优势。",
+          "direct_collision": {
+            "status": "direct",
+            "closest_work": [
+              {
+                "title": "Regret Minimization for Causal Inference on Large Treatment Space",
+                "venue_year": "AISTATS/2021",
+                "official_url": "[https://proceedings.mlr.press/v130/tanimoto21a.html](https://proceedings.mlr.press/v130/tanimoto21a.html)",
+                "overlap": "mechanism"
+              },
+              {
+                "title": "Support-aware offline policy selection for advertising marketplaces",
+                "venue_year": "arXiv/2026-05-20",
+                "official_url": "[https://arxiv.org/abs/2605.21736](https://arxiv.org/abs/2605.21736)",
+                "overlap": "combination"
+              },
+              {
+                "title": "Do no harm: A counterfactual approach to safe reinforcement learning",
+                "venue_year": "L4DC/2024",
+                "official_url": "[https://proceedings.mlr.press/v242/vaskov24a.html](https://proceedings.mlr.press/v242/vaskov24a.html)",
+                "overlap": "problem"
+              }
+            ],
+            "surviving_difference": ""
+          },
+          "iclr_fit": "weak",
+          "strongest_baseline": "A capacity-matched multi-output utility regressor or direct cost-sensitive policy classifier trained on the same complete four-action outcomes, with identical bootstrap or conformal lower bounds and the same support gate.",
+          "decisive_pilot": "Using genuinely cloned states and common exogenous randomness, train the pairwise learner and the scalar full-information baseline on exactly the same four-action branches; freeze candidate generation, thresholds, and representations before testing on a second model and domain under identical branch, training, and inference budgets.",
+          "stop_rule": "Stop if the pairwise policy fails to reduce held-out regret and worst regression relative to the scalar full-information baseline, if predicted regret cycles occur on more than 1% of admitted states, or if gains vanish when candidates are regenerated according to each action's actual successor state.",
+          "unknowns": [
+            "No public complete four-action replay dataset is identified.",
+            "The procedure for cloning states and sharing exogenous randomness across action branches is unspecified.",
+            "The method does not impose antisymmetry, transitivity, or cycle-consistency constraints on predicted pairwise regrets.",
+            "It is unverified whether future candidate sequences remain invariant under continue, commit, rollback, and stop."
+          ],
+          "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v31-web-gpt/batch-02-of-02.response.md"
+        }
+      ],
+      "external_verdict": "block",
+      "external_confidence": "high"
+    }
+  ]
+}

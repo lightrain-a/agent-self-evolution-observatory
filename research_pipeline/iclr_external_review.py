@@ -60,8 +60,10 @@ def build_prompt(ideas: Sequence[dict[str, Any]], *, batch_index: int, batch_cou
                 "idea_id": "exact supplied id",
                 "verdict": "pass|revise|block",
                 "confidence": "high|medium|low",
-                "finding": "most important independent judgment",
-                "required_action": "single concrete action before advancing",
+                "finding": "most important independent judgment in English",
+                "finding_zh": "与 finding 等义的简体中文判断",
+                "required_action": "single concrete action before advancing in English",
+                "required_action_zh": "与 required_action 等义的简体中文具体修改要求",
                 "direct_collision": {
                     "status": "none|partial|direct|unknown",
                     "closest_work": [
@@ -132,7 +134,9 @@ def normalize_response(payload: dict[str, Any], expected_ids: Sequence[str], *, 
         if idea_id not in expected or verdict not in {"pass", "revise", "block"}:
             continue
         finding = str(row.get("finding", "")).strip()
+        finding_zh = str(row.get("finding_zh", "")).strip()
         action = str(row.get("required_action", "")).strip()
+        action_zh = str(row.get("required_action_zh", "")).strip()
         if not finding or not action:
             raise ValueError(f"review for {idea_id} lacks finding or required_action")
         seen[idea_id] = {
@@ -141,7 +145,9 @@ def normalize_response(payload: dict[str, Any], expected_ids: Sequence[str], *, 
             "verdict": verdict,
             "confidence": str(row.get("confidence") or "medium"),
             "finding": finding,
+            "finding_zh": finding_zh,
             "required_action": action,
+            "required_action_zh": action_zh,
             "direct_collision": row.get("direct_collision", {}),
             "iclr_fit": str(row.get("iclr_fit") or "conditional"),
             "strongest_baseline": str(row.get("strongest_baseline") or ""),

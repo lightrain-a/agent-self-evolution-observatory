@@ -80,6 +80,48 @@ OPERATORS: tuple[IdeaOperator, ...] = (
         ("current metric", "hidden failure", "new observable"),
         "Show a concrete failure hidden by the current metric and define a measurement that changes the main conclusion.",
     ),
+    IdeaOperator(
+        "mechanism-inspiration-retrieval",
+        text("Mechanism inspiration retrieval", "机制灵感独立检索"),
+        text("Retrieve solution mechanisms separately from papers that merely describe the target problem.", "把解决机制的检索与目标问题文献分开，避免只在同题论文中做局部增量。"),
+        ("target causal variable", "source mechanism corpus", "transport condition"),
+        "Retrieve at least three mechanisms from structurally related but not title-neighbor papers; state why each mechanism can or cannot transport.",
+    ),
+    IdeaOperator(
+        "concept-path-bridging",
+        text("Concept-path bridging", "概念图桥接路径"),
+        text("Generate a method from a non-trivial path connecting distant scientific concepts through explicit intermediate variables.", "沿科学概念图中的非显然路径，用显式中间变量连接远距离概念并生成方法。"),
+        ("source concept", "bridge concepts", "target variable", "path evidence"),
+        "Sample a short concept path, identify the bridge variable that changes the target mechanism, and reject purely metaphorical connections.",
+    ),
+    IdeaOperator(
+        "reviewer-vector-repair",
+        text("Reviewer-vector repair", "Reviewer 维度反推修复"),
+        text("Turn low-scoring reviewer dimensions into changed assumptions, mechanisms, and decisive experiments rather than wording edits.", "把 Reviewer 的低分维度转化为假设、机制和决定性实验的实质变化，而不是改写措辞。"),
+        ("review dimension", "blocking evidence", "changed assumption", "new mechanism"),
+        "Produce materially distinct children for the two strongest blockers; each child must change one assumption and one executable mechanism.",
+    ),
+    IdeaOperator(
+        "method-tree-search",
+        text("Branch-and-bound method search", "分支限界方法树搜索"),
+        text("Maintain multiple solution branches and expand only Pareto-promising methods under novelty, identifiability, and feasibility constraints.", "保留多个解决方案分支，在新颖性、可识别性和可行性约束下只扩展 Pareto 有潜力的方法。"),
+        ("parent problem", "diverse child mechanisms", "branch score", "pruning evidence"),
+        "Generate at least three mechanism-distinct children, score them on a Pareto frontier, and preserve pruned branches with explicit reasons.",
+    ),
+    IdeaOperator(
+        "experiment-feedback-induction",
+        text("Experiment-feedback induction", "实验反馈归纳"),
+        text("Use controlled experimental failures to infer the missing mechanism or boundary for the next idea round.", "利用受控实验失败归纳缺失机制或边界，作为下一轮 Idea 的输入。"),
+        ("frozen experiment", "failure signature", "alternative explanation", "mechanism revision"),
+        "Convert a failed or ambiguous pilot into a falsifiable mechanism update without changing the frozen budget or regenerating the evidence split.",
+    ),
+    IdeaOperator(
+        "resource-grounded-design",
+        text("Resource-grounded method design", "公开资源约束的方法设计"),
+        text("Concretize ideas around available code, datasets, verifiers, and intervention surfaces before ranking novelty.", "在排序新颖性前，先围绕可用代码、数据集、验证器和干预表面把方法具体化。"),
+        ("public code", "dataset", "independent verifier", "exact update surface"),
+        "Reject methods without an executable public-asset path; specify the smallest code change and independent ground truth before proposing scale-up.",
+    ),
 )
 
 

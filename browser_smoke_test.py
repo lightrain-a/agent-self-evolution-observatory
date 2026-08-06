@@ -158,6 +158,10 @@ def main() -> None:
               boundaryRules: document.querySelectorAll('.system-boundary-card li').length,
               components: document.querySelectorAll('.system-components-panel tbody tr').length,
               statusGuides: document.querySelectorAll('.system-status-grid article').length,
+              evidenceExplorer: document.querySelectorAll('.system-evidence-explorer').length,
+              evidenceOptions: document.querySelectorAll('#system-evidence-idea option').length,
+              evidenceNodes: document.querySelectorAll('#system-evidence-svg .system-evidence-node').length,
+              evidenceLines: document.querySelectorAll('#system-evidence-svg .system-evidence-lines line').length,
               sourceRoutes: document.querySelectorAll('.system-route-grid > div').length,
               mainIdeas: document.querySelectorAll('.system-decision-summary .system-idea-card').length,
               inspiredIdeas: document.querySelectorAll('.system-inspired-summary .system-idea-card').length,
@@ -173,7 +177,9 @@ def main() -> None:
         require(system_overview["stages"] == 10 and system_overview["stats"] == 8, "system data flow or live statistics are incomplete")
         require(system_overview["layers"] == 7 and system_overview["contracts"] == 10, "backend layers or stage data contracts are incomplete")
         require(system_overview["artifacts"] == 8 and system_overview["boundaries"] == 3 and system_overview["boundaryRules"] == 14, "artifact or automation-boundary documentation is incomplete")
-        require(system_overview["components"] == 6 and system_overview["statusGuides"] == 4, "component or idea-state documentation is incomplete")
+        require(system_overview["components"] == 7 and system_overview["statusGuides"] == 4, "component or idea-state documentation is incomplete")
+        require(system_overview["evidenceExplorer"] == 1 and system_overview["evidenceOptions"] == 29, "evidence-graph explorer or idea selector is incomplete")
+        require(system_overview["evidenceNodes"] >= 12 and system_overview["evidenceLines"] >= 11, "local evidence graph did not render enough real nodes or relations")
         require(system_overview["sourceRoutes"] >= 7, "literature retrieval routes are incomplete")
         require(system_overview["mainIdeas"] == 14, f"expected 4 PASS + 10 REVISE main ideas, got {system_overview['mainIdeas']}")
         require(system_overview["inspiredIdeas"] == 8, f"expected 1 PASS + 7 REVISE inspired ideas, got {system_overview['inspiredIdeas']}")
@@ -181,15 +187,23 @@ def main() -> None:
         require(not system_overview["advisorText"], "advisor-facing message remains on the technical system page")
         require("paper-ideas.html#iclr-low-resource-bank" in system_overview["links"] and "paper-ideas.html#machine-school-inspired-ideas" in system_overview["links"], "system overview does not link to both idea sections")
         require("deduplicated papers" in system_overview["text"] or "篇去重论文" in system_overview["text"], "live research-system statistics are missing")
+        evidence_redraw = execute(session_id, """const s=document.querySelector('#system-evidence-idea'); const before=document.querySelector('#system-evidence-detail h4')?.textContent||''; s.selectedIndex=1; s.dispatchEvent(new Event('change',{bubbles:true})); const after=document.querySelector('#system-evidence-detail h4')?.textContent||''; return {before,after,nodes:document.querySelectorAll('#system-evidence-svg .system-evidence-node').length};""")
+        require(evidence_redraw["before"] and evidence_redraw["after"] and evidence_redraw["before"] != evidence_redraw["after"] and evidence_redraw["nodes"] >= 10, f"evidence graph selector did not redraw: {evidence_redraw}")
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
         zh_system = execute(session_id, """return {
           text: document.querySelector('.system-automation-panel')?.textContent || '',
+          componentText: document.querySelector('.system-components-panel')?.textContent || '',
+          actionText: document.querySelector('.system-decision-summary .system-idea-action')?.textContent || '',
+          evidenceTitle: document.querySelector('.system-evidence-explorer h3')?.textContent || '',
           cards: [...document.querySelectorAll('.system-boundary-card')].map(x=>({client:x.clientWidth,scroll:x.scrollWidth,text:x.textContent})),
           pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2
         };""")
         require("自动执行" in zh_system["text"] and "条件自动" in zh_system["text"] and "人工控制" in zh_system["text"], "Chinese automation boundary headings are incomplete")
         require("Pages 只发布 frontend-only 静态快照" in zh_system["text"] and "没有 P0/P1/P2 证据时" in zh_system["text"], "Chinese automation boundary content is incomplete")
+        require("引文与证据图谱" in zh_system["componentText"] and "Citation and evidence graph" not in zh_system["componentText"], "backend component name did not switch to Chinese")
+        require(zh_system["evidenceTitle"].strip() == "引文与证据图谱", f"evidence graph title did not switch to Chinese: {zh_system['evidenceTitle']}")
+        require("每一轮进化后" in zh_system["actionText"] and "Report persistent" not in zh_system["actionText"], "required action did not switch to Chinese")
         require(all(card["scroll"] <= card["client"] + 2 for card in zh_system["cards"]), "Chinese automation boundary cards overflow horizontally")
         require(not zh_system["pageOverflow"], "Chinese system overview causes page-level horizontal overflow")
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
@@ -419,6 +433,29 @@ def main() -> None:
               inspiredShortlist: document.querySelectorAll('.machine-shortlist-item').length,
               inspiredSummary: window.MACHINE_SCHOOL_IDEAS?.summary || {},
               inspiredFirstTitle: window.MACHINE_SCHOOL_IDEAS?.passed_ideas?.[0]?.title?.en || '',
+              solutionPanel: document.querySelectorAll('.solution-v3-panel').length,
+              solutionStats: document.querySelectorAll('.solution-v3-stats .stat').length,
+              solutionRepos: document.querySelectorAll('.solution-v3-repos article').length,
+              solutionStages: document.querySelectorAll('.solution-v3-flow article').length,
+              solutionGates: document.querySelectorAll('.solution-v3-gates article').length,
+              solutionShortlist: document.querySelectorAll('.solution-v3-group.tone-shortlist .solution-v3-card').length,
+              solutionRepair: document.querySelectorAll('.solution-v3-panel > .solution-v3-group.tone-repair .solution-v3-card').length,
+              solutionMechanisms: document.querySelectorAll('.solution-v3-panel > .solution-v3-group .solution-v3-card .mechanism').length,
+              solutionExternalReviewed: Number(window.IDEA_DISCOVERY_V3?.summary?.external_reviewed || 0),
+              solutionExternalPass: Number(window.IDEA_DISCOVERY_V3?.summary?.external_pass || 0),
+              solutionExternalRevise: Number(window.IDEA_DISCOVERY_V3?.summary?.external_revise || 0),
+              solutionExternalBlock: Number(window.IDEA_DISCOVERY_V3?.summary?.external_block || 0),
+              solutionRenderedReviews: document.querySelectorAll('.solution-v3-group.tone-shortlist .solution-v3-review').length,
+              repairRound: document.querySelectorAll('.solution-v31-round').length,
+              repairChildren: document.querySelectorAll('.solution-v31-round .solution-v3-card').length,
+              repairReviewed: Number(window.IDEA_DISCOVERY_V31?.summary?.external_reviewed || 0),
+              repairPass: Number(window.IDEA_DISCOVERY_V31?.summary?.external_pass || 0),
+              repairRevise: Number(window.IDEA_DISCOVERY_V31?.summary?.external_revise || 0),
+              repairBlock: Number(window.IDEA_DISCOVERY_V31?.summary?.external_block || 0),
+              repairRenderedReviews: document.querySelectorAll('.solution-v31-round .solution-v3-review').length,
+              localizedMainAction: document.querySelector('.iclr-idea-card .project-web-gpt-review small')?.textContent || '',
+              localizedInspiredAction: document.querySelector('.machine-school-group.tone-pass .project-web-gpt-review small')?.textContent || '',
+              componentGraphLabel: [...document.querySelectorAll('.automation-component h4')].map(x=>x.textContent).find(x=>x.includes('图谱')||x.includes('Citation')) || '',
               experimentProtocols: document.querySelectorAll('.cvpr-followup-archive .cvpr-experiment-protocol').length,
               protocolPhases: document.querySelectorAll('.cvpr-followup-archive .protocol-phases article').length,
               protocolModels: document.querySelectorAll('.cvpr-followup-archive .protocol-model-grid section').length,
@@ -459,7 +496,7 @@ def main() -> None:
               text: document.body.textContent || ''
             };""",
         )
-        require(idea_portfolio["automationComponents"] == 6, f"expected six reference-architecture components, got {idea_portfolio['automationComponents']}")
+        require(idea_portfolio["automationComponents"] == 7, f"expected seven running/reference components, got {idea_portfolio['automationComponents']}")
         require(idea_portfolio["automationStats"] == 6, f"expected six automation statistics, got {idea_portfolio['automationStats']}")
         require(idea_portfolio["automationCollisionRows"] > 0 and idea_portfolio["automationRepairRows"] > 0, "automation collision or repair queue did not render")
         require("healthy" in idea_portfolio["automationHealth"].lower(), f"research system health is not visible: {idea_portfolio['automationHealth']}")
@@ -492,6 +529,15 @@ def main() -> None:
         require(idea_portfolio["inspiredShortlist"] == 8, f"expected eight teacher-discussion candidates, got {idea_portfolio['inspiredShortlist']}")
         require(idea_portfolio["inspiredSummary"].get("raw") == 24 and idea_portfolio["inspiredSummary"].get("external_reviewed") == 11, f"inspired data summary is wrong: {idea_portfolio['inspiredSummary']}")
         require(idea_portfolio["inspiredFirstTitle"] == "Regression-Probe Half-Life", f"wrong top inspired idea: {idea_portfolio['inspiredFirstTitle']}")
+        require(idea_portfolio["solutionPanel"] == 1 and idea_portfolio["solutionStats"] == 5, "solution-first v3 panel or statistics did not render")
+        require((idea_portfolio["solutionRepos"], idea_portfolio["solutionStages"], idea_portfolio["solutionGates"], idea_portfolio["solutionShortlist"], idea_portfolio["solutionRepair"]) == (7,9,5,10,4), f"solution-first v3 counts are wrong: {idea_portfolio['solutionRepos']}/{idea_portfolio['solutionStages']}/{idea_portfolio['solutionGates']}/{idea_portfolio['solutionShortlist']}/{idea_portfolio['solutionRepair']}")
+        require(idea_portfolio["solutionMechanisms"] == 14, "solution-first children must expose exact mechanisms")
+        require((idea_portfolio["solutionExternalReviewed"], idea_portfolio["solutionExternalPass"], idea_portfolio["solutionExternalRevise"], idea_portfolio["solutionExternalBlock"], idea_portfolio["solutionRenderedReviews"]) == (10,0,6,4,10), "solution-first v3 R2 results are inconsistent")
+        require(idea_portfolio["repairRound"] == 1 and idea_portfolio["repairChildren"] == 6, "reviewer-vector v3.1 repair round did not render")
+        require((idea_portfolio["repairReviewed"], idea_portfolio["repairPass"], idea_portfolio["repairRevise"], idea_portfolio["repairBlock"], idea_portfolio["repairRenderedReviews"]) == (6,0,2,4,6), "reviewer-vector v3.1 R2 results are inconsistent")
+        require("每一轮进化后" in idea_portfolio["localizedMainAction"] and "Report persistent" not in idea_portfolio["localizedMainAction"], "main required action is not localized")
+        require("按时间顺序" in idea_portfolio["localizedInspiredAction"] and "Pre-register" not in idea_portfolio["localizedInspiredAction"], "inspired required action is not localized")
+        require(idea_portfolio["componentGraphLabel"] == "引文与证据图谱", f"research component label is not localized: {idea_portfolio['componentGraphLabel']}")
         require(idea_portfolio["experimentProtocols"] == 42, f"expected 42 preserved CVPR protocols, got {idea_portfolio['experimentProtocols']}")
         require(idea_portfolio["protocolPhases"] == 126, f"expected 126 preserved CVPR phase cards, got {idea_portfolio['protocolPhases']}")
         require(idea_portfolio["protocolModels"] == 252, f"expected six model/API fields per CVPR idea, got {idea_portfolio['protocolModels']}")

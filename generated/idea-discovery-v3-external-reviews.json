@@ -1,0 +1,490 @@
+{
+  "schema_version": "1.0",
+  "pipeline": "code-oracle -> signed-in ChatGPT web UI -> Agent project",
+  "required_host": "admin01-NF5468M5",
+  "reviews": {
+    "active-causal-minimal-rollback": [
+      {
+        "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The changed assumption is material: lineage becomes only a prior, while interventions identify a rollback set over persistent versioned updates. However, the learner is not yet distinguishable from dependency-aware probabilistic delta debugging plus interaction attribution. The proposal does not specify a posterior family, an intervention-acquisition objective, an estimator for stochastic agent outcomes, or the constrained decision rule that converts effects into the smallest restoring set. Planted synthetic fault sets are independent ground truth, but minimal fault sets in real update histories are not independently observable as stated.",
+        "finding_zh": "该子方案的假设变化具有实质性：谱系仅作为先验，真正通过干预识别持久化版本更新中的回滚集合。但当前学习器仍无法与“依赖感知的概率化 Delta Debugging 加交互归因”区分开来；方案没有给出后验模型、干预采集目标、随机智能体结果的估计器，也没有给出把因果效应转换为最小恢复集合的约束决策规则。合成注入故障可提供独立真值，但真实更新历史中的最小故障集合按当前定义并不可独立观测。",
+        "required_action": "Specify and freeze an interaction-aware fault posterior, a rollout-normalized acquisition rule, and an exact constrained decoder for the smallest restoring rollback set; then compare against dependency-aware ProbDD/PMA and Causal Agent Replay under identical total agent-rollout budgets on held-out models and real version histories.",
+        "required_action_zh": "明确并冻结交互感知的故障后验、按 rollout 成本归一化的采集规则，以及求解最小恢复回滚集合的精确约束解码器；随后在相同智能体总 rollout 预算下，与依赖感知的 ProbDD/PMA 和 Causal Agent Replay 比较，并覆盖冻结后的跨模型测试与真实版本历史。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "Probabilistic Delta Debugging",
+              "venue_year": "ESEC/FSE 2021",
+              "official_url": "[https://2021.esec-fse.org/details/fse-2021-papers/94/Probabilistic-Delta-Debugging](https://2021.esec-fse.org/details/fse-2021-papers/94/Probabilistic-Delta-Debugging)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Causal Agent Replay: Counterfactual Attribution for LLM-Agent Failures",
+              "venue_year": "arXiv 2026-06",
+              "official_url": "[https://arxiv.org/abs/2606.08275](https://arxiv.org/abs/2606.08275)",
+              "overlap": "combination"
+            },
+            {
+              "title": "Delta Debugging for LLM-integrated Systems",
+              "venue_year": "ICSE-SEIP 2026",
+              "official_url": "[https://conf.researchr.org/details/icse-2026/icse-2026-software-engineering-in-practice/5/Delta-Debugging-for-LLM-integrated-Systems](https://conf.researchr.org/details/icse-2026/icse-2026-software-engineering-in-practice/5/Delta-Debugging-for-LLM-integrated-Systems)",
+              "overlap": "problem"
+            }
+          ],
+          "surviving_difference": "The remaining boundary is rollback over heterogeneous, persistent, versioned agent updates with a dependency prior and an explicit minimal-restoration objective; the closest work minimizes failure-inducing inputs or attributes trajectory steps rather than selecting which deployed updates to remove."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Dependency-aware ProbDD or probabilistic monotonicity assessment seeded with the same graph and allowed the same intervention history, plus a budget-matched interaction-aware Causal Agent Replay variant.",
+        "decisive_pilot": "Inject single and pairwise faults into 4–8 heterogeneous updates, cap every method at six interventions and the same total agent rollouts, train the acquisition model on one agent/model, freeze it, and test exact restoring-set recovery, benign-update retention, and task restoration on a second model and real version sequences.",
+        "stop_rule": "Falsify the thesis if it does not improve exact restoring-set recovery and benign-update retention over dependency-aware ProbDD/PMA at the same rollout budget, or if any gain disappears after freezing on the second model or on real version histories.",
+        "unknowns": [
+          "How independently verified minimal fault sets will be obtained for real update histories.",
+          "Whether repeated enable/disable interventions are reproducible enough under stochastic agent execution.",
+          "Whether the proposed versioned update harness and dependency graphs will be released."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v3-web-gpt/batch-01-of-02.response.md"
+      }
+    ],
+    "future-reuse-harm-predictor": [
+      {
+        "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The child replaces hand-coded recovery completeness with an outcome-grounded future-harm target, and environment-scored held-out tasks can make that target independent. Yet it remains an underspecified admission controller. 'Matched replay' does not define the potential outcomes for write, summarize, and quarantine, retrieval exposure is a post-treatment variable, and the loss and action rule are absent. Recent work already learns memory admission or retention from future utility, downstream outcomes, and risk-sensitive control, so the novelty survives only if candidate-level counterfactual harm is randomized and action-specific.",
+        "finding_zh": "该子方案用未来复用伤害这一结果驱动目标替代手工定义的恢复完整性；若由环境在留出任务上评分，该监督可以独立于同一模型。但它目前仍是一个定义不足的记忆准入控制器：“匹配回放”没有定义写入、摘要和隔离三种动作的潜在结果，检索暴露还是处理后的变量，同时缺少损失函数和动作决策规则。近期工作已利用未来效用、下游结果和风险敏感控制学习记忆准入或保留，因此只有在候选条目层面随机化暴露并定义动作特异的反事实伤害后，创新边界才成立。",
+        "required_action": "Define candidate-level potential outcomes for write, summarize, and quarantine, randomize candidate exposure before retrieval, specify a multi-action policy loss and fixed decision rule, and test the frozen policy across domains against future-utility retention and A-MAC-style admission under equal capacity, replay, token, and solver-call budgets.",
+        "required_action_zh": "为写入、摘要和隔离分别定义候选条目层面的潜在结果，在检索前随机化候选暴露，给出多动作策略损失与固定决策规则，并在容量、回放、token 和求解调用预算完全一致时，与基于未来效用的保留方法及 A-MAC 式准入方法进行冻结后的跨域比较。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "How Memory Management Impacts LLM Agents: An Empirical Study of Experience-Following Behavior",
+              "venue_year": "arXiv 2025-05",
+              "official_url": "[https://arxiv.org/abs/2505.16067](https://arxiv.org/abs/2505.16067)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Adaptive Memory Admission Control for LLM Agents",
+              "venue_year": "arXiv 2026-03",
+              "official_url": "[https://arxiv.org/abs/2603.04549](https://arxiv.org/abs/2603.04549)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Learning When to Remember: Risk-Sensitive Contextual Bandits for Abstention-Aware Memory Retrieval in LLM-Based Coding Agents",
+              "venue_year": "arXiv 2026-04",
+              "official_url": "[https://arxiv.org/abs/2604.27283](https://arxiv.org/abs/2604.27283)",
+              "overlap": "combination"
+            }
+          ],
+          "surviving_difference": "The remaining boundary is an entry-level, randomized estimate of future reuse harm that directly supervises persistent write, summarize, or quarantine actions, rather than proxy utility features, retrieval-time risk, or unrandomized downstream correlations."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "History-based selective addition/deletion trained on future-task utility labels, augmented with A-MAC features, under the same memory capacity and candidate-replay budget.",
+        "decisive_pilot": "Randomize each candidate recovery experience among write, token-matched summary, and quarantine before future retrieval; hold retrieval count, memory capacity, context tokens, and solver calls fixed; train on ALFWorld, freeze, and test on a ToolBench subset using negative transfer, net utility, action calibration, and storage cost.",
+        "stop_rule": "Falsify the thesis if simple success/failure labels or history-based future-utility retention match its harm reduction and utility at equal budgets, if the effect disappears cross-domain, or if summary benefits are explained by extra generation or context budget.",
+        "unknowns": [
+          "How many independent future reuse opportunities each entry will receive.",
+          "Whether the selected ToolBench subset supplies deterministic, independently checkable task rewards.",
+          "Whether summary generation cost is included in the matched training and inference budgets."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v3-web-gpt/batch-01-of-02.response.md"
+      }
+    ],
+    "replicated-effect-memory-gate": [
+      {
+        "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "Three-arm replay and hierarchical shrinkage make the causal admission signal substantially more concrete than the parent audit, and environment rewards can provide independent outcomes. However, shuffled memory is not a valid placebo unless token length, retrieval position, task difficulty, and semantic irrelevance are controlled; it may itself change execution difficulty. The hierarchical likelihood, prior, posterior-to-action thresholds, and online admission timing are also unspecified. SkillCAT and prior memory-management work already turn replay or downstream utility into retention decisions, leaving a plausible but not yet identifiable method boundary.",
+        "finding_zh": "三臂回放与分层收缩使因果准入信号相较父方案明显更具体，环境奖励也可以提供独立结果。但“打乱记忆”只有在 token 长度、检索位置、任务难度和语义无关性都受控时才可能作为有效安慰剂，否则它本身就会改变执行难度。方案还未给出分层似然、先验、从后验到动作的阈值以及在线准入时机。SkillCAT 和既有记忆管理工作已经把回放或下游效用转化为保留决策，因此当前仅保留了一个有潜力但尚不可识别的机制边界。",
+        "required_action": "Replace the shuffled arm with a pre-registered, token- and position-matched irrelevant-memory placebo; specify the hierarchical likelihood, prior, abstention and action thresholds, and admission timing; then freeze the gate and compare it with a two-arm empirical-Bayes estimator and SkillCAT-style replay under identical total replay and storage budgets on a second model.",
+        "required_action_zh": "用预注册的、token 数与位置匹配的无关记忆安慰剂替代简单打乱臂；明确分层似然、先验、弃判与动作阈值以及准入时机；随后冻结门控器，在第二个模型上以完全相同的总回放和存储预算，与两臂经验贝叶斯估计器及 SkillCAT 式回放比较。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "SkillCAT: Contrastive Assessment and Topology-Aware Skill Self-Evolution for LLM Agents",
+              "venue_year": "arXiv 2026-06",
+              "official_url": "[https://arxiv.org/abs/2606.13317](https://arxiv.org/abs/2606.13317)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "How Memory Management Impacts LLM Agents: An Empirical Study of Experience-Following Behavior",
+              "venue_year": "arXiv 2025-05",
+              "official_url": "[https://arxiv.org/abs/2505.16067](https://arxiv.org/abs/2505.16067)",
+              "overlap": "combination"
+            },
+            {
+              "title": "Adaptive Memory Admission Control for LLM Agents",
+              "venue_year": "arXiv 2026-03",
+              "official_url": "[https://arxiv.org/abs/2603.04549](https://arxiv.org/abs/2603.04549)",
+              "overlap": "problem"
+            }
+          ],
+          "surviving_difference": "The remaining boundary is replicated entry-by-task-motif treatment-effect estimation on future tasks, with a no-memory arm, a controlled placebo arm, posterior abstention, and persistent quarantine or deletion rather than source-task patch validation or proxy-score admission."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A two-arm retrieved-versus-no-memory randomized estimator with empirical-Bayes shrinkage and fixed posterior thresholds, using the same replay observations and memory actions.",
+        "decisive_pilot": "On chronological ALFWorld and WebArena-Lite streams, randomize retrieved memory, no memory, or a token- and position-matched irrelevant placebo; keep total replay executions, context tokens, storage, and task attempts equal; train on one model, freeze on the other, and compare future-harm rate, utility, coverage, and calibration.",
+        "stop_rule": "Falsify the thesis if the controlled third arm does not reduce bias or uncertainty beyond the two-arm estimator, if the hierarchical gate does not improve the harm-utility-coverage frontier at matched replay cost, or if the gain fails on the second frozen model.",
+        "unknowns": [
+          "The exact hierarchical model, prior, and minimum replication count per entry-by-motif cell.",
+          "Whether chronological streams provide enough repeated motif exposures for stable treatment-effect posteriors.",
+          "Whether WebArena-Lite executions are reproducible enough to separate memory effects from environment variance."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v3-web-gpt/batch-01-of-02.response.md"
+      }
+    ],
+    "version-differential-active-diagnosis": [
+      {
+        "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The changed assumption only replaces a fixed delta-debugging order with a learned or probabilistic intervention order. That is already the central mechanism of ProbDD and related adaptive delta-debugging methods: maintain test-derived fault probabilities and select the next subset to maximize expected progress. Applying this template to prompts, memories, skills, workflows, and small modules, then returning the smallest explanation set, is a diagnostic controller and a direct recombination rather than a new persistent learning mechanism. Cross-model freezing tests generalization but does not create a surviving novelty boundary.",
+        "finding_zh": "该子方案的假设变化仅是把固定的 Delta Debugging 顺序替换为学习式或概率式干预顺序，而这已经是 ProbDD 及其自适应后继方法的核心机制：根据测试维护故障概率，并选择最能提升预期进展的下一组子集。把这一模板应用到提示、记忆、技能、工作流和小模块，再输出最小解释集合，本质上仍是诊断控制器和已知方法的直接重组，而不是新的持久学习机制。跨模型冻结只能检验泛化，不能产生新的创新边界。",
+        "required_action": "Abandon learned query ordering as the thesis and introduce a persistent intervention-derived repair or rollback representation whose deployed state changes after diagnosis and whose benefit cannot be reproduced by seeding ProbDD/PMA with the same historical faults; otherwise treat this child as an evaluation study, not an ICLR method.",
+        "required_action_zh": "放弃把“学习查询顺序”作为论文主论点，改为提出一种由干预导出的持久化修复或回滚表示，使诊断后部署状态真正发生更新，并证明把同一历史故障先验提供给 ProbDD/PMA 也无法复现其收益；否则应把该子方案定位为评测研究，而不是 ICLR 方法。",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "Probabilistic Delta Debugging",
+              "venue_year": "ESEC/FSE 2021",
+              "official_url": "[https://2021.esec-fse.org/details/fse-2021-papers/94/Probabilistic-Delta-Debugging](https://2021.esec-fse.org/details/fse-2021-papers/94/Probabilistic-Delta-Debugging)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Accelerating Delta Debugging through Probabilistic Monotonicity Assessment",
+              "venue_year": "EASE 2025",
+              "official_url": "[https://arxiv.org/abs/2506.11614](https://arxiv.org/abs/2506.11614)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Delta Debugging for LLM-integrated Systems",
+              "venue_year": "ICSE-SEIP 2026",
+              "official_url": "[https://conf.researchr.org/details/icse-2026/icse-2026-software-engineering-in-practice/5/Delta-Debugging-for-LLM-integrated-Systems](https://conf.researchr.org/details/icse-2026/icse-2026-software-engineering-in-practice/5/Delta-Debugging-for-LLM-integrated-Systems)",
+              "overlap": "combination"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "ProbDD or probabilistic monotonicity assessment initialized with the identical historical fault prior and constrained to the same six component substitutions and executions.",
+        "decisive_pilot": "Freeze both the proposed policy and a historical-prior ProbDD/PMA baseline, then test exact single- and pairwise-fault-set recovery on unseen models and versions under six substitutions and identical executions.",
+        "stop_rule": "Keep the block verdict if the policy does not significantly improve exact fault-set recovery and intervention count over historical-prior ProbDD/PMA, or if gains occur only on synthetic injected faults with a fixed component vocabulary.",
+        "unknowns": [
+          "The exact policy objective, posterior parameterization, and training corpus of historical faults.",
+          "Whether fault identities and component semantics are aligned across models and versions.",
+          "Whether any real version histories have independently verified interacting fault sets."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v3-web-gpt/batch-01-of-02.response.md"
+      }
+    ],
+    "cross-task-effect-transport-certificate": [
+      {
+        "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The changed assumption targets a real gap: causal usefulness on a source task is not effect transportability, and held-out task-family outcomes can provide independent ground truth. However, 'lesson-effect representations' and 'stable state-constraint features' do not define a learning objective, invariance criterion, calibration method, or abstention threshold. Recent work already studies cross-domain memory transfer, negative transfer, learned transferable abstraction, and replay-validated skill admission. With only three source families, the proposed certificate can collapse to a standard conditional-treatment-effect or domain-similarity predictor and is not calibrated without explicit overlap and uncertainty assumptions.",
+        "finding_zh": "该子方案瞄准了真实缺口：在源任务上具有因果效用并不等于效应可迁移，完全留出的任务族结果也能提供独立真值。但“经验效应表示”和“稳定状态约束特征”尚未定义学习目标、不变性判据、校准方法或弃判阈值。近期工作已经研究跨域记忆迁移、负迁移、可迁移抽象的学习以及基于回放验证的技能准入。仅使用三个源任务族时，该证书很可能退化为标准的条件处理效应预测器或域相似度预测器；若不明确重叠性和不确定性假设，也无法声称校准。",
+        "required_action": "Formulate the certificate as cross-fitted treatment-effect estimation with an explicit invariant-representation objective, positivity and overlap checks, and conformal control of effect-sign error; require zero target-family labels at deployment, freeze across both family and model, and compare against an R-learner with conformal abstention and semantic similarity under equal memory and replay budgets.",
+        "required_action_zh": "把证书明确形式化为交叉拟合的处理效应估计，并加入显式不变表示目标、正值性与支持重叠检查，以及对效应符号错误的 conformal 风险控制；部署时不得使用目标任务族标签，同时跨任务族和模型冻结，并在相同记忆与回放预算下，与带 conformal 弃判的 R-learner 和语义相似度基线比较。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "Memory Transfer Learning: How Memories are Transferred Across Domains in Coding Agents",
+              "venue_year": "ICML 2026",
+              "official_url": "[https://arxiv.org/abs/2604.14004](https://arxiv.org/abs/2604.14004)",
+              "overlap": "problem"
+            },
+            {
+              "title": "Learning How to Remember: A Meta-Cognitive Management Method for Structured and Transferable Agent Memory",
+              "venue_year": "arXiv 2026-01",
+              "official_url": "[https://arxiv.org/abs/2601.07470](https://arxiv.org/abs/2601.07470)",
+              "overlap": "combination"
+            },
+            {
+              "title": "SkillCAT: Contrastive Assessment and Topology-Aware Skill Self-Evolution for LLM Agents",
+              "venue_year": "arXiv 2026-06",
+              "official_url": "[https://arxiv.org/abs/2606.13317](https://arxiv.org/abs/2606.13317)",
+              "overlap": "experiment"
+            }
+          ],
+          "surviving_difference": "The remaining boundary is a calibrated, abstaining certificate for the sign and magnitude of an individual lesson's causal effect on a fully unseen task family, with no target-family labels or extra deployment-time replay."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A cross-fitted R-learner or other standard CATE estimator with conformal abstention, trained on the same lesson and environment descriptors and given the same source-family treatment outcomes.",
+        "decisive_pilot": "Randomize lesson exposure within at least four task families, train the certificate on three, freeze it, and test on the fourth plus a held-out model with zero target labels and no extra replay; match memory, tokens, and calls, and measure effect-sign error, calibration, selective coverage, downstream negative transfer, and net task utility.",
+        "stop_rule": "Falsify the thesis if it does not outperform the R-learner/conformal and semantic-similarity baselines on held-out-family sign error and downstream utility, if coverage falls below 30% at a 5% sign-error target, or if gains vanish on the held-out model.",
+        "unknowns": [
+          "Whether task-family descriptors needed by the certificate are available before observing target outcomes.",
+          "Whether the public task suites provide treatment overlap and enough repeated lesson-by-family effects for calibration.",
+          "Whether the proposed four-suite replay experiment is feasible within the claimed low-resource budget."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v3-web-gpt/batch-01-of-02.response.md"
+      }
+    ],
+    "precommit-workflow-transfer-certificate": [
+      {
+        "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "This remains a calibrated workflow-performance predictor rather than a learning mechanism that changes an agent's persistent behavior. Agentic Predictor and FLORA already encode workflow graphs, prompts, code, and interactions to predict workflow performance; conditioning the prediction on edits, unseen APIs, and abstention does not by itself create a new method thesis.",
+        "finding_zh": "该方案本质上仍是校准后的工作流性能预测器，而不是改变智能体持久行为的学习机制。Agentic Predictor 和 FLORA 已利用工作流图、提示、代码及交互特征预测性能；增加编辑条件、未见 API 和拒判机制，本身不足以形成新的方法论主张。",
+        "required_action": "Replace the certificate with an explicit risk-constrained workflow update operator whose objective and frozen edit policy causally improve held-out workflows over calibrated performance-predictor baselines under identical candidate and evaluation budgets.",
+        "required_action_zh": "将证书预测器替换为明确的风险约束工作流更新算子，给出其目标函数和冻结后的编辑策略，并在候选与评测预算完全一致时，证明其对未见工作流的因果收益超过校准后的性能预测器基线。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "Agentic Predictor: Performance Prediction for Agentic Workflows via Multi-View Encoding",
+              "venue_year": "ICLR 2026",
+              "official_url": "[https://openreview.net/forum?id=7oeKDZsmWp](https://openreview.net/forum?id=7oeKDZsmWp)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "FLORA: GNNs as Predictors of Agentic Workflow Performances",
+              "venue_year": "LoG 2025",
+              "official_url": "[https://openreview.net/forum?id=RmlDI5kUxa](https://openreview.net/forum?id=RmlDI5kUxa)",
+              "overlap": "mechanism"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "Agentic Predictor augmented with uncertainty calibration and abstention, trained on exactly the same graph-edit features and post-commit failure labels.",
+        "decisive_pilot": "Generate one fixed edit pool independently, train on one tool family, freeze all predictors, and compare bad-commit risk at matched coverage against a calibrated Agentic Predictor on jointly held-out API and graph-motif splits using identical regression executions.",
+        "stop_rule": "Stop if the certificate does not lower bad-commit rate at matched coverage relative to the calibrated Agentic Predictor on both held-out splits, or if parity requires additional workflow executions.",
+        "unknowns": [
+          "No loss function, uncertainty estimator, calibration procedure, or abstention threshold is specified.",
+          "The independence of candidate generation from the certificate training data is not defined.",
+          "The proposed workflow graph extractor and the construction of reliable unseen-API and motif labels are unspecified."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v3-web-gpt/batch-02-of-02.response.md"
+      }
+    ],
+    "simulator-distilled-risk-memory": [
+      {
+        "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "medium",
+        "finding": "Using an independent transition verifier during discovery and disabling simulation after freezing establishes a meaningful persistent-learning boundary. However, 'distill a minimal predicate library' is not yet an identifiable algorithm: the predicate language, soundness and coverage objectives, minimization rule, conflict handling, and retrieval decision are absent. CLIN, ICAL, and Memory-as-a-Tool already distill interaction feedback into persistent causal or procedural memory; the surviving novelty is specifically verifier-grounded counterfactual safety predicates for simulator-free deployment.",
+        "finding_zh": "在发现阶段使用独立转移验证器，并在冻结后关闭模拟器，确实建立了有意义的持久学习边界。但“蒸馏最小谓词库”尚不是可识别的算法：谓词语言、可靠性与覆盖目标、最小化规则、冲突处理和检索决策均未定义。CLIN、ICAL 和 Memory-as-a-Tool 已将交互反馈蒸馏为持久的因果或程序记忆；当前尚存的新颖边界是面向无模拟器部署、由验证器支撑的反事实安全谓词。",
+        "required_action": "Specify a soundness-constrained predicate-induction objective and deterministic update rule, including the predicate hypothesis class, compression criterion, conflict resolution, and abstention behavior, then require frozen transfer to a second transition system.",
+        "required_action_zh": "明确一个受可靠性约束的谓词归纳目标和确定性更新规则，包括谓词假设空间、压缩准则、冲突消解及拒判行为，并将冻结后迁移到第二个转移系统设为必要实验。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "CLIN: A Continually Learning Language Agent for Rapid Task Adaptation and Generalization",
+              "venue_year": "COLM 2024",
+              "official_url": "[https://openreview.net/forum?id=xS6zx1aBI9](https://openreview.net/forum?id=xS6zx1aBI9)",
+              "overlap": "combination"
+            },
+            {
+              "title": "Distilling Feedback into Memory-as-a-Tool",
+              "venue_year": "arXiv 2026-01-09",
+              "official_url": "[https://arxiv.org/abs/2601.05960](https://arxiv.org/abs/2601.05960)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "VLM Agents Generate Their Own Memories: Distilling Experience into Embodied Programs of Thought",
+              "venue_year": "arXiv 2024-06-20",
+              "official_url": "[https://arxiv.org/abs/2406.14596](https://arxiv.org/abs/2406.14596)",
+              "overlap": "combination"
+            }
+          ],
+          "surviving_difference": "Verified counterfactual state substitutions are compressed into an explicit risk-predicate library, and deployment is evaluated with simulator access prohibited."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A CLIN-style causal-abstraction memory constructed from exactly the same verifier-labeled counterfactual pairs and given the same memory and retrieval budget.",
+        "decisive_pilot": "In an exact-transition environment, allocate identical discovery states and simulator calls to the proposed predicate learner and a CLIN-style causal-memory baseline; freeze both, disable all simulator access, and evaluate irreversible-error recall, false blocks, and task success on unseen states and action compositions.",
+        "stop_rule": "Stop if the frozen predicate memory does not reduce irreversible errors relative to the matched causal-memory baseline without increasing benign-action blocking, or if gains disappear on a second transition system.",
+        "unknowns": [
+          "The irreversible-action taxonomy and the admissible state-substitution procedure are not specified.",
+          "No formal predicate language, induction loss, soundness constraint, or library minimization algorithm is supplied.",
+          "It is unclear whether ALFWorld's available transition checks support all proposed counterfactual substitutions without modifying the environment.",
+          "Transfer beyond one exact-transition environment has not been operationalized."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v3-web-gpt/batch-02-of-02.response.md"
+      }
+    ],
+    "actor-evaluator-residual-gate": [
+      {
+        "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "This is a statistical bias-detection and commit gate, not a new learning mechanism for either the actor or evaluator. Decomposing scores into task difficulty, actor ability, evaluator bias, and interaction residual closely follows established rater, latent-score, and interaction modeling; recent work already addresses iteration consistency, judge-specific deviations, and evaluator-policy co-evolution. The proposal does not specify how residuals produce a novel persistent update beyond accepting or rejecting a version.",
+        "finding_zh": "该方案是统计偏差检测与提交门控，而不是针对 actor 或 evaluator 的新学习机制。将评分分解为任务难度、actor 能力、evaluator 偏差和交互残差，与既有评分者模型、潜在分数模型及交互建模高度一致；近期工作也已处理跨轮一致性、评审器特定偏差和评审器—策略协同演化。方案没有说明残差如何产生超出版本接受或拒绝之外的新型持久更新。",
+        "required_action": "Change the update surface from a commit gate to an explicit residual-corrected evaluator or policy-training rule, with an identifiable objective that improves externally verified capability rather than only predicting biased version pairs.",
+        "required_action_zh": "将更新面从提交门控改为明确的残差校正评审器或策略训练规则，给出可识别的目标函数，并证明其提升外部验证的真实能力，而不只是预测存在偏差的版本组合。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "CREAM: Consistency Regularized Self-Rewarding Language Models",
+              "venue_year": "ICLR 2025",
+              "official_url": "[https://openreview.net/forum?id=Vf6RDObyEF](https://openreview.net/forum?id=Vf6RDObyEF)",
+              "overlap": "combination"
+            },
+            {
+              "title": "Bridging Human and LLM Judgments: Understanding and Narrowing the Gap",
+              "venue_year": "NeurIPS 2025",
+              "official_url": "[https://openreview.net/forum?id=bEP87LNTfX](https://openreview.net/forum?id=bEP87LNTfX)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Co-Evolving LLM Evaluators and Policies via DynamicRubric",
+              "venue_year": "arXiv 2026-07-22",
+              "official_url": "[https://arxiv.org/abs/2607.20083](https://arxiv.org/abs/2607.20083)",
+              "overlap": "problem"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "A Bridge-style latent capability and evaluator-deviation model calibrated on the same external anchors, combined with CREAM-style cross-iteration consistency.",
+        "decisive_pilot": "Fit all methods on the same early-round actor-by-evaluator matrix and external anchors, freeze them, and compare calibration, pseudo-improvement detection, and regression-preventing commit utility on future rounds and a held-out actor-evaluator family.",
+        "stop_rule": "Stop if the interaction-residual gate fails to improve both calibration and externally measured commit utility over the anchor-calibrated latent-score baseline, or if residual rankings are unstable across seeds and equivalent factorization constraints.",
+        "unknowns": [
+          "The factorization loss, link function, regularization, and identifiability constraints are unspecified.",
+          "The number and provenance of independent anchor tasks are not defined.",
+          "The gate threshold and the cost assigned to false commits versus false rejections are unspecified.",
+          "It is unclear whether actor and evaluator versions are independently trained or share data and checkpoints that confound the residual."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v3-web-gpt/batch-02-of-02.response.md"
+      }
+    ],
+    "asset-level-model-swap-certificate": [
+      {
+        "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "Changing the unit from a whole agent to individual assets improves diagnostic resolution but does not convert the proposal into a learning method. It remains a probe-based compatibility predictor and registry. PromptBridge already learns cross-model prompt mappings, MASA adapts skills to target backbones, SkCC compiles skills across frameworks, and recent memory-transfer work measures model- and domain-dependent negative transfer. Unifying these assets under one abstaining certificate is an audit layer rather than a standalone ICLR mechanism.",
+        "finding_zh": "将评估单位从完整智能体细化到单个资产提高了诊断分辨率，但并未把方案转化为学习方法。它仍然是基于探针的兼容性预测器和注册表。PromptBridge 已学习跨模型提示映射，MASA 针对目标骨干适配技能，SkCC 在不同框架间编译技能，近期记忆迁移工作也已研究模型与领域相关的负迁移。将这些资产统一到一个可拒判证书下，仍属于审计层而非独立的 ICLR 机制。",
+        "required_action": "Narrow to one asset class and replace compatibility prediction with a learned migration operator that transforms the asset, has an explicit training objective, and remains frozen when transferred to held-out model families.",
+        "required_action_zh": "收窄到一种资产类别，并以学习得到的迁移算子替代兼容性预测；该算子应实际变换资产、具有明确训练目标，并在迁移到未见模型家族时保持冻结。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "PromptBridge: Cross-Model Prompt Transfer for Large Language Models",
+              "venue_year": "arXiv 2025-12-01",
+              "official_url": "[https://arxiv.org/abs/2512.01420](https://arxiv.org/abs/2512.01420)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Skill is Not One-Size-Fits-All: Model-Aware Skill Alignment for LLM Agents",
+              "venue_year": "arXiv 2026-05-29",
+              "official_url": "[https://arxiv.org/abs/2605.30723](https://arxiv.org/abs/2605.30723)",
+              "overlap": "problem"
+            },
+            {
+              "title": "SkCC: Portable and Secure Skill Compilation for Cross-Framework LLM Agents",
+              "venue_year": "arXiv 2026-05-05",
+              "official_url": "[https://arxiv.org/abs/2605.03353](https://arxiv.org/abs/2605.03353)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Memory Transfer Learning: How Memories are Transferred Across Domains in Coding Agents",
+              "venue_year": "arXiv 2026-04-15",
+              "official_url": "[https://arxiv.org/abs/2604.14004](https://arxiv.org/abs/2604.14004)",
+              "overlap": "experiment"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "Separate asset-specialist models using PromptBridge for prompts, MASA or SkCC for skills, and a memory-transfer predictor for memories, all allocated the same total probe budget.",
+        "decisive_pilot": "Under a fixed probe budget, compare one universal asset certificate with independently trained per-asset predictors and full migration testing on a double-held-out model-family and asset-class split, measuring negative-transfer recall, calibration, abstention, and total migration cost.",
+        "stop_rule": "Stop if double-held-out negative-transfer calibration fails for any asset class, if the universal model is worse than per-class predictors at matched coverage, or if probe cost approaches full migration testing.",
+        "unknowns": [
+          "No shared representation capable of encoding prompts, memories, skills, and workflows is defined.",
+          "The labels for adaptation cost and failure type are not operationalized consistently across asset classes.",
+          "The identities and architectural diversity of the three proposed model families are unspecified.",
+          "ALFWorld and WebArena-Lite do not by themselves provide standardized instances of all four persistent asset classes.",
+          "The independence and cost of post-migration ground-truth evaluation are not specified."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v3-web-gpt/batch-02-of-02.response.md"
+      }
+    ],
+    "counterfactual-evolution-decision-controller": [
+      {
+        "reviewer": "agent-project-web-gpt-solution-first-iclr-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "medium",
+        "finding": "Branching the same evolution state and candidate sequence across continue, commit, rollback, and stop is a valuable experimental design that can remove candidate-sequence confounding. However, 'learn a conservative offline policy' is a generic application of offline reinforcement learning rather than an identifiable new rule. Offline RL has already been used to control frozen LLM-agent harnesses, while prior work covers offline prompt optimization and continue-or-rollback control. The surviving boundary is a paired counterfactual controller specifically governing persistent updates.",
+        "finding_zh": "让同一演化状态和候选序列分别执行继续、提交、回滚和停止，是有价值的实验设计，可消除候选序列混杂。但“学习保守离线策略”只是离线强化学习的通用应用，尚不是可识别的新规则。已有工作已使用离线强化学习控制冻结的 LLM 智能体执行框架，也已有离线提示优化及继续或回滚控制。尚存的边界是专门管理持久更新、使用配对反事实结果训练的控制器。",
+        "required_action": "Define a counterfactual paired-regret objective and support-constrained policy update that explicitly exploits all four same-state outcomes, then demonstrate that it outperforms standard offline-RL and threshold policies without regenerating candidates.",
+        "required_action_zh": "定义一个明确利用同一状态下四种结果的反事实配对后悔目标和受数据支持约束的策略更新，并证明它在不重新生成候选的条件下优于标准离线强化学习和阈值策略。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "Learning to Control LLM Agent Harnesses with Offline Reinforcement Learning",
+              "venue_year": "arXiv 2026-07-05",
+              "official_url": "[https://arxiv.org/abs/2607.05458](https://arxiv.org/abs/2607.05458)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Query-Dependent Prompt Evaluation and Optimization with Offline Inverse RL",
+              "venue_year": "arXiv 2023-09-13",
+              "official_url": "[https://arxiv.org/abs/2309.06553](https://arxiv.org/abs/2309.06553)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "CognitionLight: Continue, Rethink, or Rollback? Signaling for Persona-Aware Reasoning in Intelligent Agents",
+              "venue_year": "ICLR 2026 withdrawn submission",
+              "official_url": "[https://openreview.net/forum?id=ShzgaMO3lZ](https://openreview.net/forum?id=ShzgaMO3lZ)",
+              "overlap": "combination"
+            }
+          ],
+          "surviving_difference": "Every evolution state is evaluated under continue, commit, rollback, and stop using the same candidate sequence, and the frozen controller governs persistent prompt or memory updates rather than inference-time reasoning steps."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Advantage-weighted regression trained on the same replay table, together with a tuned regression-aware threshold policy using validation gain, future regression, and cost.",
+        "decisive_pilot": "Construct a replay table in which each eligible state shares an identical candidate sequence across all four actions; train on one model, freeze the controller, and compare paired-regret learning, advantage-weighted regression, a contextual bandit, and a tuned threshold on a second model under identical candidate, call, and training budgets.",
+        "stop_rule": "Stop if the frozen controller does not beat the tuned threshold on both cumulative utility and worst regression on the second model, if gains require regenerated candidates, or if the learned policy frequently selects actions unsupported by the replay data.",
+        "unknowns": [
+          "The conservative offline-learning objective, policy parameterization, constraint formulation, and optimization algorithm are unspecified.",
+          "Continue and commit outcomes may alter later candidate availability, making exact same-sequence counterfactual replay path-dependent.",
+          "The replay dataset's state-action coverage and treatment of unsupported actions are not defined.",
+          "The separation between validation signals used for learning and the frozen test stream used as ground truth is unspecified.",
+          "It is unclear whether rollback and stop outcomes can be evaluated without leaking future information unavailable at decision time."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v3-web-gpt/batch-02-of-02.response.md"
+      }
+    ]
+  },
+  "status": {
+    "reviewed": 10,
+    "pending": 0,
+    "complete": true,
+    "failed_batches": 0,
+    "last_attempt": "2026-08-06T16:41:02Z",
+    "last_attempt_host": "admin01-NF5468M5",
+    "last_attempt_result": "batch_2_completed",
+    "verdict_counts": {
+      "pass": 0,
+      "revise": 6,
+      "block": 4,
+      "unknown": 0
+    }
+  },
+  "updated_at": "2026-08-06T16:41:02Z",
+  "total_passed_ideas": 10
+}

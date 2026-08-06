@@ -55,6 +55,9 @@ REQUIRED_STATIC = [
     "content-review-external.js", "generated/iclr-external-reviews.json",
     "machine-school-ideas-view.js", "generated/machine-school-inspired-ideas.json",
     "generated/machine-school-inspired-ideas.js", "generated/machine-school-external-reviews.json",
+    "review-localizations.js", "solution-first-ideas-view.js",
+    "generated/idea-discovery-v3.json", "generated/idea-discovery-v3.js", "generated/idea-discovery-v3-external-reviews.json",
+    "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
     "content-system-overview.js", "system-overview-view.js", "system-overview.css",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
@@ -186,12 +189,16 @@ def main() -> None:
     system_script_order = [
         idea_page.find('src="generated/iclr-low-resource-ideas.js"'),
         idea_page.find('src="generated/machine-school-inspired-ideas.js"'),
+        idea_page.find('src="generated/idea-discovery-v3.js"'),
+        idea_page.find('src="generated/idea-discovery-v31.js"'),
+        idea_page.find('src="review-localizations.js"'),
+        idea_page.find('src="solution-first-ideas-view.js"'),
         idea_page.find('src="machine-school-ideas-view.js"'),
         idea_page.find('src="generated/research-system-state.js"'),
         idea_page.find('src="app.js"'),
     ]
     if any(position < 0 for position in system_script_order) or system_script_order != sorted(system_script_order):
-        fail("paper ideas page must load the ICLR and inspired banks before the research-system state and app.js")
+        fail("paper ideas page must load all idea banks, localizations, and renderers before the research-system state and app.js")
     state_path = ROOT / "generated" / "research-system-state.json"
     if not state_path.exists():
         fail("research-system-state.json is missing")
@@ -205,6 +212,12 @@ def main() -> None:
         fail("collision engine did not compare all 29 structured ICLR candidates")
     if research_state.get("pilot_registry", {}).get("summary", {}).get("phases") != 78:
         fail("pilot registry must contain P0/P1/P2 for all 26 passed ICLR ideas")
+    if (summary.get("solution_children"), summary.get("solution_shortlist"), summary.get("reviewer_repair_children"), summary.get("reviewer_repair_pass")) != (14,10,6,0):
+        fail("research-system state must expose both v3 and v3.1 solution-first rounds")
+    components = research_state.get("components", [])
+    graph_component = next((item for item in components if item.get("source") == "ResearchAgent"), {})
+    if graph_component.get("component", {}).get("zh") != "引文与证据图谱":
+        fail("citation/evidence component must be bilingual in the backend state")
     external_review_store = json.loads((ROOT / "generated" / "iclr-external-reviews.json").read_text(encoding="utf-8"))
     external_status = external_review_store.get("status", {})
     if external_review_store.get("total_passed_ideas") != 26:
@@ -247,6 +260,23 @@ def main() -> None:
         fail("Regression-Probe Half-Life must be the sole pilot-now inspired idea")
     if len(inspired_bank.get("teacher_shortlist", [])) != 8:
         fail("inspired-bank teacher shortlist must contain eight decision candidates")
+    discovery_v3 = json.loads((ROOT / "generated" / "idea-discovery-v3.json").read_text(encoding="utf-8"))
+    v3_summary = discovery_v3.get("summary", {})
+    if (v3_summary.get("raw_children"), v3_summary.get("internal_shortlist"), v3_summary.get("repair"), v3_summary.get("external_reviewed"), v3_summary.get("external_revise"), v3_summary.get("external_block"), v3_summary.get("external_pass")) != (14, 10, 4, 10, 6, 4, 0):
+        fail(f"unexpected solution-first v3 summary: {v3_summary}")
+    if len(discovery_v3.get("repository_patterns", [])) != 7 or len(discovery_v3.get("workflow_stages", [])) != 9 or len(discovery_v3.get("solution_gates", [])) != 5:
+        fail("solution-first v3 must preserve seven GitHub patterns, nine workflow stages, and five mechanism gates")
+    for item in discovery_v3.get("shortlist", []):
+        if not item.get("exact_mechanism", {}).get("zh") or not item.get("independent_ground_truth", {}).get("zh"):
+            fail(f"solution-first child is not concretized: {item.get('id')}")
+
+    discovery_v31 = json.loads((ROOT / "generated" / "idea-discovery-v31.json").read_text(encoding="utf-8"))
+    v31_summary = discovery_v31.get("summary", {})
+    if (v31_summary.get("children"), v31_summary.get("external_reviewed"), v31_summary.get("external_pass"), v31_summary.get("external_revise"), v31_summary.get("external_block")) != (6,6,0,2,4):
+        fail(f"unexpected reviewer-repair v3.1 summary: {v31_summary}")
+    if any(not item.get("exact_mechanism", {}).get("zh") for item in discovery_v31.get("children", [])):
+        fail("v3.1 reviewer-repaired children are not algorithmically specified")
+
     inspired_external = json.loads((ROOT / "generated" / "machine-school-external-reviews.json").read_text(encoding="utf-8"))
     inspired_status = inspired_external.get("status", {})
     if (inspired_status.get("reviewed"), inspired_status.get("pending"), inspired_status.get("complete")) != (11, 0, True):
@@ -260,6 +290,9 @@ def main() -> None:
         "generated/research-system-state.js",
         "generated/iclr-low-resource-ideas.js",
         "generated/machine-school-inspired-ideas.js",
+        "generated/idea-discovery-v3.js",
+        "generated/idea-discovery-v31.js",
+        "review-localizations.js",
         "content-system-overview.js",
         "page-architecture-data.js",
         "system-overview-view.js",
@@ -269,7 +302,7 @@ def main() -> None:
     if any(position < 0 for position in system_positions) or system_positions != sorted(system_positions):
         fail("system overview must load live literature, system state, both idea banks, and its renderer before app.js")
     system_view = (ROOT / "system-overview-view.js").read_text(encoding="utf-8")
-    for marker in ("renderSystemDesign", "renderCurrentIdeas", "renderLiveArchitecture", "renderDataContracts", "renderAutomationBoundary", "system-boundary-card", "system-artifact-table", "paper-ideas.html#iclr-low-resource-bank", "paper-ideas.html#machine-school-inspired-ideas"):
+    for marker in ("renderSystemDesign", "renderCurrentIdeas", "renderLiveArchitecture", "renderEvidenceGraphPanel", "bindEvidenceGraphExplorer", "renderDataContracts", "renderAutomationBoundary", "system-boundary-card", "system-artifact-table", "paper-ideas.html#iclr-low-resource-bank", "paper-ideas.html#machine-school-inspired-ideas"):
         if marker not in system_view:
             fail(f"system overview renderer is missing {marker}")
     system_content = (ROOT / "content-system-overview.js").read_text(encoding="utf-8")
