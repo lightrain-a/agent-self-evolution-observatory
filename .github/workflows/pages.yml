@@ -1,4 +1,4 @@
-name: Deploy static Pages through workflow source
+name: Deploy static Pages
 
 on:
   push:
@@ -12,39 +12,21 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages-custom-deploy
-  cancel-in-progress: false
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-  configure:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Switch Pages publishing source to GitHub Actions
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          status=$(curl --silent --show-error --output /tmp/pages-update-response.json --write-out '%{http_code}' \
-            --request PUT \
-            --header 'Accept: application/vnd.github+json' \
-            --header "Authorization: Bearer ${GH_TOKEN}" \
-            --header 'X-GitHub-Api-Version: 2026-03-10' \
-            https://api.github.com/repos/${{ github.repository }}/pages \
-            --data '{"build_type":"workflow"}')
-          if [ "${status}" != "204" ]; then
-            echo "::error::Unable to switch the Pages source with GITHUB_TOKEN (HTTP ${status}). Repository admin action is required."
-            exit 1
-          fi
-
   deploy:
-    needs: configure
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    timeout-minutes: 35
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v4
@@ -54,7 +36,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          timeout: 1800000
-          error_count: 60
-          reporting_interval: 5000
