@@ -10,3 +10,6 @@ NUL
 # Provider response cache and local bulk-data fallback (rebuildable and may be large)
 generated/cache/
 generated/research-data/
+
+# Frontend-only Pages build output
+_site/

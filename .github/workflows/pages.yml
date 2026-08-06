@@ -1,9 +1,11 @@
-name: Resilient static Pages deployment
+name: Recover failed GitHub Pages deployment
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows:
+      - pages build and deployment
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
@@ -13,239 +15,38 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages-resilient-deploy
-  cancel-in-progress: true
+  group: pages-fallback-deploy
+  cancel-in-progress: false
 
 jobs:
   deploy:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'failure'
     environment:
       name: github-pages
-      url: ${{ steps.direct-deploy.outputs.page_url }}
+      url: ${{ steps.deploy.outputs.page_url }}
     runs-on: ubuntu-latest
     timeout-minutes: 50
     steps:
-      - name: Checkout
+      - name: Checkout failed build commit
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Build frontend-only static site
+        run: python3 scripts/build_static_site.py
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload static site artifact
+      - name: Upload frontend artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: .
+          path: _site
 
-      - name: Wait for legacy deployment and clear stuck deployments
-        id: cleanup
+      - name: Recover and deploy Pages artifact
+        id: deploy
         env:
           GH_TOKEN: ${{ github.token }}
-          REPOSITORY: ${{ github.repository }}
-          BUILD_SHA: ${{ github.sha }}
-        run: |
-          set -euo pipefail
-          echo 'legacy_success=false' >> "${GITHUB_OUTPUT}"
-
-          api_get() {
-            curl --silent --show-error --location \
-              --header 'Accept: application/vnd.github+json' \
-              --header "Authorization: Bearer ${GH_TOKEN}" \
-              --header 'X-GitHub-Api-Version: 2026-03-10' \
-              "$1"
-          }
-
-          legacy_run_id=''
-          for _ in $(seq 1 30); do
-            runs=$(api_get "https://api.github.com/repos/${REPOSITORY}/actions/runs?head_sha=${BUILD_SHA}&per_page=20")
-            legacy_run_id=$(printf '%s' "${runs}" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next((str(x["id"]) for x in d.get("workflow_runs",[]) if x.get("name")=="pages build and deployment"), ""))')
-            [ -n "${legacy_run_id}" ] && break
-            sleep 5
-          done
-
-          if [ -n "${legacy_run_id}" ]; then
-            echo "Monitoring legacy Pages run ${legacy_run_id}."
-            for _ in $(seq 1 90); do
-              run=$(api_get "https://api.github.com/repos/${REPOSITORY}/actions/runs/${legacy_run_id}")
-              state=$(printf '%s' "${run}" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("status") or "")')
-              conclusion=$(printf '%s' "${run}" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("conclusion") or "")')
-              echo "Legacy Pages run: status=${state} conclusion=${conclusion:-pending}"
-              if [ "${state}" = 'completed' ]; then
-                if [ "${conclusion}" = 'success' ]; then
-                  echo 'The legacy Pages deployment succeeded; no fallback deployment is required.'
-                  echo 'legacy_success=true' >> "${GITHUB_OUTPUT}"
-                  exit 0
-                fi
-                break
-              fi
-              sleep 10
-            done
-          else
-            echo 'No legacy Pages run was found for this commit; proceeding with direct deployment.'
-          fi
-
-          echo 'Legacy deployment did not succeed. Clearing failed Pages deployments before fallback deployment.'
-          sleep 20
-          runs=$(api_get "https://api.github.com/repos/${REPOSITORY}/actions/runs?per_page=60")
-          run_ids=$(printf '%s' "${runs}" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(" ".join(str(x["id"]) for x in d.get("workflow_runs",[]) if x.get("conclusion")=="failure" and (x.get("name")=="pages build and deployment" or "Pages" in (x.get("name") or ""))))')
-
-          ids_file=/tmp/pages-deployment-ids.txt
-          : > "${ids_file}"
-
-          extract_run_deployments() {
-            run_id="$1"
-            max_attempts="$2"
-            archive="/tmp/pages-logs-${run_id}.zip"
-            for attempt in $(seq 1 "${max_attempts}"); do
-              status=$(curl --silent --show-error --location \
-                --output "${archive}" --write-out '%{http_code}' \
-                --header 'Accept: application/vnd.github+json' \
-                --header "Authorization: Bearer ${GH_TOKEN}" \
-                --header 'X-GitHub-Api-Version: 2026-03-10' \
-                "https://api.github.com/repos/${REPOSITORY}/actions/runs/${run_id}/logs")
-              if [ "${status}" = '200' ]; then
-                found=$(unzip -p "${archive}" \
-                  | grep -E 'Created deployment for [0-9a-f]{40}, ID:' \
-                  | sed -E 's/.*ID: ([^[:space:]]+).*/\1/' \
-                  | sort -u || true)
-                if [ -n "${found}" ]; then
-                  printf '%s\n' "${found}" >> "${ids_file}"
-                  echo "Extracted Pages deployment ID from run ${run_id}."
-                  return 0
-                fi
-              fi
-              [ "${attempt}" -eq "${max_attempts}" ] || sleep 10
-            done
-            echo "No Pages deployment ID was available from run ${run_id}."
-          }
-
-          for run_id in ${run_ids}; do
-            extract_run_deployments "${run_id}" 1
-          done
-          if [ -n "${legacy_run_id}" ]; then
-            extract_run_deployments "${legacy_run_id}" 12
-          fi
-
-          sort -u "${ids_file}" -o "${ids_file}"
-          if [ -s "${ids_file}" ]; then
-            while IFS= read -r deployment_id; do
-              [ -n "${deployment_id}" ] || continue
-              status=$(curl --silent --show-error --location \
-                --output /tmp/pages-cancel-response.json --write-out '%{http_code}' \
-                --request POST \
-                --header 'Accept: application/vnd.github+json' \
-                --header "Authorization: Bearer ${GH_TOKEN}" \
-                --header 'X-GitHub-Api-Version: 2026-03-10' \
-                "https://api.github.com/repos/${REPOSITORY}/pages/deployments/${deployment_id}/cancel")
-              case "${status}" in
-                200|202|204)
-                  echo "Canceled Pages deployment ${deployment_id}."
-                  ;;
-                404|409)
-                  echo "Pages deployment ${deployment_id} is already absent or final."
-                  ;;
-                *)
-                  echo "Unable to cancel Pages deployment ${deployment_id} (HTTP ${status}); continuing."
-                  ;;
-              esac
-            done < "${ids_file}"
-          fi
-          sleep 30
-
-      - name: Create and monitor fallback Pages deployment
-        id: direct-deploy
-        if: steps.cleanup.outputs.legacy_success != 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPOSITORY: ${{ github.repository }}
-          BUILD_SHA: ${{ github.sha }}
-        run: |
-          set -euo pipefail
-
-          artifacts=$(curl --silent --show-error --location \
-            --header 'Accept: application/vnd.github+json' \
-            --header "Authorization: Bearer ${GH_TOKEN}" \
-            --header 'X-GitHub-Api-Version: 2026-03-10' \
-            "https://api.github.com/repos/${REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts?per_page=100")
-          artifact_id=$(printf '%s' "${artifacts}" | python3 -c 'import json,sys; d=json.load(sys.stdin); xs=[x for x in d.get("artifacts",[]) if x.get("name")=="github-pages"]; print(xs[-1]["id"] if xs else "")')
-          if [ -z "${artifact_id}" ]; then
-            echo '::error::The github-pages artifact was not found.'
-            exit 1
-          fi
-
-          oidc_url="${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=pages.github.com"
-          oidc_response=$(curl --silent --show-error --location \
-            --header "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
-            "${oidc_url}")
-          oidc_token=$(printf '%s' "${oidc_response}" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("value") or "")')
-          if [ -z "${oidc_token}" ]; then
-            echo '::error::Unable to obtain the GitHub Actions OIDC token.'
-            exit 1
-          fi
-
-          payload=$(jq -n \
-            --argjson artifact_id "${artifact_id}" \
-            --arg pages_build_version "${BUILD_SHA}" \
-            --arg oidc_token "${oidc_token}" \
-            '{artifact_id:$artifact_id,pages_build_version:$pages_build_version,oidc_token:$oidc_token}')
-
-          create_status=''
-          create_message=''
-          for create_attempt in $(seq 1 12); do
-            create_status=$(curl --silent --show-error --location \
-              --output /tmp/pages-create-response.json --write-out '%{http_code}' \
-              --request POST \
-              --header 'Accept: application/vnd.github+json' \
-              --header "Authorization: Bearer ${GH_TOKEN}" \
-              --header 'X-GitHub-Api-Version: 2026-03-10' \
-              --header 'Content-Type: application/json' \
-              "https://api.github.com/repos/${REPOSITORY}/pages/deployments" \
-              --data "${payload}")
-            if [ "${create_status}" = '201' ]; then
-              break
-            fi
-            create_message=$(python3 -c 'import json; p=json.load(open("/tmp/pages-create-response.json")); print(p.get("message",p))' 2>/dev/null || echo 'unknown response')
-            echo "Fallback deployment creation attempt ${create_attempt}/12 failed (HTTP ${create_status}): ${create_message}"
-            [ "${create_attempt}" -eq 12 ] || sleep 30
-          done
-          if [ "${create_status}" != '201' ]; then
-            echo "::error::Creating the fallback Pages deployment failed after retries (HTTP ${create_status}): ${create_message}"
-            exit 1
-          fi
-
-          deployment_id=$(python3 -c 'import json; p=json.load(open("/tmp/pages-create-response.json")); print((p.get("status_url") or "").rstrip("/").split("/")[-1])')
-          page_url=$(python3 -c 'import json; p=json.load(open("/tmp/pages-create-response.json")); print(p.get("page_url") or "")')
-          if [ -z "${deployment_id}" ]; then
-            echo '::error::The Pages deployment response did not contain a deployment ID.'
-            exit 1
-          fi
-          echo "page_url=${page_url}" >> "${GITHUB_OUTPUT}"
-          echo "Created fallback Pages deployment ${deployment_id}."
-
-          for attempt in $(seq 1 180); do
-            response=$(curl --silent --show-error --location \
-              --header 'Accept: application/vnd.github+json' \
-              --header "Authorization: Bearer ${GH_TOKEN}" \
-              --header 'X-GitHub-Api-Version: 2026-03-10' \
-              "https://api.github.com/repos/${REPOSITORY}/pages/deployments/${deployment_id}")
-            status=$(printf '%s' "${response}" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("status") or "")')
-            echo "Fallback Pages deployment status: ${status:-unknown} (${attempt}/180)"
-            case "${status}" in
-              succeed)
-                echo 'Fallback Pages deployment succeeded.'
-                exit 0
-                ;;
-              deployment_failed|deployment_content_failed|deployment_cancelled|deployment_lost)
-                echo "::error::Fallback Pages deployment ended with ${status}."
-                exit 1
-                ;;
-            esac
-            sleep 10
-          done
-
-          curl --silent --show-error --location \
-            --request POST \
-            --header 'Accept: application/vnd.github+json' \
-            --header "Authorization: Bearer ${GH_TOKEN}" \
-            --header 'X-GitHub-Api-Version: 2026-03-10' \
-            "https://api.github.com/repos/${REPOSITORY}/pages/deployments/${deployment_id}/cancel" >/dev/null || true
-          echo '::error::Fallback Pages deployment did not finish within 30 minutes.'
-          exit 1
+          BUILD_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+          SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: python3 scripts/recover_pages_deployment.py

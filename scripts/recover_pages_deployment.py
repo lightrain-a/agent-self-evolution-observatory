@@ -1,0 +1,242 @@
+#!/usr/bin/env python3
+"""Recover a failed GitHub Pages deployment after the legacy job completes.
+
+This script runs only in GitHub Actions. It cancels stale internal Pages
+ deployments extracted from failed workflow logs, creates a fresh deployment
+for the frontend-only artifact, and waits up to 30 minutes for completion.
+"""
+from __future__ import annotations
+
+import io
+import json
+import os
+import re
+import sys
+import time
+import urllib.error
+import urllib.request
+import zipfile
+from typing import Any
+
+API = "https://api.github.com"
+API_VERSION = "2026-03-10"
+DEPLOYMENT_RE = re.compile(rb"Created deployment for [0-9a-f]{40}, ID: ([^\s]+)")
+FINAL_FAILURES = {
+    "deployment_failed",
+    "deployment_content_failed",
+    "deployment_cancelled",
+    "deployment_lost",
+}
+
+
+def required(name: str) -> str:
+    value = os.environ.get(name, "").strip()
+    if not value:
+        raise RuntimeError(f"Missing required environment variable: {name}")
+    return value
+
+
+def request(
+    token: str,
+    method: str,
+    path: str,
+    payload: dict[str, Any] | None = None,
+    *,
+    absolute: bool = False,
+    extra_headers: dict[str, str] | None = None,
+) -> tuple[int, bytes]:
+    url = path if absolute else API + path
+    data = None if payload is None else json.dumps(payload).encode("utf-8")
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "Authorization": f"Bearer {token}",
+        "X-GitHub-Api-Version": API_VERSION,
+        "User-Agent": "agent-evolution-pages-recovery",
+    }
+    if data is not None:
+        headers["Content-Type"] = "application/json"
+    if extra_headers:
+        headers.update(extra_headers)
+    req = urllib.request.Request(url, data=data, method=method, headers=headers)
+    try:
+        with urllib.request.urlopen(req, timeout=60) as response:
+            return response.status, response.read()
+    except urllib.error.HTTPError as error:
+        return error.code, error.read()
+
+
+def json_body(body: bytes) -> dict[str, Any]:
+    try:
+        value = json.loads(body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return {}
+    return value if isinstance(value, dict) else {}
+
+
+def failed_pages_run_ids(token: str, repository: str, source_run_id: str) -> list[str]:
+    status, body = request(token, "GET", f"/repos/{repository}/actions/runs?per_page=60")
+    if status != 200:
+        raise RuntimeError(f"Unable to list workflow runs: HTTP {status}")
+    runs = json_body(body).get("workflow_runs", [])
+    ids: list[str] = []
+    if source_run_id:
+        ids.append(source_run_id)
+    for run in runs:
+        name = str(run.get("name") or "")
+        if run.get("conclusion") != "failure":
+            continue
+        if name == "pages build and deployment" or "Pages" in name:
+            run_id = str(run.get("id") or "")
+            if run_id and run_id not in ids:
+                ids.append(run_id)
+    return ids
+
+
+def deployment_ids_from_run(token: str, repository: str, run_id: str, retries: int) -> set[str]:
+    path = f"/repos/{repository}/actions/runs/{run_id}/logs"
+    for attempt in range(1, retries + 1):
+        status, body = request(token, "GET", path)
+        if status == 200:
+            try:
+                with zipfile.ZipFile(io.BytesIO(body)) as archive:
+                    joined = b"\n".join(archive.read(name) for name in archive.namelist())
+            except zipfile.BadZipFile:
+                joined = body
+            found = {match.decode("utf-8", errors="replace") for match in DEPLOYMENT_RE.findall(joined)}
+            if found:
+                print(f"Found {len(found)} Pages deployment ID(s) in run {run_id}.")
+                return found
+        if attempt < retries:
+            time.sleep(10)
+    print(f"No internal Pages deployment ID found in run {run_id}.")
+    return set()
+
+
+def cancel_stale_deployments(token: str, repository: str, source_run_id: str) -> None:
+    ids: set[str] = set()
+    for run_id in failed_pages_run_ids(token, repository, source_run_id):
+        ids.update(deployment_ids_from_run(token, repository, run_id, 18 if run_id == source_run_id else 2))
+    for deployment_id in sorted(ids):
+        status, body = request(
+            token,
+            "POST",
+            f"/repos/{repository}/pages/deployments/{deployment_id}/cancel",
+        )
+        message = json_body(body).get("message", "")
+        if status in {200, 202, 204, 404, 409}:
+            print(f"Pages deployment {deployment_id}: cancel HTTP {status} {message}".strip())
+        else:
+            print(f"Warning: unable to cancel {deployment_id}: HTTP {status} {message}".strip())
+    # Pages may keep its single-deployment lock briefly after cancellation.
+    time.sleep(75)
+
+
+def current_artifact_id(token: str, repository: str, workflow_run_id: str) -> int:
+    status, body = request(
+        token,
+        "GET",
+        f"/repos/{repository}/actions/runs/{workflow_run_id}/artifacts?per_page=100",
+    )
+    if status != 200:
+        raise RuntimeError(f"Unable to list workflow artifacts: HTTP {status}")
+    artifacts = [
+        item for item in json_body(body).get("artifacts", [])
+        if item.get("name") == "github-pages" and not item.get("expired")
+    ]
+    if not artifacts:
+        raise RuntimeError("The github-pages artifact was not found")
+    return int(artifacts[-1]["id"])
+
+
+def oidc_token() -> str:
+    url = required("ACTIONS_ID_TOKEN_REQUEST_URL")
+    separator = "&" if "?" in url else "?"
+    url += f"{separator}audience=pages.github.com"
+    request_token = required("ACTIONS_ID_TOKEN_REQUEST_TOKEN")
+    req = urllib.request.Request(
+        url,
+        headers={"Authorization": f"bearer {request_token}"},
+    )
+    with urllib.request.urlopen(req, timeout=60) as response:
+        payload = json.loads(response.read().decode("utf-8"))
+    value = str(payload.get("value") or "")
+    if not value:
+        raise RuntimeError("Unable to obtain a GitHub Actions OIDC token")
+    return value
+
+
+def create_deployment(
+    token: str,
+    repository: str,
+    artifact_id: int,
+    build_sha: str,
+    identity_token: str,
+) -> dict[str, Any]:
+    payload = {
+        "artifact_id": artifact_id,
+        "pages_build_version": build_sha,
+        "oidc_token": identity_token,
+    }
+    last_message = ""
+    for attempt in range(1, 31):
+        status, body = request(token, "POST", f"/repos/{repository}/pages/deployments", payload)
+        response = json_body(body)
+        if status == 201:
+            print(f"Created fallback Pages deployment on attempt {attempt}.")
+            return response
+        last_message = str(response.get("message") or body[:500])
+        print(f"Create attempt {attempt}/30: HTTP {status}: {last_message}")
+        if attempt < 30:
+            time.sleep(30)
+    raise RuntimeError(f"Unable to create Pages deployment: {last_message}")
+
+
+def monitor_deployment(token: str, repository: str, deployment: dict[str, Any]) -> str:
+    status_url = str(deployment.get("status_url") or "")
+    deployment_id = status_url.rstrip("/").split("/")[-1]
+    if not deployment_id:
+        raise RuntimeError("Pages deployment response did not contain a deployment ID")
+    page_url = str(deployment.get("page_url") or "")
+    for attempt in range(1, 181):
+        status, body = request(
+            token,
+            "GET",
+            f"/repos/{repository}/pages/deployments/{deployment_id}",
+        )
+        response = json_body(body)
+        state = str(response.get("status") or "")
+        print(f"Pages deployment {deployment_id}: {state or f'HTTP {status}'} ({attempt}/180)")
+        if state == "succeed":
+            return page_url
+        if state in FINAL_FAILURES:
+            raise RuntimeError(f"Pages deployment ended with {state}")
+        time.sleep(10)
+    request(token, "POST", f"/repos/{repository}/pages/deployments/{deployment_id}/cancel")
+    raise RuntimeError("Pages deployment did not finish within 30 minutes")
+
+
+def main() -> int:
+    token = required("GH_TOKEN")
+    repository = required("GITHUB_REPOSITORY")
+    workflow_run_id = required("GITHUB_RUN_ID")
+    build_sha = required("BUILD_SHA")
+    source_run_id = os.environ.get("SOURCE_RUN_ID", "").strip()
+
+    cancel_stale_deployments(token, repository, source_run_id)
+    artifact_id = current_artifact_id(token, repository, workflow_run_id)
+    deployment = create_deployment(token, repository, artifact_id, build_sha, oidc_token())
+    page_url = monitor_deployment(token, repository, deployment)
+    output = os.environ.get("GITHUB_OUTPUT", "")
+    if output:
+        with open(output, "a", encoding="utf-8") as handle:
+            handle.write(f"page_url={page_url}\n")
+    print(f"Pages deployment succeeded: {page_url}")
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except Exception as error:
+        print(f"::error::{error}", file=sys.stderr)
+        raise
