@@ -18,6 +18,9 @@ DAILY_ARTIFACTS = (
 WEEKLY_ARTIFACTS = DAILY_ARTIFACTS + (
     "generated/iclr-low-resource-ideas.json",
     "generated/iclr-low-resource-ideas.js",
+    "generated/machine-school-inspired-ideas.json",
+    "generated/machine-school-inspired-ideas.js",
+    "generated/machine-school-external-reviews.json",
     "generated/iclr-experiment-audit.json",
     "generated/iclr-experiment-audit.js",
     "generated/cvpr-low-resource-ideas.json",

@@ -21,6 +21,9 @@ from .published_experiment_audit import DEFAULT_JSON as DEFAULT_AUDIT_JSON
 from .published_experiment_audit import build_payload as build_published_audit
 from .published_experiment_audit import validate as validate_published_audit
 from .published_experiment_audit import write_audit
+from .machine_school_idea_factory import DEFAULT_JS as DEFAULT_MACHINE_SCHOOL_JS
+from .machine_school_idea_factory import DEFAULT_JSON as DEFAULT_MACHINE_SCHOOL_JSON
+from .machine_school_idea_factory import build_machine_school_bank, validate_bank as validate_machine_school_bank, write_machine_school_bank
 from .live_pipeline import (
     DEFAULT_CORPUS_JSON,
     DEFAULT_SITE_JS,
@@ -59,6 +62,12 @@ def parse_args() -> argparse.Namespace:
     iclr.add_argument("--iclr-audit-status", action="store_true", help="Show validation status for the ICLR experiment audit.")
     iclr.add_argument("--iclr-audit-json", type=Path, default=DEFAULT_ICLR_AUDIT_JSON)
     iclr.add_argument("--iclr-audit-js", type=Path, default=DEFAULT_ICLR_AUDIT_JS)
+
+    inspired = parser.add_argument_group("Internet-inspired self-evolution idea bank")
+    inspired.add_argument("--build-machine-school-bank", action="store_true", help="Validate and export the machine-school-inspired candidate bank.")
+    inspired.add_argument("--machine-school-status", action="store_true", help="Show internal and external screening counts for the inspired bank.")
+    inspired.add_argument("--machine-school-json", type=Path, default=DEFAULT_MACHINE_SCHOOL_JSON)
+    inspired.add_argument("--machine-school-js", type=Path, default=DEFAULT_MACHINE_SCHOOL_JS)
 
     cvpr = parser.add_argument_group("Secondary CVPR visual-specialization bank")
     cvpr.add_argument("--build-cvpr-bank", action="store_true", help="Validate and export the self-reviewed low-resource CVPR idea bank.")
@@ -111,6 +120,24 @@ def _print_iclr_status() -> None:
         "top_candidates": [
             {"rank": idea["rank"], "title": idea["title"], "track": idea["track"], "gpu_hours": idea["budget"]["gpu_hours"], "priority": idea["priority"]}
             for idea in payload["passed_ideas"][:10]
+        ],
+    }, ensure_ascii=False, indent=2))
+
+
+def _print_machine_school_status() -> None:
+    payload = build_machine_school_bank()
+    print(json.dumps({
+        "summary": payload["summary"],
+        "validation_errors": validate_machine_school_bank(payload),
+        "teacher_shortlist": [
+            {
+                "rank": idea.get("external_rank"),
+                "title": idea["title"],
+                "external_verdict": idea.get("external_verdict"),
+                "final_status": idea.get("final_status"),
+                "gpu_hours": idea["budget"]["gpu_hours"],
+            }
+            for idea in payload["teacher_shortlist"]
         ],
     }, ensure_ascii=False, indent=2))
 
@@ -198,6 +225,13 @@ def main() -> None:
         print(f"ICLR idea bank complete: {payload['summary']['passed']} passed, {payload['summary']['blocked_after_structured_review']} structured blocked, {payload['summary']['early_rejected']} early rejected.")
         print(f"Wrote {args.iclr_json}")
         print(f"Wrote {args.iclr_js}")
+    if args.machine_school_status:
+        _print_machine_school_status()
+    if args.build_machine_school_bank:
+        payload = write_machine_school_bank(args.machine_school_json, args.machine_school_js)
+        print(f"Inspired idea bank complete: {payload['summary']['internal_pass']} pass, {payload['summary']['internal_revise']} revise, {payload['summary']['internal_reject']} reject.")
+        print(f"Wrote {args.machine_school_json}")
+        print(f"Wrote {args.machine_school_js}")
     if args.iclr_audit_status:
         _print_iclr_audit_status()
     if args.build_iclr_audit:
@@ -254,6 +288,7 @@ def main() -> None:
         (
             args.init_storage or args.storage_status or args.research_system_status or args.build_research_system
             or args.iclr_status or args.build_iclr_bank or args.iclr_audit_status or args.build_iclr_audit
+            or args.machine_school_status or args.build_machine_school_bank
             or args.cvpr_status or args.build_cvpr_bank
             or args.published_audit_status or args.build_published_audit or args.s2_status
         )

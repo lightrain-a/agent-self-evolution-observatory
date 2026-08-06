@@ -124,6 +124,20 @@ bash scripts/on-52.sh python3 -m research_pipeline.iclr_external_review --run --
 
 The runner refuses other hosts. `generated/iclr-external-reviews.json` is the persistent source of truth, while `generated/iclr-low-resource-ideas.json` merges only stored results into the website. A failed or malformed response is retried without erasing earlier reviews. The completed store reports 26 reviewed, zero pending, and zero failed final batches. R2 PASS does not imply selected-ready: every surviving direction still requires P0/P1/P2 evidence.
 
+## Internet-inspired expansion pipeline
+
+`machine_school_idea_factory.py` translates six informal “machine school” metaphors into scientific variables rather than preserving the joke labels as paper titles. It generates 24 candidates and applies internal collision, identifiability, stability, transfer, budget, and falsification gates. The internal result is 11 PASS, 7 REVISE/MERGE, and 6 REJECT.
+
+`machine_school_external_review.py` sends the 11 internal passes through the same Code Oracle → signed-in Agent-project ChatGPT route in three resumable batches. The completed external distribution is 1 PASS, 7 REVISE, and 3 BLOCK. `Regression-Probe Half-Life` is the sole `pilot-now` direction; seven explicit repair-first alternatives remain in `teacher_shortlist` for senior/teacher selection.
+
+Persistent artifacts:
+
+- `generated/machine-school-inspired-ideas.json/js`: all 24 candidates, internal decisions, external verdicts, final statuses, and the teacher shortlist;
+- `generated/machine-school-external-reviews.json`: full official-source review evidence and required actions;
+- `/data/wyt/agent-self-evolution-observatory/runs/reviews/machine-school-web-gpt/`: frozen prompts and response artifacts.
+
+The weekly automation cycle rebuilds and publishes the inspired bank. Missing or malformed external responses remain pending and never count as passes.
+
 ## Continuous automation and safety boundary
 
 The daily cycle rebuilds deterministic artifacts without network access. The weekly cycle may refresh Semantic Scholar and request at most two project-scoped web-GPT repair reviews. Both use exclusive locks and keep the previous valid snapshots if one step fails. The repository includes systemd service/timer files under `deploy/systemd/`.

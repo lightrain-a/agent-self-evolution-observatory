@@ -1036,7 +1036,7 @@ function renderIdeaPortfolio(config) {
   const chapters = pageArchitecture("paper-ideas").chapters || [];
   const shortlist = (ideaPipelineMeta().advisorShortlist || []).map(ideaByName).filter(Boolean);
   const pipeline = `${renderSemanticScholarStatus()}${renderIdeaBackendArchitecture()}${renderResearchSystemState()}${renderIclrReviewDimensions()}${renderIdeaOperators()}${(config.sections || []).map((section,index) => renderSectionForPage(section,index,pageId,"idea-selection-section",3)).join("")}`;
-  const iclrDecision = `${renderIclrExperimentAudit()}${renderIclrIdeaBank()}`;
+  const iclrDecision = `${renderIclrExperimentAudit()}${renderIclrIdeaBank()}${window.renderMachineSchoolIdeas ? window.renderMachineSchoolIdeas() : ""}`;
   const historicalBoard = `${renderAdvisorBoard(shortlist)}${renderShortlistDossiers(shortlist)}`;
   const followup = `${renderCvprFollowupArchive()}${renderCandidateArchive(ideas)}`;
   return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderCustomChapter(chapters[0],0,pipeline)}${renderCustomChapter(chapters[1],1,iclrDecision)}${renderCustomChapter(chapters[2],2,historicalBoard)}${renderCustomChapter(chapters[3],3,followup)}`;

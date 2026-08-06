@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-06 · Internet-inspired candidate expansion and self-screening
+
+- Translated six user-provided “machine school” metaphors into precise research variables: cross-form capability gaps, longitudinal regression exams, version-differential blame, retry dependence, model-swap compatibility, and version-conditioned privilege control.
+- Generated 24 raw candidates and completed internal screening: 11 PASS, 7 REVISE/MERGE, and 6 direct-collision REJECT.
+- Reviewed all 11 internal passes through Code Oracle and the signed-in Agent-project ChatGPT in three resumable batches; the strict external distribution is 1 PASS, 7 REVISE, and 3 BLOCK.
+- Identified Regression-Probe Half-Life as the sole `pilot-now` direction and created an eight-item teacher-discussion shortlist containing one direct PASS and seven explicitly repair-first alternatives.
+- Added persistent inspired-bank and external-review artifacts, retry-safe external review tooling, CLI commands, weekly automation rebuild/publication, and a separate website decision panel.
+- Added internal/external rank separation, final statuses, full review evidence, strongest baselines, decisive pilots, and Stop rules for every retained idea.
+- Extended unit, static, publication, and real-browser tests to verify all 24 candidates, 11 external reports, the 1/7/3 verdict distribution, and the teacher shortlist.
+
 ## 2026-08-06 · Complete Oracle review of all ICLR first-round passes
 
 - Restored access to the authoritative `admin01-NF5468M5` execution host and verified the exact Agent-project ChatGPT route with an Oracle browser smoke test.

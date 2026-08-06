@@ -353,6 +353,18 @@ def main() -> None:
               iclrRejected: document.querySelectorAll('.iclr-bank-panel .cvpr-rejected li').length,
               iclrMaxGpus: Math.max(...(window.ICLR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).map(x=>Number(x.budget?.max_gpus||0))),
               iclrMaxHours: Math.max(...(window.ICLR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).map(x=>Number(x.budget?.gpu_hours||0))),
+              inspiredPanel: document.querySelectorAll('.machine-school-panel').length,
+              inspiredStats: document.querySelectorAll('.machine-school-stats .stat').length,
+              inspiredInspirations: document.querySelectorAll('.machine-school-inspirations article').length,
+              inspiredGroups: document.querySelectorAll('.machine-school-group').length,
+              inspiredCards: document.querySelectorAll('.machine-school-idea').length,
+              inspiredExternalReviews: document.querySelectorAll('.machine-school-group.tone-pass .project-web-gpt-review').length,
+              inspiredExternalPass: document.querySelectorAll('.machine-school-group.tone-pass .machine-school-idea.verdict-pass').length,
+              inspiredExternalRevise: document.querySelectorAll('.machine-school-group.tone-pass .machine-school-idea.verdict-revise').length,
+              inspiredExternalBlock: document.querySelectorAll('.machine-school-group.tone-pass .machine-school-idea.verdict-block').length,
+              inspiredShortlist: document.querySelectorAll('.machine-shortlist-item').length,
+              inspiredSummary: window.MACHINE_SCHOOL_IDEAS?.summary || {},
+              inspiredFirstTitle: window.MACHINE_SCHOOL_IDEAS?.passed_ideas?.[0]?.title?.en || '',
               experimentProtocols: document.querySelectorAll('.cvpr-followup-archive .cvpr-experiment-protocol').length,
               protocolPhases: document.querySelectorAll('.cvpr-followup-archive .protocol-phases article').length,
               protocolModels: document.querySelectorAll('.cvpr-followup-archive .protocol-model-grid section').length,
@@ -419,6 +431,13 @@ def main() -> None:
         require(idea_portfolio["iclrTrackFilters"] == 9 and idea_portfolio["iclrBudgetFilters"] == 3, "ICLR track or budget filters are incomplete")
         require(idea_portfolio["iclrTopRows"] == 15 and idea_portfolio["iclrRejected"] == 15, "ICLR comparison table or rejection archive is incomplete")
         require(idea_portfolio["iclrMaxGpus"] <= 2 and idea_portfolio["iclrMaxHours"] <= 48, "ICLR idea bank violates the low-resource policy")
+        require(idea_portfolio["inspiredPanel"] == 1 and idea_portfolio["inspiredStats"] == 5, "internet-inspired decision panel or stats did not render")
+        require(idea_portfolio["inspiredInspirations"] == 6 and idea_portfolio["inspiredGroups"] == 3, "six inspirations or three screening groups are missing")
+        require(idea_portfolio["inspiredCards"] == 24 and idea_portfolio["inspiredExternalReviews"] == 11, f"inspired idea or external-review counts are wrong: {idea_portfolio['inspiredCards']}/{idea_portfolio['inspiredExternalReviews']}")
+        require((idea_portfolio["inspiredExternalPass"], idea_portfolio["inspiredExternalRevise"], idea_portfolio["inspiredExternalBlock"]) == (1,7,3), "inspired external verdict-card counts are wrong")
+        require(idea_portfolio["inspiredShortlist"] == 8, f"expected eight teacher-discussion candidates, got {idea_portfolio['inspiredShortlist']}")
+        require(idea_portfolio["inspiredSummary"].get("raw") == 24 and idea_portfolio["inspiredSummary"].get("external_reviewed") == 11, f"inspired data summary is wrong: {idea_portfolio['inspiredSummary']}")
+        require(idea_portfolio["inspiredFirstTitle"] == "Regression-Probe Half-Life", f"wrong top inspired idea: {idea_portfolio['inspiredFirstTitle']}")
         require(idea_portfolio["experimentProtocols"] == 42, f"expected 42 preserved CVPR protocols, got {idea_portfolio['experimentProtocols']}")
         require(idea_portfolio["protocolPhases"] == 126, f"expected 126 preserved CVPR phase cards, got {idea_portfolio['protocolPhases']}")
         require(idea_portfolio["protocolModels"] == 252, f"expected six model/API fields per CVPR idea, got {idea_portfolio['protocolModels']}")

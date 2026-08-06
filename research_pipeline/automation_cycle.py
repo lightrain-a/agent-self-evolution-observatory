@@ -15,6 +15,7 @@ from .config import PROJECT_ROOT, StorageSettings
 from .cvpr_idea_factory import write_cvpr_idea_bank
 from .iclr_experiment_audit import write_audit as write_iclr_audit
 from .iclr_idea_factory import write_iclr_idea_bank
+from .machine_school_idea_factory import write_machine_school_bank
 from .live_pipeline import sync_semantic_scholar
 from .published_experiment_audit import write_audit as write_published_audit
 from .research_system import write_research_system_state
@@ -69,6 +70,7 @@ def run_cycle(
             report["steps"].append(_step("literature-sync", _sync_literature))
         if mode in {"weekly", "manual"}:
             report["steps"].append(_step("iclr-bank", write_iclr_idea_bank))
+            report["steps"].append(_step("machine-school-inspired-bank", write_machine_school_bank))
             report["steps"].append(_step("iclr-audit", write_iclr_audit))
             report["steps"].append(_step("cvpr-followup-bank", write_cvpr_idea_bank))
             report["steps"].append(_step("published-visual-audit", write_published_audit))

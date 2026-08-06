@@ -52,6 +52,8 @@ REQUIRED_STATIC = [
     "history-figure-data.js", "catalog_audit.py", "build_citation_cache.py",
     "browser_smoke_test.py", "hierarchy_smoke_test.py", "CHANGELOG.md",
     "content-review-external.js", "generated/iclr-external-reviews.json",
+    "machine-school-ideas-view.js", "generated/machine-school-inspired-ideas.json",
+    "generated/machine-school-inspired-ideas.js", "generated/machine-school-external-reviews.json",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
 
@@ -181,11 +183,13 @@ def main() -> None:
     idea_page = (ROOT / "paper-ideas.html").read_text(encoding="utf-8")
     system_script_order = [
         idea_page.find('src="generated/iclr-low-resource-ideas.js"'),
+        idea_page.find('src="generated/machine-school-inspired-ideas.js"'),
+        idea_page.find('src="machine-school-ideas-view.js"'),
         idea_page.find('src="generated/research-system-state.js"'),
         idea_page.find('src="app.js"'),
     ]
     if any(position < 0 for position in system_script_order) or system_script_order != sorted(system_script_order):
-        fail("paper ideas page must load the research-system state after the ICLR bank and before app.js")
+        fail("paper ideas page must load the ICLR and inspired banks before the research-system state and app.js")
     state_path = ROOT / "generated" / "research-system-state.json"
     if not state_path.exists():
         fail("research-system-state.json is missing")
@@ -219,6 +223,34 @@ def main() -> None:
         fail("R2 ranking must place all four PASS ideas first")
     if sorted(idea.get("programmatic_rank") for idea in ideas) != list(range(1, 27)):
         fail("ICLR bank must preserve all original R1 ranks")
+
+    inspired_bank = json.loads((ROOT / "generated" / "machine-school-inspired-ideas.json").read_text(encoding="utf-8"))
+    inspired_summary = inspired_bank.get("summary", {})
+    expected_inspired = {
+        "raw": 24,
+        "internal_pass": 11,
+        "internal_revise": 7,
+        "internal_reject": 6,
+        "external_reviewed": 11,
+        "external_pass": 1,
+        "external_revise": 7,
+        "external_block": 3,
+    }
+    if any(inspired_summary.get(key) != value for key, value in expected_inspired.items()):
+        fail(f"unexpected inspired-bank summary: {inspired_summary}")
+    inspired_passed = inspired_bank.get("passed_ideas", [])
+    if len(inspired_passed) != 11 or [item.get("external_rank") for item in inspired_passed] != list(range(1, 12)):
+        fail("inspired-bank external ranking is incomplete")
+    if inspired_passed[0].get("id") != "regression-probe-half-life" or inspired_passed[0].get("final_status") != "pilot-now":
+        fail("Regression-Probe Half-Life must be the sole pilot-now inspired idea")
+    if len(inspired_bank.get("teacher_shortlist", [])) != 8:
+        fail("inspired-bank teacher shortlist must contain eight decision candidates")
+    inspired_external = json.loads((ROOT / "generated" / "machine-school-external-reviews.json").read_text(encoding="utf-8"))
+    inspired_status = inspired_external.get("status", {})
+    if (inspired_status.get("reviewed"), inspired_status.get("pending"), inspired_status.get("complete")) != (11, 0, True):
+        fail("inspired external review must report 11 reviewed and zero pending")
+    if inspired_status.get("verdict_counts") != {"pass": 1, "revise": 7, "block": 3, "unknown": 0}:
+        fail("inspired external verdict distribution is inconsistent")
 
     for figure_name in ("agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg"):
         try:
