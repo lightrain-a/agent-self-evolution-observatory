@@ -279,7 +279,7 @@ def main() -> None:
             if page == "/evaluation.html":
                 require(result["resources"] == 2, "evaluation live resource indexes are incomplete")
             if page == "/selected-paper.html":
-                review_status_visible = ("1 of 26" in result["text"] and "25 remain pending" in result["text"]) or ("26 个首轮通过项中" in result["text"] and "25 个仍待复核" in result["text"])
+                review_status_visible = ("all 26 first-round passes" in result["text"] and "4 PASS" in result["text"] and "12 BLOCK" in result["text"]) or ("26 个首轮通过项均已" in result["text"] and "4 个 PASS" in result["text"] and "12 个 BLOCK" in result["text"])
                 require(review_status_visible, "selected-paper external review status is stale or missing")
 
         navigate("/research-directions.html", 7)
@@ -337,6 +337,13 @@ def main() -> None:
               iclrExternalProgress: document.querySelector('.external-review-progress')?.textContent || '',
               iclrExternalReviewed: Number(window.ICLR_LOW_RESOURCE_IDEAS?.summary?.project_web_gpt_reviewed || 0),
               iclrExternalPending: Number(window.ICLR_LOW_RESOURCE_IDEAS?.summary?.project_web_gpt_pending || 0),
+              iclrExternalPass: Number(window.ICLR_LOW_RESOURCE_IDEAS?.summary?.external_pass || 0),
+              iclrExternalRevise: Number(window.ICLR_LOW_RESOURCE_IDEAS?.summary?.external_revise || 0),
+              iclrExternalBlock: Number(window.ICLR_LOW_RESOURCE_IDEAS?.summary?.external_block || 0),
+              iclrVerdictPassCards: document.querySelectorAll('.iclr-idea-card[data-external-verdict="pass"]').length,
+              iclrVerdictReviseCards: document.querySelectorAll('.iclr-idea-card[data-external-verdict="revise"]').length,
+              iclrVerdictBlockCards: document.querySelectorAll('.iclr-idea-card[data-external-verdict="block"]').length,
+              iclrFirstFourVerdicts: [...document.querySelectorAll('.iclr-idea-card')].slice(0,4).map(x=>x.dataset.externalVerdict),
               iclrStructuredBlocked: document.querySelectorAll('#iclr-low-resource-bank ~ * .structured-blocked, .iclr-bank-panel .structured-blocked').length,
               iclrCards: document.querySelectorAll('.iclr-idea-card').length,
               iclrReviews: document.querySelectorAll('.iclr-idea-card .cvpr-review-pass').length,
@@ -402,9 +409,12 @@ def main() -> None:
         require(idea_portfolio["iclrProtocols"] == 26, f"expected 26 ICLR experiment protocols, got {idea_portfolio['iclrProtocols']}")
         require(idea_portfolio["iclrProtocolPhases"] == 78, f"expected 78 ICLR P0/P1/P2 phase cards, got {idea_portfolio['iclrProtocolPhases']}")
         require(idea_portfolio["iclrProtocolModels"] == 156, f"expected six model/API fields for each ICLR idea, got {idea_portfolio['iclrProtocolModels']}")
-        require(idea_portfolio["iclrProjectWebReviews"] == 1, f"expected one rendered ICLR project-web-GPT review, got {idea_portfolio['iclrProjectWebReviews']}")
-        require(idea_portfolio["iclrExternalReviewed"] == 1 and idea_portfolio["iclrExternalPending"] == 25, f"external ICLR review counts are wrong: {idea_portfolio['iclrExternalReviewed']}/{idea_portfolio['iclrExternalPending']}")
-        require("1" in idea_portfolio["iclrExternalProgress"] and "25" in idea_portfolio["iclrExternalProgress"], f"external review progress is not rendered: {idea_portfolio['iclrExternalProgress']}")
+        require(idea_portfolio["iclrProjectWebReviews"] == 26, f"expected 26 rendered ICLR project-web-GPT reviews, got {idea_portfolio['iclrProjectWebReviews']}")
+        require(idea_portfolio["iclrExternalReviewed"] == 26 and idea_portfolio["iclrExternalPending"] == 0, f"external ICLR review counts are wrong: {idea_portfolio['iclrExternalReviewed']}/{idea_portfolio['iclrExternalPending']}")
+        require((idea_portfolio["iclrExternalPass"], idea_portfolio["iclrExternalRevise"], idea_portfolio["iclrExternalBlock"]) == (4,10,12), f"external verdict distribution is wrong: {idea_portfolio['iclrExternalPass']}/{idea_portfolio['iclrExternalRevise']}/{idea_portfolio['iclrExternalBlock']}")
+        require((idea_portfolio["iclrVerdictPassCards"], idea_portfolio["iclrVerdictReviseCards"], idea_portfolio["iclrVerdictBlockCards"]) == (4,10,12), "rendered R2 verdict-card counts are wrong")
+        require(idea_portfolio["iclrFirstFourVerdicts"] == ["pass","pass","pass","pass"], f"R2 ranking does not place the four PASS ideas first: {idea_portfolio['iclrFirstFourVerdicts']}")
+        require("4 PASS" in idea_portfolio["iclrExternalProgress"] and "12 BLOCK" in idea_portfolio["iclrExternalProgress"], f"external review progress is not rendered: {idea_portfolio['iclrExternalProgress']}")
         require(idea_portfolio["iclrStructuredBlocked"] == 3, f"expected three structured ICLR blocks, got {idea_portfolio['iclrStructuredBlocked']}")
         require(idea_portfolio["iclrTrackFilters"] == 9 and idea_portfolio["iclrBudgetFilters"] == 3, "ICLR track or budget filters are incomplete")
         require(idea_portfolio["iclrTopRows"] == 15 and idea_portfolio["iclrRejected"] == 15, "ICLR comparison table or rejection archive is incomplete")

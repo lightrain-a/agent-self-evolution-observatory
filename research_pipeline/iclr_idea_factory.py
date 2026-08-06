@@ -697,9 +697,13 @@ def _protocol(spec: IdeaSpec, fields: dict[str, dict[str, str]]) -> dict[str, An
     }
 
 
-def _priority(spec: IdeaSpec, external_reviews: dict[str, list[dict[str, Any]]]) -> float:
+def _priority(spec: IdeaSpec) -> float:
+    """Return the frozen first-round programmatic priority.
+
+    Independent external verdicts are represented explicitly and control the
+    second-round ordering; they must not be hidden inside this numeric score.
+    """
     weights = (1.15, 1.30, 1.20, 1.20, 1.15, 1.05, 1.00)
-    external_pass = any(review.get("verdict") == "pass" for review in external_reviews.get(spec.id, []))
     strategic_boost = {
         "regression-gated-self-evolution": 3.0,
         "causally-verified-experience-admission": 1.5,
@@ -709,7 +713,6 @@ def _priority(spec: IdeaSpec, external_reviews: dict[str, list[dict[str, Any]]])
     return round(
         sum(w*s for w,s in zip(weights, spec.scores))
         + max(0.0, (48-spec.budget.gpu_hours)/48)
-        + (1.0 if external_pass else 0.0)
         + strategic_boost,
         3,
     )
@@ -722,6 +725,11 @@ def build_iclr_idea_bank() -> dict[str, Any]:
     for spec in IDEAS:
         ok, reviews, blocks = _review(spec)
         fields = _derived_fields(spec)
+        idea_external_reviews = external_reviews.get(spec.id, [])
+        latest_external_review = idea_external_reviews[-1] if idea_external_reviews else {}
+        external_verdict = latest_external_review.get("verdict", "pending")
+        if external_verdict not in {"pass", "revise", "block"}:
+            external_verdict = "pending"
         record = {
             "id":spec.id,
             "title":spec.title,
@@ -747,9 +755,12 @@ def build_iclr_idea_bank() -> dict[str, Any]:
             "operator":spec.operator,
             "scores":dict(zip(REVIEW_KEYS, spec.scores)),
             "reviews":reviews,
-            "external_reviews":external_reviews.get(spec.id, []),
+            "external_reviews":idea_external_reviews,
+            "external_review_status":"reviewed" if idea_external_reviews else "pending",
+            "external_verdict":external_verdict,
+            "external_confidence":latest_external_review.get("confidence", ""),
             "experiment_protocol":_protocol(spec, fields),
-            "priority":_priority(spec, external_reviews),
+            "priority":_priority(spec),
             "status":"pass" if ok else "block",
             "blocking_reasons":blocks,
         }
@@ -758,7 +769,12 @@ def build_iclr_idea_bank() -> dict[str, Any]:
         (passed if ok else blocked).append(record)
     passed.sort(key=lambda item:(-item["priority"], item["budget"]["gpu_hours"], item["id"]))
     for rank,item in enumerate(passed, start=1):
+        item["programmatic_rank"] = rank
+    external_order = {"pass": 0, "revise": 1, "pending": 2, "block": 3}
+    passed.sort(key=lambda item:(external_order[item["external_verdict"]], -item["priority"], item["budget"]["gpu_hours"], item["id"]))
+    for rank,item in enumerate(passed, start=1):
         item["rank"] = rank
+    external_counts = {verdict:sum(item["external_verdict"] == verdict for item in passed) for verdict in ("pass", "revise", "block", "pending")}
     return {
         "schema_version":"1.0",
         "generated_at":datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
@@ -784,6 +800,10 @@ def build_iclr_idea_bank() -> dict[str, Any]:
             "project_web_gpt_reviewed":sum(bool(external_reviews.get(item["id"])) for item in passed),
             "project_web_gpt_pending":sum(not bool(external_reviews.get(item["id"])) for item in passed),
             "project_web_gpt_complete":all(bool(external_reviews.get(item["id"])) for item in passed),
+            "external_verdict_counts":external_counts,
+            "external_pass":external_counts["pass"],
+            "external_revise":external_counts["revise"],
+            "external_block":external_counts["block"],
         },
         "tracks":{key:value["label"] for key,value in TRACKS.items()},
         "passed_ideas":passed,

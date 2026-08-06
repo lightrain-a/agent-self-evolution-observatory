@@ -203,8 +203,22 @@ def main() -> None:
     external_status = external_review_store.get("status", {})
     if external_review_store.get("total_passed_ideas") != 26:
         fail("external review store must track all 26 first-round-passed ICLR ideas")
-    if int(external_status.get("reviewed", 0)) + int(external_status.get("pending", 0)) != 26:
-        fail("external review reviewed/pending counts must sum to 26")
+    if int(external_status.get("reviewed", 0)) != 26 or int(external_status.get("pending", 0)) != 0 or not external_status.get("complete"):
+        fail("external review store must report 26 reviewed, zero pending, and complete")
+    expected_external_verdicts = {"pass": 4, "revise": 10, "block": 12, "unknown": 0}
+    if external_status.get("verdict_counts") != expected_external_verdicts:
+        fail(f"unexpected external verdict distribution: {external_status.get('verdict_counts')}")
+    iclr_bank = json.loads((ROOT / "generated" / "iclr-low-resource-ideas.json").read_text(encoding="utf-8"))
+    iclr_summary = iclr_bank.get("summary", {})
+    if (iclr_summary.get("project_web_gpt_reviewed"), iclr_summary.get("project_web_gpt_pending"), iclr_summary.get("project_web_gpt_complete")) != (26, 0, True):
+        fail("ICLR bank external-review completion summary is inconsistent")
+    if (iclr_summary.get("external_pass"), iclr_summary.get("external_revise"), iclr_summary.get("external_block")) != (4, 10, 12):
+        fail("ICLR bank external verdict counts are inconsistent")
+    ideas = iclr_bank.get("passed_ideas", [])
+    if [idea.get("external_verdict") for idea in ideas[:4]] != ["pass"] * 4:
+        fail("R2 ranking must place all four PASS ideas first")
+    if sorted(idea.get("programmatic_rank") for idea in ideas) != list(range(1, 27)):
+        fail("ICLR bank must preserve all original R1 ranks")
 
     for figure_name in ("agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg"):
         try:

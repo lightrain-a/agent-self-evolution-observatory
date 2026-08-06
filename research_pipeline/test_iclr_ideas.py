@@ -45,14 +45,22 @@ class IclrIdeaBankTest(unittest.TestCase):
 
     def test_ranking_and_web_review(self) -> None:
         self.assertEqual([idea["rank"] for idea in self.ideas], list(range(1, len(self.ideas) + 1)))
-        priorities = [idea["priority"] for idea in self.ideas]
-        self.assertTrue(all(left >= right for left, right in zip(priorities, priorities[1:])))
+        self.assertEqual(sorted(idea["programmatic_rank"] for idea in self.ideas), list(range(1, len(self.ideas) + 1)))
+        verdict_order = {"pass": 0, "revise": 1, "pending": 2, "block": 3}
+        verdicts = [verdict_order[idea["external_verdict"]] for idea in self.ideas]
+        self.assertTrue(all(left <= right for left, right in zip(verdicts, verdicts[1:])))
+        for verdict in verdict_order:
+            priorities = [idea["priority"] for idea in self.ideas if idea["external_verdict"] == verdict]
+            self.assertTrue(all(left >= right for left, right in zip(priorities, priorities[1:])))
         reviewed = [idea for idea in self.ideas if idea["external_reviews"]]
         self.assertTrue(any(idea["id"] == "regression-gated-self-evolution" for idea in reviewed))
         summary = self.payload["summary"]
         self.assertEqual(summary["project_web_gpt_reviewed"], len(reviewed))
         self.assertEqual(summary["project_web_gpt_pending"], len(self.ideas) - len(reviewed))
         self.assertEqual(summary["project_web_gpt_complete"], len(reviewed) == len(self.ideas))
+        counts = summary["external_verdict_counts"]
+        for verdict in ("pass", "revise", "block", "pending"):
+            self.assertEqual(counts[verdict], sum(idea["external_verdict"] == verdict for idea in self.ideas))
 
 
 if __name__ == "__main__":

@@ -80,6 +80,7 @@ class IclrExternalReviewTest(unittest.TestCase):
         self.assertEqual(result["status"]["reviewed"], 2)
         self.assertEqual(result["status"]["pending"], 1)
         self.assertFalse(result["status"]["complete"])
+        self.assertEqual(result["status"]["verdict_counts"], {"pass": 1, "revise": 0, "block": 1, "unknown": 1})
 
 
 if __name__ == "__main__":

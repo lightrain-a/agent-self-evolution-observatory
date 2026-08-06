@@ -1,17 +1,23 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-01T03:18:13Z",
+  "updated_at": "2026-08-06T09:32:49Z",
   "pipeline": "code-oracle -> signed-in ChatGPT web UI -> Agent project",
   "required_host": "admin01-NF5468M5",
   "total_passed_ideas": 26,
   "status": {
-    "reviewed": 1,
-    "pending": 25,
+    "reviewed": 26,
+    "pending": 0,
     "failed_batches": 0,
-    "complete": false,
-    "last_attempt": "2026-08-01T03:18:13Z",
-    "last_attempt_host": "ubuntu",
-    "last_attempt_result": "blocked_wrong_host"
+    "complete": true,
+    "last_attempt": "2026-08-06T09:32:49Z",
+    "last_attempt_host": "admin01-NF5468M5",
+    "last_attempt_result": "batch_4_completed",
+    "verdict_counts": {
+      "pass": 4,
+      "revise": 10,
+      "block": 12,
+      "unknown": 0
+    }
   },
   "reviews": {
     "regression-gated-self-evolution": [
@@ -22,6 +28,1104 @@
         "finding": "The strongest low-resource ICLR thesis is constrained policy improvement with disjoint regression tests, matched costs, and auditable commit/rollback.",
         "required_action": "Report persistent capability gain and regression after every evolution round under equal interaction, token, model-call, and training budgets.",
         "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-first-research-design.md"
+      }
+    ],
+    "retrieval-interference-auditor": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The memory-harm phenomenon, held-out continual-learning evaluation, NullMemory counterfactuals, and contamination-aware routing are already established. Novelty survives only as replicated entry-level causal credit followed by a persistent quarantine policy; the current auditor framing does not yet specify an identifiable learning rule or multi-round stability test.",
+        "required_action": "Define an entry-level admission/quarantine policy whose only update signal is a replicated effect estimate from retrieved, shuffled, and no-memory replay, then test the frozen policy on a chronological held-out stream.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "AGENTCL: Toward Rigorous Evaluation of Continual Learning in Language Agents",
+              "venue_year": "arXiv/2026-06-01",
+              "official_url": "[https://arxiv.org/abs/2606.02461](https://arxiv.org/abs/2606.02461)",
+              "overlap": "problem"
+            },
+            {
+              "title": "Remembering More, Risking More: Longitudinal Safety Risks in Memory-Equipped LLM Agents",
+              "venue_year": "arXiv/2026-05-18",
+              "official_url": "[https://arxiv.org/abs/2605.17830](https://arxiv.org/abs/2605.17830)",
+              "overlap": "experiment"
+            },
+            {
+              "title": "MemGuard: Preventing Memory Contamination in Long-Term Memory-Augmented Large Language Models",
+              "venue_year": "arXiv/2026-05-27",
+              "official_url": "[https://arxiv.org/abs/2605.28009](https://arxiv.org/abs/2605.28009)",
+              "overlap": "problem"
+            }
+          ],
+          "surviving_difference": "Replicated per-entry causal effects under a three-arm replay intervention, used to update a quarantine state and then evaluated with no extra replay calls on unseen task families."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "AgentCL/MemProbe with MemGuard routing, evaluated under the longitudinal NullMemory trigger-probe protocol.",
+        "decisive_pilot": "On one ALFWorld task stream, hold the actor, retriever, store, seeds, and total calls fixed; compare no quarantine, random deletion, MemGuard, and effect-size quarantine, then freeze memory and evaluate unseen task families with no audit calls.",
+        "stop_rule": "Stop if per-entry harm signs replicate on fewer than 70% of resampled replays, or if quarantine fails on the second model to improve held-out success by at least 3 percentage points over the strongest baseline while retaining at least 95% of the positive-memory gain.",
+        "unknowns": [
+          "No official source found by the 2026-08-01 cutoff reports entry-level retrieved-versus-shuffled-versus-no-memory causal quarantine across agent task streams.",
+          "The proposed three-domain pilot's feasibility within 24 GPU-hours is not established."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-01-of-05.response.md"
+      }
+    ],
+    "causally-verified-experience-admission": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The proposal recombines same-state counterfactual rule editing, replay-gated retention of candidate skill patches, and explicit memory admission control. Requiring stability to irrelevant changes is an additional acceptance test, not a sufficiently new problem-mechanism pair for a standalone ICLR thesis.",
+        "required_action": "Replace source-task causal admission with a mechanistically distinct cross-task transportability certificate that predicts whether a lesson's effect survives task-family shift, and compare it directly against SCORE, SkillCAT, and A-MAC.",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "SCORE: Training-Free Agent Adaptation via Same-State Counterfactual Rule Editing",
+              "venue_year": "ACL ARR/2026 May submission",
+              "official_url": "[https://openreview.net/forum?id=DdBr9guP5Q](https://openreview.net/forum?id=DdBr9guP5Q)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "SkillCAT: Contrastive Assessment and Topology-Aware Skill Self-Evolution for LLM Agents",
+              "venue_year": "arXiv/2026-06-11",
+              "official_url": "[https://arxiv.org/abs/2606.13317](https://arxiv.org/abs/2606.13317)",
+              "overlap": "combination"
+            },
+            {
+              "title": "Adaptive Memory Admission Control For LLM Agents",
+              "venue_year": "ICLR 2026 MemAgents workshop",
+              "official_url": "[https://openreview.net/forum?id=mmdqUrEY24](https://openreview.net/forum?id=mmdqUrEY24)",
+              "overlap": "problem"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "SkillCAT's replay-gated candidate-patch evolution augmented with A-MAC admission scoring.",
+        "decisive_pilot": "With one frozen actor on ALFWorld, compare the proposed two-gate admission rule against SCORE, SkillCAT, and A-MAC using identical source trajectories, accepted-memory count, replay calls, and test-time calls, then evaluate a disjoint task family.",
+        "stop_rule": "Stop if the method does not reduce harmful committed lessons by at least 20% relative to the strongest baseline at equal useful-lesson retention on the second model and a disjoint task family.",
+        "unknowns": [
+          "SCORE was an ACL ARR May 2026 submission rather than a verified final proceeding by the cutoff.",
+          "Official sources do not establish that SCORE or SkillCAT tests invariance to explicitly irrelevant perturbations before every persistent update."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-01-of-05.response.md"
+      }
+    ],
+    "reward-invariance-audit": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "Selective invariance to neutral changes, sensitivity to causal changes, shortcut probes, and downstream selection validation are directly covered by recent reward-model robustness work. As written, this is a training-free diagnostic suite rather than an identifiable persistent-learning contribution.",
+        "required_action": "Do not advance the audit as the thesis; pivot to a learned reward-update mechanism that uses independently certified causal and neutral interventions and demonstrates improved downstream policy selection over CROME and PRISM.",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "Robust Reward Modeling via Causal Rubrics",
+              "venue_year": "ICML 2025 MoFA workshop",
+              "official_url": "[https://icml.cc/virtual/2025/50241](https://icml.cc/virtual/2025/50241)",
+              "overlap": "combination"
+            },
+            {
+              "title": "Reward Under Attack: Analyzing the Robustness and Hackability of Process Reward Models",
+              "venue_year": "arXiv/2026-02-20",
+              "official_url": "[https://arxiv.org/abs/2603.06621](https://arxiv.org/abs/2603.06621)",
+              "overlap": "experiment"
+            },
+            {
+              "title": "Rectifying Shortcut Behaviors in Preference-based Reward Learning",
+              "venue_year": "NeurIPS/2025",
+              "official_url": "[https://proceedings.neurips.cc/paper_files/paper/2025/hash/5d97b7e62022c859347397f6c1e8d0f9-Abstract-Conference.html](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5d97b7e62022c859347397f6c1e8d0f9-Abstract-Conference.html)",
+              "overlap": "mechanism"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "CROME causal/neutral augmentations together with the Reward Under Attack perturbation diagnostic.",
+        "decisive_pilot": "On a fixed GSM8K best-of-N candidate pool, compare whether the proposed audit score predicts ground-truth selection errors beyond CROME-style causal/neutral tests and Reward Under Attack perturbation scores using identical reward-model calls.",
+        "stop_rule": "Stop if the audit adds less than 0.03 AUROC for predicting actual best-of-N selection errors over the strongest diagnostic baseline on either of two reward models, or if its invariance score is not associated with downstream selection quality.",
+        "unknowns": [
+          "No official source verifies that the proposed cross-domain transformations for GSM8K, ALFWorld, and MM-Vet are genuinely semantics-preserving without independent labels.",
+          "Reward Under Attack focuses on process reward models for reasoning; its coverage of tool and multimodal evaluators is not established."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-01-of-05.response.md"
+      }
+    ],
+    "local-counterexample-memory-repair": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "Targeted repair of a failing skill component while preserving valid substructures is already explicit in SkillTracer and SkillAdaptor; counterexample provenance plus regression preservation is also explicit in counterexample-supplemented sketches. The proposal does not define a new representation or update operator beyond this recent combination.",
+        "required_action": "Only revive the idea by formalizing a monotone applicability-set specialization operator with executable exception lineage and proving that it preserves unaffected positives better than SkillTracer and SkillAdaptor under matched edits.",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "SkillTracer: Structural Failure Attribution and Refinement of Agentic Skills in Long-Horizon Web Tasks",
+              "venue_year": "ICLR 2026 MALGAI workshop",
+              "official_url": "[https://openreview.net/forum?id=OiyEjThGeZ](https://openreview.net/forum?id=OiyEjThGeZ)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories",
+              "venue_year": "arXiv/2026-05-31",
+              "official_url": "[https://arxiv.org/abs/2606.01311](https://arxiv.org/abs/2606.01311)",
+              "overlap": "problem"
+            },
+            {
+              "title": "Agentic Synthesis against Counterexample-Supplemented Sketches",
+              "venue_year": "arXiv/2026-07-17",
+              "official_url": "[https://arxiv.org/abs/2607.15854](https://arxiv.org/abs/2607.15854)",
+              "overlap": "combination"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "SkillTracer's node-local structural repair with preserved valid subplans and persistent skill graphs.",
+        "decisive_pilot": "Create paired counterexamples that invalidate exactly one applicability condition of an ALFWorld skill, then compare whole rewrite, SkillTracer-style local repair, SkillAdaptor, and the proposed specialization at identical edit calls on counterexample repair, old-positive retention, and unseen boundary cases.",
+        "stop_rule": "Stop if the proposed repair does not improve the harmonic mean of counterexample repair and old-positive retention by at least 5 points over SkillTracer on both models, or if lineage can be removed without reducing performance.",
+        "unknowns": [
+          "No official source found by the cutoff provides a standardized cross-domain benchmark for minimal counterexamples, exception lineage, and old-positive retention.",
+          "Agentic Synthesis reports a narrow synthetic coding case study, so its empirical generality is unknown."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-01-of-05.response.md"
+      }
+    ],
+    "irreversible-action-counterfactuals": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "World-model lookahead, episodic safety memory, and memory-guided counterfactual planning already cover most ingredients. A viable novelty boundary remains only if verified unexecuted consequences become persistent risk memories that improve later tasks after the simulator and extra lookahead calls are removed; the current formulation does not isolate that learning effect.",
+        "required_action": "Narrow to one environment with an exact independent transition verifier and demonstrate a discovery-then-freeze protocol in which counterfactual risk memories are learned under a fixed simulator-call budget and evaluated with the simulator disabled.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "Web Agents with World Models: Learning and Leveraging Environment Dynamics in Web Navigation",
+              "venue_year": "ICLR/2025",
+              "official_url": "[https://openreview.net/forum?id=moWiYJuSGF](https://openreview.net/forum?id=moWiYJuSGF)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Learning Safe Robot Planning from Unsafe Experiences: An Episodic Memory Approach for LLM-based Agents",
+              "venue_year": "ICLR 2026 MemAgents workshop",
+              "official_url": "[https://openreview.net/forum?id=KrmyJtyE6k](https://openreview.net/forum?id=KrmyJtyE6k)",
+              "overlap": "problem"
+            },
+            {
+              "title": "EvoCF: Multi-Agent Collaboration via Agentic Memory-Driven Evolutionary Counterfactual Planning",
+              "venue_year": "ICLR 2026 MALGAI workshop",
+              "official_url": "[https://openreview.net/forum?id=zGKkewtb2w](https://openreview.net/forum?id=zGKkewtb2w)",
+              "overlap": "combination"
+            }
+          ],
+          "surviving_difference": "Verifier-approved negative experience for actions never executed in the real environment, persisted across episodes and shown to transfer with no world-model or simulator calls at evaluation."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Web Agents with World Models using online lookahead, plus episodic safety memory learned from executed unsafe trajectories.",
+        "decisive_pilot": "In one sandbox with exact marked irreversible transitions, allow a fixed discovery budget of simulator calls to populate risk memory; freeze it and disable simulation at test, then compare memory-only, online world-model planning with matched amortized calls, executed-unsafe episodic memory, verbal reflection, and no memory on unseen tasks.",
+        "stop_rule": "Stop if frozen counterfactual memory fails on the second model to reduce irreversible errors by at least 20% over the strongest no-simulator baseline while keeping benign-task success within 5 percentage points, or if the effect disappears under matched total simulator calls.",
+        "unknowns": [
+          "No official source found by the cutoff exactly combines verifier-approved unexecuted irreversible outcomes with persistent cross-episode risk memory and simulator-free evaluation.",
+          "Standard irreversible-action labels and exact independent simulators for WebArena-Lite, AndroidWorld, and LIBERO were not verified.",
+          "The proposed three-domain pilot's feasibility within 32 GPU-hours is not established."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-01-of-05.response.md"
+      }
+    ],
+    "self-label-confidence-flow": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "Cross-generation error amplification is important, but CREAM already addresses noisy, overconfident preference labels through cross-iteration reward consistency, while recursive-training work studies collapse prevention through self-verification. The surviving contribution is not generic confidence weighting; it must be an explicit parent-label dependency model whose propagated uncertainty predicts independently audited errors and improves persistent reward-model updates under identical label, call, token, and training budgets.",
+        "required_action": "Produce a preregistered multi-round pilot that compares a formally specified lineage-confidence model against current-round confidence, CREAM-style consistency, and independent-judge calibration using exactly the same generated examples and evaluator calls.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "CREAM: Consistency Regularized Self-Rewarding Language Models",
+              "venue_year": "ICLR/2025",
+              "official_url": "[https://openreview.net/forum?id=Vf6RDObyEF](https://openreview.net/forum?id=Vf6RDObyEF)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Self-Verification Provably Prevents Model Collapse in Recursive Synthetic Training",
+              "venue_year": "NeurIPS/2025",
+              "official_url": "[https://openreview.net/forum?id=X5Hk8aMs6w](https://openreview.net/forum?id=X5Hk8aMs6w)",
+              "overlap": "problem"
+            },
+            {
+              "title": "Self-Evolved Reward Learning for LLMs",
+              "venue_year": "ICLR/2025",
+              "official_url": "[https://openreview.net/forum?id=Zonhl0c9I0](https://openreview.net/forum?id=Zonhl0c9I0)",
+              "overlap": "experiment"
+            }
+          ],
+          "surviving_difference": "An explicit label-lineage graph with calibrated parent-to-child uncertainty propagation across multiple generations, rather than current-round filtering or pairwise cross-iteration consistency."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "CREAM-style cross-iteration consistency combined with an independently calibrated judge ensemble, using the same examples, labels, calls, and reward-model training tokens.",
+        "decisive_pilot": "Run four self-labeling generations on one preference dataset with two open model families; keep all generated pairs and judge calls fixed, update only the same sub-50M reward head, and compare unweighted labels, current-round confidence, CREAM consistency, and lineage confidence on held-out human-label error AUROC, calibration error, external preference accuracy, and round-by-round degradation.",
+        "stop_rule": "Stop if lineage confidence does not improve held-out label-error prediction and external preference accuracy over the strongest matched-budget baseline on the second model family or domain, with bootstrap 95% confidence intervals excluding any positive gain, or if improvement requires additional evaluator calls.",
+        "unknowns": [
+          "Official sources do not establish that parent-label dependencies provide information beyond cross-iteration consistency and current-round confidence.",
+          "The reliability of self-reported confidence as a calibrated probability across generations is unverified.",
+          "It is unverified that four meaningful reward-learning rounds across two model families fit within 24 GPU-hours."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-01-of-04.response.md"
+      }
+    ],
+    "evaluator-coadaptation-guard": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "Frozen anchors, heterogeneous reward ensembles, and policy-feedback reward evolution already cover the proposal's principal components. A cross-version evaluation matrix is useful, but as written it is a hand-designed audit protocol rather than an identifiable learning contribution. The thesis becomes defensible only if actor-by-evaluator interaction residuals predict future external-quality failures and train a persistent gate that generalizes to unseen rounds or actors.",
+        "required_action": "Implement a learned actor-version-by-evaluator-version interaction-residual gate and evaluate it on held-out future rounds against frozen rewards, latest-version pairing, and matched-call reward ensembles.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "Helping or Herding? Reward Model Ensembles Mitigate but do not Eliminate Reward Hacking",
+              "venue_year": "COLM/2024",
+              "official_url": "[https://openreview.net/forum?id=5u1GpUkKtG](https://openreview.net/forum?id=5u1GpUkKtG)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Self-Evolved Reward Learning for LLMs",
+              "venue_year": "ICLR/2025",
+              "official_url": "[https://openreview.net/forum?id=Zonhl0c9I0](https://openreview.net/forum?id=Zonhl0c9I0)",
+              "overlap": "problem"
+            },
+            {
+              "title": "Reinforcement Reward Model with Policy Feedback",
+              "venue_year": "ICLR/2026 withdrawn submission",
+              "official_url": "[https://openreview.net/forum?id=I9P0Yu73if](https://openreview.net/forum?id=I9P0Yu73if)",
+              "overlap": "combination"
+            }
+          ],
+          "surviving_difference": "A factorial cross-version actor-evaluator design that separates actor main effects, evaluator main effects, and pair-specific co-adaptation, then uses the interaction residual to block updates on unseen later rounds."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A frozen-anchor reward ensemble with heterogeneous judges and conservative disagreement gating, using exactly the same candidate responses and evaluator calls.",
+        "decisive_pilot": "Generate three actor and evaluator versions, score the same response pool with the complete cross-version matrix, train a sub-50M gate only on rounds one and two, and compare its round-three reward-hacking detection and external-quality preservation against latest-pair scoring, a frozen reward model, ensemble disagreement, and random update blocking.",
+        "stop_rule": "Stop if the interaction residual fails to predict held-out external-quality degradation better than evaluator disagreement, or if the learned gate does not reduce the external exploit gap on the second model or domain at identical judge-call and response budgets.",
+        "unknowns": [
+          "It is unverified that measurable co-adaptation will emerge within three low-resource rounds when foundation-model weights are frozen.",
+          "The independence of the proposed heterogeneous judges and frozen anchors is not established.",
+          "No official source verifies that a small human audit can reliably distinguish pair-specific co-adaptation from ordinary evaluator noise at the proposed scale."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-01-of-04.response.md"
+      }
+    ],
+    "contradiction-preserving-consolidation": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "pass",
+        "confidence": "medium",
+        "finding": "The general memory-consolidation space is crowded, and recent systems already revisit discarded evidence, compress memories, or retrieve counterevidence. Nevertheless, a standalone thesis survives after narrowing: under an identical storage and retrieval budget, memory value is defined causally by whether retaining or removing an item changes a downstream conclusion. Optimizing a minimal conclusion-changing set is more specific than coverage, similarity, contradiction detection, or full-history revisitation.",
+        "required_action": "Replace the broad three-domain pilot with a fixed-capacity benchmark containing oracle-verifiable conclusion-changing evidence and compare against recent consolidation systems at identical stored and retrieved token budgets.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "Look Back to Reason Forward: Revisitable Memory for Long-Context LLM Agents",
+              "venue_year": "ICLR/2026",
+              "official_url": "[https://iclr.cc/virtual/2026/poster/10011811](https://iclr.cc/virtual/2026/poster/10011811)",
+              "overlap": "problem"
+            },
+            {
+              "title": "SimpleMem: Efficient Lifelong Memory for LLM Agents",
+              "venue_year": "arXiv/2026-01",
+              "official_url": "[https://aiming-lab.github.io/SimpleMem-Page/](https://aiming-lab.github.io/SimpleMem-Page/)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "From Retrieval to Reconstruction: Constructing Evolvable Cognitive Memory for Long-term Dialogue",
+              "venue_year": "ACL ARR/2026 submission",
+              "official_url": "[https://openreview.net/forum?id=oEkish1IxX](https://openreview.net/forum?id=oEkish1IxX)",
+              "overlap": "combination"
+            }
+          ],
+          "surviving_difference": "Fixed-capacity consolidation optimized for causal conclusion-flip value: retain the smallest counterevidence set whose removal would change the agent's later conclusion, rather than maximizing semantic coverage or generic retrieval relevance."
+        },
+        "iclr_fit": "strong",
+        "strongest_baseline": "ReMemR1-style revisitable memory combined with contradiction-aware retrieval, constrained to the same persistent-memory capacity, retrieved tokens, model calls, and context length.",
+        "decisive_pilot": "Construct sequential tasks where a rare later observation invalidates an earlier rule, impose a fixed memory capacity K, and compare FIFO, similarity retention, summary memory, SimpleMem, ReMemR1, contradiction retrieval, and conclusion-flip consolidation on retention of oracle counterevidence, final decision accuracy, and negative transfer to unseen task templates.",
+        "stop_rule": "Stop if conclusion-flip consolidation does not reduce final conclusion errors or negative transfer relative to the strongest matched-capacity baseline on a second model and held-out task family, or if its gain disappears when stored and retrieved tokens are matched.",
+        "unknowns": [
+          "A reliable conclusion-change oracle for open-ended ALFWorld and Video-MME trajectories is not specified.",
+          "It is unknown whether the minimal conclusion-changing set can be approximated without costly repeated counterfactual inference.",
+          "The feasibility of covering knowledge, interactive-agent, and multimodal domains within 20 GPU-hours is unverified."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-01-of-04.response.md"
+      }
+    ],
+    "self-correction-collapse-detector": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The proposal is directly covered as an audit rather than a learning mechanism. Correction and Corruption formalizes self-correction through separate error-repair and correct-answer-corruption rates, CorrectBench evaluates repeated correction across reasoning and code settings, and SCoRe already studies behavioral collapse during self-correction training. Adding counterfactual sensitivity is an incremental diagnostic unless it controls a new persistent update and demonstrates predictive value beyond these existing interfaces.",
+        "required_action": "Terminate the standalone detector thesis and incorporate counterfactual sensitivity only as an ablation or gating signal inside a distinct persistent self-correction learning method.",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "Correction and Corruption: A Two-Rate View of Error Flow in LLM Protocols",
+              "venue_year": "arXiv/2026-04",
+              "official_url": "[https://arxiv.org/abs/2604.18245](https://arxiv.org/abs/2604.18245)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Can LLMs Correct Themselves? A Benchmark of Self-Correction in LLMs",
+              "venue_year": "NeurIPS Datasets and Benchmarks/2025",
+              "official_url": "[https://openreview.net/forum?id=956KYtqwcU](https://openreview.net/forum?id=956KYtqwcU)",
+              "overlap": "experiment"
+            },
+            {
+              "title": "Training Language Models to Self-Correct via Reinforcement Learning",
+              "venue_year": "ICLR/2025",
+              "official_url": "[https://openreview.net/forum?id=CjwERcAU7w](https://openreview.net/forum?id=CjwERcAU7w)",
+              "overlap": "problem"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "The difficulty-conditioned correction and corruption rates from Correction and Corruption, evaluated using CorrectBench protocols and identical correction calls.",
+        "decisive_pilot": "On GSM8K and HumanEval, compare the proposed three-component score with correction rate, corruption rate, confidence change, and task difficulty for predicting whether one additional correction pass will help on held-out examples, while using identical base answers and correction traces.",
+        "stop_rule": "Stop if counterfactual sensitivity adds less than one AUROC point beyond correction rate, corruption rate, and difficulty on the second model, or if a gate using it does not improve final accuracy at an identical correction-call budget.",
+        "unknowns": [
+          "The proposal does not define which counterfactual perturbations are irrelevant while preserving task semantics.",
+          "Ground-truth counterfactual invariance for MM-Vet is not specified.",
+          "No persistent parameter, memory, prompt, workflow, or policy update controlled by the detector is defined."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-01-of-04.response.md"
+      }
+    ],
+    "intervention-validated-self-correction": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The problem-mechanism pair is substantially covered by work available before the cutoff. InT identifies an erroneous step, proposes a single-step intervention, verifies successful counterfactual continuations, and persists the intervention through training. REFLECT performs diagnosis-specific, prefix-preserving replay and treats a verified outcome flip as evidence for error attribution. Minimal intervention plus directional outcome validation is therefore not a surviving standalone mechanism, and extending it across text, tools, and multimodal tasks is primarily an experimental expansion.",
+        "required_action": "Reframe the work as a failure-analysis benchmark that identifies settings where InT and REFLECT-style controlled replay produce invalid correction credit under matched intervention and rollout budgets.",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "InT: Self-Proposed Interventions Enable Credit Assignment in LLM Reasoning",
+              "venue_year": "ICLR/2026",
+              "official_url": "[https://openreview.net/forum?id=YAhTj2VgBw](https://openreview.net/forum?id=YAhTj2VgBw)",
+              "overlap": "combination"
+            },
+            {
+              "title": "REFLECT: Intervention-Supported Error Attribution for Silent Failures in LLM Agent Traces",
+              "venue_year": "arXiv/2026-06",
+              "official_url": "[https://arxiv.org/abs/2606.09071](https://arxiv.org/abs/2606.09071)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "CRITIC: Large Language Models Can Self-Correct with Tool-Interactive Critiquing",
+              "venue_year": "ICLR/2024",
+              "official_url": "[https://openreview.net/forum?id=Sx038qxjek](https://openreview.net/forum?id=Sx038qxjek)",
+              "overlap": "problem"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "InT single-step interventions combined with REFLECT-style prefix-preserving replay and outcome-flip verification, using the same candidate corrections, tool calls, and rollout budget.",
+        "decisive_pilot": "Collect matched GSM8K and ALFWorld failures, compare free-form critique, CRITIC, InT, REFLECT replay, and the proposed directional-consistency filter using identical candidate interventions and rollouts, then persist accepted corrections in the same memory or sub-50M adapter and test transfer to held-out task templates.",
+        "stop_rule": "Stop if the proposed filter does not improve accepted-correction precision and held-out transfer over the InT-plus-REFLECT baseline on the second model or domain at identical intervention, tool-call, rollout, and training budgets.",
+        "unknowns": [
+          "A canonical minimal observation or visual intervention for MM-Vet is not defined.",
+          "The proposal does not specify an independent verifier for directional causal consistency.",
+          "It is unverified that the proposed cross-domain intervention generation and persistence experiments fit within 28 GPU-hours."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-01-of-04.response.md"
+      }
+    ],
+    "compositional-update-compatibility": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "pass",
+        "confidence": "medium",
+        "finding": "A narrow standalone thesis survives: predicting order-sensitive regressions among persistent agent updates is not covered by workflow search or module-composition work. The claim must be limited to unseen combinations of individually beneficial, versioned updates and distinguished from generic graph-performance prediction; a pairwise interaction graph alone is insufficient unless it also predicts held-out orders and higher-order compositions.",
+        "required_action": "Freeze the update surface to versioned prompt, memory, or workflow commits and preregister held-out pair-order and three-update composition tests against a task-conditioned graph predictor at identical execution and testing budgets.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "AgentSquare: Automatic LLM Agent Search in Modular Design Space",
+              "venue_year": "ICLR/2025",
+              "official_url": "[https://openreview.net/forum?id=mPdmDYIQ7f](https://openreview.net/forum?id=mPdmDYIQ7f)",
+              "overlap": "combination"
+            },
+            {
+              "title": "Learning to Compose for Cross-domain Agentic Workflow Generation",
+              "venue_year": "arXiv/2026-02",
+              "official_url": "[https://arxiv.org/abs/2602.11114](https://arxiv.org/abs/2602.11114)",
+              "overlap": "combination"
+            },
+            {
+              "title": "GNNs as Predictors of Agentic Workflow Performances",
+              "venue_year": "arXiv/2025-03",
+              "official_url": "[https://arxiv.org/abs/2503.11301](https://arxiv.org/abs/2503.11301)",
+              "overlap": "mechanism"
+            }
+          ],
+          "surviving_difference": "Predict semantic regression and commit-order effects for unseen compositions of individually useful persistent updates, rather than generating modules, recombining capabilities, or predicting the aggregate score of an already assembled workflow."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A task-conditioned FLORA-style GNN trained on the same composition tests, together with AgentSquare or AFlow search and exhaustive pairwise order checks constrained to the same total calls.",
+        "decisive_pilot": "Create individually beneficial prompt, memory, and workflow commits on ALFWorld; train on only a subset of edit pairs and orders; then, on a second frozen model and held-out task family, compare regression AUROC and final ordered-composition success against the FLORA-style predictor and equal-call exhaustive or random checks.",
+        "stop_rule": "Stop if, on the second model and task family, held-out regression AUROC is below 0.70 or improves by less than 0.03 over the strongest matched-budget predictor, or the selected commit order yields less than a 3-point success gain with a 95% confidence interval crossing zero.",
+        "unknowns": [
+          "No official source located through 2026-08-01 explicitly evaluates order-sensitive composition of persistent prompt, memory, and workflow updates rather than module recombination or complete-workflow prediction."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-02-of-04.response.md"
+      }
+    ],
+    "workflow-branch-credit": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The standalone problem-mechanism pair is substantially covered. JudgeFlow assigns responsibility scores to problematic workflow blocks and uses them to target subsequent edits; Learning to Compose estimates counterfactual marginal contributions of workflow capabilities; and Sherlock uses counterfactual workflow analysis to identify failure-prone nodes. Replacing these estimators with matched local ablations is a measurement refinement, not a distinct learning thesis.",
+        "required_action": "Merge branch credit into compositional-update-compatibility as its attribution and evaluation subsystem and stop advancing it as a standalone paper.",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "JudgeFlow: Agentic Workflow Optimization via Block Judge",
+              "venue_year": "arXiv/2026-01",
+              "official_url": "[https://openreview.net/forum?id=HYSqpiiZlc](https://openreview.net/forum?id=HYSqpiiZlc)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Learning to Compose for Cross-domain Agentic Workflow Generation",
+              "venue_year": "arXiv/2026-02",
+              "official_url": "[https://arxiv.org/abs/2602.11114](https://arxiv.org/abs/2602.11114)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Sherlock: Reliable and Efficient Agentic Workflow Execution",
+              "venue_year": "arXiv/2025-11",
+              "official_url": "[https://arxiv.org/abs/2511.00330](https://arxiv.org/abs/2511.00330)",
+              "overlap": "problem"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "JudgeFlow with its block judge augmented by exact counterfactual node and edge ablations, matched to the same workflow executions, evaluator calls, and optimization budget.",
+        "decisive_pilot": "On a fixed collection of AFlow-generated workflows, compare the proposed credit estimator with JudgeFlow plus exact local ablations for predicting the best next edit and reducing evaluations-to-target under identical call budgets.",
+        "stop_rule": "Stop if the method does not reduce evaluations-to-target by at least 20% over JudgeFlow plus exact ablations on both a second model and a second domain while preserving final task success.",
+        "unknowns": [
+          "The public JudgeFlow description does not establish separate intervention ground truth for edges and parallel structures, but that narrower omission does not preserve the broader standalone claim."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-02-of-04.response.md"
+      }
+    ],
+    "recovery-conditioned-experience": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "revise",
+        "confidence": "medium",
+        "finding": "The residual-recovery hypothesis may be novel, but the current mechanism is primarily a hand-built admission gate and leaves the persistent update surface unspecified. Dejavu already continually admits and retrieves successful embodied experiences, PEAM learns whether and when experience should be internalized, and ACE-Brain-0.5 combines progress and recovery monitoring with rollout-derived failure-recovery memory. The contribution must therefore be the prospective relationship between incomplete recovery and harmful future reuse, not the existence of another experience filter.",
+        "required_action": "Fix the update surface to a bounded external experience memory and learn a recovery-completeness score from independently measured future reuse harm rather than hard-coding endpoint, rejoin, and residual checks.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "Dejavu: Towards Experience Feedback Learning for Embodied Intelligence",
+              "venue_year": "CVPR/2026",
+              "official_url": "[https://openaccess.thecvf.com/content/CVPR2026/html/Wu_Dejavu_Towards_Experience_Feedback_Learning_for_Embodied_Intelligence_CVPR_2026_paper.html](https://openaccess.thecvf.com/content/CVPR2026/html/Wu_Dejavu_Towards_Experience_Feedback_Learning_for_Embodied_Intelligence_CVPR_2026_paper.html)",
+              "overlap": "problem"
+            },
+            {
+              "title": "PEAM: Parametric Embodied Agent Memory through Contrastive Internalization of Experience in Minecraft",
+              "venue_year": "arXiv/2026-05",
+              "official_url": "[https://arxiv.org/abs/2605.27762](https://arxiv.org/abs/2605.27762)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "ACE-Brain-0.5: A Unified Embodied Foundational Model for Physical Agentic AI",
+              "venue_year": "arXiv/2026-07",
+              "official_url": "[https://arxiv.org/abs/2607.04426](https://arxiv.org/abs/2607.04426)",
+              "overlap": "combination"
+            }
+          ],
+          "surviving_difference": "Prospectively test whether trajectories that achieve endpoint success but fail sustained-rejoin or residual-state criteria cause negative transfer, and scale persistent memory updates using an independently verified recovery level."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Dejavu's Experience Feedback Network with endpoint-success admission, matched memory capacity, retrieval calls, interactions, and foundation model, together with a PEAM-style parameterization-worthiness score.",
+        "decisive_pilot": "In LIBERO perturbation episodes that all reach endpoint success, stratify trajectories using independently computed sustained-rejoin and residual-state probes, insert equal numbers into a fixed-size memory, and measure held-out future-task reuse harm against endpoint-only Dejavu and PEAM-style admission on a second VLA.",
+        "stop_rule": "Stop if recovery completeness predicts harmful reuse with AUROC below 0.65 on the second VLA and domain, or recovery-conditioned admission fails to improve held-out success by at least 3 points over endpoint-only admission under matched memory and calls.",
+        "unknowns": [
+          "The public ACE-Brain-0.5 description does not specify whether recovery completeness gates memory admission or update magnitude.",
+          "The extent to which Dejavu admits partially recovered trajectories rather than only contextually successful experiences is not explicit in the official abstract."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-02-of-04.response.md"
+      }
+    ],
+    "world-model-error-gated-learning": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "This is a direct restatement of decision-, value-, and policy-aware model learning. Prior work explicitly argues that globally accurate transition prediction is unnecessary and optimizes model updates toward value-relevant or policy-relevant transitions; recent work also studies calibration of such objectives. Adding action-selection, risk, and recovery decisions to web or GUI agents is a domain application unless it introduces a formally distinct objective or identifiability result.",
+        "required_action": "Stop the standalone idea and reframe it only if a formally distinct, calibrated action-rank-change objective for LLM world models can be defined and evaluated with independent intervention ground truth.",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "Value-Aware Loss Function for Model-based Reinforcement Learning",
+              "venue_year": "AISTATS/2017",
+              "official_url": "[https://proceedings.mlr.press/v54/farahmand17a.html](https://proceedings.mlr.press/v54/farahmand17a.html)",
+              "overlap": "problem"
+            },
+            {
+              "title": "Learning Policy-Aware Models for Model-Based Reinforcement Learning via Transition Occupancy Matching",
+              "venue_year": "L4DC/2023",
+              "official_url": "[https://proceedings.mlr.press/v211/ma23a.html](https://proceedings.mlr.press/v211/ma23a.html)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Calibrated Value-Aware Model Learning with Probabilistic Environment Models",
+              "venue_year": "ICML/2025",
+              "official_url": "[https://proceedings.mlr.press/v267/voelcker25a.html](https://proceedings.mlr.press/v267/voelcker25a.html)",
+              "overlap": "mechanism"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "A WMA-style agent whose world model is trained using calibrated value-aware loss and TOM-style policy-relevance weighting, with identical model capacity, transitions, planning calls, and update count.",
+        "decisive_pilot": "On WebArena-Lite, train the same world-model architecture using maximum likelihood, calibrated value-aware learning, TOM, and the proposed gate, then compare task utility and action-rank preservation at identical transition, update, and planning-call budgets.",
+        "stop_rule": "Stop if the proposed gate does not exceed calibrated value-aware or TOM training by at least 3 task-success points or reduce updates by at least 20% on both a second environment and a second model, or if gains disappear when planning calls are matched.",
+        "unknowns": [],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-02-of-04.response.md"
+      }
+    ],
+    "counterexample-generating-curriculum": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The broad curriculum claim is crowded. WebRL generates new tasks from unsuccessful attempts, DreamGym generates tasks that challenge the current policy, ATGen adversarially evolves automatically scored test cases, and formal counterexample work generates verifier-checked instances by deleting hypotheses. A thesis survives only around minimal single-constraint counterexamples to explicit agent rules and demonstrable boundary generalization rather than generic difficulty generation, failure replay, or adversarial task synthesis.",
+        "required_action": "Restrict the pilot to one verifier-rich environment and define counterexample minimality operationally through constraint deletion or delta debugging against an explicit extracted policy rule.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "ATGen: Adversarial Reinforcement Learning for Test Case Generation",
+              "venue_year": "ICLR/2026",
+              "official_url": "[https://openreview.net/forum?id=Sxj4o3qXtl](https://openreview.net/forum?id=Sxj4o3qXtl)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning",
+              "venue_year": "ICLR/2025",
+              "official_url": "[https://proceedings.iclr.cc/paper_files/paper/2025/hash/c66e1fcc9691aae706250638f36f681b-Abstract-Conference.html](https://proceedings.iclr.cc/paper_files/paper/2025/hash/c66e1fcc9691aae706250638f36f681b-Abstract-Conference.html)",
+              "overlap": "problem"
+            },
+            {
+              "title": "Learning to Disprove: Formal Counterexample Generation with Large Language Models",
+              "venue_year": "arXiv/2026-03",
+              "official_url": "[https://openreview.net/forum?id=EBa52sye9K](https://openreview.net/forum?id=EBa52sye9K)",
+              "overlap": "mechanism"
+            }
+          ],
+          "surviving_difference": "Extract an explicit behavioral rule from the current agent, synthesize an automatically verified task that violates exactly one rule condition, minimize the task under constraint deletion, and test transfer to held-out rule boundaries rather than neighboring generated tasks."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "ATGen's adversarial test generator matched for generated-task count, verifier calls, adapter updates, and curriculum rounds, with WebRL failure-derived task generation as a second reference.",
+        "decisive_pilot": "In ALFWorld with programmatic success predicates, extract one explicit behavioral rule per failure, generate verifier-confirmed task variants, minimize each by deleting constraints, and train the same small adapter on equal-size curricula; compare held-out single-constraint boundary accuracy against ATGen and WebRL-style curricula on a second model.",
+        "stop_rule": "Stop if minimized counterexamples do not outperform equal-size ATGen or WebRL-style curricula by at least 5 points on held-out boundary tasks on the second model, or if gains vanish after lexical and structural near-duplicate removal.",
+        "unknowns": [
+          "No official source located through 2026-08-01 reports the exact combination of implicit agent-rule extraction, single-constraint minimization, automatic verification, and cross-domain boundary transfer.",
+          "Automatic verification is not naturally available for all three proposed pilot domains, especially open-ended multimodal evaluation."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-02-of-04.response.md"
+      }
+    ],
+    "workflow-generalization-certificate": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The proposed perturbations are not themselves novel: WorFBench evaluates held-out workflow generalization, RobustFlow trains workflow invariance to semantically equivalent instructions, and WorkflowPerturb applies controlled structural and description perturbations. A viable thesis remains only if the contribution is a calibrated pre-commit admission rule whose certificate predicts locked out-of-loop transfer better than ordinary validation, rather than another robustness test suite. ([OpenReview][1])",
+        "required_action": "Define and calibrate a pre-commit acceptance statistic on independently generated workflow candidates, then validate it against future performance on unseen tool APIs and task-graph motifs under a matched total evaluation budget.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "Benchmarking Agentic Workflow Generation",
+              "venue_year": "ICLR/2025",
+              "official_url": "[https://openreview.net/forum?id=vunPXOFmoi](https://openreview.net/forum?id=vunPXOFmoi)",
+              "overlap": "problem"
+            },
+            {
+              "title": "RobustFlow: Towards Robust Agentic Workflow Generation",
+              "venue_year": "arXiv/2025-09",
+              "official_url": "[https://arxiv.org/abs/2509.21834](https://arxiv.org/abs/2509.21834)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "WorkflowPerturb: Calibrated Stress Tests for Evaluating Multi-Agent Workflow Metrics",
+              "venue_year": "arXiv/2026-02",
+              "official_url": "[https://arxiv.org/abs/2602.17990](https://arxiv.org/abs/2602.17990)",
+              "overlap": "experiment"
+            }
+          ],
+          "surviving_difference": "A calibrated decision rule for admitting a persistent workflow update, with certificate outcomes tied prospectively to transfer onto unseen but semantically equivalent tools and graph structures; existing work primarily benchmarks, measures, or trains robustness rather than validating this commit decision."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "AFlow-generated candidates selected by ordinary held-out utility augmented with RobustFlow-style paraphrase consistency and WorkflowPerturb-style structural stress scores.",
+        "decisive_pilot": "Generate one fixed pool of AFlow workflow candidates, then compare utility-only selection, uncalibrated perturbation-score selection, and the proposed calibrated certificate on task renaming, API-equivalent tool substitution, and unseen graph motifs, charging every certification call and token equally.",
+        "stop_rule": "Stop if certificate selection fails to reduce locked-transfer regret by at least 10% relative to the strongest non-certificate selector on both the second model and second domain, or if the advantage disappears after certification calls are included in the budget.",
+        "unknowns": [
+          "Whether the proposed tool substitutions can be automatically certified as capability-equivalent rather than merely similar in description.",
+          "Whether WorfBench, HumanEval, and HotpotQA can support one common executable workflow representation without introducing benchmark-specific adapters that dominate the result.",
+          "Whether enough independent workflow candidates and perturbation executions fit within the stated 16 GPU-hours."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-03-of-04.response.md"
+      }
+    ],
+    "budgeted-evolution-controller": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "Adaptive stopping and budget-conditioned control are already active mechanisms: TacoMAS permits a meta-controller to stop test-time co-evolution, BAGEN learns budget-aware early stopping, and VRR-Stop chooses repair versus commitment from estimated marginal gain under verifier and repair noise. The surviving novelty must therefore be explicitly about persistent cross-episode updates, rollback, and frozen transfer of a learned controller across evolution processes—not generic stop-or-continue control. ([arXiv][2])",
+        "required_action": "Construct a counterfactually evaluable replay dataset for one persistent update surface in which continue, commit, rollback, and stop decisions can be compared from the same evolution state without regenerating different candidate sequences.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "TacoMAS: Test-Time Co-Evolution of Topology and Capability in LLM-based Multi-Agent Systems",
+              "venue_year": "arXiv/2026-05",
+              "official_url": "[https://arxiv.org/abs/2605.09539](https://arxiv.org/abs/2605.09539)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "BAGEN: Are LLM Agents Budget-Aware?",
+              "venue_year": "arXiv/2026-06",
+              "official_url": "[https://arxiv.org/abs/2606.00198](https://arxiv.org/abs/2606.00198)",
+              "overlap": "problem"
+            },
+            {
+              "title": "Verify, Repair, Repeat, or Stop? Robust Stopping for Noisy Verify-Repair Loops in LLM Agents",
+              "venue_year": "arXiv/2026-07",
+              "official_url": "[https://arxiv.org/abs/2607.17641](https://arxiv.org/abs/2607.17641)",
+              "overlap": "mechanism"
+            }
+          ],
+          "surviving_difference": "A compact learned policy controlling persistent harness evolution across episodes, including rollback to prior committed versions and frozen transfer across task families; the closest work primarily controls inference-time trajectories, repair loops, or task-conditioned multi-agent adaptation."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Oracle-tuned fixed patience together with a VRR-Stop-style marginal-gain rule and a BAGEN-style learned early-stop classifier, all receiving the same logged state features, candidates, and evaluation budget.",
+        "decisive_pilot": "Generate and cache candidate update branches once for ALFWorld and WebArena-Lite, train the controller only on one family, and compare frozen continue-rollback-stop decisions against fixed patience and marginal-gain rules before evaluating unchanged on AgentBench.",
+        "stop_rule": "Stop if the controller does not save at least 30% of total candidate-generation and evaluation calls at no more than a one-point absolute utility loss on the second model and second domain, or if rollback performs no better than retaining the best historical checkpoint.",
+        "unknowns": [
+          "Whether counterfactual outcomes for rejected or rolled-back updates can be obtained without spending enough additional calls to erase the claimed savings.",
+          "Whether marginal gain, disagreement, regression, and cost are observable before the decision rather than computed using post-decision evaluations.",
+          "Whether WebArena-Lite interaction cost and latency are compatible with the stated 18 GPU-hour pilot."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-03-of-04.response.md"
+      }
+    ],
+    "memory-half-life": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The problem-mechanism pair is directly occupied. MemoryBank already implements importance- and time-dependent forgetting and reinforcement; later work studies selective deletion under task-distribution shift; SF-AMS replaces heuristic decay with utility-driven survival; and Forget to Improve explicitly scores memory by value minus harm under stale-memory and task-drift conditions. Reparameterizing these signals as a half-life is not an identifiable new learning contribution. ([arXiv][3])",
+        "required_action": "Stop standalone method development and merge the idea into a controlled benchmark of memory-staleness hazard estimation with intervention-derived ground truth.",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "MemoryBank: Enhancing Large Language Models with Long-Term Memory",
+              "venue_year": "AAAI/2024",
+              "official_url": "[https://ojs.aaai.org/index.php/AAAI/article/view/29946](https://ojs.aaai.org/index.php/AAAI/article/view/29946)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "How Memory Management Impacts LLM Agents: An Empirical Study of Experience-Following Behavior",
+              "venue_year": "arXiv/2025-05",
+              "official_url": "[https://arxiv.org/abs/2505.16067](https://arxiv.org/abs/2505.16067)",
+              "overlap": "problem"
+            },
+            {
+              "title": "SF-AMS: Strategic Forgetting for Structured Memory in LLM Agent",
+              "venue_year": "arXiv/2026-07",
+              "official_url": "[https://arxiv.org/abs/2607.22562](https://arxiv.org/abs/2607.22562)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Forget to Improve: On-Device LLM-Agent Continual Learning via Budget-Curated Memory",
+              "venue_year": "arXiv/2026-06",
+              "official_url": "[https://arxiv.org/abs/2606.25115](https://arxiv.org/abs/2606.25115)",
+              "overlap": "combination"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "SF-AMS utility-driven survival combined with Forget-to-Improve net-value curation, with MemoryBank supplying the fixed forgetting-curve anchor.",
+        "decisive_pilot": "In a piecewise-stationary ALFWorld or AndroidWorld stream, compare the proposed half-life estimator with SF-AMS, net-value curation, fixed decay, and FIFO at identical memory capacity, retrieval calls, revalidation calls, and task order.",
+        "stop_rule": "Stop if the method does not outperform both SF-AMS and net-value curation on stale-memory harm and durable-rule retention on the second model and domain, or if any gain is explained by a larger effective memory or additional revalidation calls.",
+        "unknowns": [
+          "Whether SF-AMS and Forget to Improve will have complete public implementations suitable for exact reproduction.",
+          "Whether durable rules and stale memories can be labeled independently of the same downstream evaluator used to tune the half-life.",
+          "Whether AndroidWorld, ALFWorld, and HotpotQA expose comparable forms of environmental or preference drift."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-03-of-04.response.md"
+      }
+    ],
+    "update-trust-region": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "pass",
+        "confidence": "medium",
+        "finding": "A narrowed standalone thesis survives. TeamTR establishes trust-region control for sequential parameter updates in multi-agent LLMs, MAPRO invokes small prompt mutations as a heuristic trust region, and GRASP admits skill edits through a balanced held-out regression gate. None of the located work defines and validates an occupancy-level trust region for persistent nonparametric agent updates using trajectory, action, tool-routing, and retrieval distributions, then tests whether that distance predicts future regression better than textual edit size or current-task gain. ([arXiv][4])",
+        "required_action": "Pre-register one nonparametric update surface and one independently sampled occupancy-divergence estimator before claiming a unified trust region across prompts, memories, and workflows.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "TeamTR: Trust-Region Fine-Tuning for Multi-Agent LLM Coordination",
+              "venue_year": "ICML/2026",
+              "official_url": "[https://arxiv.org/abs/2605.15207](https://arxiv.org/abs/2605.15207)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "MAPRO: Recasting Multi-Agent Prompt Optimization as Maximum a Posteriori Inference",
+              "venue_year": "arXiv/2025-10",
+              "official_url": "[https://arxiv.org/abs/2510.07475](https://arxiv.org/abs/2510.07475)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "GRASP: Gated Regression-Aware Skill Proposer for Self-Improving LLM Agents",
+              "venue_year": "arXiv/2026-05",
+              "official_url": "[https://arxiv.org/abs/2605.29668](https://arxiv.org/abs/2605.29668)",
+              "overlap": "combination"
+            }
+          ],
+          "surviving_difference": "A behavior-space trust region for discrete, persistent, nonparametric updates, estimated from independent probe trajectories and used prospectively to constrain update admission rather than merely measuring textual change or imposing a held-out regression threshold."
+        },
+        "iclr_fit": "strong",
+        "strongest_baseline": "GRASP's balanced held-out probe and hard regression-budget gate, which directly tests whether an additional behavioral-shift estimator has predictive or decision value.",
+        "decisive_pilot": "Generate the same candidate prompt or skill edits for every method, estimate each candidate's trajectory/action/tool-routing shift on a fixed independent probe set, and compare regression prediction plus the accepted-update utility-regression frontier against GRASP gating, textual edit distance, and current-task gain under identical calls.",
+        "stop_rule": "Stop if no proposed shift metric improves future-regression AUROC by at least 0.05 over the GRASP-style gate and reduces accepted-update regressions by at least 20% relative at matched retained utility on both the second model and second domain.",
+        "unknowns": [
+          "Whether trajectory KL or action-edit estimates are stable with the small probe sample permitted by the 20 GPU-hour budget.",
+          "How heterogeneous trajectory, tool-routing, and memory-retrieval distances can be combined without tuning on the regression test distribution.",
+          "Whether a trust radius learned for one update surface transfers to another rather than requiring surface-specific calibration."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-03-of-04.response.md"
+      }
+    ],
+    "correction-policy-credit": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The stated collision boundary is obsolete by the review cutoff. SCoRe trains a multi-turn correction policy; InT localizes faulty reasoning and inserts targeted corrective interventions; reset-based policy optimization resamples counterfactual continuations from localized states to assign credit; and VerlTool assigns learning signals across multi-turn tool interactions. Typed correction actions and cost pruning are useful experimental factors, but they do not rescue the generic claim of local counterfactual correction credit as a new mechanism. ([OpenReview][5])",
+        "required_action": "Stop standalone method development and reframe the contribution as a benchmark of typed correction-action attribution with executable leave-one-action-out intervention ground truth.",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "Training Language Models to Self-Correct via Reinforcement Learning",
+              "venue_year": "ICLR/2025",
+              "official_url": "[https://openreview.net/forum?id=CjwERcAU7w](https://openreview.net/forum?id=CjwERcAU7w)",
+              "overlap": "problem"
+            },
+            {
+              "title": "InT: Self-Proposed Interventions Enable Credit Assignment in LLM Reasoning",
+              "venue_year": "arXiv/2026-01",
+              "official_url": "[https://arxiv.org/abs/2601.14209](https://arxiv.org/abs/2601.14209)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "Credit Assignment with Resets in Language Model Reasoning",
+              "venue_year": "arXiv/2026-05",
+              "official_url": "[https://arxiv.org/abs/2605.25507](https://arxiv.org/abs/2605.25507)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "VerlTool: Towards Holistic Agentic Reinforcement Learning with Tool Use",
+              "venue_year": "TMLR/2026",
+              "official_url": "[https://openreview.net/forum?id=oWFtI0cNsE](https://openreview.net/forum?id=oWFtI0cNsE)",
+              "overlap": "combination"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "Self-Reset Policy Optimization for localized counterfactual continuations combined with VerlTool-style tool-interaction credit and the SCoRe two-turn correction policy.",
+        "decisive_pilot": "Build fixed-prefix correction trees in which checking, resampling, tool use, and local rewrite actions are independently removed or replaced, compare estimated credits with their measured leave-one-action-out effects, and test whether pruning low-credit actions preserves success under identical rollout budgets.",
+        "stop_rule": "Stop if estimated credits have held-out Spearman correlation below 0.5 with intervention effects or if removing the lowest-credit actions fails to save at least 20% of correction calls while limiting success loss to one absolute point on both the second model and second domain.",
+        "unknowns": [
+          "Whether removing one correction action leaves a semantically valid continuation rather than changing all downstream states.",
+          "Whether one action taxonomy can be applied consistently to HumanEval, ALFWorld, and MM-Vet.",
+          "Whether independent executable verifiers exist for all domains without using the same critic that produces the proposed credit.",
+          "Whether multi-domain policy training and counterfactual rollouts fit within the stated 24 GPU-hours."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-03-of-04.response.md"
+      }
+    ],
+    "curriculum-drift-controller": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The proposal combines mechanisms already demonstrated separately and jointly: WebRL explicitly controls policy-distribution drift with adaptive updates and replay, Library Drift supplies pre-regression diagnostics and lifecycle interventions, and PACE supplies a statistically controlled stop-or-commit gate. A unified drift score is not, by itself, an identifiable new learning contribution.",
+        "required_action": "Stop this as a standalone thesis and retain it only as an evaluation or governance component inside an idea with a genuinely new update mechanism.",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning",
+              "venue_year": "ICLR 2025",
+              "official_url": "[https://arxiv.org/abs/2411.02337](https://arxiv.org/abs/2411.02337)",
+              "overlap": "combination"
+            },
+            {
+              "title": "Library Drift: Diagnosing and Fixing a Silent Failure Mode in Self-Evolving LLM Skill Libraries",
+              "venue_year": "arXiv 2026-05-19",
+              "official_url": "[https://arxiv.org/abs/2605.19576](https://arxiv.org/abs/2605.19576)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "PACE: Anytime-Valid Acceptance Tests for Self-Evolving Agents",
+              "venue_year": "arXiv 2026-06-06",
+              "official_url": "[https://arxiv.org/abs/2606.08106](https://arxiv.org/abs/2606.08106)",
+              "overlap": "mechanism"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "Library Drift contribution and router-engagement diagnostics combined with a PACE commit gate on the identical prompt, memory, or skill-update stream.",
+        "decisive_pilot": "Run a sequential external-skill evolution stream with frozen train, anchor, and out-of-loop splits; compare the proposed controller against Library Drift plus PACE using identical candidate updates, executions, tokens, evaluator calls, and replay capacity, measuring regression-prediction AUROC, warning lead time, final held-out return, and cumulative cost.",
+        "stop_rule": "Stop if the proposed signal does not predict held-out regression earlier than anchor-score degradation on both models and domains, or if Library Drift plus PACE matches its retained performance under the same call and update budgets.",
+        "unknowns": [
+          "No official specification was provided for the behavioral-distance statistic, its calibration, or its aggregation across heterogeneous update surfaces.",
+          "The number and independence of frozen anchors, replay calls, evaluator calls, and token budgets are unspecified."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-04-of-04.response.md"
+      }
+    ],
+    "lineage-aware-rollback": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "Versioned resources, lineage, rollback, inactive branches, and whole-memory semantic rollback already exist. The potentially surviving contribution is narrower: estimating a causally sufficient minimal subset of interacting commits whose removal repairs a regression while preserving unrelated accumulated gains.",
+        "required_action": "Reformulate the work around causal minimal-set rollback with explicit dependency identification, interaction handling, and a ground-truth rollback benchmark rather than around lineage storage.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "Autogenesis: A Self-Evolving Agent Protocol",
+              "venue_year": "arXiv 2026-04-16",
+              "official_url": "[https://arxiv.org/abs/2604.15034](https://arxiv.org/abs/2604.15034)",
+              "overlap": "combination"
+            },
+            {
+              "title": "ChronoMem: Version Control and Semantic Rollback for Large Language Model Agent Memory",
+              "venue_year": "arXiv 2026-07-30",
+              "official_url": "[https://arxiv.org/abs/2607.27773](https://arxiv.org/abs/2607.27773)",
+              "overlap": "mechanism"
+            },
+            {
+              "title": "ANNEAL: Adapting LLM Agents via Governed Symbolic Patch Learning",
+              "venue_year": "arXiv 2026-05-04",
+              "official_url": "[https://arxiv.org/abs/2605.16309](https://arxiv.org/abs/2605.16309)",
+              "overlap": "mechanism"
+            }
+          ],
+          "surviving_difference": "Causal identification of a minimum interacting rollback set across prompt, memory, workflow, and small-module commits, evaluated by repaired regression and preserved cumulative gain rather than by restoration to one historical snapshot."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Autogenesis-style latest-good snapshot rollback plus equal-budget greedy leave-one-commit-out and pairwise disable-replay search.",
+        "decisive_pilot": "Construct 12-commit prompt, memory, and workflow sequences containing preregistered single-cause and two-way interaction regressions; compare minimal-set recovery precision, repaired success, retained pre-regression gain, and replay cost against global rollback, greedy ablation, and exhaustive search where tractable.",
+        "stop_rule": "Stop if the inferred rollback set fails to recover the planted causes or does not preserve more accumulated held-out gain than global and greedy rollback on the second model and domain under matched replay calls.",
+        "unknowns": [
+          "The dependency-edge estimator, treatment of higher-order interactions, and optimization objective for minimal rollback are unspecified.",
+          "No official evidence establishes that hierarchical disable-replay can identify causal rollback sets from the proposed low-resource number of executions.",
+          "The semantics of reverting dependent updates whose descendants have already been modified are undefined."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-04-of-04.response.md"
+      }
+    ],
+    "outcome-equivalent-trajectory-contrast": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "CLEAR and MemCollab already contrast multiple trajectories for the same task to distill reusable context or task-level invariants while suppressing trajectory-specific artifacts. Restricting the pool to trajectories with the same endpoint does not create a new credit signal, because endpoint equivalence neither establishes process validity nor identifies which shared behavior caused success.",
+        "required_action": "Stop the proposal as stated and only reopen it after replacing outcome matching with independently verified counterfactual process interventions that yield identifiable invariance evidence.",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "CLEAR: Context Augmentation from Contrastive Learning of Experience via Agentic Reflection",
+              "venue_year": "arXiv 2026-04-08",
+              "official_url": "[https://arxiv.org/abs/2604.07487](https://arxiv.org/abs/2604.07487)",
+              "overlap": "combination"
+            },
+            {
+              "title": "MemCollab: Cross-Agent Memory Collaboration via Contrastive Trajectory Distillation",
+              "venue_year": "arXiv 2026-03-24",
+              "official_url": "[https://arxiv.org/abs/2603.23234](https://arxiv.org/abs/2603.23234)",
+              "overlap": "combination"
+            },
+            {
+              "title": "Self-Consolidation for Self-Evolving Agents",
+              "venue_year": "arXiv 2026-02-02",
+              "official_url": "[https://arxiv.org/abs/2602.01966](https://arxiv.org/abs/2602.01966)",
+              "overlap": "mechanism"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "MemCollab same-task contrastive trajectory distillation, supplemented by CLEAR multi-trajectory reflection, with identical rollout counts and memory-token budgets.",
+        "decisive_pilot": "For each ALFWorld task, collect a fixed number of successful trajectories and matched mixed-outcome trajectories, extract lessons with the proposed intersection rule and with MemCollab or CLEAR, and evaluate frozen transfer to state-perturbed task variants under identical trajectory-generation, reflection, retrieval, and token budgets.",
+        "stop_rule": "Stop if success-success contrast does not outperform mixed-outcome contrastive distillation on held-out perturbations, or if any gain disappears after matching the number of generated trajectories and retained memory tokens.",
+        "unknowns": [
+          "Independent criteria for a valid process, a meaningful process difference, and an accidental shortcut are not defined.",
+          "The proposal does not specify how shared lessons are attributed when successful trajectories share both causal and incidental behavior.",
+          "The potentially substantial cost of obtaining multiple successful trajectories is absent from the baseline budget."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-04-of-04.response.md"
+      }
+    ],
+    "failure-frontier-curriculum": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "Selecting tasks near the learner's success boundary is established curriculum learning, while WebRL and Socratic-SWE already generate tasks from current failures and adapt them to the solver's evolving capability frontier. The surviving opportunity is specifically to test adjacent-checkpoint discriminativeness as a cheaper, gradient-free estimator of future out-of-loop learning value.",
+        "required_action": "Replace the generic frontier claim with a formally defined adjacent-checkpoint discrimination score and directly test whether it predicts held-out improvement better than success probability, failure replay, and validation-gradient alignment.",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            {
+              "title": "Socratic-SWE: Self-Evolving Coding Agents via Trace-Derived Agent Skills",
+              "venue_year": "arXiv 2026-06-05",
+              "official_url": "[https://arxiv.org/abs/2606.07412](https://arxiv.org/abs/2606.07412)",
+              "overlap": "combination"
+            },
+            {
+              "title": "WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning",
+              "venue_year": "ICLR 2025",
+              "official_url": "[https://arxiv.org/abs/2411.02337](https://arxiv.org/abs/2411.02337)",
+              "overlap": "problem"
+            },
+            {
+              "title": "Proximal Curriculum for Reinforcement Learning Agents",
+              "venue_year": "TMLR 2023",
+              "official_url": "[https://arxiv.org/abs/2304.12877](https://arxiv.org/abs/2304.12877)",
+              "overlap": "mechanism"
+            }
+          ],
+          "surviving_difference": "A gradient-free task-value estimator based on behavioral disagreement between adjacent persistent agent versions, provided that it predicts out-of-loop gain rather than merely selecting medium-difficulty tasks."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Socratic-SWE solver-gradient alignment adapted to the same update surface, together with WebRL-style failure generation and a ProCuRL success-probability frontier.",
+        "decisive_pilot": "Generate one common candidate-task pool, score every task by adjacent-checkpoint discrimination, current success probability, failure provenance, and validation-gradient alignment where available, then train equal-size updates and compare gain per accepted task on frozen ID and OOD evaluations using identical generation and execution budgets.",
+        "stop_rule": "Stop if checkpoint discrimination has no stronger rank correlation with held-out gain than success-probability or gradient-alignment scores, or if its selected curriculum fails to improve gain per task on the second model and domain.",
+        "unknowns": [
+          "The checkpoint-discrimination statistic, required number of rollouts, and treatment of stochastic outcome disagreement are unspecified.",
+          "The proposal does not establish that adjacent-checkpoint disagreement reflects useful learning progress rather than evaluator noise or regression.",
+          "The cost of executing candidate tasks on multiple checkpoints is not included in the stated interaction budget."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-04-of-04.response.md"
+      }
+    ],
+    "applicability-bounded-lessons": [
+      {
+        "reviewer": "agent-project-web-gpt-iclr-area-chair",
+        "review_date": "2026-08-06",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "Assay directly addresses lessons or skills that help some tasks and harm superficially related ones: it measures per-skill causal heterogeneity, splits skills into conditional variants with explicit triggers, and suppresses predicted-harmful skills per task. RaMem independently stores contextual validity conditions and performs validity-aware retrieval. Adding support text, counterexamples, and abstention fields is therefore a representation change rather than a distinct learning mechanism.",
+        "required_action": "Stop this standalone idea and merge its counterexample or abstention representation into an Assay-class causal skill-selection baseline unless a formal calibrated support-set learner can be specified.",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            {
+              "title": "Not All Skills Help: Measuring and Repairing Agent Knowledge",
+              "venue_year": "arXiv 2026-06-13",
+              "official_url": "[https://arxiv.org/abs/2606.15390](https://arxiv.org/abs/2606.15390)",
+              "overlap": "combination"
+            },
+            {
+              "title": "RaMem: Contextual Reinstatement for Long-term Agentic Memory",
+              "venue_year": "arXiv 2026-06-22",
+              "official_url": "[https://arxiv.org/abs/2606.22844](https://arxiv.org/abs/2606.22844)",
+              "overlap": "problem"
+            },
+            {
+              "title": "SkillMAS: Skill Co-Evolution with LLM-based Multi-Agent System",
+              "venue_year": "arXiv 2026-05-10",
+              "official_url": "[https://arxiv.org/abs/2605.09341](https://arxiv.org/abs/2605.09341)",
+              "overlap": "mechanism"
+            }
+          ],
+          "surviving_difference": ""
+        },
+        "iclr_fit": "weak",
+        "strongest_baseline": "Assay conditional skill splitting and per-task causal masking with the same learned lesson library, development set, retrieval budget, and foundation model.",
+        "decisive_pilot": "Create paired tasks that are semantically similar but differ by one applicability constraint, learn lessons from one side, and compare unbounded retrieval, explicit-condition prompting, RaMem-style validity retrieval, Assay causal masking, and the proposed representation on positive transfer, harmful invocation rate, selective risk, coverage, and total calls.",
+        "stop_rule": "Stop if the method does not reduce harmful cross-task invocation beyond Assay at matched coverage and calls, or if its apparent advantage is reproduced by appending ordinary trigger conditions to each lesson.",
+        "unknowns": [
+          "The procedure for learning support conditions, selecting minimal counterexamples, and defining abstention regions is unspecified.",
+          "No calibration objective or coverage-risk guarantee is supplied for abstention.",
+          "The proposed common lesson representation across ALFWorld, AgentBench, and MM-Vet is undefined."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/iclr-project-web-gpt/batch-04-of-04.response.md"
       }
     ]
   }

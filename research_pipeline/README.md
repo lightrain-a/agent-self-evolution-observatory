@@ -108,7 +108,7 @@ No provider may directly mark an idea as accepted. `research_system.py` composes
 
 ## Independent review of all first-round ICLR passes
 
-The seven-dimension programmatic gate currently passes 26 ICLR ideas. These are not treated as externally confirmed. `iclr_external_review.py` sends every pending pass through the existing Code Oracle → signed-in ChatGPT web UI → exact Agent-project route, requires a strict JSON verdict, and persists each completed batch before rebuilding the public bank.
+The seven-dimension programmatic gate passes 26 ICLR ideas. On 2026-08-06, the authoritative host completed the Code Oracle → signed-in ChatGPT web UI → exact Agent-project audit for all 26. The external distribution is 4 PASS, 10 REVISE, and 12 BLOCK. The bank now orders ideas by R2 verdict while preserving the original R1 rank and priority.
 
 Prepare the five default batches without invoking the browser:
 
@@ -119,10 +119,10 @@ python3 -m research_pipeline.iclr_external_review --batch-size 5
 Execute them on the authoritative host that owns the authenticated Oracle/Chrome session:
 
 ```bash
-./scripts/on-52.sh python3 -m research_pipeline.iclr_external_review --run --batch-size 5
+bash scripts/on-52.sh python3 -m research_pipeline.iclr_external_review --run --batch-size 5 --max-attempts 3
 ```
 
-The runner refuses other hosts. `generated/iclr-external-reviews.json` is the persistent source of truth, while `generated/iclr-low-resource-ideas.json` merges only stored results into the website. A failed batch cannot erase earlier reviews, and missing reviews remain pending rather than implicitly passing.
+The runner refuses other hosts. `generated/iclr-external-reviews.json` is the persistent source of truth, while `generated/iclr-low-resource-ideas.json` merges only stored results into the website. A failed or malformed response is retried without erasing earlier reviews. The completed store reports 26 reviewed, zero pending, and zero failed final batches. R2 PASS does not imply selected-ready: every surviving direction still requires P0/P1/P2 evidence.
 
 ## Continuous automation and safety boundary
 

@@ -8,6 +8,7 @@ import socket
 import subprocess
 import sys
 import tempfile
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Sequence
@@ -192,6 +193,11 @@ def update_store(
         existing = [item for item in reviews.get(idea_id, []) if item.get("reviewer") != review.get("reviewer")]
         reviews[idea_id] = [*existing, review]
     reviewed = sum(bool(reviews.get(idea_id)) for idea_id in all_ids)
+    verdict_counts = {verdict: 0 for verdict in ("pass", "revise", "block", "unknown")}
+    for idea_id in all_ids:
+        items = reviews.get(idea_id, [])
+        verdict = items[-1].get("verdict", "unknown") if items else "unknown"
+        verdict_counts[verdict if verdict in verdict_counts else "unknown"] += 1
     store.update({
         "schema_version": "1.0",
         "updated_at": utc_now(),
@@ -207,6 +213,7 @@ def update_store(
         "last_attempt": utc_now(),
         "last_attempt_host": attempt_host,
         "last_attempt_result": attempt_result,
+        "verdict_counts": verdict_counts,
     })
     return store
 
@@ -259,6 +266,7 @@ def run_batches(
     store_path: Path = DEFAULT_EXTERNAL_REVIEW_JSON,
     timeout: int = 900,
     max_batches: int | None = None,
+    max_attempts: int = 3,
 ) -> dict[str, Any]:
     host = socket.gethostname()
     if host != EXPECTED_HOST:
@@ -270,31 +278,57 @@ def run_batches(
     batches = manifest.get("batches", [])
     if max_batches is not None:
         batches = batches[:max_batches]
+    if max_attempts < 1:
+        raise ValueError("max_attempts must be positive")
     for batch in batches:
         prompt_path = Path(batch["prompt"])
         response_path = Path(batch["response"])
-        command = [
-            sys.executable,
-            str(runner),
-            "Review the attached ICLR idea batch. Return only the required JSON object.",
-            "--file",
-            str(prompt_path),
-            "--slug",
-            f"iclr-idea-audit-{batch['index']:02d}",
-            "--timeout",
-            str(timeout),
-            "--output",
-            str(response_path),
-        ]
-        completed = subprocess.run(command, cwd=PROJECT_ROOT, text=True, capture_output=True, check=False, timeout=timeout + 60)
-        if completed.returncode != 0:
-            store.setdefault("status", {})["failed_batches"] = int(store.get("status", {}).get("failed_batches", 0)) + 1
-            store = update_store(store, {}, all_ids=[idea["id"] for idea in bank["passed_ideas"]], attempt_result=f"batch_{batch['index']}_failed", attempt_host=host)
-            _atomic_json(store_path, store)
-            raise RuntimeError(completed.stderr[-3000:] or completed.stdout[-3000:] or f"batch {batch['index']} failed")
-        payload = extract_json(response_path.read_text(encoding="utf-8"))
-        reviews = normalize_response(payload, batch["idea_ids"], source_artifact=str(response_path))
+        reviews: dict[str, dict[str, Any]] | None = None
+        last_error = ""
+        for attempt in range(1, max_attempts + 1):
+            response_path.unlink(missing_ok=True)
+            command = [
+                sys.executable,
+                str(runner),
+                "Review the attached ICLR idea batch. Return only the required JSON object.",
+                "--file",
+                str(prompt_path),
+                "--slug",
+                f"iclr-idea-audit-{batch['index']:02d}-attempt-{attempt}",
+                "--timeout",
+                str(timeout),
+                "--output",
+                str(response_path),
+            ]
+            try:
+                completed = subprocess.run(command, cwd=PROJECT_ROOT, text=True, capture_output=True, check=False, timeout=timeout + 60)
+                if completed.returncode != 0:
+                    raise RuntimeError(completed.stderr[-3000:] or completed.stdout[-3000:] or f"Oracle exited with {completed.returncode}")
+                if not response_path.exists():
+                    raise RuntimeError("Oracle completed without a response artifact")
+                payload = extract_json(response_path.read_text(encoding="utf-8"))
+                reviews = normalize_response(payload, batch["idea_ids"], source_artifact=str(response_path))
+                break
+            except (OSError, RuntimeError, ValueError, json.JSONDecodeError, subprocess.TimeoutExpired) as error:
+                last_error = str(error)
+                status = store.setdefault("status", {})
+                status["failed_batches"] = int(status.get("failed_batches", 0)) + 1
+                store = update_store(
+                    store,
+                    {},
+                    all_ids=[idea["id"] for idea in bank["passed_ideas"]],
+                    attempt_result=f"batch_{batch['index']}_attempt_{attempt}_failed",
+                    attempt_host=host,
+                )
+                status = store.setdefault("status", {})
+                status["last_error"] = last_error[:1000]
+                _atomic_json(store_path, store)
+                if attempt < max_attempts:
+                    time.sleep(min(30, 10 * attempt))
+        if reviews is None:
+            raise RuntimeError(f"batch {batch['index']} failed after {max_attempts} attempts: {last_error}")
         store = update_store(store, reviews, all_ids=[idea["id"] for idea in bank["passed_ideas"]], attempt_result=f"batch_{batch['index']}_completed", attempt_host=host)
+        store.setdefault("status", {}).pop("last_error", None)
         _atomic_json(store_path, store)
         write_iclr_idea_bank()
     return store
@@ -307,6 +341,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=5)
     parser.add_argument("--max-batches", type=int)
     parser.add_argument("--timeout", type=int, default=900)
+    parser.add_argument("--max-attempts", type=int, default=3)
     parser.add_argument("--bank", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--store", type=Path, default=DEFAULT_EXTERNAL_REVIEW_JSON)
     parser.add_argument("--output-dir", type=Path)
@@ -321,7 +356,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     output_dir = args.output_dir or settings.run_dir / "reviews" / "iclr-project-web-gpt"
     manifest = prepare_batches(bank, output_dir, batch_size=args.batch_size, include_reviewed=args.include_reviewed, review_store=read_store(args.store))
     if args.run:
-        store = run_batches(bank, manifest, store_path=args.store, timeout=args.timeout, max_batches=args.max_batches)
+        store = run_batches(bank, manifest, store_path=args.store, timeout=args.timeout, max_batches=args.max_batches, max_attempts=args.max_attempts)
         print(json.dumps(store.get("status", {}), ensure_ascii=False))
     else:
         print(json.dumps({"output_dir": str(output_dir), **{key: manifest[key] for key in ("total_passed_ideas", "already_reviewed", "queued_ideas", "batch_size")}}, ensure_ascii=False))

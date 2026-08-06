@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-06 · Complete Oracle review of all ICLR first-round passes
+
+- Restored access to the authoritative `admin01-NF5468M5` execution host and verified the exact Agent-project ChatGPT route with an Oracle browser smoke test.
+- Completed official-source, mechanism-level external reviews for all 26 first-round-passed ICLR ideas through four resumable five-idea batches plus the previously stored review.
+- Recorded the strict verdict distribution: 4 PASS, 10 REVISE, and 12 BLOCK, with zero pending ideas and zero failed final batches.
+- Added per-batch retries for transient ChatGPT errors, atomic persistence, unique attempt sessions, and resumable continuation without rerunning completed ideas.
+- Reordered the ICLR bank by R2 verdict while retaining the original R1 rank and frozen programmatic priority for traceability.
+- Added explicit external verdict fields, confidence, verdict counts, colored cards, R2 badges, and complete review-log reporting.
+- Preserved the four PASS directions as experiment-pending rather than selected-ready because no P0/P1/P2 results have been ingested.
+
 ## 2026-08-01 · All-pass Oracle and Agent-project review queue
 
 - Identified the authoritative ICLR first-round portfolio as 26 seven-dimension passes, with one existing Agent-project web-GPT review and twenty-five pending independent reviews.

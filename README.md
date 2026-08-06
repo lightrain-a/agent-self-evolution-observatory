@@ -135,7 +135,7 @@ Both cycles use exclusive locks, preserve the previous valid deployment snapshot
 
 ## External-agent review status
 
-The ICLR programmatic first round currently passes 26 ideas. Independent Code Oracle → signed-in Agent-project ChatGPT review is tracked separately: one stored review exists for Regression-Gated Self-Evolution and twenty-five ideas remain pending. The current 69-server worker is not the authenticated browser host; a real batch invocation was rejected by the host guard because Oracle/Chrome is restricted to `admin01-NF5468M5`.
+The ICLR programmatic first round passes 26 ideas. On 2026-08-06, all 26 were independently audited through Code Oracle and the signed-in ChatGPT Agent project on `admin01-NF5468M5`. The strict verdict distribution is **4 PASS, 10 REVISE, and 12 BLOCK**. The public ICLR bank is now ordered by R2 verdict while preserving every idea's original R1 rank.
 
 The persistent review source is `generated/iclr-external-reviews.json`; daily ICLR-bank rebuilds merge it without erasing completed reviews or converting missing reports into passes. The batch module is `research_pipeline/iclr_external_review.py`:
 
@@ -147,7 +147,7 @@ python3 -m research_pipeline.iclr_external_review --batch-size 5
 ./scripts/on-52.sh python3 -m research_pipeline.iclr_external_review --run --batch-size 5
 ```
 
-CodexFlow remains unavailable because account connection fails. Previous visual PASS/REVISE/BLOCK verdicts remain in the secondary CVPR artifact and are not treated as generic ICLR consensus.
+The four standalone R2 PASS directions are Regression-Gated Self-Evolution, Contradiction-Preserving Memory Consolidation, Compositional Update Compatibility, and Agent Update Trust Region. They remain experiment-pending rather than selected-ready because no P0/P1/P2 result has entered the pilot registry. The Oracle-mediated Agent-project audit is one consistent external-review route, not a multi-agent vote. CodexFlow remains unavailable because account connection fails, and previous visual verdicts remain isolated in the secondary CVPR artifact.
 
 ## Quality assurance
 
@@ -188,7 +188,7 @@ The checks cover:
 - 9 canonical pages and 19 compatibility redirects;
 - navigation targets, merged content groups, redirect anchors, and the page-specific chapter configuration;
 - all 34 bilingual Idea reasoning records and their six mandatory argument fields;
-- the ICLR-first evidence pipeline, eight mechanism tracks, seven reviewer dimensions, twenty-six passed candidates, the persistent Oracle/web-GPT reviewed-versus-pending count, three structured blocks, twelve historical advisor dossiers, the complete 34-idea archive, and the folded CVPR follow-up bank;
+- the ICLR-first evidence pipeline, eight mechanism tracks, seven reviewer dimensions, twenty-six R1 passes, complete 26/26 Oracle/web-GPT review coverage, the 4 PASS / 10 REVISE / 12 BLOCK R2 distribution, three structured blocks, twelve historical advisor dossiers, the complete 34-idea archive, and the folded CVPR follow-up bank;
 - 42 executable low-resource CVPR protocols, one structured block, 18 early rejections, 12 published experiment-substrate audits, and project-scoped web-GPT verdicts;
 - JavaScript syntax and one-to-one bilingual coverage of all six Idea reasoning fields;
 - sitemap, CNAME, favicon, manifest, robots, and 404 resources;
