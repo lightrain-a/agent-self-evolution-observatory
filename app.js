@@ -213,7 +213,7 @@ function setLanguage(next) {
 
 function renderFooter() {
   const footer = document.querySelector(".footer");
-  if (footer) footer.innerHTML = `${language === "zh" ? "Agent 自进化研究站" : "Agent Self-Evolution Observatory"} · <a href="bibliography.html#group-coverage-method">${language === "zh" ? "覆盖协议" : "Coverage protocol"}</a> · <a href="bibliography.html">${language === "zh" ? "动态文献库" : "Live bibliography"}</a> · <a href="https://www.semanticscholar.org/product/api" target="_blank" rel="noopener">${language === "zh" ? "文献元数据由 Semantic Scholar 提供" : "Literature metadata powered by Semantic Scholar"}</a> · <a href="https://github.com/lightrain-a/agent-self-evolution-observatory" target="_blank" rel="noopener">GitHub</a> · 30 July 2026`;
+  if (footer) footer.innerHTML = `${language === "zh" ? "Agent 自进化研究站" : "Agent Self-Evolution Observatory"} · <a href="bibliography.html#group-coverage-method">${language === "zh" ? "覆盖协议" : "Coverage protocol"}</a> · <a href="bibliography.html">${language === "zh" ? "动态文献库" : "Live bibliography"}</a> · <a href="https://www.semanticscholar.org/product/api" target="_blank" rel="noopener">${language === "zh" ? "文献元数据由 Semantic Scholar 提供" : "Literature metadata powered by Semantic Scholar"}</a> · <a href="https://github.com/lightrain-a/agent-self-evolution-observatory" target="_blank" rel="noopener">GitHub</a> · 6 August 2026`;
 }
 function renderSemanticScholarStatus() {
   const meta = window.S2_LITERATURE_META;
