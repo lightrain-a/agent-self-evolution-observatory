@@ -1,4 +1,4 @@
-name: Deploy static Pages
+name: Clear stuck GitHub Pages deployments
 
 on:
   push:
@@ -7,32 +7,80 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: read
   pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Extract and cancel failed Pages deployments
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          failed_runs=(
+            31100073917
+            31100909674
+            31101929725
+            31103272160
+            31104352820
+            31104349976
+            31105693331
+            31105942711
+          )
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
+          ids_file=/tmp/pages-deployment-ids.txt
+          : > "${ids_file}"
 
-      - name: Upload static site artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: .
+          for run_id in "${failed_runs[@]}"; do
+            archive="/tmp/pages-logs-${run_id}.zip"
+            status=$(curl --silent --show-error --location \
+              --output "${archive}" --write-out '%{http_code}' \
+              --header 'Accept: application/vnd.github+json' \
+              --header "Authorization: Bearer ${GH_TOKEN}" \
+              --header 'X-GitHub-Api-Version: 2026-03-10' \
+              "https://api.github.com/repos/${REPOSITORY}/actions/runs/${run_id}/logs")
+            if [ "${status}" != "200" ]; then
+              echo "Unable to read run ${run_id} logs (HTTP ${status}); continuing."
+              continue
+            fi
+            unzip -p "${archive}" \
+              | grep -E 'Created deployment for [0-9a-f]{40}, ID:' \
+              | sed -E 's/.*ID: ([^[:space:]]+).*/\1/' \
+              >> "${ids_file}" || true
+          done
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          sort -u "${ids_file}" -o "${ids_file}"
+          if [ ! -s "${ids_file}" ]; then
+            echo 'No Pages deployment IDs were found in the failed-run logs.'
+            exit 1
+          fi
+
+          echo 'Pages deployment IDs found:'
+          cat "${ids_file}"
+
+          while IFS= read -r deployment_id; do
+            [ -z "${deployment_id}" ] && continue
+            status=$(curl --silent --show-error --location \
+              --output /tmp/pages-cancel-response.json --write-out '%{http_code}' \
+              --request POST \
+              --header 'Accept: application/vnd.github+json' \
+              --header "Authorization: Bearer ${GH_TOKEN}" \
+              --header 'X-GitHub-Api-Version: 2026-03-10' \
+              "https://api.github.com/repos/${REPOSITORY}/pages/deployments/${deployment_id}/cancel")
+            case "${status}" in
+              200|202|204)
+                echo "Canceled Pages deployment ${deployment_id} (HTTP ${status})."
+                ;;
+              404|409)
+                echo "Pages deployment ${deployment_id} is already absent or final (HTTP ${status})."
+                ;;
+              *)
+                echo "::error::Failed to cancel Pages deployment ${deployment_id} (HTTP ${status})."
+                exit 1
+                ;;
+            esac
+          done < "${ids_file}"
