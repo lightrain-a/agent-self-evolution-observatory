@@ -35,8 +35,8 @@ window.PAGE_ARCHITECTURES = {
   },
   "system-overview":{
     chapters:[
-      {id:"system-design",title:{en:"I · How the research system works",zh:"第一章 · 系统怎么做的"},question:{en:"How do literature, evidence, idea operators, reviews, and pilots form one traceable data flow?",zh:"文献、证据、Idea 算子、审查与 Pilot 如何构成一条可追踪的数据流？"}},
-      {id:"current-ideas",title:{en:"II · Current ideas and decision status",zh:"第二章 · 目前有哪些 Idea"},question:{en:"Which ideas passed, which require repair, which were blocked, and what should advisors decide next?",zh:"哪些 Idea 通过、哪些需要修改、哪些被停止，以及下一步希望师兄和老师判断什么？"}}
+      {id:"system-design",title:{en:"I · Backend architecture and research data flow",zh:"第一章 · 后台架构与科研数据流"},question:{en:"How are literature, evidence, idea operators, reviews, pilots, persistent artifacts, and automation boundaries connected?",zh:"文献、证据、Idea 算子、审查、Pilot、持久化工件与自动化边界如何连接？"}},
+      {id:"current-ideas",title:{en:"II · Current ideas and decision status",zh:"第二章 · 当前 Idea 与决策状态"},question:{en:"Which ideas passed, which require repair, which were blocked, and what evidence is still missing?",zh:"哪些 Idea 通过、哪些需要重构、哪些已停止，以及目前还缺少什么实验依据？"}}
     ]
   },
   "research-directions":{

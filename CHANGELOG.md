@@ -1,12 +1,14 @@
 # Changelog
 
-## 2026-08-06 · Advisor-facing system and idea overview
+## 2026-08-06 · Technical research-system and idea overview
 
-- Added `system-overview.html` as a separate advisor-facing page with exactly two chapters: how the research system works and which ideas currently remain.
-- Connected the page directly to the live Semantic Scholar metadata, evidence graph, collision engine, ICLR R2 verdicts, inspired-idea reviews, and pilot registry rather than duplicating static counts.
-- Visualized the complete data flow from scope and retrieval through structured evidence, eight idea operators, R1/R2 review, and P0/P1/P2 result feedback.
-- Added the four main PASS ideas, ten main REVISE ideas, blocked archive, inspired pilot-now direction, seven inspired repair candidates, and four questions for advisor judgment.
-- Added navigation, home entry, sitemap coverage, page hierarchy, static assertions, and real-browser tests linking the overview to both sections of `paper-ideas.html`.
+- Reworked `system-overview.html` from an advisor-facing brief into technical documentation of the live backend and decision state.
+- Added seven backend layers, ten input/process/output stages, ten stage data contracts, eight persistent-artifact classes, and explicit frontend-versus-backend visibility.
+- Expanded literature ingestion, normalization, paper-field extraction, evidence graph, idea synthesis, R1 review, mechanism collision, R2 external review, and P0/P1/P2 feedback paths.
+- Replaced the short automation note with complete bilingual cards for automatic execution, conditional automation, and human-controlled decisions, including failure recovery and static frontend publication.
+- Fixed the component table to read the actual `component`, `source`, `status`, and `evidence` fields from the generated system state.
+- Removed the advisor-message and advisor-question copy while preserving direct links to the main and supplementary Idea banks.
+- Extended static and real-browser tests to require seven layers, ten stages/contracts, eight artifacts, three automation-boundary categories, fourteen boundary rules, six backend components, and complete non-overflowing Chinese rendering.
 
 ## 2026-08-06 · Internet-inspired candidate expansion and self-screening
 

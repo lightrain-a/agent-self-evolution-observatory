@@ -269,9 +269,16 @@ def main() -> None:
     if any(position < 0 for position in system_positions) or system_positions != sorted(system_positions):
         fail("system overview must load live literature, system state, both idea banks, and its renderer before app.js")
     system_view = (ROOT / "system-overview-view.js").read_text(encoding="utf-8")
-    for marker in ("renderSystemDesign", "renderCurrentIdeas", "system-stage", "system-advisor-questions", "paper-ideas.html#iclr-low-resource-bank", "paper-ideas.html#machine-school-inspired-ideas"):
+    for marker in ("renderSystemDesign", "renderCurrentIdeas", "renderLiveArchitecture", "renderDataContracts", "renderAutomationBoundary", "system-boundary-card", "system-artifact-table", "paper-ideas.html#iclr-low-resource-bank", "paper-ideas.html#machine-school-inspired-ideas"):
         if marker not in system_view:
             fail(f"system overview renderer is missing {marker}")
+    system_content = (ROOT / "content-system-overview.js").read_text(encoding="utf-8")
+    advisor_markers = ("师兄汇报", "希望师兄", "Advisor Brief", "advisor-facing", "advisor judgment")
+    if any(marker in system_view or marker in system_content for marker in advisor_markers):
+        fail("system overview must be technical documentation rather than an advisor-facing message")
+    for marker in ("自动执行", "条件自动", "人工控制", "Pages 只发布 frontend-only 静态快照", "没有 P0/P1/P2 证据时"):
+        if marker not in system_view:
+            fail(f"Chinese automation-boundary documentation is missing {marker}")
 
     for figure_name in ("agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg"):
         try:

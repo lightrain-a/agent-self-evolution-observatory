@@ -151,26 +151,49 @@ def main() -> None:
               toc4: document.querySelectorAll('.toc-level-4').length,
               stages: document.querySelectorAll('.system-stage').length,
               stats: document.querySelectorAll('.system-stat').length,
+              layers: document.querySelectorAll('.system-layer').length,
+              contracts: document.querySelectorAll('.system-contract-table tbody tr').length,
+              artifacts: document.querySelectorAll('.system-artifact-table tbody tr').length,
+              boundaries: document.querySelectorAll('.system-boundary-card').length,
+              boundaryRules: document.querySelectorAll('.system-boundary-card li').length,
+              components: document.querySelectorAll('.system-components-panel tbody tr').length,
+              statusGuides: document.querySelectorAll('.system-status-grid article').length,
               sourceRoutes: document.querySelectorAll('.system-route-grid > div').length,
               mainIdeas: document.querySelectorAll('.system-decision-summary .system-idea-card').length,
               inspiredIdeas: document.querySelectorAll('.system-inspired-summary .system-idea-card').length,
               passIdeas: document.querySelectorAll('.system-decision-summary .verdict-pass').length,
               reviseIdeas: document.querySelectorAll('.system-decision-summary .verdict-revise').length,
-              advisorQuestions: document.querySelectorAll('.system-advisor-questions li').length,
+              advisorText: /师兄汇报|希望师兄|advisor brief|advisor judgment/i.test(document.body.textContent || ''),
               links: [...document.querySelectorAll('a')].map(x=>x.getAttribute('href')||''),
               text: document.body.textContent || ''
             };""",
         )
         require(system_overview["chapters"] == 2, f"system overview must have two chapters, got {system_overview['chapters']}")
-        require((system_overview["toc2"], system_overview["toc3"], system_overview["toc4"]) == (3,10,0), f"system overview hierarchy is wrong: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
-        require(system_overview["stages"] == 8 and system_overview["stats"] == 8, "system data flow or live statistics are incomplete")
+        require(system_overview["toc2"] == 3 and system_overview["toc3"] >= 10 and system_overview["toc4"] == 0, f"system overview hierarchy is wrong: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
+        require(system_overview["stages"] == 10 and system_overview["stats"] == 8, "system data flow or live statistics are incomplete")
+        require(system_overview["layers"] == 7 and system_overview["contracts"] == 10, "backend layers or stage data contracts are incomplete")
+        require(system_overview["artifacts"] == 8 and system_overview["boundaries"] == 3 and system_overview["boundaryRules"] == 14, "artifact or automation-boundary documentation is incomplete")
+        require(system_overview["components"] == 6 and system_overview["statusGuides"] == 4, "component or idea-state documentation is incomplete")
         require(system_overview["sourceRoutes"] >= 7, "literature retrieval routes are incomplete")
         require(system_overview["mainIdeas"] == 14, f"expected 4 PASS + 10 REVISE main ideas, got {system_overview['mainIdeas']}")
         require(system_overview["inspiredIdeas"] == 8, f"expected 1 PASS + 7 REVISE inspired ideas, got {system_overview['inspiredIdeas']}")
         require(system_overview["passIdeas"] == 4 and system_overview["reviseIdeas"] == 10, "main idea verdict groups are inconsistent")
-        require(system_overview["advisorQuestions"] == 4, "advisor questions are incomplete")
+        require(not system_overview["advisorText"], "advisor-facing message remains on the technical system page")
         require("paper-ideas.html#iclr-low-resource-bank" in system_overview["links"] and "paper-ideas.html#machine-school-inspired-ideas" in system_overview["links"], "system overview does not link to both idea sections")
-        require("篇去重论文" in system_overview["text"] or "deduplicated papers" in system_overview["text"], "live research-system statistics are missing")
+        require("deduplicated papers" in system_overview["text"] or "篇去重论文" in system_overview["text"], "live research-system statistics are missing")
+        execute(session_id, "document.querySelector('.language-toggle')?.click();")
+        time.sleep(1)
+        zh_system = execute(session_id, """return {
+          text: document.querySelector('.system-automation-panel')?.textContent || '',
+          cards: [...document.querySelectorAll('.system-boundary-card')].map(x=>({client:x.clientWidth,scroll:x.scrollWidth,text:x.textContent})),
+          pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2
+        };""")
+        require("自动执行" in zh_system["text"] and "条件自动" in zh_system["text"] and "人工控制" in zh_system["text"], "Chinese automation boundary headings are incomplete")
+        require("Pages 只发布 frontend-only 静态快照" in zh_system["text"] and "没有 P0/P1/P2 证据时" in zh_system["text"], "Chinese automation boundary content is incomplete")
+        require(all(card["scroll"] <= card["client"] + 2 for card in zh_system["cards"]), "Chinese automation boundary cards overflow horizontally")
+        require(not zh_system["pageOverflow"], "Chinese system overview causes page-level horizontal overflow")
+        execute(session_id, "document.querySelector('.language-toggle')?.click();")
+        time.sleep(1)
 
         navigate("/bibliography.html", 16)
         bibliography = execute(
