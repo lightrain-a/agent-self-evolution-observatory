@@ -181,7 +181,7 @@ def main() -> None:
         require(system_overview["stages"] == 10 and system_overview["stats"] == 8, "system data flow or live statistics are incomplete")
         require(system_overview["layers"] == 7 and system_overview["contracts"] == 10, "backend layers or stage data contracts are incomplete")
         require(system_overview["artifacts"] == 8 and system_overview["boundaries"] == 3 and system_overview["boundaryRules"] == 14, "artifact or automation-boundary documentation is incomplete")
-        require(system_overview["components"] == 9 and system_overview["statusGuides"] == 4, "component or idea-state documentation is incomplete")
+        require(system_overview["components"] == 10 and system_overview["statusGuides"] == 4, "component or idea-state documentation is incomplete")
         require(system_overview["v5SummaryPanel"] == 1 and system_overview["v5ProgressItems"] == 5, "Idea Discovery v5 progress is missing from the system overview")
         require(system_overview["v4SummaryPanel"] == 1 and system_overview["v4SummaryCounts"] == 6, "Idea Discovery v4 summary is missing from the system overview")
         require(system_overview["evidenceExplorer"] == 1 and system_overview["evidenceOptions"] == 29, "evidence-graph explorer or idea selector is incomplete")
@@ -533,7 +533,7 @@ def main() -> None:
               text: document.body.textContent || ''
             };""",
         )
-        require(idea_portfolio["automationComponents"] == 9, f"expected nine running/reference components, got {idea_portfolio['automationComponents']}")
+        require(idea_portfolio["automationComponents"] == 10, f"expected ten running/reference components, got {idea_portfolio['automationComponents']}")
         require(idea_portfolio["automationStats"] == 6, f"expected six automation statistics, got {idea_portfolio['automationStats']}")
         require(idea_portfolio["automationCollisionRows"] > 0 and idea_portfolio["automationRepairRows"] > 0, "automation collision or repair queue did not render")
         require("healthy" in idea_portfolio["automationHealth"].lower(), f"research system health is not visible: {idea_portfolio['automationHealth']}")

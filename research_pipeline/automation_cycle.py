@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any, Iterator
 
 from .config import PROJECT_ROOT, StorageSettings
+from .advisor_selection import write_advisor_selection
 from .cvpr_idea_factory import write_cvpr_idea_bank
 from .discussion_portfolio import write_discussion_portfolio
 from .iclr_experiment_audit import write_audit as write_iclr_audit
@@ -86,6 +87,7 @@ def run_cycle(
             report["steps"].append(_step("second-order-idea-discovery-v52", write_idea_discovery_v52))
             report["steps"].append(_step("final-boundary-idea-discovery-v53", write_idea_discovery_v53))
             report["steps"].append(_step("discussion-ready-portfolio", write_discussion_portfolio))
+            report["steps"].append(_step("advisor-priority-selection", write_advisor_selection))
             report["steps"].append(_step("constrained-combination-idea-discovery-v4", write_idea_discovery_v4))
             report["steps"].append(_step("iclr-audit", write_iclr_audit))
             report["steps"].append(_step("cvpr-followup-bank", write_cvpr_idea_bank))

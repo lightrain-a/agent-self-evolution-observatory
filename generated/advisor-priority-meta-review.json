@@ -1,0 +1,266 @@
+{
+  "reviewer": "agent-project-advisor-portfolio-meta-review",
+  "ideas": [
+    {
+      "idea_id": "correction-action-causal-compiler",
+      "relative_tier": "lead",
+      "advisor_rank": 1,
+      "merge_with": [],
+      "reason": "Best combination of intervention-based identification, a minimal typed persistent learned object, applicability bounds, and a direct compiler-style method claim. It asks a cleaner causal question than generic self-correction and has a decisive ablation path.",
+      "reason_zh": "干预识别、最小类型化持久对象、适用域约束和编译器式方法主张结合得最完整。相比泛化的自我纠错，它提出了更干净的因果问题，也有明确的决定性消融路径。",
+      "first_pilot_priority": "high"
+    },
+    {
+      "idea_id": "bounded-probe-api-transition-operator",
+      "relative_tier": "lead",
+      "advisor_rank": 2,
+      "merge_with": [
+        "api-error-semantic-adapter",
+        "compiler-residual-contract-editor-v53"
+      ],
+      "reason": "Very crisp persistent operator: learn reusable transition semantics, permit exactly N target probes, then freeze. API-family holdout and the preregistered probe ceiling make transfer and budget claims unusually identifiable.",
+      "reason_zh": "持久算子定义非常清晰：学习可复用转移语义，只允许目标 API 上固定 N 次探测，随后冻结。API 家族留出和预注册探测上限使迁移与预算主张都很容易被严格识别。",
+      "first_pilot_priority": "high"
+    },
+    {
+      "idea_id": "regression-gated-self-evolution",
+      "relative_tier": "lead",
+      "advisor_rank": 3,
+      "merge_with": [
+        "update-trust-region",
+        "probe-mutation-retirement-policy"
+      ],
+      "reason": "Strongest portfolio-level reliability thesis and easiest to explain to an advisor: persistent updates are committed or rolled back by disjoint utility, cost, safety, and regression evidence. Broad impact outweighs its somewhat less specialized mechanism.",
+      "reason_zh": "这是组合中最强的整体可靠性主线，也最容易向导师解释：持久更新必须通过相互独立的效用、成本、安全和回归证据才能提交，否则回滚。机制本身较宽泛，但潜在影响面最大。",
+      "first_pilot_priority": "high"
+    },
+    {
+      "idea_id": "certified-out-of-span-interaction-inverter-v53",
+      "relative_tier": "high-upside",
+      "advisor_rank": 4,
+      "merge_with": [
+        "compositional-update-compatibility",
+        "update-composition-repair-compiler",
+        "restoration-clause-induction-v5"
+      ],
+      "reason": "Highest technical upside. The certificate first proves that recombination of stored updates cannot solve the case, so learning a new residual direction is mechanistically necessary rather than merely more expressive. Harder pilot, but unusually strong identifiability.",
+      "reason_zh": "技术上限最高。它先用证书证明已有更新的重组无法同时满足修复与保持要求，因此学习新的残差方向是机制上必需，而不是简单增加表达能力。P0 更难，但可识别性非常强。",
+      "first_pilot_priority": "medium"
+    },
+    {
+      "idea_id": "update-composition-repair-compiler",
+      "relative_tier": "lead",
+      "advisor_rank": 5,
+      "merge_with": [
+        "compositional-update-compatibility",
+        "restoration-clause-induction-v5",
+        "memory-interaction-clause-learner",
+        "constraint-complete-typed-memory-order-logic",
+        "certified-out-of-span-interaction-inverter-v53"
+      ],
+      "reason": "Best actionable representative of the update-interaction cluster: it goes beyond predicting incompatibility and persistently compiles minimal reorder, condition, or bridge repairs while retaining individually useful updates.",
+      "reason_zh": "它是“更新交互”簇中最适合作为主线的方案：不仅预测不兼容，还会在保留单个有效更新的前提下，持久编译最小的重排、条件化或桥接修复。",
+      "first_pilot_priority": "high"
+    },
+    {
+      "idea_id": "nested-pathway-memory-repair",
+      "relative_tier": "lead",
+      "advisor_rank": 6,
+      "merge_with": [
+        "memory-interaction-clause-learner"
+      ],
+      "reason": "Strong causal-memory representative. Separating inclusion, content, rank, and co-memory pathways turns a vague memory-editing problem into identifiable mechanisms with pathway-specific persistent interventions.",
+      "reason_zh": "这是记忆方向中最强的因果机制代表。把伤害拆成 inclusion、content、rank 和 co-memory 路径后，原本模糊的记忆编辑问题变成可识别、可分别干预的持久机制。",
+      "first_pilot_priority": "high"
+    },
+    {
+      "idea_id": "contradiction-preserving-consolidation",
+      "relative_tier": "fast-pilot",
+      "advisor_rank": 7,
+      "merge_with": [
+        "update-history-semantic-compactor"
+      ],
+      "reason": "The best cheap pilot in the set. Fixed-capacity consolidation with explicit preservation of conclusion-changing counterevidence gives a simple learned object, independent evaluation, and a strong compression-versus-correctness falsifier on one GPU.",
+      "reason_zh": "这是整组中最适合低成本快速验证的方案。固定容量压缩，同时明确保留会改变结论的反证，学习对象简单、评测独立，而且一张 GPU 就能做出“压缩率—正确性”之间很有力度的证伪实验。",
+      "first_pilot_priority": "high"
+    },
+    {
+      "idea_id": "workflow-repair-grammar-v5",
+      "relative_tier": "lead",
+      "advisor_rank": 8,
+      "merge_with": [
+        "compiler-residual-contract-editor-v53"
+      ],
+      "reason": "Clean symbolic-learning claim with frozen graph-rewrite productions, no test-time search, and API-disjoint by motif-disjoint transfer. Slightly adjacent to the API-transition line, but sufficiently different to justify an advisor slot.",
+      "reason_zh": "符号学习主张很干净：学习冻结的图重写规则，测试时不搜索，并做 API-disjoint × motif-disjoint 迁移。虽然与 API 转移方向相邻，但机制差异足够大，仍值得进入导师讨论。",
+      "first_pilot_priority": "high"
+    },
+    {
+      "idea_id": "rubric-intervention-sparse-solver",
+      "relative_tier": "fast-pilot",
+      "advisor_rank": 9,
+      "merge_with": [],
+      "reason": "Excellent experimental cleanliness and likely inexpensive P0: randomized rubric-atom interventions support sparse persistent edits with explicit neutral-dimension preservation. Its main weakness is a narrower scientific scope than the top eight.",
+      "reason_zh": "实验设计非常干净，P0 预计也便宜：通过 rubric 原子干预识别效应，再做稀疏持久编辑，并显式保持中性维度。主要劣势是科学问题的覆盖面比前八名更窄。",
+      "first_pilot_priority": "high"
+    },
+    {
+      "idea_id": "compiler-residual-contract-editor-v53",
+      "relative_tier": "high-upside",
+      "advisor_rank": 10,
+      "merge_with": [
+        "bounded-probe-api-transition-operator",
+        "workflow-repair-grammar-v5"
+      ],
+      "reason": "Strong decomposition between deterministic schema migration and only the genuinely underdetermined learned residual. The exactly matched monolithic control is excellent, but the application thesis overlaps substantially with stronger API/workflow representatives.",
+      "reason_zh": "它把确定性的 schema 迁移与真正欠定的学习残差明确拆开，而且有严格匹配的 monolithic control，识别性很好。但应用主线与更强的 API/工作流代表重合较多。",
+      "first_pilot_priority": "medium"
+    },
+    {
+      "idea_id": "effect-transport-lesson-specializer-v5",
+      "relative_tier": "second-wave",
+      "advisor_rank": 11,
+      "merge_with": [
+        "monotone-applicability-specializer-v4"
+      ],
+      "reason": "A principled solution to overgeneralized lessons using randomized effect transport and abstention outside support. Scientifically sound, but less distinctive than the causal compiler because both ultimately learn bounded applicability of persistent corrections.",
+      "reason_zh": "通过随机化效应迁移和支持域外弃判来解决 lesson 过度泛化，方法很规范。但它与因果 correction compiler 都在学习持久修正的适用边界，因此相对独特性略弱。",
+      "first_pilot_priority": "medium"
+    },
+    {
+      "idea_id": "interventional-permission-triage-under-ceiling",
+      "relative_tier": "high-upside",
+      "advisor_rank": 12,
+      "merge_with": [],
+      "reason": "Distinct security-shaped thesis with an unusually safe monotonicity constraint: it never expands authority and only prioritizes reauthorization. Attractive for impact and deployment realism, but evaluation infrastructure may dominate a low-resource pilot.",
+      "reason_zh": "这是一个很独立的安全方向，而且具有很强的单调安全约束：绝不扩大权限，只决定哪些授权需要重新验证。影响力和部署现实性都很好，但低资源 P0 可能会被评测基础设施成本主导。",
+      "first_pilot_priority": "medium"
+    },
+    {
+      "idea_id": "filtered-chronological-evaluator-state-v53",
+      "relative_tier": "high-upside",
+      "advisor_rank": 13,
+      "merge_with": [],
+      "reason": "Conceptually distinctive and has an excellent chronology falsifier, but zero-anchor extrapolation of actor-specific evaluator bias is intrinsically difficult and may produce a negative pilot before the broader method claim is well calibrated.",
+      "reason_zh": "概念上非常独特，而且时间顺序证伪实验设计很好。但在没有未来 anchor 的情况下外推 evaluator 个体偏差本身就很困难，P0 很可能先得到负结果，方法主张也较难快速定型。",
+      "first_pilot_priority": "medium"
+    },
+    {
+      "idea_id": "monotone-applicability-specializer-v4",
+      "relative_tier": "fast-pilot",
+      "advisor_rank": 14,
+      "merge_with": [
+        "effect-transport-lesson-specializer-v5",
+        "correction-action-causal-compiler"
+      ],
+      "reason": "Exceptionally crisp and cheap falsifier because the hypothesis language is frozen and specialization is monotone. However, the scientific claim is narrower and is largely subsumed by stronger applicability-bounded correction mechanisms.",
+      "reason_zh": "由于假设语言冻结且适用域只能单调收缩，它的证伪实验非常干净且便宜。但科学主张较窄，基本被更强的适用域受限修正机制所覆盖。",
+      "first_pilot_priority": "high"
+    },
+    {
+      "idea_id": "constraint-complete-typed-memory-order-logic",
+      "relative_tier": "second-wave",
+      "advisor_rank": 15,
+      "merge_with": [
+        "memory-interaction-clause-learner",
+        "update-composition-repair-compiler"
+      ],
+      "reason": "Technically precise higher-order ordering logic with exact unseen-composition tests, but it is a specialized instance of the broader interaction-and-repair thesis and therefore weaker as an independent portfolio slot.",
+      "reason_zh": "高阶顺序逻辑定义精确，也能对未见组合进行严格测试，但它本质上是更广泛“交互识别与修复”主线的一个专门实例，因此不适合单独占用组合名额。",
+      "first_pilot_priority": "medium"
+    },
+    {
+      "idea_id": "update-history-semantic-compactor",
+      "relative_tier": "second-wave",
+      "advisor_rank": 16,
+      "merge_with": [
+        "contradiction-preserving-consolidation"
+      ],
+      "reason": "Useful systems problem with a clear persistent compressed state and rollback mapping, but causal attribution of what information must survive compression is less sharp than contradiction-preserving consolidation.",
+      "reason_zh": "这是有价值的系统问题，也有明确的持久压缩状态和回滚映射。但对于“哪些信息必须在压缩中保留”的因果归因，没有 contradiction-preserving consolidation 那么尖锐。",
+      "first_pilot_priority": "medium"
+    },
+    {
+      "idea_id": "compositional-update-compatibility",
+      "relative_tier": "supporting",
+      "advisor_rank": 17,
+      "merge_with": [
+        "update-composition-repair-compiler",
+        "certified-out-of-span-interaction-inverter-v53"
+      ],
+      "reason": "Good diagnostic science, but prediction of composition regressions is dominated by representatives that either compile an actual persistent repair or prove when a genuinely new repair direction is required.",
+      "reason_zh": "作为诊断问题很好，但它主要停留在预测组合回归；更强的代表要么直接编译持久修复，要么证明何时必须学习新的修复方向，因此它更适合作为支撑实验。",
+      "first_pilot_priority": "low"
+    },
+    {
+      "idea_id": "restoration-clause-induction-v5",
+      "relative_tier": "supporting",
+      "advisor_rank": 18,
+      "merge_with": [
+        "update-composition-repair-compiler",
+        "compositional-update-compatibility"
+      ],
+      "reason": "Randomized rollback and false-block control are strong ingredients, but probabilistic compatibility clauses are better positioned as an identification module inside the broader composition-repair compiler.",
+      "reason_zh": "随机回滚和 false-block 控制都是很强的组件，但概率兼容性条款更适合作为 update-composition repair compiler 内部的识别模块，而不是独立主线。",
+      "first_pilot_priority": "low"
+    },
+    {
+      "idea_id": "memory-interaction-clause-learner",
+      "relative_tier": "supporting",
+      "advisor_rank": 19,
+      "merge_with": [
+        "nested-pathway-memory-repair",
+        "constraint-complete-typed-memory-order-logic",
+        "update-composition-repair-compiler"
+      ],
+      "reason": "The co-retrieval intervention design is useful, but persistent compatibility/exclusion/precedence clauses are covered more completely by either causal pathway repair or the broader composition-repair family.",
+      "reason_zh": "共检索干预设计有价值，但兼容、排斥和优先级条款已经被因果路径修复或更广义的组合修复体系覆盖得更完整，因此更适合作为支撑模块。",
+      "first_pilot_priority": "low"
+    },
+    {
+      "idea_id": "api-error-semantic-adapter",
+      "relative_tier": "supporting",
+      "advisor_rank": 20,
+      "merge_with": [
+        "bounded-probe-api-transition-operator"
+      ],
+      "reason": "Provider-invariant error semantics are useful, but the bounded-probe transition operator strictly broadens the object from error representation to precondition/effect/error dynamics while adding a cleaner adaptation budget contract.",
+      "reason_zh": "跨 provider 的错误语义表示很有用，但 bounded-probe transition operator 把学习对象从 error representation 扩展到了 precondition/effect/error 动态，并增加了更严格的适配预算契约，因此后者是更强代表。",
+      "first_pilot_priority": "low"
+    },
+    {
+      "idea_id": "probe-mutation-retirement-policy",
+      "relative_tier": "supporting",
+      "advisor_rank": 21,
+      "merge_with": [
+        "regression-gated-self-evolution"
+      ],
+      "reason": "A valuable regression-governance component, especially under fixed test budgets, but it optimizes the regression suite rather than the agent update mechanism itself. Best used as a later module of regression-gated evolution.",
+      "reason_zh": "在固定测试预算下学习回归探针的保留、变异、合并和退役很有价值，但它优化的是测试套件而不是 agent 更新机制本身，因此更适合作为 regression-gated self-evolution 的后续模块。",
+      "first_pilot_priority": "low"
+    },
+    {
+      "idea_id": "update-trust-region",
+      "relative_tier": "supporting",
+      "advisor_rank": 22,
+      "merge_with": [
+        "regression-gated-self-evolution"
+      ],
+      "reason": "Behavioral shift constraints are sensible, but trajectory/tool/retrieval distance is a weaker scientific object than explicit disjoint regression, utility, cost, and safety commit criteria. It is best treated as one gate inside the broader governance idea.",
+      "reason_zh": "用轨迹、工具和检索分布漂移来约束更新是合理的，但相较于明确独立的回归、效用、成本和安全提交标准，其科学对象更弱。最合适的定位是 broader regression-gated governance 中的一道 gate。",
+      "first_pilot_priority": "low"
+    }
+  ],
+  "primary_shortlist": [
+    "correction-action-causal-compiler",
+    "bounded-probe-api-transition-operator",
+    "regression-gated-self-evolution",
+    "certified-out-of-span-interaction-inverter-v53",
+    "update-composition-repair-compiler",
+    "nested-pathway-memory-repair",
+    "contradiction-preserving-consolidation",
+    "workflow-repair-grammar-v5"
+  ],
+  "portfolio_comment": "I would modify the internal eight rather than accept them unchanged: replace rubric-intervention-sparse-solver with contradiction-preserving-consolidation for the first advisor shortlist. The latter is cheaper, has a more universal agent-memory thesis, and supplies a particularly clean fixed-capacity preservation falsifier, while the rubric solver remains an excellent ninth-ranked fast pilot. The shortlist intentionally keeps only one broad governance mainline, one bounded API adaptation operator, one causal correction compiler, one composition-repair representative plus the higher-risk certified out-of-span variant, one causal memory-repair line, one cheap consolidation line, and one workflow-grammar line. Several other PASS ideas remain scientifically sound but are better treated as ablations, modules, or second-wave descendants rather than independent advisor-facing theses.",
+  "portfolio_comment_zh": "我不会原样接受内部给出的八个，而会做一处调整：第一轮导师 shortlist 中，用 contradiction-preserving-consolidation 替换 rubric-intervention-sparse-solver。前者成本更低，agent memory 的问题更普适，而且固定容量下“必须保留会改变结论的反证”提供了非常干净的保持性证伪；rubric solver 仍然是第 9 名、非常适合快速 P0 的方案。最终组合刻意只保留一个广义更新治理主线、一个有严格探测预算的 API 适配算子、一个因果修正编译器、一个组合修复代表及其高风险高收益的 certified out-of-span 版本、一个因果记忆修复方向、一个低成本记忆压缩方向，以及一个工作流 grammar 方向。其余 PASS idea 本身仍然成立，但更适合作为消融、模块或第二阶段后继，而不是分别作为导师面前的独立 scientific thesis。"
+}

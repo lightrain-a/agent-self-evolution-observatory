@@ -71,6 +71,8 @@ class PublicationTest(unittest.TestCase):
         self.assertIn("generated/idea-discovery-v52-external-reviews.json", WEEKLY_ARTIFACTS)
         self.assertIn("generated/idea-discovery-v53-external-reviews.json", WEEKLY_ARTIFACTS)
         self.assertIn("generated/discussion-ready-ideas.json", WEEKLY_ARTIFACTS)
+        self.assertIn("generated/advisor-priority-ideas.json", WEEKLY_ARTIFACTS)
+        self.assertIn("generated/advisor-priority-meta-review.json", WEEKLY_ARTIFACTS)
 
 
 if __name__ == "__main__":

@@ -179,6 +179,12 @@ The weekly automation cycle rebuilds v4 and publishes its full lineage. The main
 
 Artifacts include `generated/idea-discovery-v5*.json/js`, per-round external-review stores, and `generated/discussion-ready-ideas.json/js`.
 
+## Comparative 22-to-8 selection
+
+Once `discussion_portfolio.py` reaches the strict target, `advisor_selection.py` performs relative rather than absolute screening. All inputs already passed independent R2. It applies an explicit comparative rubric, deduplicates overlapping scientific theses by cluster, and consumes a 22-idea Agent-project portfolio meta-review before exporting an eight-direction first discussion shortlist. Supporting PASS ideas remain visible and are linked as merge/ablation/second-wave branches. No comparative ranking changes an idea to `selected-ready` without P0/P1/P2 evidence.
+
+Artifacts: `generated/advisor-priority-ideas.json/js` and `generated/advisor-priority-meta-review.json`.
+
 ## Continuous automation and safety boundary
 
 The daily cycle rebuilds deterministic artifacts without network access. The weekly cycle may refresh Semantic Scholar and request at most two project-scoped web-GPT repair reviews. Both use exclusive locks and keep the previous valid snapshots if one step fails. The repository includes systemd service/timer files under `deploy/systemd/`.

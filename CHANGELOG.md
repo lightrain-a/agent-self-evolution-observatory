@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-08-08 · Comparative 22-to-8 advisor selection
+
+- Froze idea expansion after the strict portfolio reached 22 independent R2 PASS directions, exceeding the 20-idea discussion target.
+- Added a comparative rubric across problem importance, mechanism distinctness, falsifiability, P0 feasibility, ICLR story, diversity, and complexity.
+- Completed an independent Agent-project meta-review of all 22 PASS directions, explicitly identifying overlap/merge relationships and first-pilot priority.
+- Published an eight-direction first discussion shortlist while preserving all 22 PASS ideas and their lineages.
+- Added `advisor-priority-ideas` artifacts, frontend comparison cards/table, system-overview summary, CLI/automation/publication integration, and dedicated tests.
+
 ## 2026-08-07 · Target-driven 20-idea search (Idea Discovery v5–v5.3)
 
 - Added a 36-candidate wide-search v5 bank spanning empirical failures, memory, update history, cross-surface transfer, tool/API semantics, workflows, evaluators, curricula, multi-agent communication, permissions, and model migration.

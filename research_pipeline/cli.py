@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from .config import SemanticScholarSettings, StorageSettings
+from .advisor_selection import build_advisor_selection, write_advisor_selection
 from .cvpr_idea_factory import DEFAULT_JS as DEFAULT_CVPR_JS
 from .cvpr_idea_factory import DEFAULT_JSON as DEFAULT_CVPR_JSON
 from .cvpr_idea_factory import build_cvpr_idea_bank, validate_bank, write_cvpr_idea_bank
@@ -99,6 +100,8 @@ def parse_args() -> argparse.Namespace:
     discovery.add_argument("--discussion-ready-status", action="store_true", help="Show strict R2-PASS progress toward the 20-idea discussion target.")
     discovery.add_argument("--build-discussion-ready", action="store_true", help="Rebuild the strict discussion-ready portfolio.")
     discovery.add_argument("--idea-discovery-v51-status", action="store_true", help="Show targeted v5.1 reviewer-vector repair children.")
+    discovery.add_argument("--advisor-priority-status", action="store_true", help="Show the comparative 22-to-8 advisor shortlist.")
+    discovery.add_argument("--build-advisor-priority", action="store_true", help="Rebuild the comparative advisor shortlist and meta-review view.")
     discovery.add_argument("--idea-discovery-v52-status", action="store_true", help="Show second-order v5.2 repair children.")
     discovery.add_argument("--idea-discovery-v53-status", action="store_true", help="Show final-boundary v5.3 repair children.")
     discovery.add_argument("--build-idea-discovery-v4", action="store_true", help="Build constrained-combination and conditional-revival candidates.")
@@ -258,6 +261,11 @@ def _print_idea_discovery_v53_status() -> None:
     print(json.dumps({"summary": payload["summary"], "children": [{"rank":x.get("rank"),"id":x.get("id"),"parent_id":x.get("parent_id"),"verdict":x.get("external_verdict")} for x in payload.get("children",[])]}, ensure_ascii=False, indent=2))
 
 
+def _print_advisor_priority_status() -> None:
+    payload = build_advisor_selection()
+    print(json.dumps({"source_count":payload["source_count"],"shortlist":[{"rank":x["advisor_rank"],"id":x["id"],"title":x["title"],"tier":x["relative_tier"],"p0":x["first_pilot_priority"]} for x in payload["primary_shortlist"]]}, ensure_ascii=False, indent=2))
+
+
 def _print_iclr_audit_status() -> None:
     payload = build_iclr_audit()
     print(json.dumps({
@@ -383,6 +391,11 @@ def main() -> None:
         print(f"Discussion-ready portfolio: {payload['count']}/{payload['target']} strict R2 PASS.")
     if args.idea_discovery_v51_status:
         _print_idea_discovery_v51_status()
+    if args.advisor_priority_status:
+        _print_advisor_priority_status()
+    if args.build_advisor_priority:
+        payload = write_advisor_selection()
+        print(f"Advisor priority shortlist: {len(payload['primary_shortlist'])}/{payload['source_count']} strict PASS ideas.")
     if args.idea_discovery_v52_status:
         _print_idea_discovery_v52_status()
     if args.idea_discovery_v53_status:
@@ -448,6 +461,7 @@ def main() -> None:
             or args.idea_discovery_v31_status or args.build_idea_discovery_v31
             or args.idea_discovery_v5_status or args.build_idea_discovery_v5
             or args.discussion_ready_status or args.build_discussion_ready or args.idea_discovery_v51_status
+            or args.advisor_priority_status or args.build_advisor_priority
             or args.idea_discovery_v52_status or args.idea_discovery_v53_status
             or args.idea_discovery_v4_status or args.build_idea_discovery_v4
             or args.cvpr_status or args.build_cvpr_bank

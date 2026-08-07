@@ -208,6 +208,12 @@ The strict discussion-ready portfolio is therefore **22/20**: 4 main-bank PASS +
 
 Persistent artifacts include `generated/idea-discovery-v5*.json/js`, the per-round external-review stores for v5/v5.1/v5.2/v5.3, and the strict discussion-ready roster. All BLOCK branches remain preserved as components, baselines, or future revival sources; they are never silently deleted or renamed into later rounds.
 
+## Comparative advisor selection: 22 → 8
+
+After the strict discussion portfolio reached 22 independent R2 PASS ideas, the system stopped expanding the search and added a comparative portfolio layer. `research_pipeline/advisor_selection.py` scores all 22 on problem importance, mechanism distinctness, falsifiability, pilot feasibility, ICLR story, portfolio diversity, and complexity, then an independent Agent-project meta-review compares them relative to one another and explicitly merges overlapping theses. The first discussion shortlist contains eight directions: Correction-Action Causal Compiler, Bounded-Probe API Transition Operator, Regression-Gated Self-Evolution, Certified Out-of-Span Interaction Inverter, Update-Composition Repair Compiler, Nested-Pathway Memory Repair, Contradiction-Preserving Memory Consolidation, and Workflow Repair Grammar v5. This ranking is a prioritization layer, not `selected-ready`; P0/P1/P2 results are still absent.
+
+Persistent artifacts are `generated/advisor-priority-ideas.json/js` and `generated/advisor-priority-meta-review.json`.
+
 ## Quality assurance
 
 Run static site integrity checks:
