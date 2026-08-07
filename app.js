@@ -1036,11 +1036,12 @@ function renderIdeaPortfolio(config) {
   const ideas = [...portfolioIdeas()].sort((a,b) => a.rank - b.rank);
   const chapters = pageArchitecture("paper-ideas").chapters || [];
   const shortlist = (ideaPipelineMeta().advisorShortlist || []).map(ideaByName).filter(Boolean);
-  const pipeline = `${renderSemanticScholarStatus()}${renderIdeaBackendArchitecture()}${renderResearchSystemState()}${renderIclrReviewDimensions()}${renderIdeaOperators()}${(config.sections || []).map((section,index) => renderSectionForPage(section,index,pageId,"idea-selection-section",3)).join("")}`;
-  const iclrDecision = `${renderIclrExperimentAudit()}${renderIclrIdeaBank()}${window.renderDiscussionReadyPool ? window.renderDiscussionReadyPool() : ""}${window.renderIdeaDiscoveryV5 ? window.renderIdeaDiscoveryV5() : ""}${window.renderIdeaDiscoveryV4 ? window.renderIdeaDiscoveryV4() : ""}${window.renderSolutionFirstIdeas ? window.renderSolutionFirstIdeas() : ""}${window.renderMachineSchoolIdeas ? window.renderMachineSchoolIdeas() : ""}`;
+  const reviewGuide = `${window.renderDiscussionReviewGuide ? window.renderDiscussionReviewGuide() : ""}${renderIclrReviewDimensions()}`;
+  const finalPool = `${window.renderDiscussionReadyPool ? window.renderDiscussionReadyPool() : ""}`;
+  const reviewTrace = `<details class="panel review-trace-fold"><summary><div><b>${language === "zh" ? "展开审查证据、实验基座与生成修订历史" : "Open review evidence, experiment substrates, and generation/repair history"}</b><span>${language === "zh" ? "默认折叠；只在需要追问某个 PASS 为什么成立时查看" : "Collapsed by default; open only when tracing why a PASS survived"}</span></div></summary><div class="review-trace-body">${renderIclrExperimentAudit()}${renderIclrIdeaBank()}${window.renderIdeaDiscoveryV5 ? window.renderIdeaDiscoveryV5() : ""}${window.renderIdeaDiscoveryV4 ? window.renderIdeaDiscoveryV4() : ""}${window.renderSolutionFirstIdeas ? window.renderSolutionFirstIdeas() : ""}${window.renderMachineSchoolIdeas ? window.renderMachineSchoolIdeas() : ""}${renderSemanticScholarStatus()}${renderIdeaBackendArchitecture()}${renderResearchSystemState()}${renderIdeaOperators()}${(config.sections || []).map((section,index) => renderSectionForPage(section,index,pageId,"idea-selection-section",3)).join("")}</div></details>`;
   const historicalBoard = `${renderAdvisorBoard(shortlist)}${renderShortlistDossiers(shortlist)}`;
-  const followup = `${renderCvprFollowupArchive()}${renderCandidateArchive(ideas)}`;
-  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderCustomChapter(chapters[0],0,pipeline)}${renderCustomChapter(chapters[1],1,iclrDecision)}${renderCustomChapter(chapters[2],2,historicalBoard)}${renderCustomChapter(chapters[3],3,followup)}`;
+  const archive = `<details class="panel review-archive-fold"><summary><div><b>${language === "zh" ? "展开历史导师板、CVPR 后续与完整旧 Idea 归档" : "Open historical advisor board, CVPR follow-ups, and legacy idea archive"}</b><span>${language === "zh" ? "用于追溯，不参与当前 22 个 R2 PASS 的方向讨论" : "For traceability only; not part of the current 22 R2-PASS discussion"}</span></div></summary><div class="review-archive-body">${historicalBoard}${renderCvprFollowupArchive()}${renderCandidateArchive(ideas)}</div></details>`;
+  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderCustomChapter(chapters[0],0,reviewGuide)}${renderCustomChapter(chapters[1],1,finalPool)}${renderCustomChapter(chapters[2],2,reviewTrace)}${renderCustomChapter(chapters[3],3,archive)}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;
@@ -1469,7 +1470,7 @@ function syncFilterUrl() {
 function buildToc() {
   const container = document.getElementById("page-toc");
   if (!container) return;
-  const headings = [...document.querySelectorAll("#dynamic-page h2, #dynamic-page h3, #dynamic-page h4")].filter((heading) => heading.dataset.toc !== "false" && (heading.id || heading.closest(".panel, .page-chapter, .merged-group, .direction-cluster, .idea-macro-cluster")));
+  const headings = [...document.querySelectorAll("#dynamic-page h2, #dynamic-page h3, #dynamic-page h4")].filter((heading) => heading.dataset.toc !== "false" && !heading.closest(".review-trace-fold,.review-archive-fold") && (heading.id || heading.closest(".panel, .page-chapter, .merged-group, .direction-cluster, .idea-macro-cluster")));
   headings.forEach((heading, index) => { if (!heading.id) heading.id = `${slugify(heading.textContent)}-${index + 1}`; });
   const root = [];
   const stack = [{level:1, children:root}];

@@ -19,7 +19,7 @@ EXPECTATIONS = {
     "evaluation": (3, 4, 5, 16),
     "system-overview": (2, 3, 10, 0),
     "research-directions": (4, 5, 9, 23),
-    "paper-ideas": (4, 5, 12, 14),
+    "paper-ideas": (4, 5, 3, 0),
     "selected-paper": (4, 5, 5, 20),
     "bibliography": (4, 5, 8, 6),
 }

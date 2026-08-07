@@ -181,7 +181,7 @@ def main() -> None:
         require(system_overview["stages"] == 10 and system_overview["stats"] == 8, "system data flow or live statistics are incomplete")
         require(system_overview["layers"] == 7 and system_overview["contracts"] == 10, "backend layers or stage data contracts are incomplete")
         require(system_overview["artifacts"] == 8 and system_overview["boundaries"] == 3 and system_overview["boundaryRules"] == 14, "artifact or automation-boundary documentation is incomplete")
-        require(system_overview["components"] == 10 and system_overview["statusGuides"] == 4, "component or idea-state documentation is incomplete")
+        require(system_overview["components"] == 9 and system_overview["statusGuides"] == 4, "component or idea-state documentation is incomplete")
         require(system_overview["v5SummaryPanel"] == 1 and system_overview["v5ProgressItems"] == 5, "Idea Discovery v5 progress is missing from the system overview")
         require(system_overview["v4SummaryPanel"] == 1 and system_overview["v4SummaryCounts"] == 6, "Idea Discovery v4 summary is missing from the system overview")
         require(system_overview["evidenceExplorer"] == 1 and system_overview["evidenceOptions"] == 29, "evidence-graph explorer or idea selector is incomplete")
@@ -483,13 +483,13 @@ def main() -> None:
               solutionExternalRevise: Number(window.IDEA_DISCOVERY_V3?.summary?.external_revise || 0),
               solutionExternalBlock: Number(window.IDEA_DISCOVERY_V3?.summary?.external_block || 0),
               solutionRenderedReviews: document.querySelectorAll('.solution-v3-group.tone-shortlist .solution-v3-review').length,
-              repairRound: document.querySelectorAll('.solution-v31-round').length,
-              repairChildren: document.querySelectorAll('.solution-v31-round .solution-v3-card').length,
+              repairRound: document.querySelectorAll('.solution-v3-panel > .solution-v31-round').length,
+              repairChildren: document.querySelectorAll('.solution-v3-panel > .solution-v31-round .solution-v3-card').length,
               repairReviewed: Number(window.IDEA_DISCOVERY_V31?.summary?.external_reviewed || 0),
               repairPass: Number(window.IDEA_DISCOVERY_V31?.summary?.external_pass || 0),
               repairRevise: Number(window.IDEA_DISCOVERY_V31?.summary?.external_revise || 0),
               repairBlock: Number(window.IDEA_DISCOVERY_V31?.summary?.external_block || 0),
-              repairRenderedReviews: document.querySelectorAll('.solution-v31-round .solution-v3-review').length,
+              repairRenderedReviews: document.querySelectorAll('.solution-v3-panel > .solution-v31-round .solution-v3-review').length,
               localizedMainAction: document.querySelector('.iclr-idea-card .project-web-gpt-review small')?.textContent || '',
               localizedInspiredAction: document.querySelector('.machine-school-group.tone-pass .project-web-gpt-review small')?.textContent || '',
               componentGraphLabel: [...document.querySelectorAll('.automation-component h4')].map(x=>x.textContent).find(x=>x.includes('图谱')||x.includes('Citation')) || '',

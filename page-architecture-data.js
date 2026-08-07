@@ -49,10 +49,10 @@ window.PAGE_ARCHITECTURES = {
   },
   "paper-ideas":{
     chapters:[
-      {id:"iclr-pipeline",title:{en:"I · ICLR-first evidence and review pipeline",zh:"第一章 · ICLR-first 证据与评审管线"},question:{en:"How does the backend move from ICLR literature to general learning mechanisms, seven review gates, and falsifiable pilots?",zh:"后端如何从 ICLR 文献走向一般学习机制、七维评审与可证伪 Pilot？"}},
-      {id:"iclr-decision",title:{en:"II · ICLR experiment audit and decision bank",zh:"第二章 · ICLR 实验基座审计与决策池"},question:{en:"Which mechanism-level candidates deserve the first ICLR submission, and how should their experiments be executed?",zh:"哪些机制级候选值得优先投 ICLR，其实验应如何执行？"}},
-      {id:"historical-dossiers",title:{en:"III · Historical advisor dossiers",zh:"第三章 · 历史导师论证卡"},question:{en:"How do the previous twelve advisor candidates and selected visual direction remain traceable after the venue shift?",zh:"转向 ICLR 后，原十二个导师候选与视觉主线如何继续保留和追溯？"}},
-      {id:"cvpr-followup",title:{en:"IV · CVPR follow-up and complete archive",zh:"第四章 · CVPR 后续池与完整归档"},question:{en:"Which visual specializations remain valuable for CVPR after the general ICLR mechanism is established?",zh:"一般 ICLR 机制建立后，哪些视觉专门化方向适合继续投 CVPR？"}}
+      {id:"review-reading",title:{en:"I · Review rule and reading order",zh:"第一章 · 审查规则与阅读顺序"},question:{en:"What has already been verified, and what should a senior reviewer inspect first in each idea?",zh:"哪些条件已经审过，每个 Idea 还应优先判断什么？"}},
+      {id:"discussion-pool",title:{en:"II · Formal discussion pool: 22 R2-PASS ideas",zh:"第二章 · 正式讨论池：22 个 R2 PASS Idea"},question:{en:"Across the major scientific questions, what problem does each surviving idea solve and what mechanism distinguishes it?",zh:"按主要科学问题看，22 个通过项分别解决什么问题，核心机制又是什么？"}},
+      {id:"review-trace",title:{en:"III · Evidence, feasibility, and review lineage",zh:"第三章 · 证据、可行性与审查谱系"},question:{en:"When deeper verification is needed, which experiment substrates, rejected alternatives, and repair branches support each decision?",zh:"需要进一步核查时，哪些实验基座、被否方案和修订分支支撑当前结论？"}},
+      {id:"historical-archive",title:{en:"IV · Historical and CVPR archive",zh:"第四章 · 历史与 CVPR 归档"},question:{en:"Which older advisor candidates and visual follow-ups remain available for traceability without interrupting the current ICLR review?",zh:"哪些旧导师候选和视觉后续需要保留追溯，但不干扰当前 ICLR 审查？"}}
     ]
   },
   "selected-paper":{

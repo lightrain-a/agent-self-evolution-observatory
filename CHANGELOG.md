@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-08-08 · Reviewer-first paper-idea reading flow
+
+- Reorganized `paper-ideas.html` around the senior-review sequence rather than the backend generation chronology.
+- Moved the 22 independently R2-PASS ideas to the primary reading layer and regrouped them into four scientific-problem clusters instead of v4/v5 provenance buckets.
+- Standardized every discussion card to the same decision chain: problem → core mechanism → why it survived R2 → strongest alternative → decisive pilot → Stop.
+- Added a compact three-step reading guide and a direct link to `system-overview.html` for backend details.
+- Collapsed experiment-substrate audits, the full R1/R2 banks, v3/v4/v5 repair lineage, network-inspired candidates, historical advisor material, and CVPR follow-ups by default while preserving complete traceability.
+- Reduced the `paper-ideas` page TOC to four chapters and three useful level-3 review nodes; hidden trace/archive headings no longer pollute the sidebar.
+
 ## 2026-08-08 · Keep the full strict-R2 discussion pool
 
 - Froze idea expansion after the strict portfolio reached 22 independent R2 PASS directions, exceeding the 20-idea discussion target.

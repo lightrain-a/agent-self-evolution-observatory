@@ -83,8 +83,19 @@ def main() -> None:
 
         navigate("/paper-ideas.html", 6)
         ideas = execute(session_id, """return {
+          reviewGuide: document.querySelectorAll('.discussion-review-guide').length,
+          toc2: document.querySelectorAll('.toc-level-2').length,
+          toc3: document.querySelectorAll('.toc-level-3').length,
+          toc4: document.querySelectorAll('.toc-level-4').length,
           discussionPanel: document.querySelectorAll('.discussion-ready-panel').length,
-          discussionCards: document.querySelectorAll('.discussion-ready-groups article').length,
+          discussionClusters: document.querySelectorAll('.discussion-cluster').length,
+          discussionCards: document.querySelectorAll('.discussion-idea-card').length,
+          discussionReviewSections: document.querySelectorAll('.discussion-idea-card .discussion-review-grid section').length,
+          traceFold: document.querySelectorAll('.review-trace-fold').length,
+          traceOpen: document.querySelector('.review-trace-fold')?.open || false,
+          openDiscussionCards: document.querySelectorAll('.discussion-idea-card[open]').length,
+          archiveFold: document.querySelectorAll('.review-archive-fold').length,
+          archiveOpen: document.querySelector('.review-archive-fold')?.open || false,
           v5Main: document.querySelectorAll('.v5-panel > .v4-group .v4-idea-card').length,
           v51: document.querySelectorAll('.v51-round .v4-idea-card').length,
           v52: document.querySelectorAll('.v52-round .v4-idea-card').length,
@@ -97,7 +108,11 @@ def main() -> None:
           v53s: window.IDEA_DISCOVERY_V53?.summary || {},
           text: document.body.textContent || ''
         };""")
-        require((ideas["discussionPanel"], ideas["discussionCards"]) == (1, 22), f"discussion-pool panel counts are wrong: {ideas['discussionPanel']}/{ideas['discussionCards']}")
+        require((ideas["reviewGuide"], ideas["discussionPanel"], ideas["discussionClusters"], ideas["discussionCards"]) == (1, 1, 4, 22), f"review-first discussion layout is wrong: {ideas['reviewGuide']}/{ideas['discussionPanel']}/{ideas['discussionClusters']}/{ideas['discussionCards']}")
+        require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (5, 3, 0), f"paper-ideas TOC should stay compact, got {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
+        require(ideas["discussionReviewSections"] == 88, f"each of 22 discussion ideas must expose four reviewer-decision sections, got {ideas['discussionReviewSections']}")
+        require(ideas["openDiscussionCards"] == 0, "all 22 discussion cards should be collapsed by default for scanability")
+        require(ideas["traceFold"] == 1 and ideas["archiveFold"] == 1 and not ideas["traceOpen"] and not ideas["archiveOpen"], "traceability and archive sections must remain collapsed by default")
         require(ideas["v5Main"] == 36, f"expected 36 v5 candidates, got {ideas['v5Main']}")
         require((ideas["v51"], ideas["v52"], ideas["v53"]) == (19, 12, 4), f"repair round counts are wrong: {ideas['v51']}/{ideas['v52']}/{ideas['v53']}")
         require(ideas["v53Pass"] == 3, f"expected three v5.3 PASS cards, got {ideas['v53Pass']}")

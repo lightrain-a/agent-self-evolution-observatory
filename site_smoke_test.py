@@ -125,7 +125,7 @@ def main() -> None:
         "domains": ["multimodal-reasoning", "digital-interaction", "physical-world"],
         "evaluation": ["validity-safety", "tasks-benchmarks", "reproducibility"],
         "research-directions": ["orientation", "landscape", "direction-clusters", "long-term-agenda"],
-        "paper-ideas": ["iclr-pipeline", "iclr-decision", "historical-dossiers", "cvpr-followup"],
+        "paper-ideas": ["review-reading", "discussion-pool", "review-trace", "historical-archive"],
         "selected-paper": ["problem-scope", "evidence-experiments", "narrative-execution", "review-gates"],
         "bibliography": ["coverage-protocol", "ranking-reading", "field-maps", "search-corpus"],
     }
