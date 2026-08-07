@@ -100,7 +100,8 @@ def build_advisor_selection() -> dict[str, Any]:
             row["merge_with"] = []
 
     by_id = {row["id"]: row for row in rows}
-    meta_primary = [idea_id for idea_id in meta.get("primary_shortlist", []) if idea_id in by_id]
+    meta_priority = meta.get("priority_first_read", meta.get("primary_shortlist", []))
+    meta_primary = [idea_id for idea_id in meta_priority if idea_id in by_id]
     if meta_primary:
         primary = [by_id[idea_id] for idea_id in meta_primary[:8]]
     else:
@@ -123,31 +124,42 @@ def build_advisor_selection() -> dict[str, Any]:
                     break
 
     return {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "source_count": portfolio["count"],
-        "selection_target": 8,
+        "discussion_target": portfolio["target"],
+        "discussion_pool_count": len(rows),
+        "priority_first_read_target": 8,
         "weights": WEIGHTS,
         "policy": {
             "all_inputs_already_r2_pass": True,
+            "all_strict_passes_remain_in_discussion_pool": True,
             "comparative_not_absolute_review": True,
-            "one_primary_per_overlap_cluster": True,
+            "priority_first_read_is_navigation_only": True,
             "pilot_results_not_yet_available": True,
             "selection_is_not_selected_ready": True,
         },
-        "primary_shortlist": primary,
+        "discussion_pool": rows,
+        "priority_first_read": primary,
         "ranked_ideas": rows,
         "clusters": sorted({x["cluster"] for x in rows}),
         "meta_review_status": meta.get("status", {"reviewed": len(meta.get("ideas", [])), "complete": len(meta.get("ideas", [])) == portfolio["count"]}),
-        "portfolio_comment": meta.get("portfolio_comment", ""),
-        "portfolio_comment_zh": meta.get("portfolio_comment_zh", ""),
+        "portfolio_comment": "The comparative meta-review ranks all 22 discussion-ready ideas and suggests eight first reads to reduce review effort. These eight are not a shortlist that removes the other fourteen; all 22 remain formal candidates for senior/teacher discussion.",
+        "portfolio_comment_zh": "相对元审查对全部 22 个正式讨论 Idea 做排序，并建议 8 个优先阅读方向以降低浏览成本。这 8 个不是替代其余 14 个的 shortlist；22 个方向都会完整交给师兄/老师讨论。",
     }
 
 
 def write_advisor_selection(json_path: Path = DEFAULT_JSON, js_path: Path = DEFAULT_JS) -> dict[str, Any]:
     meta = _load_meta_review()
     if meta:
-        DEFAULT_REVIEW_JSON.write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        public_meta = dict(meta)
+        raw_priority = public_meta.pop("primary_shortlist", public_meta.get("priority_first_read", []))
+        public_meta["priority_first_read"] = raw_priority
+        public_meta["interpretation"] = "All 22 strict R2 PASS ideas remain in the formal senior-discussion pool. priority_first_read is only a navigation aid and does not remove the other ideas."
+        public_meta["interpretation_zh"] = "22 个严格 R2 PASS 全部保留在正式师兄讨论池中；priority_first_read 只是优先阅读建议，不会移除其他 Idea。"
+        public_meta["portfolio_comment"] = "The meta-review ranks all 22 formal discussion candidates and suggests eight first reads to reduce review effort; it does not reduce the discussion pool."
+        public_meta["portfolio_comment_zh"] = "元审查对全部 22 个正式讨论候选做相对排序，并建议 8 个优先阅读方向以降低浏览成本；它不会把讨论池缩减到 8 个。"
+        DEFAULT_REVIEW_JSON.write_text(json.dumps(public_meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     payload = build_advisor_selection()
     json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     js_path.write_text("window.ADVISOR_PRIORITY_IDEAS = " + json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
@@ -156,4 +168,4 @@ def write_advisor_selection(json_path: Path = DEFAULT_JSON, js_path: Path = DEFA
 
 if __name__ == "__main__":
     result = write_advisor_selection()
-    print(json.dumps({"source_count": result["source_count"], "shortlist": [x["id"] for x in result["primary_shortlist"]]}, ensure_ascii=False))
+    print(json.dumps({"discussion_pool": result["discussion_pool_count"], "priority_first_read": [x["id"] for x in result["priority_first_read"]]}, ensure_ascii=False))

@@ -74,7 +74,8 @@ def main() -> None:
         };""")
         require(system["components"] == 10, f"expected ten backend components, got {system['components']}")
         require(system["progressItems"] == 5, f"expected five strict-progress cells, got {system['progressItems']}")
-        require(system["advisorCards"] == 8 and len(system["advisor"].get("primary_shortlist", [])) == 8, "system overview must show the eight-direction advisor shortlist")
+        require(system["advisorCards"] == 8 and len(system["advisor"].get("priority_first_read", [])) == 8, "system overview must show eight first-read priorities")
+        require(len(system["advisor"].get("discussion_pool", [])) == 22, "system overview must preserve all 22 discussion-ready ideas")
         require((system["portfolio"].get("count"), system["portfolio"].get("target"), system["portfolio"].get("ready")) == (22, 20, True), f"wrong discussion portfolio: {system['portfolio']}")
         require("22/20" in system["text"], "22/20 progress is not visible")
         require(system["stateSummary"].get("v53_external_pass") == 3, "system state does not expose three v5.3 PASS ideas")
@@ -102,7 +103,8 @@ def main() -> None:
           v53s: window.IDEA_DISCOVERY_V53?.summary || {},
           text: document.body.textContent || ''
         };""")
-        require((ideas["advisorPanel"], ideas["advisorCards"], ideas["advisorRows"]) == (1, 8, 22), f"advisor panel counts are wrong: {ideas['advisorPanel']}/{ideas['advisorCards']}/{ideas['advisorRows']}")
+        require((ideas["advisorPanel"], ideas["advisorCards"], ideas["advisorRows"]) == (1, 8, 22), f"advisor discussion panel counts are wrong: {ideas['advisorPanel']}/{ideas['advisorCards']}/{ideas['advisorRows']}")
+        require(len(ideas["advisor"].get("discussion_pool", [])) == 22 and len(ideas["advisor"].get("priority_first_read", [])) == 8, "advisor page must show all 22 ideas with eight first-read priorities")
         require(ideas["advisor"].get("meta_review_status", {}).get("complete") is True, "advisor comparative meta-review is incomplete")
         require(ideas["v5Main"] == 36, f"expected 36 v5 candidates, got {ideas['v5Main']}")
         require((ideas["v51"], ideas["v52"], ideas["v53"]) == (19, 12, 4), f"repair round counts are wrong: {ideas['v51']}/{ideas['v52']}/{ideas['v53']}")

@@ -50,7 +50,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"ResearchAgent / MOOSE-Chem / SciAgents / AI-Scientist-v2 / RD-Agent", "component":{"en":"Solution-first branch search","zh":"解决方案优先的分支搜索"}, "status":"running", "evidence":{"en":f"{discovery['raw_children']} v3 children / {discovery['external_revise']} R2 revise / {repaired['children']} v3.1 repairs","zh":f"{discovery['raw_children']} 个 v3 子节点 / {discovery['external_revise']} 个 R2 REVISE / {repaired['children']} 个 v3.1 修订"}},
         {"source":"ResearchAgent / MOOSE-Chem / Co-Scientist / HypoRefine / Virtual Scientists / autoresearch", "component":{"en":"Constrained composition and conditional revival","zh":"受约束组合与条件复活"}, "status":"running", "evidence":{"en":f"{v4['raw_candidates']} v4 candidates / {v4['tournament_finalists']} finalists / {v4['external_reviewed']} reviewed","zh":f"{v4['raw_candidates']} 个 v4 候选 / {v4['tournament_finalists']} 个 finalists / {v4['external_reviewed']} 个已复核"}},
         {"source":"HypoRefine / IdeaForge / ScholarEval / InnoEval / SciAtlas / InternAgent / AutoScientists", "component":{"en":"Wide-search simplification-challenge ideation","zh":"宽搜索与简化挑战式 Idea 发现"}, "status":"running", "evidence":{"en":f"{v5['raw_candidates']} v5 candidates / {v5['external_reviewed']} R2 reviewed / {v5['external_pass']} PASS","zh":f"{v5['raw_candidates']} 个 v5 候选 / {v5['external_reviewed']} 个 R2 已审 / {v5['external_pass']} 个 PASS"}},
-        {"source":"Agent-project comparative meta-review", "component":{"en":"Comparative 22-to-8 portfolio selection","zh":"22→8 比较式方向筛选"}, "status":"running", "evidence":{"en":f"{advisor['source_count']} strict PASS / {len(advisor['primary_shortlist'])} advisor directions / {advisor['meta_review_status']['reviewed']} compared","zh":f"{advisor['source_count']} 个严格 PASS / {len(advisor['primary_shortlist'])} 个讨论方向 / {advisor['meta_review_status']['reviewed']} 个完成相对比较"}},
+        {"source":"Agent-project comparative meta-review", "component":{"en":"Comparative 22-idea discussion ranking","zh":"22 个讨论 Idea 的比较式排序"}, "status":"running", "evidence":{"en":f"{advisor['discussion_pool_count']} discussion-ready PASS / {len(advisor['priority_first_read'])} first-read priorities / {advisor['meta_review_status']['reviewed']} compared","zh":f"{advisor['discussion_pool_count']} 个正式讨论 PASS / {len(advisor['priority_first_read'])} 个优先阅读 / {advisor['meta_review_status']['reviewed']} 个完成相对比较"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Pilot registry and result feedback","zh":"Pilot 注册表与结果回流"}, "status":"running", "evidence":{"en":f"{pilots['phases']} phases / {pilots['valid_result_files']} executed results","zh":f"{pilots['phases']} 个阶段 / {pilots['valid_result_files']} 个已执行结果"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Unrestricted autonomous code execution tree","zh":"不受限制的自主代码执行树"}, "status":"intentionally-disabled", "evidence":{"en":"Only sandboxed/manual experiment execution is allowed; results can still flow back automatically.","zh":"只允许沙箱或人工确认后的实验执行；合法结果仍可自动回流。"}},
     ]
@@ -161,7 +161,8 @@ def build_research_system_state() -> dict[str, Any]:
             "v53_external_pass":idea_discovery_v53["summary"]["pass"],
             "discussion_ready":discussion_portfolio["count"],
             "discussion_target":discussion_portfolio["target"],
-            "advisor_shortlist":len(advisor_selection["primary_shortlist"]),
+            "advisor_discussion_pool":advisor_selection["discussion_pool_count"],
+            "advisor_priority_first_read":len(advisor_selection["priority_first_read"]),
         },
         "evidence_graph":evidence_graph,
         "collision_engine":collision_engine,

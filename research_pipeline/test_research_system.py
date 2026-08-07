@@ -72,8 +72,9 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(any("Co-Scientist" in source for source in sources))
         self.assertTrue(any("HypoRefine" in source and "IdeaForge" in source for source in sources))
         self.assertEqual(len(self.state["components"]), 10)
-        self.assertEqual(self.state["summary"]["advisor_shortlist"], 8)
-        self.assertTrue(any(item["component"].get("zh") == "22→8 比较式方向筛选" for item in self.state["components"]))
+        self.assertEqual(self.state["summary"]["advisor_discussion_pool"], 22)
+        self.assertEqual(self.state["summary"]["advisor_priority_first_read"], 8)
+        self.assertTrue(any(item["component"].get("zh") == "22 个讨论 Idea 的比较式排序" for item in self.state["components"]))
         disabled = [item for item in self.state["components"] if item["status"] == "intentionally-disabled"]
         self.assertEqual(len(disabled), 1)
 

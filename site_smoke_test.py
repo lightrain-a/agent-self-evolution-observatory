@@ -328,8 +328,10 @@ def main() -> None:
             fail(f"unexpected repair-round summary for {filename}: {summary}")
     discussion = json.loads((ROOT / "generated" / "discussion-ready-ideas.json").read_text(encoding="utf-8"))
     advisor = json.loads((ROOT / "generated" / "advisor-priority-ideas.json").read_text(encoding="utf-8"))
-    if advisor.get("source_count") != discussion.get("count") or len(advisor.get("primary_shortlist", [])) != 8:
-        fail("advisor shortlist must compare all strict PASS ideas and retain eight primary directions")
+    if advisor.get("source_count") != discussion.get("count") or advisor.get("discussion_pool_count") != 22 or len(advisor.get("discussion_pool", [])) != 22:
+        fail("advisor discussion pool must preserve all 22 strict PASS ideas")
+    if len(advisor.get("priority_first_read", [])) != 8:
+        fail("advisor comparison layer must expose eight first-read priorities without shrinking the discussion pool")
     if advisor.get("meta_review_status", {}).get("reviewed") != discussion.get("count") or not advisor.get("meta_review_status", {}).get("complete"):
         fail("advisor comparative meta-review must cover all strict PASS ideas")
     if (discussion.get("count"), discussion.get("target"), discussion.get("remaining"), discussion.get("ready")) != (22, 20, 0, True):

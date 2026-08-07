@@ -100,8 +100,8 @@ def parse_args() -> argparse.Namespace:
     discovery.add_argument("--discussion-ready-status", action="store_true", help="Show strict R2-PASS progress toward the 20-idea discussion target.")
     discovery.add_argument("--build-discussion-ready", action="store_true", help="Rebuild the strict discussion-ready portfolio.")
     discovery.add_argument("--idea-discovery-v51-status", action="store_true", help="Show targeted v5.1 reviewer-vector repair children.")
-    discovery.add_argument("--advisor-priority-status", action="store_true", help="Show the comparative 22-to-8 advisor shortlist.")
-    discovery.add_argument("--build-advisor-priority", action="store_true", help="Rebuild the comparative advisor shortlist and meta-review view.")
+    discovery.add_argument("--advisor-priority-status", action="store_true", help="Show the full 22-idea senior discussion pool and comparative first-read priorities.")
+    discovery.add_argument("--build-advisor-priority", action="store_true", help="Rebuild the comparative 22-idea discussion ranking and first-read priorities.")
     discovery.add_argument("--idea-discovery-v52-status", action="store_true", help="Show second-order v5.2 repair children.")
     discovery.add_argument("--idea-discovery-v53-status", action="store_true", help="Show final-boundary v5.3 repair children.")
     discovery.add_argument("--build-idea-discovery-v4", action="store_true", help="Build constrained-combination and conditional-revival candidates.")
@@ -263,7 +263,7 @@ def _print_idea_discovery_v53_status() -> None:
 
 def _print_advisor_priority_status() -> None:
     payload = build_advisor_selection()
-    print(json.dumps({"source_count":payload["source_count"],"shortlist":[{"rank":x["advisor_rank"],"id":x["id"],"title":x["title"],"tier":x["relative_tier"],"p0":x["first_pilot_priority"]} for x in payload["primary_shortlist"]]}, ensure_ascii=False, indent=2))
+    print(json.dumps({"discussion_pool_count":payload["discussion_pool_count"],"discussion_target":payload["discussion_target"],"priority_first_read":[{"rank":x["advisor_rank"],"id":x["id"],"title":x["title"],"tier":x["relative_tier"],"p0":x["first_pilot_priority"]} for x in payload["priority_first_read"]]}, ensure_ascii=False, indent=2))
 
 
 def _print_iclr_audit_status() -> None:
@@ -395,7 +395,7 @@ def main() -> None:
         _print_advisor_priority_status()
     if args.build_advisor_priority:
         payload = write_advisor_selection()
-        print(f"Advisor priority shortlist: {len(payload['primary_shortlist'])}/{payload['source_count']} strict PASS ideas.")
+        print(f"Senior discussion pool: {payload['discussion_pool_count']} strict PASS ideas; {len(payload['priority_first_read'])} suggested first reads.")
     if args.idea_discovery_v52_status:
         _print_idea_discovery_v52_status()
     if args.idea_discovery_v53_status:

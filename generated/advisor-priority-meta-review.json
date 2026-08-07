@@ -251,7 +251,9 @@
       "first_pilot_priority": "low"
     }
   ],
-  "primary_shortlist": [
+  "portfolio_comment": "The meta-review ranks all 22 formal discussion candidates and suggests eight first reads to reduce review effort; it does not reduce the discussion pool.",
+  "portfolio_comment_zh": "元审查对全部 22 个正式讨论候选做相对排序，并建议 8 个优先阅读方向以降低浏览成本；它不会把讨论池缩减到 8 个。",
+  "priority_first_read": [
     "correction-action-causal-compiler",
     "bounded-probe-api-transition-operator",
     "regression-gated-self-evolution",
@@ -261,6 +263,6 @@
     "contradiction-preserving-consolidation",
     "workflow-repair-grammar-v5"
   ],
-  "portfolio_comment": "I would modify the internal eight rather than accept them unchanged: replace rubric-intervention-sparse-solver with contradiction-preserving-consolidation for the first advisor shortlist. The latter is cheaper, has a more universal agent-memory thesis, and supplies a particularly clean fixed-capacity preservation falsifier, while the rubric solver remains an excellent ninth-ranked fast pilot. The shortlist intentionally keeps only one broad governance mainline, one bounded API adaptation operator, one causal correction compiler, one composition-repair representative plus the higher-risk certified out-of-span variant, one causal memory-repair line, one cheap consolidation line, and one workflow-grammar line. Several other PASS ideas remain scientifically sound but are better treated as ablations, modules, or second-wave descendants rather than independent advisor-facing theses.",
-  "portfolio_comment_zh": "我不会原样接受内部给出的八个，而会做一处调整：第一轮导师 shortlist 中，用 contradiction-preserving-consolidation 替换 rubric-intervention-sparse-solver。前者成本更低，agent memory 的问题更普适，而且固定容量下“必须保留会改变结论的反证”提供了非常干净的保持性证伪；rubric solver 仍然是第 9 名、非常适合快速 P0 的方案。最终组合刻意只保留一个广义更新治理主线、一个有严格探测预算的 API 适配算子、一个因果修正编译器、一个组合修复代表及其高风险高收益的 certified out-of-span 版本、一个因果记忆修复方向、一个低成本记忆压缩方向，以及一个工作流 grammar 方向。其余 PASS idea 本身仍然成立，但更适合作为消融、模块或第二阶段后继，而不是分别作为导师面前的独立 scientific thesis。"
+  "interpretation": "All 22 strict R2 PASS ideas remain in the formal senior-discussion pool. priority_first_read is only a navigation aid and does not remove the other ideas.",
+  "interpretation_zh": "22 个严格 R2 PASS 全部保留在正式师兄讨论池中；priority_first_read 只是优先阅读建议，不会移除其他 Idea。"
 }
