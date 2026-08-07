@@ -18,6 +18,15 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["v4_candidates"], 28)
         self.assertEqual(self.state["summary"]["v4_finalists"], 16)
         self.assertEqual(self.state["summary"]["v4_revivals"], 8)
+        self.assertEqual(self.state["summary"]["v5_candidates"], 36)
+        self.assertEqual(self.state["summary"]["v5_finalists"], 32)
+        self.assertEqual(self.state["summary"]["v5_revivals"], 8)
+        self.assertEqual(self.state["summary"]["v5_external_pass"], 6)
+        self.assertEqual(self.state["summary"]["v51_external_pass"], 3)
+        self.assertEqual(self.state["summary"]["v52_external_pass"], 1)
+        self.assertEqual(self.state["summary"]["v53_external_pass"], 3)
+        self.assertEqual(self.state["summary"]["discussion_ready"], 22)
+        self.assertEqual(self.state["summary"]["discussion_target"], 20)
 
     def test_evidence_graph_connects_papers_queries_and_ideas(self) -> None:
         graph = self.state["evidence_graph"]["summary"]
@@ -61,6 +70,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("MOOSE-Chem / Deep-Ideation", sources)
         self.assertIn("AI-Scientist-v2", sources)
         self.assertTrue(any("Co-Scientist" in source for source in sources))
+        self.assertTrue(any("HypoRefine" in source and "IdeaForge" in source for source in sources))
         disabled = [item for item in self.state["components"] if item["status"] == "intentionally-disabled"]
         self.assertEqual(len(disabled), 1)
 

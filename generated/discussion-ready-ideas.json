@@ -1,0 +1,323 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-07T15:03:52+00:00",
+  "target": 20,
+  "count": 22,
+  "remaining": 0,
+  "ready": true,
+  "policy": {
+    "strict_external_pass_only": true,
+    "supplementary_machine_school_not_counted": true,
+    "revise_not_counted": true,
+    "internal_shortlist_not_counted": true
+  },
+  "ideas": [
+    {
+      "source": "main-r2",
+      "id": "regression-gated-self-evolution",
+      "title": {
+        "zh": "回归门控自进化",
+        "en": "Regression-Gated Self-Evolution"
+      },
+      "verdict": "pass",
+      "rank": 1,
+      "parent_ids": [],
+      "reviewed": true
+    },
+    {
+      "source": "main-r2",
+      "id": "contradiction-preserving-consolidation",
+      "title": {
+        "zh": "保留矛盾的记忆巩固",
+        "en": "Contradiction-Preserving Memory Consolidation"
+      },
+      "verdict": "pass",
+      "rank": 2,
+      "parent_ids": [],
+      "reviewed": true
+    },
+    {
+      "source": "main-r2",
+      "id": "compositional-update-compatibility",
+      "title": {
+        "zh": "组合更新兼容性",
+        "en": "Compositional Update Compatibility"
+      },
+      "verdict": "pass",
+      "rank": 3,
+      "parent_ids": [],
+      "reviewed": true
+    },
+    {
+      "source": "main-r2",
+      "id": "update-trust-region",
+      "title": {
+        "zh": "Agent 更新信赖域",
+        "en": "Agent Update Trust Region"
+      },
+      "verdict": "pass",
+      "rank": 4,
+      "parent_ids": [],
+      "reviewed": true
+    },
+    {
+      "source": "v4-r2",
+      "id": "correction-action-causal-compiler",
+      "title": {
+        "zh": "纠错动作因果编译器",
+        "en": "Correction-Action Causal Compiler"
+      },
+      "verdict": "pass",
+      "rank": 1,
+      "parent_ids": [
+        "correction-policy-credit",
+        "failure-localization-before-reflection"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v4-r2",
+      "id": "memory-interaction-clause-learner",
+      "title": {
+        "zh": "记忆交互兼容子句学习",
+        "en": "Memory Interaction Clause Learner"
+      },
+      "verdict": "pass",
+      "rank": 2,
+      "parent_ids": [
+        "contradiction-preserving-consolidation",
+        "compositional-update-compatibility"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v4-r2",
+      "id": "probe-mutation-retirement-policy",
+      "title": {
+        "zh": "Probe 变异与退役策略",
+        "en": "Probe Mutation and Retirement Policy"
+      },
+      "verdict": "pass",
+      "rank": 3,
+      "parent_ids": [
+        "regression-probe-half-life",
+        "change-triggered-regression-exams"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v4-r2",
+      "id": "update-composition-repair-compiler",
+      "title": {
+        "zh": "更新组合修复编译器",
+        "en": "Update-Composition Repair Compiler"
+      },
+      "verdict": "pass",
+      "rank": 4,
+      "parent_ids": [
+        "compositional-update-compatibility",
+        "restoration-clause-learning"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v4-r2",
+      "id": "monotone-applicability-specializer-v4",
+      "title": {
+        "zh": "单调适用集合专化器 v4",
+        "en": "Monotone Applicability-Set Specializer v4"
+      },
+      "verdict": "pass",
+      "rank": 5,
+      "parent_ids": [
+        "local-counterexample-memory-repair",
+        "monotone-applicability-specializer"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v5-r2",
+      "id": "api-error-semantic-adapter",
+      "title": {
+        "zh": "API 错误语义适配器",
+        "en": "API Error-Semantics Adapter"
+      },
+      "verdict": "pass",
+      "rank": 1,
+      "parent_ids": [
+        "api-semantic-workflow-compiler"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v5-r2",
+      "id": "workflow-repair-grammar-v5",
+      "title": {
+        "zh": "工作流修复语法 v5",
+        "en": "Workflow Repair Grammar v5"
+      },
+      "verdict": "pass",
+      "rank": 2,
+      "parent_ids": [
+        "workflow-failure-motif-rewriter"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v5-r2",
+      "id": "restoration-clause-induction-v5",
+      "title": {
+        "zh": "恢复子句归纳 v5",
+        "en": "Restoration-Clause Induction v5"
+      },
+      "verdict": "pass",
+      "rank": 3,
+      "parent_ids": [
+        "restoration-clause-learning",
+        "update-composition-repair-compiler"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v5-r2",
+      "id": "rubric-intervention-sparse-solver",
+      "title": {
+        "zh": "Rubric 干预稀疏求解器",
+        "en": "Rubric Intervention Sparse Solver"
+      },
+      "verdict": "pass",
+      "rank": 4,
+      "parent_ids": [
+        "counterfactual-rubric-rewrite"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v5-r2",
+      "id": "update-history-semantic-compactor",
+      "title": {
+        "zh": "更新历史语义压缩器",
+        "en": "Update-History Semantic Compactor"
+      },
+      "verdict": "pass",
+      "rank": 5,
+      "parent_ids": [
+        "compositional-update-compatibility"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v5-r2",
+      "id": "effect-transport-lesson-specializer-v5",
+      "title": {
+        "zh": "效应迁移经验专化 v5",
+        "en": "Effect-Transport Lesson Specializer v5"
+      },
+      "verdict": "pass",
+      "rank": 6,
+      "parent_ids": [
+        "conformal-effect-transport-gate",
+        "cross-task-effect-transport-certificate"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v51-r2",
+      "id": "bounded-probe-api-transition-operator",
+      "title": {
+        "zh": "限探针 API 转移算子",
+        "en": "Bounded-Probe API Transition Operator"
+      },
+      "verdict": "pass",
+      "rank": 1,
+      "parent_ids": [
+        "api-semantic-workflow-ir-v5"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v51-r2",
+      "id": "interventional-permission-triage-under-ceiling",
+      "title": {
+        "zh": "固定权限上限下的干预式重授权筛选",
+        "en": "Interventional Reauthorization Triage Under a Fixed Ceiling"
+      },
+      "verdict": "pass",
+      "rank": 2,
+      "parent_ids": [
+        "permission-diff-causal-reauthorizer"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v51-r2",
+      "id": "nested-pathway-memory-repair",
+      "title": {
+        "zh": "嵌套路径识别记忆修复",
+        "en": "Nested-Pathway Memory Repair"
+      },
+      "verdict": "pass",
+      "rank": 3,
+      "parent_ids": [
+        "retrieval-mediated-harm-factorial-repair-v5"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v52-r2",
+      "id": "constraint-complete-typed-memory-order-logic",
+      "title": {
+        "zh": "约束完备型类型化记忆顺序逻辑",
+        "en": "Constraint-Complete Typed Memory-Order Logic"
+      },
+      "verdict": "pass",
+      "rank": 1,
+      "parent_ids": [
+        "higher-order-typed-memory-order-logic"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v53-r2",
+      "id": "certified-out-of-span-interaction-inverter-v53",
+      "title": {
+        "zh": "可认证张成空间外交互逆算子",
+        "en": "Certified Out-of-Span Interaction Inverter"
+      },
+      "verdict": "pass",
+      "rank": 1,
+      "parent_ids": [
+        "certified-out-of-span-interaction-inverter"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v53-r2",
+      "id": "compiler-residual-contract-editor-v53",
+      "title": {
+        "zh": "编译器残差式契约编辑器",
+        "en": "Compiler-Residual Contract Editor"
+      },
+      "verdict": "pass",
+      "rank": 2,
+      "parent_ids": [
+        "compiler-residual-contract-editor"
+      ],
+      "reviewed": true
+    },
+    {
+      "source": "v53-r2",
+      "id": "filtered-chronological-evaluator-state-v53",
+      "title": {
+        "zh": "滤波式纵向评价器状态外推",
+        "en": "Filtered Longitudinal Evaluator-State Extrapolation"
+      },
+      "verdict": "pass",
+      "rank": 3,
+      "parent_ids": [
+        "filtered-chronological-evaluator-state"
+      ],
+      "reviewed": true
+    }
+  ]
+}

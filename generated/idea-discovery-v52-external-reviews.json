@@ -1,0 +1,393 @@
+{
+  "schema_version": "1.0",
+  "reviews": {
+    "budget-split-contract-router-transpiler": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v52-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The closed M=6 ledger and routing/transpilation decomposition materially repair the previous experimental confound, but they do not create a non-reducible learned mechanism. The frozen router is still specified only as a three-way mapping from the same diagnostics and contract available to the capacity-matched classifier, so the classifier can implement the same decision rule. The transpiler is then tested mainly against a fixed within-surface asset rather than an equally expressive generic conditional asset generator. Consequently the proposed system reduces to classifier-based surface selection plus conditional generation; the budget accounting makes that decomposition cheaper than exhaustive evaluation but does not make it a distinct persistent learning operator. The broader literature already treats prompts, memory, tools, and control logic as alternative self-improvement surfaces and separately studies cost-sensitive routing, reinforcing that routing itself is not the missing novelty. ([arXiv][1])",
+        "finding_zh": "封闭的 M=6 ledger 以及 routing/transpilation 解耦确实实质性修复了此前实验混杂，但仍未产生不可约的学习机制。冻结 router 仍只是从相同 diagnostics 与 contract 到三个 surface 的映射，因此容量匹配三分类器原则上可以实现同一决策规则。transpiler 又主要与固定 within-surface asset 比较，而不是与同等表达能力的通用条件资产生成器比较。因此整个方案仍可还原为“分类器选 surface + 条件生成”；预算记账只证明这种分解比穷举便宜，并没有形成新的 persistent learning operator。现有工作也已经把 prompt、memory、tool、control logic 视作不同自改进 surface，并单独研究 cost-sensitive routing，因此 routing 本身不足以支撑机制新颖性。 ([arXiv][1])",
+        "required_action": "Do not repair this by adding another module. A revival must change the learned object itself: for example, a single budget-conditioned contract policy whose sequential probe allocation, stopping, surface choice, and emitted repair jointly alter the set of repairs reachable under M. Compare it against a capacity-matched generic policy given the same diagnostics, contract, action space, calls, and supervision. Alternatively, provide a formally restricted contract-routing algebra that yields decisions a generic three-way classifier with identical inputs cannot reproduce.",
+        "required_action_zh": "不要通过继续叠加模块修复。若未来复活，应直接改变 learned object，例如学习一个统一的 budget-conditioned contract policy，使 probe 分配、停止决策、surface 选择与 repair 生成共同改变 M 预算内可达的 repair 集合，并与拥有相同 diagnostics、contract、动作空间、调用预算和监督的容量匹配通用 policy 正面对照。另一条路径是定义真正受约束的 contract-routing algebra，并证明相同输入的通用三分类器无法复现其决策。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Self-Improvements in Modern Agentic Systems: A Survey — explicitly organizes persistent self-improvement across model/scaffold targets including prompts, memory, tools, and control logic. ([arXiv][1])",
+            "Did You Check the Right Pocket? Cost-Sensitive Store Routing for Memory-Augmented Agents — formulates learned routing under an accuracy/cost trade-off, albeit only among memory stores. ([OpenReview][2])",
+            "From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory — learns a persistent memory-update operator for a frozen agent. ([OpenReview][3])"
+          ],
+          "surviving_difference": "No searched official source exactly implements a prompt-versus-memory-versus-tool-constraint contract router followed by contract transpilation under a closed target-execution ledger. The problem combination survives, but the proposed learned operator remains reducible."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A single capacity-matched budget-conditioned conditional policy that receives z_model, C, the same two diagnostic results, and remaining ledger state and directly outputs either a surface-specific asset or abstention, with every call counted inside the same M=6 ledger.",
+        "decisive_pilot": "On held-out backbone swaps, compare the split router→transpiler system against the generic joint conditional policy under identical M=6 calls, training targets, parameter count, contract checks, and asset-capacity limits. The split mechanism is scientifically distinct only if its frozen structure gives a reproducible advantage not recoverable by the generic policy.",
+        "stop_rule": "Keep this branch blocked if the generic joint policy matches the proposed system, if the router matches the three-way classifier, or if transpiler gains disappear against an equally trained conditional asset generator.",
+        "unknowns": [
+          "No structural restriction on r(z_model,C) currently distinguishes it from ordinary multiclass prediction.",
+          "The current transpiler baseline does not establish whether contract-conditioned generation itself contributes anything beyond generic conditional generation."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v52-web-gpt/batch-01-of-02.response.md"
+      }
+    ],
+    "certified-out-of-span-interaction-inverter": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v52-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The repair is materially stronger: LP/Farkas infeasibility turns the former behavioral 'out-of-span' metaphor into a checkable parameter-space statement, and hidden execution truth is independent of that certificate. This also survives obvious collision with existing null-space and orthogonal editing methods, which project edits to protect prior behavior but do not first certify that every admissible combination of stored deltas is infeasible and then learn a new direction specifically for those certified compositions. ([OpenReview][4]) However, the decisive comparison still bundles two mechanisms—explicit rollback-derived interaction targets and orthogonal-complement projection. More importantly, the No-Residual baseline is forbidden from using an explicit target that is deterministically computable from the same single/pair/full rollback executions it already receives. Thus effective supervision is not actually equalized, and a simpler residual-only or projection-only method has not been ruled out.",
+        "finding_zh": "该修复已经明显更强：LP/Farkas infeasibility 将原先含混的行为层“span 外”说法变成了可检查的参数空间命题，而且 hidden execution truth 与 certificate 相互独立。它也没有被已有 null-space/orthogonal editing 直接覆盖；AlphaEdit、O-Edit 等主要通过投影保护已有行为，并没有先认证所有 stored-delta 组合均不可行，再只针对这些 certified compositions 学习新方向。 ([OpenReview][4]) 但当前决定性实验仍把两个机制绑定在一起：rollback-derived explicit interaction target 与 orthogonal-complement projection。更关键的是，No-Residual baseline 被禁止使用一个其实可以从它已经拥有的 single/pair/full rollback executions 中确定性计算出的 residual target，因此有效监督并未真正等量。当前也尚未排除更简单的 residual-only 或 projection-only 方法。",
+        "required_action": "Run a crossed 2×2 mechanism test: explicit interaction target on/off × certified out-of-span projection on/off. Every cell must receive the identical rollback executions and may compute identical deterministic statistics from them. Add an unrestricted capacity-matched conditional generator that can consume the rollback-derived residual itself but is not forced into the orthogonal complement. Attribute the claim only to the component or interaction that remains necessary on independently certified cases.",
+        "required_action_zh": "进行严格的 2×2 交叉机制实验：explicit interaction target 开/关 × certified out-of-span projection 开/关。四个条件必须获得完全相同的 rollback executions，并允许计算完全相同的确定性统计量。再加入一个容量匹配的通用 conditional generator，允许直接使用 rollback-derived residual，但不强制投影到正交补。最终只把主张归因于在 independently certified cases 上确实不可替代的组件或二者交互。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "AlphaEdit: Null-Space Constrained Knowledge Editing for Language Models — projects editing perturbations into a null space to preserve prior knowledge. ([OpenReview][4])",
+            "O-Edit: Orthogonal Subspace Editing for Language Model Sequential Editing — enforces orthogonal update directions to reduce sequential interference. ([OpenReview][5])",
+            "Editing Models with Task Arithmetic / subsequent task-vector analyses — combine parameter-update vectors through linear arithmetic and study when such combinations work. ([arXiv][6])"
+          ],
+          "surviving_difference": "The surviving novelty is the conjunction of a pre-output certificate that the stored-delta span cannot satisfy repair-plus-preservation constraints and learning a new repair direction specifically from intervention-derived interaction evidence on those certified cases."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A capacity-matched conditional patch generator with identical atom summaries, constraints, rollback executions, residual-derived statistics, adapter rank, parameters, optimizer, and training budget but without mandatory out-of-span projection; crossed residual-only and projection-only variants are also mandatory.",
+        "decisive_pilot": "Pre-certify held-out three-/four-way compositions with LP dual certificates before inspecting any generator output, then freeze all four 2×2 variants plus the unrestricted generator and compare hidden joint repair-and-preservation success. The combined mechanism must beat both single-component variants and the unrestricted generator specifically on certified-infeasible cases.",
+        "stop_rule": "Stop if valid infeasibility certificates are rare, if the coefficient-box choice creates the apparent infeasibility, if residual-only or projection-only matches the combined method, or if an unrestricted equal-data generator reaches statistical equivalence.",
+        "unknowns": [
+          "Sensitivity of the certificate to the preregistered coefficient box.",
+          "Whether Euclidean orthogonality in adapter parameter space is the behaviorally relevant complement.",
+          "How frequently naturally arising compositions are genuinely certified out of span."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v52-web-gpt/batch-01-of-02.response.md"
+      }
+    ],
+    "compiler-residual-contract-editor": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v52-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "medium",
+        "finding": "This child directly fixes the important v5.1 objection by subtracting schema-determined work before learning and equalizing verifier access. The persistent residual contract is meaningful, independent hidden execution truth is appropriate, and the crossed joint swap is substantially better than an API-renaming benchmark. Official work already contains deterministic tool-schema compilation, typed workflow adaptation, and schema-change adaptation, but none of the searched sources directly learns only the post-compiler relational residual of a persistent memory contract. ([arXiv][7]) One strict boundary nevertheless remains: the residual editor is explicitly trained from source/target traces identifying minimal residual edits, whereas the stated monolithic control is guaranteed equal verifier and decoding access but is not unambiguously guaranteed the identical residualized source-target training pairs, target traces, and supervision budget. PASS requires closing that data-equivalence statement rather than relying on 'same source data.'",
+        "finding_zh": "该 child 已经直接修复 v5.1 的核心问题：先扣除 schema 可确定部分，再学习 residual，并统一 verifier access。persistent residual contract 是真实的行为更新对象，隐藏执行真值也独立，crossed joint swap 相比单纯 API rename 明显更有说服力。现有官方工作已经包含 deterministic tool-schema compilation、typed workflow adaptation 和 schema-change adaptation，但检索到的工作中没有直接只学习 persistent memory contract 在 compiler 之后剩余的 relational residual。 ([arXiv][7]) 仍有一个严格边界：residual editor 明确利用 source/target traces 得到最小 residual 编辑监督，而当前 monolithic control 虽然明确等量了 verifier 与 decoding access，却没有无歧义地规定它获得完全相同的 residualized source-target training pairs、target traces 和监督预算。要 PASS，需要把这一数据等价性写死，而不能只写“same source data”。",
+        "required_action": "State and enforce that the monolithic rewriter is trained on exactly the same source-target asset pairs, target execution traces, residual-required cases, success/failure labels, model calls, tokens, optimization steps, and parameter budget as the residual editor. It may output unrestricted target assets and gets the same M0 and verifier. Then preregister the residual-required subset before model comparison.",
+        "required_action_zh": "明确规定并实际保证 monolithic rewriter 与 residual editor 使用完全相同的 source-target asset pairs、target execution traces、residual-required cases、成功/失败标签、模型调用、token、优化步数和参数预算；它可以自由输出完整 target asset，同时拥有相同 M0 与 verifier。还应在比较模型之前预注册 residual-required subset。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "TSCG: Deterministic Tool-Schema Compilation for Agentic LLM Deployments — establishes a deterministic compiler layer for tool schemas. ([arXiv][7])",
+            "Type-Compliant Adaptation Cascades — treats typed LLM workflows and deterministic logic as a jointly adapted typed probabilistic program. ([OpenReview][8])",
+            "SEEK-SQL / Contrastive Self-Refinement for Low-Cost Adaptation in Real-World Text-to-SQL — explicitly targets adaptation under schema migration, but through reusable guidelines rather than post-compiler contract residual editing. ([OpenReview][9])"
+          ],
+          "surviving_difference": "The specific object left after collision search is a persistent memory-contract migration decomposed into deterministic schema compilation followed only by learned schema-underdetermined relational edits, evaluated under joint model-and-harness swaps."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A checker-equalized capacity-matched monolithic rewriter trained on the exact same residualized source-target pairs and execution traces, receiving M0, both schemas, and the same verifier/repair attempts, but free to generate the complete target asset.",
+        "decisive_pilot": "Prelabel compiler-solvable versus schema-underdetermined residual-required training and held-out cases using independent environment evidence. Equalize every training example and call across residual editor and monolithic rewriter, then compare hidden-contract success on crossed model+harness swaps, with compiler-only as the floor.",
+        "stop_rule": "Stop the typed-residual claim if compiler-only solves nearly all cases, if the fully same-data monolithic rewriter matches the residual editor on preregistered residual-required cases, or if gains vanish after equalizing verifier-guided attempts.",
+        "unknowns": [
+          "Exact procedure for independently labeling a case as schema-underdetermined rather than merely difficult for the deterministic compiler.",
+          "Whether the whitelisted residual edit language covers enough real migrations to support an ICLR-scale thesis."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v52-web-gpt/batch-01-of-02.response.md"
+      }
+    ],
+    "constraint-complete-typed-memory-order-logic": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v52-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "pass",
+        "confidence": "medium",
+        "finding": "The second-order repair materially defeats the prior strawman. Both neural controls now observe the full set and can represent context-dependent reversals or unrestricted higher-order permutation effects, so success can no longer be attributed to forbidding the baseline from expressing the target relation. The learned object is a frozen variable-bound clause registry whose exact solver changes future memory ordering, and ground truth comes from independent hidden permutation executions. The held-out recombination pilot directly tests systematic reuse rather than training fit. There is substantial partial collision with general neuro-symbolic compositional-rule induction—AGEL-Comp already induces Horn clauses from experiential feedback for compositional generalization, and ILP work learns symbolic rules that transfer to held-out compositions—but the searched work does not target intervention-discovered memory-order constraints nor compare them against full-set permutation models under identical permutation outcomes. ([arXiv][10])",
+        "finding_zh": "该二阶修复已经实质性击败此前的 strawman。两个 neural control 都能观察完整集合，并能够表达 context-dependent reversal 或任意高阶 permutation effect，因此优势不能再来自人为禁止 baseline 表达目标关系。learned object 是冻结的 variable-bound clause registry，并由 exact solver 持续改变未来 memory ordering；真值来自独立隐藏 permutation executions。留出的 clause 重组实验也直接检验 systematic reuse，而不是训练集拟合。它与一般 neuro-symbolic compositional rule induction 存在明显 partial collision：AGEL-Comp 已经从 experiential feedback 中诱导 Horn clauses 来做 compositional generalization，ILP 工作也已学习可迁移到 held-out composition 的 symbolic rules；但检索到的工作没有直接研究通过 permutation interventions 发现 memory-order constraints，也没有在完全相同 permutation outcomes 下与 full-set permutation models 正面对比。 ([arXiv][10])",
+        "required_action": "No material v5.2 repair is required before a low-resource pilot. Preserve the full-set baselines, preregister compute matching for the exact solver versus neural permutation inference, and report the result as memory-order compositional generalization rather than as a general invention of symbolic rule induction.",
+        "required_action_zh": "在进入低资源 pilot 前无需再做实质性的 v5.2 机制修改。必须保留 full-set baselines，预注册 exact solver 与 neural permutation inference 的计算预算匹配，并把贡献限定为 memory-order compositional generalization，而不是宣称发明了一般性的 symbolic rule induction。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "AGEL-Comp: A Neuro-Symbolic Framework for Compositional Generalization in Interactive Agents — induces Horn clauses from experiential feedback and uses symbolic reasoning for novel compositions. ([arXiv][10])",
+            "Learning Compositional Symbolic Task Rules from Demonstrations with Inductive Logic Programming — learns symbolic task abstractions and evaluates generalization to harder held-out tasks. ([OpenReview][11])",
+            "Learning Distributions over Permutations and Rankings with Factorized Representations — provides a strong modern permutation-learning reference point, though not symbolic memory-order induction. ([OpenReview][12])"
+          ],
+          "surviving_difference": "The surviving scientific object is a persistent typed ordering program inferred from controlled memory-permutation interventions, with exact constraint satisfaction tested on unseen recombinations against equally expressive full-set neural ordering models."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "The Generic Set-Energy Model over full typed permutations, augmented by the Conditional Pairwise Factor model conditioned on the complete set; both receive identical types, sets, permutation outcomes, parameters, training compute, and a preregistered inference-compute budget.",
+        "decisive_pilot": "Train on compositions that separately identify each reusable clause but never expose their decisive joint recombinations. Freeze all models and test first-time conjunctions/reversals on hidden compositions, measuring exact successful-permutation recovery, violation rate, and regret to exhaustive execution truth.",
+        "stop_rule": "Stop the symbolic systematic-generalization claim if either full-set neural baseline matches exact satisfaction and task success on held-out compositions, if gains disappear after compute matching, or if useful clauses do not recur across independent training compositions.",
+        "unknowns": [
+          "Practical solver-versus-neural compute matching as memory-set size grows.",
+          "Whether real agent memories exhibit enough stable type-level ordering clauses beyond a controlled benchmark."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v52-web-gpt/batch-01-of-02.response.md"
+      }
+    ],
+    "filtered-chronological-evaluator-state": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v52-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The child now follows the v5.1 repair vector closely: chronology enters the final score through an explicit transitioned prior, the history-aware direct predictor receives the same historical information, future labels are withheld, and rolling-origin evaluation is appropriate. Existing 2026 work establishes that evaluator replacement can itself shift measurements and studies detecting judge drift, but the searched work does not directly perform zero-anchor chronological latent-state extrapolation and actor-specific residual correction. ([arXiv][13]) The remaining flaw is in the proposed chronology-permutation falsifier. Because timestamps remain explicit inputs, merely shuffling sequence order while preserving timestamp/fingerprint marginals can leave true chronology recoverable from the timestamp values or create easily detectable inconsistent Δt patterns. Therefore failure or survival under that control does not uniquely establish dependence on chronological transition structure.",
+        "finding_zh": "该 child 已经非常直接地落实 v5.1 repair vector：chronology 通过显式 transitioned prior 进入最终分数，history-aware direct predictor 获得完全相同的历史信息，future labels 被严格隐藏，并采用 rolling-origin。2026 年已有工作证明 evaluator replacement 本身会改变测量并研究 judge drift 检测，但检索到的工作没有直接进行 zero-anchor chronological latent-state extrapolation 与 actor-specific residual correction。 ([arXiv][13]) 当前剩余问题在 chronology-permutation falsifier：timestamps 本身仍是显式输入，因此仅打乱序列顺序并保持 timestamp/fingerprint marginals，可能让模型直接从 timestamp 数值恢复真实 chronology，也可能制造非常容易识别的异常 Δt。于是 permutation 后增益是否消失都不能唯一证明 transition structure 的因果必要性。",
+        "required_action": "Replace the chronology permutation with a control that destroys temporal correspondence without leaving recoverable timestamps: for example, jointly reassign version-time pairings under a preregistered permutation while preserving each marginal distribution, or remove absolute timestamps and supply only the permuted transition intervals. Run the same corruption for the state model and direct-history baseline. Also include transition-prior ablation at inference without retraining.",
+        "required_action_zh": "把 chronology permutation 改为真正破坏时间对应关系、同时不给模型留下可恢复 timestamp 的控制。例如预注册后重新随机配对 version 与 time，同时保持各自边际分布；或者删除 absolute timestamps，只提供 permutation 后的 transition intervals。state model 与 direct-history baseline 必须使用完全相同的 corruption；此外还应加入不重新训练、直接在 inference 阶段消除 transition prior 的干预。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "When the Judge Changes, So Does the Measurement: Auditing LLM-as-Judge Reliability — demonstrates that evaluator replacement changes measurements and audits upgrade-induced bias. ([arXiv][13])",
+            "Who Drifted: the System or the Judge? Anytime-Valid Attribution in LLM Evaluation Pipelines — detects and attributes judge drift using fixed human-labeled anchors. ([arXiv][14])",
+            "Bias and Uncertainty in LLM-as-a-Judge Estimation — analyzes bias correction and instability of judge calibration across compared models. ([arXiv][15])"
+          ],
+          "surviving_difference": "The proposed object predicts an unseen evaluator's actor-specific bias with zero future anchors using a frozen chronological state transition plus an unlabeled fingerprint observation update; the closest works primarily audit, calibrate, or detect judge changes."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "The capacity- and compute-matched history-aware direct residual predictor receiving identical ordered historical/current fingerprints, timestamps or transition intervals, actor descriptors, historical residual supervision, and inference tokens, plus current-fingerprint-only and last-version controls.",
+        "decisive_pilot": "Use rolling-origin versions with zero future labels; compare state filter and direct-history predictor normally, under a chronology-destroying corruption that cannot be inverted from timestamps, and under an inference-time transition-prior knockout. A genuine state mechanism requires normal-condition superiority plus selective loss of that superiority under both chronology destruction and prior knockout.",
+        "stop_rule": "Stop if the direct-history predictor is equivalent, if transition-prior knockout leaves predictions essentially unchanged, if gains occur on only one origin, or if a correctly chronology-destroying control fails to selectively erase the state-model advantage.",
+        "unknowns": [
+          "How evaluator fingerprints are generated and whether their probe cost is identical across versions.",
+          "Whether at least five versions provide enough independent temporal transitions for a convincing state-dynamics claim."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v52-web-gpt/batch-01-of-02.response.md"
+      }
+    ],
+    "frozen-compositional-role-contract-clauses": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v52-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The child successfully implements the specific v5.1 request for a zero-update, capacity-matched task-conditioned executable-FSM baseline and held-out task-family evaluation. The frozen clause IDs, independent executable assertions, and clause-family ablations also make persistence and causal attribution much cleaner. However, the collision search exposes a stronger simplification that is now closer than the whole-FSM baseline. HASP already turns reusable experience into executable Program Functions that activate on states and intervene in the agent loop; Contract2Tool learns normalized symbolic precondition/effect contracts from traces and schemas; and SkillComposer composes members of a fixed reusable skill library into executable ordered plans. ([arXiv][16]) Against that literature, PRE/TRANS/HANDOFF/TERM clause factorization risks being a specialized executable-skill/contract library unless it beats an equally modular reusable-program baseline.",
+        "finding_zh": "该 child 已经落实 v5.1 明确要求的零更新、容量匹配 task-conditioned executable-FSM baseline，并采用完整留出任务族；冻结 clause IDs、独立 executable assertions 和 clause-family ablations 也使 persistence 与因果归因明显更干净。但新的 collision search 暴露了一个比完整 FSM 更接近的简单替代。HASP 已经把可复用经验转成能够在特定状态激活并干预 agent loop 的 executable Program Functions；Contract2Tool 从 traces/schema 学习 normalized symbolic precondition/effect contracts；SkillComposer 则从固定 reusable skill library 中组合 executable ordered plans。 ([arXiv][16]) 因此 PRE/TRANS/HANDOFF/TERM factorization 仍可能只是 executable skill/contract library 的特化，除非它能够击败同样模块化的 reusable-program baseline。",
+        "required_action": "Add the actual closest modular control: learn or extract reusable executable motif programs from the identical traces, each with applicability/precondition, transition/effect, and termination metadata, then use the same motif router and a capacity-matched constrained composer to assemble them for held-out tasks. Give it the same cross-task reuse opportunity, schemas, executor, state/transition budget, and zero target updates. The clause claim survives only if decomposing contracts into independently reusable PRE/TRANS/HANDOFF/TERM relations adds transfer beyond reusable executable skills themselves.",
+        "required_action_zh": "加入真正最接近的模块化 control：从完全相同 traces 中学习或提取 reusable executable motif programs，每个 program 同样包含 applicability/precondition、transition/effect 和 termination metadata，并使用相同 motif router 与容量匹配 constrained composer 在留出任务上组合。它必须拥有相同的跨任务复用机会、schemas、executor、state/transition budget，并禁止 target updates。只有当 PRE/TRANS/HANDOFF/TERM 的进一步关系级分解能够在 reusable executable skills 本身之上继续带来迁移优势，clause 主张才成立。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Harnessing LLM Agents with Skill Programs (HASP) — upgrades reusable skills into executable Program Functions that activate on failure-prone states and modify actions or context. ([arXiv][16])",
+            "Contract2Tool: Learning Preconditions and Effects for Reliable Tool-Augmented LLM Agents — learns normalized symbolic tool contracts containing preconditions/effects from schemas, documentation, and traces. ([arXiv][17])",
+            "Generative Skill Composition for LLM Agents — predicts executable compositions over a fixed reusable skill library, jointly selecting subset, count, and order. ([arXiv][18])"
+          ],
+          "surviving_difference": "No single searched work exactly factorizes cross-task role execution into versioned PRE, TRANS, HANDOFF, and TERM clauses with independent hidden handoff assertions. The unresolved question is whether that finer factorization contributes beyond already-existing reusable executable skill/contract composition."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A reusable executable-motif/program library learned from the same traces, with the same precondition/effect/termination evidence, motif router, schemas, executor, capacity, inference budget, and zero target updates, composed by a constrained task-conditioned planner without the proposed relation-level clause factorization.",
+        "decisive_pilot": "On an entirely held-out task family and never-seen motif conjunctions, compare relation-level clauses, reusable executable motif programs, and whole-task FSM synthesis under identical evidence and budgets. Then ablate PRE, TRANS, HANDOFF, and TERM separately. The proposal must outperform the modular skill-program baseline specifically on compositions requiring cross-motif relation reuse.",
+        "stop_rule": "Stop the clause-library claim if reusable executable motif programs match it, if gains exist only over whole-FSM synthesis, or if removing the purportedly reusable clause family does not selectively remove the corresponding safety/handoff advantage.",
+        "unknowns": [
+          "Whether handoff clauses provide information genuinely absent from a sufficiently expressive executable skill-program interface.",
+          "Whether clause recurrence across two training families is enough to prevent accidental task-template memorization."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v52-web-gpt/batch-01-of-02.response.md"
+      }
+    ],
+    "heldout-directed-effect-latent-translation": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v52-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The directed-pair holdout, frozen deployment, hidden contracts, and equal-probe accounting are material repairs. However, the claimed value of z_effect is still not isolated from its training objective. The primary direct translator is explicitly denied the cross-surface contrastive and cycle objectives used by the proposed model. A same-capacity direct encoder-decoder can consume the identical non-test directional pairs and use equivalent cycle/behavioral-consistency regularization without exposing a named shared latent. If that model matches z_effect, the result supports cross-direction multitask regularization rather than a distinct effect-latent operator.",
+        "finding_zh": "完整有向 surface-pair 留出、冻结部署、hidden contracts 和相同 probe 成本都属于实质修复。但当前仍未把 z_effect 本身的价值与训练目标分离。主 direct translator 被明确禁止使用 proposed 所拥有的跨表面对比和 cycle objective。一个同容量的直接 encoder-decoder 完全可以读取相同的非测试方向配对，并使用等价的 cycle/behavioral-consistency 正则，而不显式定义共享 latent。若该方法与 z_effect 等价，则证据只能支持跨方向多任务正则，而不能支持独立的 effect-latent operator。",
+        "required_action": "Add a strongest-equivalent direct translator that receives exactly the same directional training pairs and all cycle/effect-equivalence supervision, with matched capacity and compute, but has no explicit shared bottleneck or canonical effect variable. The latent claim survives only if the held-out-direction advantage remains against this control and the canonical-IR control.",
+        "required_action_zh": "加入真正的最强等价 direct translator：它获得完全相同的方向训练配对、cycle/effect-equivalence 监督、容量和计算预算，但不显式建立共享瓶颈或 canonical effect variable。只有在完整留出方向上仍同时超过该对照和 canonical-IR 对照，才能保留 latent 主张。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "PromptBridge learns cross-model mappings that transfer prompts between heterogeneous LLMs, making learned cross-system translation a close neighboring mechanism, although its object is prompt transfer rather than persistent behavioral repair assets. ([arXiv][1])",
+            "SkCC introduces a strongly typed intermediate representation to decouple skill semantics from framework-specific realization, directly occupying the canonical-IR side of the proposed comparison. ([arXiv][2])",
+            "LANTERN uses cross-language translation for program repair, providing another neighboring instance of repair transfer across representational surfaces rather than the proposed behavioral-effect latent. ([arXiv][3])"
+          ],
+          "surviving_difference": "The surviving distinction is a behavior-probe-defined repair representation evaluated on completely unseen directed surface pairs with persistent generated assets and execution-level hidden contracts; the searched neighboring work does not establish that exact object."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A capacity- and compute-matched direct source-signature-to-target-asset encoder-decoder trained on exactly the same non-test directional pairs and with the same cycle/effect-equivalence supervision, but without an explicit shared z_effect bottleneck; retain the fixed canonical-IR compiler as the second control.",
+        "decisive_pilot": "For at least four heterogeneous surfaces, retrain under leave-one-directed-pair-out. Compare z_effect, the fully regularized direct translator, and canonical IR under identical source probes, parameters, calls, and decoding budget. Require z_effect to improve hidden-contract fidelity on a preregistered majority of held-out directions while preserving protected behavior and executability.",
+        "stop_rule": "Stop the shared-latent claim if the fully regularized direct translator is statistically equivalent or better, if canonical IR matches it, or if the advantage appears only on directions represented during training.",
+        "unknowns": [
+          "Whether the direct baseline can be given equivalent cycle/effect-equivalence supervision without implicitly recreating the claimed latent.",
+          "Whether the selected surface schemas make some held-out directions intrinsically easier than others.",
+          "Whether source probe signatures contain sufficient information to make target reconstruction identifiable."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v52-web-gpt/batch-02-of-02.response.md"
+      }
+    ],
+    "nonadditive-message-effect-field": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v52-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The second-order repair correctly removes the previous extra-data advantage: both methods now see the same singleton and joint interventions, and the learned operator is frozen before held-out-family graph construction. The remaining simplification gap is decisive, however. The baseline is structurally forced to be additive, while the hypothesis is exactly that the target contains pairwise nonadditivity. A generic same-data pairwise or nonlinear graph-utility predictor can consume the same joint-mask executions and represent those residuals without the proposed additive-plus-q decomposition. Beating an additive model therefore establishes nonadditivity, not the necessity or transfer value of this particular effect-field factorization.",
+        "finding_zh": "第二阶修复已经正确消除了额外数据优势：两种方法看到相同的 singleton 与 joint interventions，而且学习算子在 held-out family 构图前冻结。但仍存在决定性的简化缺口。当前 baseline 在结构上被强制为 additive，而核心假设恰好就是目标包含 pairwise nonadditivity。同数据的通用 pairwise/nonlinear graph-utility predictor 可以直接读取相同 joint-mask executions 并表示这些残差，而无需 proposed 的 additive+q 分解。因此，超过 additive 模型只能证明存在非加性，不能证明该 effect-field factorization 的必要性或迁移价值。",
+        "required_action": "Add a capacity-matched unrestricted second-order utility predictor that receives exactly the same singleton/joint executions, descriptors, task motifs, and budgets and can model arbitrary local pair interactions, but does not use the proposed identifiable residual decomposition or q factorization. The contribution must survive this comparison.",
+        "required_action_zh": "加入容量匹配的非受限二阶 utility predictor：它获得完全相同的 singleton/joint executions、描述符、task motifs 和预算，可以表示任意局部 pair interaction，但不采用 proposed 的可识别 residual 分解或 q factorization。主张必须在该对照下仍成立。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "G-Designer already learns task-adaptive communication topology for multi-agent systems, so learned graph construction itself is not novel. ([arXiv][4])",
+            "Adaptive Graph Pruning for Multi-Agent Communication learns task-adaptive high-utility communication subgraphs, further narrowing novelty to the intervention-derived interaction object rather than topology optimization. ([arXiv][5])",
+            "TCP-MCP explicitly treats prompt utility and communication-edge utility as coupled rather than independent, which is conceptually adjacent to nonadditive communication effects. ([arXiv][6])",
+            "Group-MATES models relational influence terms beyond independent contributions in a different data-selection setting, showing that explicit interaction effects are a broader existing modeling pattern. ([arXiv][7])"
+          ],
+          "surviving_difference": "The surviving difference is intervention-identified local edge-edge residuals learned from matched joint masks and frozen for zero-search graph construction on entirely held-out task families."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A same-data, same-parameter generic pairwise graph-utility model, such as a local second-order MLP/GNN over edge pairs, trained on all identical normal, replacement, singleton-mask, and joint-mask outcomes and permitted to predict graph utility directly without the explicit a+q decomposition.",
+        "decisive_pilot": "On at least three fully held-out task families, compare additive, unrestricted pairwise, and proposed residual-factorized predictors under identical graph and token budgets. Require both accurate sign/rank prediction of unseen measured interaction residuals and a better success-cost frontier than the unrestricted pairwise model.",
+        "stop_rule": "Stop the factorized effect-field claim if a generic same-data pairwise predictor matches graph quality or residual prediction, if q fails on held-out interaction motifs, or if gains require target-family reward or search.",
+        "unknowns": [
+          "Whether pairwise interactions are sufficient or higher-order graph effects dominate.",
+          "Whether local-context definitions are fixed before examining held-out families.",
+          "Whether graph optimization under the frozen utility introduces an unaccounted search advantage."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v52-web-gpt/batch-02-of-02.response.md"
+      }
+    ],
+    "operator-heldout-marginal-gain-transport": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v52-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The held-out version-generating operator and crossed evaluation oracle are substantially stronger evaluation design, but they do not create a scientifically distinct learned object. With randomized micro-allocation and adequate overlap, g_theta(phi(v),k) is a conditional response function for next-unit validation change. A direct contextual response regressor trained on the identical randomized tuples estimates the same prediction target. Propensity correction can change statistical efficiency or robustness, but it does not by itself create a different persistent operator. Holding out O_test tests transportability of that response function; it does not defeat the simplest equivalent direct estimator. The proposed method is therefore reducible under its own strongest baseline.",
+        "finding_zh": "完整留出 version-generating operator 和 crossed evaluation oracle 显著增强了实验设计，但并没有产生科学上不同的学习对象。在随机 micro-allocation 且具有足够 overlap 时，g_theta(phi(v),k) 本质上就是下一单位 validation change 的条件响应函数。使用完全相同随机 tuples 的 direct contextual response regressor 估计的是同一个预测对象。propensity correction 可以影响统计效率或稳健性，但本身不会创造不同的持久算子。留出 O_test 只是检验这个响应函数的可迁移性，并没有击败最简单的直接估计器，因此当前 proposed 在自己的最强基线下仍可约化。",
+        "required_action": "Do not repair this by adding another estimator baseline. A future child would need to change the learned scientific object itself—for example, an identifiable operator-level transformation or counterfactual structure that cannot be represented as the same conditional next-unit response function. Otherwise recast the contribution as an evaluation protocol for curriculum transport rather than a new marginal-gain mechanism.",
+        "required_action_zh": "不要仅通过再增加一个 estimator baseline 修复。下一版必须改变学习的科学对象本身，例如建立一个不能约化为相同 conditional next-unit response function 的可识别 operator-level transformation 或 counterfactual structure。否则应把贡献降为 curriculum transport 的评测协议，而不是新的 marginal-gain 机制。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "MATES learns model-aware data influence for data selection as the model evolves, making learned version-conditioned allocation an already occupied neighboring space. ([OpenReview][8])",
+            "Group-MATES learns relational data-influence models from training trajectories and uses them for subsequent data selection, again placing learned gain/influence-guided allocation close to the proposed mechanism. ([arXiv][7])",
+            "Transfer-Aware Curriculum formulates curriculum selection through bandit-style learning and transfer signals, providing a close policy-allocation baseline family. ([arXiv][9])",
+            "Self-Evolving Curriculum uses a nonstationary bandit over problem categories and model-training state, further reducing novelty of version-conditioned curriculum allocation itself. ([arXiv][10])"
+          ],
+          "surviving_difference": "The unusual part is the leave-one-version-operator-out protocol with evaluation-only crossed micro-block interventions, but that is an evaluation distinction rather than a non-reducible learned mechanism."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "The stated same-data direct contextual response model estimating the conditional next-unit validation delta from exactly the same randomized tuples and version representation; it is already the simplest functional equivalent.",
+        "decisive_pilot": "No outcome-only pilot rescues the present mechanism claim. First demonstrate a formally or experimentally distinguishable target from conditional response regression under identical randomized data and function capacity. Cross-operator superiority alone is insufficient because both methods can learn the same mapping.",
+        "stop_rule": "Block the current mechanism claim whenever g_theta and the direct contextual response model target the same conditional gain function under the randomized logging scheme; successful O_test transport does not change that equivalence.",
+        "unknowns": [
+          "Whether propensity varies enough for weighting to matter beyond variance.",
+          "Whether phi(v) is sufficient for transport across operators.",
+          "Whether the proposed uncertainty estimate changes decisions in a way unavailable to a matched direct probabilistic regressor."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v52-web-gpt/batch-02-of-02.response.md"
+      }
+    ],
+    "residual-composition-normal-form-operator": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v52-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The repair isolates composition algebra cleanly, but its decisive claim is internally incompatible with its independent truth. The normal form is required to reproduce the final state and observable behavior of actual sequential application, while the proposed pilot simultaneously requires it to materially improve final repair-plus-C_keep success over that same sequential application. If semantic equivalence holds, those final behavioral metrics cannot improve; if they improve by changing the result, the normal form fails its own equivalence criterion. Extra composition supervision also makes the proposed residual learner non-identical to the stated baseline. The current scientific claim is therefore not falsifiable in a coherent way.",
+        "finding_zh": "该修复确实把 composition algebra 单独隔离出来了，但它的决定性主张与独立真值存在内部矛盾。normal form 被要求复现真实逐轮应用后的最终状态和可观察行为，而 pilot 又要求它相对同一个逐轮应用过程显著提高最终 repair+C_keep 成功率。如果语义等价成立，这些最终行为指标不可能提高；如果通过改变结果获得提高，又违反了自身的 equivalence criterion。此外，额外 composition supervision 也使 proposed residual learner 与声明的 baseline 不再完全相同。因此当前科学主张无法形成逻辑一致的可证伪实验。",
+        "required_action": "Redefine the object around a property for which canonical composition can add value without being required to equal literal sequential execution—for example atomic conflict resolution, stale-version rebasing, intermediate side-effect avoidance, execution cost, or another independently measured transactional property. Then construct an identical sequential baseline and a ground truth for that new property. Merely adding more composition cases does not repair the current contradiction.",
+        "required_action_zh": "重新定义一个允许 canonical composition 在不等同于字面逐轮执行时产生价值的科学对象，例如原子冲突解析、stale-version rebase、中间副作用规避、执行成本或其他独立可测的事务属性。随后再构造完全相同的 sequential baseline 与对应独立真值。仅增加更多 composition case 不能修复当前逻辑矛盾。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "A3E explicitly targets compositional model editing, so composability across edits is already an active neighboring problem rather than a new motivation by itself. ([OpenReview][11])",
+            "DeltaEdit addresses interference in sequential model editing, occupying the broader problem of accumulated edit interactions even though its mechanism is parameter-space editing rather than typed persistent assets. ([arXiv][12])",
+            "MEMOIR targets long sequences of edits while reducing interference, providing another close neighboring line on persistent sequential modification. ([arXiv][13])"
+          ],
+          "surviving_difference": "An executable canonical algebra over versioned typed persistent edits is structurally different from parameter-space sequential model editing, but the present evaluation cannot demonstrate behavioral benefit while simultaneously requiring equivalence to literal sequential execution."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Literal sequential application of the exact same predicted typed residuals from the same starting asset, with every residual predictor input, parameter, single-round objective, and test failure sequence matched.",
+        "decisive_pilot": "The current pilot should not be run as evidence for the stated claim because equivalence and behavioral improvement are mutually incompatible. A repaired pilot must first choose a distinct target such as conflict resolution, atomicity, intermediate safety, rebasing accuracy, or execution cost and independently measure that property.",
+        "stop_rule": "Block unless the claimed benefit is redefined so that success does not require the normal form both to equal and outperform literal sequential execution on the same final behavioral criterion.",
+        "unknowns": [
+          "Whether sequential edits have intermediate external side effects not represented in final-state equivalence.",
+          "Whether stale dependency versions can make canonical rebasing a genuinely different operation.",
+          "Whether composition-consistency supervision also changes the residual predictor rather than only the normalizer."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v52-web-gpt/batch-02-of-02.response.md"
+      }
+    ],
+    "structural-equivariant-diff-failure-prior": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v52-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The child materially improves the previous proposal by removing identity dependence, holding out structural update types, freezing the prior, matching challenge budgets, and providing hidden exhaustive-suite truth. The remaining boundary is the direct baseline. A generic graph/set encoder without an explicit renaming constraint is weaker than the standard simplest structural alternative: an identity-free relation-aware permutation-equivariant GNN or graph transformer can ingest the same typed canonical graph, receive the same renaming augmentation and verifier labels, and learn cross-topology structure without the hand-designed motif factorization. Until the proposed motif decomposition beats that control, any gain can be attributed to ordinary graph equivariance rather than the claimed failure-motif prior.",
+        "finding_zh": "该 child 相比上一版已有实质提升：去除了 identity 依赖，完整留出 structural update types，测试前冻结 prior，严格匹配 challenge budget，并用隐藏 exhaustive suite 建立独立真值。剩余边界在 direct baseline。一个没有显式 renaming constraint 的 generic graph/set encoder 弱于最简单的结构化替代方案：identity-free、relation-aware、天然 permutation-equivariant 的 GNN 或 graph transformer 可以读取同一 typed canonical graph、接受相同 renaming augmentation 和 verifier labels，并在没有手工 motif factorization 的情况下学习跨 topology 结构。若 proposed 不能超过这一对照，优势只能归因于普通 graph equivariance，而不能归因于所声称的 failure-motif prior。",
+        "required_action": "Replace or augment Direct-Diff Allocator with a parameter-matched identity-free relational GNN/Graph Transformer that is permutation-equivariant by construction and receives the same graph, renaming augmentations, labels, history, calls, and tokens, but no proposed motif factorization. Also include a generic motif-GNN-style control if parameterization permits.",
+        "required_action_zh": "用容量匹配的 identity-free relational GNN/Graph Transformer 替换或补充 Direct-Diff Allocator。该基线应天然 permutation-equivariant，并获得相同 graph、renaming augmentations、labels、history、calls 和 tokens，但不使用 proposed motif factorization；若预算允许，还应加入通用 motif-GNN 类对照。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Motif Graph Neural Network explicitly incorporates graph motifs to model higher-order structural information, so motif-factorized graph learning is not novel in isolation. ([arXiv][14])",
+            "StableGNN studies invariant/causal graph representations for out-of-distribution graph generalization, overlapping the goal of transfer across structural distribution shifts. ([arXiv][15])",
+            "AgentAssay uses agent-specific mutation operators, regression testing, behavioral fingerprints, and adaptive testing budgets, making update-conditioned regression discovery a close application-level neighbor. ([arXiv][16])"
+          ],
+          "surviving_difference": "The surviving combination is a frozen diff-conditioned failure-family prior that uses typed structural motifs specifically to allocate a limited future challenge budget on unseen update structures against exhaustive hidden-suite truth."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A parameter-matched identity-free relational GNN or Graph Transformer with permutation equivariance, the same typed graph and renaming augmentation, the same verified failure labels, and identical challenge/verifier/token budgets, but no hand-designed motif factorization or motif-mask objective.",
+        "decisive_pilot": "Hold out complete relation topologies and unseen motif compositions, rename all entity identifiers, and compare proposed, equivariant relational direct model, motif-GNN control, and canonical kNN under identical challenge budgets. Require higher hidden-suite failure-family recall and first-hit efficiency than every control, with ablations showing incremental value from motif factorization beyond generic equivariance.",
+        "stop_rule": "Stop the structural-motif-prior claim if an identity-free equivariant relational baseline matches it on held-out structural types, if gains disappear after fair renaming augmentation, or if the advantage depends on structural leakage from the split.",
+        "unknowns": [
+          "Whether the current generic direct baseline is already permutation-invariant through its implementation.",
+          "Whether entity renaming means graph-index permutation, literal identifier replacement, or both.",
+          "Whether held-out structural compositions share near-duplicate subgraphs with training updates.",
+          "Whether challenge generation itself introduces an additional learned advantage beyond allocation."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v52-web-gpt/batch-02-of-02.response.md"
+      }
+    ],
+    "typed-interaction-signature-quotient-transfer": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v52-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "Removing identity tokens and requiring frozen transfer to unseen identities/compositions is a substantive second-order change, and independent pair/triple interventions give real ground truth. Two material boundaries remain. First, the veto baseline is not information- or supervision-equivalent at the learned-object level: F_theta is trained to predict residual magnitude and uncertainty before thresholding, whereas the stated baseline directly learns a binary merge veto. A same-capacity residual-regression-plus-uncertainty model can use the identical intervention targets and then make direct merge or clustering decisions without quotient algebra. Second, thresholded similarity of pair/triple interaction signatures is not automatically transitive, so the proposed merge relation may fail to define a genuine quotient and may produce order-dependent classes.",
+        "finding_zh": "去除 identity token，并要求冻结后迁移到未见 identity/composition，是实质性的第二阶改变；真实 pair/triple interventions 也提供了独立真值。但仍有两个关键边界。第一，veto baseline 在学习对象和监督层面并不等价：F_theta 先学习 residual magnitude 与 uncertainty，再通过阈值决定合并，而当前 baseline 直接学习二元 merge veto。同容量的 residual-regression+uncertainty 方法可以读取完全相同的 intervention targets，然后直接做 merge 或 clustering，而无需 quotient algebra。第二，基于阈值的 pair/triple interaction-signature 相似性并不天然具有传递性，因此该 merge relation 未必真正构成 quotient，并可能产生依赖合并顺序的 classes。",
+        "required_action": "Add a same-capacity direct residual-to-merge or residual-to-clustering baseline trained with exactly the same residual-magnitude and uncertainty/calibration supervision and storage budget, differing only in the absence of quotient algebra. Separately define and test an equivalence construction that guarantees or explicitly enforces reflexivity, symmetry, transitivity, and merge-order invariance.",
+        "required_action_zh": "加入同容量 direct residual-to-merge 或 residual-to-clustering baseline：使用完全相同的 residual magnitude、uncertainty/calibration 监督和存储预算，唯一差别是不建立 quotient algebra。同时必须定义并测试一个能够保证或显式约束自反性、对称性、传递性和 merge-order invariance 的等价关系构造。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Causal Intervention-Based Memory Selection for Long-Horizon LLM Agents uses controlled interventions to estimate the causal usefulness of memories, overlapping the intervention-based identification side of the proposal although it targets selection rather than quotient compression. ([arXiv][17])",
+            "Experience Compression Spectrum organizes agent experience representations as forms of compression and identifies adaptive cross-level compression as a central design problem, making persistent memory compression a neighboring research space. ([arXiv][18])"
+          ],
+          "surviving_difference": "The surviving distinction is an identity-free typed predictor of pair/triple interaction residuals used to construct persistent compression classes that must transfer to unseen memory identities and unseen type compositions."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A capacity-matched probabilistic residual predictor trained on the exact same singleton/pair/triple residual magnitudes and calibration targets, followed by a direct merge-veto or global clustering rule, with identical feature visibility, compression target, and total storage bits but no quotient algebra.",
+        "decisive_pilot": "Use splits disjoint in both identities and type compositions at three preregistered compression rates. Compare quotient, direct residual-to-veto/clustering, binary veto, and marginal-only compression. Measure behavioral preservation, protected-behavior violations, residual prediction, storage cost, transitivity violations, and class order dependence. The quotient must beat the direct residual baseline and exhibit near-zero equivalence inconsistencies.",
+        "stop_rule": "Stop if the same-supervision direct residual baseline matches the behavioral-preservation frontier, if class formation is materially order-dependent or non-transitive, if storage accounting removes the advantage, or if gains require identity features.",
+        "unknowns": [
+          "Whether the proposed threshold relation is transitive on unseen memories.",
+          "How interaction-signature and hyperedge storage is charged against the stated bit budget.",
+          "Whether pair/triple interventions capture important higher-order interactions.",
+          "Whether thresholds and uncertainty calibration are selected without leakage from test compositions."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v52-web-gpt/batch-02-of-02.response.md"
+      }
+    ]
+  },
+  "status": {
+    "reviewed": 12,
+    "pending": 0,
+    "complete": true,
+    "last_attempt": "2026-08-07T05:01:24Z",
+    "last_attempt_host": "admin01-NF5468M5",
+    "last_attempt_result": "batch_2_completed",
+    "verdict_counts": {
+      "pass": 1,
+      "revise": 8,
+      "block": 3,
+      "unknown": 0
+    }
+  },
+  "updated_at": "2026-08-07T05:01:24Z",
+  "pipeline": "code-oracle -> signed-in ChatGPT web UI -> Agent project",
+  "required_host": "admin01-NF5468M5",
+  "total_passed_ideas": 12
+}

@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "reviews": {
+    "certified-out-of-span-interaction-inverter-v53": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v53-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "pass",
+        "confidence": "high",
+        "finding": "v5.3 closes the stated final boundary. The proposed cell and the strongest unrestricted residual-conditioned generator now receive identical certified cases, rollback executions, interaction residual R, deterministic residual statistics, explicit residual-target supervision, adapter capacity, calls, tokens, optimizer, and optimization budget. The preregistered 2×2 Target × Projection experiment separately identifies interaction-target supervision, mandatory span exit, or their interaction, while Target-ON/Projection-OFF is a genuine unrestricted equal-information control. Independent LP/Farkas infeasibility certificates determine where a within-span solution is impossible, while correctness is scored by separate hidden executions. Related orthogonal/null-space editing and model-merging methods establish substantial component-level prior art, but the official-source search did not locate the combined certificate-plus-crossed-identification mechanism. ([OpenReview][1])",
+        "finding_zh": "v5.3 已关闭上一轮指出的最后边界。完整方法与最强 unrestricted residual-conditioned generator 现在获得完全相同的 certified cases、rollback executions、interaction residual R、所有确定性 residual statistics、显式 residual-target supervision、adapter 容量、calls、tokens、optimizer 与优化预算。预注册的 2×2 Target × Projection 实验能够分别识别 interaction-target supervision、强制 span exit 或二者交互，而 Target-ON/Projection-OFF 已成为真正的信息与容量等价 unrestricted control。LP/Farkas certificate 独立决定哪些样本在线性 stored-delta span 内不可行，最终正确性则由独立 hidden executions 判定。官方来源中存在明显的 orthogonal/null-space editing 与 model-merging 先例，但未发现同时包含独立 infeasibility certificate、rollback-derived interaction residual 与等价 2×2 因果识别的直接方法。 ([OpenReview][1])",
+        "required_action": "None for the final-boundary audit. Preserve the preregistered four-cell design, unrestricted Target-ON/Projection-OFF control, independently frozen Farkas-certified test set, and claim only whichever factorial component or interaction survives on hidden execution truth.",
+        "required_action_zh": "本轮最终边界审计无需继续修补。必须保持预注册四个 cell、unrestricted Target-ON/Projection-OFF control、独立冻结的 Farkas-certified 测试集，并且最终只主张在 hidden execution truth 上真正存活的 factorial component 或 interaction。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "AlphaEdit: Null-Space Constrained Knowledge Editing for Language Models constrains edits using a null-space projection, overlapping the span-exit component but not the certificate-plus-factorial identification contract. ([OpenReview][1])",
+            "O-Edit: Orthogonal Subspace Editing for Language Model Sequential Editing uses orthogonal editing subspaces, overlapping the projection principle. ([OpenReview][2])",
+            "Quasi-Orthogonal Model Merging for Continual Learning projects new task vectors toward an orthogonal complement of previous task-vector spans, overlapping the task-vector geometry. ([OpenReview][3])"
+          ],
+          "surviving_difference": "The surviving distinction is not orthogonal projection itself, but independently certifying that the stored-delta span cannot satisfy repair plus preservation and then causally isolating residual-target supervision versus mandatory span exit with equal-information 2×2 cells and an unrestricted residual-conditioned control."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Target-ON/Projection-OFF: a capacity-matched unrestricted conditional patch generator receiving the identical certified examples, atom summaries, constraints, single/pair/full rollback records, R and deterministic residual statistics, explicit R-target supervision, adapter rank, parameter count, calls, tokens, optimizer, minibatches, and optimization steps, but free to emit any same-dimensional low-rank patch without Q_perp; the remaining two factorial cells are mandatory residual-only and projection-only controls.",
+        "decisive_pilot": "Freeze Farkas-certified held-out compositions before training and run all four Target × Projection cells plus the unrestricted residual-conditioned comparison under identical data and budget. Require hidden repair, preservation, and compositional-success truth. Attribute only a Target main effect, Projection main effect, or interaction that survives the corresponding equal-information contrasts; full Target-ON/Projection-ON must not receive credit if Target-ON/Projection-OFF reproduces it.",
+        "stop_rule": "Stop the out-of-span claim if the unrestricted residual-conditioned generator matches the full method on independently certified cases; stop the interaction-target claim if Target-OFF/Projection-ON matches it; stop the projection claim if Target-ON/Projection-OFF matches it; terminate the idea if no isolated factor or interaction yields a stable hidden-truth advantage.",
+        "unknowns": [
+          "How frequent nondegenerate LP/Farkas-certified compositions are in realistic settings.",
+          "How robust the certificate and Q_perp are to span-estimation error or violations of the frozen linear-adapter approximation."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v53-web-gpt/batch-01-of-01.response.md"
+      }
+    ],
+    "compiler-residual-contract-editor-v53": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v53-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "pass",
+        "confidence": "high",
+        "finding": "v5.3 removes the remaining supervision and data asymmetry. The monolithic rewriter now receives, example by example, the same source-target pairs, compiler output M0, canonical residual annotation delta_R, target traces, checker outcomes, success/failure labels, verifier access, repair attempts, effective token budget, parameters, calls, and optimization steps, including a matched residual head that consumes the same residual supervision. The residual-required subset is frozen before model comparison by a deterministic compiler/gold-asset procedure rather than by learned-model outcomes, and final truth is hidden from both training and subset construction. Prior work already supports local/structural program editing instead of wholesale regeneration, so edit-versus-rewrite alone is not novel; the surviving testable difference is the post-compiler schema-underdetermined relational output surface under an equal-information monolithic control. ([NeurIPS Proceedings][4])",
+        "finding_zh": "v5.3 已消除最后的数据与监督不等价。monolithic rewriter 现在逐样本获得与 residual editor 完全相同的 source-target pairs、compiler 输出 M0、canonical residual annotation delta_R、target traces、checker outcomes、success/failure labels、verifier access、repair attempts、有效 token 预算、参数量、calls 和 optimization steps，并通过 matched residual head 消费完全相同的 residual supervision。residual-required subset 在任何模型比较前由 deterministic compiler/gold-asset procedure 冻结，而不是依据模型结果筛选；最终 truth 同时独立于训练和 subset construction。已有工作已经证明 local/structural program editing 相对整段重生成具有价值，因此简单的 edit-versus-rewrite 并不新；本方案剩余可检验贡献是，在信息完全等价的 monolithic control 下，将 learned output surface 限定为 compiler 后 schema-underdetermined relational residual 是否仍带来迁移优势。 ([NeurIPS Proceedings][4])",
+        "required_action": "None for the stated final boundary. Keep the canonical differencer, residual-required subset definition, matched auxiliary residual head, verifier/repair budget equality, and output-length budget normalization frozen before observing comparative results. Do not generalize the claim beyond the post-compiler relational-residual factorization if the monolithic control closes the gap.",
+        "required_action_zh": "针对上一轮最后边界无需继续修补。必须在查看比较结果前冻结 canonical differencer、residual-required subset 定义、matched auxiliary residual head、verifier/repair budget 等价条件以及输出长度预算归一化。若 monolithic control 消除差距，则不得把结论扩展到 post-compiler relational-residual factorization 之外。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Learning to Edit Visual Programs with Self-Supervision learns execution-guided edits to existing programs rather than generating replacements from scratch. ([NeurIPS Proceedings][4])",
+            "Learning Structural Edits via Incremental Tree Transformations directly studies learned structural editing against direct generation. ([OpenReview][5])",
+            "SCALPEL: Reinforcement Learning for Surgical Program Edits trains structured, localized program edits and therefore makes generic edit sparsity/locality an insufficient novelty claim. ([OpenReview][6])"
+          ],
+          "surviving_difference": "No located official-source method instantiates the same deterministic schema compiler followed by a typed relational residual asset editor while simultaneously giving an unrestricted full-asset rewriter the identical canonical residual targets, traces, verifier feedback, effective compute, and hidden model×harness transfer test."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A capacity-matched unrestricted monolithic target-asset rewriter receiving exactly the same source asset, target asset during training, M0, canonical delta_R annotation, target execution traces, checker outcomes, success/failure labels, schemas, verifier V, checker-guided attempts, calls, effective tokens, parameter count, batch schedule, and optimization steps, with an equally sized auxiliary residual head trained on delta_R but discarded at inference.",
+        "decisive_pilot": "Before model comparison, construct the residual-required held-out subset solely from C_schema, gold target assets, the canonical differencer, and preregistered execution assertions. Compare the typed residual editor with the equal-information monolithic rewriter on identical cases and under a joint unseen-model × unseen-harness swap. Primary endpoints are hidden execution success, hidden relational correctness, and preservation failures, with the complete held-out set also reported.",
+        "stop_rule": "Stop the post-compiler residual-object claim if the equal-information monolithic rewriter matches hidden execution and joint swap transfer on the preregistered residual-required subset, or if the apparent advantage exists only on a post hoc/model-selected subset.",
+        "unknowns": [
+          "Whether the canonical differencer yields a sufficiently unique and semantically faithful delta_R rather than one arbitrary representation among many equivalent edits.",
+          "Whether the residual whitelist covers enough real migration failures for the claimed scope to be consequential."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v53-web-gpt/batch-01-of-01.response.md"
+      }
+    ],
+    "filtered-chronological-evaluator-state-v53": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v53-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "pass",
+        "confidence": "medium",
+        "finding": "v5.3 materially repairs the chronology-identification flaw. Absolute timestamps and sortable version IDs are removed, the falsifier preserves the fingerprint and interval marginals while destroying their original correspondence, and exactly the same corrupted history is supplied to the state model and the capacity-matched direct-history predictor. More importantly, chronology evidence is no longer based on corruption alone: the frozen state model must first beat the strongest direct-history predictor on zero-anchor future evaluators, its relative advantage must contract under the correspondence falsifier, and an independent inference-only removal of T_theta must also hurt. Held-out future actor×evaluator outcomes provide independent truth. The searched evaluator literature studies judge reliability, shortcut/recency bias, and temporal benchmark aging, but did not expose a direct collision with frozen latent evaluator-state extrapolation to unseen evaluator versions. One residual risk is that deranged interval/fingerprint pairs may constitute architecture-sensitive OOD rather than a pure chronology intervention; the independent T_theta ablation makes this a pilot interpretation issue rather than a remaining design boundary. ([ACL Anthology][7])",
+        "finding_zh": "v5.3 已实质修复 chronology identification 的问题。absolute timestamps 与可排序 version IDs 被删除；falsifier 在保持 fingerprint 和 interval 各自边际分布不变的同时破坏原始对应关系，并将完全相同的 corrupted history 输入 state model 与容量匹配的 direct-history predictor。更关键的是，机制证据不再只依赖 corruption：冻结 state model 必须先在 zero-anchor future evaluators 上稳定优于最强 direct-history predictor，其相对优势在 correspondence falsifier 下必须收缩，同时 inference-only 移除 T_theta 还必须独立造成性能下降。完全留出的 future actor×evaluator outcomes 提供独立 truth。检索到的 evaluator 文献涉及 judge reliability、shortcut/recency bias 与 benchmark temporal aging，但没有发现与“对未见 evaluator version 进行冻结 latent-state 外推”直接重合的方法。剩余风险是 deranged interval/fingerprint pair 可能形成 architecture-sensitive OOD，而非纯粹的 chronology intervention；由于还有独立的 T_theta inference ablation，这更属于 pilot 解释风险，而不是尚未修复的设计边界。 ([ACL Anthology][7])",
+        "required_action": "None for the final-boundary audit. Keep the no-time-ID interface and frozen derangement preregistered, report the state-versus-direct interaction under the identical corruption rather than raw corruption drops, and require the independent inference-only T_theta ablation to agree before making a transition-structure claim.",
+        "required_action_zh": "本轮最终边界审计无需继续修补。保持 no-time-ID 输入接口与 frozen derangement 的预注册；必须报告相同 corruption 下 state-versus-direct 的 interaction，而不能仅报告 raw corruption drop；只有独立的 inference-only T_theta ablation 同方向成立时，才可主张 transition structure。",
+        "direct_collision": {
+          "status": "none",
+          "closest_work": [
+            "Learning to Judge: LLMs Designing and Applying Evaluation Rubrics studies learned LLM evaluation and explicitly frames temporal evaluator drift/adaptation as outside its static treatment rather than providing a longitudinal-state mechanism. ([ACL Anthology][7])",
+            "The Silent Judge documents shortcut biases including provenance/recency effects in LLM judges, but does not learn a frozen transition state that extrapolates actor-specific bias to future judge versions. ([arXiv][8])",
+            "When Benchmarks Age studies temporal misalignment and benchmark aging, not state-space forecasting of changing evaluator behavior. ([ACL Anthology][9])"
+          ],
+          "surviving_difference": "The distinctive mechanism is a frozen longitudinal evaluator-state transition/filter used for zero-anchor future-version residual prediction, coupled to a correspondence-destroying falsifier and a separate inference-only transition-prior intervention."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A capacity- and compute-matched history-aware direct residual predictor D receiving the same ordered historical fingerprints, current unseen-evaluator fingerprint, transition intervals, actor descriptors, historical actor×evaluator residual labels, training windows, calls, and inference tokens, and receiving the identical fingerprint-interval derangement during the falsifier.",
+        "decisive_pilot": "Preregister rolling-origin Clean, Correspondence-Destroyed, and Transition-Prior-Ablated tests. Require clean state-model superiority over D on zero-anchor future evaluators; require that superiority, not merely absolute performance, to contract under the identical correspondence destruction; and require inference-only replacement of T_theta with identity propagation to independently worsen actor-specific correction. Score only against fully held-out future evaluator judgments and task outcomes.",
+        "stop_rule": "Stop the chronological-transition claim if the clean frozen state model fails to beat the matched direct-history predictor, if removing recoverable time identifiers and destroying fingerprint-interval correspondence leaves its relative advantage unchanged, if inference-only T_theta ablation does not hurt, or if corruption causes only an equal generic degradation in both architectures.",
+        "unknowns": [
+          "Whether the deranged fingerprint-interval combinations remain sufficiently in-distribution to support a clean causal interpretation.",
+          "Whether evaluator fingerprints remain stable and nonleaky across future model/API releases.",
+          "Whether enough genuinely zero-anchor evaluator transitions exist for a powered rolling-origin test."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v53-web-gpt/batch-01-of-01.response.md"
+      }
+    ],
+    "frozen-compositional-role-contract-clauses-v53": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v53-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "v5.3 successfully replaces the weak whole-task FSM comparison with a genuinely modular reusable-program control and equalizes traces, metadata, router, composer, executor, storage/capacity, calls, tokens, state/transition limits, reuse opportunities, and zero target updates. However, the collision search exposes one stronger remaining comparator than the proposed encapsulated whole-motif program library: learned symbolic action/operator libraries already represent reusable typed operators through predicates, applicability/preconditions, effects or causal relations and compose those operators for unseen tasks. UniDomain is particularly close because it learns and fuses reusable predicates, operators, and precondition/effect causal edges into a unified domain for zero-shot compositional planning; BLADE likewise learns reusable structured high-level actions with preconditions/effects. Consequently, comparing independent PRE/TRANS/HANDOFF/TERM clauses only with an internally encapsulated whole-motif program can still make the proposed representation artificially more recombinable. The final v5.2-style equality boundary is closed against the nominated program baseline, but the official-source collision search reveals one material strongest-baseline omission, so PASS is premature. ([arXiv][10])",
+        "finding_zh": "v5.3 已成功把较弱的 whole-task FSM control 替换为真正模块化、可复用的 executable-program baseline，并对齐 traces、metadata、router、composer、executor、storage/capacity、calls、tokens、state/transition limits、跨任务复用机会与 zero target updates。但官方来源碰撞检索显示，还存在一个比“内部保持整体封装的 whole-motif program library”更强、更接近的 baseline：已有 learned symbolic action/operator library 会显式表示可复用的 typed operators、predicates、applicability/preconditions、effects 或 causal relations，并将这些 operator 组合到未见任务。尤其 UniDomain 会从 demonstrations 中学习并融合 predicates、operators 以及 precondition/effect causal edges，形成 unified domain 后进行 zero-shot compositional planning；BLADE 也学习带 preconditions/effects 的 reusable structured high-level actions。因此，如果 proposed method 的 PRE/TRANS/HANDOFF/TERM 可以独立重组，而 control 的内部关系仍被人为封装在 whole motif 内，proposed representation 仍可能获得结构性更强的 recombination 权限。当前设计已经关闭对其自选 program baseline 的最终等价性边界，但官方 collision search 暴露了一个新的、实质性的 strongest-baseline 缺口，因此尚不能 PASS。 ([arXiv][10])",
+        "required_action": "Add a third, capacity/data/budget-matched learned symbolic operator/action-model baseline modeled on the closest collision class: from the identical traces it must learn reusable typed predicates/operators with the same available precondition/applicability, transition/effect, termination, and handoff information, and its planner/composer must be allowed to recombine those frozen operators and shared predicate/causal relations under the identical router, executor, storage, state/transition, retrieval, token, and zero-update budgets. Redefine the preregistered Relation-Recombination stratum so that it does not structurally deny this operator baseline access to reusable substructure. Claim independent relation-clause factorization only if the clause library beats both the whole-motif program baseline and this symbolic operator baseline on the same hidden executable truth.",
+        "required_action_zh": "增加第三个真正容量、数据和预算匹配的 learned symbolic operator/action-model baseline，对齐当前最接近的 collision class：它必须从完全相同 traces 中学习 reusable typed predicates/operators，并获得与 proposed method 相同可用的 precondition/applicability、transition/effect、termination 与 handoff 信息；其 planner/composer 必须能够在相同 router、executor、storage、state/transition、retrieval、token 与 zero-update 预算下重组冻结 operators 及共享 predicate/causal relations。同时重新定义预注册 Relation-Recombination stratum，避免通过任务构造在结构上剥夺该 operator baseline 对可复用子结构的访问。只有 clause library 在同一 hidden executable truth 上同时击败 whole-motif program baseline 与 symbolic operator baseline，才能主张独立的 relation-clause factorization 增益。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "UniDomain: Pretraining a Unified PDDL Domain from Real-World Demonstrations for Generalizable Robot Task Planning learns reusable predicates and operators, recovers precondition/effect causal edges, fuses atomic domains, and performs compositional planning on unseen tasks. ([arXiv][10])",
+            "BLADE: Learning Compositional Behaviors from Demonstration and Language learns a library of structured high-level actions with preconditions/effects and controllers for compositional generalization. ([Proceedings of Machine Learning Research][11])",
+            "Learning compositional models of robot skills for task and motion planning learns skill/action precondition and effect models and composes them for novel long-horizon tasks. ([arXiv][12])"
+          ],
+          "surviving_difference": "Independent versioned PRE/TRANS/HANDOFF/TERM role-contract clauses, particularly explicit HANDOFF and TERM relations across semantic interfaces, remain finer-grained than the located operator/skill representations. But that difference has not yet been isolated against a same-data symbolic action-model baseline that already exposes reusable predicates, preconditions, effects, and causal structure."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A frozen same-data symbolic operator/action-model library, in addition to the existing reusable whole-motif program library: learn reusable typed predicates and executable operators from exactly the same trajectories and schemas, expose the same applicability/precondition, transition/effect, termination, typed I/O and handoff evidence, and allow a capacity-matched planner/composer to recombine the frozen operator/predicate structure with the same router, executor, permissions, total storage/parameters, maximum states/transitions, composer depth, retrieval count, calls, tokens, inference budget, and zero target-task updates.",
+        "decisive_pilot": "Preregister Program-Sufficient and Relation-Recombination tasks before model comparison, but evaluate three matched paths: independent clause library, reusable whole-motif programs, and reusable symbolic operators/predicates. On Program-Sufficient cases all should approach parity. On Relation-Recombination cases the clause method must beat both controls on hidden precondition, transition/effect, handoff, termination, permission, and end-to-end assertions. The stratum must be defined from common semantic requirements rather than from absence of a complete program/operator in one baseline's library.",
+        "stop_rule": "Stop the relation-level-factorization claim if either the matched whole-motif program composer or the matched symbolic operator/action-model baseline reproduces the clause library on preregistered recomposition tasks, or if the advantage disappears after equalizing reusable predicate/causal structure, handoff/termination evidence, storage, state/transition limits, and inference budget. In that case treat the clause library as a representation variant of executable skill/symbolic contract composition rather than a distinct transfer mechanism.",
+        "unknowns": [
+          "Whether explicit HANDOFF and TERM clauses yield transfer beyond what a sufficiently expressive learned symbolic operator model can encode.",
+          "Whether the proposed Relation-Recombination stratum remains nontrivial and unbiased after all three representations receive equal reusable substructure.",
+          "Whether relation-level factorization retains an advantage after matching not only nominal storage but effective representational degrees of freedom."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v53-web-gpt/batch-01-of-01.response.md"
+      }
+    ]
+  },
+  "status": {
+    "reviewed": 4,
+    "pending": 0,
+    "complete": true,
+    "last_attempt": "2026-08-07T15:01:20Z",
+    "last_attempt_host": "admin01-NF5468M5",
+    "last_attempt_result": "batch_1_completed",
+    "verdict_counts": {
+      "pass": 3,
+      "revise": 1,
+      "block": 0,
+      "unknown": 0
+    }
+  },
+  "updated_at": "2026-08-07T15:01:20Z",
+  "pipeline": "code-oracle -> signed-in ChatGPT web UI -> Agent project",
+  "required_host": "admin01-NF5468M5",
+  "total_passed_ideas": 4
+}

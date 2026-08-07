@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-08-07 · Target-driven 20-idea search (Idea Discovery v5–v5.3)
+
+- Added a 36-candidate wide-search v5 bank spanning empirical failures, memory, update history, cross-surface transfer, tool/API semantics, workflows, evaluators, curricula, multi-agent communication, permissions, and model migration.
+- Completed strict official-source R2 for all 32 v5 finalists/revivals: 6 PASS, 19 REVISE, and 7 BLOCK.
+- Added reviewer-vector repair rounds rather than renaming failed ideas: v5.1 = 3 PASS / 12 REVISE / 4 BLOCK; v5.2 = 1 PASS / 8 REVISE / 3 BLOCK.
+- Added v5.3 final-boundary repair for only four closest-to-PASS v5.2 REVISE ideas; result = 3 PASS / 1 REVISE / 0 BLOCK.
+- Added `discussion_portfolio.py` and generated discussion-ready artifacts with a strict external-PASS-only stop target. The portfolio now contains 22 qualified ideas against a target of 20 and automatically stops further expansion.
+- Added v5/v5.1/v5.2/v5.3 rendering, strict `/20` progress, simplification challenges, final-boundary repair traceability, CLI/automation/publication integration, and frontend-only deployment coverage.
+
 ## 2026-08-07 · Constrained composition and conditional revival (Idea Discovery v4)
 
 - Added a 28-candidate v4 bank with 14 new compositions, 8 conditional revivals, 4 repair candidates, and 2 retained component/baseline branches.

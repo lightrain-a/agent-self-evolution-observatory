@@ -8,6 +8,7 @@ from .config import SemanticScholarSettings, StorageSettings
 from .cvpr_idea_factory import DEFAULT_JS as DEFAULT_CVPR_JS
 from .cvpr_idea_factory import DEFAULT_JSON as DEFAULT_CVPR_JSON
 from .cvpr_idea_factory import build_cvpr_idea_bank, validate_bank, write_cvpr_idea_bank
+from .discussion_portfolio import build_discussion_portfolio, write_discussion_portfolio
 from .iclr_idea_factory import DEFAULT_JS as DEFAULT_ICLR_JS
 from .iclr_idea_factory import DEFAULT_JSON as DEFAULT_ICLR_JSON
 from .iclr_idea_factory import build_iclr_idea_bank, validate_bank as validate_iclr_bank, write_iclr_idea_bank
@@ -17,6 +18,10 @@ from .idea_discovery_v3 import build_idea_discovery_v3, validate as validate_dis
 from .idea_discovery_v31 import DEFAULT_JS as DEFAULT_DISCOVERY_V31_JS
 from .idea_discovery_v31 import DEFAULT_JSON as DEFAULT_DISCOVERY_V31_JSON
 from .idea_discovery_v31 import build_idea_discovery_v31, validate as validate_discovery_v31, write_idea_discovery_v31
+from .idea_discovery_v5 import DEFAULT_JS as DEFAULT_DISCOVERY_V5_JS, DEFAULT_JSON as DEFAULT_DISCOVERY_V5_JSON, build_idea_discovery_v5, validate as validate_discovery_v5, write_idea_discovery_v5
+from .idea_discovery_v51 import build_idea_discovery_v51, write_idea_discovery_v51
+from .idea_discovery_v52 import build_idea_discovery_v52, write_idea_discovery_v52
+from .idea_discovery_v53 import build_idea_discovery_v53, write_idea_discovery_v53
 from .idea_discovery_v4 import DEFAULT_JS as DEFAULT_DISCOVERY_V4_JS
 from .idea_discovery_v4 import DEFAULT_JSON as DEFAULT_DISCOVERY_V4_JSON
 from .idea_discovery_v4 import build_idea_discovery_v4, validate as validate_discovery_v4, write_idea_discovery_v4
@@ -87,6 +92,15 @@ def parse_args() -> argparse.Namespace:
     discovery.add_argument("--idea-discovery-v31-status", action="store_true", help="Show v3.1 repair and external-review counts.")
     discovery.add_argument("--idea-discovery-v31-json", type=Path, default=DEFAULT_DISCOVERY_V31_JSON)
     discovery.add_argument("--idea-discovery-v31-js", type=Path, default=DEFAULT_DISCOVERY_V31_JS)
+    discovery.add_argument("--build-idea-discovery-v5", action="store_true", help="Build the wide-search v5 idea bank.")
+    discovery.add_argument("--idea-discovery-v5-status", action="store_true", help="Show v5 candidate and R2 counts.")
+    discovery.add_argument("--idea-discovery-v5-json", type=Path, default=DEFAULT_DISCOVERY_V5_JSON)
+    discovery.add_argument("--idea-discovery-v5-js", type=Path, default=DEFAULT_DISCOVERY_V5_JS)
+    discovery.add_argument("--discussion-ready-status", action="store_true", help="Show strict R2-PASS progress toward the 20-idea discussion target.")
+    discovery.add_argument("--build-discussion-ready", action="store_true", help="Rebuild the strict discussion-ready portfolio.")
+    discovery.add_argument("--idea-discovery-v51-status", action="store_true", help="Show targeted v5.1 reviewer-vector repair children.")
+    discovery.add_argument("--idea-discovery-v52-status", action="store_true", help="Show second-order v5.2 repair children.")
+    discovery.add_argument("--idea-discovery-v53-status", action="store_true", help="Show final-boundary v5.3 repair children.")
     discovery.add_argument("--build-idea-discovery-v4", action="store_true", help="Build constrained-combination and conditional-revival candidates.")
     discovery.add_argument("--idea-discovery-v4-status", action="store_true", help="Show v4 candidate groups, finalists, and external-review counts.")
     discovery.add_argument("--idea-discovery-v4-json", type=Path, default=DEFAULT_DISCOVERY_V4_JSON)
@@ -219,6 +233,31 @@ def _print_idea_discovery_v4_status() -> None:
     }, ensure_ascii=False, indent=2))
 
 
+def _print_idea_discovery_v5_status() -> None:
+    payload = build_idea_discovery_v5()
+    print(json.dumps({"summary": payload["summary"], "validation_errors": validate_discovery_v5(payload), "discussion_ready": [{"rank":x.get("external_rank"),"title":x["title"],"verdict":x.get("external_verdict")} for x in payload.get("discussion_ready", [])]}, ensure_ascii=False, indent=2))
+
+
+def _print_discussion_ready_status() -> None:
+    payload = build_discussion_portfolio()
+    print(json.dumps(payload, ensure_ascii=False, indent=2))
+
+
+def _print_idea_discovery_v51_status() -> None:
+    payload = build_idea_discovery_v51()
+    print(json.dumps({"summary": payload["summary"], "children": [{"rank":x.get("rank"),"id":x.get("id"),"parent_id":x.get("parent_id"),"verdict":x.get("external_verdict")} for x in payload.get("children",[])]}, ensure_ascii=False, indent=2))
+
+
+def _print_idea_discovery_v52_status() -> None:
+    payload = build_idea_discovery_v52()
+    print(json.dumps({"summary": payload["summary"], "children": [{"rank":x.get("rank"),"id":x.get("id"),"parent_id":x.get("parent_id"),"verdict":x.get("external_verdict")} for x in payload.get("children",[])]}, ensure_ascii=False, indent=2))
+
+
+def _print_idea_discovery_v53_status() -> None:
+    payload = build_idea_discovery_v53()
+    print(json.dumps({"summary": payload["summary"], "children": [{"rank":x.get("rank"),"id":x.get("id"),"parent_id":x.get("parent_id"),"verdict":x.get("external_verdict")} for x in payload.get("children",[])]}, ensure_ascii=False, indent=2))
+
+
 def _print_iclr_audit_status() -> None:
     payload = build_iclr_audit()
     print(json.dumps({
@@ -330,6 +369,24 @@ def main() -> None:
         print(f"Idea Discovery v4 complete: {payload['summary']['raw_candidates']} candidates, {payload['summary']['discussion']} discussion, {payload['summary']['revival']} revival, {payload['summary']['external_pass']} external PASS.")
         print(f"Wrote {args.idea_discovery_v4_json}")
         print(f"Wrote {args.idea_discovery_v4_js}")
+    if args.idea_discovery_v5_status:
+        _print_idea_discovery_v5_status()
+    if args.build_idea_discovery_v5:
+        payload = write_idea_discovery_v5(args.idea_discovery_v5_json, args.idea_discovery_v5_js)
+        print(f"Idea Discovery v5 complete: {payload['summary']['raw_candidates']} candidates, {len(payload['finalists'])} finalists/revivals, {payload['summary']['external_pass']} external PASS.")
+        print(f"Wrote {args.idea_discovery_v5_json}")
+        print(f"Wrote {args.idea_discovery_v5_js}")
+    if args.discussion_ready_status:
+        _print_discussion_ready_status()
+    if args.build_discussion_ready:
+        payload = write_discussion_portfolio()
+        print(f"Discussion-ready portfolio: {payload['count']}/{payload['target']} strict R2 PASS.")
+    if args.idea_discovery_v51_status:
+        _print_idea_discovery_v51_status()
+    if args.idea_discovery_v52_status:
+        _print_idea_discovery_v52_status()
+    if args.idea_discovery_v53_status:
+        _print_idea_discovery_v53_status()
     if args.iclr_audit_status:
         _print_iclr_audit_status()
     if args.build_iclr_audit:
@@ -389,6 +446,9 @@ def main() -> None:
             or args.machine_school_status or args.build_machine_school_bank
             or args.idea_discovery_v3_status or args.build_idea_discovery_v3
             or args.idea_discovery_v31_status or args.build_idea_discovery_v31
+            or args.idea_discovery_v5_status or args.build_idea_discovery_v5
+            or args.discussion_ready_status or args.build_discussion_ready or args.idea_discovery_v51_status
+            or args.idea_discovery_v52_status or args.idea_discovery_v53_status
             or args.idea_discovery_v4_status or args.build_idea_discovery_v4
             or args.cvpr_status or args.build_cvpr_bank
             or args.published_audit_status or args.build_published_audit or args.s2_status

@@ -198,6 +198,16 @@ The five v4 PASS directions are:
 
 All 28 candidates remain visible in `paper-ideas.html`; external BLOCK branches remain available as components, baselines, merge targets, or future revival paths. Persistent artifacts are `generated/idea-discovery-v4.json/js` and `generated/idea-discovery-v4-external-reviews.json`.
 
+## Wide-search Idea Discovery v5 → v5.3
+
+V5 makes the search target explicit: accumulate at least **20 strict external R2 PASS ideas** before senior-level direction discussion, without counting internal shortlists, REVISE ideas, or the supplementary internet-inspired batch. It expands evidence sources with empirical failure capsules, knowledge-graph neighbors, multi-team proposal diversity, simplification challenges, and micro-experiment keep/revert signals. The raw v5 pool contains 36 candidates; 32 finalist/revival candidates received official-source R2 review, yielding **6 PASS, 19 REVISE, and 7 BLOCK**.
+
+REVISE does not trigger free-form rewriting. V5.1 generated exactly one reviewer-vector child for each of 19 v5 REVISE parents and returned **3 PASS, 12 REVISE, and 4 BLOCK**. V5.2 repaired only those 12 REVISE children against their second reviewer vectors and returned **1 PASS, 8 REVISE, and 3 BLOCK**. Because the strict portfolio was still 19/20, v5.3 selected only four closest-to-PASS v5.2 REVISE ideas with one explicit surviving boundary; their final-boundary review returned **3 PASS and 1 REVISE**.
+
+The strict discussion-ready portfolio is therefore **22/20**: 4 main-bank PASS + 5 v4 PASS + 6 v5 PASS + 3 v5.1 PASS + 1 v5.2 PASS + 3 v5.3 PASS. The search stops after reaching the target. `generated/discussion-ready-ideas.json/js` is the single authoritative roster used by both the system overview and idea page.
+
+Persistent artifacts include `generated/idea-discovery-v5*.json/js`, the per-round external-review stores for v5/v5.1/v5.2/v5.3, and the strict discussion-ready roster. All BLOCK branches remain preserved as components, baselines, or future revival sources; they are never silently deleted or renamed into later rounds.
+
 ## Quality assurance
 
 Run static site integrity checks:

@@ -65,6 +65,9 @@ def build() -> Path:
         OUTPUT / "app.js",
         OUTPUT / "system-overview-view.js",
         OUTPUT / "generated" / "iclr-low-resource-ideas.js",
+        OUTPUT / "generated" / "discussion-ready-ideas.js",
+        OUTPUT / "generated" / "idea-discovery-v5.js",
+        OUTPUT / "generated" / "idea-discovery-v53.js",
         OUTPUT / "generated" / "research-system-state.js",
     )
     missing = [str(path.relative_to(OUTPUT)) for path in required if not path.exists()]

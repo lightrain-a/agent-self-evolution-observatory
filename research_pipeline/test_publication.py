@@ -65,6 +65,12 @@ class PublicationTest(unittest.TestCase):
         self.assertIn("generated/idea-discovery-v31-external-reviews.json", WEEKLY_ARTIFACTS)
         self.assertIn("generated/idea-discovery-v4.json", WEEKLY_ARTIFACTS)
         self.assertIn("generated/idea-discovery-v4-external-reviews.json", WEEKLY_ARTIFACTS)
+        self.assertIn("generated/idea-discovery-v5.json", WEEKLY_ARTIFACTS)
+        self.assertIn("generated/idea-discovery-v5-external-reviews.json", WEEKLY_ARTIFACTS)
+        self.assertIn("generated/idea-discovery-v51-external-reviews.json", WEEKLY_ARTIFACTS)
+        self.assertIn("generated/idea-discovery-v52-external-reviews.json", WEEKLY_ARTIFACTS)
+        self.assertIn("generated/idea-discovery-v53-external-reviews.json", WEEKLY_ARTIFACTS)
+        self.assertIn("generated/discussion-ready-ideas.json", WEEKLY_ARTIFACTS)
 
 
 if __name__ == "__main__":

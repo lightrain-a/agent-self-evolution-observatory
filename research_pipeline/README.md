@@ -169,6 +169,16 @@ Artifacts:
 
 The weekly automation cycle rebuilds v4 and publishes its full lineage. The main ICLR bank remains unchanged until a v4 PASS is explicitly promoted into a pilot protocol and receives P0/P1/P2 evidence.
 
+## Target-driven discussion portfolio (v5 → v5.3)
+
+`idea_discovery_v5.py` widens search while keeping the external-review bar fixed. It combines empirical failure capsules, literature and knowledge-graph evidence, multi-team proposal diversity, simplification challenges, conditional revival, and matched-budget falsifiers. Its 36 raw candidates yield 32 reviewed finalists/revivals and an external distribution of **6 PASS / 19 REVISE / 7 BLOCK**.
+
+`generate_v51_repairs.py` reads each v5 REVISE reviewer vector and generates exactly one materially changed child; `solution_first_v51_external_review.py` returns **3 PASS / 12 REVISE / 4 BLOCK**. V5.2 repeats the process only for v5.1 REVISE and returns **1 PASS / 8 REVISE / 3 BLOCK**. Because the strict portfolio remained at 19/20, v5.3 selects only four v5.2 REVISE ideas with one explicitly surviving boundary; the final review returns **3 PASS / 1 REVISE / 0 BLOCK**.
+
+`discussion_portfolio.py` is the authoritative stop controller. It counts only strict external PASS from the main R2 bank, v4, v5, v5.1, v5.2, and v5.3. Internal shortlists, REVISE ideas, and the supplementary internet-inspired batch are excluded. The resulting roster is **22/20**, so further automatic expansion stops. All failed branches remain available for baselines, components, or future materially changed revivals.
+
+Artifacts include `generated/idea-discovery-v5*.json/js`, per-round external-review stores, and `generated/discussion-ready-ideas.json/js`.
+
 ## Continuous automation and safety boundary
 
 The daily cycle rebuilds deterministic artifacts without network access. The weekly cycle may refresh Semantic Scholar and request at most two project-scoped web-GPT repair reviews. Both use exclusive locks and keep the previous valid snapshots if one step fails. The repository includes systemd service/timer files under `deploy/systemd/`.

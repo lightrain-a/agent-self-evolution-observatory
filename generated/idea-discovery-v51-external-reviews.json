@@ -1,0 +1,611 @@
+{
+  "schema_version": "1.0",
+  "pipeline": "code-oracle -> signed-in ChatGPT web UI -> Agent project",
+  "required_host": "admin01-NF5468M5",
+  "reviews": {
+    "anchor-conditioned-crossed-judge-residual": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The repair materially fixes the parent's observability defect: the new evaluator now exposes a fixed K-anchor interface, human truth is separated from calibration anchors, and the decisive endpoint is double-held-out policy-selection regret rather than raw judge agreement. However, the proposed scientific object does not survive simplification. Its core u_a^T M v_e interaction is a low-rank dyadic factorization, and adapting v_e* from a few anchor judgments is essentially cold-start latent-factor estimation. Closely related preference-factorization work already learns low-dimensional reward factors and infers a new individual's coordinates from a small number of preference observations; PReF explicitly reduces this adaptation to matrix-factorization followed by low-dimensional coefficient estimation. ([arXiv][1]) The child therefore needs to beat a matched low-rank dyadic model, not only affine/isotonic or lightweight calibration heads. As currently specified, the claimed crossed residual is reproducible by the simplest equivalent factor model.",
+        "finding_zh": "该修复确实实质性解决了父方案的可观测性问题：新 evaluator 现在只暴露固定的 K 个 anchor，人工真值与校准 anchor 分离，决定性终点也改成了 double-held-out 的策略选择 regret，而不是普通 judge agreement。但其核心科学对象没有通过简化挑战。u_a^T M v_e 本质上就是低秩二元交互分解，而通过少量 anchor 估计 v_e* 本质上属于 cold-start latent-factor estimation。已有偏好因子化工作已经利用低维 reward factors，并通过少量新用户偏好观测估计其低维坐标；PReF 甚至明确把这一过程归约为矩阵分解和低维系数估计。([arXiv][1]) 因此真正必须击败的不是 affine/isotonic 或轻量 calibration head，而是相同数据和预算下的低秩 dyadic factor model。按当前定义，crossed residual 可被最简单的等价因子模型复现。",
+        "required_action": "Revive only if the learned object is no longer equivalent to ordinary dyadic factorization. At minimum, compare against a capacity-matched low-rank actor-by-evaluator model that learns the historical interaction matrix and estimates the new evaluator coordinate from exactly the same K anchors. A future version needs a transferable structure that this factor model cannot express, such as identifiable higher-order context-dependent interaction structure, and its gain must survive after matching latent rank, anchor selection, regularization, and human-label budget.",
+        "required_action_zh": "只有当学习对象不再等价于普通 dyadic factorization 时才值得复活。至少必须加入容量匹配的低秩 actor×evaluator 模型：用同一历史交互矩阵训练，并从完全相同的 K 个 anchor 估计新 evaluator 坐标。未来版本需要提出普通因子模型无法表达的可迁移结构，例如可识别的更高阶、上下文依赖交互，并且在 latent rank、anchor selection、regularization 和人工标签预算全部匹配后仍保持优势。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Language Model Personalization via Reward Factorization (PReF): low-dimensional reward factorization with few-observation adaptation to a new preference source. ([arXiv][1])",
+            "Calibrating LLM-Based Evaluator: explicit human-aligned calibration of LLM evaluators. ([arXiv][2])",
+            "Calibrating the Evaluator: evaluator calibration specifically inside agent-feedback loops. ([arXiv][3])"
+          ],
+          "surviving_difference": "The child applies low-rank interaction structure specifically to longitudinal actor-version by evaluator-version drift and evaluates double-held-out policy-selection regret, but the proposed bilinear mechanism itself is not distinct enough from generic latent preference factorization."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A low-rank actor-evaluator dyadic preference model trained on exactly the crossed historical matrix, with the held-out evaluator latent vector inferred from the identical K anchors, plus per-evaluator affine/isotonic calibration as simpler controls.",
+        "decisive_pilot": "Use the proposed double-held-out actor/evaluator protocol, but add the direct low-rank factorization baseline. Match rank, K, anchor identities, human labels, regularization search, and candidate policies. The child survives only if its specifically claimed residual structure improves selection regret beyond that baseline and the improvement disappears under an ablation unique to the proposed mechanism rather than under removal of factorization itself.",
+        "stop_rule": "Stop if a matched low-rank dyadic factor model reaches statistically indistinguishable double-held-out selection regret at K=2,4,8, or if the alleged interaction advantage disappears after matching latent rank and regularization.",
+        "unknowns": [
+          "Whether actor-evaluator interaction is actually stable enough across both unseen actor and unseen evaluator versions to be identifiable from K as small as 2-8.",
+          "Whether anchor choice, rather than historical crossed structure, explains most low-K gains.",
+          "Whether evaluator-version embeddings have meaningful transferable structure beyond ordinary latent collaborative filtering."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-01-of-04.response.md"
+      }
+    ],
+    "behavior-preserving-residual-patch-algebra": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "This is a material repair. The residual is now an actual persistent operator with a typed edit representation, a hard non-write boundary, explicit unaffected-contract preservation, and a multi-round composition requirement. The remaining problem is the simplification baseline. The proposed full-patch baseline is deliberately denied preservation loss, locality constraints, and structured edit supervision even though those signals are available to the proposed method. That does not establish that the algebra or composition law is necessary. Preservation-aware minimal-edit repair already explicitly trains models to preserve unchanged code, while contemporary agentic repair validates target recovery separately from full regression preservation. ([arXiv][4]) A much simpler masked local editor given the same footprint and C_keep supervision could plausibly reproduce the claimed lower-regression behavior without the residual algebra.",
+        "finding_zh": "这是一次实质性修复。residual 已经变成真正的持久算子：具有 typed edit 表示、硬不可写边界、明确的 unaffected-contract preservation，以及多轮 composition 约束。剩余问题在于简化基线不够强。当前 full-patch baseline 被刻意拿掉 preservation loss、locality constraint 和结构化编辑监督，而这些信号恰恰都提供给了 proposed method，因此无法证明真正必要的是 algebra 或 composition law。已有 preservation-aware minimal-edit repair 已明确训练模型保持未修改代码，近期 agentic repair 也会把目标错误修复与完整 regression preservation 分开验证。([arXiv][4]) 一个更简单、使用相同 footprint 与 C_keep 监督的 masked local editor 很可能在不需要 residual algebra 的情况下复现低回归优势。",
+        "required_action": "Keep the typed residual formulation, but add a simplification baseline that receives the same typed edits, C_keep contracts, footprint labels, locality mask, parameter budget, and preservation objective, while omitting only the proposed residual-composition algebra. The decisive claim must become that the algebra/composition constraint improves unseen multi-round behavior beyond locality plus preservation alone.",
+        "required_action_zh": "可以保留 typed residual 形式，但必须加入真正的简化基线：它获得完全相同的 typed edits、C_keep contracts、footprint labels、locality mask、参数预算和 preservation objective，只去掉 proposed residual-composition algebra。决定性结论必须证明：在已有 locality + preservation 的基础上，algebra/composition constraint 仍能进一步改善未见多轮更新链。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "PAFT: Preservation Aware Fine-Tuning for Minimal-Edit Program Repair, which directly supplies preservation supervision for localized repair. ([arXiv][4])",
+            "EviACT: target-failure recovery followed by explicit full-regression preservation checks in agentic repair. ([arXiv][5])"
+          ],
+          "surviving_difference": "The explicit versioned residual-over-prior-update object and its multi-round composition law remain distinct; existing preservation-aware repair does not by itself establish an algebra over successive persistent agent updates."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A masked, preservation-aware local editor with exactly the same typed edit representation, writable dependency closure, C_keep supervision, edit budget, model capacity, and inference budget, but no residual composition consistency.",
+        "decisive_pilot": "Run the three-round held-out commit-chain experiment with four nested methods: full replacement; masked locality only; masked locality plus identical preservation loss; and the full residual algebra with composition consistency. Match target repair rate. The scientific effect is the final increment from locality-plus-preservation to the algebraic model, measured by hidden cumulative regression at rounds two and three.",
+        "stop_rule": "Stop if locality plus the same preservation supervision matches the residual algebra on hidden regression and repair success, or if composition consistency can be removed without measurable deterioration on unseen multi-round chains.",
+        "unknowns": [
+          "Whether real agent-update diffs admit a stable typed atomization across heterogeneous update surfaces.",
+          "Whether dependency closures remain small enough for the hard locality constraint to be meaningful.",
+          "Whether composition consistency provides information beyond ordinary multi-round training examples."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-01-of-04.response.md"
+      }
+    ],
+    "bounded-probe-api-transition-operator": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "pass",
+        "confidence": "medium",
+        "finding": "The repair is material and presently survives the audit. The broad semantic-IR claim has been replaced by a falsifiable P/E/X transition object, target-side adaptation is capped at exactly N probes, the artifact is frozen before hidden fault evaluation, and independent recovery oracles directly test the claimed semantics. Existing work confirms that evolving tool environments require explicit version-linked tool/schema transitions, and semantic API proposals explicitly emphasize recovery semantics, but the retrieved pre-2026-08-01 work does not supply the same learned cross-API precondition/effect/error operator under a fixed target-probe budget. ([arXiv][6]) The proposed comparison against both bounded direct rewriting and a fixed hand-designed IR is therefore capable of distinguishing learned reusable transition structure from ordinary execution-guided migration.",
+        "finding_zh": "该修复是实质性的，并且目前通过审查。宽泛的 semantic IR 已经被替换为可证伪的 P/E/X 转移对象；目标侧适配被硬限制为恰好 N 个 probe；在隐藏故障评测前完全冻结；独立 recovery oracle 又直接检验其所声称的语义。已有工作确实表明演化中的工具环境需要显式的版本关联 tool/schema transition，语义 API 工作也强调 recovery semantics，但在截至 2026-08-01 检索到的工作中，没有看到与该方案相同的“固定目标 probe 预算下学习跨 API precondition/effect/error operator”的机制。([arXiv][6]) 因此，与 bounded direct rewriting 和固定手工 IR 的比较能够真正区分 learned reusable transition structure 与普通 execution-guided migration。",
+        "required_action": "No conceptual repair is required before a pilot. Preregister N and all probe-selection rules, make every target execution count toward the same N-call ledger for every method, and include the fixed typed-transition IR plus direct rewriting as mandatory baselines.",
+        "required_action_zh": "在 pilot 前不需要再做概念性修复。需要预注册 N 和全部 probe-selection 规则，所有方法的任何目标 API 执行都必须计入同一个 N-call ledger，并强制包含固定 typed-transition IR 与 direct rewriting 两类基线。",
+        "direct_collision": {
+          "status": "none",
+          "closest_work": [
+            "Agent-First Tool API, which makes recovery semantics explicit in an agent-oriented semantic interface but does not learn migration operators from bounded target probes. ([arXiv][6])",
+            "ProEvolve, which represents version-linked tool/schema evolution with typed relational graphs but is a benchmark-generation framework rather than a bounded-probe migration learner. ([arXiv][7])"
+          ],
+          "surviving_difference": "Learning a reusable P/E/X operator across source API families and instantiating it for an unseen target using only a preregistered finite probe budget, followed by zero repair feedback during evaluation."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A hand-designed typed transition IR instantiated from the same documentation/schema/N probes, plus a direct LLM workflow rewriter allowed the same N target executions and frozen at the identical boundary.",
+        "decisive_pilot": "Hold out two API families entirely. Give every method the same documents, schemas and N-execution ledger. Freeze all methods immediately after the Nth execution, then evaluate unseen normal paths and independently generated fault/recovery branches. Report semantic recovery preservation separately from nominal task success and require replication across both held-out families.",
+        "stop_rule": "Stop if either the fixed typed-transition IR or bounded direct rewriting matches recovery-branch preservation within uncertainty under the identical N-call budget, or if gains fail to replicate on the second unseen API family.",
+        "unknowns": [
+          "How large N must be before P, E, and especially X become identifiable for realistic APIs.",
+          "Whether documentation leakage effectively reveals hidden recovery semantics and weakens the bounded-probe test.",
+          "Whether semantic correspondences across sufficiently different API families can be defined without manual alignment dominating the method."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-01-of-04.response.md"
+      }
+    ],
+    "budgeted-contract-surface-router-transpiler": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The child materially repairs the parent by replacing untyped cross-surface equivalence with an explicit contract and by imposing a hard target-model observation budget. The remaining identification problem is that routing quality and transpilation quality are still coupled. The training oracle labels the best surface using exhaustively constructed per-surface candidates, whereas at test time the selected surface receives an asset generated by a learned transpiler. A bad emitted asset can make a correct surface choice look wrong, while a strong transpiler can compensate for routing errors. The literature already treats memory, skills, tools, protocols and runtime bindings as distinct externalized agent substrates, reinforcing that surface choice and artifact realization are separate objects. ([arXiv][8]) The current pilot reports both top-1 surface accuracy and contract satisfaction, but it lacks the crossed oracle experiment needed to causally attribute gains to the router versus the transpiler.",
+        "finding_zh": "该 child 已经实质性修复父方案：它用显式 typed contract 替代了非类型化的跨表面“行为等价”，同时加入了严格的目标模型观测预算。剩余的识别问题是 routing quality 与 transpilation quality 仍然耦合。训练时的 oracle surface 标签来自对各 surface 上构造候选的穷举评测，而测试时选定 surface 上的资产却由 learned transpiler 新生成。因此，一个差的 emitted asset 会让正确的 surface choice 看起来错误，而一个很强的 transpiler 又可能掩盖错误 routing。已有文献也明确把 memory、skills、tools、protocols 和 runtime binding 视作不同的 agent externalization substrates，这进一步说明 surface selection 与 artifact realization 应被分开识别。([arXiv][8]) 当前 pilot 虽然同时报告 top-1 surface accuracy 和 contract satisfaction，但仍缺少能够因果拆分 router 与 transpiler 收益的 crossed-oracle 实验。",
+        "required_action": "Factor the pilot into two independent tests. First, evaluate routing using fixed prebuilt capacity-matched assets for every surface, so only surface selection varies. Second, give the transpiler the oracle surface and compare its emitted asset against the prebuilt within-surface asset. Then evaluate the composed system. Also specify M so that exhaustive three-surface evaluation is genuinely impossible under the same ledger, counting all diagnostic, validation, and candidate-evaluation target calls.",
+        "required_action_zh": "把 pilot 拆成两个独立实验。第一，routing 实验对每个 surface 使用固定、容量匹配的预构建资产，只允许 surface selection 变化。第二，直接把 oracle surface 提供给 transpiler，并把其生成资产与预构建的 within-surface asset 比较。最后再测试组合系统。同时必须精确定义 M，并把所有 diagnostic、validation 和 candidate-evaluation 的目标调用都计入预算，确保三 surface 穷举在同一 ledger 下确实不可行。",
+        "direct_collision": {
+          "status": "none",
+          "closest_work": [
+            "Externalization in LLM Agents surveys memory, skills, protocols, tools and harness bindings as distinct reusable external substrates, but does not provide the proposed bounded model-swap surface router. ([arXiv][8])"
+          ],
+          "surviving_difference": "Predicting the best persistent update substrate after a held-out backbone swap from a bounded diagnostic response budget and compiling a shared typed behavioral contract into the selected substrate."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A simple capacity-matched meta-classifier or nearest-neighbor selector trained on the same model-swap data and same m diagnostic probes, selecting among fixed per-surface assets; separately, the strongest within-surface migration method supplied with the oracle surface.",
+        "decisive_pilot": "Use a 2x2 crossed evaluation: learned versus oracle/simple routing, and learned versus fixed/oracle-quality transpilation. Hold out both model family and repair family. Count every target-model call. Demonstrate that routing alone lowers oracle-surface regret with fixed assets, transpilation alone preserves contracts when given the oracle surface, and their composition remains superior under M.",
+        "stop_rule": "Stop if a simple selector over the same diagnostic probes matches the router, if oracle-routed transpilation fails to match strong prebuilt within-surface assets, or if exhaustive/Successive-Halving-style three-surface search fits inside M and matches the complete system.",
+        "unknowns": [
+          "Whether three surfaces are enough for routing to remain a scientifically meaningful problem rather than a tiny model-selection problem.",
+          "Whether a surface-independent contract can specify behavior precisely enough to generate genuinely equivalent prompt, memory, and tool-constraint assets.",
+          "Whether diagnostic probe responses predict surface stability across unseen model families rather than merely model identity."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-01-of-04.response.md"
+      }
+    ],
+    "counterfactual-correction-production-grammar": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The repair is material relative to a generic trace-induced grammar, but the repaired mechanism is now reducible to a composition of already available primitives. CausalFlow uses interventions over agent traces to identify causally responsible failure steps and constructs validated minimal counterfactual repairs. ([arXiv][9]) NSI already lifts trajectories into explicit predicate-conditioned, logic-grounded modular programs, while SkillGraph represents reusable skills with typed dependency edges and retrieves ordered skill compositions. ([arXiv][10]) Replacing modules to identify a coarse causal slot and deleting/inserting actions to obtain a minimal correction does not create a distinct causal learning object beyond these components. A straightforward CausalFlow-to-NSI/SkillGraph pipeline using the same intervention data can produce causal minimal repairs and dependency-aware composition, so the current production grammar does not survive the simplest-equivalent-method test.",
+        "finding_zh": "相对于通用 trace-induced grammar，这次确实是实质性修复；但修复后的机制现在可以被已有原语的直接组合归约。CausalFlow 已经通过对 Agent trace 做 intervention 来识别具有因果责任的失败步骤，并生成经过验证的最小 counterfactual repairs。([arXiv][9]) NSI 已经把轨迹提升为具有显式 predicate 条件的 logic-grounded modular programs，而 SkillGraph 则用 typed dependency edges 表示可复用技能并组合有序技能子图。([arXiv][10]) 再通过 module replacement 找一个较粗的 causal slot，并通过 action deletion/insertion 得到 minimal correction，并没有形成超出这些已有组件的新 causal learning object。一个直接的 CausalFlow→NSI/SkillGraph pipeline 使用完全相同的 intervention data，就能同时得到 causal minimal repairs 与 dependency-aware composition，因此当前 production grammar 没有通过 simplest-equivalent-method 检验。",
+        "required_action": "A revival needs a learned object that cannot be produced by independently identifying minimal repairs and then composing them with an existing symbolic skill system. One viable scientific target would be causal interaction among corrections themselves: jointly necessary, antagonistic, or order-sensitive productions identified through multi-action interventions, where marginal single-action necessity is insufficient. The pilot would then need to beat CausalFlow-derived repairs composed by NSI/SkillGraph under identical intervention budgets.",
+        "required_action_zh": "若要复活，需要把学习对象改成无法通过“先独立识别 minimal repair，再交给现有 symbolic skill system 组合”得到的东西。例如可以研究纠错动作之间的因果交互：jointly necessary、antagonistic 或 order-sensitive productions，并通过 multi-action intervention 来识别，使单动作边际必要性不再足够。届时必须在完全相同 intervention 预算下击败 CausalFlow-derived repairs + NSI/SkillGraph composer。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "CausalFlow: interventional causal attribution and validated minimal counterfactual repair from agent failures. ([arXiv][9])",
+            "Neuro-Symbolic Skill Induction: trace-to-logic lifting into predicate-conditioned modular executable skills. ([arXiv][11])",
+            "SkillGraph: typed dependency graphs and ordered composition of reusable agent skills. ([arXiv][10])"
+          ],
+          "surviving_difference": "The child evaluates factorially unseen combinations and grounds coarse failure slots through module substitution, but these differences currently modify the evaluation protocol more than the core learnable mechanism."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "CausalFlow-style minimal counterfactual correction extraction followed by NSI logic compilation and SkillGraph/dependency-based composition, with the same fault injections, trajectories, slot observations, and execution budget.",
+        "decisive_pilot": "If revived, construct failures where two individually ineffective or individually harmful corrections become necessary jointly, or where correction order changes the outcome. Compare a joint-intervention production learner against independently extracted CausalFlow repairs plus NSI/SkillGraph composition. Ordinary factorial held-out combinations are insufficient unless they require this higher-order causal interaction.",
+        "stop_rule": "Stop if independently validated atomic corrections composed by NSI/SkillGraph match unseen-combination success and incorrect-action rates, or if multi-action causal interaction terms are unnecessary after typed preconditions and dependencies are supplied.",
+        "unknowns": [
+          "Whether module replacement identifies failure causes more accurately than finer-grained trajectory interventions.",
+          "Whether insertion of one correction action into a failing trajectory gives a valid intervention when downstream policy behavior changes.",
+          "Whether realistic compound failures contain higher-order correction interactions beyond ordinary precondition and dependency constraints."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-01-of-04.response.md"
+      }
+    ],
+    "counterfactual-descendant-memory-transformer": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The child directly follows the parent's simplification vector: descendants now modify memory content and the pilot explicitly conditions on cases where the applicability gate already chooses retrieval. Unfortunately, work available before the audit cutoff now collides with that repaired scientific center. MemHarness, submitted July 30, 2026, explicitly argues that retrieved memories should be contextually reconstructed rather than replayed, trains a policy to preserve transferable content while rewriting or rejecting misleading content, and shows that removing reconstruction eliminates much of the benefit. ([arXiv][12]) Thus 'learn a context-conditioned transformation of memory content because retrieval gating is insufficient' is no longer a distinct mechanism. Randomized treatment-effect estimation, effect-sign-triggered bifurcation, and lineage are meaningful additions, but as currently written they supervise or organize essentially the same context-conditioned memory-rewriting operator rather than establishing a new persistent learning object.",
+        "finding_zh": "该 child 确实直接沿着父方案的 simplification vector 修复：descendant 现在真正修改 memory content，而且 pilot 专门在 applicability gate 已经决定检索原记忆的样本上检验额外收益。但在审查截止日期之前已经出现了与这一修复后科学中心高度碰撞的工作。MemHarness 于 2026-07-30 提交，明确提出 retrieved memory 不应直接 replay，而应根据当前 context 重构；其策略会保留可迁移内容、重写或拒绝误导内容，并通过 ablation 表明去掉 reconstruction 后收益明显下降。([arXiv][12]) 因此，“因为 retrieval gating 不够，所以学习 context-conditioned memory-content transformation”已经不再是独立的新机制。随机 treatment-effect estimation、effect-sign-triggered bifurcation 和 lineage 都是有价值的附加结构，但按当前写法，它们主要是在监督或组织一个已经存在的 context-conditioned memory rewriting operator，而没有形成新的持久学习对象。",
+        "required_action": "Do not revive as another contextual memory-reconstruction method. A future child must make the causal bifurcation itself the irreducible persistent object—for example, use randomized replay to commit offline, versioned descendant memories whose contents remain fixed during future inference, and test whether maintaining multiple causally specialized persistent descendants beats a MemHarness-style state-conditioned reconstruction policy given the same memory tokens, replay budget, model capacity, and observable context.",
+        "required_action_zh": "不要以另一种 contextual memory reconstruction 方法复活。未来版本必须让 causal bifurcation 本身成为不可归约的持久对象。例如，用 randomized replay 离线生成并提交 versioned descendant memories，之后这些 descendant 的内容在未来推理中保持固定；再检验“维护多个因果专门化、持久 descendant”是否能在相同 memory token、replay budget、模型容量和 observable context 下击败 MemHarness-style state-conditioned reconstruction policy。",
+        "direct_collision": {
+          "status": "direct",
+          "closest_work": [
+            "MemHarness: Memory Is Reconstructed, Not Replayed, submitted July 30, 2026; it explicitly learns state-conditioned critique and rewriting of retrieved experiences to avoid negative transfer. ([arXiv][12])",
+            "MemCon: learned context-dependent control over retrieval, consolidation and forgetting, relevant to the alternative gating/control side of the comparison. ([arXiv][13])"
+          ],
+          "surviving_difference": "The child adds randomized treatment-effect estimation, explicit sign-conflict tests, prototype descendants, and versioned lineage. Those distinctions could support a future persistent-bifurcation method, but the current transformer still implements the already-collided core operation of context-conditioned memory reconstruction."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "MemHarness-style context-conditioned memory critique/reconstruction trained with matched capacity and the same randomized replay data, plus the original effect-conditioned retrieval gate.",
+        "decisive_pilot": "For a revival, precompute and freeze descendant contents before the held-out task arrives. Compare them against a matched MemHarness-style reconstruction policy that may rewrite the original memory online from the same observable context. Randomize descendant/original/withhold arms for causal outcome measurement, and separately evaluate examples on which both methods elect to use memory. The persistent-descendant method must outperform contextual reconstruction, not merely the retrieval gate.",
+        "stop_rule": "Stop if a matched contextual reconstruction policy reaches equivalent treatment effect, success, and negative-transfer rates on unseen subgroup/domain splits, or if descendant contents must be regenerated from each test context to obtain the gain.",
+        "unknowns": [
+          "Whether stable effect-sign regions correspond to persistent reusable memory variants rather than ordinary state-conditioned adaptation.",
+          "Whether observable features suffice to select a fixed descendant on genuinely unseen subgroup identities.",
+          "Whether shared-core regularization contributes beyond the reconstruction behavior already learned by context-conditioned memory policies."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-01-of-04.response.md"
+      }
+    ],
+    "executable-role-contract-library": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "This is a material repair: an externally enforced finite-state contract genuinely changes frozen future behavior through action gating, transition checks, handoff requirements, and forced termination. However, executable FSM-based agent orchestration is already substantial prior art: MetaAgent automatically constructs multi-agent systems whose FSM controls actions and transitions, NeuralFSM learns finite-state execution policies, and MermaidFlow evolves verifiable executable workflow graphs. ([OpenReview][1]) The surviving contribution therefore cannot be 'compile roles into an FSM'; it must be the reusable cross-task motif-conditioned contract library. The proposed dynamic-role baseline does not test that boundary because it removes executable workflow structure entirely.",
+        "finding_zh": "这是实质性修复：外部执行的有限状态契约会通过动作门控、状态转移检查、交接约束和强制终止真实改变冻结模型之后的行为。但“用可执行 FSM 编排 Agent”已有较强先例：MetaAgent 自动构造由 FSM 控制动作与转移的多 Agent 系统，NeuralFSM 学习有限状态执行策略，MermaidFlow 则演化可验证的可执行工作流图。([OpenReview][1]) 因此真正需要存活的贡献不能只是“把角色编译成 FSM”，而必须是可跨任务复用、由 motif 条件化的冻结契约库。当前 dynamic-role baseline 完全移除了可执行工作流结构，尚未验证这一边界。",
+        "required_action": "Add a capacity-matched executable-workflow baseline trained on the identical traces, motif router, tool schemas, permissions, state budget, and inference budget. It should synthesize or retrieve a task-conditioned FSM for each new task but not reuse the proposed frozen cross-task contract library. On a fully held-out task family, allow neither method target-task optimization. The reusable-contract claim survives only if the frozen library beats this per-task/task-conditioned FSM alternative and the gain disappears when reusable precondition, transition, or handoff clauses are removed.",
+        "required_action_zh": "加入容量匹配的可执行工作流基线：使用完全相同的轨迹、motif router、工具 schema、权限、状态数量和推理预算，但在每个新任务上生成或检索一个 task-conditioned FSM，而不复用所提的跨任务冻结契约库。完整留出一个任务族，并禁止双方在目标任务上继续优化。只有冻结契约库仍优于这种逐任务/条件式 FSM，同时去掉可复用的前置条件、状态转移或交接子句后优势消失，才能保留核心主张。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "MetaAgent: Automatically Constructing Multi-Agent Systems Based on Finite State Machines. ([OpenReview][1])",
+            "NeuralFSM: Adaptive Multi-Agent Coordination via Learning Finite-State Execution Policy. ([OpenReview][2])",
+            "MermaidFlow: Redefining Agentic Workflow Generation via Safety-Constrained Evolutionary Programming. ([OpenReview][3])"
+          ],
+          "surviving_difference": "The proposed object is a versioned library of reusable motif-level contracts learned from recurring cross-task failures and then frozen for zero-update transfer, rather than a task-specific FSM, learned execution policy, or newly optimized workflow."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A MetaAgent/NeuralFSM-style capacity-matched task-conditioned executable FSM learner using the identical motif router, trace supervision, tool interfaces, state budget, executor, and token/tool-call budget, but inducing the workflow anew rather than reusing a frozen cross-task contract library.",
+        "decisive_pilot": "Train on at least two task families with recurring motifs and freeze all learned components. Hold out an entire third family. Compare reusable contracts against a capacity-matched per-task FSM generator, the proposed dynamic-role baseline, and an ablation retaining router, permissions, and termination but deleting reusable transition/precondition/handoff clauses. No target-family reward or topology search is allowed. Report task success, illegal transitions, handoff errors, loops, calls, and tokens; repeat with a second base model if feasible.",
+        "stop_rule": "Stop the contract-library contribution if a task-conditioned executable FSM trained from the same evidence matches the frozen library on the held-out family, or if deleting reusable transition/precondition/handoff semantics does not materially hurt performance.",
+        "unknowns": [
+          "Whether motif-to-contract applicability can be determined without target-family tuning.",
+          "Whether contract state spaces and schemas can be normalized across heterogeneous tasks.",
+          "Whether failures arise from reusable role semantics or merely from generic workflow enforcement.",
+          "How deadlocks and mutually inconsistent learned clauses are resolved."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-02-of-04.response.md"
+      }
+    ],
+    "frozen-diff-to-failure-family-policy": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The repair creates a genuine persistent learned object and gives it valid pre/post-update ground truth and held-out update-type transfer. Diff-conditioned regression-test generation itself is not new: Cleverest generates regression tests from commit messages/code diffs and validates them by executing changed versions, including explicit behavioral comparison. ([arXiv][4]) The plausible novelty is therefore the frozen cross-update mapping from structural diffs to failure-family priors. The current strongest baseline is not yet decisive because it deliberately withholds the structural diff representation from the comparator; a simple nearest-neighbor or empirical failure-family estimator over the same historical diffs could potentially reproduce the allocation policy.",
+        "finding_zh": "该修复已经形成真实的持久学习对象，并使用有效的更新前/后真值以及 held-out update-type 迁移测试。但“根据 diff 生成回归测试”本身并非空白：Cleverest 已根据 commit message/code diff 生成回归测试，并通过变更版本的实际执行与行为差异进行验证。([arXiv][4]) 因而可能的新颖性在于“从结构 diff 到失败族先验”的冻结式跨更新映射。当前 strongest baseline 仍不够决定性，因为它主动不给比较方法 structural diff；而一个使用完全相同历史 diff 的最近邻检索或经验 failure-family 估计器可能已经能够复现预算分配效果。",
+        "required_action": "Keep the full-state replay baseline, but add same-information simplification controls: (1) k-nearest historical structural diffs with an empirical failure-family histogram, and (2) a capacity-matched direct diff-conditioned challenge allocator/generator trained on the same historical updates without the proposed policy formulation. Match all historical examples, challenge calls, verifier calls, replay capacity, and tokens. The claim should be restricted to transferable cross-update structure only if the frozen policy beats both on held-out structural update types.",
+        "required_action_zh": "保留 full-state replay baseline，同时加入“相同信息”简化对照：(1) 对历史 structural diff 做 kNN 检索并直接统计 failure-family 分布；(2) 使用相同历史更新训练、容量匹配的直接 diff-conditioned challenge allocator/generator，但不采用所提 policy 形式。历史样本、challenge 次数、verifier 次数、replay 容量和 token 必须全部匹配。只有冻结 policy 在 held-out structural update type 上仍超过二者，才能把贡献限定为可迁移的跨更新结构。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Can LLM Generate Regression Tests for Software Commits? / Cleverest, which conditions regression-test generation on commit information and validates pre/post behavioral differences. ([arXiv][4])"
+          ],
+          "surviving_difference": "A persistent parameterized prior learned across many independently verified updates and frozen before a structurally held-out update, rather than feedback-directed generation for the current diff."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Same-history kNN structural-diff retrieval plus verified failure-family frequencies and the identical generator/verifier, together with a capacity-matched direct diff-conditioned allocator. The full-state specification-plus-hard-replay method remains an additional baseline.",
+        "decisive_pilot": "Split prompt, memory, and tool changes by structural update type. Train and freeze the policy. For each held-out type, compare the proposed policy, kNN-diff retrieval, direct diff-conditioned allocation, and full-state hard-example replay using identical historical data and generation/verifier budgets. Primary endpoints are independently verified new regressions per budget and subsequent held-out regression reduction under the exact same repair algorithm.",
+        "stop_rule": "Stop if same-information diff retrieval or a direct diff-conditioned model matches the frozen policy on at least two genuinely held-out structural update-type splits, or if extra discovered failures do not improve downstream repair.",
+        "unknowns": [
+          "Whether the fixed failure-family vocabulary captures failures arising from genuinely new update types.",
+          "Whether structural update-type splits leak near-duplicate diff motifs across train and test.",
+          "How prompt, memory, and tool-schema diffs are normalized into one transferable graph space.",
+          "Whether the learned policy provides more than smoothed nearest-neighbor statistics over historical regressions."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-02-of-04.response.md"
+      }
+    ],
+    "higher-order-typed-memory-order-logic": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The child materially changes the target from unconditional precedence to composition-dependent higher-order relations, and independently defined memory types plus permutation interventions make the supervision substantially cleaner. Order sensitivity is established prior art, including large performance changes under premise permutation, while PLR learns distributions over in-context example orderings and the 2026 MemAgents workshop contains Chow-Liu ordering for long-context Chain-of-Agents. ([Proceedings of Machine Learning Research][5]) The main remaining problem is the simplification test: the proposed fixed pairwise baseline is deliberately denied access to composition context. A small set-conditioned permutation scorer or context-conditioned pairwise model trained on the identical permutation outcomes can represent relation reversals and many conditional ordering rules without symbolic Horn clauses.",
+        "finding_zh": "子方案把学习目标从无条件 precedence 实质性改成了依赖组合上下文的高阶关系；预先独立定义 memory type，再配合排列干预，也使监督更干净。已有工作已经证明顺序本身会显著影响模型表现，PLR 直接学习 in-context 示例的排列分布，2026 MemAgents workshop 也出现了面向 long-context Chain-of-Agents 的 Chow-Liu ordering。([Proceedings of Machine Learning Research][5]) 当前主要缺口是简化检验：现有 pairwise baseline 被人为禁止看到 composition context。一个使用完全相同排列结果训练的小型 set-conditioned permutation scorer 或 context-conditioned pairwise 模型，就可能表达关系反转和大量条件式排序规律，而无需显式 Horn clause。",
+        "required_action": "Replace the fixed pairwise-only comparator with a capacity-matched set-conditioned ordering model that sees the same predefined types, complete co-retrieved set, and identical permutation outcomes. Include a conditional pairwise factor model and a small generic permutation/energy model. The higher-order symbolic claim survives only if the clause registry shows materially better systematic generalization to held-out type compositions or exact constraint satisfaction, not merely better fit to patterns the baseline was forbidden to represent.",
+        "required_action_zh": "把固定 pairwise-only comparator 换成容量匹配的 set-conditioned ordering 模型，使其看到完全相同的预定义类型、完整共同检索集合以及相同排列实验结果。至少加入 conditional pairwise factor model 和一个小型通用 permutation/energy model。只有 clause registry 在 held-out type composition 上表现出明显更强的系统性泛化或精确约束满足，而不是仅击败一个被禁止表达这些关系的基线，才能保留“高阶符号逻辑”主张。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Premise Order Matters in Reasoning with Large Language Models. ([Proceedings of Machine Learning Research][5])",
+            "PLR: Plackett-Luce for Reordering In-Context Learning Examples. ([OpenReview][6])",
+            "Chow-Liu Ordering for Long-Context Reasoning in Chain-of-Agents. ([OpenReview][7])"
+          ],
+          "surviving_difference": "Persistent typed conditional precedence, commutativity, reversal, and ternary constraints learned from controlled memory-order interventions and reused across unseen memory identities."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A capacity-matched set-conditioned permutation/energy model, plus a conditional pairwise factor model s(A,B | full type composition), trained on exactly the same permutation intervention data and types.",
+        "decisive_pilot": "Pre-register conditional reversals, conditional commutativity, and genuine ternary adjacency constraints. Use disjoint memory identities and hold out complete type compositions. Compare frozen symbolic clauses against fixed pairwise scoring, conditional pairwise scoring, and a generic set-conditioned permutation model with matched capacity and training outcomes. Evaluation must include exact constraint satisfaction and task success, followed by frozen transfer to another base model.",
+        "stop_rule": "Stop the higher-order symbolic claim if a same-data, same-capacity composition-conditioned ordering model matches the clause registry on held-out identities and held-out compositions, or if the learned clauses do not transfer across base models.",
+        "unknowns": [
+          "Whether the predefined type ontology is sufficiently stable across domains.",
+          "Whether clause induction remains identifiable when multiple permutations have equivalent outcomes.",
+          "How inconsistent or cyclic learned constraints are resolved.",
+          "Whether apparent ternary effects persist after controlling for position and context-length effects."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-02-of-04.response.md"
+      }
+    ],
+    "interaction-conditioned-nonlinear-update-inverter": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The child materially escapes the parent's trivial 'identify and negate the harmful atom' reduction by targeting coupled updates for which stored-delta combinations are insufficient. This sits close to a mature model-merging literature: Task Arithmetic edits models with task vectors, TIES explicitly resolves interference among merged task vectors, TATR targets knowledge conflict during task arithmetic, and LoRI targets cross-task interference in LoRA merging. ([OpenReview][8]) No direct collision found for a frozen interaction-conditioned inverse generator that synthesizes new repair directions. The remaining flaw is the baseline: the proposed generator is conditioned on update composition, residuals, and failure probes, while the equal-parameter residual baseline is deliberately unconditional. A generic conditional repair hypernetwork could therefore explain the gain without the proposed interaction-residual decomposition or span projection.",
+        "finding_zh": "子方案已经实质性摆脱父方案“找到有害原子然后取负”的简单化，因为它明确针对 stored-delta 任意组合都不足以修复的耦合更新。但该方向紧邻成熟的模型合并文献：Task Arithmetic 使用 task vector 编辑模型，TIES 专门处理 task-vector 合并干扰，TATR 处理 task arithmetic 中的 knowledge conflict，LoRI 则直接面向 LoRA 合并的跨任务干扰。([OpenReview][8]) 尚未发现与“冻结的、交互条件化、可生成新修复方向的 inverse generator”直接相同的工作。当前主要问题是基线不对称：子方法接收更新组合、interaction residual 和 failure probe，而同参数 residual baseline 却被限定为 unconditional，因此一个普通 conditional repair hypernetwork 就可能解释全部收益，而无需所提 residual 分解或 span projection。",
+        "required_action": "Add a capacity-matched conditional patch generator that receives the identical update-atom summaries, failure probes, preservation constraints, and training interventions but does not receive explicit interaction residual targets and does not project away the stored-delta span. Also make 'out of span' operational: certify that no parameter patch inside the stored-delta span satisfies the preregistered regression-and-preservation constraints, rather than describing a behavioral residual itself as lying outside a parameter span.",
+        "required_action_zh": "加入容量匹配的 conditional patch generator：它接收完全相同的 update-atom summary、failure probe、preservation constraint 和训练干预，但不给显式 interaction-residual target，也不执行 stored-delta span 投影。同时应把“span 外”定义成可验证条件：证明 stored-delta span 内不存在任何参数 patch 能同时满足预注册的回归修复与收益保持约束，而不是把行为层面的 residual 直接称为位于参数 span 外。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Editing Models with Task Arithmetic. ([OpenReview][8])",
+            "TIES-Merging: Resolving Interference When Merging Models. ([OpenReview][9])",
+            "Task Arithmetic in Trust Region. ([OpenReview][10])",
+            "LoRI: Reducing Cross-Task Interference in Multi-Task Low-Rank Adaptation. ([OpenReview][11])"
+          ],
+          "surviving_difference": "Learning a reusable conditional inverse operator from rollback interventions and requiring it to synthesize a new repair direction when every admissible combination of stored update deltas fails the preservation-constrained repair objective."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Oracle in-span rollback/merging plus a capacity-matched conditional direct patch generator using the same atom summaries, failure probes, preservation objectives, interaction-training examples, and parameter budget but without explicit interaction-residual subtraction or span projection.",
+        "decisive_pilot": "First construct coupled LoRA compositions and numerically certify, within the finite stored-delta subspace, that no coefficient vector satisfies both regression recovery and preregistered benefit preservation. Split by update composition so test combinations are unseen. Freeze both generators and compare oracle in-span rollback, conditional direct repair, and the proposed residual-projected inverter with zero target-combination optimization. Report repair rate, retained gains, patch norm, and transfer across composition size.",
+        "stop_rule": "Stop if a generic conditional patch generator matches the inverter on certified no-in-span-solution cases, if the explicit residual/span-projection ablation causes no loss, or if reliable no-in-span-solution cases cannot be constructed.",
+        "unknowns": [
+          "Whether a practical and sufficiently exhaustive certificate of no acceptable in-span patch is feasible.",
+          "Whether interaction residuals are stable across model checkpoints and update magnitudes.",
+          "Whether the inverse generator generalizes to larger or qualitatively new update compositions.",
+          "How much of the benefit comes from generic conditional meta-learning rather than inverse structure."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-02-of-04.response.md"
+      }
+    ],
+    "interaction-effect-memory-quotient": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The repair correctly attacks the parent's marginal-effect assumption: pair/triple add-delete-substitute interventions can expose memories that are marginally equivalent but jointly non-substitutable. Higher-order hypergraph memory is already explored—for example HGMem explicitly evolves hypergraph memory to capture high-order correlations—so the graph representation itself is not novel. ([OpenReview][12]) The proposed causal interaction quotient remains different, but two material issues remain. First, the medoid comparator is too weak: a simple interaction-aware merge veto or classifier using the same pair/triple intervention outcomes may preserve exactly the same memories without constructing quotient classes. Second, the pilot claims transfer to unseen memory identities even though the persistent hypergraph is identity-node based and no explicit transferable type-to-interaction predictor is specified.",
+        "finding_zh": "该修复正确击中了父方案“边际效应决定可替代性”的假设：pair/triple 的加入、删除和替换干预能够识别“单独看等价、联合检索却不可替代”的记忆。高阶 hypergraph memory 本身已有研究，例如 HGMem 就明确让 hypergraph memory 演化出高阶相关关系，因此“使用超图”本身不能作为新颖点。([OpenReview][12]) 所提的因果 interaction quotient 仍有差异，但还剩两个实质问题。第一，medoid baseline 太弱：一个使用相同 pair/triple 干预结果的简单 interaction-aware merge veto/classifier 可能不建立 quotient class 就能保留完全相同的关键记忆。第二，pilot 要求迁移到 unseen memory identity，但持久超图以具体 memory identity 为节点，当前机制并没有明确给出可迁移的 type-to-interaction predictor。",
+        "required_action": "Define the transfer mechanism for unseen identities explicitly, for example a frozen type-conditioned interaction-signature predictor whose inputs do not contain identity-specific training labels. Then compare the quotient hypergraph against an interaction-aware veto table/classifier using exactly the same pair/triple interventions, storage budget, and compression target. The quotient claim survives only if its typed interaction structure generalizes to new identities/compositions or yields a better compression-preservation frontier than the simpler veto.",
+        "required_action_zh": "必须明确 unseen identity 的迁移机制，例如增加一个冻结的 type-conditioned interaction-signature predictor，且输入不能依赖训练期特定 identity 标签。随后使用完全相同的 pair/triple 干预、存储预算和压缩目标，将 quotient hypergraph 与简单 interaction-aware veto table/classifier 比较。只有类型化 interaction 结构能够泛化到新 identity/组合，或在相同压缩率下得到更好的行为保持前沿，quotient 主张才能成立。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Improving Multi-step RAG with Hypergraph-based Memory / HGMem, which explicitly uses evolving hypergraph memory for high-order correlations. ([OpenReview][12])"
+          ],
+          "surviving_difference": "The hyperedges are estimated from controlled behavioral substitution interventions and are used to define safe compression equivalence, rather than merely representing high-order semantic or retrieval associations."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A same-data interaction-aware merge-veto classifier/table with matched storage and compression rate, plus the original marginal-effect medoid baseline. If unseen-identity transfer is claimed, both methods must receive the same predefined type metadata.",
+        "decisive_pilot": "Construct non-additive triples with matched marginal signatures, but split both memory identities and at least one type composition between construction and evaluation. Freeze a clearly specified type-conditioned interaction predictor or registry before evaluation. Compare the quotient against marginal medoid compression and a same-intervention interaction-veto baseline at matched compression rates. Evaluation-only substitutions on unseen tasks provide behavior-preservation truth.",
+        "stop_rule": "Stop if a simple same-data interaction veto matches the quotient at the same compression rate, if the method cannot act on unseen identities without measuring their own interaction edges first, or if pair/triple residuals do not replicate across tasks.",
+        "unknowns": [
+          "How unseen memory identities acquire interaction signatures without new construction-time interventions.",
+          "Whether typed applicability domains are learned or manually specified.",
+          "The scaling cost of discovering pairwise and ternary interactions in large memory banks.",
+          "Whether higher-order effects beyond triples make the proposed equivalence relation unstable."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-02-of-04.response.md"
+      }
+    ],
+    "interventional-message-effect-transfer": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "This is a meaningful repair of the parent: the persistent object is now a frozen effect predictor rather than a topology optimized on the target task, and zero target-task reward search makes transfer falsifiable. Existing work already optimizes or predicts task-adaptive multi-agent communication graphs: GPTSwarm optimizes graph connectivity, G-Designer decodes task-specific communication topologies, and Adaptive Graph Pruning jointly adapts agents and edges. ([Proceedings of Machine Learning Research][13]) Counterfactual effect decomposition also establishes intervention-based causal analysis in multi-agent sequential systems, although not for transferable communication-graph construction. ([OpenReview][14]) The surviving idea is therefore credible, but the current simplification baseline is invalid for PASS: the proposed predictor receives paired interventional data while the comparator is restricted to observational graph-performance or edge-use statistics. A same-capacity predictor trained on the identical edge interventions could potentially reproduce the result without the claimed causal/pairwise machinery.",
+        "finding_zh": "这是对父方案有意义的修复：持久对象从目标任务上优化出的拓扑变成了冻结的 effect predictor，而且禁止目标任务 reward search，使迁移主张可以被证伪。已有工作已经能够优化或预测 task-adaptive 多 Agent 通信图：GPTSwarm 优化 graph connectivity，G-Designer 解码 task-specific communication topology，Adaptive Graph Pruning 同时自适应 Agent 数量和通信边。([Proceedings of Machine Learning Research][13]) 另外，已有多 Agent 顺序决策工作使用 counterfactual effect 做因果分解，但并不用于可迁移通信图构造。([OpenReview][14]) 因此剩余差异可信，但当前 simplification baseline 仍不满足 PASS：子方法获得配对干预数据，而比较方法被限制只能使用 observational graph performance/edge-use statistics。一个使用完全相同 edge intervention 数据训练的同容量预测器可能无需所称的因果/二边交互结构就复现效果。",
+        "required_action": "Add an identical-data baseline: a capacity-matched additive task-conditioned edge-effect regressor trained on exactly the same normal/mask/replacement/joint-mask executions, task motifs, role descriptors, and token budget, but without explicit pairwise interaction factors or special causal decomposition. Keep AGP/G-Designer/GPTSwarm-style observational/topology baselines as secondary comparisons. The method passes only if pairwise/local-context effect structure improves zero-search held-out-family graph construction beyond the same-data additive predictor.",
+        "required_action_zh": "加入“完全相同数据”的基线：容量匹配的 additive task-conditioned edge-effect regressor，训练时使用完全相同的 normal/mask/replacement/joint-mask 执行结果、task motif、角色描述和 token 预算，但不加入显式 pairwise interaction factor 或特殊因果分解。AGP/G-Designer/GPTSwarm 类 observational/topology 方法可继续作为次级对照。只有 pairwise/local-context effect 结构在零搜索 held-out family 上超过 same-data additive predictor，才能通过。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "GPTSwarm: Language Agents as Optimizable Graphs. ([Proceedings of Machine Learning Research][13])",
+            "G-Designer: Architecting Multi-agent Communication Topologies via Graph Neural Networks. ([Proceedings of Machine Learning Research][15])",
+            "Adaptive Graph Pruning for Multi-Agent Communication. ([arXiv][16])",
+            "Counterfactual Effect Decomposition in Multi-Agent Sequential Decision Making. ([OpenReview][14])"
+          ],
+          "surviving_difference": "Training a frozen motif-conditioned communication-edge effect model from controlled message interventions and requiring zero-reward-search transfer to an entirely unseen task family, rather than optimizing a graph for the target distribution."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A capacity-matched additive/context-conditioned edge-effect predictor trained on exactly the same paired interventions and descriptors, with the same training graph evaluations and graph-construction budget; GPTSwarm, G-Designer, AGP, and AgentPrune-style methods are secondary topology baselines.",
+        "decisive_pilot": "Hold out one entire programmable benchmark family and selected motif compositions. Generate one shared intervention dataset on the training families. Train the proposed sparse pairwise-interaction predictor and a same-capacity additive edge predictor on that exact dataset. Freeze both. On the held-out family allow zero topology reward search; use evaluation-only edge interventions to measure effect-sign accuracy and pairwise-interaction truth, then compare final success under identical edge/token constraints.",
+        "stop_rule": "Stop if the same-intervention additive predictor matches final held-out-family success, if removing pairwise interactions causes no degradation, or if gains require any target-task topology search or reward feedback.",
+        "unknowns": [
+          "Whether masking an upstream edge should be interpreted as a total causal effect through all downstream message changes or a direct edge effect.",
+          "Whether answer-free motif descriptors leak benchmark-family identity or other shortcuts.",
+          "How sparse two-edge interactions are selected without biasing evaluation toward training motifs.",
+          "Whether one-pass graph construction remains tractable when predicted pairwise interactions make edge selection combinatorial."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-02-of-04.response.md"
+      }
+    ],
+    "interventional-permission-triage-under-ceiling": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "pass",
+        "confidence": "medium",
+        "finding": "This is a material repair rather than a rename. The learned component no longer defines or expands authority; the immutable effect ceiling remains the authorization boundary, while randomized permission interventions supervise only which pre-existing grants deserve expensive revalidation. That separation avoids the strongest collision with Progent/Fides-style runtime privilege enforcement, which deterministically constrain tool execution rather than learn mutation-conditioned reauthorization triage. ([arXiv][1]) AuthBench likewise shows that least-privilege policy inference is itself difficult, but does not provide this post-mutation revalidation-screening mechanism. ([arXiv][2]) The persistent lease can change frozen future behavior after selected grants are revalidated, the truth source is external effect logging, and the held-out mutation-operator test directly asks whether learning saves reauthorization work beyond deterministic diffs without sacrificing safety.",
+        "finding_zh": "这是实质性修复，而不是改名。学习模块不再定义或扩张权限；不可提升的 effect ceiling 始终是授权边界，随机 permission 干预只监督哪些既有 grant 值得进行昂贵的重新验证。这样避开了与 Progent/Fides 一类运行时权限控制最强的碰撞：后者确定性约束工具执行，而不是学习 mutation 条件下的重授权筛选。([arXiv][1]) AuthBench 也说明最小权限策略推断本身很困难，但没有提供这种更新后的重验证筛选机制。([arXiv][2]) 被筛中的 grant 经重新验证后会写入持久 lease，从而改变冻结后的未来行为；真值来自外部 effect 日志；完整留出 mutation operator 的实验也能够直接检验学习方法是否能在不牺牲安全的情况下比确定性 diff 少做重授权。",
+        "required_action": "No structural repair is required. Preregister the false-negative safety criterion and report a risk-coverage/revalidation-work curve, including full reauthorization as the safety reference and deterministic semantic/dependency diff as the principal cost baseline.",
+        "required_action_zh": "无需结构性返修。预注册漏检的安全判据，并报告风险覆盖率—重授权工作量曲线；以全量重授权作为安全参照，以确定性的 semantic/dependency diff 作为主要成本基线。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Progent: Securing AI Agents with Privilege Control — deterministic symbolic least-privilege enforcement at tool-call time. ([arXiv][1])",
+            "Securing AI Agents with Information-Flow Control — deterministic runtime information-flow enforcement rather than mutation-conditioned reauthorization triage. ([OpenReview][3])",
+            "Do Coding Agents Understand Least-Privilege Authorization? / AuthBench — permission-boundary inference and authorization decomposition, not post-update grant triage. ([arXiv][2])"
+          ],
+          "surviving_difference": "The learner is explicitly subordinate to an immutable authority ceiling and learns only the intervention-grounded cost-saving decision of which already-authorized grants must be retested after an agent mutation."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Full reauthorization plus deterministic manifest/reachable-effect/dependency diff triage using exactly the same canary suite; Progent-style runtime policy enforcement should be reported as a security-system comparator rather than treated as the same task.",
+        "decisive_pilot": "Train on randomized single-permission interventions from one set of mutation operators and freeze q. Evaluate on entirely unseen mutation operators with the same ceiling and canaries for every method. Measure reauthorized permissions/canaries, false-negative risky grants, and realized unauthorized effects. The learned layer must save substantial revalidation work relative to deterministic diff while remaining statistically non-inferior to full reauthorization on the safety endpoint.",
+        "stop_rule": "Stop if deterministic semantic/dependency diff reaches the same revalidation savings, if q provides no gain on unseen mutation operators, or if any saving produces a statistically meaningful increase in unauthorized realized effects.",
+        "unknowns": [
+          "How conservative q must be to maintain useful revalidation savings under severe mutation-distribution shift.",
+          "Whether single-permission intervention labels are sufficient when the dangerous effect requires permission interactions."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-03-of-04.response.md"
+      }
+    ],
+    "latent-effect-cross-surface-translator": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The child directly implements the important parent repair: an explicit effect representation is learned, whole directed surface pairs are held out, hidden contracts are separated from training, and fixed-IR plus source-conditioned rewriting baselines are included. This is meaningfully beyond PromptBridge's cross-model prompt mapping and MASA's model-conditioned skill rewriting, both of which operate on narrower adaptation objects. ([arXiv][4]) One material simplification remains, however. The encoder is given an already-observed behavioral probe signature containing target changes, protected-behavior changes, and trigger changes. A direct probe-signature-to-target-surface decoder can therefore receive essentially the same behavioral object without learning z_effect, making the claimed necessity of the latent invariant representation untested.",
+        "finding_zh": "子方案已经直接落实父方案最重要的返修要求：显式学习 effect representation，完整留出有向 surface pair，将 hidden contracts 与训练分离，并加入固定 IR 和 source-conditioned rewrite 基线。相较 PromptBridge 的跨模型 prompt mapping 与 MASA 的 model-conditioned skill rewrite，这里的迁移对象也更宽。([arXiv][4]) 但仍剩一个实质性的简化漏洞：encoder 已经获得包含目标行为变化、受保护行为变化和触发变化的 behavioral probe signature。于是，一个直接从 probe signature 到目标 surface 的 decoder 可以获得几乎相同的行为对象而完全不学习 z_effect，因此 latent invariant representation 的必要性尚未被证明。",
+        "required_action": "Add a capacity-matched direct effect-signature baseline that receives exactly the same source-side probe signature, target schema, target capacity, calls, and tokens, but no latent contrastive/cycle objective. Also cost the source-side probe execution identically across methods. PASS only if z_effect improves fully held-out directed-pair fidelity beyond this baseline and the fixed canonical IR.",
+        "required_action_zh": "加入容量匹配的直接 effect-signature 基线：它获得完全相同的源侧 probe signature、目标 schema、目标容量、调用次数和 token，但不使用 latent contrastive/cycle objective。同时所有方法必须计入完全相同的源侧 probe 执行成本。只有 z_effect 在完整留出的有向 pair 上同时超过该基线和固定 canonical IR，才能 PASS。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "PromptBridge: Cross-Model Prompt Transfer for Large Language Models — learns mappings between prompts for model switches. ([arXiv][4])",
+            "MASA: Model-Aware Skill Alignment — learns a model-conditioned skill rewriter from skill-evolution trajectories and generalizes to unseen tasks/environments. ([arXiv][5])"
+          ],
+          "surviving_difference": "The proposed thesis concerns a shared behavioral-effect variable spanning heterogeneous persistent update surfaces and zero-shot transfer across entirely unseen directed surface pairs, rather than prompt-only or skill-only model adaptation."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Direct behavioral-effect-signature-to-target decoder with the same target decoder capacity and observations, followed by fixed canonical IR plus hand-written emitters and a source-conditioned target rewriter.",
+        "decisive_pilot": "Hold out complete directed surface pairs. Supply every method the identical source asset, identical source behavioral probes/signature, target schema, and target capacity. Compare hidden-contract repair fidelity and protected-behavior regressions. Then replace z_effect with the raw probe signature while keeping the decoder unchanged; the latent representation must retain a significant advantage specifically on unseen pairs.",
+        "stop_rule": "Stop if the raw effect-signature decoder or fixed canonical IR matches latent translation on hidden contracts, or if removing contrastive/cycle learning leaves held-out-pair performance unchanged.",
+        "unknowns": [
+          "Whether the proposed probe signature is already sufficiently complete to function as the canonical effect representation.",
+          "Whether source-side behavioral probing is feasible for every surface under the intended deployment constraints."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-03-of-04.response.md"
+      }
+    ],
+    "nested-pathway-memory-repair": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "pass",
+        "confidence": "high",
+        "finding": "The repair closes the central identifiability and simplification objections. Inclusion is randomized first and descendant variables are manipulated only in structurally valid cells, avoiding the invalid flat factorial. More importantly, the same intervention tuples are explicitly given to a direct contextual-bandit repair learner, so pathway decomposition must justify itself through held-out repair quality or intervention efficiency rather than interpretability alone. Causal Memory Intervention already demonstrates controlled interventions for selecting useful versus harmful memories, but it does not decompose retrieval, content, rank, and co-retrieval mechanisms into different persistent repair operators. ([arXiv][6]) Memory-Induced Tool-Drift establishes that retrieved memory can systematically alter downstream tool behavior, strengthening the problem motivation without covering this nested repair mechanism. ([arXiv][7])",
+        "finding_zh": "该修复已经解决核心的可识别性与简化问题。首先随机 inclusion，后代变量只在结构合法的条件单元中进行干预，避免了父方案非法的平坦完全析因。更重要的是，相同的 intervention tuples 明确交给直接 contextual-bandit repair learner，因此路径分解必须通过 held-out repair 效果或干预样本效率证明自身价值，而不能只靠可解释性。Causal Memory Intervention 已经用受控干预判断记忆有益还是有害，但没有把 retrieval、content、rank 与 co-retrieval 分解成不同的持久修复动作。([arXiv][6]) Memory-Induced Tool-Drift 则证明记忆确实能系统性改变后续工具行为，支持问题真实性，但没有覆盖这里的嵌套路径修复机制。([arXiv][7])",
+        "required_action": "No structural repair is required. In the paper, call the randomized quantities controlled nested pathway effects unless stronger mediation assumptions are formally stated; preregister the direct-bandit comparison and intervention-count learning curves.",
+        "required_action_zh": "无需结构性返修。论文中若没有额外正式的 mediation 假设，应把随机实验所得量称为 controlled nested pathway effects；同时预注册直接 bandit 比较以及随干预次数变化的学习曲线。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Causal Intervention-Based Memory Selection for Long-Horizon LLM Agents — controlled interventions estimate whether candidate memories help or harm and suppress harmful memories. ([arXiv][6])",
+            "Memory-Induced Tool-Drift in LLM Agents — documents persistent downstream behavioral distortion caused by retrieved memories. ([arXiv][7])",
+            "ActMem — uses structured causal representations and counterfactual reasoning for agent memory, but not randomized nested pathway identification followed by mechanism-specific persistent repair. ([arXiv][8])"
+          ],
+          "surviving_difference": "Nested randomized identification separates four structurally dependent harm pathways and uses them to choose different persistent memory-store interventions, with necessity tested against a direct same-data repair learner."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Same-data contextual bandit over exclude/rewrite/rank-cap/mutex-group, with identical intervention budget and future-reuse evaluation.",
+        "decisive_pilot": "Use semisynthetic generators with independently recorded mechanism truth, including single-mechanism and mixed-mechanism cases. Freeze both policies and evaluate on unseen generator parameters over repeated future reuse. Require either significantly higher repair/harmless-memory retention at the same intervention count or significantly fewer interventions to reach matched repair.",
+        "stop_rule": "Stop if independent pathway truth cannot be recovered, if the direct contextual bandit matches future-reuse performance and sample efficiency, or if the purported mechanism-specific actions collapse to the same action across pathways.",
+        "unknowns": [
+          "How well pathway identification transfers from semisynthetic generators to naturally occurring memory failures.",
+          "Whether rank and co-retrieval effects remain stable when the retrieval policy itself changes after repair."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-03-of-04.response.md"
+      }
+    ],
+    "randomized-next-unit-curriculum-gain": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "Randomized micro-allocation and frozen transfer to an independent version stream materially improve the parent's observational learning-progress formulation. However, the declared strongest baseline is no longer adequate. Actor-Curator already formulates LLM post-training curriculum selection as a non-stationary bandit, directly optimizes expected policy improvement, maintains nonzero exploration, and uses importance-weighted unbiased feedback under partial observation. ([arXiv][9]) Earlier task-selection work also explicitly connects curriculum allocation with off-policy/counterfactual estimation. ([arXiv][10]) Consequently, an IPS/DR model of next-unit return is not distinguished by comparing only against TSCL-style learning-progress slopes. The surviving possibility is cross-version causal transport: whether a gain model fitted on randomized interventions in one version-generating process predicts true marginal returns in an independently generated frozen version stream better than a same-data contextual bandit or Actor-Curator-style policy.",
+        "finding_zh": "随机微分配以及冻结迁移到独立版本流，确实比父方案基于观察式 learning progress 的设计有实质改进。但当前声明的最强基线已经不足。Actor-Curator 已经把 LLM post-training 的课程选择建模为非平稳 bandit，直接优化期望 policy improvement，保持非零探索概率，并用 importance-weighted 的无偏反馈处理 partial observation。([arXiv][9]) 更早的 task-selection 工作也已经明确把课程预算分配与 off-policy/counterfactual estimation 联系起来。([arXiv][10]) 因此，仅用 TSCL 风格的 learning-progress slope 作比较，不能证明 IPS/DR next-unit return 模型的新颖必要性。真正可能保留下来的边界是跨版本因果迁移：在一条版本生成过程上由随机干预拟合的 gain model，能否在独立生成且冻结的版本流上，比使用相同数据的 contextual bandit 或 Actor-Curator 式方法更准确地预测真实边际收益。",
+        "required_action": "Replace TSCL as the main simplification test with two matched baselines: (1) Actor-Curator-style policy-improvement bandit with the same exploration budget, and (2) a direct contextual bandit/response model trained on exactly the same randomized micro-allocation tuples and version representation. Make frozen transport across a held-out version-generating operator, not generic causal terminology, the central claim.",
+        "required_action_zh": "将主要简化检验从 TSCL 改为两个严格匹配的基线：(1) 使用相同探索预算的 Actor-Curator 式 policy-improvement bandit；(2) 使用完全相同随机微分配 tuples 和版本表示训练的直接 contextual bandit/response model。核心主张应改成对完整留出的 version-generating operator 的冻结迁移，而不是泛化地强调“causal”。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "Actor-Curator: Co-adaptive Curriculum Learning via Policy-Improvement Bandits for RL Post-Training — non-stationary bandit curriculum optimized from policy-improvement feedback with importance-weighted exploration. ([arXiv][9])",
+            "Task Selection Policies for Multitask Learning — connects task allocation to off-policy evaluation and counterfactual estimation. ([arXiv][10])",
+            "Self-Evolving Curriculum for LLM Reasoning — formulates evolving curriculum selection as a non-stationary multi-armed bandit. ([OpenReview][11])"
+          ],
+          "surviving_difference": "Explicit randomized next-training-block interventions plus frozen prediction across a separately generated model-version stream could establish transportable marginal-gain estimation, which the online co-adaptive curricula do not establish."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Actor-Curator-style policy-improvement bandit and a version-conditioned contextual bandit using the exact same randomized micro-allocation data, propensities, version features, and total training tokens.",
+        "decisive_pilot": "Generate training and evaluation version streams using disjoint update operators. Collect identical randomized micro-allocation data for the training stream, freeze every learned allocator, and evaluate next-unit regret against hidden uniform-randomized interventions in the second stream. The proposed estimator must beat both matched bandit baselines and translate that reduction into superior final utility at identical token budget.",
+        "stop_rule": "Stop if a direct same-data contextual bandit or Actor-Curator-style method matches next-unit regret on the held-out version stream, or if lower causal-return prediction error does not improve final fixed-budget training utility.",
+        "unknowns": [
+          "Whether a compact version representation contains stable information that transports across genuinely different update operators.",
+          "Whether the cost of randomized micro-training blocks is large enough to erase the curriculum efficiency benefit."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-03-of-04.response.md"
+      }
+    ],
+    "sparse-set-effect-update-collector": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "block",
+        "confidence": "high",
+        "finding": "The child materially fixes the parent's singleton-effect limitation, but the resulting mechanism is itself reducible. With binary disable indicators, a sparse model containing main effects plus second-/third-order interaction terms is simply a sparse low-order polynomial/set-function regression followed by constrained subset optimization; calling the interaction coefficients hyperedges does not create a distinct learned mechanism. The proposed comparison against greedy leave-one-out therefore avoids the simplest capacity-matched interaction-aware method. Existing self-evolving skill systems already include merging/pruning of persistent libraries, confirming the maintenance problem, although they do not provide this exact joint-disable estimator. ([arXiv][12]) The repair is scientifically cleaner than the parent, but under the stated audit rule it fails because an ordinary descriptor-conditioned sparse interaction regressor can consume the same interventions and reproduce the central set-effect prediction.",
+        "finding_zh": "子方案确实修复了父方案只看 singleton effect 的问题，但新的核心机制本身仍然可约简。对二元 disable 指示变量而言，包含主效应以及二阶/三阶交互项的稀疏模型，本质上就是一个低阶稀疏多项式/set-function 回归，再接约束子集优化；把交互系数称为 hyperedge 并没有形成不同的学习机制。当前只与 greedy leave-one-out 比较，因此绕过了最简单且容量匹配的 interaction-aware 方法。已有 self-evolving skill 系统也已经包含持久库的 merge/prune，说明维护问题是真实的，但它们并未提供这里完全相同的 joint-disable estimator。([arXiv][12]) 该修复比父方案更干净，但按照本轮审计规则仍应 BLOCK，因为普通的 descriptor-conditioned sparse interaction regression 可以使用相同干预数据重现核心集合效应预测。",
+        "required_action": "Do not continue the hypergraph formulation as a standalone mechanism. A revival would need a learned object that cannot be represented by ordinary low-order sparse interaction regression under the same interventions—for example, a demonstrably transferable structured interaction law tied to update semantics—and must compare against descriptor-conditioned L1/elastic-net quadratic and cubic set-function regressors with the identical optimization stage.",
+        "required_action_zh": "不要把当前 hypergraph 表述继续作为独立机制推进。若要复活，需要把学习对象改成无法由相同干预数据上的普通低阶稀疏交互回归表示的机制，例如与 update semantics 绑定并能证明跨版本迁移的结构化交互规律；同时必须加入 descriptor-conditioned 的 L1/elastic-net 二阶、三阶 set-function regression，并使用完全相同的集合优化阶段。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "SkillFoundry — self-evolving agent skill libraries explicitly expand, repair, merge, and prune persistent skills through validation. ([arXiv][12])",
+            "SkillRL — recursively evolves persistent skill libraries and addresses redundancy/noise in stored experience, although not through joint-disable interaction estimation. ([arXiv][13])",
+            "More Skills, Worse Agents? — documents performance degradation as skill libraries expand, supporting the need for library maintenance. ([arXiv][14])"
+          ],
+          "surviving_difference": "Joint-removal interaction testing is not directly covered by these agent-skill papers, but the proposed sparse-hypergraph implementation does not survive the simpler sparse-interaction-regression equivalence."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Descriptor-conditioned sparse quadratic/cubic set-function regression trained on exactly the same singleton/small-set disable interventions, with identical regularization tuning and identical constrained deletion-set optimizer.",
+        "decisive_pilot": "The currently proposed greedy-only pilot is not decisive. Any revival must first compare hypergraph parameterization against sparse polynomial/set-function regression on unseen version chains under identical 24-intervention budgets; only a reproducible advantage attributable to additional structured semantics would justify proceeding.",
+        "stop_rule": "Block the current formulation. Do not revive if ordinary sparse quadratic/cubic regression matches set-F1, safe reclamation, and future-version transfer.",
+        "unknowns": [
+          "Whether update descriptors admit any transferable interaction structure beyond generic pairwise/triple regression.",
+          "Whether naturally occurring jointly removable-but-individually-necessary update sets are frequent enough to justify the added identification burden."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-03-of-04.response.md"
+      }
+    ],
+    "typed-contract-memory-translator": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "The child is a material improvement: it changes the learned object from unrestricted text rewriting to typed relational edits over preconditions, programs, retrieval dependencies, and execution constraints. This boundary is plausible despite adjacent work: MemIR already demonstrates typed intermediate representations for agent memory, but focuses on provenance/source-role correctness rather than model+harness migration; MASA adapts procedural skills across models; and software-migration systems such as SPELL distill reusable structured transformations for API migration. ([arXiv][15]) The remaining flaw is baseline asymmetry. The proposed method receives deterministic type, reference-integrity, and satisfiability checks, while the capacity-matched monolithic rewriter is explicitly denied those checks. Static verification is already known to catch migration errors in software/API migration settings. ([arXiv][16]) Therefore an observed gain could come entirely from checker access rather than the typed relational representation or restricted edit language.",
+        "finding_zh": "子方案是实质性改进：学习对象从无限制文本重写变成了针对 precondition、program、retrieval dependency 与 execution constraint 的类型化关系编辑。尽管存在邻近工作，这一边界仍有可能成立：MemIR 已经把 typed intermediate representation 用于 agent memory，但重点是 provenance/source-role 正确性而不是 model+harness migration；MASA 做跨模型 procedural skill 适配；SPELL 等软件迁移系统则把迁移知识蒸馏成可复用的结构化 API transformation。([arXiv][15]) 目前剩余的关键问题是基线不对称。本方法拥有确定性的 type checking、reference-integrity checking 和 satisfiability checking，而容量匹配的 monolithic rewriter 被明确禁止使用这些检查。软件/API migration 中的既有工作已经表明静态验证可以发现迁移错误。([arXiv][16]) 因而当前实验即使出现优势，也可能完全来自 checker access，而不是 typed relational representation 或 restricted edit language。",
+        "required_action": "Equalize verifier access. The monolithic rewriter must receive the same static type/reference/constraint checker and the same number of checker-guided repair or rejection attempts. Also add a deterministic schema-diff/compiler baseline that performs field/tool rebinding and constraint solving directly from the known source and target schemas. The typed IR survives only if restricted relational editing still improves unseen joint swaps after these controls.",
+        "required_action_zh": "必须统一 verifier access。整体重写器应获得完全相同的静态 type/reference/constraint checker，以及相同次数的 checker-guided repair 或 rejection。还要加入确定性的 schema-diff/compiler 基线，直接根据已知 source/target schema 完成字段/工具重绑定与约束求解。只有在这些控制之后，restricted relational editing 在未见 joint swap 上仍明显更好，typed IR 才成立。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "MemIR: Mitigating Provenance-Role Collapse in Long-Term Agents via Typed Memory Representation — typed memory IR with structural constraints, but aimed at source/provenance correctness rather than model+harness migration. ([arXiv][15])",
+            "MASA: Model-Aware Skill Alignment — model-conditioned rewriting of persistent agent skills across backbones. ([arXiv][5])",
+            "SPELL: Synthesis of Programmatic Edits using LLMs — converts migration knowledge into structured, testable, repeatable transformation scripts. ([arXiv][17])",
+            "Compiler-directed Migrating API Callsite of Client Code — compiler-guided API migration demonstrates the adjacent deterministic program-migration boundary. ([ACM Digital Library][18])"
+          ],
+          "surviving_difference": "Joint preservation of agent-specific preconditions, executable tool programs, retrieval topology, and temporal execution constraints across simultaneous model and harness/schema swaps remains more structured than prompt/skill adaptation and broader than ordinary API-call migration."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "Capacity-matched monolithic rewriter with identical source/target traces, model calls, tokens, parameters, static checker access, and checker-guided repair budget; additionally, a deterministic schema-diff compiler/constraint solver.",
+        "decisive_pilot": "On held-out target-model families and harness schemas, compare typed restricted editing against checker-equipped monolithic rewriting and deterministic schema migration. Measure joint invariant preservation, first-attempt static legality before any repair, final legal-execution rate under equal checker/repair budget, and task success. The decisive ablation keeps the checker fixed while replacing typed edits with unrestricted serialization rewriting.",
+        "stop_rule": "Stop if checker-equipped monolithic rewriting is within 5 percentage points on joint invariant preservation and first-attempt legal execution, if deterministic schema migration matches the typed method on relation-changing swaps, or if the typed advantage disappears when checker access is equalized.",
+        "unknowns": [
+          "What fraction of field/tool/retrieval remappings require learned semantic inference rather than deterministic schema matching.",
+          "Whether constraint satisfiability can be checked soundly for memories containing open-ended natural-language predicates."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-03-of-04.response.md"
+      }
+    ],
+    "zero-anchor-evaluator-state-extrapolator": [
+      {
+        "reviewer": "agent-project-web-gpt-idea-discovery-v51-area-chair",
+        "review_date": "2026-08-07",
+        "verdict": "revise",
+        "confidence": "high",
+        "finding": "This is a material repair rather than a rename: it removes the parent's dependence on labels from the future evaluator and turns evaluator replacement into a strict zero-anchor chronological generalization problem. Evaluator replacement is a real measurement-validity failure mode: recent work shows that changing the judge can change rankings and bias behavior even with fixed candidate responses. ([arXiv][1]) The held-out ground truth is also independent because future-version human/task labels are revealed only for final evaluation. However, the proposed temporal operator is not yet shown to be irreducible. As written, the new evaluator's current unlabeled fingerprint is encoded into z_new and directly drives the correction head; the transition model mainly supplies a temporal prediction/manifold objective. A capacity-matched direct predictor given the identical current fingerprint, complete ordered historical fingerprints, timestamps/recency, actor descriptors, and historical labels could potentially learn the same future residual without an explicit latent state transition. The proposed static pooled baseline is therefore too weak. This matters because existing work already supplies label-free judge debiasing at inference time, covariate-based human-judge calibration, and external bias-correction modules, although none of the sources found directly implements zero-anchor chronological evaluator-state extrapolation. CalibraEval is label-free but targets selection bias rather than version dynamics; Bridge models systematic human-LLM discrepancies using covariates but is fitted with human judgments; RBD learns an external correction module for known judge biases. ([ACL Anthology][2]) ([arXiv][3]) ([NeurIPS Proceedings][4])",
+        "finding_zh": "这是实质性修复而不是改名：它真正去掉了父方案对未来 evaluator 标签的依赖，并把 evaluator 更换问题改成严格的 zero-anchor 时间外推问题。近期研究已经证明 evaluator 更换本身会导致固定候选输出的测量结果、排序和偏差行为发生变化，因此问题是真实的。([arXiv][1]) 独立真值设计也成立，因为未来版本的人类/任务真值只在最终评估时揭示，不参与状态估计。但当前仍不能 PASS，因为“时间状态转移”尚未成为不可约机制。按现有描述，新 evaluator 的当前无标签 fingerprint 被编码为 z_new 后直接输入修正头；状态转移更像训练时的时间预测/流形正则。因此，一个容量匹配、使用完全相同数据的直接预测器——同时输入当前 fingerprint、完整有序历史 fingerprint、时间戳/recency、actor descriptor 和历史标签——可能无需显式 latent transition 就复现收益。当前仅比较 static pooled calibrator 的 baseline 太弱。已有工作已经覆盖无标签 judge 去偏、基于协变量的人类-judge 校准以及外部 bias correction，但本次检索未发现与“未来 evaluator 零标签 + 按版本时间顺序外推 latent state”完全相同的方案：CalibraEval 是无标签但主要修复 selection bias；Bridge 用协变量建模人类与 LLM judge 偏差但依赖历史人类判断；RBD 是针对已知 bias 类型训练的外部修正模块。([ACL Anthology][2]) ([arXiv][3]) ([NeurIPS Proceedings][4])",
+        "required_action": "Make the chronological operator causally necessary and test it against a genuinely equivalent non-state alternative. Specify an explicit inference equation, for example a state-space filter in which the previous inferred state predicts a prior for z_new and the new fingerprint supplies an observation update; clarify exactly where the transition affects the corrected score. Then replace the weak static-only control with a capacity- and budget-matched direct history-aware predictor that receives the same ordered fingerprint history, current fingerprint, timestamps, actor descriptors, and historical supervision but predicts the future evaluator residual directly with no latent transition. Use rolling-origin held-out evaluator versions and require the transition method to beat both the current-fingerprint static model and this history-aware direct predictor; chronology permutation must destroy the claimed advantage.",
+        "required_action_zh": "必须让时间算子在推理路径中具有因果必要性，并与真正等价的非状态模型比较。首先写清楚明确的推理方程，例如使用 state-space filter：上一版本状态先通过 transition 产生 z_new 的先验，新 evaluator fingerprint 再作为 observation 更新状态，并明确 transition 最终在哪一步影响校正分数。其次，把目前过弱的 static-only baseline 替换为容量和预算匹配的 history-aware direct predictor：它可获得完全相同的有序历史 fingerprint、当前 fingerprint、时间戳、actor descriptor 与历史监督，但不建立 latent transition，直接预测未来 evaluator residual。采用 rolling-origin 的多个未来版本测试；只有 transition 方法同时超过当前 fingerprint 的静态模型和 history-aware direct predictor，并且打乱版本顺序后优势消失，才能保留“纵向状态外推”主张。",
+        "direct_collision": {
+          "status": "partial",
+          "closest_work": [
+            "When the Judge Changes, So Does the Measurement: Auditing LLM-as-Judge Reliability (arXiv:2607.08535) — directly establishes evaluator-replacement ambiguity and version-dependent judge reliability, but audits rather than learns a zero-anchor longitudinal correction operator. ([arXiv][1])",
+            "Bridging Human and LLM Judgments: Understanding and Narrowing the Gap — models systematic human-LLM judgment discrepancies using covariates and improves human agreement, but does not perform chronological zero-anchor extrapolation to an unseen evaluator version. ([arXiv][3])",
+            "CalibraEval: Calibrating Prediction Distribution to Mitigate Selection Bias in LLMs-as-Judges — provides label-free inference-time debiasing, but targets position/selection bias through prediction-distribution calibration rather than evaluator-version dynamics. ([ACL Anthology][2])",
+            "Any Large Language Model Can Be a Reliable Judge: Debiasing with a Reasoning-based Bias Detector — learns an external bias detector/corrector applicable across evaluators, but relies on supervised bias construction and does not extrapolate a latent evaluator state over release chronology. ([NeurIPS Proceedings][4])",
+            "Validating LLM-as-a-Judge Systems in the Absence of Gold Labels — studies judge validation when per-item gold labels are unavailable, but its object is validation rather than correction of a newly released evaluator from longitudinal fingerprints. ([arXiv][5])"
+          ],
+          "surviving_difference": "No directly colliding source found implements the full combination of crossed actor-by-evaluator historical supervision, unlabeled diagnostic fingerprints for a completely unseen evaluator version, an explicitly learned chronological evaluator-state transition, zero future-version anchors, and frozen downstream bias correction. The surviving novelty is therefore the longitudinal zero-anchor transition operator, conditional on proving that chronology adds information unavailable to equally budgeted direct fingerprint/history regression."
+        },
+        "iclr_fit": "conditional",
+        "strongest_baseline": "A capacity-matched history-aware direct residual predictor using the identical ordered historical fingerprints, current-version unlabeled fingerprint, timestamps/recency, actor descriptors, historical human/task residual labels, probe budget, parameter count, and training compute, but mapping these observables directly to actor-by-evaluator bias without an explicit latent state transition. Include current-fingerprint-only calibration and last-version/recency regression as simpler controls, plus CalibraEval or RBD where their bias assumptions apply.",
+        "decisive_pilot": "Use substantially more than a single five-checkpoint split if possible: construct at least 8 chronologically ordered evaluator checkpoints/releases, preferably with two independent release sequences or model families, and perform rolling-origin evaluation on at least the final three versions. For each held-out version, prohibit all of its human/task labels during training and state inference; every method receives exactly the same unlabeled probe responses and historical supervision. Compare (A) the explicit transition/filter, (B) current-fingerprint static calibration, (C) the capacity-matched history-aware direct predictor, and (D) time/last-version controls. Measure held-out residual MAE, pairwise ranking flips relative to independent human/task truth, and human-agreement recovery. Add equal-dimensional encoder ablations, shuffled chronology, reversed chronology, and fingerprint-feature ablations. A longitudinal claim is supported only if A consistently beats C as well as B, with paired uncertainty excluding a practically negligible effect, and the A advantage collapses when chronology is destroyed.",
+        "stop_rule": "Stop the longitudinal-state claim if the explicit transition fails to outperform the capacity-matched history-aware direct predictor on at least two of three rolling future-version holdouts, if the pooled paired advantage is indistinguishable from zero or practically negligible, if chronology permutation/reversal preserves the gain, or if z_new inferred without the transition performs equivalently. In those cases retain only the narrower zero-anchor fingerprint-calibration contribution. Also stop if future-version fingerprint shift is so discontinuous that historical dynamics have no predictive value.",
+        "unknowns": [
+          "Whether real evaluator release trajectories are sufficiently smooth or recurrent for a learned transition to extrapolate rather than merely interpolate; released API models can change discontinuously, and recent evaluator-replacement evidence shows non-monotone adjacent behavior. ([arXiv][1])",
+          "Whether logits or comparable confidence signals are available for the intended closed-source evaluators; the fingerprint definition may need an API-agnostic subset based only on observable outputs.",
+          "Whether a fixed probe bank remains informative for later evaluator versions rather than becoming stale, contaminated, or easy to overfit.",
+          "Whether the latent state is identifiable separately from model-family identity, release metadata, domain shift, prompt changes, and actor-distribution drift.",
+          "Whether enough historical actor-by-evaluator crossed human/task labels exist to estimate version-pair residuals without the correction head simply learning actor or evaluator identity.",
+          "Whether five evaluator checkpoints, as originally proposed, provide enough independent temporal transitions to distinguish genuine dynamics from ordinary regression; a larger rolling-origin panel is preferable.",
+          "Whether human preference disagreement makes residual MAE an appropriate primary target in subjective domains; programmatically verifiable tasks or multi-rater uncertainty-aware targets should be included where possible."
+        ],
+        "source_artifact": "/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v51-web-gpt/batch-04-of-04.response.md"
+      }
+    ]
+  },
+  "status": {
+    "reviewed": 19,
+    "pending": 0,
+    "complete": true,
+    "last_attempt": "2026-08-07T04:38:11Z",
+    "last_attempt_host": "admin01-NF5468M5",
+    "last_attempt_result": "batch_4_completed",
+    "verdict_counts": {
+      "pass": 3,
+      "revise": 12,
+      "block": 4,
+      "unknown": 0
+    }
+  },
+  "updated_at": "2026-08-07T04:38:11Z",
+  "total_passed_ideas": 19
+}

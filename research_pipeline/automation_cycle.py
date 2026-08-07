@@ -13,10 +13,15 @@ from typing import Any, Iterator
 
 from .config import PROJECT_ROOT, StorageSettings
 from .cvpr_idea_factory import write_cvpr_idea_bank
+from .discussion_portfolio import write_discussion_portfolio
 from .iclr_experiment_audit import write_audit as write_iclr_audit
 from .iclr_idea_factory import write_iclr_idea_bank
 from .idea_discovery_v3 import write_idea_discovery_v3
 from .idea_discovery_v31 import write_idea_discovery_v31
+from .idea_discovery_v5 import write_idea_discovery_v5
+from .idea_discovery_v51 import write_idea_discovery_v51
+from .idea_discovery_v52 import write_idea_discovery_v52
+from .idea_discovery_v53 import write_idea_discovery_v53
 from .idea_discovery_v4 import write_idea_discovery_v4
 from .machine_school_idea_factory import write_machine_school_bank
 from .live_pipeline import sync_semantic_scholar
@@ -76,6 +81,11 @@ def run_cycle(
             report["steps"].append(_step("machine-school-inspired-bank", write_machine_school_bank))
             report["steps"].append(_step("solution-first-idea-discovery-v3", write_idea_discovery_v3))
             report["steps"].append(_step("reviewer-repaired-idea-discovery-v31", write_idea_discovery_v31))
+            report["steps"].append(_step("expanded-idea-discovery-v5", write_idea_discovery_v5))
+            report["steps"].append(_step("reviewer-targeted-idea-discovery-v51", write_idea_discovery_v51))
+            report["steps"].append(_step("second-order-idea-discovery-v52", write_idea_discovery_v52))
+            report["steps"].append(_step("final-boundary-idea-discovery-v53", write_idea_discovery_v53))
+            report["steps"].append(_step("discussion-ready-portfolio", write_discussion_portfolio))
             report["steps"].append(_step("constrained-combination-idea-discovery-v4", write_idea_discovery_v4))
             report["steps"].append(_step("iclr-audit", write_iclr_audit))
             report["steps"].append(_step("cvpr-followup-bank", write_cvpr_idea_bank))

@@ -55,7 +55,12 @@ REQUIRED_STATIC = [
     "content-review-external.js", "generated/iclr-external-reviews.json",
     "machine-school-ideas-view.js", "generated/machine-school-inspired-ideas.json",
     "generated/machine-school-inspired-ideas.js", "generated/machine-school-external-reviews.json",
-    "review-localizations.js", "idea-discovery-v4-view.js", "solution-first-ideas-view.js",
+    "review-localizations.js", "idea-discovery-v5-view.js", "idea-discovery-v4-view.js", "solution-first-ideas-view.js",
+    "generated/discussion-ready-ideas.json", "generated/discussion-ready-ideas.js",
+    "generated/idea-discovery-v5.json", "generated/idea-discovery-v5.js", "generated/idea-discovery-v5-external-reviews.json",
+    "generated/idea-discovery-v51.json", "generated/idea-discovery-v51.js", "generated/idea-discovery-v51-external-reviews.json",
+    "generated/idea-discovery-v52.json", "generated/idea-discovery-v52.js", "generated/idea-discovery-v52-external-reviews.json",
+    "generated/idea-discovery-v53.json", "generated/idea-discovery-v53.js", "generated/idea-discovery-v53-external-reviews.json",
     "generated/idea-discovery-v4.json", "generated/idea-discovery-v4.js", "generated/idea-discovery-v4-external-reviews.json",
     "generated/idea-discovery-v3.json", "generated/idea-discovery-v3.js", "generated/idea-discovery-v3-external-reviews.json",
     "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
@@ -190,10 +195,16 @@ def main() -> None:
     system_script_order = [
         idea_page.find('src="generated/iclr-low-resource-ideas.js"'),
         idea_page.find('src="generated/machine-school-inspired-ideas.js"'),
+        idea_page.find('src="generated/discussion-ready-ideas.js"'),
+        idea_page.find('src="generated/idea-discovery-v5.js"'),
+        idea_page.find('src="generated/idea-discovery-v51.js"'),
+        idea_page.find('src="generated/idea-discovery-v52.js"'),
+        idea_page.find('src="generated/idea-discovery-v53.js"'),
         idea_page.find('src="generated/idea-discovery-v4.js"'),
         idea_page.find('src="generated/idea-discovery-v3.js"'),
         idea_page.find('src="generated/idea-discovery-v31.js"'),
         idea_page.find('src="review-localizations.js"'),
+        idea_page.find('src="idea-discovery-v5-view.js"'),
         idea_page.find('src="idea-discovery-v4-view.js"'),
         idea_page.find('src="solution-first-ideas-view.js"'),
         idea_page.find('src="machine-school-ideas-view.js"'),
@@ -219,9 +230,11 @@ def main() -> None:
         fail("research-system state must expose both v3 and v3.1 solution-first rounds")
     if (summary.get("v4_candidates"), summary.get("v4_finalists"), summary.get("v4_revivals")) != (28,16,8):
         fail("research-system state must expose the v4 composition and revival round")
+    if (summary.get("v5_candidates"), summary.get("v5_finalists"), summary.get("v5_revivals")) != (36,32,8):
+        fail("research-system state must expose the v5 wide-search round")
     components = research_state.get("components", [])
-    if len(components) != 8:
-        fail(f"research-system state must expose eight backend components, got {len(components)}")
+    if len(components) != 9:
+        fail(f"research-system state must expose nine backend components, got {len(components)}")
     graph_component = next((item for item in components if item.get("source") == "ResearchAgent"), {})
     if graph_component.get("component", {}).get("zh") != "引文与证据图谱":
         fail("citation/evidence component must be bilingual in the backend state")
@@ -287,6 +300,33 @@ def main() -> None:
     if v4_status.get("verdict_counts") != expected_v4_verdicts:
         fail(f"Idea Discovery v4 external verdict counts are inconsistent: {v4_status.get('verdict_counts')}")
 
+    discovery_v5 = json.loads((ROOT / "generated" / "idea-discovery-v5.json").read_text(encoding="utf-8"))
+    v5_summary = discovery_v5.get("summary", {})
+    if (v5_summary.get("raw_candidates"), v5_summary.get("finalist"), v5_summary.get("revival"), v5_summary.get("repair"), v5_summary.get("component")) != (36,24,8,2,2):
+        fail(f"unexpected Idea Discovery v5 structure: {v5_summary}")
+    if len(discovery_v5.get("finalists", [])) != 32 or len(discovery_v5.get("repository_patterns", [])) < 13:
+        fail("Idea Discovery v5 finalist pool or repository patterns are incomplete")
+    if any(not item.get("necessity_logic", {}).get("zh") or not item.get("strongest_baseline", {}).get("zh") for item in discovery_v5.get("all_candidates", [])):
+        fail("Idea Discovery v5 contains a candidate without a simplification/necessity contract")
+    v5_external_path = ROOT / "generated" / "idea-discovery-v5-external-reviews.json"
+    if v5_external_path.exists():
+        v5_external = json.loads(v5_external_path.read_text(encoding="utf-8")); v5_status = v5_external.get("status", {})
+        if (v5_status.get("reviewed"), v5_status.get("pending")) != (v5_summary.get("external_reviewed"), v5_summary.get("external_pending")):
+            fail("Idea Discovery v5 review store and public summary disagree")
+    expected_repair_rounds = {
+        "idea-discovery-v51.json": (19, 19, 3),
+        "idea-discovery-v52.json": (12, 12, 1),
+        "idea-discovery-v53.json": (4, 4, 3),
+    }
+    for filename, expected in expected_repair_rounds.items():
+        payload = json.loads((ROOT / "generated" / filename).read_text(encoding="utf-8"))
+        summary = payload.get("summary", {})
+        if (summary.get("children"), summary.get("reviewed"), summary.get("pass")) != expected:
+            fail(f"unexpected repair-round summary for {filename}: {summary}")
+    discussion = json.loads((ROOT / "generated" / "discussion-ready-ideas.json").read_text(encoding="utf-8"))
+    if (discussion.get("count"), discussion.get("target"), discussion.get("remaining"), discussion.get("ready")) != (22, 20, 0, True):
+        fail(f"strict discussion-ready portfolio has not reached target: {discussion}")
+
     discovery_v3 = json.loads((ROOT / "generated" / "idea-discovery-v3.json").read_text(encoding="utf-8"))
     v3_summary = discovery_v3.get("summary", {})
     if (v3_summary.get("raw_children"), v3_summary.get("internal_shortlist"), v3_summary.get("repair"), v3_summary.get("external_reviewed"), v3_summary.get("external_revise"), v3_summary.get("external_block"), v3_summary.get("external_pass")) != (14, 10, 4, 10, 6, 4, 0):
@@ -317,6 +357,8 @@ def main() -> None:
         "generated/research-system-state.js",
         "generated/iclr-low-resource-ideas.js",
         "generated/machine-school-inspired-ideas.js",
+        "generated/discussion-ready-ideas.js",
+        "generated/idea-discovery-v5.js",
         "generated/idea-discovery-v4.js",
         "generated/idea-discovery-v3.js",
         "generated/idea-discovery-v31.js",
