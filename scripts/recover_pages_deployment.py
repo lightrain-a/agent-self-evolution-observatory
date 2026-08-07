@@ -15,6 +15,7 @@ import re
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 import zipfile
 from typing import Any
@@ -149,10 +150,12 @@ def current_artifact_id(token: str, repository: str, workflow_run_id: str) -> in
     return int(artifacts[-1]["id"])
 
 
-def oidc_token() -> str:
+def oidc_token(repository: str) -> str:
     url = required("ACTIONS_ID_TOKEN_REQUEST_URL")
     separator = "&" if "?" in url else "?"
-    url += f"{separator}audience=pages.github.com"
+    owner = repository.split("/", 1)[0]
+    audience = f"https://github.com/{owner}"
+    url += separator + urllib.parse.urlencode({"audience": audience})
     request_token = required("ACTIONS_ID_TOKEN_REQUEST_TOKEN")
     req = urllib.request.Request(
         url,
@@ -178,7 +181,7 @@ def create_deployment(
         # seconds earlier. Refresh the token on every deployment attempt instead
         # of replaying one invalid token for the whole retry window.
         try:
-            identity_token = oidc_token()
+            identity_token = oidc_token(repository)
         except Exception as error:
             last_message = f"OIDC token request failed: {error}"
             print(f"Create attempt {attempt}/30: {last_message}")
