@@ -208,11 +208,9 @@ The strict discussion-ready portfolio is therefore **22/20**: 4 main-bank PASS +
 
 Persistent artifacts include `generated/idea-discovery-v5*.json/js`, the per-round external-review stores for v5/v5.1/v5.2/v5.3, and the strict discussion-ready roster. All BLOCK branches remain preserved as components, baselines, or future revival sources; they are never silently deleted or renamed into later rounds.
 
-## Comparative ranking of the 22 senior-discussion ideas
+## Senior discussion pool
 
-After the strict discussion portfolio reached 22 independent R2 PASS ideas, the system stopped expanding the search and added a comparative portfolio layer. **All 22 remain in the formal senior-discussion pool**; none are removed before the senior/teacher discussion. `research_pipeline/advisor_selection.py` scores all 22 on problem importance, mechanism distinctness, falsifiability, pilot feasibility, ICLR story, portfolio diversity, and complexity, while an independent Agent-project meta-review provides a 1–22 relative ranking and overlap/merge relationships. Eight ideas are marked only as **first-read priorities**—Correction-Action Causal Compiler, Bounded-Probe API Transition Operator, Regression-Gated Self-Evolution, Certified Out-of-Span Interaction Inverter, Update-Composition Repair Compiler, Nested-Pathway Memory Repair, Contradiction-Preserving Memory Consolidation, and Workflow Repair Grammar v5—but the remaining fourteen are still full discussion candidates. This ranking is a navigation/prioritization layer, not `selected-ready`; P0/P1/P2 results are still absent.
-
-Persistent artifacts are `generated/advisor-priority-ideas.json/js` and `generated/advisor-priority-meta-review.json`.
+The stopping rule is intentionally simple: once at least 20 ideas have independently passed the official-source Agent-project web R2, all qualifying ideas are handed to the senior/teacher discussion. The current pool contains **22 strict R2 PASS ideas**, all of which remain equally eligible for discussion. The system does not apply an additional shortlist, first-read priority, or comparative meta-ranking before that discussion. `generated/discussion-ready-ideas.json/js` is the only authoritative senior-discussion roster; P0/P1/P2 evidence is still required before any idea can become `selected-ready`.
 
 ## Quality assurance
 

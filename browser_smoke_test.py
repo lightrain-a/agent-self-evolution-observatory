@@ -533,7 +533,7 @@ def main() -> None:
               text: document.body.textContent || ''
             };""",
         )
-        require(idea_portfolio["automationComponents"] == 10, f"expected ten running/reference components, got {idea_portfolio['automationComponents']}")
+        require(idea_portfolio["automationComponents"] == 9, f"expected nine running/reference components, got {idea_portfolio['automationComponents']}")
         require(idea_portfolio["automationStats"] == 6, f"expected six automation statistics, got {idea_portfolio['automationStats']}")
         require(idea_portfolio["automationCollisionRows"] > 0 and idea_portfolio["automationRepairRows"] > 0, "automation collision or repair queue did not render")
         require("healthy" in idea_portfolio["automationHealth"].lower(), f"research system health is not visible: {idea_portfolio['automationHealth']}")

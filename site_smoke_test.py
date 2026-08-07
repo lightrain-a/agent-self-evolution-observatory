@@ -55,9 +55,8 @@ REQUIRED_STATIC = [
     "content-review-external.js", "generated/iclr-external-reviews.json",
     "machine-school-ideas-view.js", "generated/machine-school-inspired-ideas.json",
     "generated/machine-school-inspired-ideas.js", "generated/machine-school-external-reviews.json",
-    "review-localizations.js", "advisor-priority-view.js", "idea-discovery-v5-view.js", "idea-discovery-v4-view.js", "solution-first-ideas-view.js",
+    "review-localizations.js", "discussion-ready-view.js", "idea-discovery-v5-view.js", "idea-discovery-v4-view.js", "solution-first-ideas-view.js",
     "generated/discussion-ready-ideas.json", "generated/discussion-ready-ideas.js",
-    "generated/advisor-priority-ideas.json", "generated/advisor-priority-ideas.js", "generated/advisor-priority-meta-review.json",
     "generated/idea-discovery-v5.json", "generated/idea-discovery-v5.js", "generated/idea-discovery-v5-external-reviews.json",
     "generated/idea-discovery-v51.json", "generated/idea-discovery-v51.js", "generated/idea-discovery-v51-external-reviews.json",
     "generated/idea-discovery-v52.json", "generated/idea-discovery-v52.js", "generated/idea-discovery-v52-external-reviews.json",
@@ -197,7 +196,6 @@ def main() -> None:
         idea_page.find('src="generated/iclr-low-resource-ideas.js"'),
         idea_page.find('src="generated/machine-school-inspired-ideas.js"'),
         idea_page.find('src="generated/discussion-ready-ideas.js"'),
-        idea_page.find('src="generated/advisor-priority-ideas.js"'),
         idea_page.find('src="generated/idea-discovery-v5.js"'),
         idea_page.find('src="generated/idea-discovery-v51.js"'),
         idea_page.find('src="generated/idea-discovery-v52.js"'),
@@ -206,7 +204,7 @@ def main() -> None:
         idea_page.find('src="generated/idea-discovery-v3.js"'),
         idea_page.find('src="generated/idea-discovery-v31.js"'),
         idea_page.find('src="review-localizations.js"'),
-        idea_page.find('src="advisor-priority-view.js"'),
+        idea_page.find('src="discussion-ready-view.js"'),
         idea_page.find('src="idea-discovery-v5-view.js"'),
         idea_page.find('src="idea-discovery-v4-view.js"'),
         idea_page.find('src="solution-first-ideas-view.js"'),
@@ -236,8 +234,8 @@ def main() -> None:
     if (summary.get("v5_candidates"), summary.get("v5_finalists"), summary.get("v5_revivals")) != (36,32,8):
         fail("research-system state must expose the v5 wide-search round")
     components = research_state.get("components", [])
-    if len(components) != 10:
-        fail(f"research-system state must expose ten backend components, got {len(components)}")
+    if len(components) != 9:
+        fail(f"research-system state must expose nine backend components, got {len(components)}")
     graph_component = next((item for item in components if item.get("source") == "ResearchAgent"), {})
     if graph_component.get("component", {}).get("zh") != "引文与证据图谱":
         fail("citation/evidence component must be bilingual in the backend state")
@@ -327,13 +325,6 @@ def main() -> None:
         if (summary.get("children"), summary.get("reviewed"), summary.get("pass")) != expected:
             fail(f"unexpected repair-round summary for {filename}: {summary}")
     discussion = json.loads((ROOT / "generated" / "discussion-ready-ideas.json").read_text(encoding="utf-8"))
-    advisor = json.loads((ROOT / "generated" / "advisor-priority-ideas.json").read_text(encoding="utf-8"))
-    if advisor.get("source_count") != discussion.get("count") or advisor.get("discussion_pool_count") != 22 or len(advisor.get("discussion_pool", [])) != 22:
-        fail("advisor discussion pool must preserve all 22 strict PASS ideas")
-    if len(advisor.get("priority_first_read", [])) != 8:
-        fail("advisor comparison layer must expose eight first-read priorities without shrinking the discussion pool")
-    if advisor.get("meta_review_status", {}).get("reviewed") != discussion.get("count") or not advisor.get("meta_review_status", {}).get("complete"):
-        fail("advisor comparative meta-review must cover all strict PASS ideas")
     if (discussion.get("count"), discussion.get("target"), discussion.get("remaining"), discussion.get("ready")) != (22, 20, 0, True):
         fail(f"strict discussion-ready portfolio has not reached target: {discussion}")
 
@@ -368,7 +359,6 @@ def main() -> None:
         "generated/iclr-low-resource-ideas.js",
         "generated/machine-school-inspired-ideas.js",
         "generated/discussion-ready-ideas.js",
-        "generated/advisor-priority-ideas.js",
         "generated/idea-discovery-v5.js",
         "generated/idea-discovery-v4.js",
         "generated/idea-discovery-v3.js",

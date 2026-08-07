@@ -22,6 +22,12 @@ ROOT_FILES = (
     "site.webmanifest",
 )
 GENERATED_PATTERNS = ("*.js", "*.json")
+EXCLUDED_PUBLIC_FILES = {
+    "advisor-priority-view.js",
+    "advisor-priority-ideas.js",
+    "advisor-priority-ideas.json",
+    "advisor-priority-meta-review.json",
+}
 
 
 def copy_file(source: Path, destination: Path) -> None:
@@ -37,7 +43,7 @@ def build() -> Path:
     copied: set[Path] = set()
     for pattern in ROOT_PATTERNS:
         for source in sorted(ROOT.glob(pattern)):
-            if source.is_file():
+            if source.is_file() and source.name not in EXCLUDED_PUBLIC_FILES:
                 destination = OUTPUT / source.name
                 copy_file(source, destination)
                 copied.add(destination)
@@ -53,7 +59,7 @@ def build() -> Path:
     generated_source = ROOT / "generated"
     for pattern in GENERATED_PATTERNS:
         for source in sorted(generated_source.glob(pattern)):
-            if source.is_file():
+            if source.is_file() and source.name not in EXCLUDED_PUBLIC_FILES:
                 destination = generated_output / source.name
                 copy_file(source, destination)
                 copied.add(destination)
@@ -64,6 +70,7 @@ def build() -> Path:
         OUTPUT / "system-overview.html",
         OUTPUT / "app.js",
         OUTPUT / "system-overview-view.js",
+        OUTPUT / "discussion-ready-view.js",
         OUTPUT / "generated" / "iclr-low-resource-ideas.js",
         OUTPUT / "generated" / "discussion-ready-ideas.js",
         OUTPUT / "generated" / "idea-discovery-v5.js",
@@ -83,6 +90,9 @@ def build() -> Path:
         raise RuntimeError("Backend or private files leaked into the static site")
     if list(OUTPUT.rglob("*.enc")) or list(OUTPUT.rglob("*.py")):
         raise RuntimeError("Encrypted artifacts or Python sources leaked into the static site")
+    for name in EXCLUDED_PUBLIC_FILES:
+        if (OUTPUT / name).exists() or (OUTPUT / "generated" / name).exists():
+            raise RuntimeError(f"Inactive comparative artifact leaked into the static site: {name}")
 
     print(f"Built {len(copied)} public files in {OUTPUT}")
     return OUTPUT

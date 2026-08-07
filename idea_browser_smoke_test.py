@@ -65,17 +65,13 @@ def main() -> None:
         system = execute(session_id, """return {
           components: document.querySelectorAll('.system-components-panel tbody tr').length,
           progressItems: document.querySelectorAll('.system-v5-progress span').length,
-          advisorCards: document.querySelectorAll('.system-advisor-grid article').length,
-          advisor: window.ADVISOR_PRIORITY_IDEAS || {},
           text: document.body.textContent || '',
           graphLabel: [...document.querySelectorAll('.system-components-panel tbody tr')].map(x=>x.textContent).find(x=>x.includes('引文与证据图谱')||x.includes('Citation and evidence graph')) || '',
           portfolio: window.DISCUSSION_READY_IDEAS || {},
           stateSummary: window.RESEARCH_SYSTEM_STATE?.summary || {}
         };""")
-        require(system["components"] == 10, f"expected ten backend components, got {system['components']}")
+        require(system["components"] == 9, f"expected nine backend components, got {system['components']}")
         require(system["progressItems"] == 5, f"expected five strict-progress cells, got {system['progressItems']}")
-        require(system["advisorCards"] == 8 and len(system["advisor"].get("priority_first_read", [])) == 8, "system overview must show eight first-read priorities")
-        require(len(system["advisor"].get("discussion_pool", [])) == 22, "system overview must preserve all 22 discussion-ready ideas")
         require((system["portfolio"].get("count"), system["portfolio"].get("target"), system["portfolio"].get("ready")) == (22, 20, True), f"wrong discussion portfolio: {system['portfolio']}")
         require("22/20" in system["text"], "22/20 progress is not visible")
         require(system["stateSummary"].get("v53_external_pass") == 3, "system state does not expose three v5.3 PASS ideas")
@@ -87,10 +83,8 @@ def main() -> None:
 
         navigate("/paper-ideas.html", 6)
         ideas = execute(session_id, """return {
-          advisorPanel: document.querySelectorAll('.advisor-priority-panel').length,
-          advisorCards: document.querySelectorAll('.advisor-priority-card').length,
-          advisorRows: document.querySelectorAll('.advisor-ranking tbody tr').length,
-          advisor: window.ADVISOR_PRIORITY_IDEAS || {},
+          discussionPanel: document.querySelectorAll('.discussion-ready-panel').length,
+          discussionCards: document.querySelectorAll('.discussion-ready-groups article').length,
           v5Main: document.querySelectorAll('.v5-panel > .v4-group .v4-idea-card').length,
           v51: document.querySelectorAll('.v51-round .v4-idea-card').length,
           v52: document.querySelectorAll('.v52-round .v4-idea-card').length,
@@ -103,9 +97,7 @@ def main() -> None:
           v53s: window.IDEA_DISCOVERY_V53?.summary || {},
           text: document.body.textContent || ''
         };""")
-        require((ideas["advisorPanel"], ideas["advisorCards"], ideas["advisorRows"]) == (1, 8, 22), f"advisor discussion panel counts are wrong: {ideas['advisorPanel']}/{ideas['advisorCards']}/{ideas['advisorRows']}")
-        require(len(ideas["advisor"].get("discussion_pool", [])) == 22 and len(ideas["advisor"].get("priority_first_read", [])) == 8, "advisor page must show all 22 ideas with eight first-read priorities")
-        require(ideas["advisor"].get("meta_review_status", {}).get("complete") is True, "advisor comparative meta-review is incomplete")
+        require((ideas["discussionPanel"], ideas["discussionCards"]) == (1, 22), f"discussion-pool panel counts are wrong: {ideas['discussionPanel']}/{ideas['discussionCards']}")
         require(ideas["v5Main"] == 36, f"expected 36 v5 candidates, got {ideas['v5Main']}")
         require((ideas["v51"], ideas["v52"], ideas["v53"]) == (19, 12, 4), f"repair round counts are wrong: {ideas['v51']}/{ideas['v52']}/{ideas['v53']}")
         require(ideas["v53Pass"] == 3, f"expected three v5.3 PASS cards, got {ideas['v53Pass']}")
