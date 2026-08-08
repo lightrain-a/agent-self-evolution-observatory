@@ -16,7 +16,6 @@ ROOT_PATTERNS = (
 )
 ROOT_FILES = (
     "CNAME",
-    ".nojekyll",
     "robots.txt",
     "sitemap.xml",
     "site.webmanifest",

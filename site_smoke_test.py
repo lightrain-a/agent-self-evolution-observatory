@@ -43,7 +43,7 @@ REDIRECT_PAGES = {
     "review-log.html": "selected-paper.html#group-review-log",
 }
 REQUIRED_STATIC = [
-    "CNAME", ".nojekyll", ".gitignore", "style.css", "app.js", "data.js",
+    "CNAME", "_config.yml", ".gitignore", "style.css", "app.js", "data.js",
     "content-consolidated.js", "redirect.js", "favicon.svg", "robots.txt",
     "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
@@ -77,6 +77,17 @@ def main() -> None:
     for name in REQUIRED_STATIC:
         if not (ROOT / name).exists():
             fail(f"missing required file {name}")
+
+    if (ROOT / ".nojekyll").exists():
+        fail(".nojekyll must stay absent so the branch-mode Pages fallback honors _config.yml exclusions")
+    pages_config = (ROOT / "_config.yml").read_text(encoding="utf-8")
+    for marker in (
+        "research_pipeline", "scripts", "deploy", "deliveries", "downloads",
+        "advisor-priority-view.js", "generated/advisor-priority-ideas.json",
+        "browser_smoke_test.py", "site_smoke_test.py",
+    ):
+        if marker not in pages_config:
+            fail(f"Pages exclusion config is missing {marker}")
 
     html_files = {path.name for path in ROOT.glob("*.html") if path.name != "404.html"}
     expected = set(CANONICAL_PAGES) | set(REDIRECT_PAGES)
