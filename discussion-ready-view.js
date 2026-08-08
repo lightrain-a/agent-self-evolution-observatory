@@ -138,7 +138,11 @@
   }
 
   function mechanismOf(record) {
-    return tx(record.core_idea || record.exact_mechanism || record.composition_logic || record.material_change || "");
+    if (record.core_idea) return tx(record.core_idea);
+    const object = tx(record.persistent_update_object || record.update_surface || "");
+    const why = tx(record.necessity_logic || record.composition_logic || record.material_change || record.changed_assumption || "");
+    if (object && why) return language === "zh" ? `把持久学习对象明确为“${object}”：${why}` : `Make “${object}” the persistent learned object: ${why}`;
+    return object || why || tx(record.exact_mechanism || "");
   }
 
   function importanceOf(idea, record) {
