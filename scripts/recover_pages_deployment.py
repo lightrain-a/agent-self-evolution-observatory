@@ -228,6 +228,17 @@ def live_build_root(repository: str, page_url: str, build_sha: str) -> str:
     return ""
 
 
+def deployment_id_of(deployment: dict[str, Any]) -> str:
+    direct = str(deployment.get("id") or "").strip()
+    if direct:
+        return direct
+    status_url = str(deployment.get("status_url") or "").strip()
+    parts = [part for part in urllib.parse.urlsplit(status_url).path.split("/") if part]
+    if parts and parts[-1] == "status":
+        parts.pop()
+    return parts[-1] if parts else ""
+
+
 def create_deployment(
     token: str,
     repository: str,
@@ -254,9 +265,9 @@ def create_deployment(
         }
         status, body = request(token, "POST", f"/repos/{repository}/pages/deployments", payload)
         response = json_body(body)
-        if status == 201:
-            deployment_id = str(response.get("status_url") or "").rstrip("/").split("/")[-1]
-            print(f"Created fallback Pages deployment on attempt {attempt}.")
+        if status in {200, 201}:
+            deployment_id = deployment_id_of(response)
+            print(f"Created fallback Pages deployment on attempt {attempt} (HTTP {status}).")
             if deployment_id:
                 print(f"Created fallback Pages deployment ID: {deployment_id} for {build_sha}.")
             return response
@@ -268,8 +279,7 @@ def create_deployment(
 
 
 def monitor_deployment(token: str, repository: str, deployment: dict[str, Any], build_sha: str) -> str:
-    status_url = str(deployment.get("status_url") or "")
-    deployment_id = status_url.rstrip("/").split("/")[-1]
+    deployment_id = deployment_id_of(deployment)
     if not deployment_id:
         raise RuntimeError("Pages deployment response did not contain a deployment ID")
     page_url = str(deployment.get("page_url") or "")
