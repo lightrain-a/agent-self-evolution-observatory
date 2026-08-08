@@ -29,6 +29,8 @@ FINAL_FAILURES = {
     "deployment_cancelled",
     "deployment_lost",
 }
+STALE_RUN_CONCLUSIONS = {"failure", "cancelled"}
+MAX_STALE_RUNS = 12
 
 
 def required(name: str) -> str:
@@ -75,7 +77,7 @@ def json_body(body: bytes) -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
 
 
-def failed_pages_run_ids(token: str, repository: str, source_run_id: str) -> list[str]:
+def stale_pages_run_ids(token: str, repository: str, source_run_id: str) -> list[str]:
     status, body = request(token, "GET", f"/repos/{repository}/actions/runs?per_page=60")
     if status != 200:
         raise RuntimeError(f"Unable to list workflow runs: HTTP {status}")
@@ -85,12 +87,14 @@ def failed_pages_run_ids(token: str, repository: str, source_run_id: str) -> lis
         ids.append(source_run_id)
     for run in runs:
         name = str(run.get("name") or "")
-        if run.get("conclusion") != "failure":
+        if run.get("conclusion") not in STALE_RUN_CONCLUSIONS:
             continue
         if name == "pages build and deployment" or "Pages" in name:
             run_id = str(run.get("id") or "")
             if run_id and run_id not in ids:
                 ids.append(run_id)
+        if len(ids) >= MAX_STALE_RUNS:
+            break
     return ids
 
 
@@ -116,8 +120,10 @@ def deployment_ids_from_run(token: str, repository: str, run_id: str, retries: i
 
 def cancel_stale_deployments(token: str, repository: str, source_run_id: str) -> None:
     ids: set[str] = set()
-    for run_id in failed_pages_run_ids(token, repository, source_run_id):
-        ids.update(deployment_ids_from_run(token, repository, run_id, 18 if run_id == source_run_id else 2))
+    stale_runs = stale_pages_run_ids(token, repository, source_run_id)
+    print(f"Inspecting {len(stale_runs)} recent failed/cancelled Pages run(s) for stale deployment locks.")
+    for run_id in stale_runs:
+        ids.update(deployment_ids_from_run(token, repository, run_id, 18 if run_id == source_run_id else 1))
     for deployment_id in sorted(ids):
         status, body = request(
             token,
@@ -129,8 +135,10 @@ def cancel_stale_deployments(token: str, repository: str, source_run_id: str) ->
             print(f"Pages deployment {deployment_id}: cancel HTTP {status} {message}".strip())
         else:
             print(f"Warning: unable to cancel {deployment_id}: HTTP {status} {message}".strip())
-    # Pages may keep its single-deployment lock briefly after cancellation.
-    time.sleep(75)
+    # The deployment creation path below already retries transient lock conflicts.
+    # Keep only a short release grace period here so each publish does not inherit
+    # minutes of historical recovery latency.
+    time.sleep(20)
 
 
 def current_artifact_id(token: str, repository: str, workflow_run_id: str) -> int:
