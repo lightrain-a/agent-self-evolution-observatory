@@ -25,8 +25,12 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["v51_external_pass"], 3)
         self.assertEqual(self.state["summary"]["v52_external_pass"], 1)
         self.assertEqual(self.state["summary"]["v53_external_pass"], 3)
-        self.assertEqual(self.state["summary"]["discussion_ready"], 22)
+        self.assertEqual(self.state["summary"]["discussion_ready"], 20)
         self.assertEqual(self.state["summary"]["discussion_target"], 20)
+        self.assertEqual(self.state["summary"]["final_pass"], 20)
+        self.assertEqual(self.state["summary"]["final_revise"], 0)
+        self.assertEqual(self.state["summary"]["final_block"], 0)
+        self.assertTrue(self.state["summary"]["final_ready"])
 
     def test_evidence_graph_connects_papers_queries_and_ideas(self) -> None:
         graph = self.state["evidence_graph"]["summary"]
@@ -72,8 +76,9 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(any("Co-Scientist" in source for source in sources))
         self.assertTrue(any("HypoRefine" in source and "IdeaForge" in source for source in sources))
         self.assertEqual(len(self.state["components"]), 9)
-        self.assertEqual(self.state["summary"]["discussion_ready"], 22)
+        self.assertEqual(self.state["summary"]["discussion_ready"], 20)
         self.assertEqual(self.state["summary"]["discussion_target"], 20)
+        self.assertTrue(self.state["summary"]["final_ready"])
         disabled = [item for item in self.state["components"] if item["status"] == "intentionally-disabled"]
         self.assertEqual(len(disabled), 1)
 

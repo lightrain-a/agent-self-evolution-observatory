@@ -1,7 +1,7 @@
 {
   "schema_version": "2.0",
   "project": "Agent Self-Evolution Observatory",
-  "generated_at": "2026-07-30T10:53:40+00:00",
+  "generated_at": "2026-08-08T15:47:05+00:00",
   "architecture_version": "2.1-s2-connected",
   "funnel": [
     {
@@ -29,15 +29,15 @@
       }
     },
     {
-      "key": "advisor-shortlist",
+      "key": "final-advisor-pool",
       "label": {
-        "en": "Advisor shortlist",
-        "zh": "导师短名单"
+        "en": "Final advisor discussion pool",
+        "zh": "最终师兄讨论池"
       },
-      "count": 12,
+      "count": 20,
       "description": {
-        "en": "High-priority candidates shown first for expert judgment; not automatic acceptance.",
-        "zh": "优先展示给师兄和老师判断的候选，不代表自动通过。"
+        "en": "Current R3.1/R3.2 ideas that passed two independent reviewers plus the fresh primary-source collision gate; no shortlist or priority ranking is applied.",
+        "zh": "当前 R3.1/R3.2 版本中，通过两位独立 reviewer 与最新 primary-source 碰撞门槛的 Idea；不再施加 shortlist 或优先级排序。"
       }
     },
     {
@@ -358,7 +358,7 @@
       "legacy_rank": 1,
       "legacy_score": 91.2,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -665,7 +665,7 @@
       "legacy_rank": 2,
       "legacy_score": 89.6,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -972,7 +972,7 @@
       "legacy_rank": 3,
       "legacy_score": 89.1,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -1279,7 +1279,7 @@
       "legacy_rank": 4,
       "legacy_score": 88.4,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -1586,7 +1586,7 @@
       "legacy_rank": 5,
       "legacy_score": 87.8,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -1893,7 +1893,7 @@
       "legacy_rank": 6,
       "legacy_score": 87.2,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -2200,7 +2200,7 @@
       "legacy_rank": 7,
       "legacy_score": 86.6,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -2507,7 +2507,7 @@
       "legacy_rank": 8,
       "legacy_score": 85.2,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -2814,7 +2814,7 @@
       "legacy_rank": 9,
       "legacy_score": 84.7,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -3121,7 +3121,7 @@
       "legacy_rank": 10,
       "legacy_score": 84.0,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -3428,7 +3428,7 @@
       "legacy_rank": 11,
       "legacy_score": 83.5,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -3735,7 +3735,7 @@
       "legacy_rank": 12,
       "legacy_score": 83.1,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -4042,7 +4042,7 @@
       "legacy_rank": 13,
       "legacy_score": 82.6,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -4349,7 +4349,7 @@
       "legacy_rank": 14,
       "legacy_score": 81.8,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -4656,7 +4656,7 @@
       "legacy_rank": 15,
       "legacy_score": 81.6,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -4963,7 +4963,7 @@
       "legacy_rank": 16,
       "legacy_score": 80.8,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -5270,7 +5270,7 @@
       "legacy_rank": 17,
       "legacy_score": 80.3,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -5577,7 +5577,7 @@
       "legacy_rank": 18,
       "legacy_score": 79.4,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -5884,7 +5884,7 @@
       "legacy_rank": 19,
       "legacy_score": 79.1,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -6191,7 +6191,7 @@
       "legacy_rank": 20,
       "legacy_score": 78.9,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -6498,7 +6498,7 @@
       "legacy_rank": 21,
       "legacy_score": 78.8,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -6805,7 +6805,7 @@
       "legacy_rank": 22,
       "legacy_score": 78.7,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -7112,7 +7112,7 @@
       "legacy_rank": 23,
       "legacy_score": 78.4,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -7419,7 +7419,7 @@
       "legacy_rank": 24,
       "legacy_score": 78.2,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -7726,7 +7726,7 @@
       "legacy_rank": 25,
       "legacy_score": 77.0,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -8033,7 +8033,7 @@
       "legacy_rank": 26,
       "legacy_score": 76.8,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -8340,7 +8340,7 @@
       "legacy_rank": 27,
       "legacy_score": 75.4,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -8647,7 +8647,7 @@
       "legacy_rank": 28,
       "legacy_score": 75.0,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -8954,7 +8954,7 @@
       "legacy_rank": 29,
       "legacy_score": 74.2,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -9261,7 +9261,7 @@
       "legacy_rank": 30,
       "legacy_score": 73.8,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -9568,7 +9568,7 @@
       "legacy_rank": 31,
       "legacy_score": 73.0,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -9875,7 +9875,7 @@
       "legacy_rank": 32,
       "legacy_score": 72.6,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -10182,7 +10182,7 @@
       "legacy_rank": 33,
       "legacy_score": 71.2,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     },
     {
@@ -10489,7 +10489,7 @@
       "legacy_rank": 34,
       "legacy_score": 70.8,
       "generation_operator": "legacy-curated",
-      "updated_at": "2026-07-30T10:53:40+00:00",
+      "updated_at": "2026-08-08T15:47:05+00:00",
       "schema_version": "2.0"
     }
   ],
@@ -10621,6 +10621,107 @@
         "hidden failure",
         "new observable"
       ]
+    },
+    {
+      "key": "mechanism-inspiration-retrieval",
+      "name": {
+        "en": "Mechanism inspiration retrieval",
+        "zh": "机制灵感独立检索"
+      },
+      "purpose": {
+        "en": "Retrieve solution mechanisms separately from papers that merely describe the target problem.",
+        "zh": "把解决机制的检索与目标问题文献分开，避免只在同题论文中做局部增量。"
+      },
+      "required_evidence": [
+        "target causal variable",
+        "source mechanism corpus",
+        "transport condition"
+      ]
+    },
+    {
+      "key": "concept-path-bridging",
+      "name": {
+        "en": "Concept-path bridging",
+        "zh": "概念图桥接路径"
+      },
+      "purpose": {
+        "en": "Generate a method from a non-trivial path connecting distant scientific concepts through explicit intermediate variables.",
+        "zh": "沿科学概念图中的非显然路径，用显式中间变量连接远距离概念并生成方法。"
+      },
+      "required_evidence": [
+        "source concept",
+        "bridge concepts",
+        "target variable",
+        "path evidence"
+      ]
+    },
+    {
+      "key": "reviewer-vector-repair",
+      "name": {
+        "en": "Reviewer-vector repair",
+        "zh": "Reviewer 维度反推修复"
+      },
+      "purpose": {
+        "en": "Turn low-scoring reviewer dimensions into changed assumptions, mechanisms, and decisive experiments rather than wording edits.",
+        "zh": "把 Reviewer 的低分维度转化为假设、机制和决定性实验的实质变化，而不是改写措辞。"
+      },
+      "required_evidence": [
+        "review dimension",
+        "blocking evidence",
+        "changed assumption",
+        "new mechanism"
+      ]
+    },
+    {
+      "key": "method-tree-search",
+      "name": {
+        "en": "Branch-and-bound method search",
+        "zh": "分支限界方法树搜索"
+      },
+      "purpose": {
+        "en": "Maintain multiple solution branches and expand only Pareto-promising methods under novelty, identifiability, and feasibility constraints.",
+        "zh": "保留多个解决方案分支，在新颖性、可识别性和可行性约束下只扩展 Pareto 有潜力的方法。"
+      },
+      "required_evidence": [
+        "parent problem",
+        "diverse child mechanisms",
+        "branch score",
+        "pruning evidence"
+      ]
+    },
+    {
+      "key": "experiment-feedback-induction",
+      "name": {
+        "en": "Experiment-feedback induction",
+        "zh": "实验反馈归纳"
+      },
+      "purpose": {
+        "en": "Use controlled experimental failures to infer the missing mechanism or boundary for the next idea round.",
+        "zh": "利用受控实验失败归纳缺失机制或边界，作为下一轮 Idea 的输入。"
+      },
+      "required_evidence": [
+        "frozen experiment",
+        "failure signature",
+        "alternative explanation",
+        "mechanism revision"
+      ]
+    },
+    {
+      "key": "resource-grounded-design",
+      "name": {
+        "en": "Resource-grounded method design",
+        "zh": "公开资源约束的方法设计"
+      },
+      "purpose": {
+        "en": "Concretize ideas around available code, datasets, verifiers, and intervention surfaces before ranking novelty.",
+        "zh": "在排序新颖性前，先围绕可用代码、数据集、验证器和干预表面把方法具体化。"
+      },
+      "required_evidence": [
+        "public code",
+        "dataset",
+        "independent verifier",
+        "exact update surface"
+      ]
     }
   ],
   "reviewer_roles": [
@@ -10702,8 +10803,8 @@
   ],
   "warnings": [
     {
-      "en": "Legacy decimal scores are preserved only for traceability; the advisor view uses evidence gates and decision stages.",
-      "zh": "旧小数分数仅用于追溯；导师视图改用证据门槛和决策阶段。"
+      "en": "Legacy decimal scores and historical shortlist stages are preserved only for traceability; the current advisor pool is defined exclusively by the calculable FINAL gate.",
+      "zh": "旧小数分数与历史 shortlist 阶段仅用于追溯；当前师兄讨论池只由可计算的 FINAL 门槛定义。"
     },
     {
       "en": "Direction-level literature anchors are not sufficient to claim novelty. Exact idea-level collision checks remain mandatory.",

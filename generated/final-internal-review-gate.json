@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-08T15:51:14+00:00",
+  "review_date": "2026-08-08",
+  "review_models": [
+    "glm-5.2",
+    "deepseek-v4-pro"
+  ],
+  "policy": {
+    "absolute_bar": true,
+    "unanimous_pass_required": true,
+    "raw_reviewer_responses_backend_only": true,
+    "r31_used_only_for_current_r31_versions": true,
+    "r32_recheck_overrides_r31_for_current_r32_versions": true
+  },
+  "summary": {
+    "total": 20,
+    "unanimous_pass": 20,
+    "block": 0,
+    "revise": 0
+  },
+  "ideas": [
+    {
+      "idea_id": "contradiction-preserving-consolidation",
+      "revision": "R3.2",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "compositional-update-compatibility",
+      "revision": "R3.2",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "update-trust-region",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "correction-action-causal-compiler",
+      "revision": "R3.2",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "memory-interaction-clause-learner",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "probe-mutation-retirement-policy",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "update-composition-repair-compiler",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "monotone-applicability-specializer-v4",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "api-error-semantic-adapter",
+      "revision": "R3.2",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "workflow-repair-grammar-v5",
+      "revision": "R3.2",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "restoration-clause-induction-v5",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "rubric-intervention-sparse-solver",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "update-history-semantic-compactor",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "bounded-probe-api-transition-operator",
+      "revision": "R3.2",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "interventional-permission-triage-under-ceiling",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "nested-pathway-memory-repair",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "constraint-complete-typed-memory-order-logic",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "certified-out-of-span-interaction-inverter-v53",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "compiler-residual-contract-editor-v53",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    },
+    {
+      "idea_id": "filtered-chronological-evaluator-state-v53",
+      "revision": "R3.1",
+      "glm-5.2": "pass",
+      "deepseek-v4-pro": "pass"
+    }
+  ]
+}

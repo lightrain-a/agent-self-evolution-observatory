@@ -8,7 +8,13 @@ from .config import SemanticScholarSettings, StorageSettings
 from .cvpr_idea_factory import DEFAULT_JS as DEFAULT_CVPR_JS
 from .cvpr_idea_factory import DEFAULT_JSON as DEFAULT_CVPR_JSON
 from .cvpr_idea_factory import build_cvpr_idea_bank, validate_bank, write_cvpr_idea_bank
+from .current_final_ideas import SOURCE_JSON as RAW_CURRENT_FINAL_JSON
+from .current_final_ideas import write_current_final_ideas
 from .discussion_portfolio import build_discussion_portfolio, write_discussion_portfolio
+from .final_advisor_audit import DEFAULT_JS as DEFAULT_FINAL_ADVISOR_JS
+from .final_advisor_audit import DEFAULT_JSON as DEFAULT_FINAL_ADVISOR_JSON
+from .final_advisor_audit import build_final_advisor_audit, write_final_advisor_audit
+from .final_internal_review_gate import R31_PANEL_JSON, R32_RECHECK_JSON, write_final_internal_review_gate
 from .iclr_idea_factory import DEFAULT_JS as DEFAULT_ICLR_JS
 from .iclr_idea_factory import DEFAULT_JSON as DEFAULT_ICLR_JSON
 from .iclr_idea_factory import build_iclr_idea_bank, validate_bank as validate_iclr_bank, write_iclr_idea_bank
@@ -49,6 +55,9 @@ from .query_planner import DEFAULT_SCOPE_PATH
 from .research_system import DEFAULT_JS as DEFAULT_SYSTEM_JS
 from .research_system import DEFAULT_JSON as DEFAULT_SYSTEM_JSON
 from .research_system import build_research_system_state, validate_state, write_research_system_state
+from .r3_final_audit import DEFAULT_JS as DEFAULT_R3_FINAL_JS
+from .r3_final_audit import DEFAULT_JSON as DEFAULT_R3_FINAL_JSON
+from .r3_final_audit import build_r3_final_audit, validate_r3_final_audit, write_r3_final_audit
 
 
 def parse_args() -> argparse.Namespace:
@@ -96,8 +105,16 @@ def parse_args() -> argparse.Namespace:
     discovery.add_argument("--idea-discovery-v5-status", action="store_true", help="Show v5 candidate and R2 counts.")
     discovery.add_argument("--idea-discovery-v5-json", type=Path, default=DEFAULT_DISCOVERY_V5_JSON)
     discovery.add_argument("--idea-discovery-v5-js", type=Path, default=DEFAULT_DISCOVERY_V5_JS)
-    discovery.add_argument("--discussion-ready-status", action="store_true", help="Show strict R2-PASS progress toward the 20-idea discussion target.")
-    discovery.add_argument("--build-discussion-ready", action="store_true", help="Rebuild the strict discussion-ready portfolio.")
+    discovery.add_argument("--discussion-ready-status", action="store_true", help="Show FINAL-PASS progress toward the 20-idea advisor-discussion target.")
+    discovery.add_argument("--build-discussion-ready", action="store_true", help="Rebuild the strict 20-idea FINAL-PASS discussion portfolio.")
+    discovery.add_argument("--final-advisor-audit-status", action="store_true", help="Show the current R3.1/R3.2 two-reviewer plus fresh-collision final gate.")
+    discovery.add_argument("--build-final-advisor-audit", action="store_true", help="Rebuild the current final pre-advisor audit from R3.1/R3.2 reviews and collision rechecks.")
+    discovery.add_argument("--final-advisor-audit-json", type=Path, default=DEFAULT_FINAL_ADVISOR_JSON)
+    discovery.add_argument("--final-advisor-audit-js", type=Path, default=DEFAULT_FINAL_ADVISOR_JS)
+    discovery.add_argument("--r3-final-audit-status", action="store_true", help="Show the final pre-advisor R3 verdict counts for the 22 R2-PASS ideas.")
+    discovery.add_argument("--build-r3-final-audit", action="store_true", help="Build the final pre-advisor R3 audit data for the site.")
+    discovery.add_argument("--r3-final-audit-json", type=Path, default=DEFAULT_R3_FINAL_JSON)
+    discovery.add_argument("--r3-final-audit-js", type=Path, default=DEFAULT_R3_FINAL_JS)
     discovery.add_argument("--idea-discovery-v51-status", action="store_true", help="Show targeted v5.1 reviewer-vector repair children.")
     discovery.add_argument("--idea-discovery-v52-status", action="store_true", help="Show second-order v5.2 repair children.")
     discovery.add_argument("--idea-discovery-v53-status", action="store_true", help="Show final-boundary v5.3 repair children.")
@@ -243,6 +260,26 @@ def _print_discussion_ready_status() -> None:
     print(json.dumps(payload, ensure_ascii=False, indent=2))
 
 
+def _print_r3_final_audit_status() -> None:
+    payload = build_r3_final_audit()
+    print(json.dumps({
+        "reviewer": payload["reviewer"],
+        "review_date": payload["review_date"],
+        "summary": payload["summary"],
+        "validation_errors": validate_r3_final_audit(payload),
+    }, ensure_ascii=False, indent=2))
+
+
+def _print_final_advisor_audit_status() -> None:
+    payload = build_final_advisor_audit()
+    print(json.dumps({
+        "review_date": payload["review_date"],
+        "summary": payload["summary"],
+        "policy": payload["policy"],
+        "retired_from_advisor_pool": payload["retired_from_advisor_pool"],
+    }, ensure_ascii=False, indent=2))
+
+
 def _print_idea_discovery_v51_status() -> None:
     payload = build_idea_discovery_v51()
     print(json.dumps({"summary": payload["summary"], "children": [{"rank":x.get("rank"),"id":x.get("id"),"parent_id":x.get("parent_id"),"verdict":x.get("external_verdict")} for x in payload.get("children",[])]}, ensure_ascii=False, indent=2))
@@ -376,11 +413,31 @@ def main() -> None:
         print(f"Idea Discovery v5 complete: {payload['summary']['raw_candidates']} candidates, {len(payload['finalists'])} finalists/revivals, {payload['summary']['external_pass']} external PASS.")
         print(f"Wrote {args.idea_discovery_v5_json}")
         print(f"Wrote {args.idea_discovery_v5_js}")
+    if (args.build_discussion_ready or args.build_final_advisor_audit) and RAW_CURRENT_FINAL_JSON.exists():
+        current = write_current_final_ideas()
+        print(f"Current page-facing final ideas refreshed: {current['count']} sanitized ideas.")
+        if R31_PANEL_JSON.exists() and R32_RECHECK_JSON.exists():
+            internal = write_final_internal_review_gate()
+            print(f"Internal final-review gate refreshed: {internal['summary']['unanimous_pass']}/{internal['summary']['total']} unanimous PASS.")
     if args.discussion_ready_status:
         _print_discussion_ready_status()
     if args.build_discussion_ready:
         payload = write_discussion_portfolio()
-        print(f"Discussion-ready portfolio: {payload['count']}/{payload['target']} strict R2 PASS.")
+        print(f"Discussion-ready portfolio: {payload['count']}/{payload['target']} FINAL PASS.")
+    if args.final_advisor_audit_status:
+        _print_final_advisor_audit_status()
+    if args.build_final_advisor_audit:
+        payload = write_final_advisor_audit(args.final_advisor_audit_json, args.final_advisor_audit_js)
+        print(f"Final advisor audit: {payload['summary']['pass']} PASS, {payload['summary']['revise']} REVISE, {payload['summary']['block']} BLOCK; ready={payload['summary']['ready']}.")
+        print(f"Wrote {args.final_advisor_audit_json}")
+        print(f"Wrote {args.final_advisor_audit_js}")
+    if args.r3_final_audit_status:
+        _print_r3_final_audit_status()
+    if args.build_r3_final_audit:
+        payload = write_r3_final_audit(args.r3_final_audit_json, args.r3_final_audit_js)
+        print(f"R3 final audit: {payload['summary']['pass']} PASS, {payload['summary']['revise']} REVISE, {payload['summary']['block']} BLOCK.")
+        print(f"Wrote {args.r3_final_audit_json}")
+        print(f"Wrote {args.r3_final_audit_js}")
     if args.idea_discovery_v51_status:
         _print_idea_discovery_v51_status()
     if args.idea_discovery_v52_status:
@@ -447,7 +504,8 @@ def main() -> None:
             or args.idea_discovery_v3_status or args.build_idea_discovery_v3
             or args.idea_discovery_v31_status or args.build_idea_discovery_v31
             or args.idea_discovery_v5_status or args.build_idea_discovery_v5
-            or args.discussion_ready_status or args.build_discussion_ready or args.idea_discovery_v51_status
+            or args.discussion_ready_status or args.build_discussion_ready
+            or args.final_advisor_audit_status or args.build_final_advisor_audit or args.idea_discovery_v51_status
             or args.idea_discovery_v52_status or args.idea_discovery_v53_status
             or args.idea_discovery_v4_status or args.build_idea_discovery_v4
             or args.cvpr_status or args.build_cvpr_bank

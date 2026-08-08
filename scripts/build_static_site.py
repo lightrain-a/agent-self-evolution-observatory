@@ -27,6 +27,16 @@ EXCLUDED_PUBLIC_FILES = {
     "advisor-priority-ideas.json",
     "advisor-priority-meta-review.json",
 }
+EXCLUDED_PUBLIC_PREFIXES = (
+    "ark-",
+    "r31-",
+    "r32-final-ideas",
+    "r32-targeted-recheck",
+)
+
+
+def excluded_public_file(name: str) -> bool:
+    return name in EXCLUDED_PUBLIC_FILES or any(name.startswith(prefix) for prefix in EXCLUDED_PUBLIC_PREFIXES)
 
 
 def copy_file(source: Path, destination: Path) -> None:
@@ -42,7 +52,7 @@ def build() -> Path:
     copied: set[Path] = set()
     for pattern in ROOT_PATTERNS:
         for source in sorted(ROOT.glob(pattern)):
-            if source.is_file() and source.name not in EXCLUDED_PUBLIC_FILES:
+            if source.is_file() and not excluded_public_file(source.name):
                 destination = OUTPUT / source.name
                 copy_file(source, destination)
                 copied.add(destination)
@@ -58,7 +68,7 @@ def build() -> Path:
     generated_source = ROOT / "generated"
     for pattern in GENERATED_PATTERNS:
         for source in sorted(generated_source.glob(pattern)):
-            if source.is_file() and source.name not in EXCLUDED_PUBLIC_FILES:
+            if source.is_file() and not excluded_public_file(source.name):
                 destination = generated_output / source.name
                 copy_file(source, destination)
                 copied.add(destination)
@@ -72,6 +82,9 @@ def build() -> Path:
         OUTPUT / "discussion-ready-view.js",
         OUTPUT / "generated" / "iclr-low-resource-ideas.js",
         OUTPUT / "generated" / "discussion-ready-ideas.js",
+        OUTPUT / "generated" / "current-final-ideas.js",
+        OUTPUT / "generated" / "final-collision-recheck.js",
+        OUTPUT / "generated" / "final-advisor-audit.js",
         OUTPUT / "generated" / "idea-discovery-v5.js",
         OUTPUT / "generated" / "idea-discovery-v53.js",
         OUTPUT / "generated" / "research-system-state.js",
@@ -89,9 +102,10 @@ def build() -> Path:
         raise RuntimeError("Backend or private files leaked into the static site")
     if list(OUTPUT.rglob("*.enc")) or list(OUTPUT.rglob("*.py")):
         raise RuntimeError("Encrypted artifacts or Python sources leaked into the static site")
-    for name in EXCLUDED_PUBLIC_FILES:
-        if (OUTPUT / name).exists() or (OUTPUT / "generated" / name).exists():
-            raise RuntimeError(f"Inactive comparative artifact leaked into the static site: {name}")
+    for path in (OUTPUT, OUTPUT / "generated"):
+        for source in path.iterdir() if path.exists() else ():
+            if source.is_file() and excluded_public_file(source.name):
+                raise RuntimeError(f"Backend/internal artifact leaked into the static site: {source.name}")
 
     print(f"Built {len(copied)} public files in {OUTPUT}")
     return OUTPUT

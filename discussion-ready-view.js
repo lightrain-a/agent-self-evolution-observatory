@@ -1,5 +1,8 @@
 (() => {
   const data = () => window.DISCUSSION_READY_IDEAS || { target: 20, count: 0, ready: false, ideas: [] };
+  const currentData = () => window.CURRENT_FINAL_IDEAS || { ideas: [] };
+  const finalAuditData = () => window.FINAL_ADVISOR_AUDIT || { summary: { pass: 0, revise: 0, block: 0, ready: false }, ideas: [] };
+  const collisionData = () => window.FINAL_COLLISION_RECHECK || { ideas: [] };
   const sourceLabels = {
     "main-r2": { zh: "主 ICLR Bank", en: "Main ICLR bank" },
     "v4-r2": { zh: "v4", en: "v4" },
@@ -7,6 +10,7 @@
     "v51-r2": { zh: "v5.1", en: "v5.1" },
     "v52-r2": { zh: "v5.2", en: "v5.2" },
     "v53-r2": { zh: "v5.3", en: "v5.3" },
+    "r32-final": { zh: "当前最终版", en: "Current final" },
   };
   const clusters = [
     {
@@ -14,7 +18,6 @@
       title: { zh: "A · 可靠更新、组合冲突与长期维护", en: "A · Reliable updates, composition, and long-term maintenance" },
       question: { zh: "Agent 持续更新时，如何避免回退、组合冲突和版本债务？", en: "How can persistent agent updates avoid regressions, composition failures, and version debt?" },
       ids: [
-        "regression-gated-self-evolution",
         "compositional-update-compatibility",
         "update-trust-region",
         "update-composition-repair-compiler",
@@ -31,7 +34,6 @@
         "contradiction-preserving-consolidation",
         "memory-interaction-clause-learner",
         "monotone-applicability-specializer-v4",
-        "effect-transport-lesson-specializer-v5",
         "nested-pathway-memory-repair",
         "constraint-complete-typed-memory-order-logic",
       ],
@@ -64,6 +66,30 @@
   const label = (source) => sourceLabels[source]?.[language] || source;
   const tx = (value) => textOf(value || "");
   const escText = (value) => esc(String(value || ""));
+  const finalFor = (id) => (finalAuditData().ideas || []).find((row) => row.idea_id === id) || { verdict: "pending", revision: "", reviewers: {}, collision_gate: "pending", finding: "" };
+  const collisionFor = (id) => (collisionData().ideas || []).find((row) => row.idea_id === id) || { status: "pending", closest_work: [], surviving_difference: "", sources: [] };
+  const freshCollisionZh = {
+    "contradiction-preserving-consolidation": "当前边界不是一般的矛盾检索或动态图记忆，而是在固定容量下，以 oracle 验证的‘删除后会改变结论’作为 consolidation-time 准入规则，并用交叉删除干预识别其因果价值。",
+    "compositional-update-compatibility": "AFlow 等工作主要搜索或生成 Agent workflow；当前边界是对预注册、冻结的 Prompt/工具更新集合预测组合干扰，并用完全相同的图编码器、仅改变 interaction edge feature 来隔离交互信息本身的作用。",
+    "update-trust-region": "TeamTR 已在多 Agent 参数微调内部使用 divergence control；当前主张更窄：对异构离散 Agent patch 在提出后使用冻结、非参数行为散度门控，并与等预算 outcome/current-gain/text-edit gate 比较，不主张一般 trust-region 新颖性。",
+    "correction-action-causal-compiler": "DoVer、CausalFlow、ANNEAL 已覆盖干预式调试、反事实修复或符号 patch 学习；当前仅主张冻结的最小因果必要 typed-action conjunction，在未见 failure composition 上必须同时胜过单修复检索与等预算 chained-repair 检索。",
+    "memory-interaction-clause-learner": "已有方法会选择或重排单条记忆；当前边界是学习并冻结 type-level 兼容／排斥／优先子句，在未见 memory identity 与未见 composition type 上，对比接收相同特征与预算的 pair/triple contextual gate。",
+    "probe-mutation-retirement-policy": "mutation-guided suite augmentation 与长期 mutant 管理本身并不新；当前只检验 structural mutation 在相同 learned future-value + diversity selector 之上，是否还能改善 prequential future-regression-recall / execution-cost frontier。",
+    "update-composition-repair-compiler": "局部修复、知识复用、可回滚执行轨迹和符号 patch 已被覆盖；当前边界是冻结的 no-test-time-search compiler，能否在 held-out incompatibility-template × update-surface 单元上，以相同 expansion/testing budget 胜过 constrained search。",
+    "monotone-applicability-specializer-v4": "SkillAdaptor／SkillTracer 已覆盖 trajectory-driven skill repair；当前不主张一般 skill refinement 新颖性，而只检验在同一冻结 predicate vocabulary 上，monotone、positive-preserving 的适用域收窄是否优于 complexity-matched ILP/rule-list/precondition-only 方法。",
+    "api-error-semantic-adapter": "恢复训练、Agent-oriented API 语义设计和结构化 recovery message 已有工作覆盖；当前可发表边界是 learned discrete recovery taxonomy 与等基数 human-designed taxonomy、matched flat classifier 的可识别对照，human design 一旦追平就终止 learned-structure 主张。",
+    "workflow-repair-grammar-v5": "Failure-Driven Workflow Refinement 与 HarnessFix 已覆盖 failure-aware graph edit 和 harness attribution/patch；当前只主张冻结 production composition 本身是跨 API×motif transfer 因素，并要求所有控制都在完整 held-out failure distribution 上公平运行。",
+    "restoration-clause-induction-v5": "持久 symbolic patch、compatibility 与 rollback governance 已非新颖点；当前主张仅是 explicit no-good/compatibility/precedence clause 相对等资源 direct order-aware composition-risk model 在 unseen composition template 上的归纳偏置优势。",
+    "rubric-intervention-sparse-solver": "rubric 生成、改进和 learned rubric design 已有充分工作；当前仅检验 causal atom-effect estimation × sparsity-constrained editing 这一交叉机制，是否在独立 ground-truth ranking 下实现更小偏差且更好保持 neutral dimension。",
+    "update-history-semantic-compactor": "versioned memory、rollback 和 trustworthy consolidation 已非常拥挤；当前只主张 typed behavioral-constraint graph 在 non-local/order-sensitive history 上比等资源 semantic-dedup compactor 更能同时保持行为等价与 rollback，而该优势应在 local/commutative history 上显著缩小。",
+    "bounded-probe-api-transition-operator": "Agent-First Tool API 与 ProEvolve 已覆盖语义接口和 tool/schema evolution；当前识别比较是：在完全相同 P/E/X 表示、相同 N target probes、相同 compilation/budget 下，cross-source learned parameterization 是否胜过经过质量验证的 non-learned instantiation。",
+    "interventional-permission-triage-under-ceiling": "运行时最小权限、commit-time freshness、permission graph、durable authorization consumption 和低权限工具选择都已有工作；当前边界严格收缩为：Agent 更新后、硬权限上限不变时，哪些既有 grant 必须重新授权的等安全、等预算筛选效率。",
+    "nested-pathway-memory-repair": "已有工作已研究因果 memory usefulness、memory-induced drift 和 boundary-aware memory selection；当前边界是随机化分解 inclusion/content/rank/co-retrieval 四条 pathway，并做 pathway-specific persistent repair，且必须胜过接收相同结构标签的 direct repair learner。",
+    "constraint-complete-typed-memory-order-logic": "neuro-symbolic clause induction 与 order-aware compositional reasoning 本身已有先例；当前只做 representation × decoder factorization：symbolic clause 必须在同一 solver 下胜过 equally expressive typed n-ary factor 的 compositional extrapolation 或 compilation cost，而非声称表达能力不可替代。",
+    "certified-out-of-span-interaction-inverter-v53": "null-space／orthogonal-subspace editing 已确立几何原语；当前不主张正交性新颖，而只在 Farkas-certified in-span-infeasible composition failure 上，检验 pure orthogonal repair 是否以同 rank、同预算胜过 mixed-parameterization 与 full-space solver。",
+    "compiler-residual-contract-editor-v53": "structural/localized editing 已有充分先例；当前边界是在 deterministic contract compilation 后，对 typed relational edit whitelist 与同监督 generic local-delta editor 做严格匹配，在 model+harness swap 下检验 transfer inductive bias。",
+    "filtered-chronological-evaluator-state-v53": "sequential evaluator adaptation、benchmark aging 与在线 judge-vs-system drift attribution 都已有工作；当前只主张冻结 filtered state-space transition 对 zero-anchor future judge version 的外推优于等训练 recurrent chronological control，并由 state×correspondence-corruption interaction 与 inference-only transition-prior ablation 识别。",
+  };
   const importanceNotes = {
     "regression-gated-self-evolution": {zh:"直接回答自进化系统最核心的可靠性问题：一次更新的局部收益，不能以牺牲已掌握能力和圈外任务为代价。",en:"Addresses the central reliability problem in self-evolution: a locally useful update must not trade away mastered or out-of-loop capabilities."},
     "contradiction-preserving-consolidation": {zh:"记忆是最低成本、最常用的持久更新表面；如果压缩时丢掉能推翻规则的反证，Agent 会把局部经验固化成系统性负迁移。",en:"Memory is a common low-cost persistent update surface; losing conclusion-changing counterevidence during consolidation can turn local experience into systematic negative transfer."},
@@ -100,10 +126,14 @@
   }
 
   function recordFor(idea) {
+    const current = (currentData().ideas || []).find((row) => row.idea_id === idea.id);
+    if (current) return current;
     return sourceRows(idea.source).find((row) => row.id === idea.id) || {};
   }
 
   function recordById(id) {
+    const current = (currentData().ideas || []).find((row) => row.idea_id === id);
+    if (current) return current;
     const pools = [
       window.ICLR_LOW_RESOURCE_IDEAS?.passed_ideas || [],
       window.IDEA_DISCOVERY_V4?.all_candidates || [],
@@ -193,20 +223,29 @@
       : `Relative to “${baseline}”, the advantage must not come from more calls or capacity; it must come from learning and freezing “${object}”, with gains on “${truth}” that the matched-budget baseline cannot reproduce.`;
   }
 
-  function nearestWorkOf(record, review) {
+  function nearestWorkOf(record, review, ideaId = "") {
+    const fresh = collisionFor(ideaId || record.idea_id || record.id || "");
+    if ((fresh.closest_work || []).length) return fresh.closest_work.slice(0, 5);
     const direct = review.direct_collision || {};
     const rows = record.nearest_work || direct.closest_work || [];
     return rows.map((item) => typeof item === "string" ? item : (item.title || item.name || "")).filter(Boolean).slice(0, 5);
   }
 
-  function collisionOf(record, review) {
+  function collisionOf(record, review, ideaId = "") {
+    const fresh = collisionFor(ideaId || record.idea_id || record.id || "");
+    if (fresh.surviving_difference) {
+      const zhBoundary = freshCollisionZh[ideaId || record.idea_id || record.id || ""] || tx(record.collision_boundary || "") || fresh.surviving_difference;
+      return language === "zh"
+        ? `2026-08-08 最新碰撞复核：${fresh.status || "pass"}。最接近工作：${(fresh.closest_work || []).join("、")}。当前仍存活的边界：${zhBoundary}`
+        : `Fresh 2026-08-08 collision recheck: ${fresh.status || "pass"}. Closest work: ${(fresh.closest_work || []).join(", ")}. Surviving boundary: ${fresh.surviving_difference}`;
+    }
     if (record.collision_boundary) return tx(record.collision_boundary);
     const direct = review.direct_collision || {};
     const status = direct.status || "partial";
-    const names = nearestWorkOf(record, review);
+    const names = nearestWorkOf(record, review, ideaId);
     return language === "zh"
-      ? `直接碰撞状态：${status}。最接近工作包括 ${names.join("、") || "已在 R2 中核查的直接工作"}；剩余可发表边界见下方 R2 通过理由。`
-      : `Direct-collision status: ${status}. Closest work includes ${names.join(", ") || "the direct work checked in R2"}; the surviving publication boundary is summarized in the R2 rationale below.`;
+      ? `直接碰撞状态：${status}。最接近工作包括 ${names.join("、") || "已在 R2 中核查的直接工作"}。`
+      : `Direct-collision status: ${status}. Closest work includes ${names.join(", ") || "the direct work checked in R2"}.`;
   }
 
   function methodFlowOf(record) {
@@ -262,12 +301,23 @@
     const pilot = pilotOf(record, review);
     const stop = stopOf(record, review);
     const truth = truthOf(record);
-    const nearest = nearestWorkOf(record, review);
+    const nearest = nearestWorkOf(record, review, idea.id);
     const flow = methodFlowOf(record);
     const budget = budgetOf(record);
-    return `<details class="discussion-idea-card" id="discussion-${escText(idea.id)}">
-      <summary><div><span class="discussion-pass-badge">R2 PASS</span><b>${tx(idea.title)}</b><small>${label(idea.source)}${budget ? ` · ${escText(budget)}` : ""}</small></div><p><strong>${language === "zh" ? "问题" : "Problem"}</strong>${escText(problem)}</p></summary>
+    const finalAudit = finalFor(idea.id);
+    const finalVerdict = String(finalAudit.verdict || "pending").toLowerCase();
+    const revision = finalAudit.revision || idea.revision || record.revision || "R3.1";
+    const finalFinding = language === "zh"
+      ? (tx(record.r3_repair_summary || "") || `当前 ${revision} 版本已通过 GLM-5.2 与 DeepSeek V4 Pro 独立复审，并通过 2026-08-08 最新 primary-source 碰撞复核。`)
+      : (finalAudit.finding || tx(record.r3_repair_summary || "") || `The current ${revision} version passed independent GLM-5.2 and DeepSeek V4 Pro review plus the fresh 2026-08-08 primary-source collision recheck.`);
+    const remainingRisk = tx(record.remaining_risk || "");
+    const reviewerState = finalAudit.reviewers || { "glm-5.2": finalAudit["glm-5.2"], "deepseek-v4-pro": finalAudit["deepseek-v4-pro"] };
+    const reviewerLine = Object.entries(reviewerState).filter(([, verdict]) => verdict).map(([name, verdict]) => `${name} ${String(verdict || "pending").toUpperCase()}`).join(" · ");
+    const survivingClaim = tx(record.surviving_claim || "");
+    return `<details class="discussion-idea-card r3-card-${escText(finalVerdict)}" id="discussion-${escText(idea.id)}">
+      <summary><div><span class="discussion-pass-badge discussion-r2-badge">R2 provenance</span><span class="discussion-r3-badge r3-${escText(finalVerdict)}">${escText(revision)} FINAL ${escText(finalVerdict.toUpperCase())}</span><b>${tx(idea.title)}</b><small>${label(idea.source)}${budget ? ` · ${escText(budget)}` : ""}</small></div><p><strong>${language === "zh" ? "问题" : "Problem"}</strong>${escText(problem)}</p></summary>
       <div class="discussion-idea-body">
+        <section class="discussion-r3-gate r3-${escText(finalVerdict)}"><div class="discussion-r3-gate-head"><b>${language === "zh" ? "最终师兄讨论门槛" : "Final pre-advisor gate"}</b><span>${escText(revision)} · ${escText(finalVerdict.toUpperCase())}</span></div><p>${escText(finalFinding)}</p><div><strong>${language === "zh" ? "独立复审：" : "Independent review:"}</strong> ${escText(reviewerLine)} · collision ${escText(String(finalAudit.collision_gate || "pending").toUpperCase())}</div>${remainingRisk ? `<div><strong>${language === "zh" ? "剩余风险：" : "Remaining risk:"}</strong> ${escText(remainingRisk)}</div>` : ""}</section>
         <div class="discussion-section-title">${language === "zh" ? "一 · 研究论证" : "I · Research argument"}</div>
         <div class="discussion-argument-grid">
           <section><h4 data-toc="false">${language === "zh" ? "目的／要解决的问题" : "Purpose / problem"}</h4><p>${escText(problem)}</p></section>
@@ -285,8 +335,8 @@
 
         <div class="discussion-section-title">${language === "zh" ? "三 · 文献与独立审查" : "III · Literature and independent review"}</div>
         <div class="discussion-review-grid discussion-review-grid-three">
-          <section><h4 data-toc="false">${language === "zh" ? "最近工作与碰撞边界" : "Nearest work and collision boundary"}</h4><p>${escText(collisionOf(record, review))}</p>${nearest.length ? `<div class="discussion-nearest-work">${nearest.map((name) => `<span>${escText(name)}</span>`).join("")}</div>` : ""}</section>
-          <section><h4 data-toc="false">${language === "zh" ? "为什么能通过 R2" : "Why it passed R2"}</h4><p>${escText(boundaryOf(record, review))}</p></section>
+          <section><h4 data-toc="false">${language === "zh" ? "最近工作与碰撞边界" : "Nearest work and collision boundary"}</h4><p>${escText(collisionOf(record, review, idea.id))}</p>${nearest.length ? `<div class="discussion-nearest-work">${nearest.map((name) => `<span>${escText(name)}</span>`).join("")}</div>` : ""}</section>
+          <section><h4 data-toc="false">${language === "zh" ? "当前最终可发表边界" : "Current surviving publication claim"}</h4><p>${escText(survivingClaim || boundaryOf(record, review))}</p></section>
           <section><h4 data-toc="false">${language === "zh" ? "最强 Baseline／替代方法" : "Strongest baseline / alternative"}</h4><p>${escText(baseline)}</p></section>
         </div>
 
@@ -307,12 +357,19 @@
 
   window.renderDiscussionReviewGuide = function renderDiscussionReviewGuide() {
     const d = data();
-    return `<section class="panel discussion-review-guide"><div class="idea-panel-heading"><div><h3 id="idea-review-reading-guide">${language === "zh" ? "这页怎么审：先看最终候选，再看证据" : "How to review this page: final candidates first, evidence second"}</h3><p class="section-intro">${language === "zh" ? "本页只服务于方向讨论，不重复展示完整后台。22 个 Idea 都已通过指定 Agent 项目网页版 ChatGPT 的独立官方来源 R2；R2 PASS 只表示问题、机制与新颖性边界值得进入讨论，并不代表实验结论已经成立。" : "This page is for direction review rather than backend inspection. All 22 ideas already passed independent official-source R2 in the designated Agent-project ChatGPT web review. PASS means the problem, mechanism, and novelty boundary merit discussion; it does not establish the experimental claim."}</p></div><strong>${d.count || 0}/${d.target || 20} R2 PASS</strong></div><div class="discussion-reading-steps"><article><span>1</span><b>${language === "zh" ? "先判断问题" : "Judge the problem"}</b><p>${language === "zh" ? "问题是否真实、重要，而且值得单独写一篇论文？" : "Is the failure real, important, and paper-worthy?"}</p></article><article><span>2</span><b>${language === "zh" ? "再看机制边界" : "Inspect the mechanism boundary"}</b><p>${language === "zh" ? "核心机制是否真的区别于最近工作和最强简化方法？" : "Is the mechanism genuinely distinct from closest work and the strongest simplification?"}</p></article><article><span>3</span><b>${language === "zh" ? "最后看决定性实验" : "Finish with the decisive test"}</b><p>${language === "zh" ? "Pilot 能否用一个主实验直接证伪核心主张，而不是靠很多次要指标？" : "Can one main experiment directly falsify the thesis rather than relying on many secondary metrics?"}</p></article></div><a class="discussion-system-link" href="system-overview.html">${language === "zh" ? "后台数据流、证据图谱与自动化细节见系统设计页 →" : "See the system-design page for backend data flow, evidence graph, and automation →"}</a></section>`;
+    const s = finalAuditData().summary || d.final_summary || { pass: 0, revise: 0, block: 0, ready: false };
+    return `<section class="panel discussion-review-guide"><div class="idea-panel-heading"><div><h3 id="idea-review-reading-guide">${language === "zh" ? "这页怎么审：只看当前 20 个 FINAL PASS 版本" : "How to review this page: only the current 20 FINAL-PASS versions count"}</h3><p class="section-intro">${language === "zh" ? `R2 只保留来源追溯；原始 R3 也只保留历史诊断。当前门槛是修复后的 R3.1/R3.2 页面版本：其中 14 个在 R3.1 获得 GLM-5.2 与 DeepSeek V4 Pro 双 PASS，另外 6 个完成 R3.2 定向修复后再次获得双 PASS；随后 20 个当前版本全部补做 2026-08-08 primary-source collision recheck。最终结果为 ${s.pass || 0} PASS / ${s.revise || 0} REVISE / ${s.block || 0} BLOCK。两个旧 R3 BLOCK 版本已退出师兄讨论池，仅在历史审计中保留。` : `R2 is provenance only, and the original R3 is retained only as a historical diagnostic. The current gate is the repaired R3.1/R3.2 page-facing version: 14 ideas received unanimous GLM-5.2 + DeepSeek V4 Pro PASS at R3.1; the other 6 were surgically repaired at R3.2 and then received unanimous PASS. All 20 current versions then received a fresh 2026-08-08 primary-source collision recheck. Final result: ${s.pass || 0} PASS / ${s.revise || 0} REVISE / ${s.block || 0} BLOCK. The two historical R3-BLOCK versions are retired from the advisor pool but preserved in the audit archive.`}</p></div><strong>FINAL ${s.pass || 0}P · ${s.revise || 0}R · ${s.block || 0}B</strong></div><div class="discussion-reading-steps"><article><span>1</span><b>${language === "zh" ? "先看最终存活边界" : "Read the surviving claim first"}</b><p>${language === "zh" ? "最近工作已经覆盖了什么？当前版本到底只剩哪一个可证伪的机制差异？" : "What is already covered by the closest work, and what falsifiable mechanism difference actually remains?"}</p></article><article><span>2</span><b>${language === "zh" ? "再核问题—机制对齐" : "Check problem–method alignment"}</b><p>${language === "zh" ? "修订后的机制是否仍在解决原问题，而不是为了过审迭代成另一个问题？" : "Does the repaired mechanism still solve the stated problem rather than drifting merely to survive review?"}</p></article><article><span>3</span><b>${language === "zh" ? "最后看决定性 Pilot" : "Finish with the decisive pilot"}</b><p>${language === "zh" ? "最强简化基线、独立真值、冻结学习和等预算是否能一次实验真正证伪主张？" : "Can the strongest simplification, independent truth, frozen learning, and matched budget genuinely falsify the thesis in one experiment?"}</p></article></div><a class="discussion-system-link" href="system-overview.html">${language === "zh" ? "后台数据流、证据图谱与自动化细节见系统设计页 →" : "See the system-design page for backend data flow, evidence graph, and automation →"}</a></section>`;
   };
 
   window.renderDiscussionReadyPool = function renderDiscussionReadyPool() {
     const d = data();
-    const allIdeas = d.ideas || [];
-    return `<section class="panel discussion-ready-panel"><div class="idea-panel-heading"><div><h3 id="discussion-ready-pool">${language === "zh" ? "正式讨论池：22 个独立 R2 PASS Idea" : "Formal discussion pool: 22 independently R2-PASS ideas"}</h3><p class="section-intro">${language === "zh" ? "不再按 v4/v5 生成版本阅读，而按科学问题组织。每张卡展开后统一回答：目的／问题、重要性、核心思想、核心直觉、成立依据、方法逻辑、相对优势、最近工作与碰撞边界、方法流程、最强 Baseline、决定性 Pilot、独立真值和 Stop。22 个全部保留，没有额外 shortlist。" : "Ideas are organized by scientific question rather than generation version. Every expanded card covers purpose/problem, importance, core idea, intuition, rationale, method logic, comparative advantage, closest work/collision boundary, method flow, strongest baseline, decisive pilot, independent ground truth, and Stop. All 22 remain; there is no extra shortlist."}</p></div><strong>${d.count || 0} PASS</strong></div><div class="discussion-cluster-nav">${clusters.map((cluster) => `<a href="#discussion-cluster-${cluster.id}">${tx(cluster.title)} <span>${orderedClusterIdeas(cluster, allIdeas).length}</span></a>`).join("")}</div><div class="discussion-clusters">${clusters.map((cluster) => { const rows = orderedClusterIdeas(cluster, allIdeas); return `<section class="discussion-cluster" id="discussion-cluster-${cluster.id}"><header><div><h3 data-toc="false">${tx(cluster.title)}</h3><p>${tx(cluster.question)}</p></div><strong>${rows.length}</strong></header><div class="discussion-idea-list">${rows.map(card).join("")}</div></section>`; }).join("")}</div></section>`;
+    const provenance = new Map((d.ideas || []).map((idea) => [idea.id, idea]));
+    const finalIds = new Set((finalAuditData().ideas || []).filter((row) => row.verdict === "pass").map((row) => row.idea_id));
+    const allIdeas = (currentData().ideas || []).filter((row) => finalIds.has(row.idea_id)).map((row) => {
+      const prior = provenance.get(row.idea_id) || {};
+      return { ...prior, id: row.idea_id, title: row.title || prior.title || {}, revision: row.revision || prior.revision || "R3.1", source: prior.source || "r32-final" };
+    });
+    const s = finalAuditData().summary || d.final_summary || { pass: 0, revise: 0, block: 0, ready: false };
+    return `<section class="panel discussion-ready-panel"><div class="idea-panel-heading"><div><h3 id="discussion-ready-pool">${language === "zh" ? "师兄讨论池：20 个 FINAL PASS Idea" : "Advisor discussion pool: 20 FINAL-PASS ideas"}</h3><p class="section-intro">${language === "zh" ? "这里不做 shortlist、优先级或 Top-8。只展示真正通过最终门槛的 20 个当前版本，并继续按科学问题分组帮助阅读。每张卡顶部给出 revision、双模型独立复审与最新碰撞门槛；正文展开问题动机、重要性、核心思想、直觉与成立依据、方法逻辑、持久更新对象、最近工作、最强 baseline、决定性 pilot、独立真值和 stop condition。" : "There is no shortlist, priority tier, or Top-8 here. The page shows only the 20 current versions that passed the final gate, grouped solely by scientific question for readability. Each card starts with revision, two-model independent review, and the fresh collision gate, then expands the problem, importance, core idea, intuition/rationale, method logic, persistent update object, closest work, strongest baseline, decisive pilot, independent truth, and stop condition."}</p></div><strong>${s.pass || 0} FINAL PASS</strong></div><div class="discussion-cluster-nav">${clusters.map((cluster) => `<a href="#discussion-cluster-${cluster.id}">${tx(cluster.title)} <span>${orderedClusterIdeas(cluster, allIdeas).length}</span></a>`).join("")}</div><div class="discussion-clusters">${clusters.map((cluster) => { const rows = orderedClusterIdeas(cluster, allIdeas); return `<section class="discussion-cluster" id="discussion-cluster-${cluster.id}"><header><div><h3 data-toc="false">${tx(cluster.title)}</h3><p>${tx(cluster.question)}</p></div><strong>${rows.length}</strong></header><div class="discussion-idea-list">${rows.map(card).join("")}</div></section>`; }).join("")}</div></section>`;
   };
 })();

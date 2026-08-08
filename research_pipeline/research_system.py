@@ -157,6 +157,10 @@ def build_research_system_state() -> dict[str, Any]:
             "v53_external_pass":idea_discovery_v53["summary"]["pass"],
             "discussion_ready":discussion_portfolio["count"],
             "discussion_target":discussion_portfolio["target"],
+            "final_pass":discussion_portfolio["final_summary"]["pass"],
+            "final_revise":discussion_portfolio["final_summary"]["revise"],
+            "final_block":discussion_portfolio["final_summary"]["block"],
+            "final_ready":discussion_portfolio["ready"],
         },
         "evidence_graph":evidence_graph,
         "collision_engine":collision_engine,
@@ -184,6 +188,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"collision-engine", "pass":state["collision_engine"]["summary"]["pairwise_comparisons"] > 0, "detail":state["collision_engine"]["summary"]["pairwise_comparisons"]},
         {"key":"lineage", "pass":state["lineage"]["summary"]["idea_nodes"] >= 24, "detail":state["lineage"]["summary"]["idea_nodes"]},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0, "detail":state["pilot_registry"]["summary"]},
+        {"key":"final-advisor-gate", "pass":state["summary"]["final_ready"] and state["summary"]["final_pass"] == state["summary"]["discussion_target"] and state["summary"]["final_revise"] == 0 and state["summary"]["final_block"] == 0, "detail":{"pass":state["summary"]["final_pass"],"target":state["summary"]["discussion_target"],"revise":state["summary"]["final_revise"],"block":state["summary"]["final_block"]}},
     ]
     return {"status":"healthy" if all(item["pass"] for item in checks) else "degraded", "checks":checks}
 
@@ -196,6 +201,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if state["evidence_graph"]["summary"]["nodes"] <= state["summary"]["papers"]: errors.append("evidence graph lacks non-paper nodes")
     if state["collision_engine"]["summary"]["pairwise_comparisons"] <= 0: errors.append("collision engine did not run")
     if state["pilot_registry"]["summary"]["phases"] != state["summary"]["passed_ideas"] * 3: errors.append("pilot phase count mismatch")
+    if not state["summary"]["final_ready"] or state["summary"]["final_pass"] != state["summary"]["discussion_target"]: errors.append("final advisor gate not ready")
     return errors
 
 

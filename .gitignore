@@ -11,5 +11,11 @@ NUL
 generated/cache/
 generated/research-data/
 
+# Backend-only model/reviewer intermediates. Public pages consume sanitized final artifacts instead.
+generated/ark-*
+generated/r31-*
+generated/r32-final-ideas.*
+generated/r32-targeted-recheck.*
+
 # Frontend-only Pages build output
 _site/
