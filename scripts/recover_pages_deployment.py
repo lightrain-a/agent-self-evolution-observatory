@@ -23,13 +23,14 @@ from typing import Any
 API = "https://api.github.com"
 API_VERSION = "2026-03-10"
 DEPLOYMENT_RE = re.compile(rb"Created deployment for [0-9a-f]{40}, ID: ([^\s]+)")
+FALLBACK_DEPLOYMENT_RE = re.compile(rb"Created fallback Pages deployment ID: ([^\s]+)")
 FINAL_FAILURES = {
     "deployment_failed",
     "deployment_content_failed",
     "deployment_cancelled",
     "deployment_lost",
 }
-STALE_RUN_CONCLUSIONS = {"failure", "cancelled"}
+STALE_RUN_CONCLUSIONS = {"success", "failure", "cancelled"}
 MAX_STALE_RUNS = 12
 
 
@@ -108,7 +109,11 @@ def deployment_ids_from_run(token: str, repository: str, run_id: str, retries: i
                     joined = b"\n".join(archive.read(name) for name in archive.namelist())
             except zipfile.BadZipFile:
                 joined = body
-            found = {match.decode("utf-8", errors="replace") for match in DEPLOYMENT_RE.findall(joined)}
+            found = {
+                match.decode("utf-8", errors="replace")
+                for pattern in (DEPLOYMENT_RE, FALLBACK_DEPLOYMENT_RE)
+                for match in pattern.findall(joined)
+            }
             if found:
                 print(f"Found {len(found)} Pages deployment ID(s) in run {run_id}.")
                 return found
@@ -121,7 +126,7 @@ def deployment_ids_from_run(token: str, repository: str, run_id: str, retries: i
 def cancel_stale_deployments(token: str, repository: str, source_run_id: str) -> None:
     ids: set[str] = set()
     stale_runs = stale_pages_run_ids(token, repository, source_run_id)
-    print(f"Inspecting {len(stale_runs)} recent failed/cancelled Pages run(s) for stale deployment locks.")
+    print(f"Inspecting {len(stale_runs)} recent completed Pages run(s) for stale deployment locks.")
     for run_id in stale_runs:
         ids.update(deployment_ids_from_run(token, repository, run_id, 18 if run_id == source_run_id else 1))
     for deployment_id in sorted(ids):
@@ -177,6 +182,52 @@ def oidc_token(repository: str) -> str:
     return value
 
 
+def public_roots(repository: str, page_url: str) -> list[str]:
+    roots: list[str] = []
+
+    def add(value: str) -> None:
+        value = value.strip()
+        if not value:
+            return
+        if not value.startswith(("http://", "https://")):
+            value = "https://" + value
+        value = value.rstrip("/") + "/"
+        if value not in roots:
+            roots.append(value)
+
+    add(page_url)
+    try:
+        add(open("CNAME", "r", encoding="utf-8").read().strip())
+    except OSError:
+        pass
+    owner, repo = repository.split("/", 1)
+    add(f"https://{owner}.github.io/{repo}/")
+    return roots
+
+
+def live_build_root(repository: str, page_url: str, build_sha: str) -> str:
+    for root in public_roots(repository, page_url):
+        manifest_url = urllib.parse.urljoin(root, "deployment-manifest.json")
+        separator = "&" if "?" in manifest_url else "?"
+        manifest_url += separator + urllib.parse.urlencode({"sha": build_sha})
+        req = urllib.request.Request(
+            manifest_url,
+            headers={
+                "Accept": "application/json",
+                "Cache-Control": "no-cache",
+                "User-Agent": "agent-evolution-pages-live-verifier",
+            },
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=15) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+            continue
+        if str(payload.get("build_sha") or "") == build_sha:
+            return root
+    return ""
+
+
 def create_deployment(
     token: str,
     repository: str,
@@ -204,7 +255,10 @@ def create_deployment(
         status, body = request(token, "POST", f"/repos/{repository}/pages/deployments", payload)
         response = json_body(body)
         if status == 201:
+            deployment_id = str(response.get("status_url") or "").rstrip("/").split("/")[-1]
             print(f"Created fallback Pages deployment on attempt {attempt}.")
+            if deployment_id:
+                print(f"Created fallback Pages deployment ID: {deployment_id} for {build_sha}.")
             return response
         last_message = str(response.get("message") or body[:500])
         print(f"Create attempt {attempt}/30: HTTP {status}: {last_message}")
@@ -213,7 +267,7 @@ def create_deployment(
     raise RuntimeError(f"Unable to create Pages deployment: {last_message}")
 
 
-def monitor_deployment(token: str, repository: str, deployment: dict[str, Any]) -> str:
+def monitor_deployment(token: str, repository: str, deployment: dict[str, Any], build_sha: str) -> str:
     status_url = str(deployment.get("status_url") or "")
     deployment_id = status_url.rstrip("/").split("/")[-1]
     if not deployment_id:
@@ -230,6 +284,10 @@ def monitor_deployment(token: str, repository: str, deployment: dict[str, Any]) 
         print(f"Pages deployment {deployment_id}: {state or f'HTTP {status}'} ({attempt}/180)")
         if state == "succeed":
             return page_url
+        live_root = live_build_root(repository, page_url, build_sha)
+        if live_root:
+            print(f"Verified live Pages build {build_sha} at {live_root} despite deployment state {state or status}.")
+            return live_root
         if state in FINAL_FAILURES:
             raise RuntimeError(f"Pages deployment ended with {state}")
         time.sleep(10)
@@ -247,7 +305,7 @@ def main() -> int:
     cancel_stale_deployments(token, repository, source_run_id)
     artifact_id = current_artifact_id(token, repository, workflow_run_id)
     deployment = create_deployment(token, repository, artifact_id, build_sha)
-    page_url = monitor_deployment(token, repository, deployment)
+    page_url = monitor_deployment(token, repository, deployment, build_sha)
     output = os.environ.get("GITHUB_OUTPUT", "")
     if output:
         with open(output, "a", encoding="utf-8") as handle:

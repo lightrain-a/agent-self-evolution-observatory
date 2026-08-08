@@ -2,6 +2,8 @@
 """Build the public static site without publishing backend code or private artifacts."""
 from __future__ import annotations
 
+import json
+import os
 import shutil
 from pathlib import Path
 
@@ -64,6 +66,15 @@ def build() -> Path:
             copy_file(source, destination)
             copied.add(destination)
 
+    manifest = {
+        "schema_version": "1.0",
+        "build_sha": os.environ.get("GITHUB_SHA", "local").strip() or "local",
+        "source": "frontend-only-pages-build",
+    }
+    manifest_path = OUTPUT / "deployment-manifest.json"
+    manifest_path.write_text(json.dumps(manifest, separators=(",", ":")) + "\n", encoding="utf-8")
+    copied.add(manifest_path)
+
     generated_output = OUTPUT / "generated"
     generated_source = ROOT / "generated"
     for pattern in GENERATED_PATTERNS:
@@ -80,6 +91,7 @@ def build() -> Path:
         OUTPUT / "app.js",
         OUTPUT / "system-overview-view.js",
         OUTPUT / "discussion-ready-view.js",
+        OUTPUT / "deployment-manifest.json",
         OUTPUT / "generated" / "iclr-low-resource-ideas.js",
         OUTPUT / "generated" / "discussion-ready-ideas.js",
         OUTPUT / "generated" / "current-final-ideas.js",
