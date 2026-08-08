@@ -36,7 +36,7 @@ The hierarchy and recommended reading order are defined centrally in `page-archi
 5. `evaluation.html` — evaluation, safety, governance, benchmarks, environments, and repositories.
 6. `system-overview.html` — technical documentation for the live backend: literature ingestion, the interactive citation/evidence graph, idea generation, R1/R2 review, P0/P1/P2, automation boundaries, and current idea states.
 7. `research-directions.html` — four beginner-level questions, a running example, plain-language explanations of ten stable directions, thirty representative literature cards with one-line methods, and the long-term agenda.
-8. `paper-ideas.html` — a senior-review-oriented ICLR discussion page: three-step reading guide, 22 independently R2-PASS ideas grouped by scientific problem, uniform reviewer cards (problem → mechanism → R2 boundary → strongest alternative → decisive pilot → Stop), and collapsed evidence/lineage plus historical/CVPR archives.
+8. `paper-ideas.html` — a senior-review-oriented ICLR discussion page: three-step reading guide, 22 independently R2-PASS ideas grouped by scientific problem, and fully expanded reviewer cards covering problem, importance, core idea, intuition, rationale, method logic, comparative advantage, closest work/collision boundary, method flow, strongest baseline, decisive pilot, independent truth, and Stop; evidence/lineage plus historical/CVPR archives remain collapsed by default.
 9. `selected-paper.html` — Regression-Gated Self-Evolution problem formulation, matched-budget experiments, execution roadmap, and ICLR review gates.
 10. `bibliography.html` — coverage protocol, interactive maps, exports, and live bibliography.
 

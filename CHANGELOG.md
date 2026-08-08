@@ -4,7 +4,8 @@
 
 - Reorganized `paper-ideas.html` around the senior-review sequence rather than the backend generation chronology.
 - Moved the 22 independently R2-PASS ideas to the primary reading layer and regrouped them into four scientific-problem clusters instead of v4/v5 provenance buckets.
-- Standardized every discussion card to the same decision chain: problem → core mechanism → why it survived R2 → strongest alternative → decisive pilot → Stop.
+- Expanded every discussion card into the full senior-review argument contract: purpose/problem → research importance → core idea → core intuition → rationale → method logic → comparative advantage → closest work/collision boundary → method flow → strongest baseline → decisive pilot → independent ground truth → Stop.
+- Added evidence-grounded fallbacks for v4/v5/v5.x fields, including lineage-based recovery of the original research problem, learning-signal/independent-truth separation, and Chinese localization of the four main-bank R2 findings.
 - Added a compact three-step reading guide and a direct link to `system-overview.html` for backend details.
 - Collapsed experiment-substrate audits, the full R1/R2 banks, v3/v4/v5 repair lineage, network-inspired candidates, historical advisor material, and CVPR follow-ups by default while preserving complete traceability.
 - Reduced the `paper-ideas` page TOC to four chapters and three useful level-3 review nodes; hidden trace/archive headings no longer pollute the sidebar.

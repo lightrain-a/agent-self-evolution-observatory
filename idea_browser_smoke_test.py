@@ -90,7 +90,14 @@ def main() -> None:
           discussionPanel: document.querySelectorAll('.discussion-ready-panel').length,
           discussionClusters: document.querySelectorAll('.discussion-cluster').length,
           discussionCards: document.querySelectorAll('.discussion-idea-card').length,
-          discussionReviewSections: document.querySelectorAll('.discussion-idea-card .discussion-review-grid section').length,
+          argumentFields: document.querySelectorAll('.discussion-argument-grid section').length,
+          methodLogicBlocks: document.querySelectorAll('.discussion-method-logic').length,
+          methodFlows: document.querySelectorAll('.discussion-method-flow').length,
+          methodFlowSteps: document.querySelectorAll('.discussion-method-flow li').length,
+          reviewEvidenceFields: document.querySelectorAll('.discussion-review-grid-three section').length,
+          validationFields: document.querySelectorAll('.discussion-validation-grid section').length,
+          firstR2Finding: document.querySelector('.discussion-review-grid-three section:nth-child(2) p')?.textContent || '',
+          emptyExpandedFields: [...document.querySelectorAll('.discussion-argument-grid p,.discussion-method-logic p,.discussion-method-flow li,.discussion-review-grid-three p,.discussion-validation-grid p')].filter(x=>!(x.textContent||'').trim()).length,
           traceFold: document.querySelectorAll('.review-trace-fold').length,
           traceOpen: document.querySelector('.review-trace-fold')?.open || false,
           openDiscussionCards: document.querySelectorAll('.discussion-idea-card[open]').length,
@@ -110,7 +117,11 @@ def main() -> None:
         };""")
         require((ideas["reviewGuide"], ideas["discussionPanel"], ideas["discussionClusters"], ideas["discussionCards"]) == (1, 1, 4, 22), f"review-first discussion layout is wrong: {ideas['reviewGuide']}/{ideas['discussionPanel']}/{ideas['discussionClusters']}/{ideas['discussionCards']}")
         require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (5, 3, 0), f"paper-ideas TOC should stay compact, got {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
-        require(ideas["discussionReviewSections"] == 88, f"each of 22 discussion ideas must expose four reviewer-decision sections, got {ideas['discussionReviewSections']}")
+        require(ideas["argumentFields"] == 132, f"22 ideas must expose six research-argument fields each, got {ideas['argumentFields']}")
+        require(ideas["methodLogicBlocks"] == 22 and ideas["methodFlows"] == 22 and ideas["methodFlowSteps"] == 88, f"method logic/flow is incomplete: {ideas['methodLogicBlocks']}/{ideas['methodFlows']}/{ideas['methodFlowSteps']}")
+        require(ideas["reviewEvidenceFields"] == 66 and ideas["validationFields"] == 66, f"review or validation fields are incomplete: {ideas['reviewEvidenceFields']}/{ideas['validationFields']}")
+        require("受约束策略改进" in ideas["firstR2Finding"] and "The strongest" not in ideas["firstR2Finding"], f"main-bank R2 finding is not localized: {ideas['firstR2Finding']}")
+        require(ideas["emptyExpandedFields"] == 0, f"expanded senior-review fields contain empty content: {ideas['emptyExpandedFields']}")
         require(ideas["openDiscussionCards"] == 0, "all 22 discussion cards should be collapsed by default for scanability")
         require(ideas["traceFold"] == 1 and ideas["archiveFold"] == 1 and not ideas["traceOpen"] and not ideas["archiveOpen"], "traceability and archive sections must remain collapsed by default")
         require(ideas["v5Main"] == 36, f"expected 36 v5 candidates, got {ideas['v5Main']}")

@@ -1,3 +1,10 @@
+window.REVIEW_FINDING_ZH = {
+  "regression-gated-self-evolution":"在低资源 ICLR 设置下，最强且最清楚的论文边界是把自进化写成受约束策略改进：回归测试与当前任务收益相互隔离，成本严格匹配，每次持久更新都必须经过可审计的 commit／rollback 决策。",
+  "contradiction-preserving-consolidation":"通用记忆巩固已经较拥挤，但收窄后仍有独立边界：在完全相同的存储与检索预算下，用‘保留或删除某条记忆是否会改变下游结论’来因果定义记忆价值，并优化最小的结论改变证据集。这比覆盖率、相似度、矛盾检测或完整历史重访更具体。",
+  "compositional-update-compatibility":"仍存在一个较窄的独立主张：现有工作流搜索和模块组合工作并未直接预测多个持久更新之间的顺序敏感回归。论文必须限定在‘单独有效、已版本化更新的未见组合’上，并证明模型能够预测留出顺序和高阶组合，而不是退化为普通图性能预测。",
+  "update-trust-region":"收窄后的独立边界仍成立：已有工作覆盖参数更新的 trust region、Prompt 小步变异或技能编辑的 held-out gate，但尚未直接定义并验证针对持久非参数 Agent 更新的 occupancy-level trust region，同时联合轨迹、动作、工具路由和记忆检索分布，并检验该距离是否比文本编辑量或当前任务收益更能预测未来回归。"
+};
+
 window.REVIEW_ACTION_ZH = {
   "regression-gated-self-evolution":"在每一轮进化后，以相同的交互、Token、模型调用和训练预算报告持久能力增益与能力回退。",
   "contradiction-preserving-consolidation":"将宽泛的三领域 Pilot 改为固定容量基准，加入可由 Oracle 验证、确实会改变结论的证据，并在相同存储与检索 Token 预算下对比近期记忆巩固方法。",
@@ -36,6 +43,12 @@ window.REVIEW_ACTION_ZH = {
   "recurrent-failure-contract-compilation":"停止作为独立 Idea，将带过期条件的契约验证并入更广义的轨迹到技能或行为契约项目。",
   "change-triggered-regression-exams":"用因果可识别的更新到失败模型替代普通测试选择机制，并证明其具有预测式测试选择无法提供的迁移或覆盖性质。",
   "swap-aware-regression-localization":"将因子替换协议并入模型替换兼容性证书，作为真值标签生成器和评测 Oracle，停止独立推进。"
+};
+
+window.localizedReviewFinding = function localizedReviewFinding(ideaId, review, lang) {
+  if (!review) return "";
+  if (lang === "zh") return review.finding_zh || window.REVIEW_FINDING_ZH[ideaId] || review.finding || "";
+  return review.finding || review.finding_en || review.finding_zh || "";
 };
 
 window.localizedReviewAction = function localizedReviewAction(ideaId, review, lang) {
