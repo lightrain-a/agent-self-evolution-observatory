@@ -14,7 +14,7 @@ from typing import Any
 from .config import StorageSettings
 from .p0_a1 import analyze as analyze_a1, synthetic_rows as synthetic_a1
 from .p0_a2 import analyze as analyze_a2, synthetic_rows as synthetic_a2
-from .p0_alfworld_adapter import run_smoke
+from .p0_alfworld_adapter import run_lightweight_smoke, run_smoke
 from .p0_alfworld_collect import collect_a1, collect_a2
 from .p0_common import (
     CONFIG_DIR,
@@ -299,11 +299,19 @@ def run_smoke_transaction(args: argparse.Namespace) -> dict[str, Any]:
         site.addsitedir(str(args.extra_pythonpath))
         os.environ["P0_EXTRA_SITE"] = str(args.extra_pythonpath)
     os.environ["ALFWORLD_DATA"] = str(args.alfworld_data)
-    rows = run_smoke(args.alfworld_config, args.model_path, "eval_out_of_distribution", 1, "")
-    row = rows[0] if rows else {}
-    passed = bool(row.get("gamefile") and int(row.get("steps") or 0) > 0)
+    row = run_lightweight_smoke(args.alfworld_config, args.model_path, "eval_out_of_distribution")
+    model_probe = row.get("model_probe") or {}
+    passed = bool(
+        row.get("gamefile")
+        and int(row.get("steps") or 0) == 1
+        and not row.get("parser_invalid")
+        and row.get("observation_ready")
+        and model_probe.get("chat_template_ready")
+        and len(model_probe.get("shards") or []) >= 1
+    )
     payload = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
+        "smoke_kind": "lightweight-model-artifact-plus-env-step",
         "status": "pass" if passed else "fail",
         "model_path": str(args.model_path),
         "runtime_contract_hash": readiness["runtime_contract_hash"],
@@ -311,7 +319,12 @@ def run_smoke_transaction(args: argparse.Namespace) -> dict[str, Any]:
         "gamefile": row.get("gamefile", ""),
         "steps": int(row.get("steps") or 0),
         "won": int(row.get("won") or 0),
-        "invalid_choice_rate": float(row.get("invalid_choice_rate") or 0.0),
+        "parser_invalid": bool(row.get("parser_invalid")),
+        "command_count": int(row.get("command_count") or 0),
+        "tokenizer_class": model_probe.get("tokenizer_class", ""),
+        "chat_template_ready": bool(model_probe.get("chat_template_ready")),
+        "shard_probe_count": len(model_probe.get("shards") or []),
+        "shard_probes": model_probe.get("shards") or [],
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

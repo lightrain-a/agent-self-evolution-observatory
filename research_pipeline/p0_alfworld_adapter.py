@@ -274,7 +274,78 @@ def compare_rollouts(before: dict[str, Any], after: dict[str, Any]) -> dict[str,
     }
 
 
+def probe_model_artifacts(model_path: Path) -> dict[str, Any]:
+    from safetensors import safe_open
+    from transformers import AutoTokenizer
+
+    tokenizer = AutoTokenizer.from_pretrained(str(model_path), local_files_only=True)
+    rendered = tokenizer.apply_chat_template(
+        [{"role": "system", "content": "runtime smoke"}, {"role": "user", "content": "choose one action"}],
+        tokenize=False,
+        add_generation_prompt=True,
+    )
+    index_path = model_path / "model.safetensors.index.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    shards = sorted(set((index.get("weight_map") or {}).values()))
+    if not shards:
+        raise RuntimeError("model index exposes no safetensors shards")
+    probes: list[dict[str, Any]] = []
+    for shard in shards:
+        shard_path = model_path / shard
+        with safe_open(str(shard_path), framework="pt", device="cpu") as handle:
+            keys = list(handle.keys())
+            if not keys:
+                raise RuntimeError(f"empty model shard: {shard}")
+            def tensor_size(key: str) -> int:
+                total = 1
+                for dim in handle.get_slice(key).get_shape():
+                    total *= int(dim)
+                return total
+            key = min(keys, key=tensor_size)
+            tensor = handle.get_tensor(key)
+            probes.append({"shard": shard, "tensor": key, "numel": int(tensor.numel())})
+    return {
+        "tokenizer_class": type(tokenizer).__name__,
+        "chat_template_ready": bool(rendered and "assistant" in rendered),
+        "shards": probes,
+    }
+
+
+def run_lightweight_smoke(config_path: Path, model_path: Path, split: str) -> dict[str, Any]:
+    model_probe = probe_model_artifacts(model_path)
+    config = load_config(config_path)
+    env = build_env(config, split)
+    try:
+        obs, info = env.reset()
+        commands = list((info.get("admissible_commands") or [[]])[0])
+        if not commands:
+            raise RuntimeError("ALFWorld smoke exposed no admissible commands")
+        raw = "1"
+        action, invalid = parse_admissible_choice(raw, commands)
+        obs2, scores, dones, info2 = env.step([action])
+        gamefile = str((info.get("extra.gamefile") or [""])[0])
+        won_values = info2.get("won") or [False]
+        return {
+            "gamefile": gamefile,
+            "steps": 1,
+            "action": action,
+            "parser_invalid": bool(invalid),
+            "raw_choice": raw,
+            "score": float(scores[0]),
+            "done": bool(dones[0]),
+            "won": int(bool(won_values[0])),
+            "observation_ready": bool(obs and obs2),
+            "command_count": len(commands),
+            "model_probe": model_probe,
+        }
+    finally:
+        close = getattr(env, "close", None)
+        if callable(close):
+            close()
+
+
 def run_smoke(config_path: Path, model_path: Path, split: str, episodes: int, patch: str, max_steps: int = 1) -> list[dict[str, Any]]:
+    """Full-generation diagnostic kept for manual debugging, not readiness gating."""
     config = load_config(config_path)
     policy = HFAdmissiblePolicy(model_path)
     env = build_env(config, split)

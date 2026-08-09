@@ -52,14 +52,14 @@ An audited setup script is provided but is **not** run by the repository build/t
 bash research_pipeline/setup_p0_runtime.sh
 ```
 
-It installs ALFWorld/TextWorld into `/data/wyt/envs/agent_evolution_p0_site` rather than modifying the existing CUDA environment, appends that target after the working runtime packages, and downloads game/PDDL data to the experiment disk. After setup, rerun `preflight --write-site`, then run exactly one smoke episode:
+It installs ALFWorld/TextWorld into `/data/wyt/envs/agent_evolution_p0_site` rather than modifying the existing CUDA environment, appends that target after the working runtime packages, and downloads game/PDDL data to the experiment disk. After setup, rerun `preflight --write-site`, then run exactly one lightweight runtime smoke:
 
 ```bash
 /data/wyt/envs/vlm_test/bin/python -m research_pipeline.p0_runner smoke
 python -m research_pipeline.p0_runner preflight --write-site
 ```
 
-The smoke artifact is `/data/wyt/agent-self-evolution-observatory/p0-runtime-smoke.json`. It proves the model/environment/action-parser chain can execute one admissible action and one environment step; task success is not required. The artifact is bound to a runtime contract hash covering the adapter source, ALFWorld config, selected Python/model paths, and detected torch/transformers/alfworld/textworld versions, so relevant code or dependency changes automatically invalidate stale smoke results. Smoke and formal P0 share one exclusive execution lock, preventing transport retries from launching duplicate model loads. `collect` stays locked until the current contract has a PASS smoke artifact.
+The smoke artifact is `/data/wyt/agent-self-evolution-observatory/p0-runtime-smoke.json`. Readiness smoke is deliberately lightweight: it validates the real Qwen tokenizer/chat template, reads one small tensor from every indexed safetensors shard, then executes an actual ALFWorld OOD `reset → admissible-command parse → env.step`. It does **not** load the full 7B model or claim that generation works. Full model loading and generation are validated by the first formal P0 transaction; any failure leaves the run `failed` and cannot create a Pilot Registry result. The smoke artifact is bound to a runtime contract hash covering the adapter source, ALFWorld config, selected Python/model paths, and detected torch/transformers/alfworld/textworld versions, so relevant code or dependency changes automatically invalidate stale smoke results. Smoke and formal P0 share one exclusive execution lock, preventing transport retries from launching duplicate model loads. `collect` stays locked until the current contract has a PASS smoke artifact.
 
 When formal collection starts, the runner writes `/data/wyt/agent-self-evolution-observatory/p0-execution-state.json` with `running`, then moves through `collected` to `registered` or records `failed`. This marker is operational state only and is never treated as a scientific P0 result; only validated Pilot Registry results populate measured effects.
 
@@ -111,7 +111,7 @@ python -m research_pipeline.p0_runner analyze update-trust-region \
 
 For manual debugging, analysis may run without registration. A real registry write additionally requires `--cost <run>/cost.json --manifest <run>/manifest.json --register`; cost and provenance are hard-validated before the registry write.
 
-Once ALFWorld package/data **and the real smoke episode** pass, the preferred formal A-1 command is the transactional `execute` path:
+Once ALFWorld package/data **and the lightweight runtime smoke** pass, the preferred formal A-1 command is the transactional `execute` path:
 
 ```bash
 export ALFWORLD_DATA=/data/wyt/agent-self-evolution-observatory/alfworld
@@ -163,7 +163,7 @@ Rules:
 
 The frozen P0 uses **8 discovery + 8 calibration + 12 hidden sequences**, at most four update rounds per task, and the same **2 regression probes** per round. The collection plan is 366 environment episodes under a 420-episode cap.
 
-Once runtime preflight and the real smoke episode pass, the preferred formal A-2 command is:
+Once runtime preflight and the lightweight runtime smoke pass, the preferred formal A-2 command is:
 
 ```bash
 export ALFWORLD_DATA=/data/wyt/agent-self-evolution-observatory/alfworld
