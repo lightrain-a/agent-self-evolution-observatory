@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "code_commit": "917b5ad0a10ceeacbbf2cd7ef9da149851409252",
+  "code_commit": "13691c28a834f59bde810e8d0d9db172c4bad9a6",
   "environment_ready": false,
   "launch_ready": false,
   "blockers": [
@@ -25,7 +25,7 @@
     {
       "name": "NVIDIA A100-SXM4-80GB",
       "memory_total_mib": 81920,
-      "memory_free_mib": 49128
+      "memory_free_mib": 48786
     }
   ],
   "model": {
@@ -52,7 +52,7 @@
     "p0_execution_started": false
   },
   "data_root": "/data/wyt/agent-self-evolution-observatory",
-  "data_disk_free_gib": 9896.7,
+  "data_disk_free_gib": 9872.4,
   "supported_p0": [
     "budgeted-evolution-controller",
     "update-trust-region"
