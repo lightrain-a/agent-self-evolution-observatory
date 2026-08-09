@@ -949,6 +949,90 @@ function renderIclrIdeaBank() {
   const earlyRejected = (bank.early_rejected || []).map((item) => `<li><b>${esc(item.title)}</b><span>${esc(item.reason)}</span></li>`);
   return `<section class="panel cvpr-bank-panel iclr-bank-panel"><div class="idea-panel-heading"><div><h3 id="iclr-low-resource-bank">${language === "zh" ? "ICLR-first 低资源 Agent 自进化 Idea Bank" : "ICLR-first low-resource agent self-evolution idea bank"}</h3><p class="section-intro">${language === "zh" ? "自动后端先用七维 Reviewer 检查真实持续进化、机制明确性、信用分配、稳定性、圈外泛化、反馈完整性和等预算复现；每个通过项必须覆盖至少两个任务域，并使用开放权重完成主结果。" : "The automatic backend reviews reality of evolution, mechanistic specificity, credit assignment, stability, out-of-loop generalization, feedback integrity, and matched-budget reproducibility. Every passed idea covers at least two domains and uses open weights for the primary result."}</p></div><strong>${ideas.length} ${language === "zh" ? "个 R1 通过项" : "R1-passed ideas"}</strong></div><div class="grid cvpr-bank-stats iclr-bank-stats"><div class="stat"><b>${bank.summary.raw_candidates}</b><span>${language === "zh" ? "个原始候选" : "raw candidates"}</span></div><div class="stat"><b>${ideas.length}</b><span>${language === "zh" ? "个七审通过" : "passed seven reviews"}</span></div><div class="stat"><b>${bank.summary.blocked_after_structured_review || 0}</b><span>${language === "zh" ? "个结构化阻断" : "structured blocked"}</span></div><div class="stat"><b>${bank.summary.early_rejected}</b><span>${language === "zh" ? "个前置淘汰" : "early rejected"}</span></div><div class="stat"><b>${bank.summary.tracks}</b><span>${language === "zh" ? "个机制轨道" : "mechanism tracks"}</span></div><div class="stat"><b>${bank.summary.project_web_gpt_reviewed || 0}/${ideas.length}</b><span>${language === "zh" ? "Oracle／网页版 GPT 已复核" : "Oracle / web-GPT reviewed"}</span></div></div><div class="external-review-progress ${bank.summary.project_web_gpt_complete ? "complete" : "pending"}"><b>${language === "zh" ? "外部二审" : "External second review"}</b><span>${bank.summary.project_web_gpt_complete ? (language === "zh" ? `26 个首轮通过项已全部完成独立复核：${bank.summary.external_pass || 0} PASS、${bank.summary.external_revise || 0} REVISE、${bank.summary.external_block || 0} BLOCK。当前列表按二审结论排序，并保留 R1 原排名。` : `All 26 first-round passes have independent reviews: ${bank.summary.external_pass || 0} PASS, ${bank.summary.external_revise || 0} REVISE, and ${bank.summary.external_block || 0} BLOCK. The list is ordered by R2 verdict while preserving the R1 rank.`) : (language === "zh" ? `已完成 ${bank.summary.project_web_gpt_reviewed || 0} 个，待复核 ${bank.summary.project_web_gpt_pending ?? ideas.length} 个；结果只在 Oracle 调用 Agent 项目网页版 ChatGPT 后计入。` : `${bank.summary.project_web_gpt_reviewed || 0} complete and ${bank.summary.project_web_gpt_pending ?? ideas.length} pending; only Oracle-mediated Agent-project web-GPT results count.`)}</span></div><div class="cvpr-filter-bar iclr-filter-bar"><div class="cvpr-track-filters">${trackButtons.map(([key,label],index) => `<button class="cvpr-filter-btn iclr-filter-btn ${index === 0 ? "active" : ""}" data-iclr-filter-type="track" data-iclr-filter-value="${esc(key)}">${esc(label)}</button>`).join("")}</div><div class="cvpr-budget-filters"><button class="cvpr-filter-btn iclr-filter-btn active" data-iclr-filter-type="budget" data-iclr-filter-value="48">≤48 GPUh</button><button class="cvpr-filter-btn iclr-filter-btn" data-iclr-filter-type="budget" data-iclr-filter-value="32">≤32 GPUh</button><button class="cvpr-filter-btn iclr-filter-btn" data-iclr-filter-type="budget" data-iclr-filter-value="24">≤24 GPUh</button></div></div><div class="advisor-table-scroll"><table class="matrix cvpr-top-table iclr-top-table"><thead><tr><th>${language === "zh" ? "R2 排序" : "R2 rank"}</th><th>Idea</th><th>${language === "zh" ? "二审" : "R2 verdict"}</th><th>${language === "zh" ? "学习问题" : "Learning problem"}</th><th>${language === "zh" ? "更新机制" : "Update mechanism"}</th><th>${language === "zh" ? "任务域" : "Domains"}</th><th>${language === "zh" ? "预算" : "Budget"}</th><th>${language === "zh" ? "R1 优先值" : "R1 priority"}</th></tr></thead><tbody>${topRows}</tbody></table></div><div id="iclr-idea-list" class="cvpr-idea-list iclr-idea-list">${ideas.map((idea,index) => `<div id="iclr-${esc(idea.id)}">${renderIclrIdeaCard(idea,index)}</div>`).join("")}</div><details class="cvpr-rejected"><summary>${language === "zh" ? `查看 ${(bank.summary.early_rejected || 0) + (bank.summary.blocked_after_structured_review || 0)} 个阻断／淘汰方向` : `See ${(bank.summary.early_rejected || 0) + (bank.summary.blocked_after_structured_review || 0)} blocked/rejected directions`}</summary><ul>${[...structuredBlocked,...earlyRejected].join("")}</ul></details></section>`;
 }
+function humanReviewData() {
+  return window.HUMAN_REVIEW_IDEA_MAP || {review_date:"",status_order:[],status_labels:{},groups:[],ideas:{}};
+}
+function humanReviewStatusLabel(status) {
+  const row = humanReviewData().status_labels?.[status] || {zh:status,en:status};
+  return textOf(row);
+}
+function humanReviewStatusTone(status) {
+  if (status === "p0-ready") return "ready";
+  if (status === "method-redesign") return "redesign";
+  return "paused";
+}
+function renderHumanReviewedIdeaCard(idea, meta, index) {
+  const budget = idea.budget || {};
+  const intuition = textOf(idea.core_intuition || idea.rationale || {});
+  const historicalVerdict = String(idea.external_verdict || "pending").toUpperCase();
+  const tone = humanReviewStatusTone(meta.status);
+  const code = meta.code || idea.id;
+  return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}" ${index < 2 ? "open" : ""}>
+    <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(idea.title)}</b><small>${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(meta.status))}</span><p>${textOf(idea.purpose)}</p></div></summary>
+    <div class="human-idea-body">
+      <section class="human-feedback-box"><h4 data-toc="false">${language === "zh" ? "当前人工意见" : "Current human review"}</h4><p>${textOf(meta.feedback)}</p></section>
+      <div class="human-core-grid">
+        <section><h4 data-toc="false">${language === "zh" ? "学习问题" : "Learning problem"}</h4><p>${textOf(idea.purpose)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "核心直觉（当前版）" : "Core intuition (current)"}</h4><p>${esc(intuition)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "核心方法" : "Core method"}</h4><p>${textOf(idea.core_idea)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "方法逻辑" : "Method logic"}</h4><p>${textOf(idea.method_logic)}</p></section>
+      </div>
+      <div class="human-evidence-grid">
+        <section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${textOf(idea.importance)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "最近工作与碰撞边界" : "Nearest work / collision"}</h4><p>${textOf(idea.collision_boundary)}</p><div class="cvpr-chip-row">${(idea.nearest_work || []).map((name) => `<span>${esc(name)}</span>`).join("")}</div></section>
+        <section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${textOf(idea.strongest_baseline)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "当前实验预算" : "Current pilot budget"}</h4><p>${budget.max_gpus || 0} GPU · ${budget.gpu_hours || 0}h · ${budget.wall_days || 0} ${language === "zh" ? "天" : "days"}</p><p class="cvpr-stop"><b>Stop:</b> ${textOf(idea.stop_condition)}</p></section>
+      </div>
+    </div>
+  </details>`;
+}
+function renderDiscussedIdeaBank() {
+  const bank = iclrIdeaBank();
+  const review = humanReviewData();
+  const byId = new Map((bank.passed_ideas || []).map((idea) => [idea.id, idea]));
+  const statuses = review.status_order || ["p0-ready","method-redesign","paused-merged"];
+  const all = Object.entries(review.ideas || {}).map(([id,meta]) => ({id,meta,idea:byId.get(id)})).filter((row) => row.idea);
+  const counts = Object.fromEntries(statuses.map((status) => [status,all.filter((row) => row.meta.status === status).length]));
+  const groups = (review.groups || []).map((group) => {
+    const rows = all.filter((row) => row.meta.group === group.id).sort((a,b) => String(a.meta.code).localeCompare(String(b.meta.code),undefined,{numeric:true}));
+    const statusBlocks = statuses.map((status) => {
+      const subset = rows.filter((row) => row.meta.status === status);
+      if (!subset.length) return "";
+      return `<div class="human-status-block"><div class="human-status-heading human-status-${humanReviewStatusTone(status)}"><b>${esc(humanReviewStatusLabel(status))}</b><span>${subset.length}</span></div><div class="human-idea-list">${subset.map((row,index) => renderHumanReviewedIdeaCard(row.idea,row.meta,index)).join("")}</div></div>`;
+    }).join("");
+    return `<section class="human-science-group" id="discussed-group-${esc(group.id.toLowerCase())}"><header><span>${esc(group.id)}</span><div><h3>${textOf(group.title)}</h3><p>${textOf(group.question)}</p></div><strong>${rows.length}</strong></header>${statusBlocks}</section>`;
+  }).join("");
+  return `<section class="panel human-review-overview"><div class="idea-panel-heading"><div><b class="human-overview-kicker">H1 · ${esc(review.review_date || "2026-08-09")}</b><p class="section-intro">${language === "zh" ? "这一章只按科学问题和当前成熟度组织今天已经人工讨论过的 Idea。A-1、B-1 等编号是新的组内稳定编号；历史 R1/R2/R3/v5 等批次仅保留为来源元数据，不参与前端分类。" : "This chapter organizes already-discussed ideas only by scientific question and current maturity. Codes such as A-1 and B-1 are the new stable within-group identifiers; historical R1/R2/R3/v5 rounds remain provenance metadata rather than frontend categories."}</p></div><strong>${all.length} ${language === "zh" ? "个已讨论" : "discussed"}</strong></div><div class="human-review-stats">${statuses.map((status) => `<div class="human-stat human-stat-${humanReviewStatusTone(status)}"><b>${counts[status] || 0}</b><span>${esc(humanReviewStatusLabel(status))}</span></div>`).join("")}</div></section>${groups}`;
+}
+function supplementalGroupId(idea) {
+  const key = `${idea.idea_id || idea.id || ""} ${textOf(idea.title || {})}`.toLowerCase();
+  if (/world|embodied|recovery|transition.*state/.test(key)) return "F";
+  if (/workflow|api|permission|provider|compiler|contract|tool|privilege|swap/.test(key)) return "E";
+  if (/curriculum|exam|task-generation|challenge/.test(key)) return "D";
+  if (/evaluator|rubric|reward|judge|correction|critic/.test(key)) return "C";
+  if (/memory|skill|applicability|retrieval|consolidat|lesson/.test(key)) return "B";
+  return "A";
+}
+function renderSupplementalIdeaCard(row) {
+  const idea = row.idea;
+  const id = idea.idea_id || idea.id || "candidate";
+  const source = row.source;
+  const title = textOf(idea.title || {});
+  const problem = textOf(idea.purpose || idea.problem || {});
+  const method = textOf(idea.core_idea || {});
+  const sourceLabel = source === "final" ? `${idea.revision || "R3"} · FINAL PASS` : `${language === "zh" ? "网络灵感" : "internet-inspired"} · ${String(idea.external_verdict || idea.final_status || "pending").toUpperCase()}`;
+  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${language === "zh" ? "新增候选" : "new candidate"}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div><section><b>${language === "zh" ? "当前方法" : "Current method"}</b><p>${esc(method || textOf(idea.hypothesis || {}))}</p></section><section><b>${language === "zh" ? "当前用途" : "Current role"}</b><p>${language === "zh" ? "尚未并入第一章，也暂不占 A-1/B-1 等正式编号。下一轮先判断是合并进已有科学问题，还是作为真正独立的新 Idea 保留。" : "Not yet merged into Chapter 1 and does not yet consume an A-1/B-1 style permanent code. The next audit decides whether it strengthens an existing scientific problem or survives as a genuinely independent idea."}</p></section></div></details>`;
+}
+function renderNewIdeaCandidates() {
+  const bankIds = new Set((iclrIdeaBank().passed_ideas || []).map((idea) => idea.id));
+  const finalIdeas = (window.CURRENT_FINAL_IDEAS?.ideas || []).filter((idea) => !bankIds.has(idea.idea_id)).map((idea) => ({source:"final",idea}));
+  const inspired = window.MACHINE_SCHOOL_IDEAS || {};
+  const inspiredRows = [...(inspired.passed_ideas || []),...(inspired.revise_ideas || [])].filter((idea) => String(idea.external_verdict || "pending").toLowerCase() !== "block").map((idea) => ({source:"inspired",idea}));
+  const seen = new Set();
+  const rows = [...finalIdeas,...inspiredRows].filter((row) => { const id=row.idea.idea_id || row.idea.id; if (!id || seen.has(id)) return false; seen.add(id); return true; });
+  const groups = humanReviewData().groups || [];
+  return `<section class="panel supplemental-overview"><div class="idea-panel-heading"><div><p class="section-intro">${language === "zh" ? "这里仅放尚未完成当前人工讨论的候选。它们来自已有的高质量自动修订版本和网络灵感扩展，但前端不按批次分类；下一步统一做 merge audit，能强化第一章的就吸收进去，真正独立的才获得正式组内编号。" : "This section contains only candidates not yet covered by the current human discussion. They come from high-quality automated repairs and the internet-inspired expansion, but are not grouped by generation round. The next merge audit will absorb useful methods into Chapter 1 and assign permanent group codes only to genuinely independent ideas."}</p></div><strong>${rows.length} ${language === "zh" ? "个待讨论" : "to review"}</strong></div></section>${groups.map((group) => { const subset=rows.filter((row)=>supplementalGroupId(row.idea)===group.id); if(!subset.length) return ""; return `<section class="supplemental-group" id="new-group-${esc(group.id.toLowerCase())}"><header><span>${esc(group.id)}</span><div><h3>${textOf(group.title)}</h3><p>${language === "zh" ? "待判断：合并进第一章，还是形成新的独立 Idea。" : "Pending decision: merge into Chapter 1 or survive as a new standalone idea."}</p></div><strong>${subset.length}</strong></header><div class="supplemental-list">${subset.map(renderSupplementalIdeaCard).join("")}</div></section>`; }).join("")}`;
+}
 function renderCvprFollowupArchive() {
   return `<details class="panel cvpr-followup-archive"><summary><div><b>${language === "zh" ? "CVPR 后续视觉专门化池" : "CVPR follow-up visual-specialization bank"}</b><span>${language === "zh" ? "保留原视觉、视频、生成和 VLA Idea；不再作为当前主投入口。" : "Preserves the visual, video, generation, and VLA ideas; no longer the primary submission view."}</span></div></summary><div class="cvpr-followup-body">${renderPublishedExperimentAudit()}${renderCvprLowResourceBank()}</div></details>`;
 }
@@ -1033,15 +1117,10 @@ function renderCvprLowResourceBank() {
 }
 
 function renderIdeaPortfolio(config) {
-  const ideas = [...portfolioIdeas()].sort((a,b) => a.rank - b.rank);
   const chapters = pageArchitecture("paper-ideas").chapters || [];
-  const shortlist = (ideaPipelineMeta().advisorShortlist || []).map(ideaByName).filter(Boolean);
-  const reviewGuide = `${window.renderDiscussionReviewGuide ? window.renderDiscussionReviewGuide() : ""}${renderIclrReviewDimensions()}`;
-  const finalPool = `${window.renderDiscussionReadyPool ? window.renderDiscussionReadyPool() : ""}`;
-  const reviewTrace = `<details class="panel review-trace-fold"><summary><div><b>${language === "zh" ? "展开审查证据、实验基座与生成修订历史" : "Open review evidence, experiment substrates, and generation/repair history"}</b><span>${language === "zh" ? "默认折叠；只在需要追问某个 PASS 为什么成立时查看" : "Collapsed by default; open only when tracing why a PASS survived"}</span></div></summary><div class="review-trace-body">${renderIclrExperimentAudit()}${renderIclrIdeaBank()}${window.renderIdeaDiscoveryV5 ? window.renderIdeaDiscoveryV5() : ""}${window.renderIdeaDiscoveryV4 ? window.renderIdeaDiscoveryV4() : ""}${window.renderSolutionFirstIdeas ? window.renderSolutionFirstIdeas() : ""}${window.renderMachineSchoolIdeas ? window.renderMachineSchoolIdeas() : ""}${renderSemanticScholarStatus()}${renderIdeaBackendArchitecture()}${renderResearchSystemState()}${renderIdeaOperators()}${(config.sections || []).map((section,index) => renderSectionForPage(section,index,pageId,"idea-selection-section",3)).join("")}</div></details>`;
-  const historicalBoard = `${renderAdvisorBoard(shortlist)}${renderShortlistDossiers(shortlist)}`;
-  const archive = `<details class="panel review-archive-fold"><summary><div><b>${language === "zh" ? "展开历史导师板、CVPR 后续与完整旧 Idea 归档" : "Open historical advisor board, CVPR follow-ups, and legacy idea archive"}</b><span>${language === "zh" ? "仅用于追溯；历史排序与 Top-8 导航不参与当前 20 个 FINAL PASS 的师兄讨论" : "For traceability only; historical rankings and Top-8 navigation are not part of the current 20 FINAL-PASS discussion"}</span></div></summary><div class="review-archive-body">${historicalBoard}${renderCvprFollowupArchive()}${renderCandidateArchive(ideas)}</div></details>`;
-  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderCustomChapter(chapters[0],0,reviewGuide)}${renderCustomChapter(chapters[1],1,finalPool)}${renderCustomChapter(chapters[2],2,reviewTrace)}${renderCustomChapter(chapters[3],3,archive)}`;
+  const discussed = renderDiscussedIdeaBank();
+  const newIdeas = renderNewIdeaCandidates();
+  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderCustomChapter(chapters[0],0,discussed)}${renderCustomChapter(chapters[1],1,newIdeas)}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;

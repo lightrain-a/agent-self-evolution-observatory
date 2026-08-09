@@ -136,7 +136,7 @@ def main() -> None:
         "domains": ["multimodal-reasoning", "digital-interaction", "physical-world"],
         "evaluation": ["validity-safety", "tasks-benchmarks", "reproducibility"],
         "research-directions": ["orientation", "landscape", "direction-clusters", "long-term-agenda"],
-        "paper-ideas": ["review-reading", "discussion-pool", "review-trace", "historical-archive"],
+        "paper-ideas": ["discussed-ideas", "new-ideas"],
         "selected-paper": ["problem-scope", "evidence-experiments", "narrative-execution", "review-gates"],
         "bibliography": ["coverage-protocol", "ranking-reading", "field-maps", "search-corpus"],
     }
@@ -206,25 +206,14 @@ def main() -> None:
     system_script_order = [
         idea_page.find('src="generated/iclr-low-resource-ideas.js"'),
         idea_page.find('src="generated/machine-school-inspired-ideas.js"'),
-        idea_page.find('src="generated/discussion-ready-ideas.js"'),
-        idea_page.find('src="generated/idea-discovery-v5.js"'),
-        idea_page.find('src="generated/idea-discovery-v51.js"'),
-        idea_page.find('src="generated/idea-discovery-v52.js"'),
-        idea_page.find('src="generated/idea-discovery-v53.js"'),
-        idea_page.find('src="generated/idea-discovery-v4.js"'),
-        idea_page.find('src="generated/idea-discovery-v3.js"'),
-        idea_page.find('src="generated/idea-discovery-v31.js"'),
-        idea_page.find('src="review-localizations.js"'),
-        idea_page.find('src="discussion-ready-view.js"'),
-        idea_page.find('src="idea-discovery-v5-view.js"'),
-        idea_page.find('src="idea-discovery-v4-view.js"'),
-        idea_page.find('src="solution-first-ideas-view.js"'),
-        idea_page.find('src="machine-school-ideas-view.js"'),
-        idea_page.find('src="generated/research-system-state.js"'),
+        idea_page.find('src="idea-human-review-data.js"'),
+        idea_page.find('src="generated/current-final-ideas.js"'),
+        idea_page.find('src="content-idea-portfolio.js"'),
+        idea_page.find('src="page-architecture-data.js"'),
         idea_page.find('src="app.js"'),
     ]
     if any(position < 0 for position in system_script_order) or system_script_order != sorted(system_script_order):
-        fail("paper ideas page must load all idea banks, localizations, and renderers before the research-system state and app.js")
+        fail("paper ideas page must load the human-review idea data and current supplemental candidates before app.js")
     state_path = ROOT / "generated" / "research-system-state.json"
     if not state_path.exists():
         fail("research-system-state.json is missing")
@@ -336,7 +325,7 @@ def main() -> None:
         if (summary.get("children"), summary.get("reviewed"), summary.get("pass")) != expected:
             fail(f"unexpected repair-round summary for {filename}: {summary}")
     discussion = json.loads((ROOT / "generated" / "discussion-ready-ideas.json").read_text(encoding="utf-8"))
-    if (discussion.get("count"), discussion.get("target"), discussion.get("remaining"), discussion.get("ready")) != (22, 20, 0, True):
+    if (discussion.get("count"), discussion.get("target"), discussion.get("remaining"), discussion.get("ready")) != (20, 20, 0, True):
         fail(f"strict discussion-ready portfolio has not reached target: {discussion}")
 
     discovery_v3 = json.loads((ROOT / "generated" / "idea-discovery-v3.json").read_text(encoding="utf-8"))
@@ -384,7 +373,7 @@ def main() -> None:
     if any(position < 0 for position in system_positions) or system_positions != sorted(system_positions):
         fail("system overview must load live literature, system state, both idea banks, and its renderer before app.js")
     system_view = (ROOT / "system-overview-view.js").read_text(encoding="utf-8")
-    for marker in ("renderSystemDesign", "renderCurrentIdeas", "renderLiveArchitecture", "renderEvidenceGraphPanel", "bindEvidenceGraphExplorer", "renderDataContracts", "renderAutomationBoundary", "system-boundary-card", "system-artifact-table", "paper-ideas.html#iclr-low-resource-bank", "paper-ideas.html#machine-school-inspired-ideas"):
+    for marker in ("renderSystemDesign", "renderCurrentIdeas", "renderLiveArchitecture", "renderEvidenceGraphPanel", "bindEvidenceGraphExplorer", "renderDataContracts", "renderAutomationBoundary", "system-boundary-card", "system-artifact-table", "paper-ideas.html#discussed-ideas", "paper-ideas.html#new-ideas"):
         if marker not in system_view:
             fail(f"system overview renderer is missing {marker}")
     system_content = (ROOT / "content-system-overview.js").read_text(encoding="utf-8")
