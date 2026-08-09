@@ -58,6 +58,11 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(registry["ideas"], 26)
         self.assertEqual(registry["phases"], 78)
         self.assertEqual(registry["invalid_result_files"], 0)
+        self.assertEqual(registry["invalid_approval_files"], 0)
+        self.assertEqual(registry["p0_authorized"], 2)
+        self.assertEqual(registry["p1_authorized"], 0)
+        self.assertTrue(self.state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"])
+        self.assertTrue(self.state["pilot_registry"]["policy"]["p0_pass_requires_explicit_human_approval_before_p1"])
 
     def test_repair_queue_contains_structured_blocks(self) -> None:
         queue = self.state["repair_queue"]

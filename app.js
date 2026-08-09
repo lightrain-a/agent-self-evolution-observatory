@@ -1251,11 +1251,57 @@ function renderCvprLowResourceBank() {
   return `<section class="panel cvpr-bank-panel"><div class="idea-panel-heading"><div><h3 id="cvpr-low-resource-bank">${language === "zh" ? "CVPR 低资源自审查 Idea Bank" : "Self-reviewed low-resource CVPR idea bank"}</h3><p class="section-intro">${language === "zh" ? "先由五类程序化 Reviewer 检查新颖性、视觉不可替代性、科学成立性、主表证据和低资源可行性；优先候选再由你指定 agent 项目中的网页版 GPT 严格复核。仅展示未被阻断、使用公开资产且 Pilot 不超过 2 张 GPU／48 GPU 小时的候选。" : "Five programmatic reviewers first check novelty, visual necessity, scientific validity, decisive evidence, and low-resource feasibility; priority candidates are then reviewed by web GPT inside the designated agent project. Only unblocked candidates using public assets within 2 GPUs / 48 GPU-hours are shown."}</p></div><strong>${ideas.length} ${language === "zh" ? "个通过项" : "passed ideas"}</strong></div><div class="grid cvpr-bank-stats"><div class="stat"><b>${bank.summary.raw_candidates}</b><span>${language === "zh" ? "个初始候选" : "raw candidates"}</span></div><div class="stat"><b>${ideas.length}</b><span>${language === "zh" ? "个五审通过" : "passed five reviews"}</span></div><div class="stat"><b>${bank.summary.blocked_after_structured_review || 0}</b><span>${language === "zh" ? "个结构化阻断" : "structured blocked"}</span></div><div class="stat"><b>${bank.summary.early_rejected}</b><span>${language === "zh" ? "个前置淘汰" : "early rejected"}</span></div><div class="stat"><b>${bank.summary.tracks}</b><span>${language === "zh" ? "个 CVPR 方向" : "CVPR tracks"}</span></div></div><div class="cvpr-filter-bar"><div class="cvpr-track-filters">${trackButtons.map(([key,label],index) => `<button class="cvpr-filter-btn ${index === 0 ? "active" : ""}" data-cvpr-filter-type="track" data-cvpr-filter-value="${esc(key)}">${esc(label)}</button>`).join("")}</div><div class="cvpr-budget-filters"><button class="cvpr-filter-btn active" data-cvpr-filter-type="budget" data-cvpr-filter-value="48">≤48 GPUh</button><button class="cvpr-filter-btn" data-cvpr-filter-type="budget" data-cvpr-filter-value="24">≤24 GPUh</button><button class="cvpr-filter-btn" data-cvpr-filter-type="budget" data-cvpr-filter-value="16">≤16 GPUh</button></div></div><div class="advisor-table-scroll"><table class="matrix cvpr-top-table"><thead><tr><th>${language === "zh" ? "排序" : "Rank"}</th><th>Idea</th><th>${language === "zh" ? "问题" : "Problem"}</th><th>${language === "zh" ? "机制" : "Mechanism"}</th><th>${language === "zh" ? "预算" : "Budget"}</th><th>${language === "zh" ? "优先值" : "Priority"}</th></tr></thead><tbody>${topRows}</tbody></table></div><div id="cvpr-idea-list" class="cvpr-idea-list">${ideas.map((idea,index) => `<div id="cvpr-${esc(idea.id)}">${renderCvprIdeaCard(idea,index)}</div>`).join("")}</div><details class="cvpr-rejected"><summary>${language === "zh" ? `查看 ${(bank.summary.early_rejected || 0) + (bank.summary.blocked_after_structured_review || 0)} 个被阻断／淘汰方向及原因` : `See ${(bank.summary.early_rejected || 0) + (bank.summary.blocked_after_structured_review || 0)} blocked/rejected directions and reasons`}</summary><ul>${rejected}</ul></details></section>`;
 }
 
+function p0ExperimentPlan() {
+  return window.P0_EXPERIMENT_PLAN || {summary:{},policy:{},ideas:[]};
+}
+function p0StatusMeta(status) {
+  const map = {
+    ready:{tone:"ready",zh:"P0 可准备",en:"P0 ready"},
+    "collision-recheck":{tone:"check",zh:"先查直接碰撞",en:"Collision recheck first"},
+    "scenario-check":{tone:"hold",zh:"先确认真实场景",en:"Scenario confirmation first"},
+  };
+  return map[status] || {tone:"hold",zh:"暂不运行",en:"Not executable"};
+}
+function renderP0ExperimentBoard() {
+  const plan = p0ExperimentPlan();
+  const summary = plan.summary || {};
+  const policy = plan.policy || {};
+  const cards = (plan.ideas || []).map((item) => {
+    const status = p0StatusMeta(item.status);
+    const resource = item.resource || {};
+    const prerequisites = (item.prerequisites || []).map((row) => `<li>${textOf(row)}</li>`).join("");
+    const outputs = (item.outputs || []).map((name) => `<span>${esc(name)}</span>`).join("");
+    return `<details class="p0-plan-card p0-tone-${status.tone}" data-p0-status="${esc(item.status || "")}" data-p0-authorized="${item.execution_authorized ? "1" : "0"}">
+      <summary><span class="p0-plan-code">${esc(item.code || "")}</span><div class="p0-plan-title"><b>${textOf(item.title)}</b><small>${language === "zh" ? status.zh : status.en}</small></div><p>${textOf(item.question)}</p><div class="p0-plan-budget"><b>${resource.max_gpus || 0} GPU · ≤${resource.gpu_hours_cap || 0} GPUh</b><span>${language === "zh" ? `最多 ${resource.episode_cap || 0} 次任务执行` : `≤${resource.episode_cap || 0} task episodes`}</span></div><div class="p0-plan-next">${textOf(item.next_action)}</div></summary>
+      <div class="p0-plan-body">
+        ${prerequisites ? `<section class="p0-prerequisite"><b>${language === "zh" ? "运行前必须先完成" : "Must clear before execution"}</b><ul>${prerequisites}</ul></section>` : ""}
+        <div class="p0-plan-grid">
+          <section><b>${language === "zh" ? "这轮刻意不做什么" : "Deliberately out of scope"}</b><p>${textOf(item.scope)}</p></section>
+          <section class="p0-wide"><b>${language === "zh" ? "最小实验怎么做" : "Smallest experiment"}</b><p>${textOf(item.design)}</p></section>
+          <section><b>${language === "zh" ? "和谁比" : "Fair baselines"}</b><p>${textOf(item.baselines)}</p></section>
+          <section><b>${language === "zh" ? "谁来判对错" : "Independent truth"}</b><p>${textOf(item.truth)}</p></section>
+          <section><b>${language === "zh" ? "最后主要看哪张表" : "Decision table"}</b><p>${textOf(item.metrics)}</p></section>
+          <section class="p0-go"><b>Go</b><p>${textOf(item.go)}</p></section>
+          <section class="p0-stop"><b>Stop</b><p>${textOf(item.stop)}</p></section>
+          <section><b>${language === "zh" ? "资源硬上限" : "Hard resource cap"}</b><p>${resource.max_gpus || 0} GPU · ${resource.gpu_hours_cap || 0} GPUh · ${resource.wall_hours_cap || 0}h wall · ≤${resource.episode_cap || 0} episodes</p></section>
+        </div>
+        <div class="p0-output-row"><b>${language === "zh" ? "跑完必须留下" : "Required artifacts"}</b>${outputs}</div>
+        <a class="link-btn p0-idea-link" href="#idea-${esc(String(item.code || "").toLowerCase())}">${language === "zh" ? "回到这个 Idea 的完整说明 →" : "Open the full idea →"}</a>
+      </div>
+    </details>`;
+  }).join("");
+  return `<section class="panel p0-control-board" id="p0-experiment-board"><div class="p0-board-head"><div><div class="eyebrow">P0 · ${language === "zh" ? "实验准备" : "EXPERIMENT PREPARATION"}</div><h2 data-toc="false">${language === "zh" ? "实验准备与执行队列" : "Experiment preparation and execution queue"}</h2><p>${language === "zh" ? "这里只展示真正需要做决定的 5 个小 P0。先看能不能跑，再看最小实验、主表和 Stop；完整论文级 P1/P2 不在这里提前展开。" : "This board contains only the five small P0 decisions that matter now. First check whether execution is unlocked, then read the smallest test, decision table, and Stop rule; paper-scale P1/P2 remains out of scope."}</p></div><strong>${summary.ready_now || 0}/${summary.planned || 0}<span>${language === "zh" ? "当前可准备" : "ready now"}</span></strong></div>
+    <div class="p0-policy-lock"><b>${language === "zh" ? "硬门禁" : "Hard gate"}</b><span>${language === "zh" ? `只允许小 P0；P0 PASS 也不会自动进入 P1。必须先回到人工审查。目前 P1 授权数 = ${summary.p1_authorized || 0}。` : `Small P0 only. A P0 PASS never auto-escalates to P1; it must return to human review first. P1 authorizations now = ${summary.p1_authorized || 0}.`}</span></div>
+    <div class="p0-board-stats"><div><b>${summary.ready_now || 0}</b><span>${language === "zh" ? "现在可准备" : "ready now"}</span></div><div><b>${summary.collision_recheck || 0}</b><span>${language === "zh" ? "先查碰撞" : "collision checks"}</span></div><div><b>${summary.scenario_check || 0}</b><span>${language === "zh" ? "先确认场景" : "scenario check"}</span></div><div><b>${summary.gpu_hours_cap_ready_now || 0}</b><span>${language === "zh" ? "当前 GPUh 上限" : "ready GPUh cap"}</span></div><div><b>${summary.gpu_hours_cap_if_all_unlocked || 0}</b><span>${language === "zh" ? "全部解锁后上限" : "all-unlocked cap"}</span></div><div><b>${summary.p1_authorized || 0}</b><span>P1 ${language === "zh" ? "已授权" : "authorized"}</span></div></div>
+    <div class="p0-reading-note"><b>${language === "zh" ? "建议执行顺序" : "Suggested order"}</b><span>${language === "zh" ? "先并行准备 A-1 的 update/probe harness 与 A-2 的 fixed-replay harness；同时做 B-1、E-1 碰撞复查。F-1 等子龙确认真实场景后再冻结环境。" : "Prepare the A-1 update/probe harness and A-2 fixed-replay harness in parallel while rechecking B-1/E-1 collisions. Freeze F-1's environment only after scenario confirmation with Zilong."}</span></div>
+    <div class="p0-plan-list">${cards}</div>
+  </section>`;
+}
 function renderIdeaPortfolio(config) {
   const chapters = pageArchitecture("paper-ideas").chapters || [];
   const discussed = renderDiscussedIdeaBank();
   const newIdeas = renderNewIdeaCandidates();
-  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderCustomChapter(chapters[0],0,discussed)}${renderCustomChapter(chapters[1],1,newIdeas)}`;
+  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderP0ExperimentBoard()}${renderCustomChapter(chapters[0],0,discussed)}${renderCustomChapter(chapters[1],1,newIdeas)}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;

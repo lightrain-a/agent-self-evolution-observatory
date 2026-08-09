@@ -22,6 +22,6 @@
     "wall_clock_hours": 0.0
   },
   "diagnosis": "State the observed phenomenon and the strongest alternative explanation checked.",
-  "next_action": "execute-P1",
+  "next_action": "await-human-approval",
   "completed_at": "2026-07-30T00:00:00Z"
 }

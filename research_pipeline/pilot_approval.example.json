@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "idea_id": "update-trust-region",
+  "after_phase": "P0",
+  "decision": "approve",
+  "reviewed_by": "human-reviewer",
+  "reviewed_at": "2026-08-09T00:00:00Z",
+  "rationale": "P0 supports the mechanism and the reviewer explicitly authorizes the planned P1 scope."
+}
