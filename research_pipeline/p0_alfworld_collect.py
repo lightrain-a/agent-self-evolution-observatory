@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from .p0_alfworld_adapter import HFAdmissiblePolicy, available_game_files, load_config as load_alfworld_config, run_game_file
+from .p0_alfworld_adapter import ALFWorldGameRunner, HFAdmissiblePolicy, load_config as load_alfworld_config
 from .p0_alfworld_contract import build_a1_row, build_a2_round, estimate_a1_episodes, estimate_a2_episodes
 from .p0_common import balanced_assignments, config_hash, load_json
 
@@ -96,13 +96,14 @@ def collect_a1(
         raise ValueError(f"A-1 frozen collection plan can use {estimate['worst_case_total']} episodes, above cap {cap}")
 
     policy = HFAdmissiblePolicy(model_path)
+    runner = ALFWorldGameRunner(world)
     raw_records: list[dict[str, Any]] = []
     started = time.time()
 
-    discovery_files = _ordered(available_game_files(world, str(split_cfg["discovery"])), seed, "a1-discovery")
+    discovery_files = _ordered(runner.available_game_files(str(split_cfg["discovery"])), seed, "a1-discovery")
     failure_traces: list[dict[str, Any]] = []
     for game_file in discovery_files[:discovery_cap]:
-        trace = run_game_file(world, str(split_cfg["discovery"]), game_file, policy, max_steps=max_steps)
+        trace = runner.run_game_file(str(split_cfg["discovery"]), game_file, policy, max_steps=max_steps)
         raw_records.append(_trace_record("discovery-baseline", trace))
         if not trace["success"]:
             failure_traces.append(trace)
@@ -113,16 +114,16 @@ def collect_a1(
 
     candidates, attempts = generate_a1_candidates(policy, failure_traces, list(target_range), seed)
 
-    probe_files = _ordered(available_game_files(world, str(split_cfg["behavior_probes"])), seed, "a1-probes")[:probe_count]
-    hidden_files = _ordered(available_game_files(world, str(split_cfg["hidden"])), seed, "a1-hidden")[:hidden_pool_count]
+    probe_files = _ordered(runner.available_game_files(str(split_cfg["behavior_probes"])), seed, "a1-probes")[:probe_count]
+    hidden_files = _ordered(runner.available_game_files(str(split_cfg["hidden"])), seed, "a1-hidden")[:hidden_pool_count]
     probe_baseline: dict[str, dict[str, Any]] = {}
     hidden_baseline: dict[str, dict[str, Any]] = {}
     for game_file in probe_files:
-        trace = run_game_file(world, str(split_cfg["behavior_probes"]), game_file, policy, max_steps=max_steps)
+        trace = runner.run_game_file(str(split_cfg["behavior_probes"]), game_file, policy, max_steps=max_steps)
         probe_baseline[game_file] = trace
         raw_records.append(_trace_record("behavior-probe-baseline", trace))
     for game_file in hidden_files:
-        trace = run_game_file(world, str(split_cfg["hidden"]), game_file, policy, max_steps=max_steps)
+        trace = runner.run_game_file(str(split_cfg["hidden"]), game_file, policy, max_steps=max_steps)
         hidden_baseline[game_file] = trace
         raw_records.append(_trace_record("hidden-baseline", trace))
 
@@ -134,17 +135,17 @@ def collect_a1(
         patch = str(candidate["patch"])
         source_id = str(candidate["source_task_id"])
         current_before = failure_by_id[source_id]
-        current_after = run_game_file(world, str(split_cfg["discovery"]), source_id, policy, patch, max_steps=max_steps)
+        current_after = runner.run_game_file(str(split_cfg["discovery"]), source_id, policy, patch, max_steps=max_steps)
         raw_records.append(_trace_record("candidate-current", current_after, candidate_id=candidate_id))
         probe_after: list[dict[str, Any]] = []
         for game_file in probe_files:
-            trace = run_game_file(world, str(split_cfg["behavior_probes"]), game_file, policy, patch, max_steps=max_steps)
+            trace = runner.run_game_file(str(split_cfg["behavior_probes"]), game_file, policy, patch, max_steps=max_steps)
             probe_after.append(trace)
             raw_records.append(_trace_record("candidate-probe", trace, candidate_id=candidate_id))
         hidden_after: list[dict[str, Any]] = []
         assigned_hidden = assignments[candidate_id]
         for game_file in assigned_hidden:
-            trace = run_game_file(world, str(split_cfg["hidden"]), game_file, policy, patch, max_steps=max_steps)
+            trace = runner.run_game_file(str(split_cfg["hidden"]), game_file, policy, patch, max_steps=max_steps)
             hidden_after.append(trace)
             raw_records.append(_trace_record("candidate-hidden", trace, candidate_id=candidate_id))
         row = build_a1_row(
@@ -194,6 +195,8 @@ def collect_a1(
         },
         "resource_estimate": estimate,
         "actual_environment_episodes": len(raw_records),
+        "environment_wrapper_reuse": True,
+        "environment_wrapper_builds": runner.wrapper_build_count,
         "hidden_assignment": assignments,
         "analysis_input": "candidate-evaluation.jsonl",
     }
@@ -232,13 +235,14 @@ def collect_a2(
         raise ValueError(f"A-2 frozen collection plan uses {estimated_episodes} episodes, above cap {cap}")
 
     policy = HFAdmissiblePolicy(model_path)
+    runner = ALFWorldGameRunner(world)
     raw_records: list[dict[str, Any]] = []
     started = time.time()
-    probe_source = _ordered(available_game_files(world, "eval_in_distribution"), seed, "a2-probes")
+    probe_source = _ordered(runner.available_game_files("eval_in_distribution"), seed, "a2-probes")
     probe_files = probe_source[:probe_count]
     probe_baseline: dict[str, dict[str, Any]] = {}
     for game_file in probe_files:
-        trace = run_game_file(world, "eval_in_distribution", game_file, policy, max_steps=max_steps)
+        trace = runner.run_game_file("eval_in_distribution", game_file, policy, max_steps=max_steps)
         probe_baseline[game_file] = trace
         raw_records.append(_trace_record("a2-probe-baseline", trace))
 
@@ -248,14 +252,14 @@ def collect_a2(
     for split_index, (split_label, count_value) in enumerate(split_items):
         count = int(count_value)
         env_split = str(split_names[split_label])
-        pool = _ordered(available_game_files(world, env_split), seed, f"a2-{split_label}")
+        pool = _ordered(runner.available_game_files(env_split), seed, f"a2-{split_label}")
         if env_split == "eval_in_distribution":
             pool = [path for path in pool if path not in set(probe_files)]
         selected = pool[:count]
         if len(selected) < count:
             raise RuntimeError(f"not enough ALFWorld tasks for A-2 {split_label}: {len(selected)} < {count}")
         for task_offset, game_file in enumerate(selected):
-            baseline = run_game_file(world, env_split, game_file, policy, max_steps=max_steps)
+            baseline = runner.run_game_file(env_split, game_file, policy, max_steps=max_steps)
             raw_records.append(_trace_record("a2-task-baseline", baseline, split=split_label))
             previous = baseline
             persistent_patch = ""
@@ -271,11 +275,11 @@ def collect_a2(
                 patch_generation_calls += 1
                 if patch_piece and patch_piece.lower() not in persistent_patch.lower():
                     persistent_patch = (persistent_patch + "\n" + patch_piece).strip()
-                current = run_game_file(world, env_split, game_file, policy, persistent_patch, max_steps=max_steps)
+                current = runner.run_game_file(env_split, game_file, policy, persistent_patch, max_steps=max_steps)
                 raw_records.append(_trace_record("a2-task-round", current, split=split_label, round=round_index))
                 probe_current: list[dict[str, Any]] = []
                 for probe_file in probe_files:
-                    trace = run_game_file(world, "eval_in_distribution", probe_file, policy, persistent_patch, max_steps=max_steps)
+                    trace = runner.run_game_file("eval_in_distribution", probe_file, policy, persistent_patch, max_steps=max_steps)
                     probe_current.append(trace)
                     raw_records.append(_trace_record("a2-probe-round", trace, split=split_label, round=round_index, task_id=game_file))
                 logical_calls += 1 + int(current.get("model_calls", 0)) + sum(int(trace.get("model_calls", 0)) for trace in probe_current)
@@ -322,6 +326,8 @@ def collect_a2(
         "resource_estimate": estimate,
         "estimated_environment_episodes": estimated_episodes,
         "actual_environment_episodes": len(raw_records),
+        "environment_wrapper_reuse": True,
+        "environment_wrapper_builds": runner.wrapper_build_count,
         "sequence_generation_contract": {
             "mode": "full-policy-conditioned-rollout-then-freeze",
             "controller_access_during_generation": False,

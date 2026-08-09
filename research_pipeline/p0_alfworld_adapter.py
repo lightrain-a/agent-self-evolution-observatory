@@ -172,30 +172,69 @@ class HFAdmissiblePolicy:
         return line[:500].strip()
 
 
+class ALFWorldGameRunner:
+    """Reuse the expensive ALFWorld wrapper discovery work within each split."""
+
+    def __init__(self, config: dict[str, Any], environment_factory=None) -> None:
+        if environment_factory is None:
+            try:
+                from alfworld.agents.environment import get_environment
+            except ImportError as error:
+                raise RuntimeError("ALFWorld is not installed in the selected runtime") from error
+            environment_factory = get_environment
+        self.config = config
+        self.env_type = str(config["env"]["type"])
+        self._environment_factory = environment_factory
+        self._wrappers: dict[str, Any] = {}
+        self.wrapper_build_count = 0
+
+    def _wrapper(self, split: str):
+        split = str(split)
+        if split not in self._wrappers:
+            self._wrappers[split] = self._environment_factory(self.env_type)(self.config, train_eval=split)
+            self.wrapper_build_count += 1
+        return self._wrappers[split]
+
+    def available_game_files(self, split: str) -> list[str]:
+        wrapper = self._wrapper(split)
+        files = [str(path) for path in list(getattr(wrapper, "game_files", []) or [])]
+        if not files:
+            raise RuntimeError(f"ALFWorld exposed no game files for split {split}")
+        return files
+
+    def build_env(self, split: str, game_files: list[str] | None = None):
+        wrapper = self._wrapper(split)
+        if game_files is not None:
+            wrapper.game_files = list(game_files)
+            wrapper.num_games = len(wrapper.game_files)
+        return wrapper.init_env(batch_size=1)
+
+    def run_game_file(
+        self,
+        split: str,
+        game_file: str,
+        policy: HFAdmissiblePolicy,
+        patch: str = "",
+        max_steps: int = 50,
+    ) -> dict[str, Any]:
+        env = self.build_env(split, [game_file])
+        try:
+            trace = run_episode(env, policy, patch, max_steps=max_steps)
+            trace["task_id"] = str(game_file)
+            trace["gamefile"] = str(game_file)
+            return trace
+        finally:
+            close = getattr(env, "close", None)
+            if callable(close):
+                close()
+
+
 def build_env(config: dict[str, Any], split: str, game_files: list[str] | None = None):
-    try:
-        from alfworld.agents.environment import get_environment
-    except ImportError as error:
-        raise RuntimeError("ALFWorld is not installed in the selected runtime") from error
-    env_type = str(config["env"]["type"])
-    wrapper = get_environment(env_type)(config, train_eval=split)
-    if game_files is not None:
-        wrapper.game_files = list(game_files)
-        wrapper.num_games = len(wrapper.game_files)
-    return wrapper.init_env(batch_size=1)
+    return ALFWorldGameRunner(config).build_env(split, game_files)
 
 
 def available_game_files(config: dict[str, Any], split: str) -> list[str]:
-    try:
-        from alfworld.agents.environment import get_environment
-    except ImportError as error:
-        raise RuntimeError("ALFWorld is not installed in the selected runtime") from error
-    env_type = str(config["env"]["type"])
-    wrapper = get_environment(env_type)(config, train_eval=split)
-    files = [str(path) for path in list(getattr(wrapper, "game_files", []) or [])]
-    if not files:
-        raise RuntimeError(f"ALFWorld exposed no game files for split {split}")
-    return files
+    return ALFWorldGameRunner(config).available_game_files(split)
 
 
 def run_episode(env, policy: HFAdmissiblePolicy, patch: str = "", max_steps: int = 50) -> dict[str, Any]:
@@ -253,16 +292,7 @@ def run_game_file(
     patch: str = "",
     max_steps: int = 50,
 ) -> dict[str, Any]:
-    env = build_env(config, split, [game_file])
-    try:
-        trace = run_episode(env, policy, patch, max_steps=max_steps)
-        trace["task_id"] = str(game_file)
-        trace["gamefile"] = str(game_file)
-        return trace
-    finally:
-        close = getattr(env, "close", None)
-        if callable(close):
-            close()
+    return ALFWorldGameRunner(config).run_game_file(split, game_file, policy, patch, max_steps)
 
 
 def compare_rollouts(before: dict[str, Any], after: dict[str, Any]) -> dict[str, float]:

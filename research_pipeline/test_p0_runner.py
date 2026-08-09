@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 from .p0_a1 import analyze as analyze_a1, synthetic_rows as synthetic_a1
 from .p0_a2 import analyze as analyze_a2, synthetic_rows as synthetic_a2
-from .p0_alfworld_adapter import action_family_shift, normalized_edit_distance, parse_admissible_choice
+from .p0_alfworld_adapter import ALFWorldGameRunner, action_family_shift, normalized_edit_distance, parse_admissible_choice
 from .p0_alfworld_collect import generate_a1_candidates
 from .p0_common import balanced_assignments, config_hash, load_json, result_payload, runtime_preflight, validate_collection_manifest, validate_measured_cost
 from .p0_runner import config_path, p0_execution_lock
@@ -67,6 +67,30 @@ class P0RunnerTest(unittest.TestCase):
         result = analyze_a2(changed, config)
         self.assertEqual(result["frozen_heuristic"], reference["frozen_heuristic"])
         self.assertEqual(result["frozen_linear_controller"], reference["frozen_linear_controller"])
+
+    def test_alfworld_wrapper_is_reused_within_each_split(self) -> None:
+        builds: list[str] = []
+
+        class FakeWrapper:
+            def __init__(self, split: str) -> None:
+                self.game_files = [f"{split}-a", f"{split}-b"]
+                self.num_games = len(self.game_files)
+
+            def init_env(self, batch_size: int = 1):
+                return object()
+
+        def factory(_env_type: str):
+            def construct(_config, train_eval: str):
+                builds.append(train_eval)
+                return FakeWrapper(train_eval)
+            return construct
+
+        runner = ALFWorldGameRunner({"env": {"type": "AlfredTWEnv"}}, environment_factory=factory)
+        self.assertEqual(runner.available_game_files("train"), ["train-a", "train-b"])
+        self.assertEqual(runner.available_game_files("train"), ["train-a", "train-b"])
+        self.assertEqual(runner.available_game_files("eval_out_of_distribution"), ["eval_out_of_distribution-a", "eval_out_of_distribution-b"])
+        self.assertEqual(builds, ["train", "eval_out_of_distribution"])
+        self.assertEqual(runner.wrapper_build_count, 2)
 
     def test_alfworld_choice_parser_never_invents_an_action(self) -> None:
         commands = ["look", "go to fridge 1", "open fridge 1"]
