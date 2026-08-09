@@ -143,6 +143,21 @@ def main() -> None:
         after_ratio = after_refresh["y"] / max(1, after_refresh["max"])
         require(after_ratio < 0.8, f"paper-ideas refresh jumped near the bottom: before={before_refresh}, after={after_refresh}")
 
+        request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844})
+        time.sleep(1)
+        mobile = execute(session_id, """const card=document.querySelector('.human-review-idea-card'); if(card) card.open=true; const history=document.querySelector('.human-review-history'); return {
+          innerWidth: window.innerWidth,
+          scrollWidth: document.documentElement.scrollWidth,
+          historyColumns: history ? getComputedStyle(history).gridTemplateColumns : '',
+          cardWidth: card ? card.getBoundingClientRect().width : 0,
+          bodyWidth: document.body.getBoundingClientRect().width
+        };""")
+        require(mobile["scrollWidth"] <= mobile["innerWidth"] + 2, f"paper-ideas mobile layout has page-level horizontal overflow: {mobile}")
+        require(" " not in mobile["historyColumns"].strip(), f"human review history must collapse to one column on mobile: {mobile['historyColumns']}")
+        require(mobile["cardWidth"] <= mobile["innerWidth"], f"idea card exceeds the mobile viewport: {mobile}")
+        request("POST", f"/session/{session_id}/window/rect", {"width": 1440, "height": 1000})
+        time.sleep(1)
+
         navigate("/experiments.html", 6)
         experiments = execute(session_id, """return {
           chapters: document.querySelectorAll('.page-chapter').length,
