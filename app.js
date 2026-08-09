@@ -961,15 +961,71 @@ function humanReviewStatusTone(status) {
   if (status === "method-redesign") return "redesign";
   return "paused";
 }
+function currentFinalIdeaById(id) {
+  return (window.CURRENT_FINAL_IDEAS?.ideas || []).find((idea) => (idea.idea_id || idea.id) === id) || null;
+}
+function experimentStateCopy(status) {
+  if (status === "p0-ready") return language === "zh"
+    ? {title:"P0 实验验证",note:"当前仅允许执行小规模 P0。P0 结果完成后必须回到人工审查，未获人工批准不得自动进入 P1/P2。"}
+    : {title:"P0 experiment",note:"Only the small P0 is authorized. After P0, the result must return to human review; P1/P2 cannot start without explicit human approval."};
+  if (status === "method-redesign") return language === "zh"
+    ? {title:"实验验证草案",note:"当前方法仍在补实质缺口；保留已有决定性实验作为验证框架，但方法定稿后必须重新锁定实验协议再运行。"}
+    : {title:"Experiment draft",note:"The method still has a substantive gap. The existing decisive experiment is kept as the validation frame, but the protocol must be re-frozen after the method is finalized."};
+  if (status === "paused-merged") return language === "zh"
+    ? {title:"历史实验协议",note:"该方向当前暂停/已并入其他方向；实验仅作为可追溯设计保留，不授权启动。"}
+    : {title:"Historical experiment protocol",note:"This direction is paused or merged elsewhere. The experiment is retained for traceability only and is not authorized to run."};
+  return language === "zh"
+    ? {title:"实验验证",note:"该方向尚未完成当前轮人工审查；以下实验用于判断机制是否成立，不代表已授权执行。"}
+    : {title:"Experiment validation",note:"This direction has not completed the current human review. The experiment is shown to test the mechanism and does not imply execution approval."};
+}
+function renderMatchedResourceList(items) {
+  if (!Array.isArray(items) || !items.length) return "";
+  const visible = items.slice(0,6).map((item) => `<li>${esc(item)}</li>`).join("");
+  const remainder = items.length > 6 ? `<li class="human-resource-more">+${items.length - 6} ${language === "zh" ? "项匹配约束" : "more matched constraints"}</li>` : "";
+  return `<ul class="human-resource-list">${visible}${remainder}</ul>`;
+}
+function renderIdeaExperimentSection(idea, meta = {}, sourceIdeas = []) {
+  const sources = (sourceIdeas || []).filter(Boolean);
+  const exactFinal = currentFinalIdeaById(idea.id || idea.idea_id);
+  const rich = exactFinal || sources[sources.length - 1] || idea;
+  const protocol = idea.experiment_protocol || rich.experiment_protocol || {};
+  const externalPilot = [...(idea.external_reviews || [])].reverse().find((review) => review.decisive_pilot)?.decisive_pilot;
+  const pilot = textOf(rich.decisive_pilot || idea.decisive_pilot || externalPilot || idea.pilot || {});
+  const metric = textOf(idea.decisive_metric || rich.decisive_metric || protocol.main_table || {});
+  const truth = textOf(rich.independent_ground_truth || idea.independent_ground_truth || protocol.data_protocol?.test || {});
+  const baseline = textOf(rich.strongest_baseline || idea.strongest_baseline || {});
+  const stop = textOf(rich.stop_condition || idea.stop_condition || protocol.stop_gate || {});
+  const go = textOf(rich.success_gate || idea.success_gate || protocol.success_gate || rich.surviving_claim || {});
+  const resources = rich.matched_resources || idea.matched_resources || [];
+  const budget = idea.budget || {};
+  const hasBudget = Number(budget.max_gpus || 0) || Number(budget.gpu_hours || 0) || Number(budget.wall_days || 0);
+  const state = experimentStateCopy(meta.status);
+  const experimentTone = meta.status === "new-review" ? "review" : humanReviewStatusTone(meta.status);
+  if (![pilot,metric,truth,baseline,stop,go].some(Boolean) && !hasBudget && !protocol.actor && !resources.length) return "";
+  const sourceDetails = sources.length > 1 ? `<details class="human-source-pilots"><summary>${language === "zh" ? "查看合并来源中的决定性实验" : "Decisive experiments from merged sources"}</summary>${sources.map((source) => `<section><b>${textOf(source.title || {})}</b><p>${textOf(source.decisive_pilot || {})}</p></section>`).join("")}</details>` : "";
+  return `<section class="human-experiment-section human-experiment-${experimentTone}">
+    <header><div><h4 data-toc="false">${esc(state.title)}</h4><p>${esc(state.note)}</p></div><span>${meta.status === "p0-ready" ? "P0" : (meta.status === "method-redesign" ? "DRAFT" : (meta.status === "paused-merged" ? "HOLD" : "REVIEW"))}</span></header>
+    <div class="human-experiment-grid">
+      <section><h4 data-toc="false">${language === "zh" ? "决定性 Pilot / P0" : "Decisive pilot / P0"}</h4><p>${pilot || "—"}</p></section>
+      <section><h4 data-toc="false">${language === "zh" ? "原任务评测与独立真值" : "Original-task evaluation & independent truth"}</h4><p>${truth || "—"}</p></section>
+      <section><h4 data-toc="false">${language === "zh" ? "主指标 / 决定性主表" : "Primary metric / decisive table"}</h4><p>${metric || "—"}</p></section>
+      <section><h4 data-toc="false">${language === "zh" ? "最强匹配基线" : "Strongest matched baseline"}</h4><p>${baseline || "—"}</p></section>
+      <section><h4 data-toc="false">${language === "zh" ? "匹配资源与预算" : "Matched resources & budget"}</h4>${renderMatchedResourceList(resources)}${hasBudget ? `<p class="human-budget-line">${budget.max_gpus || 0} GPU · ${budget.gpu_hours || 0}h · ${budget.wall_days || 0} ${language === "zh" ? "天" : "days"}</p>` : ""}</section>
+      <section><h4 data-toc="false">Go / Stop</h4><p><b>Go:</b> ${go || "—"}</p><p class="cvpr-stop"><b>Stop:</b> ${stop || "—"}</p></section>
+    </div>
+    ${sourceDetails}
+    ${renderExperimentProtocol(idea, "ICLR")}
+  </section>`;
+}
 function renderHumanReviewedIdeaCard(idea, meta, index) {
   const overlay = (window.FINAL20_MERGE_OVERRIDES || {})[idea.id] || {};
   const current = {...idea, ...overlay};
-  const budget = idea.budget || {};
   const intuition = textOf(current.core_intuition || current.rationale || {});
   const historicalVerdict = String(idea.external_verdict || "pending").toUpperCase();
   const tone = humanReviewStatusTone(meta.status);
   const code = meta.code || idea.id;
   const absorbed = overlay.absorbed_from || [];
+  const absorbedIdeas = absorbed.map(currentFinalIdeaById).filter(Boolean);
   const absorbedNote = absorbed.length ? `<div class="human-absorbed-methods"><b>${language === "zh" ? "已吸收 FINAL 方法资产" : "Absorbed FINAL method assets"}</b>${absorbed.map((id)=>`<span>${esc(id)}</span>`).join("")}</div>` : "";
   return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}">
     <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(meta.status))}</span><p>${textOf(current.purpose)}</p></div></summary>
@@ -984,9 +1040,8 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
       <div class="human-evidence-grid">
         <section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${textOf(current.importance)}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "最近工作与碰撞边界" : "Nearest work / collision"}</h4><p>${textOf(current.collision_boundary)}</p><div class="cvpr-chip-row">${(current.nearest_work || []).map((name) => `<span>${esc(name)}</span>`).join("")}</div></section>
-        <section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${textOf(current.strongest_baseline)}</p></section>
-        <section><h4 data-toc="false">${language === "zh" ? "当前实验预算" : "Current pilot budget"}</h4><p>${budget.max_gpus || 0} GPU · ${budget.gpu_hours || 0}h · ${budget.wall_days || 0} ${language === "zh" ? "天" : "days"}</p><p class="cvpr-stop"><b>Stop:</b> ${textOf(current.stop_condition)}</p></section>
       </div>
+      ${renderIdeaExperimentSection(current,meta,absorbedIdeas)}
     </div>
   </details>`;
 }
@@ -1021,13 +1076,14 @@ function renderSupplementalIdeaCard(row) {
   const idea = row.idea;
   const id = idea.idea_id || idea.id || "candidate";
   const source = row.source;
+  const sourceIdeas = (idea.source_ids || []).map(currentFinalIdeaById).filter(Boolean);
   const title = textOf(idea.title || {});
   const problem = textOf(idea.purpose || idea.problem || {});
   const method = textOf(idea.core_idea || {});
   const intuition = textOf(idea.core_intuition || {});
   const sourceLabel = source === "final-merged" ? (language === "zh" ? "FINAL20 合并审查后独立保留" : "Independent after FINAL20 merge audit") : `${language === "zh" ? "网络灵感" : "internet-inspired"} · ${String(idea.external_verdict || idea.final_status || "pending").toUpperCase()}`;
   const code = idea.code || (language === "zh" ? "新增候选" : "new candidate");
-  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div><section><b>${language === "zh" ? "核心直觉" : "Core intuition"}</b><p>${esc(intuition || "—")}</p></section><section><b>${language === "zh" ? "当前方法" : "Current method"}</b><p>${esc(method || textOf(idea.hypothesis || {}))}</p></section><section><b>${language === "zh" ? "最强对照" : "Strongest baseline"}</b><p>${textOf(idea.strongest_baseline || {})}</p></section><section><b>${language === "zh" ? "当前用途" : "Current role"}</b><p>${source === "final-merged" ? (language === "zh" ? "20 个 FINAL 已完成去重合并；该方向无法合理并入第一章，因此作为独立新增 Idea 保留，等待下一轮人工讨论。" : "The 20 FINAL ideas have been deduplicated and merged; this direction could not be reasonably absorbed into Chapter 1 and remains as an independent new idea for human discussion.") : (language === "zh" ? "尚未完成人工讨论；下一轮先判断是否并入已有科学问题。" : "Not yet human-reviewed; next decide whether it should merge into an existing scientific problem.")}</p></section></div></details>`;
+  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div><section><b>${language === "zh" ? "核心直觉" : "Core intuition"}</b><p>${esc(intuition || "—")}</p></section><section><b>${language === "zh" ? "当前方法" : "Current method"}</b><p>${esc(method || textOf(idea.hypothesis || {}))}</p></section><section><b>${language === "zh" ? "最强对照" : "Strongest baseline"}</b><p>${textOf(idea.strongest_baseline || {})}</p></section><section><b>${language === "zh" ? "当前用途" : "Current role"}</b><p>${source === "final-merged" ? (language === "zh" ? "20 个 FINAL 已完成去重合并；该方向无法合理并入第一章，因此作为独立新增 Idea 保留，等待下一轮人工讨论。" : "The 20 FINAL ideas have been deduplicated and merged; this direction could not be reasonably absorbed into Chapter 1 and remains as an independent new idea for human discussion.") : (language === "zh" ? "尚未完成人工讨论；下一轮先判断是否并入已有科学问题。" : "Not yet human-reviewed; next decide whether it should merge into an existing scientific problem.")}</p></section>${renderIdeaExperimentSection(idea,{status:"new-review"},sourceIdeas)}</div></details>`;
 }
 function renderNewIdeaCandidates() {
   const finalIdeas = (window.FINAL20_MERGE_AUDIT?.standalone_ideas || []).map((idea) => ({source:"final-merged",idea}));
