@@ -966,17 +966,17 @@ function currentFinalIdeaById(id) {
 }
 function experimentStateCopy(status) {
   if (status === "p0-ready") return language === "zh"
-    ? {title:"P0 实验验证",note:"当前仅允许执行小规模 P0。P0 结果完成后必须回到人工审查，未获人工批准不得自动进入 P1/P2。"}
-    : {title:"P0 experiment",note:"Only the small P0 is authorized. After P0, the result must return to human review; P1/P2 cannot start without explicit human approval."};
+    ? {title:"怎么验证这个 Idea（P0）",note:"先只做最小实验，回答“这个机制到底有没有用”。P0 做完先汇报，人工批准后才能进入更大实验。"}
+    : {title:"How to test this idea (P0)",note:"Run only the smallest experiment needed to answer whether the mechanism works. Report P0 first; larger experiments require explicit human approval."};
   if (status === "method-redesign") return language === "zh"
-    ? {title:"实验验证草案",note:"当前方法仍在补实质缺口；保留已有决定性实验作为验证框架，但方法定稿后必须重新锁定实验协议再运行。"}
-    : {title:"Experiment draft",note:"The method still has a substantive gap. The existing decisive experiment is kept as the validation frame, but the protocol must be re-frozen after the method is finalized."};
+    ? {title:"怎么验证这个 Idea",note:"这里先把最小可证伪实验讲清楚。方法改完后再冻结具体参数，不把一份旧协议和一份新草案重复展示。"}
+    : {title:"How to test this idea",note:"This states the smallest falsifiable test. Freeze exact parameters only after the method is finalized, rather than showing a draft and a duplicate protocol."};
   if (status === "paused-merged") return language === "zh"
-    ? {title:"历史实验协议",note:"该方向当前暂停/已并入其他方向；实验仅作为可追溯设计保留，不授权启动。"}
-    : {title:"Historical experiment protocol",note:"This direction is paused or merged elsewhere. The experiment is retained for traceability only and is not authorized to run."};
+    ? {title:"历史验证方案（暂不执行）",note:"这个方向当前暂停或已并入其他 Idea；只保留验证思路方便追溯，不启动实验。"}
+    : {title:"Historical validation plan (do not run)",note:"This direction is paused or merged elsewhere. Keep the validation logic for traceability, but do not run it."};
   return language === "zh"
-    ? {title:"实验验证",note:"该方向尚未完成当前轮人工审查；以下实验用于判断机制是否成立，不代表已授权执行。"}
-    : {title:"Experiment validation",note:"This direction has not completed the current human review. The experiment is shown to test the mechanism and does not imply execution approval."};
+    ? {title:"怎么验证这个 Idea（待讨论）",note:"下面只回答实验上最重要的几个问题，方便先判断这个方向值不值得继续。"}
+    : {title:"How to test this idea (for review)",note:"The section answers only the experiment questions needed to decide whether this direction is worth pursuing."};
 }
 function renderMatchedResourceList(items) {
   if (!Array.isArray(items) || !items.length) return "";
@@ -984,15 +984,54 @@ function renderMatchedResourceList(items) {
   const remainder = items.length > 6 ? `<li class="human-resource-more">+${items.length - 6} ${language === "zh" ? "项匹配约束" : "more matched constraints"}</li>` : "";
   return `<ul class="human-resource-list">${visible}${remainder}</ul>`;
 }
+function humanPilotSummary(idea, fallback = "") {
+  const id = idea.id || idea.idea_id || "";
+  const zh = {
+    "update-trust-region":"拿一批候选更新，先在固定 Probe 上记录更新前后行为怎么变，再到隐藏原任务上看哪些更新真的造成回退。比较三种接纳方式：只看当前收益、只看编辑大小、看行为漂移。只有行为漂移能更准地挡住坏更新、同时不过度拒绝好更新，才值得继续。",
+    "budgeted-evolution-controller":"让同一批任务分别使用“固定更新轮数”和“学会自己决定继续 / 回滚 / 停止”的控制器。在最终成功率接近的前提下比较调用数和回退；如果控制器省不下明显调用，或者省调用会伤害任务表现，就停止。",
+    "outcome-equivalent-trajectory-contrast":"找出一批“最后都成功、但中间过程不同”的轨迹。只把多条有效成功路径共同支持的经验写入记忆，再和“成功就写入”以及单轨迹反思比较，最后到新任务上看哪种经验更能迁移、也更少造成回退。",
+    "workflow-generalization-certificate":"先正常优化一批工作流，再给它们做几种很小但有针对性的变化，例如任务重命名、工具替换和局部结构扰动。比较“通过这些检查才提交”的工作流与“只看开发集分数就提交”的工作流，最后到未见工具和未见任务图上测试。",
+    "world-model-error-gated-learning":"收集世界模型的预测错误，把它们分成两类：会改变下一步动作 / 风险 / 恢复决策的错误，以及虽然预测错了但不会改变决策的错误。只学习前一类，再和“所有错误都学”以及“按误差大小学”比较，看能否用更少更新拿到同等或更高任务收益。"
+  };
+  const en = {
+    "update-trust-region":"Take a batch of candidate updates, measure how behavior changes on fixed probes, then use hidden original tasks to see which updates actually cause regressions. Compare admission by current gain, edit size, and behavioral shift. Continue only if behavioral shift blocks harmful updates more accurately without rejecting too many useful ones.",
+    "budgeted-evolution-controller":"Run the same tasks with a fixed update count and with a controller that chooses continue, rollback, or stop. Compare calls and regressions at similar final success. Stop if the controller does not save substantial calls or saves calls only by hurting performance.",
+    "outcome-equivalent-trajectory-contrast":"Collect trajectories that reach the same successful endpoint through different processes. Store only experience supported across multiple valid success paths, compare against write-on-success and single-trajectory reflection, then test transfer and regression on new tasks.",
+    "workflow-generalization-certificate":"Optimize workflows normally, then apply small targeted changes such as task renaming, tool substitution, and local structural perturbation. Compare workflows admitted by these checks against workflows admitted by development score alone, then test on unseen tools and task graphs.",
+    "world-model-error-gated-learning":"Split world-model errors into those that change the next action, risk, or recovery decision and those that do not. Learn only the first group, then compare with learning every error or prioritizing by error magnitude. Test whether fewer updates preserve or improve task success."
+  };
+  return (language === "zh" ? zh[id] : en[id]) || fallback;
+}
+function humanMetricSummary(idea, fallback = "") {
+  const id = idea.id || idea.idea_id || "";
+  const zh = {
+    "update-trust-region":"重点看三件事：坏更新识别得准不准、隐藏任务最坏回退有多大、好更新被误拒绝多少。",
+    "budgeted-evolution-controller":"重点看同等任务成功率下节省了多少调用、是否减少无效更新轮次，以及跨任务后还能不能保持这种节省。",
+    "outcome-equivalent-trajectory-contrast":"重点看写入经验后对新任务的真实收益、最坏回退，以及哪些经验被正确保留 / 拒绝。",
+    "workflow-generalization-certificate":"重点看未见工具和未见任务图上的成功率、最坏回退，以及“证书通过”能否真的预测后续泛化。",
+    "world-model-error-gated-learning":"重点看任务成功率、需要学习的转移数量 / 更新成本，以及真正会改变决策的错误是否被优先修好。"
+  };
+  const en = {
+    "update-trust-region":"Focus on harmful-update detection, worst hidden-task regression, and how many useful updates are falsely rejected.",
+    "budgeted-evolution-controller":"Focus on calls saved at equal task success, wasted update rounds avoided, and whether the saving transfers across tasks.",
+    "outcome-equivalent-trajectory-contrast":"Focus on real future-task gain, worst regression, and whether useful versus harmful experience is admitted correctly.",
+    "workflow-generalization-certificate":"Focus on success on unseen tools/task graphs, worst regression, and whether passing the certificate predicts later generalization.",
+    "world-model-error-gated-learning":"Focus on task success, number/cost of learned transitions, and whether decision-changing errors are preferentially repaired."
+  };
+  return (language === "zh" ? zh[id] : en[id]) || fallback;
+}
 function renderIdeaExperimentSection(idea, meta = {}, sourceIdeas = []) {
   const sources = (sourceIdeas || []).filter(Boolean);
   const exactFinal = currentFinalIdeaById(idea.id || idea.idea_id);
   const rich = exactFinal || sources[sources.length - 1] || idea;
   const protocol = idea.experiment_protocol || rich.experiment_protocol || {};
+  const data = protocol.data_protocol || {};
   const externalPilot = [...(idea.external_reviews || [])].reverse().find((review) => review.decisive_pilot)?.decisive_pilot;
-  const pilot = textOf(idea.decisive_pilot || rich.decisive_pilot || externalPilot || idea.pilot || {});
-  const metric = textOf(idea.decisive_metric || rich.decisive_metric || protocol.main_table || {});
-  const truth = textOf(idea.independent_ground_truth || rich.independent_ground_truth || protocol.data_protocol?.test || {});
+  const rawPilot = textOf(idea.decisive_pilot || rich.decisive_pilot || externalPilot || idea.pilot || {});
+  const rawMetric = textOf(idea.decisive_metric || rich.decisive_metric || protocol.main_table || {});
+  const pilot = humanPilotSummary(idea, rawPilot);
+  const metric = humanMetricSummary(idea, rawMetric);
+  const truth = textOf(idea.independent_ground_truth || rich.independent_ground_truth || data.test || {});
   const baseline = textOf(idea.strongest_baseline || rich.strongest_baseline || {});
   const stop = textOf(idea.stop_condition || rich.stop_condition || protocol.stop_gate || {});
   const go = textOf(idea.success_gate || rich.success_gate || protocol.success_gate || idea.surviving_claim || rich.surviving_claim || {});
@@ -1001,20 +1040,36 @@ function renderIdeaExperimentSection(idea, meta = {}, sourceIdeas = []) {
   const hasBudget = Number(budget.max_gpus || 0) || Number(budget.gpu_hours || 0) || Number(budget.wall_days || 0);
   const state = experimentStateCopy(meta.status);
   const experimentTone = meta.status === "new-review" ? "review" : humanReviewStatusTone(meta.status);
-  if (![pilot,metric,truth,baseline,stop,go].some(Boolean) && !hasBudget && !protocol.actor && !resources.length) return "";
-  const sourceDetails = sources.length > 1 ? `<details class="human-source-pilots"><summary>${language === "zh" ? "查看合并来源中的决定性实验" : "Decisive experiments from merged sources"}</summary>${sources.map((source) => `<section><b>${textOf(source.title || {})}</b><p>${textOf(source.decisive_pilot || {})}</p></section>`).join("")}</details>` : "";
+  const actor = protocol.actor || "";
+  const crossModel = protocol.cross_model || "";
+  const verifier = protocol.critic_or_verifier || "";
+  const apiRole = textOf(protocol.commercial_api_role || {});
+  const parameterUpdates = textOf(protocol.parameter_updates || {});
+  const discovery = textOf(data.discovery || {});
+  const calibration = textOf(data.calibration || {});
+  const frozenTest = textOf(data.test || {});
+  const repetitions = textOf(protocol.repetitions || {});
+  const callBudget = textOf(protocol.call_budget || {});
+  const computeBudget = textOf(protocol.compute_budget || {});
+  const controls = (protocol.controls || []).map((item) => `<li>${textOf(item)}</li>`).join("");
+  const ablations = (protocol.ablations || []).map((item) => `<li>${textOf(item)}</li>`).join("");
+  const phases = (protocol.phases || []).map((phase) => `<li><b>${esc(phase.id)} · ${textOf(phase.title)}</b><span>${textOf(phase.setup)}</span><small>${language === "zh" ? "通过条件" : "Gate"}: ${textOf(phase.gate)}</small></li>`).join("");
+  const hasExecutionDetails = [actor,crossModel,verifier,apiRole,parameterUpdates,discovery,calibration,frozenTest,repetitions,callBudget,computeBudget,controls,ablations,phases].some(Boolean) || resources.length || hasBudget;
+  if (![pilot,metric,truth,baseline,stop,go].some(Boolean) && !hasExecutionDetails) return "";
+  const sourceDetails = sources.length > 1 ? `<details class="human-source-pilots"><summary>${language === "zh" ? "合并前的实验来源（追溯用）" : "Pre-merge experiment sources (traceability)"}</summary>${sources.map((source) => `<section><b>${textOf(source.title || {})}</b><p>${textOf(source.decisive_pilot || {})}</p></section>`).join("")}</details>` : "";
+  const executionDetails = hasExecutionDetails ? `<details class="human-execution-details"><summary>${language === "zh" ? "模型、API、数据划分与预算" : "Models, API, data splits, and budget"}<small>${language === "zh" ? "执行时再看这些参数，不和上面的实验思路重复" : "Execution parameters only; no duplicate experiment narrative"}</small></summary><div class="human-execution-grid">${actor ? `<section><b>${language === "zh" ? "主模型" : "Main model"}</b><p>${esc(actor)}</p></section>` : ""}${crossModel ? `<section><b>${language === "zh" ? "第二模型" : "Second model"}</b><p>${esc(crossModel)}</p></section>` : ""}${verifier ? `<section><b>${language === "zh" ? "谁来判对错" : "Verifier"}</b><p>${esc(verifier)}</p></section>` : ""}${apiRole ? `<section><b>${language === "zh" ? "商业 API 做什么" : "Commercial API role"}</b><p>${apiRole}</p></section>` : ""}${parameterUpdates ? `<section><b>${language === "zh" ? "真正更新什么" : "What actually changes"}</b><p>${parameterUpdates}</p></section>` : ""}${discovery ? `<section><b>${language === "zh" ? "用什么数据找规律" : "Discovery split"}</b><p>${discovery}</p></section>` : ""}${calibration ? `<section><b>${language === "zh" ? "用什么数据定阈值" : "Calibration split"}</b><p>${calibration}</p></section>` : ""}${frozenTest ? `<section><b>${language === "zh" ? "最后在哪些数据上验" : "Frozen test"}</b><p>${frozenTest}</p></section>` : ""}${repetitions || callBudget ? `<section><b>${language === "zh" ? "重复次数 / 调用量" : "Repeats / calls"}</b><p>${repetitions}</p><p>${callBudget}</p></section>` : ""}${computeBudget || hasBudget ? `<section><b>${language === "zh" ? "算力" : "Compute"}</b><p>${computeBudget}</p>${hasBudget ? `<p>${budget.max_gpus || 0} GPU · ${budget.gpu_hours || 0}h · ${budget.wall_days || 0} ${language === "zh" ? "天" : "days"}</p>` : ""}</section>` : ""}</div>${resources.length ? `<div class="human-execution-list"><b>${language === "zh" ? "公平比较时必须保持一致" : "Must be matched across methods"}</b>${renderMatchedResourceList(resources)}</div>` : ""}${controls ? `<div class="human-execution-list"><b>${language === "zh" ? "额外对照" : "Additional controls"}</b><ol>${controls}</ol></div>` : ""}${ablations ? `<div class="human-execution-list"><b>${language === "zh" ? "关键消融" : "Key ablations"}</b><ol>${ablations}</ol></div>` : ""}${phases ? `<div class="human-phase-list"><b>${language === "zh" ? "如果继续，后面怎么扩" : "If it survives, how to scale"}</b><ol>${phases}</ol></div>` : ""}</details>` : "";
   return `<section class="human-experiment-section human-experiment-${experimentTone}">
-    <header><div><h4 data-toc="false">${esc(state.title)}</h4><p>${esc(state.note)}</p></div><span>${meta.status === "p0-ready" ? "P0" : (meta.status === "method-redesign" ? "DRAFT" : (meta.status === "paused-merged" ? "HOLD" : "REVIEW"))}</span></header>
+    <header><div><h4 data-toc="false">${esc(state.title)}</h4><p>${esc(state.note)}</p></div><span>${language === "zh" ? (meta.status === "p0-ready" ? "P0" : (meta.status === "method-redesign" ? "待定稿" : (meta.status === "paused-merged" ? "暂停" : "待讨论"))) : (meta.status === "p0-ready" ? "P0" : (meta.status === "method-redesign" ? "DESIGN" : (meta.status === "paused-merged" ? "HOLD" : "REVIEW")))}</span></header>
     <div class="human-experiment-grid">
-      <section><h4 data-toc="false">${language === "zh" ? "决定性 Pilot / P0" : "Decisive pilot / P0"}</h4><p>${pilot || "—"}</p></section>
-      <section><h4 data-toc="false">${language === "zh" ? "原任务评测与独立真值" : "Original-task evaluation & independent truth"}</h4><p>${truth || "—"}</p></section>
-      <section><h4 data-toc="false">${language === "zh" ? "主指标 / 决定性主表" : "Primary metric / decisive table"}</h4><p>${metric || "—"}</p></section>
-      <section><h4 data-toc="false">${language === "zh" ? "最强匹配基线" : "Strongest matched baseline"}</h4><p>${baseline || "—"}</p></section>
-      <section><h4 data-toc="false">${language === "zh" ? "匹配资源与预算" : "Matched resources & budget"}</h4>${renderMatchedResourceList(resources)}${hasBudget ? `<p class="human-budget-line">${budget.max_gpus || 0} GPU · ${budget.gpu_hours || 0}h · ${budget.wall_days || 0} ${language === "zh" ? "天" : "days"}</p>` : ""}</section>
-      <section><h4 data-toc="false">Go / Stop</h4><p><b>Go:</b> ${go || "—"}</p><p class="cvpr-stop"><b>Stop:</b> ${stop || "—"}</p></section>
+      <section class="human-experiment-wide"><h4 data-toc="false">${language === "zh" ? "最小实验怎么做" : "Smallest experiment"}</h4><p>${pilot || "—"}</p></section>
+      <section><h4 data-toc="false">${language === "zh" ? "和谁比才公平" : "Fair comparison"}</h4><p>${baseline || "—"}</p></section>
+      <section><h4 data-toc="false">${language === "zh" ? "原任务怎么评，谁来判对错" : "Original-task truth"}</h4><p>${truth || "—"}</p></section>
+      <section><h4 data-toc="false">${language === "zh" ? "主要看什么结果" : "What to measure"}</h4><p>${metric || "—"}</p></section>
+      <section><h4 data-toc="false">${language === "zh" ? "什么结果值得继续" : "What counts as a win"}</h4><p>${go || "—"}</p></section>
+      <section class="human-experiment-stop"><h4 data-toc="false">${language === "zh" ? "什么情况直接放弃" : "When to stop"}</h4><p>${stop || "—"}</p></section>
     </div>
+    ${executionDetails}
     ${sourceDetails}
-    ${renderExperimentProtocol(idea, "ICLR")}
   </section>`;
 }
 function renderHumanReviewedIdeaCard(idea, meta, index) {
@@ -1028,21 +1083,21 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const absorbedIdeas = absorbed.map(currentFinalIdeaById).filter(Boolean);
   const absorbedNote = absorbed.length ? `<div class="human-absorbed-methods"><b>${language === "zh" ? "已吸收 FINAL 方法资产" : "Absorbed FINAL method assets"}</b>${absorbed.map((id)=>`<span>${esc(id)}</span>`).join("")}</div>` : "";
   return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}">
-    <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(meta.status))}</span><p>${textOf(current.purpose)}</p></div></summary>
+    <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(meta.status))}</span><p>${textOf(meta.feedback)}</p></div></summary>
     <div class="human-idea-body">
-      <section class="human-feedback-box"><h4 data-toc="false">${language === "zh" ? "当前人工意见" : "Current human review"}</h4><p>${textOf(meta.feedback)}</p>${absorbedNote}</section>
-      <div class="human-core-grid">
-        <section><h4 data-toc="false">${language === "zh" ? "学习问题" : "Learning problem"}</h4><p>${textOf(current.purpose)}</p></section>
-        <section><h4 data-toc="false">${language === "zh" ? "核心直觉（合并后）" : "Core intuition (merged)"}</h4><p>${esc(intuition)}</p></section>
-        <section><h4 data-toc="false">${language === "zh" ? "核心方法" : "Core method"}</h4><p>${textOf(current.core_idea)}</p></section>
-        <section><h4 data-toc="false">${language === "zh" ? "方法逻辑" : "Method logic"}</h4><p>${textOf(current.method_logic)}</p></section>
+      <div class="human-core-grid human-reading-grid">
+        <section><h4 data-toc="false">${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</h4><p>${textOf(current.purpose)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</h4><p>${esc(intuition)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</h4><p>${textOf(current.core_idea)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "为什么值得试" : "Why might this work?"}</h4><p>${textOf(current.rationale || current.importance)}</p></section>
       </div>
-      <div class="human-evidence-grid">
-        <section><h4 data-toc="false">${language === "zh" ? "为什么合理／成立依据" : "Why it should work"}</h4><p>${textOf(current.rationale)}</p></section>
-        <section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${textOf(current.importance)}</p></section>
-        <section><h4 data-toc="false">${language === "zh" ? "相对优势" : "Comparative advantage"}</h4><p>${textOf(current.comparative_advantage)}</p></section>
-        <section><h4 data-toc="false">${language === "zh" ? "最近工作与碰撞边界" : "Nearest work / collision"}</h4><p>${textOf(current.collision_boundary)}</p><div class="cvpr-chip-row">${(current.nearest_work || []).map((name) => `<span>${esc(name)}</span>`).join("")}</div></section>
-      </div>
+      ${absorbedNote}
+      <details class="human-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "需要写论文或审 novelty 时再展开" : "Open when checking implementation or novelty"}</small></summary><div class="human-evidence-grid">
+        <section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${textOf(current.method_logic)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "为什么这个问题重要" : "Why the problem matters"}</h4><p>${textOf(current.importance)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds over simpler methods"}</h4><p>${textOf(current.comparative_advantage)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${textOf(current.collision_boundary)}</p><div class="cvpr-chip-row">${(current.nearest_work || []).map((name) => `<span>${esc(name)}</span>`).join("")}</div></section>
+      </div></details>
       ${renderIdeaExperimentSection(current,meta,absorbedIdeas)}
     </div>
   </details>`;
@@ -1063,7 +1118,7 @@ function renderDiscussedIdeaBank() {
     }).join("");
     return `<section class="human-science-group" id="discussed-group-${esc(group.id.toLowerCase())}"><header><span>${esc(group.id)}</span><div><h3>${textOf(group.title)}</h3><p>${textOf(group.question)}</p></div><strong>${rows.length}</strong></header>${statusBlocks}</section>`;
   }).join("");
-  return `<section class="panel human-review-overview"><div class="idea-panel-heading"><div><b class="human-overview-kicker">H1 · ${esc(review.review_date || "2026-08-09")}</b><p class="section-intro">${language === "zh" ? "这一章只按科学问题和当前成熟度组织今天已经人工讨论过的 Idea。A-1、B-1 等编号是新的组内稳定编号；历史 R1/R2/R3/v5 等批次仅保留为来源元数据，不参与前端分类。" : "This chapter organizes already-discussed ideas only by scientific question and current maturity. Codes such as A-1 and B-1 are the new stable within-group identifiers; historical R1/R2/R3/v5 rounds remain provenance metadata rather than frontend categories."}</p></div><strong>${all.length} ${language === "zh" ? "个已讨论" : "discussed"}</strong></div><div class="human-review-stats">${statuses.map((status) => `<div class="human-stat human-stat-${humanReviewStatusTone(status)}"><b>${counts[status] || 0}</b><span>${esc(humanReviewStatusLabel(status))}</span></div>`).join("")}</div></section>${groups}`;
+  return `<section class="panel human-review-overview"><div class="idea-panel-heading"><div><b class="human-overview-kicker">H1 · ${esc(review.review_date || "2026-08-09")}</b><p class="section-intro">${language === "zh" ? "按科学问题和当前成熟度组织。卡片外先给一句人话结论；展开后先看“问题—直觉—具体做法—为什么值得试”，技术细节和 novelty 边界默认收起，实验只保留一个“怎么验证”板块。历史 R1/R2/R3/v5 仅作来源记录。" : "Organized by scientific problem and current maturity. Each card starts with a plain-language bottom line; inside, read problem → intuition → concrete method → why it is worth trying. Technical/novelty details stay collapsed, and validation appears once in a single 'how to test' section. Historical rounds remain provenance only."}</p></div><strong>${all.length} ${language === "zh" ? "个已讨论" : "discussed"}</strong></div><div class="human-review-stats">${statuses.map((status) => `<div class="human-stat human-stat-${humanReviewStatusTone(status)}"><b>${counts[status] || 0}</b><span>${esc(humanReviewStatusLabel(status))}</span></div>`).join("")}</div></section>${groups}`;
 }
 function supplementalGroupId(idea) {
   const key = `${idea.idea_id || idea.id || ""} ${textOf(idea.title || {})}`.toLowerCase();
@@ -1091,7 +1146,9 @@ function renderSupplementalIdeaCard(row) {
   const collision = textOf(idea.collision_boundary || richSource.collision_boundary || {});
   const sourceLabel = source === "final-merged" ? (language === "zh" ? "FINAL20 合并审查后独立保留" : "Independent after FINAL20 merge audit") : `${language === "zh" ? "网络灵感" : "internet-inspired"} · ${String(idea.external_verdict || idea.final_status || "pending").toUpperCase()}`;
   const code = idea.code || (language === "zh" ? "新增候选" : "new candidate");
-  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div><section><b>${language === "zh" ? "学习问题" : "Learning problem"}</b><p>${esc(problem || "—")}</p></section><section><b>${language === "zh" ? "核心直觉" : "Core intuition"}</b><p>${esc(intuition || "—")}</p></section><section><b>${language === "zh" ? "核心方法" : "Core method"}</b><p>${esc(method || textOf(idea.hypothesis || {}))}</p></section><section><b>${language === "zh" ? "方法流程" : "Method flow"}</b><p>${esc(methodLogic || "—")}</p></section><section><b>${language === "zh" ? "为什么合理／成立依据" : "Why it should work"}</b><p>${esc(rationale || "—")}</p></section><section><b>${language === "zh" ? "为什么重要" : "Why it matters"}</b><p>${esc(importance || problem || "—")}</p></section><section><b>${language === "zh" ? "相对优势／存活主张" : "Comparative advantage / surviving claim"}</b><p>${esc(advantage || "—")}</p></section><section><b>${language === "zh" ? "最近工作与碰撞边界" : "Nearest work / collision"}</b><p>${esc(collision || "—")}</p></section><section><b>${language === "zh" ? "最强对照" : "Strongest baseline"}</b><p>${textOf(idea.strongest_baseline || richSource.strongest_baseline || {})}</p></section><section><b>${language === "zh" ? "当前用途" : "Current role"}</b><p>${source === "final-merged" ? (language === "zh" ? "20 个 FINAL 已完成去重合并；该方向无法合理并入第一章，因此作为独立新增 Idea 保留，等待下一轮人工讨论。" : "The 20 FINAL ideas have been deduplicated and merged; this direction could not be reasonably absorbed into Chapter 1 and remains as an independent new idea for human discussion.") : (language === "zh" ? "尚未完成人工讨论；下一轮先判断是否并入已有科学问题。" : "Not yet human-reviewed; next decide whether it should merge into an existing scientific problem.")}</p></section>${renderIdeaExperimentSection(idea,{status:"new-review"},sourceIdeas)}</div></details>`;
+  const baseline = textOf(idea.strongest_baseline || richSource.strongest_baseline || {});
+  const currentRole = source === "final-merged" ? (language === "zh" ? "FINAL 去重后仍不能合理并入已有方向，因此暂时作为独立 Idea 保留，等下一轮人工讨论。" : "After FINAL deduplication this still does not merge cleanly into an existing direction, so it remains independent pending human review.") : (language === "zh" ? "这是新增候选，还没有完成当前轮人工讨论；先判断问题是否真实、方法是否有实质，再决定保留或合并。" : "This is a new candidate that has not completed human review; first test whether the problem is real and the method substantive, then keep or merge it.");
+  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div class="supplemental-human-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem || "—")}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition || "—")}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || textOf(idea.hypothesis || {}))}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || "—")}</p></section><details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4>${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic || "—")}</p></section><section><h4>${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || problem || "—")}</p></section><section><h4>${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage || "—")}</p></section><section><h4>${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision || "—")}</p></section><section><h4>${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline || "—"}</p></section><section><h4>${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(idea,{status:"new-review"},sourceIdeas)}</div></details>`;
 }
 function renderNewIdeaCandidates() {
   const finalIdeas = (window.FINAL20_MERGE_AUDIT?.standalone_ideas || []).map((idea) => ({source:"final-merged",idea}));
