@@ -642,11 +642,20 @@ function indexCatalog(records) {
     return record;
   });
 }
+function refreshAfterCatalogUpdate() {
+  if (pageId === "paper-ideas") {
+    const root = document.getElementById("dynamic-page");
+    if (root) hydrateCitations(root);
+    updateCitationStatus();
+    return;
+  }
+  updateCounter();
+  renderPage();
+}
 async function loadCatalog() {
   citationIndex = new Map();
   catalog = indexCatalog(mergeCatalog([], DATA));
-  updateCounter();
-  renderPage();
+  refreshAfterCatalogUpdate();
   let upstream = [];
   let semanticScholar = [];
   try {
@@ -672,8 +681,7 @@ async function loadCatalog() {
   semanticScholar = await fetchSemanticScholarSnapshot();
   citationIndex = new Map();
   catalog = indexCatalog(mergeCatalog(upstream, [...semanticScholar, ...DATA]));
-  updateCounter();
-  renderPage();
+  refreshAfterCatalogUpdate();
 }
 function updateCounter(extra = "") {
   const counter = document.getElementById("result-count");
@@ -1148,7 +1156,7 @@ function renderSupplementalIdeaCard(row) {
   const code = idea.code || (language === "zh" ? "新增候选" : "new candidate");
   const baseline = textOf(idea.strongest_baseline || richSource.strongest_baseline || {});
   const currentRole = source === "final-merged" ? (language === "zh" ? "FINAL 去重后仍不能合理并入已有方向，因此暂时作为独立 Idea 保留，等下一轮人工讨论。" : "After FINAL deduplication this still does not merge cleanly into an existing direction, so it remains independent pending human review.") : (language === "zh" ? "这是新增候选，还没有完成当前轮人工讨论；先判断问题是否真实、方法是否有实质，再决定保留或合并。" : "This is a new candidate that has not completed human review; first test whether the problem is real and the method substantive, then keep or merge it.");
-  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div class="supplemental-human-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem || "—")}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition || "—")}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || textOf(idea.hypothesis || {}))}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || "—")}</p></section><details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4>${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic || "—")}</p></section><section><h4>${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || problem || "—")}</p></section><section><h4>${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage || "—")}</p></section><section><h4>${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision || "—")}</p></section><section><h4>${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline || "—"}</p></section><section><h4>${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(idea,{status:"new-review"},sourceIdeas)}</div></details>`;
+  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div class="supplemental-human-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem || "—")}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition || "—")}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || textOf(idea.hypothesis || {}))}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || "—")}</p></section><details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || problem || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline || "—"}</p></section><section><h4 data-toc="false">${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(idea,{status:"new-review"},sourceIdeas)}</div></details>`;
 }
 function renderNewIdeaCandidates() {
   const finalIdeas = (window.FINAL20_MERGE_AUDIT?.standalone_ideas || []).map((idea) => ({source:"final-merged",idea}));
