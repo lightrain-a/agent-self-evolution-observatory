@@ -98,21 +98,23 @@ def main() -> None:
           newGroups: document.querySelectorAll('.supplemental-group').length,
           newCards: document.querySelectorAll('.supplemental-idea-card').length,
           openNewCards: document.querySelectorAll('.supplemental-idea-card[open]').length,
-          newFinal: [...document.querySelectorAll('.supplemental-idea-card summary small')].filter(x=>(x.textContent||'').includes('FINAL PASS')).length,
+          newFinal: [...document.querySelectorAll('.supplemental-idea-card summary small')].filter(x=>/FINAL20|merge audit/.test(x.textContent||'')).length,
           newInspired: [...document.querySelectorAll('.supplemental-idea-card summary small')].filter(x=>/网络灵感|internet-inspired/.test(x.textContent||'')).length,
+          mergedMethods: document.querySelectorAll('.human-absorbed-methods').length,
           text: document.body.textContent || ''
         };""")
         require(ideas["chapters"] == 2, f"paper-ideas should have exactly two frontend chapters, got {ideas['chapters']}")
-        require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (3, 12, 0), f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
+        require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (3, 11, 0), f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
         require(ideas["discussedGroups"] == 6 and ideas["discussedCards"] == 26, f"expected six scientific groups and 26 discussed ideas, got {ideas['discussedGroups']}/{ideas['discussedCards']}")
         require((ideas["readyCards"], ideas["redesignCards"], ideas["pausedCards"]) == (5, 14, 7), f"human-review status counts are wrong: {ideas['readyCards']}/{ideas['redesignCards']}/{ideas['pausedCards']}")
         require(ideas["feedbackBoxes"] == 26, f"every discussed idea must expose the current human feedback, got {ideas['feedbackBoxes']}")
         require(ideas["openDiscussedCards"] == 0 and ideas["openNewCards"] == 0, f"all idea cards must be collapsed by default, got {ideas['openDiscussedCards']}/{ideas['openNewCards']}")
         require(len(ideas["codes"]) == 26 and len(set(ideas["codes"])) == 26, f"group codes are missing or duplicated: {ideas['codes']}")
         require(all(code in ideas["codes"] for code in ("A-1","A-5","B-1","B-7","C-1","D-1","E-1","F-1","F-3")), f"expected stable group codes are missing: {ideas['codes']}")
-        require(ideas["newGroups"] == 6 and ideas["newCards"] == 32, f"new-idea staging area is incomplete: {ideas['newGroups']}/{ideas['newCards']}")
-        require((ideas["newFinal"], ideas["newInspired"]) == (17, 15), f"supplemental provenance counts are wrong: {ideas['newFinal']}/{ideas['newInspired']}")
-        require("已讨论 Idea" in ideas["text"] and "新增 Idea" in ideas["text"], "two-chapter Chinese reading structure is not visible")
+        require(ideas["newGroups"] == 5 and ideas["newCards"] == 18, f"new-idea staging area is incomplete after FINAL20 merge audit: {ideas['newGroups']}/{ideas['newCards']}")
+        require((ideas["newFinal"], ideas["newInspired"]) == (3, 15), f"supplemental provenance counts are wrong after merge: {ideas['newFinal']}/{ideas['newInspired']}")
+        require(ideas["mergedMethods"] >= 8, f"merged FINAL method provenance is not visible on discussed ideas: {ideas['mergedMethods']}")
+        require(all(marker in ideas["text"] for marker in ("已讨论 Idea","新增 Idea","预算校准的预测性回归面板","有害记忆路径识别与最小隔离修复","E-3","E-4","B-8")), "merged/current idea titles or standalone FINAL codes are missing")
         print("PASS")
         print("Focused system/idea pages verified in a real browser")
     finally:
