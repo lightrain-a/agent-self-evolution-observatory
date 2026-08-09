@@ -98,6 +98,8 @@ def main() -> None:
           redesignCards: document.querySelectorAll('.human-review-idea-card.human-tone-redesign').length,
           pausedCards: document.querySelectorAll('.human-review-idea-card.human-tone-paused').length,
           feedbackSummaries: document.querySelectorAll('.human-review-idea-card .human-idea-summary p').length,
+          humanOpinionBoxes: document.querySelectorAll('.human-opinion-box').length,
+          iterationBoxes: document.querySelectorAll('.human-iteration-box').length,
           concreteExamples: [...document.querySelectorAll('.human-review-idea-card h4')].filter(x=>/举个具体例子|Concrete example/.test(x.textContent||'')).length,
           parentMergeRules: [...document.querySelectorAll('.human-review-idea-card h4')].filter(x=>/必须并回父 Idea|must merge into its parent/.test(x.textContent||'')).length,
           openDiscussedCards: document.querySelectorAll('.human-review-idea-card[open]').length,
@@ -119,7 +121,9 @@ def main() -> None:
         require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (3, 11, 0), f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
         require(ideas["discussedGroups"] == 6 and ideas["discussedCards"] == 26, f"expected six scientific groups and 26 discussed ideas, got {ideas['discussedGroups']}/{ideas['discussedCards']}")
         require((ideas["readyCards"], ideas["redesignCards"], ideas["pausedCards"]) == (2, 17, 7), f"human-review status counts are wrong: {ideas['readyCards']}/{ideas['redesignCards']}/{ideas['pausedCards']}")
-        require(ideas["feedbackSummaries"] == 26, f"every discussed idea must expose the current human feedback in its summary, got {ideas['feedbackSummaries']}")
+        require(ideas["feedbackSummaries"] == 26, f"every discussed idea must expose one current summary, got {ideas['feedbackSummaries']}")
+        require(ideas["humanOpinionBoxes"] == 26, f"all 26 discussed ideas must preserve the human opinion, got {ideas['humanOpinionBoxes']}")
+        require(ideas["iterationBoxes"] == 17, f"all 17 method-redesign ideas must show the 2026-08-10 iteration, got {ideas['iterationBoxes']}")
         require(ideas["concreteExamples"] == 26 and ideas["parentMergeRules"] >= 1, f"intuition/example or parent-merge UI gate is missing: {ideas['concreteExamples']}/{ideas['parentMergeRules']}")
         require(ideas["openDiscussedCards"] == 0 and ideas["openNewCards"] == 0, f"all idea cards must be collapsed by default, got {ideas['openDiscussedCards']}/{ideas['openNewCards']}")
         require(len(ideas["codes"]) == 26 and len(set(ideas["codes"])) == 26, f"group codes are missing or duplicated: {ideas['codes']}")
@@ -127,8 +131,8 @@ def main() -> None:
         require(ideas["newGroups"] == 5 and ideas["newCards"] == 18, f"new-idea staging area is incomplete after FINAL20 merge audit: {ideas['newGroups']}/{ideas['newCards']}")
         require((ideas["newFinal"], ideas["newInspired"]) == (3, 15), f"supplemental provenance counts are wrong after merge: {ideas['newFinal']}/{ideas['newInspired']}")
         require(ideas["mergedMethods"] >= 8, f"merged FINAL method provenance is not visible on discussed ideas: {ideas['mergedMethods']}")
-        require(ideas["freshCollisionBlocks"] == 5 and ideas["freshCollisionLinks"] >= 14, f"fresh reducibility sources are missing from repaired ideas: {ideas['freshCollisionBlocks']}/{ideas['freshCollisionLinks']}")
-        require(all(marker in ideas["text"] for marker in ("已讨论 Idea","新增 Idea","预算校准的预测性回归面板","有害记忆路径识别与最小隔离修复","E-3","E-4","B-8")), "merged/current idea titles or standalone FINAL codes are missing")
+        require(ideas["freshCollisionBlocks"] == 17 and ideas["freshCollisionLinks"] >= 48, f"fresh reducibility sources are missing from redesign ideas: {ideas['freshCollisionBlocks']}/{ideas['freshCollisionLinks']}")
+        require(all(marker in ideas["text"] for marker in ("已讨论 Idea","新增 Idea","预算校准的预测性回归面板","跨过程验证经验蒸馏","成对编辑效应工作流更新策略","决策翻转驱动的转移准入","E-3","E-4","B-8")), "redesigned/current idea titles or standalone FINAL codes are missing")
 
         execute(session_id, "document.documentElement.style.scrollBehavior='auto'; window.scrollTo(0, (document.documentElement.scrollHeight-window.innerHeight) * 0.42); return true;")
         time.sleep(1)

@@ -12,6 +12,13 @@ from .method_detail_b6 import DETAIL as B6_METHOD_DETAIL
 from .method_detail_c1 import DETAIL as C1_METHOD_DETAIL
 from .method_detail_d1 import DETAIL as D1_METHOD_DETAIL
 from .method_detail_f3 import DETAIL as F3_METHOD_DETAIL
+from .method_redesign_a_20260810 import DETAILS as REDESIGN_A_20260810
+from .method_redesign_b1_b3_20260810 import DETAILS as REDESIGN_B13_20260810
+from .method_redesign_b4_b6_20260810 import DETAILS as REDESIGN_B46_20260810
+from .method_redesign_c_d_20260810 import DETAILS as REDESIGN_CD_20260810
+from .method_redesign_e_20260810 import DETAILS as REDESIGN_E_20260810
+from .method_redesign_f12_20260810 import DETAILS as REDESIGN_F12_20260810
+from .method_redesign_f3_20260810 import DETAILS as REDESIGN_F3_20260810
 from .method_details_common import TRACK_UPDATE_OBJECTS, generic_concrete_example, method_substance, original_task_evaluation, parent_merge_gate
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "iclr-low-resource-ideas.json"
@@ -641,6 +648,13 @@ METHOD_DETAIL_OVERRIDES: dict[str, dict[str, Any]] = {
     "self-label-confidence-flow": C1_METHOD_DETAIL,
     "counterexample-generating-curriculum": D1_METHOD_DETAIL,
     "recovery-conditioned-experience": F3_METHOD_DETAIL,
+    **REDESIGN_A_20260810,
+    **REDESIGN_B13_20260810,
+    **REDESIGN_B46_20260810,
+    **REDESIGN_CD_20260810,
+    **REDESIGN_E_20260810,
+    **REDESIGN_F12_20260810,
+    **REDESIGN_F3_20260810,
 }
 
 
@@ -762,20 +776,20 @@ def build_iclr_idea_bank() -> dict[str, Any]:
             external_verdict = "pending"
         record = {
             "id":spec.id,
-            "title":spec.title,
+            "title":fields.get("title", spec.title),
             "track_id":spec.track,
             "track":TRACKS[spec.track]["label"],
-            "purpose":spec.problem,
-            "core_idea":spec.mechanism,
+            "purpose":fields.get("purpose", spec.problem),
+            "core_idea":fields.get("core_idea", spec.mechanism),
             "core_intuition":fields["core_intuition"],
             "concrete_example":fields["concrete_example"],
             "rationale":TRACKS[spec.track]["rationale"],
             "method_logic":fields["method_logic"],
             "importance":TRACKS[spec.track]["importance"],
             "comparative_advantage":fields["comparative_advantage"],
-            "collision_boundary":spec.collision,
-            "hypothesis":spec.hypothesis,
-            "nearest_work":list(spec.nearest),
+            "collision_boundary":fields.get("collision_boundary", spec.collision),
+            "hypothesis":fields.get("hypothesis", spec.hypothesis),
+            "nearest_work":list(fields.get("nearest_work", spec.nearest)),
             "datasets":list(spec.datasets),
             "domains":list(spec.domains),
             "models":list(TRACKS[spec.track]["models"]),
@@ -784,6 +798,7 @@ def build_iclr_idea_bank() -> dict[str, Any]:
             "parent_merge_gate":parent_merge_gate(fields),
             "original_task_evaluation":original_task_evaluation(),
             "fresh_reducibility_check":fields.get("fresh_reducibility_check"),
+            "redesign_iteration":fields.get("redesign_iteration"),
             "pilot":fields["pilot"],
             "decisive_metric":fields["metric"],
             "stop_condition":fields["stop"],

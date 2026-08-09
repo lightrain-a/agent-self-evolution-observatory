@@ -997,16 +997,16 @@ function humanPilotSummary(idea, fallback = "") {
   const zh = {
     "update-trust-region":"拿一批候选更新，先在固定 Probe 上记录更新前后行为怎么变，再到隐藏原任务上看哪些更新真的造成回退。比较三种接纳方式：只看当前收益、只看编辑大小、看行为漂移。只有行为漂移能更准地挡住坏更新、同时不过度拒绝好更新，才值得继续。",
     "budgeted-evolution-controller":"让同一批任务分别使用“固定更新轮数”和“学会自己决定继续 / 回滚 / 停止”的控制器。在最终成功率接近的前提下比较调用数和回退；如果控制器省不下明显调用，或者省调用会伤害任务表现，就停止。",
-    "outcome-equivalent-trajectory-contrast":"找出一批“最后都成功、但中间过程不同”的轨迹。只把多条有效成功路径共同支持的经验写入记忆，再和“成功就写入”以及单轨迹反思比较，最后到新任务上看哪种经验更能迁移、也更少造成回退。",
-    "workflow-generalization-certificate":"先正常优化一批工作流，再给它们做几种很小但有针对性的变化，例如任务重命名、工具替换和局部结构扰动。比较“通过这些检查才提交”的工作流与“只看开发集分数就提交”的工作流，最后到未见工具和未见任务图上测试。",
-    "world-model-error-gated-learning":"收集世界模型的预测错误，把它们分成两类：会改变下一步动作 / 风险 / 恢复决策的错误，以及虽然预测错了但不会改变决策的错误。只学习前一类，再和“所有错误都学”以及“按误差大小学”比较，看能否用更少更新拿到同等或更高任务收益。"
+    "outcome-equivalent-trajectory-contrast":"固定同一成功终点的不同有效过程，用同一个抽取器提候选 lesson。不是做文字共识，而是对每条 lesson 做 memory OFF/ON 干预，并 leave-one-process-family-out 验证；只有平均效用为正、最差过程也不有害的经验才写入。和 consensus、单轨迹、utility-only 在同 replay 预算下比较。",
+    "workflow-generalization-certificate":"把旧 certificate 彻底换成 paired edit-effect editor：在 source workflows 上记录同一个局部 edit 前后的真实执行增量，学习一个冻结编辑策略；到未见 API/任务图时禁止试跑候选，只允许直接选择并提交一个 edit，再和 Agentic Predictor、最近邻 edit reuse、failure heuristic 比较。",
+    "world-model-error-gated-learning":"固定能进入更新的 transition 数量。对每条真实 transition，把 world-model 预测单独替换成真值，检查冻结 policy 的动作 / 风险 / 恢复决策是否会翻转；只优先学习真正会改变决策的 transition，再和 uniform、最大误差、uncertainty、AAWM-style 选样比较。"
   };
   const en = {
     "update-trust-region":"Take a batch of candidate updates, measure how behavior changes on fixed probes, then use hidden original tasks to see which updates actually cause regressions. Compare admission by current gain, edit size, and behavioral shift. Continue only if behavioral shift blocks harmful updates more accurately without rejecting too many useful ones.",
     "budgeted-evolution-controller":"Run the same tasks with a fixed update count and with a controller that chooses continue, rollback, or stop. Compare calls and regressions at similar final success. Stop if the controller does not save substantial calls or saves calls only by hurting performance.",
-    "outcome-equivalent-trajectory-contrast":"Collect trajectories that reach the same successful endpoint through different processes. Store only experience supported across multiple valid success paths, compare against write-on-success and single-trajectory reflection, then test transfer and regression on new tasks.",
-    "workflow-generalization-certificate":"Optimize workflows normally, then apply small targeted changes such as task renaming, tool substitution, and local structural perturbation. Compare workflows admitted by these checks against workflows admitted by development score alone, then test on unseen tools and task graphs.",
-    "world-model-error-gated-learning":"Split world-model errors into those that change the next action, risk, or recovery decision and those that do not. Learn only the first group, then compare with learning every error or prioritizing by error magnitude. Test whether fewer updates preserve or improve task success."
+    "outcome-equivalent-trajectory-contrast":"Freeze distinct valid process families that reach the same successful outcome and use one extractor for candidate lessons. Instead of textual consensus, run memory OFF/ON interventions with leave-one-process-family-out validation; persist only lessons with positive mean utility and non-harmful worst-process effect. Compare against consensus, single-trajectory, and utility-only admission at matched replay budget.",
+    "workflow-generalization-certificate":"Replace the old certificate with a paired edit-effect editor: learn from true before/after execution deltas of typed local edits on source workflows, freeze the editor, and on unseen APIs/task graphs forbid candidate trials and allow exactly one direct edit commit. Compare with Agentic Predictor, nearest-neighbor edit reuse, and failure heuristics.",
+    "world-model-error-gated-learning":"Fix the number of transitions allowed into updates. For each true transition, replace only the world-model prediction with truth and test whether the frozen policy changes its action, risk, or recovery decision. Prioritize decision-switch transitions and compare with uniform, largest-error, uncertainty, and AAWM-style selection."
   };
   return (language === "zh" ? zh[id] : en[id]) || fallback;
 }
@@ -1015,16 +1015,16 @@ function humanMetricSummary(idea, fallback = "") {
   const zh = {
     "update-trust-region":"重点看三件事：坏更新识别得准不准、隐藏任务最坏回退有多大、好更新被误拒绝多少。",
     "budgeted-evolution-controller":"重点看同等任务成功率下节省了多少调用、是否减少无效更新轮次，以及跨任务后还能不能保持这种节省。",
-    "outcome-equivalent-trajectory-contrast":"重点看写入经验后对新任务的真实收益、最坏回退，以及哪些经验被正确保留 / 拒绝。",
-    "workflow-generalization-certificate":"重点看未见工具和未见任务图上的成功率、最坏回退，以及“证书通过”能否真的预测后续泛化。",
-    "world-model-error-gated-learning":"重点看任务成功率、需要学习的转移数量 / 更新成本，以及真正会改变决策的错误是否被优先修好。"
+    "outcome-equivalent-trajectory-contrast":"重点看同 replay 预算下 future-task success、负迁移率和 worst-process effect；utility-only 若等效就停止 process-invariance 主张。",
+    "workflow-generalization-certificate":"重点看 hidden workflow 零搜索直接 edit 后的真实成功增量、坏 edit 率和执行数；absolute predictor 若等效就停止。",
+    "world-model-error-gated-learning":"重点看相同 transition-update 数下的任务成功、action regret、风险 / 恢复错误，以及 decision-switch 选样是否比误差大小更省更新。"
   };
   const en = {
     "update-trust-region":"Focus on harmful-update detection, worst hidden-task regression, and how many useful updates are falsely rejected.",
     "budgeted-evolution-controller":"Focus on calls saved at equal task success, wasted update rounds avoided, and whether the saving transfers across tasks.",
-    "outcome-equivalent-trajectory-contrast":"Focus on real future-task gain, worst regression, and whether useful versus harmful experience is admitted correctly.",
-    "workflow-generalization-certificate":"Focus on success on unseen tools/task graphs, worst regression, and whether passing the certificate predicts later generalization.",
-    "world-model-error-gated-learning":"Focus on task success, number/cost of learned transitions, and whether decision-changing errors are preferentially repaired."
+    "outcome-equivalent-trajectory-contrast":"Focus on future-task success, negative transfer, and worst-process effect at matched replay budget; stop the process-invariance claim if utility-only admission matches.",
+    "workflow-generalization-certificate":"Focus on true post-edit success delta, harmful-edit rate, and executions for zero-search direct edits on hidden workflows; stop if absolute prediction matches.",
+    "world-model-error-gated-learning":"Focus on task success, action regret, risk/recovery errors, and whether decision-switch selection uses the fixed transition-update budget more effectively than error magnitude."
   };
   return (language === "zh" ? zh[id] : en[id]) || fallback;
 }
@@ -1085,7 +1085,8 @@ function renderIdeaExperimentSection(idea, meta = {}, sourceIdeas = []) {
 }
 function renderHumanReviewedIdeaCard(idea, meta, index) {
   const overlay = (window.FINAL20_MERGE_OVERRIDES || {})[idea.id] || {};
-  const current = {...idea, ...overlay};
+  const redesigned = !!idea.redesign_iteration;
+  const current = redesigned ? {...overlay, ...idea} : {...idea, ...overlay};
   const intuition = textOf(current.core_intuition || current.rationale || {});
   const example = textOf(current.concrete_example || {});
   const substance = current.method_substance || {};
@@ -1093,15 +1094,22 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const historicalVerdict = String(idea.external_verdict || "pending").toUpperCase();
   const tone = humanReviewStatusTone(meta.status);
   const code = meta.code || idea.id;
-  const absorbed = overlay.absorbed_from || [];
+  const humanOpinion = textOf(meta.feedback || {});
+  const iteration = current.redesign_iteration || {};
+  const iterationSummary = textOf(iteration.summary || {});
+  const absorbed = overlay.absorbed_from || current.absorbed_from || [];
   const absorbedIdeas = absorbed.map(currentFinalIdeaById).filter(Boolean);
   const absorbedNote = absorbed.length ? `<div class="human-absorbed-methods"><b>${language === "zh" ? "已吸收 FINAL 方法资产" : "Absorbed FINAL method assets"}</b>${absorbed.map((id)=>`<span>${esc(id)}</span>`).join("")}</div>` : "";
   const freshCheck = current.fresh_reducibility_check || {};
   const freshSources = (freshCheck.sources || []).map((source) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}</a>`).join("");
   const freshBlock = freshSources ? `<section class="human-fresh-collision"><h4 data-toc="false">${language === "zh" ? `Fresh reducibility · ${esc(freshCheck.review_date || "")}` : `Fresh reducibility · ${esc(freshCheck.review_date || "")}`}</h4><p>${language === "zh" ? "以下是一手来源；上面的“最近工作与真正边界”已经按这些工作收窄，不把已有人做过的部分继续当贡献。" : "Primary sources below support the narrowed boundary above; already-covered mechanisms are not counted as the contribution."}</p><nav>${freshSources}</nav></section>` : "";
   return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}">
-    <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(meta.status))}</span><p>${textOf(meta.feedback)}</p></div></summary>
+    <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(meta.status))}</span><p>${esc(iterationSummary || humanOpinion)}</p></div></summary>
     <div class="human-idea-body">
+      <div class="human-review-history">
+        <section class="human-opinion-box"><h4 data-toc="false">${language === "zh" ? "人工意见 · 2026-08-09（保留）" : "Human opinion · 2026-08-09 (preserved)"}</h4><p>${esc(humanOpinion || "—")}</p></section>
+        ${iterationSummary ? `<section class="human-iteration-box"><h4 data-toc="false">${language === "zh" ? `本轮方法迭代 · ${esc(iteration.round || "2026-08-10")}` : `Current method iteration · ${esc(iteration.round || "2026-08-10")}`}</h4><p>${esc(iterationSummary)}</p>${iteration.verdict ? `<small>${language === "zh" ? "当前门禁" : "Current gate"}: ${esc(iteration.verdict)}</small>` : ""}</section>` : ""}
+      </div>
       <div class="human-core-grid human-reading-grid">
         <section><h4 data-toc="false">${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</h4><p>${textOf(current.purpose)}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</h4><p>${esc(intuition)}</p></section>
@@ -1139,7 +1147,7 @@ function renderDiscussedIdeaBank() {
     }).join("");
     return `<section class="human-science-group" id="discussed-group-${esc(group.id.toLowerCase())}"><header><span>${esc(group.id)}</span><div><h3>${textOf(group.title)}</h3><p>${textOf(group.question)}</p></div><strong>${rows.length}</strong></header>${statusBlocks}</section>`;
   }).join("");
-  return `<section class="panel human-review-overview"><div class="idea-panel-heading"><div><b class="human-overview-kicker">H1 · ${esc(review.review_date || "2026-08-09")}</b><p class="section-intro">${language === "zh" ? "按科学问题和当前成熟度组织。卡片外先给一句人话结论；展开后先看“问题—直觉—具体做法—为什么值得试”，技术细节和 novelty 边界默认收起，实验只保留一个“怎么验证”板块。历史 R1/R2/R3/v5 仅作来源记录。" : "Organized by scientific problem and current maturity. Each card starts with a plain-language bottom line; inside, read problem → intuition → concrete method → why it is worth trying. Technical/novelty details stay collapsed, and validation appears once in a single 'how to test' section. Historical rounds remain provenance only."}</p></div><strong>${all.length} ${language === "zh" ? "个已讨论" : "discussed"}</strong></div><div class="human-review-stats">${statuses.map((status) => `<div class="human-stat human-stat-${humanReviewStatusTone(status)}"><b>${counts[status] || 0}</b><span>${esc(humanReviewStatusLabel(status))}</span></div>`).join("")}</div></section>${groups}`;
+  return `<section class="panel human-review-overview"><div class="idea-panel-heading"><div><b class="human-overview-kicker">H1 · ${esc(review.review_date || "2026-08-09")}</b><p class="section-intro">${language === "zh" ? "按科学问题和当前成熟度组织。26 个已讨论 Idea 的人工意见永久保留；需要方法继续打磨的 Idea 另显示 2026-08-10 方法重构结论。展开后看“人工意见 → 本轮迭代 → 问题—直觉—具体做法—例子—论文边界—决定性实验”，历史意见不会被后续改写覆盖。" : "Organized by scientific problem and current maturity. Human opinions for all 26 discussed ideas are permanently preserved; ideas under method redesign additionally show the 2026-08-10 redesign conclusion. Expanded cards show human opinion → current iteration → problem → intuition → method → example → paper boundary → decisive experiment, without overwriting historical human judgment."}</p></div><strong>${all.length} ${language === "zh" ? "个已讨论" : "discussed"}</strong></div><div class="human-review-stats">${statuses.map((status) => `<div class="human-stat human-stat-${humanReviewStatusTone(status)}"><b>${counts[status] || 0}</b><span>${esc(humanReviewStatusLabel(status))}</span></div>`).join("")}</div></section>${groups}`;
 }
 function supplementalGroupId(idea) {
   const key = `${idea.idea_id || idea.id || ""} ${textOf(idea.title || {})}`.toLowerCase();

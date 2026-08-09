@@ -186,21 +186,24 @@ class ALFWorldGameRunner:
         self.env_type = str(config["env"]["type"])
         self._environment_factory = environment_factory
         self._wrappers: dict[str, Any] = {}
+        self._all_game_files: dict[str, tuple[str, ...]] = {}
         self.wrapper_build_count = 0
 
     def _wrapper(self, split: str):
         split = str(split)
         if split not in self._wrappers:
-            self._wrappers[split] = self._environment_factory(self.env_type)(self.config, train_eval=split)
+            wrapper = self._environment_factory(self.env_type)(self.config, train_eval=split)
+            files = tuple(str(path) for path in list(getattr(wrapper, "game_files", []) or []))
+            if not files:
+                raise RuntimeError(f"ALFWorld exposed no game files for split {split}")
+            self._wrappers[split] = wrapper
+            self._all_game_files[split] = files
             self.wrapper_build_count += 1
         return self._wrappers[split]
 
     def available_game_files(self, split: str) -> list[str]:
-        wrapper = self._wrapper(split)
-        files = [str(path) for path in list(getattr(wrapper, "game_files", []) or [])]
-        if not files:
-            raise RuntimeError(f"ALFWorld exposed no game files for split {split}")
-        return files
+        self._wrapper(split)
+        return list(self._all_game_files[str(split)])
 
     def build_env(self, split: str, game_files: list[str] | None = None):
         wrapper = self._wrapper(split)

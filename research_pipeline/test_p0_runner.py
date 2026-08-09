@@ -87,6 +87,7 @@ class P0RunnerTest(unittest.TestCase):
 
         runner = ALFWorldGameRunner({"env": {"type": "AlfredTWEnv"}}, environment_factory=factory)
         self.assertEqual(runner.available_game_files("train"), ["train-a", "train-b"])
+        runner.build_env("train", ["train-b"])
         self.assertEqual(runner.available_game_files("train"), ["train-a", "train-b"])
         self.assertEqual(runner.available_game_files("eval_out_of_distribution"), ["eval_out_of_distribution-a", "eval_out_of_distribution-b"])
         self.assertEqual(builds, ["train", "eval_out_of_distribution"])

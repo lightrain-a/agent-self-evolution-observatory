@@ -50,46 +50,74 @@ class IclrIdeaBankTest(unittest.TestCase):
                 self.assertIn("worst", original["primary_endpoints"]["en"].lower())
                 self.assertIn(idea["parent_merge_gate"]["status"], {"not-applicable", "merge-if-tied", "merged"})
 
-    def test_five_repaired_method_contracts_are_specific(self) -> None:
+    def test_method_redesign_round_20260810_is_specific_and_sourced(self) -> None:
         by_id = {idea["id"]: idea for idea in self.ideas}
         b4 = by_id["causally-verified-experience-admission"]
         self.assertEqual(b4["parent_merge_gate"]["parent_id"], "regression-gated-self-evolution")
         self.assertEqual(b4["parent_merge_gate"]["status"], "merge-if-tied")
-        self.assertIn("6 个 sentinel", b4["method_logic"]["zh"])
-        self.assertIn("same six probes", b4["strongest_baseline"]["en"].lower())
+        self.assertIn("K=6", b4["method_logic"]["zh"])
+        self.assertIn("same k=6", b4["strongest_baseline"]["en"].lower())
 
         b6 = by_id["memory-half-life"]
         self.assertIn("reuse", b6["core_intuition"]["en"].lower())
-        self.assertIn("memory-on/off", b6["method_logic"]["en"].lower())
+        self.assertIn("memory off/on", b6["method_logic"]["en"].lower())
         self.assertIn("recency+frequency", b6["strongest_baseline"]["en"].lower())
 
         c1 = by_id["self-label-confidence-flow"]
         self.assertIn("label-event dag", c1["method_logic"]["en"].lower())
         self.assertIn("independent-anchor", c1["strongest_baseline"]["en"].lower())
-        self.assertIn("not repeated full-model training", c1["method_logic"]["en"].lower())
+        self.assertIn("effective evidence", c1["method_logic"]["en"].lower())
 
         d1 = by_id["counterexample-generating-curriculum"]
         self.assertIn("1-minimal", d1["method_logic"]["en"].lower())
-        self.assertIn("without delta debugging", d1["strongest_baseline"]["en"].lower())
-        self.assertIn("generator output is not a label", d1["method_substance"]["learning_signal"]["en"].lower())
+        self.assertIn("without minimization", d1["strongest_baseline"]["en"].lower())
+        self.assertIn("1-minimal", d1["method_substance"]["learning_signal"]["en"].lower())
 
         f3 = by_id["recovery-conditioned-experience"]
         self.assertIn("p0a", f3["method_logic"]["en"].lower())
-        self.assertIn("nonzero", f3["method_logic"]["en"].lower())
-        self.assertIn("state vectors", f3["method_substance"]["independent_truth"]["en"].lower())
+        self.assertIn("typed δs", f3["method_logic"]["en"].lower())
+        self.assertIn("exact program state", f3["method_substance"]["independent_truth"]["en"].lower())
 
-        for idea_id in (
+        redesigned_ids = (
+            "regression-gated-self-evolution",
+            "compositional-update-compatibility",
+            "lineage-aware-rollback",
+            "outcome-equivalent-trajectory-contrast",
+            "contradiction-preserving-consolidation",
+            "retrieval-interference-auditor",
             "causally-verified-experience-admission",
+            "local-counterexample-memory-repair",
             "memory-half-life",
             "self-label-confidence-flow",
+            "evaluator-coadaptation-guard",
             "counterexample-generating-curriculum",
+            "workflow-generalization-certificate",
+            "workflow-branch-credit",
+            "world-model-error-gated-learning",
+            "irreversible-action-counterfactuals",
             "recovery-conditioned-experience",
-        ):
-            with self.subTest(fresh_reducibility=idea_id):
-                fresh = by_id[idea_id].get("fresh_reducibility_check") or {}
-                self.assertEqual(fresh.get("review_date"), "2026-08-09")
+        )
+        self.assertEqual(len(redesigned_ids), 17)
+        for idea_id in redesigned_ids:
+            with self.subTest(redesign=idea_id):
+                idea = by_id[idea_id]
+                iteration = idea.get("redesign_iteration") or {}
+                self.assertEqual(iteration.get("round"), "2026-08-10")
+                self.assertTrue(iteration.get("verdict"))
+                self.assertTrue((iteration.get("summary") or {}).get("zh"))
+                fresh = idea.get("fresh_reducibility_check") or {}
+                self.assertEqual(fresh.get("review_date"), "2026-08-10")
                 self.assertGreaterEqual(len(fresh.get("sources") or []), 2)
                 self.assertTrue(all(str(source.get("url", "")).startswith("https://") for source in fresh["sources"]))
+                self.assertGreaterEqual(len(idea["method_logic"]["zh"]), 40)
+                self.assertGreaterEqual(len(idea["strongest_baseline"]["zh"]), 20)
+                self.assertGreaterEqual(len(idea["stop_condition"]["zh"]), 20)
+
+        self.assertEqual(by_id["outcome-equivalent-trajectory-contrast"]["title"]["zh"], "跨过程验证经验蒸馏")
+        self.assertEqual(by_id["workflow-generalization-certificate"]["title"]["zh"], "成对编辑效应工作流更新策略")
+        self.assertEqual(by_id["world-model-error-gated-learning"]["title"]["zh"], "决策翻转驱动的转移准入")
+        self.assertEqual(by_id["causally-verified-experience-admission"]["parent_merge_gate"]["parent_id"], "regression-gated-self-evolution")
+        self.assertEqual(by_id["workflow-branch-credit"]["parent_merge_gate"]["parent_id"], "workflow-generalization-certificate")
 
     def test_primary_open_weight_and_api_policy(self) -> None:
         policy = self.payload["policy"]
