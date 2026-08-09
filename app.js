@@ -27,6 +27,8 @@ const CITATION_CONFIG = window.CITATION_RANKING_CONFIG || {sourceName:"OpenAlex"
 const CITATION_CACHE_KEY = `agent-evolution-citations-${CITATION_CONFIG.cacheVersion || "v1"}`;
 const CITATION_CACHE_MAX_AGE = (CITATION_CONFIG.cacheMaxAgeDays || 7) * 24 * 60 * 60 * 1000;
 const pageId = document.body.dataset.page || "home";
+const NAVIGATION_TYPE = performance.getEntriesByType?.("navigation")?.[0]?.type || "navigate";
+if (pageId === "paper-ideas" && "scrollRestoration" in history) history.scrollRestoration = "manual";
 const initialQuery = new URLSearchParams(location.search);
 let language = localStorage.getItem("agent-evolution-language") || "en";
 let catalog = [];
@@ -200,6 +202,15 @@ function textOf(value) {
   if (typeof value === "string") return value;
   if (!value) return "";
   return value[language] || value.en || value.zh || "";
+}
+function resetPaperIdeasAfterReload() {
+  if (pageId !== "paper-ideas" || NAVIGATION_TYPE !== "reload") return;
+  const root = document.getElementById("dynamic-page");
+  root?.querySelectorAll("details[open]").forEach((node) => { node.open = false; });
+  const reset = () => window.scrollTo(0, 0);
+  reset();
+  requestAnimationFrame(() => requestAnimationFrame(reset));
+  setTimeout(reset, 120);
 }
 function setLanguage(next) {
   const oldHeight = Math.max(document.documentElement.scrollHeight, 1);
@@ -2127,5 +2138,6 @@ citationIndex = new Map();
 catalog = indexCatalog(mergeCatalog([], DATA));
 renderShell();
 renderPage();
+resetPaperIdeasAfterReload();
 bindSearch();
 loadCatalog();
