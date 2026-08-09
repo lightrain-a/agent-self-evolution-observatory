@@ -1039,7 +1039,10 @@ function renderIdeaExperimentSection(idea, meta = {}, sourceIdeas = []) {
   const rawMetric = textOf(idea.decisive_metric || rich.decisive_metric || protocol.main_table || {});
   const pilot = humanPilotSummary(idea, rawPilot);
   const metric = humanMetricSummary(idea, rawMetric);
-  const truth = textOf(idea.independent_ground_truth || rich.independent_ground_truth || data.test || {});
+  const originalEval = idea.original_task_evaluation || rich.original_task_evaluation || protocol.original_task_evaluation || {};
+  const pairedOriginal = textOf(originalEval.paired_measurement || {});
+  const independentTruth = textOf(idea.independent_ground_truth || rich.independent_ground_truth || idea.method_substance?.independent_truth || rich.method_substance?.independent_truth || originalEval.independent_truth || data.test || {});
+  const truth = [pairedOriginal,independentTruth].filter(Boolean).join(" ");
   const baseline = textOf(idea.strongest_baseline || rich.strongest_baseline || {});
   const stop = textOf(idea.stop_condition || rich.stop_condition || protocol.stop_gate || {});
   const go = textOf(idea.success_gate || rich.success_gate || protocol.success_gate || idea.surviving_claim || rich.surviving_claim || {});
@@ -1084,12 +1087,18 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const overlay = (window.FINAL20_MERGE_OVERRIDES || {})[idea.id] || {};
   const current = {...idea, ...overlay};
   const intuition = textOf(current.core_intuition || current.rationale || {});
+  const example = textOf(current.concrete_example || {});
+  const substance = current.method_substance || {};
+  const mergeGate = current.parent_merge_gate || {};
   const historicalVerdict = String(idea.external_verdict || "pending").toUpperCase();
   const tone = humanReviewStatusTone(meta.status);
   const code = meta.code || idea.id;
   const absorbed = overlay.absorbed_from || [];
   const absorbedIdeas = absorbed.map(currentFinalIdeaById).filter(Boolean);
   const absorbedNote = absorbed.length ? `<div class="human-absorbed-methods"><b>${language === "zh" ? "已吸收 FINAL 方法资产" : "Absorbed FINAL method assets"}</b>${absorbed.map((id)=>`<span>${esc(id)}</span>`).join("")}</div>` : "";
+  const freshCheck = current.fresh_reducibility_check || {};
+  const freshSources = (freshCheck.sources || []).map((source) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}</a>`).join("");
+  const freshBlock = freshSources ? `<section class="human-fresh-collision"><h4 data-toc="false">${language === "zh" ? `Fresh reducibility · ${esc(freshCheck.review_date || "")}` : `Fresh reducibility · ${esc(freshCheck.review_date || "")}`}</h4><p>${language === "zh" ? "以下是一手来源；上面的“最近工作与真正边界”已经按这些工作收窄，不把已有人做过的部分继续当贡献。" : "Primary sources below support the narrowed boundary above; already-covered mechanisms are not counted as the contribution."}</p><nav>${freshSources}</nav></section>` : "";
   return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}">
     <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(meta.status))}</span><p>${textOf(meta.feedback)}</p></div></summary>
     <div class="human-idea-body">
@@ -1097,6 +1106,7 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
         <section><h4 data-toc="false">${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</h4><p>${textOf(current.purpose)}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</h4><p>${esc(intuition)}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</h4><p>${textOf(current.core_idea)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "举个具体例子" : "Concrete example"}</h4><p>${esc(example || "—")}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "为什么值得试" : "Why might this work?"}</h4><p>${textOf(current.rationale || current.importance)}</p></section>
       </div>
       ${absorbedNote}
@@ -1104,7 +1114,10 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
         <section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${textOf(current.method_logic)}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "为什么这个问题重要" : "Why the problem matters"}</h4><p>${textOf(current.importance)}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds over simpler methods"}</h4><p>${textOf(current.comparative_advantage)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "真正更新什么 / 用什么学" : "Persistent update / learning signal"}</h4><p>${textOf(substance.persistent_update_object || {})}</p><p>${textOf(substance.learning_signal || {})}</p></section>
+        ${mergeGate.status === "merge-if-tied" ? `<section><h4 data-toc="false">${language === "zh" ? "什么时候必须并回父 Idea" : "When it must merge into its parent"}</h4><p>${textOf(mergeGate.decision_rule || {})}</p></section>` : ""}
         <section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${textOf(current.collision_boundary)}</p><div class="cvpr-chip-row">${(current.nearest_work || []).map((name) => `<span>${esc(name)}</span>`).join("")}</div></section>
+        ${freshBlock}
       </div></details>
       ${renderIdeaExperimentSection(current,meta,absorbedIdeas)}
     </div>
@@ -1254,6 +1267,12 @@ function renderCvprLowResourceBank() {
 function p0ExperimentPlan() {
   return window.P0_EXPERIMENT_PLAN || {summary:{},policy:{},ideas:[]};
 }
+function p0RuntimeReadiness() {
+  return window.P0_RUNTIME_READINESS || {environment_ready:false,launch_ready:false,blockers:["runtime-preflight-not-generated"],python_modules:{},gpus:[],model:{ready:false},alfworld_data:{ready:false},smoke_rollout:{ready:false,status:"missing"},stages:{harness_ready:false,package_ready:false,data_ready:false,smoke_rollout_ready:false,p0_execution_started:false},data_disk_free_gib:0,supported_p0:[]};
+}
+function p0CollisionRecheck() {
+  return window.P0_COLLISION_RECHECK || {ideas:{}};
+}
 function experimentPilotRegistry() {
   return window.RESEARCH_SYSTEM_STATE?.pilot_registry || {summary:{},policy:{},ideas:[],phases:[]};
 }
@@ -1313,6 +1332,7 @@ function p0StatusMeta(status) {
   const map = {
     ready:{tone:"ready",zh:"P0 可准备",en:"P0 ready"},
     "collision-recheck":{tone:"check",zh:"先查直接碰撞",en:"Collision recheck first"},
+    "method-redesign":{tone:"redesign",zh:"fresh recheck 后方法重构",en:"Method redesign after fresh recheck"},
     "scenario-check":{tone:"hold",zh:"先确认真实场景",en:"Scenario confirmation first"},
   };
   return map[status] || {tone:"hold",zh:"暂不运行",en:"Not executable"};
@@ -1329,12 +1349,16 @@ function renderP0ExperimentBoard() {
     const resource = item.resource || {};
     const prerequisites = (item.prerequisites || []).map((row) => `<li>${textOf(row)}</li>`).join("");
     const outputs = (item.outputs || []).map((name) => `<span>${esc(name)}</span>`).join("");
+    const collision = (p0CollisionRecheck().ideas || {})[item.id];
+    const collisionWorks = (collision?.closest_work || []).map((work) => `<a href="${esc(work.url)}" target="_blank" rel="noopener">${esc(work.title)} <small>${esc(String(work.year || ""))}</small></a>`).join("");
+    const collisionBlock = collision ? `<details class="p0-collision-result"><summary>${language === "zh" ? "2026-08-09 fresh collision 复查结果" : "Fresh collision recheck · 2026-08-09"}<span>${esc(String(collision.verdict || "").toUpperCase())}</span></summary><div><p>${textOf(collision.finding)}</p><b>${language === "zh" ? "必须怎么改" : "Required redesign"}</b><p>${textOf(collision.required_action)}</p>${collisionWorks ? `<nav>${collisionWorks}</nav>` : ""}</div></details>` : "";
     return `<details id="exp-${esc(String(item.code || "").toLowerCase())}" class="p0-plan-card p0-tone-${status.tone}" data-p0-status="${esc(item.status || "")}" data-p0-phase-status="${esc(phase?.status || "planned")}" data-p0-authorized="${phase?.execution_authorized ? "1" : "0"}">
       <summary><span class="p0-plan-code">${esc(item.code || "")}</span><div class="p0-plan-title"><b>${textOf(item.title)}</b><small>${language === "zh" ? status.zh : status.en}</small></div><p>${textOf(item.question)}</p><div class="p0-plan-budget"><b>${resource.max_gpus || 0} GPU · ≤${resource.gpu_hours_cap || 0} GPUh</b><span>${language === "zh" ? `最多 ${resource.episode_cap || 0} 次任务执行` : `≤${resource.episode_cap || 0} task episodes`}</span></div><div class="p0-plan-next">${textOf(item.next_action)}</div></summary>
       <div class="p0-plan-body">
         ${renderExperimentPhaseTrack(item)}
         ${renderLiveP0Result(item, phase)}
         ${prerequisites ? `<section class="p0-prerequisite"><b>${language === "zh" ? "运行前必须先完成" : "Must clear before execution"}</b><ul>${prerequisites}</ul></section>` : ""}
+        ${collisionBlock}
         <div class="p0-plan-grid">
           <section><b>${language === "zh" ? "这轮刻意不做什么" : "Deliberately out of scope"}</b><p>${textOf(item.scope)}</p></section>
           <section class="p0-wide"><b>${language === "zh" ? "最小实验怎么做" : "Smallest experiment"}</b><p>${textOf(item.design)}</p></section>
@@ -1352,8 +1376,8 @@ function renderP0ExperimentBoard() {
   }).join("");
   return `<section class="panel p0-control-board" id="p0-experiment-board"><div class="p0-board-head"><div><div class="eyebrow">P0 · ${language === "zh" ? "实验准备" : "EXPERIMENT PREPARATION"}</div><h2 data-toc="false">${language === "zh" ? "实验准备与执行队列" : "Experiment preparation and execution queue"}</h2><p>${language === "zh" ? "这里只展示真正需要做决定的 5 个小 P0。先看能不能跑，再看最小实验、主表和 Stop；完整论文级 P1/P2 不在这里提前展开。" : "This board contains only the five small P0 decisions that matter now. First check whether execution is unlocked, then read the smallest test, decision table, and Stop rule; paper-scale P1/P2 remains out of scope."}</p></div><strong>${summary.ready_now || 0}/${summary.planned || 0}<span>${language === "zh" ? "当前可准备" : "ready now"}</span></strong></div>
     <div class="p0-policy-lock"><b>${language === "zh" ? "硬门禁" : "Hard gate"}</b><span>${language === "zh" ? `只允许小 P0；P0 PASS 也不会自动进入 P1。必须先回到人工审查。目前 P1 授权数 = ${summary.p1_authorized || 0}。` : `Small P0 only. A P0 PASS never auto-escalates to P1; it must return to human review first. P1 authorizations now = ${summary.p1_authorized || 0}.`}</span></div>
-    <div class="p0-board-stats"><div><b>${summary.ready_now || 0}</b><span>${language === "zh" ? "现在可准备" : "ready now"}</span></div><div><b>${summary.collision_recheck || 0}</b><span>${language === "zh" ? "先查碰撞" : "collision checks"}</span></div><div><b>${summary.scenario_check || 0}</b><span>${language === "zh" ? "先确认场景" : "scenario check"}</span></div><div><b>${summary.gpu_hours_cap_ready_now || 0}</b><span>${language === "zh" ? "当前 GPUh 上限" : "ready GPUh cap"}</span></div><div><b>${summary.gpu_hours_cap_if_all_unlocked || 0}</b><span>${language === "zh" ? "全部解锁后上限" : "all-unlocked cap"}</span></div><div><b>${summary.p1_authorized || 0}</b><span>P1 ${language === "zh" ? "已授权" : "authorized"}</span></div></div>
-    <div class="p0-reading-note"><b>${language === "zh" ? "建议执行顺序" : "Suggested order"}</b><span>${language === "zh" ? "先并行准备 A-1 的 update/probe harness 与 A-2 的 fixed-replay harness；同时做 B-1、E-1 碰撞复查。F-1 等子龙确认真实场景后再冻结环境。" : "Prepare the A-1 update/probe harness and A-2 fixed-replay harness in parallel while rechecking B-1/E-1 collisions. Freeze F-1's environment only after scenario confirmation with Zilong."}</span></div>
+    <div class="p0-board-stats"><div><b>${summary.ready_now || 0}</b><span>${language === "zh" ? "现在可准备" : "ready now"}</span></div><div><b>${summary.method_redesign || summary.collision_recheck || 0}</b><span>${language === "zh" ? "碰撞后需重构" : "redesign after collision"}</span></div><div><b>${summary.scenario_check || 0}</b><span>${language === "zh" ? "先确认场景" : "scenario check"}</span></div><div><b>${summary.gpu_hours_cap_ready_now || 0}</b><span>${language === "zh" ? "当前 GPUh 上限" : "ready GPUh cap"}</span></div><div><b>${summary.gpu_hours_cap_if_all_unlocked || 0}</b><span>${language === "zh" ? "当前仍有效方案上限" : "current valid-plan cap"}</span></div><div><b>${summary.p1_authorized || 0}</b><span>P1 ${language === "zh" ? "已授权" : "authorized"}</span></div></div>
+    <div class="p0-reading-note"><b>${language === "zh" ? "建议执行顺序" : "Suggested order"}</b><span>${language === "zh" ? "A-1/A-2 的 harness 已准备，下一步只补 ALFWorld 运行依赖与数据并做 1-episode smoke；B-1/E-1 的 fresh collision 已完成，当前先重构方法、不占 GPU；F-1 仍等真实场景确认。" : "A-1/A-2 harnesses are prepared; next clear the ALFWorld package/data runtime gate and run a one-episode smoke. B-1/E-1 fresh collision checks are complete and now require method redesign without GPU use. F-1 still waits for real-scenario confirmation."}</span></div>
     <div class="p0-plan-list">${cards}</div>
   </section>`;
 }
@@ -1365,6 +1389,26 @@ function renderP0ExperimentEntry() {
   const running = (plan.ideas || []).filter((item) => experimentPilotPhase(item.id,"P0")?.status === "running").length;
   return `<section class="panel p0-entry-panel"><div><div class="eyebrow">P0 · ${language === "zh" ? "实验入口" : "EXPERIMENT TRACKER"}</div><h3 id="experiment-tracker-entry" data-toc="false">${language === "zh" ? "实验计划、进展和结果已移到独立页面" : "Experiment plans, progress, and results now live on a separate page"}</h3><p>${language === "zh" ? "Idea 页只保留科学问题与方法论证；实验页集中维护执行授权、前置条件、实际运行状态、效果、资源消耗、Go/Stop 与人工审批。" : "The idea page now focuses on scientific problems and mechanisms. The experiment page owns execution gates, prerequisites, live status, measured effects, resource use, Go/Stop decisions, and human approvals."}</p></div><div class="p0-entry-stats"><span><b>${summary.planned || 0}</b>${language === "zh" ? "个 P0" : "P0 plans"}</span><span><b>${summary.ready_now || 0}</b>${language === "zh" ? "已解锁" : "unlocked"}</span><span><b>${running}</b>${language === "zh" ? "运行中" : "running"}</span><span><b>${executed}</b>${language === "zh" ? "已有结果" : "with results"}</span><span><b>${registry.summary?.p1_authorized || 0}</b>P1 ${language === "zh" ? "授权" : "authorized"}</span></div><a class="link-btn p0-entry-link" href="experiments.html">${language === "zh" ? "打开实验进展与结果页 →" : "Open Experiment Progress & Results →"}</a></section>`;
 }
+function renderP0RuntimeReadiness() {
+  const runtime = p0RuntimeReadiness();
+  const gpu = (runtime.gpus || [])[0] || {};
+  const modules = runtime.python_modules || {};
+  const supported = new Set(runtime.supported_p0 || []);
+  const stages = runtime.stages || {};
+  const blockerRows = (runtime.blockers || []).map((item) => `<li>${esc(item)}</li>`).join("");
+  const execution = runtime.execution_state || {};
+  const executionStatus = String(execution.status || "").toLowerCase();
+  const executionLabels = {running:{zh:"运行中",en:"RUNNING"},collected:{zh:"采集完成",en:"COLLECTED"},registered:{zh:"已登记",en:"REGISTERED"},failed:{zh:"运行失败",en:"FAILED"}};
+  const status = executionStatus === "running" ? {tone:"running",zh:"真实 P0 运行中",en:"Real P0 running"} : executionStatus === "collected" ? {tone:"check",zh:"采集完成，待登记",en:"Collected; registration pending"} : executionStatus === "registered" ? {tone:"pass",zh:"P0 结果已登记",en:"P0 result registered"} : executionStatus === "failed" ? {tone:"fail",zh:"P0 运行失败",en:"P0 execution failed"} : runtime.launch_ready ? {tone:"pass",zh:"可启动真实 P0",en:"P0 launch ready"} : (runtime.environment_ready ? {tone:"check",zh:"环境通过，待 smoke",en:"Runtime ready; smoke pending"} : {tone:"revise",zh:"环境未就绪",en:"Runtime not ready"});
+  const executionLabel = executionLabels[executionStatus] || {zh:"未启动",en:"PENDING"};
+  const stageRows = [
+    ["harness_ready", language === "zh" ? "Harness" : "Harness"],
+    ["package_ready", language === "zh" ? "ALFWorld + TextWorld" : "ALFWorld + TextWorld"],
+    ["data_ready", language === "zh" ? "PDDL / game 数据" : "PDDL / game data"],
+    ["smoke_rollout_ready", language === "zh" ? "真实 smoke episode" : "real smoke episode"],
+  ].map(([key,label],index) => `<span class="runtime-stage ${stages[key] ? "stage-pass" : "stage-pending"}"><i>${index+1}</i><b>${esc(label)}</b><small>${stages[key] ? (language === "zh" ? "通过" : "PASS") : (language === "zh" ? "未完成" : "PENDING")}</small></span>`).join("") + `<span class="runtime-stage ${executionStatus === "failed" ? "stage-fail" : (stages.p0_execution_started ? "stage-pass" : "stage-pending")}"><i>5</i><b>${language === "zh" ? "正式 P0" : "formal P0"}</b><small>${language === "zh" ? executionLabel.zh : executionLabel.en}</small></span>`;
+  return `<section class="panel experiment-runtime-panel"><div class="idea-panel-heading"><div><h3 id="p0-runtime-readiness" data-toc="false">${language === "zh" ? "P0 运行环境 readiness" : "P0 runtime readiness"}</h3><p class="section-intro">${language === "zh" ? "科学授权、harness、依赖、数据、真实 smoke 和正式实验分开记账。只有 smoke 也通过后才允许 collect；安装环境绝不会被记成实验开始。" : "Scientific authorization, harness, dependencies, data, a real smoke rollout, and formal execution are tracked separately. Collection stays locked until smoke passes; installing the runtime never counts as starting an experiment."}</p></div><span class="experiment-status-badge status-${status.tone}">${language === "zh" ? status.zh : status.en}</span></div><div class="experiment-runtime-stages">${stageRows}</div><div class="experiment-runtime-grid"><div><b>${gpu.name ? esc(gpu.name) : "--"}</b><span>${gpu.memory_free_mib ? `${Math.round(gpu.memory_free_mib/1024)} GB ${language === "zh" ? "空闲显存" : "VRAM free"}` : (language === "zh" ? "未检测到 GPU" : "No GPU detected")}</span></div><div><b>${runtime.model?.ready ? "YES" : "NO"}</b><span>${language === "zh" ? "Qwen2.5-7B 本地模型" : "local Qwen2.5-7B"}</span></div><div><b>${experimentNumber(runtime.data_disk_free_gib || 0)} GB</b><span>${language === "zh" ? "实验数据盘空闲" : "experiment disk free"}</span></div><div><b>${supported.has("update-trust-region") ? "YES" : "NO"}</b><span>A-1 harness</span></div><div><b>${supported.has("budgeted-evolution-controller") ? "YES" : "NO"}</b><span>A-2 harness</span></div><div><b>${Object.values(modules).filter(Boolean).length}/${Object.keys(modules).length || 3}</b><span>${language === "zh" ? "Python 运行依赖" : "Python runtime deps"}</span></div><div><b>${runtime.alfworld_data?.ready ? "YES" : "NO"}</b><span>${language === "zh" ? "ALFWorld PDDL / game 数据" : "ALFWorld PDDL / game data"}</span></div></div>${blockerRows ? `<div class="experiment-runtime-blockers"><b>${language === "zh" ? "当前阻塞" : "Current blockers"}</b><ul>${blockerRows}</ul></div>` : (runtime.smoke_rollout?.ready ? `<div class="experiment-runtime-ready">${language === "zh" ? "机器依赖、数据和真实 smoke 均通过，可以启动已授权 P0。" : "Machine dependencies, data, and real smoke all pass; authorized P0s may launch."}</div>` : `<div class="experiment-runtime-blockers"><b>${language === "zh" ? "下一步" : "Next"}</b><ul><li>${language === "zh" ? "先跑 1 个无更新的 ALFWorld OOD smoke episode；通过后 collect 才解锁。" : "Run one no-update ALFWorld OOD smoke episode; collection unlocks only after it passes."}</li></ul></div>`)}</section>`;
+}
 function renderExperimentResourceLedger() {
   const plan = p0ExperimentPlan();
   const p0Phases = (plan.ideas || []).map((item) => experimentPilotPhase(item.id,"P0")).filter(Boolean);
@@ -1374,8 +1418,8 @@ function renderExperimentResourceLedger() {
   const tokens = results.reduce((sum,row) => sum + Number(row.cost?.tokens || 0), 0);
   const wall = results.reduce((sum,row) => sum + Number(row.cost?.wall_clock_hours || 0), 0);
   const authorizedCap = (plan.ideas || []).filter((item) => experimentPilotPhase(item.id,"P0")?.execution_authorized).reduce((sum,item) => sum + Number(item.resource?.gpu_hours_cap || 0), 0);
-  const allCap = (plan.ideas || []).reduce((sum,item) => sum + Number(item.resource?.gpu_hours_cap || 0), 0);
-  return `<section class="panel experiment-ledger"><div class="idea-panel-heading"><div><h3 id="experiment-resource-ledger">${language === "zh" ? "资源账本" : "Resource ledger"}</h3><p class="section-intro">${language === "zh" ? "预算上限来自冻结 P0 计划；实际消耗只从已登记的真实结果文件累计。" : "Caps come from the frozen P0 plans; actual usage is accumulated only from registered executed-result files."}</p></div><strong>${experimentNumber(spent)} / ${authorizedCap} GPUh</strong></div><div class="experiment-ledger-grid"><div><b>${experimentNumber(spent)}</b><span>${language === "zh" ? "已消耗 GPUh" : "GPUh spent"}</span></div><div><b>${authorizedCap}</b><span>${language === "zh" ? "当前授权上限" : "authorized cap"}</span></div><div><b>${allCap}</b><span>${language === "zh" ? "五项全部解锁上限" : "all-unlocked cap"}</span></div><div><b>${experimentNumber(wall)}</b><span>${language === "zh" ? "累计墙钟小时" : "wall-clock hours"}</span></div><div><b>${experimentNumber(calls)}</b><span>${language === "zh" ? "模型调用" : "model calls"}</span></div><div><b>${experimentNumber(tokens)}</b><span>tokens</span></div></div></section>`;
+  const allCap = Number(plan.summary?.gpu_hours_cap_if_all_unlocked || 0);
+  return `<section class="panel experiment-ledger"><div class="idea-panel-heading"><div><h3 id="experiment-resource-ledger">${language === "zh" ? "资源账本" : "Resource ledger"}</h3><p class="section-intro">${language === "zh" ? "预算上限来自冻结 P0 计划；实际消耗只从已登记的真实结果文件累计。" : "Caps come from the frozen P0 plans; actual usage is accumulated only from registered executed-result files."}</p></div><strong>${experimentNumber(spent)} / ${authorizedCap} GPUh</strong></div><div class="experiment-ledger-grid"><div><b>${experimentNumber(spent)}</b><span>${language === "zh" ? "已消耗 GPUh" : "GPUh spent"}</span></div><div><b>${authorizedCap}</b><span>${language === "zh" ? "当前授权上限" : "authorized cap"}</span></div><div><b>${allCap}</b><span>${language === "zh" ? "当前仍有效方案上限" : "current valid-plan cap"}</span></div><div><b>${experimentNumber(wall)}</b><span>${language === "zh" ? "累计墙钟小时" : "wall-clock hours"}</span></div><div><b>${experimentNumber(calls)}</b><span>${language === "zh" ? "模型调用" : "model calls"}</span></div><div><b>${experimentNumber(tokens)}</b><span>tokens</span></div></div></section>`;
 }
 function renderExperimentResultsSnapshot() {
   const plan = p0ExperimentPlan();
@@ -1384,7 +1428,7 @@ function renderExperimentResultsSnapshot() {
     const result = phase?.result;
     const status = result ? experimentPhaseMeta(result.result) : (phase?.execution_authorized ? {tone:"ready",zh:"已授权，未运行",en:"Authorized, not run"} : p0StatusMeta(item.status));
     const metrics = result ? Object.entries(result.metrics || {}).slice(0,4).map(([key,value]) => `${esc(key.replaceAll("_"," "))}=${experimentNumber(value)}`).join(" · ") : (language === "zh" ? "尚无真实效果数据" : "No measured effect yet");
-    const cost = result ? `${experimentNumber(result.cost?.gpu_hours || 0)} GPUh · ${experimentNumber(result.cost?.model_calls || 0)} calls` : `0 / ${item.resource?.gpu_hours_cap || 0} GPUh`;
+    const cost = result ? `${experimentNumber(result.cost?.gpu_hours || 0)} GPUh · ${experimentNumber(result.cost?.model_calls || 0)} calls · ${experimentNumber(result.cost?.tokens || 0)} tokens · ${experimentNumber(result.cost?.environment_episodes || 0)} episodes` : `0 / ${item.resource?.gpu_hours_cap || 0} GPUh`;
     return `<tr><td><a href="#exp-${esc(item.code.toLowerCase())}"><strong>${esc(item.code)}</strong><small>${textOf(item.title)}</small></a></td><td><span class="experiment-status-badge status-${esc(status.tone)}">${language === "zh" ? status.zh : status.en}</span></td><td>${metrics}</td><td>${esc(cost)}</td><td>${esc(phase?.next_action || textOf(item.next_action) || "--")}</td></tr>`;
   }).join("");
   return `<section class="panel experiment-results-panel"><div class="idea-panel-heading"><div><h3 id="experiment-results-snapshot">${language === "zh" ? "结果与效果总表" : "Results and effect snapshot"}</h3><p class="section-intro">${language === "zh" ? "这里不复制人工填写的结论；只显示 Pilot registry 中真正存在的结果、指标和成本。尚未运行的实验明确显示为无效果数据。" : "This table does not duplicate hand-written conclusions. It only renders results, metrics, and cost that actually exist in the pilot registry; unrun experiments explicitly show no measured effect."}</p></div></div><div class="advisor-table-scroll"><table class="matrix experiment-results-table"><thead><tr><th>Idea</th><th>${language === "zh" ? "状态" : "Status"}</th><th>${language === "zh" ? "已测效果" : "Measured effect"}</th><th>${language === "zh" ? "实际成本" : "Actual cost"}</th><th>${language === "zh" ? "下一步" : "Next"}</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
@@ -1404,7 +1448,7 @@ function renderExperimentApprovalPanel() {
 }
 function renderExperimentDashboard(config) {
   const chapters = pageArchitecture("experiments").chapters || [];
-  const queue = renderP0ExperimentBoard();
+  const queue = `${renderP0RuntimeReadiness()}${renderP0ExperimentBoard()}`;
   const results = `${renderExperimentResourceLedger()}${renderExperimentResultsSnapshot()}`;
   const approvals = renderExperimentApprovalPanel();
   return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("experiments"))}${renderCustomChapter(chapters[0],0,queue)}${renderCustomChapter(chapters[1],1,results)}${renderCustomChapter(chapters[2],2,approvals)}`;

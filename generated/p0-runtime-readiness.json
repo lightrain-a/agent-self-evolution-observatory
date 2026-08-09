@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.1",
+  "code_commit": "917b5ad0a10ceeacbbf2cd7ef9da149851409252",
+  "environment_ready": false,
+  "launch_ready": false,
+  "blockers": [
+    "python-module-missing:alfworld",
+    "python-module-missing:textworld",
+    "alfworld-data-missing"
+  ],
+  "runtime_python": "/data/wyt/envs/vlm_test/bin/python",
+  "runtime_contract_hash": "1fb6f8a8f9ae5b36a8d98fde7668b298e8775d4caae16a589cb6bdbfc65cc460",
+  "extra_pythonpath": "/data/wyt/envs/agent_evolution_p0_site",
+  "python_modules": {
+    "torch": true,
+    "transformers": true,
+    "alfworld": false,
+    "textworld": false
+  },
+  "python_versions": {
+    "torch": "2.12.1+cu130",
+    "transformers": "4.45.0"
+  },
+  "gpus": [
+    {
+      "name": "NVIDIA A100-SXM4-80GB",
+      "memory_total_mib": 81920,
+      "memory_free_mib": 49128
+    }
+  ],
+  "model": {
+    "path": "/data/wyt/models/indept/Qwen2.5-7B",
+    "ready": true
+  },
+  "alfworld_data": {
+    "path": "/data/wyt/agent-self-evolution-observatory/alfworld",
+    "ready": false
+  },
+  "smoke_rollout": {
+    "path": "/data/wyt/agent-self-evolution-observatory/p0-runtime-smoke.json",
+    "ready": false,
+    "status": "missing"
+  },
+  "execution_state": {
+    "path": "/data/wyt/agent-self-evolution-observatory/p0-execution-state.json"
+  },
+  "stages": {
+    "harness_ready": true,
+    "package_ready": false,
+    "data_ready": false,
+    "smoke_rollout_ready": false,
+    "p0_execution_started": false
+  },
+  "data_root": "/data/wyt/agent-self-evolution-observatory",
+  "data_disk_free_gib": 9896.7,
+  "supported_p0": [
+    "budgeted-evolution-controller",
+    "update-trust-region"
+  ]
+}

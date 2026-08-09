@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "idea_id": "budgeted-evolution-controller",
+  "phase": "P0",
+  "models": ["Qwen2.5-7B-Instruct"],
+  "datasets": ["ALFWorld"],
+  "seeds": [42],
+  "scope": {
+    "candidate_sequence_mode": "fixed-and-reused",
+    "max_update_rounds": 4,
+    "behavior_probes": 2,
+    "max_steps": 50,
+    "sequence_splits": {
+      "discovery": 8,
+      "calibration": 8,
+      "hidden": 12
+    },
+    "alfworld_splits": {
+      "discovery": "train",
+      "calibration": "eval_in_distribution",
+      "hidden": "eval_out_of_distribution"
+    },
+    "controller_features": ["marginal_gain", "probe_regression", "disagreement", "cumulative_calls"]
+  },
+  "analysis": {
+    "cost_lambda": 0.01,
+    "regression_lambda": 0.4,
+    "heuristic_grid": {
+      "min_gain": [0.0, 0.02, 0.05],
+      "max_probe_regression": [0.1, 0.25, 0.4],
+      "max_disagreement": [0.2, 0.4, 0.6],
+      "max_calls": [4, 8, 12]
+    }
+  },
+  "go_gate": {
+    "min_call_saving": 0.25,
+    "max_success_loss": 0.02
+  },
+  "resource_cap": {
+    "max_gpus": 1,
+    "gpu_hours": 3,
+    "wall_hours": 6,
+    "episodes": 420
+  }
+}

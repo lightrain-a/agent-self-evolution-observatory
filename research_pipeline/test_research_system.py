@@ -61,6 +61,9 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(registry["invalid_approval_files"], 0)
         self.assertEqual(registry["p0_authorized"], 2)
         self.assertEqual(registry["p1_authorized"], 0)
+        by_id = {item["idea_id"]: item for item in self.state["pilot_registry"]["ideas"]}
+        self.assertEqual(by_id["outcome-equivalent-trajectory-contrast"]["p0_gate_status"], "method-redesign")
+        self.assertEqual(by_id["workflow-generalization-certificate"]["p0_gate_status"], "method-redesign")
         self.assertTrue(self.state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"])
         self.assertTrue(self.state["pilot_registry"]["policy"]["p0_pass_requires_explicit_human_approval_before_p1"])
 

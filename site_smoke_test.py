@@ -66,7 +66,7 @@ REQUIRED_STATIC = [
     "generated/idea-discovery-v3.json", "generated/idea-discovery-v3.js", "generated/idea-discovery-v3-external-reviews.json",
     "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
     "content-system-overview.js", "system-overview-view.js", "system-overview.css",
-    "idea-lab.css", "generated/p0-experiment-plan.js",
+    "idea-lab.css", "generated/p0-experiment-plan.js", "generated/p0-collision-recheck.js", "generated/p0-runtime-readiness.js",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
 

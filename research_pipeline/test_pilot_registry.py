@@ -40,7 +40,7 @@ class PilotRegistryGateTest(unittest.TestCase):
         self.assertEqual(registry["summary"]["p0_authorized"], 1)
         self.assertEqual(by_id["update-trust-region"]["next_phase"], "P0")
         self.assertIsNone(by_id["outcome-equivalent-trajectory-contrast"]["next_phase"])
-        self.assertEqual(by_id["outcome-equivalent-trajectory-contrast"]["p0_gate_status"], "collision-recheck")
+        self.assertEqual(by_id["outcome-equivalent-trajectory-contrast"]["p0_gate_status"], "method-redesign")
         self.assertEqual(by_id["regression-gated-self-evolution"]["p0_gate_status"], "not-current-p0-candidate")
 
     def test_p0_pass_waits_for_explicit_human_approval(self) -> None:

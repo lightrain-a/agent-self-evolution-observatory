@@ -7,6 +7,12 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT
+from .method_detail_b4 import DETAIL as B4_METHOD_DETAIL
+from .method_detail_b6 import DETAIL as B6_METHOD_DETAIL
+from .method_detail_c1 import DETAIL as C1_METHOD_DETAIL
+from .method_detail_d1 import DETAIL as D1_METHOD_DETAIL
+from .method_detail_f3 import DETAIL as F3_METHOD_DETAIL
+from .method_details_common import TRACK_UPDATE_OBJECTS, generic_concrete_example, method_substance, original_task_evaluation, parent_merge_gate
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "iclr-low-resource-ideas.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "iclr-low-resource-ideas.js"
@@ -197,16 +203,16 @@ IDEAS: tuple[IdeaSpec, ...] = (
     ),
 
     I(
-        "causally-verified-experience-admission", "因果验证经验准入", "Causally Verified Experience Admission", "credit",
-        "成功轨迹常产生非因果或不可复用经验，按成功率写入会积累有害规则。",
-        "Successful trajectories often yield non-causal or non-reusable lessons, making success-only admission harmful.",
-        "候选经验必须在 matched replay 中改变目标失败，并对无关变化保持稳定，才允许持久写入。",
-        "A candidate lesson must change the target failure in matched replay and remain stable to irrelevant changes before persistent admission.",
-        "因果准入应提高未来任务收益并降低有害 commit。",
-        "Causal admission should improve future-task utility and reduce harmful commits.",
-        "Retroformer 学习反思、AgentRefine 学习纠错轨迹，但没有控制经验持久化前的因果准入。",
-        "Retroformer learns retrospection and AgentRefine learns refinement traces, but neither governs causal admission before persistence.",
-        ("Retroformer", "AgentRefine", "Counterfactual Trace Auditing"), ("ALFWorld", "WebArena-Lite", "MM-Vet"), ("text/tool", "web", "multimodal"), 40,
+        "causally-verified-experience-admission", "影响范围感知经验准入", "Impact-Scoped Experience Admission", "credit",
+        "一条经验在源任务上确实有帮助，也不代表它在别的任务族里安全；但把所有无关任务逐项 replay 又贵得不可接受。",
+        "A lesson can causally help its source task yet still harm other task families, while replaying every unrelated task is prohibitively expensive.",
+        "先用经验触发条件、检索位置和任务结构预测可能受影响的任务范围，再用固定小型 sentinel 面板覆盖‘预计受影响、边界附近、预计不受影响’三类任务；只有源任务收益和 sentinel before/after 都通过才持久写入。",
+        "Predict an impact scope from lesson triggers, retrieval position, and task structure, then run a fixed compact sentinel panel spanning predicted-affected, boundary, and predicted-unaffected tasks; persist only when source benefit and sentinel before/after checks both pass.",
+        "同样 replay 预算下，记忆特有的影响范围应比源任务因果门控、语义相似度或通用回归 Probe 更少放入有害经验。",
+        "At the same replay budget, memory-specific impact scope should admit fewer harmful lessons than source-only causal gating, semantic similarity, or generic regression probes.",
+        "MemoPilot/SEAM 已直接按下游效用学习记忆或经验更新，Memory-Induced Tool-Drift 也已证明记忆能伤害工具行为；因此本方向只剩‘用记忆触发/适用范围分配固定 sentinel 预算’这一独立变量。若同预算 A-3 通用回归面板等效，必须并入 A-3。",
+        "MemoPilot/SEAM already learn memory or experience updates from downstream utility, and Memory-Induced Tool-Drift establishes that memory can harm tool behavior. The only surviving variable is allocating a fixed sentinel budget from memory trigger/applicability scope; merge into A-3 if equal-budget generic regression gating is equivalent.",
+        ("MemoPilot", "SEAM", "Memory-Induced Tool-Drift"), ("ALFWorld", "WebArena-Lite", "MM-Vet"), ("text/tool", "web", "multimodal"), 40,
         (5,5,5,5,5,5,4), "objective-evaluation-mismatch", 2, 8,
     ),
     I(
@@ -289,16 +295,16 @@ IDEAS: tuple[IdeaSpec, ...] = (
         (5,5,5,4,5,4,5), "metric-replacement",
     ),
     I(
-        "memory-half-life", "记忆半衰期", "Memory Half-Life", "memory",
-        "记忆被永久保留，即使环境、工具或偏好已经变化。",
-        "Memories persist even after environments, tools, or preferences change.",
-        "根据跨任务帮助率、冲突率和漂移证据估计半衰期，触发复验、衰减或删除。",
-        "Estimate half-life from cross-task benefit, conflict, and drift evidence, triggering revalidation, decay, or deletion.",
-        "半衰期应比 recency/FIFO 更快删除过期记忆并保留长期有效规则。",
-        "Half-life should remove stale memories faster than recency/FIFO while retaining durable rules.",
-        "选择性遗忘已有启发式，但帮助/伤害驱动的半衰期仍不足。",
-        "Selective forgetting has heuristics, but benefit/harm-driven half-life remains underexplored.",
-        ("Selective Forgetting", "Continual Learning", "Memory Agents"), ("AndroidWorld", "ALFWorld", "HotpotQA"), ("web", "text/tool", "knowledge"), 18,
+        "memory-half-life", "激活条件记忆复验", "Activation-Conditioned Memory Revalidation", "memory",
+        "记忆是否过期不由墙钟时间决定：很久没被调用但环境未变的规则可能仍有效，频繁调用的规则也可能在局部 API/状态变化后立刻失效。",
+        "Memory staleness is not wall-clock age: an old but inactive rule can remain valid, while a frequently used rule can fail immediately after a local API or state change.",
+        "把时间改成‘复用机会’：每次记忆真正被激活时记录任务局部特征，并在少量审计激活上做 memory-on/off matched replay，估计条件效用随复用机会的变化；只有局部效用显著漂移时触发复验、隔离或删除。",
+        "Measure time in reuse opportunities: record local task features whenever a memory is actually activated and run memory-on/off matched replay on a small audited subset to estimate conditional utility over reuse opportunities; trigger revalidation, quarantine, or deletion only when local utility drifts.",
+        "基于激活局部效用的复验应在相同审计预算下比 LRU、LFU、固定 TTL 和定期复验更早发现真正失效的记忆，同时少误删长期有效记忆。",
+        "Activation-local utility revalidation should detect truly stale memories earlier than LRU, LFU, fixed TTL, and periodic revalidation at the same audit budget while deleting fewer durable memories.",
+        "Supersede 已直接训练 stale/superseded memory 更新，ShiftBench 已把 distribution shift 后的 memory recovery 做成独立评测轴；因此 novelty 不能是‘处理过期记忆’，只能是激活时 memory-on/off 边际效用驱动的同预算复验调度。若 recency/frequency/TTL 等效，则降级为组件。",
+        "Supersede directly trains stale/superseded-memory updating and ShiftBench isolates memory recovery after distribution shift. Novelty therefore cannot be 'handling stale memory'; it must be equal-budget revalidation scheduling driven by activation-time memory-on/off marginal utility. Demote to a component if recency/frequency/TTL is equivalent.",
+        ("Supersede", "ShiftBench", "MemoPilot"), ("AndroidWorld", "ALFWorld", "HotpotQA"), ("web", "text/tool", "knowledge"), 18,
         (4,5,5,4,5,4,5), "limitation-inversion",
     ),
 
@@ -369,16 +375,16 @@ IDEAS: tuple[IdeaSpec, ...] = (
         (5,5,5,4,5,4,4), "pme-recombination", 2, 8,
     ),
     I(
-        "counterexample-generating-curriculum", "反例生成课程", "Counterexample-Generating Curriculum", "curriculum",
-        "课程生成模仿失败样本，却不主动寻找能推翻当前策略规则的最小反例。",
-        "Curriculum generation imitates failures rather than searching for minimal counterexamples to current policy rules.",
-        "从隐含规则生成单约束变化的边界任务，只保留能触发一致性破坏且可自动验证的反例。",
-        "Generate single-constraint boundary tasks from implicit rules and retain only automatically verifiable counterexamples.",
-        "最小反例应提高规则边界泛化，而不只是近邻任务性能。",
-        "Minimal counterexamples should improve boundary generalization rather than nearby-task performance only.",
-        "AgentRefine 合成纠错轨迹；本方法显式优化反例价值。",
-        "AgentRefine synthesizes refinement traces; this explicitly optimizes counterexample value.",
-        ("AgentRefine", "Counterexample-Guided Learning", "WebRL"), ("ALFWorld", "ToolBench", "MM-Vet"), ("text/tool", "multimodal"), 26,
+        "counterexample-generating-curriculum", "最小反例生成课程", "Minimal-Counterexample Curriculum", "curriculum",
+        "失败重放会重复已经见过的错误，普通任务生成也可能只制造更难的题；真正缺的是能精确推翻当前策略规则的最小新反例。",
+        "Failure replay repeats known mistakes and generic task generation can merely create harder tasks; what is missing is a minimal new counterexample that precisely falsifies a current policy rule.",
+        "先从轨迹抽取一条可执行的候选规则和参数化任务模板；强模型只负责提出边界任务。环境/程序 verifier 判定任务有效性和规则是否被推翻，再用 delta debugging 逐个删除约束，直到任何进一步删除都会使任务失效或不再构成反例。验证后的 1-minimal 反例才进入下一轮固定 token 的小型 LoRA/Prompt 更新。",
+        "Extract an executable candidate rule and parameterized task template from traces; a stronger model only proposes boundary tasks. An environment/program verifier decides task validity and whether the rule is falsified, then delta debugging removes constraints until any further removal makes the task invalid or no longer a counterexample. Only verified 1-minimal counterexamples enter the next fixed-token small LoRA/prompt update.",
+        "在相同生成、验证和训练 token 下，1-minimal 反例应比失败重放、随机扰动和 verifier 过滤但不做最小化的任务产生更强的未见边界泛化。",
+        "At matched generation, verification, and training tokens, verified 1-minimal counterexamples should improve unseen boundary generalization more than failure replay, random perturbations, or verifier-filtered but non-minimized tasks.",
+        "Counterexample Guided Learning in the Large 已覆盖 verifier 返回反例驱动的 LLM/agent refinement，DDOR 已用 delta debugging 定位最小失败触发片段；因此本方向只能主张‘verifier-confirmed 1-minimality 作为 curriculum selection variable 是否带来额外圈外学习增益’，不能主张 counterexample learning 或 delta debugging 本身。",
+        "Counterexample Guided Learning in the Large already covers verifier-returned counterexamples for LLM/agent refinement, and DDOR uses delta debugging to localize minimal failure-triggering fragments. The surviving claim is only whether verifier-confirmed 1-minimality as a curriculum-selection variable yields additional out-of-loop learning gain, not counterexample learning or delta debugging themselves.",
+        ("Counterexample Guided Learning in the Large", "DDOR"), ("ALFWorld", "ToolBench", "MM-Vet"), ("text/tool", "multimodal"), 26,
         (5,5,5,4,4,5,5), "cross-domain-analogy",
     ),
     I(
@@ -475,16 +481,16 @@ IDEAS: tuple[IdeaSpec, ...] = (
         (5,5,5,5,5,5,5), "metric-replacement",
     ),
     I(
-        "self-label-confidence-flow", "自标注置信传播", "Self-Label Confidence Flow", "evaluator",
-        "多轮自标注和再训练会丢失初始不确定性，低质量标签可能跨代放大。",
-        "Across self-labeling generations, initial uncertainty is lost and low-quality labels can amplify.",
-        "让每个派生标签携带来源、置信度和父标签依赖，并把不确定性传播到训练权重。",
-        "Carry provenance, confidence, and parent-label dependencies with each derived label and propagate uncertainty into training weights.",
-        "谱系置信应更好预测标签错误并降低噪声放大。",
-        "Lineage confidence should better predict label errors and reduce noise amplification.",
-        "Self-Evolved Reward Learning 筛选当前轮标签，但跨轮置信传播仍是空缺。",
-        "Self-Evolved Reward Learning filters current-round labels, but cross-round confidence propagation remains open.",
-        ("Self-Evolved Reward Learning", "Weak-to-Strong", "Data Provenance"), ("UltraFeedback", "HH-RLHF"), ("reward learning", "alignment"), 24,
+        "self-label-confidence-flow", "谱系校准的自标注准入", "Lineage-Calibrated Self-Label Admission", "evaluator",
+        "自进化系统会把自己或同源评价器上一轮产生的成功/失败判断继续用于下一轮 Prompt、记忆或 rubric 更新；若把这些派生标签当成独立证据，同一个早期错误会被重复计票并单向放大。",
+        "A self-evolving system can reuse success/failure judgments produced by itself or a same-source evaluator to drive later prompt, memory, or rubric updates; treating descendants as independent evidence repeatedly counts one early error and can amplify it one-way.",
+        "为每个自标注记录生成轮次、产生模型/评价器家族和父标签，组成 provenance DAG；在一小组冻结独立锚点上估计每个来源家族的可靠度，并把同一祖先/同一来源的后代去相关后再计算准入权重。权重只决定持久 Prompt/记忆/rubric 更新是否接受，不要求反复全参数训练。",
+        "Record generation, producer/evaluator family, and parent labels for every self-label to form a provenance DAG. Estimate source-family reliability on a small frozen independent anchor set, de-correlate descendants sharing ancestors or sources, and use the resulting weight only to admit persistent prompt/memory/rubric updates rather than assuming repeated full-parameter training.",
+        "如果错误主要沿同源谱系传播，谱系去相关后的准入应比当前轮置信度、简单一致性和不看祖先的加权平均更早阻断坏更新，同时保留独立来源支持的好更新。",
+        "If errors propagate mainly along same-source lineages, lineage-decorrelated admission should block bad updates earlier than current-round confidence, simple consistency, or ancestry-blind weighting while retaining updates supported by independent sources.",
+        "URST 已做 uncertainty-aware evaluator self-training，SERM 已用多 agent agreement 缓解自生成标签噪声；因此本方向不能泛称‘更可靠自标注’，只保留跨轮 label-event 谱系相关性去重。若真实日志无显著谱系传播，或同一独立 anchor 的简单阈值等效，则停止。",
+        "URST already performs uncertainty-aware evaluator self-training and SERM uses multi-agent agreement to reduce self-generated label noise. The surviving claim is specifically cross-round label-event lineage de-correlation; stop if real logs show little lineage propagation or a simple threshold on the same independent anchors is equivalent.",
+        ("URST", "SERM", "Self-Evolved Reward Learning"), ("UltraFeedback", "HH-RLHF"), ("reward learning", "alignment"), 24,
         (5,5,5,4,5,5,5), "cross-domain-analogy",
     ),
 
@@ -515,16 +521,16 @@ IDEAS: tuple[IdeaSpec, ...] = (
         (5,5,5,5,5,5,4), "assumption-removal", 2, 7,
     ),
     I(
-        "recovery-conditioned-experience", "恢复条件经验学习", "Recovery-Conditioned Experience Learning", "world",
-        "任务成功或重新加入轨迹不等于完整恢复，残余状态可能被写成成功经验。",
-        "Task success or trajectory rejoin does not imply full recovery, and residual states can be stored as success lessons.",
-        "经验准入同时要求终点成功、持续重合和状态残差通过，并按恢复级别控制写入强度。",
-        "Admission requires endpoint success, sustained rejoin, and residual-state checks, with update strength conditioned on recovery level.",
-        "完整恢复轨迹应具有更高未来技能复用价值，残差轨迹更易造成负迁移。",
-        "Fully recovered trajectories should have higher future reuse value; residual trajectories should cause more negative transfer.",
-        "具身 continual learning 常按任务成功更新，过程残差与持久学习的关系仍不足。",
-        "Embodied continual learning often updates from task success, leaving process residuals underexplored.",
-        ("Online Continual Learning for Agents", "TPER", "OpenVLA"), ("LIBERO", "CALVIN"), ("embodied", "VLA"), 26,
+        "recovery-conditioned-experience", "残余状态感知经验准入", "Residual-State-Aware Experience Admission", "world",
+        "一个任务最终成功，并不保证中途偏离后已经把环境恢复到正常成功轨迹应有的状态；如果系统只按 success 写经验，仍可能把带残余状态的恢复过程当成正经验。",
+        "Final task success does not guarantee that the environment recovered to the state expected on a normal successful path after an intermediate deviation; success-only experience writing can therefore store a recovery process with residual state as positive experience.",
+        "先做现象检查：在能读出程序状态的环境中，把扰动后仍成功的轨迹与同起点的正常成功参考轨迹配对，在重汇合点和终点计算对象位置、持有物、开关/资源等可执行状态差 Δs。只有确认‘success + 非零 Δs’确实被基线记忆系统正向写入后，才学习一个由未来 matched reuse harm 监督的 residual-effect admission score，决定写入、摘要或隔离。",
+        "Start with a phenomenon check in an environment exposing program state. Pair perturbed-but-successful trajectories with normal successful references from the same start state and compute executable residual-state differences Δs at rejoin and terminal points (object location, inventory, toggles/resources, etc.). Only if baseline memory systems actually write success + nonzero-Δs trajectories as positive experience do we learn a residual-effect admission score supervised by future matched reuse harm to choose write, summarize, or quarantine.",
+        "若残余状态真的影响未来复用，基于 Δs 学到的准入应在相同记忆容量和 replay 预算下，比 success-only、终点相同和手工恢复阈值更少产生负迁移。",
+        "If residual state truly matters for future reuse, Δs-based learned admission should reduce negative transfer versus success-only, endpoint-equality, and hand-coded recovery thresholds under the same memory and replay budgets.",
+        "Dejavu 与 Trajectory-Informed Memory Generation 已从成功、失败和恢复轨迹形成可复用经验；The Compliance Trap 已把冲突记忆的 Entry→Propagation→Recovery 作为轨迹级诊断，Experience Memory Graph 也直接学习失败到成功的恢复结构。因此本方向不能主张‘从恢复经验学习’本身，只剩更窄的 failure mode：success-only writer 会把 success + 非零 Δs 当正经验写入，且该 Δs 能预测未来 matched-reuse harm。否则停止。",
+        "Dejavu and Trajectory-Informed Memory Generation already form reusable experience from successful, failed, and recovery trajectories; The Compliance Trap diagnoses Entry→Propagation→Recovery under conflicting memory, and Experience Memory Graph learns recovery structure from failed and successful trajectories. The claim therefore cannot be 'learning from recovery experience' itself. It survives only as the narrower failure mode that a success-only writer positively stores success + nonzero Δs and that Δs predicts future matched-reuse harm; otherwise stop.",
+        ("Dejavu", "Trajectory-Informed Memory Generation", "The Compliance Trap", "Experience Memory Graph"), ("LIBERO", "CALVIN"), ("embodied", "VLA"), 26,
         (5,5,4,5,5,4,5), "pme-recombination",
     ),
 )
@@ -629,7 +635,16 @@ def _review(spec: IdeaSpec) -> tuple[bool, list[dict[str, Any]], list[str]]:
     return not blocks, reviews, blocks
 
 
-def _derived_fields(spec: IdeaSpec) -> dict[str, dict[str, str]]:
+METHOD_DETAIL_OVERRIDES: dict[str, dict[str, Any]] = {
+    "causally-verified-experience-admission": B4_METHOD_DETAIL,
+    "memory-half-life": B6_METHOD_DETAIL,
+    "self-label-confidence-flow": C1_METHOD_DETAIL,
+    "counterexample-generating-curriculum": D1_METHOD_DETAIL,
+    "recovery-conditioned-experience": F3_METHOD_DETAIL,
+}
+
+
+def _derived_fields(spec: IdeaSpec) -> dict[str, Any]:
     track = TRACKS[spec.track]
     method = bi(
         f"从失败或更新候选中抽取状态，应用“{spec.mechanism['zh']}”，在隔离 calibration 与 regression 集上比较后 commit、局部修复或 rollback。",
@@ -651,10 +666,24 @@ def _derived_fields(spec: IdeaSpec) -> dict[str, dict[str, str]]:
         f"若“{spec.hypothesis['zh']}”在第二模型或第二任务域不成立，或收益仅来自更多调用，则停止。",
         f"Stop if the hypothesis—{spec.hypothesis['en']}—fails on the second model/domain or gains come only from extra calls.",
     )
-    return {"method_logic":method, "comparative_advantage":advantage, "pilot":pilot, "metric":metric, "stop":stop}
+    fields: dict[str, Any] = {
+        "core_intuition": spec.hypothesis,
+        "concrete_example": generic_concrete_example(spec),
+        "method_logic": method,
+        "comparative_advantage": advantage,
+        "strongest_baseline": track["baseline"],
+        "pilot": pilot,
+        "metric": metric,
+        "stop": stop,
+        "persistent_update_object": TRACK_UPDATE_OBJECTS[spec.track],
+        "learning_signal": spec.hypothesis,
+        "independent_truth": bi("环境/工具执行、程序 checker 或冻结异构 Critic 提供独立真值；方法自己的分数不能循环充当标签。", "Environment/tool execution, program checkers, or a frozen heterogeneous critic provide independent truth; the method's own score cannot be recycled as its label."),
+    }
+    fields.update(METHOD_DETAIL_OVERRIDES.get(spec.id, {}))
+    return fields
 
 
-def _protocol(spec: IdeaSpec, fields: dict[str, dict[str, str]]) -> dict[str, Any]:
+def _protocol(spec: IdeaSpec, fields: dict[str, Any]) -> dict[str, Any]:
     models = TRACKS[spec.track]["models"]
     return {
         "execution_mode":bi("ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。", "ICLR primary results use open weights, frozen backbones, and persistent small-component updates; visual specialization remains for CVPR."),
@@ -669,6 +698,7 @@ def _protocol(spec: IdeaSpec, fields: dict[str, dict[str, str]]) -> dict[str, An
             "calibration":bi("另取不重叠的 100–200 个样本冻结阈值和至多三组超参数。", "Use a disjoint 100-200 examples to freeze thresholds and at most three hyperparameter settings."),
             "test":bi("官方测试集或至少 500 个隔离样本；测试期间禁止修改更新规则。", "Use official tests or at least 500 isolated examples; update rules stay frozen during testing."),
         },
+        "original_task_evaluation": original_task_evaluation(),
         "phases":[
             {"id":"P0", "title":bi("真实进化检查", "Reality-of-evolution check"), "setup":bi("移除持久状态并匹配推理预算，排除更多采样、检索和重排。", "Remove persistent state and match inference budgets to exclude extra sampling, retrieval, and reranking."), "gate":bi("若移除更新后收益仍在，则不属于持续学习。", "If gains remain after removing the update, the effect is not persistent learning.")},
             {"id":"P1", "title":bi("机制 Pilot", "Mechanism pilot"), "setup":fields["pilot"], "gate":spec.hypothesis},
@@ -677,7 +707,7 @@ def _protocol(spec: IdeaSpec, fields: dict[str, dict[str, str]]) -> dict[str, An
         "controls":[
             bi("无持久更新，匹配推理预算。", "No persistent update with matched inference budget."),
             bi("全部接受或仅按当前任务收益接受。", "Accept all updates or filter only by current-task gain."),
-            TRACKS[spec.track]["baseline"],
+            fields["strongest_baseline"],
             bi("等预算随机更新／拒绝。", "Equal-budget random update/rejection."),
             bi("隐藏真值 Oracle 上界。", "Hidden-ground-truth oracle ceiling."),
         ],
@@ -737,6 +767,8 @@ def build_iclr_idea_bank() -> dict[str, Any]:
             "track":TRACKS[spec.track]["label"],
             "purpose":spec.problem,
             "core_idea":spec.mechanism,
+            "core_intuition":fields["core_intuition"],
+            "concrete_example":fields["concrete_example"],
             "rationale":TRACKS[spec.track]["rationale"],
             "method_logic":fields["method_logic"],
             "importance":TRACKS[spec.track]["importance"],
@@ -747,7 +779,11 @@ def build_iclr_idea_bank() -> dict[str, Any]:
             "datasets":list(spec.datasets),
             "domains":list(spec.domains),
             "models":list(TRACKS[spec.track]["models"]),
-            "strongest_baseline":TRACKS[spec.track]["baseline"],
+            "strongest_baseline":fields["strongest_baseline"],
+            "method_substance":method_substance(fields),
+            "parent_merge_gate":parent_merge_gate(fields),
+            "original_task_evaluation":original_task_evaluation(),
+            "fresh_reducibility_check":fields.get("fresh_reducibility_check"),
             "pilot":fields["pilot"],
             "decisive_metric":fields["metric"],
             "stop_condition":fields["stop"],
@@ -789,6 +825,11 @@ def build_iclr_idea_bank() -> dict[str, Any]:
             "review_dimensions":list(REVIEW_KEYS),
             "primary_open_weight_required":True,
             "commercial_api_optional_only":True,
+            "core_intuition_required":True,
+            "concrete_example_required":True,
+            "method_substance_required":True,
+            "original_task_evaluation_required":True,
+            "parent_merge_gate_required":True,
         },
         "summary":{
             "raw_candidates":len(IDEAS)+len(EARLY_REJECTED),
@@ -824,6 +865,9 @@ def build_iclr_idea_bank() -> dict[str, Any]:
 def validate_bank(payload: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     ids: set[str] = set()
+    all_passed_ids = {str(idea.get("id", "")) for idea in payload.get("passed_ideas", [])}
+    required_substance = ("persistent_update_object", "learning_signal", "independent_truth", "matched_simplification", "decisive_falsifier")
+    required_original_eval = ("split_rule", "paired_measurement", "independent_truth", "primary_endpoints", "budget_matching")
     for idea in payload.get("passed_ideas", []):
         if idea["id"] in ids:
             errors.append(f"duplicate id: {idea['id']}")
@@ -836,10 +880,36 @@ def validate_bank(payload: dict[str, Any]) -> list[str]:
             errors.append(f"review gate failed: {idea['id']}")
         if not idea.get("experiment_protocol"):
             errors.append(f"missing protocol: {idea['id']}")
-        for field in ("purpose","core_idea","rationale","method_logic","importance","comparative_advantage","collision_boundary","hypothesis","pilot","decisive_metric","stop_condition"):
+        for field in ("purpose","core_idea","core_intuition","concrete_example","rationale","method_logic","importance","comparative_advantage","collision_boundary","hypothesis","strongest_baseline","pilot","decisive_metric","stop_condition"):
             value = idea.get(field)
             if not isinstance(value, dict) or not value.get("zh") or not value.get("en"):
                 errors.append(f"missing bilingual {field}: {idea['id']}")
+        substance = idea.get("method_substance")
+        if not isinstance(substance, dict):
+            errors.append(f"missing method-substance gate: {idea['id']}")
+        else:
+            for field in required_substance:
+                value = substance.get(field)
+                if not isinstance(value, dict) or not value.get("zh") or not value.get("en"):
+                    errors.append(f"missing method-substance {field}: {idea['id']}")
+        original_eval = idea.get("original_task_evaluation")
+        if not isinstance(original_eval, dict):
+            errors.append(f"missing original-task evaluation: {idea['id']}")
+        else:
+            for field in required_original_eval:
+                value = original_eval.get(field)
+                if not isinstance(value, dict) or not value.get("zh") or not value.get("en"):
+                    errors.append(f"missing original-task evaluation {field}: {idea['id']}")
+        merge_gate = idea.get("parent_merge_gate")
+        if not isinstance(merge_gate, dict) or merge_gate.get("status") not in {"not-applicable", "merge-if-tied", "merged"}:
+            errors.append(f"invalid parent-merge gate: {idea['id']}")
+        elif merge_gate.get("status") == "merge-if-tied":
+            parent_id = str(merge_gate.get("parent_id", ""))
+            rule = merge_gate.get("decision_rule")
+            if not parent_id or parent_id not in all_passed_ids:
+                errors.append(f"parent-merge target missing: {idea['id']} -> {parent_id}")
+            if not isinstance(rule, dict) or not rule.get("zh") or not rule.get("en"):
+                errors.append(f"parent-merge rule missing: {idea['id']}")
     if len(payload.get("passed_ideas", [])) < 24:
         errors.append("fewer than 24 passed ICLR ideas")
     if payload.get("target_venue") != "ICLR":

@@ -14,8 +14,8 @@ VALID_APPROVAL_DECISIONS = {"approve", "hold", "reject"}
 CURRENT_P0_GATE = {
     "update-trust-region": "ready",
     "budgeted-evolution-controller": "ready",
-    "outcome-equivalent-trajectory-contrast": "collision-recheck",
-    "workflow-generalization-certificate": "collision-recheck",
+    "outcome-equivalent-trajectory-contrast": "method-redesign",
+    "workflow-generalization-certificate": "method-redesign",
     "world-model-error-gated-learning": "scenario-check",
 }
 
@@ -283,6 +283,8 @@ def _blocked_next_action(blocked_by: str | None) -> str:
         return "await-P1-result"
     if blocked_by == "collision-recheck":
         return "complete-collision-recheck"
+    if blocked_by == "method-redesign":
+        return "redesign-method-before-P0"
     if blocked_by == "scenario-check":
         return "confirm-scenario-before-P0"
     if blocked_by == "not-current-p0-candidate":
