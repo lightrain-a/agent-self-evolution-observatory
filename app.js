@@ -971,6 +971,45 @@ function renderIclrIdeaBank() {
 function humanReviewData() {
   return window.HUMAN_REVIEW_IDEA_MAP || {review_date:"",status_order:[],status_labels:{},groups:[],ideas:{}};
 }
+function canonicalHumanReviewData() {
+  return window.HUMAN_REVIEW_CANONICAL_20260810 || {review_date:"",category_labels:{},principles:{},original_task_evaluation:{},ideas:{}};
+}
+function humanRecommendationLabel(category) {
+  return textOf(canonicalHumanReviewData().category_labels?.[category] || {zh:category,en:category});
+}
+function humanRecommendationTone(category) {
+  if (category === "pilot") return "pilot";
+  if (category === "redesign") return "redesign";
+  if (category === "pause") return "pause";
+  return "unreviewed";
+}
+function renderHumanReviewMethodology() {
+  const canonical = canonicalHumanReviewData();
+  const entries = Object.values(canonical.ideas || {});
+  if (!entries.length) return "";
+  const counts = entries.reduce((acc,row) => { acc[row.category] = (acc[row.category] || 0) + 1; return acc; }, {});
+  const principles = canonical.principles || {};
+  const evaluation = canonical.original_task_evaluation || {};
+  const sources = (evaluation.sources || []).map((source) => `<a href="${esc(source.url)}" target="_blank" rel="noopener"><b>${esc(source.title)}</b><span>${textOf(source.lesson)}</span></a>`).join("");
+  return `<section class="panel human-review-methodology">
+    <div class="human-review-methodology-head"><div><b>${language === "zh" ? "人工意见复核 · 2026-08-10" : "Human-opinion audit · 2026-08-10"}</b><p>${language === "zh" ? "下面的“人工建议”是原讨论意见；卡片里的“当前门禁”是后续 novelty / collision / reducibility 审查后的状态。两者分开保存，不再互相覆盖。" : "Human recommendations preserve the original discussion judgment; current gates reflect later novelty/collision/reducibility reviews. They are stored separately and never overwrite one another."}</p></div><span>${entries.length}/26</span></div>
+    <div class="human-recommendation-stats">${["pilot","redesign","pause","unreviewed"].map((category) => `<div class="human-recommendation-stat tone-${humanRecommendationTone(category)}"><b>${counts[category] || 0}</b><span>${esc(humanRecommendationLabel(category))}</span></div>`).join("")}</div>
+    <div class="human-review-principles">
+      <section><h4 data-toc="false">${language === "zh" ? "可实验类怎么走" : "Pilot-class workflow"}</h4><p>${textOf(principles.pilot)}</p></section>
+      <section><h4 data-toc="false">${language === "zh" ? "方法继续打磨怎么走" : "Method-redesign workflow"}</h4><p>${textOf(principles.redesign)}</p></section>
+      <section><h4 data-toc="false">${language === "zh" ? "暂停／合并类" : "Pause / merge"}</h4><p>${textOf(principles.pause)}</p></section>
+      <section><h4 data-toc="false">${language === "zh" ? "后续系统生成硬规则" : "System-generation hard rule"}</h4><p>${textOf(principles.readability)}</p></section>
+    </div>
+    <details class="human-original-eval-guide"><summary><div><b>${textOf(evaluation.title)}</b><small>${language === "zh" ? "回答：隔离回归集怎么得到，100+ 原任务怎么避免每次全量重复评测" : "How to build isolated regression evaluation without rerunning 100+ tasks every update"}</small></div></summary><div class="human-original-eval-grid">
+      <section><b>${language === "zh" ? "1 · 冻结保护全集" : "1 · Protected universe"}</b><p>${textOf(evaluation.protected_universe)}</p></section>
+      <section><b>${language === "zh" ? "2 · 每次只跑 Sentinel" : "2 · Per-update sentinels"}</b><p>${textOf(evaluation.sentinel_panel)}</p></section>
+      <section><b>${language === "zh" ? "3 · 配对评测" : "3 · Paired evaluation"}</b><p>${textOf(evaluation.paired_test)}</p></section>
+      <section><b>${language === "zh" ? "4 · 只对边界案例重复" : "4 · Adaptive repeats only"}</b><p>${textOf(evaluation.adaptive_repeat)}</p></section>
+      <section><b>${language === "zh" ? "5 · 低频 Full Audit" : "5 · Low-frequency full audit"}</b><p>${textOf(evaluation.full_audit)}</p></section>
+      <section><b>${language === "zh" ? "6 · 独立真值" : "6 · Independent truth"}</b><p>${textOf(evaluation.independent_truth)}</p></section>
+    </div><nav class="human-original-eval-sources">${sources}</nav></details>
+  </section>`;
+}
 function humanReviewStatusLabel(status) {
   const row = humanReviewData().status_labels?.[status] || {zh:status,en:status};
   return textOf(row);
@@ -1105,7 +1144,10 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const historicalVerdict = String(idea.external_verdict || "pending").toUpperCase();
   const tone = humanReviewStatusTone(meta.status);
   const code = meta.code || idea.id;
-  const humanOpinion = textOf(meta.feedback || {});
+  const canonicalReview = canonicalHumanReviewData().ideas?.[idea.id] || {};
+  const humanOpinion = textOf(canonicalReview.opinion || meta.feedback || {});
+  const originalNumber = Number(canonicalReview.original_number || 0);
+  const humanRecommendation = canonicalReview.category || "unreviewed";
   const iteration = current.redesign_iteration || {};
   const iterationSummary = textOf(iteration.summary || {});
   const absorbed = overlay.absorbed_from || current.absorbed_from || [];
@@ -1115,10 +1157,10 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const freshSources = (freshCheck.sources || []).map((source) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}</a>`).join("");
   const freshBlock = freshSources ? `<section class="human-fresh-collision"><h4 data-toc="false">${language === "zh" ? `Fresh reducibility · ${esc(freshCheck.review_date || "")}` : `Fresh reducibility · ${esc(freshCheck.review_date || "")}`}</h4><p>${language === "zh" ? "以下是一手来源；上面的“最近工作与真正边界”已经按这些工作收窄，不把已有人做过的部分继续当贡献。" : "Primary sources below support the narrowed boundary above; already-covered mechanisms are not counted as the contribution."}</p><nav>${freshSources}</nav></section>` : "";
   return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}">
-    <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(meta.status))}</span><p>${esc(iterationSummary || humanOpinion)}</p></div></summary>
+    <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${originalNumber ? `${language === "zh" ? "原讨论" : "Original"} Idea ${originalNumber} · ` : ""}${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(meta.status))}</span><p>${esc(iterationSummary || humanOpinion)}</p></div></summary>
     <div class="human-idea-body">
       <div class="human-review-history">
-        <section class="human-opinion-box"><h4 data-toc="false">${language === "zh" ? "人工意见 · 2026-08-09（保留）" : "Human opinion · 2026-08-09 (preserved)"}</h4><p>${esc(humanOpinion || "—")}</p></section>
+        <section class="human-opinion-box"><h4 data-toc="false">${language === "zh" ? `人工意见 · 2026-08-10（原讨论 Idea ${originalNumber || "?"}）` : `Human opinion · 2026-08-10 (original Idea ${originalNumber || "?"})`}</h4><p>${esc(humanOpinion || "—")}</p><small class="human-recommendation-label tone-${humanRecommendationTone(humanRecommendation)}">${esc(humanRecommendationLabel(humanRecommendation))}</small></section>
         ${iterationSummary ? `<section class="human-iteration-box"><h4 data-toc="false">${language === "zh" ? `本轮方法迭代 · ${esc(iteration.round || "2026-08-10")}` : `Current method iteration · ${esc(iteration.round || "2026-08-10")}`}</h4><p>${esc(iterationSummary)}</p>${iteration.verdict ? `<small>${language === "zh" ? "当前门禁" : "Current gate"}: ${esc(iteration.verdict)}</small>` : ""}</section>` : ""}
       </div>
       <div class="human-core-grid human-reading-grid">
@@ -1158,7 +1200,8 @@ function renderDiscussedIdeaBank() {
     }).join("");
     return `<section class="human-science-group" id="discussed-group-${esc(group.id.toLowerCase())}"><header><span>${esc(group.id)}</span><div><h3>${textOf(group.title)}</h3><p>${textOf(group.question)}</p></div><strong>${rows.length}</strong></header>${statusBlocks}</section>`;
   }).join("");
-  return `<section class="panel human-review-overview"><div class="idea-panel-heading"><div><b class="human-overview-kicker">H1 · ${esc(review.review_date || "2026-08-09")}</b><p class="section-intro">${language === "zh" ? "按科学问题和当前成熟度组织。26 个已讨论 Idea 的人工意见永久保留；需要方法继续打磨的 Idea 另显示 2026-08-10 方法重构结论。展开后看“人工意见 → 本轮迭代 → 问题—直觉—具体做法—例子—论文边界—决定性实验”，历史意见不会被后续改写覆盖。" : "Organized by scientific problem and current maturity. Human opinions for all 26 discussed ideas are permanently preserved; ideas under method redesign additionally show the 2026-08-10 redesign conclusion. Expanded cards show human opinion → current iteration → problem → intuition → method → example → paper boundary → decisive experiment, without overwriting historical human judgment."}</p></div><strong>${all.length} ${language === "zh" ? "个已讨论" : "discussed"}</strong></div><div class="human-review-stats">${statuses.map((status) => `<div class="human-stat human-stat-${humanReviewStatusTone(status)}"><b>${counts[status] || 0}</b><span>${esc(humanReviewStatusLabel(status))}</span></div>`).join("")}</div></section>${groups}`;
+  const canonicalDate = canonicalHumanReviewData().review_date || review.review_date || "2026-08-10";
+  return `<section class="panel human-review-overview"><div class="idea-panel-heading"><div><b class="human-overview-kicker">H1 · ${esc(canonicalDate)}</b><p class="section-intro">${language === "zh" ? "按科学问题和当前成熟度组织。人工原始意见、后续方法迭代和当前科学门禁分开保存；原讨论 Idea 1–26 的编号已重新映射到当前 A/B/C 编号。展开后看“人工意见 → 本轮迭代 → 问题—直觉—具体做法—例子—论文边界—决定性实验”。" : "Organized by scientific problem and current maturity. Original human opinions, later method iterations, and current scientific gates are stored separately; original Idea 1–26 numbers are mapped to the current A/B/C codes. Expanded cards show human opinion → current iteration → problem → intuition → method → example → paper boundary → decisive experiment."}</p></div><strong>${all.length} ${language === "zh" ? "个已讨论" : "discussed"}</strong></div><div class="human-review-stats">${statuses.map((status) => `<div class="human-stat human-stat-${humanReviewStatusTone(status)}"><b>${counts[status] || 0}</b><span>${esc(humanReviewStatusLabel(status))}</span></div>`).join("")}</div></section>${renderHumanReviewMethodology()}${groups}`;
 }
 function supplementalGroupId(idea) {
   const key = `${idea.idea_id || idea.id || ""} ${textOf(idea.title || {})}`.toLowerCase();

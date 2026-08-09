@@ -61,7 +61,8 @@ class IclrIdeaBankTest(unittest.TestCase):
         b6 = by_id["memory-half-life"]
         self.assertIn("reuse", b6["core_intuition"]["en"].lower())
         self.assertIn("memory off/on", b6["method_logic"]["en"].lower())
-        self.assertIn("recency+frequency", b6["strongest_baseline"]["en"].lower())
+        self.assertIn("last-used", b6["strongest_baseline"]["en"].lower())
+        self.assertIn("fixed audit", b6["strongest_baseline"]["en"].lower())
 
         c1 = by_id["self-label-confidence-flow"]
         self.assertIn("label-event dag", c1["method_logic"]["en"].lower())
@@ -70,6 +71,7 @@ class IclrIdeaBankTest(unittest.TestCase):
 
         d1 = by_id["counterexample-generating-curriculum"]
         self.assertIn("1-minimal", d1["method_logic"]["en"].lower())
+        self.assertIn("freeze the stronger proposer", d1["method_logic"]["en"].lower())
         self.assertIn("without minimization", d1["strongest_baseline"]["en"].lower())
         self.assertIn("1-minimal", d1["method_substance"]["learning_signal"]["en"].lower())
 
@@ -123,8 +125,18 @@ class IclrIdeaBankTest(unittest.TestCase):
         policy = self.payload["policy"]
         self.assertTrue(policy["primary_open_weight_required"])
         self.assertTrue(policy["commercial_api_optional_only"])
-        for key in ("core_intuition_required", "concrete_example_required", "method_substance_required", "original_task_evaluation_required", "parent_merge_gate_required"):
+        for key in (
+            "core_intuition_required", "concrete_example_required", "method_substance_required",
+            "original_task_evaluation_required", "parent_merge_gate_required", "plain_language_intuition_required",
+            "method_first_required", "method_signature_duplicate_gate", "per_update_full_regression_forbidden",
+            "adaptive_repeat_required",
+        ):
             self.assertTrue(policy[key], key)
+        for idea in self.ideas:
+            original = idea["original_task_evaluation"]
+            self.assertIn("adaptive repeats", original["paired_measurement"]["en"].lower())
+            self.assertIn("fixed sentinel count", original["budget_matching"]["en"].lower())
+            self.assertIn("full audits", original["budget_matching"]["en"].lower())
         for idea in self.ideas:
             role = idea["experiment_protocol"]["commercial_api_role"]
             self.assertIn("optional", role["en"].lower())

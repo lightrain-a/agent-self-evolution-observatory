@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-09T17:22:51+00:00",
+  "generated_at": "2026-08-09T20:41:30+00:00",
   "target_venue": "ICLR",
   "storage": {
-    "data_root": "/home/wyt/code/agent-self-evolution-observatory/generated/research-data",
-    "run_dir": "/home/wyt/code/agent-self-evolution-observatory/generated/research-data/runs"
+    "data_root": "/home/wyt/code/agent-evolution-site-publish-20260810/generated/research-data",
+    "run_dir": "/home/wyt/code/agent-evolution-site-publish-20260810/generated/research-data/runs"
   },
   "automation": {
     "daily": {
@@ -25,7 +25,7 @@
     "passed_ideas": 26,
     "evidence_nodes": 500,
     "evidence_edges": 612,
-    "collision_flags": 70,
+    "collision_flags": 71,
     "lineage_edges": 258,
     "pilot_results": 0,
     "repair_queue": 9,
@@ -77,7 +77,7 @@
         "uses-mechanism": 29,
         "tests-hypothesis": 29
       },
-      "isolated_nodes": 203,
+      "isolated_nodes": 205,
       "ideas_with_semantic_evidence": 29
     },
     "nodes": [
@@ -267,8 +267,8 @@
         "key": "counterexample-generating-curriculum:core_idea",
         "field": "core_idea",
         "text": {
-          "zh": "强模型只提候选边界任务，程序/环境 verifier 判真。对验证反例逐约束 delta-debug，直到任何进一步删除都会使任务失效或不再反驳当前规则；只把 1-minimal 反例送入固定 token 的下一轮 Prompt/LoRA/skill 更新。",
-          "en": "A stronger model only proposes candidate boundary tasks and a program/environment verifier supplies truth. Delta-debug each verified counterexample until any further constraint removal makes it invalid or no longer refutes the current rule; only 1-minimal counterexamples enter the next fixed-token prompt/LoRA/skill update."
+          "zh": "P0 中强模型 proposer 完全冻结，不参与任何迭代更新；它只在固定调用预算内提出候选边界任务，程序/环境 verifier 独立判真。对验证反例逐约束 delta-debug，直到任何进一步删除都会使任务失效或不再反驳当前规则；只把 1-minimal 反例送入小模型的固定 token Prompt/LoRA/skill 更新。这样把‘反例质量’与‘教师自己越来越强’严格分开。",
+          "en": "In P0 the stronger proposer is fully frozen and never iteratively updated. It only proposes candidate boundary tasks under a fixed call budget, while a program/environment verifier independently supplies truth. Delta-debug each verified counterexample until any further constraint removal makes it invalid or no longer refutes the current rule; only 1-minimal counterexamples enter the smaller model's fixed-token prompt/LoRA/skill update. This separates counterexample quality from a teacher that itself improves over time."
         }
       },
       {
@@ -567,8 +567,8 @@
         "key": "memory-half-life:core_idea",
         "field": "core_idea",
         "text": {
-          "zh": "时间轴改成真实 reuse opportunity。每次 memory 被激活就记录 task family、API/schema 指纹、状态谓词和 reuse index；仅固定比例激活做 memory-on/off replay，用这些真实边际效用学习 local utility hazard。hazard 只决定下一次何时复验/隔离，不直接定义 memory 好坏。",
-          "en": "Replace wall-clock time with real reuse opportunities. On every activation record task family, API/schema fingerprint, state predicates, and reuse index; audit only a fixed fraction with memory-on/off replay and learn a local utility hazard from true marginal utility. The hazard only schedules revalidation/quarantine and never defines truth itself."
+          "zh": "采用两阶段触发。第一阶段完全廉价：memory 每次被激活就打标，只用最近使用时间、激活频率、复用间隔和局部 API/schema 变化给所有 memory 排审计优先级；很久没用、局部环境变化大或复用模式异常的 memory 先进入候选。第二阶段才消耗真实预算：只对固定比例候选做 memory-on/off paired replay，用真实边际效用决定继续保留、缩短复验间隔或隔离。历史干预效用只学习‘下一次该审谁’，不替代最终真值。",
+          "en": "Use a two-stage trigger. Stage one is cheap: mark every activation and rank memories for audit using recency, activation frequency, reuse interval, and local API/schema change; long-unused memories, strong local changes, or unusual reuse patterns become candidates. Stage two spends real budget only on a fixed fraction of candidates via paired memory-on/off replay, whose true marginal utility decides retain, shorten the next audit interval, or quarantine. Historical intervention utility learns only whom to audit next and never replaces final truth."
         }
       },
       {
@@ -647,8 +647,8 @@
         "key": "recovery-conditioned-experience:purpose",
         "field": "purpose",
         "text": {
-          "zh": "恢复轨迹、harm recovery 和 recovery memory 都已有工作；剩下的窄失败模式是：任务虽然 success，但扰动后终点/重汇合点仍有可执行残余状态，而 success-only writer 把这类轨迹正向写入并在未来复用时造成伤害。",
-          "en": "Recovery trajectories, harm recovery, and recovery memory are already studied. The narrow remaining failure mode is that a task succeeds while executable residual state remains after perturbation, a success-only writer stores the trajectory positively, and future reuse causes harm."
+          "zh": "最终任务成功是一个很粗的标签：它会把‘干净完成’和‘勉强补救后完成’都记成 success。长期自进化却会把成功轨迹写成可复用经验；如果补救轨迹虽然完成目标，却仍留下抽屉未复位、工具被占用、权限/资源状态异常等残余状态，反复学习就可能把这些异常行为固化。真正要验证的问题是：这类 success+残余状态是否会被误写成正经验，并在未来复用时造成伤害。",
+          "en": "Final task success is a coarse label: it treats clean completion and barely recovered completion as the same success. Long-term self-evolution may persist successful trajectories as reusable experience; if a recovered trajectory completes the goal but leaves residual state such as an unrestored drawer, occupied tool, or abnormal permission/resource state, repeated learning may entrench that behavior. The concrete question is whether success-with-residual-state is admitted as positive experience and later causes harm when reused."
         }
       },
       {
@@ -687,8 +687,8 @@
         "key": "retrieval-interference-auditor:core_idea",
         "field": "core_idea",
         "text": {
-          "zh": "先用 per-item causal selector 得到候选集，再只对高频共检索 pair 做 2×2 intervention：none、A、B、A+B。学习稀疏 interaction edge（synergy/harm/exclusion/order），形成持久 co-retrieval graph；运行时在不增加 replay 的情况下先应用 exclusion/ordering，再交给普通检索器。",
-          "en": "Start from a per-item causal selector, then run 2×2 interventions only for frequent co-retrieval pairs: none, A, B, A+B. Learn sparse interaction edges (synergy/harm/exclusion/order) as a persistent co-retrieval graph; at runtime apply exclusion/ordering before the normal retriever with no extra replay."
+          "zh": "先用 per-item causal selector 得到候选集，再只对高频共检索 pair 做 2×2 intervention：none、A、B、A+B。把‘有害’操作化为：A+B 的真实任务效用相对 none、A 或 B 出现可重复的额外负边际效应；把‘隔离’操作化为：保留原 memory，但写入 exclusion / precedence edge，使该触发条件下不再共同检索或强制先后顺序。最终形成持久 co-retrieval graph，测试时不再额外 replay。",
+          "en": "Start from a per-item causal selector, then run 2×2 interventions only for frequent co-retrieval pairs: none, A, B, A+B. Define harmful operationally as a reproducible extra negative marginal effect of A+B on true task utility relative to none/A/B. Define quarantine as preserving the original memories while storing an exclusion/precedence edge that blocks joint retrieval or enforces order under the trigger. Persist the resulting co-retrieval graph and use it at test time without extra replay."
         }
       },
       {
@@ -7259,42 +7259,42 @@
         "source": "idea:ecaf8d36e37a43",
         "target": "paper:06d97e9906def0",
         "relation": "semantic-evidence",
-        "score": 0.0234,
+        "score": 0.0254,
         "rank": 1
       },
       {
         "source": "idea:ecaf8d36e37a43",
-        "target": "paper:7a5abd516dd52c",
+        "target": "paper:86105192e6d517",
         "relation": "semantic-evidence",
-        "score": 0.0183,
+        "score": 0.0206,
         "rank": 2
+      },
+      {
+        "source": "idea:ecaf8d36e37a43",
+        "target": "paper:3359f7547e5a81",
+        "relation": "semantic-evidence",
+        "score": 0.0206,
+        "rank": 3
+      },
+      {
+        "source": "idea:ecaf8d36e37a43",
+        "target": "paper:b577508b129446",
+        "relation": "semantic-evidence",
+        "score": 0.0205,
+        "rank": 4
+      },
+      {
+        "source": "idea:ecaf8d36e37a43",
+        "target": "paper:f35470ee23e48c",
+        "relation": "semantic-evidence",
+        "score": 0.0204,
+        "rank": 5
       },
       {
         "source": "idea:ecaf8d36e37a43",
         "target": "paper:03d652c30fd33d",
         "relation": "semantic-evidence",
-        "score": 0.0169,
-        "rank": 3
-      },
-      {
-        "source": "idea:ecaf8d36e37a43",
-        "target": "paper:58aba9d631db83",
-        "relation": "semantic-evidence",
-        "score": 0.0126,
-        "rank": 4
-      },
-      {
-        "source": "idea:ecaf8d36e37a43",
-        "target": "paper:c0f328cf8b5bff",
-        "relation": "semantic-evidence",
-        "score": 0.0126,
-        "rank": 5
-      },
-      {
-        "source": "idea:ecaf8d36e37a43",
-        "target": "paper:14258093143561",
-        "relation": "semantic-evidence",
-        "score": 0.0125,
+        "score": 0.0197,
         "rank": 6
       },
       {
@@ -7425,86 +7425,86 @@
       },
       {
         "source": "idea:058a159c5d541c",
+        "target": "paper:b9db3b65bcbd29",
+        "relation": "semantic-evidence",
+        "score": 0.0227,
+        "rank": 1
+      },
+      {
+        "source": "idea:058a159c5d541c",
         "target": "paper:cc27b80176fb81",
         "relation": "semantic-evidence",
-        "score": 0.0256,
-        "rank": 1
+        "score": 0.0223,
+        "rank": 2
+      },
+      {
+        "source": "idea:058a159c5d541c",
+        "target": "paper:f35470ee23e48c",
+        "relation": "semantic-evidence",
+        "score": 0.0221,
+        "rank": 3
       },
       {
         "source": "idea:058a159c5d541c",
         "target": "paper:14258093143561",
         "relation": "semantic-evidence",
-        "score": 0.0214,
-        "rank": 2
+        "score": 0.0185,
+        "rank": 4
       },
       {
         "source": "idea:058a159c5d541c",
         "target": "paper:31975a19490591",
         "relation": "semantic-evidence",
-        "score": 0.0213,
-        "rank": 3
+        "score": 0.0184,
+        "rank": 5
       },
       {
         "source": "idea:058a159c5d541c",
         "target": "paper:90c301bd33a4bc",
         "relation": "semantic-evidence",
-        "score": 0.0209,
-        "rank": 4
-      },
-      {
-        "source": "idea:058a159c5d541c",
-        "target": "paper:7a5abd516dd52c",
-        "relation": "semantic-evidence",
-        "score": 0.0208,
-        "rank": 5
-      },
-      {
-        "source": "idea:058a159c5d541c",
-        "target": "paper:b9db3b65bcbd29",
-        "relation": "semantic-evidence",
-        "score": 0.0208,
+        "score": 0.0182,
         "rank": 6
       },
       {
         "source": "idea:029eef117e198f",
         "target": "paper:f35470ee23e48c",
         "relation": "semantic-evidence",
-        "score": 0.033,
+        "score": 0.0294,
         "rank": 1
       },
       {
         "source": "idea:029eef117e198f",
         "target": "paper:14258093143561",
         "relation": "semantic-evidence",
-        "score": 0.0291,
+        "score": 0.0258,
         "rank": 2
       },
       {
         "source": "idea:029eef117e198f",
         "target": "paper:b9db3b65bcbd29",
         "relation": "semantic-evidence",
-        "score": 0.0282,
+        "score": 0.0251,
         "rank": 3
       },
       {
         "source": "idea:029eef117e198f",
         "target": "paper:357838d41f7af2",
         "relation": "semantic-evidence",
-        "score": 0.0278,
+        "score": 0.0248,
         "rank": 4
       },
       {
         "source": "idea:029eef117e198f",
         "target": "paper:b577508b129446",
         "relation": "semantic-evidence",
-        "score": 0.0275,
+        "score": 0.0245,
         "rank": 5
       },
       {
         "source": "idea:029eef117e198f",
         "target": "paper:fd05a5d13caa5a",
         "relation": "semantic-evidence",
-        "score": 0.0272,
+        "score": 0.0243,
         "rank": 6
       },
       {
@@ -7966,42 +7966,42 @@
         "source": "idea:a3691ebe510f49",
         "target": "paper:86105192e6d517",
         "relation": "semantic-evidence",
-        "score": 0.0292,
+        "score": 0.0246,
         "rank": 1
       },
       {
         "source": "idea:a3691ebe510f49",
         "target": "paper:3359f7547e5a81",
         "relation": "semantic-evidence",
-        "score": 0.0292,
+        "score": 0.0246,
         "rank": 2
       },
       {
         "source": "idea:a3691ebe510f49",
         "target": "paper:da861bdb4845d2",
         "relation": "semantic-evidence",
-        "score": 0.0234,
+        "score": 0.0197,
         "rank": 3
       },
       {
         "source": "idea:a3691ebe510f49",
         "target": "paper:cc27b80176fb81",
         "relation": "semantic-evidence",
-        "score": 0.0233,
+        "score": 0.0196,
         "rank": 4
       },
       {
         "source": "idea:a3691ebe510f49",
         "target": "paper:06d97e9906def0",
         "relation": "semantic-evidence",
-        "score": 0.0227,
+        "score": 0.0192,
         "rank": 5
       },
       {
         "source": "idea:a3691ebe510f49",
         "target": "paper:14258093143561",
         "relation": "semantic-evidence",
-        "score": 0.0183,
+        "score": 0.0153,
         "rank": 6
       },
       {
@@ -8357,6 +8357,7 @@
       "paper:d17016cdc4786f",
       "paper:9dd6981fb33d27",
       "paper:2879dac12b69b4",
+      "paper:58aba9d631db83",
       "paper:f0dab8dc6033ff",
       "paper:0356affdbeb963",
       "paper:937ac489527294",
@@ -8457,6 +8458,7 @@
       "paper:b9511c3e1f7744",
       "paper:2f61ec7ccf05b0",
       "paper:a9a84a1a92279c",
+      "paper:c0f328cf8b5bff",
       "paper:4ea05b26cc0287",
       "paper:5c303cc697ffa8",
       "paper:c26733919a51d9",
@@ -8490,9 +8492,7 @@
       "paper:c3f11186953cbd",
       "paper:e73962f272f5fe",
       "paper:7c95d9410253ae",
-      "paper:e3bdc72a818d85",
-      "paper:5f3debb4497037",
-      "paper:05fb953c907614"
+      "paper:e3bdc72a818d85"
     ]
   },
   "collision_engine": {
@@ -8501,17 +8501,19 @@
       "duplicate": 0.26,
       "near_duplicate": 0.18,
       "shared_problem": 0.14,
-      "shared_mechanism": 0.14
+      "shared_mechanism": 0.14,
+      "method_signature_duplicate": 0.26
     },
     "summary": {
       "ideas": 29,
       "pairwise_comparisons": 406,
-      "flagged_pairs": 70,
-      "clusters": 3,
+      "flagged_pairs": 71,
+      "clusters": 4,
       "relation_counts": {
-        "same-mechanism-different-setting": 66,
+        "same-mechanism-different-setting": 59,
+        "same-method-signature": 6,
         "near-duplicate": 3,
-        "same-problem-different-mechanism": 1
+        "same-problem-different-mechanism": 3
       }
     },
     "clusters": [
@@ -8552,8 +8554,28 @@
       {
         "cluster_id": "collision-3",
         "idea_ids": [
+          "failure-frontier-curriculum",
+          "curriculum-drift-controller"
+        ],
+        "titles": [
+          {
+            "zh": "失败前沿课程",
+            "en": "Failure-Frontier Curriculum"
+          },
+          {
+            "zh": "课程漂移控制器",
+            "en": "Curriculum Drift Controller"
+          }
+        ]
+      },
+      {
+        "cluster_id": "collision-4",
+        "idea_ids": [
           "reward-invariance-audit",
-          "self-correction-collapse-detector"
+          "self-correction-collapse-detector",
+          "intervention-validated-self-correction",
+          "correction-policy-credit",
+          "heterogeneous-critic-disagreement"
         ],
         "titles": [
           {
@@ -8563,6 +8585,18 @@
           {
             "zh": "自纠正坍塌检测",
             "en": "Self-Correction Collapse Detector"
+          },
+          {
+            "zh": "干预验证自纠正",
+            "en": "Intervention-Validated Self-Correction"
+          },
+          {
+            "zh": "纠正策略信用分配",
+            "en": "Correction Policy Credit Assignment"
+          },
+          {
+            "zh": "异构 Critic 分歧学习",
+            "en": "Heterogeneous Critic Disagreement Learning"
           }
         ]
       }
@@ -8579,13 +8613,14 @@
           "zh": "干预验证自纠正",
           "en": "Intervention-Validated Self-Correction"
         },
-        "relation": "same-mechanism-different-setting",
-        "recommended_action": "consider-cross-domain-merge",
+        "relation": "same-method-signature",
+        "recommended_action": "merge-or-rewrite-mechanism",
         "scores": {
           "hybrid": 0.381,
           "problem": 0.0833,
           "mechanism": 0.525,
           "experiment": 0.9091,
+          "method_signature": 0.2917,
           "full": 0.5701,
           "assets": 0.5
         }
@@ -8601,13 +8636,14 @@
           "zh": "课程漂移控制器",
           "en": "Curriculum Drift Controller"
         },
-        "relation": "same-mechanism-different-setting",
-        "recommended_action": "consider-cross-domain-merge",
+        "relation": "same-method-signature",
+        "recommended_action": "merge-or-rewrite-mechanism",
         "scores": {
           "hybrid": 0.3775,
           "problem": 0.05,
           "mechanism": 0.5128,
           "experiment": 0.9545,
+          "method_signature": 0.3125,
           "full": 0.61,
           "assets": 0.6667
         }
@@ -8623,13 +8659,14 @@
           "zh": "纠正策略信用分配",
           "en": "Correction Policy Credit Assignment"
         },
-        "relation": "same-mechanism-different-setting",
-        "recommended_action": "consider-cross-domain-merge",
+        "relation": "same-method-signature",
+        "recommended_action": "merge-or-rewrite-mechanism",
         "scores": {
           "hybrid": 0.3766,
           "problem": 0.0417,
           "mechanism": 0.5526,
           "experiment": 0.9091,
+          "method_signature": 0.3721,
           "full": 0.5882,
           "assets": 0.5
         }
@@ -8652,6 +8689,7 @@
           "problem": 0.1,
           "mechanism": 0.5122,
           "experiment": 0.881,
+          "method_signature": 0.2353,
           "full": 0.5577,
           "assets": 0.3125
         }
@@ -8667,13 +8705,14 @@
           "zh": "纠正策略信用分配",
           "en": "Correction Policy Credit Assignment"
         },
-        "relation": "same-mechanism-different-setting",
-        "recommended_action": "consider-cross-domain-merge",
+        "relation": "same-method-signature",
+        "recommended_action": "merge-or-rewrite-mechanism",
         "scores": {
           "hybrid": 0.3678,
           "problem": 0.087,
           "mechanism": 0.4884,
           "experiment": 0.9091,
+          "method_signature": 0.2857,
           "full": 0.5701,
           "assets": 0.5
         }
@@ -8689,13 +8728,14 @@
           "zh": "异构 Critic 分歧学习",
           "en": "Heterogeneous Critic Disagreement Learning"
         },
-        "relation": "same-mechanism-different-setting",
-        "recommended_action": "consider-cross-domain-merge",
+        "relation": "same-method-signature",
+        "recommended_action": "merge-or-rewrite-mechanism",
         "scores": {
           "hybrid": 0.3597,
           "problem": 0.0417,
           "mechanism": 0.5116,
           "experiment": 0.9091,
+          "method_signature": 0.2885,
           "full": 0.581,
           "assets": 0.5
         }
@@ -8718,6 +8758,7 @@
           "problem": 0.1818,
           "mechanism": 0.4878,
           "experiment": 0.5273,
+          "method_signature": 0.0806,
           "full": 0.4386,
           "assets": 0.3333
         }
@@ -8733,13 +8774,14 @@
           "zh": "异构 Critic 分歧学习",
           "en": "Heterogeneous Critic Disagreement Learning"
         },
-        "relation": "same-mechanism-different-setting",
-        "recommended_action": "consider-cross-domain-merge",
+        "relation": "same-method-signature",
+        "recommended_action": "merge-or-rewrite-mechanism",
         "scores": {
           "hybrid": 0.3491,
           "problem": 0.04,
           "mechanism": 0.4565,
           "experiment": 0.9535,
+          "method_signature": 0.2727,
           "full": 0.5495,
           "assets": 0.7143
         }
@@ -8762,6 +8804,7 @@
           "problem": 0.1111,
           "mechanism": 0.4878,
           "experiment": 0.6327,
+          "method_signature": 0.0645,
           "full": 0.486,
           "assets": 0.4
         }
@@ -8784,6 +8827,7 @@
           "problem": 0.0,
           "mechanism": 0.4762,
           "experiment": 0.9091,
+          "method_signature": 0.2453,
           "full": 0.537,
           "assets": 0.5
         }
@@ -8806,6 +8850,7 @@
           "problem": 0.0476,
           "mechanism": 0.5405,
           "experiment": 0.5472,
+          "method_signature": 0.0727,
           "full": 0.4324,
           "assets": 0.2105
         }
@@ -8828,6 +8873,7 @@
           "problem": 0.0,
           "mechanism": 0.4651,
           "experiment": 0.9286,
+          "method_signature": 0.2131,
           "full": 0.5481,
           "assets": 0.4
         }
@@ -8850,6 +8896,7 @@
           "problem": 0.0357,
           "mechanism": 0.5122,
           "experiment": 0.566,
+          "method_signature": 0.0746,
           "full": 0.4261,
           "assets": 0.4667
         }
@@ -8872,6 +8919,7 @@
           "problem": 0.0417,
           "mechanism": 0.5238,
           "experiment": 0.5273,
+          "method_signature": 0.0625,
           "full": 0.4261,
           "assets": 0.3333
         }
@@ -8894,6 +8942,7 @@
           "problem": 0.0714,
           "mechanism": 0.5128,
           "experiment": 0.5,
+          "method_signature": 0.05,
           "full": 0.4103,
           "assets": 0.2105
         }
@@ -8916,6 +8965,7 @@
           "problem": 0.0,
           "mechanism": 0.5714,
           "experiment": 0.5577,
+          "method_signature": 0.1379,
           "full": 0.425,
           "assets": 0.1579
         }
@@ -8938,6 +8988,7 @@
           "problem": 0.0952,
           "mechanism": 0.4651,
           "experiment": 0.4912,
+          "method_signature": 0.0448,
           "full": 0.4261,
           "assets": 0.2222
         }
@@ -8960,6 +9011,7 @@
           "problem": 0.0,
           "mechanism": 0.5,
           "experiment": 0.5769,
+          "method_signature": 0.0323,
           "full": 0.4211,
           "assets": 0.5714
         }
@@ -8982,6 +9034,7 @@
           "problem": 0.0435,
           "mechanism": 0.5405,
           "experiment": 0.4655,
+          "method_signature": 0.0345,
           "full": 0.3879,
           "assets": 0.1
         }
@@ -9004,6 +9057,7 @@
           "problem": 0.0,
           "mechanism": 0.5122,
           "experiment": 0.5769,
+          "method_signature": 0.0862,
           "full": 0.4224,
           "assets": 0.4375
         }
@@ -9026,6 +9080,7 @@
           "problem": 0.0,
           "mechanism": 0.5,
           "experiment": 0.5273,
+          "method_signature": 0.0455,
           "full": 0.4159,
           "assets": 0.6154
         }
@@ -9048,6 +9103,7 @@
           "problem": 0.037,
           "mechanism": 0.4651,
           "experiment": 0.5769,
+          "method_signature": 0.0606,
           "full": 0.4224,
           "assets": 0.5
         }
@@ -9070,6 +9126,7 @@
           "problem": 0.0476,
           "mechanism": 0.4762,
           "experiment": 0.5472,
+          "method_signature": 0.0303,
           "full": 0.4248,
           "assets": 0.3529
         }
@@ -9092,6 +9149,7 @@
           "problem": 0.0455,
           "mechanism": 0.5263,
           "experiment": 0.4655,
+          "method_signature": 0.0339,
           "full": 0.3966,
           "assets": 0.1
         }
@@ -9114,6 +9172,7 @@
           "problem": 0.0714,
           "mechanism": 0.4545,
           "experiment": 0.5273,
+          "method_signature": 0.0469,
           "full": 0.4016,
           "assets": 0.3529
         }
@@ -9136,6 +9195,7 @@
           "problem": 0.037,
           "mechanism": 0.5,
           "experiment": 0.4912,
+          "method_signature": 0.0484,
           "full": 0.4017,
           "assets": 0.3125
         }
@@ -9158,6 +9218,7 @@
           "problem": 0.0,
           "mechanism": 0.4878,
           "experiment": 0.5273,
+          "method_signature": 0.0606,
           "full": 0.4248,
           "assets": 0.6154
         }
@@ -9180,6 +9241,7 @@
           "problem": 0.0455,
           "mechanism": 0.5,
           "experiment": 0.4912,
+          "method_signature": 0.0339,
           "full": 0.4,
           "assets": 0.2222
         }
@@ -9202,6 +9264,7 @@
           "problem": 0.0,
           "mechanism": 0.5263,
           "experiment": 0.5091,
+          "method_signature": 0.0339,
           "full": 0.4234,
           "assets": 0.3125
         }
@@ -9224,6 +9287,7 @@
           "problem": 0.0,
           "mechanism": 0.5,
           "experiment": 0.5882,
+          "method_signature": 0.0625,
           "full": 0.4364,
           "assets": 0.375
         }
@@ -9246,6 +9310,7 @@
           "problem": 0.0455,
           "mechanism": 0.4651,
           "experiment": 0.5185,
+          "method_signature": 0.0833,
           "full": 0.4103,
           "assets": 0.4286
         }
@@ -9268,6 +9333,7 @@
           "problem": 0.0,
           "mechanism": 0.5,
           "experiment": 0.5769,
+          "method_signature": 0.0714,
           "full": 0.4455,
           "assets": 0.3529
         }
@@ -9290,6 +9356,7 @@
           "problem": 0.0357,
           "mechanism": 0.4762,
           "experiment": 0.5273,
+          "method_signature": 0.0323,
           "full": 0.3983,
           "assets": 0.3529
         }
@@ -9312,6 +9379,7 @@
           "problem": 0.0,
           "mechanism": 0.5122,
           "experiment": 0.5091,
+          "method_signature": 0.1148,
           "full": 0.4211,
           "assets": 0.3333
         }
@@ -9334,6 +9402,7 @@
           "problem": 0.0,
           "mechanism": 0.5128,
           "experiment": 0.5091,
+          "method_signature": 0.0333,
           "full": 0.4071,
           "assets": 0.3125
         }
@@ -9356,6 +9425,7 @@
           "problem": 0.0,
           "mechanism": 0.4773,
           "experiment": 0.58,
+          "method_signature": 0.1129,
           "full": 0.4224,
           "assets": 0.4286
         }
@@ -9378,6 +9448,7 @@
           "problem": 0.0,
           "mechanism": 0.5385,
           "experiment": 0.4909,
+          "method_signature": 0.0484,
           "full": 0.3966,
           "assets": 0.1
         }
@@ -9400,6 +9471,7 @@
           "problem": 0.04,
           "mechanism": 0.4878,
           "experiment": 0.5283,
+          "method_signature": 0.069,
           "full": 0.3983,
           "assets": 0.1
         }
@@ -9422,6 +9494,7 @@
           "problem": 0.0435,
           "mechanism": 0.4762,
           "experiment": 0.4912,
+          "method_signature": 0.0299,
           "full": 0.3932,
           "assets": 0.2222
         }
@@ -9444,6 +9517,7 @@
           "problem": 0.0,
           "mechanism": 0.4545,
           "experiment": 0.6,
+          "method_signature": 0.0597,
           "full": 0.4138,
           "assets": 0.5
         }
@@ -9466,6 +9540,7 @@
           "problem": 0.0,
           "mechanism": 0.4565,
           "experiment": 0.5556,
+          "method_signature": 0.0417,
           "full": 0.4237,
           "assets": 0.5
         }
@@ -9488,6 +9563,7 @@
           "problem": 0.0,
           "mechanism": 0.4762,
           "experiment": 0.5185,
+          "method_signature": 0.0323,
           "full": 0.4017,
           "assets": 0.4286
         }
@@ -9510,6 +9586,7 @@
           "problem": 0.0,
           "mechanism": 0.5,
           "experiment": 0.5185,
+          "method_signature": 0.0476,
           "full": 0.4087,
           "assets": 0.2222
         }
@@ -9532,6 +9609,7 @@
           "problem": 0.0,
           "mechanism": 0.4878,
           "experiment": 0.5091,
+          "method_signature": 0.0308,
           "full": 0.4,
           "assets": 0.3333
         }
@@ -9554,6 +9632,7 @@
           "problem": 0.0,
           "mechanism": 0.4651,
           "experiment": 0.5769,
+          "method_signature": 0.0469,
           "full": 0.4298,
           "assets": 0.3529
         }
@@ -9576,6 +9655,7 @@
           "problem": 0.0345,
           "mechanism": 0.4545,
           "experiment": 0.5,
+          "method_signature": 0.0141,
           "full": 0.3802,
           "assets": 0.3529
         }
@@ -9598,6 +9678,7 @@
           "problem": 0.0,
           "mechanism": 0.5128,
           "experiment": 0.5091,
+          "method_signature": 0.0308,
           "full": 0.4123,
           "assets": 0.0952
         }
@@ -9620,6 +9701,7 @@
           "problem": 0.0,
           "mechanism": 0.5,
           "experiment": 0.4912,
+          "method_signature": 0.0462,
           "full": 0.4103,
           "assets": 0.2222
         }
@@ -9642,6 +9724,7 @@
           "problem": 0.0,
           "mechanism": 0.4878,
           "experiment": 0.4912,
+          "method_signature": 0.0476,
           "full": 0.3983,
           "assets": 0.3125
         }
@@ -9664,6 +9747,7 @@
           "problem": 0.0,
           "mechanism": 0.4884,
           "experiment": 0.5283,
+          "method_signature": 0.0678,
           "full": 0.4224,
           "assets": 0.1579
         }
@@ -9686,6 +9770,7 @@
           "problem": 0.0,
           "mechanism": 0.4878,
           "experiment": 0.4912,
+          "method_signature": 0.0333,
           "full": 0.4087,
           "assets": 0.2222
         }
@@ -9708,6 +9793,7 @@
           "problem": 0.0,
           "mechanism": 0.4545,
           "experiment": 0.5283,
+          "method_signature": 0.0308,
           "full": 0.3884,
           "assets": 0.4
         }
@@ -9730,6 +9816,7 @@
           "problem": 0.0,
           "mechanism": 0.4348,
           "experiment": 0.5556,
+          "method_signature": 0.029,
           "full": 0.3934,
           "assets": 0.5
         }
@@ -9752,6 +9839,7 @@
           "problem": 0.0,
           "mechanism": 0.4773,
           "experiment": 0.5185,
+          "method_signature": 0.0615,
           "full": 0.3884,
           "assets": 0.2222
         }
@@ -9774,6 +9862,7 @@
           "problem": 0.0,
           "mechanism": 0.4773,
           "experiment": 0.5091,
+          "method_signature": 0.0563,
           "full": 0.3983,
           "assets": 0.2105
         }
@@ -9796,6 +9885,7 @@
           "problem": 0.0,
           "mechanism": 0.4762,
           "experiment": 0.5091,
+          "method_signature": 0.0462,
           "full": 0.4,
           "assets": 0.2105
         }
@@ -9818,6 +9908,7 @@
           "problem": 0.0,
           "mechanism": 0.4667,
           "experiment": 0.5185,
+          "method_signature": 0.0735,
           "full": 0.4068,
           "assets": 0.2222
         }
@@ -9840,6 +9931,7 @@
           "problem": 0.0,
           "mechanism": 0.4762,
           "experiment": 0.4912,
+          "method_signature": 0.0492,
           "full": 0.3802,
           "assets": 0.2222
         }
@@ -9862,6 +9954,7 @@
           "problem": 0.0,
           "mechanism": 0.4444,
           "experiment": 0.5273,
+          "method_signature": 0.0441,
           "full": 0.3852,
           "assets": 0.3529
         }
@@ -9884,6 +9977,7 @@
           "problem": 0.0,
           "mechanism": 0.4651,
           "experiment": 0.4912,
+          "method_signature": 0.0656,
           "full": 0.377,
           "assets": 0.2222
         }
@@ -9906,6 +10000,7 @@
           "problem": 0.04,
           "mechanism": 0.4348,
           "experiment": 0.4727,
+          "method_signature": 0.0143,
           "full": 0.3689,
           "assets": 0.1579
         }
@@ -9928,6 +10023,7 @@
           "problem": 0.0,
           "mechanism": 0.4545,
           "experiment": 0.5091,
+          "method_signature": 0.0597,
           "full": 0.3802,
           "assets": 0.2105
         }
@@ -9950,6 +10046,7 @@
           "problem": 0.0,
           "mechanism": 0.4565,
           "experiment": 0.5283,
+          "method_signature": 0.0769,
           "full": 0.3852,
           "assets": 0.1579
         }
@@ -9972,6 +10069,7 @@
           "problem": 0.0,
           "mechanism": 0.4545,
           "experiment": 0.4912,
+          "method_signature": 0.0455,
           "full": 0.3833,
           "assets": 0.2222
         }
@@ -9994,6 +10092,7 @@
           "problem": 0.0,
           "mechanism": 0.4545,
           "experiment": 0.4821,
+          "method_signature": 0.0556,
           "full": 0.3932,
           "assets": 0.2105
         }
@@ -10016,6 +10115,7 @@
           "problem": 0.0,
           "mechanism": 0.4444,
           "experiment": 0.5185,
+          "method_signature": 0.0137,
           "full": 0.3898,
           "assets": 0.2222
         }
@@ -10038,6 +10138,7 @@
           "problem": 0.1857,
           "mechanism": 0.156,
           "experiment": 0.1887,
+          "method_signature": 0.1417,
           "full": 0.2081,
           "assets": 0.5625
         }
@@ -10060,8 +10161,55 @@
           "problem": 0.1667,
           "mechanism": 0.1261,
           "experiment": 0.22,
+          "method_signature": 0.1273,
           "full": 0.2,
           "assets": 0.7143
+        }
+      },
+      {
+        "left_id": "regression-gated-self-evolution",
+        "right_id": "memory-half-life",
+        "left_title": {
+          "zh": "预算校准的预测性回归面板",
+          "en": "Budget-Calibrated Predictive Regression Panel"
+        },
+        "right_title": {
+          "zh": "复用机会驱动的记忆效用复验",
+          "en": "Reuse-Opportunity Memory Utility Revalidation"
+        },
+        "relation": "same-problem-different-mechanism",
+        "recommended_action": "retain-as-controlled-comparison",
+        "scores": {
+          "hybrid": 0.163,
+          "problem": 0.2075,
+          "mechanism": 0.1126,
+          "experiment": 0.1009,
+          "method_signature": 0.1163,
+          "full": 0.1452,
+          "assets": 0.3333
+        }
+      },
+      {
+        "left_id": "causally-verified-experience-admission",
+        "right_id": "memory-half-life",
+        "left_title": {
+          "zh": "影响范围路由的经验准入",
+          "en": "Influence-Routed Experience Admission"
+        },
+        "right_title": {
+          "zh": "复用机会驱动的记忆效用复验",
+          "en": "Reuse-Opportunity Memory Utility Revalidation"
+        },
+        "relation": "same-problem-different-mechanism",
+        "recommended_action": "retain-as-controlled-comparison",
+        "scores": {
+          "hybrid": 0.1473,
+          "problem": 0.1569,
+          "mechanism": 0.1154,
+          "experiment": 0.0877,
+          "method_signature": 0.0746,
+          "full": 0.1545,
+          "assets": 0.4118
         }
       },
       {
@@ -10082,37 +10230,16 @@
           "problem": 0.15,
           "mechanism": 0.075,
           "experiment": 0.0526,
+          "method_signature": 0.0316,
           "full": 0.107,
           "assets": 0.4
-        }
-      },
-      {
-        "left_id": "retrieval-interference-auditor",
-        "right_id": "outcome-equivalent-trajectory-contrast",
-        "left_title": {
-          "zh": "共检索交互排斥图",
-          "en": "Co-Retrieval Interaction Exclusion Graph"
-        },
-        "right_title": {
-          "zh": "跨过程验证经验蒸馏",
-          "en": "Cross-Process Validated Experience Distillation"
-        },
-        "relation": "same-mechanism-different-setting",
-        "recommended_action": "consider-cross-domain-merge",
-        "scores": {
-          "hybrid": 0.1093,
-          "problem": 0.0339,
-          "mechanism": 0.1441,
-          "experiment": 0.1222,
-          "full": 0.1527,
-          "assets": 0.3529
         }
       }
     ]
   },
   "lineage": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T17:22:51+00:00",
+    "generated_at": "2026-08-09T20:41:30+00:00",
     "summary": {
       "nodes": 278,
       "edges": 258,
@@ -10129,8 +10256,8 @@
       },
       "relations": {
         "reviewed-by": 229,
-        "generated-under-track": 26,
-        "near-duplicate-child": 3
+        "generated-under-track": 22,
+        "near-duplicate-child": 7
       }
     },
     "nodes": [
@@ -10142,7 +10269,7 @@
           "zh": "受约束持续进化",
           "en": "Constrained continual evolution"
         },
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "track-root:credit",
@@ -10152,7 +10279,7 @@
           "zh": "失败归因与经验准入",
           "en": "Failure credit and experience admission"
         },
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "track-root:memory",
@@ -10162,7 +10289,7 @@
           "zh": "记忆与技能巩固",
           "en": "Memory and skill consolidation"
         },
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "track-root:correction",
@@ -10172,7 +10299,7 @@
           "zh": "自纠正与策略内化",
           "en": "Self-correction and policy internalization"
         },
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "track-root:curriculum",
@@ -10182,7 +10309,7 @@
           "zh": "课程与任务进化",
           "en": "Curriculum and task evolution"
         },
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "track-root:workflow",
@@ -10192,7 +10319,7 @@
           "zh": "工作流与更新表面搜索",
           "en": "Workflow and update-surface search"
         },
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "track-root:evaluator",
@@ -10202,7 +10329,7 @@
           "zh": "奖励与评价器进化",
           "en": "Reward and evaluator evolution"
         },
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "track-root:world",
@@ -10212,7 +10339,7 @@
           "zh": "世界模型与具身持续适应",
           "en": "World models and embodied adaptation"
         },
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "regression-gated-self-evolution",
@@ -10234,7 +10361,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:regression-gated-self-evolution:1",
@@ -10342,7 +10469,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:contradiction-preserving-consolidation:1",
@@ -10450,7 +10577,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:compositional-update-compatibility:1",
@@ -10558,7 +10685,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:update-trust-region:1",
@@ -10666,7 +10793,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:retrieval-interference-auditor:1",
@@ -10774,7 +10901,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:irreversible-action-counterfactuals:1",
@@ -10881,7 +11008,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:self-label-confidence-flow:1",
@@ -10989,7 +11116,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:evaluator-coadaptation-guard:1",
@@ -11097,7 +11224,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:recovery-conditioned-experience:1",
@@ -11205,7 +11332,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:counterexample-generating-curriculum:1",
@@ -11314,7 +11441,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:workflow-generalization-certificate:1",
@@ -11422,7 +11549,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:budgeted-evolution-controller:1",
@@ -11530,7 +11657,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:lineage-aware-rollback:1",
@@ -11638,7 +11765,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:failure-frontier-curriculum:1",
@@ -11746,7 +11873,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:causally-verified-experience-admission:1",
@@ -11854,7 +11981,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:reward-invariance-audit:1",
@@ -11962,7 +12089,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:local-counterexample-memory-repair:1",
@@ -12070,7 +12197,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:self-correction-collapse-detector:1",
@@ -12178,7 +12305,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:intervention-validated-self-correction:1",
@@ -12286,7 +12413,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:workflow-branch-credit:1",
@@ -12394,7 +12521,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:world-model-error-gated-learning:1",
@@ -12502,7 +12629,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:memory-half-life:1",
@@ -12610,7 +12737,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:correction-policy-credit:1",
@@ -12718,7 +12845,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:curriculum-drift-controller:1",
@@ -12827,7 +12954,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:outcome-equivalent-trajectory-contrast:1",
@@ -12935,7 +13062,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "review:applicability-bounded-lessons:1",
@@ -13045,7 +13172,7 @@
         "blocking_reasons": [
           "Module-level intervention labels may require expensive environment-specific instrumentation."
         ],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "programmatic-review:failure-localization-before-reflection:1",
@@ -13146,7 +13273,7 @@
         "blocking_reasons": [
           "Cross-family disagreement may reflect formatting and style rather than distinct error mechanisms."
         ],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "programmatic-review:heterogeneous-critic-disagreement:1",
@@ -13247,7 +13374,7 @@
         "blocking_reasons": [
           "Oracle labels require executing all update surfaces, making supervision close to exhaustive search."
         ],
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "programmatic-review:update-surface-router:1",
@@ -13331,84 +13458,84 @@
         "kind": "early-rejected",
         "title": "更大模型做更多反思",
         "reason": "只增加推理计算，不能证明持久学习。",
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "early-rejected:268",
         "kind": "early-rejected",
         "title": "全参数训练 70B 自进化 Agent",
         "reason": "超出低资源约束且机制难归因。",
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "early-rejected:269",
         "kind": "early-rejected",
         "title": "只在自生成任务上提升",
         "reason": "缺少圈外泛化。",
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "early-rejected:270",
         "kind": "early-rejected",
         "title": "仅商业 API 闭环",
         "reason": "不可复现且依赖供应商快照。",
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "early-rejected:271",
         "kind": "early-rejected",
         "title": "固定多轮 Self-Refine",
         "reason": "属于更多采样，不是进化机制。",
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "early-rejected:272",
         "kind": "early-rejected",
         "title": "同模型 Actor 与 Judge 自我确认",
         "reason": "反馈完整性无法独立验证。",
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "early-rejected:273",
         "kind": "early-rejected",
         "title": "只报告最佳 checkpoint",
         "reason": "掩盖多轮回退与坍塌。",
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "early-rejected:274",
         "kind": "early-rejected",
         "title": "从头训练世界模型和策略",
         "reason": "资源高且无法分离贡献。",
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "early-rejected:275",
         "kind": "early-rejected",
         "title": "单一视觉 benchmark 技巧",
         "reason": "保留为 CVPR 后续，不作为 ICLR 主候选。",
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "early-rejected:276",
         "kind": "early-rejected",
         "title": "只做平均准确率的记忆消融",
         "reason": "无法识别有害条目和负迁移。",
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "early-rejected:277",
         "kind": "early-rejected",
         "title": "无隔离划分的在线适应",
         "reason": "无法排除测试泄漏。",
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       },
       {
         "id": "early-rejected:278",
         "kind": "early-rejected",
         "title": "泛化 Agent 自进化综述",
         "reason": "不是方法或可证伪 benchmark 贡献。",
-        "created_at": "2026-08-09T17:22:51+00:00"
+        "created_at": "2026-08-09T20:41:29+00:00"
       }
     ],
     "edges": [
@@ -14011,9 +14138,9 @@
         "relation": "reviewed-by"
       },
       {
-        "source": "track-root:curriculum",
+        "source": "curriculum-drift-controller",
         "target": "failure-frontier-curriculum",
-        "relation": "generated-under-track",
+        "relation": "near-duplicate-child",
         "operator": "pme-recombination"
       },
       {
@@ -14241,9 +14368,9 @@
         "relation": "reviewed-by"
       },
       {
-        "source": "track-root:correction",
+        "source": "reward-invariance-audit",
         "target": "intervention-validated-self-correction",
-        "relation": "generated-under-track",
+        "relation": "near-duplicate-child",
         "operator": "objective-evaluation-mismatch"
       },
       {
@@ -14425,9 +14552,9 @@
         "relation": "reviewed-by"
       },
       {
-        "source": "track-root:correction",
+        "source": "reward-invariance-audit",
         "target": "correction-policy-credit",
-        "relation": "generated-under-track",
+        "relation": "near-duplicate-child",
         "operator": "missing-cell"
       },
       {
@@ -14650,9 +14777,9 @@
         "relation": "reviewed-by"
       },
       {
-        "source": "track-root:correction",
+        "source": "reward-invariance-audit",
         "target": "heterogeneous-critic-disagreement",
-        "relation": "generated-under-track",
+        "relation": "near-duplicate-child",
         "operator": "pme-recombination"
       },
       {
@@ -14735,9 +14862,9 @@
   },
   "pilot_registry": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T17:22:51+00:00",
-    "result_dir": "/home/wyt/code/agent-self-evolution-observatory/generated/research-data/runs/pilots/results",
-    "approval_dir": "/home/wyt/code/agent-self-evolution-observatory/generated/research-data/runs/pilots/approvals",
+    "generated_at": "2026-08-09T20:41:30+00:00",
+    "result_dir": "/home/wyt/code/agent-evolution-site-publish-20260810/generated/research-data/runs/pilots/results",
+    "approval_dir": "/home/wyt/code/agent-evolution-site-publish-20260810/generated/research-data/runs/pilots/approvals",
     "result_schema": {
       "schema_version": "1.0",
       "required": [
@@ -15973,8 +16100,8 @@
           "en": "Freeze P1 choices, transfer to a second model/domain, and run at least three rounds."
         },
         "gate": {
-          "zh": "若 non-minimal baseline 在相同 verifier/训练预算下等效，或 minimality 只减少 token 而不改善独立边界泛化，则停止。",
-          "en": "Stop if the non-minimal baseline matches at identical verifier/training budget, or if minimality only reduces tokens without improving independent-boundary generalization."
+          "zh": "若 non-minimal baseline 在相同 proposer/verifier/训练预算下等效，或只有更新强 proposer 才能看到收益，或 minimality 只减少 token 而不改善独立边界泛化，则停止。",
+          "en": "Stop if the non-minimal baseline matches under identical proposer/verifier/training budget, if gains appear only when the stronger proposer itself is updated, or if minimality only reduces tokens without improving independent-boundary generalization."
         },
         "status": "planned",
         "result": null,
@@ -16909,8 +17036,8 @@
           "en": "Freeze P1 choices, transfer to a second model/domain, and run at least three rounds."
         },
         "gate": {
-          "zh": "若 recency+frequency、TTL 或 LRU/LFU 在同 audit 预算下等效，或 intervention utility 对未来 drift 无额外预测力，则只作为缓存调度组件。",
-          "en": "If recency+frequency, TTL, or LRU/LFU matches at the same audit budget, or intervention utility adds no predictive value for future drift, keep only as a cache-scheduling component."
+          "zh": "若纯 last-used/frequency/reuse-interval 触发、TTL 或 LRU/LFU 在同 audit 预算下等效，说明程序局部性启发已经足够，本方法降级为缓存调度组件；若真实 memory-on/off 效用不能改善下一次该审谁的排序，也停止 learned hazard 主张。",
+          "en": "If pure last-used/frequency/reuse-interval triggering, TTL, or LRU/LFU matches at the same audit budget, the locality heuristic is already sufficient and the method is demoted to cache scheduling. Also stop the learned-hazard claim if true memory-on/off utility does not improve whom to audit next."
         },
         "status": "planned",
         "result": null,
@@ -17518,7 +17645,7 @@
   },
   "idea_discovery_v3": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T17:22:51+00:00",
+    "generated_at": "2026-08-09T20:41:30+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -20474,7 +20601,7 @@
   },
   "idea_discovery_v31": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T17:22:51+00:00",
+    "generated_at": "2026-08-09T20:41:30+00:00",
     "round": "v3.1",
     "status": "external-reviewed",
     "policy": {
@@ -21187,7 +21314,7 @@
   },
   "idea_discovery_v4": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T17:22:51+00:00",
+    "generated_at": "2026-08-09T20:41:30+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -30862,7 +30989,7 @@
   },
   "idea_discovery_v5": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T17:22:51+00:00",
+    "generated_at": "2026-08-09T20:41:30+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -40855,7 +40982,7 @@
   },
   "idea_discovery_v51": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T17:22:51+00:00",
+    "generated_at": "2026-08-09T20:41:30+00:00",
     "target_venue": "ICLR",
     "policy": {
       "generated_only_from_review_vectors": true,
@@ -42547,7 +42674,7 @@
   },
   "idea_discovery_v52": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T17:22:51+00:00",
+    "generated_at": "2026-08-09T20:41:30+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v51_revise": true,
@@ -43525,7 +43652,7 @@
   },
   "idea_discovery_v53": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T17:22:51+00:00",
+    "generated_at": "2026-08-09T20:41:30+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v52_revise_with_single_surviving_boundary": true,
@@ -43864,7 +43991,7 @@
   },
   "discussion_portfolio": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-09T17:22:51+00:00",
+    "generated_at": "2026-08-09T20:41:30+00:00",
     "target": 20,
     "count": 20,
     "remaining": 0,
@@ -44334,8 +44461,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "406 pair comparisons / 70 flagged",
-        "zh": "406 组两两比较 / 70 个标记"
+        "en": "406 pair comparisons / 71 flagged",
+        "zh": "406 组两两比较 / 71 个标记"
       }
     },
     {

@@ -41,10 +41,20 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("paper", graph["node_kinds"])
 
     def test_collision_engine_runs_all_pairs(self) -> None:
-        collision = self.state["collision_engine"]["summary"]
+        engine = self.state["collision_engine"]
+        collision = engine["summary"]
         self.assertEqual(collision["ideas"], 29)
         self.assertEqual(collision["pairwise_comparisons"], 406)
         self.assertGreater(collision["flagged_pairs"], 0)
+        self.assertGreaterEqual(collision["relation_counts"].get("same-method-signature", 0), 1)
+        pairs = {(item["left_id"], item["right_id"]): item for item in engine["pairs"]}
+        duplicate_sets = [
+            {"self-correction-collapse-detector", "correction-policy-credit"},
+            {"failure-frontier-curriculum", "curriculum-drift-controller"},
+        ]
+        for expected in duplicate_sets:
+            self.assertTrue(any({left, right} == expected and row["relation"] == "same-method-signature" for (left, right), row in pairs.items()))
+        self.assertFalse(any({left, right} == {"update-trust-region", "budgeted-evolution-controller"} and row["relation"] == "same-method-signature" for (left, right), row in pairs.items()))
 
     def test_lineage_preserves_branches_and_reviews(self) -> None:
         lineage = self.state["lineage"]["summary"]

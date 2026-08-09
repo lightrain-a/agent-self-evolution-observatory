@@ -20,6 +20,7 @@ class CollisionThresholds:
     near_duplicate: float = 0.18
     shared_problem: float = 0.14
     shared_mechanism: float = 0.14
+    method_signature_duplicate: float = 0.26
 
 
 def _field(idea: dict[str, Any], key: str) -> str:
@@ -87,11 +88,20 @@ def analyze_collisions(
     problem_docs = [_field(idea, "purpose") for idea in ideas]
     mechanism_docs = [_field(idea, "core_idea") + " " + _field(idea, "method_logic") for idea in ideas]
     experiment_docs = [_field(idea, "pilot") + " " + _field(idea, "decisive_metric") + " " + _field(idea, "strongest_baseline") for idea in ideas]
+    method_signature_docs = [
+        " ".join((
+            _field(idea, "core_idea"),
+            bilingual_text((idea.get("method_substance") or {}).get("learning_signal")),
+            _field(idea, "strongest_baseline"),
+        ))
+        for idea in ideas
+    ]
     full_docs = [" ".join((problem_docs[i], mechanism_docs[i], experiment_docs[i], _field(idea, "title"))) for i, idea in enumerate(ideas)]
 
     problem_matrix = _similarity_matrix(problem_docs)
     mechanism_matrix = _similarity_matrix(mechanism_docs)
     experiment_matrix = _similarity_matrix(experiment_docs)
+    method_signature_matrix = _similarity_matrix(method_signature_docs)
     full_matrix = _similarity_matrix(full_docs)
 
     records: list[dict[str, Any]] = []
@@ -102,6 +112,7 @@ def analyze_collisions(
             problem = float(problem_matrix[left][right])
             mechanism = float(mechanism_matrix[left][right])
             experiment = float(experiment_matrix[left][right])
+            method_signature = float(method_signature_matrix[left][right])
             full = float(full_matrix[left][right])
             assets = _jaccard(_assets(ideas[left]), _assets(ideas[right]))
             # Problem and mechanism carry most of the weight. Experiment text is deliberately
@@ -109,7 +120,10 @@ def analyze_collisions(
             hybrid = 0.40 * problem + 0.40 * mechanism + 0.08 * experiment + 0.07 * full + 0.05 * assets
             relation = "distinct"
             action = "keep-separate"
-            if hybrid >= thresholds.duplicate and problem >= 0.55 and mechanism >= 0.55:
+            if method_signature >= thresholds.method_signature_duplicate:
+                relation, action = "same-method-signature", "merge-or-rewrite-mechanism"
+                duplicate_pairs.append((left, right))
+            elif hybrid >= thresholds.duplicate and problem >= 0.55 and mechanism >= 0.55:
                 relation, action = "duplicate", "merge-or-stop-lower-priority"
                 duplicate_pairs.append((left, right))
             elif hybrid >= thresholds.near_duplicate and problem >= 0.12 and mechanism >= 0.12:
@@ -136,6 +150,7 @@ def analyze_collisions(
                     "problem": round(problem, 4),
                     "mechanism": round(mechanism, 4),
                     "experiment": round(experiment, 4),
+                    "method_signature": round(method_signature, 4),
                     "full": round(full, 4),
                     "assets": round(assets, 4),
                 },
@@ -156,6 +171,7 @@ def analyze_collisions(
             "near_duplicate": thresholds.near_duplicate,
             "shared_problem": thresholds.shared_problem,
             "shared_mechanism": thresholds.shared_mechanism,
+            "method_signature_duplicate": thresholds.method_signature_duplicate,
         },
         "summary": {
             "ideas": len(ideas),
