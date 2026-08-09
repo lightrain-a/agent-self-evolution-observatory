@@ -274,12 +274,12 @@ def compare_rollouts(before: dict[str, Any], after: dict[str, Any]) -> dict[str,
     }
 
 
-def run_smoke(config_path: Path, model_path: Path, split: str, episodes: int, patch: str) -> list[dict[str, Any]]:
+def run_smoke(config_path: Path, model_path: Path, split: str, episodes: int, patch: str, max_steps: int = 1) -> list[dict[str, Any]]:
     config = load_config(config_path)
     policy = HFAdmissiblePolicy(model_path)
     env = build_env(config, split)
     try:
-        return [run_episode(env, policy, patch, max_steps=50) for _ in range(episodes)]
+        return [run_episode(env, policy, patch, max_steps=max_steps) for _ in range(episodes)]
     finally:
         close = getattr(env, "close", None)
         if callable(close):

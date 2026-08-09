@@ -291,6 +291,36 @@ def run_real_p0_transaction(args: argparse.Namespace) -> dict[str, Any]:
     return {"manifest": manifest, "result": result, "research_system_refreshed": True}
 
 
+def run_smoke_transaction(args: argparse.Namespace) -> dict[str, Any]:
+    readiness = runtime_preflight(args.model_path, args.data_root, Path(sys.executable), args.extra_pythonpath, args.alfworld_data, args.output)
+    if not readiness["environment_ready"]:
+        raise RuntimeError("P0 runtime is not ready for smoke: " + ", ".join(readiness["blockers"]))
+    if args.extra_pythonpath.exists():
+        site.addsitedir(str(args.extra_pythonpath))
+        os.environ["P0_EXTRA_SITE"] = str(args.extra_pythonpath)
+    os.environ["ALFWORLD_DATA"] = str(args.alfworld_data)
+    rows = run_smoke(args.alfworld_config, args.model_path, "eval_out_of_distribution", 1, "")
+    row = rows[0] if rows else {}
+    passed = bool(row.get("gamefile") and int(row.get("steps") or 0) > 0)
+    payload = {
+        "schema_version": "1.0",
+        "status": "pass" if passed else "fail",
+        "model_path": str(args.model_path),
+        "runtime_contract_hash": readiness["runtime_contract_hash"],
+        "alfworld_data": str(args.alfworld_data),
+        "gamefile": row.get("gamefile", ""),
+        "steps": int(row.get("steps") or 0),
+        "won": int(row.get("won") or 0),
+        "invalid_choice_rate": float(row.get("invalid_choice_rate") or 0.0),
+    }
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    write_readiness(runtime_preflight(args.model_path, args.data_root, Path(sys.executable), args.extra_pythonpath, args.alfworld_data, args.output))
+    if not passed:
+        raise RuntimeError("ALFWorld smoke rollout did not produce a valid non-empty episode")
+    return payload
+
+
 def main() -> None:
     args = parse_args()
     if args.command == "preflight":
@@ -301,31 +331,8 @@ def main() -> None:
     elif args.command == "dry-run":
         print(json.dumps(dry_run(args.idea_id, args.output_dir), ensure_ascii=False, indent=2))
     elif args.command == "smoke":
-        readiness = runtime_preflight(args.model_path, args.data_root, Path(sys.executable), args.extra_pythonpath, args.alfworld_data, args.output)
-        if not readiness["environment_ready"]:
-            raise RuntimeError("P0 runtime is not ready for smoke: " + ", ".join(readiness["blockers"]))
-        if args.extra_pythonpath.exists():
-            site.addsitedir(str(args.extra_pythonpath))
-            os.environ["P0_EXTRA_SITE"] = str(args.extra_pythonpath)
-        os.environ["ALFWORLD_DATA"] = str(args.alfworld_data)
-        rows = run_smoke(args.alfworld_config, args.model_path, "eval_out_of_distribution", 1, "")
-        row = rows[0] if rows else {}
-        passed = bool(row.get("gamefile") and int(row.get("steps") or 0) > 0)
-        payload = {
-            "schema_version": "1.0",
-            "status": "pass" if passed else "fail",
-            "model_path": str(args.model_path),
-            "runtime_contract_hash": readiness["runtime_contract_hash"],
-            "alfworld_data": str(args.alfworld_data),
-            "gamefile": row.get("gamefile", ""),
-            "steps": int(row.get("steps") or 0),
-            "won": int(row.get("won") or 0),
-            "invalid_choice_rate": float(row.get("invalid_choice_rate") or 0.0),
-        }
-        args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        if not passed:
-            raise RuntimeError("ALFWorld smoke rollout did not produce a valid non-empty episode")
+        with p0_execution_lock(args.data_root):
+            payload = run_smoke_transaction(args)
         print(json.dumps(payload, ensure_ascii=False, indent=2))
     elif args.command in {"collect", "execute"}:
         with p0_execution_lock(args.data_root):

@@ -17,8 +17,9 @@ export P0_EXTRA_SITE="$P0_SITE"
 export ALFWORLD_DATA
 
 # Append the isolated target after the existing environment so its packages fill
-# missing dependencies without shadowing the working CUDA/PyTorch stack.
-"$BASE_PYTHON" -c "import site; site.addsitedir('$P0_SITE'); from alfworld.scripts.alfworld_download import main; main()"
+# missing dependencies without shadowing the working CUDA/PyTorch stack. ALFWorld
+# 0.4.2 ships the downloader as a generated bin script rather than alfworld.scripts.
+"$BASE_PYTHON" -c "import runpy,site,sys; site.addsitedir('$P0_SITE'); sys.argv=['alfworld-download']; runpy.run_path('$P0_SITE/bin/alfworld-download', run_name='__main__')"
 
 "$BASE_PYTHON" - <<'PY'
 import importlib.util, os, site

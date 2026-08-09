@@ -59,9 +59,9 @@ It installs ALFWorld/TextWorld into `/data/wyt/envs/agent_evolution_p0_site` rat
 python -m research_pipeline.p0_runner preflight --write-site
 ```
 
-The smoke artifact is `/data/wyt/agent-self-evolution-observatory/p0-runtime-smoke.json`. It only proves the model/environment/action-parser chain can execute a non-empty episode; task success is not required. The artifact is bound to a runtime contract hash covering the adapter source, ALFWorld config, selected Python/model paths, and detected torch/transformers/alfworld/textworld versions, so relevant code or dependency changes automatically invalidate stale smoke results. `collect` stays locked until the current contract has a PASS smoke artifact.
+The smoke artifact is `/data/wyt/agent-self-evolution-observatory/p0-runtime-smoke.json`. It proves the model/environment/action-parser chain can execute one admissible action and one environment step; task success is not required. The artifact is bound to a runtime contract hash covering the adapter source, ALFWorld config, selected Python/model paths, and detected torch/transformers/alfworld/textworld versions, so relevant code or dependency changes automatically invalidate stale smoke results. Smoke and formal P0 share one exclusive execution lock, preventing transport retries from launching duplicate model loads. `collect` stays locked until the current contract has a PASS smoke artifact.
 
-When formal collection starts, the runner writes `/data/wyt/agent-self-evolution-observatory/p0-execution-state.json` with `running`, then updates it to `completed` or `failed`. This marker is operational state only and is never treated as a scientific P0 result; only validated Pilot Registry results populate measured effects.
+When formal collection starts, the runner writes `/data/wyt/agent-self-evolution-observatory/p0-execution-state.json` with `running`, then moves through `collected` to `registered` or records `failed`. This marker is operational state only and is never treated as a scientific P0 result; only validated Pilot Registry results populate measured effects.
 
 ## A-1 normalized input
 
