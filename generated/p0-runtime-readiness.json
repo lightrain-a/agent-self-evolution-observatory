@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "code_commit": "8ade97fe8e43d8e397bf0571f50e0429b61bc566",
+  "code_commit": "26b5b1a680b5e84f2caa00233829e0a86a486229",
   "environment_ready": true,
   "launch_ready": true,
   "blockers": [],
@@ -23,7 +23,7 @@
     {
       "name": "NVIDIA A100-SXM4-80GB",
       "memory_total_mib": 81920,
-      "memory_free_mib": 63591
+      "memory_free_mib": 46976
     }
   ],
   "model": {
@@ -40,17 +40,24 @@
     "status": "pass"
   },
   "execution_state": {
-    "path": "/data/wyt/agent-self-evolution-observatory/p0-execution-state.json"
+    "path": "/data/wyt/agent-self-evolution-observatory/p0-execution-state.json",
+    "schema_version": "1.0",
+    "idea_id": "update-trust-region",
+    "phase": "P0",
+    "status": "running",
+    "started_at": "2026-08-09T15:08:05+00:00",
+    "output_dir": "/data/wyt/agent-self-evolution-observatory/runs/p0-a1",
+    "runtime_contract_hash": "05a898850993d61858bdff9ee7bfba6dbb5b213a8079e53a7453e333c44a8f97"
   },
   "stages": {
     "harness_ready": true,
     "package_ready": true,
     "data_ready": true,
     "smoke_rollout_ready": true,
-    "p0_execution_started": false
+    "p0_execution_started": true
   },
   "data_root": "/data/wyt/agent-self-evolution-observatory",
-  "data_disk_free_gib": 9526.3,
+  "data_disk_free_gib": 9394.5,
   "supported_p0": [
     "budgeted-evolution-controller",
     "update-trust-region"

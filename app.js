@@ -1386,7 +1386,9 @@ function renderP0ExperimentEntry() {
   const summary = plan.summary || {};
   const registry = experimentPilotRegistry();
   const executed = (plan.ideas || []).filter((item) => !!experimentPilotPhase(item.id,"P0")?.result).length;
-  const running = (plan.ideas || []).filter((item) => experimentPilotPhase(item.id,"P0")?.status === "running").length;
+  const execution = p0RuntimeReadiness()?.execution_state || {};
+  const registryRunning = (plan.ideas || []).filter((item) => experimentPilotPhase(item.id,"P0")?.status === "running").length;
+  const running = registryRunning || (String(execution.status || "").toLowerCase() === "running" ? 1 : 0);
   return `<section class="panel p0-entry-panel"><div><div class="eyebrow">P0 · ${language === "zh" ? "实验入口" : "EXPERIMENT TRACKER"}</div><h3 id="experiment-tracker-entry" data-toc="false">${language === "zh" ? "实验计划、进展和结果已移到独立页面" : "Experiment plans, progress, and results now live on a separate page"}</h3><p>${language === "zh" ? "Idea 页只保留科学问题与方法论证；实验页集中维护执行授权、前置条件、实际运行状态、效果、资源消耗、Go/Stop 与人工审批。" : "The idea page now focuses on scientific problems and mechanisms. The experiment page owns execution gates, prerequisites, live status, measured effects, resource use, Go/Stop decisions, and human approvals."}</p></div><div class="p0-entry-stats"><span><b>${summary.planned || 0}</b>${language === "zh" ? "个 P0" : "P0 plans"}</span><span><b>${summary.ready_now || 0}</b>${language === "zh" ? "已解锁" : "unlocked"}</span><span><b>${running}</b>${language === "zh" ? "运行中" : "running"}</span><span><b>${executed}</b>${language === "zh" ? "已有结果" : "with results"}</span><span><b>${registry.summary?.p1_authorized || 0}</b>P1 ${language === "zh" ? "授权" : "authorized"}</span></div><a class="link-btn p0-entry-link" href="experiments.html">${language === "zh" ? "打开实验进展与结果页 →" : "Open Experiment Progress & Results →"}</a></section>`;
 }
 function renderP0RuntimeReadiness() {
@@ -1423,10 +1425,13 @@ function renderExperimentResourceLedger() {
 }
 function renderExperimentResultsSnapshot() {
   const plan = p0ExperimentPlan();
+  const runtimeExecution = p0RuntimeReadiness()?.execution_state || {};
   const rows = (plan.ideas || []).map((item) => {
     const phase = experimentPilotPhase(item.id,"P0");
     const result = phase?.result;
-    const status = result ? experimentPhaseMeta(result.result) : (phase?.execution_authorized ? {tone:"ready",zh:"已授权，未运行",en:"Authorized, not run"} : p0StatusMeta(item.status));
+    const liveStatus = runtimeExecution.idea_id === item.id ? String(runtimeExecution.status || "").toLowerCase() : "";
+    const liveMeta = liveStatus === "running" ? {tone:"running",zh:"运行中",en:"Running"} : liveStatus === "collected" ? {tone:"check",zh:"采集完成，待登记",en:"Collected, pending registration"} : liveStatus === "failed" ? {tone:"fail",zh:"运行失败",en:"Execution failed"} : liveStatus === "registered" ? {tone:"pass",zh:"已登记",en:"Registered"} : null;
+    const status = result ? experimentPhaseMeta(result.result) : (liveMeta || (phase?.execution_authorized ? {tone:"ready",zh:"已授权，未运行",en:"Authorized, not run"} : p0StatusMeta(item.status)));
     const metrics = result ? Object.entries(result.metrics || {}).slice(0,4).map(([key,value]) => `${esc(key.replaceAll("_"," "))}=${experimentNumber(value)}`).join(" · ") : (language === "zh" ? "尚无真实效果数据" : "No measured effect yet");
     const cost = result ? `${experimentNumber(result.cost?.gpu_hours || 0)} GPUh · ${experimentNumber(result.cost?.model_calls || 0)} calls · ${experimentNumber(result.cost?.tokens || 0)} tokens · ${experimentNumber(result.cost?.environment_episodes || 0)} episodes` : `0 / ${item.resource?.gpu_hours_cap || 0} GPUh`;
     return `<tr><td><a href="#exp-${esc(item.code.toLowerCase())}"><strong>${esc(item.code)}</strong><small>${textOf(item.title)}</small></a></td><td><span class="experiment-status-badge status-${esc(status.tone)}">${language === "zh" ? status.zh : status.en}</span></td><td>${metrics}</td><td>${esc(cost)}</td><td>${esc(phase?.next_action || textOf(item.next_action) || "--")}</td></tr>`;
