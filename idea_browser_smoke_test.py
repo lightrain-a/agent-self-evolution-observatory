@@ -87,12 +87,9 @@ def main() -> None:
           toc2: document.querySelectorAll('.toc-level-2').length,
           toc3: document.querySelectorAll('.toc-level-3').length,
           toc4: document.querySelectorAll('.toc-level-4').length,
+          p0Entry: document.querySelectorAll('.p0-entry-panel').length,
           p0Boards: document.querySelectorAll('.p0-control-board').length,
-          p0Cards: document.querySelectorAll('.p0-plan-card').length,
-          p0Authorized: document.querySelectorAll('.p0-plan-card[data-p0-authorized="1"]').length,
-          p0Collision: document.querySelectorAll('.p0-plan-card[data-p0-status="collision-recheck"]').length,
-          p0Scenario: document.querySelectorAll('.p0-plan-card[data-p0-status="scenario-check"]').length,
-          p0Open: document.querySelectorAll('.p0-plan-card[open]').length,
+          experimentLinks: [...document.querySelectorAll('a')].filter(x=>x.getAttribute('href')==='experiments.html').length,
           p0Summary: window.P0_EXPERIMENT_PLAN?.summary || {},
           p0Policy: window.P0_EXPERIMENT_PLAN?.policy || {},
           discussedGroups: document.querySelectorAll('.human-science-group').length,
@@ -112,8 +109,7 @@ def main() -> None:
           text: document.body.textContent || ''
         };""")
         require(ideas["chapters"] == 2, f"paper-ideas should have exactly two frontend chapters, got {ideas['chapters']}")
-        require(ideas["p0Boards"] == 1 and ideas["p0Cards"] == 5, f"P0 execution board is incomplete: {ideas['p0Boards']}/{ideas['p0Cards']}")
-        require((ideas["p0Authorized"], ideas["p0Collision"], ideas["p0Scenario"], ideas["p0Open"]) == (2, 2, 1, 0), f"P0 execution status is wrong: {ideas['p0Authorized']}/{ideas['p0Collision']}/{ideas['p0Scenario']}/{ideas['p0Open']}")
+        require(ideas["p0Entry"] == 1 and ideas["p0Boards"] == 0 and ideas["experimentLinks"] >= 1, f"paper-ideas must expose only the compact experiment entry: {ideas['p0Entry']}/{ideas['p0Boards']}/{ideas['experimentLinks']}")
         require(ideas["p0Summary"].get("gpu_hours_cap_ready_now") == 7 and ideas["p0Summary"].get("p1_authorized") == 0, f"P0 resource/approval summary is wrong: {ideas['p0Summary']}")
         require(ideas["p0Policy"].get("automatic_p0_to_p1_forbidden") is True and ideas["p0Policy"].get("p0_pass_requires_human_approval") is True, f"P0 human approval policy is missing: {ideas['p0Policy']}")
         require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (3, 11, 0), f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
@@ -136,6 +132,43 @@ def main() -> None:
         after_refresh = execute(session_id, "return {y:window.scrollY,max:document.documentElement.scrollHeight-window.innerHeight};")
         after_ratio = after_refresh["y"] / max(1, after_refresh["max"])
         require(after_ratio < 0.8, f"paper-ideas refresh jumped near the bottom: before={before_refresh}, after={after_refresh}")
+
+        navigate("/experiments.html", 6)
+        experiments = execute(session_id, """return {
+          chapters: document.querySelectorAll('.page-chapter').length,
+          toc2: document.querySelectorAll('.toc-level-2').length,
+          toc3: document.querySelectorAll('.toc-level-3').length,
+          toc4: document.querySelectorAll('.toc-level-4').length,
+          board: document.querySelectorAll('.p0-control-board').length,
+          cards: document.querySelectorAll('.p0-plan-card').length,
+          authorized: document.querySelectorAll('.p0-plan-card[data-p0-authorized="1"]').length,
+          collision: document.querySelectorAll('.p0-plan-card[data-p0-status="collision-recheck"]').length,
+          scenario: document.querySelectorAll('.p0-plan-card[data-p0-status="scenario-check"]').length,
+          openCards: document.querySelectorAll('.p0-plan-card[open]').length,
+          phaseTracks: document.querySelectorAll('.experiment-phase-track').length,
+          phaseCells: document.querySelectorAll('.experiment-phase-cell').length,
+          liveResults: document.querySelectorAll('.experiment-live-result').length,
+          executedResults: document.querySelectorAll('.experiment-live-result:not(.result-pending)').length,
+          ledger: document.querySelectorAll('.experiment-ledger').length,
+          ledgerCells: document.querySelectorAll('.experiment-ledger-grid>div').length,
+          resultRows: document.querySelectorAll('.experiment-results-table tbody tr').length,
+          approvalRows: document.querySelectorAll('.experiment-approval-table tbody tr').length,
+          gateCells: document.querySelectorAll('.experiment-gate-summary>span').length,
+          p0AuthorizedState: Number(window.RESEARCH_SYSTEM_STATE?.pilot_registry?.summary?.p0_authorized || 0),
+          p1AuthorizedState: Number(window.RESEARCH_SYSTEM_STATE?.pilot_registry?.summary?.p1_authorized || 0),
+          validResults: Number(window.RESEARCH_SYSTEM_STATE?.pilot_registry?.summary?.valid_result_files || 0),
+          text: document.body.textContent || ''
+        };""")
+        require(experiments["chapters"] == 3, f"experiments page must have three chapters, got {experiments['chapters']}")
+        require((experiments["toc2"], experiments["toc3"], experiments["toc4"]) == (4, 3, 0), f"experiments TOC hierarchy is wrong: {experiments['toc2']}/{experiments['toc3']}/{experiments['toc4']}")
+        require(experiments["board"] == 1 and experiments["cards"] == 5, f"experiment queue is incomplete: {experiments['board']}/{experiments['cards']}")
+        require((experiments["authorized"], experiments["collision"], experiments["scenario"], experiments["openCards"]) == (2, 2, 1, 0), f"experiment gate counts are wrong: {experiments['authorized']}/{experiments['collision']}/{experiments['scenario']}/{experiments['openCards']}")
+        require((experiments["phaseTracks"], experiments["phaseCells"], experiments["liveResults"]) == (5, 20, 5), f"phase/result tracking is incomplete: {experiments['phaseTracks']}/{experiments['phaseCells']}/{experiments['liveResults']}")
+        require(experiments["executedResults"] == 0 and experiments["validResults"] == 0, f"unexecuted P0s must not fabricate effects: {experiments['executedResults']}/{experiments['validResults']}")
+        require(experiments["ledger"] == 1 and experiments["ledgerCells"] == 6, f"resource ledger is incomplete: {experiments['ledger']}/{experiments['ledgerCells']}")
+        require(experiments["resultRows"] == 5 and experiments["approvalRows"] == 5 and experiments["gateCells"] == 4, f"result/approval tables are incomplete: {experiments['resultRows']}/{experiments['approvalRows']}/{experiments['gateCells']}")
+        require((experiments["p0AuthorizedState"], experiments["p1AuthorizedState"]) == (2, 0), f"live authorization state is wrong: {experiments['p0AuthorizedState']}/{experiments['p1AuthorizedState']}")
+        require(("结果与效果总表" in experiments["text"] or "Results and effect snapshot" in experiments["text"]) and ("人工审批与下一阶段锁" in experiments["text"] or "Human approvals and next-phase locks" in experiments["text"]), "experiment result/approval sections are not visible")
         print("PASS")
         print("Focused system/idea pages verified in a real browser")
     finally:

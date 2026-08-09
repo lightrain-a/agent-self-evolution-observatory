@@ -20,6 +20,7 @@ EXPECTATIONS = {
     "system-overview": (2, 3, 10, 0),
     "research-directions": (4, 5, 9, 23),
     "paper-ideas": (4, 5, 3, 0),
+    "experiments": (3, 4, 3, 0),
     "selected-paper": (4, 5, 5, 20),
     "bibliography": (4, 5, 8, 6),
 }
@@ -84,7 +85,7 @@ def main() -> None:
                 raise AssertionError(f"{page}: merged group is still rendered as H2")
             print(f"{page}: chapters={actual[0]}, toc={actual[1]}/{actual[2]}/{actual[3]}")
         print("PASS")
-        print("Nine canonical pages have page-specific H2/H3/H4 hierarchy")
+        print("Eleven canonical pages have page-specific H2/H3/H4 hierarchy")
     finally:
         server.terminate()
         try:

@@ -3,7 +3,7 @@ window.PAGE_ARCHITECTURES = {
     chapters:[
       {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, what can change, and where does the field come from?",zh:"什么算自进化、哪些对象可以变化，以及这个领域从哪里发展而来？"},links:["foundations.html","mechanisms.html","domains.html","evaluation.html"]},
       {id:"select-research",title:{en:"Select a research direction",zh:"选择研究方向"},question:{en:"How does the research system produce candidates, and which concrete paper idea should be pursued next?",zh:"科研系统如何产生候选，下一步又应该选择哪个具体论文 Idea？"},links:["system-overview.html","research-directions.html","paper-ideas.html"]},
-      {id:"execute-audit",title:{en:"Execute and audit",zh:"执行与审计"},question:{en:"How is one selected paper developed, and how is its evidence traced back to the literature?",zh:"一个选中论文如何被执行，以及其证据如何追溯到文献？"},links:["selected-paper.html","bibliography.html"]}
+      {id:"execute-audit",title:{en:"Execute and audit",zh:"执行与审计"},question:{en:"How are pilots tracked, how is one selected paper developed, and how is its evidence traced back to the literature?",zh:"Pilot 如何跟踪，一个选中论文如何继续执行，以及证据如何追溯到文献？"},links:["experiments.html","selected-paper.html","bibliography.html"]}
     ]
   },
   foundations:{
@@ -51,6 +51,13 @@ window.PAGE_ARCHITECTURES = {
     chapters:[
       {id:"discussed-ideas",title:{en:"I · Discussed ideas",zh:"第一章 · 已讨论 Idea"},question:{en:"What scientific problems have already received human review, and which are ready for P0, still need method redesign, or should be paused/merged?",zh:"哪些科学问题已经完成当前人工讨论，哪些可以进入 P0、哪些需要继续打磨方法、哪些应暂停或合并？"}},
       {id:"new-ideas",title:{en:"II · New ideas awaiting discussion",zh:"第二章 · 新增 Idea"},question:{en:"Which additional candidates have not yet received the current human discussion, and should they merge into an existing problem or survive as independent ideas?",zh:"哪些新增候选还没有完成当前人工讨论，它们应并入已有科学问题，还是保留为真正独立的新 Idea？"}}
+    ]
+  },
+  experiments:{
+    chapters:[
+      {id:"experiment-queue",title:{en:"I · Current P0 queue and execution gates",zh:"第一章 · 当前 P0 队列与执行门禁"},question:{en:"Which pilots are executable now, what prerequisites remain, and what is the smallest decisive experiment?",zh:"哪些 Pilot 现在可以执行、还缺哪些前置条件，以及最小决定性实验是什么？"}},
+      {id:"experiment-results",title:{en:"II · Results, effects, and resource accounting",zh:"第二章 · 实验结果、效果与资源账本"},question:{en:"What has actually run, what effect was measured, how much did it cost, and did it cross the Go/Stop threshold?",zh:"哪些实验真的跑过、测到了什么效果、花了多少资源，以及是否越过 Go/Stop 门槛？"}},
+      {id:"experiment-approvals",title:{en:"III · Human approvals and next-phase locks",zh:"第三章 · 人工审批与下一阶段锁"},question:{en:"Which P0 results are awaiting review, and is any P1/P2 execution explicitly authorized?",zh:"哪些 P0 结果等待人工复核，以及是否有任何 P1/P2 获得显式执行授权？"}}
     ]
   },
   "selected-paper":{

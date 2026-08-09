@@ -18,6 +18,7 @@ CANONICAL_PAGES = {
     "system-overview.html": "system-overview",
     "research-directions.html": "research-directions",
     "paper-ideas.html": "paper-ideas",
+    "experiments.html": "experiments",
     "selected-paper.html": "selected-paper",
     "bibliography.html": "bibliography",
 }
@@ -65,6 +66,7 @@ REQUIRED_STATIC = [
     "generated/idea-discovery-v3.json", "generated/idea-discovery-v3.js", "generated/idea-discovery-v3-external-reviews.json",
     "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
     "content-system-overview.js", "system-overview-view.js", "system-overview.css",
+    "idea-lab.css", "generated/p0-experiment-plan.js",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
 

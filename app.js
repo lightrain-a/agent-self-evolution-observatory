@@ -1254,6 +1254,61 @@ function renderCvprLowResourceBank() {
 function p0ExperimentPlan() {
   return window.P0_EXPERIMENT_PLAN || {summary:{},policy:{},ideas:[]};
 }
+function experimentPilotRegistry() {
+  return window.RESEARCH_SYSTEM_STATE?.pilot_registry || {summary:{},policy:{},ideas:[],phases:[]};
+}
+function experimentPilotPhase(ideaId, phase = "P0") {
+  return (experimentPilotRegistry().phases || []).find((row) => row.idea_id === ideaId && row.phase === phase) || null;
+}
+function experimentPilotIdea(ideaId) {
+  return (experimentPilotRegistry().ideas || []).find((row) => row.idea_id === ideaId) || null;
+}
+function experimentPhaseMeta(status) {
+  const map = {
+    planned:{tone:"planned",zh:"尚未运行",en:"Not run"},
+    running:{tone:"running",zh:"运行中",en:"Running"},
+    pass:{tone:"pass",zh:"P0 PASS",en:"P0 PASS"},
+    revise:{tone:"revise",zh:"需要修订",en:"Revise"},
+    fail:{tone:"fail",zh:"P0 FAIL",en:"P0 FAIL"},
+    blocked:{tone:"fail",zh:"已阻断",en:"Blocked"},
+  };
+  return map[status] || map.planned;
+}
+function experimentNumber(value) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return esc(String(value ?? "--"));
+  if (Number.isInteger(value)) return String(value);
+  return String(Math.round(value * 10000) / 10000);
+}
+function renderExperimentMetricPairs(values = {}) {
+  const entries = Object.entries(values || {});
+  if (!entries.length) return `<span class="experiment-empty">${language === "zh" ? "尚无指标" : "No metrics yet"}</span>`;
+  return entries.map(([key,value]) => `<span><b>${esc(key.replaceAll("_"," "))}</b><strong>${experimentNumber(value)}</strong></span>`).join("");
+}
+function renderExperimentPhaseTrack(item) {
+  const registry = experimentPilotRegistry();
+  const ideaState = experimentPilotIdea(item.id) || {};
+  const p0 = experimentPilotPhase(item.id,"P0");
+  const p1 = experimentPilotPhase(item.id,"P1");
+  const p2 = experimentPilotPhase(item.id,"P2");
+  const p0Done = ["pass","revise","fail","blocked"].includes(p0?.status);
+  const approval = ideaState.p0_human_approval;
+  const cells = [
+    {label:"P0",status:p0?.status || "planned",authorized:!!p0?.execution_authorized},
+    {label:language === "zh" ? "人工审批" : "Human approval",status:approval ? "pass" : (p0?.status === "pass" ? "running" : "planned"),authorized:p0?.status === "pass"},
+    {label:"P1",status:p1?.status || "planned",authorized:!!p1?.execution_authorized},
+    {label:"P2",status:p2?.status || "planned",authorized:!!p2?.execution_authorized},
+  ];
+  return `<div class="experiment-phase-track">${cells.map((cell,index) => { const meta=experimentPhaseMeta(cell.status); return `<div class="experiment-phase-cell phase-${meta.tone} ${cell.authorized ? "phase-authorized" : ""}"><span>${index + 1}</span><b>${esc(cell.label)}</b><small>${language === "zh" ? meta.zh : meta.en}${cell.authorized && cell.status === "planned" ? (language === "zh" ? " · 已授权" : " · authorized") : ""}</small></div>`; }).join("")}</div>`;
+}
+function renderLiveP0Result(item, phase) {
+  if (!phase?.result) {
+    const blocked = phase?.blocked_by;
+    return `<section class="experiment-live-result result-pending"><header><b>${language === "zh" ? "当前执行状态" : "Current execution state"}</b><span>${phase?.execution_authorized ? (language === "zh" ? "P0 已授权" : "P0 authorized") : (language === "zh" ? "P0 未授权" : "P0 locked")}</span></header><p>${blocked ? `${language === "zh" ? "阻塞原因" : "Blocked by"}: ${esc(blocked)}` : (language === "zh" ? "尚未写入真实 P0 结果；页面将在结果进入 registry 后自动显示效果、成本与决策。" : "No executed P0 result is registered yet. Effects, cost, and decision will appear automatically after ingestion.")}</p></section>`;
+  }
+  const result = phase.result;
+  const meta = experimentPhaseMeta(result.result);
+  return `<section class="experiment-live-result result-${meta.tone}"><header><b>${language === "zh" ? "真实 P0 结果" : "Executed P0 result"}</b><span>${language === "zh" ? meta.zh : meta.en}</span></header><div class="experiment-result-metrics">${renderExperimentMetricPairs(result.metrics)}</div><div class="experiment-result-cost">${renderExperimentMetricPairs(result.cost)}</div><p><strong>${language === "zh" ? "诊断" : "Diagnosis"}:</strong> ${esc(result.diagnosis || "--")}</p><p><strong>${language === "zh" ? "下一步" : "Next"}:</strong> ${esc(phase.next_action || result.next_action || "--")}</p></section>`;
+}
 function p0StatusMeta(status) {
   const map = {
     ready:{tone:"ready",zh:"P0 可准备",en:"P0 ready"},
@@ -1267,13 +1322,18 @@ function renderP0ExperimentBoard() {
   const summary = plan.summary || {};
   const policy = plan.policy || {};
   const cards = (plan.ideas || []).map((item) => {
-    const status = p0StatusMeta(item.status);
+    const phase = experimentPilotPhase(item.id,"P0");
+    const plannedStatus = p0StatusMeta(item.status);
+    const executedStatus = experimentPhaseMeta(phase?.status);
+    const status = phase?.status && phase.status !== "planned" ? {tone:executedStatus.tone,zh:executedStatus.zh,en:executedStatus.en} : plannedStatus;
     const resource = item.resource || {};
     const prerequisites = (item.prerequisites || []).map((row) => `<li>${textOf(row)}</li>`).join("");
     const outputs = (item.outputs || []).map((name) => `<span>${esc(name)}</span>`).join("");
-    return `<details class="p0-plan-card p0-tone-${status.tone}" data-p0-status="${esc(item.status || "")}" data-p0-authorized="${item.execution_authorized ? "1" : "0"}">
+    return `<details id="exp-${esc(String(item.code || "").toLowerCase())}" class="p0-plan-card p0-tone-${status.tone}" data-p0-status="${esc(item.status || "")}" data-p0-phase-status="${esc(phase?.status || "planned")}" data-p0-authorized="${phase?.execution_authorized ? "1" : "0"}">
       <summary><span class="p0-plan-code">${esc(item.code || "")}</span><div class="p0-plan-title"><b>${textOf(item.title)}</b><small>${language === "zh" ? status.zh : status.en}</small></div><p>${textOf(item.question)}</p><div class="p0-plan-budget"><b>${resource.max_gpus || 0} GPU · ≤${resource.gpu_hours_cap || 0} GPUh</b><span>${language === "zh" ? `最多 ${resource.episode_cap || 0} 次任务执行` : `≤${resource.episode_cap || 0} task episodes`}</span></div><div class="p0-plan-next">${textOf(item.next_action)}</div></summary>
       <div class="p0-plan-body">
+        ${renderExperimentPhaseTrack(item)}
+        ${renderLiveP0Result(item, phase)}
         ${prerequisites ? `<section class="p0-prerequisite"><b>${language === "zh" ? "运行前必须先完成" : "Must clear before execution"}</b><ul>${prerequisites}</ul></section>` : ""}
         <div class="p0-plan-grid">
           <section><b>${language === "zh" ? "这轮刻意不做什么" : "Deliberately out of scope"}</b><p>${textOf(item.scope)}</p></section>
@@ -1286,7 +1346,7 @@ function renderP0ExperimentBoard() {
           <section><b>${language === "zh" ? "资源硬上限" : "Hard resource cap"}</b><p>${resource.max_gpus || 0} GPU · ${resource.gpu_hours_cap || 0} GPUh · ${resource.wall_hours_cap || 0}h wall · ≤${resource.episode_cap || 0} episodes</p></section>
         </div>
         <div class="p0-output-row"><b>${language === "zh" ? "跑完必须留下" : "Required artifacts"}</b>${outputs}</div>
-        <a class="link-btn p0-idea-link" href="#idea-${esc(String(item.code || "").toLowerCase())}">${language === "zh" ? "回到这个 Idea 的完整说明 →" : "Open the full idea →"}</a>
+        <a class="link-btn p0-idea-link" href="${pageId === "paper-ideas" ? "" : "paper-ideas.html"}#idea-${esc(String(item.code || "").toLowerCase())}">${language === "zh" ? "回到这个 Idea 的完整说明 →" : "Open the full idea →"}</a>
       </div>
     </details>`;
   }).join("");
@@ -1297,11 +1357,63 @@ function renderP0ExperimentBoard() {
     <div class="p0-plan-list">${cards}</div>
   </section>`;
 }
+function renderP0ExperimentEntry() {
+  const plan = p0ExperimentPlan();
+  const summary = plan.summary || {};
+  const registry = experimentPilotRegistry();
+  const executed = (plan.ideas || []).filter((item) => !!experimentPilotPhase(item.id,"P0")?.result).length;
+  const running = (plan.ideas || []).filter((item) => experimentPilotPhase(item.id,"P0")?.status === "running").length;
+  return `<section class="panel p0-entry-panel"><div><div class="eyebrow">P0 · ${language === "zh" ? "实验入口" : "EXPERIMENT TRACKER"}</div><h3 id="experiment-tracker-entry" data-toc="false">${language === "zh" ? "实验计划、进展和结果已移到独立页面" : "Experiment plans, progress, and results now live on a separate page"}</h3><p>${language === "zh" ? "Idea 页只保留科学问题与方法论证；实验页集中维护执行授权、前置条件、实际运行状态、效果、资源消耗、Go/Stop 与人工审批。" : "The idea page now focuses on scientific problems and mechanisms. The experiment page owns execution gates, prerequisites, live status, measured effects, resource use, Go/Stop decisions, and human approvals."}</p></div><div class="p0-entry-stats"><span><b>${summary.planned || 0}</b>${language === "zh" ? "个 P0" : "P0 plans"}</span><span><b>${summary.ready_now || 0}</b>${language === "zh" ? "已解锁" : "unlocked"}</span><span><b>${running}</b>${language === "zh" ? "运行中" : "running"}</span><span><b>${executed}</b>${language === "zh" ? "已有结果" : "with results"}</span><span><b>${registry.summary?.p1_authorized || 0}</b>P1 ${language === "zh" ? "授权" : "authorized"}</span></div><a class="link-btn p0-entry-link" href="experiments.html">${language === "zh" ? "打开实验进展与结果页 →" : "Open Experiment Progress & Results →"}</a></section>`;
+}
+function renderExperimentResourceLedger() {
+  const plan = p0ExperimentPlan();
+  const p0Phases = (plan.ideas || []).map((item) => experimentPilotPhase(item.id,"P0")).filter(Boolean);
+  const results = p0Phases.map((phase) => phase.result).filter(Boolean);
+  const spent = results.reduce((sum,row) => sum + Number(row.cost?.gpu_hours || 0), 0);
+  const calls = results.reduce((sum,row) => sum + Number(row.cost?.model_calls || 0), 0);
+  const tokens = results.reduce((sum,row) => sum + Number(row.cost?.tokens || 0), 0);
+  const wall = results.reduce((sum,row) => sum + Number(row.cost?.wall_clock_hours || 0), 0);
+  const authorizedCap = (plan.ideas || []).filter((item) => experimentPilotPhase(item.id,"P0")?.execution_authorized).reduce((sum,item) => sum + Number(item.resource?.gpu_hours_cap || 0), 0);
+  const allCap = (plan.ideas || []).reduce((sum,item) => sum + Number(item.resource?.gpu_hours_cap || 0), 0);
+  return `<section class="panel experiment-ledger"><div class="idea-panel-heading"><div><h3 id="experiment-resource-ledger">${language === "zh" ? "资源账本" : "Resource ledger"}</h3><p class="section-intro">${language === "zh" ? "预算上限来自冻结 P0 计划；实际消耗只从已登记的真实结果文件累计。" : "Caps come from the frozen P0 plans; actual usage is accumulated only from registered executed-result files."}</p></div><strong>${experimentNumber(spent)} / ${authorizedCap} GPUh</strong></div><div class="experiment-ledger-grid"><div><b>${experimentNumber(spent)}</b><span>${language === "zh" ? "已消耗 GPUh" : "GPUh spent"}</span></div><div><b>${authorizedCap}</b><span>${language === "zh" ? "当前授权上限" : "authorized cap"}</span></div><div><b>${allCap}</b><span>${language === "zh" ? "五项全部解锁上限" : "all-unlocked cap"}</span></div><div><b>${experimentNumber(wall)}</b><span>${language === "zh" ? "累计墙钟小时" : "wall-clock hours"}</span></div><div><b>${experimentNumber(calls)}</b><span>${language === "zh" ? "模型调用" : "model calls"}</span></div><div><b>${experimentNumber(tokens)}</b><span>tokens</span></div></div></section>`;
+}
+function renderExperimentResultsSnapshot() {
+  const plan = p0ExperimentPlan();
+  const rows = (plan.ideas || []).map((item) => {
+    const phase = experimentPilotPhase(item.id,"P0");
+    const result = phase?.result;
+    const status = result ? experimentPhaseMeta(result.result) : (phase?.execution_authorized ? {tone:"ready",zh:"已授权，未运行",en:"Authorized, not run"} : p0StatusMeta(item.status));
+    const metrics = result ? Object.entries(result.metrics || {}).slice(0,4).map(([key,value]) => `${esc(key.replaceAll("_"," "))}=${experimentNumber(value)}`).join(" · ") : (language === "zh" ? "尚无真实效果数据" : "No measured effect yet");
+    const cost = result ? `${experimentNumber(result.cost?.gpu_hours || 0)} GPUh · ${experimentNumber(result.cost?.model_calls || 0)} calls` : `0 / ${item.resource?.gpu_hours_cap || 0} GPUh`;
+    return `<tr><td><a href="#exp-${esc(item.code.toLowerCase())}"><strong>${esc(item.code)}</strong><small>${textOf(item.title)}</small></a></td><td><span class="experiment-status-badge status-${esc(status.tone)}">${language === "zh" ? status.zh : status.en}</span></td><td>${metrics}</td><td>${esc(cost)}</td><td>${esc(phase?.next_action || textOf(item.next_action) || "--")}</td></tr>`;
+  }).join("");
+  return `<section class="panel experiment-results-panel"><div class="idea-panel-heading"><div><h3 id="experiment-results-snapshot">${language === "zh" ? "结果与效果总表" : "Results and effect snapshot"}</h3><p class="section-intro">${language === "zh" ? "这里不复制人工填写的结论；只显示 Pilot registry 中真正存在的结果、指标和成本。尚未运行的实验明确显示为无效果数据。" : "This table does not duplicate hand-written conclusions. It only renders results, metrics, and cost that actually exist in the pilot registry; unrun experiments explicitly show no measured effect."}</p></div></div><div class="advisor-table-scroll"><table class="matrix experiment-results-table"><thead><tr><th>Idea</th><th>${language === "zh" ? "状态" : "Status"}</th><th>${language === "zh" ? "已测效果" : "Measured effect"}</th><th>${language === "zh" ? "实际成本" : "Actual cost"}</th><th>${language === "zh" ? "下一步" : "Next"}</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+}
+function renderExperimentApprovalPanel() {
+  const plan = p0ExperimentPlan();
+  const registry = experimentPilotRegistry();
+  const rows = (plan.ideas || []).map((item) => {
+    const state = experimentPilotIdea(item.id) || {};
+    const p0 = experimentPilotPhase(item.id,"P0");
+    const p1 = experimentPilotPhase(item.id,"P1");
+    const p0Result = p0?.result?.result || "--";
+    const approval = state.p0_human_approval;
+    return `<tr><td><strong>${esc(item.code)}</strong><small>${textOf(item.title)}</small></td><td>${esc(p0Result)}</td><td>${approval ? `<span class="experiment-status-badge status-pass">${language === "zh" ? "已批准" : "Approved"}</span>` : `<span class="experiment-status-badge status-planned">${p0Result === "pass" ? (language === "zh" ? "等待人工审批" : "Awaiting human approval") : (language === "zh" ? "尚不适用" : "Not applicable yet")}</span>`}</td><td>${p1?.execution_authorized ? `<b class="experiment-auth-yes">YES</b>` : `<b class="experiment-auth-no">NO</b>`}</td></tr>`;
+  }).join("");
+  return `<section class="panel experiment-approval-panel"><div class="idea-panel-heading"><div><h3 id="experiment-human-approval">${language === "zh" ? "人工审批与下一阶段锁" : "Human approvals and next-phase locks"}</h3><p class="section-intro">${language === "zh" ? "P0 PASS 后必须先回到人工讨论。没有显式 approval artifact，P1 的 execution_authorized 永远为 false。" : "Every P0 PASS returns to human review. Without an explicit approval artifact, P1 execution_authorized remains false."}</p></div><strong>P1 = ${registry.summary?.p1_authorized || 0}</strong></div><div class="experiment-gate-summary"><span><b>${registry.summary?.valid_approval_files || 0}</b>${language === "zh" ? "有效审批文件" : "valid approvals"}</span><span><b>${registry.summary?.awaiting_human_approval || 0}</b>${language === "zh" ? "等待审批" : "awaiting approval"}</span><span><b>${registry.summary?.p0_authorized || 0}</b>P0 ${language === "zh" ? "已授权" : "authorized"}</span><span><b>${registry.summary?.p1_authorized || 0}</b>P1 ${language === "zh" ? "已授权" : "authorized"}</span></div><div class="advisor-table-scroll"><table class="matrix experiment-approval-table"><thead><tr><th>Idea</th><th>P0</th><th>${language === "zh" ? "人工审批" : "Human approval"}</th><th>P1 authorized</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+}
+function renderExperimentDashboard(config) {
+  const chapters = pageArchitecture("experiments").chapters || [];
+  const queue = renderP0ExperimentBoard();
+  const results = `${renderExperimentResourceLedger()}${renderExperimentResultsSnapshot()}`;
+  const approvals = renderExperimentApprovalPanel();
+  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("experiments"))}${renderCustomChapter(chapters[0],0,queue)}${renderCustomChapter(chapters[1],1,results)}${renderCustomChapter(chapters[2],2,approvals)}`;
+}
 function renderIdeaPortfolio(config) {
   const chapters = pageArchitecture("paper-ideas").chapters || [];
   const discussed = renderDiscussedIdeaBank();
   const newIdeas = renderNewIdeaCandidates();
-  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderP0ExperimentBoard()}${renderCustomChapter(chapters[0],0,discussed)}${renderCustomChapter(chapters[1],1,newIdeas)}`;
+  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderP0ExperimentEntry()}${renderCustomChapter(chapters[0],0,discussed)}${renderCustomChapter(chapters[1],1,newIdeas)}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;
@@ -1929,6 +2041,7 @@ function renderPage() {
   else if (config.renderMode === "merged-hub") root.innerHTML = renderMergedHub(config);
   else if (pageId === "research-directions") root.innerHTML = renderDirectionMap(config);
   else if (pageId === "paper-ideas") root.innerHTML = renderIdeaPortfolio(config);
+  else if (pageId === "experiments") root.innerHTML = renderExperimentDashboard(config);
   else if (pageId === "direction-board") root.innerHTML = renderIdeaRanking(config);
   else if (pageId === "bibliography") root.innerHTML = renderBibliography(config);
   else if (pageId === "repositories") root.innerHTML = renderDynamicResourceIndex(config, "repositories");
