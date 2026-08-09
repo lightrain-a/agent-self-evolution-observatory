@@ -93,9 +93,11 @@ def main() -> None:
           redesignCards: document.querySelectorAll('.human-review-idea-card.human-tone-redesign').length,
           pausedCards: document.querySelectorAll('.human-review-idea-card.human-tone-paused').length,
           feedbackBoxes: document.querySelectorAll('.human-review-idea-card .human-feedback-box').length,
+          openDiscussedCards: document.querySelectorAll('.human-review-idea-card[open]').length,
           codes: [...document.querySelectorAll('.human-idea-code')].map(x=>(x.textContent||'').trim()),
           newGroups: document.querySelectorAll('.supplemental-group').length,
           newCards: document.querySelectorAll('.supplemental-idea-card').length,
+          openNewCards: document.querySelectorAll('.supplemental-idea-card[open]').length,
           newFinal: [...document.querySelectorAll('.supplemental-idea-card summary small')].filter(x=>(x.textContent||'').includes('FINAL PASS')).length,
           newInspired: [...document.querySelectorAll('.supplemental-idea-card summary small')].filter(x=>/网络灵感|internet-inspired/.test(x.textContent||'')).length,
           text: document.body.textContent || ''
@@ -105,6 +107,7 @@ def main() -> None:
         require(ideas["discussedGroups"] == 6 and ideas["discussedCards"] == 26, f"expected six scientific groups and 26 discussed ideas, got {ideas['discussedGroups']}/{ideas['discussedCards']}")
         require((ideas["readyCards"], ideas["redesignCards"], ideas["pausedCards"]) == (5, 14, 7), f"human-review status counts are wrong: {ideas['readyCards']}/{ideas['redesignCards']}/{ideas['pausedCards']}")
         require(ideas["feedbackBoxes"] == 26, f"every discussed idea must expose the current human feedback, got {ideas['feedbackBoxes']}")
+        require(ideas["openDiscussedCards"] == 0 and ideas["openNewCards"] == 0, f"all idea cards must be collapsed by default, got {ideas['openDiscussedCards']}/{ideas['openNewCards']}")
         require(len(ideas["codes"]) == 26 and len(set(ideas["codes"])) == 26, f"group codes are missing or duplicated: {ideas['codes']}")
         require(all(code in ideas["codes"] for code in ("A-1","A-5","B-1","B-7","C-1","D-1","E-1","F-1","F-3")), f"expected stable group codes are missing: {ideas['codes']}")
         require(ideas["newGroups"] == 6 and ideas["newCards"] == 32, f"new-idea staging area is incomplete: {ideas['newGroups']}/{ideas['newCards']}")

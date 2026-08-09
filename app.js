@@ -967,7 +967,7 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const historicalVerdict = String(idea.external_verdict || "pending").toUpperCase();
   const tone = humanReviewStatusTone(meta.status);
   const code = meta.code || idea.id;
-  return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}" ${index < 2 ? "open" : ""}>
+  return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}">
     <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(idea.title)}</b><small>${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(meta.status))}</span><p>${textOf(idea.purpose)}</p></div></summary>
     <div class="human-idea-body">
       <section class="human-feedback-box"><h4 data-toc="false">${language === "zh" ? "当前人工意见" : "Current human review"}</h4><p>${textOf(meta.feedback)}</p></section>
