@@ -990,13 +990,13 @@ function renderIdeaExperimentSection(idea, meta = {}, sourceIdeas = []) {
   const rich = exactFinal || sources[sources.length - 1] || idea;
   const protocol = idea.experiment_protocol || rich.experiment_protocol || {};
   const externalPilot = [...(idea.external_reviews || [])].reverse().find((review) => review.decisive_pilot)?.decisive_pilot;
-  const pilot = textOf(rich.decisive_pilot || idea.decisive_pilot || externalPilot || idea.pilot || {});
+  const pilot = textOf(idea.decisive_pilot || rich.decisive_pilot || externalPilot || idea.pilot || {});
   const metric = textOf(idea.decisive_metric || rich.decisive_metric || protocol.main_table || {});
-  const truth = textOf(rich.independent_ground_truth || idea.independent_ground_truth || protocol.data_protocol?.test || {});
-  const baseline = textOf(rich.strongest_baseline || idea.strongest_baseline || {});
-  const stop = textOf(rich.stop_condition || idea.stop_condition || protocol.stop_gate || {});
-  const go = textOf(rich.success_gate || idea.success_gate || protocol.success_gate || rich.surviving_claim || {});
-  const resources = rich.matched_resources || idea.matched_resources || [];
+  const truth = textOf(idea.independent_ground_truth || rich.independent_ground_truth || protocol.data_protocol?.test || {});
+  const baseline = textOf(idea.strongest_baseline || rich.strongest_baseline || {});
+  const stop = textOf(idea.stop_condition || rich.stop_condition || protocol.stop_gate || {});
+  const go = textOf(idea.success_gate || rich.success_gate || protocol.success_gate || idea.surviving_claim || rich.surviving_claim || {});
+  const resources = idea.matched_resources || rich.matched_resources || [];
   const budget = idea.budget || {};
   const hasBudget = Number(budget.max_gpus || 0) || Number(budget.gpu_hours || 0) || Number(budget.wall_days || 0);
   const state = experimentStateCopy(meta.status);
@@ -1038,7 +1038,9 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
         <section><h4 data-toc="false">${language === "zh" ? "方法逻辑" : "Method logic"}</h4><p>${textOf(current.method_logic)}</p></section>
       </div>
       <div class="human-evidence-grid">
+        <section><h4 data-toc="false">${language === "zh" ? "为什么合理／成立依据" : "Why it should work"}</h4><p>${textOf(current.rationale)}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${textOf(current.importance)}</p></section>
+        <section><h4 data-toc="false">${language === "zh" ? "相对优势" : "Comparative advantage"}</h4><p>${textOf(current.comparative_advantage)}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "最近工作与碰撞边界" : "Nearest work / collision"}</h4><p>${textOf(current.collision_boundary)}</p><div class="cvpr-chip-row">${(current.nearest_work || []).map((name) => `<span>${esc(name)}</span>`).join("")}</div></section>
       </div>
       ${renderIdeaExperimentSection(current,meta,absorbedIdeas)}
@@ -1077,13 +1079,19 @@ function renderSupplementalIdeaCard(row) {
   const id = idea.idea_id || idea.id || "candidate";
   const source = row.source;
   const sourceIdeas = (idea.source_ids || []).map(currentFinalIdeaById).filter(Boolean);
+  const richSource = sourceIdeas[sourceIdeas.length - 1] || idea;
   const title = textOf(idea.title || {});
-  const problem = textOf(idea.purpose || idea.problem || {});
-  const method = textOf(idea.core_idea || {});
-  const intuition = textOf(idea.core_intuition || {});
+  const problem = textOf(idea.purpose || idea.problem || richSource.purpose || {});
+  const method = textOf(idea.core_idea || richSource.core_idea || {});
+  const intuition = textOf(idea.core_intuition || richSource.core_intuition || {});
+  const rationale = textOf(idea.rationale || richSource.rationale || idea.hypothesis || {});
+  const methodLogic = textOf(idea.method_logic || richSource.method_logic || {});
+  const importance = textOf(idea.importance || richSource.importance || {});
+  const advantage = textOf(idea.comparative_advantage || richSource.comparative_advantage || richSource.surviving_claim || idea.hypothesis || {});
+  const collision = textOf(idea.collision_boundary || richSource.collision_boundary || {});
   const sourceLabel = source === "final-merged" ? (language === "zh" ? "FINAL20 合并审查后独立保留" : "Independent after FINAL20 merge audit") : `${language === "zh" ? "网络灵感" : "internet-inspired"} · ${String(idea.external_verdict || idea.final_status || "pending").toUpperCase()}`;
   const code = idea.code || (language === "zh" ? "新增候选" : "new candidate");
-  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div><section><b>${language === "zh" ? "核心直觉" : "Core intuition"}</b><p>${esc(intuition || "—")}</p></section><section><b>${language === "zh" ? "当前方法" : "Current method"}</b><p>${esc(method || textOf(idea.hypothesis || {}))}</p></section><section><b>${language === "zh" ? "最强对照" : "Strongest baseline"}</b><p>${textOf(idea.strongest_baseline || {})}</p></section><section><b>${language === "zh" ? "当前用途" : "Current role"}</b><p>${source === "final-merged" ? (language === "zh" ? "20 个 FINAL 已完成去重合并；该方向无法合理并入第一章，因此作为独立新增 Idea 保留，等待下一轮人工讨论。" : "The 20 FINAL ideas have been deduplicated and merged; this direction could not be reasonably absorbed into Chapter 1 and remains as an independent new idea for human discussion.") : (language === "zh" ? "尚未完成人工讨论；下一轮先判断是否并入已有科学问题。" : "Not yet human-reviewed; next decide whether it should merge into an existing scientific problem.")}</p></section>${renderIdeaExperimentSection(idea,{status:"new-review"},sourceIdeas)}</div></details>`;
+  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div><section><b>${language === "zh" ? "学习问题" : "Learning problem"}</b><p>${esc(problem || "—")}</p></section><section><b>${language === "zh" ? "核心直觉" : "Core intuition"}</b><p>${esc(intuition || "—")}</p></section><section><b>${language === "zh" ? "核心方法" : "Core method"}</b><p>${esc(method || textOf(idea.hypothesis || {}))}</p></section><section><b>${language === "zh" ? "方法流程" : "Method flow"}</b><p>${esc(methodLogic || "—")}</p></section><section><b>${language === "zh" ? "为什么合理／成立依据" : "Why it should work"}</b><p>${esc(rationale || "—")}</p></section><section><b>${language === "zh" ? "为什么重要" : "Why it matters"}</b><p>${esc(importance || problem || "—")}</p></section><section><b>${language === "zh" ? "相对优势／存活主张" : "Comparative advantage / surviving claim"}</b><p>${esc(advantage || "—")}</p></section><section><b>${language === "zh" ? "最近工作与碰撞边界" : "Nearest work / collision"}</b><p>${esc(collision || "—")}</p></section><section><b>${language === "zh" ? "最强对照" : "Strongest baseline"}</b><p>${textOf(idea.strongest_baseline || richSource.strongest_baseline || {})}</p></section><section><b>${language === "zh" ? "当前用途" : "Current role"}</b><p>${source === "final-merged" ? (language === "zh" ? "20 个 FINAL 已完成去重合并；该方向无法合理并入第一章，因此作为独立新增 Idea 保留，等待下一轮人工讨论。" : "The 20 FINAL ideas have been deduplicated and merged; this direction could not be reasonably absorbed into Chapter 1 and remains as an independent new idea for human discussion.") : (language === "zh" ? "尚未完成人工讨论；下一轮先判断是否并入已有科学问题。" : "Not yet human-reviewed; next decide whether it should merge into an existing scientific problem.")}</p></section>${renderIdeaExperimentSection(idea,{status:"new-review"},sourceIdeas)}</div></details>`;
 }
 function renderNewIdeaCandidates() {
   const finalIdeas = (window.FINAL20_MERGE_AUDIT?.standalone_ideas || []).map((idea) => ({source:"final-merged",idea}));
