@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import shutil
 from pathlib import Path
 
@@ -35,6 +36,9 @@ EXCLUDED_PUBLIC_PREFIXES = (
     "r32-final-ideas",
     "r32-targeted-recheck",
 )
+LOCAL_ASSET_RE = re.compile(
+    r'(?P<prefix>\b(?:src|href)=["\'])(?P<url>(?!https?://|//|data:|mailto:|#)[^"\']+\.(?:css|js))(?P<suffix>["\'])'
+)
 
 
 def excluded_public_file(name: str) -> bool:
@@ -44,6 +48,26 @@ def excluded_public_file(name: str) -> bool:
 def copy_file(source: Path, destination: Path) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source, destination)
+
+
+def cache_guard_script(build_sha: str) -> str:
+    encoded_sha = json.dumps(build_sha)
+    return f'''<script>window.__SITE_BUILD_SHA__={encoded_sha};(()=>{{const current=String(window.__SITE_BUILD_SHA__||"").slice(0,12);fetch(`deployment-manifest.json?check=${{Date.now()}}`,{{cache:"no-store"}}).then(r=>r.ok?r.json():null).then(m=>{{const latest=String(m?.build_sha||"").slice(0,12);if(!latest||!current||latest===current)return;const u=new URL(location.href);if(u.searchParams.get("_sitev")===latest)return;u.searchParams.set("_sitev",latest);location.replace(u.toString());}}).catch(()=>{{}});}})();</script>'''
+
+
+def version_html_assets(html: str, build_sha: str) -> str:
+    version = build_sha[:12] or "local"
+
+    def replace(match: re.Match[str]) -> str:
+        url = match.group("url")
+        separator = "&" if "?" in url else "?"
+        return f'{match.group("prefix")}{url}{separator}v={version}{match.group("suffix")}'
+
+    html = LOCAL_ASSET_RE.sub(replace, html)
+    guard = cache_guard_script(build_sha)
+    if "</head>" in html:
+        return html.replace("</head>", guard + "</head>", 1)
+    return guard + html
 
 
 def build() -> Path:
@@ -66,14 +90,19 @@ def build() -> Path:
             copy_file(source, destination)
             copied.add(destination)
 
+    build_sha = os.environ.get("GITHUB_SHA", "local").strip() or "local"
     manifest = {
         "schema_version": "1.0",
-        "build_sha": os.environ.get("GITHUB_SHA", "local").strip() or "local",
+        "build_sha": build_sha,
         "source": "frontend-only-pages-build",
     }
     manifest_path = OUTPUT / "deployment-manifest.json"
     manifest_path.write_text(json.dumps(manifest, separators=(",", ":")) + "\n", encoding="utf-8")
     copied.add(manifest_path)
+
+    for html_path in sorted(OUTPUT.glob("*.html")):
+        html = html_path.read_text(encoding="utf-8")
+        html_path.write_text(version_html_assets(html, build_sha), encoding="utf-8")
 
     generated_output = OUTPUT / "generated"
     generated_source = ROOT / "generated"
