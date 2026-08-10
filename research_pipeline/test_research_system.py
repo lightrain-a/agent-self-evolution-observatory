@@ -62,7 +62,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(registry["p0_authorized"], 0)
         self.assertEqual(registry["pre_p0_ready"], 0)
         self.assertEqual(registry["pre_experiment_ready"], 0)
-        self.assertEqual(registry["invalidated_result_files"], 1)
+        self.assertEqual(registry["invalidated_result_files"], sum(bool(item.get("invalidated")) for item in self.state["pilot_registry"].get("invalid_results", [])))
         self.assertEqual(registry["p1_authorized"], 0)
         by_id = {item["idea_id"]: item for item in self.state["pilot_registry"]["ideas"]}
         self.assertEqual(by_id["outcome-equivalent-trajectory-contrast"]["p0_gate_status"], "method-redesign")

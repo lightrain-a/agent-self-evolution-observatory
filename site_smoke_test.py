@@ -380,14 +380,14 @@ def main() -> None:
         fail("system overview must not load current idea-bank or discussion-pool artifacts")
     system_files = ["system-overview-core.js", "system-overview-lifecycle.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-view.js"]
     system_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in system_files)
-    for marker in ("RESEARCH SYSTEM CONTRACT", "system-lifecycle-step", "PRE-P0 IDENTIFIABILITY COMPILER", "10 / 10", "system-failure-layer", "system-repair-loop", "MCP-Yu + Experiment Orchestrator", "system-components-panel"):
+    for marker in ("RESEARCH SYSTEM CONTRACT", "system-lifecycle-step", "PRE-EXPERIMENT COMPILER", "8 / 8", "GATE 3 · IDENTIFIABILITY SUB-AUDIT", "10 / 10", "system-failure-layer", "system-repair-loop", "MCP-Yu + Experiment Orchestrator", "system-components-panel"):
         if marker not in system_text:
             fail(f"system overview implementation is missing {marker}")
     system_content = (ROOT / "content-system-overview.js").read_text(encoding="utf-8")
     forbidden_idea_markers = ("主 ICLR Idea Bank", "最终师兄讨论门槛", "Main ICLR idea bank", "Final advisor gate", "paper-ideas.html#discussed-ideas")
     if any(marker in system_text or marker in system_content for marker in forbidden_idea_markers):
         fail("system overview must contain only the research system, not current idea decisions")
-    for marker in ("自动执行", "条件自动", "人工控制", "10/10 Pre-P0", "实验启动前编译器与经验沉淀"):
+    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "实验启动前编译器与经验沉淀"):
         if marker not in system_text and marker not in system_content and marker not in (ROOT / "page-architecture-data.js").read_text(encoding="utf-8"):
             fail(f"Chinese research-system documentation is missing {marker}")
 

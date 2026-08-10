@@ -25,6 +25,10 @@ def passing_audit(idea_id: str) -> dict:
     return {"schema_version":"1.0","policy":{"p0_execution_requires_pre_p0_pass":True},"summary":{"audited":1,"execution_ready":1,"blocked":0},"nodes":[node]}
 
 
+def passing_pre_experiment_card(idea_id: str) -> dict:
+    return {"idea_id": idea_id, "status": "pass", "execution_authorized": True, "passed_gates": 8, "gate_count": 8, "blockers": []}
+
+
 class PreP0IdentifiabilityTest(unittest.TestCase):
     def test_current_round1_failures_are_blocked_before_gpu(self) -> None:
         audit=build_pre_p0_identifiability_audit({"passed_ideas":[idea(k) for k in CURRENT_CONTRACTS]})
@@ -46,7 +50,7 @@ class PreP0IdentifiabilityTest(unittest.TestCase):
             self.assertFalse(audit_contract("x",broken)["execution_ready"],row["key"])
 
     def test_real_p0_runner_cannot_bypass_pre_p0_gate(self) -> None:
-        with self.assertRaisesRegex(RuntimeError, "Pre-P0 identifiability gate"):
+        with self.assertRaisesRegex(RuntimeError, "explicit frozen --config and 8/8 Pre-Experiment Card"):
             collect_real_p0(
                 "update-trust-region", None, Path("missing-alfworld.yaml"), Path("missing-model"),
                 Path("missing-data"), Path("missing-site"), Path("missing-alfworld"), Path("missing-output"),
@@ -63,7 +67,7 @@ class PreP0IdentifiabilityTest(unittest.TestCase):
             self.assertEqual(row["pre_p0_gate_status"],"repair-required")
             self.assertEqual(row["next_action"],"repair-pre-p0-identifiability-before-P0")
 
-            ready=build_pilot_registry(bank,result_dir=root/"results",approval_dir=root/"approvals",pre_p0_audit=passing_audit("update-trust-region"))
+            ready=build_pilot_registry(bank,result_dir=root/"results",approval_dir=root/"approvals",pre_p0_audit=passing_audit("update-trust-region"),pre_experiment_cards={"update-trust-region":passing_pre_experiment_card("update-trust-region")})
             self.assertEqual(ready["summary"]["p0_authorized"],1)
             self.assertEqual(ready["ideas"][0]["next_phase"],"P0")
 
