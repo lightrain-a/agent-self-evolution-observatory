@@ -473,6 +473,73 @@ def smoke_a1_updater(experiment_config: Path, alfworld_config: Path, model_path:
     }
 
 
+def run_a1_updater_dev_shard(
+    experiment_config: Path,
+    alfworld_config: Path,
+    model_path: Path,
+    failure_traces: Path,
+    output: Path,
+    *,
+    candidate_start: int,
+    candidate_count: int,
+) -> dict[str, Any]:
+    experiment = load_json(experiment_config)
+    scope = experiment.get("scope") or {}
+    seed = int((experiment.get("seeds") or [42])[0])
+    split = str((scope.get("splits") or {}).get("discovery") or "train")
+    max_steps = int(scope.get("max_steps", 50))
+    source_rows = _jsonl_read(failure_traces)
+    failures = [
+        row["trace"] for row in source_rows
+        if row.get("role") == "discovery-baseline"
+        and isinstance(row.get("trace"), dict)
+        and not bool(row["trace"].get("success"))
+    ]
+    if not failures:
+        raise RuntimeError("development shard found no discovery-baseline failures")
+    world = load_config(alfworld_config)
+    world.setdefault("general", {})["save_path"] = str(output.parent / f"alfworld-runtime-{candidate_start:03d}")
+    policy = HFAdmissiblePolicy(model_path, policy_mode=str(scope.get("policy_mode") or "react-family"))
+    runner = ALFWorldGameRunner(world)
+    rows: list[dict[str, Any]] = []
+    for index in range(candidate_start, candidate_start + candidate_count):
+        source = failures[index % len(failures)]
+        patch = policy.propose_patch(source, seed=seed + 1000 + index, variant=index)
+        after = runner.run_game_file(split, str(source["task_id"]), policy, patch, max_steps=max_steps)
+        text = patch.lower().strip()
+        rows.append({
+            "candidate_id": f"q{index:03d}",
+            "source_task_id": str(source["task_id"]),
+            "source_task_family": str(source.get("task_family") or ""),
+            "patch": patch,
+            "scoped_conditional": _scoped_conditional(patch),
+            "generic_phrase_hit": any(term in text for term in ("track visited locations", "avoid redundant actions", "explore systematically", "plan carefully")),
+            "current_task_gain": float(after["success"]) - float(source["success"]),
+            "source_before_success": float(source["success"]),
+            "source_after_success": float(after["success"]),
+            "source_after_steps": int(after.get("steps") or 0),
+        })
+    payload = {
+        "schema_version": "1.0",
+        "artifact_kind": "a1-updater-development-shard",
+        "candidate_start": candidate_start,
+        "candidate_count": candidate_count,
+        "hidden_or_probe_execution_count": 0,
+        "metrics": {
+            "candidate_count": len(rows),
+            "positive_target_gain_candidates": sum(float(row["current_task_gain"]) > 0 for row in rows),
+            "effective_candidate_fraction": sum(float(row["current_task_gain"]) > 0 for row in rows) / len(rows),
+            "scoped_conditional_fraction": sum(bool(row["scoped_conditional"]) for row in rows) / len(rows),
+            "generic_phrase_fraction": sum(bool(row["generic_phrase_hit"]) for row in rows) / len(rows),
+            "unique_patch_count": len({str(row["patch"]).strip().lower() for row in rows}),
+        },
+        "rows": rows,
+        "usage": policy.usage_snapshot(),
+    }
+    _atomic_json(output, payload)
+    return payload
+
+
 def _updater_evidence_path(data_root: Path, evidence_id: str) -> Path:
     return data_root / "pre-experiment" / "evidence" / "updater-competence" / f"{evidence_id}.json"
 
@@ -485,6 +552,14 @@ def _parse_updater_args() -> argparse.Namespace:
     smoke.add_argument("--alfworld-config", type=Path, required=True)
     smoke.add_argument("--model-path", type=Path, required=True)
     smoke.add_argument("--output", type=Path)
+    dev = sub.add_parser("dev-a1-updater")
+    dev.add_argument("--config", type=Path, required=True)
+    dev.add_argument("--alfworld-config", type=Path, required=True)
+    dev.add_argument("--model-path", type=Path, required=True)
+    dev.add_argument("--failure-traces", type=Path, required=True)
+    dev.add_argument("--candidate-start", type=int, required=True)
+    dev.add_argument("--candidate-count", type=int, required=True)
+    dev.add_argument("--output", type=Path, required=True)
     a1 = sub.add_parser("qualify-a1-updater")
     a1.add_argument("--config", type=Path, required=True)
     a1.add_argument("--alfworld-config", type=Path, required=True)
@@ -519,6 +594,23 @@ def _updater_main() -> None:
             raise
         if args.output is not None:
             _atomic_json(args.output, evidence)
+        print(json.dumps(evidence, ensure_ascii=False, indent=2))
+        return
+    if args.command == "dev-a1-updater":
+        try:
+            evidence = run_a1_updater_dev_shard(
+                args.config, args.alfworld_config, args.model_path, args.failure_traces, args.output,
+                candidate_start=args.candidate_start, candidate_count=args.candidate_count,
+            )
+        except Exception as error:
+            evidence = {
+                "schema_version": "1.0", "artifact_kind": "a1-updater-development-shard",
+                "status": "error", "error_type": type(error).__name__, "message": str(error),
+                "hidden_or_probe_execution_count": 0,
+            }
+            _atomic_json(args.output, evidence)
+            print(json.dumps(evidence, ensure_ascii=False, indent=2))
+            raise
         print(json.dumps(evidence, ensure_ascii=False, indent=2))
         return
     if args.command == "qualify-a1-updater":
@@ -945,7 +1037,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] in {"smoke-a1-updater", "qualify-a1-updater", "audit-a2-updater"}:
+    if len(sys.argv) > 1 and sys.argv[1] in {"smoke-a1-updater", "dev-a1-updater", "qualify-a1-updater", "audit-a2-updater"}:
         _updater_main()
     else:
         main()

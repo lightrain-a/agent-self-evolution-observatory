@@ -12,6 +12,7 @@ import io
 import json
 import os
 import re
+import subprocess
 import sys
 import time
 import urllib.error
@@ -50,24 +51,51 @@ def request(
     absolute: bool = False,
     extra_headers: dict[str, str] | None = None,
 ) -> tuple[int, bytes]:
-    url = path if absolute else API + path
-    data = None if payload is None else json.dumps(payload).encode("utf-8")
+    """Call GitHub REST through the runner-native ``gh`` TLS stack.
+
+    Python urllib on the hosted Pages deploy runner can inherit a certificate
+    chain that rejects GitHub's connection as self-signed. ``gh api`` uses the
+    runner's native trust store and the workflow-provided GH_TOKEN, while this
+    wrapper preserves the status/body contract used by the recovery logic.
+    """
+    if absolute:
+        raise RuntimeError("absolute REST URLs are not supported by the gh-api transport")
     headers = {
         "Accept": "application/vnd.github+json",
-        "Authorization": f"Bearer {token}",
         "X-GitHub-Api-Version": API_VERSION,
         "User-Agent": "agent-evolution-pages-recovery",
     }
-    if data is not None:
+    if payload is not None:
         headers["Content-Type"] = "application/json"
     if extra_headers:
         headers.update(extra_headers)
-    req = urllib.request.Request(url, data=data, method=method, headers=headers)
-    try:
-        with urllib.request.urlopen(req, timeout=60) as response:
-            return response.status, response.read()
-    except urllib.error.HTTPError as error:
-        return error.code, error.read()
+    command = ["gh", "api", "--include", "--method", method]
+    for key, value in headers.items():
+        command.extend(["-H", f"{key}: {value}"])
+    command.append(path)
+    input_bytes = None
+    if payload is not None:
+        command.extend(["--input", "-"])
+        input_bytes = json.dumps(payload).encode("utf-8")
+    env = os.environ.copy()
+    env["GH_TOKEN"] = token
+    completed = subprocess.run(
+        command,
+        input=input_bytes,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        env=env,
+        timeout=60,
+        check=False,
+    )
+    raw = completed.stdout
+    separator = b"\r\n\r\n" if b"\r\n\r\n" in raw else b"\n\n"
+    header, body = raw.split(separator, 1) if separator in raw else (raw, b"")
+    matches = re.findall(rb"^HTTP/\S+\s+(\d{3})", header, re.MULTILINE)
+    if not matches:
+        stderr = completed.stderr.decode("utf-8", errors="replace")[:1000]
+        raise RuntimeError(f"gh api returned no HTTP status (exit {completed.returncode}): {stderr}")
+    return int(matches[-1]), body
 
 
 def json_body(body: bytes) -> dict[str, Any]:
