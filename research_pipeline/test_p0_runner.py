@@ -8,12 +8,13 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+from .alfworld_react_scaffold import extract_task_goal, react_scaffold, task_family_from_gamefile
 from .p0_a1 import analyze as analyze_a1, synthetic_rows as synthetic_a1
 from .p0_a2 import analyze as analyze_a2, synthetic_rows as synthetic_a2
 from .p0_alfworld_adapter import ALFWorldGameRunner, action_family_shift, normalized_edit_distance, parse_admissible_choice
-from .p0_alfworld_collect import generate_a1_candidates
+from .p0_alfworld_collect import _task_family_order, generate_a1_candidates
 from .p0_common import balanced_assignments, config_hash, load_json, result_payload, runtime_preflight, validate_collection_manifest, validate_measured_cost
-from .p0_runner import config_path, p0_execution_lock
+from .p0_runner import analyze_file, config_path, execution_state_path, p0_execution_lock, run_real_p0_transaction
 
 
 class P0RunnerTest(unittest.TestCase):
@@ -52,6 +53,44 @@ class P0RunnerTest(unittest.TestCase):
         self.assertEqual(len(rows), 3)
         self.assertEqual(attempts, 3)
         self.assertTrue(all(row["source_task_id"] == "discovery-task" for row in rows))
+
+    def test_a2_floor_effect_is_inconclusive_not_method_fail(self) -> None:
+        config = copy.deepcopy(load_json(config_path("budgeted-evolution-controller")))
+        config.setdefault("analysis", {})["identifiability"] = {
+            "minimum_hidden_oracle_success_rate": 0.20,
+            "minimum_discovery_sequences_with_success_change_fraction": 0.20,
+        }
+        rows = synthetic_a2()
+        for seq in rows:
+            for round_row in seq["rounds"]:
+                round_row["success"] = 0.0
+        with self.assertRaisesRegex(ValueError, "inconclusive/floor-effect"):
+            analyze_a2(rows, config)
+
+    def test_a2_screening_floor_effect_never_emits_formal_fail(self) -> None:
+        config = load_json(Path(__file__).with_name("p0_a2_screening_config.json"))
+        rows = synthetic_a2()
+        for seq in rows:
+            for round_row in seq["rounds"]:
+                round_row["success"] = 0.0
+        result = analyze_a2(rows, config)
+        self.assertEqual(result["decision"], "screening-inconclusive")
+        self.assertIsNone(result["go"])
+
+    def test_a1_too_few_harmful_candidates_is_inconclusive(self) -> None:
+        config = copy.deepcopy(load_json(config_path("update-trust-region")))
+        config.setdefault("analysis", {})["minimum_harmful_candidates_for_decision"] = 6
+        rows = synthetic_a1()
+        for row in rows:
+            row["hidden_after"] = list(row["hidden_before"])
+        with self.assertRaisesRegex(ValueError, "inconclusive"):
+            analyze_a1(rows, config)
+
+    def test_a1_screening_never_emits_formal_fail(self) -> None:
+        config = load_json(Path(__file__).with_name("p0_a1_screening_config.json"))
+        result = analyze_a1(synthetic_a1(), config)
+        self.assertIn(result["decision"], {"screening-signal", "screening-no-signal", "screening-inconclusive"})
+        self.assertIsNone(result["go"])
 
     def test_a2_hidden_sequences_cannot_change_fitted_controller(self) -> None:
         config = load_json(config_path("budgeted-evolution-controller"))
@@ -97,9 +136,33 @@ class P0RunnerTest(unittest.TestCase):
         commands = ["look", "go to fridge 1", "open fridge 1"]
         self.assertEqual(parse_admissible_choice("3", commands), ("open fridge 1", False))
         self.assertEqual(parse_admissible_choice("open fridge 1", commands), ("open fridge 1", False))
+        self.assertEqual(parse_admissible_choice("Thought: inspect first\nAction: open fridge 1", commands), ("open fridge 1", False))
+        self.assertEqual(parse_admissible_choice("Thought: maybe go to fridge 1, but inspect it\nAction: open fridge 1", commands), ("open fridge 1", False))
         self.assertEqual(parse_admissible_choice("I would dance", commands), ("look", True))
         self.assertGreater(normalized_edit_distance(["look"], ["open fridge 1"]), 0)
         self.assertGreater(action_family_shift(["look", "look"], ["open fridge 1", "go to fridge 1"]), 0)
+
+    def test_react_family_scaffold_keeps_goal_and_task_type(self) -> None:
+        path = "/data/alfworld/valid_seen/pick_cool_then_place_in_recep-Plate-None-Cabinet-27/trial_x/game.tw-pddl"
+        self.assertEqual(task_family_from_gamefile(path), "pick_cool_then_place_in_recep")
+        obs = "Room description.\n\nYour task is to: put a cool plate in cabinet.\n"
+        self.assertEqual(extract_task_goal(obs), "put a cool plate in cabinet.")
+        scaffold = react_scaffold("pick_cool_then_place_in_recep")
+        self.assertIn("cool then place", scaffold)
+        self.assertIn("Action:", scaffold)
+
+    def test_task_family_order_spreads_early_sample_across_families(self) -> None:
+        paths = [
+            f"/x/pick_and_place_simple-A/trial-{i}/game.tw-pddl" for i in range(5)
+        ] + [
+            f"/x/pick_clean_then_place_in_recep-A/trial-{i}/game.tw-pddl" for i in range(5)
+        ] + [
+            f"/x/pick_heat_then_place_in_recep-A/trial-{i}/game.tw-pddl" for i in range(5)
+        ]
+        ordered = _task_family_order(paths, 42, "test")
+        first_three = {task_family_from_gamefile(path) for path in ordered[:3]}
+        self.assertEqual(len(first_three), 3)
+        self.assertEqual(ordered, _task_family_order(paths, 42, "test"))
 
     def test_balanced_hidden_assignment_is_deterministic_and_nearly_even(self) -> None:
         assignments = balanced_assignments([f"c{i}" for i in range(30)], [f"t{i}" for i in range(40)], 12, 42)
@@ -111,19 +174,61 @@ class P0RunnerTest(unittest.TestCase):
                 counts[task_id] += 1
         self.assertLessEqual(max(counts.values()) - min(counts.values()), 1)
 
-    def test_real_p0_execution_lock_is_exclusive_and_blocks_unresolved_runs(self) -> None:
+    def test_real_p0_execution_lock_is_per_idea_and_blocks_only_same_unresolved_run(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            with p0_execution_lock(root):
+            with p0_execution_lock(root, "idea-a"):
                 with self.assertRaisesRegex(RuntimeError, "execution lock"):
-                    with p0_execution_lock(root):
+                    with p0_execution_lock(root, "idea-a"):
                         pass
-            (root / "p0-execution-state.json").write_text(
-                json.dumps({"status": "collected", "idea_id": "update-trust-region"}), encoding="utf-8"
-            )
-            with self.assertRaisesRegex(RuntimeError, "unresolved"):
-                with p0_execution_lock(root):
+                with p0_execution_lock(root, "idea-b"):
                     pass
+            state_path = execution_state_path(root, "idea-a")
+            state_path.parent.mkdir(parents=True, exist_ok=True)
+            state_path.write_text(json.dumps({"status": "collected", "idea_id": "idea-a"}), encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "unresolved"):
+                with p0_execution_lock(root, "idea-a"):
+                    pass
+            with p0_execution_lock(root, "idea-b"):
+                pass
+            (root / "p0-execution-state.json").write_text(json.dumps({"status": "running", "idea_id": "legacy-a"}), encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "unresolved"):
+                with p0_execution_lock(root, "legacy-a"):
+                    pass
+            with p0_execution_lock(root, "idea-b"):
+                pass
+
+    def test_screening_config_cannot_register_as_formal_p0(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config = copy.deepcopy(load_json(config_path("update-trust-region")))
+            config["phase"] = "P0-screening"
+            config_file = Path(tmp) / "screening.json"
+            config_file.write_text(json.dumps(config), encoding="utf-8")
+            args = type("Args", (), {
+                "idea_id": "update-trust-region",
+                "config": config_file,
+                "command": "execute",
+            })()
+            with self.assertRaisesRegex(RuntimeError, "cannot register"):
+                run_real_p0_transaction(args)
+
+    def test_screening_analysis_writes_nonregistrable_artifact(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            input_path = root / "candidate-evaluation.jsonl"
+            input_path.write_text("".join(json.dumps(row) + "\n" for row in synthetic_a1()), encoding="utf-8")
+            result = analyze_file(
+                "update-trust-region",
+                input_path,
+                Path(__file__).with_name("p0_a1_screening_config.json"),
+                root / "out",
+                None,
+                None,
+                False,
+            )
+            self.assertEqual(result["artifact_kind"], "screening-analysis")
+            self.assertEqual(result["phase"], "P0-screening")
+            self.assertIn(result["decision"], {"screening-signal", "screening-no-signal", "screening-inconclusive"})
 
     def test_p0_pass_requires_human_approval_next(self) -> None:
         config = load_json(config_path("update-trust-region"))

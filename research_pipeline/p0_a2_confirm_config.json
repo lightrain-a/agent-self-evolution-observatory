@@ -1,0 +1,128 @@
+{
+  "schema_version": "2.0",
+  "idea_id": "budgeted-evolution-controller",
+  "phase": "P0",
+  "models": ["Qwen2.5-7B-Instruct"],
+  "datasets": ["ALFWorld"],
+  "seeds": [42],
+  "replication_seeds": [42, 73],
+  "scope": {
+    "policy_mode": "react-family",
+    "stratify_by_task_type": true,
+    "candidate_sequence_mode": "fixed-and-reused",
+    "max_update_rounds": 4,
+    "behavior_probes": 2,
+    "max_steps": 50,
+    "sequence_splits": {
+      "discovery": 12,
+      "calibration": 12,
+      "hidden": 24
+    },
+    "alfworld_splits": {
+      "discovery": "train",
+      "calibration": "eval_in_distribution",
+      "hidden": "eval_out_of_distribution"
+    },
+    "controller_features": ["marginal_gain", "probe_regression", "disagreement", "cumulative_calls"]
+  },
+  "analysis": {
+    "cost_lambda": 0.01,
+    "regression_lambda": 0.4,
+    "identifiability": {
+      "minimum_hidden_oracle_success_rate": 0.25,
+      "minimum_discovery_sequences_with_success_change_fraction": 0.25
+    },
+    "bootstrap_confidence": 0.95,
+    "inconclusive_if_interval_crosses_zero": true,
+    "heuristic_grid": {
+      "min_gain": [0.0, 0.02, 0.05],
+      "max_probe_regression": [0.1, 0.25, 0.4],
+      "max_disagreement": [0.2, 0.4, 0.6],
+      "max_calls": [4, 8, 12]
+    }
+  },
+  "go_gate": {
+    "min_call_saving": 0.25,
+    "max_success_loss": 0.05,
+    "require_replication_direction_consistency": true
+  },
+  "resource_cap": {
+    "max_gpus": 1,
+    "gpu_hours": 9.0,
+    "wall_hours": 10.5,
+    "episodes": 650
+  },
+  "pre_experiment": {
+    "parameter_provenance": {
+      "critical_parameters": [
+        "scope.max_steps",
+        "scope.sequence_splits",
+        "scope.max_update_rounds",
+        "analysis.identifiability.minimum_hidden_oracle_success_rate",
+        "go_gate.min_call_saving",
+        "go_gate.max_success_loss",
+        "resource_cap.gpu_hours"
+      ],
+      "entries": [
+        {"parameter": "scope.max_steps", "value": 50, "source_type": "literature", "basis": "Keep the competent ALFWorld interaction horizon at 50 steps."},
+        {"parameter": "scope.sequence_splits", "value": {"discovery": 12, "calibration": 12, "hidden": 24}, "source_type": "statistical-calculation", "basis": "Twenty-four fit sequences and twenty-four hidden sequences provide a confirmatory controller split while preserving frozen hidden evaluation."},
+        {"parameter": "scope.max_update_rounds", "value": 4, "source_type": "explicit-protocol-choice", "basis": "Four update rounds expose early/late stopping and over-update harm without unbounded search."},
+        {"parameter": "analysis.identifiability.minimum_hidden_oracle_success_rate", "value": 0.25, "source_type": "explicit-protocol-choice", "basis": "At least one quarter of hidden sequences must contain a successful candidate round before call-saving can be scientifically identified."},
+        {"parameter": "go_gate.min_call_saving", "value": 0.25, "source_type": "explicit-protocol-choice", "basis": "A 25% call reduction at matched utility is the preregistered minimum effect worth a formal P0 claim."},
+        {"parameter": "go_gate.max_success_loss", "value": 0.05, "source_type": "statistical-calculation", "basis": "Twenty-four hidden sequences have 1/24 = 4.17pp binary success resolution; a 5pp tolerance is observable whereas 2pp is not."},
+        {"parameter": "resource_cap.gpu_hours", "value": 9.0, "source_type": "measured-throughput", "basis": "Qualified Qwen react-family throughput predicts about 7.45 worst-case GPU-hours; cap includes a safety margin."}
+      ]
+    },
+    "competence": {
+      "evidence_id": "qwen25-react-family-ood134",
+      "model_name": "Qwen2.5-7B-Instruct",
+      "policy_mode": "react-family",
+      "minimum_success_rate": 0.30,
+      "maximum_success_rate": 0.90,
+      "minimum_task_types_with_success": 5
+    },
+    "identifiability": {
+      "required_sequence_archetypes": ["early-stop", "late-stop", "rollback-or-harm"],
+      "true_false_question": "Do the frozen sequences contain target variation and policy disagreement that can identify a call-saving controller?"
+    },
+    "statistics": {
+      "screening_cannot_reject_idea": true
+    },
+    "compute": {
+      "minimum_gpu_hour_margin": 1.10
+    },
+    "throughput": {
+      "measurement_id": "qwen25-react-family-id24-server60-20260810",
+      "reference": "Qwen2.5-7B-Instruct react-family on server 60 RTX3090, 24 ID environments, 50-step cap",
+      "calibration_episodes": 24,
+      "calibration_model_calls": 969,
+      "calibration_gpu_hours": 0.22905,
+      "calls_per_gpu_hour": 4230.5,
+      "mean_steps_per_episode": 40.375
+    },
+    "recovery": {
+      "incremental_trace": true,
+      "atomic_progress": true,
+      "heartbeat_state": true,
+      "online_budget_watchdog": true,
+      "per_run_lock": true,
+      "gpu_uuid_binding": true,
+      "restart_policy": "Preserve complete sequence artifacts for diagnosis; restart a fresh confirmatory run under the same frozen contract after any runtime stop.",
+      "partial_artifact_policy": "Partial sequences never enter the Pilot Registry or formal controller comparison."
+    },
+    "outcomes": {
+      "allowed": [
+        "METHOD-PASS",
+        "METHOD-FAIL",
+        "INCONCLUSIVE",
+        "BASELINE-FLOOR",
+        "BASELINE-CEILING",
+        "RUNTIME-ERROR",
+        "IMPLEMENTATION-ERROR",
+        "BUDGET-STOP"
+      ],
+      "budget_stop_registers_scientific_result": false,
+      "floor_or_ceiling_counts_as_method_fail": false
+    }
+  }
+}

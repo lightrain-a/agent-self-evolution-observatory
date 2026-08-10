@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "defaults": {
+    "min_free_memory_mib": 18000,
+    "max_gpu_utilization_pct": 25,
+    "ssh_connect_timeout_seconds": 6
+  },
+  "servers": [
+    {
+      "id": "60",
+      "ssh": "60",
+      "repo": "/home/hdd/yutong/agent-self-evolution-p0",
+      "python": "/home/hdd/yutong/envs/vlm_fp_231_exact/bin/python",
+      "data_root": "/home/hdd/yutong/agent-evolution-p0-data",
+      "model_path": "/home/hdd/qinglinji/models/Qwen2.5-7B-Instruct",
+      "extra_pythonpath": "/home/hdd/yutong/agent-evolution-p0-site",
+      "alfworld_data": "/home/hdd/yutong/agent-evolution-p0-data/alfworld",
+      "enabled": true,
+      "priority": 10
+    },
+    {
+      "id": "69",
+      "ssh": "69",
+      "repo": "/home/wyt/code/agent-self-evolution-observatory",
+      "python": "/data/wyt/envs/vlm_test/bin/python",
+      "data_root": "/data/wyt/agent-self-evolution-observatory",
+      "model_path": "/data/wyt/models/indept/Qwen2.5-7B",
+      "extra_pythonpath": "/data/wyt/envs/agent_evolution_p0_site",
+      "alfworld_data": "/data/wyt/agent-self-evolution-observatory/alfworld",
+      "enabled": true,
+      "priority": 20
+    }
+  ]
+}

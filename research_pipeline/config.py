@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import os
 import shutil
 from dataclasses import dataclass
@@ -148,6 +149,31 @@ class StorageSettings:
             "data_disk": _disk_summary(self.data_root),
             "code_disk": _disk_summary(PROJECT_ROOT),
         }
+
+
+def resolve_experiment_data_root(storage: StorageSettings | None = None) -> Path:
+    """Resolve the machine-local experiment root used by runner/orchestrator.
+
+    Literature/corpus storage and GPU experiment storage may differ. An explicit
+    RESEARCH_EXPERIMENT_DATA_ROOT wins; otherwise the local orchestrator profile
+    whose repo matches this checkout is authoritative. The generic research data
+    root remains the safe fallback for machines without an execution profile.
+    """
+    storage = storage or StorageSettings.from_env()
+    explicit = os.getenv("RESEARCH_EXPERIMENT_DATA_ROOT", "").strip()
+    if explicit:
+        return Path(explicit).expanduser()
+    profile_path = PROJECT_ROOT / "research_pipeline" / "experiment_orchestrator_profiles.json"
+    try:
+        payload = json.loads(profile_path.read_text(encoding="utf-8"))
+        current_repo = str(PROJECT_ROOT.resolve())
+        for row in payload.get("servers") or []:
+            repo = str(Path(str(row.get("repo") or "")).expanduser())
+            if repo == current_repo and row.get("data_root"):
+                return Path(str(row["data_root"])).expanduser()
+    except (OSError, ValueError, KeyError, json.JSONDecodeError):
+        pass
+    return storage.data_root
 
 
 @dataclass(frozen=True, slots=True)

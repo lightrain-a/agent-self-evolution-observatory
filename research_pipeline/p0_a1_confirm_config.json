@@ -1,0 +1,129 @@
+{
+  "schema_version": "2.0",
+  "idea_id": "update-trust-region",
+  "phase": "P0",
+  "models": ["Qwen2.5-7B-Instruct"],
+  "datasets": ["ALFWorld"],
+  "seeds": [42],
+  "replication_seeds": [42, 73],
+  "scope": {
+    "policy_mode": "react-family",
+    "stratify_by_task_type": true,
+    "update_surface": "prompt-patch-only",
+    "discovery_failures_target": 24,
+    "candidate_updates_target": [32, 32],
+    "behavior_probes": 12,
+    "hidden_original_tasks_target": 48,
+    "hidden_tasks_per_candidate": 12,
+    "discovery_episode_cap": 32,
+    "max_steps": 50,
+    "stratify_probes_and_hidden_by_task_type": true,
+    "splits": {
+      "discovery": "train",
+      "behavior_probes": "eval_in_distribution",
+      "hidden": "eval_out_of_distribution"
+    }
+  },
+  "analysis": {
+    "acceptance_rate": 0.5,
+    "drift_weights": {
+      "action_sequence_distance": 0.35,
+      "invalid_action_rate": 0.25,
+      "instruction_choice_shift": 0.25,
+      "plan_length": 0.15
+    },
+    "feature_scales": {
+      "action_sequence_distance": 1.0,
+      "invalid_action_rate": 0.25,
+      "instruction_choice_shift": 1.0,
+      "plan_length": 8.0
+    },
+    "minimum_harmful_candidates_for_decision": 6,
+    "bootstrap_confidence": 0.95,
+    "inconclusive_if_interval_crosses_zero": true
+  },
+  "go_gate": {
+    "min_harmful_reduction": 0.25,
+    "max_target_gain_loss": 0.0625,
+    "require_replication_direction_consistency": true
+  },
+  "resource_cap": {
+    "max_gpus": 1,
+    "gpu_hours": 12.0,
+    "wall_hours": 13,
+    "episodes": 900
+  },
+  "pre_experiment": {
+    "parameter_provenance": {
+      "critical_parameters": [
+        "scope.max_steps",
+        "scope.candidate_updates_target",
+        "scope.hidden_tasks_per_candidate",
+        "analysis.minimum_harmful_candidates_for_decision",
+        "go_gate.min_harmful_reduction",
+        "go_gate.max_target_gain_loss",
+        "resource_cap.gpu_hours"
+      ],
+      "entries": [
+        {"parameter": "scope.max_steps", "value": 50, "source_type": "literature", "basis": "Keep the benchmark interaction horizon aligned with the competent ALFWorld agent setting rather than shortening it for cost."},
+        {"parameter": "scope.candidate_updates_target", "value": [32, 32], "source_type": "statistical-calculation", "basis": "Thirty-two candidates yield sixteen accepted updates and about eight harmful candidates at 25% planning prevalence, above the six-candidate identifiability minimum."},
+        {"parameter": "scope.hidden_tasks_per_candidate", "value": 12, "source_type": "statistical-calculation", "basis": "Twelve hidden tasks reduce per-candidate binary hidden-delta resolution to 8.33 percentage points for confirmatory evaluation."},
+        {"parameter": "analysis.minimum_harmful_candidates_for_decision", "value": 6, "source_type": "statistical-calculation", "basis": "Formal harmful-admission comparison is forbidden with fewer than six observed harmful candidates."},
+        {"parameter": "go_gate.min_harmful_reduction", "value": 0.25, "source_type": "explicit-protocol-choice", "basis": "A 25% relative harmful-commit reduction is the preregistered minimum effect worth a confirmatory P0 claim."},
+        {"parameter": "go_gate.max_target_gain_loss", "value": 0.0625, "source_type": "statistical-calculation", "basis": "Sixteen accepted candidates imply a 1/16 = 6.25 percentage-point observable resolution, so a 2pp tolerance would be unresolvable."},
+        {"parameter": "resource_cap.gpu_hours", "value": 12.0, "source_type": "measured-throughput", "basis": "Qualified Qwen react-family throughput predicts about 10.59 worst-case GPU-hours; 12 GPUh preserves a safety margin."}
+      ]
+    },
+    "competence": {
+      "evidence_id": "qwen25-react-family-ood134",
+      "model_name": "Qwen2.5-7B-Instruct",
+      "policy_mode": "react-family",
+      "minimum_success_rate": 0.30,
+      "maximum_success_rate": 0.90,
+      "minimum_task_types_with_success": 5
+    },
+    "identifiability": {
+      "expected_harmful_prevalence": 0.25,
+      "true_false_question": "Would harmful-update admission differ between a drift-informed gate and matched acceptance simplifications?"
+    },
+    "statistics": {
+      "screening_cannot_reject_idea": true
+    },
+    "compute": {
+      "minimum_gpu_hour_margin": 1.10
+    },
+    "throughput": {
+      "measurement_id": "qwen25-react-family-id24-server60-20260810",
+      "reference": "Qwen2.5-7B-Instruct react-family on server 60 RTX3090, 24 ID environments, 50-step cap",
+      "calibration_episodes": 24,
+      "calibration_model_calls": 969,
+      "calibration_gpu_hours": 0.22905,
+      "calls_per_gpu_hour": 4230.5,
+      "mean_steps_per_episode": 40.375
+    },
+    "recovery": {
+      "incremental_trace": true,
+      "atomic_progress": true,
+      "heartbeat_state": true,
+      "online_budget_watchdog": true,
+      "per_run_lock": true,
+      "gpu_uuid_binding": true,
+      "restart_policy": "Preserve completed atomic artifacts; diagnose the stop and restart a fresh confirmatory run from the same frozen config. Do not merge partial outcomes across runtimes.",
+      "partial_artifact_policy": "Partial traces are diagnostic only and cannot enter the Pilot Registry."
+    },
+    "outcomes": {
+      "allowed": [
+        "METHOD-PASS",
+        "METHOD-FAIL",
+        "INCONCLUSIVE",
+        "BASELINE-FLOOR",
+        "BASELINE-CEILING",
+        "RUNTIME-ERROR",
+        "IMPLEMENTATION-ERROR",
+        "BUDGET-STOP"
+      ],
+      "budget_stop_registers_scientific_result": false,
+      "floor_or_ceiling_counts_as_method_fail": false
+    }
+  }
+}

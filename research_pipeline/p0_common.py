@@ -187,16 +187,29 @@ def runtime_preflight(model_path: Path, data_root: Path, python_path: Path, extr
         and smoke_payload.get("model_path") == str(model_path)
         and smoke_payload.get("runtime_contract_hash") == contract_hash
     )
-    execution_state_path = data_root / "p0-execution-state.json"
-    execution_state: dict[str, Any] = {}
-    if execution_state_path.exists():
+    execution_states: list[dict[str, Any]] = []
+    execution_dir = data_root / "p0-executions"
+    if execution_dir.exists():
+        for state_path in sorted(execution_dir.glob("*.json")):
+            try:
+                loaded = json.loads(state_path.read_text(encoding="utf-8"))
+                if isinstance(loaded, dict):
+                    execution_states.append({"path": str(state_path), **loaded})
+            except (OSError, json.JSONDecodeError):
+                continue
+    legacy_execution_state_path = data_root / "p0-execution-state.json"
+    if legacy_execution_state_path.exists():
         try:
-            loaded = json.loads(execution_state_path.read_text(encoding="utf-8"))
+            loaded = json.loads(legacy_execution_state_path.read_text(encoding="utf-8"))
             if isinstance(loaded, dict):
-                execution_state = loaded
+                legacy_id = str(loaded.get("idea_id") or "")
+                if not any(str(row.get("idea_id") or "") == legacy_id for row in execution_states):
+                    execution_states.append({"path": str(legacy_execution_state_path), **loaded, "legacy": True})
         except (OSError, json.JSONDecodeError):
-            execution_state = {}
-    execution_started = str(execution_state.get("status") or "") in {"running", "collected", "registered", "failed"}
+            pass
+    execution_states.sort(key=lambda row: str(row.get("updated_at") or row.get("finished_at") or row.get("started_at") or ""), reverse=True)
+    execution_state = execution_states[0] if execution_states else {"path": str(legacy_execution_state_path)}
+    execution_started = any(str(row.get("status") or "") in {"running", "collected", "registered", "failed"} for row in execution_states)
     environment_ready = not blockers
     return {
         "schema_version": "1.1",
@@ -213,7 +226,8 @@ def runtime_preflight(model_path: Path, data_root: Path, python_path: Path, extr
         "model": {"path": str(model_path), "ready": model_ok},
         "alfworld_data": {"path": str(alfworld_data), "ready": alfworld_data_ok},
         "smoke_rollout": {"path": str(smoke_path), "ready": smoke_ready, "status": smoke_payload.get("status", "missing")},
-        "execution_state": {"path": str(execution_state_path), **execution_state},
+        "execution_state": execution_state,
+        "execution_states": execution_states,
         "stages": {
             "harness_ready": True,
             "package_ready": bool(modules.get("alfworld") and modules.get("textworld")),

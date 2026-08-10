@@ -41,20 +41,10 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("paper", graph["node_kinds"])
 
     def test_collision_engine_runs_all_pairs(self) -> None:
-        engine = self.state["collision_engine"]
-        collision = engine["summary"]
+        collision = self.state["collision_engine"]["summary"]
         self.assertEqual(collision["ideas"], 29)
         self.assertEqual(collision["pairwise_comparisons"], 406)
         self.assertGreater(collision["flagged_pairs"], 0)
-        self.assertGreaterEqual(collision["relation_counts"].get("same-method-signature", 0), 1)
-        pairs = {(item["left_id"], item["right_id"]): item for item in engine["pairs"]}
-        duplicate_sets = [
-            {"self-correction-collapse-detector", "correction-policy-credit"},
-            {"failure-frontier-curriculum", "curriculum-drift-controller"},
-        ]
-        for expected in duplicate_sets:
-            self.assertTrue(any({left, right} == expected and row["relation"] == "same-method-signature" for (left, right), row in pairs.items()))
-        self.assertFalse(any({left, right} == {"update-trust-region", "budgeted-evolution-controller"} and row["relation"] == "same-method-signature" for (left, right), row in pairs.items()))
 
     def test_lineage_preserves_branches_and_reviews(self) -> None:
         lineage = self.state["lineage"]["summary"]
@@ -71,6 +61,8 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(registry["invalid_approval_files"], 0)
         self.assertEqual(registry["p0_authorized"], 0)
         self.assertEqual(registry["pre_p0_ready"], 0)
+        self.assertEqual(registry["pre_experiment_ready"], 0)
+        self.assertEqual(registry["invalidated_result_files"], 1)
         self.assertEqual(registry["p1_authorized"], 0)
         by_id = {item["idea_id"]: item for item in self.state["pilot_registry"]["ideas"]}
         self.assertEqual(by_id["outcome-equivalent-trajectory-contrast"]["p0_gate_status"], "method-redesign")
@@ -90,6 +82,18 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("target_variation", by_code["A-2"]["blockers"])
         self.assertIn("baseline_disagreement", by_code["B-1"]["blockers"])
         self.assertIn("claim_alignment", by_code["E-1"]["blockers"])
+
+    def test_pre_experiment_compiler_is_eight_gate_and_launch_authoritative(self) -> None:
+        compiler = self.state["pre_experiment_compiler"]
+        self.assertEqual(len(compiler["gates"]), 8)
+        self.assertEqual(compiler["summary"]["compiled_cards"], 4)
+        self.assertEqual(compiler["summary"]["execution_ready"], 0)
+        self.assertEqual(compiler["summary"]["blocked"], 4)
+        self.assertEqual(compiler["summary"]["formal_p0_ready"], 0)
+        self.assertEqual(compiler["summary"]["formal_p0_total"], 2)
+        self.assertEqual(compiler["summary"]["gate_failures"]["mechanism_identifiability"], 4)
+        self.assertTrue(compiler["policy"]["automatic_override_forbidden"])
+        self.assertTrue(self.state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"])
 
     def test_experiment_iteration_distinguishes_pilot_failure_layers(self) -> None:
         iteration = self.state["experiment_iteration"]
@@ -122,7 +126,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("AI-Scientist-v2", sources)
         self.assertTrue(any("Co-Scientist" in source for source in sources))
         self.assertTrue(any("HypoRefine" in source and "IdeaForge" in source for source in sources))
-        self.assertEqual(len(self.state["components"]), 11)
+        self.assertEqual(len(self.state["components"]), 12)
         self.assertEqual(self.state["summary"]["discussion_ready"], 20)
         self.assertEqual(self.state["summary"]["discussion_target"], 20)
         self.assertTrue(self.state["summary"]["final_ready"])

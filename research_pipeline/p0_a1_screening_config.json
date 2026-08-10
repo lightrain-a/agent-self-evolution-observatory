@@ -1,0 +1,121 @@
+{
+  "schema_version": "2.0",
+  "idea_id": "update-trust-region",
+  "phase": "P0-screening",
+  "models": ["Qwen2.5-7B-Instruct"],
+  "datasets": ["ALFWorld"],
+  "seeds": [42],
+  "scope": {
+    "policy_mode": "react-family",
+    "stratify_by_task_type": true,
+    "update_surface": "prompt-patch-only",
+    "discovery_failures_target": 16,
+    "candidate_updates_target": [16, 16],
+    "behavior_probes": 6,
+    "hidden_original_tasks_target": 24,
+    "hidden_tasks_per_candidate": 8,
+    "discovery_episode_cap": 24,
+    "max_steps": 50,
+    "splits": {
+      "discovery": "train",
+      "behavior_probes": "eval_in_distribution",
+      "hidden": "eval_out_of_distribution"
+    }
+  },
+  "analysis": {
+    "acceptance_rate": 0.5,
+    "drift_weights": {
+      "action_sequence_distance": 0.35,
+      "invalid_action_rate": 0.25,
+      "instruction_choice_shift": 0.25,
+      "plan_length": 0.15
+    },
+    "feature_scales": {
+      "action_sequence_distance": 1.0,
+      "invalid_action_rate": 0.25,
+      "instruction_choice_shift": 1.0,
+      "plan_length": 8.0
+    },
+    "screening_only": true,
+    "screening_cannot_reject_idea": true,
+    "screening_max_target_gain_loss": 0.125,
+    "minimum_harmful_candidates_for_interpretation": 4
+  },
+  "resource_cap": {
+    "max_gpus": 1,
+    "gpu_hours": 4.0,
+    "wall_hours": 5,
+    "episodes": 300
+  },
+  "pre_experiment": {
+    "parameter_provenance": {
+      "critical_parameters": [
+        "scope.max_steps",
+        "scope.candidate_updates_target",
+        "scope.hidden_tasks_per_candidate",
+        "analysis.minimum_harmful_candidates_for_interpretation",
+        "analysis.screening_max_target_gain_loss",
+        "resource_cap.gpu_hours"
+      ],
+      "entries": [
+        {"parameter": "scope.max_steps", "value": 50, "source_type": "literature", "basis": "ALFWorld/ReAct/Reflexion-style text-agent evaluation uses a 50-step episode cap; do not shorten the scientific horizon for convenience."},
+        {"parameter": "scope.candidate_updates_target", "value": [16, 16], "source_type": "statistical-calculation", "basis": "Sixteen candidates yield eight matched accepted updates and approximately four harmful candidates at the preregistered 25% planning prevalence."},
+        {"parameter": "scope.hidden_tasks_per_candidate", "value": 8, "source_type": "statistical-calculation", "basis": "Eight hidden tasks give 12.5 percentage-point binary resolution, acceptable for screening but not formal rejection."},
+        {"parameter": "analysis.minimum_harmful_candidates_for_interpretation", "value": 4, "source_type": "statistical-calculation", "basis": "Fewer than four harmful candidates cannot support a directional screening interpretation."},
+        {"parameter": "analysis.screening_max_target_gain_loss", "value": 0.125, "source_type": "statistical-calculation", "basis": "Eight accepted candidates imply a 1/8 = 12.5 percentage-point observable resolution."},
+        {"parameter": "resource_cap.gpu_hours", "value": 4.0, "source_type": "measured-throughput", "basis": "Qualified Qwen react-family throughput predicts about 3.50 worst-case GPU-hours; cap includes a safety margin."}
+      ]
+    },
+    "competence": {
+      "evidence_id": "qwen25-react-family-ood134",
+      "model_name": "Qwen2.5-7B-Instruct",
+      "policy_mode": "react-family",
+      "minimum_success_rate": 0.30,
+      "maximum_success_rate": 0.90,
+      "minimum_task_types_with_success": 5
+    },
+    "identifiability": {
+      "expected_harmful_prevalence": 0.25,
+      "true_false_question": "Can behavior drift rank harmful persistent updates differently from gain/edit-size simplifications?"
+    },
+    "statistics": {
+      "screening_cannot_reject_idea": true
+    },
+    "compute": {
+      "minimum_gpu_hour_margin": 1.10
+    },
+    "throughput": {
+      "measurement_id": "qwen25-react-family-id24-server60-20260810",
+      "reference": "Qwen2.5-7B-Instruct react-family on server 60 RTX3090, 24 ID environments, 50-step cap",
+      "calibration_episodes": 24,
+      "calibration_model_calls": 969,
+      "calibration_gpu_hours": 0.22905,
+      "calls_per_gpu_hour": 4230.5,
+      "mean_steps_per_episode": 40.375
+    },
+    "recovery": {
+      "incremental_trace": true,
+      "atomic_progress": true,
+      "heartbeat_state": true,
+      "online_budget_watchdog": true,
+      "per_run_lock": true,
+      "gpu_uuid_binding": true,
+      "restart_policy": "Preserve completed atomic artifacts; diagnose the stop and start a fresh run under the same frozen config. Never splice partial scientific results across incompatible runtimes.",
+      "partial_artifact_policy": "Partial traces remain diagnostic evidence but cannot be registered as a scientific P0 result."
+    },
+    "outcomes": {
+      "allowed": [
+        "SCREENING-SIGNAL",
+        "SCREENING-NO-SIGNAL",
+        "INCONCLUSIVE",
+        "BASELINE-FLOOR",
+        "BASELINE-CEILING",
+        "RUNTIME-ERROR",
+        "IMPLEMENTATION-ERROR",
+        "BUDGET-STOP"
+      ],
+      "budget_stop_registers_scientific_result": false,
+      "floor_or_ceiling_counts_as_method_fail": false
+    }
+  }
+}

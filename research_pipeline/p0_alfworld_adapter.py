@@ -10,6 +10,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from .alfworld_react_scaffold import extract_task_goal, react_scaffold, task_family_from_gamefile
+
 
 P0_EXTRA_SITE = Path(os.environ.get("P0_EXTRA_SITE", "/data/wyt/envs/agent_evolution_p0_site"))
 if P0_EXTRA_SITE.exists():
@@ -63,6 +65,12 @@ def action_family_shift(before: list[str], after: list[str]) -> float:
 def parse_admissible_choice(raw: str, commands: list[str]) -> tuple[str, bool]:
     text = raw.strip()
     lowered = text.lower()
+    action_lines = re.findall(r"(?im)^\s*action\s*:\s*(.+?)\s*$", text)
+    if action_lines:
+        final_action = action_lines[-1].strip().lower()
+        for command in commands:
+            if final_action == command.lower() or command.lower() in final_action:
+                return command, False
     for command in commands:
         if lowered == command.lower() or command.lower() in lowered:
             return command, False
@@ -76,7 +84,7 @@ def parse_admissible_choice(raw: str, commands: list[str]) -> tuple[str, bool]:
 
 
 class HFAdmissiblePolicy:
-    def __init__(self, model_path: Path, *, device: str = "cuda", max_history: int = 6) -> None:
+    def __init__(self, model_path: Path, *, device: str = "cuda", max_history: int = 6, policy_mode: str = "direct") -> None:
         try:
             import torch
             from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -89,6 +97,9 @@ class HFAdmissiblePolicy:
         ).to(device).eval()
         self.device = device
         self.max_history = max_history
+        if policy_mode not in {"direct", "react-lite", "react-family"}:
+            raise ValueError(f"unsupported policy_mode: {policy_mode}")
+        self.policy_mode = policy_mode
         self._input_tokens = 0
         self._output_tokens = 0
         self._generation_calls = 0
@@ -109,21 +120,50 @@ class HFAdmissiblePolicy:
     def token_count(self, text: str) -> int:
         return len(self.tokenizer.encode(text, add_special_tokens=False))
 
-    def choose(self, observation: str, commands: list[str], history: list[tuple[str, str]], patch: str) -> tuple[str, bool, str]:
+    def choose(
+        self,
+        observation: str,
+        commands: list[str],
+        history: list[tuple[str, str]],
+        patch: str,
+        *,
+        goal_context: str = "",
+        task_family: str = "unknown",
+    ) -> tuple[str, bool, str]:
         numbered = "\n".join(f"{i+1}. {command}" for i, command in enumerate(commands))
         history_text = "\n".join(f"Action: {a}\nObservation: {o}" for a, o in history[-self.max_history:])
-        system = (
-            "You are an ALFWorld text agent. Choose exactly one admissible command. "
-            "Return only the command text or its number. Do not explain."
-        )
+        if self.policy_mode == "react-family":
+            system = react_scaffold(task_family)
+        elif self.policy_mode == "react-lite":
+            system = (
+                "You are a text-based household task agent. Track the goal, what you are holding, and which subgoal is next. "
+                "Think briefly from the current observation and recent history, then finish with exactly one line "
+                "`Action: <one exact admissible command>`. Do not invent commands. "
+                "If the target object has not been found, search plausible receptacles systematically. "
+                "If the task requires cleaning, cooling, or heating, complete that transformation before final placement."
+            )
+        else:
+            system = (
+                "You are an ALFWorld text agent. Choose exactly one admissible command. "
+                "Return only the command text or its number. Do not explain."
+            )
         if patch.strip():
             system += "\nPersistent prompt update:\n" + patch.strip()
-        user = f"Recent history:\n{history_text or '(none)'}\n\nCurrent observation:\n{observation}\n\nAdmissible commands:\n{numbered}\n\nChoice:"
+        user = (
+            f"Task goal (do not forget):\n{goal_context or 'complete the household task'}\n\n"
+            f"Recent history:\n{history_text or '(none)'}\n\nCurrent observation:\n{observation}\n\n"
+            f"Admissible commands:\n{numbered}\n\nChoose the next action."
+        )
         messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
         prompt = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
         with self.torch.no_grad():
-            generated = self.model.generate(**inputs, max_new_tokens=24, do_sample=False, pad_token_id=self.tokenizer.eos_token_id)
+            generated = self.model.generate(
+                **inputs,
+                max_new_tokens=72 if self.policy_mode in {"react-lite", "react-family"} else 24,
+                do_sample=False,
+                pad_token_id=self.tokenizer.eos_token_id,
+            )
         suffix = generated[0, inputs["input_ids"].shape[1]:]
         self._record_usage(inputs, suffix)
         raw = self.tokenizer.decode(suffix, skip_special_tokens=True).strip()
@@ -249,6 +289,8 @@ def run_episode(env, policy: HFAdmissiblePolicy, patch: str = "", max_steps: int
     invalid = 0
     start_obs = str(obs[0])
     gamefile = str((info.get("extra.gamefile") or [""])[0])
+    task_goal = extract_task_goal(start_obs)
+    task_family = task_family_from_gamefile(gamefile)
     done = False
     final_score = 0.0
     won = False
@@ -256,7 +298,14 @@ def run_episode(env, policy: HFAdmissiblePolicy, patch: str = "", max_steps: int
         commands = list((info.get("admissible_commands") or [[]])[0])
         if not commands:
             break
-        action, was_invalid, raw = policy.choose(str(obs[0]), commands, history, patch)
+        action, was_invalid, raw = policy.choose(
+            str(obs[0]),
+            commands,
+            history,
+            patch,
+            goal_context=task_goal,
+            task_family=task_family,
+        )
         invalid += int(was_invalid)
         actions.append(action)
         raw_choices.append(raw)
@@ -272,6 +321,8 @@ def run_episode(env, policy: HFAdmissiblePolicy, patch: str = "", max_steps: int
         "task_id": task_id,
         "gamefile": gamefile,
         "initial_observation": start_obs,
+        "task_goal": task_goal,
+        "task_family": task_family,
         "success": int(won),
         "won": int(won),
         "score": final_score,

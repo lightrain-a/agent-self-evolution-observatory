@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "purpose": "base-agent-competence-qualification-before-update-experiments",
+  "benchmark": "ALFWorld",
+  "policy_modes": ["react-family"],
+  "calibration": {
+    "split": "eval_in_distribution",
+    "num_envs": 24,
+    "stratify_by_task_type": true,
+    "max_steps": 50,
+    "minimum_success_rate_to_full_qualification": 0.20,
+    "minimum_task_types_with_success_to_full_qualification": 3
+  },
+  "full_qualification": {
+    "split": "eval_out_of_distribution",
+    "num_envs": 134,
+    "max_steps": 50,
+    "minimum_success_rate": 0.30,
+    "minimum_successful_tasks": 41,
+    "minimum_task_types_with_success": 5
+  },
+  "policy": {
+    "qualification_failure_rejects_idea": false,
+    "action_on_failure": "change-base-agent-scaffold-or-model-and-repeat-qualification"
+  },
+  "literature_basis": [
+    "ReAct evaluates ALFWorld with a competent prompted agent and reports 70.9/78.4 percent success using one or two in-context examples.",
+    "Reflexion official ALFWorld run uses 134 environments per trial and 10 iterative trials.",
+    "ALFWorld and Reflexion configs use a 50-step episode cap.",
+    "AutoManual uses 6 environments per task in its building stage and 25 per task in testing.",
+    "ExpeL ALFWorld insight extraction uses 8 experiences per iteration and 2-fold evaluation."
+  ]
+}

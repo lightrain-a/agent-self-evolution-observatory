@@ -80,7 +80,7 @@ def main() -> None:
         require(system["lifecycleSteps"] == 8, f"research lifecycle must expose eight decision stages, got {system['lifecycleSteps']}")
         require(system["preflightGates"] == 10 and system["quantWorksheets"] == 2, f"Pre-P0 compiler is incomplete: {system['preflightGates']}/{system['quantWorksheets']}")
         require(system["lessons"] == 6 and system["failureLayers"] == 5 and system["repairLoops"] == 1, f"learning/diagnosis visualization is incomplete: {system['lessons']}/{system['failureLayers']}/{system['repairLoops']}")
-        require(system["components"] == 11, f"expected eleven backend components, got {system['components']}")
+        require(system["components"] == 12, f"expected twelve backend components, got {system['components']}")
         require(system["ideaCards"] == 0, f"system-overview must not render current idea/status panels, got {system['ideaCards']}")
         require((system["preSummary"].get("audited"), system["preSummary"].get("execution_ready"), system["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system['preSummary']}")
         require(system["iterationSummary"].get("belief_updates_allowed") == 1 and system["iterationSummary"].get("scale_up_allowed") == 0, f"experiment-diagnosis state is wrong: {system['iterationSummary']}")

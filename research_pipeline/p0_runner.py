@@ -32,7 +32,7 @@ from .p0_common import (
     write_readiness,
 )
 from .pilot_registry import CURRENT_P0_GATE
-from .pre_p0_identifiability import execution_status as pre_p0_execution_status
+from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path, write_card as write_pre_experiment_card
 
 
 def config_path(idea_id: str) -> Path:
@@ -93,12 +93,27 @@ def analyze_file(
         manifest_errors = validate_collection_manifest(idea_id, config, input_path, cost, manifest)
         if manifest_errors:
             raise ValueError("invalid collection manifest: " + "; ".join(manifest_errors))
-    result = result_payload(analysis, config, cost)
+    config_phase = str(config.get("phase") or "P0")
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "analysis.json").write_text(json.dumps(analysis, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    write_csv(output_dir / "main_table.csv", analysis["table"])
-    if register:
-        result["registered_path"] = str(register_result(result))
+    write_csv(output_dir / "main_table.csv", analysis.get("table") or [])
+    if config_phase != "P0":
+        if register:
+            raise ValueError(f"{config_phase} analysis cannot be registered as a Pilot result")
+        result = {
+            "schema_version": "1.0",
+            "artifact_kind": "screening-analysis",
+            "idea_id": idea_id,
+            "phase": config_phase,
+            "decision": analysis.get("decision"),
+            "analysis": analysis,
+            "cost": cost or {},
+            "next_action": "human-review-before-confirmatory-p0",
+        }
+    else:
+        result = result_payload(analysis, config, cost)
+        if register:
+            result["registered_path"] = str(register_result(result))
     (output_dir / "decision.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return result
 
@@ -109,29 +124,45 @@ def _utc_now() -> str:
 
 def _write_execution_state(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    tmp.replace(path)
+
+
+def execution_state_path(data_root: Path, idea_id: str) -> Path:
+    return data_root / "p0-executions" / f"{idea_id}.json"
 
 
 @contextmanager
-def p0_execution_lock(data_root: Path):
-    lock_path = data_root / "p0-execution.lock"
+def p0_execution_lock(data_root: Path, idea_id: str = "legacy"):
+    """Serialize only the same P0 idea; distinct ideas may run concurrently."""
+    state_path = execution_state_path(data_root, idea_id)
+    lock_path = state_path.with_suffix(".lock")
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     handle = lock_path.open("a+", encoding="utf-8")
     try:
         try:
             fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError as error:
-            raise RuntimeError("another real P0 process already holds the execution lock") from error
-        state_path = data_root / "p0-execution-state.json"
+            raise RuntimeError(f"another real P0 process already holds the execution lock for {idea_id}") from error
+        prior_states: list[dict[str, Any]] = []
         if state_path.exists():
             try:
-                prior = load_json(state_path)
+                prior_states.append(load_json(state_path))
             except (OSError, ValueError, json.JSONDecodeError):
-                prior = {}
-            if str(prior.get("status") or "") in {"running", "collected"}:
-                raise RuntimeError(
-                    "previous P0 execution is unresolved; finish/register it or explicitly repair its state before launching another run"
-                )
+                pass
+        legacy_path = data_root / "p0-execution-state.json"
+        if legacy_path.exists():
+            try:
+                legacy = load_json(legacy_path)
+                if str(legacy.get("idea_id") or "") == idea_id:
+                    prior_states.append(legacy)
+            except (OSError, ValueError, json.JSONDecodeError):
+                pass
+        if any(str(prior.get("status") or "") in {"running", "collected"} for prior in prior_states):
+            raise RuntimeError(
+                f"previous P0 execution for {idea_id} is unresolved; finish/register it or explicitly repair its state before relaunch"
+            )
         yield
     finally:
         try:
@@ -152,9 +183,22 @@ def collect_real_p0(
 ) -> tuple[dict[str, Any], dict[str, Any], Path]:
     if CURRENT_P0_GATE.get(idea_id) != "ready":
         raise RuntimeError(f"{idea_id} is not scientifically authorized for P0")
-    pre_p0_status = pre_p0_execution_status(idea_id)
-    if pre_p0_status != "pass":
-        raise RuntimeError(f"{idea_id} is blocked by Pre-P0 identifiability gate: {pre_p0_status}")
+    if experiment_config is None:
+        raise RuntimeError("real P0 collect/execute requires an explicit frozen --config and 8/8 Pre-Experiment Card")
+    config_file = experiment_config
+    pre_experiment = compile_pre_experiment_from_path(idea_id, config_file, data_root)
+    card_path = write_pre_experiment_card(pre_experiment, data_root)
+    if not pre_experiment["execution_authorized"]:
+        raise RuntimeError(
+            f"{idea_id} is blocked by Pre-Experiment Compiler: " + ", ".join(pre_experiment["blockers"])
+        )
+    expected_model = str((pre_experiment.get("expected_runtime") or {}).get("competence_model_name") or "").strip()
+    if expected_model and expected_model.lower() not in str(model_path).lower():
+        raise RuntimeError(
+            f"{idea_id} qualified model mismatch: expected {expected_model}, runtime path is {model_path}"
+        )
+    output_dir.mkdir(parents=True, exist_ok=True)
+    (output_dir / "pre-experiment-card.json").write_text(json.dumps({**pre_experiment, "card_path": str(card_path)}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     smoke_path = data_root / "p0-runtime-smoke.json"
     readiness = runtime_preflight(model_path, data_root, Path(sys.executable), extra_pythonpath, alfworld_data, smoke_path)
     if not readiness["launch_ready"]:
@@ -166,28 +210,38 @@ def collect_real_p0(
         site.addsitedir(str(extra_pythonpath))
         os.environ["P0_EXTRA_SITE"] = str(extra_pythonpath)
     os.environ["ALFWORLD_DATA"] = str(alfworld_data)
-    config_file = experiment_config or config_path(idea_id)
+    run_phase = str(load_json(config_file).get("phase") or "P0")
     collector = collect_a1 if idea_id == "update-trust-region" else collect_a2
-    state_path = data_root / "p0-execution-state.json"
+    state_path = execution_state_path(data_root, idea_id)
     state = {
         "schema_version": "1.0",
         "idea_id": idea_id,
-        "phase": "P0",
+        "phase": run_phase,
         "status": "running",
         "started_at": _utc_now(),
         "output_dir": str(output_dir),
         "runtime_contract_hash": readiness["runtime_contract_hash"],
+        "pre_experiment_card": str(card_path),
+        "pre_experiment_gates": f"{pre_experiment['passed_gates']}/{pre_experiment['gate_count']}",
+        "stage": "starting",
+        "progress": {},
     }
     _write_execution_state(state_path, state)
     write_readiness(runtime_preflight(model_path, data_root, Path(sys.executable), extra_pythonpath, alfworld_data, smoke_path))
     try:
-        manifest = collector(config_file, alfworld_config, model_path, output_dir)
+        def progress_callback(progress: dict[str, Any]) -> None:
+            state["stage"] = str(progress.get("stage") or state.get("stage") or "running")
+            state["progress"] = progress
+            state["updated_at"] = _utc_now()
+            _write_execution_state(state_path, state)
+
+        manifest = collector(config_file, alfworld_config, model_path, output_dir, progress_callback=progress_callback)
     except Exception as error:
         state.update({"status": "failed", "finished_at": _utc_now(), "error_type": type(error).__name__, "failed_stage": "collect"})
         _write_execution_state(state_path, state)
         write_readiness(runtime_preflight(model_path, data_root, Path(sys.executable), extra_pythonpath, alfworld_data, smoke_path))
         raise
-    state.update({"status": "collected", "collected_at": _utc_now(), "manifest": str(output_dir / "manifest.json")})
+    state.update({"status": "collected", "stage": "collected", "collected_at": _utc_now(), "manifest": str(output_dir / "manifest.json")})
     _write_execution_state(state_path, state)
     write_readiness(runtime_preflight(model_path, data_root, Path(sys.executable), extra_pythonpath, alfworld_data, smoke_path))
     return manifest, readiness, config_file
@@ -226,7 +280,7 @@ def parse_args() -> argparse.Namespace:
     smoke.add_argument("--data-root", type=Path, default=Path("/data/wyt/agent-self-evolution-observatory"))
     smoke.add_argument("--extra-pythonpath", type=Path, default=Path("/data/wyt/envs/agent_evolution_p0_site"))
     smoke.add_argument("--alfworld-data", type=Path, default=Path("/data/wyt/agent-self-evolution-observatory/alfworld"))
-    smoke.add_argument("--output", type=Path, default=Path("/data/wyt/agent-self-evolution-observatory/p0-runtime-smoke.json"))
+    smoke.add_argument("--output", type=Path)
 
     collect = sub.add_parser("collect")
     collect.add_argument("idea_id", choices=sorted(SUPPORTED_IDEAS))
@@ -251,6 +305,16 @@ def parse_args() -> argparse.Namespace:
 
 
 def run_real_p0_transaction(args: argparse.Namespace) -> dict[str, Any]:
+    if args.config is None:
+        raise RuntimeError("real P0 collect/execute requires an explicit frozen --config; implicit legacy defaults are disabled")
+    requested_config = args.config
+    requested_payload = load_json(requested_config)
+    requested_phase = str(requested_payload.get("phase") or "P0")
+    if args.command == "execute" and requested_phase != "P0":
+        raise RuntimeError(
+            f"{requested_phase} is screening/qualification-only and cannot register a Pilot result; "
+            "use collect, then escalate to a frozen confirmatory P0 config"
+        )
     manifest, readiness, experiment_config = collect_real_p0(
         args.idea_id,
         args.config,
@@ -264,7 +328,7 @@ def run_real_p0_transaction(args: argparse.Namespace) -> dict[str, Any]:
     if args.command == "collect":
         return manifest
 
-    state_path = args.data_root / "p0-execution-state.json"
+    state_path = execution_state_path(args.data_root, args.idea_id)
     state = load_json(state_path)
     try:
         result = analyze_file(
@@ -283,6 +347,7 @@ def run_real_p0_transaction(args: argparse.Namespace) -> dict[str, Any]:
         raise
     state.update({
         "status": "registered",
+        "stage": "registered",
         "finished_at": _utc_now(),
         "result": result["result"],
         "registered_path": result.get("registered_path", ""),
@@ -348,11 +413,13 @@ def main() -> None:
     elif args.command == "dry-run":
         print(json.dumps(dry_run(args.idea_id, args.output_dir), ensure_ascii=False, indent=2))
     elif args.command == "smoke":
-        with p0_execution_lock(args.data_root):
+        if args.output is None:
+            args.output = args.data_root / "p0-runtime-smoke.json"
+        with p0_execution_lock(args.data_root, "runtime-smoke"):
             payload = run_smoke_transaction(args)
         print(json.dumps(payload, ensure_ascii=False, indent=2))
     elif args.command in {"collect", "execute"}:
-        with p0_execution_lock(args.data_root):
+        with p0_execution_lock(args.data_root, args.idea_id):
             payload = run_real_p0_transaction(args)
         print(json.dumps(payload, ensure_ascii=False, indent=2))
     else:
