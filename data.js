@@ -9,7 +9,7 @@ window.NAV_GROUPS = [
     ["evaluation.html",{en:"Evaluation & Infrastructure",zh:"评测与基础设施"}],
   ]},
   { title:{en:"Research Planning",zh:"研究规划"}, open:true, pages:[
-    ["system-overview.html",{en:"Research System & Current Ideas",zh:"科研系统与当前 Idea"}],
+    ["system-overview.html",{en:"Research System",zh:"科研系统"}],
     ["research-directions.html",{en:"Directions & Long-term Agenda",zh:"方向地图与长期议程"}],
     ["paper-ideas.html",{en:"ICLR-first Paper Idea Lab",zh:"ICLR-first 论文 Idea 实验室"}],
     ["experiments.html",{en:"Experiment Progress & Results",zh:"实验进展与结果"}],
@@ -145,7 +145,7 @@ window.PAGE_CONTENT = {
     {href:"mechanisms.html",title:{en:"Evolution Mechanism Atlas",zh:"进化机制总览"},desc:{en:"Parameters, prompts, memory, skills/tools, workflows, and their failure modes.",zh:"参数、提示词、记忆、技能工具、工作流及其失败模式。"}},
     {href:"domains.html",title:{en:"Visual & Interactive Domains",zh:"视觉与交互领域"},desc:{en:"Visual/multimodal, GUI/web, and embodied agents compared on one page.",zh:"在一个页面中对齐视觉多模态、GUI/Web 与具身 Agent。"}},
     {href:"evaluation.html",title:{en:"Evaluation & Infrastructure",zh:"评测与基础设施"},desc:{en:"Longitudinal evidence, safety, benchmarks, datasets, environments, and repositories.",zh:"纵向证据、安全、基准、数据、环境与代码资源。"}},
-    {href:"system-overview.html",paper:true,title:{en:"Research System & Current Ideas",zh:"科研系统与当前 Idea"},desc:{en:"Backend architecture, literature and evidence data flow, idea-generation operators, R1/R2 review, automation boundaries, persistent artifacts, and current decision states.",zh:"后台分层架构、文献与证据数据流、Idea 生成算子、R1/R2 审查、自动化边界、持久化工件与当前决策状态。"}},
+    {href:"system-overview.html",paper:true,title:{en:"Research System",zh:"科研系统"},desc:{en:"How evidence becomes identifiable experiments: research lifecycle, Pre-P0 compilation, failure diagnosis, atomic repair, persistent artifacts, orchestration, and human control gates.",zh:"从证据到可辨识实验：科研生命周期、Pre-P0 编译、失败诊断、原子修复、持久工件、实验编排与人工控制门。"}},
     {href:"research-directions.html",paper:true,title:{en:"Directions & Long-term Agenda",zh:"方向地图与长期议程"},desc:{en:"Ten stable field directions, twenty-six ICLR-first mechanism candidates, and a preserved visual follow-up portfolio.",zh:"十个稳定领域方向、二十六个 ICLR-first 机制候选，以及完整保留的视觉后续候选池。"}},
     {href:"paper-ideas.html",paper:true,title:{en:"ICLR-first Paper Idea Lab",zh:"ICLR-first 论文 Idea 实验室"},desc:{en:"ICLR literature audit, eight mechanism tracks, seven review gates, cross-domain experiments, and a secondary CVPR visual bank.",zh:"ICLR 文献基座审计、八个机制轨道、七维评审、跨域实验，以及第二阶段 CVPR 视觉池。"}},
     {href:"experiments.html",paper:true,title:{en:"Experiment Progress & Results",zh:"实验进展与结果"},desc:{en:"Live P0 queue, prerequisites, execution authorization, resource accounting, measured effects, Go/Stop decisions, and human approval gates.",zh:"集中查看 P0 队列、前置条件、执行授权、资源账本、实验效果、Go/Stop 决策与人工审批门禁。"}},

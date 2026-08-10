@@ -157,6 +157,15 @@ def main() -> None:
               boundaries: document.querySelectorAll('.system-boundary-card').length,
               boundaryRules: document.querySelectorAll('.system-boundary-card li').length,
               components: document.querySelectorAll('.system-components-panel tbody tr').length,
+              lifecycleSteps: document.querySelectorAll('.system-lifecycle-step').length,
+              preflightGates: document.querySelectorAll('.preflight-gate').length,
+              quantWorksheets: document.querySelectorAll('.preflight-quant-grid article').length,
+              lessons: document.querySelectorAll('.system-lesson').length,
+              failureLayers: document.querySelectorAll('.system-failure-layer').length,
+              repairLoops: document.querySelectorAll('.system-repair-loop').length,
+              ideaPanels: document.querySelectorAll('.system-idea-card,.system-decision-summary,.system-v5-summary,.system-v4-summary,.system-inspired-summary').length,
+              preSummary: window.RESEARCH_SYSTEM_STATE?.pre_p0_identifiability?.summary || {},
+              iterationSummary: window.RESEARCH_SYSTEM_STATE?.experiment_iteration?.summary || {},
               v5SummaryPanel: document.querySelectorAll('.system-v5-summary').length,
               v5ProgressItems: document.querySelectorAll('.system-v5-progress span').length,
               v4SummaryPanel: document.querySelectorAll('.system-v4-summary').length,
@@ -176,42 +185,35 @@ def main() -> None:
               text: document.body.textContent || ''
             };""",
         )
-        require(system_overview["chapters"] == 2, f"system overview must have two chapters, got {system_overview['chapters']}")
-        require(system_overview["toc2"] == 3 and system_overview["toc3"] >= 10 and system_overview["toc4"] == 0, f"system overview hierarchy is wrong: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
-        require(system_overview["stages"] == 13 and system_overview["stats"] == 9, "system data flow or live statistics are incomplete")
-        require(system_overview["layers"] == 7 and system_overview["contracts"] == 13, "backend layers or stage data contracts are incomplete")
-        require(system_overview["artifacts"] == 14 and system_overview["boundaries"] == 3 and system_overview["boundaryRules"] == 14, "artifact or automation-boundary documentation is incomplete")
-        require(system_overview["components"] == 11 and system_overview["statusGuides"] == 4, "component or idea-state documentation is incomplete")
-        require(system_overview["v5SummaryPanel"] == 1 and system_overview["v5ProgressItems"] == 5, "Idea Discovery v5 progress is missing from the system overview")
-        require(system_overview["v4SummaryPanel"] == 1 and system_overview["v4SummaryCounts"] == 6, "Idea Discovery v4 summary is missing from the system overview")
-        require(system_overview["evidenceExplorer"] == 1 and system_overview["evidenceOptions"] == 29, "evidence-graph explorer or idea selector is incomplete")
-        require(system_overview["evidenceNodes"] >= 12 and system_overview["evidenceLines"] >= 11, "local evidence graph did not render enough real nodes or relations")
-        require(system_overview["sourceRoutes"] >= 7, "literature retrieval routes are incomplete")
-        require(system_overview["mainIdeas"] == 14, f"expected 4 PASS + 10 REVISE main ideas, got {system_overview['mainIdeas']}")
-        require(system_overview["inspiredIdeas"] == 8, f"expected 1 PASS + 7 REVISE inspired ideas, got {system_overview['inspiredIdeas']}")
-        require(system_overview["passIdeas"] == 4 and system_overview["reviseIdeas"] == 10, "main idea verdict groups are inconsistent")
-        require(not system_overview["advisorText"], "advisor-facing message remains on the technical system page")
-        require("paper-ideas.html#iclr-low-resource-bank" in system_overview["links"] and "paper-ideas.html#machine-school-inspired-ideas" in system_overview["links"], "system overview does not link to both idea sections")
-        require("deduplicated papers" in system_overview["text"] or "篇去重论文" in system_overview["text"], "live research-system statistics are missing")
-        require("22/20" in system_overview["text"], "strict discussion-ready target is not visible on the system overview")
-        evidence_redraw = execute(session_id, """const s=document.querySelector('#system-evidence-idea'); const before=document.querySelector('#system-evidence-detail h4')?.textContent||''; s.selectedIndex=1; s.dispatchEvent(new Event('change',{bubbles:true})); const after=document.querySelector('#system-evidence-detail h4')?.textContent||''; return {before,after,nodes:document.querySelectorAll('#system-evidence-svg .system-evidence-node').length};""")
-        require(evidence_redraw["before"] and evidence_redraw["after"] and evidence_redraw["before"] != evidence_redraw["after"] and evidence_redraw["nodes"] >= 10, f"evidence graph selector did not redraw: {evidence_redraw}")
+        require(system_overview["chapters"] == 4, f"system overview must have four research-system chapters, got {system_overview['chapters']}")
+        require(system_overview["toc2"] >= 4 and system_overview["toc4"] == 0, f"system overview hierarchy is wrong: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
+        require(system_overview["stats"] == 6, f"research-system hero statistics are incomplete: {system_overview['stats']}")
+        require(system_overview["lifecycleSteps"] == 8, f"research lifecycle must expose eight decision stages, got {system_overview['lifecycleSteps']}")
+        require(system_overview["contracts"] == 6, f"research lifecycle contracts are incomplete: {system_overview['contracts']}")
+        require(system_overview["preflightGates"] == 10 and system_overview["quantWorksheets"] == 2, f"Pre-P0 compiler is incomplete: {system_overview['preflightGates']}/{system_overview['quantWorksheets']}")
+        require(system_overview["lessons"] == 6 and system_overview["failureLayers"] == 5 and system_overview["repairLoops"] == 1, f"system learning/diagnosis visualization is incomplete: {system_overview['lessons']}/{system_overview['failureLayers']}/{system_overview['repairLoops']}")
+        require(system_overview["artifacts"] == 8 and system_overview["boundaries"] == 3, f"artifact or automation-boundary documentation is incomplete: {system_overview['artifacts']}/{system_overview['boundaries']}")
+        require(system_overview["components"] == 11, f"backend component table is incomplete: {system_overview['components']}")
+        require(system_overview["ideaPanels"] == 0, f"current idea/status panels leaked back into the research-system page: {system_overview['ideaPanels']}")
+        require((system_overview["preSummary"].get("audited"), system_overview["preSummary"].get("execution_ready"), system_overview["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system_overview['preSummary']}")
+        require(system_overview["iterationSummary"].get("belief_updates_allowed") == 1 and system_overview["iterationSummary"].get("scale_up_allowed") == 0, f"experiment diagnosis state is wrong: {system_overview['iterationSummary']}")
+        require("Main ICLR idea bank" not in system_overview["text"] and "Final advisor gate" not in system_overview["text"] and "主 ICLR Idea Bank" not in system_overview["text"] and "最终师兄讨论门槛" not in system_overview["text"], "current idea portfolio remains on the research-system page")
+        require("Pre-P0" in system_overview["text"] and ("10 / 10" in system_overview["text"] or "10/10" in system_overview["text"]), "ten-gate Pre-P0 compiler is not visible")
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
         zh_system = execute(session_id, """return {
-          text: document.querySelector('.system-automation-panel')?.textContent || '',
+          automationText: document.querySelector('.system-automation-panel')?.textContent || '',
+          preflightText: document.querySelector('.preflight-compiler')?.textContent || '',
+          semanticsText: document.querySelector('.system-semantics')?.textContent || '',
           componentText: document.querySelector('.system-components-panel')?.textContent || '',
-          actionText: document.querySelector('.system-decision-summary .system-idea-action')?.textContent || '',
-          evidenceTitle: document.querySelector('.system-evidence-explorer h3')?.textContent || '',
-          cards: [...document.querySelectorAll('.system-boundary-card')].map(x=>({client:x.clientWidth,scroll:x.scrollWidth,text:x.textContent})),
+          cards: [...document.querySelectorAll('.system-boundary-card,.preflight-gate,.system-failure-layer')].map(x=>({client:x.clientWidth,scroll:x.scrollWidth,text:x.textContent})),
           pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2
         };""")
-        require("自动执行" in zh_system["text"] and "条件自动" in zh_system["text"] and "人工控制" in zh_system["text"], "Chinese automation boundary headings are incomplete")
-        require("Pages 只发布 frontend-only 静态快照" in zh_system["text"] and "没有 P0/P1/P2 证据时" in zh_system["text"], "Chinese automation boundary content is incomplete")
+        require("自动执行" in zh_system["automationText"] and "条件自动" in zh_system["automationText"] and "人工控制" in zh_system["automationText"], "Chinese automation boundary headings are incomplete")
+        require("主张与训练目标对齐" in zh_system["preflightText"] and "方法与最强简化会做出不同决策" in zh_system["preflightText"] and "小样本可拟合性" in zh_system["preflightText"], "Chinese Pre-P0 hard gates are incomplete")
+        require("先定位失败发生在哪一层" in zh_system["semanticsText"] and "科学边界层" in zh_system["semanticsText"], "Chinese failure-layer semantics are incomplete")
         require("引文与证据图谱" in zh_system["componentText"] and "Citation and evidence graph" not in zh_system["componentText"], "backend component name did not switch to Chinese")
-        require(zh_system["evidenceTitle"].strip() == "引文与证据图谱", f"evidence graph title did not switch to Chinese: {zh_system['evidenceTitle']}")
-        require("每一轮进化后" in zh_system["actionText"] and "Report persistent" not in zh_system["actionText"], "required action did not switch to Chinese")
-        require(all(card["scroll"] <= card["client"] + 2 for card in zh_system["cards"]), "Chinese automation boundary cards overflow horizontally")
+        require(all(card["scroll"] <= card["client"] + 2 for card in zh_system["cards"]), "Chinese system cards overflow horizontally")
         require(not zh_system["pageOverflow"], "Chinese system overview causes page-level horizontal overflow")
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)

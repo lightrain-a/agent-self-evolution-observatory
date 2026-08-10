@@ -65,7 +65,7 @@ REQUIRED_STATIC = [
     "generated/idea-discovery-v4.json", "generated/idea-discovery-v4.js", "generated/idea-discovery-v4-external-reviews.json",
     "generated/idea-discovery-v3.json", "generated/idea-discovery-v3.js", "generated/idea-discovery-v3-external-reviews.json",
     "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
-    "content-system-overview.js", "system-overview-view.js", "system-overview.css",
+    "content-system-overview.js", "system-overview-core.js", "system-overview-lifecycle.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
     "idea-lab.css", "generated/p0-experiment-plan.js", "generated/p0-collision-recheck.js", "generated/p0-runtime-readiness.js",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
@@ -363,33 +363,33 @@ def main() -> None:
     required_system_scripts = [
         "generated/s2-literature.js",
         "generated/research-system-state.js",
-        "generated/iclr-low-resource-ideas.js",
-        "generated/machine-school-inspired-ideas.js",
-        "generated/discussion-ready-ideas.js",
-        "generated/idea-discovery-v5.js",
-        "generated/idea-discovery-v4.js",
-        "generated/idea-discovery-v3.js",
-        "generated/idea-discovery-v31.js",
-        "review-localizations.js",
         "content-system-overview.js",
         "page-architecture-data.js",
+        "system-overview-core.js",
+        "system-overview-lifecycle.js",
+        "system-overview-preflight.js",
+        "system-overview-operations.js",
         "system-overview-view.js",
         "app.js",
     ]
     system_positions = [system_page.find(f'src="{name}"') for name in required_system_scripts]
     if any(position < 0 for position in system_positions) or system_positions != sorted(system_positions):
-        fail("system overview must load live literature, system state, both idea banks, and its renderer before app.js")
-    system_view = (ROOT / "system-overview-view.js").read_text(encoding="utf-8")
-    for marker in ("renderSystemDesign", "renderCurrentIdeas", "renderLiveArchitecture", "renderEvidenceGraphPanel", "bindEvidenceGraphExplorer", "renderDataContracts", "renderAutomationBoundary", "system-boundary-card", "system-artifact-table", "paper-ideas.html#discussed-ideas", "paper-ideas.html#new-ideas"):
-        if marker not in system_view:
-            fail(f"system overview renderer is missing {marker}")
+        fail("system overview must load research-system state and modular renderers before app.js")
+    forbidden_system_scripts = ("generated/iclr-low-resource-ideas.js", "generated/machine-school-inspired-ideas.js", "generated/discussion-ready-ideas.js", "generated/idea-discovery-v5.js")
+    if any(f'src="{name}"' in system_page for name in forbidden_system_scripts):
+        fail("system overview must not load current idea-bank or discussion-pool artifacts")
+    system_files = ["system-overview-core.js", "system-overview-lifecycle.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-view.js"]
+    system_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in system_files)
+    for marker in ("RESEARCH SYSTEM CONTRACT", "system-lifecycle-step", "PRE-P0 IDENTIFIABILITY COMPILER", "10 / 10", "system-failure-layer", "system-repair-loop", "MCP-Yu + Experiment Orchestrator", "system-components-panel"):
+        if marker not in system_text:
+            fail(f"system overview implementation is missing {marker}")
     system_content = (ROOT / "content-system-overview.js").read_text(encoding="utf-8")
-    advisor_markers = ("师兄汇报", "希望师兄", "Advisor Brief", "advisor-facing", "advisor judgment")
-    if any(marker in system_view or marker in system_content for marker in advisor_markers):
-        fail("system overview must be technical documentation rather than an advisor-facing message")
-    for marker in ("自动执行", "条件自动", "人工控制", "Pages 只发布 frontend-only 静态快照", "没有 P0/P1/P2 证据时"):
-        if marker not in system_view:
-            fail(f"Chinese automation-boundary documentation is missing {marker}")
+    forbidden_idea_markers = ("主 ICLR Idea Bank", "最终师兄讨论门槛", "Main ICLR idea bank", "Final advisor gate", "paper-ideas.html#discussed-ideas")
+    if any(marker in system_text or marker in system_content for marker in forbidden_idea_markers):
+        fail("system overview must contain only the research system, not current idea decisions")
+    for marker in ("自动执行", "条件自动", "人工控制", "10/10 Pre-P0", "实验启动前编译器与经验沉淀"):
+        if marker not in system_text and marker not in system_content and marker not in (ROOT / "page-architecture-data.js").read_text(encoding="utf-8"):
+            fail(f"Chinese research-system documentation is missing {marker}")
 
     for figure_name in ("agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg"):
         try:

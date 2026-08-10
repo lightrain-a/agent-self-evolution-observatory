@@ -7,7 +7,7 @@
     const bodies = [
       sections.renderPurpose ? sections.renderPurpose(state,s2) : "",
       sections.renderLifecycle ? sections.renderLifecycle() : "",
-      sections.renderPreflight ? sections.renderPreflight() : "",
+      sections.renderPreflight ? sections.renderPreflight(state) : "",
       sections.renderOperations ? sections.renderOperations(state) : "",
     ];
     return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("system-overview"))}${chapters.map((chapter,index)=>renderCustomChapter(chapter,index,bodies[index] || "")).join("")}`;

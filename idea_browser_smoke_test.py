@@ -63,23 +63,40 @@ def main() -> None:
 
         navigate("/system-overview.html")
         system = execute(session_id, """return {
+          chapters: document.querySelectorAll('.page-chapter').length,
+          lifecycleSteps: document.querySelectorAll('.system-lifecycle-step').length,
+          preflightGates: document.querySelectorAll('.preflight-gate').length,
+          quantWorksheets: document.querySelectorAll('.preflight-quant-grid article').length,
+          lessons: document.querySelectorAll('.system-lesson').length,
+          failureLayers: document.querySelectorAll('.system-failure-layer').length,
+          repairLoops: document.querySelectorAll('.system-repair-loop').length,
           components: document.querySelectorAll('.system-components-panel tbody tr').length,
-          progressItems: document.querySelectorAll('.system-v5-progress span').length,
-          text: document.body.textContent || '',
-          graphLabel: [...document.querySelectorAll('.system-components-panel tbody tr')].map(x=>x.textContent).find(x=>x.includes('引文与证据图谱')||x.includes('Citation and evidence graph')) || '',
-          portfolio: window.DISCUSSION_READY_IDEAS || {},
-          stateSummary: window.RESEARCH_SYSTEM_STATE?.summary || {}
+          ideaCards: document.querySelectorAll('.system-idea-card,.system-decision-summary,.system-v5-summary,.system-v4-summary,.system-inspired-summary').length,
+          preSummary: window.RESEARCH_SYSTEM_STATE?.pre_p0_identifiability?.summary || {},
+          iterationSummary: window.RESEARCH_SYSTEM_STATE?.experiment_iteration?.summary || {},
+          text: document.body.textContent || ''
         };""")
+        require(system["chapters"] == 4, f"research-system overview must have four chapters, got {system['chapters']}")
+        require(system["lifecycleSteps"] == 8, f"research lifecycle must expose eight decision stages, got {system['lifecycleSteps']}")
+        require(system["preflightGates"] == 10 and system["quantWorksheets"] == 2, f"Pre-P0 compiler is incomplete: {system['preflightGates']}/{system['quantWorksheets']}")
+        require(system["lessons"] == 6 and system["failureLayers"] == 5 and system["repairLoops"] == 1, f"learning/diagnosis visualization is incomplete: {system['lessons']}/{system['failureLayers']}/{system['repairLoops']}")
         require(system["components"] == 11, f"expected eleven backend components, got {system['components']}")
-        require(system["progressItems"] == 6, f"expected six final-gate progress cells, got {system['progressItems']}")
-        require((system["portfolio"].get("count"), system["portfolio"].get("target"), system["portfolio"].get("ready")) == (20, 20, True), f"wrong discussion portfolio: {system['portfolio']}")
-        require("20/20" in system["text"] or "20 / 20" in system["text"], "20/20 final-gate progress is not visible")
-        require(system["stateSummary"].get("v53_external_pass") == 3, "system state does not expose three v5.3 PASS ideas")
+        require(system["ideaCards"] == 0, f"system-overview must not render current idea/status panels, got {system['ideaCards']}")
+        require((system["preSummary"].get("audited"), system["preSummary"].get("execution_ready"), system["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system['preSummary']}")
+        require(system["iterationSummary"].get("belief_updates_allowed") == 1 and system["iterationSummary"].get("scale_up_allowed") == 0, f"experiment-diagnosis state is wrong: {system['iterationSummary']}")
+        require("Main ICLR idea bank" not in system["text"] and "Final advisor gate" not in system["text"] and "主 ICLR Idea Bank" not in system["text"] and "最终师兄讨论门槛" not in system["text"], "current idea portfolio leaked back into the research-system page")
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
-        zh = execute(session_id, "return {graph:[...document.querySelectorAll('.system-components-panel tbody tr')].map(x=>x.textContent).find(x=>x.includes('引文与证据图谱'))||'', text:document.body.textContent||''};")
-        require("引文与证据图谱" in zh["graph"], "citation/evidence component is not localized")
-        require("20/20" in zh["text"] or "20 / 20" in zh["text"], "Chinese system page lost the final-gate target")
+        zh = execute(session_id, "return {text:document.body.textContent||'', gates:document.querySelectorAll('.preflight-gate').length, failures:document.querySelectorAll('.system-failure-layer').length};")
+        require(zh["gates"] == 10 and zh["failures"] == 5 and "科研系统到底要保证什么" in zh["text"] and "实验启动前编译器与经验沉淀" in zh["text"], "Chinese research-system hierarchy or Pre-P0 visualization is incomplete")
+        request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844})
+        time.sleep(1)
+        system_mobile = execute(session_id, """const gate=document.querySelector('.preflight-gate-grid'); const failure=document.querySelector('.system-failure-layers'); return {inner:window.innerWidth,scroll:document.documentElement.scrollWidth,gateCols:gate?getComputedStyle(gate).gridTemplateColumns:'',failureCols:failure?getComputedStyle(failure).gridTemplateColumns:'',maxCard:Math.max(0,...[...document.querySelectorAll('.preflight-gate,.system-failure-layer')].map(x=>x.getBoundingClientRect().width))};""")
+        require(system_mobile["scroll"] <= system_mobile["inner"] + 2, f"research-system mobile layout has page-level horizontal overflow: {system_mobile}")
+        require(" " not in system_mobile["gateCols"].strip() and " " not in system_mobile["failureCols"].strip(), f"Pre-P0/failure grids must collapse to one column on mobile: {system_mobile}")
+        require(system_mobile["maxCard"] <= system_mobile["inner"], f"research-system cards exceed mobile viewport: {system_mobile}")
+        request("POST", f"/session/{session_id}/window/rect", {"width": 1440, "height": 1000})
+        time.sleep(1)
 
         navigate("/paper-ideas.html", 6)
         ideas = execute(session_id, """return {
