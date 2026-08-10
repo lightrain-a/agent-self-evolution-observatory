@@ -166,10 +166,24 @@ def resolve_experiment_data_root(storage: StorageSettings | None = None) -> Path
     profile_path = PROJECT_ROOT / "research_pipeline" / "experiment_orchestrator_profiles.json"
     try:
         payload = json.loads(profile_path.read_text(encoding="utf-8"))
-        current_repo = str(PROJECT_ROOT.resolve())
+        current_repos = {str(PROJECT_ROOT.resolve())}
+        # A deployment/repair may run from a clean git worktree whose checkout
+        # path differs from the canonical profile repo.  Git stores the common
+        # repository in the worktree's .git pointer; treat that canonical root
+        # as an equivalent local checkout without weakening machine selection.
+        git_pointer = PROJECT_ROOT / ".git"
+        if git_pointer.is_file():
+            first_line = git_pointer.read_text(encoding="utf-8").splitlines()[0].strip()
+            if first_line.startswith("gitdir:"):
+                git_dir = Path(first_line.split(":", 1)[1].strip()).expanduser().resolve()
+                marker = f"{os.sep}.git{os.sep}worktrees{os.sep}"
+                raw_git_dir = str(git_dir)
+                if marker in raw_git_dir:
+                    canonical_repo = raw_git_dir.split(marker, 1)[0]
+                    current_repos.add(str(Path(canonical_repo).resolve()))
         for row in payload.get("servers") or []:
-            repo = str(Path(str(row.get("repo") or "")).expanduser())
-            if repo == current_repo and row.get("data_root"):
+            repo = str(Path(str(row.get("repo") or "")).expanduser().resolve())
+            if repo in current_repos and row.get("data_root"):
                 return Path(str(row["data_root"])).expanduser()
     except (OSError, ValueError, KeyError, json.JSONDecodeError):
         pass

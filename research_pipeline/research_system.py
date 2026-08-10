@@ -21,6 +21,7 @@ from .idea_collision import analyze_collisions
 from .idea_lineage import build_lineage
 from .live_pipeline import load_live_corpus
 from .pilot_registry import build_pilot_registry
+from .p0_mem_xfer_offline_analysis import build_mem_xfer_workflow_state
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
 from .pre_experiment_specs import GATES as PRE_EXPERIMENT_GATES, POLICY as PRE_EXPERIMENT_POLICY
 from .pre_p0_identifiability import build_pre_p0_identifiability_audit
@@ -169,6 +170,7 @@ def build_research_system_state() -> dict[str, Any]:
         if card.get("phase") == "P0" and card.get("idea_id")
     }
     experiment_data_root = resolve_experiment_data_root(storage)
+    mem_xfer_workflow = build_mem_xfer_workflow_state(experiment_data_root)
     pilot_registry = build_pilot_registry(
         idea_bank,
         result_dir=experiment_data_root / "runs" / "pilots" / "results",
@@ -249,6 +251,10 @@ def build_research_system_state() -> dict[str, Any]:
             "final_revise":discussion_portfolio["final_summary"]["revise"],
             "final_block":discussion_portfolio["final_summary"]["block"],
             "final_ready":discussion_portfolio["ready"],
+            "mem_xfer_full_table_status":mem_xfer_workflow["full_table"]["status"],
+            "mem_xfer_offline_analysis_status":mem_xfer_workflow["offline_analysis"]["status"],
+            "mem_xfer_support_qualification_status":mem_xfer_workflow["support_qualification"]["status"],
+            "mem_xfer_second_model_status":mem_xfer_workflow["second_model"]["status"],
         },
         "evidence_graph":evidence_graph,
         "collision_engine":collision_engine,
@@ -267,6 +273,7 @@ def build_research_system_state() -> dict[str, Any]:
         "idea_discovery_v52":idea_discovery_v52,
         "idea_discovery_v53":idea_discovery_v53,
         "discussion_portfolio":discussion_portfolio,
+        "mem_xfer_workflow":mem_xfer_workflow,
     }
     state["components"] = _component_manifest(state)
     state["health"] = _health(state, corpus)
@@ -284,6 +291,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == 4, "detail":state["pre_experiment_compiler"]["summary"]},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
+        {"key":"mem-xfer-workflow", "pass":state["mem_xfer_workflow"]["full_table"]["status"] == "full_table_collected" and state["mem_xfer_workflow"]["offline_analysis"]["status"] == "offline_analysis_complete" and state["mem_xfer_workflow"]["second_model"]["status"] == "second_model_hold", "detail":{"full":state["mem_xfer_workflow"]["full_table"]["status"],"offline":state["mem_xfer_workflow"]["offline_analysis"]["status"],"support":state["mem_xfer_workflow"]["support_qualification"]["status"],"second_model":state["mem_xfer_workflow"]["second_model"]["status"]}},
         {"key":"final-advisor-gate", "pass":state["summary"]["final_ready"] and state["summary"]["final_pass"] == state["summary"]["discussion_target"] and state["summary"]["final_revise"] == 0 and state["summary"]["final_block"] == 0, "detail":{"pass":state["summary"]["final_pass"],"target":state["summary"]["discussion_target"],"revise":state["summary"]["final_revise"],"block":state["summary"]["final_block"]}},
     ]
     return {"status":"healthy" if all(item["pass"] for item in checks) else "degraded", "checks":checks}
@@ -307,6 +315,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"]: errors.append("P0 execution must require an 8/8 Pre-Experiment Card")
     if not state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"]: errors.append("automatic P0-to-P1 escalation must stay forbidden")
     if not state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"]: errors.append("non-identifiable pilots must not update scientific belief")
+    if state["mem_xfer_workflow"]["full_table"]["status"] != "full_table_collected": errors.append("mem-xfer full table must remain collected immutable evidence")
+    if state["mem_xfer_workflow"]["offline_analysis"]["status"] != "offline_analysis_complete": errors.append("mem-xfer offline analysis must automatically follow a complete full table")
+    if state["mem_xfer_workflow"]["second_model"]["status"] != "second_model_hold": errors.append("mem-xfer second backbone must remain on HOLD before support gate authorization")
     if state["pilot_registry"]["summary"]["invalid_approval_files"] != 0: errors.append("invalid pilot approval files")
     if not state["summary"]["final_ready"] or state["summary"]["final_pass"] != state["summary"]["discussion_target"]: errors.append("final advisor gate not ready")
     return errors

@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-10T14:22:08+00:00",
+  "generated_at": "2026-08-10T18:00:11+00:00",
   "target_venue": "ICLR",
   "storage": {
-    "data_root": "/tmp/ae-pre-gpu-publish-r8kz5jxq/repo/generated/research-data",
-    "run_dir": "/tmp/ae-pre-gpu-publish-r8kz5jxq/repo/generated/research-data/runs"
+    "data_root": "/home/wyt/code/agent-self-evolution-observatory-memxfer-20260811/generated/research-data",
+    "run_dir": "/home/wyt/code/agent-self-evolution-observatory-memxfer-20260811/generated/research-data/runs"
   },
   "automation": {
     "daily": {
@@ -61,7 +61,11 @@
     "final_pass": 20,
     "final_revise": 0,
     "final_block": 0,
-    "final_ready": true
+    "final_ready": true,
+    "mem_xfer_full_table_status": "full_table_collected",
+    "mem_xfer_offline_analysis_status": "offline_analysis_complete",
+    "mem_xfer_support_qualification_status": "support_qualification_running",
+    "mem_xfer_second_model_status": "second_model_hold"
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -10620,7 +10624,7 @@
   },
   "lineage": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-10T14:22:08+00:00",
+    "generated_at": "2026-08-10T18:00:11+00:00",
     "summary": {
       "nodes": 278,
       "edges": 258,
@@ -10650,7 +10654,7 @@
           "zh": "受约束持续进化",
           "en": "Constrained continual evolution"
         },
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "track-root:credit",
@@ -10660,7 +10664,7 @@
           "zh": "失败归因与经验准入",
           "en": "Failure credit and experience admission"
         },
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "track-root:memory",
@@ -10670,7 +10674,7 @@
           "zh": "记忆与技能巩固",
           "en": "Memory and skill consolidation"
         },
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "track-root:correction",
@@ -10680,7 +10684,7 @@
           "zh": "自纠正与策略内化",
           "en": "Self-correction and policy internalization"
         },
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "track-root:curriculum",
@@ -10690,7 +10694,7 @@
           "zh": "课程与任务进化",
           "en": "Curriculum and task evolution"
         },
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "track-root:workflow",
@@ -10700,7 +10704,7 @@
           "zh": "工作流与更新表面搜索",
           "en": "Workflow and update-surface search"
         },
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "track-root:evaluator",
@@ -10710,7 +10714,7 @@
           "zh": "奖励与评价器进化",
           "en": "Reward and evaluator evolution"
         },
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "track-root:world",
@@ -10720,7 +10724,7 @@
           "zh": "世界模型与具身持续适应",
           "en": "World models and embodied adaptation"
         },
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "regression-gated-self-evolution",
@@ -10742,7 +10746,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:regression-gated-self-evolution:1",
@@ -10850,7 +10854,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:contradiction-preserving-consolidation:1",
@@ -10958,7 +10962,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:compositional-update-compatibility:1",
@@ -11066,7 +11070,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:update-trust-region:1",
@@ -11174,7 +11178,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:retrieval-interference-auditor:1",
@@ -11282,7 +11286,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:irreversible-action-counterfactuals:1",
@@ -11389,7 +11393,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:self-label-confidence-flow:1",
@@ -11497,7 +11501,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:evaluator-coadaptation-guard:1",
@@ -11605,7 +11609,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:recovery-conditioned-experience:1",
@@ -11713,7 +11717,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:counterexample-generating-curriculum:1",
@@ -11822,7 +11826,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:workflow-generalization-certificate:1",
@@ -11930,7 +11934,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:budgeted-evolution-controller:1",
@@ -12038,7 +12042,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:lineage-aware-rollback:1",
@@ -12146,7 +12150,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:failure-frontier-curriculum:1",
@@ -12254,7 +12258,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:causally-verified-experience-admission:1",
@@ -12362,7 +12366,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:reward-invariance-audit:1",
@@ -12470,7 +12474,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:local-counterexample-memory-repair:1",
@@ -12578,7 +12582,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:self-correction-collapse-detector:1",
@@ -12686,7 +12690,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:intervention-validated-self-correction:1",
@@ -12794,7 +12798,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:workflow-branch-credit:1",
@@ -12902,7 +12906,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:world-model-error-gated-learning:1",
@@ -13010,7 +13014,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:memory-half-life:1",
@@ -13118,7 +13122,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:correction-policy-credit:1",
@@ -13226,7 +13230,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:curriculum-drift-controller:1",
@@ -13335,7 +13339,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:outcome-equivalent-trajectory-contrast:1",
@@ -13443,7 +13447,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "review:applicability-bounded-lessons:1",
@@ -13553,7 +13557,7 @@
         "blocking_reasons": [
           "Module-level intervention labels may require expensive environment-specific instrumentation."
         ],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "programmatic-review:failure-localization-before-reflection:1",
@@ -13654,7 +13658,7 @@
         "blocking_reasons": [
           "Cross-family disagreement may reflect formatting and style rather than distinct error mechanisms."
         ],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "programmatic-review:heterogeneous-critic-disagreement:1",
@@ -13755,7 +13759,7 @@
         "blocking_reasons": [
           "Oracle labels require executing all update surfaces, making supervision close to exhaustive search."
         ],
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "programmatic-review:update-surface-router:1",
@@ -13839,84 +13843,84 @@
         "kind": "early-rejected",
         "title": "更大模型做更多反思",
         "reason": "只增加推理计算，不能证明持久学习。",
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "early-rejected:268",
         "kind": "early-rejected",
         "title": "全参数训练 70B 自进化 Agent",
         "reason": "超出低资源约束且机制难归因。",
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "early-rejected:269",
         "kind": "early-rejected",
         "title": "只在自生成任务上提升",
         "reason": "缺少圈外泛化。",
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "early-rejected:270",
         "kind": "early-rejected",
         "title": "仅商业 API 闭环",
         "reason": "不可复现且依赖供应商快照。",
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "early-rejected:271",
         "kind": "early-rejected",
         "title": "固定多轮 Self-Refine",
         "reason": "属于更多采样，不是进化机制。",
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "early-rejected:272",
         "kind": "early-rejected",
         "title": "同模型 Actor 与 Judge 自我确认",
         "reason": "反馈完整性无法独立验证。",
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "early-rejected:273",
         "kind": "early-rejected",
         "title": "只报告最佳 checkpoint",
         "reason": "掩盖多轮回退与坍塌。",
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "early-rejected:274",
         "kind": "early-rejected",
         "title": "从头训练世界模型和策略",
         "reason": "资源高且无法分离贡献。",
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "early-rejected:275",
         "kind": "early-rejected",
         "title": "单一视觉 benchmark 技巧",
         "reason": "保留为 CVPR 后续，不作为 ICLR 主候选。",
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "early-rejected:276",
         "kind": "early-rejected",
         "title": "只做平均准确率的记忆消融",
         "reason": "无法识别有害条目和负迁移。",
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "early-rejected:277",
         "kind": "early-rejected",
         "title": "无隔离划分的在线适应",
         "reason": "无法排除测试泄漏。",
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       },
       {
         "id": "early-rejected:278",
         "kind": "early-rejected",
         "title": "泛化 Agent 自进化综述",
         "reason": "不是方法或可证伪 benchmark 贡献。",
-        "created_at": "2026-08-10T14:22:08+00:00"
+        "created_at": "2026-08-10T18:00:11+00:00"
       }
     ],
     "edges": [
@@ -15683,7 +15687,7 @@
   },
   "pre_gpu_candidate_gates": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-10T14:22:08+00:00",
+    "generated_at": "2026-08-10T18:00:11+00:00",
     "policy": {
       "gate_order": [
         "offline",
@@ -15732,8 +15736,8 @@
         "reality": "pass",
         "phenomenon": "pass",
         "decision": "small-p0",
-        "reason": "Future-task memory harm is real; retrieved/no-memory/matched-placebo arms admit independent environment-scored truth and an identifiable replicated-effect boundary.",
-        "next_action": "Enter the shared P0-MEM-XFER-CAUSAL run."
+        "reason": "The three-arm phenomenon replicated, but the frozen full table has only 4 memory candidates; this is PHENOMENON_PASS_METHOD_INCONCLUSIVE, not method failure.",
+        "next_action": "Run P0-MEM-XFER-SUPPORT-ENRICHED; require >=8 candidates plus replicated harm/benefit and candidate-level held-out future evaluation before method inference."
       },
       {
         "rank": 4,
@@ -15752,8 +15756,8 @@
         "reality": "pass",
         "phenomenon": "pass",
         "decision": "small-p0",
-        "reason": "Cross-domain memory evidence shows source-task usefulness is not target-family transportability; zero-target-label effect-sign prediction with abstention remains identifiable.",
-        "next_action": "Share the same treatment table with #3 inside P0-MEM-XFER-CAUSAL."
+        "reason": "The three-arm phenomenon replicated, but only 5 controlled nonzero effects and 2 eligible target-family folds remain; this is PHENOMENON_PASS_TRANSPORT_SUPPORT_INSUFFICIENT.",
+        "next_action": "Run P0-MEM-XFER-SUPPORT-ENRICHED and compare any transport model against source-family mean LOTO and semantic-similarity simplifications."
       },
       {
         "rank": 6,
@@ -15907,7 +15911,7 @@
         "scientific_authority": "Development/sensitivity evidence only. Passing means the manipulation exposes arm-dependent outcomes; it is not evidence that either #3 or #5 already beats a baseline."
       },
       "full_qwen_stage": {
-        "status": "running",
+        "status": "full_table_collected",
         "started_at": "2026-08-10T14:06:51Z",
         "server_id": "60",
         "gpu_uuid": "GPU-814cd021-31d8-2c6f-76a5-b8d4739b34d1",
@@ -15919,6 +15923,16 @@
         "future_tasks_per_family": 8,
         "units": 32,
         "planned_executions": 96,
+        "completed_executions": 96,
+        "completed_units": 32,
+        "outcome_disagreement_units": 8,
+        "retrieved_harm_units": 3,
+        "retrieved_benefit_units": 3,
+        "placebo_nonzero_units": 5,
+        "controlled_nonzero_units": 5,
+        "gpu_hours": 0.9954,
+        "model_calls": 3716,
+        "tokens": 3803375,
         "method_failure_authorized": false,
         "prior_runtime_attempt": {
           "run_id": "p0-mem-xfer-causal-full-qwen-v1",
@@ -15928,7 +15942,99 @@
           "frozen_plan_hash": "2e99261fcfe8a7b44fc53a95ad6788e9a4d8a558e2c40ba8592928f1014ea2c6"
         }
       },
-      "next_gate": "Collect the 96-execution outcome-independent Qwen treatment table. Then run frozen offline #3 replicated-effect admission and #5 leave-one-family-out transport analyses on exactly that table before opening a second-model GPU run."
+      "offline_analysis": {
+        "status": "offline_analysis_complete",
+        "complete": true,
+        "error": null,
+        "decision": {
+          "schema_version": "1.0",
+          "analysis_id": "p0-mem-xfer-offline-decision-v1",
+          "created_at": "2026-08-10T17:18:39+00:00",
+          "experiment_id": "P0-MEM-XFER-CAUSAL",
+          "source_evidence": {
+            "run_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/p0-mem-xfer-causal-full-qwen-v1-r1",
+            "immutable": true,
+            "completed_executions": 96,
+            "completed_units": 32,
+            "model_calls": 3716,
+            "evidence_sha256": {
+              "analysis.json": "77d50c54c11103b745e4589d0c0113601bb1f502b726cfb8d4660b7aa7dae140",
+              "cost.json": "40e899f84e002894ae030aa76ab8d2f1d22ce1525a81bcf54fc824257898775b",
+              "decision.json": "ec867a982c978e17cc36f1bfc7181a35cb9a6ccbccfa581dd19879bd92e7b7b4",
+              "main_table.csv": "689ab04bbb471e9c54da39e757b9d9c5ae99b16040c70ee14945fc4648456c76",
+              "progress.json": "faebb4b21219d560f7c4a3c8552e71d7f94bb6ba42f6562b31d4a2e739ae55c0",
+              "raw-traces.jsonl": "49f1e8f2699d647de03995a43207021ad44abfb3fac24249bcd41b2865e0de77"
+            }
+          },
+          "full_qwen_observed": {
+            "units": 32,
+            "outcome_disagreement": 8,
+            "retrieved_harm": 3,
+            "retrieved_benefit": 3,
+            "placebo_nonzero": 5,
+            "controlled_nonzero": 5,
+            "mean_retrieved_effect_vs_no_memory": 0.0,
+            "mean_placebo_effect_vs_no_memory": 0.03125,
+            "mean_controlled_effect_vs_placebo": -0.03125
+          },
+          "idea_3": {
+            "idea_id": "replicated-effect-memory-gate",
+            "verdict": "PHENOMENON_PASS_METHOD_INCONCLUSIVE",
+            "reason": "candidate_support_insufficient",
+            "method_failure_authorized": false
+          },
+          "idea_5": {
+            "idea_id": "cross-task-effect-transport-certificate",
+            "verdict": "PHENOMENON_PASS_TRANSPORT_SUPPORT_INSUFFICIENT",
+            "reason": "controlled_effect_support_insufficient",
+            "method_failure_authorized": false
+          },
+          "workflow_decision": "EXPAND",
+          "authorized_scope": [
+            "P0-MEM-XFER-SUPPORT-ENRICHED Qwen support qualification only"
+          ],
+          "next_experiment": "P0-MEM-XFER-SUPPORT-ENRICHED",
+          "next_status": "support_qualification_pending",
+          "second_model_status": "second_model_hold",
+          "second_model_authorized": false,
+          "method_failure_authorized": false,
+          "interpretation": "Phenomenon replicated; candidate-level and transport support are insufficient. Expand only the Qwen support substrate."
+        },
+        "automatic_trigger": "full_table_collected"
+      },
+      "support_enriched_stage": {
+        "id": "P0-MEM-XFER-SUPPORT-ENRICHED",
+        "run_id": "p0-mem-xfer-support-enriched-qwen-v1",
+        "status": "support_qualification_running",
+        "progress": {
+          "schema_version": "1.0",
+          "status": "support_qualification_running",
+          "completed_episodes": 36,
+          "total_episodes": 72,
+          "completed_units": 12,
+          "total_units": 24,
+          "current_unit": "se-m-pick_clean_then_place_in_recep-2-u05",
+          "current_arm": "no-memory",
+          "elapsed_hours": 0.3634090944203652,
+          "model_calls": 1357,
+          "gpu_uuid": "GPU-814cd021-31d8-2c6f-76a5-b8d4739b34d1",
+          "updated_at": "2026-08-10T17:59:53+00:00"
+        },
+        "decision": null,
+        "plan_hash": "47dbaebf7c0f26079ccc0d6116e8e66305331ba64a40e793e6abd8726daffc6b",
+        "support_units": 24,
+        "support_executions": 72,
+        "full_units": 72,
+        "full_executions": 216,
+        "candidate_split": "candidate 1/2 development; candidate 3 completely held out",
+        "second_model_authorized": false
+      },
+      "second_backbone": {
+        "status": "second_model_hold",
+        "authorized": false,
+        "rule": "Remain HOLD until support-enriched Qwen reaches its frozen mechanism/support gate; never authorize from the old full table alone."
+      },
+      "next_gate": "Finish the frozen 24-unit / 72-execution Qwen support qualification. Expand only if all support gates pass; otherwise HOLD without method failure. Keep the second backbone on HOLD."
     }
   },
   "pre_experiment_compiler": {
@@ -16009,7 +16115,7 @@
     "cards": [
       {
         "schema_version": "2.0",
-        "compiled_at": "2026-08-10T14:22:08+00:00",
+        "compiled_at": "2026-08-10T18:00:11+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -16410,7 +16516,7 @@
       },
       {
         "schema_version": "2.0",
-        "compiled_at": "2026-08-10T14:22:08+00:00",
+        "compiled_at": "2026-08-10T18:00:11+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0",
         "expected_runtime": {
@@ -16819,7 +16925,7 @@
       },
       {
         "schema_version": "2.0",
-        "compiled_at": "2026-08-10T14:22:08+00:00",
+        "compiled_at": "2026-08-10T18:00:11+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -17236,7 +17342,7 @@
       },
       {
         "schema_version": "2.0",
-        "compiled_at": "2026-08-10T14:22:08+00:00",
+        "compiled_at": "2026-08-10T18:00:11+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0",
         "expected_runtime": {
@@ -17663,7 +17769,7 @@
   },
   "pilot_registry": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-10T14:22:08+00:00",
+    "generated_at": "2026-08-10T18:00:11+00:00",
     "result_dir": "/data/wyt/agent-self-evolution-observatory/runs/pilots/results",
     "approval_dir": "/data/wyt/agent-self-evolution-observatory/runs/pilots/approvals",
     "result_schema": {
@@ -17902,7 +18008,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.0",
-          "compiled_at": "2026-08-10T14:22:08+00:00",
+          "compiled_at": "2026-08-10T18:00:11+00:00",
           "idea_id": "update-trust-region",
           "phase": "P0",
           "expected_runtime": {
@@ -18639,7 +18745,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.0",
-          "compiled_at": "2026-08-10T14:22:08+00:00",
+          "compiled_at": "2026-08-10T18:00:11+00:00",
           "idea_id": "budgeted-evolution-controller",
           "phase": "P0",
           "expected_runtime": {
@@ -22328,7 +22434,7 @@
   },
   "idea_discovery_v3": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-10T14:22:08+00:00",
+    "generated_at": "2026-08-10T18:00:11+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -25284,7 +25390,7 @@
   },
   "idea_discovery_v31": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-10T14:22:08+00:00",
+    "generated_at": "2026-08-10T18:00:11+00:00",
     "round": "v3.1",
     "status": "external-reviewed",
     "policy": {
@@ -25997,7 +26103,7 @@
   },
   "idea_discovery_v4": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-10T14:22:08+00:00",
+    "generated_at": "2026-08-10T18:00:11+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -35672,7 +35778,7 @@
   },
   "idea_discovery_v5": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-10T14:22:08+00:00",
+    "generated_at": "2026-08-10T18:00:11+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -45665,7 +45771,7 @@
   },
   "idea_discovery_v51": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-10T14:22:08+00:00",
+    "generated_at": "2026-08-10T18:00:11+00:00",
     "target_venue": "ICLR",
     "policy": {
       "generated_only_from_review_vectors": true,
@@ -47357,7 +47463,7 @@
   },
   "idea_discovery_v52": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-10T14:22:08+00:00",
+    "generated_at": "2026-08-10T18:00:11+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v51_revise": true,
@@ -48335,7 +48441,7 @@
   },
   "idea_discovery_v53": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-10T14:22:08+00:00",
+    "generated_at": "2026-08-10T18:00:11+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v52_revise_with_single_surviving_boundary": true,
@@ -48674,7 +48780,7 @@
   },
   "discussion_portfolio": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-10T14:22:08+00:00",
+    "generated_at": "2026-08-10T18:00:11+00:00",
     "target": 20,
     "count": 20,
     "remaining": 0,
@@ -49123,6 +49229,139 @@
       }
     ]
   },
+  "mem_xfer_workflow": {
+    "schema_version": "1.0",
+    "experiment_id": "P0-MEM-XFER-CAUSAL",
+    "full_run_id": "p0-mem-xfer-causal-full-qwen-v1-r1",
+    "support_run_id": "p0-mem-xfer-support-enriched-qwen-v1",
+    "allowed_statuses": [
+      "full_table_collected",
+      "offline_analysis_pending",
+      "offline_analysis_complete",
+      "support_qualification_pending",
+      "support_qualification_running",
+      "support_qualification_hold",
+      "support_qualification_pass",
+      "second_model_hold",
+      "second_model_authorized"
+    ],
+    "full_table": {
+      "status": "full_table_collected",
+      "complete": true,
+      "progress": {
+        "status": "complete",
+        "completed_episodes": 96,
+        "total_episodes": 96,
+        "completed_units": 32,
+        "decision": "full-table-collected",
+        "elapsed_hours": 0.9953982025855739,
+        "model_calls": 3716,
+        "updated_at": "2026-08-10T15:06:44+00:00"
+      }
+    },
+    "offline_analysis": {
+      "status": "offline_analysis_complete",
+      "complete": true,
+      "error": null,
+      "decision": {
+        "schema_version": "1.0",
+        "analysis_id": "p0-mem-xfer-offline-decision-v1",
+        "created_at": "2026-08-10T17:18:39+00:00",
+        "experiment_id": "P0-MEM-XFER-CAUSAL",
+        "source_evidence": {
+          "run_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/p0-mem-xfer-causal-full-qwen-v1-r1",
+          "immutable": true,
+          "completed_executions": 96,
+          "completed_units": 32,
+          "model_calls": 3716,
+          "evidence_sha256": {
+            "analysis.json": "77d50c54c11103b745e4589d0c0113601bb1f502b726cfb8d4660b7aa7dae140",
+            "cost.json": "40e899f84e002894ae030aa76ab8d2f1d22ce1525a81bcf54fc824257898775b",
+            "decision.json": "ec867a982c978e17cc36f1bfc7181a35cb9a6ccbccfa581dd19879bd92e7b7b4",
+            "main_table.csv": "689ab04bbb471e9c54da39e757b9d9c5ae99b16040c70ee14945fc4648456c76",
+            "progress.json": "faebb4b21219d560f7c4a3c8552e71d7f94bb6ba42f6562b31d4a2e739ae55c0",
+            "raw-traces.jsonl": "49f1e8f2699d647de03995a43207021ad44abfb3fac24249bcd41b2865e0de77"
+          }
+        },
+        "full_qwen_observed": {
+          "units": 32,
+          "outcome_disagreement": 8,
+          "retrieved_harm": 3,
+          "retrieved_benefit": 3,
+          "placebo_nonzero": 5,
+          "controlled_nonzero": 5,
+          "mean_retrieved_effect_vs_no_memory": 0.0,
+          "mean_placebo_effect_vs_no_memory": 0.03125,
+          "mean_controlled_effect_vs_placebo": -0.03125
+        },
+        "idea_3": {
+          "idea_id": "replicated-effect-memory-gate",
+          "verdict": "PHENOMENON_PASS_METHOD_INCONCLUSIVE",
+          "reason": "candidate_support_insufficient",
+          "method_failure_authorized": false
+        },
+        "idea_5": {
+          "idea_id": "cross-task-effect-transport-certificate",
+          "verdict": "PHENOMENON_PASS_TRANSPORT_SUPPORT_INSUFFICIENT",
+          "reason": "controlled_effect_support_insufficient",
+          "method_failure_authorized": false
+        },
+        "workflow_decision": "EXPAND",
+        "authorized_scope": [
+          "P0-MEM-XFER-SUPPORT-ENRICHED Qwen support qualification only"
+        ],
+        "next_experiment": "P0-MEM-XFER-SUPPORT-ENRICHED",
+        "next_status": "support_qualification_pending",
+        "second_model_status": "second_model_hold",
+        "second_model_authorized": false,
+        "method_failure_authorized": false,
+        "interpretation": "Phenomenon replicated; candidate-level and transport support are insufficient. Expand only the Qwen support substrate."
+      },
+      "automatic_trigger": "full_table_collected"
+    },
+    "support_qualification": {
+      "status": "support_qualification_running",
+      "progress": {
+        "schema_version": "1.0",
+        "status": "support_qualification_running",
+        "completed_episodes": 36,
+        "total_episodes": 72,
+        "completed_units": 12,
+        "total_units": 24,
+        "current_unit": "se-m-pick_clean_then_place_in_recep-2-u05",
+        "current_arm": "no-memory",
+        "elapsed_hours": 0.3634090944203652,
+        "model_calls": 1357,
+        "gpu_uuid": "GPU-814cd021-31d8-2c6f-76a5-b8d4739b34d1",
+        "updated_at": "2026-08-10T17:59:53+00:00"
+      },
+      "decision": null,
+      "authorized": true
+    },
+    "second_model": {
+      "status": "second_model_hold",
+      "authorized": false,
+      "rule": "Remain HOLD until support-enriched Qwen reaches its frozen mechanism/support gate; never authorize from the old full table alone."
+    },
+    "dependencies": [
+      {
+        "from": "full_table_collected",
+        "to": "offline_analysis_complete",
+        "automatic": true,
+        "action": "run CPU-only frozen offline analyzer"
+      },
+      {
+        "from": "offline_analysis_complete",
+        "to": "support_qualification_pending",
+        "condition": "workflow_decision == EXPAND"
+      },
+      {
+        "from": "support_qualification_pass",
+        "to": "second_model_authorized",
+        "condition": "explicit downstream authorization after support-enriched Qwen gate"
+      }
+    ]
+  },
   "components": [
     {
       "source": "ResearchAgent",
@@ -49383,6 +49622,16 @@
             "matched-simplification-tie": 1,
             "objective-claim-mismatch": 1
           }
+        }
+      },
+      {
+        "key": "mem-xfer-workflow",
+        "pass": true,
+        "detail": {
+          "full": "full_table_collected",
+          "offline": "offline_analysis_complete",
+          "support": "support_qualification_running",
+          "second_model": "second_model_hold"
         }
       },
       {

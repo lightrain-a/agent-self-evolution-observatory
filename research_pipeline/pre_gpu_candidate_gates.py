@@ -17,6 +17,7 @@ from .config import StorageSettings, resolve_experiment_data_root
 from .p0_alfworld_adapter import ALFWorldGameRunner, HFAdmissiblePolicy, load_config
 from .p0_alfworld_collect import _task_family_order, generate_a1_candidates
 from .p0_common import git_head, load_json
+from .p0_mem_xfer_offline_analysis import build_mem_xfer_workflow_state
 
 
 def _now() -> str:
@@ -26,9 +27,9 @@ def _now() -> str:
 GATE_ROWS: tuple[dict[str, Any], ...] = (
     {"rank": 1, "idea_id": "active-causal-minimal-rollback", "offline": "conditional", "reality": "pass", "phenomenon": "hold", "decision": "hold", "reason": "Synthetic faults have independent truth, but real version histories still lack an independent oracle for the minimal restoring rollback set.", "next_action": "Mine real composition-regression cases where causal rollback disagrees with chronology/lineage before GPU use."},
     {"rank": 2, "idea_id": "future-reuse-harm-predictor", "offline": "pass", "reality": "pass", "phenomenon": "hold", "decision": "secondary", "reason": "Memory negative transfer is real, but the narrower residual/recovery-incompleteness harm claim is not independently established.", "next_action": "Keep as a preregistered secondary analysis inside #3 without extra executions."},
-    {"rank": 3, "idea_id": "replicated-effect-memory-gate", "offline": "pass", "reality": "pass", "phenomenon": "pass", "decision": "small-p0", "reason": "Future-task memory harm is real; retrieved/no-memory/matched-placebo arms admit independent environment-scored truth and an identifiable replicated-effect boundary.", "next_action": "Enter the shared P0-MEM-XFER-CAUSAL run."},
+    {"rank": 3, "idea_id": "replicated-effect-memory-gate", "offline": "pass", "reality": "pass", "phenomenon": "pass", "decision": "small-p0", "reason": "The three-arm phenomenon replicated, but the frozen full table has only 4 memory candidates; this is PHENOMENON_PASS_METHOD_INCONCLUSIVE, not method failure.", "next_action": "Run P0-MEM-XFER-SUPPORT-ENRICHED; require >=8 candidates plus replicated harm/benefit and candidate-level held-out future evaluation before method inference."},
     {"rank": 4, "idea_id": "version-differential-active-diagnosis", "offline": "pass", "reality": "stop", "phenomenon": "not-run", "decision": "stop", "reason": "The current thesis reduces to learned/probabilistic delta-debugging order and directly collides with ProbDD/PMA-style mechanisms.", "next_action": "Reopen only with a distinct persistent repair/rollback representation."},
-    {"rank": 5, "idea_id": "cross-task-effect-transport-certificate", "offline": "pass", "reality": "pass", "phenomenon": "pass", "decision": "small-p0", "reason": "Cross-domain memory evidence shows source-task usefulness is not target-family transportability; zero-target-label effect-sign prediction with abstention remains identifiable.", "next_action": "Share the same treatment table with #3 inside P0-MEM-XFER-CAUSAL."},
+    {"rank": 5, "idea_id": "cross-task-effect-transport-certificate", "offline": "pass", "reality": "pass", "phenomenon": "pass", "decision": "small-p0", "reason": "The three-arm phenomenon replicated, but only 5 controlled nonzero effects and 2 eligible target-family folds remain; this is PHENOMENON_PASS_TRANSPORT_SUPPORT_INSUFFICIENT.", "next_action": "Run P0-MEM-XFER-SUPPORT-ENRICHED and compare any transport model against source-family mean LOTO and semantic-similarity simplifications."},
     {"rank": 6, "idea_id": "precommit-workflow-transfer-certificate", "offline": "pass", "reality": "stop", "phenomenon": "not-run", "decision": "stop", "reason": "The current form remains a calibrated workflow-performance predictor/certificate; existing workflow predictors cover the main mechanism.", "next_action": "Reopen only as a risk-constrained workflow update operator rather than a predictor."},
     {"rank": 7, "idea_id": "simulator-distilled-risk-memory", "offline": "pass", "reality": "pass", "phenomenon": "hold", "decision": "hold", "reason": "The verifier-grounded simulator-off boundary is meaningful, but irreversible or goal-unreachable action-state prevalence must first be measured with CPU/PDDL checks.", "next_action": "Run CPU phenomenon qualification first and stop if prevalence is insufficient."},
     {"rank": 8, "idea_id": "actor-evaluator-residual-gate", "offline": "pass", "reality": "stop", "phenomenon": "not-run", "decision": "stop", "reason": "Interaction-residual factorization remains statistical bias detection and a commit gate; existing latent-score/evaluator-deviation/co-evolution work covers the core.", "next_action": "Reopen only with an explicit residual-corrected evaluator or policy-training rule."},
@@ -123,6 +124,7 @@ def build_pre_gpu_candidate_gate_state() -> dict[str, Any]:
     candidates = [dict(row) for row in GATE_ROWS]
     small_p0 = [row for row in candidates if row["decision"] == "small-p0"]
     qualification = _qualification_state(experiment_root)
+    mem_xfer_workflow = build_mem_xfer_workflow_state(experiment_root)
     status = "qualification-pass" if qualification["status"] == "pass" else (
         "qualification-running" if qualification["status"] == "running" else qualification["status"]
     )
@@ -194,7 +196,7 @@ def build_pre_gpu_candidate_gate_state() -> dict[str, Any]:
                 "scientific_authority": "Development/sensitivity evidence only. Passing means the manipulation exposes arm-dependent outcomes; it is not evidence that either #3 or #5 already beats a baseline.",
             },
             "full_qwen_stage": {
-                "status": "running",
+                "status": mem_xfer_workflow["full_table"]["status"],
                 "started_at": "2026-08-10T14:06:51Z",
                 "server_id": "60",
                 "gpu_uuid": "GPU-814cd021-31d8-2c6f-76a5-b8d4739b34d1",
@@ -206,6 +208,16 @@ def build_pre_gpu_candidate_gate_state() -> dict[str, Any]:
                 "future_tasks_per_family": 8,
                 "units": 32,
                 "planned_executions": 96,
+                "completed_executions": int((mem_xfer_workflow["full_table"].get("progress") or {}).get("completed_episodes") or 0),
+                "completed_units": int((mem_xfer_workflow["full_table"].get("progress") or {}).get("completed_units") or 0),
+                "outcome_disagreement_units": 8,
+                "retrieved_harm_units": 3,
+                "retrieved_benefit_units": 3,
+                "placebo_nonzero_units": 5,
+                "controlled_nonzero_units": 5,
+                "gpu_hours": 0.9954,
+                "model_calls": 3716,
+                "tokens": 3803375,
                 "method_failure_authorized": False,
                 "prior_runtime_attempt": {
                     "run_id": "p0-mem-xfer-causal-full-qwen-v1",
@@ -215,7 +227,23 @@ def build_pre_gpu_candidate_gate_state() -> dict[str, Any]:
                     "frozen_plan_hash": "2e99261fcfe8a7b44fc53a95ad6788e9a4d8a558e2c40ba8592928f1014ea2c6",
                 },
             },
-            "next_gate": "Collect the 96-execution outcome-independent Qwen treatment table. Then run frozen offline #3 replicated-effect admission and #5 leave-one-family-out transport analyses on exactly that table before opening a second-model GPU run.",
+            "offline_analysis": mem_xfer_workflow["offline_analysis"],
+            "support_enriched_stage": {
+                "id": "P0-MEM-XFER-SUPPORT-ENRICHED",
+                "run_id": "p0-mem-xfer-support-enriched-qwen-v1",
+                "status": mem_xfer_workflow["support_qualification"]["status"],
+                "progress": mem_xfer_workflow["support_qualification"].get("progress") or {},
+                "decision": mem_xfer_workflow["support_qualification"].get("decision"),
+                "plan_hash": "47dbaebf7c0f26079ccc0d6116e8e66305331ba64a40e793e6abd8726daffc6b",
+                "support_units": 24,
+                "support_executions": 72,
+                "full_units": 72,
+                "full_executions": 216,
+                "candidate_split": "candidate 1/2 development; candidate 3 completely held out",
+                "second_model_authorized": False,
+            },
+            "second_backbone": mem_xfer_workflow["second_model"],
+            "next_gate": "Finish the frozen 24-unit / 72-execution Qwen support qualification. Expand only if all support gates pass; otherwise HOLD without method failure. Keep the second backbone on HOLD.",
         }
     }
 
