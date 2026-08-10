@@ -13,6 +13,12 @@ from .p0_alfworld_contract import build_a1_row, build_a2_round, estimate_a1_epis
 from .p0_common import balanced_assignments, config_hash, load_json
 
 
+def _task_key(value: str) -> str:
+    normalized = str(value).replace("\\", "/")
+    marker = "/json_2.1.1/"
+    return normalized.split(marker, 1)[1] if marker in normalized else normalized
+
+
 def _ordered(values: list[str], seed: int, label: str) -> list[str]:
     return sorted(values, key=lambda value: hashlib.sha256(f"{seed}|{label}|{value}".encode()).hexdigest())
 
@@ -362,7 +368,8 @@ def collect_a2(
     started = time.time()
     _emit_progress(output_dir, progress_callback, policy, started, 0, stage="probe-baseline")
     stratify = bool(scope.get("stratify_by_task_type"))
-    probe_pool = runner.available_game_files("eval_in_distribution")
+    excluded_task_keys = {str(value) for value in (scope.get("excluded_qualification_task_keys") or []) if str(value)}
+    probe_pool = [path for path in runner.available_game_files("eval_in_distribution") if _task_key(path) not in excluded_task_keys]
     probe_source = (_task_family_order if stratify else _ordered)(probe_pool, seed, "a2-probes")
     probe_files = probe_source[:probe_count]
     probe_baseline: dict[str, dict[str, Any]] = {}
@@ -377,7 +384,7 @@ def collect_a2(
     for split_index, (split_label, count_value) in enumerate(split_items):
         count = int(count_value)
         env_split = str(split_names[split_label])
-        raw_pool = runner.available_game_files(env_split)
+        raw_pool = [path for path in runner.available_game_files(env_split) if _task_key(path) not in excluded_task_keys]
         pool = (_task_family_order if stratify else _ordered)(raw_pool, seed, f"a2-{split_label}")
         if env_split == "eval_in_distribution":
             pool = [path for path in pool if path not in set(probe_files)]
@@ -454,6 +461,8 @@ def collect_a2(
         "policy_mode": policy_mode,
         "stratified_by_task_type": stratify,
         "sequence_splits": splits,
+        "excluded_qualification_task_keys": sorted(excluded_task_keys),
+        "excluded_qualification_task_count": len(excluded_task_keys),
         "alfworld_splits": split_names,
         "resource_estimate": estimate,
         "estimated_environment_episodes": estimated_episodes,

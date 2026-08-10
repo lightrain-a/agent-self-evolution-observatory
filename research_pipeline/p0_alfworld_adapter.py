@@ -177,24 +177,35 @@ class HFAdmissiblePolicy:
         self.torch.manual_seed(seed)
         if self.torch.cuda.is_available():
             self.torch.cuda.manual_seed_all(seed)
-        actions = list(trace.get("actions") or [])[-12:]
-        observations = list(trace.get("observations") or [])[-12:]
+        actions = list(trace.get("actions") or [])
+        observations = list(trace.get("observations") or [])
+        start = max(0, len(actions) - 18)
         paired = "\n".join(
-            f"Action: {action}\nObservation: {observations[i] if i < len(observations) else ''}"
-            for i, action in enumerate(actions)
+            f"Action: {actions[i]}\nResulting observation: {observations[i + 1] if i + 1 < len(observations) else ''}"
+            for i in range(start, len(actions))
+        )
+        focus = (
+            "missing goal prerequisite or action ordering" if variant % 4 == 0 else
+            "search/localization decision" if variant % 4 == 1 else
+            "goal-state or state-transition condition" if variant % 4 == 2 else
+            "recovery/termination decision"
         )
         system = (
-            "You improve a persistent prompt for a text-based embodied agent. "
-            "Return exactly one short, general instruction that could improve future behavior. "
-            "Do not mention benchmark names, task IDs, or specific object instance numbers. "
+            "You repair one failed trajectory of a text-based embodied agent. "
+            "Internally compare the task-goal predicates with the actions actually completed, then output exactly one scoped conditional instruction in the form 'If <observable trigger>, then <concrete action priority or constraint>.' "
+            "The trigger must be observable from the task goal, current observation, inventory, or recent actions. "
+            "Target the smallest failure mechanism supported by the trajectory and preserve behavior outside that trigger. "
+            "If the goal requires cleaning, cooling, heating, using a light, or handling two objects, the repair must preserve that required predicate instead of merely finding, examining, or moving the target object. "
+            "Do not output generic advice such as 'plan carefully', 'track visited locations', 'avoid redundant actions', or 'explore systematically' unless it is tied to a concrete observable trigger and a concrete action. "
+            "Do not mention benchmark names, task IDs, or concrete object/receptacle instance numbers. Refer only to object or receptacle types. "
             "Do not explain the instruction."
         )
-        if variant % 2:
-            system += " Prefer a planning or state-tracking rule rather than restating the failed action."
         user = (
+            f"Task goal:\n{trace.get('task_goal') or '(unknown)'}\n\n"
             f"Outcome success={int(bool(trace.get('success')))}.\n"
             f"Current persistent patch:\n{previous_patch or '(none)'}\n\n"
-            f"Recent trajectory:\n{paired or '(empty)'}\n\nNew instruction:"
+            f"Failure-mechanism lens for this proposal: {focus}. If the trajectory does not support that lens, use the closest supported mechanism instead.\n\n"
+            f"Recent action/result pairs:\n{paired or '(empty)'}\n\nScoped conditional repair:"
         )
         messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
         prompt = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
@@ -202,7 +213,7 @@ class HFAdmissiblePolicy:
         with self.torch.no_grad():
             generated = self.model.generate(
                 **inputs,
-                max_new_tokens=56,
+                max_new_tokens=72,
                 do_sample=True,
                 temperature=0.7,
                 top_p=0.9,
@@ -212,6 +223,8 @@ class HFAdmissiblePolicy:
         self._record_usage(inputs, suffix)
         raw = self.tokenizer.decode(suffix, skip_special_tokens=True).strip()
         line = next((part.strip() for part in raw.splitlines() if part.strip()), raw).strip(" -*\t")
+        line = re.sub(r"\b([A-Za-z][A-Za-z_-]*)\s+\d+\b", r"\1", line)
+        line = re.sub(r"\s+", " ", line).strip()
         return line[:500].strip()
 
 

@@ -4,6 +4,8 @@ import re
 from collections import Counter
 from typing import Any
 
+from .human_terminal_state import repair_allowed
+
 
 RULES: tuple[dict[str, Any], ...] = (
     {
@@ -184,6 +186,7 @@ def build_repair_queue(idea_bank: dict[str, Any], collisions: dict[str, Any], pi
             "automatic_execution": "project-web-gpt-optional",
         })
 
+    queue = [item for item in queue if repair_allowed(str(item.get("idea_id") or ""))]
     queue.sort(key=lambda item: (-float(item["priority"]), str(item["idea_id"])))
     source_counts = Counter(item["source"] for item in queue)
     operator_counts = Counter(
@@ -201,6 +204,8 @@ def build_repair_queue(idea_bank: dict[str, Any], collisions: dict[str, Any], pi
             "automatic_selection_forbidden": True,
             "experiment_diagnosis_precedes_pilot_revision": True,
             "nonidentifiable_pilot_cannot_trigger_scientific_stop": True,
+            "terminal_human_parent_repair_forbidden": True,
+            "absorbed_child_repair_forbidden": True,
         },
         "summary": {
             "queued_ideas": len(queue),

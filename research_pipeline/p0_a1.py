@@ -171,7 +171,7 @@ def analyze(rows: list[dict[str, Any]], config: dict[str, Any]) -> dict[str, Any
             **common,
             "decision": "screening-signal" if directional else "screening-no-signal",
             "go": None,
-            "diagnosis": "Screening shows a directional signal; proceed to confirmatory P0." if directional else "Screening does not show a directional signal yet; review or repeat screening, but do not reject the idea.",
+            "diagnosis": "Screening shows a directional signal; confirmatory P0 remains blocked until independent Pre-Experiment identifiability and probe-fidelity gates pass." if directional else "Screening does not show a directional signal yet; review or repeat screening, but do not reject the idea.",
         }
 
     confidence = float(analysis_cfg.get("bootstrap_confidence", 0.95))

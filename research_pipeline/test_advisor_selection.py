@@ -16,7 +16,9 @@ class DiscussionPoolPolicyTest(unittest.TestCase):
         self.assertEqual(portfolio["final_summary"]["pass"], 20)
         self.assertEqual(portfolio["final_summary"]["revise"], 0)
         self.assertEqual(portfolio["final_summary"]["block"], 0)
-        self.assertTrue(all(item["verdict"] == "pass" and item["reviewed"] and item["collision_gate"] == "pass" for item in portfolio["ideas"]))
+        self.assertTrue(all(item["reviewed"] and item["terminal_state"] in {"p0", "p0-ready"} for item in portfolio["ideas"]))
+        self.assertTrue(portfolio["policy"]["terminal_human_state_is_active_source_of_truth"])
+        self.assertTrue(portfolio["policy"]["absorbed_children_excluded_from_advisor_pool"])
 
     def test_no_comparative_shortlist_is_active(self) -> None:
         state = build_research_system_state()

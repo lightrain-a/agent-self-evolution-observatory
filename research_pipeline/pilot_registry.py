@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import StorageSettings, resolve_experiment_data_root
+from .human_terminal_state import load_parents
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
 from .pre_p0_identifiability import build_pre_p0_identifiability_audit
 
@@ -198,6 +199,7 @@ def build_pilot_registry(
     for approval in sorted(valid_approvals, key=lambda item: (str(item.get("reviewed_at") or ""), str(item.get("source_path") or ""))):
         latest_approvals[str(approval["idea_id"])] = approval
 
+    terminal_parents = load_parents()
     plans: list[dict[str, Any]] = []
     for idea in idea_bank.get("passed_ideas") or []:
         idea_id = str(idea["id"])
@@ -209,7 +211,13 @@ def build_pilot_registry(
         }
         approval = latest_approvals.get(idea_id)
         approval_decision = str((approval or {}).get("decision") or "")
-        p0_gate_status = CURRENT_P0_GATE.get(idea_id, "not-current-p0-candidate")
+        terminal_state = str((terminal_parents.get(idea_id) or {}).get("terminal_state") or "")
+        if terminal_state in {"merge", "drop"}:
+            p0_gate_status = f"terminal-{terminal_state}"
+        elif terminal_state in {"p0", "p0-ready"}:
+            p0_gate_status = "ready"
+        else:
+            p0_gate_status = CURRENT_P0_GATE.get(idea_id, "not-current-p0-candidate")
         pre_p0 = pre_p0_by_id.get(idea_id) or {"execution_ready": False, "status": "missing-contract", "blockers": ["missing-pre-p0-contract"]}
         pre_p0_status = "pass" if pre_p0.get("execution_ready") else str(pre_p0.get("status") or "repair-required")
         pre_experiment = pre_experiment_cards.get(idea_id) or {"execution_authorized": False, "status": "missing-card", "blockers": ["missing-pre-experiment-card"]}
@@ -243,12 +251,15 @@ def build_pilot_registry(
         phases = sorted(by_idea.get(idea_id, []), key=lambda item: item["phase"])
         approval = latest_approvals.get(idea_id)
         state = _idea_state(phases, approval)
+        terminal = terminal_parents.get(idea_id) or {}
         idea_states.append({
             "idea_id": idea["id"],
             "title": idea.get("title"),
             "rank": idea.get("rank"),
             "state": state,
-            "p0_gate_status": CURRENT_P0_GATE.get(idea_id, "not-current-p0-candidate"),
+            "terminal_state": terminal.get("terminal_state"),
+            "terminal_merge_into": terminal.get("merge_into"),
+            "p0_gate_status": (f"terminal-{terminal.get('terminal_state')}" if terminal.get("terminal_state") in {"merge", "drop"} else ("ready" if terminal.get("terminal_state") in {"p0", "p0-ready"} else CURRENT_P0_GATE.get(idea_id, "not-current-p0-candidate"))),
             "pre_p0_gate_status": "pass" if (pre_p0_by_id.get(idea_id) or {}).get("execution_ready") else str((pre_p0_by_id.get(idea_id) or {}).get("status") or "missing-contract"),
             "pre_p0_audit": pre_p0_by_id.get(idea_id),
             "pre_experiment_gate_status": "pass" if (pre_experiment_cards.get(idea_id) or {}).get("execution_authorized") else str((pre_experiment_cards.get(idea_id) or {}).get("status") or "missing-card"),
@@ -275,6 +286,9 @@ def build_pilot_registry(
             "automatic_p0_to_p1_forbidden": True,
             "p0_execution_requires_pre_p0_pass": True,
             "p0_execution_requires_pre_experiment_8_of_8": True,
+            "terminal_human_parent_auto_repair_forbidden": True,
+            "terminal_merge_or_drop_independent_p0_forbidden": True,
+            "absorbed_child_independent_p0_forbidden": True,
         },
         "summary": {
             "ideas": len(idea_states),

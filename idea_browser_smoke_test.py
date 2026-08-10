@@ -81,7 +81,7 @@ def main() -> None:
         require(system["lifecycleSteps"] == 8, f"research lifecycle must expose eight decision stages, got {system['lifecycleSteps']}")
         require(system["outerGates"] == 8 and system["preflightGates"] == 10 and system["quantWorksheets"] == 2, f"Pre-Experiment/identifiability compiler is incomplete: {system['outerGates']}/{system['preflightGates']}/{system['quantWorksheets']}")
         require(system["lessons"] == 6 and system["failureLayers"] == 5 and system["repairLoops"] == 1, f"learning/diagnosis visualization is incomplete: {system['lessons']}/{system['failureLayers']}/{system['repairLoops']}")
-        require(system["components"] == 12, f"expected twelve backend components, got {system['components']}")
+        require(system["components"] == 13, f"expected thirteen backend components including the human terminal controller, got {system['components']}")
         require(system["ideaCards"] == 0, f"system-overview must not render current idea/status panels, got {system['ideaCards']}")
         require((system["preSummary"].get("audited"), system["preSummary"].get("execution_ready"), system["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system['preSummary']}")
         require(system["iterationSummary"].get("belief_updates_allowed") == 1 and system["iterationSummary"].get("scale_up_allowed") == 0, f"experiment-diagnosis state is wrong: {system['iterationSummary']}")
@@ -113,8 +113,11 @@ def main() -> None:
           discussedGroups: document.querySelectorAll('.human-science-group').length,
           discussedCards: document.querySelectorAll('.human-review-idea-card').length,
           readyCards: document.querySelectorAll('.human-review-idea-card.human-tone-ready').length,
-          redesignCards: document.querySelectorAll('.human-review-idea-card.human-tone-redesign').length,
-          pausedCards: document.querySelectorAll('.human-review-idea-card.human-tone-paused').length,
+          mergedCards: document.querySelectorAll('.human-review-idea-card.human-tone-merged').length,
+          droppedCards: document.querySelectorAll('.human-review-idea-card.human-tone-dropped').length,
+          terminalCounts: [...document.querySelectorAll('.human-review-idea-card')].reduce((a,x)=>{const k=x.dataset.terminalStatus||'';a[k]=(a[k]||0)+1;return a;},{}),
+          terminalSummary: window.HUMAN_TERMINAL_IDEA_STATE?.summary || {},
+          absorbedChildCount: Object.keys(window.HUMAN_TERMINAL_IDEA_STATE?.absorbed_children || {}).length,
           feedbackSummaries: document.querySelectorAll('.human-review-idea-card .human-idea-summary p').length,
           humanOpinionBoxes: document.querySelectorAll('.human-opinion-box').length,
           iterationBoxes: document.querySelectorAll('.human-iteration-box').length,
@@ -143,13 +146,15 @@ def main() -> None:
         require(ideas["p0Entry"] == 1 and ideas["p0Boards"] == 0 and ideas["experimentLinks"] >= 1, f"paper-ideas must expose only the compact experiment entry: {ideas['p0Entry']}/{ideas['p0Boards']}/{ideas['experimentLinks']}")
         require(ideas["p0Summary"].get("ready_now") == 0 and ideas["p0Summary"].get("pre_p0_blocked") == 4 and ideas["p0Summary"].get("gpu_hours_cap_ready_now") == 0 and ideas["p0Summary"].get("p1_authorized") == 0, f"P0 Pre-P0/resource summary is wrong: {ideas['p0Summary']}")
         require(ideas["p0Policy"].get("pre_p0_identifiability_required") is True and ideas["p0Policy"].get("automatic_p0_to_p1_forbidden") is True and ideas["p0Policy"].get("p0_pass_requires_human_approval") is True, f"P0 human/Pre-P0 approval policy is missing: {ideas['p0Policy']}")
-        require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (3, 11, 0), f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
+        require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (3, 9, 0), f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
         require(ideas["discussedGroups"] == 6 and ideas["discussedCards"] == 26, f"expected six scientific groups and 26 discussed ideas, got {ideas['discussedGroups']}/{ideas['discussedCards']}")
-        require((ideas["readyCards"], ideas["redesignCards"], ideas["pausedCards"]) == (2, 17, 7), f"human-review status counts are wrong: {ideas['readyCards']}/{ideas['redesignCards']}/{ideas['pausedCards']}")
+        require((ideas["readyCards"], ideas["mergedCards"], ideas["droppedCards"]) == (13, 6, 7), f"terminal tone counts are wrong: {ideas['readyCards']}/{ideas['mergedCards']}/{ideas['droppedCards']}")
+        require(ideas["terminalCounts"] == {"p0":2,"p0-ready":11,"merge":6,"drop":7}, f"terminal parent counts are wrong: {ideas['terminalCounts']}")
+        require((ideas["terminalSummary"].get("human_parents"), ideas["absorbedChildCount"]) == (26,17), f"terminal ledger or absorbed-child count is wrong: {ideas['terminalSummary']}/{ideas['absorbedChildCount']}")
         require(ideas["feedbackSummaries"] == 26, f"every discussed idea must expose one current summary, got {ideas['feedbackSummaries']}")
         require(ideas["humanOpinionBoxes"] == 26, f"all 26 discussed ideas must preserve the human opinion, got {ideas['humanOpinionBoxes']}")
         require(ideas["iterationBoxes"] == 17 and ideas["finalRefinementBoxes"] == 17, f"all 17 refined methods must show the final iteration and routing: {ideas['iterationBoxes']}/{ideas['finalRefinementBoxes']}")
-        require(ideas["finalRefinementCounts"] == [10,3,4], f"final method routing must be 10 advance / 3 merge / 4 hold, got {ideas['finalRefinementCounts']}")
+        require(ideas["finalRefinementCounts"] == [2,11,6,7], f"terminal routing must be 2 P0 / 11 P0-ready / 6 merge / 7 drop, got {ideas['finalRefinementCounts']}")
         require(ideas["methodologyPanels"] == 1 and ideas["originalEvalGuides"] == 1, f"human-opinion audit/original-eval methodology panels are missing: {ideas['methodologyPanels']}/{ideas['originalEvalGuides']}")
         require(ideas["canonicalReviewCount"] == 26, f"canonical human-review map must cover all 26 ideas, got {ideas['canonicalReviewCount']}")
         require(ideas["humanRecommendationStats"] == [4,14,7,1], f"canonical human recommendation counts are wrong: {ideas['humanRecommendationStats']}")
@@ -158,12 +163,12 @@ def main() -> None:
         require(ideas["openDiscussedCards"] == 0 and ideas["openNewCards"] == 0, f"all idea cards must be collapsed by default, got {ideas['openDiscussedCards']}/{ideas['openNewCards']}")
         require(len(ideas["codes"]) == 26 and len(set(ideas["codes"])) == 26, f"group codes are missing or duplicated: {ideas['codes']}")
         require(all(code in ideas["codes"] for code in ("A-1","A-5","B-1","B-7","C-1","D-1","E-1","F-1","F-3")), f"expected stable group codes are missing: {ideas['codes']}")
-        require(ideas["newGroups"] == 5 and ideas["newCards"] == 18, f"new-idea staging area is incomplete after FINAL20 merge audit: {ideas['newGroups']}/{ideas['newCards']}")
-        require((ideas["newFinal"], ideas["newInspired"]) == (3, 15), f"supplemental provenance counts are wrong after merge: {ideas['newFinal']}/{ideas['newInspired']}")
+        require(ideas["newGroups"] == 3 and ideas["newCards"] == 7, f"terminal standalone-method area is incomplete: {ideas['newGroups']}/{ideas['newCards']}")
+        require((ideas["newFinal"], ideas["newInspired"]) == (0, 0), f"legacy supplemental candidates must not remain active: {ideas['newFinal']}/{ideas['newInspired']}")
         require(ideas["mergedMethods"] >= 8, f"merged FINAL method provenance is not visible on discussed ideas: {ideas['mergedMethods']}")
         require(ideas["freshCollisionBlocks"] == 17 and ideas["freshCollisionLinks"] >= 40, f"fresh reducibility sources are missing from refined ideas: {ideas['freshCollisionBlocks']}/{ideas['freshCollisionLinks']}")
         require(all(marker in ideas["text"] for marker in ("ChronoMem","DeltaBox","CausalFlow")), "latest load-bearing collision sources are not visible in refined idea cards")
-        require(all(marker in ideas["text"] for marker in ("已讨论 Idea","新增 Idea","预算校准的预测性回归面板","跨过程验证经验蒸馏","条件编辑排序工作流策略","决策翻转驱动的转移准入","merge-into-A3","merge-into-E1","hold-fresh-collision","E-3","E-4","B-8")), "final-refined/current idea titles, gates, or standalone FINAL codes are missing")
+        require("Human terminal ledger" in ideas["text"] and ideas["newCards"] == 7 and ideas["absorbedChildCount"] == 17, "terminal/current idea summary or standalone-method rendering is missing")
 
         expanded_before_refresh = execute(session_id, """document.documentElement.style.scrollBehavior='auto'; const card=document.getElementById('idea-a-1'); if(!card) return null; card.open=true; card.querySelectorAll('details').forEach(x=>x.open=true); const top=card.getBoundingClientRect().top+window.scrollY; window.scrollTo(0, top+Math.min(900,Math.max(500,card.scrollHeight*.55))); return {y:window.scrollY,open:document.querySelectorAll('#dynamic-page details[open]').length};""")
         time.sleep(1)

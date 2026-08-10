@@ -65,8 +65,9 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(registry["invalidated_result_files"], sum(bool(item.get("invalidated")) for item in self.state["pilot_registry"].get("invalid_results", [])))
         self.assertEqual(registry["p1_authorized"], 0)
         by_id = {item["idea_id"]: item for item in self.state["pilot_registry"]["ideas"]}
-        self.assertEqual(by_id["outcome-equivalent-trajectory-contrast"]["p0_gate_status"], "method-redesign")
-        self.assertEqual(by_id["workflow-generalization-certificate"]["p0_gate_status"], "method-redesign")
+        self.assertEqual(by_id["outcome-equivalent-trajectory-contrast"]["p0_gate_status"], "terminal-merge")
+        self.assertEqual(by_id["workflow-generalization-certificate"]["p0_gate_status"], "ready")
+        self.assertEqual(by_id["workflow-generalization-certificate"]["terminal_state"], "p0-ready")
         self.assertEqual(by_id["update-trust-region"]["pre_p0_gate_status"], "repair-required")
         self.assertEqual(by_id["budgeted-evolution-controller"]["pre_p0_gate_status"], "repair-required")
         self.assertTrue(self.state["pilot_registry"]["policy"]["p0_execution_requires_pre_p0_pass"])
@@ -111,12 +112,13 @@ class ResearchSystemTest(unittest.TestCase):
 
     def test_repair_queue_contains_structured_blocks(self) -> None:
         queue = self.state["repair_queue"]
-        self.assertGreaterEqual(queue["summary"]["queued_ideas"], 3)
-        sources = {item["source"] for item in queue["queue"]}
-        self.assertIn("structured-block", sources)
-        self.assertIn("experiment-diagnosis", sources)
+        self.assertEqual(queue["summary"]["queued_ideas"], 1)
+        self.assertEqual({item["idea_id"] for item in queue["queue"]}, {"update-surface-router"})
+        self.assertTrue(all(item["idea_id"] not in self.state["human_terminal_ideas"]["parents"] for item in queue["queue"]))
         self.assertTrue(queue["policy"]["preserve_parent_branch"])
         self.assertTrue(queue["policy"]["automatic_selection_forbidden"])
+        self.assertTrue(queue["policy"]["terminal_human_parent_repair_forbidden"])
+        self.assertTrue(queue["policy"]["absorbed_child_repair_forbidden"])
 
     def test_reference_components_are_explicit(self) -> None:
         sources = {item["source"] for item in self.state["components"]}
@@ -126,7 +128,8 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("AI-Scientist-v2", sources)
         self.assertTrue(any("Co-Scientist" in source for source in sources))
         self.assertTrue(any("HypoRefine" in source and "IdeaForge" in source for source in sources))
-        self.assertEqual(len(self.state["components"]), 12)
+        self.assertEqual(len(self.state["components"]), 13)
+        self.assertIn("Human terminal ledger", sources)
         self.assertEqual(self.state["summary"]["discussion_ready"], 20)
         self.assertEqual(self.state["summary"]["discussion_target"], 20)
         self.assertTrue(self.state["summary"]["final_ready"])

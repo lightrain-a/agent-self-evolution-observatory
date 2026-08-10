@@ -108,7 +108,7 @@ def analyze_file(
             "decision": analysis.get("decision"),
             "analysis": analysis,
             "cost": cost or {},
-            "next_action": "human-review-before-confirmatory-p0",
+            "next_action": "resolve-pre-experiment-blockers-before-confirmatory-p0",
         }
     else:
         result = result_payload(analysis, config, cost)
@@ -186,7 +186,18 @@ def collect_real_p0(
     if experiment_config is None:
         raise RuntimeError("real P0 collect/execute requires an explicit frozen --config and 8/8 Pre-Experiment Card")
     config_file = experiment_config
-    pre_experiment = compile_pre_experiment_from_path(idea_id, config_file, data_root)
+    config_payload = load_json(config_file)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    frozen_config = output_dir / "frozen-config.json"
+    if frozen_config.exists() and frozen_config.stat().st_size:
+        existing = load_json(frozen_config)
+        if existing != config_payload:
+            raise RuntimeError(f"refusing to reuse output_dir with a different frozen config: {frozen_config}")
+    else:
+        tmp_config = frozen_config.with_suffix(frozen_config.suffix + ".tmp")
+        tmp_config.write_text(json.dumps(config_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        tmp_config.replace(frozen_config)
+    pre_experiment = compile_pre_experiment_from_path(idea_id, frozen_config, data_root)
     card_path = write_pre_experiment_card(pre_experiment, data_root)
     if not pre_experiment["execution_authorized"]:
         raise RuntimeError(
@@ -197,7 +208,6 @@ def collect_real_p0(
         raise RuntimeError(
             f"{idea_id} qualified model mismatch: expected {expected_model}, runtime path is {model_path}"
         )
-    output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "pre-experiment-card.json").write_text(json.dumps({**pre_experiment, "card_path": str(card_path)}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     smoke_path = data_root / "p0-runtime-smoke.json"
     readiness = runtime_preflight(model_path, data_root, Path(sys.executable), extra_pythonpath, alfworld_data, smoke_path)
@@ -222,6 +232,7 @@ def collect_real_p0(
         "output_dir": str(output_dir),
         "runtime_contract_hash": readiness["runtime_contract_hash"],
         "pre_experiment_card": str(card_path),
+        "frozen_config": str(frozen_config),
         "pre_experiment_gates": f"{pre_experiment['passed_gates']}/{pre_experiment['gate_count']}",
         "stage": "starting",
         "progress": {},
@@ -235,7 +246,10 @@ def collect_real_p0(
             state["updated_at"] = _utc_now()
             _write_execution_state(state_path, state)
 
-        manifest = collector(config_file, alfworld_config, model_path, output_dir, progress_callback=progress_callback)
+        collector_kwargs: dict[str, Any] = {"progress_callback": progress_callback}
+        if idea_id == "budgeted-evolution-controller":
+            collector_kwargs["data_root"] = data_root
+        manifest = collector(frozen_config, alfworld_config, model_path, output_dir, **collector_kwargs)
     except Exception as error:
         state.update({"status": "failed", "finished_at": _utc_now(), "error_type": type(error).__name__, "failed_stage": "collect"})
         _write_execution_state(state_path, state)

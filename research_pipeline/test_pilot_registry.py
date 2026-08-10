@@ -67,8 +67,9 @@ class PilotRegistryGateTest(unittest.TestCase):
         self.assertEqual(by_id["update-trust-region"]["pre_p0_gate_status"], "pass")
         self.assertEqual(by_id["update-trust-region"]["pre_experiment_gate_status"], "pass")
         self.assertIsNone(by_id["outcome-equivalent-trajectory-contrast"]["next_phase"])
-        self.assertEqual(by_id["outcome-equivalent-trajectory-contrast"]["p0_gate_status"], "method-redesign")
-        self.assertEqual(by_id["regression-gated-self-evolution"]["p0_gate_status"], "not-current-p0-candidate")
+        self.assertEqual(by_id["outcome-equivalent-trajectory-contrast"]["p0_gate_status"], "terminal-merge")
+        self.assertEqual(by_id["regression-gated-self-evolution"]["p0_gate_status"], "ready")
+        self.assertEqual(by_id["regression-gated-self-evolution"]["terminal_state"], "p0-ready")
 
     def test_failing_pre_p0_blocks_even_when_eight_gate_card_passes(self) -> None:
         bank = {"passed_ideas": [idea("update-trust-region")]}

@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0",
-  "generated_at": "2026-08-08T15:51:14+00:00",
+  "generated_at": "2026-08-10T18:58:21+00:00",
   "target": 20,
   "count": 20,
   "remaining": 0,
@@ -15,18 +15,7 @@
     "fresh_collision_rechecks": 20,
     "targeted_r32_rechecks": 6
   },
-  "policy": {
-    "strict_final_pass_only": true,
-    "r2_is_provenance_only": true,
-    "historical_r3_not_counted_as_current_verdict": true,
-    "two_model_unanimous_pass_required": true,
-    "fresh_primary_source_collision_gate_required": true,
-    "supplementary_machine_school_not_counted": true,
-    "revise_not_counted": true,
-    "block_not_counted": true,
-    "no_portfolio_shortlist": true
-  },
-  "ideas": [
+  "legacy_r3_final_passes": [
     {
       "source": "main-r2",
       "id": "contradiction-preserving-consolidation",
@@ -446,6 +435,282 @@
         "deepseek-v4-pro": "pass"
       },
       "collision_gate": "pass"
+    }
+  ],
+  "policy": {
+    "terminal_human_state_is_active_source_of_truth": true,
+    "active_states": [
+      "p0",
+      "p0-ready"
+    ],
+    "merge_and_drop_excluded": true,
+    "absorbed_children_excluded_from_advisor_pool": true,
+    "independent_terminal_methods_allowed": true,
+    "readiness_is_terminalization_not_legacy_pass_count": true,
+    "legacy_r3_rows_are_traceability_only": true,
+    "legacy_r3_required_two_model_and_collision_gates": true,
+    "no_portfolio_shortlist": true
+  },
+  "ideas": [
+    {
+      "source": "human-terminal-parent",
+      "id": "budgeted-evolution-controller",
+      "title": {
+        "zh": "预算化进化控制器",
+        "en": "Budgeted Evolution Controller"
+      },
+      "terminal_state": "p0",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "compositional-update-compatibility",
+      "title": {
+        "zh": "类型化更新交互规则注册表",
+        "en": "Typed Update-Interaction Rule Registry"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "contradiction-preserving-consolidation",
+      "title": {
+        "zh": "因果结论改变保留",
+        "en": "Causal Conclusion-Change Retention"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "counterexample-generating-curriculum",
+      "title": {
+        "zh": "1-最小边界反例课程",
+        "en": "1-Minimal Boundary-Counterexample Curriculum"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "evaluator-coadaptation-guard",
+      "title": {
+        "zh": "冻结锚点评价器共适应防护",
+        "en": "Frozen-Anchor Evaluator Coadaptation Guard"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "lineage-aware-rollback",
+      "title": {
+        "zh": "回滚等价的更新历史压缩",
+        "en": "Rollback-Equivalent Update-History Compaction"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "local-counterexample-memory-repair",
+      "title": {
+        "zh": "紧凑外部适用边界的局部反例修复",
+        "en": "Local Counterexample Repair with Compact External Applicability Gate"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "memory-half-life",
+      "title": {
+        "zh": "复用机会驱动的记忆效用复验",
+        "en": "Reuse-Opportunity Memory Utility Revalidation"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "regression-gated-self-evolution",
+      "title": {
+        "zh": "预算校准的预测性回归面板",
+        "en": "Budget-Calibrated Predictive Regression Panel"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "retrieval-interference-auditor",
+      "title": {
+        "zh": "检索干扰审计器",
+        "en": "Retrieval Interference Auditor"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "update-trust-region",
+      "title": {
+        "zh": "行为散度信赖域",
+        "en": "Behavioral Trust Region for Agent Updates"
+      },
+      "terminal_state": "p0",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "workflow-branch-credit",
+      "title": {
+        "zh": "失败模式因果重写注册表",
+        "en": "Failure-Motif Causal Rewrite Registry"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "workflow-generalization-certificate",
+      "title": {
+        "zh": "成对编辑效应工作流更新策略",
+        "en": "Paired Edit-Effect Workflow Update Policy"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "terminal-independent-method",
+      "id": "active-causal-minimal-rollback",
+      "title": {
+        "zh": "主动因果最小回滚",
+        "en": "Active Causal Minimal Rollback"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": false,
+      "reviewed": true,
+      "final_verdict": "terminal-human-compatible",
+      "parent_ids": []
+    },
+    {
+      "source": "terminal-independent-method",
+      "id": "bounded-probe-api-transition-operator",
+      "title": {
+        "zh": "限探针 API 转移算子",
+        "en": "Bounded-Probe API Transition Operator"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": false,
+      "reviewed": true,
+      "final_verdict": "terminal-human-compatible",
+      "parent_ids": []
+    },
+    {
+      "source": "terminal-independent-method",
+      "id": "constraint-complete-typed-memory-order-logic",
+      "title": {
+        "zh": "约束完备的类型化记忆顺序逻辑",
+        "en": "Constraint-Complete Typed Memory-Order Logic"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": false,
+      "reviewed": true,
+      "final_verdict": "terminal-human-compatible",
+      "parent_ids": []
+    },
+    {
+      "source": "terminal-independent-method",
+      "id": "counterfactual-evolution-decision-controller",
+      "title": {
+        "zh": "反事实进化决策控制器",
+        "en": "Counterfactual Evolution Decision Controller"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": false,
+      "reviewed": true,
+      "final_verdict": "terminal-human-compatible",
+      "parent_ids": []
+    },
+    {
+      "source": "terminal-independent-method",
+      "id": "cross-task-effect-transport-certificate",
+      "title": {
+        "zh": "跨任务效应迁移证书",
+        "en": "Cross-Task Effect Transport Certificate"
+      },
+      "terminal_state": "p0",
+      "human_parent": false,
+      "reviewed": true,
+      "final_verdict": "terminal-human-compatible",
+      "parent_ids": []
+    },
+    {
+      "source": "terminal-independent-method",
+      "id": "interventional-permission-triage-under-ceiling",
+      "title": {
+        "zh": "固定上限下的干预式权限重授权筛选",
+        "en": "Interventional Permission Triage Under a Fixed Ceiling"
+      },
+      "terminal_state": "p0-ready",
+      "human_parent": false,
+      "reviewed": true,
+      "final_verdict": "terminal-human-compatible",
+      "parent_ids": []
+    },
+    {
+      "source": "terminal-independent-method",
+      "id": "replicated-effect-memory-gate",
+      "title": {
+        "zh": "重复效应记忆门控",
+        "en": "Replicated-Effect Memory Gate"
+      },
+      "terminal_state": "p0",
+      "human_parent": false,
+      "reviewed": true,
+      "final_verdict": "terminal-human-compatible",
+      "parent_ids": []
     }
   ]
 }

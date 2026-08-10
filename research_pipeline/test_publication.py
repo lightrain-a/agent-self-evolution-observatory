@@ -46,7 +46,12 @@ class PublicationTest(unittest.TestCase):
     def test_daily_publication_is_state_only(self) -> None:
         self.assertEqual(
             DAILY_ARTIFACTS,
-            ("generated/research-system-state.json", "generated/research-system-state.js"),
+            (
+                "generated/human-terminal-idea-state.json",
+                "generated/human-terminal-idea-state.js",
+                "generated/research-system-state.json",
+                "generated/research-system-state.js",
+            ),
         )
 
     def test_transient_network_deferral_is_non_fatal(self) -> None:

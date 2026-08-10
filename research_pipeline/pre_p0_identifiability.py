@@ -130,6 +130,54 @@ CURRENT_CONTRACTS: dict[str, dict[str, Any]] = {
 }
 
 
+def apply_evidence_overlay(contract: dict[str, Any], overlay: dict[str, Any]) -> dict[str, Any]:
+    """Apply readiness evidence without allowing same-batch development evidence to self-authorize a rerun."""
+    merged = {
+        **contract,
+        "checks": dict(contract.get("checks") or {}),
+        "evidence": dict(contract.get("evidence") or {}),
+        "evidence_overlays": list(contract.get("evidence_overlays") or []),
+    }
+    may_unblock = (
+        str(overlay.get("authorization_effect") or "") == "may-unblock"
+        and bool(overlay.get("independent_validation"))
+        and not bool(overlay.get("same_evaluation_batch_as_repair_selection"))
+    )
+    applied: list[dict[str, Any]] = []
+    for key, update in (overlay.get("check_updates") or {}).items():
+        if key not in merged["checks"] or not isinstance(update, dict):
+            continue
+        new_pass = bool(update.get("pass"))
+        old_pass = bool(merged["checks"].get(key))
+        evidence = str(update.get("evidence") or "")
+        if not new_pass:
+            merged["checks"][key] = False
+            action = "blocked-by-new-evidence" if old_pass else "blocking-evidence-updated"
+        elif old_pass:
+            action = "positive-evidence-recorded"
+        elif may_unblock:
+            merged["checks"][key] = True
+            action = "unblocked-by-independent-validation"
+        else:
+            action = "positive-development-evidence-recorded-without-unblocking"
+        if evidence:
+            prior = str(merged["evidence"].get(key) or "")
+            merged["evidence"][key] = (prior + " | " + evidence).strip(" |")
+        applied.append({"check": key, "requested_pass": new_pass, "previous_pass": old_pass, "resulting_pass": bool(merged["checks"].get(key)), "action": action})
+    overlay_record = {
+        "evidence_id": str(overlay.get("evidence_id") or overlay.get("idea_id") or "external-evidence"),
+        "authorization_effect": str(overlay.get("authorization_effect") or "may-block-only"),
+        "independent_validation": bool(overlay.get("independent_validation")),
+        "same_evaluation_batch_as_repair_selection": bool(overlay.get("same_evaluation_batch_as_repair_selection")),
+        "qualification_exclusion_evidence_id": str(overlay.get("idea_id") or ""),
+        "excluded_qualification_task_count": int(overlay.get("excluded_qualification_task_count") or len(overlay.get("excluded_qualification_task_keys") or [])),
+        "excluded_qualification_task_keys": list(overlay.get("excluded_qualification_task_keys") or []),
+        "applied": applied,
+    }
+    merged["evidence_overlays"].append(overlay_record)
+    return merged
+
+
 def audit_contract(idea_id: str, contract: dict[str, Any] | None) -> dict[str, Any]:
     if not contract:
         return {
@@ -168,6 +216,7 @@ def audit_contract(idea_id: str, contract: dict[str, Any] | None) -> dict[str, A
         "primary_metric":contract.get("primary_metric"),
         "required_next":contract.get("required_next"),
         "estimated_voi":estimated_voi,
+        "evidence_overlays":list(contract.get("evidence_overlays") or []),
     }
 
 

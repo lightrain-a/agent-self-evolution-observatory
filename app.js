@@ -1010,12 +1010,26 @@ function renderHumanReviewMethodology() {
     </div><nav class="human-original-eval-sources">${sources}</nav></details>
   </section>`;
 }
+function humanTerminalState() {
+  return window.HUMAN_TERMINAL_IDEA_STATE || {decision_date:"",summary:{},parents:{},absorbed_children:{},independent_methods:{}};
+}
+function terminalParentState(id) {
+  return humanTerminalState().parents?.[id] || null;
+}
 function humanReviewStatusLabel(status) {
-  const row = humanReviewData().status_labels?.[status] || {zh:status,en:status};
+  const terminalLabels = {
+    p0:{zh:"已进入 P0",en:"Entered P0"},
+    "p0-ready":{zh:"P0-ready",en:"P0-ready"},
+    merge:{zh:"已合并",en:"Merged"},
+    drop:{zh:"已弃掉",en:"Dropped"},
+  };
+  const row = terminalLabels[status] || humanReviewData().status_labels?.[status] || {zh:status,en:status};
   return textOf(row);
 }
 function humanReviewStatusTone(status) {
-  if (status === "p0-ready") return "ready";
+  if (status === "p0" || status === "p0-ready") return "ready";
+  if (status === "merge") return "merged";
+  if (status === "drop") return "dropped";
   if (status === "method-redesign") return "redesign";
   return "paused";
 }
@@ -1023,9 +1037,15 @@ function currentFinalIdeaById(id) {
   return (window.CURRENT_FINAL_IDEAS?.ideas || []).find((idea) => (idea.idea_id || idea.id) === id) || null;
 }
 function experimentStateCopy(status) {
+  if (status === "p0") return language === "zh"
+    ? {title:"P0 生命周期已进入",note:"该方向已经产生过 P0 / Pilot artifact。后续只按冻结实验协议做诊断或合格重跑，不再回到 Idea-level 自动修订。"}
+    : {title:"P0 lifecycle entered",note:"This direction already produced a P0/Pilot artifact. Further work is frozen-protocol diagnosis or a qualified rerun, not idea-level automatic redesign."};
   if (status === "p0-ready") return language === "zh"
-    ? {title:"怎么验证这个 Idea（P0）",note:"先只做最小实验，回答“这个机制到底有没有用”。P0 做完先汇报，人工批准后才能进入更大实验。"}
-    : {title:"How to test this idea (P0)",note:"Run only the smallest experiment needed to answer whether the mechanism works. Report P0 first; larger experiments require explicit human approval."};
+    ? {title:"最小 P0 怎么做",note:"方法定义已经冻结到可证伪版本；只运行下面的最小 P0，命中 stop 条件就直接终止，不再自动生成修订 child。"}
+    : {title:"Minimum P0",note:"The mechanism is frozen to a falsifiable version. Run only the minimum P0 below; if a stop condition fires, terminate rather than spawning an automatic repair child."};
+  if (status === "merge" || status === "drop") return language === "zh"
+    ? {title:"终态，不再独立执行",note:"该方向已经进入人工终态；历史实验设计仅作追溯，不再进入自动修订、独立 P0 或 advisor standalone 队列。"}
+    : {title:"Terminal; no standalone execution",note:"This direction is human-terminal. Historical experiment design is traceability only and cannot re-enter automatic repair, standalone P0, or advisor queues."};
   if (status === "method-redesign") return language === "zh"
     ? {title:"怎么验证这个 Idea",note:"这里先把最小可证伪实验讲清楚。方法改完后再冻结具体参数，不把一份旧协议和一份新草案重复展示。"}
     : {title:"How to test this idea",note:"This states the smallest falsifiable test. Freeze exact parameters only after the method is finalized, rather than showing a draft and a duplicate protocol."};
@@ -1120,7 +1140,7 @@ function renderIdeaExperimentSection(idea, meta = {}, sourceIdeas = []) {
   const sourceDetails = sources.length > 1 ? `<details class="human-source-pilots"><summary>${language === "zh" ? "合并前的实验来源（追溯用）" : "Pre-merge experiment sources (traceability)"}</summary>${sources.map((source) => `<section><b>${textOf(source.title || {})}</b><p>${textOf(source.decisive_pilot || {})}</p></section>`).join("")}</details>` : "";
   const executionDetails = hasExecutionDetails ? `<details class="human-execution-details"><summary>${language === "zh" ? "模型、API、数据划分与预算" : "Models, API, data splits, and budget"}<small>${language === "zh" ? "执行时再看这些参数，不和上面的实验思路重复" : "Execution parameters only; no duplicate experiment narrative"}</small></summary><div class="human-execution-grid">${actor ? `<section><b>${language === "zh" ? "主模型" : "Main model"}</b><p>${esc(actor)}</p></section>` : ""}${crossModel ? `<section><b>${language === "zh" ? "第二模型" : "Second model"}</b><p>${esc(crossModel)}</p></section>` : ""}${verifier ? `<section><b>${language === "zh" ? "谁来判对错" : "Verifier"}</b><p>${esc(verifier)}</p></section>` : ""}${apiRole ? `<section><b>${language === "zh" ? "商业 API 做什么" : "Commercial API role"}</b><p>${apiRole}</p></section>` : ""}${parameterUpdates ? `<section><b>${language === "zh" ? "真正更新什么" : "What actually changes"}</b><p>${parameterUpdates}</p></section>` : ""}${discovery ? `<section><b>${language === "zh" ? "用什么数据找规律" : "Discovery split"}</b><p>${discovery}</p></section>` : ""}${calibration ? `<section><b>${language === "zh" ? "用什么数据定阈值" : "Calibration split"}</b><p>${calibration}</p></section>` : ""}${frozenTest ? `<section><b>${language === "zh" ? "最后在哪些数据上验" : "Frozen test"}</b><p>${frozenTest}</p></section>` : ""}${repetitions || callBudget ? `<section><b>${language === "zh" ? "重复次数 / 调用量" : "Repeats / calls"}</b><p>${repetitions}</p><p>${callBudget}</p></section>` : ""}${computeBudget || hasBudget ? `<section><b>${language === "zh" ? "算力" : "Compute"}</b><p>${computeBudget}</p>${hasBudget ? `<p>${budget.max_gpus || 0} GPU · ${budget.gpu_hours || 0}h · ${budget.wall_days || 0} ${language === "zh" ? "天" : "days"}</p>` : ""}</section>` : ""}</div>${resources.length ? `<div class="human-execution-list"><b>${language === "zh" ? "公平比较时必须保持一致" : "Must be matched across methods"}</b>${renderMatchedResourceList(resources)}</div>` : ""}${controls ? `<div class="human-execution-list"><b>${language === "zh" ? "额外对照" : "Additional controls"}</b><ol>${controls}</ol></div>` : ""}${ablations ? `<div class="human-execution-list"><b>${language === "zh" ? "关键消融" : "Key ablations"}</b><ol>${ablations}</ol></div>` : ""}${phases ? `<div class="human-phase-list"><b>${language === "zh" ? "如果继续，后面怎么扩" : "If it survives, how to scale"}</b><ol>${phases}</ol></div>` : ""}</details>` : "";
   return `<section class="human-experiment-section human-experiment-${experimentTone}">
-    <header><div><h4 data-toc="false">${esc(state.title)}</h4><p>${esc(state.note)}</p></div><span>${language === "zh" ? (meta.status === "p0-ready" ? "P0" : (meta.status === "method-redesign" ? "待定稿" : (meta.status === "paused-merged" ? "暂停" : "待讨论"))) : (meta.status === "p0-ready" ? "P0" : (meta.status === "method-redesign" ? "DESIGN" : (meta.status === "paused-merged" ? "HOLD" : "REVIEW")))}</span></header>
+    <header><div><h4 data-toc="false">${esc(state.title)}</h4><p>${esc(state.note)}</p></div><span>${esc(meta.status === "new-review" ? (language === "zh" ? "待讨论" : "REVIEW") : humanReviewStatusLabel(meta.status))}</span></header>
     <div class="human-experiment-grid">
       <section class="human-experiment-wide"><h4 data-toc="false">${language === "zh" ? "最小实验怎么做" : "Smallest experiment"}</h4><p>${pilot || "—"}</p></section>
       <section><h4 data-toc="false">${language === "zh" ? "和谁比才公平" : "Fair comparison"}</h4><p>${baseline || "—"}</p></section>
@@ -1133,6 +1153,18 @@ function renderIdeaExperimentSection(idea, meta = {}, sourceIdeas = []) {
     ${sourceDetails}
   </section>`;
 }
+function renderTerminalDecision(ideaId) {
+  const terminal = terminalParentState(ideaId);
+  if (!terminal) return "";
+  const absorbed = terminal.absorbed_children || [];
+  const mergeTarget = terminal.merge_into ? `<span><b>${language === "zh" ? "并入" : "Merge into"}</b>${esc(terminal.merge_into)}</span>` : "";
+  const gate = textOf(terminal.pre_p0_gate || {});
+  const baseline = textOf(terminal.strongest_baseline || {});
+  const minimum = textOf(terminal.minimum_p0 || {});
+  const stop = textOf(terminal.exact_stop || {});
+  const children = absorbed.length ? `<div class="terminal-child-list"><b>${language === "zh" ? "已吸收 child" : "Absorbed children"}</b>${absorbed.map((id) => `<span>${esc(id)}</span>`).join("")}</div>` : "";
+  return `<section class="terminal-decision terminal-${esc(terminal.terminal_state || "")}"><header><div><b>${textOf(terminal.final_parent_mechanism || {})}</b><p>${textOf(terminal.terminal_reason || {})}</p></div><strong>${esc(humanReviewStatusLabel(terminal.terminal_state || ""))}</strong></header><div class="terminal-decision-grid">${mergeTarget}${gate ? `<span><b>${language === "zh" ? "Pre-P0 / 前置门" : "Pre-P0 gate"}</b>${gate}</span>` : ""}${baseline ? `<span><b>${language === "zh" ? "最强对照" : "Strongest baseline"}</b>${baseline}</span>` : ""}${minimum ? `<span><b>${language === "zh" ? "最小 P0" : "Minimum P0"}</b>${minimum}</span>` : ""}${stop ? `<span><b>${language === "zh" ? "精确终止条件" : "Exact stop"}</b>${stop}</span>` : ""}</div>${children}</section>`;
+}
 function renderHumanReviewedIdeaCard(idea, meta, index) {
   const overlay = (window.FINAL20_MERGE_OVERRIDES || {})[idea.id] || {};
   const redesigned = !!idea.redesign_iteration;
@@ -1142,8 +1174,10 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const substance = current.method_substance || {};
   const mergeGate = current.parent_merge_gate || {};
   const historicalVerdict = String(idea.external_verdict || "pending").toUpperCase();
-  const tone = humanReviewStatusTone(meta.status);
-  const code = meta.code || idea.id;
+  const terminal = terminalParentState(idea.id);
+  const currentStatus = terminal?.terminal_state || meta.status;
+  const tone = humanReviewStatusTone(currentStatus);
+  const code = terminal?.code || meta.code || idea.id;
   const canonicalReview = canonicalHumanReviewData().ideas?.[idea.id] || {};
   const humanOpinion = textOf(canonicalReview.opinion || meta.feedback || {});
   const originalNumber = Number(canonicalReview.original_number || 0);
@@ -1153,19 +1187,20 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const finalRefinement = current.final_refinement || {};
   const finalRecommendation = String(finalRefinement.recommendation || "");
   const finalOfflineGate = textOf(finalRefinement.offline_pre_p0_gate || {});
-  const absorbed = overlay.absorbed_from || current.absorbed_from || [];
+  const absorbed = [...new Set([...(terminal?.absorbed_children || []),...(overlay.absorbed_from || current.absorbed_from || [])])];
   const absorbedIdeas = absorbed.map(currentFinalIdeaById).filter(Boolean);
   const absorbedNote = absorbed.length ? `<div class="human-absorbed-methods"><b>${language === "zh" ? "已吸收 FINAL 方法资产" : "Absorbed FINAL method assets"}</b>${absorbed.map((id)=>`<span>${esc(id)}</span>`).join("")}</div>` : "";
   const freshCheck = current.fresh_reducibility_check || {};
   const freshSources = (freshCheck.sources || []).map((source) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}</a>`).join("");
   const freshBlock = freshSources ? `<section class="human-fresh-collision"><h4 data-toc="false">${language === "zh" ? `Fresh reducibility · ${esc(freshCheck.review_date || "")}` : `Fresh reducibility · ${esc(freshCheck.review_date || "")}`}</h4><p>${language === "zh" ? "以下是一手来源；上面的“最近工作与真正边界”已经按这些工作收窄，不把已有人做过的部分继续当贡献。" : "Primary sources below support the narrowed boundary above; already-covered mechanisms are not counted as the contribution."}</p><nav>${freshSources}</nav></section>` : "";
-  return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}">
-    <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${originalNumber ? `${language === "zh" ? "原讨论" : "Original"} Idea ${originalNumber} · ` : ""}${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(meta.status))}</span><p>${esc(iterationSummary || humanOpinion)}</p></div></summary>
+  return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}" data-terminal-status="${esc(currentStatus)}">
+    <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${originalNumber ? `${language === "zh" ? "原讨论" : "Original"} Idea ${originalNumber} · ` : ""}${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(currentStatus))}</span><p>${esc(textOf(terminal?.terminal_reason || {}) || iterationSummary || humanOpinion)}</p></div></summary>
     <div class="human-idea-body">
       <div class="human-review-history">
         <section class="human-opinion-box"><h4 data-toc="false">${language === "zh" ? `人工意见 · 2026-08-10（原讨论 Idea ${originalNumber || "?"}）` : `Human opinion · 2026-08-10 (original Idea ${originalNumber || "?"})`}</h4><p>${esc(humanOpinion || "—")}</p><small class="human-recommendation-label tone-${humanRecommendationTone(humanRecommendation)}">${esc(humanRecommendationLabel(humanRecommendation))}</small></section>
         ${iterationSummary ? `<section class="human-iteration-box"><h4 data-toc="false">${language === "zh" ? `本轮方法迭代 · ${esc(iteration.round || "2026-08-10")}` : `Current method iteration · ${esc(iteration.round || "2026-08-10")}`}</h4><p>${esc(iterationSummary)}</p>${iteration.verdict ? `<small>${language === "zh" ? "当前门禁" : "Current gate"}: ${esc(iteration.verdict)}</small>` : ""}${finalRecommendation ? `<div class="human-final-refinement"><b>${language === "zh" ? "最终分流" : "Final recommendation"}</b><span>${esc(finalRecommendation)}</span>${finalOfflineGate ? `<p>${language === "zh" ? "GPU 前先做：" : "Before GPU: "}${esc(finalOfflineGate)}</p>` : ""}</div>` : ""}</section>` : ""}
       </div>
+      ${renderTerminalDecision(idea.id)}
       <div class="human-core-grid human-reading-grid">
         <section><h4 data-toc="false">${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</h4><p>${textOf(current.purpose)}</p></section>
         <section><h4 data-toc="false">${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</h4><p>${esc(intuition)}</p></section>
@@ -1183,7 +1218,7 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
         <section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${textOf(current.collision_boundary)}</p><div class="cvpr-chip-row">${(current.nearest_work || []).map((name) => `<span>${esc(name)}</span>`).join("")}</div></section>
         ${freshBlock}
       </div></details>
-      ${renderIdeaExperimentSection(current,meta,absorbedIdeas)}
+      ${["p0","p0-ready"].includes(currentStatus) ? renderIdeaExperimentSection(current,{...meta,status:currentStatus},absorbedIdeas) : ""}
     </div>
   </details>`;
 }
@@ -1191,8 +1226,11 @@ function renderDiscussedIdeaBank() {
   const bank = iclrIdeaBank();
   const review = humanReviewData();
   const byId = new Map((bank.passed_ideas || []).map((idea) => [idea.id, idea]));
-  const statuses = review.status_order || ["p0-ready","method-redesign","paused-merged"];
-  const all = Object.entries(review.ideas || {}).map(([id,meta]) => ({id,meta,idea:byId.get(id)})).filter((row) => row.idea);
+  const statuses = ["p0","p0-ready","merge","drop"];
+  const all = Object.entries(review.ideas || {}).map(([id,meta]) => {
+    const terminal = terminalParentState(id);
+    return {id,meta:{...meta,status:terminal?.terminal_state || meta.status,code:terminal?.code || meta.code,group:terminal?.group || meta.group},idea:byId.get(id)};
+  }).filter((row) => row.idea);
   const counts = Object.fromEntries(statuses.map((status) => [status,all.filter((row) => row.meta.status === status).length]));
   const groups = (review.groups || []).map((group) => {
     const rows = all.filter((row) => row.meta.group === group.id).sort((a,b) => String(a.meta.code).localeCompare(String(b.meta.code),undefined,{numeric:true}));
@@ -1203,12 +1241,11 @@ function renderDiscussedIdeaBank() {
     }).join("");
     return `<section class="human-science-group" id="discussed-group-${esc(group.id.toLowerCase())}"><header><span>${esc(group.id)}</span><div><h3>${textOf(group.title)}</h3><p>${textOf(group.question)}</p></div><strong>${rows.length}</strong></header>${statusBlocks}</section>`;
   }).join("");
-  const canonicalDate = canonicalHumanReviewData().review_date || review.review_date || "2026-08-10";
-  const refined = all.map((row) => row.idea.final_refinement).filter(Boolean);
-  const finalCounts = {advance:0,merge:0,hold:0};
-  refined.forEach((item) => { const rec=String(item.recommendation || ""); if(rec.startsWith("advance") || rec.startsWith("phenomenon")) finalCounts.advance += 1; else if(rec.startsWith("merge")) finalCounts.merge += 1; else finalCounts.hold += 1; });
-  const finalSummary = refined.length ? `<div class="human-final-summary"><div><b>${finalCounts.advance}</b><span>${language === "zh" ? "继续到 Pre-P0／现象前置门" : "continue to Pre-P0 / phenomenon gates"}</span></div><div><b>${finalCounts.merge}</b><span>Merge</span></div><div><b>${finalCounts.hold}</b><span>Hold</span></div><small>${language === "zh" ? "Final Refinement · 2026-08-10：这是当前科学分流，不覆盖上方人工原始意见。" : "Final Refinement · 2026-08-10: current scientific routing; original human opinions above remain unchanged."}</small></div>` : "";
-  return `<section class="panel human-review-overview"><div class="idea-panel-heading"><div><b class="human-overview-kicker">H1 · ${esc(canonicalDate)}</b><p class="section-intro">${language === "zh" ? "按科学问题和当前成熟度组织。人工原始意见、后续方法迭代和当前科学门禁分开保存；原讨论 Idea 1–26 的编号已重新映射到当前 A/B/C 编号。展开后看“人工意见 → 本轮迭代 → 问题—直觉—具体做法—例子—论文边界—决定性实验”。" : "Organized by scientific problem and current maturity. Original human opinions, later method iterations, and current scientific gates are stored separately; original Idea 1–26 numbers are mapped to the current A/B/C codes. Expanded cards show human opinion → current iteration → problem → intuition → method → example → paper boundary → decisive experiment."}</p></div><strong>${all.length} ${language === "zh" ? "个已讨论" : "discussed"}</strong></div><div class="human-review-stats">${statuses.map((status) => `<div class="human-stat human-stat-${humanReviewStatusTone(status)}"><b>${counts[status] || 0}</b><span>${esc(humanReviewStatusLabel(status))}</span></div>`).join("")}</div>${finalSummary}</section>${renderHumanReviewMethodology()}${groups}`;
+  const terminalLedger = humanTerminalState();
+  const canonicalDate = terminalLedger.decision_date || canonicalHumanReviewData().review_date || review.review_date || "2026-08-11";
+  const terminalSummary = terminalLedger.summary || {};
+  const finalSummary = `<div class="human-final-summary terminal-summary"><div><b>${terminalSummary.p0 || 0}</b><span>${language === "zh" ? "已进入 P0" : "entered P0"}</span></div><div><b>${terminalSummary.p0_ready || 0}</b><span>P0-ready</span></div><div><b>${terminalSummary.merge || 0}</b><span>${language === "zh" ? "已合并" : "merged"}</span></div><div><b>${terminalSummary.drop || 0}</b><span>${language === "zh" ? "已弃掉" : "dropped"}</span></div><small>${language === "zh" ? `Human terminal ledger · ${canonicalDate}：26 个 parent 均已终态；merge/drop 不再自动修订，吸收 child 不再作为独立方向进入队列。` : `Human terminal ledger · ${canonicalDate}: all 26 parents are terminal; merge/drop parents cannot re-enter automatic repair, and absorbed children cannot return as standalone directions.`}</small></div>`;
+  return `<section class="panel human-review-overview"><div class="idea-panel-heading"><div><b class="human-overview-kicker">H1 · ${esc(canonicalDate)}</b><p class="section-intro">${language === "zh" ? "按科学问题组织，并以 2026-08-11 人工终态 ledger 覆盖旧三态。原始人工意见、历史自动审查和实验 artifact 继续保留，但 26 个 parent 只按“已进入 P0 / P0-ready / 已合并 / 已弃掉”四类展示；合并或弃掉的方向不会再次进入自动修订。" : "Organized by scientific problem with the 2026-08-11 human terminal ledger overriding the old three-state view. Original opinions, automated review history, and experiment artifacts remain traceable, while all 26 parents are shown only as entered-P0, P0-ready, merged, or dropped; merged/dropped directions cannot re-enter automatic repair."}</p></div><strong>${all.length} ${language === "zh" ? "个已讨论" : "discussed"}</strong></div><div class="human-review-stats">${statuses.map((status) => `<div class="human-stat human-stat-${humanReviewStatusTone(status)}"><b>${counts[status] || 0}</b><span>${esc(humanReviewStatusLabel(status))}</span></div>`).join("")}</div>${finalSummary}</section>${renderHumanReviewMethodology()}${groups}`;
 }
 function supplementalGroupId(idea) {
   const key = `${idea.idea_id || idea.id || ""} ${textOf(idea.title || {})}`.toLowerCase();
@@ -1226,7 +1263,8 @@ function renderSupplementalIdeaCard(row) {
   const sourceIdeas = (idea.source_ids || []).map(currentFinalIdeaById).filter(Boolean);
   const richSource = sourceIdeas[sourceIdeas.length - 1] || idea;
   const title = textOf(idea.title || {});
-  const problem = textOf(idea.purpose || idea.problem || richSource.purpose || {});
+  const currentFact = textOf(idea.current_fact || {});
+  const problem = textOf(idea.purpose || idea.problem || richSource.purpose || {}) || currentFact;
   const method = textOf(idea.core_idea || richSource.core_idea || {});
   const intuition = textOf(idea.core_intuition || richSource.core_intuition || {});
   const rationale = textOf(idea.rationale || richSource.rationale || idea.hypothesis || {});
@@ -1234,21 +1272,23 @@ function renderSupplementalIdeaCard(row) {
   const importance = textOf(idea.importance || richSource.importance || {});
   const advantage = textOf(idea.comparative_advantage || richSource.comparative_advantage || richSource.surviving_claim || idea.hypothesis || {});
   const collision = textOf(idea.collision_boundary || richSource.collision_boundary || {});
-  const sourceLabel = source === "final-merged" ? (language === "zh" ? "FINAL20 合并审查后独立保留" : "Independent after FINAL20 merge audit") : `${language === "zh" ? "网络灵感" : "internet-inspired"} · ${String(idea.external_verdict || idea.final_status || "pending").toUpperCase()}`;
+  const sourceLabel = source === "terminal-independent" ? `${language === "zh" ? "终态独立方法" : "Terminal standalone"} · ${humanReviewStatusLabel(idea.terminal_state || idea.status || "")}` : (source === "final-merged" ? (language === "zh" ? "FINAL20 合并审查后独立保留" : "Independent after FINAL20 merge audit") : `${language === "zh" ? "网络灵感" : "internet-inspired"} · ${String(idea.external_verdict || idea.final_status || "pending").toUpperCase()}`);
   const code = idea.code || (language === "zh" ? "新增候选" : "new candidate");
   const baseline = textOf(idea.strongest_baseline || richSource.strongest_baseline || {});
-  const currentRole = source === "final-merged" ? (language === "zh" ? "FINAL 去重后仍不能合理并入已有方向，因此暂时作为独立 Idea 保留，等下一轮人工讨论。" : "After FINAL deduplication this still does not merge cleanly into an existing direction, so it remains independent pending human review.") : (language === "zh" ? "这是新增候选，还没有完成当前轮人工讨论；先判断问题是否真实、方法是否有实质，再决定保留或合并。" : "This is a new candidate that has not completed human review; first test whether the problem is real and the method substantive, then keep or merge it.");
-  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div class="supplemental-human-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem || "—")}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition || "—")}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || textOf(idea.hypothesis || {}))}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || "—")}</p></section><details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || problem || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline || "—"}</p></section><section><h4 data-toc="false">${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(idea,{status:"new-review"},sourceIdeas)}</div></details>`;
+  const currentRole = currentFact || (source === "terminal-independent" ? (language === "zh" ? "人工终态保留为独立方法；只按其 P0 / P0-ready 身份继续，不进入自动 redesign。" : "Human-terminal standalone method; continue only through its P0/P0-ready lifecycle, never automatic redesign.") : source === "final-merged" ? (language === "zh" ? "FINAL 去重后仍不能合理并入已有方向，因此暂时作为独立 Idea 保留，等下一轮人工讨论。" : "After FINAL deduplication this still does not merge cleanly into an existing direction, so it remains independent pending human review.") : (language === "zh" ? "这是新增候选，还没有完成当前轮人工讨论；先判断问题是否真实、方法是否有实质，再决定保留或合并。" : "This is a new candidate that has not completed human review; first test whether the problem is real and the method substantive, then keep or merge it."));
+  return `<details class="supplemental-idea-card" id="new-${esc(id)}"><summary><div><span>${esc(code)}</span><b>${esc(title)}</b><small>${esc(sourceLabel)}</small></div><p>${esc(problem)}</p></summary><div class="supplemental-human-grid"><section><b>${language === "zh" ? "这个 Idea 在解决什么" : "What problem is this solving?"}</b><p>${esc(problem || "—")}</p></section><section><b>${language === "zh" ? "最简单的直觉" : "Plain-language intuition"}</b><p>${esc(intuition || "—")}</p></section><section><b>${language === "zh" ? "具体准备怎么做" : "What would we actually do?"}</b><p>${esc(method || textOf(idea.hypothesis || {}))}</p></section><section><b>${language === "zh" ? "为什么值得试" : "Why might this work?"}</b><p>${esc(rationale || importance || "—")}</p></section><details class="human-technical-details supplemental-technical-details"><summary>${language === "zh" ? "方法细节与论文边界" : "Method details and paper boundary"}<small>${language === "zh" ? "审方法或 novelty 时再展开" : "Open for method/novelty review"}</small></summary><div class="human-evidence-grid"><section><h4 data-toc="false">${language === "zh" ? "方法步骤" : "Method steps"}</h4><p>${esc(methodLogic || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "为什么重要" : "Why it matters"}</h4><p>${esc(importance || problem || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "相比简单方法多了什么" : "What it adds"}</h4><p>${esc(advantage || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "最近工作与真正边界" : "Nearest work and real boundary"}</h4><p>${esc(collision || "—")}</p></section><section><h4 data-toc="false">${language === "zh" ? "最强对照" : "Strongest baseline"}</h4><p>${baseline || "—"}</p></section><section><h4 data-toc="false">${language === "zh" ? "当前判断" : "Current role"}</h4><p>${esc(currentRole)}</p></section></div></details>${renderIdeaExperimentSection(idea,{status:source === "terminal-independent" ? (idea.terminal_state || idea.status || "new-review") : "new-review"},sourceIdeas)}</div></details>`;
 }
 function renderNewIdeaCandidates() {
-  const finalIdeas = (window.FINAL20_MERGE_AUDIT?.standalone_ideas || []).map((idea) => ({source:"final-merged",idea}));
-  const inspired = window.MACHINE_SCHOOL_IDEAS || {};
-  const inspiredRows = [...(inspired.passed_ideas || []),...(inspired.revise_ideas || [])].filter((idea) => String(idea.external_verdict || "pending").toLowerCase() !== "block").map((idea) => ({source:"inspired",idea}));
-  const seen = new Set();
-  const rows = [...finalIdeas,...inspiredRows].filter((row) => { const id=row.idea.idea_id || row.idea.id; if (!id || seen.has(id)) return false; seen.add(id); return true; });
+  const ledger = humanTerminalState();
+  const discovery = [...(window.RESEARCH_SYSTEM_STATE?.idea_discovery_v3?.all_children || []),...(window.RESEARCH_SYSTEM_STATE?.idea_discovery_v31?.children || [])];
+  const rows = Object.entries(ledger.independent_methods || {}).map(([id,terminal]) => {
+    const rich = currentFinalIdeaById(id) || discovery.find((idea) => (idea.idea_id || idea.id) === id) || {};
+    return {source:"terminal-independent",idea:{...rich,...terminal,id,idea_id:id,status:terminal.terminal_state,group:terminal.group || supplementalGroupId({...rich,...terminal,id})}};
+  });
   const groups = humanReviewData().groups || [];
-  const merged = window.FINAL20_MERGE_AUDIT?.summary || {};
-  return `<section class="panel supplemental-overview"><div class="idea-panel-heading"><div><p class="section-intro">${language === "zh" ? `20 个 FINAL 已完成合并审查：${merged.merged_into_discussed || 0} 个直接吸收进第一章，${merged.component_only || 0} 个仅保留为专门组件，4 条 FINAL 来源合并为 3 个真正独立的新 Idea。这里另外保留尚未完成人工讨论的网络灵感候选；前端仍按科学问题而不是批次组织。` : `The 20 FINAL ideas have completed merge review: ${merged.merged_into_discussed || 0} were absorbed into Chapter 1, ${merged.component_only || 0} remains only as a specialized component, and four FINAL source records collapsed into three genuinely independent new ideas. Internet-inspired candidates remain here until human review; the frontend stays organized by scientific problem, not generation round.`}</p></div><strong>${rows.length} ${language === "zh" ? "个待讨论" : "to review"}</strong></div></section>${groups.map((group) => { const subset=rows.filter((row)=>(row.idea.group || supplementalGroupId(row.idea))===group.id); if(!subset.length) return ""; return `<section class="supplemental-group" id="new-group-${esc(group.id.toLowerCase())}"><header><span>${esc(group.id)}</span><div><h3>${textOf(group.title)}</h3><p>${language === "zh" ? "新增方向按科学问题归组；FINAL 来源已经先做过去重合并。" : "New directions are grouped by scientific problem; FINAL-derived candidates have already been deduplicated and merged."}</p></div><strong>${subset.length}</strong></header><div class="supplemental-list">${subset.map(renderSupplementalIdeaCard).join("")}</div></section>`; }).join("")}`;
+  const intro = language === "zh" ? `这里只保留 2026-08-11 terminal ledger 明确认定仍可独立存在的 ${rows.length} 个方法。已吸收的 ${ledger.summary?.absorbed_children || 0} 个 child 不再作为独立 Idea、独立 P0 或 advisor 候选；历史版本只用于追溯。` : `Only the ${rows.length} methods explicitly retained as standalone by the 2026-08-11 terminal ledger remain here. The ${ledger.summary?.absorbed_children || 0} absorbed children no longer appear as standalone ideas, P0s, or advisor candidates; history remains traceable.`;
+  const head = `<section class="panel supplemental-overview"><div class="idea-panel-heading"><div><p class="section-intro">${intro}</p></div><strong>${rows.length} ${language === "zh" ? "个独立方法" : "standalone methods"}</strong></div></section>`;
+  return head + groups.map((group) => { const subset=rows.filter((row)=>(row.idea.group || supplementalGroupId(row.idea))===group.id); if(!subset.length) return ""; return `<section class="supplemental-group" id="new-group-${esc(group.id.toLowerCase())}"><header><span>${esc(group.id)}</span><div><h3>${textOf(group.title)}</h3><p>${language === "zh" ? "只展示未被吸收、仍有独立实验身份的方法。" : "Only unabsorbed methods with a standalone experimental identity are shown."}</p></div><strong>${subset.length}</strong></header><div class="supplemental-list">${subset.map(renderSupplementalIdeaCard).join("")}</div></section>`; }).join("");
 }
 function renderCvprFollowupArchive() {
   return `<details class="panel cvpr-followup-archive"><summary><div><b>${language === "zh" ? "CVPR 后续视觉专门化池" : "CVPR follow-up visual-specialization bank"}</b><span>${language === "zh" ? "保留原视觉、视频、生成和 VLA Idea；不再作为当前主投入口。" : "Preserves the visual, video, generation, and VLA ideas; no longer the primary submission view."}</span></div></summary><div class="cvpr-followup-body">${renderPublishedExperimentAudit()}${renderCvprLowResourceBank()}</div></details>`;
@@ -1338,6 +1378,11 @@ function p0ExperimentPlan() {
 }
 function p0RuntimeReadiness() {
   return window.P0_RUNTIME_READINESS || {environment_ready:false,launch_ready:false,blockers:["runtime-preflight-not-generated"],python_modules:{},gpus:[],model:{ready:false},alfworld_data:{ready:false},smoke_rollout:{ready:false,status:"missing"},stages:{harness_ready:false,package_ready:false,data_ready:false,smoke_rollout_ready:false,p0_execution_started:false},data_disk_free_gib:0,supported_p0:[]};
+}
+function p0RuntimeExecutions() {
+  const runtime = p0RuntimeReadiness();
+  if (Array.isArray(runtime.execution_states) && runtime.execution_states.length) return runtime.execution_states;
+  return runtime.execution_state?.status ? [runtime.execution_state] : [];
 }
 function p0CollisionRecheck() {
   return window.P0_COLLISION_RECHECK || {ideas:{}};
@@ -1513,9 +1558,10 @@ function renderP0ExperimentEntry() {
   const summary = plan.summary || {};
   const registry = experimentPilotRegistry();
   const executed = (plan.ideas || []).filter((item) => !!experimentPilotPhase(item.id,"P0")?.result).length;
-  const execution = p0RuntimeReadiness()?.execution_state || {};
+  const executions = p0RuntimeExecutions();
   const registryRunning = (plan.ideas || []).filter((item) => experimentPilotPhase(item.id,"P0")?.status === "running").length;
-  const running = registryRunning || (String(execution.status || "").toLowerCase() === "running" ? 1 : 0);
+  const runtimeRunning = new Set(executions.filter((row) => String(row.status || "").toLowerCase() === "running").map((row) => row.idea_id || row.path)).size;
+  const running = Math.max(registryRunning, runtimeRunning);
   return `<section class="panel p0-entry-panel"><div><div class="eyebrow">P0 · ${language === "zh" ? "实验入口" : "EXPERIMENT TRACKER"}</div><h3 id="experiment-tracker-entry" data-toc="false">${language === "zh" ? "实验计划、进展和结果已移到独立页面" : "Experiment plans, progress, and results now live on a separate page"}</h3><p>${language === "zh" ? "Idea 页只保留科学问题与方法论证；实验页集中维护执行授权、前置条件、实际运行状态、效果、资源消耗、Go/Stop 与人工审批。" : "The idea page now focuses on scientific problems and mechanisms. The experiment page owns execution gates, prerequisites, live status, measured effects, resource use, Go/Stop decisions, and human approvals."}</p></div><div class="p0-entry-stats"><span><b>${summary.planned || 0}</b>${language === "zh" ? "个 P0" : "P0 plans"}</span><span><b>${summary.ready_now || 0}</b>${language === "zh" ? "已解锁" : "unlocked"}</span><span><b>${running}</b>${language === "zh" ? "运行中" : "running"}</span><span><b>${executed}</b>${language === "zh" ? "已有结果" : "with results"}</span><span><b>${registry.summary?.p1_authorized || 0}</b>P1 ${language === "zh" ? "授权" : "authorized"}</span></div><a class="link-btn p0-entry-link" href="experiments.html">${language === "zh" ? "打开实验进展与结果页 →" : "Open Experiment Progress & Results →"}</a></section>`;
 }
 function renderP0RuntimeReadiness() {
@@ -1525,18 +1571,25 @@ function renderP0RuntimeReadiness() {
   const supported = new Set(runtime.supported_p0 || []);
   const stages = runtime.stages || {};
   const blockerRows = (runtime.blockers || []).map((item) => `<li>${esc(item)}</li>`).join("");
-  const execution = runtime.execution_state || {};
+  const executions = p0RuntimeExecutions();
+  const execution = executions.find((row) => String(row.status || "").toLowerCase() === "running") || runtime.execution_state || {};
   const executionStatus = String(execution.status || "").toLowerCase();
   const executionLabels = {running:{zh:"运行中",en:"RUNNING"},collected:{zh:"采集完成",en:"COLLECTED"},registered:{zh:"已登记",en:"REGISTERED"},failed:{zh:"运行失败",en:"FAILED"}};
   const status = executionStatus === "running" ? {tone:"running",zh:"真实 P0 运行中",en:"Real P0 running"} : executionStatus === "collected" ? {tone:"check",zh:"采集完成，待登记",en:"Collected; registration pending"} : executionStatus === "registered" ? {tone:"pass",zh:"P0 结果已登记",en:"P0 result registered"} : executionStatus === "failed" ? {tone:"fail",zh:"P0 运行失败",en:"P0 execution failed"} : runtime.launch_ready ? {tone:"pass",zh:"可启动真实 P0",en:"P0 launch ready"} : (runtime.environment_ready ? {tone:"check",zh:"环境通过，待 smoke",en:"Runtime ready; smoke pending"} : {tone:"revise",zh:"环境未就绪",en:"Runtime not ready"});
   const executionLabel = executionLabels[executionStatus] || {zh:"未启动",en:"PENDING"};
+  const liveRuns = executions.map((row) => {
+    const progress = row.progress || {};
+    const runStatus = String(row.status || "pending").toUpperCase();
+    const candidateProgress = progress.candidates_total ? ` · ${progress.candidates_completed || progress.candidate_index || 0}/${progress.candidates_total} candidates` : "";
+    return `<div><b>${esc(row.idea_id || "runtime")}</b><span>${esc(runStatus)} · ${esc(progress.stage || row.stage || "--")} · ${experimentNumber(progress.environment_episodes || 0)} episodes · ${experimentNumber(progress.model_calls || 0)} calls · ${experimentNumber(progress.elapsed_hours || 0)}h${candidateProgress}</span></div>`;
+  }).join("");
   const stageRows = [
     ["harness_ready", language === "zh" ? "Harness" : "Harness"],
     ["package_ready", language === "zh" ? "ALFWorld + TextWorld" : "ALFWorld + TextWorld"],
     ["data_ready", language === "zh" ? "PDDL / game 数据" : "PDDL / game data"],
     ["smoke_rollout_ready", language === "zh" ? "轻量 runtime smoke" : "lightweight runtime smoke"],
   ].map(([key,label],index) => `<span class="runtime-stage ${stages[key] ? "stage-pass" : "stage-pending"}"><i>${index+1}</i><b>${esc(label)}</b><small>${stages[key] ? (language === "zh" ? "通过" : "PASS") : (language === "zh" ? "未完成" : "PENDING")}</small></span>`).join("") + `<span class="runtime-stage ${executionStatus === "failed" ? "stage-fail" : (stages.p0_execution_started ? "stage-pass" : "stage-pending")}"><i>5</i><b>${language === "zh" ? "正式 P0" : "formal P0"}</b><small>${language === "zh" ? executionLabel.zh : executionLabel.en}</small></span>`;
-  return `<section class="panel experiment-runtime-panel"><div class="idea-panel-heading"><div><h3 id="p0-runtime-readiness" data-toc="false">${language === "zh" ? "P0 运行环境 readiness" : "P0 runtime readiness"}</h3><p class="section-intro">${language === "zh" ? "科学授权、harness、依赖、数据、轻量 runtime smoke 和正式实验分开记账。轻量 smoke 只验证 Qwen tokenizer/chat template、各权重 shard 可读，以及真实 ALFWorld OOD 的 reset → parser → env.step；完整 7B 权重加载与生成只在正式 P0 事务里验证，失败不会登记科学结果。" : "Scientific authorization, harness, dependencies, data, a lightweight runtime smoke, and formal execution are tracked separately. The smoke checks the Qwen tokenizer/chat template, readability of every weight shard, and a real ALFWorld OOD reset → parser → env.step. Full 7B loading/generation is validated only by the formal P0 transaction, and failures cannot be registered as scientific results."}</p></div><span class="experiment-status-badge status-${status.tone}">${language === "zh" ? status.zh : status.en}</span></div><div class="experiment-runtime-stages">${stageRows}</div><div class="experiment-runtime-grid"><div><b>${gpu.name ? esc(gpu.name) : "--"}</b><span>${gpu.memory_free_mib ? `${Math.round(gpu.memory_free_mib/1024)} GB ${language === "zh" ? "空闲显存" : "VRAM free"}` : (language === "zh" ? "未检测到 GPU" : "No GPU detected")}</span></div><div><b>${runtime.model?.ready ? "YES" : "NO"}</b><span>${language === "zh" ? "Qwen2.5-7B 本地模型" : "local Qwen2.5-7B"}</span></div><div><b>${experimentNumber(runtime.data_disk_free_gib || 0)} GB</b><span>${language === "zh" ? "实验数据盘空闲" : "experiment disk free"}</span></div><div><b>${supported.has("update-trust-region") ? "YES" : "NO"}</b><span>A-1 harness</span></div><div><b>${supported.has("budgeted-evolution-controller") ? "YES" : "NO"}</b><span>A-2 harness</span></div><div><b>${Object.values(modules).filter(Boolean).length}/${Object.keys(modules).length || 3}</b><span>${language === "zh" ? "Python 运行依赖" : "Python runtime deps"}</span></div><div><b>${runtime.alfworld_data?.ready ? "YES" : "NO"}</b><span>${language === "zh" ? "ALFWorld PDDL / game 数据" : "ALFWorld PDDL / game data"}</span></div></div>${blockerRows ? `<div class="experiment-runtime-blockers"><b>${language === "zh" ? "当前阻塞" : "Current blockers"}</b><ul>${blockerRows}</ul></div>` : (runtime.smoke_rollout?.ready ? `<div class="experiment-runtime-ready">${language === "zh" ? "机器依赖、数据和轻量 runtime smoke 均通过；已授权 P0 现在可以启动，但尚未产生任何实验效果。" : "Machine dependencies, data, and the lightweight runtime smoke all pass; authorized P0s may now launch, but no experimental effect has been measured yet."}</div>` : `<div class="experiment-runtime-blockers"><b>${language === "zh" ? "下一步" : "Next"}</b><ul><li>${language === "zh" ? "先完成轻量 runtime smoke：Qwen tokenizer/权重 shard 可读 + ALFWorld OOD 单步链路；通过后 collect 才解锁。" : "First clear the lightweight runtime smoke: Qwen tokenizer/weight-shard readability plus one ALFWorld OOD environment step; collection unlocks only after it passes."}</li></ul></div>`)}</section>`;
+  return `<section class="panel experiment-runtime-panel"><div class="idea-panel-heading"><div><h3 id="p0-runtime-readiness" data-toc="false">${language === "zh" ? "P0 运行环境 readiness" : "P0 runtime readiness"}</h3><p class="section-intro">${language === "zh" ? "科学授权、harness、依赖、数据、轻量 runtime smoke 和正式实验分开记账。轻量 smoke 只验证 Qwen tokenizer/chat template、各权重 shard 可读，以及真实 ALFWorld OOD 的 reset → parser → env.step；完整 7B 权重加载与生成只在正式 P0 事务里验证，失败不会登记科学结果。" : "Scientific authorization, harness, dependencies, data, a lightweight runtime smoke, and formal execution are tracked separately. The smoke checks the Qwen tokenizer/chat template, readability of every weight shard, and a real ALFWorld OOD reset → parser → env.step. Full 7B loading/generation is validated only by the formal P0 transaction, and failures cannot be registered as scientific results."}</p></div><span class="experiment-status-badge status-${status.tone}">${language === "zh" ? status.zh : status.en}</span></div><div class="experiment-runtime-stages">${stageRows}</div>${liveRuns ? `<div class="experiment-live-runs">${liveRuns}</div>` : ""}<div class="experiment-runtime-grid"><div><b>${gpu.name ? esc(gpu.name) : "--"}</b><span>${gpu.memory_free_mib ? `${Math.round(gpu.memory_free_mib/1024)} GB ${language === "zh" ? "空闲显存" : "VRAM free"}` : (language === "zh" ? "未检测到 GPU" : "No GPU detected")}</span></div><div><b>${runtime.model?.ready ? "YES" : "NO"}</b><span>${language === "zh" ? "Qwen2.5-7B 本地模型" : "local Qwen2.5-7B"}</span></div><div><b>${experimentNumber(runtime.data_disk_free_gib || 0)} GB</b><span>${language === "zh" ? "实验数据盘空闲" : "experiment disk free"}</span></div><div><b>${supported.has("update-trust-region") ? "YES" : "NO"}</b><span>A-1 harness</span></div><div><b>${supported.has("budgeted-evolution-controller") ? "YES" : "NO"}</b><span>A-2 harness</span></div><div><b>${Object.values(modules).filter(Boolean).length}/${Object.keys(modules).length || 3}</b><span>${language === "zh" ? "Python 运行依赖" : "Python runtime deps"}</span></div><div><b>${runtime.alfworld_data?.ready ? "YES" : "NO"}</b><span>${language === "zh" ? "ALFWorld PDDL / game 数据" : "ALFWorld PDDL / game data"}</span></div></div>${blockerRows ? `<div class="experiment-runtime-blockers"><b>${language === "zh" ? "当前阻塞" : "Current blockers"}</b><ul>${blockerRows}</ul></div>` : (runtime.smoke_rollout?.ready ? `<div class="experiment-runtime-ready">${language === "zh" ? "机器依赖、数据和轻量 runtime smoke 均通过；已授权 P0 现在可以启动，但尚未产生任何实验效果。" : "Machine dependencies, data, and the lightweight runtime smoke all pass; authorized P0s may now launch, but no experimental effect has been measured yet."}</div>` : `<div class="experiment-runtime-blockers"><b>${language === "zh" ? "下一步" : "Next"}</b><ul><li>${language === "zh" ? "先完成轻量 runtime smoke：Qwen tokenizer/权重 shard 可读 + ALFWorld OOD 单步链路；通过后 collect 才解锁。" : "First clear the lightweight runtime smoke: Qwen tokenizer/weight-shard readability plus one ALFWorld OOD environment step; collection unlocks only after it passes."}</li></ul></div>`)}</section>`;
 }
 function preP0IdentifiabilityState() {
   return window.RESEARCH_SYSTEM_STATE?.pre_p0_identifiability || {summary:{},policy:{},checks:[],nodes:[]};
@@ -1604,11 +1657,12 @@ function renderExperimentResourceLedger() {
 }
 function renderExperimentResultsSnapshot() {
   const plan = p0ExperimentPlan();
-  const runtimeExecution = p0RuntimeReadiness()?.execution_state || {};
+  const runtimeExecutions = p0RuntimeExecutions();
   const rows = (plan.ideas || []).map((item) => {
     const phase = experimentPilotPhase(item.id,"P0");
     const result = phase?.result;
-    const liveStatus = runtimeExecution.idea_id === item.id ? String(runtimeExecution.status || "").toLowerCase() : "";
+    const runtimeExecution = runtimeExecutions.find((row) => row.idea_id === item.id) || {};
+    const liveStatus = String(runtimeExecution.status || "").toLowerCase();
     const liveMeta = liveStatus === "running" ? {tone:"running",zh:"运行中",en:"Running"} : liveStatus === "collected" ? {tone:"check",zh:"采集完成，待登记",en:"Collected, pending registration"} : liveStatus === "failed" ? {tone:"fail",zh:"运行失败",en:"Execution failed"} : liveStatus === "registered" ? {tone:"pass",zh:"已登记",en:"Registered"} : null;
     const status = result ? experimentPhaseMeta(result.result) : (liveMeta || (phase?.execution_authorized ? {tone:"ready",zh:"已授权，未运行",en:"Authorized, not run"} : p0StatusMeta(item.status)));
     const metrics = result ? Object.entries(result.metrics || {}).slice(0,4).map(([key,value]) => `${esc(key.replaceAll("_"," "))}=${experimentNumber(value)}`).join(" · ") : (language === "zh" ? "尚无真实效果数据" : "No measured effect yet");

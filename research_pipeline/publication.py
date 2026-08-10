@@ -12,6 +12,8 @@ from typing import Any
 from .config import PROJECT_ROOT, StorageSettings
 
 DAILY_ARTIFACTS = (
+    "generated/human-terminal-idea-state.json",
+    "generated/human-terminal-idea-state.js",
     "generated/research-system-state.json",
     "generated/research-system-state.js",
 )

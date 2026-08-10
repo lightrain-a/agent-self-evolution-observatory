@@ -7,6 +7,7 @@ from typing import Any
 
 from .config import PROJECT_ROOT
 from .final_advisor_audit import TARGET, build_final_advisor_audit
+from .human_terminal_state import build_human_terminal_state
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "discussion-ready-ideas.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "discussion-ready-ideas.js"
@@ -53,15 +54,16 @@ def build_discussion_portfolio() -> dict[str, Any]:
     final = build_final_advisor_audit()
     gate = {row["idea_id"]: row for row in final["ideas"]}
     provenance = _r2_provenance()
+    terminal = build_human_terminal_state()
 
-    rows: list[dict[str, Any]] = []
+    legacy_rows: list[dict[str, Any]] = []
     for idea in current.get("ideas", []):
         idea_id = idea.get("idea_id")
         audit = gate.get(idea_id) or {}
         if audit.get("verdict") != "pass":
             continue
         source = provenance.get(idea_id) or {}
-        rows.append(
+        legacy_rows.append(
             {
                 "source": source.get("source", "r32-final"),
                 "id": idea_id,
@@ -77,7 +79,17 @@ def build_discussion_portfolio() -> dict[str, Any]:
             }
         )
 
-    ready = len(rows) == TARGET and final["summary"].get("ready") is True
+    rows: list[dict[str, Any]] = []
+    for idea_id, meta in terminal["parents"].items():
+        if meta.get("terminal_state") not in {"p0", "p0-ready"}:
+            continue
+        rows.append({"source":"human-terminal-parent","id":idea_id,"title":meta.get("final_parent_mechanism") or {},"terminal_state":meta.get("terminal_state"),"human_parent":True,"reviewed":True,"final_verdict":"terminal-human-decision","parent_ids":[]})
+    for idea_id, meta in terminal["independent_methods"].items():
+        if meta.get("terminal_state") not in {"p0", "p0-ready"}:
+            continue
+        rows.append({"source":"terminal-independent-method","id":idea_id,"title":meta.get("title") or {},"terminal_state":meta.get("terminal_state"),"human_parent":False,"reviewed":True,"final_verdict":"terminal-human-compatible","parent_ids":[]})
+    rows.sort(key=lambda row: (0 if row.get("human_parent") else 1, str(row.get("id"))))
+    ready = terminal["summary"].get("human_parents") == 26
     return {
         "schema_version": "2.0",
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
@@ -86,15 +98,16 @@ def build_discussion_portfolio() -> dict[str, Any]:
         "remaining": max(0, TARGET - len(rows)),
         "ready": ready,
         "final_summary": final["summary"],
+        "legacy_r3_final_passes": legacy_rows,
         "policy": {
-            "strict_final_pass_only": True,
-            "r2_is_provenance_only": True,
-            "historical_r3_not_counted_as_current_verdict": True,
-            "two_model_unanimous_pass_required": True,
-            "fresh_primary_source_collision_gate_required": True,
-            "supplementary_machine_school_not_counted": True,
-            "revise_not_counted": True,
-            "block_not_counted": True,
+            "terminal_human_state_is_active_source_of_truth": True,
+            "active_states": ["p0", "p0-ready"],
+            "merge_and_drop_excluded": True,
+            "absorbed_children_excluded_from_advisor_pool": True,
+            "independent_terminal_methods_allowed": True,
+            "readiness_is_terminalization_not_legacy_pass_count": True,
+            "legacy_r3_rows_are_traceability_only": True,
+            "legacy_r3_required_two_model_and_collision_gates": True,
             "no_portfolio_shortlist": True,
         },
         "ideas": rows,

@@ -7,15 +7,15 @@ from typing import Any, Iterable
 from .p0_common import mean, rounded, safe_div
 
 
-def _decision_utility(seq: dict[str, Any], decision: tuple[int, int], config: dict[str, Any]) -> float:
-    analysis = config.get("analysis") or {}
-    selected_index, observed_index = decision
-    selected = seq["rounds"][selected_index]
-    observed = seq["rounds"][observed_index]
+def _policy_objective(seqs: list[dict[str, Any]], selector) -> tuple[float, float, float]:
+    """Lexicographic objective matching the claim: success, regression, then calls."""
+    decisions = [selector(seq) for seq in seqs]
+    selected = [seq["rounds"][decision[0]] for seq, decision in zip(seqs, decisions)]
+    observed = [seq["rounds"][decision[1]] for seq, decision in zip(seqs, decisions)]
     return (
-        float(selected["success"])
-        - float(analysis.get("regression_lambda", 0.4)) * float(selected.get("regression", 0.0))
-        - float(analysis.get("cost_lambda", 0.01)) * float(observed["cumulative_calls"])
+        mean(float(row["success"]) for row in selected),
+        -mean(float(row.get("regression", 0.0)) for row in selected),
+        -mean(float(row["cumulative_calls"]) for row in observed),
     )
 
 
@@ -29,19 +29,19 @@ def _heuristic_grid(config: dict[str, Any]) -> Iterable[tuple[float, float, floa
     for min_gain in grid.get("min_gain", [0.0, 0.02, 0.05]):
         for max_reg in grid.get("max_probe_regression", [0.1, 0.25, 0.4]):
             for max_dis in grid.get("max_disagreement", [0.2, 0.4, 0.6]):
-                for max_calls in grid.get("max_calls", [4, 8, 12]):
-                    yield float(min_gain), float(max_reg), float(max_dis), int(max_calls)
+                for max_rounds in grid.get("max_rounds", [1, 2, 3, 4]):
+                    yield float(min_gain), float(max_reg), float(max_dis), int(max_rounds)
 
 
 def _heuristic(seq: dict[str, Any], params: tuple[float, float, float, int]) -> tuple[int, int]:
-    min_gain, max_reg, max_dis, max_calls = params
+    min_gain, max_reg, max_dis, max_rounds = params
     selected = 0
     for index, row in enumerate(seq["rounds"]):
         if index > 0 and (
             float(row["marginal_gain"]) < min_gain
             or float(row["probe_regression"]) > max_reg
             or float(row["disagreement"]) > max_dis
-            or int(row["cumulative_calls"]) > max_calls
+            or int(row.get("round", index + 1)) > max_rounds
         ):
             return max(0, index - 1), index
         selected = index
@@ -51,7 +51,7 @@ def _heuristic(seq: dict[str, Any], params: tuple[float, float, float, int]) -> 
 def _fit_heuristic(seqs: list[dict[str, Any]], config: dict[str, Any]) -> tuple[float, float, float, int]:
     best: tuple[float, tuple[float, float, float, int]] | None = None
     for params in _heuristic_grid(config):
-        score = mean(_decision_utility(seq, _heuristic(seq, params), config) for seq in seqs)
+        score = _policy_objective(seqs, lambda seq, p=params: _heuristic(seq, p))
         if best is None or score > best[0]:
             best = (score, params)
     if best is None:
@@ -92,7 +92,7 @@ def _fit_linear(seqs: list[dict[str, Any]], config: dict[str, Any]):
                 for w3 in levels:
                     weights = (w0, w1, w2, w3)
                     for threshold in thresholds:
-                        score = mean(_decision_utility(seq, _linear(seq, weights, threshold, scales), config) for seq in seqs)
+                        score = _policy_objective(seqs, lambda seq, w=weights, t=threshold: _linear(seq, w, t, scales))
                         if best is None or score > best[0]:
                             best = (score, weights, threshold)
     if best is None:
@@ -125,24 +125,24 @@ def _evaluate_table(hidden: list[dict[str, Any]], heuristic, weights, threshold,
     ]
 
 
-def _comparison(table: list[dict[str, Any]]) -> tuple[dict[str, Any], dict[str, Any], float, float]:
+def _comparison(table: list[dict[str, Any]], success_tolerance: float) -> tuple[dict[str, Any], dict[str, Any], float, float]:
     by_name = {row["policy"]: row for row in table}
     proposed = by_name["learned-linear-controller"]
     simple = [by_name[name] for name in ("fixed-1", "fixed-2", "fixed-4", "tuned-heuristic")]
-    eligible = [row for row in simple if row["success_rate"] >= proposed["success_rate"] - 0.02]
+    eligible = [row for row in simple if row["success_rate"] >= proposed["success_rate"] - success_tolerance]
     strongest = min(eligible or simple, key=lambda row: (row["mean_calls"], -row["success_rate"], row["regression_rate"]))
     saved = safe_div(strongest["mean_calls"] - proposed["mean_calls"], strongest["mean_calls"])
     success_loss = strongest["success_rate"] - proposed["success_rate"]
     return proposed, strongest, saved, success_loss
 
 
-def _bootstrap_call_saving_interval(hidden: list[dict[str, Any]], heuristic, weights, threshold, scales, confidence: float, seed: int, samples: int = 2000) -> tuple[float, float]:
+def _bootstrap_call_saving_interval(hidden: list[dict[str, Any]], heuristic, weights, threshold, scales, confidence: float, seed: int, success_tolerance: float, samples: int = 2000) -> tuple[float, float]:
     rng = random.Random(seed)
     n = len(hidden)
     values: list[float] = []
     for _ in range(samples):
         sampled = [rng.choice(hidden) for _ in range(n)]
-        _, _, saved, _ = _comparison(_evaluate_table(sampled, heuristic, weights, threshold, scales))
+        _, _, saved, _ = _comparison(_evaluate_table(sampled, heuristic, weights, threshold, scales), success_tolerance)
         values.append(saved)
     values.sort()
     alpha = max(0.0, min(1.0, 1.0 - confidence))
@@ -199,14 +199,17 @@ def analyze(rows: list[dict[str, Any]], config: dict[str, Any]) -> dict[str, Any
     heuristic = _fit_heuristic(discovery, config)
     weights, threshold, scales = _fit_linear(discovery, config)
     table = _evaluate_table(hidden, heuristic, weights, threshold, scales)
-    proposed, strongest, saved, success_loss = _comparison(table)
+    comparison_tolerance = float(
+        analysis_cfg.get("screening_max_success_loss", (config.get("go_gate") or {}).get("max_success_loss", 0.0))
+    )
+    proposed, strongest, saved, success_loss = _comparison(table, comparison_tolerance)
     common = {
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0",
         "discovery_sequences": len(discovery),
         "hidden_sequences": len(hidden),
         "identifiability": ident_payload,
-        "frozen_heuristic": {"min_gain": heuristic[0], "max_probe_regression": heuristic[1], "max_disagreement": heuristic[2], "max_calls": heuristic[3]},
+        "frozen_heuristic": {"min_gain": heuristic[0], "max_probe_regression": heuristic[1], "max_disagreement": heuristic[2], "max_rounds": heuristic[3]},
         "frozen_linear_controller": {"weights": list(weights), "threshold": threshold},
         "table": table,
         "strongest_simple_baseline": strongest["policy"],
@@ -224,7 +227,7 @@ def analyze(rows: list[dict[str, Any]], config: dict[str, Any]) -> dict[str, Any
         }
 
     confidence = float(analysis_cfg.get("bootstrap_confidence", 0.95))
-    saving_ci = _bootstrap_call_saving_interval(hidden, heuristic, weights, threshold, scales, confidence, int((config.get("seeds") or [42])[0]))
+    saving_ci = _bootstrap_call_saving_interval(hidden, heuristic, weights, threshold, scales, confidence, int((config.get("seeds") or [42])[0]), comparison_tolerance)
     gate = config.get("go_gate") or {}
     point_go = (
         saved >= float(gate.get("min_call_saving", 0.25))
