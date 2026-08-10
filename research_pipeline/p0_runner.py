@@ -32,6 +32,7 @@ from .p0_common import (
     write_readiness,
 )
 from .pilot_registry import CURRENT_P0_GATE
+from .pre_p0_identifiability import execution_status as pre_p0_execution_status
 
 
 def config_path(idea_id: str) -> Path:
@@ -151,6 +152,9 @@ def collect_real_p0(
 ) -> tuple[dict[str, Any], dict[str, Any], Path]:
     if CURRENT_P0_GATE.get(idea_id) != "ready":
         raise RuntimeError(f"{idea_id} is not scientifically authorized for P0")
+    pre_p0_status = pre_p0_execution_status(idea_id)
+    if pre_p0_status != "pass":
+        raise RuntimeError(f"{idea_id} is blocked by Pre-P0 identifiability gate: {pre_p0_status}")
     smoke_path = data_root / "p0-runtime-smoke.json"
     readiness = runtime_preflight(model_path, data_root, Path(sys.executable), extra_pythonpath, alfworld_data, smoke_path)
     if not readiness["launch_ready"]:

@@ -21,6 +21,7 @@ from .idea_collision import analyze_collisions
 from .idea_lineage import build_lineage
 from .live_pipeline import load_live_corpus
 from .pilot_registry import build_pilot_registry
+from .pre_p0_identifiability import build_pre_p0_identifiability_audit
 from .review_repair import build_repair_queue
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "research-system-state.json"
@@ -37,6 +38,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     lineage = state["lineage"]["summary"]
     pilots = state["pilot_registry"]["summary"]
     iteration = state["experiment_iteration"]["summary"]
+    pre_p0 = state["pre_p0_identifiability"]["summary"]
     repairs = state["repair_queue"]["summary"]
     discovery = state["idea_discovery_v3"]["summary"]
     repaired = state["idea_discovery_v31"]["summary"]
@@ -50,6 +52,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"ResearchAgent / MOOSE-Chem / SciAgents / AI-Scientist-v2 / RD-Agent", "component":{"en":"Solution-first branch search","zh":"解决方案优先的分支搜索"}, "status":"running", "evidence":{"en":f"{discovery['raw_children']} v3 children / {discovery['external_revise']} R2 revise / {repaired['children']} v3.1 repairs","zh":f"{discovery['raw_children']} 个 v3 子节点 / {discovery['external_revise']} 个 R2 REVISE / {repaired['children']} 个 v3.1 修订"}},
         {"source":"ResearchAgent / MOOSE-Chem / Co-Scientist / HypoRefine / Virtual Scientists / autoresearch", "component":{"en":"Constrained composition and conditional revival","zh":"受约束组合与条件复活"}, "status":"running", "evidence":{"en":f"{v4['raw_candidates']} v4 candidates / {v4['tournament_finalists']} finalists / {v4['external_reviewed']} reviewed","zh":f"{v4['raw_candidates']} 个 v4 候选 / {v4['tournament_finalists']} 个 finalists / {v4['external_reviewed']} 个已复核"}},
         {"source":"HypoRefine / IdeaForge / ScholarEval / InnoEval / SciAtlas / InternAgent / AutoScientists", "component":{"en":"Wide-search simplification-challenge ideation","zh":"宽搜索与简化挑战式 Idea 发现"}, "status":"running", "evidence":{"en":f"{v5['raw_candidates']} v5 candidates / {v5['external_reviewed']} R2 reviewed / {v5['external_pass']} PASS","zh":f"{v5['raw_candidates']} 个 v5 候选 / {v5['external_reviewed']} 个 R2 已审 / {v5['external_pass']} 个 PASS"}},
+        {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Pre-P0 identifiability auditor","zh":"Pre-P0 实验可识别性审计"}, "status":"running", "evidence":{"en":f"{pre_p0['execution_ready']}/{pre_p0['audited']} current contracts execution-ready","zh":f"当前 {pre_p0['execution_ready']}/{pre_p0['audited']} 份合同允许启动实验"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Pilot registry and result feedback","zh":"Pilot 注册表与结果回流"}, "status":"running", "evidence":{"en":f"{pilots['phases']} phases / {pilots['valid_result_files']} executed results","zh":f"{pilots['phases']} 个阶段 / {pilots['valid_result_files']} 个已执行结果"}},
         {"source":"AI-Scientist-v2 / AIDE / RD-Agent / ML-Master / AIRA / Agent Laboratory", "component":{"en":"Experiment diagnosis and atomic repair tree","zh":"实验诊断与原子修复树"}, "status":"running", "evidence":{"en":f"{iteration['nodes']} pilot nodes / {iteration['repair_children']} atomic repair children / {iteration['scale_up_allowed']} scale-up","zh":f"{iteration['nodes']} 个 Pilot 节点 / {iteration['repair_children']} 个原子修复子节点 / {iteration['scale_up_allowed']} 个可扩大"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Unrestricted autonomous code execution tree","zh":"不受限制的自主代码执行树"}, "status":"intentionally-disabled", "evidence":{"en":"Only sandboxed/manual experiment execution is allowed; results can still flow back automatically.","zh":"只允许沙箱或人工确认后的实验执行；合法结果仍可自动回流。"}},
@@ -104,7 +107,8 @@ def build_research_system_state() -> dict[str, Any]:
     evidence_graph = build_evidence_graph(corpus, idea_bank)
     collision_engine = analyze_collisions(idea_bank)
     lineage = build_lineage(idea_bank, collision_engine)
-    pilot_registry = build_pilot_registry(idea_bank)
+    pre_p0_identifiability = build_pre_p0_identifiability_audit(idea_bank)
+    pilot_registry = build_pilot_registry(idea_bank, pre_p0_audit=pre_p0_identifiability)
     experiment_iteration = build_experiment_iteration_state()
     repair_queue = build_repair_queue(idea_bank, collision_engine, pilot_registry, experiment_iteration)
     idea_discovery_v3 = build_idea_discovery_v3()
@@ -143,6 +147,8 @@ def build_research_system_state() -> dict[str, Any]:
             "collision_flags":collision_engine["summary"]["flagged_pairs"],
             "lineage_edges":lineage["summary"]["edges"],
             "pilot_results":pilot_registry["summary"]["valid_result_files"],
+            "pre_p0_audited":pre_p0_identifiability["summary"]["audited"],
+            "pre_p0_ready":pre_p0_identifiability["summary"]["execution_ready"],
             "experiment_diagnoses":experiment_iteration["summary"]["nodes"],
             "experiment_repair_children":experiment_iteration["summary"]["repair_children"],
             "experiment_scale_up":experiment_iteration["summary"]["scale_up_allowed"],
@@ -172,6 +178,7 @@ def build_research_system_state() -> dict[str, Any]:
         "evidence_graph":evidence_graph,
         "collision_engine":collision_engine,
         "lineage":lineage,
+        "pre_p0_identifiability":pre_p0_identifiability,
         "pilot_registry":pilot_registry,
         "experiment_iteration":experiment_iteration,
         "repair_queue":repair_queue,
@@ -195,6 +202,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"evidence-coverage", "pass":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"] >= 20, "detail":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"]},
         {"key":"collision-engine", "pass":state["collision_engine"]["summary"]["pairwise_comparisons"] > 0, "detail":state["collision_engine"]["summary"]["pairwise_comparisons"]},
         {"key":"lineage", "pass":state["lineage"]["summary"]["idea_nodes"] >= 24, "detail":state["lineage"]["summary"]["idea_nodes"]},
+        {"key":"pre-p0-identifiability", "pass":state["pre_p0_identifiability"]["policy"]["p0_execution_requires_pre_p0_pass"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_p0_pass"], "detail":state["pre_p0_identifiability"]["summary"]},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
         {"key":"final-advisor-gate", "pass":state["summary"]["final_ready"] and state["summary"]["final_pass"] == state["summary"]["discussion_target"] and state["summary"]["final_revise"] == 0 and state["summary"]["final_block"] == 0, "detail":{"pass":state["summary"]["final_pass"],"target":state["summary"]["discussion_target"],"revise":state["summary"]["final_revise"],"block":state["summary"]["final_block"]}},
@@ -210,6 +218,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if state["evidence_graph"]["summary"]["nodes"] <= state["summary"]["papers"]: errors.append("evidence graph lacks non-paper nodes")
     if state["collision_engine"]["summary"]["pairwise_comparisons"] <= 0: errors.append("collision engine did not run")
     if state["pilot_registry"]["summary"]["phases"] != state["summary"]["passed_ideas"] * 3: errors.append("pilot phase count mismatch")
+    if not state["pilot_registry"]["policy"]["p0_execution_requires_pre_p0_pass"]: errors.append("P0 execution must require Pre-P0 identifiability PASS")
     if not state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"]: errors.append("automatic P0-to-P1 escalation must stay forbidden")
     if not state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"]: errors.append("non-identifiable pilots must not update scientific belief")
     if state["pilot_registry"]["summary"]["invalid_approval_files"] != 0: errors.append("invalid pilot approval files")

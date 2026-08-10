@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import StorageSettings
+from .pre_p0_identifiability import build_pre_p0_identifiability_audit
 
 VALID_PHASES = {"P0", "P1", "P2"}
 VALID_RESULTS = {"pass", "revise", "fail", "blocked", "running", "planned"}
@@ -150,12 +151,15 @@ def build_pilot_registry(
     *,
     result_dir: Path | None = None,
     approval_dir: Path | None = None,
+    pre_p0_audit: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     storage = StorageSettings.from_env()
     result_dir = result_dir or storage.run_dir / "pilots" / "results"
     approval_dir = approval_dir or result_dir.parent / "approvals"
     valid_results, invalid_results = load_results(result_dir)
     valid_approvals, invalid_approvals = load_approvals(approval_dir)
+    pre_p0_audit = pre_p0_audit or build_pre_p0_identifiability_audit(idea_bank)
+    pre_p0_by_id = {str(node["idea_id"]): node for node in pre_p0_audit.get("nodes") or []}
     latest: dict[tuple[str, str], dict[str, Any]] = {}
     for result in sorted(valid_results, key=_result_order):
         latest[(str(result["idea_id"]), str(result["phase"]))] = result
@@ -176,10 +180,11 @@ def build_pilot_registry(
         approval = latest_approvals.get(idea_id)
         approval_decision = str((approval or {}).get("decision") or "")
         p0_gate_status = CURRENT_P0_GATE.get(idea_id, "not-current-p0-candidate")
+        pre_p0_status = str((pre_p0_by_id.get(idea_id) or {}).get("status") or "missing-contract")
         for phase in phases:
             phase_id = str(phase.get("id"))
             plan = _phase_plan(idea, phase)
-            authorized, blocked_by = _phase_authorization(phase_id, phase_statuses, approval_decision, p0_gate_status)
+            authorized, blocked_by = _phase_authorization(phase_id, phase_statuses, approval_decision, p0_gate_status, pre_p0_status)
             plan["execution_authorized"] = authorized
             plan["blocked_by"] = blocked_by
             plan["next_action"] = f"execute-{phase_id}" if authorized else _blocked_next_action(blocked_by)
@@ -211,6 +216,8 @@ def build_pilot_registry(
             "rank": idea.get("rank"),
             "state": state,
             "p0_gate_status": CURRENT_P0_GATE.get(idea_id, "not-current-p0-candidate"),
+            "pre_p0_gate_status": str((pre_p0_by_id.get(idea_id) or {}).get("status") or "missing-contract"),
+            "pre_p0_gate": pre_p0_by_id.get(idea_id),
             "p0_human_approval": approval,
             "completed_phases": sum(phase["status"] in {"pass", "revise", "fail", "blocked"} for phase in phases),
             "total_phases": len(phases),
@@ -231,6 +238,7 @@ def build_pilot_registry(
             "p0_pass_requires_explicit_human_approval_before_p1": True,
             "approval_artifact_required": True,
             "automatic_p0_to_p1_forbidden": True,
+            "p0_execution_requires_pre_p0_pass": True,
         },
         "summary": {
             "ideas": len(idea_states),
@@ -242,6 +250,7 @@ def build_pilot_registry(
             "invalid_approval_files": len(invalid_approvals),
             "awaiting_human_approval": sum(item["state"] == "awaiting-human-approval" for item in idea_states),
             "p0_authorized": sum(any(phase["phase"] == "P0" and phase["status"] in {"planned", "running"} and phase.get("execution_authorized") for phase in by_idea.get(str(item["idea_id"]), [])) for item in idea_states),
+            "pre_p0_ready": sum(str(item.get("pre_p0_gate_status")) == "pass" for item in idea_states),
             "p1_authorized": sum(any(phase["phase"] == "P1" and phase["status"] in {"planned", "running"} and phase.get("execution_authorized") for phase in by_idea.get(str(item["idea_id"]), [])) for item in idea_states),
             "pilot_ready": sum(item["state"] == "pilot-ready" for item in idea_states),
             "selected_ready": sum(item["state"] == "selected-ready" for item in idea_states),
@@ -254,10 +263,12 @@ def build_pilot_registry(
     }
 
 
-def _phase_authorization(phase: str, statuses: dict[str, str], approval_decision: str, p0_gate_status: str) -> tuple[bool, str | None]:
+def _phase_authorization(phase: str, statuses: dict[str, str], approval_decision: str, p0_gate_status: str, pre_p0_status: str = "missing-contract") -> tuple[bool, str | None]:
     if phase == "P0":
         if p0_gate_status != "ready":
             return False, p0_gate_status
+        if pre_p0_status != "pass":
+            return False, "pre-p0-identifiability"
         return True, None
     if phase == "P1":
         if statuses.get("P0") != "pass":
@@ -287,6 +298,8 @@ def _blocked_next_action(blocked_by: str | None) -> str:
         return "redesign-method-before-P0"
     if blocked_by == "scenario-check":
         return "confirm-scenario-before-P0"
+    if blocked_by == "pre-p0-identifiability":
+        return "repair-pre-p0-identifiability-before-P0"
     if blocked_by == "not-current-p0-candidate":
         return "not-authorized-by-current-human-review"
     return "wait"

@@ -70,7 +70,7 @@ def main() -> None:
           portfolio: window.DISCUSSION_READY_IDEAS || {},
           stateSummary: window.RESEARCH_SYSTEM_STATE?.summary || {}
         };""")
-        require(system["components"] == 10, f"expected ten backend components, got {system['components']}")
+        require(system["components"] == 11, f"expected eleven backend components, got {system['components']}")
         require(system["progressItems"] == 6, f"expected six final-gate progress cells, got {system['progressItems']}")
         require((system["portfolio"].get("count"), system["portfolio"].get("target"), system["portfolio"].get("ready")) == (20, 20, True), f"wrong discussion portfolio: {system['portfolio']}")
         require("20/20" in system["text"] or "20 / 20" in system["text"], "20/20 final-gate progress is not visible")
@@ -121,8 +121,8 @@ def main() -> None:
         };""")
         require(ideas["chapters"] == 2, f"paper-ideas should have exactly two frontend chapters, got {ideas['chapters']}")
         require(ideas["p0Entry"] == 1 and ideas["p0Boards"] == 0 and ideas["experimentLinks"] >= 1, f"paper-ideas must expose only the compact experiment entry: {ideas['p0Entry']}/{ideas['p0Boards']}/{ideas['experimentLinks']}")
-        require(ideas["p0Summary"].get("gpu_hours_cap_ready_now") == 7 and ideas["p0Summary"].get("p1_authorized") == 0, f"P0 resource/approval summary is wrong: {ideas['p0Summary']}")
-        require(ideas["p0Policy"].get("automatic_p0_to_p1_forbidden") is True and ideas["p0Policy"].get("p0_pass_requires_human_approval") is True, f"P0 human approval policy is missing: {ideas['p0Policy']}")
+        require(ideas["p0Summary"].get("ready_now") == 0 and ideas["p0Summary"].get("pre_p0_blocked") == 4 and ideas["p0Summary"].get("gpu_hours_cap_ready_now") == 0 and ideas["p0Summary"].get("p1_authorized") == 0, f"P0 Pre-P0/resource summary is wrong: {ideas['p0Summary']}")
+        require(ideas["p0Policy"].get("pre_p0_identifiability_required") is True and ideas["p0Policy"].get("automatic_p0_to_p1_forbidden") is True and ideas["p0Policy"].get("p0_pass_requires_human_approval") is True, f"P0 human/Pre-P0 approval policy is missing: {ideas['p0Policy']}")
         require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (3, 11, 0), f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
         require(ideas["discussedGroups"] == 6 and ideas["discussedCards"] == 26, f"expected six scientific groups and 26 discussed ideas, got {ideas['discussedGroups']}/{ideas['discussedCards']}")
         require((ideas["readyCards"], ideas["redesignCards"], ideas["pausedCards"]) == (2, 17, 7), f"human-review status counts are wrong: {ideas['readyCards']}/{ideas['redesignCards']}/{ideas['pausedCards']}")
@@ -189,6 +189,12 @@ def main() -> None:
           resultRows: document.querySelectorAll('.experiment-results-table tbody tr').length,
           approvalRows: document.querySelectorAll('.experiment-approval-table tbody tr').length,
           gateCells: document.querySelectorAll('.experiment-gate-summary>span').length,
+          preP0Panels: document.querySelectorAll('.pre-p0-panel').length,
+          preP0Cards: document.querySelectorAll('.pre-p0-card').length,
+          preP0ReadyCards: document.querySelectorAll('.pre-p0-card.ready').length,
+          preP0BlockedCards: document.querySelectorAll('.pre-p0-card.blocked').length,
+          preP0ReadyState: Number(window.RESEARCH_SYSTEM_STATE?.pre_p0_identifiability?.summary?.execution_ready || 0),
+          preP0AuditedState: Number(window.RESEARCH_SYSTEM_STATE?.pre_p0_identifiability?.summary?.audited || 0),
           runtimePanels: document.querySelectorAll('.experiment-runtime-panel').length,
           runtimeCells: document.querySelectorAll('.experiment-runtime-grid>div').length,
           runtimeStages: document.querySelectorAll('.experiment-runtime-stages .runtime-stage').length,
@@ -212,11 +218,12 @@ def main() -> None:
         require(experiments["chapters"] == 3, f"experiments page must have three chapters, got {experiments['chapters']}")
         require((experiments["toc2"], experiments["toc3"], experiments["toc4"]) == (4, 3, 0), f"experiments TOC hierarchy is wrong: {experiments['toc2']}/{experiments['toc3']}/{experiments['toc4']}")
         require(experiments["board"] == 1 and experiments["cards"] == 5, f"experiment queue is incomplete: {experiments['board']}/{experiments['cards']}")
-        require((experiments["authorized"], experiments["collision"], experiments["redesign"], experiments["scenario"], experiments["openCards"]) == (2, 0, 2, 1, 0), f"experiment gate counts are wrong: {experiments['authorized']}/{experiments['collision']}/{experiments['redesign']}/{experiments['scenario']}/{experiments['openCards']}")
+        require((experiments["authorized"], experiments["collision"], experiments["redesign"], experiments["scenario"], experiments["openCards"]) == (0, 0, 2, 1, 0), f"experiment gate counts are wrong: {experiments['authorized']}/{experiments['collision']}/{experiments['redesign']}/{experiments['scenario']}/{experiments['openCards']}")
         require((experiments["phaseTracks"], experiments["phaseCells"], experiments["liveResults"]) == (5, 20, 5), f"phase/result tracking is incomplete: {experiments['phaseTracks']}/{experiments['phaseCells']}/{experiments['liveResults']}")
         require(experiments["executedResults"] == 0 and experiments["validResults"] == 0, f"unexecuted P0s must not fabricate effects: {experiments['executedResults']}/{experiments['validResults']}")
         require(experiments["ledger"] == 1 and experiments["ledgerCells"] == 6, f"resource ledger is incomplete: {experiments['ledger']}/{experiments['ledgerCells']}")
         require(experiments["resultRows"] == 5 and experiments["approvalRows"] == 5 and experiments["gateCells"] == 4, f"result/approval tables are incomplete: {experiments['resultRows']}/{experiments['approvalRows']}/{experiments['gateCells']}")
+        require(experiments["preP0Panels"] == 1 and experiments["preP0Cards"] == 4 and experiments["preP0ReadyCards"] == 0 and experiments["preP0BlockedCards"] == 4 and (experiments["preP0ReadyState"],experiments["preP0AuditedState"]) == (0,4), f"Pre-P0 panel/state is incomplete: {experiments['preP0Panels']}/{experiments['preP0Cards']}/{experiments['preP0ReadyCards']}/{experiments['preP0BlockedCards']} state={experiments['preP0ReadyState']}/{experiments['preP0AuditedState']}")
         require(experiments["runtimePanels"] == 1 and experiments["runtimeCells"] == 7 and experiments["runtimeStages"] == 5, f"runtime readiness panel is incomplete: {experiments['runtimePanels']}/{experiments['runtimeCells']}/{experiments['runtimeStages']}")
         require(experiments["iterationPanels"] == 1 and experiments["diagnosisCards"] == 4, f"experiment diagnosis panel is incomplete: {experiments['iterationPanels']}/{experiments['diagnosisCards']}")
         require(set(experiments["diagnosisTypes"]) == {"representation-signal-mismatch","no-label-variation","matched-simplification-tie","objective-claim-mismatch"}, f"unexpected experiment diagnoses: {experiments['diagnosisTypes']}")
@@ -224,9 +231,9 @@ def main() -> None:
         require(experiments["runtimeGpu"] >= 1 and experiments["runtimeModelReady"] and experiments["runtimeSupported"] == 2, f"runtime preflight lost GPU/model/harness readiness: {experiments}")
         require((experiments["runtimeReady"] and experiments["runtimeBlockers"] == 0) or ((not experiments["runtimeReady"]) and experiments["runtimeBlockers"] >= 1), f"runtime readiness/blocker state is inconsistent: {experiments}")
         require(experiments["launchReady"] == (experiments["runtimeReady"] and experiments["smokeReady"]), f"P0 launch must require both runtime and smoke readiness: {experiments}")
-        require((experiments["p0AuthorizedState"], experiments["p1AuthorizedState"]) == (2, 0), f"live authorization state is wrong: {experiments['p0AuthorizedState']}/{experiments['p1AuthorizedState']}")
+        require((experiments["p0AuthorizedState"], experiments["p1AuthorizedState"]) == (0, 0), f"live authorization state is wrong: {experiments['p0AuthorizedState']}/{experiments['p1AuthorizedState']}")
         require(("结果与效果总表" in experiments["text"] or "Results and effect snapshot" in experiments["text"]) and ("人工审批与下一阶段锁" in experiments["text"] or "Human approvals and next-phase locks" in experiments["text"]), "experiment result/approval sections are not visible")
-        require(("实验诊断与原子修复树" in experiments["text"] or "Experiment diagnosis and atomic repair tree" in experiments["text"]), "experiment diagnosis/repair section is not visible")
+        require(("Pre-P0" in experiments["text"] and ("实验诊断与原子修复树" in experiments["text"] or "Experiment diagnosis and atomic repair tree" in experiments["text"])), "Pre-P0 or experiment diagnosis/repair section is not visible")
         print("PASS")
         print("Focused system/idea pages verified in a real browser")
     finally:

@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from .pilot_registry import build_pilot_registry, validate_result
+from .pre_p0_identifiability import CHECKS, audit_contract
 
 
 PHASES = [{"id": p, "title": {"en": p}, "setup": {"en": "setup"}, "gate": {"en": "gate"}} for p in ("P0", "P1", "P2")]
@@ -13,6 +14,11 @@ PHASES = [{"id": p, "title": {"en": p}, "setup": {"en": "setup"}, "gate": {"en":
 
 def idea(idea_id: str) -> dict:
     return {"id": idea_id, "title": {"en": idea_id}, "rank": 1, "experiment_protocol": {"phases": PHASES}}
+
+
+def passing_pre_p0(idea_id: str) -> dict:
+    node = audit_contract(idea_id, {"code":"X","checks":{row["key"]:True for row in CHECKS}})
+    return {"schema_version":"1.0","policy":{"p0_execution_requires_pre_p0_pass":True},"summary":{"audited":1,"execution_ready":1,"blocked":0},"nodes":[node]}
 
 
 def p0_result(idea_id: str, next_action: str = "await-human-approval") -> dict:
@@ -35,7 +41,7 @@ class PilotRegistryGateTest(unittest.TestCase):
     def test_only_current_ready_p0_is_authorized(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
-            registry = build_pilot_registry(self.bank, result_dir=root / "results", approval_dir=root / "approvals")
+            registry = build_pilot_registry(self.bank, result_dir=root / "results", approval_dir=root / "approvals", pre_p0_audit=passing_pre_p0("update-trust-region"))
         by_id = {row["idea_id"]: row for row in registry["ideas"]}
         self.assertEqual(registry["summary"]["p0_authorized"], 1)
         self.assertEqual(by_id["update-trust-region"]["next_phase"], "P0")
@@ -47,7 +53,7 @@ class PilotRegistryGateTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td); (root / "results").mkdir()
             (root / "results" / "p0.json").write_text(json.dumps(p0_result("update-trust-region")), encoding="utf-8")
-            registry = build_pilot_registry(self.bank, result_dir=root / "results", approval_dir=root / "approvals")
+            registry = build_pilot_registry(self.bank, result_dir=root / "results", approval_dir=root / "approvals", pre_p0_audit=passing_pre_p0("update-trust-region"))
             row = next(x for x in registry["ideas"] if x["idea_id"] == "update-trust-region")
             self.assertEqual(row["state"], "awaiting-human-approval")
             self.assertIsNone(row["next_phase"])
@@ -59,7 +65,7 @@ class PilotRegistryGateTest(unittest.TestCase):
                 "idea_id": "update-trust-region", "after_phase": "P0", "decision": "approve",
                 "reviewed_by": "human", "reviewed_at": "2026-08-09T01:00:00Z", "rationale": "approved",
             }), encoding="utf-8")
-            registry = build_pilot_registry(self.bank, result_dir=root / "results", approval_dir=root / "approvals")
+            registry = build_pilot_registry(self.bank, result_dir=root / "results", approval_dir=root / "approvals", pre_p0_audit=passing_pre_p0("update-trust-region"))
             row = next(x for x in registry["ideas"] if x["idea_id"] == "update-trust-region")
             self.assertEqual(row["next_phase"], "P1")
             self.assertEqual(registry["summary"]["p1_authorized"], 1)

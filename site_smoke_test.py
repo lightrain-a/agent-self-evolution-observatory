@@ -236,8 +236,13 @@ def main() -> None:
     if (summary.get("v5_candidates"), summary.get("v5_finalists"), summary.get("v5_revivals")) != (36,32,8):
         fail("research-system state must expose the v5 wide-search round")
     components = research_state.get("components", [])
-    if len(components) != 10:
-        fail(f"research-system state must expose ten backend components, got {len(components)}")
+    if len(components) != 11:
+        fail(f"research-system state must expose eleven backend components, got {len(components)}")
+    pre_p0 = research_state.get("pre_p0_identifiability", {})
+    if pre_p0.get("summary", {}).get("audited") != 4 or pre_p0.get("summary", {}).get("execution_ready") != 0:
+        fail(f"Pre-P0 identifiability state is inconsistent: {pre_p0.get('summary')}")
+    if research_state.get("pilot_registry", {}).get("summary", {}).get("p0_authorized") != 0:
+        fail("P0 authorization must be zero while all current Pre-P0 contracts are blocked")
     graph_component = next((item for item in components if item.get("source") == "ResearchAgent"), {})
     if graph_component.get("component", {}).get("zh") != "引文与证据图谱":
         fail("citation/evidence component must be bilingual in the backend state")

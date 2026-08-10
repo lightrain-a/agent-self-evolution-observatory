@@ -69,13 +69,27 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(registry["phases"], 78)
         self.assertEqual(registry["invalid_result_files"], 0)
         self.assertEqual(registry["invalid_approval_files"], 0)
-        self.assertEqual(registry["p0_authorized"], 2)
+        self.assertEqual(registry["p0_authorized"], 0)
+        self.assertEqual(registry["pre_p0_ready"], 0)
         self.assertEqual(registry["p1_authorized"], 0)
         by_id = {item["idea_id"]: item for item in self.state["pilot_registry"]["ideas"]}
         self.assertEqual(by_id["outcome-equivalent-trajectory-contrast"]["p0_gate_status"], "method-redesign")
         self.assertEqual(by_id["workflow-generalization-certificate"]["p0_gate_status"], "method-redesign")
+        self.assertEqual(by_id["update-trust-region"]["pre_p0_gate_status"], "repair-required")
+        self.assertEqual(by_id["budgeted-evolution-controller"]["pre_p0_gate_status"], "repair-required")
+        self.assertTrue(self.state["pilot_registry"]["policy"]["p0_execution_requires_pre_p0_pass"])
         self.assertTrue(self.state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"])
         self.assertTrue(self.state["pilot_registry"]["policy"]["p0_pass_requires_explicit_human_approval_before_p1"])
+
+    def test_pre_p0_auditor_blocks_known_nonidentifiable_designs(self) -> None:
+        audit = self.state["pre_p0_identifiability"]
+        self.assertEqual(audit["summary"]["audited"], 4)
+        self.assertEqual(audit["summary"]["execution_ready"], 0)
+        by_code = {item["code"]: item for item in audit["nodes"]}
+        self.assertIn("representability", by_code["A-1"]["blockers"])
+        self.assertIn("target_variation", by_code["A-2"]["blockers"])
+        self.assertIn("baseline_disagreement", by_code["B-1"]["blockers"])
+        self.assertIn("claim_alignment", by_code["E-1"]["blockers"])
 
     def test_experiment_iteration_distinguishes_pilot_failure_layers(self) -> None:
         iteration = self.state["experiment_iteration"]
@@ -108,7 +122,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("AI-Scientist-v2", sources)
         self.assertTrue(any("Co-Scientist" in source for source in sources))
         self.assertTrue(any("HypoRefine" in source and "IdeaForge" in source for source in sources))
-        self.assertEqual(len(self.state["components"]), 10)
+        self.assertEqual(len(self.state["components"]), 11)
         self.assertEqual(self.state["summary"]["discussion_ready"], 20)
         self.assertEqual(self.state["summary"]["discussion_target"], 20)
         self.assertTrue(self.state["summary"]["final_ready"])
