@@ -35,8 +35,10 @@ window.PAGE_ARCHITECTURES = {
   },
   "system-overview":{
     chapters:[
-      {id:"system-design",title:{en:"I · Backend architecture and research data flow",zh:"第一章 · 后台架构与科研数据流"},question:{en:"How are literature, evidence, idea operators, reviews, pilots, persistent artifacts, and automation boundaries connected?",zh:"文献、证据、Idea 算子、审查、Pilot、持久化工件与自动化边界如何连接？"}},
-      {id:"current-ideas",title:{en:"II · Current ideas and decision status",zh:"第二章 · 当前 Idea 与决策状态"},question:{en:"Which ideas passed, which require repair, which were blocked, and what evidence is still missing?",zh:"哪些 Idea 通过、哪些需要重构、哪些已停止，以及目前还缺少什么实验依据？"}}
+      {id:"system-purpose",title:{en:"I · What the research system is designed to guarantee",zh:"第一章 · 科研系统到底要保证什么"},question:{en:"What makes this more than an automation script, and which guarantees should remain stable across projects?",zh:"这套系统为什么不只是自动化脚本，哪些保证应该跨项目保持稳定？"}},
+      {id:"research-lifecycle",title:{en:"II · How one research question moves through the system",zh:"第二章 · 一项研究如何流过系统"},question:{en:"What must be answered at each stage from evidence collection to an auditable scientific decision?",zh:"从证据收集到可审计科学结论，每一阶段必须回答什么问题？"}},
+      {id:"pre-experiment-compiler",title:{en:"III · Pre-Experiment Compiler and lessons learned",zh:"第三章 · 实验启动前编译器与经验沉淀"},question:{en:"How does the system detect unidentifiable, underpowered, or wasteful experiments before GPU spend?",zh:"系统如何在消耗 GPU 之前发现不可辨识、统计不足或资源浪费的实验设计？"}},
+      {id:"operations-recovery",title:{en:"IV · Execution, artifacts, automation, and recovery",zh:"第四章 · 执行、工件、自动化与失败恢复"},question:{en:"How are long-running experiments isolated, scheduled, persisted, recovered, and kept under human scientific control?",zh:"长时间实验如何隔离、调度、持久化、恢复，并始终保留人工科学控制？"}}
     ]
   },
   "research-directions":{

@@ -1,6 +1,6 @@
 window.PAGE_CONTENT["system-overview"] = {
-  eyebrow:{en:"Research Infrastructure · Data Flow and Decision State",zh:"科研基础设施 · 数据流与决策状态"},
-  title:{en:"Agent self-evolution research system design",zh:"Agent 自进化科研系统设计"},
-  lead:{en:"A technical view of the backend data flow: how literature is collected and normalized, how evidence and ideas are represented, how candidates are reviewed, and how experiments feed decisions back into the system.",zh:"从技术视角说明后台数据流：文献如何收集与规范化、证据与 Idea 如何表示、候选如何审查，以及实验结果如何回流并改变决策状态。"},
-  callout:{en:"The backend performs repeatable collection, transformation, review orchestration, validation, and snapshot publication. Scientific scope, final topic selection, claim changes, and formal experiment execution remain explicit human control points.",zh:"后台负责可重复的收集、转换、评审编排、校验和静态快照发布；研究范围、最终选题、论文主张修改和正式实验执行仍是明确的人工控制点。"}
+  eyebrow:{en:"Research Infrastructure · From Evidence to Auditable Experiments",zh:"科研基础设施 · 从证据到可审计实验"},
+  title:{en:"How the research system works",zh:"科研系统如何工作"},
+  lead:{en:"A system-level view of the research loop: evidence collection, hypothesis formation, pre-experiment compilation, agent qualification, screening, confirmatory experiments, typed outcomes, recovery, and knowledge deposition.",zh:"从系统层面说明完整科研闭环：证据收集、问题与假设形成、实验启动前编译、Agent 资格测试、Screening、Confirmatory 实验、结果分类、失败恢复与经验沉淀。"},
+  callout:{en:"The central rule is simple: before spending GPU time, first prove that the experiment is capable of answering the scientific question. Automation may execute the workflow, but scientific claims, budget escalation, and final interpretation remain explicit human gates.",zh:"核心原则很简单：在消耗 GPU 之前，先证明这个实验有资格回答科学问题。系统可以自动执行流程，但科学主张、扩预算和最终解释仍保留明确的人工门。"}
 };
