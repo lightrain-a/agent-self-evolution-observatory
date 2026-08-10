@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-09T20:41:30+00:00",
+  "generated_at": "2026-08-10T03:57:04+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "/home/wyt/code/agent-evolution-site-publish-20260810/generated/research-data",
@@ -28,7 +28,10 @@
     "collision_flags": 71,
     "lineage_edges": 258,
     "pilot_results": 0,
-    "repair_queue": 9,
+    "experiment_diagnoses": 4,
+    "experiment_repair_children": 8,
+    "experiment_scale_up": 0,
+    "repair_queue": 13,
     "solution_children": 14,
     "solution_shortlist": 10,
     "reviewer_repair_children": 6,
@@ -10239,7 +10242,7 @@
   },
   "lineage": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T20:41:30+00:00",
+    "generated_at": "2026-08-10T03:57:04+00:00",
     "summary": {
       "nodes": 278,
       "edges": 258,
@@ -10269,7 +10272,7 @@
           "zh": "受约束持续进化",
           "en": "Constrained continual evolution"
         },
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "track-root:credit",
@@ -10279,7 +10282,7 @@
           "zh": "失败归因与经验准入",
           "en": "Failure credit and experience admission"
         },
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "track-root:memory",
@@ -10289,7 +10292,7 @@
           "zh": "记忆与技能巩固",
           "en": "Memory and skill consolidation"
         },
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "track-root:correction",
@@ -10299,7 +10302,7 @@
           "zh": "自纠正与策略内化",
           "en": "Self-correction and policy internalization"
         },
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "track-root:curriculum",
@@ -10309,7 +10312,7 @@
           "zh": "课程与任务进化",
           "en": "Curriculum and task evolution"
         },
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "track-root:workflow",
@@ -10319,7 +10322,7 @@
           "zh": "工作流与更新表面搜索",
           "en": "Workflow and update-surface search"
         },
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "track-root:evaluator",
@@ -10329,7 +10332,7 @@
           "zh": "奖励与评价器进化",
           "en": "Reward and evaluator evolution"
         },
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "track-root:world",
@@ -10339,7 +10342,7 @@
           "zh": "世界模型与具身持续适应",
           "en": "World models and embodied adaptation"
         },
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "regression-gated-self-evolution",
@@ -10361,7 +10364,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:regression-gated-self-evolution:1",
@@ -10469,7 +10472,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:contradiction-preserving-consolidation:1",
@@ -10577,7 +10580,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:compositional-update-compatibility:1",
@@ -10685,7 +10688,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:update-trust-region:1",
@@ -10793,7 +10796,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:retrieval-interference-auditor:1",
@@ -10901,7 +10904,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:irreversible-action-counterfactuals:1",
@@ -11008,7 +11011,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:self-label-confidence-flow:1",
@@ -11116,7 +11119,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:evaluator-coadaptation-guard:1",
@@ -11224,7 +11227,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:recovery-conditioned-experience:1",
@@ -11332,7 +11335,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:counterexample-generating-curriculum:1",
@@ -11441,7 +11444,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:workflow-generalization-certificate:1",
@@ -11549,7 +11552,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:budgeted-evolution-controller:1",
@@ -11657,7 +11660,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:lineage-aware-rollback:1",
@@ -11765,7 +11768,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:failure-frontier-curriculum:1",
@@ -11873,7 +11876,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:causally-verified-experience-admission:1",
@@ -11981,7 +11984,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:reward-invariance-audit:1",
@@ -12089,7 +12092,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:local-counterexample-memory-repair:1",
@@ -12197,7 +12200,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:self-correction-collapse-detector:1",
@@ -12305,7 +12308,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:intervention-validated-self-correction:1",
@@ -12413,7 +12416,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:workflow-branch-credit:1",
@@ -12521,7 +12524,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:world-model-error-gated-learning:1",
@@ -12629,7 +12632,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:memory-half-life:1",
@@ -12737,7 +12740,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:correction-policy-credit:1",
@@ -12845,7 +12848,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:curriculum-drift-controller:1",
@@ -12954,7 +12957,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:outcome-equivalent-trajectory-contrast:1",
@@ -13062,7 +13065,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "review:applicability-bounded-lessons:1",
@@ -13172,7 +13175,7 @@
         "blocking_reasons": [
           "Module-level intervention labels may require expensive environment-specific instrumentation."
         ],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "programmatic-review:failure-localization-before-reflection:1",
@@ -13273,7 +13276,7 @@
         "blocking_reasons": [
           "Cross-family disagreement may reflect formatting and style rather than distinct error mechanisms."
         ],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "programmatic-review:heterogeneous-critic-disagreement:1",
@@ -13374,7 +13377,7 @@
         "blocking_reasons": [
           "Oracle labels require executing all update surfaces, making supervision close to exhaustive search."
         ],
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "programmatic-review:update-surface-router:1",
@@ -13458,84 +13461,84 @@
         "kind": "early-rejected",
         "title": "更大模型做更多反思",
         "reason": "只增加推理计算，不能证明持久学习。",
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "early-rejected:268",
         "kind": "early-rejected",
         "title": "全参数训练 70B 自进化 Agent",
         "reason": "超出低资源约束且机制难归因。",
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "early-rejected:269",
         "kind": "early-rejected",
         "title": "只在自生成任务上提升",
         "reason": "缺少圈外泛化。",
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "early-rejected:270",
         "kind": "early-rejected",
         "title": "仅商业 API 闭环",
         "reason": "不可复现且依赖供应商快照。",
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "early-rejected:271",
         "kind": "early-rejected",
         "title": "固定多轮 Self-Refine",
         "reason": "属于更多采样，不是进化机制。",
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "early-rejected:272",
         "kind": "early-rejected",
         "title": "同模型 Actor 与 Judge 自我确认",
         "reason": "反馈完整性无法独立验证。",
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "early-rejected:273",
         "kind": "early-rejected",
         "title": "只报告最佳 checkpoint",
         "reason": "掩盖多轮回退与坍塌。",
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "early-rejected:274",
         "kind": "early-rejected",
         "title": "从头训练世界模型和策略",
         "reason": "资源高且无法分离贡献。",
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "early-rejected:275",
         "kind": "early-rejected",
         "title": "单一视觉 benchmark 技巧",
         "reason": "保留为 CVPR 后续，不作为 ICLR 主候选。",
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "early-rejected:276",
         "kind": "early-rejected",
         "title": "只做平均准确率的记忆消融",
         "reason": "无法识别有害条目和负迁移。",
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "early-rejected:277",
         "kind": "early-rejected",
         "title": "无隔离划分的在线适应",
         "reason": "无法排除测试泄漏。",
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       },
       {
         "id": "early-rejected:278",
         "kind": "early-rejected",
         "title": "泛化 Agent 自进化综述",
         "reason": "不是方法或可证伪 benchmark 贡献。",
-        "created_at": "2026-08-09T20:41:29+00:00"
+        "created_at": "2026-08-10T03:57:04+00:00"
       }
     ],
     "edges": [
@@ -14862,7 +14865,7 @@
   },
   "pilot_registry": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T20:41:30+00:00",
+    "generated_at": "2026-08-10T03:57:04+00:00",
     "result_dir": "/home/wyt/code/agent-evolution-site-publish-20260810/generated/research-data/runs/pilots/results",
     "approval_dir": "/home/wyt/code/agent-evolution-site-publish-20260810/generated/research-data/runs/pilots/approvals",
     "result_schema": {
@@ -17361,6 +17364,331 @@
     "invalid_results": [],
     "invalid_approvals": []
   },
+  "experiment_iteration": {
+    "schema_version": "1.0",
+    "round1_root": "/data/wyt/agent-self-evolution-observatory/runs/round1-canonical-37c85ae",
+    "policy": {
+      "schema_version": "1.0",
+      "pre_pilot_readiness_gates": [
+        "novelty_locked",
+        "substrate_qualified",
+        "intervention_variation",
+        "target_variation",
+        "objective_matches_claim",
+        "baseline_discriminability",
+        "budget_precomputed",
+        "streaming_trace_enabled"
+      ],
+      "atomic_child_only": true,
+      "max_children_per_node": 2,
+      "max_repair_depth": 3,
+      "bug_fix_is_not_scientific_revision": true,
+      "underfit_cannot_be_called_scientific_fail": true,
+      "nonidentifiable_pilot_cannot_update_scientific_belief": true,
+      "hidden_split_reuse_after_exposure_forbidden": true,
+      "automatic_scale_up_forbidden": true,
+      "human_approval_required_after_positive_p0": true
+    },
+    "taxonomy": {
+      "infrastructure-error": {
+        "layer": "execution",
+        "meaning": "The run did not test the scientific mechanism because the harness/runtime failed."
+      },
+      "budget-plan-mismatch": {
+        "layer": "execution",
+        "meaning": "Actual execution exceeded the preregistered cost model or execution path."
+      },
+      "substrate-degenerate": {
+        "layer": "experiment",
+        "meaning": "The base system is too easy, too hard, or otherwise lacks the variation required to test the mechanism."
+      },
+      "no-label-variation": {
+        "layer": "experiment",
+        "meaning": "The target variable has insufficient variation, so no learner can identify the claimed decision boundary."
+      },
+      "underfit": {
+        "layer": "optimization",
+        "meaning": "The learner has not reached the preregistered fit/convergence gate; more optimization may be justified within budget."
+      },
+      "representation-signal-mismatch": {
+        "layer": "mechanism",
+        "meaning": "Optimization converged but the proposed representation/signal does not predict the scientific target."
+      },
+      "objective-claim-mismatch": {
+        "layer": "mechanism",
+        "meaning": "The training objective can be optimized, but success on that objective does not identify the quantity required by the paper claim."
+      },
+      "matched-simplification-tie": {
+        "layer": "scientific-boundary",
+        "meaning": "The proposed mechanism is empirically indistinguishable from a simpler matched baseline on the pilot."
+      },
+      "positive-signal": {
+        "layer": "scientific-boundary",
+        "meaning": "The mechanism clears fit, identifiability, and matched-baseline gates; scale-up may be proposed but requires human approval."
+      },
+      "true-negative": {
+        "layer": "scientific-boundary",
+        "meaning": "The experiment is identifiable and adequately optimized, yet the mechanism fails its preregistered scientific test."
+      }
+    },
+    "repair_operators": {
+      "debug-only": {
+        "changes": "implementation",
+        "scientific_change": false,
+        "rule": "Repair only the runtime/harness defect; preserve the scientific protocol and hidden split."
+      },
+      "substrate-requalification": {
+        "changes": "experimental substrate",
+        "scientific_change": false,
+        "rule": "Change only the substrate/task generator until the preregistered variation and competence gates are satisfied."
+      },
+      "target-variation-design": {
+        "changes": "pilot construction",
+        "scientific_change": false,
+        "rule": "Create or select cases spanning the target decision boundary before training; verify label entropy before model fitting."
+      },
+      "optimization-extension": {
+        "changes": "training budget",
+        "scientific_change": false,
+        "rule": "Increase epochs/steps only when the learning curve has not converged and the target has adequate variation."
+      },
+      "representation-child": {
+        "changes": "one representation or feature family",
+        "scientific_change": true,
+        "rule": "Create an atomic child changing only the representation/signal while preserving candidate pool, truth, and evaluation budget."
+      },
+      "objective-child": {
+        "changes": "one learning objective",
+        "scientific_change": true,
+        "rule": "Replace the misaligned objective with one that directly matches the paper claim; keep representation and data fixed where possible."
+      },
+      "disagreement-mining": {
+        "changes": "pilot case selection",
+        "scientific_change": false,
+        "rule": "Before another GPU run, find cases where the proposed mechanism and strongest simplification make different decisions; merge if none exist."
+      },
+      "merge-simplification": {
+        "changes": "claim boundary",
+        "scientific_change": true,
+        "rule": "Merge the idea into the simpler parent/baseline when a matched pilot cannot expose a distinct decision or effect."
+      }
+    },
+    "references": [
+      {
+        "system": "AI Scientist-v2",
+        "url": "https://github.com/SakanaAI/AI-Scientist-v2",
+        "adopted": "multiple initial drafts, progressive experiment tree, bounded debug depth"
+      },
+      {
+        "system": "AIDE",
+        "url": "https://github.com/WecoAI/aideml",
+        "adopted": "simple first draft, atomic single-change improvements, separate debug vs improvement branches"
+      },
+      {
+        "system": "R&D-Agent",
+        "url": "https://github.com/microsoft/RD-Agent",
+        "adopted": "separate performance feedback for research hypotheses from error feedback for implementation"
+      },
+      {
+        "system": "ML-Master",
+        "url": "https://github.com/sjtu-sai-agents/ML-Master",
+        "adopted": "persist experiment outcomes as scoped research memory for later exploration"
+      },
+      {
+        "system": "AI Research Agents / AIRA",
+        "url": "https://arxiv.org/abs/2507.02554",
+        "adopted": "treat search policy, operators, and evaluation/final-node selection as separate design variables"
+      },
+      {
+        "system": "Agent Laboratory",
+        "url": "https://github.com/SamuelSchmidgall/AgentLaboratory",
+        "adopted": "stage-separated literature/planning/experimentation with explicit human feedback checkpoints"
+      }
+    ],
+    "summary": {
+      "nodes": 4,
+      "identifiable": 1,
+      "belief_updates_allowed": 1,
+      "scale_up_allowed": 0,
+      "repair_children": 8,
+      "diagnosis_counts": {
+        "representation-signal-mismatch": 1,
+        "no-label-variation": 1,
+        "matched-simplification-tie": 1,
+        "objective-claim-mismatch": 1
+      }
+    },
+    "nodes": [
+      {
+        "idea_id": "update-trust-region",
+        "code": "A-1",
+        "artifact_dir": "/data/wyt/agent-self-evolution-observatory/runs/round1-canonical-37c85ae/a12",
+        "qualification_pass": true,
+        "trace_readiness": {
+          "budget_precomputed": true,
+          "streaming_trace_enabled": true,
+          "plan_matches_execution": true,
+          "provenance_frozen": true
+        },
+        "experiment_identifiable": false,
+        "scientific_belief_update_allowed": false,
+        "scale_up_allowed": false,
+        "diagnosis": "representation-signal-mismatch",
+        "diagnosis_layer": "mechanism",
+        "evidence": {
+          "epochs": 295,
+          "converged": true,
+          "validation_auc": 0.5,
+          "raw_drift_baseline": {
+            "policy": "gain+raw-drift",
+            "accepted": 4,
+            "harmful": 0,
+            "mean_gain": 0.08333333333333337,
+            "mean_regression": 0.0
+          },
+          "fitted_gate": {
+            "policy": "fitted-cross-surface-drift",
+            "accepted": 4,
+            "harmful": 2,
+            "mean_gain": -0.125,
+            "mean_regression": 0.12499999999999997
+          }
+        },
+        "repair_children": [
+          {
+            "operator": "representation-child",
+            "child": "A1-R1 contextual-divergence",
+            "changed_variable": "add task/update-surface conditional divergence; keep truth/candidate pool/budget fixed",
+            "precondition": "retrospective leave-one-update-out AUC > 0.65 before new GPU execution"
+          },
+          {
+            "operator": "merge-simplification",
+            "child": "A1-S raw-drift simplification",
+            "changed_variable": "remove learned gate and test whether monotone raw drift is sufficient",
+            "precondition": "if raw drift matches on a larger frozen update pool, stop learned-gate claim"
+          }
+        ]
+      },
+      {
+        "idea_id": "budgeted-evolution-controller",
+        "code": "A-2",
+        "artifact_dir": "/data/wyt/agent-self-evolution-observatory/runs/round1-canonical-37c85ae/a12",
+        "qualification_pass": true,
+        "trace_readiness": {
+          "budget_precomputed": true,
+          "streaming_trace_enabled": true,
+          "plan_matches_execution": true,
+          "provenance_frozen": true
+        },
+        "experiment_identifiable": false,
+        "scientific_belief_update_allowed": false,
+        "scale_up_allowed": false,
+        "diagnosis": "no-label-variation",
+        "diagnosis_layer": "experiment",
+        "evidence": {
+          "fit_reason": "no-label-variation",
+          "validation_auc": 0.5
+        },
+        "repair_children": [
+          {
+            "operator": "target-variation-design",
+            "child": "A2-R1 sequence-archetype qualification",
+            "changed_variable": "update-sequence generator only",
+            "precondition": "before fitting, frozen sequences must contain early-stop, late-stop, and rollback-optimal cases with label entropy >= 0.6 bits"
+          },
+          {
+            "operator": "objective-child",
+            "child": "A2-R2 marginal-value controller",
+            "changed_variable": "predict next-round marginal value instead of categorical optimal round",
+            "precondition": "use the same frozen sequence pool; proceed only if marginal targets have non-trivial variance"
+          }
+        ]
+      },
+      {
+        "idea_id": "outcome-equivalent-trajectory-contrast",
+        "code": "B-1",
+        "artifact_dir": "/data/wyt/agent-self-evolution-observatory/runs/round1-canonical-37c85ae/b1",
+        "qualification_pass": true,
+        "trace_readiness": {
+          "budget_precomputed": true,
+          "streaming_trace_enabled": true,
+          "plan_matches_execution": true,
+          "provenance_frozen": true
+        },
+        "experiment_identifiable": true,
+        "scientific_belief_update_allowed": true,
+        "scale_up_allowed": false,
+        "diagnosis": "matched-simplification-tie",
+        "diagnosis_layer": "scientific-boundary",
+        "evidence": {
+          "all_policy_selection": [
+            "l01",
+            "l02",
+            "l03"
+          ],
+          "all_policy_hidden_effect": 0.0138888889,
+          "policies": [
+            "single-source",
+            "consensus",
+            "utility-only",
+            "cross-process-robust"
+          ]
+        },
+        "repair_children": [
+          {
+            "operator": "disagreement-mining",
+            "child": "B1-R1 disagreement-case miner",
+            "changed_variable": "case selection only; no new model mechanism",
+            "precondition": "find held-out cases where utility-only and cross-process robustness rank different lessons before another GPU run"
+          },
+          {
+            "operator": "merge-simplification",
+            "child": "B1-S merge into utility admission",
+            "changed_variable": "claim boundary only",
+            "precondition": "merge if retrospective + newly mined cases still produce identical decisions"
+          }
+        ]
+      },
+      {
+        "idea_id": "workflow-generalization-certificate",
+        "code": "E-1",
+        "artifact_dir": "/data/wyt/agent-self-evolution-observatory/runs/round1-canonical-37c85ae/e1",
+        "qualification_pass": true,
+        "trace_readiness": {
+          "budget_precomputed": true,
+          "streaming_trace_enabled": true,
+          "plan_matches_execution": true,
+          "provenance_frozen": true
+        },
+        "experiment_identifiable": false,
+        "scientific_belief_update_allowed": false,
+        "scale_up_allowed": false,
+        "diagnosis": "objective-claim-mismatch",
+        "diagnosis_layer": "mechanism",
+        "evidence": {
+          "epochs": 700,
+          "converged": true,
+          "binary_validation_auc": 1.0,
+          "calibration_top1_accuracy": 0.0,
+          "global_best_accuracy": 0.0
+        },
+        "repair_children": [
+          {
+            "operator": "objective-child",
+            "child": "E1-R1 pairwise edit ranking",
+            "changed_variable": "replace binary positive-effect loss with pairwise delta-ranking loss; keep edit representation/workflows fixed",
+            "precondition": "calibration top-1 must exceed global-best by >=25pp before opening fresh hidden workflows"
+          },
+          {
+            "operator": "objective-child",
+            "child": "E1-R2 listwise regret prediction",
+            "changed_variable": "predict normalized edit regret within each workflow rather than binary effect",
+            "precondition": "same frozen source workflows and edit library; no hidden access during objective selection"
+          }
+        ]
+      }
+    ]
+  },
   "repair_queue": {
     "schema_version": "1.0",
     "policy": {
@@ -17368,21 +17696,177 @@
       "max_children_per_round": 2,
       "reviewer_cannot_self_approve": true,
       "preserve_parent_branch": true,
-      "automatic_selection_forbidden": true
+      "automatic_selection_forbidden": true,
+      "experiment_diagnosis_precedes_pilot_revision": true,
+      "nonidentifiable_pilot_cannot_trigger_scientific_stop": true
     },
     "summary": {
-      "queued_ideas": 9,
+      "queued_ideas": 13,
       "source_counts": {
         "collision-engine": 6,
+        "experiment-diagnosis": 4,
         "structured-block": 3
       },
       "operator_counts": {
         "limitation-inversion": 6,
+        "objective-child": 3,
         "assumption-removal": 3,
+        "merge-simplification": 2,
+        "target-variation-design": 1,
+        "representation-child": 1,
+        "disagreement-mining": 1,
         "contradiction-resolution": 1
       }
     },
     "queue": [
+      {
+        "idea_id": "budgeted-evolution-controller",
+        "title": {
+          "zh": "预算感知进化控制器",
+          "en": "Budgeted Evolution Controller"
+        },
+        "source": "experiment-diagnosis",
+        "priority": 250,
+        "current_status": "no-label-variation",
+        "diagnosis_layer": "experiment",
+        "scientific_belief_update_allowed": false,
+        "recommended_repairs": [
+          {
+            "key": "target-variation-design",
+            "operator": "target-variation-design",
+            "action": "update-sequence generator only",
+            "child": "A2-R1 sequence-archetype qualification",
+            "precondition": "before fitting, frozen sequences must contain early-stop, late-stop, and rollback-optimal cases with label entropy >= 0.6 bits",
+            "match_score": 1
+          },
+          {
+            "key": "objective-child",
+            "operator": "objective-child",
+            "action": "predict next-round marginal value instead of categorical optimal round",
+            "child": "A2-R2 marginal-value controller",
+            "precondition": "use the same frozen sequence pool; proceed only if marginal targets have non-trivial variance",
+            "match_score": 1
+          }
+        ],
+        "max_children": 2,
+        "rerun_reviewers": [
+          "experiment-identifiability",
+          "attribution",
+          "simplification"
+        ],
+        "automatic_execution": "forbidden-until-child-readiness-gate"
+      },
+      {
+        "idea_id": "update-trust-region",
+        "title": {
+          "zh": "Agent 更新信赖域",
+          "en": "Agent Update Trust Region"
+        },
+        "source": "experiment-diagnosis",
+        "priority": 250,
+        "current_status": "representation-signal-mismatch",
+        "diagnosis_layer": "mechanism",
+        "scientific_belief_update_allowed": false,
+        "recommended_repairs": [
+          {
+            "key": "representation-child",
+            "operator": "representation-child",
+            "action": "add task/update-surface conditional divergence; keep truth/candidate pool/budget fixed",
+            "child": "A1-R1 contextual-divergence",
+            "precondition": "retrospective leave-one-update-out AUC > 0.65 before new GPU execution",
+            "match_score": 1
+          },
+          {
+            "key": "merge-simplification",
+            "operator": "merge-simplification",
+            "action": "remove learned gate and test whether monotone raw drift is sufficient",
+            "child": "A1-S raw-drift simplification",
+            "precondition": "if raw drift matches on a larger frozen update pool, stop learned-gate claim",
+            "match_score": 1
+          }
+        ],
+        "max_children": 2,
+        "rerun_reviewers": [
+          "experiment-identifiability",
+          "attribution",
+          "simplification"
+        ],
+        "automatic_execution": "forbidden-until-child-readiness-gate"
+      },
+      {
+        "idea_id": "workflow-generalization-certificate",
+        "title": {
+          "zh": "成对编辑效应工作流更新策略",
+          "en": "Paired Edit-Effect Workflow Update Policy"
+        },
+        "source": "experiment-diagnosis",
+        "priority": 250,
+        "current_status": "objective-claim-mismatch",
+        "diagnosis_layer": "mechanism",
+        "scientific_belief_update_allowed": false,
+        "recommended_repairs": [
+          {
+            "key": "objective-child",
+            "operator": "objective-child",
+            "action": "replace binary positive-effect loss with pairwise delta-ranking loss; keep edit representation/workflows fixed",
+            "child": "E1-R1 pairwise edit ranking",
+            "precondition": "calibration top-1 must exceed global-best by >=25pp before opening fresh hidden workflows",
+            "match_score": 1
+          },
+          {
+            "key": "objective-child",
+            "operator": "objective-child",
+            "action": "predict normalized edit regret within each workflow rather than binary effect",
+            "child": "E1-R2 listwise regret prediction",
+            "precondition": "same frozen source workflows and edit library; no hidden access during objective selection",
+            "match_score": 1
+          }
+        ],
+        "max_children": 2,
+        "rerun_reviewers": [
+          "experiment-identifiability",
+          "attribution",
+          "simplification"
+        ],
+        "automatic_execution": "forbidden-until-child-readiness-gate"
+      },
+      {
+        "idea_id": "outcome-equivalent-trajectory-contrast",
+        "title": {
+          "zh": "跨过程验证经验蒸馏",
+          "en": "Cross-Process Validated Experience Distillation"
+        },
+        "source": "experiment-diagnosis",
+        "priority": 225,
+        "current_status": "matched-simplification-tie",
+        "diagnosis_layer": "scientific-boundary",
+        "scientific_belief_update_allowed": true,
+        "recommended_repairs": [
+          {
+            "key": "disagreement-mining",
+            "operator": "disagreement-mining",
+            "action": "case selection only; no new model mechanism",
+            "child": "B1-R1 disagreement-case miner",
+            "precondition": "find held-out cases where utility-only and cross-process robustness rank different lessons before another GPU run",
+            "match_score": 1
+          },
+          {
+            "key": "merge-simplification",
+            "operator": "merge-simplification",
+            "action": "claim boundary only",
+            "child": "B1-S merge into utility admission",
+            "precondition": "merge if retrospective + newly mined cases still produce identical decisions",
+            "match_score": 1
+          }
+        ],
+        "max_children": 2,
+        "rerun_reviewers": [
+          "experiment-identifiability",
+          "attribution",
+          "simplification"
+        ],
+        "automatic_execution": "forbidden-until-child-readiness-gate"
+      },
       {
         "idea_id": "update-surface-router",
         "title": {
@@ -17645,7 +18129,7 @@
   },
   "idea_discovery_v3": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T20:41:30+00:00",
+    "generated_at": "2026-08-10T03:57:04+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -20601,7 +21085,7 @@
   },
   "idea_discovery_v31": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T20:41:30+00:00",
+    "generated_at": "2026-08-10T03:57:04+00:00",
     "round": "v3.1",
     "status": "external-reviewed",
     "policy": {
@@ -21314,7 +21798,7 @@
   },
   "idea_discovery_v4": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T20:41:30+00:00",
+    "generated_at": "2026-08-10T03:57:04+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -30989,7 +31473,7 @@
   },
   "idea_discovery_v5": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T20:41:30+00:00",
+    "generated_at": "2026-08-10T03:57:04+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -40982,7 +41466,7 @@
   },
   "idea_discovery_v51": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T20:41:30+00:00",
+    "generated_at": "2026-08-10T03:57:04+00:00",
     "target_venue": "ICLR",
     "policy": {
       "generated_only_from_review_vectors": true,
@@ -42674,7 +43158,7 @@
   },
   "idea_discovery_v52": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T20:41:30+00:00",
+    "generated_at": "2026-08-10T03:57:04+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v51_revise": true,
@@ -43652,7 +44136,7 @@
   },
   "idea_discovery_v53": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-09T20:41:30+00:00",
+    "generated_at": "2026-08-10T03:57:04+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v52_revise_with_single_surviving_boundary": true,
@@ -43991,7 +44475,7 @@
   },
   "discussion_portfolio": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-09T20:41:30+00:00",
+    "generated_at": "2026-08-10T03:57:04+00:00",
     "target": 20,
     "count": 20,
     "remaining": 0,
@@ -44485,8 +44969,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "9 repair candidates",
-        "zh": "9 个修订候选"
+        "en": "13 repair candidates",
+        "zh": "13 个修订候选"
       }
     },
     {
@@ -44535,6 +45019,18 @@
       "evidence": {
         "en": "78 phases / 0 executed results",
         "zh": "78 个阶段 / 0 个已执行结果"
+      }
+    },
+    {
+      "source": "AI-Scientist-v2 / AIDE / RD-Agent / ML-Master / AIRA / Agent Laboratory",
+      "component": {
+        "en": "Experiment diagnosis and atomic repair tree",
+        "zh": "实验诊断与原子修复树"
+      },
+      "status": "running",
+      "evidence": {
+        "en": "4 pilot nodes / 8 atomic repair children / 0 scale-up",
+        "zh": "4 个 Pilot 节点 / 8 个原子修复子节点 / 0 个可扩大"
       }
     },
     {
@@ -44592,6 +45088,23 @@
           "pilot_ready": 0,
           "selected_ready": 0,
           "stopped": 0
+        }
+      },
+      {
+        "key": "experiment-diagnosis",
+        "pass": true,
+        "detail": {
+          "nodes": 4,
+          "identifiable": 1,
+          "belief_updates_allowed": 1,
+          "scale_up_allowed": 0,
+          "repair_children": 8,
+          "diagnosis_counts": {
+            "representation-signal-mismatch": 1,
+            "no-label-variation": 1,
+            "matched-simplification-tie": 1,
+            "objective-claim-mismatch": 1
+          }
         }
       },
       {

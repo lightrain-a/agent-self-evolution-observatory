@@ -70,7 +70,7 @@ def main() -> None:
           portfolio: window.DISCUSSION_READY_IDEAS || {},
           stateSummary: window.RESEARCH_SYSTEM_STATE?.summary || {}
         };""")
-        require(system["components"] == 9, f"expected nine backend components, got {system['components']}")
+        require(system["components"] == 10, f"expected ten backend components, got {system['components']}")
         require(system["progressItems"] == 6, f"expected six final-gate progress cells, got {system['progressItems']}")
         require((system["portfolio"].get("count"), system["portfolio"].get("target"), system["portfolio"].get("ready")) == (20, 20, True), f"wrong discussion portfolio: {system['portfolio']}")
         require("20/20" in system["text"] or "20 / 20" in system["text"], "20/20 final-gate progress is not visible")
@@ -192,6 +192,11 @@ def main() -> None:
           runtimePanels: document.querySelectorAll('.experiment-runtime-panel').length,
           runtimeCells: document.querySelectorAll('.experiment-runtime-grid>div').length,
           runtimeStages: document.querySelectorAll('.experiment-runtime-stages .runtime-stage').length,
+          iterationPanels: document.querySelectorAll('.experiment-iteration-panel').length,
+          diagnosisCards: document.querySelectorAll('.experiment-diagnosis-card').length,
+          diagnosisTypes: [...document.querySelectorAll('.experiment-diagnosis-card')].map(x=>x.dataset.diagnosis || ''),
+          iterationScaleUp: Number(window.RESEARCH_SYSTEM_STATE?.experiment_iteration?.summary?.scale_up_allowed || 0),
+          iterationBeliefUpdates: Number(window.RESEARCH_SYSTEM_STATE?.experiment_iteration?.summary?.belief_updates_allowed || 0),
           runtimeReady: Boolean(window.P0_RUNTIME_READINESS?.environment_ready),
           launchReady: Boolean(window.P0_RUNTIME_READINESS?.launch_ready),
           smokeReady: Boolean(window.P0_RUNTIME_READINESS?.smoke_rollout?.ready),
@@ -213,11 +218,15 @@ def main() -> None:
         require(experiments["ledger"] == 1 and experiments["ledgerCells"] == 6, f"resource ledger is incomplete: {experiments['ledger']}/{experiments['ledgerCells']}")
         require(experiments["resultRows"] == 5 and experiments["approvalRows"] == 5 and experiments["gateCells"] == 4, f"result/approval tables are incomplete: {experiments['resultRows']}/{experiments['approvalRows']}/{experiments['gateCells']}")
         require(experiments["runtimePanels"] == 1 and experiments["runtimeCells"] == 7 and experiments["runtimeStages"] == 5, f"runtime readiness panel is incomplete: {experiments['runtimePanels']}/{experiments['runtimeCells']}/{experiments['runtimeStages']}")
+        require(experiments["iterationPanels"] == 1 and experiments["diagnosisCards"] == 4, f"experiment diagnosis panel is incomplete: {experiments['iterationPanels']}/{experiments['diagnosisCards']}")
+        require(set(experiments["diagnosisTypes"]) == {"representation-signal-mismatch","no-label-variation","matched-simplification-tie","objective-claim-mismatch"}, f"unexpected experiment diagnoses: {experiments['diagnosisTypes']}")
+        require(experiments["iterationScaleUp"] == 0 and experiments["iterationBeliefUpdates"] == 1, f"diagnosis policy must permit only the identifiable B-1 belief update and no scale-up: {experiments['iterationScaleUp']}/{experiments['iterationBeliefUpdates']}")
         require(experiments["runtimeGpu"] >= 1 and experiments["runtimeModelReady"] and experiments["runtimeSupported"] == 2, f"runtime preflight lost GPU/model/harness readiness: {experiments}")
         require((experiments["runtimeReady"] and experiments["runtimeBlockers"] == 0) or ((not experiments["runtimeReady"]) and experiments["runtimeBlockers"] >= 1), f"runtime readiness/blocker state is inconsistent: {experiments}")
         require(experiments["launchReady"] == (experiments["runtimeReady"] and experiments["smokeReady"]), f"P0 launch must require both runtime and smoke readiness: {experiments}")
         require((experiments["p0AuthorizedState"], experiments["p1AuthorizedState"]) == (2, 0), f"live authorization state is wrong: {experiments['p0AuthorizedState']}/{experiments['p1AuthorizedState']}")
         require(("结果与效果总表" in experiments["text"] or "Results and effect snapshot" in experiments["text"]) and ("人工审批与下一阶段锁" in experiments["text"] or "Human approvals and next-phase locks" in experiments["text"]), "experiment result/approval sections are not visible")
+        require(("实验诊断与原子修复树" in experiments["text"] or "Experiment diagnosis and atomic repair tree" in experiments["text"]), "experiment diagnosis/repair section is not visible")
         print("PASS")
         print("Focused system/idea pages verified in a real browser")
     finally:

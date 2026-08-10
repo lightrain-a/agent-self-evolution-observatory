@@ -76,7 +76,7 @@ def _rule_matches(text: str) -> list[dict[str, Any]]:
     return results
 
 
-def build_repair_queue(idea_bank: dict[str, Any], collisions: dict[str, Any], pilot_registry: dict[str, Any]) -> dict[str, Any]:
+def build_repair_queue(idea_bank: dict[str, Any], collisions: dict[str, Any], pilot_registry: dict[str, Any], experiment_iteration: dict[str, Any] | None = None) -> dict[str, Any]:
     queue: list[dict[str, Any]] = []
     by_id = {
         str(idea["id"]): idea
@@ -130,6 +130,37 @@ def build_repair_queue(idea_bank: dict[str, Any], collisions: dict[str, Any], pi
             "automatic_execution": "project-web-gpt-optional",
         })
 
+    for node in (experiment_iteration or {}).get("nodes") or []:
+        children = list(node.get("repair_children") or [])
+        if not children:
+            continue
+        idea = by_id.get(str(node.get("idea_id")))
+        if not idea:
+            continue
+        queue.append({
+            "idea_id": node["idea_id"],
+            "title": idea.get("title"),
+            "source": "experiment-diagnosis",
+            "priority": 250 if not node.get("experiment_identifiable") else 225,
+            "current_status": node.get("diagnosis"),
+            "diagnosis_layer": node.get("diagnosis_layer"),
+            "scientific_belief_update_allowed": bool(node.get("scientific_belief_update_allowed")),
+            "recommended_repairs": [
+                {
+                    "key": str(child.get("operator") or "atomic-repair"),
+                    "operator": str(child.get("operator") or "atomic-repair"),
+                    "action": str(child.get("changed_variable") or child.get("precondition") or "Create one atomic repair child."),
+                    "child": child.get("child"),
+                    "precondition": child.get("precondition"),
+                    "match_score": 1,
+                }
+                for child in children[:2]
+            ],
+            "max_children": min(2, len(children)),
+            "rerun_reviewers": ["experiment-identifiability", "attribution", "simplification"],
+            "automatic_execution": "forbidden-until-child-readiness-gate",
+        })
+
     for item in pilot_registry.get("ideas") or []:
         if item.get("state") != "revise":
             continue
@@ -168,6 +199,8 @@ def build_repair_queue(idea_bank: dict[str, Any], collisions: dict[str, Any], pi
             "reviewer_cannot_self_approve": True,
             "preserve_parent_branch": True,
             "automatic_selection_forbidden": True,
+            "experiment_diagnosis_precedes_pilot_revision": True,
+            "nonidentifiable_pilot_cannot_trigger_scientific_stop": True,
         },
         "summary": {
             "queued_ideas": len(queue),

@@ -107,8 +107,9 @@ def mean_js(rows,base,cid,ids):
     return float(np.mean(vals)) if vals else 0.0
 
 def auc(y,p):
-    from sklearn.metrics import roc_auc_score
-    return .5 if len(set(y.tolist()))<2 else float(roc_auc_score(y,p))
+    y=np.asarray(y); p=np.asarray(p); pos=p[y==1]; neg=p[y==0]
+    if not len(pos) or not len(neg): return .5
+    return float(np.mean((pos[:,None]>neg[None,:]) + .5*(pos[:,None]==neg[None,:])))
 def fit_logistic(Xt,yt,Xv,yv,out:Path,min_epochs=40,max_epochs=500,patience=50,lr=.05,l2=1e-3):
     rng=np.random.default_rng(SEED); mu=Xt.mean(0); sd=Xt.std(0); sd[sd<1e-6]=1.; A=(Xt-mu)/sd; V=(Xv-mu)/sd
     w=rng.normal(0,.02,A.shape[1]); b=0.; best=None; noimp=0; hist=[]

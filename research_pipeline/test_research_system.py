@@ -77,11 +77,26 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(self.state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"])
         self.assertTrue(self.state["pilot_registry"]["policy"]["p0_pass_requires_explicit_human_approval_before_p1"])
 
+    def test_experiment_iteration_distinguishes_pilot_failure_layers(self) -> None:
+        iteration = self.state["experiment_iteration"]
+        self.assertEqual(iteration["summary"]["nodes"], 4)
+        self.assertEqual(iteration["summary"]["scale_up_allowed"], 0)
+        by_code = {item["code"]: item for item in iteration["nodes"]}
+        self.assertEqual(by_code["A-1"]["diagnosis"], "representation-signal-mismatch")
+        self.assertEqual(by_code["A-2"]["diagnosis"], "no-label-variation")
+        self.assertEqual(by_code["B-1"]["diagnosis"], "matched-simplification-tie")
+        self.assertEqual(by_code["E-1"]["diagnosis"], "objective-claim-mismatch")
+        self.assertFalse(by_code["A-1"]["scientific_belief_update_allowed"])
+        self.assertFalse(by_code["A-2"]["scientific_belief_update_allowed"])
+        self.assertTrue(by_code["B-1"]["scientific_belief_update_allowed"])
+        self.assertFalse(by_code["E-1"]["scientific_belief_update_allowed"])
+
     def test_repair_queue_contains_structured_blocks(self) -> None:
         queue = self.state["repair_queue"]
         self.assertGreaterEqual(queue["summary"]["queued_ideas"], 3)
         sources = {item["source"] for item in queue["queue"]}
         self.assertIn("structured-block", sources)
+        self.assertIn("experiment-diagnosis", sources)
         self.assertTrue(queue["policy"]["preserve_parent_branch"])
         self.assertTrue(queue["policy"]["automatic_selection_forbidden"])
 
@@ -93,7 +108,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("AI-Scientist-v2", sources)
         self.assertTrue(any("Co-Scientist" in source for source in sources))
         self.assertTrue(any("HypoRefine" in source and "IdeaForge" in source for source in sources))
-        self.assertEqual(len(self.state["components"]), 9)
+        self.assertEqual(len(self.state["components"]), 10)
         self.assertEqual(self.state["summary"]["discussion_ready"], 20)
         self.assertEqual(self.state["summary"]["discussion_target"], 20)
         self.assertTrue(self.state["summary"]["final_ready"])

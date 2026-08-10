@@ -236,8 +236,8 @@ def main() -> None:
     if (summary.get("v5_candidates"), summary.get("v5_finalists"), summary.get("v5_revivals")) != (36,32,8):
         fail("research-system state must expose the v5 wide-search round")
     components = research_state.get("components", [])
-    if len(components) != 9:
-        fail(f"research-system state must expose nine backend components, got {len(components)}")
+    if len(components) != 10:
+        fail(f"research-system state must expose ten backend components, got {len(components)}")
     graph_component = next((item for item in components if item.get("source") == "ResearchAgent"), {})
     if graph_component.get("component", {}).get("zh") != "引文与证据图谱":
         fail("citation/evidence component must be bilingual in the backend state")

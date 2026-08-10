@@ -8,6 +8,7 @@ from typing import Any
 from .config import PROJECT_ROOT, StorageSettings
 from .discussion_portfolio import build_discussion_portfolio
 from .evidence_graph import build_evidence_graph
+from .experiment_iteration import build_experiment_iteration_state
 from .iclr_idea_factory import build_iclr_idea_bank
 from .idea_discovery_v3 import build_idea_discovery_v3
 from .idea_discovery_v31 import build_idea_discovery_v31
@@ -35,6 +36,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     collisions = state["collision_engine"]["summary"]
     lineage = state["lineage"]["summary"]
     pilots = state["pilot_registry"]["summary"]
+    iteration = state["experiment_iteration"]["summary"]
     repairs = state["repair_queue"]["summary"]
     discovery = state["idea_discovery_v3"]["summary"]
     repaired = state["idea_discovery_v31"]["summary"]
@@ -49,6 +51,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"ResearchAgent / MOOSE-Chem / Co-Scientist / HypoRefine / Virtual Scientists / autoresearch", "component":{"en":"Constrained composition and conditional revival","zh":"受约束组合与条件复活"}, "status":"running", "evidence":{"en":f"{v4['raw_candidates']} v4 candidates / {v4['tournament_finalists']} finalists / {v4['external_reviewed']} reviewed","zh":f"{v4['raw_candidates']} 个 v4 候选 / {v4['tournament_finalists']} 个 finalists / {v4['external_reviewed']} 个已复核"}},
         {"source":"HypoRefine / IdeaForge / ScholarEval / InnoEval / SciAtlas / InternAgent / AutoScientists", "component":{"en":"Wide-search simplification-challenge ideation","zh":"宽搜索与简化挑战式 Idea 发现"}, "status":"running", "evidence":{"en":f"{v5['raw_candidates']} v5 candidates / {v5['external_reviewed']} R2 reviewed / {v5['external_pass']} PASS","zh":f"{v5['raw_candidates']} 个 v5 候选 / {v5['external_reviewed']} 个 R2 已审 / {v5['external_pass']} 个 PASS"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Pilot registry and result feedback","zh":"Pilot 注册表与结果回流"}, "status":"running", "evidence":{"en":f"{pilots['phases']} phases / {pilots['valid_result_files']} executed results","zh":f"{pilots['phases']} 个阶段 / {pilots['valid_result_files']} 个已执行结果"}},
+        {"source":"AI-Scientist-v2 / AIDE / RD-Agent / ML-Master / AIRA / Agent Laboratory", "component":{"en":"Experiment diagnosis and atomic repair tree","zh":"实验诊断与原子修复树"}, "status":"running", "evidence":{"en":f"{iteration['nodes']} pilot nodes / {iteration['repair_children']} atomic repair children / {iteration['scale_up_allowed']} scale-up","zh":f"{iteration['nodes']} 个 Pilot 节点 / {iteration['repair_children']} 个原子修复子节点 / {iteration['scale_up_allowed']} 个可扩大"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Unrestricted autonomous code execution tree","zh":"不受限制的自主代码执行树"}, "status":"intentionally-disabled", "evidence":{"en":"Only sandboxed/manual experiment execution is allowed; results can still flow back automatically.","zh":"只允许沙箱或人工确认后的实验执行；合法结果仍可自动回流。"}},
     ]
 
@@ -102,7 +105,8 @@ def build_research_system_state() -> dict[str, Any]:
     collision_engine = analyze_collisions(idea_bank)
     lineage = build_lineage(idea_bank, collision_engine)
     pilot_registry = build_pilot_registry(idea_bank)
-    repair_queue = build_repair_queue(idea_bank, collision_engine, pilot_registry)
+    experiment_iteration = build_experiment_iteration_state()
+    repair_queue = build_repair_queue(idea_bank, collision_engine, pilot_registry, experiment_iteration)
     idea_discovery_v3 = build_idea_discovery_v3()
     idea_discovery_v31 = build_idea_discovery_v31()
     idea_discovery_v4 = build_idea_discovery_v4()
@@ -139,6 +143,9 @@ def build_research_system_state() -> dict[str, Any]:
             "collision_flags":collision_engine["summary"]["flagged_pairs"],
             "lineage_edges":lineage["summary"]["edges"],
             "pilot_results":pilot_registry["summary"]["valid_result_files"],
+            "experiment_diagnoses":experiment_iteration["summary"]["nodes"],
+            "experiment_repair_children":experiment_iteration["summary"]["repair_children"],
+            "experiment_scale_up":experiment_iteration["summary"]["scale_up_allowed"],
             "repair_queue":repair_queue["summary"]["queued_ideas"],
             "solution_children":idea_discovery_v3["summary"]["raw_children"],
             "solution_shortlist":idea_discovery_v3["summary"]["internal_shortlist"],
@@ -166,6 +173,7 @@ def build_research_system_state() -> dict[str, Any]:
         "collision_engine":collision_engine,
         "lineage":lineage,
         "pilot_registry":pilot_registry,
+        "experiment_iteration":experiment_iteration,
         "repair_queue":repair_queue,
         "idea_discovery_v3":idea_discovery_v3,
         "idea_discovery_v31":idea_discovery_v31,
@@ -188,6 +196,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"collision-engine", "pass":state["collision_engine"]["summary"]["pairwise_comparisons"] > 0, "detail":state["collision_engine"]["summary"]["pairwise_comparisons"]},
         {"key":"lineage", "pass":state["lineage"]["summary"]["idea_nodes"] >= 24, "detail":state["lineage"]["summary"]["idea_nodes"]},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"], "detail":state["pilot_registry"]["summary"]},
+        {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
         {"key":"final-advisor-gate", "pass":state["summary"]["final_ready"] and state["summary"]["final_pass"] == state["summary"]["discussion_target"] and state["summary"]["final_revise"] == 0 and state["summary"]["final_block"] == 0, "detail":{"pass":state["summary"]["final_pass"],"target":state["summary"]["discussion_target"],"revise":state["summary"]["final_revise"],"block":state["summary"]["final_block"]}},
     ]
     return {"status":"healthy" if all(item["pass"] for item in checks) else "degraded", "checks":checks}
@@ -202,6 +211,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if state["collision_engine"]["summary"]["pairwise_comparisons"] <= 0: errors.append("collision engine did not run")
     if state["pilot_registry"]["summary"]["phases"] != state["summary"]["passed_ideas"] * 3: errors.append("pilot phase count mismatch")
     if not state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"]: errors.append("automatic P0-to-P1 escalation must stay forbidden")
+    if not state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"]: errors.append("non-identifiable pilots must not update scientific belief")
     if state["pilot_registry"]["summary"]["invalid_approval_files"] != 0: errors.append("invalid pilot approval files")
     if not state["summary"]["final_ready"] or state["summary"]["final_pass"] != state["summary"]["discussion_target"]: errors.append("final advisor gate not ready")
     return errors

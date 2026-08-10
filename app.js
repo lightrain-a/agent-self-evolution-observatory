@@ -1473,6 +1473,40 @@ function renderP0RuntimeReadiness() {
   ].map(([key,label],index) => `<span class="runtime-stage ${stages[key] ? "stage-pass" : "stage-pending"}"><i>${index+1}</i><b>${esc(label)}</b><small>${stages[key] ? (language === "zh" ? "通过" : "PASS") : (language === "zh" ? "未完成" : "PENDING")}</small></span>`).join("") + `<span class="runtime-stage ${executionStatus === "failed" ? "stage-fail" : (stages.p0_execution_started ? "stage-pass" : "stage-pending")}"><i>5</i><b>${language === "zh" ? "正式 P0" : "formal P0"}</b><small>${language === "zh" ? executionLabel.zh : executionLabel.en}</small></span>`;
   return `<section class="panel experiment-runtime-panel"><div class="idea-panel-heading"><div><h3 id="p0-runtime-readiness" data-toc="false">${language === "zh" ? "P0 运行环境 readiness" : "P0 runtime readiness"}</h3><p class="section-intro">${language === "zh" ? "科学授权、harness、依赖、数据、轻量 runtime smoke 和正式实验分开记账。轻量 smoke 只验证 Qwen tokenizer/chat template、各权重 shard 可读，以及真实 ALFWorld OOD 的 reset → parser → env.step；完整 7B 权重加载与生成只在正式 P0 事务里验证，失败不会登记科学结果。" : "Scientific authorization, harness, dependencies, data, a lightweight runtime smoke, and formal execution are tracked separately. The smoke checks the Qwen tokenizer/chat template, readability of every weight shard, and a real ALFWorld OOD reset → parser → env.step. Full 7B loading/generation is validated only by the formal P0 transaction, and failures cannot be registered as scientific results."}</p></div><span class="experiment-status-badge status-${status.tone}">${language === "zh" ? status.zh : status.en}</span></div><div class="experiment-runtime-stages">${stageRows}</div><div class="experiment-runtime-grid"><div><b>${gpu.name ? esc(gpu.name) : "--"}</b><span>${gpu.memory_free_mib ? `${Math.round(gpu.memory_free_mib/1024)} GB ${language === "zh" ? "空闲显存" : "VRAM free"}` : (language === "zh" ? "未检测到 GPU" : "No GPU detected")}</span></div><div><b>${runtime.model?.ready ? "YES" : "NO"}</b><span>${language === "zh" ? "Qwen2.5-7B 本地模型" : "local Qwen2.5-7B"}</span></div><div><b>${experimentNumber(runtime.data_disk_free_gib || 0)} GB</b><span>${language === "zh" ? "实验数据盘空闲" : "experiment disk free"}</span></div><div><b>${supported.has("update-trust-region") ? "YES" : "NO"}</b><span>A-1 harness</span></div><div><b>${supported.has("budgeted-evolution-controller") ? "YES" : "NO"}</b><span>A-2 harness</span></div><div><b>${Object.values(modules).filter(Boolean).length}/${Object.keys(modules).length || 3}</b><span>${language === "zh" ? "Python 运行依赖" : "Python runtime deps"}</span></div><div><b>${runtime.alfworld_data?.ready ? "YES" : "NO"}</b><span>${language === "zh" ? "ALFWorld PDDL / game 数据" : "ALFWorld PDDL / game data"}</span></div></div>${blockerRows ? `<div class="experiment-runtime-blockers"><b>${language === "zh" ? "当前阻塞" : "Current blockers"}</b><ul>${blockerRows}</ul></div>` : (runtime.smoke_rollout?.ready ? `<div class="experiment-runtime-ready">${language === "zh" ? "机器依赖、数据和轻量 runtime smoke 均通过；已授权 P0 现在可以启动，但尚未产生任何实验效果。" : "Machine dependencies, data, and the lightweight runtime smoke all pass; authorized P0s may now launch, but no experimental effect has been measured yet."}</div>` : `<div class="experiment-runtime-blockers"><b>${language === "zh" ? "下一步" : "Next"}</b><ul><li>${language === "zh" ? "先完成轻量 runtime smoke：Qwen tokenizer/权重 shard 可读 + ALFWorld OOD 单步链路；通过后 collect 才解锁。" : "First clear the lightweight runtime smoke: Qwen tokenizer/weight-shard readability plus one ALFWorld OOD environment step; collection unlocks only after it passes."}</li></ul></div>`)}</section>`;
 }
+function experimentIterationState() {
+  return window.RESEARCH_SYSTEM_STATE?.experiment_iteration || {summary:{},policy:{},nodes:[],references:[]};
+}
+function experimentDiagnosisMeta(name="") {
+  const map = {
+    "representation-signal-mismatch":{tone:"mechanism",zh:"表示／学习信号不匹配",en:"Representation / signal mismatch"},
+    "no-label-variation":{tone:"experiment",zh:"目标没有足够变化",en:"No target variation"},
+    "matched-simplification-tie":{tone:"simplify",zh:"与更简单方法打平",en:"Matched simplification tie"},
+    "objective-claim-mismatch":{tone:"mechanism",zh:"训练目标与论文主张不一致",en:"Objective / claim mismatch"},
+    "substrate-degenerate":{tone:"experiment",zh:"实验基座退化",en:"Degenerate substrate"},
+    "underfit":{tone:"optimization",zh:"尚未拟合",en:"Underfit"},
+    "positive-signal":{tone:"positive",zh:"可汇报正向 P0",en:"Positive P0 signal"},
+    "true-negative":{tone:"negative",zh:"可识别的真实负结果",en:"Identifiable negative"},
+  };
+  return map[name] || {tone:"neutral",zh:name || "未诊断",en:name || "Undiagnosed"};
+}
+function renderExperimentIterationPanel() {
+  const state = experimentIterationState();
+  const nodes = state.nodes || [];
+  if (!nodes.length) return "";
+  const cards = nodes.map((node) => {
+    const meta = experimentDiagnosisMeta(node.diagnosis);
+    const children = (node.repair_children || []).map((child,index) => `<li><b>${esc(child.child || `${language === "zh" ? "原子修复" : "Atomic repair"} ${index+1}`)}</b><span>${esc(child.changed_variable || "")}</span>${child.precondition ? `<small>${language === "zh" ? "重跑前条件" : "Precondition"}: ${esc(child.precondition)}</small>` : ""}</li>`).join("");
+    const belief = node.scientific_belief_update_allowed;
+    const identifiable = node.experiment_identifiable;
+    return `<article class="experiment-diagnosis-card diagnosis-${meta.tone}" data-diagnosis="${esc(node.diagnosis || "")}">
+      <header><span>${esc(node.code || "")}</span><div><b>${language === "zh" ? meta.zh : meta.en}</b><small>${esc(node.diagnosis || "")}</small></div></header>
+      <div class="experiment-diagnosis-flags"><span class="${identifiable ? "yes" : "no"}">${language === "zh" ? "实验可判方法" : "Experiment identifiable"}: ${identifiable ? "YES" : "NO"}</span><span class="${belief ? "yes" : "no"}">${language === "zh" ? "允许更新科学判断" : "Scientific belief update"}: ${belief ? "YES" : "NO"}</span><span class="no">${language === "zh" ? "扩大实验" : "Scale up"}: NO</span></div>
+      ${children ? `<ol>${children}</ol>` : `<p>${language === "zh" ? "当前不生成自动修复子节点。" : "No automatic repair child is generated."}</p>`}
+    </article>`;
+  }).join("");
+  const refs = (state.references || []).map((item) => `<a href="${esc(item.url || "#")}" target="_blank" rel="noopener"><b>${esc(item.system || "")}</b><span>${esc(item.adopted || "")}</span></a>`).join("");
+  return `<section class="panel experiment-iteration-panel"><div class="idea-panel-heading"><div><h3 id="experiment-diagnosis-repair" data-toc="false">${language === "zh" ? "实验诊断与原子修复树" : "Experiment diagnosis and atomic repair tree"}</h3><p class="section-intro">${language === "zh" ? "P0 没过不再自动等于 Idea 不成立。先判断这次实验是否有资格评价方法：基座、目标变化、拟合、训练目标和简化对照分别诊断；只有 experiment_identifiable=true 的结果才允许改变科学判断。每次修复只改一个变量。" : "A failed P0 no longer automatically means the idea is invalid. First diagnose whether the experiment can evaluate the mechanism at all: substrate, target variation, optimization, objective alignment, and matched simplification are separated. Only experiment_identifiable=true may update scientific belief, and every repair changes one variable."}</p></div><strong>${state.summary?.repair_children || 0} ${language === "zh" ? "个修复子节点" : "repair children"}</strong></div><div class="experiment-iteration-summary"><span><b>${state.summary?.nodes || 0}</b>${language === "zh" ? "已诊断 Pilot" : "diagnosed pilots"}</span><span><b>${state.summary?.identifiable || 0}</b>${language === "zh" ? "实验可识别" : "identifiable"}</span><span><b>${state.summary?.belief_updates_allowed || 0}</b>${language === "zh" ? "可更新科学判断" : "belief updates allowed"}</span><span><b>${state.summary?.scale_up_allowed || 0}</b>${language === "zh" ? "允许扩大" : "scale-up allowed"}</span></div><div class="experiment-diagnosis-grid">${cards}</div><details class="experiment-research-patterns"><summary>${language === "zh" ? "这套流程参考了哪些自动科研系统" : "Autonomous research systems informing this workflow"}</summary><div>${refs}</div></details></section>`;
+}
 function renderExperimentResourceLedger() {
   const plan = p0ExperimentPlan();
   const p0Phases = (plan.ideas || []).map((item) => experimentPilotPhase(item.id,"P0")).filter(Boolean);
@@ -1516,7 +1550,7 @@ function renderExperimentApprovalPanel() {
 function renderExperimentDashboard(config) {
   const chapters = pageArchitecture("experiments").chapters || [];
   const queue = `${renderP0RuntimeReadiness()}${renderP0ExperimentBoard()}`;
-  const results = `${renderExperimentResourceLedger()}${renderExperimentResultsSnapshot()}`;
+  const results = `${renderExperimentResourceLedger()}${renderExperimentIterationPanel()}${renderExperimentResultsSnapshot()}`;
   const approvals = renderExperimentApprovalPanel();
   return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("experiments"))}${renderCustomChapter(chapters[0],0,queue)}${renderCustomChapter(chapters[1],1,results)}${renderCustomChapter(chapters[2],2,approvals)}`;
 }
