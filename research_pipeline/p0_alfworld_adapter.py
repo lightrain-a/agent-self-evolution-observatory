@@ -148,7 +148,10 @@ class HFAdmissiblePolicy:
                 "Return only the command text or its number. Do not explain."
             )
         if patch.strip():
-            system += "\nPersistent prompt update:\n" + patch.strip()
+            if patch.startswith("MEMORY::"):
+                system += "\nRetrieved experience memory:\n" + patch.removeprefix("MEMORY::").strip()
+            else:
+                system += "\nPersistent prompt update:\n" + patch.strip()
         user = (
             f"Task goal (do not forget):\n{goal_context or 'complete the household task'}\n\n"
             f"Recent history:\n{history_text or '(none)'}\n\nCurrent observation:\n{observation}\n\n"

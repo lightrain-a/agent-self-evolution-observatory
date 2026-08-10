@@ -24,6 +24,7 @@ from .pilot_registry import build_pilot_registry
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
 from .pre_experiment_specs import GATES as PRE_EXPERIMENT_GATES, POLICY as PRE_EXPERIMENT_POLICY
 from .pre_p0_identifiability import build_pre_p0_identifiability_audit
+from .pre_gpu_candidate_gates import build_pre_gpu_candidate_gate_state
 from .review_repair import build_repair_queue
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "research-system-state.json"
@@ -176,6 +177,7 @@ def build_research_system_state() -> dict[str, Any]:
         pre_experiment_cards=formal_cards,
     )
     experiment_iteration = build_experiment_iteration_state()
+    pre_gpu_candidate_gates = build_pre_gpu_candidate_gate_state()
     repair_queue = build_repair_queue(idea_bank, collision_engine, pilot_registry, experiment_iteration)
     idea_discovery_v3 = build_idea_discovery_v3()
     idea_discovery_v31 = build_idea_discovery_v31()
@@ -224,6 +226,10 @@ def build_research_system_state() -> dict[str, Any]:
             "repair_queue":repair_queue["summary"]["queued_ideas"],
             "solution_children":idea_discovery_v3["summary"]["raw_children"],
             "solution_shortlist":idea_discovery_v3["summary"]["internal_shortlist"],
+            "pre_gpu_candidates":pre_gpu_candidate_gates["summary"]["total"],
+            "true_small_p0":pre_gpu_candidate_gates["summary"]["small_p0"],
+            "pre_gpu_hold":pre_gpu_candidate_gates["summary"]["hold"],
+            "pre_gpu_stop":pre_gpu_candidate_gates["summary"]["stop"],
             "reviewer_repair_children":idea_discovery_v31["summary"]["children"],
             "reviewer_repair_pass":idea_discovery_v31["summary"]["external_pass"],
             "v4_candidates":idea_discovery_v4["summary"]["raw_candidates"],
@@ -248,6 +254,7 @@ def build_research_system_state() -> dict[str, Any]:
         "collision_engine":collision_engine,
         "lineage":lineage,
         "pre_p0_identifiability":pre_p0_identifiability,
+        "pre_gpu_candidate_gates":pre_gpu_candidate_gates,
         "pre_experiment_compiler":pre_experiment_compiler,
         "pilot_registry":pilot_registry,
         "experiment_iteration":experiment_iteration,
@@ -273,6 +280,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"collision-engine", "pass":state["collision_engine"]["summary"]["pairwise_comparisons"] > 0, "detail":state["collision_engine"]["summary"]["pairwise_comparisons"]},
         {"key":"lineage", "pass":state["lineage"]["summary"]["idea_nodes"] >= 24, "detail":state["lineage"]["summary"]["idea_nodes"]},
         {"key":"pre-p0-identifiability", "pass":state["pre_p0_identifiability"]["policy"]["p0_execution_requires_pre_p0_pass"], "detail":state["pre_p0_identifiability"]["summary"]},
+        {"key":"pre-gpu-survivor-gate", "pass":state["pre_gpu_candidate_gates"]["summary"]["total"] == 10 and state["pre_gpu_candidate_gates"]["summary"]["small_p0"] == 2 and state["pre_gpu_candidate_gates"]["policy"]["hold_or_inconclusive_is_not_method_failure"], "detail":state["pre_gpu_candidate_gates"]["summary"]},
         {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == 4, "detail":state["pre_experiment_compiler"]["summary"]},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
@@ -290,6 +298,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if state["collision_engine"]["summary"]["pairwise_comparisons"] <= 0: errors.append("collision engine did not run")
     if state["pilot_registry"]["summary"]["phases"] != state["summary"]["passed_ideas"] * 3: errors.append("pilot phase count mismatch")
     if not state["pre_p0_identifiability"]["policy"]["p0_execution_requires_pre_p0_pass"]: errors.append("retrospective Pre-P0 audit must remain authoritative evidence")
+    if state["pre_gpu_candidate_gates"]["summary"]["total"] != 10: errors.append("pre-GPU survivor gate must cover all ten shortlisted candidates")
+    if state["pre_gpu_candidate_gates"]["summary"]["small_p0"] != 2: errors.append("pre-GPU survivor gate must expose exactly the two currently cleared small P0 candidates")
+    if not state["pre_gpu_candidate_gates"]["policy"]["hold_or_inconclusive_is_not_method_failure"]: errors.append("HOLD/INCONCLUSIVE must remain scientifically neutral")
     if not state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"]: errors.append("Pre-Experiment Compiler must require all eight gates")
     if not state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"]: errors.append("Pre-Experiment Compiler override must stay forbidden")
     if state["pre_experiment_compiler"]["summary"]["compiled_cards"] != 4: errors.append("expected four frozen pre-experiment cards")
