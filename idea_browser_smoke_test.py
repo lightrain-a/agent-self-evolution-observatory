@@ -117,6 +117,8 @@ def main() -> None:
           feedbackSummaries: document.querySelectorAll('.human-review-idea-card .human-idea-summary p').length,
           humanOpinionBoxes: document.querySelectorAll('.human-opinion-box').length,
           iterationBoxes: document.querySelectorAll('.human-iteration-box').length,
+          finalRefinementBoxes: document.querySelectorAll('.human-final-refinement').length,
+          finalRefinementCounts: [...document.querySelectorAll('.human-final-summary>div>b')].map(x=>Number((x.textContent||'0').trim())),
           methodologyPanels: document.querySelectorAll('.human-review-methodology').length,
           originalEvalGuides: document.querySelectorAll('.human-original-eval-guide').length,
           humanRecommendationStats: [...document.querySelectorAll('.human-recommendation-stat b')].map(x=>Number((x.textContent||'0').trim())),
@@ -145,7 +147,8 @@ def main() -> None:
         require((ideas["readyCards"], ideas["redesignCards"], ideas["pausedCards"]) == (2, 17, 7), f"human-review status counts are wrong: {ideas['readyCards']}/{ideas['redesignCards']}/{ideas['pausedCards']}")
         require(ideas["feedbackSummaries"] == 26, f"every discussed idea must expose one current summary, got {ideas['feedbackSummaries']}")
         require(ideas["humanOpinionBoxes"] == 26, f"all 26 discussed ideas must preserve the human opinion, got {ideas['humanOpinionBoxes']}")
-        require(ideas["iterationBoxes"] == 17, f"all 17 method-redesign ideas must show the 2026-08-10 iteration, got {ideas['iterationBoxes']}")
+        require(ideas["iterationBoxes"] == 17 and ideas["finalRefinementBoxes"] == 17, f"all 17 refined methods must show the final iteration and routing: {ideas['iterationBoxes']}/{ideas['finalRefinementBoxes']}")
+        require(ideas["finalRefinementCounts"] == [10,3,4], f"final method routing must be 10 advance / 3 merge / 4 hold, got {ideas['finalRefinementCounts']}")
         require(ideas["methodologyPanels"] == 1 and ideas["originalEvalGuides"] == 1, f"human-opinion audit/original-eval methodology panels are missing: {ideas['methodologyPanels']}/{ideas['originalEvalGuides']}")
         require(ideas["canonicalReviewCount"] == 26, f"canonical human-review map must cover all 26 ideas, got {ideas['canonicalReviewCount']}")
         require(ideas["humanRecommendationStats"] == [4,14,7,1], f"canonical human recommendation counts are wrong: {ideas['humanRecommendationStats']}")
@@ -157,8 +160,9 @@ def main() -> None:
         require(ideas["newGroups"] == 5 and ideas["newCards"] == 18, f"new-idea staging area is incomplete after FINAL20 merge audit: {ideas['newGroups']}/{ideas['newCards']}")
         require((ideas["newFinal"], ideas["newInspired"]) == (3, 15), f"supplemental provenance counts are wrong after merge: {ideas['newFinal']}/{ideas['newInspired']}")
         require(ideas["mergedMethods"] >= 8, f"merged FINAL method provenance is not visible on discussed ideas: {ideas['mergedMethods']}")
-        require(ideas["freshCollisionBlocks"] == 17 and ideas["freshCollisionLinks"] >= 48, f"fresh reducibility sources are missing from redesign ideas: {ideas['freshCollisionBlocks']}/{ideas['freshCollisionLinks']}")
-        require(all(marker in ideas["text"] for marker in ("已讨论 Idea","新增 Idea","预算校准的预测性回归面板","跨过程验证经验蒸馏","成对编辑效应工作流更新策略","决策翻转驱动的转移准入","E-3","E-4","B-8")), "redesigned/current idea titles or standalone FINAL codes are missing")
+        require(ideas["freshCollisionBlocks"] == 17 and ideas["freshCollisionLinks"] >= 40, f"fresh reducibility sources are missing from refined ideas: {ideas['freshCollisionBlocks']}/{ideas['freshCollisionLinks']}")
+        require(all(marker in ideas["text"] for marker in ("ChronoMem","DeltaBox","CausalFlow")), "latest load-bearing collision sources are not visible in refined idea cards")
+        require(all(marker in ideas["text"] for marker in ("已讨论 Idea","新增 Idea","预算校准的预测性回归面板","跨过程验证经验蒸馏","条件编辑排序工作流策略","决策翻转驱动的转移准入","merge-into-A3","merge-into-E1","hold-fresh-collision","E-3","E-4","B-8")), "final-refined/current idea titles, gates, or standalone FINAL codes are missing")
 
         expanded_before_refresh = execute(session_id, """document.documentElement.style.scrollBehavior='auto'; const card=document.getElementById('idea-a-1'); if(!card) return null; card.open=true; card.querySelectorAll('details').forEach(x=>x.open=true); const top=card.getBoundingClientRect().top+window.scrollY; window.scrollTo(0, top+Math.min(900,Math.max(500,card.scrollHeight*.55))); return {y:window.scrollY,open:document.querySelectorAll('#dynamic-page details[open]').length};""")
         time.sleep(1)

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-09T20:41:29+00:00",
+  "generated_at": "2026-08-10T07:59:02+00:00",
   "target_venue": "ICLR",
   "secondary_venue": "CVPR",
   "review_mode": "iclr-seven-dimension-programmatic-plus-project-web-gpt",
@@ -49,7 +49,13 @@
     },
     "external_pass": 4,
     "external_revise": 10,
-    "external_block": 12
+    "external_block": 12,
+    "final_method_refinement": {
+      "reviewed": 17,
+      "advance": 10,
+      "merge": 3,
+      "hold": 4
+    }
   },
   "tracks": {
     "constrained": {
@@ -235,12 +241,35 @@
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "reducibility-check",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "pre-p0-offline-gate",
         "summary": {
-          "zh": "generic pre-commit gate 已碰撞；本轮收窄为固定 K 下学习 Probe fidelity 与 lifecycle。先做同 K 对照，只有 learned panel 独立减少隐藏回退才重新升 P0。",
-          "en": "Generic pre-commit gating is collided. This round narrows the idea to learning probe fidelity and lifecycle under fixed K; only an equal-K win on hidden regression can re-unlock P0."
+          "zh": "最终只保留固定 K 的 Probe fidelity/retirement policy。先做历史版本时间留出；固定/随机/简单敏感度面板同预算等效就合并，不再训练 learned gate。",
+          "en": "Only a fixed-K probe fidelity/retirement policy survives. Run temporal holdout on historical versions first; merge if fixed/random/simple-sensitivity panels match at equal budget."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "advance-to-pre-p0-offline-gate",
+        "offline_pre_p0_gate": {
+          "zh": "只用历史版本做时间留出：固定 K 下 learned probe lifecycle 必须同时超过固定面板、随机轮换和简单历史敏感度排序；没有稳定未来版本增益就不跑 GPU。",
+          "en": "Use temporal holdout over historical versions only: at fixed K, learned probe lifecycle must beat fixed panels, random rotation, and simple historical-sensitivity ranking; no GPU run without stable future-version gain."
+        },
+        "strongest_simplification": {
+          "zh": "同 K 固定/随机/历史敏感度 Probe 面板，不学习额外 gate。",
+          "en": "Equal-K fixed/random/historical-sensitivity probe panels with no additional learned gate."
+        },
+        "rationale": {
+          "zh": "三套有效模型提案为 2 keep / 1 merge。generic pre-commit gating 已被 VaG 等覆盖，只保留固定预算下学习 Probe fidelity/lifecycle。",
+          "en": "The three valid model proposals vote 2 keep / 1 merge. Generic pre-commit gating is covered by VaG-like work; only learnable probe fidelity/lifecycle under a fixed budget survives."
+        },
+        "sources": [],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "冻结 30–40 个历史轻量更新和 8-Probe 预算，比较固定面板、随机轮换、历史敏感度面板与学习面板；最终只在从未用于面板学习的隐藏原任务上统计 harmful-commit rate。",
@@ -704,12 +733,40 @@
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "pilot-candidate-after-recheck",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "pre-p0-offline-gate",
         "summary": {
-          "zh": "把‘保留少数反证’升级为 raw evidence 不可覆盖 + conclusion-changing contradiction core，并把 episodic-only 设成必须打赢的 baseline。",
-          "en": "Upgraded from preserving minority counterexamples to immutable raw evidence plus conclusion-changing contradiction cores, with episodic-only as the baseline that must be beaten."
+          "zh": "最终变量是‘规则必须携带能改变结论的最小原始证据核心’，不是更好的 summary。先离线证明 deletion sensitivity，再和 episodic-only 同预算比较。",
+          "en": "The final variable is that a rule must carry a minimal raw-evidence core that can change its conclusion, not a better summary. Prove deletion sensitivity offline, then compare with episodic-only memory at equal budget."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "advance-to-pre-p0-offline-gate",
+        "offline_pre_p0_gate": {
+          "zh": "在已有 episode 日志上先验证：删除一个很小 contradiction core 是否会改变规则结论/适用边界；若结论不敏感，core 只是摘要装饰，不启动 P0。",
+          "en": "On existing episode logs, first verify that deleting a small contradiction core changes the rule conclusion/applicability boundary; if conclusions are insensitive, the core is decorative and P0 is blocked."
+        },
+        "strongest_simplification": {
+          "zh": "immutable episodic-only memory：同 context/storage 预算直接检索原始 episode。",
+          "en": "Immutable episodic-only memory at the same context/storage budget, directly retrieving raw episodes."
+        },
+        "rationale": {
+          "zh": "三模型一致保留。MERIT 等最新工作保存正/负经验，但没有直接构造 conclusion-changing evidence core，边界仍可辨识。",
+          "en": "All three models retain it. Recent work such as MERIT stores positive/negative experience but does not directly construct conclusion-changing evidence cores."
+        },
+        "sources": [
+          {
+            "title": "Causal Episodic Memory for Feedback-Driven Agent Repair (MERIT)",
+            "url": "https://arxiv.org/abs/2608.05906"
+          }
+        ],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "固定 40–60 条 raw episodes 和 8–12 个候选 rule；比较 forced summary、utility refinement、episodic-only、rule+contradiction-core。hidden tasks 从未参与 consolidation。",
@@ -1205,12 +1262,35 @@
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "method-redesign",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "pre-p0-offline-gate",
         "summary": {
-          "zh": "从泛化的‘组合冲突’收窄为异构更新表面的 typed interaction repair compiler；必须用未见 triples 证明 clause 能迁移。",
-          "en": "Narrowed from generic composition conflict to a typed interaction repair compiler across heterogeneous update surfaces; unseen triples must demonstrate clause transfer."
+          "zh": "不再主张‘更新会冲突’；只研究 pair intervention 能否编译成可复用 typed clause，并在未见 triples 上比 pairwise score 更少执行、更少回退。",
+          "en": "The claim is not that updates interact; it is whether pair interventions compile into reusable typed clauses that reduce executions and regressions on unseen triples beyond a pairwise score."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "advance-to-pre-p0-offline-gate",
+        "offline_pre_p0_gate": {
+          "zh": "先在异构更新日志中确认非加性交互与顺序效应足够常见；pair 诱导 clause 后必须在完全未见 triples 上迁移。pairwise conflict score 已足够则停止。",
+          "en": "First verify that non-additive/order interactions are common in heterogeneous update logs; clauses induced from pairs must transfer to fully unseen triples. Stop if a pairwise conflict score is sufficient."
+        },
+        "strongest_simplification": {
+          "zh": "等预算 pairwise conflict predictor + greedy ordering，看到相同 pair intervention 结果。",
+          "en": "Equal-budget pairwise conflict predictor plus greedy ordering with the same pair-intervention results."
+        },
+        "rationale": {
+          "zh": "三个模型一致保留；现有工作覆盖 compositional model editing，但尚未直接覆盖 Prompt/Memory/Tool/Workflow 异构更新表面的冻结 typed repair grammar。",
+          "en": "All three models retain it. Existing work covers compositional model editing but not a frozen typed repair grammar across heterogeneous prompt/memory/tool/workflow update surfaces."
+        },
+        "sources": [],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "选 Prompt×Memory×Tool 三类各 6–8 个冻结更新；用 pair 数据训练 clause compiler，测试从未一起出现过的 triples。四格容量、调用和 hidden-task truth 全匹配。",
@@ -1684,6 +1764,7 @@
       },
       "fresh_reducibility_check": null,
       "redesign_iteration": null,
+      "final_refinement": null,
       "pilot": {
         "zh": "在 ALFWorld、AgentBench 上，以 1 GPU、20 GPU 小时完成两个开放模型和至少两个任务域的 P0/P1/P2 验证。",
         "en": "Run P0/P1/P2 on ALFWorld, AgentBench with two open models and at least two domains within 1 GPUs and 20 GPU-hours."
@@ -2176,12 +2257,48 @@
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "parent-simplification-check",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "phenomenon-gate-first",
         "summary": {
-          "zh": "旧 auditor 与 CMI 直接碰撞；本轮只保留 A×B 共检索交互项。若 per-item CMI 或简单共现互斥等效，就并回普通 memory selection。",
-          "en": "The old auditor collides with CMI. This round keeps only A×B co-retrieval interactions; merge back into ordinary memory selection if per-item CMI or simple co-occurrence exclusion matches."
+          "zh": "先证明‘单条都安全、一起检索才有额外伤害’在真实日志里足够常见。不存在高 prevalence pairwise residual 就并入 CMI/普通 memory selection。",
+          "en": "First prove that memories safe individually but harmful jointly occur often enough in real logs. Without a prevalent pairwise residual, merge into CMI/ordinary memory selection."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "phenomenon-gate-before-standalone",
+        "offline_pre_p0_gate": {
+          "zh": "只用历史 retrieval/intervention 日志测 pairwise residual：per-item CMI 已筛过后，A+B 的额外负效应必须足够常见且不能由共现频率解释；否则并入普通 memory selection。",
+          "en": "Use historical retrieval/intervention logs to estimate pairwise residuals after per-item CMI selection. A+B must show sufficiently prevalent extra harm not explained by co-occurrence frequency; otherwise merge into ordinary memory selection."
+        },
+        "strongest_simplification": {
+          "zh": "per-item CMI + 简单 frequent-pair exclusion，同样 replay 预算。",
+          "en": "Per-item CMI plus simple frequent-pair exclusion at the same replay budget."
+        },
+        "rationale": {
+          "zh": "两模型建议 merge、一模型保留；CMI、Causal-AgentIR、MERIT 让 generic harmful-memory selection 很拥挤。只有高 prevalence 不可加性交互残差才能支撑独立方法。",
+          "en": "Two models recommend merge and one retain. CMI, Causal-AgentIR, and MERIT make generic harmful-memory selection crowded; only a prevalent non-additive interaction residual can support a standalone method."
+        },
+        "sources": [
+          {
+            "title": "Causal Intervention-Based Memory Selection for Long-Horizon LLM Agents",
+            "url": "https://arxiv.org/abs/2605.17641"
+          },
+          {
+            "title": "Causal-AgentIR",
+            "url": "https://arxiv.org/abs/2607.21125"
+          },
+          {
+            "title": "MERIT",
+            "url": "https://arxiv.org/abs/2608.05906"
+          }
+        ],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "固定 20–30 个 memory 和 top co-retrieval pairs；在相同 replay 总数下比较 per-item causal、随机 pair、共现阈值、interaction graph。hidden tasks 不参与 edge 学习。",
@@ -2678,12 +2795,40 @@
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "reality-and-simplification-check",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "hold-reality-simplification-check",
         "summary": {
-          "zh": "从泛化 counterfactual risk 改成 simulator-verifiable irreversibility clause memory；必须证明跨 episode 复用比同总调用 test-time planner 更省且不更保守。",
-          "en": "Reframed from generic counterfactual risk to simulator-verifiable irreversibility-clause memory; cross-episode reuse must beat an equal-total-call test-time planner without extra conservatism."
+          "zh": "先确认真实不可逆事件与跨 episode 复用价值，再比较 persistent clause 与同调用 test-time counterfactual planner。未证明调用节省且不过度保守前，不进入 P0。",
+          "en": "First confirm real irreversible events and cross-episode reuse value, then compare persistent clauses with an equal-call test-time counterfactual planner. No P0 before showing call savings without excess conservatism."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "hold-reality-and-collision-check",
+        "offline_pre_p0_gate": {
+          "zh": "先在 exact simulator/program 环境验证不可逆事件是否跨 episode 重复、能否被紧凑 clause 覆盖，以及 clause reuse 是否比同总 simulator calls 的 test-time planner 少调用；任一不成立就停止。",
+          "en": "In an exact simulator/program environment, first verify that irreversible events recur across episodes, are covered by compact clauses, and clause reuse uses fewer calls than a test-time planner at the same total simulator budget. Stop if any condition fails."
+        },
+        "strongest_simplification": {
+          "zh": "EvoCF/test-time counterfactual planner + deterministic safety predicates，同总 simulator calls。",
+          "en": "EvoCF/test-time counterfactual planner plus deterministic safety predicates at the same total simulator calls."
+        },
+        "rationale": {
+          "zh": "三模型为 2 hold / 1 keep。EvoCF 已学习 failure-derived reusable constraints 并做 counterfactual planning，persistent irreversibility clause 必须先证明独立复用收益。",
+          "en": "The three models vote 2 hold / 1 keep. EvoCF already learns reusable failure-derived constraints and performs counterfactual planning, so persistent irreversibility clauses need an independent reuse advantage first."
+        },
+        "sources": [
+          {
+            "title": "EvoCF: Multi-Agent Collaboration via Agentic Memory-Driven Evolutionary Counterfactual Planning",
+            "url": "https://openreview.net/forum?id=zGKkewtb2w"
+          }
+        ],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "在 exact-state simulator 中学习 10–20 条 verified clauses；hidden tasks 比较 no-memory、hand rules、test-time counterfactual planner、persistent clauses，累计 simulator calls 严格匹配。",
@@ -3174,12 +3319,35 @@
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "reality-check-first",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "hold-reality-check",
         "summary": {
-          "zh": "保留的变量是跨轮 label lineage 相关性，不是更复杂的 confidence。先证明确有谱系错误传播，否则直接停止。",
-          "en": "The surviving variable is cross-round label-lineage dependence, not richer confidence. First prove lineage error propagation exists or stop."
+          "zh": "暂停方法设计。先证明同祖先/同来源标签在多轮 self-evolution 中真的造成可测错误放大；没有现象就停止，不因为理论上可能而造问题。",
+          "en": "Pause method design. First prove that shared-ancestor/shared-source labels cause measurable error amplification across self-evolution rounds; stop if the phenomenon is absent rather than manufacturing it."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "hold-reality-check",
+        "offline_pre_p0_gate": {
+          "zh": "先在真实多轮 self-labeling 日志中计算 wrong-ancestor → descendant error amplification；若继承稀少或简单 independent-anchor threshold 已足够，则停止。",
+          "en": "First measure wrong-ancestor to descendant error amplification in real multi-round self-labeling logs. Stop if inheritance is rare or a simple independent-anchor threshold is sufficient."
+        },
+        "strongest_simplification": {
+          "zh": "independent-anchor threshold / source-level reliability weighting，不建 provenance DAG。",
+          "en": "Independent-anchor threshold/source-level reliability weighting without a provenance DAG."
+        },
+        "rationale": {
+          "zh": "三个有效模型一致 HOLD。问题在真实系统中的普遍性尚未得到证据，继续设计更复杂 confidence flow 没有意义。",
+          "en": "All three valid models vote HOLD. The prevalence of the problem in real systems is unverified, so further confidence-flow design is premature."
+        },
+        "sources": [],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "先用公开/真实 4–6 轮自标注日志做 reality check；若 lineage error enrichment 存在，再构造 ancestry-blind、source-count、anchor-threshold、lineage-decorrelated 四臂，最后两轮冻结测试。",
@@ -3656,31 +3824,54 @@
       "fresh_reducibility_check": {
         "review_date": "2026-08-10",
         "summary": {
-          "zh": "reward self-improvement 已有；边界收窄为跨版本 attribution 与 evaluator-only rubric repair。",
-          "en": "Reward self-improvement is covered; the boundary narrows to cross-version attribution and evaluator-only rubric repair."
+          "zh": "SERPO 已共同进化 rubric/policy，REFORM 自修 reward model，rubric-RL reward hacking 也显示训练 evaluator 与参考质量会分离；C-2 只保留 actor-fixed cross-version attribution + evaluator-only repair。",
+          "en": "SERPO co-evolves rubric/policy, REFORM self-repairs reward models, and rubric-RL reward hacking shows divergence from reference quality. C-2 survives only as actor-fixed cross-version attribution followed by evaluator-only repair."
         },
         "sources": [
           {
-            "title": "Co-Evolution of Policy and Internal Reward for Language Agents",
-            "url": "https://arxiv.org/abs/2604.03098"
+            "title": "SERPO: Self-Evolving Rubric Policy Optimization",
+            "url": "https://arxiv.org/abs/2607.26873"
           },
           {
-            "title": "Teach a Reward Model to Correct Itself: Reward Guided Adversarial Failure Discovery",
+            "title": "Teach a Reward Model to Correct Itself (REFORM)",
             "url": "https://openreview.net/forum?id=F8RVIIdkkY"
           },
           {
-            "title": "CUARewardBench",
-            "url": "https://openreview.net/forum?id=Xj7V0wKlE5"
+            "title": "Reward Hacking in Rubric-Based Reinforcement Learning",
+            "url": "https://arxiv.org/abs/2605.12474"
           }
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "pilot-candidate-after-recheck",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "pre-p0-reality-gate",
         "summary": {
-          "zh": "从‘guard actor/reward 共适应’改成 actor-fixed cross-version attribution，再做 evaluator-only rubric repair；简单 anchor calibration 是必须打赢的对照。",
-          "en": "Reframed from generic co-adaptation guarding to actor-fixed cross-version attribution followed by evaluator-only rubric repair; simple anchor calibration is the required control."
+          "zh": "先做跨版本 actor-fixed score matrix，证明 evaluator 漂移能与 actor 改进分开识别；没有归因信号就不修 rubric。通过后再比较 sparse rubric repair 与简单 anchor calibration。",
+          "en": "First build an actor-fixed cross-version score matrix and prove evaluator drift is separately identifiable from actor improvement. No attribution signal means no rubric repair; only then compare sparse repair with simple anchor calibration."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "advance-to-pre-p0-reality-gate",
+        "offline_pre_p0_gate": {
+          "zh": "先用已有 actor/evaluator checkpoint 做 version matrix：同一冻结 actor 输出被 evaluator 版本变化显著重排时，才允许做 rubric intervention；否则简单 anchor calibration 已足够。",
+          "en": "Build a version matrix from existing actor/evaluator checkpoints first. Rubric intervention is allowed only if the same frozen actor outputs are materially re-ranked by evaluator-version changes; otherwise simple anchor calibration is sufficient."
+        },
+        "strongest_simplification": {
+          "zh": "frozen independent-anchor calibration / evaluator threshold calibration。",
+          "en": "Frozen independent-anchor calibration / evaluator threshold calibration."
+        },
+        "rationale": {
+          "zh": "三模型为 2 keep / 1 hold。最新 reward/rubric 工作很拥挤，因此只保留 actor-fixed attribution 后 evaluator-only sparse repair 这一窄变量。",
+          "en": "The three models vote 2 keep / 1 hold. Recent reward/rubric work is crowded, so only actor-fixed attribution followed by evaluator-only sparse repair survives."
+        },
+        "sources": [],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "4 个 actor×4 个 evaluator 版本，固定 100–200 anchor trajectories；注入或自然产生 2–3 类 shortcut drift，比较 frozen reward、scalar calibration、multi-judge、cross-version rubric repair。",
@@ -4157,27 +4348,50 @@
       "fresh_reducibility_check": {
         "review_date": "2026-08-10",
         "summary": {
-          "zh": "恢复本身不新；先用 prevalence gate 验证窄 failure mode，再谈 learned admission。",
-          "en": "Recovery itself is not new; first verify the narrow failure mode with a prevalence gate before learning admission."
+          "zh": "MERIT 已把 verified successful corrections / unsuccessful directions 写入跨 episode memory，Human-Guided Harm Recovery 研究恢复本身；F-3 只保留 success label 过粗导致 success+nonzero residual 被错误写成正经验这一 failure mode。",
+          "en": "MERIT stores verified corrections/unsuccessful directions across episodes and Human-Guided Harm Recovery studies recovery itself. F-3 survives only as the failure mode where a coarse success label admits success+nonzero-residual trajectories as positive experience."
         },
         "sources": [
           {
-            "title": "Human-Guided Harm Recovery for Computer Use Agents",
-            "url": "https://openreview.net/forum?id=hHR39fUK3u"
+            "title": "Causal Episodic Memory for Feedback-Driven Agent Repair (MERIT)",
+            "url": "https://arxiv.org/abs/2608.05906"
           },
           {
-            "title": "ShiftBench: Measuring Recovery of Agent Memory Under Distribution Shift",
-            "url": "https://openreview.net/forum?id=CCSztIjmOy"
+            "title": "Human-Guided Harm Recovery for Computer Use Agents",
+            "url": "https://openreview.net/forum?id=joefYuOHWS"
           }
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
+        "round": "2026-08-10 · Final Refinement",
         "verdict": "phenomenon-gate-first",
         "summary": {
-          "zh": "保留窄 failure mode：success-only writer 是否会正向写入 success+nonzero Δs。P0a 现象不存在就立即停，存在才学 residual-effect admission。",
-          "en": "Keep only the narrow failure mode: whether success-only writers admit success+nonzero Δs. Stop at P0a if absent; learn residual-effect admission only if real."
+          "zh": "先证明‘任务成功但环境没有真正恢复’会被 success-only writer 当正经验写入，并且 residual Δs 对未来复用伤害有预测力。现象不存在就直接停；存在才设计 learner。",
+          "en": "First prove that task-success trajectories with incomplete state recovery are positively stored by a success-only writer and that residual Δs predicts future reuse harm. Stop if the phenomenon is absent; design a learner only if it exists."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "phenomenon-gate-before-learning",
+        "offline_pre_p0_gate": {
+          "zh": "只做 P0a trace/exact-state gate：统计 success+nonzero Δs prevalence、success-only writer 正向写入率，以及 residual 是否预测未来复用 harm；现象不足则停止，不训练 admission model。",
+          "en": "Run only the P0a trace/exact-state gate: estimate prevalence of success+nonzero Δs, positive-write rate of a success-only writer, and whether residuals predict future reuse harm. Stop without training an admission model if the phenomenon is weak."
+        },
+        "strongest_simplification": {
+          "zh": "success-only admission + 手写 residual threshold，在同 exact-state truth 下比较。",
+          "en": "Success-only admission plus a hand-written residual threshold under the same exact-state truth."
+        },
+        "rationale": {
+          "zh": "三个模型一致保留，但都放在 phenomenon gate 之后；最新 recovery-memory 工作说明贡献不能是‘从恢复轨迹学习’，只能是 residual-state admission。",
+          "en": "All three models retain it only after a phenomenon gate. Recent recovery-memory work rules out claiming learning from recovery trajectories itself; the contribution must be residual-state admission."
+        },
+        "sources": [],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "P0a 至少 100 对 normal/perturbed successes；只有 success+Δs 非零且被 writer 正向写入达到预注册 prevalence 才启动 P0b。P0b 固定相同 future replay 数比较 success-only、endpoint equality、hand threshold、learned residual-effect。",
@@ -4673,12 +4887,35 @@
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "decisive-simplification-test",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "pre-p0-offline-gate",
         "summary": {
-          "zh": "不再主张反例学习本身，只测试 1-minimality 是否是有价值的 curriculum variable；non-minimal 同预算若等效就停止。",
-          "en": "No claim on counterexample learning itself; only test 1-minimality as a curriculum variable, and stop if the equal-budget non-minimal control matches."
+          "zh": "强 proposer 全程冻结，verifier 独立判真。只研究 1-minimality 本身：同样 verified counterexamples，做/不做 delta-debug 是否改变样本效率和边界泛化。",
+          "en": "Freeze the strong proposer and use independent verifier truth. Study 1-minimality itself: with the same verified counterexamples, does delta-debugging improve sample efficiency and boundary generalization over no minimization?"
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "advance-to-pre-p0-offline-gate",
+        "offline_pre_p0_gate": {
+          "zh": "GPU 前先在现有 counterexample pool 做 delta-debug：1-minimal 化必须显著去掉无关因素，并让错误边界更局部；若 non-minimal 同 verifier 同预算已等效，则停止。",
+          "en": "Before GPU training, delta-debug an existing counterexample pool. 1-minimalization must remove irrelevant factors and localize the error boundary; stop if non-minimal examples with the same verifier and budget are equivalent."
+        },
+        "strongest_simplification": {
+          "zh": "同 proposer / verifier / 任务数的 non-minimal counterexample curriculum。",
+          "en": "Non-minimal counterexample curriculum with the same proposer, verifier, and task count."
+        },
+        "rationale": {
+          "zh": "三个模型一致保留；已有工作覆盖 counterexample learning，独立价值只能来自 1-minimality 这一 curriculum variable。",
+          "en": "All three models retain it. Counterexample learning itself is covered; the independent value can only come from 1-minimality as a curriculum variable."
+        },
+        "sources": [],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "每轮冻结 20–30 个 verified counterexamples，一半做 delta-debug 到 1-minimal；最终两臂训练 token 完全相同。P0 只看一轮更新后的独立 boundary set。",
@@ -5029,8 +5266,8 @@
     {
       "id": "workflow-generalization-certificate",
       "title": {
-        "zh": "成对编辑效应工作流更新策略",
-        "en": "Paired Edit-Effect Workflow Update Policy"
+        "zh": "条件编辑排序工作流策略",
+        "en": "Conditional Edit-Ranking Workflow Policy"
       },
       "track_id": "workflow",
       "track": {
@@ -5042,8 +5279,8 @@
         "en": "WorkflowPerturb, Agentic Predictor, and FLORA cover workflow perturbation/performance prediction, while CE-Graph already applies failure-driven targeted graph edits. A certificate is no longer enough. The remaining question is whether paired before/after edit interventions can train a persistent update policy that directly chooses edits on unseen workflows after freezing."
       },
       "core_idea": {
-        "zh": "固定 typed edit library，把每次历史试验记录成 (W, e, W⊕e, ΔU)。学习 conditional edit-effect 或直接的 π(e|local graph context, API types, failure signature)。进入 hidden workflow 后策略冻结，只能一次选择并 commit edit，禁止先试跑候选。",
-        "en": "Fix a typed edit library and record each historical trial as (W, e, W⊕e, ΔU). Learn conditional edit effect or directly π(e | local graph context, API types, failure signature). On hidden workflows the policy is frozen and must choose and commit one edit without trial-running candidates first."
+        "zh": "冻结 typed edit library 与 workflow 局部上下文表示。Source workflow 只做单编辑 paired before/after 干预得到 ΔU；学习同一 workflow 内 edit_i 与 edit_j 的 pairwise 排序或 normalized regret，而不是‘edit 是否有正收益’二分类。冻结后在未见 workflow 上禁止候选试跑，只允许直接选择并持久提交一个 edit。",
+        "en": "Freeze a typed edit library and local workflow-context representation. Source workflows provide paired single-edit before/after interventions yielding ΔU. Learn pairwise edit ranking or normalized regret within each workflow rather than binary positive-effect classification. Freeze before unseen workflows, forbid candidate trials, and allow exactly one edit selection and persistent commit."
       },
       "core_intuition": {
         "zh": "绝对 workflow score 只能告诉我们哪个图好；真正可迁移的学习对象应是‘在什么局部上下文里，哪种 edit 的因果增量通常为正’。",
@@ -5099,8 +5336,8 @@
         "Qwen2.5-VL-7B-Instruct"
       ],
       "strongest_baseline": {
-        "zh": "Agentic Predictor + threshold/selection：相同 source execution 数据与模型容量，预测候选完整 workflow score；hidden 阶段同样禁止试跑，只按 predictor 选择一个 edit。",
-        "en": "Agentic Predictor plus threshold/selection: same source execution data and model capacity, predicts full candidate-workflow scores; hidden stage likewise forbids trials and selects one edit via the predictor."
+        "zh": "global-best edit、nearest-neighbor historical edit reuse、同特征同容量 binary effect classifier，以及 CE-Graph propose-and-verify；所有方法共享 source paired-edit 数据，hidden 禁止候选试跑。",
+        "en": "Global-best edit, nearest-neighbor historical edit reuse, a capacity-matched binary effect classifier, and CE-Graph propose-and-verify; all share source paired-edit data and hidden workflows forbid candidate trials."
       },
       "method_substance": {
         "persistent_update_object": {
@@ -5108,16 +5345,16 @@
           "en": "A frozen typed workflow-edit policy/conditional edit-effect model reused across workflows, plus the versioned committed workflow."
         },
         "learning_signal": {
-          "zh": "source workflow 单编辑 before/after 的真实 execution utility ΔU。",
-          "en": "True execution-utility ΔU from single-edit before/after interventions on source workflows."
+          "zh": "同一 source workflow 内不同 edit 的真实 paired ΔU 差/排序，直接监督 conditional best-edit ranking；不再用单个 edit 的正负标签替代论文主张。",
+          "en": "True paired ΔU differences/rankings among edits within the same source workflow directly supervise conditional best-edit ranking; binary positive-effect labels no longer substitute for the paper claim."
         },
         "independent_truth": {
           "zh": "程序化 workflow success、tool/API execution 与任务金标；predictor/edit-effect 自己的分数不作为标签。",
           "en": "Programmatic workflow success, tool/API execution, and task gold labels; predictor/edit-effect scores never serve as truth."
         },
         "matched_simplification": {
-          "zh": "Agentic Predictor + threshold/selection：相同 source execution 数据与模型容量，预测候选完整 workflow score；hidden 阶段同样禁止试跑，只按 predictor 选择一个 edit。",
-          "en": "Agentic Predictor plus threshold/selection: same source execution data and model capacity, predicts full candidate-workflow scores; hidden stage likewise forbids trials and selects one edit via the predictor."
+          "zh": "global-best edit、nearest-neighbor historical edit reuse、同特征同容量 binary effect classifier，以及 CE-Graph propose-and-verify；所有方法共享 source paired-edit 数据，hidden 禁止候选试跑。",
+          "en": "Global-best edit, nearest-neighbor historical edit reuse, a capacity-matched binary effect classifier, and CE-Graph propose-and-verify; all share source paired-edit data and hidden workflows forbid candidate trials."
         },
         "decisive_falsifier": {
           "zh": "若 Agentic Predictor、nearest-neighbor edit reuse 或 failure-signature heuristic 在相同 source/hidden execution 预算下等效，则停止 update-policy 主张。",
@@ -5157,43 +5394,62 @@
       "fresh_reducibility_check": {
         "review_date": "2026-08-10",
         "summary": {
-          "zh": "旧 certificate/predictor 版本已碰撞；新版本只有在 hidden workflow 零搜索 edit 上赢过 absolute predictor 才成立。",
-          "en": "The old certificate/predictor form is collided; the redesign survives only if zero-search edits on hidden workflows beat absolute prediction."
+          "zh": "GraphMind 已从 operational traces 自进化 workflow graph，COVENANT 编译并约束 workflow execution，CausalFlow 做 counterfactual repair；E-1 只剩 paired edit effect → frozen conditional ranker → hidden zero-search one-shot commit。",
+          "en": "GraphMind evolves workflow graphs from operational traces, COVENANT compiles and constrains workflow execution, and CausalFlow performs counterfactual repair. E-1 survives only as paired edit effect → frozen conditional ranker → hidden zero-search one-shot commit."
         },
         "sources": [
           {
-            "title": "Agentic Predictor: Performance Prediction for Agentic Workflows via Multi-View Encoding",
-            "url": "https://arxiv.org/abs/2505.19764"
+            "title": "GraphMind: From Operational Traces to Self-Evolving Workflow Automation",
+            "url": "https://arxiv.org/abs/2605.17617"
           },
           {
-            "title": "GNNs as Predictors of Agentic Workflow Performances",
-            "url": "https://arxiv.org/abs/2503.11301"
+            "title": "COVENANT: Natural-Language Workflow Compilation for Aligned Agent Execution",
+            "url": "https://arxiv.org/abs/2607.25400"
           },
           {
-            "title": "Failure-Driven Workflow Refinement",
-            "url": "https://openreview.net/forum?id=IqxucrBy2z"
-          },
-          {
-            "title": "WorkflowPerturb: Calibrated Stress Tests for Evaluating Multi-Agent Workflow Metrics",
-            "url": "https://arxiv.org/abs/2602.17990"
+            "title": "CausalFlow: Causal Attribution and Counterfactual Repair for LLM Agent Failures",
+            "url": "https://arxiv.org/abs/2605.25338"
           }
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "fresh-collision-recheck",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "pre-p0-objective-gate",
         "summary": {
-          "zh": "certificate 版彻底停止；改成 paired edit-effect → frozen zero-search editor。只有 hidden workflow 直接 commit edit 仍优于 predictor/heuristic 才重新解锁。",
-          "en": "The certificate version is stopped. Redesign: paired edit effects → frozen zero-search editor; re-unlock only if direct hidden-workflow edits beat predictors/heuristics."
+          "zh": "E-1 正式改成 conditional edit ranking：同一 workflow 内直接学哪个 edit 更好。先复用已有 paired matrix 做 workflow-held-out top-1/regret；打不赢 global-best 就停止，禁止再烧 GPU。",
+          "en": "E-1 is now conditional edit ranking: directly learn which edit is better within a workflow. Reuse the existing paired matrix for workflow-held-out top-1/regret; stop if it cannot beat global-best, with no further GPU spend."
         }
       },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "advance-to-pre-p0-objective-gate",
+        "offline_pre_p0_gate": {
+          "zh": "复用已有 paired edit-effect matrix，不新增 rollout；pairwise/listwise objective 必须在 workflow-held-out calibration 上打赢 global-best/nearest-neighbor，才允许 fresh hidden。",
+          "en": "Reuse the existing paired edit-effect matrix with no new rollouts. A pairwise/listwise objective must beat global-best/nearest-neighbor on workflow-held-out calibration before fresh hidden workflows are opened."
+        },
+        "strongest_simplification": {
+          "zh": "global-best / nearest-neighbor / 同容量 binary effect classifier。",
+          "en": "Global-best / nearest-neighbor / capacity-matched binary effect classifier."
+        },
+        "rationale": {
+          "zh": "三模型为 2 keep / 1 merge。canonical Round-1 已证明 binary objective 与 paper claim 错位，因此本轮真正修复是 conditional ranking，而不是继续加 feature。",
+          "en": "The three models vote 2 keep / 1 merge. Canonical Round-1 showed the binary objective is misaligned with the paper claim; the material repair is conditional ranking rather than adding features."
+        },
+        "sources": [],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
+      },
       "pilot": {
-        "zh": "40–60 个 source workflow edits，4–6 种 typed operators；hidden 20–30 个 workflow/API graph。比较 nearest-neighbor edit reuse、Agentic Predictor、CE-Graph-style failure editor、paired edit-effect policy；hidden 阶段全部限制为单次 edit commit。",
-        "en": "Use 40–60 source workflow edits across 4–6 typed operators and 20–30 hidden workflows/API graphs. Compare nearest-neighbor edit reuse, Agentic Predictor, a CE-Graph-style failure editor, and the paired edit-effect policy; hidden-stage methods are all restricted to one edit commit."
+        "zh": "先只做 offline calibration：按 workflow 留出，pairwise/listwise ranker 的 top-1 best-edit accuracy 必须比 global-best 高至少 25pp；未过门不得打开 fresh hidden。过门后才在 fresh hidden workflow 上一次 commit。",
+        "en": "Start with offline workflow-held-out calibration only. Pairwise/listwise ranking must exceed global-best top-1 best-edit accuracy by at least 25 points; fresh hidden workflows stay sealed until this gate passes. Only then allow one persistent commit on fresh hidden workflows."
       },
       "decisive_metric": {
-        "zh": "hidden post-edit success Δ、负 edit 率、零搜索 edit precision、执行次数、跨 API/graph motif transfer。",
-        "en": "Hidden post-edit success delta, harmful-edit rate, zero-search edit precision, execution count, and transfer across APIs/graph motifs."
+        "zh": "workflow-held-out top-1 best-edit accuracy、edit regret；只有 offline gate 通过后才看 fresh-hidden commit success / bad-commit rate。",
+        "en": "Workflow-held-out top-1 best-edit accuracy and edit regret; fresh-hidden commit success/bad-commit rate is measured only after the offline gate passes."
       },
       "stop_condition": {
         "zh": "若 Agentic Predictor、nearest-neighbor edit reuse 或 failure-signature heuristic 在相同 source/hidden execution 预算下等效，则停止 update-policy 主张。",
@@ -5431,8 +5687,8 @@
               "en": "Mechanism pilot"
             },
             "setup": {
-              "zh": "40–60 个 source workflow edits，4–6 种 typed operators；hidden 20–30 个 workflow/API graph。比较 nearest-neighbor edit reuse、Agentic Predictor、CE-Graph-style failure editor、paired edit-effect policy；hidden 阶段全部限制为单次 edit commit。",
-              "en": "Use 40–60 source workflow edits across 4–6 typed operators and 20–30 hidden workflows/API graphs. Compare nearest-neighbor edit reuse, Agentic Predictor, a CE-Graph-style failure editor, and the paired edit-effect policy; hidden-stage methods are all restricted to one edit commit."
+              "zh": "先只做 offline calibration：按 workflow 留出，pairwise/listwise ranker 的 top-1 best-edit accuracy 必须比 global-best 高至少 25pp；未过门不得打开 fresh hidden。过门后才在 fresh hidden workflow 上一次 commit。",
+              "en": "Start with offline workflow-held-out calibration only. Pairwise/listwise ranking must exceed global-best top-1 best-edit accuracy by at least 25 points; fresh hidden workflows stay sealed until this gate passes. Only then allow one persistent commit on fresh hidden workflows."
             },
             "gate": {
               "zh": "通过证书的工作流应更好迁移到未见工具和任务图。",
@@ -5465,8 +5721,8 @@
             "en": "Accept all updates or filter only by current-task gain."
           },
           {
-            "zh": "Agentic Predictor + threshold/selection：相同 source execution 数据与模型容量，预测候选完整 workflow score；hidden 阶段同样禁止试跑，只按 predictor 选择一个 edit。",
-            "en": "Agentic Predictor plus threshold/selection: same source execution data and model capacity, predicts full candidate-workflow scores; hidden stage likewise forbids trials and selects one edit via the predictor."
+            "zh": "global-best edit、nearest-neighbor historical edit reuse、同特征同容量 binary effect classifier，以及 CE-Graph propose-and-verify；所有方法共享 source paired-edit 数据，hidden 禁止候选试跑。",
+            "en": "Global-best edit, nearest-neighbor historical edit reuse, a capacity-matched binary effect classifier, and CE-Graph propose-and-verify; all share source paired-edit data and hidden workflows forbid candidate trials."
           },
           {
             "zh": "等预算随机更新／拒绝。",
@@ -5490,8 +5746,8 @@
           "en": "Cap: 1 GPUs, 16 GPU-hours, 5 days."
         },
         "main_table": {
-          "zh": "hidden post-edit success Δ、负 edit 率、零搜索 edit precision、执行次数、跨 API/graph motif transfer。",
-          "en": "Hidden post-edit success delta, harmful-edit rate, zero-search edit precision, execution count, and transfer across APIs/graph motifs."
+          "zh": "workflow-held-out top-1 best-edit accuracy、edit regret；只有 offline gate 通过后才看 fresh-hidden commit success / bad-commit rate。",
+          "en": "Workflow-held-out top-1 best-edit accuracy and edit regret; fresh-hidden commit success/bad-commit rate is measured only after the offline gate passes."
         },
         "ablations": [
           {
@@ -5662,6 +5918,7 @@
       },
       "fresh_reducibility_check": null,
       "redesign_iteration": null,
+      "final_refinement": null,
       "pilot": {
         "zh": "在 ALFWorld、WebArena-Lite、AgentBench 上，以 1 GPU、18 GPU 小时完成两个开放模型和至少两个任务域的 P0/P1/P2 验证。",
         "en": "Run P0/P1/P2 on ALFWorld, WebArena-Lite, AgentBench with two open models and at least two domains within 1 GPUs and 18 GPU-hours."
@@ -6021,8 +6278,8 @@
         "en": "Constrained continual evolution"
       },
       "purpose": {
-        "zh": "长版本链真正的问题不是同时定位很多祖先，而是完整保存每个版本越来越贵；压缩历史又可能让未来 rollback 无法恢复原行为。",
-        "en": "The real long-version-chain problem is not locating many ancestors at once, but the growing cost of retaining every version; compressing history can destroy future rollback semantics."
+        "zh": "版本化 rollback 已出现更直接的 Agent memory 系统，OS 层也已有高效增量 checkpoint/rollback；当前版本不再具备直接进入 P0 的新颖性边界。只有证明跨异构更新表面的固定存储预算行为等价压缩不能被 snapshot/delta checkpoint 解决，才值得复活。",
+        "en": "Direct agent-memory version control and efficient incremental checkpoint/rollback now exist. The current version is no longer P0-ready and is revivable only if cross-surface behavioral-equivalent compaction under a fixed storage budget cannot be solved by snapshot/delta checkpointing."
       },
       "core_idea": {
         "zh": "定期把顺序更新链压成 checkpoint + dependency/restoration clauses。压缩目标不是重构参数相似度，而是对一组冻结 rollback query 保持行为等价：撤销任意授权更新子集后，压缩历史应恢复与 full-history replay 相同的任务行为。",
@@ -6137,31 +6394,59 @@
       "fresh_reducibility_check": {
         "review_date": "2026-08-10",
         "summary": {
-          "zh": "cascade repair 和 harmful-edit pruning 已存在；只有 rollback-equivalent compaction 还能形成不同问题。",
-          "en": "Cascade repair and harmful-edit pruning already exist; rollback-equivalent compaction remains a distinct problem."
+          "zh": "ChronoMem 已直接做 Agent memory version control + semantic rollback，DeltaBox 做增量 checkpoint/rollback；A-5 暂停，除非能证明异构更新历史压缩有新的不可约变量。",
+          "en": "ChronoMem directly provides agent-memory version control and semantic rollback, while DeltaBox provides incremental checkpoint/rollback. Hold A-5 unless heterogeneous update-history compaction exposes a new irreducible variable."
         },
         "sources": [
           {
-            "title": "MEMOREPAIR: Barrier-First Cascade Repair in Agentic Memory",
-            "url": "https://arxiv.org/abs/2605.07242"
+            "title": "ChronoMem: Version Control and Semantic Rollback for Large Language Model Agent Memory",
+            "url": "https://arxiv.org/abs/2607.27773"
           },
           {
-            "title": "CleanEdit: Retention-Aware Pruning and Bounded Replay for Lifelong Model Editing",
-            "url": "https://openreview.net/forum?id=pguFq8hyd4"
-          },
-          {
-            "title": "Energy-Regularized Sequential Model Editing on Hyperspheres",
-            "url": "https://openreview.net/forum?id=CHsdtzCip6"
+            "title": "DeltaBox: Scaling Stateful AI Agents with Millisecond-Level Sandbox Checkpoint/Rollback",
+            "url": "https://arxiv.org/abs/2605.22781"
           }
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "pilot-candidate-after-recheck",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "hold-fresh-collision",
         "summary": {
-          "zh": "从弱现实的祖先定位改成 rollback-equivalent history compaction；如果周期 checkpoint 不能等效，该问题有独立 P0 价值。",
-          "en": "Reframed from weak ancestor localization to rollback-equivalent history compaction; it has a standalone P0 only if periodic checkpoints fail to match it."
+          "zh": "ChronoMem + DeltaBox 使版本控制/回滚/增量 checkpoint 已很拥挤。A-5 暂停；只有同存储预算下 snapshot/delta 无法保持而 learned compaction 能保持的跨表面行为等价出现时才复活。",
+          "en": "ChronoMem and DeltaBox make version control, rollback, and incremental checkpointing crowded. Hold A-5; revive only if equal-storage snapshot/delta baselines fail on a cross-surface behavioral-equivalence regime that learned compaction solves."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "hold-after-fresh-collision",
+        "offline_pre_p0_gate": {
+          "zh": "先做纯离线 storage-equivalence test：periodic snapshot、delta checkpoint 与 clause compactor 在同字节预算下若无稳定 rollback fidelity 差异，则永久停止。",
+          "en": "Run an offline storage-equivalence test first: if periodic snapshots, delta checkpoints, and the clause compactor show no stable rollback-fidelity difference at equal bytes, stop permanently."
+        },
+        "strongest_simplification": {
+          "zh": "ChronoMem-style snapshots / DeltaBox-style delta checkpoints + deterministic replay。",
+          "en": "ChronoMem-style snapshots / DeltaBox-style delta checkpoints plus deterministic replay."
+        },
+        "rationale": {
+          "zh": "三模型为 2 keep / 1 hold，但最新 ChronoMem 明显压缩 novelty；当前最合理状态是 HOLD。",
+          "en": "The three models vote 2 keep / 1 hold, but ChronoMem materially narrows novelty; HOLD is the defensible current state."
+        },
+        "sources": [
+          {
+            "title": "ChronoMem",
+            "url": "https://arxiv.org/abs/2607.27773"
+          },
+          {
+            "title": "DeltaBox",
+            "url": "https://arxiv.org/abs/2605.22781"
+          }
+        ],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "构造 30–50 个顺序轻量更新、12 个冻结 rollback query；比较 full-history oracle、周期 checkpoint、文本摘要和 clause compactor，存储字节与 replay 调用严格匹配。",
@@ -6637,6 +6922,7 @@
       },
       "fresh_reducibility_check": null,
       "redesign_iteration": null,
+      "final_refinement": null,
       "pilot": {
         "zh": "在 WebArena-Lite、ALFWorld 上，以 2 GPU、48 GPU 小时完成两个开放模型和至少两个任务域的 P0/P1/P2 验证。",
         "en": "Run P0/P1/P2 on WebArena-Lite, ALFWorld with two open models and at least two domains within 2 GPUs and 48 GPU-hours."
@@ -7133,12 +7419,35 @@
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "parent-merge-test",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "merge-into-A3",
         "summary": {
-          "zh": "只保留固定 6 Probe 下的 memory-specific scope routing；同预算 A-3 若等效，直接合并，不再单列。",
-          "en": "Only memory-specific scope routing under a fixed six-probe budget survives; merge directly into A-3 if the equal-budget parent matches."
+          "zh": "B-4 不再作为独立论文方法；memory-specific influence scope 只作为 A-3 Probe allocator 的一个候选特征。",
+          "en": "B-4 is no longer a standalone paper method; memory-specific influence scope becomes a candidate feature inside the A-3 probe allocator."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "merge-into-A3",
+        "offline_pre_p0_gate": {
+          "zh": "不再建立独立 P0；只把 memory-scope feature 加进 A-3 固定 K Probe allocator，离线看是否提高 probe-selection fidelity。",
+          "en": "Do not build a standalone P0; add memory-scope features only to A-3's fixed-K probe allocator and test offline whether probe-selection fidelity improves."
+        },
+        "strongest_simplification": {
+          "zh": "A-3 通用 fixed-K regression panel，完全相同 K/hidden truth/candidate lessons。",
+          "en": "A-3 generic fixed-K regression panel with identical K, hidden truth, and candidate lessons."
+        },
+        "rationale": {
+          "zh": "三个模型一致建议 merge；B-4 没有独立于 A-3 的持久学习对象，真正有价值的是 probe allocation feature。",
+          "en": "All three models recommend merge. B-4 lacks a persistent learned object independent of A-3; the useful part is a probe-allocation feature."
+        },
+        "sources": [],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "20–30 个冻结 lesson，6-sentinel 硬预算；比较随机、全局历史敏感度、A-3 learned panel、scope-routed panel。hidden task family 在 router 和阈值冻结后才打开。",
@@ -7615,6 +7924,7 @@
       },
       "fresh_reducibility_check": null,
       "redesign_iteration": null,
+      "final_refinement": null,
       "pilot": {
         "zh": "在 GSM8K、ALFWorld、MM-Vet 上，以 1 GPU、20 GPU 小时完成两个开放模型和至少两个任务域的 P0/P1/P2 验证。",
         "en": "Run P0/P1/P2 on GSM8K, ALFWorld, MM-Vet with two open models and at least two domains within 1 GPUs and 20 GPU-hours."
@@ -8090,31 +8400,55 @@
       "fresh_reducibility_check": {
         "review_date": "2026-08-10",
         "summary": {
-          "zh": "counterexample repair 已存在；可识别变量是冻结 skill body 后的 minimal monotone external gate。",
-          "en": "Counterexample repair exists; the identifiable variable is a minimal monotone external gate around a frozen skill body."
+          "zh": "生产系统已有 deterministic executability gate；B-5 的边界只能是从真实 counterexample 学到最小单调适用边界，而不是一般 skill gating。",
+          "en": "Production systems already use deterministic executability gates. B-5 survives only as learning a minimal monotone applicability boundary from verified counterexamples, not generic skill gating."
         },
         "sources": [
           {
-            "title": "CEDAR: A Counter-Example Driven Agent with Regular Restriction",
-            "url": "https://openreview.net/forum?id=IyMoawG676"
+            "title": "Don't Offer What Can't Be Done: Deterministic Executability Gating for LLM Skill Selection at Scale",
+            "url": "https://arxiv.org/abs/2608.01050"
           },
           {
-            "title": "MEMOREPAIR: Barrier-First Cascade Repair in Agentic Memory",
+            "title": "MEMOREPAIR",
             "url": "https://arxiv.org/abs/2605.07242"
-          },
-          {
-            "title": "When Memory Updates but Behavior Does Not",
-            "url": "https://arxiv.org/abs/2608.01619"
           }
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "pilot-candidate-after-recheck",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "pre-p0-offline-gate",
         "summary": {
-          "zh": "把反例修复自由度压到 external gate：skill body 不动、边界只最小单调收缩。若自由 classifier 等效则不单列。",
-          "en": "Repair freedom is restricted to the external gate: skill body frozen, boundary only minimally and monotonically shrinks. Do not keep standalone if a free classifier is equivalent."
+          "zh": "skill body 永久冻结，只允许 external applicability gate 最小单调收缩。先离线证明固定谓词能排除反例并保持旧正例，再与 deterministic hard-stop 和自由 classifier 比。",
+          "en": "Freeze the skill body permanently and allow only minimal monotone shrinkage of an external applicability gate. Prove offline that fixed predicates exclude counterexamples while preserving old positives, then compare with deterministic hard-stops and a free classifier."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "advance-to-pre-p0-offline-gate",
+        "offline_pre_p0_gate": {
+          "zh": "用历史正例/反例模拟 boundary growth：固定谓词词表下，最小单调排除必须覆盖反例且保留绝大多数旧正例；若需要自由 classifier 或复杂新谓词，停止。",
+          "en": "Simulate boundary growth on historical positives/counterexamples: under a fixed predicate vocabulary, minimal monotone exclusions must cover counterexamples while preserving most old positives; stop if a free classifier or complex new predicates are required."
+        },
+        "strongest_simplification": {
+          "zh": "deterministic hard-stop predicate gate + unrestricted classifier，各自看到相同 counterexamples。",
+          "en": "Deterministic hard-stop predicate gate plus unrestricted classifier, each seeing the same counterexamples."
+        },
+        "rationale": {
+          "zh": "三个模型一致保留；新 executability-gating 工作把边界压到‘从反例学习且只能最小单调收缩’。",
+          "en": "All three models retain it. New executability-gating work narrows the contribution to learning from counterexamples under a minimal monotone-shrink constraint."
+        },
+        "sources": [
+          {
+            "title": "Deterministic Executability Gating",
+            "url": "https://arxiv.org/abs/2608.01050"
+          }
+        ],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "冻结 10–15 个 procedural skills，每个注入 2–4 个可验证边界反例；比较 delete、full rewrite、free classifier、minimal monotone gate，旧正例与新反例 paired 测试。",
@@ -8591,6 +8925,7 @@
       },
       "fresh_reducibility_check": null,
       "redesign_iteration": null,
+      "final_refinement": null,
       "pilot": {
         "zh": "在 GSM8K、HumanEval、MM-Vet 上，以 1 GPU、18 GPU 小时完成两个开放模型和至少两个任务域的 P0/P1/P2 验证。",
         "en": "Run P0/P1/P2 on GSM8K, HumanEval, MM-Vet with two open models and at least two domains within 1 GPUs and 18 GPU-hours."
@@ -9067,6 +9402,7 @@
       },
       "fresh_reducibility_check": null,
       "redesign_iteration": null,
+      "final_refinement": null,
       "pilot": {
         "zh": "在 GSM8K、ALFWorld、MM-Vet 上，以 1 GPU、28 GPU 小时完成两个开放模型和至少两个任务域的 P0/P1/P2 验证。",
         "en": "Run P0/P1/P2 on GSM8K, ALFWorld, MM-Vet with two open models and at least two domains within 1 GPUs and 28 GPU-hours."
@@ -9559,12 +9895,44 @@
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "parent-merge-test",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "merge-into-E1",
         "summary": {
-          "zh": "从 branch credit 收窄为 intervention-confirmed failure motif rewrite grammar；若 E-1 同预算 editor 等效，就作为 E-1 子组件合并。",
-          "en": "Narrowed from branch credit to intervention-confirmed failure-motif rewrite grammar; merge as an E-1 component if the equal-budget editor matches."
+          "zh": "E-2 不再作为独立论文方法。failure motif / causal subgraph 只保留为 E-1 conditional edit ranker 的结构化上下文特征；是否有增益用同一 paired matrix 做消融。",
+          "en": "E-2 is no longer a standalone paper method. Failure motifs/causal subgraphs remain only as structured context features for the E-1 conditional edit ranker, ablated on the same paired matrix."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "merge-into-E1",
+        "offline_pre_p0_gate": {
+          "zh": "不再单独推进；把 recurring failure motif / minimal causal subgraph 作为 E-1 local-context feature 或 edit explanation，在同一 paired-edit dataset 上做消融。",
+          "en": "Do not pursue standalone. Use recurring failure motifs/minimal causal subgraphs as E-1 local-context features or edit explanations and ablate them on the same paired-edit dataset."
+        },
+        "strongest_simplification": {
+          "zh": "E-1 conditional edit ranker，不使用 motif feature。",
+          "en": "E-1 conditional edit ranker without motif features."
+        },
+        "rationale": {
+          "zh": "三个模型一致 merge；CausalFlow 已直接做 causal attribution + minimal counterfactual repair，GraphMind/CE-Graph 也覆盖 workflow failure-driven graph adaptation。",
+          "en": "All three models recommend merge. CausalFlow directly performs causal attribution plus minimal counterfactual repair, while GraphMind/CE-Graph cover failure-driven workflow graph adaptation."
+        },
+        "sources": [
+          {
+            "title": "CausalFlow",
+            "url": "https://arxiv.org/abs/2605.25338"
+          },
+          {
+            "title": "GraphMind",
+            "url": "https://arxiv.org/abs/2605.17617"
+          }
+        ],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "source 12–20 个 workflow，每类 failure motif 至少出现 3 次；编译 3–6 条 rewrite rules。hidden workflows 上比较 CE-Graph-style editor、E-1 edit-effect policy、grammar direct rewrite，调用严格匹配。",
@@ -10056,12 +10424,35 @@
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "scenario-check-then-recheck",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "hold-scenario-check",
         "summary": {
-          "zh": "主动删掉 AAWM 已覆盖的 decision-aware target；改成 fixed update budget 下的 decision-switch transition admission。仍需先确认真实持续适应场景。",
-          "en": "Removed the AAWM-collided decision-aware target claim; redesigned as decision-switch transition admission under fixed update budget. Real continual adaptation must still be confirmed first."
+          "zh": "方法先暂停。和子龙确认真实持续适应场景，并用现有 transition log 做 decision-switch prevalence / error-magnitude non-equivalence 检查；没有现实信号就停止。",
+          "en": "Pause method work. Confirm the real continual-adaptation setting with Zilong and audit existing transition logs for decision-switch prevalence and non-equivalence to error magnitude; stop if the signal is absent."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "hold-scenario-check",
+        "offline_pre_p0_gate": {
+          "zh": "先用真实持续适应日志做 trace-only decision-switch audit：修正预测是否经常改变后续动作/风险/恢复决策，并检查该信号是否不等价于误差幅度；场景未确认前禁止设计 P0。",
+          "en": "Use real continual-adaptation logs for a trace-only decision-switch audit first: determine whether correcting predictions often changes subsequent action/risk/recovery decisions and whether that signal is non-equivalent to error magnitude. No P0 design before the setting is confirmed."
+        },
+        "strongest_simplification": {
+          "zh": "largest-error / random equal-count transition admission。",
+          "en": "Largest-error / random equal-count transition admission."
+        },
+        "rationale": {
+          "zh": "三模型为 2 hold / 1 keep。AAWM 已覆盖 decision-aware world-model target，因此当前只有真实 continual-adaptation 场景中的 fixed-budget transition admission 可能存活。",
+          "en": "The three models vote 2 hold / 1 keep. AAWM already covers decision-aware world-model targets, leaving only fixed-budget transition admission in a real continual-adaptation setting as a possible surviving boundary."
+        },
+        "sources": [],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "在 exact-transition 或程序可核对环境收集 300–500 transitions；固定只允许 25–50% 进入更新。比较 random、largest prediction error、uncertainty、AAWM/uniform、decision-switch admission。",
@@ -10555,12 +10946,44 @@
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "same-budget-simplification-test",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "pre-p0-offline-gate",
         "summary": {
-          "zh": "从‘memory half-life’收窄成同审计预算下的 intervention-utility 复验调度；若 recency/frequency 等效，降级为缓存组件。",
-          "en": "Narrowed from memory half-life to intervention-utility revalidation scheduling at matched audit budget; demote to a cache component if recency/frequency is equivalent."
+          "zh": "最终问题不是‘旧记忆多久删’，而是固定真实干预预算下‘哪些 activation 最值得复验’。先用时间留出日志打赢 LRU/LFU/TTL/recency-frequency，否则降级缓存组件。",
+          "en": "The final problem is not when old memories expire, but which activations deserve revalidation under a fixed intervention budget. Beat LRU/LFU/TTL/recency-frequency on temporal holdout first or demote to a cache component."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "advance-to-pre-p0-offline-gate",
+        "offline_pre_p0_gate": {
+          "zh": "对历史 activation + memory OFF/ON intervention 日志做时间切分；学习调度器必须在相同 audit fraction 下更早发现 utility drift，且不能比 recency/frequency 多用真值。",
+          "en": "Time-split historical activation plus memory OFF/ON intervention logs. The scheduler must detect utility drift earlier at the same audit fraction without using more truth than recency/frequency baselines."
+        },
+        "strongest_simplification": {
+          "zh": "LRU/LFU/TTL/recency-frequency + 同比例随机 audit。",
+          "en": "LRU/LFU/TTL/recency-frequency plus equal-fraction random audit."
+        },
+        "rationale": {
+          "zh": "三个模型一致保留；MemoPilot/ShiftBench 覆盖 memory learning/recovery，但固定 intervention-budget 下何时复验仍是窄调度问题。",
+          "en": "All three models retain it. MemoPilot/ShiftBench cover memory learning/recovery, while when to revalidate under a fixed intervention budget remains a narrow scheduling problem."
+        },
+        "sources": [
+          {
+            "title": "From Player to Master: Enhancing Test-Time Learning of LLM Agents via Reinforcement Learning over Memory",
+            "url": "https://openreview.net/forum?id=gNWNtstp3r"
+          },
+          {
+            "title": "ShiftBench: Measuring Recovery of Agent Memory Under Distribution Shift",
+            "url": "https://openreview.net/forum?id=CCSztIjmOy"
+          }
+        ],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "构造可控 API/schema shift 或使用自然 shift 段；固定 20% audit fraction，比较 TTL、LRU/LFU、recency+frequency、utility-hazard，所有方法相同 on/off replay 总数。",
@@ -11044,6 +11467,7 @@
       },
       "fresh_reducibility_check": null,
       "redesign_iteration": null,
+      "final_refinement": null,
       "pilot": {
         "zh": "在 HumanEval、ALFWorld、MM-Vet 上，以 1 GPU、24 GPU 小时完成两个开放模型和至少两个任务域的 P0/P1/P2 验证。",
         "en": "Run P0/P1/P2 on HumanEval, ALFWorld, MM-Vet with two open models and at least two domains within 1 GPUs and 24 GPU-hours."
@@ -11525,6 +11949,7 @@
       },
       "fresh_reducibility_check": null,
       "redesign_iteration": null,
+      "final_refinement": null,
       "pilot": {
         "zh": "在 WebArena-Lite、ALFWorld 上，以 1 GPU、22 GPU 小时完成两个开放模型和至少两个任务域的 P0/P1/P2 验证。",
         "en": "Run P0/P1/P2 on WebArena-Lite, ALFWorld with two open models and at least two domains within 1 GPUs and 22 GPU-hours."
@@ -12023,12 +12448,35 @@
         ]
       },
       "redesign_iteration": {
-        "round": "2026-08-10",
-        "verdict": "fresh-collision-recheck",
+        "round": "2026-08-10 · Final Refinement",
+        "verdict": "merge-unless-disagreement",
         "summary": {
-          "zh": "旧版 consensus/交集已不够新；改成 leave-one-process-family-out 的 memory-on/off 干预效用稳定性。若 utility-only 等效，立即停止。",
-          "en": "Consensus/intersection is no longer novel. The redesign uses leave-one-process-family-out memory-on/off utility stability; stop immediately if utility-only is equivalent."
+          "zh": "当前不扩样，先做 disagreement mining。找不到 utility-only 与 cross-process 的决策分歧就合并；只有分歧样本上后者减少负迁移才恢复独立方法。",
+          "en": "Do disagreement mining instead of scaling. Merge if utility-only and cross-process admission do not make different decisions; revive only if the latter reduces negative transfer on disagreement cases."
         }
+      },
+      "final_refinement": {
+        "round": "2026-08-10",
+        "recommendation": "merge-unless-disagreement-found",
+        "offline_pre_p0_gate": {
+          "zh": "禁止再跑 GPU；先在冻结 trajectory/lesson pool 上找 utility-only 与 process-robust 的排序分歧。若没有稳定分歧，直接并入普通 utility admission。",
+          "en": "No further GPU run: first mine a frozen trajectory/lesson pool for ranking disagreements between utility-only and process-robust admission. If stable disagreements do not exist, merge into ordinary utility admission."
+        },
+        "strongest_simplification": {
+          "zh": "utility-only admission：完全相同 lesson、memory OFF/ON replay 和预算，只看平均干预效用。",
+          "en": "Utility-only admission with identical lessons, memory OFF/ON replays, and budget, using only mean intervention utility."
+        },
+        "rationale": {
+          "zh": "三模型都认为理论机制可行，但 canonical Round-1 中四种策略选出相同 lesson；在真实 disagreement 出现前，process invariance 不是独立贡献。",
+          "en": "All three models find the mechanism plausible, but canonical Round-1 made all policies select the same lessons. Process invariance is not a standalone contribution until a real disagreement regime is found."
+        },
+        "sources": [],
+        "multi_model_inputs": [
+          "deepseek-v4-pro",
+          "kimi-k3",
+          "doubao-seed-evolving"
+        ],
+        "glm_5_2_status": "returned-but-failed-structured-quality-gate"
       },
       "pilot": {
         "zh": "每个 discovery task 收集至少 3 个成功 process family；冻结 20–30 个 candidate lesson。四臂比较 single-success、consensus、utility-only、cross-process validated，memory 数量和 replay 预算严格匹配。",
@@ -12505,6 +12953,7 @@
       },
       "fresh_reducibility_check": null,
       "redesign_iteration": null,
+      "final_refinement": null,
       "pilot": {
         "zh": "在 ALFWorld、AgentBench、MM-Vet 上，以 1 GPU、20 GPU 小时完成两个开放模型和至少两个任务域的 P0/P1/P2 验证。",
         "en": "Run P0/P1/P2 on ALFWorld, AgentBench, MM-Vet with two open models and at least two domains within 1 GPUs and 20 GPU-hours."
@@ -12981,6 +13430,7 @@
       },
       "fresh_reducibility_check": null,
       "redesign_iteration": null,
+      "final_refinement": null,
       "pilot": {
         "zh": "在 AgentBench、WebArena-Lite 上，以 1 GPU、28 GPU 小时完成两个开放模型和至少两个任务域的 P0/P1/P2 验证。",
         "en": "Run P0/P1/P2 on AgentBench, WebArena-Lite with two open models and at least two domains within 1 GPUs and 28 GPU-hours."
@@ -13418,6 +13868,7 @@
       },
       "fresh_reducibility_check": null,
       "redesign_iteration": null,
+      "final_refinement": null,
       "pilot": {
         "zh": "在 GSM8K、ALFWorld、MM-Vet 上，以 2 GPU、32 GPU 小时完成两个开放模型和至少两个任务域的 P0/P1/P2 验证。",
         "en": "Run P0/P1/P2 on GSM8K, ALFWorld, MM-Vet with two open models and at least two domains within 2 GPUs and 32 GPU-hours."
@@ -13854,6 +14305,7 @@
       },
       "fresh_reducibility_check": null,
       "redesign_iteration": null,
+      "final_refinement": null,
       "pilot": {
         "zh": "在 ALFWorld、AgentBench、MM-Vet 上，以 2 GPU、44 GPU 小时完成两个开放模型和至少两个任务域的 P0/P1/P2 验证。",
         "en": "Run P0/P1/P2 on ALFWorld, AgentBench, MM-Vet with two open models and at least two domains within 2 GPUs and 44 GPU-hours."

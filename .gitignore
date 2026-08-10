@@ -16,6 +16,7 @@ generated/ark-*
 generated/r31-*
 generated/r32-final-ideas.*
 generated/r32-targeted-recheck.*
+generated/final-method-refinement-*.json
 
 # Frontend-only Pages build output
 _site/

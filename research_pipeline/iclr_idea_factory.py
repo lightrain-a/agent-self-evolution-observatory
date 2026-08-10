@@ -19,6 +19,10 @@ from .method_redesign_c_d_20260810 import DETAILS as REDESIGN_CD_20260810
 from .method_redesign_e_20260810 import DETAILS as REDESIGN_E_20260810
 from .method_redesign_f12_20260810 import DETAILS as REDESIGN_F12_20260810
 from .method_redesign_f3_20260810 import DETAILS as REDESIGN_F3_20260810
+from .method_refinement_final_a_20260810 import DETAILS as FINAL_REFINEMENT_A_20260810
+from .method_refinement_final_b_20260810 import DETAILS as FINAL_REFINEMENT_B_20260810
+from .method_refinement_final_cd_20260810 import DETAILS as FINAL_REFINEMENT_CD_20260810
+from .method_refinement_final_ef_20260810 import DETAILS as FINAL_REFINEMENT_EF_20260810
 from .method_details_common import TRACK_UPDATE_OBJECTS, generic_concrete_example, method_substance, original_task_evaluation, parent_merge_gate
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "iclr-low-resource-ideas.json"
@@ -656,6 +660,14 @@ METHOD_DETAIL_OVERRIDES: dict[str, dict[str, Any]] = {
     **REDESIGN_F12_20260810,
     **REDESIGN_F3_20260810,
 }
+for _final_patch_group in (
+    FINAL_REFINEMENT_A_20260810,
+    FINAL_REFINEMENT_B_20260810,
+    FINAL_REFINEMENT_CD_20260810,
+    FINAL_REFINEMENT_EF_20260810,
+):
+    for _idea_id, _patch in _final_patch_group.items():
+        METHOD_DETAIL_OVERRIDES[_idea_id] = {**METHOD_DETAIL_OVERRIDES.get(_idea_id, {}), **_patch}
 
 
 def _derived_fields(spec: IdeaSpec) -> dict[str, Any]:
@@ -799,6 +811,7 @@ def build_iclr_idea_bank() -> dict[str, Any]:
             "original_task_evaluation":original_task_evaluation(),
             "fresh_reducibility_check":fields.get("fresh_reducibility_check"),
             "redesign_iteration":fields.get("redesign_iteration"),
+            "final_refinement":fields.get("final_refinement"),
             "pilot":fields["pilot"],
             "decisive_metric":fields["metric"],
             "stop_condition":fields["stop"],
@@ -826,6 +839,16 @@ def build_iclr_idea_bank() -> dict[str, Any]:
     for rank,item in enumerate(passed, start=1):
         item["rank"] = rank
     external_counts = {verdict:sum(item["external_verdict"] == verdict for item in passed) for verdict in ("pass", "revise", "block", "pending")}
+    final_refined = [item for item in passed if item.get("final_refinement")]
+    final_routes = {"advance": 0, "merge": 0, "hold": 0}
+    for item in final_refined:
+        recommendation = str((item.get("final_refinement") or {}).get("recommendation") or "")
+        if recommendation.startswith("advance") or recommendation.startswith("phenomenon"):
+            final_routes["advance"] += 1
+        elif recommendation.startswith("merge"):
+            final_routes["merge"] += 1
+        else:
+            final_routes["hold"] += 1
     return {
         "schema_version":"1.0",
         "generated_at":datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
@@ -865,6 +888,7 @@ def build_iclr_idea_bank() -> dict[str, Any]:
             "external_pass":external_counts["pass"],
             "external_revise":external_counts["revise"],
             "external_block":external_counts["block"],
+            "final_method_refinement":{"reviewed":len(final_refined), **final_routes},
         },
         "tracks":{key:value["label"] for key,value in TRACKS.items()},
         "passed_ideas":passed,

@@ -35,6 +35,7 @@ EXCLUDED_PUBLIC_PREFIXES = (
     "r31-",
     "r32-final-ideas",
     "r32-targeted-recheck",
+    "final-method-refinement-",
 )
 LOCAL_ASSET_RE = re.compile(
     r'(?P<prefix>\b(?:src|href)=["\'])(?P<url>(?!https?://|//|data:|mailto:|#)[^"\']+\.(?:css|js))(?P<suffix>["\'])'

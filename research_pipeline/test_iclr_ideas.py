@@ -104,7 +104,7 @@ class IclrIdeaBankTest(unittest.TestCase):
             with self.subTest(redesign=idea_id):
                 idea = by_id[idea_id]
                 iteration = idea.get("redesign_iteration") or {}
-                self.assertEqual(iteration.get("round"), "2026-08-10")
+                self.assertTrue(str(iteration.get("round") or "").startswith("2026-08-10"))
                 self.assertTrue(iteration.get("verdict"))
                 self.assertTrue((iteration.get("summary") or {}).get("zh"))
                 fresh = idea.get("fresh_reducibility_check") or {}
@@ -116,10 +116,46 @@ class IclrIdeaBankTest(unittest.TestCase):
                 self.assertGreaterEqual(len(idea["stop_condition"]["zh"]), 20)
 
         self.assertEqual(by_id["outcome-equivalent-trajectory-contrast"]["title"]["zh"], "跨过程验证经验蒸馏")
-        self.assertEqual(by_id["workflow-generalization-certificate"]["title"]["zh"], "成对编辑效应工作流更新策略")
+        self.assertEqual(by_id["workflow-generalization-certificate"]["title"]["zh"], "条件编辑排序工作流策略")
         self.assertEqual(by_id["world-model-error-gated-learning"]["title"]["zh"], "决策翻转驱动的转移准入")
         self.assertEqual(by_id["causally-verified-experience-admission"]["parent_merge_gate"]["parent_id"], "regression-gated-self-evolution")
         self.assertEqual(by_id["workflow-branch-credit"]["parent_merge_gate"]["parent_id"], "workflow-generalization-certificate")
+
+    def test_final_method_refinement_round_is_complete_and_decisive(self) -> None:
+        by_id = {idea["id"]: idea for idea in self.ideas}
+        ids = (
+            "regression-gated-self-evolution", "compositional-update-compatibility", "lineage-aware-rollback",
+            "outcome-equivalent-trajectory-contrast", "contradiction-preserving-consolidation", "retrieval-interference-auditor",
+            "causally-verified-experience-admission", "local-counterexample-memory-repair", "memory-half-life",
+            "self-label-confidence-flow", "evaluator-coadaptation-guard", "counterexample-generating-curriculum",
+            "workflow-generalization-certificate", "workflow-branch-credit", "world-model-error-gated-learning",
+            "irreversible-action-counterfactuals", "recovery-conditioned-experience",
+        )
+        buckets = {"advance": 0, "merge": 0, "hold": 0}
+        for idea_id in ids:
+            with self.subTest(final_refinement=idea_id):
+                ref = by_id[idea_id].get("final_refinement") or {}
+                self.assertEqual(ref.get("round"), "2026-08-10")
+                self.assertEqual(ref.get("multi_model_inputs"), ["deepseek-v4-pro", "kimi-k3", "doubao-seed-evolving"])
+                self.assertEqual(ref.get("glm_5_2_status"), "returned-but-failed-structured-quality-gate")
+                self.assertTrue((ref.get("offline_pre_p0_gate") or {}).get("zh"))
+                self.assertTrue((ref.get("strongest_simplification") or {}).get("en"))
+                recommendation = str(ref.get("recommendation") or "")
+                if recommendation.startswith("advance") or recommendation.startswith("phenomenon"):
+                    buckets["advance"] += 1
+                elif recommendation.startswith("merge"):
+                    buckets["merge"] += 1
+                else:
+                    buckets["hold"] += 1
+        self.assertEqual(buckets, {"advance": 10, "merge": 3, "hold": 4})
+        self.assertEqual(self.payload["summary"]["final_method_refinement"], {"reviewed": 17, "advance": 10, "merge": 3, "hold": 4})
+        self.assertIn("pairwise", by_id["workflow-generalization-certificate"]["core_idea"]["en"].lower())
+        self.assertEqual(by_id["causally-verified-experience-admission"]["redesign_iteration"]["verdict"], "merge-into-A3")
+        self.assertEqual(by_id["workflow-branch-credit"]["redesign_iteration"]["verdict"], "merge-into-E1")
+        self.assertEqual(by_id["self-label-confidence-flow"]["redesign_iteration"]["verdict"], "hold-reality-check")
+        a5_sources = {source["title"] for source in by_id["lineage-aware-rollback"]["fresh_reducibility_check"]["sources"]}
+        self.assertTrue(any("ChronoMem" in title for title in a5_sources))
+        self.assertTrue(any("DeltaBox" in title for title in a5_sources))
 
     def test_primary_open_weight_and_api_policy(self) -> None:
         policy = self.payload["policy"]
