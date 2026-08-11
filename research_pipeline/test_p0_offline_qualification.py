@@ -33,7 +33,9 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(by_id["counterfactual-evolution-decision-controller"]["checks"]["representability"]["status"],"synthetic-pass")
         self.assertEqual(by_id["constraint-complete-typed-memory-order-logic"]["checks"]["baseline_disagreement"]["status"],"fail")
         self.assertEqual(by_id["constraint-complete-typed-memory-order-logic"]["gpu0"]["status"],"stop-matched-nary-equivalent")
-        self.assertEqual(self.state["summary"]["gpu0_stop"],1)
+        self.assertEqual(by_id["active-causal-minimal-rollback"]["checks"]["baseline_disagreement"]["status"],"fail")
+        self.assertEqual(by_id["active-causal-minimal-rollback"]["gpu0"]["status"],"stop-matched-group-testing-equivalent")
+        self.assertEqual(self.state["summary"]["gpu0_stop"],2)
 
     def test_reused_artifacts_capture_current_blockers(self) -> None:
         shared=self.state["shared_evidence"]

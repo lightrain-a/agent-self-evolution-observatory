@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T06:05:35+00:00",
+  "generated_at": "2026-08-11T06:24:47+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
@@ -34,8 +34,8 @@
     "admitted": 20,
     "transitioned_from_p0_ready": 16,
     "settings_complete": 20,
-    "execution_authorized": 2,
-    "execution_blocked_or_pending": 18
+    "execution_authorized": 0,
+    "execution_blocked_or_pending": 20
   },
   "cards": [
     {
@@ -1150,11 +1150,11 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "conditional",
-          "evidence": "Rollback/harm is real, but minimal-fault-set support is not established.",
-          "source": "qualification/a2-updater-support-v1/fixed-sequences.jsonl",
-          "evidence_kind": "real-reused",
-          "next": "Collect non-prefix enable/disable interventions and independent minimal-fault truth on 24 frozen 4–8-update sequences."
+          "status": "stop-matched-group-testing-equivalent",
+          "evidence": "CPU P0 shows the active query policy is exactly a non-learning binary group-testing simplification under the same sparse-fault prior.",
+          "source": "generated/p0-a6-cpu.json",
+          "evidence_kind": "cpu-p0-falsifier",
+          "next": "Stop standalone A-6; the current active query policy is exactly reproduced by non-learning binary group testing under the same sparse-fault prior."
         },
         "pre_p0": {
           "passed": 8,
@@ -1172,8 +1172,8 @@
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "fail",
+              "evidence": "Non-learning binary group testing exactly reproduces active-causal recovery and per-case intervention counts: mean tests 5.708 vs 5.708; per-case identical=True."
             },
             {
               "key": "representability",
@@ -1272,11 +1272,7 @@
         },
         "execution_authorized": false,
         "blockers": [
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
@@ -2696,10 +2692,12 @@
           ]
         },
         "runtime_throughput": {
-          "status": "pass"
+          "status": "complete"
         },
-        "execution_authorized": true,
-        "blockers": []
+        "execution_authorized": false,
+        "blockers": [
+          "p0-complete-second-model-hold"
+        ]
       }
     },
     {
@@ -2890,10 +2888,12 @@
           ]
         },
         "runtime_throughput": {
-          "status": "pass"
+          "status": "complete"
         },
-        "execution_authorized": true,
-        "blockers": []
+        "execution_authorized": false,
+        "blockers": [
+          "p0-complete-second-model-hold"
+        ]
       }
     },
     {

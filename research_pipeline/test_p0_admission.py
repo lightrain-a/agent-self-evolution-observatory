@@ -28,8 +28,12 @@ class P0AdmissionTest(unittest.TestCase):
         self.assertEqual(by_id["interventional-permission-triage-under-ceiling"]["code"], "E-4")
 
     def test_p0_entry_does_not_fake_execution_authorization(self) -> None:
-        self.assertEqual(self.state["summary"]["execution_authorized"], 2)
-        self.assertEqual(self.state["summary"]["execution_blocked_or_pending"], 18)
+        self.assertEqual(self.state["summary"]["execution_authorized"], 0)
+        for idea_id in ("replicated-effect-memory-gate","cross-task-effect-transport-certificate"):
+            row=next(card for card in self.state["cards"] if card["idea_id"]==idea_id)
+            self.assertFalse(row["execution_preflight"]["execution_authorized"])
+            self.assertEqual(row["execution_preflight"]["blockers"],["p0-complete-second-model-hold"])
+        self.assertEqual(self.state["summary"]["execution_blocked_or_pending"], 20)
         transitioned = [row for row in self.state["cards"] if (row.get("p0_entry") or {}).get("date") == "2026-08-11"]
         self.assertEqual(len(transitioned), 16)
         self.assertTrue(all(not row["execution_preflight"]["execution_authorized"] for row in transitioned))
@@ -37,6 +41,9 @@ class P0AdmissionTest(unittest.TestCase):
         b10=next(row for row in transitioned if row["idea_id"]=="constraint-complete-typed-memory-order-logic")
         self.assertEqual(b10["execution_preflight"]["blockers"],["p0-stop-await-human-review"])
         self.assertEqual(b10["execution_preflight"]["gpu0"]["status"],"stop-matched-nary-equivalent")
+        a6=next(row for row in transitioned if row["idea_id"]=="active-causal-minimal-rollback")
+        self.assertEqual(a6["execution_preflight"]["blockers"],["p0-stop-await-human-review"])
+        self.assertEqual(a6["execution_preflight"]["gpu0"]["status"],"stop-matched-group-testing-equivalent")
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .config import PROJECT_ROOT
+from .config import PROJECT_ROOT, StorageSettings, resolve_experiment_data_root
 from .human_terminal_state import load_independent_methods, load_parents
 from .pre_experiment_specs import GATES as OUTER_GATES
 from .pre_p0_identifiability import CHECKS as PRE_P0_CHECKS
@@ -130,13 +130,27 @@ def _gpu0(idea_id: str) -> dict[str,str]:
     if idea_id in {"regression-gated-self-evolution","lineage-aware-rollback","workflow-generalization-certificate"}: return {"offline":"pass","reality":"pass","phenomenon":"pass-existing-artifact","next":"Compile the current frozen mechanism against Pre-P0 before execution."}
     return {"offline":"pass","reality":"pass","phenomenon":"pending","next":"Run the frozen offline/trace phenomenon qualification before any GPU method run."}
 
+def _memory_execution_state() -> dict[str, Any]:
+    root=resolve_experiment_data_root(StorageSettings.from_env())
+    run=root/"runs"/"p0-mem-xfer-support-enriched-qwen-v1"
+    try: progress=json.loads((run/"full-support-table"/"progress.json").read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError): progress={}
+    try: decision=json.loads((run/"support-enriched-analysis"/"offline_decision.json").read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError): decision={}
+    complete=bool(decision) and int(progress.get("completed_episodes") or 0)==216 and int(progress.get("completed_units") or 0)==72
+    in_progress=str(progress.get("status") or "") in {"full_qwen_support_running","full_support_table_running"} and not complete
+    return {"complete":complete,"in_progress":in_progress,"second_model_authorized":bool(decision.get("second_model_authorized")),"progress_status":progress.get("status")}
+
 def _preflight(idea_id: str, offline: dict[str, Any] | None = None) -> dict[str, Any]:
-    running=idea_id in {"replicated-effect-memory-gate","cross-task-effect-transport-certificate"}
+    memory_lifecycle=idea_id in {"replicated-effect-memory-gate","cross-task-effect-transport-certificate"}
+    memory_state=_memory_execution_state() if memory_lifecycle else {}
+    running=bool(memory_lifecycle and memory_state.get("in_progress"))
+    completed_memory=bool(memory_lifecycle and memory_state.get("complete"))
     gpu0=(offline or {}).get("gpu0") or _gpu0(idea_id)
     pre=[]
     empirical=(offline or {}).get("checks") or {}
     for c in PRE_P0_CHECKS:
-        ok=running or c["key"] in {"claim_alignment","cost_plan","provenance_plan","interpretation_matrix"}
+        ok=memory_lifecycle or c["key"] in {"claim_alignment","cost_plan","provenance_plan","interpretation_matrix"}
         status="pass" if ok else "pending-evidence"
         if c["key"] in empirical and empirical[c["key"]].get("status") in {"pass","fail"}:
             status=empirical[c["key"]]["status"]
@@ -146,11 +160,13 @@ def _preflight(idea_id: str, offline: dict[str, Any] | None = None) -> dict[str,
     outer=[]
     competence_pass=any(x["key"]=="competence_window" and x["status"]=="pass" for x in pre)
     for g in OUTER_GATES:
-        ok=running or g["key"] in {"parameter_provenance","statistical_resolution","compute_graph","observability_recovery","outcome_semantics"} or (g["key"]=="baseline_competence" and competence_pass)
+        ok=memory_lifecycle or g["key"] in {"parameter_provenance","statistical_resolution","compute_graph","observability_recovery","outcome_semantics"} or (g["key"]=="baseline_competence" and competence_pass)
         outer.append({"key":g["key"],"status":"pass" if ok else "pending-evidence"})
-    updater=(offline or {}).get("updater_competence") or {"status":"pass" if running else "pending-evidence","passed":running}
-    blockers=[] if running else []
-    if not running:
+    updater=(offline or {}).get("updater_competence") or {"status":"pass" if memory_lifecycle else "pending-evidence","passed":memory_lifecycle}
+    blockers=[]
+    if completed_memory:
+        blockers=["p0-complete-second-model-hold"] if not memory_state.get("second_model_authorized") else ["p0-complete-await-explicit-second-model-launch"]
+    elif not running:
         gpu0_status=str(gpu0.get("phenomenon") or gpu0.get("status") or "pending")
         if gpu0_status.startswith("stop"):
             blockers=["p0-stop-await-human-review"]
@@ -164,7 +180,7 @@ def _preflight(idea_id: str, offline: dict[str, Any] | None = None) -> dict[str,
       "pre_p0":{"passed":sum(x["status"]=="pass" for x in pre),"total":len(pre),"checks":pre},
       "updater_competence":{**updater,"not_a_ninth_gate":True},
       "pre_experiment":{"passed":sum(x["status"]=="pass" for x in outer),"total":len(outer),"gates":outer},
-      "runtime_throughput":{"status":"pass" if running else "pending-harness-smoke"},
+      "runtime_throughput":{"status":"complete" if completed_memory else ("pass" if running else "pending-harness-smoke")},
       "execution_authorized":running,"blockers":blockers,
     }
 

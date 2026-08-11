@@ -147,7 +147,7 @@ def main() -> None:
         };""")
         require(ideas["chapters"] == 2, f"paper-ideas should have exactly two frontend chapters, got {ideas['chapters']}")
         require(ideas["p0Entry"] == 1 and ideas["p0Boards"] == 0 and ideas["experimentLinks"] >= 1, f"paper-ideas must expose only the compact experiment entry: {ideas['p0Entry']}/{ideas['p0Boards']}/{ideas['experimentLinks']}")
-        require(ideas["p0AdmissionSummary"].get("active_p0") == 20 and ideas["p0AdmissionSummary"].get("transitioned_from_p0_ready") == 16 and ideas["p0AdmissionSummary"].get("settings_complete") == 20 and ideas["p0EntryStats"][:4] == [20,16,20,2], f"paper-ideas P0 admission entry is stale: {ideas['p0AdmissionSummary']} / {ideas['p0EntryStats']}")
+        require(ideas["p0AdmissionSummary"].get("active_p0") == 20 and ideas["p0AdmissionSummary"].get("transitioned_from_p0_ready") == 16 and ideas["p0AdmissionSummary"].get("settings_complete") == 20 and ideas["p0EntryStats"][:4] == [20,16,20,0], f"paper-ideas P0 admission entry is stale: {ideas['p0AdmissionSummary']} / {ideas['p0EntryStats']}")
         require(ideas["p0Summary"].get("ready_now") == 0 and ideas["p0Summary"].get("pre_p0_blocked") == 4 and ideas["p0Summary"].get("gpu_hours_cap_ready_now") == 0 and ideas["p0Summary"].get("p1_authorized") == 0, f"P0 Pre-P0/resource summary is wrong: {ideas['p0Summary']}")
         require(ideas["p0Policy"].get("pre_p0_identifiability_required") is True and ideas["p0Policy"].get("automatic_p0_to_p1_forbidden") is True and ideas["p0Policy"].get("p0_pass_requires_human_approval") is True, f"P0 human/Pre-P0 approval policy is missing: {ideas['p0Policy']}")
         require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (3, 9, 0), f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
@@ -216,7 +216,8 @@ def main() -> None:
           offlineSummary: window.P0_OFFLINE_QUALIFICATION?.summary || {},
           realizabilitySummary: window.P0_REALIZABILITY_SUITE?.summary || {},
           b10Decision: window.P0_B10_CPU?.decision || '',
-          b10StopRows: document.querySelectorAll('.terminal-exp-p0-stop').length,
+          a6Decision: window.P0_A6_CPU?.decision || '',
+          p0StopRows: document.querySelectorAll('.terminal-exp-p0-stop').length,
           admissionSummary: window.P0_ADMISSION_STATE?.summary || {},
           legacyArchives: document.querySelectorAll('.experiment-legacy-archive').length,
           toc2: document.querySelectorAll('.toc-level-2').length,
@@ -266,11 +267,11 @@ def main() -> None:
         };""")
         require(experiments["chapters"] == 3, f"experiments page must have three chapters, got {experiments['chapters']}")
         require((experiments["terminalPortfolio"],experiments["terminalRows"],experiments["terminalP0"],experiments["terminalP0Ready"]) == (1,20,20,0), f"terminal experiment portfolio is not aligned with Paper Ideas: {experiments}")
-        require((experiments["terminalStarted"],experiments["terminalPending"],experiments["auditQueue"],experiments["auditItems"]) == (5,15,1,15), f"started/pending audit split is wrong: {experiments}")
+        require((experiments["terminalStarted"],experiments["terminalPending"],experiments["auditQueue"],experiments["auditItems"]) == (6,14,1,14), f"started/pending audit split is wrong: {experiments}")
         require(experiments["admissionPanel"] == 1 and experiments["admissionRows"] == 16 and experiments["admissionSummary"].get("active_p0") == 20 and experiments["admissionSummary"].get("transitioned_from_p0_ready") == 16 and experiments["admissionSummary"].get("settings_complete") == 20, f"P0 admission/settings panel is incomplete: {experiments}")
-        require(experiments["offlinePanel"] == 1 and experiments["offlineSummary"].get("ideas") == 16 and experiments["offlineSummary"].get("checks_failed",0) >= 4 and experiments["offlineSummary"].get("checks_synthetic_pass") == 14 and experiments["offlineSummary"].get("gpu0_stop") == 1, f"offline qualification panel/state is incomplete: {experiments}")
+        require(experiments["offlinePanel"] == 1 and experiments["offlineSummary"].get("ideas") == 16 and experiments["offlineSummary"].get("checks_failed",0) >= 5 and experiments["offlineSummary"].get("checks_synthetic_pass") == 14 and experiments["offlineSummary"].get("gpu0_stop") == 2, f"offline qualification panel/state is incomplete: {experiments}")
         require(experiments["realizabilitySummary"].get("audited") == 14 and experiments["realizabilitySummary"].get("synthetic_pass") == 14, f"synthetic realizability summary is wrong: {experiments}")
-        require(experiments["b10Decision"] == "STOP_MATCHED_NARY_EQUIVALENT" and experiments["b10StopRows"] == 1, f"B-10 CPU P0 STOP is not visible: {experiments}")
+        require(experiments["b10Decision"] == "STOP_MATCHED_NARY_EQUIVALENT" and experiments["a6Decision"] == "STOP_MATCHED_GROUP_TESTING_EQUIVALENT" and experiments["p0StopRows"] == 2, f"A-6/B-10 CPU P0 STOPs are not visible: {experiments}")
         require(experiments["legacyArchives"] >= 3, f"legacy experiment evidence must be demoted into traceability archives: {experiments['legacyArchives']}")
         require((experiments["toc2"], experiments["toc3"], experiments["toc4"]) == (4, 3, 0), f"experiments TOC hierarchy is wrong: {experiments['toc2']}/{experiments['toc3']}/{experiments['toc4']}")
         require(experiments["board"] == 1 and experiments["cards"] == 5, f"experiment queue is incomplete: {experiments['board']}/{experiments['cards']}")

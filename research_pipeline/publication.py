@@ -22,6 +22,8 @@ DAILY_ARTIFACTS = (
     "generated/p0-realizability-suite.js",
     "generated/p0-b10-cpu.json",
     "generated/p0-b10-cpu.js",
+    "generated/p0-a6-cpu.json",
+    "generated/p0-a6-cpu.js",
     "generated/research-system-state.json",
     "generated/research-system-state.js",
 )

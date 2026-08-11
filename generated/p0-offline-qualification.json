@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T06:05:33+00:00",
+  "generated_at": "2026-08-11T06:24:45+00:00",
   "experiment_root": "profile-resolved-machine-local",
   "policy": {
     "real_reused_may_unblock": true,
@@ -118,6 +118,60 @@
       },
       "identifiable": false
     },
+    "a6_cpu": {
+      "decision": "STOP_MATCHED_GROUP_TESTING_EQUIVALENT",
+      "summary": {
+        "active-causal": {
+          "exact_recovery": 1.0,
+          "mean_tests": 5.708333333333333,
+          "max_tests": 8,
+          "mean_rollback_size": 1.6666666666666667,
+          "benign_removed": 0
+        },
+        "binary-group-testing": {
+          "exact_recovery": 1.0,
+          "mean_tests": 5.708333333333333,
+          "max_tests": 8,
+          "mean_rollback_size": 1.6666666666666667,
+          "benign_removed": 0
+        },
+        "delta-debugging": {
+          "exact_recovery": 1.0,
+          "mean_tests": 15.041666666666666,
+          "max_tests": 37,
+          "mean_rollback_size": 1.6666666666666667,
+          "benign_removed": 0
+        },
+        "one-at-a-time": {
+          "exact_recovery": 1.0,
+          "mean_tests": 6.916666666666667,
+          "max_tests": 9,
+          "mean_rollback_size": 1.6666666666666667,
+          "benign_removed": 0
+        },
+        "last-update": {
+          "exact_recovery": 0.0,
+          "mean_tests": 1.0,
+          "max_tests": 1,
+          "mean_rollback_size": 1.0,
+          "benign_removed": 21
+        },
+        "exact-shapley": {
+          "exact_recovery": 1.0,
+          "mean_tests": 92.66666666666667,
+          "max_tests": 256,
+          "mean_rollback_size": 1.6666666666666667,
+          "benign_removed": 0
+        }
+      },
+      "matched_simplification": {
+        "baseline": "binary-group-testing",
+        "relative_mean_test_saving": 0.0,
+        "paired_sign_p": 1.0,
+        "per_case_test_counts_identical": true,
+        "equivalent": true
+      }
+    },
     "b10": {
       "decision": "STOP_MATCHED_NARY_EQUIVALENT",
       "metrics": {
@@ -154,11 +208,11 @@
   "summary": {
     "ideas": 16,
     "checks_passed": 27,
-    "checks_failed": 4,
-    "checks_pending": 51,
+    "checks_failed": 5,
+    "checks_pending": 50,
     "checks_synthetic_pass": 14,
-    "gpu0_hold_or_conditional": 8,
-    "gpu0_stop": 1
+    "gpu0_hold_or_conditional": 7,
+    "gpu0_stop": 2
   },
   "cards": [
     {
@@ -933,11 +987,11 @@
     {
       "idea_id": "active-causal-minimal-rollback",
       "gpu0": {
-        "status": "conditional",
-        "evidence": "Rollback/harm is real, but minimal-fault-set support is not established.",
-        "source": "qualification/a2-updater-support-v1/fixed-sequences.jsonl",
-        "evidence_kind": "real-reused",
-        "next": "Collect non-prefix enable/disable interventions and independent minimal-fault truth on 24 frozen 4–8-update sequences."
+        "status": "stop-matched-group-testing-equivalent",
+        "evidence": "CPU P0 shows the active query policy is exactly a non-learning binary group-testing simplification under the same sparse-fault prior.",
+        "source": "generated/p0-a6-cpu.json",
+        "evidence_kind": "cpu-p0-falsifier",
+        "next": "Stop standalone A-6; the current active query policy is exactly reproduced by non-learning binary group testing under the same sparse-fault prior."
       },
       "checks": {
         "target_variation": {
@@ -947,10 +1001,10 @@
           "evidence_kind": "real-reused"
         },
         "baseline_disagreement": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "fail",
+          "evidence": "Non-learning binary group testing exactly reproduces active-causal recovery and per-case intervention counts: mean tests 5.708 vs 5.708; per-case identical=True.",
+          "source": "generated/p0-a6-cpu.json",
+          "evidence_kind": "cpu-p0-falsifier"
         },
         "representability": {
           "status": "synthetic-pass",

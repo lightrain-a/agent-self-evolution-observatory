@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "decision_date": "2026-08-11",
-  "generated_at": "2026-08-11T06:05:35+00:00",
+  "generated_at": "2026-08-11T06:24:47+00:00",
   "source_of_truth_priority": [
     "latest-human-review",
     "explicit-user-update",
@@ -915,6 +915,11 @@
         "zh": "主动因果最小回滚",
         "en": "Active Causal Minimal Rollback"
       },
+      "current_fact": {
+        "zh": "CPU P0 已触发 matched-simplification STOP：24 个冻结 4–8-update 稀疏故障案例上，active-causal 与非学习 binary group testing 均 100% 找到最小故障集，平均测试次数逐 case 完全一致（5.708 vs 5.708，paired p=1.0）。相对 ddmin 的 62% 节省来自换成了更适合稀疏故障的标准 group testing，而不是独立学习机制；不建议再耗真实序列/GPU，等待人工确认 DROP/merge。",
+        "en": "CPU P0 fired a matched-simplification STOP. Across 24 frozen 4–8-update sparse-fault cases, active-causal and non-learning binary group testing both recover the exact minimal fault set on 100% of cases with identical per-case intervention counts (5.708 vs 5.708 mean tests, paired p=1.0). The apparent 62% saving over ddmin comes from switching to standard sparse group testing rather than a distinct learned mechanism; no real-sequence/GPU expansion is recommended, pending human DROP/merge review."
+      },
+      "p0_decision": "STOP_MATCHED_GROUP_TESTING_EQUIVALENT",
       "code": "A-6",
       "group": "A",
       "p0_entry": {

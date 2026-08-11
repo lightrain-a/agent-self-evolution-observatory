@@ -157,6 +157,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["p0_realizability"]["summary"]["audited"], 14)
         self.assertEqual(self.state["p0_realizability"]["summary"]["synthetic_pass"], 14)
         self.assertEqual(self.state["summary"]["p0_b10_decision"], "STOP_MATCHED_NARY_EQUIVALENT")
+        self.assertEqual(self.state["summary"]["p0_a6_decision"], "STOP_MATCHED_GROUP_TESTING_EQUIVALENT")
         self.assertTrue(self.state["p0_offline_qualification"]["policy"]["method_result_from_offline_qualification_forbidden"])
         self.assertEqual(self.state["summary"]["discussion_ready"], 20)
         self.assertEqual(self.state["summary"]["discussion_target"], 20)
