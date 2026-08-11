@@ -103,7 +103,7 @@ class ExperimentOrchestratorTest(unittest.TestCase):
         ]
         with self.assertRaisesRegex(RuntimeError, "already has a registered P0"):
             build_launch_plan("budgeted-evolution-controller", self.profiles, cluster, {})
-        with patch("research_pipeline.experiment_orchestrator.local_economy_preflight", return_value={"execution_compilation_authorized": True, "passed_gates": 5, "gate_count": 5, "gates": []}), patch("research_pipeline.experiment_orchestrator.evaluate_stage_contract", return_value={"execution_authorized": True, "stage": "p0-support", "blockers": []}), patch("research_pipeline.experiment_orchestrator.remote_pre_experiment_card", return_value={"execution_authorized": True, "passed_gates": 8, "gate_count": 8, "blockers": []}):
+        with patch("research_pipeline.experiment_orchestrator.local_economy_preflight", return_value={"execution_compilation_authorized": True, "passed_gates": 5, "gate_count": 5, "gates": []}), patch("research_pipeline.experiment_orchestrator.consultation_launch_clearance", return_value={"pass": True, "blockers": []}), patch("research_pipeline.experiment_orchestrator.evaluate_stage_contract", return_value={"execution_authorized": True, "stage": "p0-support", "blockers": []}), patch("research_pipeline.experiment_orchestrator.remote_pre_experiment_card", return_value={"execution_authorized": True, "passed_gates": 8, "gate_count": 8, "blockers": []}):
             plan = build_launch_plan(
                 "budgeted-evolution-controller",
                 self.profiles,
@@ -127,12 +127,21 @@ class ExperimentOrchestratorTest(unittest.TestCase):
             "gpus": [GPUState(1, "GPU-60-1", "3090", 24576, 24000, 0).__dict__],
             "execution_states": [],
         }]
-        with patch("research_pipeline.experiment_orchestrator.local_economy_preflight", return_value={"execution_compilation_authorized": True, "passed_gates": 5, "gate_count": 5, "gates": []}), patch("research_pipeline.experiment_orchestrator.evaluate_stage_contract", return_value={"execution_authorized": True, "stage": "p0-support", "blockers": []}), patch("research_pipeline.experiment_orchestrator.remote_pre_experiment_card", return_value={"execution_authorized": False, "passed_gates": 7, "gate_count": 8, "blockers": ["statistical-resolution"]}):
+        with patch("research_pipeline.experiment_orchestrator.local_economy_preflight", return_value={"execution_compilation_authorized": True, "passed_gates": 5, "gate_count": 5, "gates": []}), patch("research_pipeline.experiment_orchestrator.consultation_launch_clearance", return_value={"pass": True, "blockers": []}), patch("research_pipeline.experiment_orchestrator.evaluate_stage_contract", return_value={"execution_authorized": True, "stage": "p0-support", "blockers": []}), patch("research_pipeline.experiment_orchestrator.remote_pre_experiment_card", return_value={"execution_authorized": False, "passed_gates": 7, "gate_count": 8, "blockers": ["statistical-resolution"]}):
             with self.assertRaisesRegex(RuntimeError, "Pre-Experiment Compiler"):
                 build_launch_plan(
                     "update-trust-region", self.profiles, cluster, {},
                     run_label="blocked", config_name="p0_a1_screening_config.json",
                 )
+
+    def test_launch_plan_blocks_before_remote_compile_when_ai_consultation_is_unresolved(self) -> None:
+        cluster = [{"server_id":"60","priority":10,"reachable":True,"preflight":{"launch_ready":True},"gpus":[GPUState(1,"GPU-60-1","3090",24576,24000,0).__dict__],"execution_states":[]}]
+        economy={"execution_compilation_authorized":True,"gates":[]}
+        clearance={"pass":False,"blockers":["ai-consultation-pre_launch_stress_review-pending"]}
+        with patch("research_pipeline.experiment_orchestrator.local_economy_preflight", return_value=economy), patch("research_pipeline.experiment_orchestrator.consultation_launch_clearance", return_value=clearance), patch("research_pipeline.experiment_orchestrator.remote_pre_experiment_card") as remote:
+            with self.assertRaisesRegex(RuntimeError, "AI consultation clearance"):
+                build_launch_plan("update-trust-region",self.profiles,cluster,{},run_label="blocked-ai",config_name="p0_a1_screening_config.json")
+            remote.assert_not_called()
 
     def test_launch_plan_blocks_before_remote_compile_when_economy_fails(self) -> None:
         cluster = [{"server_id":"60","priority":10,"reachable":True,"preflight":{"launch_ready":True},"gpus":[GPUState(1,"GPU-60-1","3090",24576,24000,0).__dict__],"execution_states":[]}]

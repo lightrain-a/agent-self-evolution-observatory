@@ -12,6 +12,7 @@ from typing import Any
 
 from .p0_common import CONFIG_DIR, load_json
 from .p0_admission import build_p0_admission_state
+from .ai_consultation_automation import consultation_launch_clearance
 from .config import StorageSettings, resolve_experiment_data_root
 from .experiment_authority import acquire_authority, reconcile_authority, release_authority
 from .governance_protocol import evaluate_stage_contract
@@ -308,11 +309,15 @@ def build_launch_plan(
     if economy.get("execution_compilation_authorized") is not True:
         failed = [str(g.get("key")) for g in economy.get("gates") or [] if g.get("pass") is not True]
         raise RuntimeError(f"{idea_id} blocked by P0 Economy Gate: " + ", ".join(failed or [str(economy.get('status') or 'blocked')]))
+    storage = StorageSettings.from_env()
+    ai_clearance = consultation_launch_clearance(storage, idea_id)
+    if ai_clearance.get("pass") is not True:
+        raise RuntimeError(f"{idea_id} blocked by AI consultation clearance: " + ", ".join(ai_clearance.get("blockers") or []))
     if not config_name:
         raise RuntimeError("scientific launch requires an explicit frozen config and 8/8 Pre-Experiment Card")
     local_config = CONFIG_DIR / Path(config_name).name
     config_payload = load_json(local_config)
-    authority_root = resolve_experiment_data_root(StorageSettings.from_env())
+    authority_root = resolve_experiment_data_root(storage)
     governance = evaluate_stage_contract(idea_id, config_payload, authority_root)
     if governance.get("execution_authorized") is not True:
         raise RuntimeError(f"{idea_id} blocked by Research Governance v2: " + ", ".join(governance.get("blockers") or []))

@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any, Iterator
 
 from .config import PROJECT_ROOT, StorageSettings
+from .ai_consultation_automation import run_ai_consultation_automation
 from .cvpr_idea_factory import write_cvpr_idea_bank
 from .discussion_portfolio import write_discussion_portfolio
 from .emerging_niche import write_emerging_niche_policy
@@ -81,6 +82,8 @@ def run_cycle(
     mode: str = "daily",
     sync_literature: bool = False,
     web_review_limit: int = 0,
+    ai_consultation_limit: int = 1,
+    ai_consultations: bool = True,
     publish: bool = False,
 ) -> dict[str, Any]:
     storage = StorageSettings.from_env()
@@ -94,6 +97,8 @@ def run_cycle(
         "mode": mode,
         "sync_literature": sync_literature,
         "web_review_limit": web_review_limit,
+        "ai_consultation_limit": ai_consultation_limit,
+        "ai_consultations": ai_consultations,
         "publish": publish,
         "steps": [],
         "status": "running",
@@ -140,6 +145,15 @@ def run_cycle(
         report["steps"].append(_step("p0-e4-permission", write_e4_permission_p0))
         report["steps"].append(_step("p0-offline-qualification", write_p0_offline_qualification_state))
         report["steps"].append(_step("p0-admission-state", write_p0_admission_state))
+        report["steps"].append(_step("research-system-pre-ai", write_research_system_state))
+        report["steps"].append(_step(
+            "ai-consultation-automation",
+            lambda: run_ai_consultation_automation(
+                storage,
+                execute=ai_consultations,
+                max_cases=max(0, ai_consultation_limit),
+            ),
+        ))
         report["steps"].append(_step("research-system-state", write_research_system_state))
         if web_review_limit > 0:
             report["steps"].append(_step("project-web-gpt-repair-review", lambda: _run_web_reviews(web_review_limit, storage)))
@@ -300,13 +314,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--mode", choices=("daily", "weekly", "manual"), default="manual")
     parser.add_argument("--sync-literature", action="store_true")
     parser.add_argument("--web-review-limit", type=int, default=0)
+    parser.add_argument("--ai-consultation-limit", type=int, default=1, help="Maximum new AI-clinic cases executed per cycle.")
+    parser.add_argument("--no-ai-consultations", action="store_true", help="Keep AI-clinic trigger/hash sync active but skip external reviewer calls for this cycle.")
     parser.add_argument("--publish", action="store_true", help="Publish substantive generated-artifact changes to origin/main.")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    report = run_cycle(mode=args.mode, sync_literature=args.sync_literature, web_review_limit=max(args.web_review_limit, 0), publish=args.publish)
+    report = run_cycle(
+        mode=args.mode,
+        sync_literature=args.sync_literature,
+        web_review_limit=max(args.web_review_limit, 0),
+        ai_consultation_limit=max(args.ai_consultation_limit, 0),
+        ai_consultations=not args.no_ai_consultations,
+        publish=args.publish,
+    )
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0 if report["status"] == "pass" else 1
 

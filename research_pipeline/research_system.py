@@ -7,6 +7,7 @@ from typing import Any
 
 from .config import PROJECT_ROOT, StorageSettings, resolve_experiment_data_root
 from .ai_consultation_clinic import build_ai_consultation_clinic_state, write_ai_consultation_clinic_state
+from .ai_consultation_automation import DEFAULT_JSON as AI_CONSULTATION_AUTOMATION_JSON, PUBLIC_POLICY as AI_AUTOMATION_POLICY
 from .discussion_portfolio import build_discussion_portfolio
 from .evidence_graph import build_evidence_graph
 from .experiment_iteration import build_experiment_iteration_state
@@ -107,6 +108,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     economy = state["p0_economy_gate"]["summary"]
     p0_ledger = state["p0_decision_ledger"]["summary"]
     ai_clinic = state["ai_consultation_clinic"]["summary"]
+    ai_automation = state["ai_consultation_automation"]["summary"]
     governance = state["research_governance_v2"]
     iteration = state["experiment_iteration"]["summary"]
     repairs = state["repair_queue"]["summary"]
@@ -127,6 +129,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Pre-P0 identifiability auditor","zh":"Pre-P0 实验可识别性审计"}, "status":"running", "evidence":{"en":f"{pre_p0['execution_ready']}/{pre_p0['audited']} retrospective contracts execution-ready","zh":f"当前 {pre_p0['execution_ready']}/{pre_p0['audited']} 份 retrospective 合同允许启动"}},
         {"source":"P0 retrospective economy review", "component":{"en":"Five-gate P0 Economy layer","zh":"P0 五门资源经济层"}, "status":"running", "evidence":{"en":f"{economy['matched_simplification_stops']} matched-simplification stops / {economy['substrate_stops']} substrate stops / {economy['economy_ready']} currently economy-ready","zh":f"{economy['matched_simplification_stops']} 个简化基线 STOP / {economy['substrate_stops']} 个底座 STOP / 当前 {economy['economy_ready']} 个 Economy-ready"}},
         {"source":"Web GPT + domestic-model independent consultation", "component":{"en":"Five-checkpoint AI consultation clinic","zh":"五节点 AI 会诊诊断层"}, "status":"running", "evidence":{"en":f"{ai_clinic['checkpoints']} checkpoints / {ai_clinic['pre_gpu_checkpoints']} before GPU / zero AI-authoritative checkpoints","zh":f"{ai_clinic['checkpoints']} 个会诊节点 / {ai_clinic['pre_gpu_checkpoints']} 个位于 GPU 前 / AI 直接授权节点为 0"}},
+        {"source":"Content-addressed AI consultation automation", "component":{"en":"Automatic consultation trigger queue","zh":"AI 会诊自动触发队列"}, "status":"running", "evidence":{"en":f"baseline={ai_automation.get('baseline_initialized')} / {ai_automation.get('cases',0)} cases / {ai_automation.get('pending',0)} pending / {ai_automation.get('unresolved_high_risk',0)} unresolved high-risk","zh":f"baseline={ai_automation.get('baseline_initialized')} / {ai_automation.get('cases',0)} 个 case / {ai_automation.get('pending',0)} 个待执行 / {ai_automation.get('unresolved_high_risk',0)} 个未处置高风险"}},
         {"source":"Unified P0 decision ledger", "component":{"en":"Current experiment-decision ledger","zh":"统一 P0 当前决策账本"}, "status":"running", "evidence":{"en":f"{p0_ledger['active_p0']} active rows / {p0_ledger['experiment_stopped']} stopped awaiting review / {p0_ledger['launchable']} launchable","zh":f"{p0_ledger['active_p0']} 条活跃记录 / {p0_ledger['experiment_stopped']} 条实验 STOP 待人工 / {p0_ledger['launchable']} 条可启动"}},
         {"source":"P0-System v2", "component":{"en":"Stage governance, repair budgets, trace contracts, and resource leases","zh":"阶段治理、修复预算、Trace 合同与资源租约"}, "status":"running", "evidence":{"en":f"{len(governance['stages'])} scientific stages / {len(governance['failure_classes'])} typed failure classes / {governance['runtime']['active_gpu_leases']} active GPU leases","zh":f"{len(governance['stages'])} 个科学阶段 / {len(governance['failure_classes'])} 类失败语义 / {governance['runtime']['active_gpu_leases']} 个活跃 GPU 租约"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Updater-competence prerequisite + eight-gate Pre-Experiment Compiler","zh":"Updater Competence 前置条件 + 八门实验启动前编译器"}, "status":"running", "evidence":{"en":f"updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / launch-ready {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']} / formal P0 {pre_experiment['formal_p0_ready']}/{pre_experiment['formal_p0_total']}","zh":f"Updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / 可启动 {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']} / formal P0 {pre_experiment['formal_p0_ready']}/{pre_experiment['formal_p0_total']}"}},
@@ -177,6 +180,42 @@ def _load_corpus_with_site_fallback() -> dict[str, Any]:
     }
 
 
+def _load_ai_consultation_automation_public() -> dict[str, Any]:
+    try:
+        payload = json.loads(AI_CONSULTATION_AUTOMATION_JSON.read_text(encoding="utf-8"))
+        if isinstance(payload, dict):
+            return payload
+    except (OSError, json.JSONDecodeError):
+        pass
+    return {
+        "schema_version": "1.0",
+        "generated_at": None,
+        "policy": AI_AUTOMATION_POLICY,
+        "clinic_policy": {
+            "ai_vote_can_authorize_gpu": False,
+            "ai_vote_can_authorize_second_backbone": False,
+            "ai_vote_can_emit_method_pass_fail": False,
+            "high_risk_findings_must_be_compiled_into_machine_checks": True,
+        },
+        "finding_dispositions": [],
+        "summary": {
+            "baseline_initialized": False,
+            "baseline_subjects": 0,
+            "cases": 0,
+            "created_this_cycle": 0,
+            "executed_this_cycle": 0,
+            "pending": 0,
+            "partial": 0,
+            "complete": 0,
+            "reviewer_unavailable": 0,
+            "retryable": 0,
+            "waived_cases": 0,
+            "unresolved_high_risk": 0,
+        },
+        "recent_cases": [],
+    }
+
+
 def build_research_system_state() -> dict[str, Any]:
     storage = StorageSettings.from_env()
     corpus = _load_corpus_with_site_fallback()
@@ -213,8 +252,16 @@ def build_research_system_state() -> dict[str, Any]:
     p0_offline_qualification = build_p0_offline_qualification_state()
     p0_admission = build_p0_admission_state()
     ai_consultation_clinic = build_ai_consultation_clinic_state()
+    ai_consultation_automation = _load_ai_consultation_automation_public()
     p0_admission_public = {"summary": p0_admission["summary"], "policy": p0_admission["policy"]}
     ai_consultation_public = {"summary": ai_consultation_clinic["summary"], "policy": ai_consultation_clinic["policy"], "panel": ai_consultation_clinic["panel"], "checkpoints": ai_consultation_clinic["checkpoints"], "finding_dispositions": ai_consultation_clinic["finding_dispositions"]}
+    ai_consultation_automation_public = {
+        "summary": ai_consultation_automation.get("summary") or {},
+        "policy": ai_consultation_automation.get("policy") or AI_AUTOMATION_POLICY,
+        "clinic_policy": ai_consultation_automation.get("clinic_policy") or {},
+        "finding_dispositions": ai_consultation_automation.get("finding_dispositions") or [],
+        "recent_cases": ai_consultation_automation.get("recent_cases") or [],
+    }
     p0_economy_gate = p0_admission["economy_gate"]
     p0_economy_public = {"summary": p0_economy_gate["summary"], "policy": p0_economy_gate["policy"], "gates": p0_economy_gate["gates"]}
     p0_decision_ledger = build_p0_decision_ledger(p0_admission, p0_offline_qualification, human_terminal_ideas)
@@ -279,6 +326,9 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_admission_execution_authorized":p0_admission["summary"]["execution_authorized"],
             "ai_consultation_checkpoints":ai_consultation_clinic["summary"]["checkpoints"],
             "ai_consultation_pre_gpu_checkpoints":ai_consultation_clinic["summary"]["pre_gpu_checkpoints"],
+            "ai_consultation_automation_cases":(ai_consultation_automation.get("summary") or {}).get("cases",0),
+            "ai_consultation_pending":(ai_consultation_automation.get("summary") or {}).get("pending",0),
+            "ai_consultation_unresolved_high_risk":(ai_consultation_automation.get("summary") or {}).get("unresolved_high_risk",0),
             "p0_economy_matched_simplification_stops":p0_economy_gate["summary"]["matched_simplification_stops"],
             "p0_economy_substrate_stops":p0_economy_gate["summary"]["substrate_stops"],
             "p0_decision_ledger_stopped":p0_decision_ledger["summary"]["experiment_stopped"],
@@ -353,6 +403,7 @@ def build_research_system_state() -> dict[str, Any]:
         "human_terminal_ideas":human_terminal_ideas,
         "p0_admission":p0_admission_public,
         "ai_consultation_clinic":ai_consultation_public,
+        "ai_consultation_automation":ai_consultation_automation_public,
         "p0_economy_gate":p0_economy_public,
         "p0_decision_ledger":p0_decision_ledger_public,
         "research_governance_v2":research_governance_v2,
@@ -409,6 +460,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"p0-admission", "pass":state["p0_admission"]["summary"].get("active_p0") == 20 and state["p0_admission"]["summary"].get("admitted") == 20 and state["p0_admission"]["summary"].get("transitioned_from_p0_ready") == 16 and state["p0_admission"]["summary"].get("settings_complete") == 20, "detail":state["p0_admission"]["summary"]},
         {"key":"p0-economy-gate", "pass":state["p0_economy_gate"]["summary"].get("matched_simplification_stops") == 12 and state["p0_economy_gate"]["summary"].get("substrate_stops") == 4 and state["p0_economy_gate"]["policy"].get("all_five_required_before_execution_compilation") is True, "detail":state["p0_economy_gate"]["summary"]},
         {"key":"ai-consultation-clinic", "pass":state["ai_consultation_clinic"]["summary"].get("checkpoints") == 5 and state["ai_consultation_clinic"]["policy"].get("ai_vote_can_authorize_gpu") is False and state["ai_consultation_clinic"]["policy"].get("high_risk_findings_must_be_compiled_into_machine_checks") is True, "detail":state["ai_consultation_clinic"]["summary"]},
+        {"key":"ai-consultation-automation", "pass":state["ai_consultation_automation"]["policy"].get("content_addressed_triggers") is True and state["ai_consultation_automation"]["policy"].get("ai_output_never_authorizes_execution") is True and state["ai_consultation_automation"]["clinic_policy"].get("ai_vote_can_authorize_gpu") is False, "detail":state["ai_consultation_automation"]["summary"]},
         {"key":"p0-decision-ledger", "pass":state["p0_decision_ledger"]["summary"].get("active_p0") == 20 and state["p0_decision_ledger"]["summary"].get("launchable") == 0 and state["p0_decision_ledger"]["policy"].get("economy_stop_overrides_planned_registry_display") is True, "detail":state["p0_decision_ledger"]["summary"]},
         {"key":"research-governance-v2", "pass":state["research_governance_v2"]["policy"].get("support_and_method_are_distinct") is True and state["research_governance_v2"]["policy"].get("p0_method_requires_frozen_support_pass") is True and state["research_governance_v2"]["policy"].get("raw_trace_is_mandatory_for_gpu_runs") is True and len(state["research_governance_v2"].get("stages") or []) == 7, "detail":state["research_governance_v2"]},
         {"key":"p0-offline-qualification", "pass":state["p0_offline_qualification"]["summary"].get("ideas") == 16 and state["p0_offline_qualification"]["policy"].get("method_result_from_offline_qualification_forbidden") is True, "detail":state["p0_offline_qualification"]["summary"]},
@@ -451,6 +503,10 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if (ai_clinic.get("summary") or {}).get("checkpoints") != 5: errors.append("AI consultation clinic must expose five checkpoints")
     if (ai_clinic.get("policy") or {}).get("ai_vote_can_authorize_gpu") is not False: errors.append("AI consultation must never authorize GPU execution")
     if (ai_clinic.get("policy") or {}).get("high_risk_findings_must_be_compiled_into_machine_checks") is not True: errors.append("AI consultation findings must compile into machine checks")
+    ai_automation = state.get("ai_consultation_automation") or {}
+    if (ai_automation.get("policy") or {}).get("content_addressed_triggers") is not True: errors.append("AI consultation automation must use content-addressed triggers")
+    if (ai_automation.get("policy") or {}).get("ai_output_never_authorizes_execution") is not True: errors.append("AI consultation automation must never authorize execution")
+    if (ai_automation.get("clinic_policy") or {}).get("ai_vote_can_authorize_gpu") is not False: errors.append("AI consultation automation must preserve zero AI GPU authority")
     ledger = state.get("p0_decision_ledger") or {}
     if (ledger.get("summary") or {}).get("active_p0") != 20: errors.append("P0 decision ledger must cover all 20 active P0 directions")
     if (ledger.get("summary") or {}).get("launchable") != state["p0_admission"]["summary"].get("execution_authorized"): errors.append("P0 decision ledger launchability must match execution authorization")
