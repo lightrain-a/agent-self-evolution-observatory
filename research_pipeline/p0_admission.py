@@ -44,6 +44,13 @@ SETUPS = {
  "constraint-complete-typed-memory-order-logic":("cpu-enumeration-first","typed-memory permutation simulator + exhaustive oracle",32),
  "active-causal-minimal-rollback":("offline-replay-first","24 frozen 4-8-update sequences + minimal-fault oracle",24),
  "counterfactual-evolution-decision-controller":("offline-replay-first","24 frozen sequences + four-action counterfactual table",24),
+ "self-label-confidence-flow":("offline-self-label-first","4-6 self-label rounds + lineage-linked decisions",200),
+ "self-correction-collapse-detector":("offline-correction-first","frozen multi-mode correction traces",30),
+ "intervention-validated-self-correction":("offline-intervention-first","matched correction delete/insert intervention table",24),
+ "failure-frontier-curriculum":("cpu-mutation-first","verified typed boundary-mutation table across versions",30),
+ "world-model-error-gated-learning":("cpu-world-model-first","exact-dynamics transition residual table + frozen policy",100),
+ "irreversible-action-counterfactuals":("simulator-first","finite-state irreversible-predecessor truth + simulator-off executor",60),
+ "recovery-conditioned-experience":("phenomenon-pairs-first","same-start normal/perturbed successful recovery pairs",100),
 }
 
 FALLBACK = {
@@ -232,10 +239,11 @@ def build_p0_admission_state() -> dict[str, Any]:
           "admission_status":"admitted" if all(x["pass"] for x in checks) else "blocked",
           "admission_checks":checks,"contract":contract,"setup":setup,"execution_preflight":preflight})
     transitioned=[c for c in cards if (c.get("p0_entry") or {}).get("date")=="2026-08-11"]
+    revived=[c for c in cards if (c.get("p0_entry") or {}).get("basis")=="user-authorized-material-revival"]
     economy_state=build_economy_state(cards)
     return {"schema_version":"1.0","generated_at":_now(),"policy":{**POLICY,"economy":ECONOMY_POLICY},"economy_gate":economy_state,
       "summary":{"active_p0":len(cards),"admitted":sum(c["admission_status"]=="admitted" for c in cards),
-        "transitioned_from_p0_ready":len(transitioned),"settings_complete":sum(all(x["pass"] for x in c["admission_checks"]) for c in cards),
+        "transitioned_from_p0_ready":len(transitioned),"revived_from_drop":len(revived),"settings_complete":sum(all(x["pass"] for x in c["admission_checks"]) for c in cards),
         "economy_ready":economy_state["summary"]["economy_ready"],
         "execution_authorized":sum(bool(c["execution_preflight"]["execution_authorized"]) for c in cards),
         "execution_blocked_or_pending":sum(not bool(c["execution_preflight"]["execution_authorized"]) for c in cards)},"cards":cards}
@@ -243,9 +251,13 @@ def build_p0_admission_state() -> dict[str, Any]:
 def validate_p0_admission_state(state: dict[str, Any]) -> list[str]:
     errors=[]
     s=state["summary"]
-    if s["active_p0"]!=20: errors.append(f"expected 20 active P0, got {s['active_p0']}")
-    if s["admitted"]!=20 or s["settings_complete"]!=20: errors.append("all 20 P0 directions need complete admission settings")
-    if s["transitioned_from_p0_ready"]!=16: errors.append(f"expected 16 transitions, got {s['transitioned_from_p0_ready']}")
+    rows={**load_parents(),**load_independent_methods()}
+    expected_active=sum(str(row.get("terminal_state") or "")=="p0" for row in rows.values())
+    expected_revived=sum((row.get("p0_entry") or {}).get("basis")=="user-authorized-material-revival" for row in rows.values())
+    if s["active_p0"]!=expected_active: errors.append(f"expected {expected_active} active P0, got {s['active_p0']}")
+    if s["admitted"]!=expected_active or s["settings_complete"]!=expected_active: errors.append(f"all {expected_active} P0 directions need complete admission settings")
+    if s["transitioned_from_p0_ready"]!=16: errors.append(f"expected 16 historical transitions, got {s['transitioned_from_p0_ready']}")
+    if s.get("revived_from_drop")!=expected_revived: errors.append(f"expected {expected_revived} user-authorized revivals, got {s.get('revived_from_drop')}")
     codes=[c["code"] for c in state["cards"]]
     if not all(codes) or len(codes)!=len(set(codes)): errors.append("P0 codes must be non-empty and unique")
     if any(c["setup"]["max_gpus"]>1 or c["setup"]["gpu_hours_cap"]>12 for c in state["cards"]): errors.append("P0 resource cap exceeded")

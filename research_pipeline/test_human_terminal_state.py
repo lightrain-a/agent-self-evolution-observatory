@@ -19,8 +19,10 @@ class HumanTerminalStateTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["human_parents"], 26)
         self.assertEqual(
             (self.state["summary"]["p0"], self.state["summary"]["p0_ready"], self.state["summary"]["merge"], self.state["summary"]["drop"]),
-            (13, 0, 6, 7),
+            (20, 0, 6, 0),
         )
+        self.assertEqual(self.state["summary"]["p0_resolved_lineages"], 26)
+        self.assertEqual(self.state["summary"]["revived_to_p0"], 7)
         self.assertEqual(len(terminal_parent_ids()), 26)
 
     def test_terminal_parents_and_absorbed_children_cannot_reenter_repair(self) -> None:

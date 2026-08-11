@@ -13,7 +13,7 @@ DEFAULT_JS = PROJECT_ROOT / "generated" / "human-terminal-idea-state.js"
 GROUP_FILES = tuple(Path(__file__).with_name(f"human_terminal_state_{g}.json") for g in "abcdef")
 INDEPENDENT_FILE = Path(__file__).with_name("human_terminal_independent.json")
 VALID_STATES = {"p0", "p0-ready", "merge", "drop"}
-EXPECTED = Counter({"p0": 13, "merge": 6, "drop": 7})
+EXPECTED = Counter({"p0": 20, "merge": 6})
 
 
 def _load(path: Path) -> dict[str, Any]:
@@ -59,7 +59,12 @@ def absorbed_child_ids() -> set[str]:
 
 def repair_allowed(idea_id: str) -> bool:
     idea_id = str(idea_id)
-    return idea_id not in terminal_parent_ids() and idea_id not in absorbed_child_ids()
+    if idea_id in absorbed_child_ids():
+        return False
+    parent = load_parents().get(idea_id)
+    if parent is None:
+        return True
+    return str(parent.get("terminal_state") or "") in {"drop", "p0-ready"}
 
 
 def standalone_allowed(idea_id: str) -> bool:
@@ -78,16 +83,17 @@ def build_human_terminal_state() -> dict[str, Any]:
         "schema_version": "1.0",
         "decision_date": "2026-08-11",
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
-        "source_of_truth_priority": ["latest-human-review", "explicit-user-update", "real-experiment", "new-multimodel-review", "historical-automatic-review"],
+        "source_of_truth_priority": ["explicit-user-update", "latest-human-review", "real-experiment", "new-multimodel-review", "historical-automatic-review"],
         "policy": {
-            "terminal_parent_repair_forbidden": True,
+            "terminal_parent_repair_forbidden": False,
+            "terminal_parent_repair_allowed_until_p0_or_merge": True,
             "absorbed_child_standalone_forbidden": True,
             "absorbed_child_repair_queue_forbidden": True,
             "absorbed_child_independent_p0_forbidden": True,
             "absorbed_child_advisor_pool_forbidden": True,
             "historical_artifacts_preserved": True,
         },
-        "summary": {"human_parents": 26, "p0": counts["p0"], "p0_ready": counts["p0-ready"], "merge": counts["merge"], "drop": counts["drop"], "absorbed_children": len(absorbed_child_index()), "independent_methods": len(independent)},
+        "summary": {"human_parents": 26, "p0": counts["p0"], "p0_ready": counts["p0-ready"], "merge": counts["merge"], "drop": counts["drop"], "p0_resolved_lineages": counts["p0"] + counts["merge"], "revived_to_p0": sum(bool(row.get("revival")) and row.get("terminal_state") == "p0" for row in parents.values()), "absorbed_children": len(absorbed_child_index()), "independent_methods": len(independent)},
         "parents": parents,
         "absorbed_children": absorbed_child_index(),
         "independent_methods": independent,

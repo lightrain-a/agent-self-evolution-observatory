@@ -9,9 +9,10 @@ from .p0_four_direction_iteration import build_four_direction_iteration
 class P0DecisionLedgerTest(unittest.TestCase):
  def test_ledger_collapses_plans_to_current_decisions(self):
   state=build_p0_decision_ledger(build_p0_admission_state(),build_p0_offline_qualification_state(),build_human_terminal_state())
-  self.assertEqual(state['summary']['active_p0'],20)
+  self.assertEqual(state['summary']['active_p0'],27)
   self.assertEqual(state['summary']['launchable'],0)
   self.assertGreaterEqual(state['summary']['experiment_stopped'],16)
+  self.assertEqual(state['summary']['economy_blocked'],7)
   by={r['idea_id']:r for r in state['rows']}
   self.assertEqual(by['active-causal-minimal-rollback']['current_state'],'experiment-stop-await-human-review')
   self.assertEqual(by['active-causal-minimal-rollback']['economy_stop_class'],'matched-simplification')

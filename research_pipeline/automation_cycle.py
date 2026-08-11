@@ -124,15 +124,15 @@ def run_cycle(
         report["steps"].append(_step("human-terminal-idea-state", write_human_terminal_state))
         report["steps"].append(_step("p0-realizability-suite", write_p0_realizability_suite))
         report["steps"].append(_step("p0-b10-cpu", write_b10_cpu_p0))
-        report["steps"].append(_step("p0-a12-soft-audit-f0", write_a12_soft_audit_f0))
-        report["steps"].append(_step("p0-a3-substrate-stop", write_a3_substrate_stop))
+        report["steps"].append(_step("p0-a12-soft-audit-f0", lambda: _preserve_on_missing_historical_source(write_a12_soft_audit_f0)))
+        report["steps"].append(_step("p0-a3-substrate-stop", lambda: _preserve_on_missing_historical_source(write_a3_substrate_stop)))
         report["steps"].append(_step("p0-a4-composition-cpu", write_a4_cpu_p0))
         report["steps"].append(_step("p0-a5-history-cpu", write_a5_cpu_p0))
         report["steps"].append(_step("p0-a6-cpu", write_a6_cpu_p0))
         report["steps"].append(_step("p0-a7-counterfactual-cpu", write_a7_cpu_p0))
         report["steps"].append(_step("p0-b2-support-stop", write_b2_support_stop))
         report["steps"].append(_step("p0-b3-interference-cpu", write_b3_cpu_screen))
-        report["steps"].append(_step("p0-b3-fresh-support-stop", write_b3_fresh_support_stop))
+        report["steps"].append(_step("p0-b3-fresh-support-stop", lambda: _preserve_on_missing_historical_source(write_b3_fresh_support_stop)))
         report["steps"].append(_step("p0-b3-real-state", write_b3_real_state))
         report["steps"].append(_step("p0-b5-applicability-cpu", write_b5_cpu_p0))
         report["steps"].append(_step("p0-b6-memory-utility-cpu", write_b6_cpu_p0))
@@ -171,15 +171,15 @@ def run_cycle(
         write_human_terminal_state()
         write_p0_realizability_suite()
         write_b10_cpu_p0()
-        write_a12_soft_audit_f0()
-        write_a3_substrate_stop()
+        _preserve_on_missing_historical_source(write_a12_soft_audit_f0)
+        _preserve_on_missing_historical_source(write_a3_substrate_stop)
         write_a4_cpu_p0()
         write_a5_cpu_p0()
         write_a6_cpu_p0()
         write_a7_cpu_p0()
         write_b2_support_stop()
         write_b3_cpu_screen()
-        write_b3_fresh_support_stop()
+        _preserve_on_missing_historical_source(write_b3_fresh_support_stop)
         write_b3_real_state()
         write_b5_cpu_p0()
         write_b6_cpu_p0()
@@ -217,6 +217,14 @@ def run_cycle(
         report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         latest.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return report
+
+
+def _preserve_on_missing_historical_source(function: Any) -> Any:
+    """Keep the last frozen scientific artifact when a compute host lacks its source run tree."""
+    try:
+        return function()
+    except FileNotFoundError as error:
+        return {"status":"preserved-missing-historical-source","missing_source":str(error)}
 
 
 def _step(name: str, function: Any) -> dict[str, Any]:
