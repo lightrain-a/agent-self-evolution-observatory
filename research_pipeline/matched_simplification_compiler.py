@@ -2,6 +2,12 @@ from __future__ import annotations
 from typing import Any
 
 MATCH_DIMENSIONS=("candidate_pool","labels_or_truth","model_calls","environment_calls","tokens","hidden_access","tuning_split")
+COMPLEXITY_LADDER=(
+ {'tier':0,'key':'constant-or-mean','title':'Constant / mean policy','examples':['majority action','global mean','always/never']},
+ {'tier':1,'key':'threshold-or-lookup','title':'Threshold / lookup policy','examples':['fixed threshold','family lookup','nearest-neighbor']},
+ {'tier':2,'key':'shallow-or-sparse','title':'Shallow / sparse learned policy','examples':['depth-limited CART','sparse linear','monotone DNF']},
+ {'tier':3,'key':'proposed-mechanism','title':'Proposed mechanism','examples':['learned controller','causal model','structured compiler']},
+)
 
 def compile_matched_simplifications(idea_id:str,mechanism:str,declared_baseline:str)->dict[str,Any]:
  text=(mechanism+' '+declared_baseline).lower(); rows=[]
@@ -21,4 +27,4 @@ def compile_matched_simplifications(idea_id:str,mechanism:str,declared_baseline:
   add('direct-edit-reuse','Direct edit-effect reuse','Compare nearest/direct paired edit-effect lookup with zero hidden search and matched source calls.')
  if any(k in text for k in ('controller','predict','regression','classifier','gate')):
   add('mean-or-threshold','Mean / threshold control','Compare calibrated means, fixed thresholds, family shrinkage, and nearest-neighbor decisions.')
- return {'schema_version':'1.0','idea_id':idea_id,'minimum_required_baselines':3,'compiled_baselines':rows,'baseline_count':len(rows),'matched_dimensions':list(MATCH_DIMENSIONS),'hidden_outcome_retuning_forbidden':True,'posthoc_baseline_deletion_forbidden':True}
+ return {'schema_version':'1.1','idea_id':idea_id,'minimum_required_baselines':3,'compiled_baselines':rows,'baseline_count':len(rows),'matched_dimensions':list(MATCH_DIMENSIONS),'complexity_ladder':list(COMPLEXITY_LADDER),'complexity_ladder_policy':{'required_before_gpu':True,'minimum_empirical_lower_tiers':3,'same_information_required':True,'same_budget_required':True,'headroom_rule':'The proposed mechanism must beat the strongest lower-complexity tier on the frozen decision utility; otherwise stop/merge before GPU expansion.','no_headroom_action':'stop_or_merge_before_expensive_transition'},'hidden_outcome_retuning_forbidden':True,'posthoc_baseline_deletion_forbidden':True}
