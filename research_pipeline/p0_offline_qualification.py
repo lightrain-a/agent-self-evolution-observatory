@@ -50,6 +50,25 @@ def _ck(status: str, evidence: str, source: str = "", kind: str = "real-reused")
 def _pending() -> dict[str, Any]:
     return _ck("pending", "No mechanism-aligned real offline evidence has cleared this check yet.", kind="pending")
 
+
+def _prefer_more_informative_frozen_state(candidate: dict[str, Any]) -> dict[str, Any]:
+    """Do not downgrade frozen scientific evidence merely because a compute host lacks source run trees."""
+    try:
+        frozen = json.loads(DEFAULT_JSON.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return candidate
+    old = frozen.get("summary") or {}
+    new = candidate.get("summary") or {}
+    if old.get("ideas") != new.get("ideas"):
+        return candidate
+    old_information = int(old.get("checks_passed") or 0) + int(old.get("checks_failed") or 0)
+    new_information = int(new.get("checks_passed") or 0) + int(new.get("checks_failed") or 0)
+    new_failures = int(new.get("checks_failed") or 0)
+    old_failures = int(old.get("checks_failed") or 0)
+    if old_information > new_information and new_failures <= old_failures:
+        return frozen
+    return candidate
+
 def _a3_artifact() -> dict[str, Any]:
     path=PROJECT_ROOT/"generated"/"p0-a3-substrate-stop.json"
     try:return json.loads(path.read_text(encoding="utf-8"))
@@ -431,9 +450,10 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
         "gpu0_hold_or_conditional":sum(str(c["gpu0"]["status"]).startswith("hold") or c["gpu0"]["status"] in {"conditional","partial-pass"} for c in cards),
         "gpu0_stop":sum(str(c["gpu0"]["status"]).startswith("stop") for c in cards),
     }
-    return {"schema_version":"1.0","generated_at":_now(),"experiment_root":"profile-resolved-machine-local",
-        "policy":{"real_reused_may_unblock":True,"synthetic_harness_may_not_unblock_reality":True,"same_batch_self_authorization_forbidden":True,"method_result_from_offline_qualification_forbidden":True},
+    state={"schema_version":"1.0","generated_at":_now(),"experiment_root":"profile-resolved-machine-local",
+        "policy":{"real_reused_may_unblock":True,"synthetic_harness_may_not_unblock_reality":True,"same_batch_self_authorization_forbidden":True,"method_result_from_offline_qualification_forbidden":True,"frozen_evidence_cannot_downgrade_to_pending_on_missing_host_data":True},
         "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"memory_full":memfull,"substrate_readiness":ready,"e1":we1,"a3_substrate_stop":{"decision":a3cpu.get("decision"),"updater_competence":a3cpu.get("updater_competence"),"mastered_panel":a3cpu.get("mastered_panel"),"fresh_final_a3_test":a3cpu.get("fresh_final_a3_test"),"method_failure_authorized":a3cpu.get("method_failure_authorized")},"a4_composition_cpu":{"decision":a4cpu.get("decision"),"metrics":a4cpu.get("metrics"),"matched_simplification":a4cpu.get("matched_simplification")},"a5_history_cpu":{"decision":a5cpu.get("decision"),"semantic":a5cpu.get("semantic_compactor"),"generic":a5cpu.get("generic_state_diff"),"periodic":a5cpu.get("periodic_checkpoint")},"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"a7_counterfactual_cpu":{"decision":a7cpu.get("decision"),"design":a7cpu.get("design"),"linear_hidden":(a7cpu.get("linear_controller") or {}).get("hidden"),"cart_hidden":(a7cpu.get("matched_cart") or {}).get("hidden")},"b2_support_stop":{"decision":b2cpu.get("decision"),"frozen_support_gate":b2cpu.get("frozen_support_gate"),"method_failure_authorized":b2cpu.get("method_failure_authorized")},"b3_interference_cpu":{"decision":b3cpu.get("decision"),"metrics":b3cpu.get("metrics"),"runtime_preflight_snapshot":b3cpu.get("runtime_preflight_snapshot")},"b3_fresh_support_stop":{"decision":b3support.get("decision"),"required":b3support.get("required_unique_fresh_pair_targets"),"available":b3support.get("available_unique_fresh_pair_targets"),"family_support":b3support.get("family_support")},"b3_real_cinteraction":{"status":b3real.get("status"),"plan_hash":b3real.get("plan_hash"),"decision":b3real.get("decision")},"b5_applicability_cpu":{"decision":b5cpu.get("decision"),"metrics":b5cpu.get("metrics"),"matched_simplification":b5cpu.get("matched_simplification")},"b6_memory_utility_cpu":{"decision":b6cpu.get("decision"),"design":b6cpu.get("design"),"matched_simplification":b6cpu.get("matched_simplification")},"c2_evaluator_cpu":{"decision":c2cpu.get("decision"),"attribution":c2cpu.get("attribution"),"matched_simplification":c2cpu.get("matched_simplification")},"d1_minimal_curriculum_cpu":{"decision":d1cpu.get("decision"),"design":d1cpu.get("design"),"matched_simplification":d1cpu.get("matched_simplification")},"e1_edit_table_stop":{"decision":e1stop.get("decision"),"source_table":e1stop.get("source_table"),"method_failure_authorized":e1stop.get("method_failure_authorized")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"e2_workflow_cpu":{"decision":e2cpu.get("decision"),"metrics":e2cpu.get("metrics"),"freeze_sha256":e2cpu.get("freeze_sha256_before_hidden")},"e3_real_api":{"decision":e3real.get("decision"),"metrics":e3real.get("metrics"),"prediction_sha256":e3real.get("prediction_sha256_before_hidden")},"e3_stateful":{"decision":e3stateful.get("decision"),"metrics":e3stateful.get("metrics"),"prediction_sha256":e3stateful.get("prediction_sha256_before_hidden")},"e4_permission_cpu":{"decision":e4cpu.get("decision"),"metrics":e4cpu.get("metrics"),"threshold":e4cpu.get("threshold")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
+    return _prefer_more_informative_frozen_state(state)
 
 def write_p0_offline_qualification_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS)->dict[str,Any]:
     state=build_p0_offline_qualification_state(); json_path.parent.mkdir(parents=True,exist_ok=True)

@@ -17,6 +17,10 @@ def _now()->str:return datetime.now(timezone.utc).replace(microsecond=0).isoform
 def build_state()->dict[str,Any]:
     root=resolve_experiment_data_root(StorageSettings.from_env())
     ev=e1(root)
+    if int(ev.get("workflows") or 0)==0 and DEFAULT_JSON.exists():
+        try: frozen=json.loads(DEFAULT_JSON.read_text(encoding="utf-8"))
+        except (OSError,json.JSONDecodeError): frozen={}
+        if int((frozen.get("source_table") or {}).get("workflows") or 0)>0: return frozen
     identifiable=bool(ev.get("identifiable")); workflows=int(ev.get("workflows") or 0); effective=int(ev.get("effective_workflows") or 0); unique=int(ev.get("uniquely_ranked_workflows") or 0)
     stop=(not identifiable) and workflows>0
     return {
@@ -30,6 +34,10 @@ def build_state()->dict[str,Any]:
 
 def write_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS)->dict[str,Any]:
     s=build_state(); json_path.parent.mkdir(parents=True,exist_ok=True)
+    if int((s.get("source_table") or {}).get("workflows") or 0)==0 and json_path.exists():
+        try: frozen=json.loads(json_path.read_text(encoding="utf-8"))
+        except (OSError,json.JSONDecodeError): frozen={}
+        if int((frozen.get("source_table") or {}).get("workflows") or 0)>0: return frozen
     json_path.write_text(json.dumps(s,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     js_path.write_text("window.P0_E1_EDIT_TABLE_STOP = "+json.dumps(s,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
     return s

@@ -17,6 +17,10 @@ def _now()->str:return datetime.now(timezone.utc).replace(microsecond=0).isoform
 def build_state()->dict[str,Any]:
     root=resolve_experiment_data_root(StorageSettings.from_env())
     mem=memory_full(root)
+    if int(mem.get("full_completed_units") or 0)==0 and DEFAULT_JSON.exists():
+        try: frozen=json.loads(DEFAULT_JSON.read_text(encoding="utf-8"))
+        except (OSError,json.JSONDecodeError): frozen={}
+        if int((frozen.get("frozen_support_gate") or {}).get("current_full_units") or 0)>0: return frozen
     controlled=int(mem.get("controlled_nonzero") or 0); required=30
     stop=mem.get("status")=="complete" and controlled<required
     return {
@@ -30,6 +34,10 @@ def build_state()->dict[str,Any]:
 
 def write_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS)->dict[str,Any]:
     s=build_state(); json_path.parent.mkdir(parents=True,exist_ok=True)
+    if int((s.get("frozen_support_gate") or {}).get("current_full_units") or 0)==0 and json_path.exists():
+        try: frozen=json.loads(json_path.read_text(encoding="utf-8"))
+        except (OSError,json.JSONDecodeError): frozen={}
+        if int((frozen.get("frozen_support_gate") or {}).get("current_full_units") or 0)>0: return frozen
     json_path.write_text(json.dumps(s,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     js_path.write_text("window.P0_B2_SUPPORT_STOP = "+json.dumps(s,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
     return s
