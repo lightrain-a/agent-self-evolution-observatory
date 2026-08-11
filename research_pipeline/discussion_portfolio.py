@@ -106,6 +106,7 @@ def build_discussion_portfolio() -> dict[str, Any]:
             "absorbed_children_excluded_from_advisor_pool": True,
             "independent_terminal_methods_allowed": True,
             "readiness_is_terminalization_not_legacy_pass_count": True,
+            "target_is_minimum_not_exact_cap": True,
             "legacy_r3_rows_are_traceability_only": True,
             "legacy_r3_required_two_model_and_collision_gates": True,
             "no_portfolio_shortlist": True,

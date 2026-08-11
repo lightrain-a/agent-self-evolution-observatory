@@ -382,8 +382,8 @@ def main() -> None:
         if (summary.get("children"), summary.get("reviewed"), summary.get("pass")) != expected:
             fail(f"unexpected repair-round summary for {filename}: {summary}")
     discussion = json.loads((ROOT / "generated" / "discussion-ready-ideas.json").read_text(encoding="utf-8"))
-    if (discussion.get("count"), discussion.get("target"), discussion.get("remaining"), discussion.get("ready")) != (20, 20, 0, True):
-        fail(f"strict discussion-ready portfolio has not reached target: {discussion}")
+    if int(discussion.get("count") or 0) < int(discussion.get("target") or 0) or discussion.get("remaining") != 0 or discussion.get("ready") is not True:
+        fail(f"strict discussion-ready portfolio has not reached minimum target: {discussion}")
 
     discovery_v3 = json.loads((ROOT / "generated" / "idea-discovery-v3.json").read_text(encoding="utf-8"))
     v3_summary = discovery_v3.get("summary", {})
