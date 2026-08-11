@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "idea_id": "retrieval-interference-auditor",
+  "code": "B-3",
+  "freshness_contract": "exclude all source-memory scenarios, all previously observed full-support target scenarios, and duplicate target scenarios",
+  "required_unique_fresh_pair_targets": 6,
+  "available_unique_fresh_pair_targets": 5,
+  "family_support": {
+    "pick_and_place_simple": {
+      "all": 8,
+      "fresh": 0,
+      "fresh_scenarios": []
+    },
+    "pick_clean_then_place_in_recep": {
+      "all": 11,
+      "fresh": 3,
+      "fresh_scenarios": [
+        "pick_clean_then_place_in_recep-Cloth-None-Cabinet-424",
+        "pick_clean_then_place_in_recep-Cloth-None-CounterTop-424",
+        "pick_clean_then_place_in_recep-Spatula-None-Drawer-10"
+      ]
+    },
+    "pick_cool_then_place_in_recep": {
+      "all": 7,
+      "fresh": 1,
+      "fresh_scenarios": [
+        "pick_cool_then_place_in_recep-Potato-None-Microwave-10"
+      ]
+    },
+    "pick_heat_then_place_in_recep": {
+      "all": 8,
+      "fresh": 1,
+      "fresh_scenarios": [
+        "pick_heat_then_place_in_recep-Potato-None-GarbageCan-10"
+      ]
+    }
+  },
+  "invalid_development_run": "p0-b3-real-cinteraction-qwen-v1",
+  "decision": "STOP_CURRENT_SUBSTRATE_FRESH_CINTERACTION_SUPPORT_INSUFFICIENT",
+  "current_substrate_stop_authorized": true,
+  "method_failure_authorized": false,
+  "interpretation": "The synthetic pathway screening signal cannot be promoted because ALFWorld has fewer outcome-unseen source-disjoint target scenarios than the frozen six-pair prevalence gate requires. Reusing prior targets or duplicate scenarios would invalidate the fresh-prevalence claim.",
+  "next_action": "Stop the current ALFWorld B-3 instance and send it to human pivot/drop review; reopen only on a fresh co-retrieval substrate with at least six independent unseen pair-target units."
+}

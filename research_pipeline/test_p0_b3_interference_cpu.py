@@ -20,10 +20,11 @@ class P0B3InterferenceCpuTest(unittest.TestCase):
         self.assertFalse(s["p1_authorized"])
         self.assertIn("synthetic",s["scientific_role"].lower())
 
-    def test_real_gate_is_blocked_by_runtime_drift_not_gpu_capacity(self) -> None:
+    def test_runtime_was_resolved_without_environment_mutation(self) -> None:
         r=self.state["runtime_preflight_snapshot"]
-        self.assertEqual(r["decision"],"HOLD_RUNTIME_ENVIRONMENT_DRIFT")
-        self.assertIn("idle",r["gpu_state"].lower())
+        self.assertEqual(r["decision"],"RUNTIME_RESOLVED")
+        self.assertTrue(r["one_step_qwen_alfworld_smoke_pass"])
+        self.assertIn("Python 3.12",r["runtime"])
         self.assertFalse(r["installation_or_environment_mutation_attempted"])
 
 

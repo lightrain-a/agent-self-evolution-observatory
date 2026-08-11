@@ -216,16 +216,21 @@ def main() -> None:
           offlineSummary: window.P0_OFFLINE_QUALIFICATION?.summary || {},
           realizabilitySummary: window.P0_REALIZABILITY_SUITE?.summary || {},
           b10Decision: window.P0_B10_CPU?.decision || '',
+          a3Decision: window.P0_A3_SUBSTRATE_STOP?.decision || '',
           a4Decision: window.P0_A4_COMPOSITION_CPU?.decision || '',
           a5Decision: window.P0_A5_HISTORY_CPU?.decision || '',
           a6Decision: window.P0_A6_CPU?.decision || '',
           a7Decision: window.P0_A7_COUNTERFACTUAL_CPU?.decision || '',
+          b2Decision: window.P0_B2_SUPPORT_STOP?.decision || '',
           b3Decision: window.P0_B3_INTERFERENCE_CPU?.decision || '',
           b3RuntimeDecision: window.P0_B3_INTERFERENCE_CPU?.runtime_preflight_snapshot?.decision || '',
+          b3SupportDecision: window.P0_B3_FRESH_SUPPORT_STOP?.decision || '',
+          b3RealStatus: window.P0_B3_REAL_CINTERACTION?.status || '',
           b5Decision: window.P0_B5_APPLICABILITY_CPU?.decision || '',
           b6Decision: window.P0_B6_MEMORY_UTILITY_CPU?.decision || '',
           c2Decision: window.P0_C2_EVALUATOR_CPU?.decision || '',
           d1Decision: window.P0_D1_MINIMAL_CURRICULUM_CPU?.decision || '',
+          e1Decision: window.P0_E1_EDIT_TABLE_STOP?.decision || '',
           e2Decision: window.P0_E2_WORKFLOW_CPU?.decision || '',
           e3Decision: window.P0_E3_STATEFUL?.decision || window.P0_E3_REAL_API?.decision || '',
           e4Decision: window.P0_E4_PERMISSION_CPU?.decision || '',
@@ -279,11 +284,14 @@ def main() -> None:
         };""")
         require(experiments["chapters"] == 3, f"experiments page must have three chapters, got {experiments['chapters']}")
         require((experiments["terminalPortfolio"],experiments["terminalRows"],experiments["terminalP0"],experiments["terminalP0Ready"]) == (1,20,20,0), f"terminal experiment portfolio is not aligned with Paper Ideas: {experiments}")
-        require((experiments["terminalStarted"],experiments["terminalPending"],experiments["auditQueue"],experiments["auditItems"]) == (17,3,1,3), f"started/pending audit split is wrong: {experiments}")
+        require((experiments["terminalStarted"],experiments["terminalPending"],experiments["auditQueue"],experiments["auditItems"]) == (20,0,0,0), f"started/pending audit split is wrong: {experiments}")
         require(experiments["admissionPanel"] == 1 and experiments["admissionRows"] == 16 and experiments["admissionSummary"].get("active_p0") == 20 and experiments["admissionSummary"].get("transitioned_from_p0_ready") == 16 and experiments["admissionSummary"].get("settings_complete") == 20, f"P0 admission/settings panel is incomplete: {experiments}")
-        require(experiments["offlinePanel"] == 1 and experiments["offlineSummary"].get("ideas") == 16 and experiments["offlineSummary"].get("checks_failed",0) >= 15 and experiments["offlineSummary"].get("checks_synthetic_pass") == 14 and experiments["offlineSummary"].get("gpu0_stop") == 12, f"offline qualification panel/state is incomplete: {experiments}")
+        require(experiments["offlinePanel"] == 1 and experiments["offlineSummary"].get("ideas") == 16 and experiments["offlineSummary"].get("checks_failed",0) >= 15 and experiments["offlineSummary"].get("checks_synthetic_pass") == 14 and experiments["offlineSummary"].get("gpu0_stop") == 16 and experiments["offlineSummary"].get("gpu0_hold_or_conditional") == 0, f"offline qualification panel/state is incomplete: {experiments}")
         require(experiments["realizabilitySummary"].get("audited") == 14 and experiments["realizabilitySummary"].get("synthetic_pass") == 14, f"synthetic realizability summary is wrong: {experiments}")
-        require(experiments["b10Decision"] == "STOP_MATCHED_NARY_EQUIVALENT" and experiments["a4Decision"] == "STOP_DIRECT_ORDER_AWARE_RISK_EQUIVALENT" and experiments["a5Decision"] == "STOP_MATCHED_GENERIC_STATE_DIFF_DOMINATES" and experiments["a6Decision"] == "STOP_MATCHED_GROUP_TESTING_EQUIVALENT" and experiments["a7Decision"] == "STOP_MATCHED_SHALLOW_RULE_EQUIVALENT" and experiments["b3Decision"] == "SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED" and experiments["b3RuntimeDecision"] == "HOLD_RUNTIME_ENVIRONMENT_DRIFT" and experiments["b5Decision"] == "STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT" and experiments["b6Decision"] == "STOP_RECENCY_FREQUENCY_POLICY_DOMINATES" and experiments["c2Decision"] == "STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT" and experiments["d1Decision"] == "STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT" and experiments["e2Decision"] == "STOP_MATCHED_E1_DIRECT_EDIT_EQUIVALENT" and experiments["e3Decision"] == "STOP_STATEFUL_DETERMINISTIC_PEX_CEILING" and experiments["e4Decision"] == "STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT" and experiments["p0StopRows"] == 14, f"P0 STOPs or B-3 screening/runtime HOLD are not visible: {experiments}")
+        require(experiments["a3Decision"] == "STOP_CURRENT_SUBSTRATE_UPDATER_INCOMPETENT" and experiments["a4Decision"] == "STOP_DIRECT_ORDER_AWARE_RISK_EQUIVALENT" and experiments["a5Decision"] == "STOP_MATCHED_GENERIC_STATE_DIFF_DOMINATES" and experiments["a6Decision"] == "STOP_MATCHED_GROUP_TESTING_EQUIVALENT" and experiments["a7Decision"] == "STOP_MATCHED_SHALLOW_RULE_EQUIVALENT", f"A-family terminal decisions are not visible: {experiments}")
+        require(experiments["b2Decision"] == "STOP_CURRENT_SUBSTRATE_CONCLUSION_CHANGE_SUPPORT_INSUFFICIENT" and experiments["b3SupportDecision"] == "STOP_CURRENT_SUBSTRATE_FRESH_CINTERACTION_SUPPORT_INSUFFICIENT" and experiments["b3RealStatus"] == "invalid-development" and experiments["b5Decision"] == "STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT" and experiments["b6Decision"] == "STOP_RECENCY_FREQUENCY_POLICY_DOMINATES" and experiments["b10Decision"] == "STOP_MATCHED_NARY_EQUIVALENT", f"B-family terminal decisions are not visible: {experiments}")
+        require(experiments["c2Decision"] == "STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT" and experiments["d1Decision"] == "STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT" and experiments["e1Decision"] == "STOP_CURRENT_EDIT_TABLE_RANKING_DEGENERATE" and experiments["e2Decision"] == "STOP_MATCHED_E1_DIRECT_EDIT_EQUIVALENT" and experiments["e3Decision"] == "STOP_STATEFUL_DETERMINISTIC_PEX_CEILING" and experiments["e4Decision"] == "STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT", f"C/D/E terminal decisions are not visible: {experiments}")
+        require(experiments["p0StopRows"] == 18, f"expected 18 P0 stop rows after full terminalization, got {experiments['p0StopRows']}")
         require(experiments["legacyArchives"] >= 3, f"legacy experiment evidence must be demoted into traceability archives: {experiments['legacyArchives']}")
         require((experiments["toc2"], experiments["toc3"], experiments["toc4"]) == (4, 3, 0), f"experiments TOC hierarchy is wrong: {experiments['toc2']}/{experiments['toc3']}/{experiments['toc4']}")
         require(experiments["board"] == 1 and experiments["cards"] == 5, f"experiment queue is incomplete: {experiments['board']}/{experiments['cards']}")

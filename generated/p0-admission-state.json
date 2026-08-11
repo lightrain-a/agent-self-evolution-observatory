@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T10:34:23+00:00",
+  "generated_at": "2026-08-11T11:39:23+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
@@ -520,11 +520,11 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "hold",
-          "evidence": "Update-harm phenomenon exists, but the current probe representation is not faithful enough for the predictive regression panel.",
-          "source": "pre-experiment-a1-screening-review-20260810.json",
-          "evidence_kind": "real-reused",
-          "next": "Repair updater/action-stream competence, then collect a fresh ALFWorld candidate batch and replay the frozen 6-task mastered panel."
+          "status": "stop-current-substrate-updater-incompetent",
+          "evidence": "Current prompt-patch substrate fails the block-only updater gate: 1/8 positive target-gain candidates and effective fraction 0.125 < required 0.400. Fresh A-3 collection is forbidden.",
+          "source": "generated/p0-a3-substrate-stop.json",
+          "evidence_kind": "real-substrate-stop",
+          "next": "Stop GPU work on this prompt-patch P0 instance. Reopen A-3 only with a newly qualified update substrate/action stream and a newly frozen fresh-candidate validation; otherwise send the direction to human pivot/drop review."
         },
         "pre_p0": {
           "passed": 7,
@@ -641,11 +641,7 @@
         },
         "execution_authorized": false,
         "blockers": [
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
@@ -1763,11 +1759,11 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "hold-support-cardinality-insufficient",
-          "evidence": "The completed shared Memory table contains only 11 controlled-nonzero unit effects. These are not automatically conclusion-change cases and cannot satisfy the dedicated >=30 reproducible conclusion-change gate.",
-          "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-enriched-analysis/offline_decision.json",
-          "evidence_kind": "real-reused",
-          "next": "Build >=30 reproducible conclusion-change deletion cases and matched NLI/utility selection sets before hidden evaluation."
+          "status": "stop-current-substrate-conclusion-change-support-insufficient",
+          "evidence": "Current shared-memory evidence cannot satisfy the frozen B-2 support gate: 11 controlled-nonzero memory effects < 30 required reproducible conclusion-change deletion cases, with 0 dedicated deletion cases available.",
+          "source": "generated/p0-b2-support-stop.json",
+          "evidence_kind": "real-substrate-stop",
+          "next": "Do not open hidden E_orig or train a B-2 selector on this table. Reopen only with a fresh dedicated deletion-sensitivity collection that independently supplies >=30 reproducible conclusion-change cases; otherwise send B-2 to human pivot/drop review."
         },
         "pre_p0": {
           "passed": 8,
@@ -1875,11 +1871,7 @@
         },
         "execution_authorized": false,
         "blockers": [
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
@@ -1967,11 +1959,11 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "hold-real-cinteraction-runtime",
-          "evidence": "Synthetic matched-cost screening is positive: pathway and simple baselines both use 96 audit calls and have 0 future harm, while retained benefit is 54 vs 18. This does not establish real co-retrieval interference. Real ALFWorld launch is blocked by runtime environment drift, not GPU capacity.",
-          "source": "generated/p0-b3-interference-cpu.json",
-          "evidence_kind": "synthetic-screening-plus-runtime-audit",
-          "next": "Collect a small real ALFWorld co-retrieval factorial block; freeze retrieval/content/rank/co-retrieval arms and compare the same matched baseline before any learned repair."
+          "status": "stop-current-substrate-fresh-cinteraction-support-insufficient",
+          "evidence": "After excluding all source-memory scenarios, all previously observed full-support target scenarios, and duplicate targets, ALFWorld exposes only 5 unique fresh pair-target scenarios < frozen requirement 6.",
+          "source": "generated/p0-b3-fresh-support-stop.json",
+          "evidence_kind": "real-substrate-support-stop",
+          "next": "Stop the current ALFWorld B-3 instance and send it to human pivot/drop review; reopen only on a fresh co-retrieval substrate with at least six independent unseen pair-target units."
         },
         "pre_p0": {
           "passed": 8,
@@ -2079,11 +2071,7 @@
         },
         "execution_authorized": false,
         "blockers": [
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
@@ -3363,11 +3351,11 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "hold",
-          "evidence": "Do not open hidden workflows. Rebuild a paired edit-effect table with genuine within-workflow edit variation first.",
-          "source": "runs/round1-20260810/e1-r5/evaluations.jsonl",
-          "evidence_kind": "real-reused",
-          "next": "Rebuild the source paired edit-effect table until within-workflow edit deltas are genuinely non-tied; keep hidden workflows sealed."
+          "status": "stop-current-edit-table-ranking-degenerate",
+          "evidence": "Current paired edit-effect table is non-identifiable: 4/16 workflows have positive edit effects and only 3 have non-tied edit deltas; effective fraction=0.250.",
+          "source": "generated/p0-e1-edit-table-stop.json",
+          "evidence_kind": "real-substrate-stop",
+          "next": "Do not open hidden workflows or train the E-1 ranker on this table. Reopen only after a newly frozen paired intervention table has genuine non-tied edit effects at the preregistered source gate; otherwise send E-1 to human pivot/drop review."
         },
         "pre_p0": {
           "passed": 5,
@@ -3475,11 +3463,7 @@
         },
         "execution_authorized": false,
         "blockers": [
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },

@@ -100,7 +100,7 @@ def run_b3_cpu_screen() -> dict[str,Any]:
       "metrics":{"pathway_audit_calls":pcalls,"simple_audit_calls":scalls,"pathway_future_harm":pharm,"simple_future_harm":sharm,"pathway_retained_benefit":pbenef,"simple_retained_benefit":sbenef,"pathway_net_utility":putil,"simple_net_utility":sutil,"relative_net_utility_gain":utility_gain,"retained_benefit_gain":benefit_gain},
       "by_pathway":by_path,"rows":rows,
       "matched_simplification":{"baseline":"per-item causal selector + simple co-occurrence exclusion","same_audit_calls":same_cost,"equivalent":equivalent},
-      "runtime_preflight_snapshot":{"measured_on":"2026-08-11","server":"60","gpu_state":"3x RTX3090-class idle","registered_profile_runtime":"FAIL: adapter importable but ALFWorld package missing","legacy_runtime_overlay":"FAIL: Python 3.8 interpreter mixed with Python>=3.9/3.12 TextWorld/Numpy packages","python313_base":"FAIL: Torch present but Transformers stack absent","installation_or_environment_mutation_attempted":False,"decision":"HOLD_RUNTIME_ENVIRONMENT_DRIFT"},
+      "runtime_preflight_snapshot":{"measured_on":"2026-08-11","server":"69","runtime":"PASS: /home/wyt/vlm_env Python 3.12 + /data/wyt/envs/agent_evolution_p0_site; Torch/Transformers/ALFWorld/TextWorld import together","one_step_qwen_alfworld_smoke_pass":True,"installation_or_environment_mutation_attempted":False,"decision":"RUNTIME_RESOLVED"},
       "decision":decision,"p1_authorized":False,
       "next_action":"Collect a small real ALFWorld co-retrieval factorial block; freeze retrieval/content/rank/co-retrieval arms and compare the same matched baseline before any learned repair." if signal else "Return B-3 to human DROP/merge review."}
 

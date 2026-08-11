@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T09:04:49+00:00",
+  "generated_at": "2026-08-11T11:39:19+00:00",
   "idea_id": "retrieval-interference-auditor",
   "code": "B-3",
   "scientific_role": "synthetic mechanism screening only; cannot establish that real memory co-retrieval interference exists",
@@ -1316,13 +1316,11 @@
   },
   "runtime_preflight_snapshot": {
     "measured_on": "2026-08-11",
-    "server": "60",
-    "gpu_state": "3x RTX3090-class idle",
-    "registered_profile_runtime": "FAIL: adapter importable but ALFWorld package missing",
-    "legacy_runtime_overlay": "FAIL: Python 3.8 interpreter mixed with Python>=3.9/3.12 TextWorld/Numpy packages",
-    "python313_base": "FAIL: Torch present but Transformers stack absent",
+    "server": "69",
+    "runtime": "PASS: /home/wyt/vlm_env Python 3.12 + /data/wyt/envs/agent_evolution_p0_site; Torch/Transformers/ALFWorld/TextWorld import together",
+    "one_step_qwen_alfworld_smoke_pass": true,
     "installation_or_environment_mutation_attempted": false,
-    "decision": "HOLD_RUNTIME_ENVIRONMENT_DRIFT"
+    "decision": "RUNTIME_RESOLVED"
   },
   "decision": "SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED",
   "p1_authorized": false,

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-11T11:39:20+00:00",
+  "idea_id": "workflow-generalization-certificate",
+  "code": "E-1",
+  "scientific_scope": "current frozen 16-workflow paired edit-effect source table only",
+  "source_table": {
+    "workflows": 16,
+    "edits_per_workflow": 5,
+    "effective_workflows": 4,
+    "uniquely_ranked_workflows": 3,
+    "effective_fraction": 0.25,
+    "identifiable": false
+  },
+  "decision": "STOP_CURRENT_EDIT_TABLE_RANKING_DEGENERATE",
+  "current_substrate_stop_authorized": true,
+  "method_failure_authorized": false,
+  "hidden_workflows_opened": false,
+  "exact_method_stop_fired": false,
+  "interpretation": "The current paired edit-effect table has insufficient within-workflow target/effect variation to identify a best-edit ranking policy. Hidden workflows must remain sealed. This stops the current source-table instantiation, not the Paired Edit-Effect Workflow Update Policy itself.",
+  "next_action": "Do not open hidden workflows or train the E-1 ranker on this table. Reopen only after a newly frozen paired intervention table has genuine non-tied edit effects at the preregistered source gate; otherwise send E-1 to human pivot/drop review."
+}

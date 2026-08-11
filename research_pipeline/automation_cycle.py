@@ -17,15 +17,20 @@ from .discussion_portfolio import write_discussion_portfolio
 from .human_terminal_state import write_human_terminal_state
 from .p0_admission import write_p0_admission_state
 from .p0_b10_cpu import write_b10_cpu_p0
+from .p0_a3_substrate_stop import write_state as write_a3_substrate_stop
 from .p0_a4_composition_cpu import write_a4_cpu_p0
 from .p0_a5_history_cpu import write_a5_cpu_p0
 from .p0_a6_cpu import write_a6_cpu_p0
 from .p0_a7_counterfactual_cpu import write_a7_cpu_p0
+from .p0_b2_support_stop import write_state as write_b2_support_stop
 from .p0_b3_interference_cpu import write_b3_cpu_screen
+from .p0_b3_fresh_support_stop import write_state as write_b3_fresh_support_stop
+from .p0_b3_real_state import write_state as write_b3_real_state
 from .p0_b5_applicability_cpu import write_b5_cpu_p0
 from .p0_b6_memory_utility_cpu import write_b6_cpu_p0
 from .p0_c2_evaluator_cpu import write_c2_cpu_p0
 from .p0_d1_minimal_curriculum_cpu import write_d1_cpu_p0
+from .p0_e1_edit_table_stop import write_state as write_e1_table_stop
 from .p0_e2_workflow_cpu import write_e2_cpu_p0
 from .p0_e3_real_api import write as write_e3_real_api_p0
 from .p0_e3_stateful import write_stateful as write_e3_stateful_p0
@@ -111,15 +116,20 @@ def run_cycle(
         report["steps"].append(_step("human-terminal-idea-state", write_human_terminal_state))
         report["steps"].append(_step("p0-realizability-suite", write_p0_realizability_suite))
         report["steps"].append(_step("p0-b10-cpu", write_b10_cpu_p0))
+        report["steps"].append(_step("p0-a3-substrate-stop", write_a3_substrate_stop))
         report["steps"].append(_step("p0-a4-composition-cpu", write_a4_cpu_p0))
         report["steps"].append(_step("p0-a5-history-cpu", write_a5_cpu_p0))
         report["steps"].append(_step("p0-a6-cpu", write_a6_cpu_p0))
         report["steps"].append(_step("p0-a7-counterfactual-cpu", write_a7_cpu_p0))
+        report["steps"].append(_step("p0-b2-support-stop", write_b2_support_stop))
         report["steps"].append(_step("p0-b3-interference-cpu", write_b3_cpu_screen))
+        report["steps"].append(_step("p0-b3-fresh-support-stop", write_b3_fresh_support_stop))
+        report["steps"].append(_step("p0-b3-real-state", write_b3_real_state))
         report["steps"].append(_step("p0-b5-applicability-cpu", write_b5_cpu_p0))
         report["steps"].append(_step("p0-b6-memory-utility-cpu", write_b6_cpu_p0))
         report["steps"].append(_step("p0-c2-evaluator-cpu", write_c2_cpu_p0))
         report["steps"].append(_step("p0-d1-minimal-curriculum-cpu", write_d1_cpu_p0))
+        report["steps"].append(_step("p0-e1-edit-table-stop", write_e1_table_stop))
         report["steps"].append(_step("p0-e2-workflow-cpu", write_e2_cpu_p0))
         report["steps"].append(_step("p0-e3-real-api", write_e3_real_api_p0))
         report["steps"].append(_step("p0-e3-stateful", write_e3_stateful_p0))
@@ -142,15 +152,20 @@ def run_cycle(
         write_human_terminal_state()
         write_p0_realizability_suite()
         write_b10_cpu_p0()
+        write_a3_substrate_stop()
         write_a4_cpu_p0()
         write_a5_cpu_p0()
         write_a6_cpu_p0()
         write_a7_cpu_p0()
+        write_b2_support_stop()
         write_b3_cpu_screen()
+        write_b3_fresh_support_stop()
+        write_b3_real_state()
         write_b5_cpu_p0()
         write_b6_cpu_p0()
         write_c2_cpu_p0()
         write_d1_cpu_p0()
+        write_e1_table_stop()
         write_e2_cpu_p0()
         write_e3_real_api_p0()
         write_e3_stateful_p0()

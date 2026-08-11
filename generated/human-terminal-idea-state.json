@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "decision_date": "2026-08-11",
-  "generated_at": "2026-08-11T10:37:37+00:00",
+  "generated_at": "2026-08-11T11:39:22+00:00",
   "source_of_truth_priority": [
     "latest-human-review",
     "explicit-user-update",
@@ -122,7 +122,12 @@
         "date": "2026-08-11",
         "basis": "p0-admission-contract-frozen",
         "execution_authorized": false
-      }
+      },
+      "current_fact": {
+        "zh": "A-3 当前 prompt-patch P0 实例已触发 substrate STOP：8 个 typed/scoped candidate 仅 1 个正 target gain，effective candidate fraction=12.5%<冻结 40% 门；updater competence 为 block-only FAIL。6-task mastered panel 已冻结并通过，但 fresh candidate×panel×hidden-original fidelity 从未获授权执行，hidden original 未打开。因此 STOP_CURRENT_SUBSTRATE_UPDATER_INCOMPETENT 只停止当前 Qwen2.5-7B+ALFWorld prompt-patch 实例，不授权 A-3 方法 FAIL；若未来重开必须先换成新通过 competence 的 update substrate/action stream。",
+        "en": "The current A-3 prompt-patch P0 instance fires a substrate STOP: among 8 typed/scoped candidates only 1 has positive target gain and the effective-candidate fraction is 12.5%, below the frozen 40% gate; updater competence is a block-only failure. The six-task mastered panel is frozen and passed, but the fresh candidate × panel × hidden-original fidelity test was never authorized and hidden originals were never opened. STOP_CURRENT_SUBSTRATE_UPDATER_INCOMPETENT therefore stops only the current Qwen2.5-7B + ALFWorld prompt-patch instance and does not authorize an A-3 method failure; reopening requires a newly competence-qualified update substrate/action stream."
+      },
+      "p0_decision": "STOP_CURRENT_SUBSTRATE_UPDATER_INCOMPETENT"
     },
     "compositional-update-compatibility": {
       "code": "A-4",
@@ -265,7 +270,12 @@
         "date": "2026-08-11",
         "basis": "p0-admission-contract-frozen",
         "execution_authorized": false
-      }
+      },
+      "current_fact": {
+        "zh": "B-2 当前共享 Memory substrate/data 实例触发支持门 STOP：完整 72-unit 表只有 11 个 controlled-nonzero memory effects，且专门的 conclusion-change deletion cases 为 0，无法满足冻结的 ≥30 reproducible conclusion-changing cases 前置门。STOP_CURRENT_SUBSTRATE_CONCLUSION_CHANGE_SUPPORT_INSUFFICIENT 只停止当前数据实例，不授权 B-2 方法 FAIL；hidden E_orig 不得打开。",
+        "en": "The current B-2 shared-memory substrate/data instance fires a support-gate STOP: the complete 72-unit table contains only 11 controlled-nonzero memory effects and zero dedicated conclusion-change deletion cases, so it cannot satisfy the frozen >=30 reproducible conclusion-changing-case prerequisite. STOP_CURRENT_SUBSTRATE_CONCLUSION_CHANGE_SUPPORT_INSUFFICIENT stops only this data instance and does not authorize a B-2 method failure; hidden E_orig must remain sealed."
+      },
+      "p0_decision": "STOP_CURRENT_SUBSTRATE_CONCLUSION_CHANGE_SUPPORT_INSUFFICIENT"
     },
     "retrieval-interference-auditor": {
       "code": "B-3",
@@ -300,15 +310,16 @@
         "en": "Stop the pathway claim if decomposition does not beat matched per-item/co-occurrence controls."
       },
       "current_fact": {
-        "zh": "B-3 CPU screening 在 24 个 programmatic interference cases 上给出机制信号：item/content/rank/co-retrieval 四类各 6 个，pathway 方法与 per-item + co-occurrence baseline 都严格使用 96 次 audit 且 future harm 均为 0，但路径修复保留 benefit 54 vs 18；优势完全来自 content/rank 的 rewrite/rank-cap，item 与 co-retrieval 两类和简单基线打平。该结果只允许 SCREENING_SIGNAL，不证明真实 co-retrieval interference。真实 24-execution ALFWorld gate 当前被 runtime drift 挡住：60 的三张 3090 均空闲，但登记 runtime 缺 ALFWorld，旧 runtime 包又跨 Python 3.8/3.9+/3.12 不兼容，因此未安装/拼装新环境，保持 reality/runtime HOLD。",
-        "en": "B-3 CPU screening produced a mechanism signal on 24 programmatic interference cases, six each for item/content/rank/co-retrieval. The pathway method and the per-item + co-occurrence baseline both use exactly 96 audit calls and have zero future harm, but pathway repair retains benefit 54 vs 18. The entire advantage comes from rewrite/rank-cap on content/rank pathways; item and co-retrieval cases tie the simple baseline. This is SCREENING_SIGNAL only and does not establish real co-retrieval interference. The 24-execution real ALFWorld gate is currently blocked by runtime drift: all three RTX3090-class GPUs on server 60 are idle, but the registered runtime lacks ALFWorld and the legacy runtime packages mix incompatible Python 3.8/3.9+/3.12 artifacts. No new environment was installed or spliced; reality/runtime remains on HOLD."
+        "zh": "B-3 synthetic matched-cost screening 曾给出 pathway signal，但真实 fresh reality gate 的 substrate support 不足：先前 v1 的 6 targets 中 5/6 与旧 Memory full-support target scenarios 重叠，已标 INVALID_TARGET_OVERLAP_DEVELOPMENT_ONLY 并停止；按严格 fresh contract 排除 source scenarios、全部旧 target scenarios 与重复 target 后，四个 source family 仅剩 0/3/1/1，共 5 个 executable fresh scenarios < 冻结 6-pair gate。触发 STOP_CURRENT_SUBSTRATE_FRESH_CINTERACTION_SUPPORT_INSUFFICIENT；不授权 B-3 方法 FAIL。",
+        "en": "B-3 synthetic matched-cost screening produced a pathway signal, but the real fresh-reality substrate lacks support. Five of six targets in the first v1 run overlapped prior Memory full-support target scenarios, so that run was marked INVALID_TARGET_OVERLAP_DEVELOPMENT_ONLY and stopped. Under the strict fresh contract excluding source scenarios, all prior target scenarios, and duplicate targets, the four source families expose only 0/3/1/1 = 5 executable fresh scenarios, below the frozen six-pair gate. STOP_CURRENT_SUBSTRATE_FRESH_CINTERACTION_SUPPORT_INSUFFICIENT fires; a B-3 method failure is not authorized."
       },
       "p0_screening_decision": "SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED",
       "p0_entry": {
         "date": "2026-08-11",
         "basis": "p0-admission-contract-frozen",
         "execution_authorized": false
-      }
+      },
+      "p0_decision": "STOP_CURRENT_SUBSTRATE_FRESH_CINTERACTION_SUPPORT_INSUFFICIENT"
     },
     "causally-verified-experience-admission": {
       "code": "B-4",
@@ -691,7 +702,12 @@
         "date": "2026-08-11",
         "basis": "p0-admission-contract-frozen",
         "execution_authorized": false
-      }
+      },
+      "current_fact": {
+        "zh": "E-1 当前 frozen paired edit-effect source table 触发 ranking-substrate STOP：16 个 workflows×5 edits 中仅 4/16 有任何正 edit，只有 3 个 workflow 的 edit delta 可唯一排序，effective fraction=25%。因此 STOP_CURRENT_EDIT_TABLE_RANKING_DEGENERATE；hidden workflows 未打开，Paired Edit-Effect Workflow Update Policy 方法本体未判。",
+        "en": "The current E-1 frozen paired edit-effect source table fires a ranking-substrate STOP: among 16 workflows x 5 edits, only 4/16 have any positive edit and only 3 workflows have uniquely rankable edit deltas, for an effective fraction of 25%. Therefore STOP_CURRENT_EDIT_TABLE_RANKING_DEGENERATE fires; hidden workflows were never opened and the Paired Edit-Effect Workflow Update Policy itself is not adjudicated."
+      },
+      "p0_decision": "STOP_CURRENT_EDIT_TABLE_RANKING_DEGENERATE"
     },
     "workflow-branch-credit": {
       "code": "E-2",

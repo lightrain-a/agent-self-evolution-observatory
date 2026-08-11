@@ -28,6 +28,8 @@ class P0OfflineQualificationTest(unittest.TestCase):
     def test_a3_and_e1_failures_are_not_overridden_by_synthetic_harnesses(self) -> None:
         by_id={row["idea_id"]:row for row in self.state["cards"]}
         self.assertEqual(by_id["regression-gated-self-evolution"]["checks"]["representability"]["status"],"fail")
+        self.assertEqual(by_id["regression-gated-self-evolution"]["gpu0"]["status"],"stop-current-substrate-updater-incompetent")
+        self.assertFalse(by_id["regression-gated-self-evolution"]["substrate_stop"]["method_failure_authorized"])
         self.assertEqual(by_id["workflow-generalization-certificate"]["checks"]["target_variation"]["status"],"fail")
         self.assertEqual(by_id["workflow-generalization-certificate"]["checks"]["effect_variation"]["status"],"fail")
         self.assertEqual(by_id["compositional-update-compatibility"]["gpu0"]["status"],"stop-direct-order-aware-risk-equivalent")
@@ -53,7 +55,10 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(by_id["local-counterexample-memory-repair"]["checks"]["baseline_disagreement"]["status"],"fail")
         self.assertEqual(by_id["memory-half-life"]["gpu0"]["status"],"stop-recency-frequency-policy-dominates")
         self.assertEqual(by_id["memory-half-life"]["checks"]["baseline_disagreement"]["status"],"fail")
-        self.assertEqual(self.state["summary"]["gpu0_stop"],12)
+        self.assertEqual(by_id["contradiction-preserving-consolidation"]["gpu0"]["status"],"stop-current-substrate-conclusion-change-support-insufficient")
+        self.assertEqual(by_id["retrieval-interference-auditor"]["gpu0"]["status"],"stop-current-substrate-fresh-cinteraction-support-insufficient")
+        self.assertEqual(by_id["workflow-generalization-certificate"]["gpu0"]["status"],"stop-current-edit-table-ranking-degenerate")
+        self.assertEqual(self.state["summary"]["gpu0_stop"],16)
 
     def test_reused_artifacts_capture_current_blockers(self) -> None:
         shared=self.state["shared_evidence"]
@@ -76,21 +81,20 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertAlmostEqual(shared["updater_competence"]["a2"]["evidence"]["nonzero_update_effect_fraction"],7/36)
         self.assertEqual(shared["a7_counterfactual_cpu"]["decision"],"STOP_MATCHED_SHALLOW_RULE_EQUIVALENT")
         self.assertEqual(shared["b3_interference_cpu"]["decision"],"SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED")
-        self.assertEqual(shared["b3_interference_cpu"]["runtime_preflight_snapshot"]["decision"],"HOLD_RUNTIME_ENVIRONMENT_DRIFT")
+        self.assertEqual(shared["b3_interference_cpu"]["runtime_preflight_snapshot"]["decision"],"RUNTIME_RESOLVED")
+        self.assertTrue(shared["b3_interference_cpu"]["runtime_preflight_snapshot"]["one_step_qwen_alfworld_smoke_pass"])
+        self.assertEqual(shared["a3_substrate_stop"]["decision"],"STOP_CURRENT_SUBSTRATE_UPDATER_INCOMPETENT")
+        self.assertEqual(shared["b2_support_stop"]["decision"],"STOP_CURRENT_SUBSTRATE_CONCLUSION_CHANGE_SUPPORT_INSUFFICIENT")
+        self.assertEqual(shared["b3_fresh_support_stop"]["decision"],"STOP_CURRENT_SUBSTRATE_FRESH_CINTERACTION_SUPPORT_INSUFFICIENT")
+        self.assertEqual(shared["b3_fresh_support_stop"]["available"],5)
+        self.assertEqual(shared["e1_edit_table_stop"]["decision"],"STOP_CURRENT_EDIT_TABLE_RANKING_DEGENERATE")
         self.assertEqual(shared["b5_applicability_cpu"]["decision"],"STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT")
         self.assertEqual(shared["b6_memory_utility_cpu"]["decision"],"STOP_RECENCY_FREQUENCY_POLICY_DOMINATES")
 
     def test_exact_data_deficits_are_explicit_holds(self) -> None:
         by_id={row["idea_id"]:row for row in self.state["cards"]}
-        expected={
-            "regression-gated-self-evolution":"hold",
-            "contradiction-preserving-consolidation":"hold-support-cardinality-insufficient",
-            "retrieval-interference-auditor":"hold-real-cinteraction-runtime",
-            "workflow-generalization-certificate":"hold",
-        }
-        for idea_id,status in expected.items():
-            self.assertEqual(by_id[idea_id]["gpu0"]["status"],status,idea_id)
-        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],4)
+        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],0)
+        self.assertTrue(all(str(row["gpu0"]["status"]).startswith("stop") for row in self.state["cards"]))
 
 
 if __name__=="__main__":

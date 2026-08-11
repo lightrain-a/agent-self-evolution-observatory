@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-11T11:39:19+00:00",
+  "idea_id": "regression-gated-self-evolution",
+  "code": "A-3",
+  "scientific_scope": "current Qwen2.5-7B-Instruct + ALFWorld persistent-prompt-patch P0 substrate only",
+  "updater_competence": {
+    "passed": false,
+    "candidate_count": 8,
+    "positive_target_gain_candidates": 1,
+    "effective_candidate_fraction": 0.125,
+    "required_positive_target_gain_candidates": 8,
+    "required_effective_candidate_fraction": 0.4,
+    "authorization_effect": "block-only"
+  },
+  "mastered_panel": {
+    "passed": true,
+    "panel_size": 6,
+    "mastered_candidates": 41,
+    "task_family_coverage": 5
+  },
+  "legacy_probe_fidelity": {
+    "aggregate_panel_loo_auc": 0.36666666666666664,
+    "best_single_probe_auc": 0.5416666666666666,
+    "minimum_required_auc": 0.65,
+    "passed": false,
+    "role": "supporting negative evidence only; not the final A-3 marginal-probe-value test"
+  },
+  "fresh_final_a3_test": {
+    "execution_authorized": false,
+    "blocked_by": [
+      "updater-competence",
+      "fresh-candidate-batch-not-collected"
+    ],
+    "fresh_candidate_validation_required": true,
+    "fresh_outputs_present": false,
+    "hidden_original_opened": false,
+    "method_result_available": false
+  },
+  "decision": "STOP_CURRENT_SUBSTRATE_UPDATER_INCOMPETENT",
+  "current_substrate_stop_authorized": true,
+  "method_failure_authorized": false,
+  "exact_method_stop_fired": false,
+  "interpretation": "The current prompt-patch updater fails a block-only competence prerequisite, so fresh A-3 collection is forbidden. The final marginal-probe-value versus hidden-original-fidelity claim was never legally tested and must not be called a method failure.",
+  "next_action": "Stop GPU work on this prompt-patch P0 instance. Reopen A-3 only with a newly qualified update substrate/action stream and a newly frozen fresh-candidate validation; otherwise send the direction to human pivot/drop review."
+}

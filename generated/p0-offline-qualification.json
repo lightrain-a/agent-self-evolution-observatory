@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T10:34:21+00:00",
+  "generated_at": "2026-08-11T11:39:22+00:00",
   "experiment_root": "profile-resolved-machine-local",
   "policy": {
     "real_reused_may_unblock": true,
@@ -138,6 +138,36 @@
         "discovery": 2
       },
       "identifiable": false
+    },
+    "a3_substrate_stop": {
+      "decision": "STOP_CURRENT_SUBSTRATE_UPDATER_INCOMPETENT",
+      "updater_competence": {
+        "passed": false,
+        "candidate_count": 8,
+        "positive_target_gain_candidates": 1,
+        "effective_candidate_fraction": 0.125,
+        "required_positive_target_gain_candidates": 8,
+        "required_effective_candidate_fraction": 0.4,
+        "authorization_effect": "block-only"
+      },
+      "mastered_panel": {
+        "passed": true,
+        "panel_size": 6,
+        "mastered_candidates": 41,
+        "task_family_coverage": 5
+      },
+      "fresh_final_a3_test": {
+        "execution_authorized": false,
+        "blocked_by": [
+          "updater-competence",
+          "fresh-candidate-batch-not-collected"
+        ],
+        "fresh_candidate_validation_required": true,
+        "fresh_outputs_present": false,
+        "hidden_original_opened": false,
+        "method_result_available": false
+      },
+      "method_failure_authorized": false
     },
     "a4_composition_cpu": {
       "decision": "STOP_DIRECT_ORDER_AWARE_RISK_EQUIVALENT",
@@ -690,6 +720,17 @@
         ]
       }
     },
+    "b2_support_stop": {
+      "decision": "STOP_CURRENT_SUBSTRATE_CONCLUSION_CHANGE_SUPPORT_INSUFFICIENT",
+      "frozen_support_gate": {
+        "required_reproducible_conclusion_change_cases": 30,
+        "current_controlled_nonzero_memory_effects": 11,
+        "current_full_units": 72,
+        "dedicated_conclusion_change_deletion_cases_available": 0,
+        "gate_pass": false
+      },
+      "method_failure_authorized": false
+    },
     "b3_interference_cpu": {
       "decision": "SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED",
       "metrics": {
@@ -706,14 +747,52 @@
       },
       "runtime_preflight_snapshot": {
         "measured_on": "2026-08-11",
-        "server": "60",
-        "gpu_state": "3x RTX3090-class idle",
-        "registered_profile_runtime": "FAIL: adapter importable but ALFWorld package missing",
-        "legacy_runtime_overlay": "FAIL: Python 3.8 interpreter mixed with Python>=3.9/3.12 TextWorld/Numpy packages",
-        "python313_base": "FAIL: Torch present but Transformers stack absent",
+        "server": "69",
+        "runtime": "PASS: /home/wyt/vlm_env Python 3.12 + /data/wyt/envs/agent_evolution_p0_site; Torch/Transformers/ALFWorld/TextWorld import together",
+        "one_step_qwen_alfworld_smoke_pass": true,
         "installation_or_environment_mutation_attempted": false,
-        "decision": "HOLD_RUNTIME_ENVIRONMENT_DRIFT"
+        "decision": "RUNTIME_RESOLVED"
       }
+    },
+    "b3_fresh_support_stop": {
+      "decision": "STOP_CURRENT_SUBSTRATE_FRESH_CINTERACTION_SUPPORT_INSUFFICIENT",
+      "required": 6,
+      "available": 5,
+      "family_support": {
+        "pick_and_place_simple": {
+          "all": 8,
+          "fresh": 0,
+          "fresh_scenarios": []
+        },
+        "pick_clean_then_place_in_recep": {
+          "all": 11,
+          "fresh": 3,
+          "fresh_scenarios": [
+            "pick_clean_then_place_in_recep-Cloth-None-Cabinet-424",
+            "pick_clean_then_place_in_recep-Cloth-None-CounterTop-424",
+            "pick_clean_then_place_in_recep-Spatula-None-Drawer-10"
+          ]
+        },
+        "pick_cool_then_place_in_recep": {
+          "all": 7,
+          "fresh": 1,
+          "fresh_scenarios": [
+            "pick_cool_then_place_in_recep-Potato-None-Microwave-10"
+          ]
+        },
+        "pick_heat_then_place_in_recep": {
+          "all": 8,
+          "fresh": 1,
+          "fresh_scenarios": [
+            "pick_heat_then_place_in_recep-Potato-None-GarbageCan-10"
+          ]
+        }
+      }
+    },
+    "b3_real_cinteraction": {
+      "status": "invalid-development",
+      "plan_hash": "d7296fc806244a085bb1c4e9bc85151ba1ac11b21f28a3ff91dbe92ecca04159",
+      "decision": null
     },
     "b5_applicability_cpu": {
       "decision": "STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT",
@@ -801,6 +880,18 @@
         "equivalent": true,
         "avoided_extra_verifier_calls": 320
       }
+    },
+    "e1_edit_table_stop": {
+      "decision": "STOP_CURRENT_EDIT_TABLE_RANKING_DEGENERATE",
+      "source_table": {
+        "workflows": 16,
+        "edits_per_workflow": 5,
+        "effective_workflows": 4,
+        "uniquely_ranked_workflows": 3,
+        "effective_fraction": 0.25,
+        "identifiable": false
+      },
+      "method_failure_authorized": false
     },
     "b10": {
       "decision": "STOP_MATCHED_NARY_EQUIVALENT",
@@ -897,18 +988,18 @@
     "checks_failed": 15,
     "checks_pending": 17,
     "checks_synthetic_pass": 14,
-    "gpu0_hold_or_conditional": 4,
-    "gpu0_stop": 12
+    "gpu0_hold_or_conditional": 0,
+    "gpu0_stop": 16
   },
   "cards": [
     {
       "idea_id": "regression-gated-self-evolution",
       "gpu0": {
-        "status": "hold",
-        "evidence": "Update-harm phenomenon exists, but the current probe representation is not faithful enough for the predictive regression panel.",
-        "source": "pre-experiment-a1-screening-review-20260810.json",
-        "evidence_kind": "real-reused",
-        "next": "Repair updater/action-stream competence, then collect a fresh ALFWorld candidate batch and replay the frozen 6-task mastered panel."
+        "status": "stop-current-substrate-updater-incompetent",
+        "evidence": "Current prompt-patch substrate fails the block-only updater gate: 1/8 positive target-gain candidates and effective fraction 0.125 < required 0.400. Fresh A-3 collection is forbidden.",
+        "source": "generated/p0-a3-substrate-stop.json",
+        "evidence_kind": "real-substrate-stop",
+        "next": "Stop GPU work on this prompt-patch P0 instance. Reopen A-3 only with a newly qualified update substrate/action stream and a newly frozen fresh-candidate validation; otherwise send the direction to human pivot/drop review."
       },
       "checks": {
         "target_variation": {
@@ -962,6 +1053,12 @@
         "reason": "Prompt-patch updater action space is degenerate; downstream admission learning is blocked. This does not reject Persistent Update Governance.",
         "source": "research_pipeline/p0_a1_screening_config.json",
         "evidence_kind": "real-reused"
+      },
+      "substrate_stop": {
+        "method_failure_authorized": false,
+        "exact_method_stop_fired": false,
+        "hidden_original_opened": false,
+        "fresh_final_test_available": false
       }
     },
     {
@@ -1085,11 +1182,11 @@
     {
       "idea_id": "contradiction-preserving-consolidation",
       "gpu0": {
-        "status": "hold-support-cardinality-insufficient",
-        "evidence": "The completed shared Memory table contains only 11 controlled-nonzero unit effects. These are not automatically conclusion-change cases and cannot satisfy the dedicated >=30 reproducible conclusion-change gate.",
-        "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-enriched-analysis/offline_decision.json",
-        "evidence_kind": "real-reused",
-        "next": "Build >=30 reproducible conclusion-change deletion cases and matched NLI/utility selection sets before hidden evaluation."
+        "status": "stop-current-substrate-conclusion-change-support-insufficient",
+        "evidence": "Current shared-memory evidence cannot satisfy the frozen B-2 support gate: 11 controlled-nonzero memory effects < 30 required reproducible conclusion-change deletion cases, with 0 dedicated deletion cases available.",
+        "source": "generated/p0-b2-support-stop.json",
+        "evidence_kind": "real-substrate-stop",
+        "next": "Do not open hidden E_orig or train a B-2 selector on this table. Reopen only with a fresh dedicated deletion-sensitivity collection that independently supplies >=30 reproducible conclusion-change cases; otherwise send B-2 to human pivot/drop review."
       },
       "checks": {
         "target_variation": {
@@ -1134,16 +1231,21 @@
         "passed": false,
         "evidence_kind": "pending",
         "reason": "mechanism-specific updater/action-stream competence has not been qualified"
+      },
+      "substrate_stop": {
+        "method_failure_authorized": false,
+        "exact_method_stop_fired": false,
+        "dedicated_conclusion_change_cases": 0
       }
     },
     {
       "idea_id": "retrieval-interference-auditor",
       "gpu0": {
-        "status": "hold-real-cinteraction-runtime",
-        "evidence": "Synthetic matched-cost screening is positive: pathway and simple baselines both use 96 audit calls and have 0 future harm, while retained benefit is 54 vs 18. This does not establish real co-retrieval interference. Real ALFWorld launch is blocked by runtime environment drift, not GPU capacity.",
-        "source": "generated/p0-b3-interference-cpu.json",
-        "evidence_kind": "synthetic-screening-plus-runtime-audit",
-        "next": "Collect a small real ALFWorld co-retrieval factorial block; freeze retrieval/content/rank/co-retrieval arms and compare the same matched baseline before any learned repair."
+        "status": "stop-current-substrate-fresh-cinteraction-support-insufficient",
+        "evidence": "After excluding all source-memory scenarios, all previously observed full-support target scenarios, and duplicate targets, ALFWorld exposes only 5 unique fresh pair-target scenarios < frozen requirement 6.",
+        "source": "generated/p0-b3-fresh-support-stop.json",
+        "evidence_kind": "real-substrate-support-stop",
+        "next": "Stop the current ALFWorld B-3 instance and send it to human pivot/drop review; reopen only on a fresh co-retrieval substrate with at least six independent unseen pair-target units."
       },
       "checks": {
         "target_variation": {
@@ -1192,8 +1294,42 @@
       "screening_signal": {
         "status": "pass",
         "real_method_authority": false,
-        "runtime_decision": "HOLD_RUNTIME_ENVIRONMENT_DRIFT",
+        "runtime_decision": "RUNTIME_RESOLVED",
         "relative_net_utility_gain": 2.0
+      },
+      "substrate_stop": {
+        "method_failure_authorized": false,
+        "invalid_development_run": "p0-b3-real-cinteraction-qwen-v1",
+        "family_support": {
+          "pick_and_place_simple": {
+            "all": 8,
+            "fresh": 0,
+            "fresh_scenarios": []
+          },
+          "pick_clean_then_place_in_recep": {
+            "all": 11,
+            "fresh": 3,
+            "fresh_scenarios": [
+              "pick_clean_then_place_in_recep-Cloth-None-Cabinet-424",
+              "pick_clean_then_place_in_recep-Cloth-None-CounterTop-424",
+              "pick_clean_then_place_in_recep-Spatula-None-Drawer-10"
+            ]
+          },
+          "pick_cool_then_place_in_recep": {
+            "all": 7,
+            "fresh": 1,
+            "fresh_scenarios": [
+              "pick_cool_then_place_in_recep-Potato-None-Microwave-10"
+            ]
+          },
+          "pick_heat_then_place_in_recep": {
+            "all": 8,
+            "fresh": 1,
+            "fresh_scenarios": [
+              "pick_heat_then_place_in_recep-Potato-None-GarbageCan-10"
+            ]
+          }
+        }
       }
     },
     {
@@ -1423,11 +1559,11 @@
     {
       "idea_id": "workflow-generalization-certificate",
       "gpu0": {
-        "status": "hold",
-        "evidence": "Do not open hidden workflows. Rebuild a paired edit-effect table with genuine within-workflow edit variation first.",
-        "source": "runs/round1-20260810/e1-r5/evaluations.jsonl",
-        "evidence_kind": "real-reused",
-        "next": "Rebuild the source paired edit-effect table until within-workflow edit deltas are genuinely non-tied; keep hidden workflows sealed."
+        "status": "stop-current-edit-table-ranking-degenerate",
+        "evidence": "Current paired edit-effect table is non-identifiable: 4/16 workflows have positive edit effects and only 3 have non-tied edit deltas; effective fraction=0.250.",
+        "source": "generated/p0-e1-edit-table-stop.json",
+        "evidence_kind": "real-substrate-stop",
+        "next": "Do not open hidden workflows or train the E-1 ranker on this table. Reopen only after a newly frozen paired intervention table has genuine non-tied edit effects at the preregistered source gate; otherwise send E-1 to human pivot/drop review."
       },
       "checks": {
         "target_variation": {
@@ -1472,6 +1608,11 @@
         "passed": false,
         "evidence_kind": "pending",
         "reason": "mechanism-specific updater/action-stream competence has not been qualified"
+      },
+      "substrate_stop": {
+        "method_failure_authorized": false,
+        "exact_method_stop_fired": false,
+        "hidden_workflows_opened": false
       }
     },
     {
