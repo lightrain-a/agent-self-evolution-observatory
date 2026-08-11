@@ -16,6 +16,7 @@ from .cvpr_idea_factory import write_cvpr_idea_bank
 from .discussion_portfolio import write_discussion_portfolio
 from .human_terminal_state import write_human_terminal_state
 from .p0_admission import write_p0_admission_state
+from .p0_b10_cpu import write_b10_cpu_p0
 from .p0_offline_qualification import write_p0_offline_qualification_state
 from .p0_realizability_suite import write_p0_realizability_suite
 from .iclr_experiment_audit import write_audit as write_iclr_audit
@@ -96,6 +97,7 @@ def run_cycle(
             report["steps"].append(_step("published-visual-audit", write_published_audit))
         report["steps"].append(_step("human-terminal-idea-state", write_human_terminal_state))
         report["steps"].append(_step("p0-realizability-suite", write_p0_realizability_suite))
+        report["steps"].append(_step("p0-b10-cpu", write_b10_cpu_p0))
         report["steps"].append(_step("p0-offline-qualification", write_p0_offline_qualification_state))
         report["steps"].append(_step("p0-admission-state", write_p0_admission_state))
         report["steps"].append(_step("research-system-state", write_research_system_state))
@@ -113,6 +115,7 @@ def run_cycle(
         # only if normalized content has changed.
         write_human_terminal_state()
         write_p0_realizability_suite()
+        write_b10_cpu_p0()
         write_p0_offline_qualification_state()
         write_p0_admission_state()
         write_research_system_state()

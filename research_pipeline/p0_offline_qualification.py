@@ -8,6 +8,7 @@ from typing import Any
 from .config import PROJECT_ROOT, StorageSettings, resolve_experiment_data_root
 from .p0_offline_evidence import alfworld, a1, a2, a3_panel, a67_dataset, memory, e1
 from .p0_realizability_suite import build_p0_realizability_suite
+from .p0_b10_cpu import run_b10_cpu_p0
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "p0-offline-qualification.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "p0-offline-qualification.js"
@@ -92,6 +93,15 @@ def _apply_e1(card: dict[str, Any], ev: dict[str, Any]) -> None:
     c["effect_variation"]=_ck("fail",f"Effective workflow fraction={ev['effective_fraction']:.3f}; current paired table cannot identify a best-edit ranking policy.",ev["source"])
     card["gpu0"]={"status":"hold","evidence":"Do not open hidden workflows. Rebuild a paired edit-effect table with genuine within-workflow edit variation first.","source":ev["source"],"evidence_kind":"real-reused"}
 
+def _apply_b10(card: dict[str, Any], result: dict[str, Any]) -> None:
+    if card["idea_id"]!="constraint-complete-typed-memory-order-logic": return
+    if result.get("decision")!="STOP_MATCHED_NARY_EQUIVALENT": return
+    m=result.get("metrics") or {}
+    card["checks"]["target_variation"]=_ck("pass","32 binding held-out type combinations contain legal and violating orderings under exhaustive programmatic truth.","generated/p0-b10-cpu.json","cpu-p0-falsifier")
+    card["checks"]["baseline_disagreement"]=_ck("fail",f"Matched typed n-ary factor ties symbolic exact ({m.get('factor_exact_accuracy',0):.3f} vs {m.get('symbolic_exact_accuracy',0):.3f}) and compiled accuracy at the same active-edge budget ({m.get('factor_budgeted_compiled_accuracy',0):.3f} vs {m.get('symbolic_compiled_accuracy',0):.3f}).","generated/p0-b10-cpu.json","cpu-p0-falsifier")
+    card["gpu0"]={"status":"stop-matched-nary-equivalent","evidence":"CPU P0 fired the preregistered matched-simplification stop; no GPU or real-agent expansion is warranted for standalone B-10.","source":"generated/p0-b10-cpu.json","evidence_kind":"cpu-p0-falsifier","next":result.get("next_action")}
+
+
 def _apply_d1(card: dict[str, Any], aw: dict[str, Any]) -> None:
     if card["idea_id"]!="counterexample-generating-curriculum" or not aw["passed"]: return
     card["checks"]["target_variation"]=_ck("pass",f"Base OOD set contains both successes ({aw['successes']}) and failures ({aw['total']-aw['successes']}); boundary candidates can exist.",aw["source"])
@@ -102,17 +112,18 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
     aw,aa1,aa2,a3p,a67,mem,we1=alfworld(root),a1(root),a2(root),a3_panel(root),a67_dataset(root),memory(root),e1(root)
     up_a1=_updater_config("p0_a1_screening_config.json"); up_a2=_updater_config("p0_a2_screening_config.json")
     realizability=build_p0_realizability_suite(); realizability_by_id={row["idea_id"]:row for row in realizability.get("rows") or []}
+    b10=run_b10_cpu_p0()
     cards=[]
     for idea in NEW_IDS:
         card=_base_card(idea,aw)
         card["updater_competence"]={"status":"pending","passed":False,"evidence_kind":"pending","reason":"mechanism-specific updater/action-stream competence has not been qualified"}
         if idea=="regression-gated-self-evolution": card["updater_competence"]={**up_a1,"evidence_kind":"real-reused"}
         elif idea in {"lineage-aware-rollback","active-causal-minimal-rollback","counterfactual-evolution-decision-controller"}: card["updater_competence"]={**up_a2,"evidence_kind":"real-reused"}
-        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_d1(card,aw)
+        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_b10(card,b10); _apply_d1(card,aw)
         synthetic=realizability_by_id.get(idea)
         if synthetic and synthetic.get("representability_pass") and card["checks"]["representability"]["status"]=="pending":
             card["checks"]["representability"]=_ck("synthetic-pass","Synthetic mechanism harness passed; this clears representability only and has no reality/method authority.","generated/p0-realizability-suite.json","synthetic-realizability-only")
-        card["gpu0"]["next"] = NEXT_ACTION[idea]
+        card["gpu0"].setdefault("next", NEXT_ACTION[idea])
         cards.append(card)
     summary={
         "ideas":len(cards),
@@ -121,10 +132,11 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
         "checks_pending":sum(v["status"]=="pending" for c in cards for v in c["checks"].values()),
         "checks_synthetic_pass":sum(v["status"]=="synthetic-pass" for c in cards for v in c["checks"].values()),
         "gpu0_hold_or_conditional":sum(c["gpu0"]["status"] in {"hold","conditional","partial-pass"} for c in cards),
+        "gpu0_stop":sum(str(c["gpu0"]["status"]).startswith("stop") for c in cards),
     }
     return {"schema_version":"1.0","generated_at":_now(),"experiment_root":"profile-resolved-machine-local",
         "policy":{"real_reused_may_unblock":True,"synthetic_harness_may_not_unblock_reality":True,"same_batch_self_authorization_forbidden":True,"method_result_from_offline_qualification_forbidden":True},
-        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"e1":we1,"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
+        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"e1":we1,"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
 
 def write_p0_offline_qualification_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS)->dict[str,Any]:
     state=build_p0_offline_qualification_state(); json_path.parent.mkdir(parents=True,exist_ok=True)

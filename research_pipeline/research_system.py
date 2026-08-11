@@ -24,6 +24,7 @@ from .live_pipeline import load_live_corpus
 from .pilot_registry import build_pilot_registry
 from .p0_mem_xfer_offline_analysis import build_mem_xfer_workflow_state
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
+from .p0_b10_cpu import write_b10_cpu_p0
 from .p0_offline_qualification import build_p0_offline_qualification_state, write_p0_offline_qualification_state
 from .p0_realizability_suite import build_p0_realizability_suite, write_p0_realizability_suite
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
@@ -254,6 +255,7 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_offline_checks_failed":p0_offline_qualification["summary"]["checks_failed"],
             "p0_offline_checks_pending":p0_offline_qualification["summary"]["checks_pending"],
             "p0_realizability_passed":p0_realizability["summary"]["synthetic_pass"],
+            "p0_b10_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("b10",{}).get("decision"),
             "solution_children":idea_discovery_v3["summary"]["raw_children"],
             "solution_shortlist":idea_discovery_v3["summary"]["internal_shortlist"],
             "pre_gpu_candidates":pre_gpu_candidate_gates["summary"]["total"],
@@ -371,6 +373,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
 def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAULT_JS) -> dict[str, Any]:
     write_human_terminal_state()
     write_p0_realizability_suite()
+    write_b10_cpu_p0()
     write_p0_offline_qualification_state()
     write_p0_admission_state()
     state=build_research_system_state()

@@ -152,10 +152,13 @@ def _preflight(idea_id: str, offline: dict[str, Any] | None = None) -> dict[str,
     blockers=[] if running else []
     if not running:
         gpu0_status=str(gpu0.get("phenomenon") or gpu0.get("status") or "pending")
-        if gpu0_status not in {"pass","pass-existing-artifact","pass-existing-target"}: blockers.append("gpu0-phenomenon")
-        blockers.append("pre-p0-empirical-checks")
-        if not updater.get("passed"): blockers.append("updater-competence")
-        blockers += ["outer-identifiability/competence/throughput","runtime-smoke"]
+        if gpu0_status.startswith("stop"):
+            blockers=["p0-stop-await-human-review"]
+        else:
+            if gpu0_status not in {"pass","pass-existing-artifact","pass-existing-target"}: blockers.append("gpu0-phenomenon")
+            blockers.append("pre-p0-empirical-checks")
+            if not updater.get("passed"): blockers.append("updater-competence")
+            blockers += ["outer-identifiability/competence/throughput","runtime-smoke"]
     return {
       "gpu0":gpu0,
       "pre_p0":{"passed":sum(x["status"]=="pass" for x in pre),"total":len(pre),"checks":pre},

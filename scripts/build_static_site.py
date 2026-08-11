@@ -129,6 +129,7 @@ def build() -> Path:
         OUTPUT / "generated" / "p0-admission-state.js",
         OUTPUT / "generated" / "p0-offline-qualification.js",
         OUTPUT / "generated" / "p0-realizability-suite.js",
+        OUTPUT / "generated" / "p0-b10-cpu.js",
         OUTPUT / "generated" / "discussion-ready-ideas.js",
         OUTPUT / "generated" / "current-final-ideas.js",
         OUTPUT / "generated" / "final-collision-recheck.js",

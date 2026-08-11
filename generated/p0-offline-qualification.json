@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T05:44:59+00:00",
+  "generated_at": "2026-08-11T06:05:33+00:00",
   "experiment_root": "profile-resolved-machine-local",
   "policy": {
     "real_reused_may_unblock": true,
@@ -118,6 +118,33 @@
       },
       "identifiable": false
     },
+    "b10": {
+      "decision": "STOP_MATCHED_NARY_EQUIVALENT",
+      "metrics": {
+        "symbolic_exact_accuracy": 1.0,
+        "factor_exact_accuracy": 1.0,
+        "symbolic_compiled_accuracy": 1.0,
+        "factor_compiled_accuracy": 1.0,
+        "factor_budgeted_compiled_accuracy": 1.0,
+        "symbolic_only_wins": 0,
+        "factor_only_wins": 0,
+        "paired_sign_p": 1.0,
+        "symbolic_representation_advantage": 0.0,
+        "symbolic_exact_candidates_mean": 39.0,
+        "symbolic_compiled_edge_checks_mean": 1.125,
+        "factor_exact_candidates_mean": 39.0,
+        "factor_compiled_edge_checks_mean": 6.625,
+        "factor_budgeted_edge_checks_mean": 1.125
+      },
+      "gates": {
+        "representation_advantage_required": 0.1,
+        "paired_p_required": 0.05,
+        "representation_claim_pass": false,
+        "compiled_noninferior_and_cheaper": true,
+        "matched_factor_compiled_matches": false,
+        "matched_edge_budget_factor_matches": true
+      }
+    },
     "realizability_summary": {
       "audited": 14,
       "synthetic_pass": 14,
@@ -126,11 +153,12 @@
   },
   "summary": {
     "ideas": 16,
-    "checks_passed": 26,
-    "checks_failed": 3,
-    "checks_pending": 53,
+    "checks_passed": 27,
+    "checks_failed": 4,
+    "checks_pending": 51,
     "checks_synthetic_pass": 14,
-    "gpu0_hold_or_conditional": 8
+    "gpu0_hold_or_conditional": 8,
+    "gpu0_stop": 1
   },
   "cards": [
     {
@@ -851,23 +879,24 @@
     {
       "idea_id": "constraint-complete-typed-memory-order-logic",
       "gpu0": {
-        "status": "pending",
-        "evidence": "Run the frozen mechanism-specific offline/trace phenomenon gate.",
-        "evidence_kind": "pending",
-        "next": "Run the CPU 2×2 representation×decoder P0 on >=32 hidden type combinations with exhaustive ordering truth."
+        "status": "stop-matched-nary-equivalent",
+        "evidence": "CPU P0 fired the preregistered matched-simplification stop; no GPU or real-agent expansion is warranted for standalone B-10.",
+        "source": "generated/p0-b10-cpu.json",
+        "evidence_kind": "cpu-p0-falsifier",
+        "next": "Stop standalone B-10 and do not spend GPU; retain this P0 as the matched-simplification falsifier and return the drop/merge decision to human review."
       },
       "checks": {
         "target_variation": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "32 binding held-out type combinations contain legal and violating orderings under exhaustive programmatic truth.",
+          "source": "generated/p0-b10-cpu.json",
+          "evidence_kind": "cpu-p0-falsifier"
         },
         "baseline_disagreement": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "fail",
+          "evidence": "Matched typed n-ary factor ties symbolic exact (1.000 vs 1.000) and compiled accuracy at the same active-edge budget (1.000 vs 1.000).",
+          "source": "generated/p0-b10-cpu.json",
+          "evidence_kind": "cpu-p0-falsifier"
         },
         "representability": {
           "status": "synthetic-pass",

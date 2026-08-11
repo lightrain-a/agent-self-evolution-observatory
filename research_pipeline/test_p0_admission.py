@@ -34,6 +34,9 @@ class P0AdmissionTest(unittest.TestCase):
         self.assertEqual(len(transitioned), 16)
         self.assertTrue(all(not row["execution_preflight"]["execution_authorized"] for row in transitioned))
         self.assertTrue(all(row["setup"]["max_gpus"] == 1 and row["setup"]["gpu_hours_cap"] <= 12 for row in transitioned))
+        b10=next(row for row in transitioned if row["idea_id"]=="constraint-complete-typed-memory-order-logic")
+        self.assertEqual(b10["execution_preflight"]["blockers"],["p0-stop-await-human-review"])
+        self.assertEqual(b10["execution_preflight"]["gpu0"]["status"],"stop-matched-nary-equivalent")
 
 
 if __name__ == "__main__":

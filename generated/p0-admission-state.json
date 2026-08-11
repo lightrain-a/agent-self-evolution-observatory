@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T05:44:59+00:00",
+  "generated_at": "2026-08-11T06:05:35+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
@@ -1577,13 +1577,14 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "pending",
-          "evidence": "Run the frozen mechanism-specific offline/trace phenomenon gate.",
-          "evidence_kind": "pending",
-          "next": "Run the CPU 2×2 representation×decoder P0 on >=32 hidden type combinations with exhaustive ordering truth."
+          "status": "stop-matched-nary-equivalent",
+          "evidence": "CPU P0 fired the preregistered matched-simplification stop; no GPU or real-agent expansion is warranted for standalone B-10.",
+          "source": "generated/p0-b10-cpu.json",
+          "evidence_kind": "cpu-p0-falsifier",
+          "next": "Stop standalone B-10 and do not spend GPU; retain this P0 as the matched-simplification falsifier and return the drop/merge decision to human review."
         },
         "pre_p0": {
-          "passed": 5,
+          "passed": 6,
           "total": 10,
           "checks": [
             {
@@ -1593,13 +1594,13 @@
             },
             {
               "key": "target_variation",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "pass",
+              "evidence": "32 binding held-out type combinations contain legal and violating orderings under exhaustive programmatic truth."
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "fail",
+              "evidence": "Matched typed n-ary factor ties symbolic exact (1.000 vs 1.000) and compiled accuracy at the same active-edge budget (1.000 vs 1.000)."
             },
             {
               "key": "representability",
@@ -1688,11 +1689,7 @@
         },
         "execution_authorized": false,
         "blockers": [
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
