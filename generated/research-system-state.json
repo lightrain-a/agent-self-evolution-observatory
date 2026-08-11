@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T06:25:07+00:00",
+  "generated_at": "2026-08-11T07:43:46+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "/data/wyt/agent-self-evolution-observatory/publish-persistent-governance-20260811-r3/generated/research-data",
@@ -50724,7 +50724,70 @@
         "second_model_authorized": false,
         "resolution": "Continue the unchanged frozen full-stage block; preserve this sequencing deviation in provenance."
       },
-      "scientific_authority": "provisional-only",
+      "provenance_replay": {
+        "schema_version": "1.0",
+        "artifact_kind": "full-support-environment-action-replay",
+        "source_raw_sha256": "45d9954a14f370936b5e1129f985130f4b9ef2b742e72a4c6e1e01bc068b1fbf",
+        "replayed_executions": 216,
+        "checks": {
+          "success_matches_216": {
+            "required": 216,
+            "actual": 216,
+            "pass": true
+          },
+          "step_matches_216": {
+            "required": 216,
+            "actual": 216,
+            "pass": true
+          },
+          "rows_with_nonadmissible_actions": {
+            "required": 0,
+            "actual": 0,
+            "pass": true
+          },
+          "unique_unit_arm_keys": {
+            "required": 216,
+            "actual": 216,
+            "pass": true
+          },
+          "placebo_token_gap_violations": {
+            "required": 0,
+            "actual": 0,
+            "pass": true
+          }
+        },
+        "decision": "PROVENANCE_REPLAY_PASS",
+        "paper_level_authority_from_replay_gate": true,
+        "method_failure_authorized": false,
+        "second_model_authorized": false
+      },
+      "provenance_regeneration": {
+        "schema_version": "1.0",
+        "artifact_kind": "full-support-nonzero-deterministic-regeneration",
+        "decision": "PROVENANCE_INCONCLUSIVE_EARLY_STOP",
+        "required_units": 11,
+        "attempted_units": 3,
+        "matched_units": 2,
+        "mismatched_units": 1,
+        "remaining_units_not_run": 8,
+        "gate_pass": false,
+        "paper_level_authority": false,
+        "method_failure_authorized": false,
+        "second_model_authorized": false,
+        "early_stop_reason": "Frozen recovery requires every original nonzero controlled-effect sign to match. The first sign mismatch makes PASS impossible; remaining units are not run to avoid non-informative GPU spend.",
+        "attempted_unit_ids": [
+          "se-m-pick_and_place_simple-1-u03",
+          "se-m-pick_clean_then_place_in_recep-1-u02",
+          "se-m-pick_clean_then_place_in_recep-1-u04"
+        ],
+        "first_mismatch": {
+          "unit_id": "se-m-pick_clean_then_place_in_recep-1-u04",
+          "original_controlled_delta": 1,
+          "regenerated_controlled_delta": 0,
+          "sign_match": false
+        }
+      },
+      "scientific_authority": "provenance-inconclusive",
       "authorized": true
     },
     "support_enriched_analysis": {

@@ -266,6 +266,32 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
     full_support_decision = _read_json(full_support_dir / "decision.json")
     full_support_provenance_deviation = _read_json(full_support_dir / "source-provenance-deviation.json")
     full_support_sequencing_deviation = _read_json(full_support_dir / "sequencing-deviation.json")
+    full_support_provenance_replay = _read_json(full_support_dir / "provenance-replay" / "action-replay-summary.json")
+    full_support_provenance_regeneration_raw = _read_json(full_support_dir / "provenance-regeneration" / "decision.json")
+    full_support_provenance_regeneration = None
+    if full_support_provenance_regeneration_raw:
+        mismatch = full_support_provenance_regeneration_raw.get("first_mismatch") or {}
+        full_support_provenance_regeneration = {
+            key: full_support_provenance_regeneration_raw.get(key)
+            for key in (
+                "schema_version", "artifact_kind", "decision", "required_units", "attempted_units",
+                "matched_units", "mismatched_units", "remaining_units_not_run", "gate_pass",
+                "paper_level_authority", "method_failure_authorized", "second_model_authorized",
+                "early_stop_reason", "attempted_unit_ids",
+            )
+        }
+        full_support_provenance_regeneration["first_mismatch"] = {
+            key: mismatch.get(key)
+            for key in ("unit_id", "original_controlled_delta", "regenerated_controlled_delta", "sign_match")
+        } if mismatch else None
+    if full_support_provenance_regeneration and str(full_support_provenance_regeneration.get("decision") or "").startswith("PROVENANCE_INCONCLUSIVE"):
+        full_support_scientific_authority = "provenance-inconclusive"
+    elif full_support_provenance_replay and full_support_provenance_replay.get("decision") == "PROVENANCE_REPLAY_PASS" and full_support_provenance_regeneration and full_support_provenance_regeneration.get("gate_pass") is True:
+        full_support_scientific_authority = "recovered-decision-authority"
+    elif full_support_provenance_deviation:
+        full_support_scientific_authority = "provisional-only"
+    else:
+        full_support_scientific_authority = "decision-authority" if full_support_decision else "incomplete"
     full_support_complete = bool(
         full_support_decision
         and full_support_decision.get("decision") == "FULL_SUPPORT_TABLE_COLLECTED"
@@ -306,7 +332,11 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
         except Exception as error:
             support_analysis_error = f"{type(error).__name__}: {error}"
     support_analysis_complete = bool(support_analysis_decision) and support_analysis_error is None
-    second_model_authorized = bool(support_analysis_complete and support_analysis_decision.get("second_model_authorized") is True)
+    second_model_authorized = bool(
+        support_analysis_complete
+        and support_analysis_decision.get("second_model_authorized") is True
+        and full_support_scientific_authority in {"decision-authority", "recovered-decision-authority"}
+    )
     second_model_status = "second_model_authorized" if second_model_authorized else "second_model_hold"
     return {
         "schema_version": "1.0",
@@ -340,7 +370,9 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             "decision": full_support_decision, "pre_gpu_audit": full_support_audit,
             "provenance_deviation": full_support_provenance_deviation,
             "sequencing_deviation": full_support_sequencing_deviation,
-            "scientific_authority": "provisional-only" if full_support_provenance_deviation else ("decision-authority" if full_support_decision else "incomplete"),
+            "provenance_replay": full_support_provenance_replay,
+            "provenance_regeneration": full_support_provenance_regeneration,
+            "scientific_authority": full_support_scientific_authority,
             "authorized": support_status == "support_qualification_pass" and bool(full_support_audit and full_support_audit.get("execution_ready") is True),
         },
         "support_enriched_analysis": {
