@@ -267,6 +267,7 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
     full_support_provenance_deviation = _read_json(full_support_dir / "source-provenance-deviation.json")
     full_support_sequencing_deviation = _read_json(full_support_dir / "sequencing-deviation.json")
     full_support_provenance_replay = _read_json(full_support_dir / "provenance-replay" / "action-replay-summary.json")
+    full_support_provenance_final = _read_json(full_support_dir / "provenance-recovery" / "final-decision.json")
     full_support_provenance_regeneration_raw = _read_json(full_support_dir / "provenance-regeneration" / "decision.json")
     full_support_provenance_regeneration = None
     if full_support_provenance_regeneration_raw:
@@ -284,7 +285,13 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             key: mismatch.get(key)
             for key in ("unit_id", "original_controlled_delta", "regenerated_controlled_delta", "sign_match")
         } if mismatch else None
-    if full_support_provenance_regeneration and str(full_support_provenance_regeneration.get("decision") or "").startswith("PROVENANCE_INCONCLUSIVE"):
+    if full_support_provenance_final:
+        full_support_scientific_authority = (
+            "recovered-decision-authority"
+            if full_support_provenance_final.get("paper_level_scientific_authority") is True
+            else "provenance-inconclusive"
+        )
+    elif full_support_provenance_regeneration and str(full_support_provenance_regeneration.get("decision") or "").startswith("PROVENANCE_INCONCLUSIVE"):
         full_support_scientific_authority = "provenance-inconclusive"
     elif full_support_provenance_replay and full_support_provenance_replay.get("decision") == "PROVENANCE_REPLAY_PASS" and full_support_provenance_regeneration and full_support_provenance_regeneration.get("gate_pass") is True:
         full_support_scientific_authority = "recovered-decision-authority"
@@ -372,6 +379,7 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             "sequencing_deviation": full_support_sequencing_deviation,
             "provenance_replay": full_support_provenance_replay,
             "provenance_regeneration": full_support_provenance_regeneration,
+            "provenance_recovery": full_support_provenance_final,
             "scientific_authority": full_support_scientific_authority,
             "authorized": support_status == "support_qualification_pass" and bool(full_support_audit and full_support_audit.get("execution_ready") is True),
         },

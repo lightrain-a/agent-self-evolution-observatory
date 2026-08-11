@@ -258,6 +258,7 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_realizability_passed":p0_realizability["summary"]["synthetic_pass"],
             "p0_b10_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("b10",{}).get("decision"),
             "p0_a6_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("a6_cpu",{}).get("decision"),
+            "p0_e2_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("e2_workflow_cpu",{}).get("decision"),
             "p0_e3_decision":((p0_offline_qualification.get("shared_evidence") or {}).get("e3_stateful") or (p0_offline_qualification.get("shared_evidence") or {}).get("e3_real_api") or {}).get("decision"),
             "p0_e4_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("e4_permission_cpu",{}).get("decision"),
             "solution_children":idea_discovery_v3["summary"]["raw_children"],
@@ -367,6 +368,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if state["mem_xfer_workflow"]["full_support"]["status"] != "full_support_complete": errors.append("mem-xfer frozen 216-execution Qwen full-support table must be complete")
     if state["mem_xfer_workflow"]["support_enriched_analysis"]["status"] != "support_enriched_analysis_complete": errors.append("mem-xfer CPU-only #3/#5 downstream gate must automatically follow the complete full-support table")
     if (state["mem_xfer_workflow"]["support_enriched_analysis"].get("decision") or {}).get("method_failure_authorized") is not False: errors.append("mem-xfer support gate must not authorize method failure from support insufficiency")
+    provenance = state["mem_xfer_workflow"]["full_support"].get("provenance_recovery") or {}
+    if provenance.get("decision") != "PROVENANCE_INCONCLUSIVE": errors.append("mem-xfer final provenance recovery must record the matched-hardware inconclusive terminal result")
+    if state["mem_xfer_workflow"]["full_support"].get("scientific_authority") != "provenance-inconclusive": errors.append("mem-xfer full table must remain diagnostic-only after provenance mismatch")
     if state["mem_xfer_workflow"]["second_model"]["status"] != "second_model_hold": errors.append("mem-xfer second backbone must remain on HOLD unless the CPU-only full-support gate explicitly authorizes it")
     terminal_summary = state["human_terminal_ideas"]["summary"]
     if terminal_summary.get("human_parents") != 26 or (terminal_summary.get("p0"), terminal_summary.get("p0_ready"), terminal_summary.get("merge"), terminal_summary.get("drop")) != (13,0,6,7): errors.append("human terminal ledger mismatch")

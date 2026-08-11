@@ -22382,7 +22382,7 @@
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-11T08:06:44+00:00",
+    "generated_at": "2026-08-11T08:25:55+00:00",
     "source_of_truth_priority": [
       "latest-human-review",
       "explicit-user-update",
@@ -23216,8 +23216,8 @@
           "en": "Replicated-Effect Memory Gate"
         },
         "current_fact": {
-          "zh": "已进入共享 P0。冻结的 Qwen full-support table 已完整收齐 216/216 executions、72/72 units，并已自动执行 CPU-only #3 downstream gate。#3 当前为 SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE：candidate 12/8 通过，但跨 probe/future 可复现 harm candidate 为 0/2、benefit candidate 为 1/2，因此只说明支持度不足，禁止写成方法 PASS/FAIL。完整性修复已执行：216/216 action replay 全部通过，但 deterministic regeneration 在前 3 个原 nonzero unit 中出现 1 个 sign mismatch（se-m-pick_clean_then_place_in_recep-1-u04，原 +1 → 重跑 0），按冻结 gate early-stop 剩余 8 个；full-table paper-level authority=provenance-inconclusive，第二 backbone 继续 HOLD。",
-          "en": "Entered shared P0. The frozen Qwen full-support table is complete at 216/216 executions over 72/72 units and automatically triggered the CPU-only #3 downstream gate. #3 is SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE: candidate count passes at 12/8, but cross-probe/future replicated harm candidates are 0/2 and replicated benefit candidates are 1/2, so this is support insufficiency rather than a method PASS/FAIL. Integrity recovery has run: the 216/216 action replay passed, but deterministic regeneration found one sign mismatch among the first three original nonzero units (se-m-pick_clean_then_place_in_recep-1-u04, original +1 → regenerated 0). The frozen gate therefore early-stops the remaining eight units; full-table paper-level authority is provenance-inconclusive and the second backbone remains on HOLD."
+          "zh": "已进入共享 P0。冻结的 Qwen full-support table 已完整收齐 216/216 executions、72/72 units，并已自动执行 CPU-only #3 downstream gate。#3 当前为 SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE：candidate 12/8 通过，但跨 probe/future 可复现 harm candidate 为 0/2、benefit candidate 为 1/2，因此只说明支持度不足，禁止写成方法 PASS/FAIL。完整性修复终态：216/216 action replay 全部通过；在原始 full-table 同一物理 RTX 3090 上完成 11 个 nonzero unit × 3 arms = 33/33 deterministic regeneration，其中 10/11 controlled-effect sign 匹配，唯一 mismatch 为 se-m-pick_cool_then_place_in_recep-2-u03（原 +1 → 重跑 0）。因此 full-table paper-level authority=provenance-inconclusive，当前 216 表仅作 diagnostic evidence；第二 backbone 与 formal-method experiment 均继续 HOLD。",
+          "en": "Entered shared P0. The frozen Qwen full-support table is complete at 216/216 executions over 72/72 units and automatically triggered the CPU-only #3 downstream gate. #3 is SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE: candidate count passes at 12/8, but cross-probe/future replicated harm candidates are 0/2 and replicated benefit candidates are 1/2, so this is support insufficiency rather than a method PASS/FAIL. Terminal integrity recovery: the 216/216 action replay passed; matched-hardware deterministic regeneration on the same physical RTX 3090 as the original full table completed all 11 nonzero units x 3 arms = 33/33 executions, with 10/11 controlled-effect signs matching. The sole mismatch is se-m-pick_cool_then_place_in_recep-2-u03 (original +1 -> regenerated 0). Full-table paper-level authority is therefore provenance-inconclusive and the current 216 table is diagnostic evidence only; the second backbone and formal-method experiment remain on HOLD."
         },
         "code": "B-8",
         "group": "B"
@@ -23230,8 +23230,8 @@
           "en": "Cross-Task Effect Transport Certificate"
         },
         "current_fact": {
-          "zh": "与 Replicated-Effect Memory Gate 共享 P0。冻结的 Qwen full-support table 已完整收齐 216/216 executions、72/72 units，并已自动执行 CPU-only #5 strict-LOTO downstream gate。#5 当前为 TRANSPORT_SUPPORT_INSUFFICIENT：controlled nonzero 为 11/12，eligible target-family folds 为 3/3；这不足以授权 transport mechanism 推断，也不构成方法 FAIL。完整性修复已执行：216/216 action replay 全部通过，但 deterministic regeneration 在前 3 个原 nonzero unit 中出现 1 个 sign mismatch（se-m-pick_clean_then_place_in_recep-1-u04，原 +1 → 重跑 0），因此 full-table paper-level authority=provenance-inconclusive；第二 backbone 继续 HOLD，尚未授权跨模型 confirmatory 实验。",
-          "en": "Shares P0 with Replicated-Effect Memory Gate. The frozen Qwen full-support table is complete at 216/216 executions over 72/72 units and automatically triggered the CPU-only #5 strict-LOTO downstream gate. #5 is TRANSPORT_SUPPORT_INSUFFICIENT: controlled nonzero is 11/12 while eligible target-family folds pass at 3/3. This does not authorize transport-mechanism inference and is not a method FAIL. Integrity recovery has run: the 216/216 action replay passed, but deterministic regeneration found one sign mismatch among the first three original nonzero units (se-m-pick_clean_then_place_in_recep-1-u04, original +1 → regenerated 0), making full-table paper-level authority provenance-inconclusive. The second backbone remains on HOLD and no cross-model confirmatory experiment is authorized."
+          "zh": "与 Replicated-Effect Memory Gate 共享 P0。冻结的 Qwen full-support table 已完整收齐 216/216 executions、72/72 units，并已自动执行 CPU-only #5 strict-LOTO downstream gate。#5 当前为 TRANSPORT_SUPPORT_INSUFFICIENT：controlled nonzero 为 11/12，eligible target-family folds 为 3/3；这不足以授权 transport mechanism 推断，也不构成方法 FAIL。完整性修复终态：216/216 action replay 全部通过；同一物理 RTX 3090 上 33/33 deterministic regeneration 完成，10/11 controlled-effect sign 匹配，唯一 mismatch 为 se-m-pick_cool_then_place_in_recep-2-u03（原 +1 → 重跑 0）。因此 full-table paper-level authority=provenance-inconclusive，当前表仅作 diagnostic evidence；第二 backbone 与跨模型/formal-method confirmatory 实验均继续 HOLD。",
+          "en": "Shares P0 with Replicated-Effect Memory Gate. The frozen Qwen full-support table is complete at 216/216 executions over 72/72 units and automatically triggered the CPU-only #5 strict-LOTO downstream gate. #5 is TRANSPORT_SUPPORT_INSUFFICIENT: controlled nonzero is 11/12 while eligible target-family folds pass at 3/3. This does not authorize transport-mechanism inference and is not a method FAIL. Terminal integrity recovery: the 216/216 action replay passed; matched-hardware deterministic regeneration on the same physical RTX 3090 completed 33/33 executions, with 10/11 controlled-effect signs matching. The sole mismatch is se-m-pick_cool_then_place_in_recep-2-u03 (original +1 -> regenerated 0). Full-table paper-level authority is therefore provenance-inconclusive and the table is diagnostic evidence only; the second backbone and cross-model/formal-method confirmatory experiment remain on HOLD."
         },
         "code": "B-9",
         "group": "B"
@@ -50792,6 +50792,76 @@
           "regenerated_controlled_delta": 0,
           "sign_match": false
         }
+      },
+      "provenance_recovery": {
+        "schema_version": "1.0",
+        "artifact_kind": "full-support-provenance-recovery-final",
+        "decision": "PROVENANCE_INCONCLUSIVE",
+        "environment_action_replay": {
+          "decision": "PROVENANCE_REPLAY_PASS",
+          "replayed_executions": 216,
+          "checks": {
+            "success_matches_216": {
+              "required": 216,
+              "actual": 216,
+              "pass": true
+            },
+            "step_matches_216": {
+              "required": 216,
+              "actual": 216,
+              "pass": true
+            },
+            "rows_with_nonadmissible_actions": {
+              "required": 0,
+              "actual": 0,
+              "pass": true
+            },
+            "unique_unit_arm_keys": {
+              "required": 216,
+              "actual": 216,
+              "pass": true
+            },
+            "placebo_token_gap_violations": {
+              "required": 0,
+              "actual": 0,
+              "pass": true
+            }
+          },
+          "summary_path": "/data/wyt/agent-self-evolution-observatory/runs/p0-mem-xfer-support-enriched-qwen-v1/full-support-table/provenance-replay/action-replay-summary.json"
+        },
+        "deterministic_nonzero_regeneration": {
+          "decision": "PROVENANCE_INCONCLUSIVE",
+          "nonzero_units": 11,
+          "executions": 33,
+          "controlled_effect_sign_matches": 10,
+          "controlled_effect_sign_mismatches": 1,
+          "mismatch_units": [
+            {
+              "unit_id": "se-m-pick_cool_then_place_in_recep-2-u03",
+              "original_controlled_delta": 1,
+              "regenerated_controlled_delta": 0,
+              "original_sign": 1,
+              "regenerated_sign": 0,
+              "sign_match": false,
+              "arm_success": {
+                "placebo": 1,
+                "retrieved": 1,
+                "no-memory": 1
+              }
+            }
+          ],
+          "decision_path": "/data/wyt/agent-self-evolution-observatory/runs/p0-current-user-authority-provenance-r3/decision.json",
+          "gpu_uuid": "GPU-814cd021-31d8-2c6f-76a5-b8d4739b34d1",
+          "model_path": "/home/hdd/qinglinji/models/Qwen2.5-7B-Instruct"
+        },
+        "paper_level_scientific_authority": false,
+        "evidence_role": "diagnostic-only",
+        "formal_method_experiment_authorized": false,
+        "admission_method_training_authorized": false,
+        "method_failure_authorized": false,
+        "second_model_authorized": false,
+        "next_action": "HOLD formal-method and second-backbone escalation. Do not repair by retuning frozen thresholds or mixing partial replica branches. Any future reopening requires a clean source-locked primary collection with an exact runtime snapshot preserved before execution.",
+        "created_at": "2026-08-11T08:16:36+00:00"
       },
       "scientific_authority": "provenance-inconclusive",
       "authorized": true
