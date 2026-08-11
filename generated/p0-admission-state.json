@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T11:39:23+00:00",
+  "generated_at": "2026-08-11T12:50:09+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
@@ -121,10 +121,9 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "offline": "pass",
-          "reality": "pass",
-          "phenomenon": "pass",
-          "next": "Continue only under the already frozen P0/rerun contract."
+          "status": "stop-repair-f0",
+          "evidence": "STOP_REPAIR_SOFT_AUDIT_SIMPLE_TRIAGE_DOMINATES",
+          "next": "merge/drop review; no GPU rerun"
         },
         "pre_p0": {
           "passed": 4,
@@ -226,14 +225,11 @@
           ]
         },
         "runtime_throughput": {
-          "status": "pending-harness-smoke"
+          "status": "not-required-after-repair-f0-stop"
         },
         "execution_authorized": false,
         "blockers": [
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-repair-stop-await-human-review"
         ]
       }
     },
@@ -320,10 +316,9 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "offline": "pass",
-          "reality": "pass",
-          "phenomenon": "pass",
-          "next": "Continue only under the already frozen P0/rerun contract."
+          "status": "stop-repair-f0",
+          "evidence": "STOP_REPAIR_FIXED_HORIZON_DOMINATES",
+          "next": "merge/drop review; no GPU rerun"
         },
         "pre_p0": {
           "passed": 4,
@@ -425,14 +420,11 @@
           ]
         },
         "runtime_throughput": {
-          "status": "pending-harness-smoke"
+          "status": "not-required-after-repair-f0-stop"
         },
         "execution_authorized": false,
         "blockers": [
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-repair-stop-await-human-review"
         ]
       }
     },

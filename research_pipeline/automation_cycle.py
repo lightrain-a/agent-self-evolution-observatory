@@ -18,6 +18,7 @@ from .emerging_niche import write_emerging_niche_policy
 from .human_terminal_state import write_human_terminal_state
 from .p0_admission import write_p0_admission_state
 from .p0_b10_cpu import write_b10_cpu_p0
+from .p0_a12_soft_audit_f0 import write as write_a12_soft_audit_f0
 from .p0_a3_substrate_stop import write_state as write_a3_substrate_stop
 from .p0_a4_composition_cpu import write_a4_cpu_p0
 from .p0_a5_history_cpu import write_a5_cpu_p0
@@ -118,6 +119,7 @@ def run_cycle(
         report["steps"].append(_step("human-terminal-idea-state", write_human_terminal_state))
         report["steps"].append(_step("p0-realizability-suite", write_p0_realizability_suite))
         report["steps"].append(_step("p0-b10-cpu", write_b10_cpu_p0))
+        report["steps"].append(_step("p0-a12-soft-audit-f0", write_a12_soft_audit_f0))
         report["steps"].append(_step("p0-a3-substrate-stop", write_a3_substrate_stop))
         report["steps"].append(_step("p0-a4-composition-cpu", write_a4_cpu_p0))
         report["steps"].append(_step("p0-a5-history-cpu", write_a5_cpu_p0))
@@ -155,6 +157,7 @@ def run_cycle(
         write_human_terminal_state()
         write_p0_realizability_suite()
         write_b10_cpu_p0()
+        write_a12_soft_audit_f0()
         write_a3_substrate_stop()
         write_a4_cpu_p0()
         write_a5_cpu_p0()

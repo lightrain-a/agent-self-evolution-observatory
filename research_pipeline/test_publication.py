@@ -47,6 +47,8 @@ class PublicationTest(unittest.TestCase):
         self.assertEqual(
             DAILY_ARTIFACTS,
             (
+                "generated/emerging-niche-policy.json",
+                "generated/emerging-niche-policy.js",
                 "generated/human-terminal-idea-state.json",
                 "generated/human-terminal-idea-state.js",
                 "generated/p0-admission-state.json",
@@ -57,6 +59,10 @@ class PublicationTest(unittest.TestCase):
                 "generated/p0-realizability-suite.js",
                 "generated/p0-b10-cpu.json",
                 "generated/p0-b10-cpu.js",
+                "generated/p0-a1-soft-audit-f0.json",
+                "generated/p0-a1-soft-audit-f0.js",
+                "generated/p0-a2-evidence-depth-f0.json",
+                "generated/p0-a2-evidence-depth-f0.js",
                 "generated/p0-a3-substrate-stop.json",
                 "generated/p0-a3-substrate-stop.js",
                 "generated/p0-a4-composition-cpu.json",

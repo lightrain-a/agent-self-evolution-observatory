@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "decision_date": "2026-08-11",
-  "generated_at": "2026-08-11T12:18:48+00:00",
+  "generated_at": "2026-08-11T12:50:07+00:00",
   "source_of_truth_priority": [
     "latest-human-review",
     "explicit-user-update",
@@ -55,7 +55,12 @@
       "exact_stop": {
         "zh": "实验层 stop 由冻结协议决定；单次不可识别 pilot 不等于 Idea-level DROP。",
         "en": "Experiment-level stop follows the frozen protocol; a non-identifiable pilot is not an idea-level DROP."
-      }
+      },
+      "current_fact": {
+        "zh": "A-1 会诊后的 soft-audit repair F0 已收口。只用 36 个 development unit 选 horizon，在 36 个 future_eval unit 冻结验证：branch h=1 召回 2/5 nonzero=40%，成本 624/2813=22.2%；更简单的 development target-family prior 在更低成本 613 steps 下召回 3/5=60%，而 h=1 + navigate→navigate trigger 同为 40% recall 但只需 526 steps。future 仅 1 个 harmful unit，不足以授权 harm-prioritization 主张。决定 STOP_REPAIR_SOFT_AUDIT_SIMPLE_TRIAGE_DOMINATES：早期 branch signal 仅并入科研系统的 soft audit scheduling heuristic，不再为 A-1 standalone repair 消耗 GPU。",
+        "en": "The post-clinic A-1 soft-audit repair F0 is closed. Horizon selection used only 36 development units and was frozen on 36 future_eval units. Branch h=1 recalls 2/5 nonzero effects (40%) at 624/2813 paired-action steps (22.2%). A simpler development target-family prior recalls 3/5 (60%) at a lower 613-step cost, while an h=1 + navigate-to-navigate trigger matches 40% recall at only 526 steps. The future split contains only one harmful unit, so a harm-prioritization claim is not identifiable. Decision: STOP_REPAIR_SOFT_AUDIT_SIMPLE_TRIAGE_DOMINATES. Keep early branch signals only as a research-system soft-audit scheduling heuristic and spend no further GPU on standalone A-1 repair."
+      },
+      "p0_decision": "STOP_REPAIR_SOFT_AUDIT_SIMPLE_TRIAGE_DOMINATES"
     },
     "budgeted-evolution-controller": {
       "code": "A-2",
@@ -85,7 +90,12 @@
       "exact_stop": {
         "zh": "合格基座下仍无可识别最优轮次变化，或简单策略同预算等效，则停止控制器机制主张。",
         "en": "Stop the controller claim if qualified substrates still show no identifiable optimal-round variation or matched simple policies are equivalent."
-      }
+      },
+      "current_fact": {
+        "zh": "A-2 已从“控制 update round”修到“控制 evidence acquisition depth”并完成 CPU repair F0。development-only 搜索得到 per-target-family horizon 策略，在 development 达到 5/6=83.3% nonzero recall、34.3% cost；但冻结 future_eval 上只剩 2/5=40% recall、734/2813=26.1% cost。完全不自适应的 fixed h=1 在 future 同样 2/5=40% recall，却只需 624/2813=22.2% cost，严格支配 adaptive controller。决定 STOP_REPAIR_FIXED_HORIZON_DOMINATES：evidence-depth scheduling 并入 A-1/系统 soft audit，不启动 A-2 controller GPU training。",
+        "en": "A-2 was repaired from controlling update rounds to controlling evidence-acquisition depth and completed a CPU repair F0. A development-only per-target-family horizon search reaches 5/6 (83.3%) nonzero recall at 34.3% cost on development, but on frozen future_eval it falls to 2/5 (40%) recall at 734/2813 steps (26.1%). A non-adaptive fixed h=1 reaches the same 2/5 (40%) future recall at only 624/2813 steps (22.2%), strictly dominating the adaptive controller. Decision: STOP_REPAIR_FIXED_HORIZON_DOMINATES. Merge evidence-depth scheduling into A-1/system soft audit and do not launch A-2 controller GPU training."
+      },
+      "p0_decision": "STOP_REPAIR_FIXED_HORIZON_DOMINATES"
     },
     "regression-gated-self-evolution": {
       "code": "A-3",

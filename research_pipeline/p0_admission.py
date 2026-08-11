@@ -213,11 +213,16 @@ def build_p0_admission_state() -> dict[str, Any]:
         if code in seen: checks.append({"key":"unique_code","pass":False})
         seen.add(code)
         entry=row.get("p0_entry") or {"date":"historical","basis":"pre-existing-p0-artifact"}
+        preflight=_preflight(idea_id,offline_by_id.get(idea_id))
+        if row.get("p0_decision") in {"STOP_REPAIR_SOFT_AUDIT_SIMPLE_TRIAGE_DOMINATES","STOP_REPAIR_FIXED_HORIZON_DOMINATES"}:
+            preflight["gpu0"]={"status":"stop-repair-f0","evidence":row.get("p0_decision"),"next":"merge/drop review; no GPU rerun"}
+            preflight["execution_authorized"]=False; preflight["blockers"]=["p0-repair-stop-await-human-review"]
+            preflight["runtime_throughput"]={"status":"not-required-after-repair-f0-stop"}
         cards.append({"idea_id":idea_id,"code":code,"group":group,
           "title":row.get("title") or row.get("final_parent_mechanism") or {"en":idea_id,"zh":idea_id},
           "lifecycle":"p0","p0_entry":entry,
           "admission_status":"admitted" if all(x["pass"] for x in checks) else "blocked",
-          "admission_checks":checks,"contract":contract,"setup":setup,"execution_preflight":_preflight(idea_id,offline_by_id.get(idea_id))})
+          "admission_checks":checks,"contract":contract,"setup":setup,"execution_preflight":preflight})
     transitioned=[c for c in cards if (c.get("p0_entry") or {}).get("date")=="2026-08-11"]
     return {"schema_version":"1.0","generated_at":_now(),"policy":POLICY,
       "summary":{"active_p0":len(cards),"admitted":sum(c["admission_status"]=="admitted" for c in cards),

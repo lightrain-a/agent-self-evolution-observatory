@@ -257,6 +257,8 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_offline_checks_pending":p0_offline_qualification["summary"]["checks_pending"],
             "p0_realizability_passed":p0_realizability["summary"]["synthetic_pass"],
             "p0_b10_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("b10",{}).get("decision"),
+            "p0_a1_repair_decision":(human_terminal_ideas.get("parents") or {}).get("update-trust-region",{}).get("p0_decision"),
+            "p0_a2_repair_decision":(human_terminal_ideas.get("parents") or {}).get("budgeted-evolution-controller",{}).get("p0_decision"),
             "p0_a3_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("a3_substrate_stop",{}).get("decision"),
             "p0_a4_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("a4_composition_cpu",{}).get("decision"),
             "p0_a5_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("a5_history_cpu",{}).get("decision"),
