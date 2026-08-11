@@ -50,6 +50,18 @@ def _ck(status: str, evidence: str, source: str = "", kind: str = "real-reused")
 def _pending() -> dict[str, Any]:
     return _ck("pending", "No mechanism-aligned real offline evidence has cleared this check yet.", kind="pending")
 
+def _b3_artifact() -> dict[str, Any]:
+    path=PROJECT_ROOT/"generated"/"p0-b3-interference-cpu.json"
+    try:return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):return {}
+
+
+def _a7_artifact() -> dict[str, Any]:
+    path=PROJECT_ROOT/"generated"/"p0-a7-counterfactual-cpu.json"
+    try:return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):return {}
+
+
 def _e2_artifact() -> dict[str, Any]:
     path=PROJECT_ROOT/"generated"/"p0-e2-workflow-cpu.json"
     try:return json.loads(path.read_text(encoding="utf-8"))
@@ -120,6 +132,21 @@ def _apply_a6_stop(card: dict[str, Any], result: dict[str, Any]) -> None:
     m=result.get("matched_simplification") or {}; s=result.get("summary") or {}
     card["checks"]["baseline_disagreement"]=_ck("fail",f"Non-learning binary group testing exactly reproduces active-causal recovery and per-case intervention counts: mean tests {s.get('active-causal',{}).get('mean_tests',0):.3f} vs {s.get('binary-group-testing',{}).get('mean_tests',0):.3f}; per-case identical={m.get('per_case_test_counts_identical')}.","generated/p0-a6-cpu.json","cpu-p0-falsifier")
     card["gpu0"]={"status":"stop-matched-group-testing-equivalent","evidence":"CPU P0 shows the active query policy is exactly a non-learning binary group-testing simplification under the same sparse-fault prior.","source":"generated/p0-a6-cpu.json","evidence_kind":"cpu-p0-falsifier","next":result.get("next_action")}
+
+
+def _apply_a7_stop(card: dict[str, Any], result: dict[str, Any]) -> None:
+    if card["idea_id"]!="counterfactual-evolution-decision-controller" or result.get("decision")!="STOP_MATCHED_SHALLOW_RULE_EQUIVALENT": return
+    linear=(result.get("linear_controller") or {}).get("hidden") or {}; tree=(result.get("matched_cart") or {}).get("hidden") or {}
+    card["checks"]["baseline_disagreement"]=_ck("fail",f"Same-state linear controller and calibration-selected shallow CART both achieve hidden action accuracy {linear.get('action_accuracy',0):.3f} vs {tree.get('action_accuracy',0):.3f} with mean regret {linear.get('mean_regret',0):.3f} vs {tree.get('mean_regret',0):.3f}.","generated/p0-a7-counterfactual-cpu.json","cpu-counterfactual-p0")
+    card["checks"]["tiny_overfit"]=_ck("pass","All four actions occur in the hidden table and exact state combinations are disjoint from training rows; both policies are frozen before hidden evaluation.","generated/p0-a7-counterfactual-cpu.json","cpu-counterfactual-p0")
+    card["gpu0"]={"status":"stop-matched-shallow-rule-equivalent","evidence":"A depth-3 shallow decision rule on the identical state features exactly reproduces the learned four-action controller on the frozen hidden counterfactual table.","source":"generated/p0-a7-counterfactual-cpu.json","evidence_kind":"cpu-counterfactual-p0","next":result.get("next_action")}
+
+
+def _apply_b3_screening(card: dict[str, Any], result: dict[str, Any]) -> None:
+    if card["idea_id"]!="retrieval-interference-auditor" or result.get("decision")!="SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED": return
+    m=result.get("metrics") or {}; runtime=result.get("runtime_preflight_snapshot") or {}
+    card["gpu0"]={"status":"hold-real-cinteraction-runtime","evidence":f"Synthetic matched-cost screening is positive: pathway and simple baselines both use {m.get('pathway_audit_calls',0)} audit calls and have 0 future harm, while retained benefit is {m.get('pathway_retained_benefit',0)} vs {m.get('simple_retained_benefit',0)}. This does not establish real co-retrieval interference. Real ALFWorld launch is blocked by runtime environment drift, not GPU capacity.","source":"generated/p0-b3-interference-cpu.json","evidence_kind":"synthetic-screening-plus-runtime-audit","next":result.get("next_action")}
+    card["screening_signal"]={"status":"pass","real_method_authority":False,"runtime_decision":runtime.get("decision"),"relative_net_utility_gain":m.get("relative_net_utility_gain")}
 
 
 def _apply_b10(card: dict[str, Any], result: dict[str, Any]) -> None:
@@ -212,14 +239,14 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
     aw,aa1,aa2,a3p,a67,mem,memfull,ready,we1=alfworld(root),a1(root),a2(root),a3_panel(root),a67_dataset(root),memory(root),memory_full(root),substrate_readiness(root),e1(root)
     up_a1=_updater_config("p0_a1_screening_config.json"); up_a2=_updater_config("p0_a2_screening_config.json")
     realizability=build_p0_realizability_suite(); realizability_by_id={row["idea_id"]:row for row in realizability.get("rows") or []}
-    b10=run_b10_cpu_p0(); a6cpu=run_a6_cpu_p0(); e2cpu=_e2_artifact(); e3real=_e3_artifact(); e3stateful=_e3_stateful_artifact(); e4cpu=_e4_artifact()
+    b10=run_b10_cpu_p0(); a6cpu=run_a6_cpu_p0(); a7cpu=_a7_artifact(); b3cpu=_b3_artifact(); e2cpu=_e2_artifact(); e3real=_e3_artifact(); e3stateful=_e3_stateful_artifact(); e4cpu=_e4_artifact()
     cards=[]
     for idea in NEW_IDS:
         card=_base_card(idea,aw)
         card["updater_competence"]={"status":"pending","passed":False,"evidence_kind":"pending","reason":"mechanism-specific updater/action-stream competence has not been qualified"}
         if idea=="regression-gated-self-evolution": card["updater_competence"]={**up_a1,"evidence_kind":"real-reused"}
         elif idea in {"lineage-aware-rollback","active-causal-minimal-rollback","counterfactual-evolution-decision-controller"}: card["updater_competence"]={**up_a2,"evidence_kind":"real-reused"}
-        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_a6_stop(card,a6cpu); _apply_b10(card,b10); _apply_d1(card,aw); _apply_exact_data_holds(card,a67,memfull); _apply_missing_substrates(card,ready); _apply_e2_stop(card,e2cpu); _apply_e3_reality(card,e3real); _apply_e3_stateful_stop(card,e3stateful); _apply_e4_result(card,e4cpu)
+        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_a6_stop(card,a6cpu); _apply_b10(card,b10); _apply_d1(card,aw); _apply_exact_data_holds(card,a67,memfull); _apply_missing_substrates(card,ready); _apply_a7_stop(card,a7cpu); _apply_b3_screening(card,b3cpu); _apply_e2_stop(card,e2cpu); _apply_e3_reality(card,e3real); _apply_e3_stateful_stop(card,e3stateful); _apply_e4_result(card,e4cpu)
         synthetic=realizability_by_id.get(idea)
         if synthetic and synthetic.get("representability_pass") and card["checks"]["representability"]["status"]=="pending":
             card["checks"]["representability"]=_ck("synthetic-pass","Synthetic mechanism harness passed; this clears representability only and has no reality/method authority.","generated/p0-realizability-suite.json","synthetic-realizability-only")
@@ -236,7 +263,7 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
     }
     return {"schema_version":"1.0","generated_at":_now(),"experiment_root":"profile-resolved-machine-local",
         "policy":{"real_reused_may_unblock":True,"synthetic_harness_may_not_unblock_reality":True,"same_batch_self_authorization_forbidden":True,"method_result_from_offline_qualification_forbidden":True},
-        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"memory_full":memfull,"substrate_readiness":ready,"e1":we1,"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"e2_workflow_cpu":{"decision":e2cpu.get("decision"),"metrics":e2cpu.get("metrics"),"freeze_sha256":e2cpu.get("freeze_sha256_before_hidden")},"e3_real_api":{"decision":e3real.get("decision"),"metrics":e3real.get("metrics"),"prediction_sha256":e3real.get("prediction_sha256_before_hidden")},"e3_stateful":{"decision":e3stateful.get("decision"),"metrics":e3stateful.get("metrics"),"prediction_sha256":e3stateful.get("prediction_sha256_before_hidden")},"e4_permission_cpu":{"decision":e4cpu.get("decision"),"metrics":e4cpu.get("metrics"),"threshold":e4cpu.get("threshold")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
+        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"memory_full":memfull,"substrate_readiness":ready,"e1":we1,"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"a7_counterfactual_cpu":{"decision":a7cpu.get("decision"),"design":a7cpu.get("design"),"linear_hidden":(a7cpu.get("linear_controller") or {}).get("hidden"),"cart_hidden":(a7cpu.get("matched_cart") or {}).get("hidden")},"b3_interference_cpu":{"decision":b3cpu.get("decision"),"metrics":b3cpu.get("metrics"),"runtime_preflight_snapshot":b3cpu.get("runtime_preflight_snapshot")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"e2_workflow_cpu":{"decision":e2cpu.get("decision"),"metrics":e2cpu.get("metrics"),"freeze_sha256":e2cpu.get("freeze_sha256_before_hidden")},"e3_real_api":{"decision":e3real.get("decision"),"metrics":e3real.get("metrics"),"prediction_sha256":e3real.get("prediction_sha256_before_hidden")},"e3_stateful":{"decision":e3stateful.get("decision"),"metrics":e3stateful.get("metrics"),"prediction_sha256":e3stateful.get("prediction_sha256_before_hidden")},"e4_permission_cpu":{"decision":e4cpu.get("decision"),"metrics":e4cpu.get("metrics"),"threshold":e4cpu.get("threshold")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
 
 def write_p0_offline_qualification_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS)->dict[str,Any]:
     state=build_p0_offline_qualification_state(); json_path.parent.mkdir(parents=True,exist_ok=True)

@@ -217,6 +217,9 @@ def main() -> None:
           realizabilitySummary: window.P0_REALIZABILITY_SUITE?.summary || {},
           b10Decision: window.P0_B10_CPU?.decision || '',
           a6Decision: window.P0_A6_CPU?.decision || '',
+          a7Decision: window.P0_A7_COUNTERFACTUAL_CPU?.decision || '',
+          b3Decision: window.P0_B3_INTERFERENCE_CPU?.decision || '',
+          b3RuntimeDecision: window.P0_B3_INTERFERENCE_CPU?.runtime_preflight_snapshot?.decision || '',
           e2Decision: window.P0_E2_WORKFLOW_CPU?.decision || '',
           e3Decision: window.P0_E3_STATEFUL?.decision || window.P0_E3_REAL_API?.decision || '',
           e4Decision: window.P0_E4_PERMISSION_CPU?.decision || '',
@@ -270,11 +273,11 @@ def main() -> None:
         };""")
         require(experiments["chapters"] == 3, f"experiments page must have three chapters, got {experiments['chapters']}")
         require((experiments["terminalPortfolio"],experiments["terminalRows"],experiments["terminalP0"],experiments["terminalP0Ready"]) == (1,20,20,0), f"terminal experiment portfolio is not aligned with Paper Ideas: {experiments}")
-        require((experiments["terminalStarted"],experiments["terminalPending"],experiments["auditQueue"],experiments["auditItems"]) == (9,11,1,11), f"started/pending audit split is wrong: {experiments}")
+        require((experiments["terminalStarted"],experiments["terminalPending"],experiments["auditQueue"],experiments["auditItems"]) == (11,9,1,9), f"started/pending audit split is wrong: {experiments}")
         require(experiments["admissionPanel"] == 1 and experiments["admissionRows"] == 16 and experiments["admissionSummary"].get("active_p0") == 20 and experiments["admissionSummary"].get("transitioned_from_p0_ready") == 16 and experiments["admissionSummary"].get("settings_complete") == 20, f"P0 admission/settings panel is incomplete: {experiments}")
-        require(experiments["offlinePanel"] == 1 and experiments["offlineSummary"].get("ideas") == 16 and experiments["offlineSummary"].get("checks_failed",0) >= 6 and experiments["offlineSummary"].get("checks_synthetic_pass") == 14 and experiments["offlineSummary"].get("gpu0_stop") == 5, f"offline qualification panel/state is incomplete: {experiments}")
+        require(experiments["offlinePanel"] == 1 and experiments["offlineSummary"].get("ideas") == 16 and experiments["offlineSummary"].get("checks_failed",0) >= 9 and experiments["offlineSummary"].get("checks_synthetic_pass") == 14 and experiments["offlineSummary"].get("gpu0_stop") == 6, f"offline qualification panel/state is incomplete: {experiments}")
         require(experiments["realizabilitySummary"].get("audited") == 14 and experiments["realizabilitySummary"].get("synthetic_pass") == 14, f"synthetic realizability summary is wrong: {experiments}")
-        require(experiments["b10Decision"] == "STOP_MATCHED_NARY_EQUIVALENT" and experiments["a6Decision"] == "STOP_MATCHED_GROUP_TESTING_EQUIVALENT" and experiments["e2Decision"] == "STOP_MATCHED_E1_DIRECT_EDIT_EQUIVALENT" and experiments["e3Decision"] == "STOP_STATEFUL_DETERMINISTIC_PEX_CEILING" and experiments["e4Decision"] == "STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT" and experiments["p0StopRows"] == 5, f"A-6/B-10/E-2/E-3/E-4 P0 STOPs are not visible: {experiments}")
+        require(experiments["b10Decision"] == "STOP_MATCHED_NARY_EQUIVALENT" and experiments["a6Decision"] == "STOP_MATCHED_GROUP_TESTING_EQUIVALENT" and experiments["a7Decision"] == "STOP_MATCHED_SHALLOW_RULE_EQUIVALENT" and experiments["b3Decision"] == "SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED" and experiments["b3RuntimeDecision"] == "HOLD_RUNTIME_ENVIRONMENT_DRIFT" and experiments["e2Decision"] == "STOP_MATCHED_E1_DIRECT_EDIT_EQUIVALENT" and experiments["e3Decision"] == "STOP_STATEFUL_DETERMINISTIC_PEX_CEILING" and experiments["e4Decision"] == "STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT" and experiments["p0StopRows"] == 6, f"A-6/A-7/B-10/E-2/E-3/E-4 STOPs or B-3 screening/runtime HOLD are not visible: {experiments}")
         require(experiments["legacyArchives"] >= 3, f"legacy experiment evidence must be demoted into traceability archives: {experiments['legacyArchives']}")
         require((experiments["toc2"], experiments["toc3"], experiments["toc4"]) == (4, 3, 0), f"experiments TOC hierarchy is wrong: {experiments['toc2']}/{experiments['toc3']}/{experiments['toc4']}")
         require(experiments["board"] == 1 and experiments["cards"] == 5, f"experiment queue is incomplete: {experiments['board']}/{experiments['cards']}")

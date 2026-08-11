@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "decision_date": "2026-08-11",
-  "generated_at": "2026-08-11T08:31:34+00:00",
+  "generated_at": "2026-08-11T09:04:49+00:00",
   "source_of_truth_priority": [
     "latest-human-review",
     "explicit-user-update",
@@ -289,6 +289,11 @@
         "zh": "路径分解不优于 matched per-item/co-occurrence baseline 则停止路径机制主张。",
         "en": "Stop the pathway claim if decomposition does not beat matched per-item/co-occurrence controls."
       },
+      "current_fact": {
+        "zh": "B-3 CPU screening 在 24 个 programmatic interference cases 上给出机制信号：item/content/rank/co-retrieval 四类各 6 个，pathway 方法与 per-item + co-occurrence baseline 都严格使用 96 次 audit 且 future harm 均为 0，但路径修复保留 benefit 54 vs 18；优势完全来自 content/rank 的 rewrite/rank-cap，item 与 co-retrieval 两类和简单基线打平。该结果只允许 SCREENING_SIGNAL，不证明真实 co-retrieval interference。真实 24-execution ALFWorld gate 当前被 runtime drift 挡住：60 的三张 3090 均空闲，但登记 runtime 缺 ALFWorld，旧 runtime 包又跨 Python 3.8/3.9+/3.12 不兼容，因此未安装/拼装新环境，保持 reality/runtime HOLD。",
+        "en": "B-3 CPU screening produced a mechanism signal on 24 programmatic interference cases, six each for item/content/rank/co-retrieval. The pathway method and the per-item + co-occurrence baseline both use exactly 96 audit calls and have zero future harm, but pathway repair retains benefit 54 vs 18. The entire advantage comes from rewrite/rank-cap on content/rank pathways; item and co-retrieval cases tie the simple baseline. This is SCREENING_SIGNAL only and does not establish real co-retrieval interference. The 24-execution real ALFWorld gate is currently blocked by runtime drift: all three RTX3090-class GPUs on server 60 are idle, but the registered runtime lacks ALFWorld and the legacy runtime packages mix incompatible Python 3.8/3.9+/3.12 artifacts. No new environment was installed or spliced; reality/runtime remains on HOLD."
+      },
+      "p0_screening_decision": "SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED",
       "p0_entry": {
         "date": "2026-08-11",
         "basis": "p0-admission-contract-frozen",
@@ -943,6 +948,11 @@
         "zh": "反事实进化决策控制器",
         "en": "Counterfactual Evolution Decision Controller"
       },
+      "current_fact": {
+        "zh": "A-7 CPU same-state four-action P0 已触发 matched-simplification STOP：hidden table 中 continue/commit/rollback/stop 分别有 6/2/6/2 个最优动作，线性 counterfactual controller 16/16、mean/worst regret=0；但仅用同四个原始 state features、由 train/calibration 选择的 depth-3 CART（13 nodes）同样 16/16、regret=0，四动作分布完全一致。counterfactual table 仍可作为 A-2 的诊断/简单决策规则，但 standalone learned-controller 主张被浅规则完全复现，不建议再做真实四动作 GPU replay，等待人工确认 merge/drop。",
+        "en": "A-7 CPU same-state four-action P0 fired a matched-simplification STOP. The hidden table supports all actions with optimal counts continue/commit/rollback/stop = 6/2/6/2. The linear counterfactual controller reaches 16/16 with zero mean/worst regret, but a depth-3 CART with only the same four raw state features, selected using train/calibration only, also reaches 16/16 and zero regret with the identical action distribution. The counterfactual table remains useful as A-2 diagnostic/simple decision-rule evidence, but the standalone learned-controller claim is fully reproduced by a shallow rule; no real four-action GPU replay is recommended pending human merge/drop review."
+      },
+      "p0_decision": "STOP_MATCHED_SHALLOW_RULE_EQUIVALENT",
       "code": "A-7",
       "group": "A",
       "p0_entry": {

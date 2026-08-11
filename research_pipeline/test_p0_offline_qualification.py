@@ -31,6 +31,8 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(by_id["workflow-generalization-certificate"]["checks"]["target_variation"]["status"],"fail")
         self.assertEqual(by_id["workflow-generalization-certificate"]["checks"]["effect_variation"]["status"],"fail")
         self.assertEqual(by_id["counterfactual-evolution-decision-controller"]["checks"]["representability"]["status"],"synthetic-pass")
+        self.assertEqual(by_id["counterfactual-evolution-decision-controller"]["checks"]["baseline_disagreement"]["status"],"fail")
+        self.assertEqual(by_id["counterfactual-evolution-decision-controller"]["gpu0"]["status"],"stop-matched-shallow-rule-equivalent")
         self.assertEqual(by_id["constraint-complete-typed-memory-order-logic"]["checks"]["baseline_disagreement"]["status"],"fail")
         self.assertEqual(by_id["constraint-complete-typed-memory-order-logic"]["gpu0"]["status"],"stop-matched-nary-equivalent")
         self.assertEqual(by_id["active-causal-minimal-rollback"]["checks"]["baseline_disagreement"]["status"],"fail")
@@ -39,7 +41,7 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(by_id["bounded-probe-api-transition-operator"]["gpu0"]["status"],"stop-stateful-deterministic-pex-ceiling")
         self.assertEqual(by_id["interventional-permission-triage-under-ceiling"]["gpu0"]["status"],"stop-matched-boolean-rule-equivalent")
         self.assertEqual(by_id["workflow-branch-credit"]["gpu0"]["status"],"stop-matched-e1-direct-edit-equivalent")
-        self.assertEqual(self.state["summary"]["gpu0_stop"],5)
+        self.assertEqual(self.state["summary"]["gpu0_stop"],6)
 
     def test_reused_artifacts_capture_current_blockers(self) -> None:
         shared=self.state["shared_evidence"]
@@ -60,6 +62,9 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(shared["updater_competence"]["a1"]["status"],"stop-substrate")
         self.assertFalse(shared["updater_competence"]["a2"]["passed"])
         self.assertAlmostEqual(shared["updater_competence"]["a2"]["evidence"]["nonzero_update_effect_fraction"],7/36)
+        self.assertEqual(shared["a7_counterfactual_cpu"]["decision"],"STOP_MATCHED_SHALLOW_RULE_EQUIVALENT")
+        self.assertEqual(shared["b3_interference_cpu"]["decision"],"SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED")
+        self.assertEqual(shared["b3_interference_cpu"]["runtime_preflight_snapshot"]["decision"],"HOLD_RUNTIME_ENVIRONMENT_DRIFT")
 
     def test_exact_data_deficits_are_explicit_holds(self) -> None:
         by_id={row["idea_id"]:row for row in self.state["cards"]}
@@ -67,9 +72,8 @@ class P0OfflineQualificationTest(unittest.TestCase):
             "regression-gated-self-evolution":"hold",
             "compositional-update-compatibility":"hold-composition-matrix-missing",
             "lineage-aware-rollback":"hold-history-too-short",
-            "counterfactual-evolution-decision-controller":"hold-four-action-counterfactuals-missing",
             "contradiction-preserving-consolidation":"hold-support-cardinality-insufficient",
-            "retrieval-interference-auditor":"hold-co-retrieval-arms-missing",
+            "retrieval-interference-auditor":"hold-real-cinteraction-runtime",
             "local-counterexample-memory-repair":"hold-boundary-dataset-missing",
             "memory-half-life":"hold-longitudinal-reuse-missing",
             "evaluator-coadaptation-guard":"hold-cross-version-matrix-missing",
@@ -78,7 +82,7 @@ class P0OfflineQualificationTest(unittest.TestCase):
         }
         for idea_id,status in expected.items():
             self.assertEqual(by_id[idea_id]["gpu0"]["status"],status,idea_id)
-        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],11)
+        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],10)
 
 
 if __name__=="__main__":
