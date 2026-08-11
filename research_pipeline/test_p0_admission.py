@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
-from .p0_admission import build_p0_admission_state, validate_p0_admission_state
+from .p0_admission import build_p0_admission_state, validate_p0_admission_state, write_p0_admission_state
 
 
 class P0AdmissionTest(unittest.TestCase):
@@ -32,24 +35,36 @@ class P0AdmissionTest(unittest.TestCase):
         for idea_id in ("replicated-effect-memory-gate","cross-task-effect-transport-certificate"):
             row=next(card for card in self.state["cards"] if card["idea_id"]==idea_id)
             self.assertFalse(row["execution_preflight"]["execution_authorized"])
-            self.assertEqual(row["execution_preflight"]["blockers"],["p0-complete-second-model-hold"])
+            self.assertEqual(row["execution_preflight"]["blockers"],["economy-gate","p0-complete-second-model-hold"])
+        self.assertEqual(self.state["summary"]["economy_ready"], 0)
+        self.assertEqual(self.state["economy_gate"]["summary"]["matched_simplification_stops"], 12)
+        self.assertEqual(self.state["economy_gate"]["summary"]["substrate_stops"], 4)
         self.assertEqual(self.state["summary"]["execution_blocked_or_pending"], 20)
         transitioned = [row for row in self.state["cards"] if (row.get("p0_entry") or {}).get("date") == "2026-08-11"]
         self.assertEqual(len(transitioned), 16)
         self.assertTrue(all(not row["execution_preflight"]["execution_authorized"] for row in transitioned))
         self.assertTrue(all(row["setup"]["max_gpus"] == 1 and row["setup"]["gpu_hours_cap"] <= 12 for row in transitioned))
         b10=next(row for row in transitioned if row["idea_id"]=="constraint-complete-typed-memory-order-logic")
-        self.assertEqual(b10["execution_preflight"]["blockers"],["p0-stop-await-human-review"])
+        self.assertEqual(b10["execution_preflight"]["blockers"],["economy-gate","p0-stop-await-human-review"])
         self.assertEqual(b10["execution_preflight"]["gpu0"]["status"],"stop-matched-nary-equivalent")
         a6=next(row for row in transitioned if row["idea_id"]=="active-causal-minimal-rollback")
-        self.assertEqual(a6["execution_preflight"]["blockers"],["p0-stop-await-human-review"])
+        self.assertEqual(a6["execution_preflight"]["blockers"],["economy-gate","p0-stop-await-human-review"])
         self.assertEqual(a6["execution_preflight"]["gpu0"]["status"],"stop-matched-group-testing-equivalent")
         e3=next(row for row in transitioned if row["idea_id"]=="bounded-probe-api-transition-operator")
-        self.assertEqual(e3["execution_preflight"]["blockers"],["p0-stop-await-human-review"])
+        self.assertEqual(e3["execution_preflight"]["blockers"],["economy-gate","p0-stop-await-human-review"])
         self.assertEqual(e3["execution_preflight"]["gpu0"]["status"],"stop-stateful-deterministic-pex-ceiling")
         e4=next(row for row in transitioned if row["idea_id"]=="interventional-permission-triage-under-ceiling")
-        self.assertEqual(e4["execution_preflight"]["blockers"],["p0-stop-await-human-review"])
+        self.assertEqual(e4["execution_preflight"]["blockers"],["economy-gate","p0-stop-await-human-review"])
         self.assertEqual(e4["execution_preflight"]["gpu0"]["status"],"stop-matched-boolean-rule-equivalent")
+
+    def test_public_admission_compacts_economy_compiler_details(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); write_p0_admission_state(root/'state.json',root/'state.js'); public=json.loads((root/'state.json').read_text())
+        self.assertEqual(public['summary']['economy_ready'],0)
+        for card in public['cards']:
+            econ=card['execution_preflight']['economy_gate']
+            for gate in econ['gates']:
+                self.assertNotIn('evidence',gate)
 
 
 if __name__ == "__main__":

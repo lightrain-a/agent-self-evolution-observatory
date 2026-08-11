@@ -10,6 +10,7 @@ from .human_terminal_state import load_independent_methods, load_parents
 from .pre_experiment_specs import GATES as OUTER_GATES
 from .pre_p0_identifiability import CHECKS as PRE_P0_CHECKS
 from .p0_offline_qualification import build_p0_offline_qualification_state
+from .p0_economy_gate import evaluate_economy_card, build_economy_state, POLICY as ECONOMY_POLICY
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "p0-admission-state.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "p0-admission-state.js"
@@ -17,7 +18,8 @@ ADMISSION_KEYS = ("stable_code_group","frozen_mechanism","collision_review","str
 POLICY = {
     "stage_semantics":"P0 lifecycle entry is distinct from execution authorization",
     "entry_requires":"10/10 admission checks",
-    "execution_requires":"GPU-0 + Pre-P0 10/10 + updater competence + Pre-Experiment 8/8 + runtime smoke",
+    "execution_requires":"Economy 5/5 + GPU-0 + Pre-P0 10/10 + updater competence + Pre-Experiment 8/8 + runtime smoke",
+    "economy_gate":"pre-execution resource-economy layer; not a ninth Pre-Experiment gate",
     "max_gpus":1,"gpu_hours_cap":12,"wall_hours_cap":12,"seed":42,
     "second_backbone_locked":True,"hidden_test_locked_before_freeze":True,
     "p1_requires_human_approval":True,"streaming_artifacts":True,
@@ -121,6 +123,7 @@ def _contract(idea_id: str, row: dict[str, Any]) -> dict[str, str]:
       "pre_p0":f.get("pre_p0") or _txt(row.get("pre_p0_gate")),
       "minimum_p0":f.get("minimum_p0") or _txt(row.get("minimum_p0")),
       "stop":f.get("stop") or _txt(row.get("exact_stop")),
+      "economy":row.get("economy_contract") or {},
     }
 
 def _gpu0(idea_id: str) -> dict[str,str]:
@@ -141,7 +144,7 @@ def _memory_execution_state() -> dict[str, Any]:
     in_progress=str(progress.get("status") or "") in {"full_qwen_support_running","full_support_table_running"} and not complete
     return {"complete":complete,"in_progress":in_progress,"second_model_authorized":bool(decision.get("second_model_authorized")),"progress_status":progress.get("status")}
 
-def _preflight(idea_id: str, offline: dict[str, Any] | None = None) -> dict[str, Any]:
+def _preflight(idea_id: str, offline: dict[str, Any] | None = None, contract: dict[str, Any] | None = None, setup: dict[str, Any] | None = None) -> dict[str, Any]:
     memory_lifecycle=idea_id in {"replicated-effect-memory-gate","cross-task-effect-transport-certificate"}
     memory_state=_memory_execution_state() if memory_lifecycle else {}
     running=bool(memory_lifecycle and memory_state.get("in_progress"))
@@ -163,6 +166,7 @@ def _preflight(idea_id: str, offline: dict[str, Any] | None = None) -> dict[str,
         ok=memory_lifecycle or g["key"] in {"parameter_provenance","statistical_resolution","compute_graph","observability_recovery","outcome_semantics"} or (g["key"]=="baseline_competence" and competence_pass)
         outer.append({"key":g["key"],"status":"pass" if ok else "pending-evidence"})
     updater=(offline or {}).get("updater_competence") or {"status":"pass" if memory_lifecycle else "pending-evidence","passed":memory_lifecycle}
+    economy=evaluate_economy_card(idea_id,offline,contract,setup)
     blockers=[]
     if completed_memory:
         blockers=["p0-complete-second-model-hold"] if not memory_state.get("second_model_authorized") else ["p0-complete-await-explicit-second-model-launch"]
@@ -175,13 +179,16 @@ def _preflight(idea_id: str, offline: dict[str, Any] | None = None) -> dict[str,
             blockers.append("pre-p0-empirical-checks")
             if not updater.get("passed"): blockers.append("updater-competence")
             blockers += ["outer-identifiability/competence/throughput","runtime-smoke"]
+    if not economy.get("execution_compilation_authorized"):
+        blockers.insert(0,"economy-gate")
     return {
       "gpu0":gpu0,
       "pre_p0":{"passed":sum(x["status"]=="pass" for x in pre),"total":len(pre),"checks":pre},
       "updater_competence":{**updater,"not_a_ninth_gate":True},
       "pre_experiment":{"passed":sum(x["status"]=="pass" for x in outer),"total":len(outer),"gates":outer},
+      "economy_gate":economy,
       "runtime_throughput":{"status":"complete" if completed_memory else ("pass" if running else "pending-harness-smoke")},
-      "execution_authorized":running,"blockers":blockers,
+      "execution_authorized":running and bool(economy.get("execution_compilation_authorized")),"blockers":blockers,
     }
 
 def _setup(idea_id: str) -> dict[str, Any]:
@@ -191,6 +198,7 @@ def _setup(idea_id: str) -> dict[str, Any]:
       "second_backbone":"LOCKED until first-model P0 gate + explicit human approval",
       "adaptive_repeats":"threshold-near/high-variance only; max 3/unit","checkpoint_every_units":6,
       "streaming_trace":"jsonl + atomic progress.json","exclusive_output_lock":True,
+      "authority_mode":"single-writer-lease","authority_epoch_required":True,
       "resume_from_checkpoint":True,"overwrite_nonempty_run":False}
 
 def build_p0_admission_state() -> dict[str, Any]:
@@ -213,7 +221,7 @@ def build_p0_admission_state() -> dict[str, Any]:
         if code in seen: checks.append({"key":"unique_code","pass":False})
         seen.add(code)
         entry=row.get("p0_entry") or {"date":"historical","basis":"pre-existing-p0-artifact"}
-        preflight=_preflight(idea_id,offline_by_id.get(idea_id))
+        preflight=_preflight(idea_id,offline_by_id.get(idea_id),contract,setup)
         if row.get("p0_decision") in {"STOP_REPAIR_SOFT_AUDIT_SIMPLE_TRIAGE_DOMINATES","STOP_REPAIR_FIXED_HORIZON_DOMINATES"}:
             preflight["gpu0"]={"status":"stop-repair-f0","evidence":row.get("p0_decision"),"next":"merge/drop review; no GPU rerun"}
             preflight["execution_authorized"]=False; preflight["blockers"]=["p0-repair-stop-await-human-review"]
@@ -224,9 +232,11 @@ def build_p0_admission_state() -> dict[str, Any]:
           "admission_status":"admitted" if all(x["pass"] for x in checks) else "blocked",
           "admission_checks":checks,"contract":contract,"setup":setup,"execution_preflight":preflight})
     transitioned=[c for c in cards if (c.get("p0_entry") or {}).get("date")=="2026-08-11"]
-    return {"schema_version":"1.0","generated_at":_now(),"policy":POLICY,
+    economy_state=build_economy_state(cards)
+    return {"schema_version":"1.0","generated_at":_now(),"policy":{**POLICY,"economy":ECONOMY_POLICY},"economy_gate":economy_state,
       "summary":{"active_p0":len(cards),"admitted":sum(c["admission_status"]=="admitted" for c in cards),
         "transitioned_from_p0_ready":len(transitioned),"settings_complete":sum(all(x["pass"] for x in c["admission_checks"]) for c in cards),
+        "economy_ready":economy_state["summary"]["economy_ready"],
         "execution_authorized":sum(bool(c["execution_preflight"]["execution_authorized"]) for c in cards),
         "execution_blocked_or_pending":sum(not bool(c["execution_preflight"]["execution_authorized"]) for c in cards)},"cards":cards}
 
@@ -240,14 +250,30 @@ def validate_p0_admission_state(state: dict[str, Any]) -> list[str]:
     if not all(codes) or len(codes)!=len(set(codes)): errors.append("P0 codes must be non-empty and unique")
     if any(c["setup"]["max_gpus"]>1 or c["setup"]["gpu_hours_cap"]>12 for c in state["cards"]): errors.append("P0 resource cap exceeded")
     if any(c["execution_preflight"]["execution_authorized"] and c["execution_preflight"]["blockers"] for c in state["cards"]): errors.append("authorized P0 cannot have blockers")
+    if any(c["execution_preflight"]["execution_authorized"] and not (c["execution_preflight"].get("economy_gate") or {}).get("execution_compilation_authorized") for c in state["cards"]): errors.append("Economy Gate must pass before execution authorization")
+    if not state["policy"]["economy"]["all_five_required_before_execution_compilation"]: errors.append("Economy 5/5 policy missing")
     return errors
+
+def _public_p0_admission_state(state:dict[str,Any])->dict[str,Any]:
+    cards=[]
+    for card in state.get("cards") or []:
+        row={**card}; pre={**(row.get("execution_preflight") or {})}; econ=pre.get("economy_gate") or {}
+        pre["economy_gate"]={
+            "status":econ.get("status"),"execution_compilation_authorized":bool(econ.get("execution_compilation_authorized")),
+            "passed_gates":econ.get("passed_gates",0),"gate_count":econ.get("gate_count",5),"primary_stop_class":econ.get("primary_stop_class"),
+            "gates":[{k:g.get(k) for k in ("key","status","pass","reason")} for g in econ.get("gates") or []],
+        }
+        row["execution_preflight"]=pre; cards.append(row)
+    economy=state.get("economy_gate") or {}
+    return {**state,"economy_gate":{"schema_version":economy.get("schema_version"),"generated_at":economy.get("generated_at"),"policy":economy.get("policy"),"gates":economy.get("gates"),"summary":economy.get("summary")},"cards":cards}
 
 def write_p0_admission_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS)->dict[str,Any]:
     state=build_p0_admission_state(); errors=validate_p0_admission_state(state)
     if errors: raise ValueError("Invalid P0 admission state:\n- "+"\n- ".join(errors))
+    public=_public_p0_admission_state(state)
     json_path.parent.mkdir(parents=True,exist_ok=True)
-    json_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    js_path.write_text("window.P0_ADMISSION_STATE = "+json.dumps(state,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
+    json_path.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    js_path.write_text("window.P0_ADMISSION_STATE = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
     return state
 
 if __name__=="__main__": print(json.dumps(write_p0_admission_state(),ensure_ascii=False))

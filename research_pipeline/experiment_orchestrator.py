@@ -11,10 +11,21 @@ from pathlib import Path
 from typing import Any
 
 from .p0_common import CONFIG_DIR, load_json
+from .p0_admission import build_p0_admission_state
+from .config import StorageSettings, resolve_experiment_data_root
+from .experiment_authority import acquire_authority, release_authority
 
 
 PROFILE_PATH = CONFIG_DIR / "experiment_orchestrator_profiles.json"
 ACTIVE_STATES = {"running", "collected"}
+
+
+def local_economy_preflight(idea_id: str) -> dict[str, Any]:
+    state = build_p0_admission_state()
+    for card in state.get("cards") or []:
+        if str(card.get("idea_id")) == idea_id:
+            return (card.get("execution_preflight") or {}).get("economy_gate") or {}
+    return {"status": "missing", "execution_compilation_authorized": False, "gates": []}
 
 
 @dataclass(frozen=True)
@@ -288,6 +299,10 @@ def build_launch_plan(
     if registered and not allow_repeat:
         where = ", ".join(f"{row['server_id']}:{row.get('result', 'registered')}" for row in registered)
         raise RuntimeError(f"{idea_id} already has a registered P0 ({where}); use --allow-repeat only for an intentional repaired protocol")
+    economy = local_economy_preflight(idea_id)
+    if economy.get("execution_compilation_authorized") is not True:
+        failed = [str(g.get("key")) for g in economy.get("gates") or [] if g.get("pass") is not True]
+        raise RuntimeError(f"{idea_id} blocked by P0 Economy Gate: " + ", ".join(failed or [str(economy.get('status') or 'blocked')]))
 
     server, gpu = choose_slot(
         cluster,
@@ -342,6 +357,7 @@ def build_launch_plan(
         "gpu_free_mib": int(gpu["memory_free_mib"]),
         "gpu_utilization_pct": int(gpu["utilization_gpu_pct"]),
         "runtime_contract_hash": str((server.get("preflight") or {}).get("runtime_contract_hash") or ""),
+        "economy_gate": economy,
         "pre_experiment_card": pre_experiment,
         "pre_experiment_status": f"{pre_experiment.get('passed_gates', 0)}/{pre_experiment.get('gate_count', 8)}",
         "run_id": run_id,
@@ -440,10 +456,19 @@ def build_qualification_plan(
 
 def launch_plan(plan: dict[str, Any], profiles: list[ServerProfile]) -> dict[str, Any]:
     profile = profile_by_id(profiles, str(plan["server_id"]))
-    run_remote(profile, str(plan["remote_command"]), timeout=15)
-    session = str(plan["tmux_session"])
-    verify = run_remote(profile, f"tmux has-session -t {shlex.quote(session)} 2>/dev/null && echo running || echo missing")
-    return {**plan, "launch_checked_at": utc_now(), "tmux_status": verify.strip()}
+    root = resolve_experiment_data_root(StorageSettings.from_env())
+    plan_hash = str((plan.get("pre_experiment_card") or {}).get("config_sha256") or plan.get("runtime_contract_hash") or plan.get("run_id"))
+    authority = acquire_authority(root, str(plan["idea_id"]), plan_hash, "experiment-orchestrator", str(plan.get("mode") or "execute"), str(plan["run_id"]))
+    try:
+        run_remote(profile, str(plan["remote_command"]), timeout=15)
+        session = str(plan["tmux_session"])
+        verify = run_remote(profile, f"tmux has-session -t {shlex.quote(session)} 2>/dev/null && echo running || echo missing")
+        if verify.strip() != "running":
+            release_authority(root, str(plan["idea_id"]), str(authority["authority_id"]), "launch-missing")
+        return {**plan, "authority": authority, "launch_checked_at": utc_now(), "tmux_status": verify.strip()}
+    except Exception:
+        release_authority(root, str(plan["idea_id"]), str(authority["authority_id"]), "launch-error")
+        raise
 
 
 def mark_remote_execution_failed(profile: ServerProfile, idea_id: str, reason: str) -> None:
@@ -472,6 +497,10 @@ def stop_plan(plan: dict[str, Any], profiles: list[ServerProfile]) -> dict[str, 
     profile = profile_by_id(profiles, str(plan["server_id"]))
     session = str(plan["tmux_session"])
     run_remote(profile, f"tmux kill-session -t {shlex.quote(session)} 2>/dev/null || true")
+    authority = plan.get("authority") or {}
+    if authority.get("authority_id"):
+        root = resolve_experiment_data_root(StorageSettings.from_env())
+        release_authority(root, str(plan["idea_id"]), str(authority["authority_id"]), "orchestrator-stop")
     return {**plan, "stopped_at": utc_now(), "tmux_status": "stopped"}
 
 

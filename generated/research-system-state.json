@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T12:54:41.980408+00:00",
+  "generated_at": "2026-08-11T13:17:15+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "/data/wyt/agent-self-evolution-observatory/publish-persistent-governance-20260811-r3/generated/research-data",
@@ -100,7 +100,12 @@
     "p0_b3_real_decision": null,
     "p0_e1_decision": "STOP_CURRENT_EDIT_TABLE_RANKING_DEGENERATE",
     "p0_a1_repair_decision": "STOP_REPAIR_SOFT_AUDIT_SIMPLE_TRIAGE_DOMINATES",
-    "p0_a2_repair_decision": "STOP_REPAIR_FIXED_HORIZON_DOMINATES"
+    "p0_a2_repair_decision": "STOP_REPAIR_FIXED_HORIZON_DOMINATES",
+    "p0_admission_economy_ready": 0,
+    "p0_economy_matched_simplification_stops": 12,
+    "p0_economy_substrate_stops": 4,
+    "p0_decision_ledger_stopped": 20,
+    "p0_decision_ledger_launchable": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -52166,6 +52171,30 @@
         "en": "Only sandboxed/manual experiment execution is allowed; results can still flow back automatically.",
         "zh": "只允许沙箱或人工确认后的实验执行；合法结果仍可自动回流。"
       }
+    },
+    {
+      "source": "P0 retrospective economy review",
+      "component": {
+        "en": "Five-gate P0 Economy layer",
+        "zh": "P0 五门资源经济层"
+      },
+      "status": "running",
+      "evidence": {
+        "en": "12 matched-simplification stops / 4 substrate stops / 0 currently economy-ready",
+        "zh": "12 个简化基线 STOP / 4 个底座 STOP / 当前 0 个 Economy-ready"
+      }
+    },
+    {
+      "source": "Unified P0 decision ledger",
+      "component": {
+        "en": "Current experiment-decision ledger",
+        "zh": "统一 P0 当前决策账本"
+      },
+      "status": "running",
+      "evidence": {
+        "en": "20 active rows / 20 stopped awaiting review / 0 launchable",
+        "zh": "20 条活跃记录 / 20 条实验 STOP 待人工 / 0 条可启动"
+      }
     }
   ],
   "health": {
@@ -52312,18 +52341,6 @@
         }
       },
       {
-        "key": "p0-admission",
-        "pass": true,
-        "detail": {
-          "active_p0": 20,
-          "admitted": 20,
-          "transitioned_from_p0_ready": 16,
-          "settings_complete": 20,
-          "execution_authorized": 0,
-          "execution_blocked_or_pending": 20
-        }
-      },
-      {
         "key": "final-advisor-gate",
         "pass": true,
         "detail": {
@@ -52331,6 +52348,50 @@
           "target": 20,
           "revise": 0,
           "block": 0
+        }
+      },
+      {
+        "key": "p0-admission",
+        "pass": true,
+        "detail": {
+          "active_p0": 20,
+          "admitted": 20,
+          "transitioned_from_p0_ready": 16,
+          "settings_complete": 20,
+          "economy_ready": 0,
+          "execution_authorized": 0,
+          "execution_blocked_or_pending": 20
+        }
+      },
+      {
+        "key": "p0-economy-gate",
+        "pass": true,
+        "detail": {
+          "ideas": 20,
+          "economy_ready": 0,
+          "blocked_or_stopped": 20,
+          "stop_classes": {
+            "substrate": 4,
+            "matched-simplification": 12
+          },
+          "matched_simplification_stops": 12,
+          "substrate_stops": 4,
+          "voi_stops": 0
+        }
+      },
+      {
+        "key": "p0-decision-ledger",
+        "pass": true,
+        "detail": {
+          "active_p0": 20,
+          "state_counts": {
+            "experiment-stop-await-human-review": 20
+          },
+          "experiment_stopped": 20,
+          "economy_blocked": 0,
+          "compile_blocked": 0,
+          "launchable": 0,
+          "execution_authorized": 0
         }
       },
       {
@@ -52363,13 +52424,15 @@
       "admitted": 20,
       "transitioned_from_p0_ready": 16,
       "settings_complete": 20,
+      "economy_ready": 0,
       "execution_authorized": 0,
       "execution_blocked_or_pending": 20
     },
     "policy": {
       "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
       "entry_requires": "10/10 admission checks",
-      "execution_requires": "GPU-0 + Pre-P0 10/10 + updater competence + Pre-Experiment 8/8 + runtime smoke",
+      "execution_requires": "Economy 5/5 + GPU-0 + Pre-P0 10/10 + updater competence + Pre-Experiment 8/8 + runtime smoke",
+      "economy_gate": "pre-execution resource-economy layer; not a ninth Pre-Experiment gate",
       "max_gpus": 1,
       "gpu_hours_cap": 12,
       "wall_hours_cap": 12,
@@ -52392,7 +52455,20 @@
         "RUNTIME-ERROR",
         "IMPLEMENTATION-ERROR",
         "BUDGET-STOP"
-      ]
+      ],
+      "economy": {
+        "schema_version": "1.0",
+        "stage_semantics": "resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate",
+        "all_five_required_before_execution_compilation": true,
+        "matched_simplification_must_precede_gpu": true,
+        "substrate_inventory_must_precede_hidden_or_gpu": true,
+        "causal_unit_and_observable_must_be_explicit": true,
+        "gpu_requires_decision_changing_voi": true,
+        "single_writer_authority_required": true,
+        "economy_failure_cannot_emit_method_fail": true,
+        "micro_p0_fraction_max": 0.2,
+        "second_backbone_cannot_rescue_failed_economy_gate": true
+      }
     }
   },
   "p0_offline_qualification": {
@@ -52422,6 +52498,77 @@
       "representability_only": true,
       "cannot_unblock_reality_or_effect_variation": true,
       "cannot_emit_method_result": true
+    }
+  },
+  "p0_economy_gate": {
+    "summary": {
+      "ideas": 20,
+      "economy_ready": 0,
+      "blocked_or_stopped": 20,
+      "stop_classes": {
+        "substrate": 4,
+        "matched-simplification": 12
+      },
+      "matched_simplification_stops": 12,
+      "substrate_stops": 4,
+      "voi_stops": 0
+    },
+    "policy": {
+      "schema_version": "1.0",
+      "stage_semantics": "resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate",
+      "all_five_required_before_execution_compilation": true,
+      "matched_simplification_must_precede_gpu": true,
+      "substrate_inventory_must_precede_hidden_or_gpu": true,
+      "causal_unit_and_observable_must_be_explicit": true,
+      "gpu_requires_decision_changing_voi": true,
+      "single_writer_authority_required": true,
+      "economy_failure_cannot_emit_method_fail": true,
+      "micro_p0_fraction_max": 0.2,
+      "second_backbone_cannot_rescue_failed_economy_gate": true
+    },
+    "gates": [
+      {
+        "key": "matched_simplification",
+        "title": "Matched-Simplification Headroom"
+      },
+      {
+        "key": "substrate_inventory",
+        "title": "Substrate / Support Inventory"
+      },
+      {
+        "key": "causal_unit_observable",
+        "title": "Causal Unit & Observable"
+      },
+      {
+        "key": "decision_voi",
+        "title": "Decision-Changing Value of Information"
+      },
+      {
+        "key": "single_writer_authority",
+        "title": "Single-Writer Experiment Authority"
+      }
+    ]
+  },
+  "p0_decision_ledger": {
+    "summary": {
+      "active_p0": 20,
+      "state_counts": {
+        "experiment-stop-await-human-review": 20
+      },
+      "experiment_stopped": 20,
+      "economy_blocked": 0,
+      "compile_blocked": 0,
+      "launchable": 0,
+      "execution_authorized": 0
+    },
+    "policy": {
+      "schema_version": "1.0",
+      "one_current_row_per_active_p0": true,
+      "lifecycle_and_execution_decision_are_separate": true,
+      "economy_stop_overrides_planned_registry_display": true,
+      "execution_artifact_overrides_plan": true,
+      "human_terminal_state_remains_lifecycle_authority": true,
+      "scientific_stop_does_not_rewrite_p0_lifecycle": true
     }
   }
 }

@@ -28,6 +28,7 @@ from .p0_b10_cpu import write_b10_cpu_p0
 from .p0_a6_cpu import write_a6_cpu_p0
 from .p0_offline_qualification import build_p0_offline_qualification_state, write_p0_offline_qualification_state
 from .p0_realizability_suite import build_p0_realizability_suite, write_p0_realizability_suite
+from .p0_decision_ledger import build_p0_decision_ledger, write_p0_decision_ledger
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
 from .pre_experiment_specs import GATES as PRE_EXPERIMENT_GATES, POLICY as PRE_EXPERIMENT_POLICY
 from .pre_p0_identifiability import build_pre_p0_identifiability_audit
@@ -100,6 +101,8 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     pilots = state["pilot_registry"]["summary"]
     pre_p0 = state["pre_p0_identifiability"]["summary"]
     pre_experiment = state["pre_experiment_compiler"]["summary"]
+    economy = state["p0_economy_gate"]["summary"]
+    p0_ledger = state["p0_decision_ledger"]["summary"]
     iteration = state["experiment_iteration"]["summary"]
     repairs = state["repair_queue"]["summary"]
     terminal = state["human_terminal_ideas"]["summary"]
@@ -117,6 +120,8 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"ResearchAgent / MOOSE-Chem / Co-Scientist / HypoRefine / Virtual Scientists / autoresearch", "component":{"en":"Constrained composition and conditional revival","zh":"受约束组合与条件复活"}, "status":"running", "evidence":{"en":f"{v4['raw_candidates']} v4 candidates / {v4['tournament_finalists']} finalists / {v4['external_reviewed']} reviewed","zh":f"{v4['raw_candidates']} 个 v4 候选 / {v4['tournament_finalists']} 个 finalists / {v4['external_reviewed']} 个已复核"}},
         {"source":"HypoRefine / IdeaForge / ScholarEval / InnoEval / SciAtlas / InternAgent / AutoScientists", "component":{"en":"Wide-search simplification-challenge ideation","zh":"宽搜索与简化挑战式 Idea 发现"}, "status":"running", "evidence":{"en":f"{v5['raw_candidates']} v5 candidates / {v5['external_reviewed']} R2 reviewed / {v5['external_pass']} PASS","zh":f"{v5['raw_candidates']} 个 v5 候选 / {v5['external_reviewed']} 个 R2 已审 / {v5['external_pass']} 个 PASS"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Pre-P0 identifiability auditor","zh":"Pre-P0 实验可识别性审计"}, "status":"running", "evidence":{"en":f"{pre_p0['execution_ready']}/{pre_p0['audited']} retrospective contracts execution-ready","zh":f"当前 {pre_p0['execution_ready']}/{pre_p0['audited']} 份 retrospective 合同允许启动"}},
+        {"source":"P0 retrospective economy review", "component":{"en":"Five-gate P0 Economy layer","zh":"P0 五门资源经济层"}, "status":"running", "evidence":{"en":f"{economy['matched_simplification_stops']} matched-simplification stops / {economy['substrate_stops']} substrate stops / {economy['economy_ready']} currently economy-ready","zh":f"{economy['matched_simplification_stops']} 个简化基线 STOP / {economy['substrate_stops']} 个底座 STOP / 当前 {economy['economy_ready']} 个 Economy-ready"}},
+        {"source":"Unified P0 decision ledger", "component":{"en":"Current experiment-decision ledger","zh":"统一 P0 当前决策账本"}, "status":"running", "evidence":{"en":f"{p0_ledger['active_p0']} active rows / {p0_ledger['experiment_stopped']} stopped awaiting review / {p0_ledger['launchable']} launchable","zh":f"{p0_ledger['active_p0']} 条活跃记录 / {p0_ledger['experiment_stopped']} 条实验 STOP 待人工 / {p0_ledger['launchable']} 条可启动"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Updater-competence prerequisite + eight-gate Pre-Experiment Compiler","zh":"Updater Competence 前置条件 + 八门实验启动前编译器"}, "status":"running", "evidence":{"en":f"updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / launch-ready {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']} / formal P0 {pre_experiment['formal_p0_ready']}/{pre_experiment['formal_p0_total']}","zh":f"Updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / 可启动 {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']} / formal P0 {pre_experiment['formal_p0_ready']}/{pre_experiment['formal_p0_total']}"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Pilot registry and result feedback","zh":"Pilot 注册表与结果回流"}, "status":"running", "evidence":{"en":f"{pilots['phases']} phases / {pilots['valid_result_files']} executed results","zh":f"{pilots['phases']} 个阶段 / {pilots['valid_result_files']} 个已执行结果"}},
         {"source":"AI-Scientist-v2 / AIDE / RD-Agent / ML-Master / AIRA / Agent Laboratory", "component":{"en":"Experiment diagnosis and atomic repair tree","zh":"实验诊断与原子修复树"}, "status":"running", "evidence":{"en":f"{iteration['nodes']} pilot nodes / {iteration['repair_children']} atomic repair children / {iteration['scale_up_allowed']} scale-up","zh":f"{iteration['nodes']} 个 Pilot 节点 / {iteration['repair_children']} 个原子修复子节点 / {iteration['scale_up_allowed']} 个可扩大"}},
@@ -195,6 +200,10 @@ def build_research_system_state() -> dict[str, Any]:
     p0_offline_qualification = build_p0_offline_qualification_state()
     p0_admission = build_p0_admission_state()
     p0_admission_public = {"summary": p0_admission["summary"], "policy": p0_admission["policy"]}
+    p0_economy_gate = p0_admission["economy_gate"]
+    p0_economy_public = {"summary": p0_economy_gate["summary"], "policy": p0_economy_gate["policy"], "gates": p0_economy_gate["gates"]}
+    p0_decision_ledger = build_p0_decision_ledger(p0_admission, p0_offline_qualification, human_terminal_ideas)
+    p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
     p0_offline_public = {"summary": p0_offline_qualification["summary"], "policy": p0_offline_qualification["policy"]}
     p0_realizability_public = {"summary": p0_realizability["summary"], "policy": p0_realizability["policy"]}
     repair_queue = build_repair_queue(idea_bank, collision_engine, pilot_registry, experiment_iteration)
@@ -251,7 +260,12 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_admission_active":p0_admission["summary"]["active_p0"],
             "p0_admission_transitioned":p0_admission["summary"]["transitioned_from_p0_ready"],
             "p0_admission_settings_complete":p0_admission["summary"]["settings_complete"],
+            "p0_admission_economy_ready":p0_admission["summary"]["economy_ready"],
             "p0_admission_execution_authorized":p0_admission["summary"]["execution_authorized"],
+            "p0_economy_matched_simplification_stops":p0_economy_gate["summary"]["matched_simplification_stops"],
+            "p0_economy_substrate_stops":p0_economy_gate["summary"]["substrate_stops"],
+            "p0_decision_ledger_stopped":p0_decision_ledger["summary"]["experiment_stopped"],
+            "p0_decision_ledger_launchable":p0_decision_ledger["summary"]["launchable"],
             "p0_offline_checks_passed":p0_offline_qualification["summary"]["checks_passed"],
             "p0_offline_checks_failed":p0_offline_qualification["summary"]["checks_failed"],
             "p0_offline_checks_pending":p0_offline_qualification["summary"]["checks_pending"],
@@ -318,6 +332,8 @@ def build_research_system_state() -> dict[str, Any]:
         "experiment_iteration":experiment_iteration,
         "human_terminal_ideas":human_terminal_ideas,
         "p0_admission":p0_admission_public,
+        "p0_economy_gate":p0_economy_public,
+        "p0_decision_ledger":p0_decision_ledger_public,
         "p0_offline_qualification":p0_offline_public,
         "p0_realizability":p0_realizability_public,
         "repair_queue":repair_queue,
@@ -350,6 +366,8 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"mem-xfer-workflow", "pass":state["mem_xfer_workflow"]["full_table"]["status"] == "full_table_collected" and state["mem_xfer_workflow"]["offline_analysis"]["status"] == "offline_analysis_complete" and state["mem_xfer_workflow"]["support_qualification"]["status"] == "support_qualification_pass" and state["mem_xfer_workflow"]["full_support"]["status"] == "full_support_complete" and state["mem_xfer_workflow"]["support_enriched_analysis"]["status"] == "support_enriched_analysis_complete" and (state["mem_xfer_workflow"]["support_enriched_analysis"].get("decision") or {}).get("method_failure_authorized") is False and state["mem_xfer_workflow"]["second_model"]["status"] == "second_model_hold", "detail":{"old_full":state["mem_xfer_workflow"]["full_table"]["status"],"old_offline":state["mem_xfer_workflow"]["offline_analysis"]["status"],"support_qualification":state["mem_xfer_workflow"]["support_qualification"]["status"],"full_support":state["mem_xfer_workflow"]["full_support"]["status"],"cpu_gate":state["mem_xfer_workflow"]["support_enriched_analysis"]["status"],"second_model":state["mem_xfer_workflow"]["second_model"]["status"]}},
         {"key":"human-terminal-ledger", "pass":state["human_terminal_ideas"]["summary"].get("human_parents") == 26 and (state["human_terminal_ideas"]["summary"].get("p0"),state["human_terminal_ideas"]["summary"].get("p0_ready"),state["human_terminal_ideas"]["summary"].get("merge"),state["human_terminal_ideas"]["summary"].get("drop")) == (13,0,6,7), "detail":state["human_terminal_ideas"]["summary"]},
         {"key":"p0-admission", "pass":state["p0_admission"]["summary"].get("active_p0") == 20 and state["p0_admission"]["summary"].get("admitted") == 20 and state["p0_admission"]["summary"].get("transitioned_from_p0_ready") == 16 and state["p0_admission"]["summary"].get("settings_complete") == 20, "detail":state["p0_admission"]["summary"]},
+        {"key":"p0-economy-gate", "pass":state["p0_economy_gate"]["summary"].get("matched_simplification_stops") == 12 and state["p0_economy_gate"]["summary"].get("substrate_stops") == 4 and state["p0_economy_gate"]["policy"].get("all_five_required_before_execution_compilation") is True, "detail":state["p0_economy_gate"]["summary"]},
+        {"key":"p0-decision-ledger", "pass":state["p0_decision_ledger"]["summary"].get("active_p0") == 20 and state["p0_decision_ledger"]["summary"].get("launchable") == 0 and state["p0_decision_ledger"]["policy"].get("economy_stop_overrides_planned_registry_display") is True, "detail":state["p0_decision_ledger"]["summary"]},
         {"key":"p0-offline-qualification", "pass":state["p0_offline_qualification"]["summary"].get("ideas") == 16 and state["p0_offline_qualification"]["policy"].get("method_result_from_offline_qualification_forbidden") is True, "detail":state["p0_offline_qualification"]["summary"]},
         {"key":"p0-realizability", "pass":state["p0_realizability"]["summary"].get("audited") == 14 and state["p0_realizability"]["policy"].get("cannot_emit_method_result") is True, "detail":state["p0_realizability"]["summary"]},
         {"key":"final-advisor-gate", "pass":state["summary"]["final_ready"] and state["summary"]["final_pass"] == state["summary"]["discussion_target"] and state["summary"]["final_revise"] == 0 and state["summary"]["final_block"] == 0, "detail":{"pass":state["summary"]["final_pass"],"target":state["summary"]["discussion_target"],"revise":state["summary"]["final_revise"],"block":state["summary"]["final_block"]}},
@@ -402,6 +420,13 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     terminal_summary = state["human_terminal_ideas"]["summary"]
     if terminal_summary.get("human_parents") != 26 or (terminal_summary.get("p0"), terminal_summary.get("p0_ready"), terminal_summary.get("merge"), terminal_summary.get("drop")) != (13,0,6,7): errors.append("human terminal ledger mismatch")
     if state["p0_admission"]["summary"].get("active_p0") != 20 or state["p0_admission"]["summary"].get("admitted") != 20 or state["p0_admission"]["summary"].get("transitioned_from_p0_ready") != 16 or state["p0_admission"]["summary"].get("settings_complete") != 20: errors.append("P0 admission ledger mismatch")
+    economy = state.get("p0_economy_gate") or {}
+    if (economy.get("summary") or {}).get("matched_simplification_stops") != 12 or (economy.get("summary") or {}).get("substrate_stops") != 4: errors.append("P0 Economy retrospective stop classification mismatch")
+    if (economy.get("policy") or {}).get("all_five_required_before_execution_compilation") is not True: errors.append("P0 Economy 5/5 must precede execution compilation")
+    ledger = state.get("p0_decision_ledger") or {}
+    if (ledger.get("summary") or {}).get("active_p0") != 20: errors.append("P0 decision ledger must cover all 20 active P0 directions")
+    if (ledger.get("summary") or {}).get("launchable") != state["p0_admission"]["summary"].get("execution_authorized"): errors.append("P0 decision ledger launchability must match execution authorization")
+    if (ledger.get("policy") or {}).get("economy_stop_overrides_planned_registry_display") is not True: errors.append("P0 decision ledger must override stale planned display with terminal Economy evidence")
     if state["p0_offline_qualification"]["summary"].get("ideas") != 16 or state["p0_offline_qualification"]["policy"].get("method_result_from_offline_qualification_forbidden") is not True: errors.append("P0 offline qualification policy mismatch")
     if state["p0_realizability"]["summary"].get("audited") != 14 or state["p0_realizability"]["policy"].get("cannot_emit_method_result") is not True: errors.append("P0 realizability policy mismatch")
     if state["repair_queue"]["policy"].get("terminal_human_parent_repair_forbidden") is not True or state["repair_queue"]["policy"].get("absorbed_child_repair_forbidden") is not True: errors.append("terminal repair policy missing")
@@ -418,6 +443,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_p0_offline_qualification_state()
     write_p0_admission_state()
     state=build_research_system_state()
+    write_p0_decision_ledger(state["p0_decision_ledger"])
     errors=validate_state(state)
     if errors: raise ValueError("Invalid research system state:\n- " + "\n- ".join(errors))
     json_path.parent.mkdir(parents=True, exist_ok=True)

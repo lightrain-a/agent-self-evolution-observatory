@@ -1,10 +1,11 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T12:50:09+00:00",
+  "generated_at": "2026-08-11T13:17:11+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
-    "execution_requires": "GPU-0 + Pre-P0 10/10 + updater competence + Pre-Experiment 8/8 + runtime smoke",
+    "execution_requires": "Economy 5/5 + GPU-0 + Pre-P0 10/10 + updater competence + Pre-Experiment 8/8 + runtime smoke",
+    "economy_gate": "pre-execution resource-economy layer; not a ninth Pre-Experiment gate",
     "max_gpus": 1,
     "gpu_hours_cap": 12,
     "wall_hours_cap": 12,
@@ -27,13 +28,78 @@
       "RUNTIME-ERROR",
       "IMPLEMENTATION-ERROR",
       "BUDGET-STOP"
-    ]
+    ],
+    "economy": {
+      "schema_version": "1.0",
+      "stage_semantics": "resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate",
+      "all_five_required_before_execution_compilation": true,
+      "matched_simplification_must_precede_gpu": true,
+      "substrate_inventory_must_precede_hidden_or_gpu": true,
+      "causal_unit_and_observable_must_be_explicit": true,
+      "gpu_requires_decision_changing_voi": true,
+      "single_writer_authority_required": true,
+      "economy_failure_cannot_emit_method_fail": true,
+      "micro_p0_fraction_max": 0.2,
+      "second_backbone_cannot_rescue_failed_economy_gate": true
+    }
+  },
+  "economy_gate": {
+    "schema_version": "1.0",
+    "generated_at": "2026-08-11T13:17:11+00:00",
+    "policy": {
+      "schema_version": "1.0",
+      "stage_semantics": "resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate",
+      "all_five_required_before_execution_compilation": true,
+      "matched_simplification_must_precede_gpu": true,
+      "substrate_inventory_must_precede_hidden_or_gpu": true,
+      "causal_unit_and_observable_must_be_explicit": true,
+      "gpu_requires_decision_changing_voi": true,
+      "single_writer_authority_required": true,
+      "economy_failure_cannot_emit_method_fail": true,
+      "micro_p0_fraction_max": 0.2,
+      "second_backbone_cannot_rescue_failed_economy_gate": true
+    },
+    "gates": [
+      {
+        "key": "matched_simplification",
+        "title": "Matched-Simplification Headroom"
+      },
+      {
+        "key": "substrate_inventory",
+        "title": "Substrate / Support Inventory"
+      },
+      {
+        "key": "causal_unit_observable",
+        "title": "Causal Unit & Observable"
+      },
+      {
+        "key": "decision_voi",
+        "title": "Decision-Changing Value of Information"
+      },
+      {
+        "key": "single_writer_authority",
+        "title": "Single-Writer Experiment Authority"
+      }
+    ],
+    "summary": {
+      "ideas": 20,
+      "economy_ready": 0,
+      "blocked_or_stopped": 20,
+      "stop_classes": {
+        "substrate": 4,
+        "matched-simplification": 12
+      },
+      "matched_simplification_stops": 12,
+      "substrate_stops": 4,
+      "voi_stops": 0
+    }
   },
   "summary": {
     "active_p0": 20,
     "admitted": 20,
     "transitioned_from_p0_ready": 16,
     "settings_complete": 20,
+    "economy_ready": 0,
     "execution_authorized": 0,
     "execution_blocked_or_pending": 20
   },
@@ -100,7 +166,8 @@
         "truth": "Program/environment truth on a sealed held-out set with paired before/after evaluation.",
         "pre_p0": "Preserve the existing P0 history; any rerun follows the current frozen Pre-Experiment/identifiability contract.",
         "minimum_p0": "Preserve the executed A-1 P0 artifact and later diagnostics without rewriting history.",
-        "stop": "Experiment-level stop follows the frozen protocol; a non-identifiable pilot is not an idea-level DROP."
+        "stop": "Experiment-level stop follows the frozen protocol; a non-identifiable pilot is not an idea-level DROP.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -116,6 +183,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -224,6 +293,45 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "blocked",
+          "execution_compilation_authorized": false,
+          "passed_gates": 1,
+          "gate_count": 5,
+          "primary_stop_class": "",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit substrate inventory contract missing: effective_candidates_min, fresh_heldout_min, reserve_fraction_min, target_variation_rule, observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "pending",
+              "pass": false,
+              "reason": "VOI contract missing: cheapest_falsifier, decision_changing_outcomes, abandonment_condition"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "not-required-after-repair-f0-stop"
         },
@@ -295,7 +403,8 @@
         "truth": "Program/environment truth on a sealed held-out set with paired before/after evaluation.",
         "pre_p0": "Any rerun must first clear the current Pre-Experiment identifiability and substrate-competence gates.",
         "minimum_p0": "Keep the old P0 artifact as diagnostic evidence; a rerun must first establish target variation and base-agent competence.",
-        "stop": "Stop the controller claim if qualified substrates still show no identifiable optimal-round variation or matched simple policies are equivalent."
+        "stop": "Stop the controller claim if qualified substrates still show no identifiable optimal-round variation or matched simple policies are equivalent.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -311,6 +420,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -419,6 +530,45 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "blocked",
+          "execution_compilation_authorized": false,
+          "passed_gates": 1,
+          "gate_count": 5,
+          "primary_stop_class": "",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit substrate inventory contract missing: effective_candidates_min, fresh_heldout_min, reserve_fraction_min, target_variation_rule, observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "pending",
+              "pass": false,
+              "reason": "VOI contract missing: cheapest_falsifier, decision_changing_outcomes, abandonment_condition"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "not-required-after-repair-f0-stop"
         },
@@ -491,7 +641,8 @@
         "truth": "Program/environment truth on a sealed held-out set with paired before/after evaluation.",
         "pre_p0": "Freeze the panel, threshold, and stopping rule before opening hidden original tasks.",
         "minimum_p0": "Freeze core/reserve after cross-version discovery/calibration; evaluate hidden-original fidelity, false-safe rate, and cost for both accepted and rejected updates.",
-        "stop": "Stop if fixed-K/fixed gating is equivalent at the same probe budget or marginal probe value cannot predict hidden-original fidelity."
+        "stop": "Stop if fixed-K/fixed gating is equivalent at the same probe budget or marginal probe value cannot predict hidden-original fidelity.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -507,6 +658,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -628,11 +781,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 1,
+          "gate_count": 5,
+          "primary_stop_class": "substrate",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "fail",
+              "pass": false,
+              "reason": "current substrate/support inventory cannot instantiate the frozen test"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -700,7 +893,8 @@
         "truth": "Program/environment truth on a sealed held-out set with paired before/after evaluation.",
         "pre_p0": "Freeze update identities, the template×surface split, registry, and zero-test-time-search decoder.",
         "minimum_p0": "Directly predict and repair on held-out update identities and held-out template×surface compositions with zero test-time search.",
-        "stop": "Stop if the direct order-aware risk model or equal-budget repair search ties it, or rules memorize identities/templates."
+        "stop": "Stop if the direct order-aware risk model or equal-budget repair search ties it, or rules memorize identities/templates.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -716,6 +910,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -828,11 +1024,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 2,
+          "gate_count": 5,
+          "primary_stop_class": "matched-simplification",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "fail",
+              "pass": false,
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -900,7 +1136,8 @@
         "truth": "Program/environment truth on a sealed held-out set with paired before/after evaluation.",
         "pre_p0": "Preregister the sequential update stream, storage/replay budget, and 12 frozen rollback queries.",
         "minimum_p0": "30–50 sequential updates plus 12 frozen rollback queries measuring rollback fidelity, accumulated gain, and compaction.",
-        "stop": "Stop if matched-budget periodic checkpoints reach the same rollback fidelity or near-full history is required for correct rollback."
+        "stop": "Stop if matched-budget periodic checkpoints reach the same rollback fidelity or near-full history is required for correct rollback.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -916,6 +1153,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -1038,11 +1277,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 2,
+          "gate_count": 5,
+          "primary_stop_class": "matched-simplification",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "fail",
+              "pass": false,
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -1110,7 +1389,8 @@
         "truth": "Frozen synthetic/real update sequences with known minimal fault sets and post-rollback task truth.",
         "pre_p0": "Freeze 24 sequences, single/double interaction faults, minimal-fault oracle, and intervention budget; require nontrivial fault sets.",
         "minimum_p0": "On 24 frozen 4-8-update sequences compare intervention tests needed to find equally small fault sets and benign gains retained after rollback.",
-        "stop": "Stop if it cannot match Delta Debugging minimal sets with fewer tests or real sequences show no selective-rollback benefit."
+        "stop": "Stop if it cannot match Delta Debugging minimal sets with fewer tests or real sequences show no selective-rollback benefit.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -1126,6 +1406,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -1248,11 +1530,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 2,
+          "gate_count": 5,
+          "primary_stop_class": "matched-simplification",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "fail",
+              "pass": false,
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -1320,7 +1642,8 @@
         "truth": "Frozen cumulative utility and worst-regression outcomes for all four actions on the same sequences.",
         "pre_p0": "Freeze four-action counterfactual table; require nonzero action entropy, >=20% non-majority optimum, and simple-baseline disagreement.",
         "minimum_p0": "Use 24 frozen sequences, freeze the controller, and evaluate held-out cumulative utility/worst regression without candidate regeneration.",
-        "stop": "Stop if a simple threshold is equivalent, candidate regeneration is required, or a later second-model check fails."
+        "stop": "Stop if a simple threshold is equivalent, candidate regeneration is required, or a later second-model check fails.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -1336,6 +1659,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -1458,11 +1783,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 2,
+          "gate_count": 5,
+          "primary_stop_class": "matched-simplification",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "fail",
+              "pass": false,
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -1530,7 +1895,8 @@
         "truth": "Independent exhaustive enumeration of feasible orderings on hidden type combinations.",
         "pre_p0": "Freeze type vocabulary, train/held-out combinations, 2x2 cells, capacity matching, and exhaustive oracle.",
         "minimum_p0": "Run the frozen 2x2 on at least 32 hidden type combinations; measure success, violations, regret, and inference cost.",
-        "stop": "Stop representation claim if n-ary ties under same solver; stop no-search claim if compilation loses accuracy or cost advantage."
+        "stop": "Stop representation claim if n-ary ties under same solver; stop no-search claim if compilation loses accuracy or cost advantage.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -1546,6 +1912,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -1658,11 +2026,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 2,
+          "gate_count": 5,
+          "primary_stop_class": "matched-simplification",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "fail",
+              "pass": false,
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -1730,7 +2138,8 @@
         "truth": "Program/environment truth on a sealed held-out set with paired before/after evaluation.",
         "pre_p0": ">=30 reproducible conclusion-changing cases; Jaccard<0.7 versus NLI and utility selections; positive net benefit after calibration cost; freeze the buffer before hidden E_orig.",
         "minimum_p0": "Build the conclusion-change set with matched deletion, freeze it, then run paired before/after on hidden E_orig.",
-        "stop": "If any disagreement/cost gate fails, DROP directly with no further repair."
+        "stop": "If any disagreement/cost gate fails, DROP directly with no further repair.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -1746,6 +2155,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -1858,11 +2269,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 1,
+          "gate_count": 5,
+          "primary_stop_class": "substrate",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "fail",
+              "pass": false,
+              "reason": "current substrate/support inventory cannot instantiate the frozen test"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -1930,7 +2381,8 @@
         "truth": "Program/environment truth on a sealed held-out set with paired before/after evaluation.",
         "pre_p0": "Freeze top-M screening, matched audit cost, randomization hierarchy, and repair actions; forbid exhaustive three-arm replay over all memories.",
         "minimum_p0": "Apply persistent repair after pathway localization, then freeze and evaluate future-reuse net benefit and intervention sample efficiency.",
-        "stop": "Stop the pathway claim if decomposition does not beat matched per-item/co-occurrence controls."
+        "stop": "Stop the pathway claim if decomposition does not beat matched per-item/co-occurrence controls.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -1946,6 +2398,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -2058,11 +2512,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 1,
+          "gate_count": 5,
+          "primary_stop_class": "substrate",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "fail",
+              "pass": false,
+              "reason": "current substrate/support inventory cannot instantiate the frozen test"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -2130,7 +2624,8 @@
         "truth": "Program/environment truth on a sealed held-out set with paired before/after evaluation.",
         "pre_p0": "Freeze the skill body, predicate vocabulary, complexity budget, and old-positive protection set.",
         "minimum_p0": "Use counterexample-driven minimal monotone shrinking and evaluate held-out boundary cases together with old positives.",
-        "stop": "Stop the standalone monotone/generalization claim if a complexity-matched baseline is equivalent."
+        "stop": "Stop the standalone monotone/generalization claim if a complexity-matched baseline is equivalent.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -2146,6 +2641,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -2258,11 +2755,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 2,
+          "gate_count": 5,
+          "primary_stop_class": "matched-simplification",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "fail",
+              "pass": false,
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -2330,7 +2867,8 @@
         "truth": "Program/environment truth on a sealed held-out set with paired before/after evaluation.",
         "pre_p0": "Freeze the 20% activation audit, replay budget, hazard features, and retire/quarantine/revalidate rule.",
         "minimum_p0": "Estimate intervention utility drift at real reuse opportunities, freeze, then evaluate future-reuse harm/benefit and cost.",
-        "stop": "If a simple cache policy is equivalent at matched budget, retain only a cache component."
+        "stop": "If a simple cache policy is equivalent at matched budget, retain only a cache component.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -2346,6 +2884,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -2458,11 +2998,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 2,
+          "gate_count": 5,
+          "primary_stop_class": "matched-simplification",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "fail",
+              "pass": false,
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -2529,7 +3109,8 @@
         "truth": "ALFWorld environment success under the frozen memory treatment table.",
         "pre_p0": "Keep the shared full-support plan frozen; no admission classifier training before candidate replication support is established.",
         "minimum_p0": "Complete full-Qwen support and test same-candidate controlled-sign replication across probe-development and future-eval.",
-        "stop": "If support is insufficient remain METHOD INCONCLUSIVE; support counts alone cannot establish admission-method PASS."
+        "stop": "If support is insufficient remain METHOD INCONCLUSIVE; support counts alone cannot establish admission-method PASS.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -2545,6 +3126,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -2654,11 +3237,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "blocked",
+          "execution_compilation_authorized": false,
+          "passed_gates": 1,
+          "gate_count": 5,
+          "primary_stop_class": "",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit substrate inventory contract missing: effective_candidates_min, fresh_heldout_min, reserve_fraction_min, target_variation_rule, observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "pending",
+              "pass": false,
+              "reason": "VOI contract missing: cheapest_falsifier, decision_changing_outcomes, abandonment_condition"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "complete"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-complete-second-model-hold"
         ]
       }
@@ -2725,7 +3348,8 @@
         "truth": "ALFWorld environment success with target-family held-out folds.",
         "pre_p0": "Require >=12 controlled-nonzero effects and >=3 target-family folds with >=2 nonzero each before transport claims.",
         "minimum_p0": "Complete full-Qwen support and evaluate controlled-effect transport by target-family fold; second backbone remains locked.",
-        "stop": "If support is insufficient remain TRANSPORT SUPPORT INSUFFICIENT; never auto-unlock the second backbone."
+        "stop": "If support is insufficient remain TRANSPORT SUPPORT INSUFFICIENT; never auto-unlock the second backbone.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -2741,6 +3365,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -2850,11 +3476,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "blocked",
+          "execution_compilation_authorized": false,
+          "passed_gates": 1,
+          "gate_count": 5,
+          "primary_stop_class": "",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit substrate inventory contract missing: effective_candidates_min, fresh_heldout_min, reserve_fraction_min, target_variation_rule, observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "pending",
+              "pass": false,
+              "reason": "VOI contract missing: cheapest_falsifier, decision_changing_outcomes, abandonment_condition"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "complete"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-complete-second-model-hold"
         ]
       }
@@ -2922,7 +3588,8 @@
         "truth": "Frozen external anchors plus program/environment truth; the evolving evaluator never judges itself.",
         "pre_p0": "Freeze external anchors, the cross-version response pool, rubric atoms, and actor-freeze rule.",
         "minimum_p0": "At least a 3×3 actor/evaluator cross-score; attribute first, then sparsely repair only evaluator-side drift, with independent anchors defining truth.",
-        "stop": "Stop the corresponding claim if cross-version attribution does not beat disagreement or causal+sparse repair is tied by a simpler cell."
+        "stop": "Stop the corresponding claim if cross-version attribution does not beat disagreement or causal+sparse repair is tied by a simpler cell.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -2938,6 +3605,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -3050,11 +3719,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 2,
+          "gate_count": 5,
+          "primary_stop_class": "matched-simplification",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "fail",
+              "pass": false,
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -3122,7 +3831,8 @@
         "truth": "Environment/program verifier on an independently frozen boundary set.",
         "pre_p0": "Freeze the verifier, minimality procedure, final training-token budget, and independent boundary set.",
         "minimum_p0": "Perform one frozen update with the 1-minimal curriculum and compare unseen-boundary generalization against the token-matched non-minimal curriculum.",
-        "stop": "DROP if the non-minimal baseline is equivalent or minimality only saves tokens without improving unseen-boundary generalization."
+        "stop": "DROP if the non-minimal baseline is equivalent or minimality only saves tokens without improving unseen-boundary generalization.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -3138,6 +3848,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -3250,11 +3962,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 2,
+          "gate_count": 5,
+          "primary_stop_class": "matched-simplification",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "fail",
+              "pass": false,
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -3322,7 +4074,8 @@
         "truth": "Programmatic workflow/API execution truth on sealed hidden cases; no learned scorer defines correctness.",
         "pre_p0": "Freeze the typed edit library, source paired single-edit intervention table, hidden workflows, and zero-search editor.",
         "minimum_p0": "Learn true DeltaU(edit|workflow,failure) on source workflows; on hidden workflows forbid trials and commit exactly one edit, judged by programmatic post-commit truth.",
-        "stop": "Stop if predictor+threshold is equally effective or gains improve only prediction accuracy without persistent committed outcomes."
+        "stop": "Stop if predictor+threshold is equally effective or gains improve only prediction accuracy without persistent committed outcomes.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -3338,6 +4091,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -3450,11 +4205,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 1,
+          "gate_count": 5,
+          "primary_stop_class": "substrate",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "fail",
+              "pass": false,
+              "reason": "current substrate/support inventory cannot instantiate the frozen test"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -3522,7 +4317,8 @@
         "truth": "Programmatic workflow/API execution truth on sealed hidden cases; no learned scorer defines correctness.",
         "pre_p0": "Freeze the semantic/execution graph, group-intervention budget, identity/API-disjoint split, and a capacity of 3–6 typed rewrite rules.",
         "minimum_p0": "Rank structural credit from a single graph+surrogate, verify key subgraphs with few group interventions, require motifs to recur across identity/API-disjoint workflows, compile frozen rewrites, and apply zero-search on hidden workflows.",
-        "stop": "If E-1/CE-Graph is equivalent, merge into E-1/drop; also stop standalone E-2 if rules memorize node/API names."
+        "stop": "If E-1/CE-Graph is equivalent, merge into E-1/drop; also stop standalone E-2 if rules memorize node/API names.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -3538,6 +4334,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -3650,11 +4448,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 2,
+          "gate_count": 5,
+          "primary_stop_class": "matched-simplification",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "fail",
+              "pass": false,
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -3722,7 +4560,8 @@
         "truth": "Hidden API harness with unrevealed preconditions, side effects, and recovery oracles.",
         "pre_p0": "Freeze P/E/X, two unseen API families, N=6 probes/family, source-rule quality gate, and hidden recovery harness.",
         "minimum_p0": "Validate deterministic source-rule quality, then learned-vs-deterministic P/E/X on two unseen API families; freeze after probing.",
-        "stop": "Stop if learned P/E/X does not beat the isomorphic deterministic baseline or gains vanish on recovery branches/second API family."
+        "stop": "Stop if learned P/E/X does not beat the isomorphic deterministic baseline or gains vanish on recovery branches/second API family.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -3738,6 +4577,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -3850,11 +4691,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 2,
+          "gate_count": 5,
+          "primary_stop_class": "matched-simplification",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "fail",
+              "pass": false,
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
@@ -3922,7 +4803,8 @@
         "truth": "Independent sandbox external-effect log under the fixed authority ceiling.",
         "pre_p0": "Freeze ceiling, train/test mutation split, deterministic envelope, canaries, and external-effect oracle; exclude new permission requests.",
         "minimum_p0": "Test unseen mutation operators; compare reauthorization workload while requiring zero unauthorized realized effects.",
-        "stop": "Stop if workload does not fall or any saving increases unauthorized realized effects."
+        "stop": "Stop if workload does not fall or any saving increases unauthorized realized effects.",
+        "economy": {}
       },
       "setup": {
         "phase": "P0",
@@ -3938,6 +4820,8 @@
         "checkpoint_every_units": 6,
         "streaming_trace": "jsonl + atomic progress.json",
         "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
         "resume_from_checkpoint": true,
         "overwrite_nonempty_run": false
       },
@@ -4050,11 +4934,51 @@
             }
           ]
         },
+        "economy_gate": {
+          "status": "stop-before-p0-execution",
+          "execution_compilation_authorized": false,
+          "passed_gates": 2,
+          "gate_count": 5,
+          "primary_stop_class": "matched-simplification",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "fail",
+              "pass": false,
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit causal-unit contract missing: causal_unit, prediction_unit, effect_observable, effect_moderators, effect_stability_scope, aggregation_risk"
+            },
+            {
+              "key": "decision_voi",
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
         "runtime_throughput": {
           "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
+          "economy-gate",
           "p0-stop-await-human-review"
         ]
       }
