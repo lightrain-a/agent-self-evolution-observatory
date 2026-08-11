@@ -33,6 +33,8 @@ from .p0_common import (
 )
 from .pilot_registry import CURRENT_P0_GATE
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path, write_card as write_pre_experiment_card
+from .governance_protocol import evaluate_stage_contract
+from .trace_preflight import pre_model_load_audit, validate_raw_trace_file
 
 
 def config_path(idea_id: str) -> Path:
@@ -197,6 +199,10 @@ def collect_real_p0(
         tmp_config = frozen_config.with_suffix(frozen_config.suffix + ".tmp")
         tmp_config.write_text(json.dumps(config_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         tmp_config.replace(frozen_config)
+    governance = evaluate_stage_contract(idea_id, config_payload, data_root)
+    (output_dir / "governance-stage-contract.json").write_text(json.dumps(governance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    if not governance.get("execution_authorized"):
+        raise RuntimeError(f"{idea_id} blocked by Research Governance v2: " + ", ".join(governance.get("blockers") or []))
     pre_experiment = compile_pre_experiment_from_path(idea_id, frozen_config, data_root)
     card_path = write_pre_experiment_card(pre_experiment, data_root)
     if not pre_experiment["execution_authorized"]:
@@ -209,6 +215,12 @@ def collect_real_p0(
             f"{idea_id} qualified model mismatch: expected {expected_model}, runtime path is {model_path}"
         )
     (output_dir / "pre-experiment-card.json").write_text(json.dumps({**pre_experiment, "card_path": str(card_path)}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    pre_model = pre_model_load_audit(
+        idea_id, str(governance["stage"]), frozen_config, model_path, alfworld_data, extra_pythonpath, output_dir,
+        (CONFIG_DIR / "p0_runner.py", CONFIG_DIR / "p0_alfworld_adapter.py"),
+    )
+    if not pre_model.get("pass"):
+        raise RuntimeError("P0 pre-model-load audit failed: " + ", ".join(pre_model.get("blockers") or []))
     smoke_path = data_root / "p0-runtime-smoke.json"
     readiness = runtime_preflight(model_path, data_root, Path(sys.executable), extra_pythonpath, alfworld_data, smoke_path)
     if not readiness["launch_ready"]:
@@ -226,6 +238,7 @@ def collect_real_p0(
     state = {
         "schema_version": "1.0",
         "idea_id": idea_id,
+        "run_id": output_dir.name,
         "phase": run_phase,
         "status": "running",
         "started_at": _utc_now(),
@@ -250,6 +263,13 @@ def collect_real_p0(
         if idea_id == "budgeted-evolution-controller":
             collector_kwargs["data_root"] = data_root
         manifest = collector(frozen_config, alfworld_config, model_path, output_dir, **collector_kwargs)
+        trace_audit = validate_raw_trace_file(output_dir / "raw-traces.jsonl")
+        (output_dir / "trace-contract-audit.json").write_text(json.dumps(trace_audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        state["trace_contract_audit"] = str(output_dir / "trace-contract-audit.json")
+        if not trace_audit.get("pass"):
+            state.update({"failure_kind": "PROVENANCE_INCONCLUSIVE", "scientific_result_available": False, "diagnosis": "raw trace contract incomplete"})
+            _write_execution_state(state_path, state)
+            raise RuntimeError("raw trace contract failed; scientific registration is forbidden")
     except Exception as error:
         state.update({"status": "failed", "finished_at": _utc_now(), "error_type": type(error).__name__, "failed_stage": "collect"})
         _write_execution_state(state_path, state)

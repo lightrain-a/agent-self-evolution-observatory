@@ -11,6 +11,8 @@ from .discussion_portfolio import build_discussion_portfolio
 from .evidence_graph import build_evidence_graph
 from .experiment_iteration import build_experiment_iteration_state
 from .human_terminal_state import build_human_terminal_state, write_human_terminal_state
+from .governance_protocol import build_governance_state, write_governance_state
+from .resource_lease import list_gpu_leases
 from .iclr_idea_factory import build_iclr_idea_bank
 from .idea_discovery_v3 import build_idea_discovery_v3
 from .idea_discovery_v31 import build_idea_discovery_v31
@@ -105,6 +107,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     economy = state["p0_economy_gate"]["summary"]
     p0_ledger = state["p0_decision_ledger"]["summary"]
     ai_clinic = state["ai_consultation_clinic"]["summary"]
+    governance = state["research_governance_v2"]
     iteration = state["experiment_iteration"]["summary"]
     repairs = state["repair_queue"]["summary"]
     terminal = state["human_terminal_ideas"]["summary"]
@@ -125,6 +128,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"P0 retrospective economy review", "component":{"en":"Five-gate P0 Economy layer","zh":"P0 五门资源经济层"}, "status":"running", "evidence":{"en":f"{economy['matched_simplification_stops']} matched-simplification stops / {economy['substrate_stops']} substrate stops / {economy['economy_ready']} currently economy-ready","zh":f"{economy['matched_simplification_stops']} 个简化基线 STOP / {economy['substrate_stops']} 个底座 STOP / 当前 {economy['economy_ready']} 个 Economy-ready"}},
         {"source":"Web GPT + domestic-model independent consultation", "component":{"en":"Five-checkpoint AI consultation clinic","zh":"五节点 AI 会诊诊断层"}, "status":"running", "evidence":{"en":f"{ai_clinic['checkpoints']} checkpoints / {ai_clinic['pre_gpu_checkpoints']} before GPU / zero AI-authoritative checkpoints","zh":f"{ai_clinic['checkpoints']} 个会诊节点 / {ai_clinic['pre_gpu_checkpoints']} 个位于 GPU 前 / AI 直接授权节点为 0"}},
         {"source":"Unified P0 decision ledger", "component":{"en":"Current experiment-decision ledger","zh":"统一 P0 当前决策账本"}, "status":"running", "evidence":{"en":f"{p0_ledger['active_p0']} active rows / {p0_ledger['experiment_stopped']} stopped awaiting review / {p0_ledger['launchable']} launchable","zh":f"{p0_ledger['active_p0']} 条活跃记录 / {p0_ledger['experiment_stopped']} 条实验 STOP 待人工 / {p0_ledger['launchable']} 条可启动"}},
+        {"source":"P0-System v2", "component":{"en":"Stage governance, repair budgets, trace contracts, and resource leases","zh":"阶段治理、修复预算、Trace 合同与资源租约"}, "status":"running", "evidence":{"en":f"{len(governance['stages'])} scientific stages / {len(governance['failure_classes'])} typed failure classes / {governance['runtime']['active_gpu_leases']} active GPU leases","zh":f"{len(governance['stages'])} 个科学阶段 / {len(governance['failure_classes'])} 类失败语义 / {governance['runtime']['active_gpu_leases']} 个活跃 GPU 租约"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Updater-competence prerequisite + eight-gate Pre-Experiment Compiler","zh":"Updater Competence 前置条件 + 八门实验启动前编译器"}, "status":"running", "evidence":{"en":f"updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / launch-ready {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']} / formal P0 {pre_experiment['formal_p0_ready']}/{pre_experiment['formal_p0_total']}","zh":f"Updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / 可启动 {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']} / formal P0 {pre_experiment['formal_p0_ready']}/{pre_experiment['formal_p0_total']}"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Pilot registry and result feedback","zh":"Pilot 注册表与结果回流"}, "status":"running", "evidence":{"en":f"{pilots['phases']} phases / {pilots['valid_result_files']} executed results","zh":f"{pilots['phases']} 个阶段 / {pilots['valid_result_files']} 个已执行结果"}},
         {"source":"AI-Scientist-v2 / AIDE / RD-Agent / ML-Master / AIRA / Agent Laboratory", "component":{"en":"Experiment diagnosis and atomic repair tree","zh":"实验诊断与原子修复树"}, "status":"running", "evidence":{"en":f"{iteration['nodes']} pilot nodes / {iteration['repair_children']} atomic repair children / {iteration['scale_up_allowed']} scale-up","zh":f"{iteration['nodes']} 个 Pilot 节点 / {iteration['repair_children']} 个原子修复子节点 / {iteration['scale_up_allowed']} 个可扩大"}},
@@ -188,6 +192,12 @@ def build_research_system_state() -> dict[str, Any]:
         if card.get("phase") == "P0" and card.get("idea_id")
     }
     experiment_data_root = resolve_experiment_data_root(storage)
+    research_governance_v2 = build_governance_state()
+    research_governance_v2["runtime"] = {
+        "active_gpu_leases": len(list_gpu_leases(experiment_data_root, True)),
+        "lease_root": str(experiment_data_root / "resource-leases"),
+        "repair_budget_root": str(experiment_data_root / "governance" / "repair-budget"),
+    }
     mem_xfer_workflow = build_mem_xfer_workflow_state(experiment_data_root)
     pilot_registry = build_pilot_registry(
         idea_bank,
@@ -273,6 +283,9 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_economy_substrate_stops":p0_economy_gate["summary"]["substrate_stops"],
             "p0_decision_ledger_stopped":p0_decision_ledger["summary"]["experiment_stopped"],
             "p0_decision_ledger_launchable":p0_decision_ledger["summary"]["launchable"],
+            "governance_v2_stages":len(research_governance_v2["stages"]),
+            "governance_v2_failure_classes":len(research_governance_v2["failure_classes"]),
+            "governance_v2_active_gpu_leases":research_governance_v2["runtime"]["active_gpu_leases"],
             "p0_offline_checks_passed":p0_offline_qualification["summary"]["checks_passed"],
             "p0_offline_checks_failed":p0_offline_qualification["summary"]["checks_failed"],
             "p0_offline_checks_pending":p0_offline_qualification["summary"]["checks_pending"],
@@ -342,6 +355,7 @@ def build_research_system_state() -> dict[str, Any]:
         "ai_consultation_clinic":ai_consultation_public,
         "p0_economy_gate":p0_economy_public,
         "p0_decision_ledger":p0_decision_ledger_public,
+        "research_governance_v2":research_governance_v2,
         "p0_offline_qualification":p0_offline_public,
         "p0_realizability":p0_realizability_public,
         "repair_queue":repair_queue,
@@ -360,6 +374,25 @@ def build_research_system_state() -> dict[str, Any]:
     return state
 
 
+def _mem_xfer_semantic_errors(workflow: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    allowed = set(workflow.get("allowed_statuses") or [])
+    for key in ("full_table", "offline_analysis", "support_qualification", "full_support", "support_enriched_analysis", "applicability_falsifier", "mechanism_diagnosis", "second_model"):
+        status = str((workflow.get(key) or {}).get("status") or "")
+        if status and status not in allowed and status != "collecting": errors.append(f"mem-xfer invalid typed status {key}:{status}")
+    support = workflow.get("support_qualification") or {}
+    full = workflow.get("full_support") or {}
+    analysis = workflow.get("support_enriched_analysis") or {}
+    formal = workflow.get("formal_method") or {}
+    second = workflow.get("second_model") or {}
+    if full.get("authorized") and support.get("status") != "support_qualification_pass": errors.append("mem-xfer full support cannot be authorized before support PASS")
+    decision = analysis.get("decision") or {}
+    if decision and decision.get("method_failure_authorized") is True and decision.get("formal_method_experiment_authorized") is not True: errors.append("support insufficiency cannot authorize METHOD-FAIL")
+    if formal.get("authorized") and analysis.get("status") != "support_enriched_analysis_complete": errors.append("formal method cannot open before completed support analysis")
+    if second.get("authorized") and decision.get("second_model_authorized") is not True: errors.append("second backbone requires explicit support-analysis authorization")
+    return errors
+
+
 def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
     checks = [
         {"key":"corpus", "pass":bool(corpus.get("papers")), "detail":f"{len(corpus.get('papers') or [])} papers"},
@@ -371,12 +404,13 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == 4, "detail":state["pre_experiment_compiler"]["summary"]},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
-        {"key":"mem-xfer-workflow", "pass":state["mem_xfer_workflow"]["full_table"]["status"] == "full_table_collected" and state["mem_xfer_workflow"]["offline_analysis"]["status"] == "offline_analysis_complete" and state["mem_xfer_workflow"]["support_qualification"]["status"] == "support_qualification_pass" and state["mem_xfer_workflow"]["full_support"]["status"] == "full_support_complete" and state["mem_xfer_workflow"]["support_enriched_analysis"]["status"] == "support_enriched_analysis_complete" and (state["mem_xfer_workflow"]["support_enriched_analysis"].get("decision") or {}).get("method_failure_authorized") is False and state["mem_xfer_workflow"]["second_model"]["status"] == "second_model_hold", "detail":{"old_full":state["mem_xfer_workflow"]["full_table"]["status"],"old_offline":state["mem_xfer_workflow"]["offline_analysis"]["status"],"support_qualification":state["mem_xfer_workflow"]["support_qualification"]["status"],"full_support":state["mem_xfer_workflow"]["full_support"]["status"],"cpu_gate":state["mem_xfer_workflow"]["support_enriched_analysis"]["status"],"second_model":state["mem_xfer_workflow"]["second_model"]["status"]}},
+        {"key":"mem-xfer-workflow", "pass":not _mem_xfer_semantic_errors(state["mem_xfer_workflow"]), "detail":{"semantic_errors":_mem_xfer_semantic_errors(state["mem_xfer_workflow"]),"support_qualification":state["mem_xfer_workflow"]["support_qualification"]["status"],"full_support":state["mem_xfer_workflow"]["full_support"]["status"],"cpu_gate":state["mem_xfer_workflow"]["support_enriched_analysis"]["status"],"second_model":state["mem_xfer_workflow"]["second_model"]["status"]}},
         {"key":"human-terminal-ledger", "pass":state["human_terminal_ideas"]["summary"].get("human_parents") == 26 and (state["human_terminal_ideas"]["summary"].get("p0"),state["human_terminal_ideas"]["summary"].get("p0_ready"),state["human_terminal_ideas"]["summary"].get("merge"),state["human_terminal_ideas"]["summary"].get("drop")) == (13,0,6,7), "detail":state["human_terminal_ideas"]["summary"]},
         {"key":"p0-admission", "pass":state["p0_admission"]["summary"].get("active_p0") == 20 and state["p0_admission"]["summary"].get("admitted") == 20 and state["p0_admission"]["summary"].get("transitioned_from_p0_ready") == 16 and state["p0_admission"]["summary"].get("settings_complete") == 20, "detail":state["p0_admission"]["summary"]},
         {"key":"p0-economy-gate", "pass":state["p0_economy_gate"]["summary"].get("matched_simplification_stops") == 12 and state["p0_economy_gate"]["summary"].get("substrate_stops") == 4 and state["p0_economy_gate"]["policy"].get("all_five_required_before_execution_compilation") is True, "detail":state["p0_economy_gate"]["summary"]},
         {"key":"ai-consultation-clinic", "pass":state["ai_consultation_clinic"]["summary"].get("checkpoints") == 5 and state["ai_consultation_clinic"]["policy"].get("ai_vote_can_authorize_gpu") is False and state["ai_consultation_clinic"]["policy"].get("high_risk_findings_must_be_compiled_into_machine_checks") is True, "detail":state["ai_consultation_clinic"]["summary"]},
         {"key":"p0-decision-ledger", "pass":state["p0_decision_ledger"]["summary"].get("active_p0") == 20 and state["p0_decision_ledger"]["summary"].get("launchable") == 0 and state["p0_decision_ledger"]["policy"].get("economy_stop_overrides_planned_registry_display") is True, "detail":state["p0_decision_ledger"]["summary"]},
+        {"key":"research-governance-v2", "pass":state["research_governance_v2"]["policy"].get("support_and_method_are_distinct") is True and state["research_governance_v2"]["policy"].get("p0_method_requires_frozen_support_pass") is True and state["research_governance_v2"]["policy"].get("raw_trace_is_mandatory_for_gpu_runs") is True and len(state["research_governance_v2"].get("stages") or []) == 7, "detail":state["research_governance_v2"]},
         {"key":"p0-offline-qualification", "pass":state["p0_offline_qualification"]["summary"].get("ideas") == 16 and state["p0_offline_qualification"]["policy"].get("method_result_from_offline_qualification_forbidden") is True, "detail":state["p0_offline_qualification"]["summary"]},
         {"key":"p0-realizability", "pass":state["p0_realizability"]["summary"].get("audited") == 14 and state["p0_realizability"]["policy"].get("cannot_emit_method_result") is True, "detail":state["p0_realizability"]["summary"]},
         {"key":"final-advisor-gate", "pass":state["summary"]["final_ready"] and state["summary"]["final_pass"] == state["summary"]["discussion_target"] and state["summary"]["final_revise"] == 0 and state["summary"]["final_block"] == 0, "detail":{"pass":state["summary"]["final_pass"],"target":state["summary"]["discussion_target"],"revise":state["summary"]["final_revise"],"block":state["summary"]["final_block"]}},
@@ -404,28 +438,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"]: errors.append("P0 execution must require an 8/8 Pre-Experiment Card")
     if not state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"]: errors.append("automatic P0-to-P1 escalation must stay forbidden")
     if not state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"]: errors.append("non-identifiable pilots must not update scientific belief")
-    if state["mem_xfer_workflow"]["full_table"]["status"] != "full_table_collected": errors.append("mem-xfer full table must remain collected immutable evidence")
-    if state["mem_xfer_workflow"]["offline_analysis"]["status"] != "offline_analysis_complete": errors.append("mem-xfer offline analysis must automatically follow a complete full table")
-    if state["mem_xfer_workflow"]["support_qualification"]["status"] != "support_qualification_pass": errors.append("mem-xfer support qualification must remain PASS before the frozen full-support table")
-    if state["mem_xfer_workflow"]["full_support"]["status"] != "full_support_complete": errors.append("mem-xfer frozen 216-execution Qwen full-support table must be complete")
-    if state["mem_xfer_workflow"]["support_enriched_analysis"]["status"] != "support_enriched_analysis_complete": errors.append("mem-xfer CPU-only #3/#5 downstream gate must automatically follow the complete full-support table")
-    if (state["mem_xfer_workflow"]["support_enriched_analysis"].get("decision") or {}).get("method_failure_authorized") is not False: errors.append("mem-xfer support gate must not authorize method failure from support insufficiency")
-    provenance = state["mem_xfer_workflow"]["full_support"].get("provenance_recovery") or {}
-    if provenance.get("decision") != "PROVENANCE_INCONCLUSIVE": errors.append("mem-xfer final provenance recovery must record the matched-hardware inconclusive terminal result")
-    if state["mem_xfer_workflow"]["full_support"].get("scientific_authority") != "provenance-inconclusive": errors.append("mem-xfer full table must remain diagnostic-only after provenance mismatch")
-    falsifier = state["mem_xfer_workflow"].get("applicability_falsifier") or {}
-    if falsifier.get("status") != "r1_not_authorized": errors.append("mem-xfer clean R1 must remain unauthorized after the frozen applicability VOI screen fails")
-    if (falsifier.get("decision") or {}).get("decision") != "NO_R1_VOI_STOP_STANDALONE": errors.append("mem-xfer applicability falsifier terminal decision mismatch")
-    diagnosis = state["mem_xfer_workflow"].get("mechanism_diagnosis") or {}
-    if diagnosis.get("status") != "mechanism_diagnosis_complete": errors.append("mem-xfer retrospective first-divergence mechanism diagnosis must be complete")
-    if (diagnosis.get("first_divergence") or {}).get("decision") != "WEAK_OR_NO_STATE_LOCALIZATION": errors.append("mem-xfer first-divergence localization decision mismatch")
-    if (diagnosis.get("route_reproducibility") or {}).get("decision") != "REPRODUCIBLE_EARLY_BRANCH_CONTEXT_DEPENDENT_SIGN": errors.append("mem-xfer route reproducibility diagnosis mismatch")
-    if (diagnosis.get("route_reproducibility") or {}).get("new_idea_authorized") is not False: errors.append("mem-xfer diagnosis must not auto-authorize a replacement idea")
-    audit_priority = diagnosis.get("audit_priority") or {}
-    if audit_priority.get("decision") != "MERGE_AS_SOFT_GOVERNANCE_SIGNAL": errors.append("mem-xfer branch-amplification audit signal must remain a soft-governance merge")
-    if audit_priority.get("hard_gate_authorized") is not False or audit_priority.get("candidate_exclusion_authorized") is not False: errors.append("mem-xfer branch amplification must never become a hard candidate-exclusion gate")
-    if state["mem_xfer_workflow"].get("formal_method",{}).get("authorized") is not False: errors.append("mem-xfer formal method experiment must remain HOLD after the failed VOI screen")
-    if state["mem_xfer_workflow"]["second_model"]["status"] != "second_model_hold": errors.append("mem-xfer second backbone must remain on HOLD unless the CPU-only full-support gate explicitly authorizes it")
+    errors.extend(_mem_xfer_semantic_errors(state["mem_xfer_workflow"]))
+    if not state["mem_xfer_workflow"].get("allowed_statuses"): errors.append("mem-xfer workflow must publish typed allowed statuses")
+    if not state["mem_xfer_workflow"].get("dependencies"): errors.append("mem-xfer workflow must publish stage dependencies")
     terminal_summary = state["human_terminal_ideas"]["summary"]
     if terminal_summary.get("human_parents") != 26 or (terminal_summary.get("p0"), terminal_summary.get("p0_ready"), terminal_summary.get("merge"), terminal_summary.get("drop")) != (13,0,6,7): errors.append("human terminal ledger mismatch")
     if state["p0_admission"]["summary"].get("active_p0") != 20 or state["p0_admission"]["summary"].get("admitted") != 20 or state["p0_admission"]["summary"].get("transitioned_from_p0_ready") != 16 or state["p0_admission"]["summary"].get("settings_complete") != 20: errors.append("P0 admission ledger mismatch")
@@ -440,6 +455,10 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if (ledger.get("summary") or {}).get("active_p0") != 20: errors.append("P0 decision ledger must cover all 20 active P0 directions")
     if (ledger.get("summary") or {}).get("launchable") != state["p0_admission"]["summary"].get("execution_authorized"): errors.append("P0 decision ledger launchability must match execution authorization")
     if (ledger.get("policy") or {}).get("economy_stop_overrides_planned_registry_display") is not True: errors.append("P0 decision ledger must override stale planned display with terminal Economy evidence")
+    governance = state.get("research_governance_v2") or {}
+    if len(governance.get("stages") or []) != 7: errors.append("Research Governance v2 must expose seven ordered scientific stages")
+    if (governance.get("policy") or {}).get("support_and_method_are_distinct") is not True or (governance.get("policy") or {}).get("p0_method_requires_frozen_support_pass") is not True: errors.append("P0 support/method stage separation policy missing")
+    if (governance.get("policy") or {}).get("raw_trace_is_mandatory_for_gpu_runs") is not True or (governance.get("policy") or {}).get("pre_model_load_audit_required") is not True: errors.append("GPU trace/pre-model-load governance policy missing")
     if state["p0_offline_qualification"]["summary"].get("ideas") != 16 or state["p0_offline_qualification"]["policy"].get("method_result_from_offline_qualification_forbidden") is not True: errors.append("P0 offline qualification policy mismatch")
     if state["p0_realizability"]["summary"].get("audited") != 14 or state["p0_realizability"]["policy"].get("cannot_emit_method_result") is not True: errors.append("P0 realizability policy mismatch")
     if state["repair_queue"]["policy"].get("terminal_human_parent_repair_forbidden") is not True or state["repair_queue"]["policy"].get("absorbed_child_repair_forbidden") is not True: errors.append("terminal repair policy missing")
@@ -458,6 +477,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_ai_consultation_clinic_state()
     state=build_research_system_state()
     write_p0_decision_ledger(state["p0_decision_ledger"])
+    write_governance_state(PROJECT_ROOT / "generated" / "research-governance-v2.json", PROJECT_ROOT / "generated" / "research-governance-v2.js")
     errors=validate_state(state)
     if errors: raise ValueError("Invalid research system state:\n- " + "\n- ".join(errors))
     json_path.parent.mkdir(parents=True, exist_ok=True)

@@ -60,6 +60,19 @@ class ExperimentOrchestratorTest(unittest.TestCase):
         self.assertEqual(server["server_id"], "60")
         self.assertEqual(gpu["index"], 0)
 
+    def test_choose_slot_excludes_active_gpu_lease(self) -> None:
+        cluster = [{
+            "server_id": "60", "priority": 10, "reachable": True,
+            "preflight": {"launch_ready": True},
+            "gpus": [
+                GPUState(0, "GPU-LEASED", "3090", 24576, 24000, 0).__dict__,
+                GPUState(1, "GPU-FREE", "3090", 24576, 23000, 0).__dict__,
+            ],
+        }]
+        server, gpu = choose_slot(cluster, min_free_memory_mib=18000, max_gpu_utilization_pct=25, excluded_gpu_uuids={"GPU-LEASED"})
+        self.assertEqual(server["server_id"], "60")
+        self.assertEqual(gpu["uuid"], "GPU-FREE")
+
     def test_active_execution_blocks_duplicate_idea_across_servers(self) -> None:
         cluster = [
             {
@@ -90,7 +103,7 @@ class ExperimentOrchestratorTest(unittest.TestCase):
         ]
         with self.assertRaisesRegex(RuntimeError, "already has a registered P0"):
             build_launch_plan("budgeted-evolution-controller", self.profiles, cluster, {})
-        with patch("research_pipeline.experiment_orchestrator.local_economy_preflight", return_value={"execution_compilation_authorized": True, "passed_gates": 5, "gate_count": 5, "gates": []}), patch("research_pipeline.experiment_orchestrator.remote_pre_experiment_card", return_value={"execution_authorized": True, "passed_gates": 8, "gate_count": 8, "blockers": []}):
+        with patch("research_pipeline.experiment_orchestrator.local_economy_preflight", return_value={"execution_compilation_authorized": True, "passed_gates": 5, "gate_count": 5, "gates": []}), patch("research_pipeline.experiment_orchestrator.evaluate_stage_contract", return_value={"execution_authorized": True, "stage": "p0-support", "blockers": []}), patch("research_pipeline.experiment_orchestrator.remote_pre_experiment_card", return_value={"execution_authorized": True, "passed_gates": 8, "gate_count": 8, "blockers": []}):
             plan = build_launch_plan(
                 "budgeted-evolution-controller",
                 self.profiles,
@@ -114,7 +127,7 @@ class ExperimentOrchestratorTest(unittest.TestCase):
             "gpus": [GPUState(1, "GPU-60-1", "3090", 24576, 24000, 0).__dict__],
             "execution_states": [],
         }]
-        with patch("research_pipeline.experiment_orchestrator.local_economy_preflight", return_value={"execution_compilation_authorized": True, "passed_gates": 5, "gate_count": 5, "gates": []}), patch("research_pipeline.experiment_orchestrator.remote_pre_experiment_card", return_value={"execution_authorized": False, "passed_gates": 7, "gate_count": 8, "blockers": ["statistical-resolution"]}):
+        with patch("research_pipeline.experiment_orchestrator.local_economy_preflight", return_value={"execution_compilation_authorized": True, "passed_gates": 5, "gate_count": 5, "gates": []}), patch("research_pipeline.experiment_orchestrator.evaluate_stage_contract", return_value={"execution_authorized": True, "stage": "p0-support", "blockers": []}), patch("research_pipeline.experiment_orchestrator.remote_pre_experiment_card", return_value={"execution_authorized": False, "passed_gates": 7, "gate_count": 8, "blockers": ["statistical-resolution"]}):
             with self.assertRaisesRegex(RuntimeError, "Pre-Experiment Compiler"):
                 build_launch_plan(
                     "update-trust-region", self.profiles, cluster, {},

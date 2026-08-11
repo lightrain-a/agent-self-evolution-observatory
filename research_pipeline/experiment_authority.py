@@ -28,6 +28,16 @@ def validate_authority(root:Path,idea_id:str,authority_id:str,plan_hash:str='')-
  path,_=_paths(root,idea_id); row=_read(path)
  ok=row.get('status')=='active' and row.get('authority_id')==authority_id and (not plan_hash or row.get('plan_hash')==plan_hash)
  return {'valid':bool(ok),'authority':row}
+
+def reconcile_authority(root:Path,idea_id:str,active_run_ids:set[str],grace_seconds:int=300)->dict[str,Any]:
+ path,lock=_paths(root,idea_id)
+ with lock.open('a+') as fh:
+  fcntl.flock(fh.fileno(),fcntl.LOCK_EX); row=_read(path)
+  if row.get('status')!='active' or str(row.get('run_id') or '') in active_run_ids: return row
+  try: acquired=datetime.fromisoformat(str(row.get('acquired_at') or ''))
+  except ValueError: return row
+  if (datetime.now(timezone.utc)-acquired).total_seconds()<grace_seconds: return row
+  row={**row,'status':'released','release_outcome':'reconciled-no-active-run','released_at':_now()}; _atomic(path,row); return row
 def release_authority(root:Path,idea_id:str,authority_id:str,outcome:str='released')->dict[str,Any]:
  path,lock=_paths(root,idea_id)
  with lock.open('a+') as fh:

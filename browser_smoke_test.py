@@ -158,8 +158,9 @@ def main() -> None:
               boundaryRules: document.querySelectorAll('.system-boundary-card li').length,
               components: document.querySelectorAll('.system-components-panel tbody tr').length,
               lifecycleSteps: document.querySelectorAll('.system-lifecycle-step').length,
+              governanceStages: document.querySelectorAll('.governance-stage-card').length,
               outerGates: document.querySelectorAll('.preflight-outer-gate').length,
-              preflightGates: document.querySelectorAll('.preflight-gate').length,
+              preflightGates: document.querySelectorAll('.preflight-gate[data-preflight-key]').length,
               quantWorksheets: document.querySelectorAll('.preflight-quant-grid article').length,
               lessons: document.querySelectorAll('.system-lesson').length,
               failureLayers: document.querySelectorAll('.system-failure-layer').length,
@@ -189,22 +190,24 @@ def main() -> None:
         require(system_overview["chapters"] == 4, f"system overview must have four research-system chapters, got {system_overview['chapters']}")
         require(system_overview["toc2"] >= 4 and system_overview["toc4"] == 0, f"system overview hierarchy is wrong: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
         require(system_overview["stats"] == 6, f"research-system hero statistics are incomplete: {system_overview['stats']}")
-        require(system_overview["lifecycleSteps"] == 8, f"research lifecycle must expose eight decision stages, got {system_overview['lifecycleSteps']}")
-        require(system_overview["contracts"] == 6, f"research lifecycle contracts are incomplete: {system_overview['contracts']}")
+        require(system_overview["lifecycleSteps"] >= 11, f"research lifecycle must expose at least eleven end-to-end stages, got {system_overview['lifecycleSteps']}")
+        require(system_overview["governanceStages"] == 7, f"P0-System v2 must expose seven scientific stages, got {system_overview['governanceStages']}")
+        require(system_overview["contracts"] >= 8, f"research lifecycle contracts are incomplete: {system_overview['contracts']}")
         require(system_overview["outerGates"] == 8 and system_overview["preflightGates"] == 10 and system_overview["quantWorksheets"] == 2, f"Pre-Experiment/identifiability compiler is incomplete: {system_overview['outerGates']}/{system_overview['preflightGates']}/{system_overview['quantWorksheets']}")
         require(system_overview["lessons"] == 6 and system_overview["failureLayers"] == 5 and system_overview["repairLoops"] == 1, f"system learning/diagnosis visualization is incomplete: {system_overview['lessons']}/{system_overview['failureLayers']}/{system_overview['repairLoops']}")
-        require(system_overview["artifacts"] == 8 and system_overview["boundaries"] == 3, f"artifact or automation-boundary documentation is incomplete: {system_overview['artifacts']}/{system_overview['boundaries']}")
-        require(system_overview["components"] == 11, f"backend component table is incomplete: {system_overview['components']}")
+        require(system_overview["artifacts"] >= 14 and system_overview["boundaries"] == 3, f"artifact or automation-boundary documentation is incomplete: {system_overview['artifacts']}/{system_overview['boundaries']}")
+        require(system_overview["components"] >= 15, f"backend component table is incomplete: {system_overview['components']}")
         require(system_overview["ideaPanels"] == 0, f"current idea/status panels leaked back into the research-system page: {system_overview['ideaPanels']}")
         require((system_overview["preSummary"].get("audited"), system_overview["preSummary"].get("execution_ready"), system_overview["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system_overview['preSummary']}")
         require(system_overview["iterationSummary"].get("belief_updates_allowed") == 1 and system_overview["iterationSummary"].get("scale_up_allowed") == 0, f"experiment diagnosis state is wrong: {system_overview['iterationSummary']}")
         require("Main ICLR idea bank" not in system_overview["text"] and "Final advisor gate" not in system_overview["text"] and "主 ICLR Idea Bank" not in system_overview["text"] and "最终师兄讨论门槛" not in system_overview["text"], "current idea portfolio remains on the research-system page")
         require(("8 / 8" in system_overview["text"] or "8/8" in system_overview["text"]) and ("10 / 10" in system_overview["text"] or "10/10" in system_overview["text"]), "eight-gate Pre-Experiment compiler or ten-check identifiability sub-audit is not visible")
+        require("SUPPORT_INSUFFICIENT" in system_overview["text"] and "P0-S" in system_overview["text"] and "P0-M" in system_overview["text"], "P0-System v2 support/method separation is not visible")
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
         zh_system = execute(session_id, """return {
           automationText: document.querySelector('.system-automation-panel')?.textContent || '',
-          preflightText: document.querySelector('.preflight-compiler')?.textContent || '',
+          preflightText: [...document.querySelectorAll('.preflight-compiler')].find(x=>x.querySelector('.preflight-gate[data-preflight-key]'))?.textContent || '',
           semanticsText: document.querySelector('.system-semantics')?.textContent || '',
           componentText: document.querySelector('.system-components-panel')?.textContent || '',
           cards: [...document.querySelectorAll('.system-boundary-card,.preflight-gate,.system-failure-layer')].map(x=>({client:x.clientWidth,scroll:x.scrollWidth,text:x.textContent})),
@@ -218,6 +221,9 @@ def main() -> None:
         require(not zh_system["pageOverflow"], "Chinese system overview causes page-level horizontal overflow")
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
+        if os.getenv("SYSTEM_OVERVIEW_ONLY") == "1":
+            print("SYSTEM_OVERVIEW_SMOKE_OK")
+            return
 
         navigate("/bibliography.html", 16)
         bibliography = execute(

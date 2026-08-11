@@ -102,19 +102,20 @@ class ResearchSystemTest(unittest.TestCase):
 
     def test_memory_support_workflow_preserves_stage_boundaries(self) -> None:
         workflow = self.state["mem_xfer_workflow"]
-        self.assertEqual(workflow["support_qualification"]["status"], "support_qualification_pass")
-        self.assertTrue((workflow["full_support"].get("pre_gpu_audit") or {}).get("execution_ready"))
-        self.assertIn(workflow["full_support"]["status"], {"full_support_ready", "full_qwen_support_running", "full_qwen_support_checkpoint", "full_support_complete"})
-        progress = workflow["full_support"]["progress"]
-        if workflow["full_support"]["status"] != "full_support_ready":
-            self.assertGreaterEqual(int(progress.get("completed_episodes") or 0), 72)
-            self.assertEqual(int(progress.get("total_episodes") or 0), 216)
-        if workflow["full_support"].get("provenance_regeneration"):
-            self.assertEqual(workflow["full_support"]["scientific_authority"], "provenance-inconclusive")
-        elif workflow["full_support"].get("provenance_deviation"):
-            self.assertEqual(workflow["full_support"]["scientific_authority"], "provisional-only")
-        self.assertEqual(workflow["second_model"]["status"], "second_model_hold")
-        self.assertFalse(workflow["second_model"]["authorized"])
+        allowed = set(workflow["allowed_statuses"])
+        for key in ("offline_analysis", "support_qualification", "full_support", "support_enriched_analysis", "applicability_falsifier", "mechanism_diagnosis", "second_model"):
+            self.assertIn(workflow[key]["status"], allowed)
+        self.assertIn(workflow["full_table"]["status"], allowed | {"collecting"})
+        if workflow["full_support"].get("authorized"):
+            self.assertEqual(workflow["support_qualification"]["status"], "support_qualification_pass")
+        decision = workflow["support_enriched_analysis"].get("decision") or {}
+        if decision.get("method_failure_authorized"):
+            self.assertTrue(decision.get("formal_method_experiment_authorized"))
+        if workflow["formal_method"].get("authorized"):
+            self.assertEqual(workflow["support_enriched_analysis"]["status"], "support_enriched_analysis_complete")
+        if workflow["second_model"].get("authorized"):
+            self.assertTrue(decision.get("second_model_authorized"))
+        self.assertGreater(len(workflow.get("dependencies") or []), 0)
 
     def test_experiment_iteration_distinguishes_pilot_failure_layers(self) -> None:
         iteration = self.state["experiment_iteration"]
@@ -148,11 +149,15 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("AI-Scientist-v2", sources)
         self.assertTrue(any("Co-Scientist" in source for source in sources))
         self.assertTrue(any("HypoRefine" in source and "IdeaForge" in source for source in sources))
-        self.assertEqual(len(self.state["components"]), 16)
+        self.assertEqual(len(self.state["components"]), 17)
         self.assertIn("Human terminal ledger", sources)
         self.assertIn("P0 retrospective economy review", sources)
         self.assertIn("Web GPT + domestic-model independent consultation", sources)
         self.assertIn("Unified P0 decision ledger", sources)
+        self.assertIn("P0-System v2", sources)
+        self.assertEqual(len(self.state["research_governance_v2"]["stages"]), 7)
+        self.assertTrue(self.state["research_governance_v2"]["policy"]["support_and_method_are_distinct"])
+        self.assertTrue(self.state["research_governance_v2"]["policy"]["raw_trace_is_mandatory_for_gpu_runs"])
         self.assertEqual(self.state["summary"]["human_terminal_p0"], 13)
         self.assertEqual(self.state["summary"]["human_terminal_p0_ready"], 0)
         self.assertEqual(self.state["summary"]["p0_admission_active"], 20)

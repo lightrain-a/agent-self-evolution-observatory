@@ -13,7 +13,9 @@ from typing import Any
 from .p0_common import CONFIG_DIR, load_json
 from .p0_admission import build_p0_admission_state
 from .config import StorageSettings, resolve_experiment_data_root
-from .experiment_authority import acquire_authority, release_authority
+from .experiment_authority import acquire_authority, reconcile_authority, release_authority
+from .governance_protocol import evaluate_stage_contract
+from .resource_lease import acquire_gpu_lease, active_gpu_uuids, reconcile_gpu_leases, release_gpu_lease
 
 
 PROFILE_PATH = CONFIG_DIR / "experiment_orchestrator_profiles.json"
@@ -226,6 +228,7 @@ def choose_slot(
     *,
     min_free_memory_mib: int,
     max_gpu_utilization_pct: int,
+    excluded_gpu_uuids: set[str] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     candidates: list[tuple[int, int, int, str, dict[str, Any], dict[str, Any]]] = []
     for server in cluster:
@@ -235,6 +238,8 @@ def choose_slot(
         if not pf.get("launch_ready"):
             continue
         for gpu in server.get("gpus") or []:
+            if str(gpu.get("uuid") or "") in (excluded_gpu_uuids or set()):
+                continue
             free = int(gpu.get("memory_free_mib") or 0)
             util = int(gpu.get("utilization_gpu_pct") or 0)
             if free < min_free_memory_mib or util > max_gpu_utilization_pct:
@@ -303,11 +308,23 @@ def build_launch_plan(
     if economy.get("execution_compilation_authorized") is not True:
         failed = [str(g.get("key")) for g in economy.get("gates") or [] if g.get("pass") is not True]
         raise RuntimeError(f"{idea_id} blocked by P0 Economy Gate: " + ", ".join(failed or [str(economy.get('status') or 'blocked')]))
+    if not config_name:
+        raise RuntimeError("scientific launch requires an explicit frozen config and 8/8 Pre-Experiment Card")
+    local_config = CONFIG_DIR / Path(config_name).name
+    config_payload = load_json(local_config)
+    authority_root = resolve_experiment_data_root(StorageSettings.from_env())
+    governance = evaluate_stage_contract(idea_id, config_payload, authority_root)
+    if governance.get("execution_authorized") is not True:
+        raise RuntimeError(f"{idea_id} blocked by Research Governance v2: " + ", ".join(governance.get("blockers") or []))
+    active_run_ids = {str(state.get("run_id") or "") for server_row in cluster for state in server_row.get("execution_states") or [] if str(state.get("status") or "").lower() in ACTIVE_STATES and state.get("run_id")}
+    reconcile_gpu_leases(authority_root, active_run_ids)
+    leased_gpu_uuids = active_gpu_uuids(authority_root)
 
     server, gpu = choose_slot(
         cluster,
         min_free_memory_mib=int(defaults.get("min_free_memory_mib", 18000)),
         max_gpu_utilization_pct=int(defaults.get("max_gpu_utilization_pct", 25)),
+        excluded_gpu_uuids=leased_gpu_uuids,
     )
     profile = profile_by_id(profiles, str(server["server_id"]))
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -318,8 +335,6 @@ def build_launch_plan(
     q = shlex.quote
     if mode not in {"collect", "execute"}:
         raise ValueError(f"unsupported launch mode: {mode}")
-    if not config_name:
-        raise RuntimeError("scientific launch requires an explicit frozen config and 8/8 Pre-Experiment Card")
     remote_config = f"{profile.repo}/research_pipeline/{Path(config_name).name}"
     config_arg = f" --config {q(remote_config)}"
     pre_experiment = remote_pre_experiment_card(profile, idea_id, remote_config)
@@ -334,10 +349,19 @@ def build_launch_plan(
         raise RuntimeError(
             f"{idea_id} qualified model mismatch on server {profile.id}: expected {expected_model}, runtime path is {profile.model_path}"
         )
+    audit_command = (
+        f"{q(profile.python)} -m research_pipeline.trace_preflight prelaunch "
+        f"--idea-id {q(idea_id)} --stage {q(str(governance['stage']))} --config {q(remote_config)} "
+        f"--model-path {q(profile.model_path)} --alfworld-data {q(profile.alfworld_data)} "
+        f"--extra-pythonpath {q(profile.extra_pythonpath)} --output-dir {q(output_dir)} "
+        f"--source {q(profile.repo + '/research_pipeline/p0_runner.py')} "
+        f"--source {q(profile.repo + '/research_pipeline/p0_alfworld_adapter.py')}"
+    )
     inner = (
         f"cd {q(profile.repo)} && "
         f"export CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES={q(str(gpu['uuid']))} "
         f"ALFWORLD_DATA={q(profile.alfworld_data)} P0_EXTRA_SITE={q(profile.extra_pythonpath)}; "
+        f"{audit_command} && "
         f"{q(profile.python)} -m research_pipeline.p0_runner {q(mode)} {q(idea_id)}{config_arg} "
         f"--model-path {q(profile.model_path)} --data-root {q(profile.data_root)} "
         f"--extra-pythonpath {q(profile.extra_pythonpath)} --alfworld-data {q(profile.alfworld_data)} "
@@ -358,6 +382,9 @@ def build_launch_plan(
         "gpu_utilization_pct": int(gpu["utilization_gpu_pct"]),
         "runtime_contract_hash": str((server.get("preflight") or {}).get("runtime_contract_hash") or ""),
         "economy_gate": economy,
+        "governance": governance,
+        "active_run_ids_snapshot": sorted(active_run_ids),
+        "leased_gpu_uuids_snapshot": sorted(leased_gpu_uuids),
         "pre_experiment_card": pre_experiment,
         "pre_experiment_status": f"{pre_experiment.get('passed_gates', 0)}/{pre_experiment.get('gate_count', 8)}",
         "run_id": run_id,
@@ -389,6 +416,10 @@ def build_qualification_plan(
     num_shards: int = 1,
     shard_index: int = 0,
 ) -> dict[str, Any]:
+    authority_root = resolve_experiment_data_root(StorageSettings.from_env())
+    active_run_ids = {str(state.get("run_id") or "") for server_row in cluster for state in server_row.get("execution_states") or [] if str(state.get("status") or "").lower() in ACTIVE_STATES and state.get("run_id")}
+    reconcile_gpu_leases(authority_root, active_run_ids)
+    leased_gpu_uuids = active_gpu_uuids(authority_root)
     if server_id:
         server = next((row for row in cluster if str(row.get("server_id")) == server_id), None)
         if server is None or not server.get("reachable"):
@@ -397,7 +428,7 @@ def build_qualification_plan(
             raise RuntimeError(f"qualification server {server_id} is not launch-ready")
         gpus = list(server.get("gpus") or [])
         if gpu_index is None:
-            eligible = [g for g in gpus if int(g.get("memory_free_mib") or 0) >= int(defaults.get("min_free_memory_mib", 18000)) and int(g.get("utilization_gpu_pct") or 0) <= int(defaults.get("max_gpu_utilization_pct", 25))]
+            eligible = [g for g in gpus if str(g.get("uuid") or "") not in leased_gpu_uuids and int(g.get("memory_free_mib") or 0) >= int(defaults.get("min_free_memory_mib", 18000)) and int(g.get("utilization_gpu_pct") or 0) <= int(defaults.get("max_gpu_utilization_pct", 25))]
             if not eligible:
                 raise RuntimeError(f"no free qualification GPU on server {server_id}")
             gpu = max(eligible, key=lambda row: int(row.get("memory_free_mib") or 0))
@@ -405,11 +436,14 @@ def build_qualification_plan(
             gpu = next((row for row in gpus if int(row.get("index")) == int(gpu_index)), None)
             if gpu is None:
                 raise RuntimeError(f"GPU index {gpu_index} not found on server {server_id}")
+            if str(gpu.get("uuid") or "") in leased_gpu_uuids:
+                raise RuntimeError(f"GPU index {gpu_index} on server {server_id} already has an active resource lease")
     else:
         server, gpu = choose_slot(
             cluster,
             min_free_memory_mib=int(defaults.get("min_free_memory_mib", 18000)),
             max_gpu_utilization_pct=int(defaults.get("max_gpu_utilization_pct", 25)),
+            excluded_gpu_uuids=leased_gpu_uuids,
         )
     profile = profile_by_id(profiles, str(server["server_id"]))
     q = shlex.quote
@@ -447,6 +481,8 @@ def build_qualification_plan(
         "num_shards": int(num_shards),
         "shard_index": int(shard_index),
         "run_id": run_id,
+        "active_run_ids_snapshot": sorted(active_run_ids),
+        "leased_gpu_uuids_snapshot": sorted(leased_gpu_uuids),
         "output_dir": output_dir,
         "log_path": log_path,
         "tmux_session": session,
@@ -457,17 +493,27 @@ def build_qualification_plan(
 def launch_plan(plan: dict[str, Any], profiles: list[ServerProfile]) -> dict[str, Any]:
     profile = profile_by_id(profiles, str(plan["server_id"]))
     root = resolve_experiment_data_root(StorageSettings.from_env())
+    owner_id = str(plan.get("idea_id") or f"qualification:{plan['run_id']}")
+    active_run_ids = set(str(x) for x in plan.get("active_run_ids_snapshot") or [] if x)
+    reconcile_authority(root, owner_id, active_run_ids)
+    reconcile_gpu_leases(root, active_run_ids)
     plan_hash = str((plan.get("pre_experiment_card") or {}).get("config_sha256") or plan.get("runtime_contract_hash") or plan.get("run_id"))
-    authority = acquire_authority(root, str(plan["idea_id"]), plan_hash, "experiment-orchestrator", str(plan.get("mode") or "execute"), str(plan["run_id"]))
+    stage = str((plan.get("governance") or {}).get("stage") or plan.get("mode") or plan.get("job_type") or "execute")
+    authority = acquire_authority(root, owner_id, plan_hash, "experiment-orchestrator", stage, str(plan["run_id"]))
+    expected = (plan.get("pre_experiment_card") or {}).get("expected_runtime") or {}
+    wall_hours = float(expected.get("worst_wall_hours") or expected.get("expected_wall_hours") or 10.0)
+    gpu_lease = acquire_gpu_lease(root, str(plan["server_id"]), str(plan["gpu_uuid"]), str(plan["run_id"]), owner_id, max(120, int((wall_hours + 2.0) * 60)))
     try:
         run_remote(profile, str(plan["remote_command"]), timeout=15)
         session = str(plan["tmux_session"])
         verify = run_remote(profile, f"tmux has-session -t {shlex.quote(session)} 2>/dev/null && echo running || echo missing")
         if verify.strip() != "running":
-            release_authority(root, str(plan["idea_id"]), str(authority["authority_id"]), "launch-missing")
-        return {**plan, "authority": authority, "launch_checked_at": utc_now(), "tmux_status": verify.strip()}
+            release_gpu_lease(root, str(plan["server_id"]), str(plan["gpu_uuid"]), str(gpu_lease["lease_id"]), "launch-missing")
+            release_authority(root, owner_id, str(authority["authority_id"]), "launch-missing")
+        return {**plan, "authority": authority, "gpu_lease": gpu_lease, "launch_checked_at": utc_now(), "tmux_status": verify.strip()}
     except Exception:
-        release_authority(root, str(plan["idea_id"]), str(authority["authority_id"]), "launch-error")
+        release_gpu_lease(root, str(plan["server_id"]), str(plan["gpu_uuid"]), str(gpu_lease["lease_id"]), "launch-error")
+        release_authority(root, owner_id, str(authority["authority_id"]), "launch-error")
         raise
 
 
@@ -497,10 +543,14 @@ def stop_plan(plan: dict[str, Any], profiles: list[ServerProfile]) -> dict[str, 
     profile = profile_by_id(profiles, str(plan["server_id"]))
     session = str(plan["tmux_session"])
     run_remote(profile, f"tmux kill-session -t {shlex.quote(session)} 2>/dev/null || true")
+    root = resolve_experiment_data_root(StorageSettings.from_env())
+    owner_id = str(plan.get("idea_id") or f"qualification:{plan.get('run_id')}")
+    lease = plan.get("gpu_lease") or {}
+    if lease.get("lease_id"):
+        release_gpu_lease(root, str(plan["server_id"]), str(plan["gpu_uuid"]), str(lease["lease_id"]), "orchestrator-stop")
     authority = plan.get("authority") or {}
     if authority.get("authority_id"):
-        root = resolve_experiment_data_root(StorageSettings.from_env())
-        release_authority(root, str(plan["idea_id"]), str(authority["authority_id"]), "orchestrator-stop")
+        release_authority(root, owner_id, str(authority["authority_id"]), "orchestrator-stop")
     return {**plan, "stopped_at": utc_now(), "tmux_status": "stopped"}
 
 
