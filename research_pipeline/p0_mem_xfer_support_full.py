@@ -8,6 +8,8 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
+from . import p0_alfworld_adapter as _adapter_module
+from . import p0_mem_xfer_support_enriched as _support_module
 from .p0_alfworld_adapter import ALFWorldGameRunner, HFAdmissiblePolicy, load_config
 from .p0_mem_xfer_support_enriched import (
     ARMS, EXPERIMENT_ID, SupportP0Error, _append_jsonl, _atomic_json,
@@ -24,6 +26,29 @@ FULL_SUPPORT_GATES = {
     "minimum_nonzero_controlled_effects": 12,
     "minimum_target_family_folds_with_two_nonzero": 3,
 }
+
+
+def _critical_source_snapshot() -> dict[str, dict[str, str]]:
+    paths = {
+        "p0_mem_xfer_support_full": Path(__file__).resolve(),
+        "p0_mem_xfer_support_enriched": Path(str(_support_module.__file__)).resolve(),
+        "p0_alfworld_adapter": Path(str(_adapter_module.__file__)).resolve(),
+    }
+    return {name: {"path": str(path), "sha256": _file_hash(path)} for name, path in paths.items()}
+
+
+def _snapshot_hashes(snapshot: dict[str, Any]) -> dict[str, str]:
+    return {name: str((row or {}).get("sha256") or "") for name, row in snapshot.items()}
+
+
+LOADED_SOURCE_SNAPSHOT = _critical_source_snapshot()
+
+
+def _assert_loaded_sources_match_audit(audit: dict[str, Any]) -> None:
+    expected = _snapshot_hashes(audit.get("source_snapshot") or {})
+    loaded = _snapshot_hashes(LOADED_SOURCE_SNAPSHOT)
+    if not expected or expected != loaded:
+        raise SupportP0Error(f"loaded source snapshot mismatch: expected={expected}, loaded={loaded}")
 
 
 def _effect_sign(values: list[int]) -> int:
@@ -183,6 +208,7 @@ def build_full_pre_gpu_audit(run_dir: Path, model_path: Path, *, wall_hours_cap:
         "decision": "PASS" if passed else "HOLD", "execution_ready": passed,
         "plan_hash": plan["plan_hash"], "model_path": str(model_path),
         "checks": checks, "support_source": support_source,
+        "source_snapshot": _critical_source_snapshot(),
         "budget": {
             "reused_support_executions": 72, "new_executions": 144, "full_executions": 216,
             "support_gpu_hours": support_gpu_hours,
@@ -200,6 +226,7 @@ def build_full_pre_gpu_audit(run_dir: Path, model_path: Path, *, wall_hours_cap:
         },
         "provenance_contract": {
             "exclusive_lock_before_model_load": True,
+            "loaded_source_sha_must_match_pre_gpu_audit": True,
             "duplicate_process_contaminates_run": True,
             "support_rows_reused_not_rerun": True,
             "partial_full_run_has_no_scientific_authority": True,
@@ -232,6 +259,7 @@ def run_full_qwen_support(
             raise SupportP0Error("full audit/plan hash mismatch")
         if str(audit.get("model_path") or "") != str(model_path):
             raise SupportP0Error("full audit/model path mismatch")
+        _assert_loaded_sources_match_audit(audit)
         if new_episode_cap != 144:
             raise SupportP0Error(f"full new-episode budget must remain 144; got {new_episode_cap}")
         support_rows, support_source = _support_source_rows(run_dir, plan, model_path)
@@ -251,6 +279,7 @@ def run_full_qwen_support(
             "full_pre_gpu_audit": str(full_audit_path), "full_pre_gpu_audit_sha256": _file_hash(full_audit_path),
             "analysis_contract": audit.get("analysis_contract") or {},
             "provenance_contract": audit.get("provenance_contract") or {},
+            "loaded_source_snapshot": LOADED_SOURCE_SNAPSHOT,
             "method_failure_authorized": False, "admission_method_training_authorized": False,
             "second_model_authorized": False,
         }

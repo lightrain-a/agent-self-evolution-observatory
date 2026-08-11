@@ -4,8 +4,16 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from .p0_mem_xfer_support_enriched import ARMS, SupportP0Error, _exclusive_run_lock
-from .p0_mem_xfer_support_full import analyze_full_support_rows
+from .p0_mem_xfer_support_enriched import (
+    ARMS, SupportP0Error, _exclusive_run_lock,
+    _assert_loaded_sources_match_audit as _assert_support_loaded_sources_match_audit,
+    _critical_source_snapshot as _support_critical_source_snapshot,
+)
+from .p0_mem_xfer_support_full import (
+    _assert_loaded_sources_match_audit,
+    _critical_source_snapshot,
+    analyze_full_support_rows,
+)
 
 FAMILIES = (
     "pick_and_place_simple", "pick_clean_then_place_in_recep",
@@ -67,6 +75,28 @@ class FullSupportTest(unittest.TestCase):
                 with self.assertRaises(SupportP0Error):
                     with _exclusive_run_lock(lock):
                         pass
+
+    def test_loaded_source_snapshot_must_match_pre_gpu_audit(self) -> None:
+        snapshot = _critical_source_snapshot()
+        self.assertEqual(set(snapshot), {
+            "p0_mem_xfer_support_full", "p0_mem_xfer_support_enriched", "p0_alfworld_adapter",
+        })
+        self.assertTrue(all(len(row["sha256"]) == 64 for row in snapshot.values()))
+        _assert_loaded_sources_match_audit({"source_snapshot": snapshot})
+        bad = {name: dict(row) for name, row in snapshot.items()}
+        bad["p0_mem_xfer_support_full"]["sha256"] = "0" * 64
+        with self.assertRaises(SupportP0Error):
+            _assert_loaded_sources_match_audit({"source_snapshot": bad})
+
+    def test_support_stage_loaded_source_snapshot_must_match_audit(self) -> None:
+        snapshot = _support_critical_source_snapshot()
+        self.assertEqual(set(snapshot), {"p0_mem_xfer_support_enriched", "p0_alfworld_adapter"})
+        self.assertTrue(all(len(row["sha256"]) == 64 for row in snapshot.values()))
+        _assert_support_loaded_sources_match_audit({"source_snapshot": snapshot})
+        bad = {name: dict(row) for name, row in snapshot.items()}
+        bad["p0_alfworld_adapter"]["sha256"] = "0" * 64
+        with self.assertRaises(SupportP0Error):
+            _assert_support_loaded_sources_match_audit({"source_snapshot": bad})
 
 
 if __name__ == "__main__":

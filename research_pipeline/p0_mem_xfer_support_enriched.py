@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator
 
+from . import p0_alfworld_adapter as _adapter_module
 from .alfworld_react_scaffold import task_family_from_gamefile
 from .p0_alfworld_adapter import ALFWorldGameRunner, HFAdmissiblePolicy, load_config
 
@@ -58,6 +59,25 @@ def _json_hash(payload: Any) -> str:
     return hashlib.sha256(raw).hexdigest()
 def _file_hash(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def _critical_source_snapshot() -> dict[str, dict[str, str]]:
+    paths = {
+        "p0_mem_xfer_support_enriched": Path(__file__).resolve(),
+        "p0_alfworld_adapter": Path(str(_adapter_module.__file__)).resolve(),
+    }
+    return {name: {"path": str(path), "sha256": _file_hash(path)} for name, path in paths.items()}
+
+def _snapshot_hashes(snapshot: dict[str, Any]) -> dict[str, str]:
+    return {name: str((row or {}).get("sha256") or "") for name, row in snapshot.items()}
+
+LOADED_SOURCE_SNAPSHOT = _critical_source_snapshot()
+
+def _assert_loaded_sources_match_audit(audit: dict[str, Any]) -> None:
+    expected = _snapshot_hashes(audit.get("source_snapshot") or {})
+    loaded = _snapshot_hashes(LOADED_SOURCE_SNAPSHOT)
+    if not expected or expected != loaded:
+        raise SupportP0Error(f"loaded source snapshot mismatch: expected={expected}, loaded={loaded}")
+
 def _atomic_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
@@ -436,6 +456,12 @@ def build_pre_gpu_audit(
         "audit_id": "p0-mem-xfer-support-enriched-pre-gpu-v1", "created_at": _now(),
         "decision": "PASS" if not blockers else "HOLD", "execution_ready": not blockers,
         "blockers": blockers, "checks": checks, "preview_plan_hash": plan_hash(material),
+        "source_snapshot": _critical_source_snapshot(),
+        "provenance_contract": {
+            "exclusive_lock_before_model_load": True,
+            "loaded_source_sha_must_match_pre_gpu_audit": True,
+            "duplicate_process_contaminates_run": True,
+        },
         "scientific_authority": "Authorizes only the 24-unit/72-execution Qwen support qualification; it does not authorize a method PASS or a second backbone.",
         "typed_failure_policy": ["METHOD-FAIL", "PHENOMENON-FAIL", "SUPPORT-INSUFFICIENT", "COMPETENCE-FAIL", "RUNTIME-BLOCKER", "BUDGET-STOP", "HOLD", "INCONCLUSIVE"],
     }
@@ -544,6 +570,7 @@ def _run_support_qualification_unlocked(
     audit = _load_json(Path(str(plan["pre_gpu_audit"])))
     if audit.get("decision") != "PASS" or audit.get("preview_plan_hash") != plan["plan_hash"]:
         raise SupportP0Error("frozen pre-GPU audit no longer authorizes this plan")
+    _assert_loaded_sources_match_audit(audit)
     if output_dir.exists() and any(output_dir.iterdir()):
         raise SupportP0Error(f"refusing to overwrite non-empty support qualification directory: {output_dir}")
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -557,6 +584,7 @@ def _run_support_qualification_unlocked(
         "plan_hash": plan["plan_hash"], "model_path": str(model_path), "gpu_uuid": gpu_uuid,
         "max_steps": max_steps, "episode_cap": episode_cap, "wall_hours_cap": wall_hours_cap,
         "arms": list(ARMS), "independent_truth": material["independent_truth"],
+        "loaded_source_snapshot": LOADED_SOURCE_SNAPSHOT,
         "method_failure_authorized": False, "second_model_authorized": False,
     })
     raw_path = output_dir / "raw-traces.jsonl"; raw_path.write_text("", encoding="utf-8")
