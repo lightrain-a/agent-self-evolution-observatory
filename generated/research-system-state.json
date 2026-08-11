@@ -22389,7 +22389,7 @@
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-11T09:38:27+00:00",
+    "generated_at": "2026-08-11T10:37:42+00:00",
     "source_of_truth_priority": [
       "latest-human-review",
       "explicit-user-update",
@@ -23253,11 +23253,12 @@
           "en": "Replicated-Effect Memory Gate"
         },
         "current_fact": {
-          "zh": "已进入共享 P0。冻结的 Qwen full-support table 已完整收齐 216/216 executions、72/72 units，并已自动执行 CPU-only #3 downstream gate。#3 当前为 SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE：candidate 12/8 通过，但跨 probe/future 可复现 harm candidate 为 0/2、benefit candidate 为 1/2，因此只说明支持度不足，禁止写成方法 PASS/FAIL。完整性修复终态：216/216 action replay 全部通过；在原始 full-table 同一物理 RTX 3090 上完成 11 个 nonzero unit × 3 arms = 33/33 deterministic regeneration，其中 10/11 controlled-effect sign 匹配，唯一 mismatch 为 se-m-pick_cool_then_place_in_recep-2-u03（原 +1 → 重跑 0）。因此 full-table paper-level authority=provenance-inconclusive，当前 216 表仅作 diagnostic evidence；第二 backbone 与 formal-method experiment 均继续 HOLD。",
-          "en": "Entered shared P0. The frozen Qwen full-support table is complete at 216/216 executions over 72/72 units and automatically triggered the CPU-only #3 downstream gate. #3 is SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE: candidate count passes at 12/8, but cross-probe/future replicated harm candidates are 0/2 and replicated benefit candidates are 1/2, so this is support insufficiency rather than a method PASS/FAIL. Terminal integrity recovery: the 216/216 action replay passed; matched-hardware deterministic regeneration on the same physical RTX 3090 as the original full table completed all 11 nonzero units x 3 arms = 33/33 executions, with 10/11 controlled-effect signs matching. The sole mismatch is se-m-pick_cool_then_place_in_recep-2-u03 (original +1 -> regenerated 0). Full-table paper-level authority is therefore provenance-inconclusive and the current 216 table is diagnostic evidence only; the second backbone and formal-method experiment remain on HOLD."
+          "zh": "共享 P0 已收口。旧 216/216 Qwen 表的 #3 gate 为 SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE，且 matched-hardware provenance 为 PROVENANCE_INCONCLUSIVE，因此该表只作 diagnostic evidence。会诊后冻结并执行 CPU-only candidate×applicability VOI falsifier：candidate identity permutation 有信号（p=0.046），但 candidate-local scope predictor 的 future MSE=0.188，劣于 candidate mean=0.139、zero=0.139 和更简单的 source-family mean=0.127；5 个 future nonzero 只覆盖 1 个（20%，门槛80%）。正式决定 NO_R1_VOI_STOP_STANDALONE：不授权 clean P0-R1，不授权 formal-method 或第二 backbone；这不是旧 P0 的 method FAIL，而是 standalone #3 已无继续实验 VOI，等待人工 DROP/merge 确认。",
+          "en": "The shared P0 is closed. The old 216/216 Qwen table produced SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE for #3 and matched-hardware provenance is PROVENANCE_INCONCLUSIVE, so the table remains diagnostic evidence only. After consultation, a frozen CPU-only candidate x applicability VOI falsifier was run. Candidate identity has a permutation signal (p=0.046), but the candidate-local scope predictor has future MSE 0.188, worse than candidate mean 0.139, zero 0.139, and the simpler source-family mean 0.127; it covers only 1/5 future nonzero effects (20% vs the frozen 80% requirement). The terminal decision is NO_R1_VOI_STOP_STANDALONE: no clean P0-R1, formal-method experiment, or second backbone is authorized. This is not a method FAIL from the old P0; it is a no-VOI stop for standalone #3, pending human DROP/merge confirmation."
         },
         "code": "B-8",
-        "group": "B"
+        "group": "B",
+        "p0_decision": "STOP_NO_R1_VOI_APPLICABILITY_STRUCTURE_ABSENT"
       },
       "cross-task-effect-transport-certificate": {
         "terminal_state": "p0",
@@ -23267,11 +23268,12 @@
           "en": "Cross-Task Effect Transport Certificate"
         },
         "current_fact": {
-          "zh": "与 Replicated-Effect Memory Gate 共享 P0。冻结的 Qwen full-support table 已完整收齐 216/216 executions、72/72 units，并已自动执行 CPU-only #5 strict-LOTO downstream gate。#5 当前为 TRANSPORT_SUPPORT_INSUFFICIENT：controlled nonzero 为 11/12，eligible target-family folds 为 3/3；这不足以授权 transport mechanism 推断，也不构成方法 FAIL。完整性修复终态：216/216 action replay 全部通过；同一物理 RTX 3090 上 33/33 deterministic regeneration 完成，10/11 controlled-effect sign 匹配，唯一 mismatch 为 se-m-pick_cool_then_place_in_recep-2-u03（原 +1 → 重跑 0）。因此 full-table paper-level authority=provenance-inconclusive，当前表仅作 diagnostic evidence；第二 backbone 与跨模型/formal-method confirmatory 实验均继续 HOLD。",
-          "en": "Shares P0 with Replicated-Effect Memory Gate. The frozen Qwen full-support table is complete at 216/216 executions over 72/72 units and automatically triggered the CPU-only #5 strict-LOTO downstream gate. #5 is TRANSPORT_SUPPORT_INSUFFICIENT: controlled nonzero is 11/12 while eligible target-family folds pass at 3/3. This does not authorize transport-mechanism inference and is not a method FAIL. Terminal integrity recovery: the 216/216 action replay passed; matched-hardware deterministic regeneration on the same physical RTX 3090 completed 33/33 executions, with 10/11 controlled-effect signs matching. The sole mismatch is se-m-pick_cool_then_place_in_recep-2-u03 (original +1 -> regenerated 0). Full-table paper-level authority is therefore provenance-inconclusive and the table is diagnostic evidence only; the second backbone and cross-model/formal-method confirmatory experiment remain on HOLD."
+          "zh": "与 B-8 共享的 P0 已收口。#5 原 gate 为 TRANSPORT_SUPPORT_INSUFFICIENT（controlled nonzero 11/12，eligible folds 3/3），旧表 provenance-inconclusive。会诊后 #5 不再作为独立方向；其唯一可能价值被降级为 B-8 的 scope-conditioned transport 子分析。随后 CPU-only applicability VOI falsifier 失败：candidate-local scope prediction 不仅未击败简单结构基线，future nonzero coverage 仅 1/5。由于 B-8 的 clean R1 也因此未获授权，#5 standalone escalation 同步停止；保留旧 strict-LOTO 结果作为 archived secondary diagnostic，不启动第二 backbone。",
+          "en": "The shared P0 with B-8 is closed. #5 originally ended at TRANSPORT_SUPPORT_INSUFFICIENT (11/12 controlled nonzero effects; 3/3 eligible folds) and the old table is provenance-inconclusive. After consultation, #5 is no longer a standalone direction; its remaining role is only a scope-conditioned transport sub-analysis of B-8. The subsequent CPU-only applicability VOI falsifier also failed: candidate-local scope prediction did not beat simpler structural baselines and covered only 1/5 future nonzero effects. Because B-8 is therefore not authorized for a clean R1, standalone #5 escalation stops as well. Preserve strict-LOTO results as archived secondary diagnostics and do not launch a second backbone."
         },
         "code": "B-9",
-        "group": "B"
+        "group": "B",
+        "p0_decision": "STOP_STANDALONE_ARCHIVE_AS_SECONDARY_TRANSPORT_ANALYSIS"
       },
       "bounded-probe-api-transition-operator": {
         "terminal_state": "p0",
@@ -50524,6 +50526,9 @@
       "support_enriched_analysis_pending",
       "support_enriched_analysis_complete",
       "support_enriched_analysis_blocked",
+      "r1_screen_pending",
+      "r1_eligible_human_authorization",
+      "r1_not_authorized",
       "second_model_hold",
       "second_model_authorized"
     ],
@@ -51422,6 +51427,229 @@
       },
       "automatic_trigger": "full_support_complete"
     },
+    "applicability_falsifier": {
+      "status": "r1_not_authorized",
+      "decision": {
+        "schema_version": "1.0",
+        "analysis_id": "mem-xfer-applicability-falsifier-v1",
+        "created_at": "2026-08-11T10:32:13+00:00",
+        "decision": "NO_R1_VOI_STOP_STANDALONE",
+        "screen_pass": false,
+        "clean_r1_authorized": false,
+        "clean_r1_eligible_for_human_authorization": false,
+        "method_failure_authorized": false,
+        "second_model_authorized": false,
+        "scientific_role": "CPU-only retrospective VOI falsifier on diagnostic-only 216-table; cannot emit method PASS/FAIL",
+        "source_evidence": {
+          "contract_sha256": "dd985ce145471a4fa6aa27f9a2c2b19d06736fc000fc0e977f38b6210a56a308",
+          "main_table_sha256": "eb861663351041e1f1a297b6791c7d31b4ba18285c3a13f0603d5d80c09b324f",
+          "provenance_final_sha256": "ad283b1098943d725553e38020851f654b5ce8b70a2a362ce5958a56f197ef0e",
+          "provenance_decision": "PROVENANCE_INCONCLUSIVE",
+          "evidence_role": "diagnostic-only"
+        },
+        "split_summary": {
+          "probe_units": 36,
+          "future_units": 36,
+          "probe_nonzero": 6,
+          "future_nonzero": 5
+        },
+        "metrics": {
+          "candidate-local-scope": {
+            "predictor": "candidate-local-scope",
+            "mse": 0.1882716049382716,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 1,
+            "future_nonzero_coverage": 0.2,
+            "covered_nonzero_sign_accuracy": 1.0,
+            "predicted_nonzero_units": 6,
+            "false_positive_zero_units": 5,
+            "false_positive_zero_rate": 0.16129032258064516
+          },
+          "zero": {
+            "predictor": "zero",
+            "mse": 0.1388888888888889,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 0,
+            "future_nonzero_coverage": 0.0,
+            "covered_nonzero_sign_accuracy": null,
+            "predicted_nonzero_units": 0,
+            "false_positive_zero_units": 0,
+            "false_positive_zero_rate": 0.0
+          },
+          "candidate-probe-mean": {
+            "predictor": "candidate-probe-mean",
+            "mse": 0.1388888888888889,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 2,
+            "future_nonzero_coverage": 0.4,
+            "covered_nonzero_sign_accuracy": 1.0,
+            "predicted_nonzero_units": 12,
+            "false_positive_zero_units": 10,
+            "false_positive_zero_rate": 0.3225806451612903
+          },
+          "source-family-probe-mean": {
+            "predictor": "source-family-probe-mean",
+            "mse": 0.12654320987654322,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 3,
+            "future_nonzero_coverage": 0.6,
+            "covered_nonzero_sign_accuracy": 1.0,
+            "predicted_nonzero_units": 18,
+            "false_positive_zero_units": 15,
+            "false_positive_zero_rate": 0.4838709677419355
+          },
+          "target-family-probe-mean": {
+            "predictor": "target-family-probe-mean",
+            "mse": 0.15123456790123457,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 2,
+            "future_nonzero_coverage": 0.4,
+            "covered_nonzero_sign_accuracy": 0.5,
+            "predicted_nonzero_units": 27,
+            "false_positive_zero_units": 25,
+            "false_positive_zero_rate": 0.8064516129032258
+          },
+          "same-vs-cross-relation-probe-mean": {
+            "predictor": "same-vs-cross-relation-probe-mean",
+            "mse": 0.15393518518518517,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 5,
+            "future_nonzero_coverage": 1.0,
+            "covered_nonzero_sign_accuracy": 0.4,
+            "predicted_nonzero_units": 36,
+            "false_positive_zero_units": 31,
+            "false_positive_zero_rate": 1.0
+          },
+          "candidate-free-global-nearest-signature": {
+            "predictor": "candidate-free-global-nearest-signature",
+            "mse": 0.16709939448543437,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 4,
+            "future_nonzero_coverage": 0.8,
+            "covered_nonzero_sign_accuracy": 0.75,
+            "predicted_nonzero_units": 21,
+            "false_positive_zero_units": 17,
+            "false_positive_zero_rate": 0.5483870967741935
+          },
+          "structural-cart-depth-1": {
+            "predictor": "structural-cart-depth-1",
+            "mse": 0.17321251417233563,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 5,
+            "future_nonzero_coverage": 1.0,
+            "covered_nonzero_sign_accuracy": 0.2,
+            "predicted_nonzero_units": 36,
+            "false_positive_zero_units": 31,
+            "false_positive_zero_rate": 1.0
+          },
+          "candidate-structural-cart-depth-1": {
+            "predictor": "candidate-structural-cart-depth-1",
+            "mse": 0.17321251417233563,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 5,
+            "future_nonzero_coverage": 1.0,
+            "covered_nonzero_sign_accuracy": 0.2,
+            "predicted_nonzero_units": 36,
+            "false_positive_zero_units": 31,
+            "false_positive_zero_rate": 1.0
+          },
+          "structural-cart-depth-2": {
+            "predictor": "structural-cart-depth-2",
+            "mse": 0.21154503616042078,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 5,
+            "future_nonzero_coverage": 1.0,
+            "covered_nonzero_sign_accuracy": 0.4,
+            "predicted_nonzero_units": 35,
+            "false_positive_zero_units": 30,
+            "false_positive_zero_rate": 0.967741935483871
+          },
+          "candidate-structural-cart-depth-2": {
+            "predictor": "candidate-structural-cart-depth-2",
+            "mse": 0.2768803418803419,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 5,
+            "future_nonzero_coverage": 1.0,
+            "covered_nonzero_sign_accuracy": 0.8,
+            "predicted_nonzero_units": 35,
+            "false_positive_zero_units": 30,
+            "false_positive_zero_rate": 0.967741935483871
+          },
+          "structural-cart-depth-3": {
+            "predictor": "structural-cart-depth-3",
+            "mse": 0.21064814814814814,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 2,
+            "future_nonzero_coverage": 0.4,
+            "covered_nonzero_sign_accuracy": 1.0,
+            "predicted_nonzero_units": 17,
+            "false_positive_zero_units": 15,
+            "false_positive_zero_rate": 0.4838709677419355
+          },
+          "candidate-structural-cart-depth-3": {
+            "predictor": "candidate-structural-cart-depth-3",
+            "mse": 0.3132716049382716,
+            "future_nonzero": 5,
+            "future_nonzero_covered": 2,
+            "future_nonzero_coverage": 0.4,
+            "covered_nonzero_sign_accuracy": 0.5,
+            "predicted_nonzero_units": 13,
+            "false_positive_zero_units": 11,
+            "false_positive_zero_rate": 0.3548387096774194
+          }
+        },
+        "candidate_shuffle": {
+          "permutations": 10000,
+          "seed": 20260811,
+          "observed_mse": 0.1882716049382716,
+          "permutation_mean_mse": 0.2848473765432099,
+          "p_value": 0.0463953604639536
+        },
+        "best_candidate_free_baseline": "source-family-probe-mean",
+        "best_any_baseline": "source-family-probe-mean",
+        "checks": {
+          "candidate_shuffle_signal": {
+            "actual": 0.0463953604639536,
+            "required_p_max": 0.1,
+            "pass": true
+          },
+          "scope_beats_candidate_mean_by_10pct": {
+            "actual_ratio": 1.3555555555555556,
+            "required_ratio_max": 0.9,
+            "pass": false
+          },
+          "scope_beats_zero": {
+            "scope_mse": 0.1882716049382716,
+            "zero_mse": 0.1388888888888889,
+            "pass": false
+          },
+          "scope_beats_best_candidate_free": {
+            "scope_mse": 0.1882716049382716,
+            "baseline": "source-family-probe-mean",
+            "baseline_mse": 0.12654320987654322,
+            "pass": false
+          },
+          "future_nonzero_coverage": {
+            "actual": 0.2,
+            "required_min": 0.8,
+            "pass": false
+          },
+          "covered_nonzero_sign_accuracy": {
+            "actual": 1.0,
+            "required_min": 0.8,
+            "pass": true
+          }
+        },
+        "next_action": "Do not launch clean R1 or a second backbone. Stop standalone #3/#5 escalation; retain #5 only as archived secondary transport analysis and preserve all old evidence as diagnostic-only."
+      },
+      "cpu_only": true,
+      "scientific_role": "retrospective VOI screen; cannot emit method PASS/FAIL"
+    },
+    "formal_method": {
+      "status": "formal_method_hold",
+      "authorized": false,
+      "rule": "A clean R1 requires applicability-structure screen PASS plus human authorization; the current screen does not authorize execution."
+    },
     "second_model": {
       "status": "second_model_hold",
       "authorized": false,
@@ -51452,8 +51680,13 @@
       },
       {
         "from": "support_enriched_analysis_complete",
+        "to": "r1_screen_pending",
+        "action": "run frozen CPU-only candidate×applicability VOI falsifier before any clean R1"
+      },
+      {
+        "from": "r1_eligible_human_authorization",
         "to": "second_model_authorized",
-        "condition": "explicit CPU decision authorizes second model; support counts alone do not imply method PASS"
+        "condition": "only after a fresh source-locked Qwen R1 and separate explicit authorization; never from the old table"
       }
     ]
   },

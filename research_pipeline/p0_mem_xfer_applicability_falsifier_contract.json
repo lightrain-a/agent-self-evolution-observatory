@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "analysis_id": "mem-xfer-applicability-falsifier-v1",
+  "frozen_before_formal_execution": true,
+  "scientific_role": "CPU-only retrospective VOI falsifier on diagnostic-only 216-table; cannot emit method PASS/FAIL",
+  "source_table": "full-support-table/main_table.csv",
+  "train_split": "probe_development (36 units)",
+  "evaluation_split": "future_eval (36 units)",
+  "target": "placebo-controlled delta in {-1,0,1}",
+  "frozen_task_signature": [
+    "target_family",
+    "target_object",
+    "target_receptacle"
+  ],
+  "candidate_local_scope_predictor": "For each future unit, within the same candidate choose probe rows with the maximum exact-match count over the 3 frozen task-signature fields; predict their mean controlled delta. No scene id, outcome-derived feature, threshold tuning, or target outcome is used.",
+  "baselines": [
+    "zero",
+    "candidate-probe-mean",
+    "source-family-probe-mean",
+    "target-family-probe-mean",
+    "same-vs-cross-relation-probe-mean",
+    "candidate-free-global-nearest-signature",
+    "structural CART depth 1/2/3",
+    "candidate+structural CART depth 1/2/3"
+  ],
+  "candidate_shuffle_test": {
+    "permutations": 10000,
+    "seed": 20260811,
+    "metric": "future MSE",
+    "p_definition": "(1 + permutations with MSE <= observed)/(1+N)"
+  },
+  "screen_pass_requires_all": {
+    "candidate_shuffle_p_max": 0.1,
+    "scope_mse_vs_candidate_mean_ratio_max": 0.9,
+    "scope_mse_strictly_below_zero": true,
+    "scope_mse_strictly_below_best_candidate_free": true,
+    "future_nonzero_coverage_min": 0.8,
+    "covered_nonzero_sign_accuracy_min": 0.8
+  },
+  "if_pass": "Eligible for exactly one fresh source-locked same-backbone P0-R1 design; not automatic GPU launch.",
+  "if_fail": "Do not launch clean R1. Stop standalone #3/#5 escalation; preserve old table and falsifier as diagnostic evidence only.",
+  "method_failure_authorized": false,
+  "second_model_authorized": false,
+  "created_at": "2026-08-11T10:29:48+00:00"
+}

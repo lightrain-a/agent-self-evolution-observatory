@@ -339,6 +339,25 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
         except Exception as error:
             support_analysis_error = f"{type(error).__name__}: {error}"
     support_analysis_complete = bool(support_analysis_decision) and support_analysis_error is None
+    applicability_falsifier_raw = _read_json(support_dir / "applicability-falsifier-v1" / "decision.json")
+    applicability_falsifier = None
+    if applicability_falsifier_raw:
+        applicability_falsifier = {
+            key: applicability_falsifier_raw.get(key)
+            for key in (
+                "schema_version", "analysis_id", "created_at", "decision", "screen_pass",
+                "clean_r1_authorized", "clean_r1_eligible_for_human_authorization",
+                "method_failure_authorized", "second_model_authorized", "scientific_role",
+                "source_evidence", "split_summary", "metrics", "candidate_shuffle",
+                "best_candidate_free_baseline", "best_any_baseline", "checks", "next_action",
+            )
+        }
+    if applicability_falsifier and applicability_falsifier.get("decision") == "NO_R1_VOI_STOP_STANDALONE":
+        r1_status = "r1_not_authorized"
+    elif applicability_falsifier and applicability_falsifier.get("screen_pass") is True:
+        r1_status = "r1_eligible_human_authorization"
+    else:
+        r1_status = "r1_screen_pending"
     second_model_authorized = bool(
         support_analysis_complete
         and support_analysis_decision.get("second_model_authorized") is True
@@ -356,7 +375,8 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             "support_qualification_hold", "support_qualification_pass",
             "full_support_pending", "full_support_ready", "full_qwen_support_running", "full_qwen_support_checkpoint",
             "full_support_hold", "full_support_complete", "support_enriched_analysis_pending", "support_enriched_analysis_complete",
-            "support_enriched_analysis_blocked", "second_model_hold", "second_model_authorized",
+            "support_enriched_analysis_blocked", "r1_screen_pending", "r1_eligible_human_authorization", "r1_not_authorized",
+            "second_model_hold", "second_model_authorized",
         ],
         "full_table": {
             "status": "full_table_collected" if full_complete else "collecting",
@@ -390,6 +410,17 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             "decision": support_analysis_decision,
             "automatic_trigger": "full_support_complete",
         },
+        "applicability_falsifier": {
+            "status": r1_status,
+            "decision": applicability_falsifier,
+            "cpu_only": True,
+            "scientific_role": "retrospective VOI screen; cannot emit method PASS/FAIL",
+        },
+        "formal_method": {
+            "status": "formal_method_hold",
+            "authorized": False,
+            "rule": "A clean R1 requires applicability-structure screen PASS plus human authorization; the current screen does not authorize execution.",
+        },
         "second_model": {
             "status": second_model_status, "authorized": second_model_authorized,
             "rule": "Remain HOLD through support qualification and the full Qwen support table; second-backbone authorization requires an explicit CPU-only full-support decision and is never implied by the old full table or qualification PASS alone.",
@@ -399,6 +430,7 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             {"from": "offline_analysis_complete", "to": "support_qualification_pending", "condition": "workflow_decision == EXPAND"},
             {"from": "support_qualification_pass", "to": "full_support_pending", "condition": "same frozen plan; reuse 72 support episodes and collect only remaining 144"},
             {"from": "full_support_complete", "to": "support_enriched_analysis_complete", "automatic": True, "action": "run frozen CPU-only #3 candidate support/gate and #5 strict LOTO support analysis"},
-            {"from": "support_enriched_analysis_complete", "to": "second_model_authorized", "condition": "explicit CPU decision authorizes second model; support counts alone do not imply method PASS"},
+            {"from": "support_enriched_analysis_complete", "to": "r1_screen_pending", "action": "run frozen CPU-only candidate×applicability VOI falsifier before any clean R1"},
+            {"from": "r1_eligible_human_authorization", "to": "second_model_authorized", "condition": "only after a fresh source-locked Qwen R1 and separate explicit authorization; never from the old table"},
         ],
     }

@@ -377,6 +377,10 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     provenance = state["mem_xfer_workflow"]["full_support"].get("provenance_recovery") or {}
     if provenance.get("decision") != "PROVENANCE_INCONCLUSIVE": errors.append("mem-xfer final provenance recovery must record the matched-hardware inconclusive terminal result")
     if state["mem_xfer_workflow"]["full_support"].get("scientific_authority") != "provenance-inconclusive": errors.append("mem-xfer full table must remain diagnostic-only after provenance mismatch")
+    falsifier = state["mem_xfer_workflow"].get("applicability_falsifier") or {}
+    if falsifier.get("status") != "r1_not_authorized": errors.append("mem-xfer clean R1 must remain unauthorized after the frozen applicability VOI screen fails")
+    if (falsifier.get("decision") or {}).get("decision") != "NO_R1_VOI_STOP_STANDALONE": errors.append("mem-xfer applicability falsifier terminal decision mismatch")
+    if state["mem_xfer_workflow"].get("formal_method",{}).get("authorized") is not False: errors.append("mem-xfer formal method experiment must remain HOLD after the failed VOI screen")
     if state["mem_xfer_workflow"]["second_model"]["status"] != "second_model_hold": errors.append("mem-xfer second backbone must remain on HOLD unless the CPU-only full-support gate explicitly authorizes it")
     terminal_summary = state["human_terminal_ideas"]["summary"]
     if terminal_summary.get("human_parents") != 26 or (terminal_summary.get("p0"), terminal_summary.get("p0_ready"), terminal_summary.get("merge"), terminal_summary.get("drop")) != (13,0,6,7): errors.append("human terminal ledger mismatch")
