@@ -835,8 +835,8 @@
         "en": "Replicated-Effect Memory Gate"
       },
       "current_fact": {
-        "zh": "已进入共享 P0。完整 Qwen 表 96/96 executions、32 units 已收齐，冻结离线判定为 PHENOMENON PASS / METHOD INCONCLUSIVE。support qualification 72/72 executions、24/24 units 已 PASS；其后 full Qwen support table 已正式启动，实时进度以 Experiments 页的 workflow artifact 为准。第二 backbone 仍 HOLD。",
-        "en": "Entered shared P0. The full Qwen table is complete at 96/96 executions over 32 units with a frozen PHENOMENON PASS / METHOD INCONCLUSIVE verdict. Support qualification passed at 72/72 executions over 24/24 units; the full Qwen support table has now formally started, with live progress taken from the Experiments workflow artifact. The second backbone remains on HOLD."
+        "zh": "已进入共享 P0。冻结的 Qwen full-support table 已完整收齐 216/216 executions、72/72 units，并已自动执行 CPU-only #3 downstream gate。#3 当前为 SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE：candidate 12/8 通过，但跨 probe/future 可复现 harm candidate 为 0/2、benefit candidate 为 1/2，因此只说明支持度不足，禁止写成方法 PASS/FAIL。第二 backbone 继续 HOLD；full-table provenance 仍为 provisional-only，待独立 replay/再生成完整性修复。",
+        "en": "Entered shared P0. The frozen Qwen full-support table is complete at 216/216 executions over 72/72 units and automatically triggered the CPU-only #3 downstream gate. #3 is SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE: candidate count passes at 12/8, but cross-probe/future replicated harm candidates are 0/2 and replicated benefit candidates are 1/2, so this is support insufficiency rather than a method PASS/FAIL. The second backbone remains on HOLD; full-table provenance is still provisional-only pending the independent replay/regeneration integrity repair."
       },
       "code": "B-8",
       "group": "B"
@@ -849,8 +849,8 @@
         "en": "Cross-Task Effect Transport Certificate"
       },
       "current_fact": {
-        "zh": "与 Replicated-Effect Memory Gate 共享 P0。旧完整 Qwen 表冻结为 PHENOMENON PASS / TRANSPORT SUPPORT INSUFFICIENT；support qualification 72/72 executions 已 PASS，随后 full Qwen support table 已正式启动，用于冻结的 candidate replication / transport-support 判定。第二 backbone 仍 HOLD，尚无跨模型 confirmatory PASS。",
-        "en": "Shares P0 with Replicated-Effect Memory Gate. The old full Qwen table froze at PHENOMENON PASS / TRANSPORT SUPPORT INSUFFICIENT; support qualification passed at 72/72 executions, and the full Qwen support table has now formally started for the frozen candidate-replication and transport-support decision. The second backbone remains on HOLD, with no cross-model confirmatory PASS yet."
+        "zh": "与 Replicated-Effect Memory Gate 共享 P0。冻结的 Qwen full-support table 已完整收齐 216/216 executions、72/72 units，并已自动执行 CPU-only #5 strict-LOTO downstream gate。#5 当前为 TRANSPORT_SUPPORT_INSUFFICIENT：controlled nonzero 为 11/12，eligible target-family folds 为 3/3；这不足以授权 transport mechanism 推断，也不构成方法 FAIL。第二 backbone 继续 HOLD，尚未授权跨模型 confirmatory 实验；full-table provenance 仍为 provisional-only，等待完整性修复。",
+        "en": "Shares P0 with Replicated-Effect Memory Gate. The frozen Qwen full-support table is complete at 216/216 executions over 72/72 units and automatically triggered the CPU-only #5 strict-LOTO downstream gate. #5 is TRANSPORT_SUPPORT_INSUFFICIENT: controlled nonzero is 11/12 while eligible target-family folds pass at 3/3. This does not authorize transport-mechanism inference and is not a method FAIL. The second backbone remains on HOLD, with no cross-model confirmatory experiment authorized; full-table provenance remains provisional-only pending integrity repair."
       },
       "code": "B-9",
       "group": "B"
