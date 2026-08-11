@@ -50,6 +50,12 @@ def _ck(status: str, evidence: str, source: str = "", kind: str = "real-reused")
 def _pending() -> dict[str, Any]:
     return _ck("pending", "No mechanism-aligned real offline evidence has cleared this check yet.", kind="pending")
 
+def _e2_artifact() -> dict[str, Any]:
+    path=PROJECT_ROOT/"generated"/"p0-e2-workflow-cpu.json"
+    try:return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):return {}
+
+
 def _e3_artifact() -> dict[str, Any]:
     path=PROJECT_ROOT/"generated"/"p0-e3-real-api.json"
     try:return json.loads(path.read_text(encoding="utf-8"))
@@ -139,6 +145,17 @@ def _apply_exact_data_holds(card: dict[str, Any], a67: dict[str, Any], memfull: 
         card["gpu0"]={"status":"hold-longitudinal-reuse-missing","evidence":"The completed shared Memory table is a treatment table, not a longitudinal reuse stream; it contains 0 repeated reuse sequences for utility-hazard learning.","source":memfull.get("source"),"evidence_kind":"real-reused","next":NEXT_ACTION[idea]}
 
 
+def _apply_e2_stop(card: dict[str, Any], result: dict[str, Any]) -> None:
+    if card["idea_id"]!="workflow-branch-credit" or result.get("decision")!="STOP_MATCHED_E1_DIRECT_EDIT_EQUIVALENT": return
+    m=result.get("metrics") or {}
+    card["checks"]["target_variation"]=_ck("pass","Four recurring typed failure motifs are verified across 16 source workflows and held out across API/identity-disjoint hidden workflows.","generated/p0-e2-workflow-cpu.json","cpu-workflow-p0")
+    card["checks"]["baseline_disagreement"]=_ck("fail",f"Causal grammar and matched E-1-style direct edit policy tie at hidden success {m.get('grammar_hidden_success',0):.3f} vs {m.get('direct_edit_hidden_success',0):.3f}, with rewrite agreement {m.get('hidden_rewrite_agreement',0):.3f} and equal source calls {m.get('grammar_source_calls',0)}.","generated/p0-e2-workflow-cpu.json","cpu-workflow-p0")
+    card["checks"]["tiny_overfit"]=_ck("pass","Hidden workflow API/object identities are disjoint and both rules are frozen before hidden truth is opened.","generated/p0-e2-workflow-cpu.json","cpu-workflow-p0")
+    card["checks"]["effect_variation"]=_ck("pass","The sandbox contains four distinct local failure causes and four distinct corrective rewrites under programmatic task truth.","generated/p0-e2-workflow-cpu.json","cpu-workflow-p0")
+    card["updater_competence"]={"status":"pass","passed":True,"evidence_kind":"cpu-workflow-p0","reason":"Each source motif has repeatable causal and noncausal group intervention outcomes."}
+    card["gpu0"]={"status":"stop-matched-e1-direct-edit-equivalent","evidence":"The intervention-confirmed grammar produces exactly the same hidden rewrites as a matched E-1-style paired edit-effect lookup with identical source calls and zero hidden search.","source":"generated/p0-e2-workflow-cpu.json","evidence_kind":"cpu-workflow-p0","next":result.get("next_action")}
+
+
 def _apply_e3_reality(card: dict[str, Any], result: dict[str, Any]) -> None:
     if card["idea_id"]!="bounded-probe-api-transition-operator" or result.get("decision")!="READ_ONLY_SUBSTRATE_REDUCIBLE": return
     m=result.get("metrics") or {}; fam=m.get("family_accuracy") or {}
@@ -195,14 +212,14 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
     aw,aa1,aa2,a3p,a67,mem,memfull,ready,we1=alfworld(root),a1(root),a2(root),a3_panel(root),a67_dataset(root),memory(root),memory_full(root),substrate_readiness(root),e1(root)
     up_a1=_updater_config("p0_a1_screening_config.json"); up_a2=_updater_config("p0_a2_screening_config.json")
     realizability=build_p0_realizability_suite(); realizability_by_id={row["idea_id"]:row for row in realizability.get("rows") or []}
-    b10=run_b10_cpu_p0(); a6cpu=run_a6_cpu_p0(); e3real=_e3_artifact(); e3stateful=_e3_stateful_artifact(); e4cpu=_e4_artifact()
+    b10=run_b10_cpu_p0(); a6cpu=run_a6_cpu_p0(); e2cpu=_e2_artifact(); e3real=_e3_artifact(); e3stateful=_e3_stateful_artifact(); e4cpu=_e4_artifact()
     cards=[]
     for idea in NEW_IDS:
         card=_base_card(idea,aw)
         card["updater_competence"]={"status":"pending","passed":False,"evidence_kind":"pending","reason":"mechanism-specific updater/action-stream competence has not been qualified"}
         if idea=="regression-gated-self-evolution": card["updater_competence"]={**up_a1,"evidence_kind":"real-reused"}
         elif idea in {"lineage-aware-rollback","active-causal-minimal-rollback","counterfactual-evolution-decision-controller"}: card["updater_competence"]={**up_a2,"evidence_kind":"real-reused"}
-        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_a6_stop(card,a6cpu); _apply_b10(card,b10); _apply_d1(card,aw); _apply_exact_data_holds(card,a67,memfull); _apply_missing_substrates(card,ready); _apply_e3_reality(card,e3real); _apply_e3_stateful_stop(card,e3stateful); _apply_e4_result(card,e4cpu)
+        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_a6_stop(card,a6cpu); _apply_b10(card,b10); _apply_d1(card,aw); _apply_exact_data_holds(card,a67,memfull); _apply_missing_substrates(card,ready); _apply_e2_stop(card,e2cpu); _apply_e3_reality(card,e3real); _apply_e3_stateful_stop(card,e3stateful); _apply_e4_result(card,e4cpu)
         synthetic=realizability_by_id.get(idea)
         if synthetic and synthetic.get("representability_pass") and card["checks"]["representability"]["status"]=="pending":
             card["checks"]["representability"]=_ck("synthetic-pass","Synthetic mechanism harness passed; this clears representability only and has no reality/method authority.","generated/p0-realizability-suite.json","synthetic-realizability-only")
@@ -219,7 +236,7 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
     }
     return {"schema_version":"1.0","generated_at":_now(),"experiment_root":"profile-resolved-machine-local",
         "policy":{"real_reused_may_unblock":True,"synthetic_harness_may_not_unblock_reality":True,"same_batch_self_authorization_forbidden":True,"method_result_from_offline_qualification_forbidden":True},
-        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"memory_full":memfull,"substrate_readiness":ready,"e1":we1,"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"e3_real_api":{"decision":e3real.get("decision"),"metrics":e3real.get("metrics"),"prediction_sha256":e3real.get("prediction_sha256_before_hidden")},"e3_stateful":{"decision":e3stateful.get("decision"),"metrics":e3stateful.get("metrics"),"prediction_sha256":e3stateful.get("prediction_sha256_before_hidden")},"e4_permission_cpu":{"decision":e4cpu.get("decision"),"metrics":e4cpu.get("metrics"),"threshold":e4cpu.get("threshold")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
+        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"memory_full":memfull,"substrate_readiness":ready,"e1":we1,"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"e2_workflow_cpu":{"decision":e2cpu.get("decision"),"metrics":e2cpu.get("metrics"),"freeze_sha256":e2cpu.get("freeze_sha256_before_hidden")},"e3_real_api":{"decision":e3real.get("decision"),"metrics":e3real.get("metrics"),"prediction_sha256":e3real.get("prediction_sha256_before_hidden")},"e3_stateful":{"decision":e3stateful.get("decision"),"metrics":e3stateful.get("metrics"),"prediction_sha256":e3stateful.get("prediction_sha256_before_hidden")},"e4_permission_cpu":{"decision":e4cpu.get("decision"),"metrics":e4cpu.get("metrics"),"threshold":e4cpu.get("threshold")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
 
 def write_p0_offline_qualification_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS)->dict[str,Any]:
     state=build_p0_offline_qualification_state(); json_path.parent.mkdir(parents=True,exist_ok=True)

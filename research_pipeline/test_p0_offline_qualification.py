@@ -38,7 +38,8 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(by_id["bounded-probe-api-transition-operator"]["checks"]["baseline_disagreement"]["status"],"fail")
         self.assertEqual(by_id["bounded-probe-api-transition-operator"]["gpu0"]["status"],"stop-stateful-deterministic-pex-ceiling")
         self.assertEqual(by_id["interventional-permission-triage-under-ceiling"]["gpu0"]["status"],"stop-matched-boolean-rule-equivalent")
-        self.assertEqual(self.state["summary"]["gpu0_stop"],4)
+        self.assertEqual(by_id["workflow-branch-credit"]["gpu0"]["status"],"stop-matched-e1-direct-edit-equivalent")
+        self.assertEqual(self.state["summary"]["gpu0_stop"],5)
 
     def test_reused_artifacts_capture_current_blockers(self) -> None:
         shared=self.state["shared_evidence"]
@@ -74,11 +75,10 @@ class P0OfflineQualificationTest(unittest.TestCase):
             "evaluator-coadaptation-guard":"hold-cross-version-matrix-missing",
             "counterexample-generating-curriculum":"hold-minimality-unmeasured",
             "workflow-generalization-certificate":"hold",
-            "workflow-branch-credit":"hold-group-interventions-missing",
         }
         for idea_id,status in expected.items():
             self.assertEqual(by_id[idea_id]["gpu0"]["status"],status,idea_id)
-        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],12)
+        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],11)
 
 
 if __name__=="__main__":

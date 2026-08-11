@@ -18,6 +18,7 @@ from .human_terminal_state import write_human_terminal_state
 from .p0_admission import write_p0_admission_state
 from .p0_b10_cpu import write_b10_cpu_p0
 from .p0_a6_cpu import write_a6_cpu_p0
+from .p0_e2_workflow_cpu import write_e2_cpu_p0
 from .p0_e3_real_api import write as write_e3_real_api_p0
 from .p0_e3_stateful import write_stateful as write_e3_stateful_p0
 from .p0_e4_permission_cpu import write_state as write_e4_permission_p0
@@ -103,6 +104,7 @@ def run_cycle(
         report["steps"].append(_step("p0-realizability-suite", write_p0_realizability_suite))
         report["steps"].append(_step("p0-b10-cpu", write_b10_cpu_p0))
         report["steps"].append(_step("p0-a6-cpu", write_a6_cpu_p0))
+        report["steps"].append(_step("p0-e2-workflow-cpu", write_e2_cpu_p0))
         report["steps"].append(_step("p0-e3-real-api", write_e3_real_api_p0))
         report["steps"].append(_step("p0-e3-stateful", write_e3_stateful_p0))
         report["steps"].append(_step("p0-e4-permission", write_e4_permission_p0))
@@ -125,6 +127,7 @@ def run_cycle(
         write_p0_realizability_suite()
         write_b10_cpu_p0()
         write_a6_cpu_p0()
+        write_e2_cpu_p0()
         write_e3_real_api_p0()
         write_e3_stateful_p0()
         write_e4_permission_p0()

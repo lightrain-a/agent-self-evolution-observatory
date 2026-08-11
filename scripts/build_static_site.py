@@ -131,6 +131,7 @@ def build() -> Path:
         OUTPUT / "generated" / "p0-realizability-suite.js",
         OUTPUT / "generated" / "p0-b10-cpu.js",
         OUTPUT / "generated" / "p0-a6-cpu.js",
+        OUTPUT / "generated" / "p0-e2-workflow-cpu.js",
         OUTPUT / "generated" / "p0-e3-real-api.js",
         OUTPUT / "generated" / "p0-e3-stateful.js",
         OUTPUT / "generated" / "p0-e4-permission-cpu.js",
