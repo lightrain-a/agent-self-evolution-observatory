@@ -32,6 +32,8 @@ DAILY_ARTIFACTS = (
     "generated/p0-b3-interference-cpu.js",
     "generated/p0-c2-evaluator-cpu.json",
     "generated/p0-c2-evaluator-cpu.js",
+    "generated/p0-d1-minimal-curriculum-cpu.json",
+    "generated/p0-d1-minimal-curriculum-cpu.js",
     "generated/p0-e2-workflow-cpu.json",
     "generated/p0-e2-workflow-cpu.js",
     "generated/p0-e3-real-api.json",

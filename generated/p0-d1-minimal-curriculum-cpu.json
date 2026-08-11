@@ -1,0 +1,299 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-11T09:31:00+00:00",
+  "idea_id": "counterexample-generating-curriculum",
+  "code": "D-1",
+  "scientific_role": "CPU verifier-grounded curriculum P0; proposer is frozen and independent hidden boundaries are never used in minimization/selection",
+  "design": {
+    "rules": 20,
+    "verified_candidates_per_rule": 4,
+    "verified_candidates": 80,
+    "hidden_boundary_cases": 60,
+    "final_training_tokens_per_arm": 320,
+    "same_final_training_tokens": true,
+    "independent_truth": "programmatic boundary verifier"
+  },
+  "one_minimal": {
+    "verified_1minimal_examples": 80,
+    "extra_verifier_calls_for_minimization": 320,
+    "compiled_updates": {
+      "r00": [
+        "boundary-00"
+      ],
+      "r01": [
+        "boundary-01"
+      ],
+      "r02": [
+        "boundary-02"
+      ],
+      "r03": [
+        "boundary-03"
+      ],
+      "r04": [
+        "boundary-04"
+      ],
+      "r05": [
+        "boundary-05"
+      ],
+      "r06": [
+        "boundary-06"
+      ],
+      "r07": [
+        "boundary-07"
+      ],
+      "r08": [
+        "boundary-08"
+      ],
+      "r09": [
+        "boundary-09"
+      ],
+      "r10": [
+        "boundary-10"
+      ],
+      "r11": [
+        "boundary-11"
+      ],
+      "r12": [
+        "boundary-12"
+      ],
+      "r13": [
+        "boundary-13"
+      ],
+      "r14": [
+        "boundary-14"
+      ],
+      "r15": [
+        "boundary-15"
+      ],
+      "r16": [
+        "boundary-16"
+      ],
+      "r17": [
+        "boundary-17"
+      ],
+      "r18": [
+        "boundary-18"
+      ],
+      "r19": [
+        "boundary-19"
+      ]
+    },
+    "evaluation": {
+      "hidden_cases": 60,
+      "hidden_boundary_accuracy": 1.0,
+      "extra_noncausal_atoms_in_updates": 0
+    }
+  },
+  "matched_intersection": {
+    "extra_verifier_calls_after_validation": 0,
+    "compiled_updates": {
+      "r00": [
+        "boundary-00"
+      ],
+      "r01": [
+        "boundary-01"
+      ],
+      "r02": [
+        "boundary-02"
+      ],
+      "r03": [
+        "boundary-03"
+      ],
+      "r04": [
+        "boundary-04"
+      ],
+      "r05": [
+        "boundary-05"
+      ],
+      "r06": [
+        "boundary-06"
+      ],
+      "r07": [
+        "boundary-07"
+      ],
+      "r08": [
+        "boundary-08"
+      ],
+      "r09": [
+        "boundary-09"
+      ],
+      "r10": [
+        "boundary-10"
+      ],
+      "r11": [
+        "boundary-11"
+      ],
+      "r12": [
+        "boundary-12"
+      ],
+      "r13": [
+        "boundary-13"
+      ],
+      "r14": [
+        "boundary-14"
+      ],
+      "r15": [
+        "boundary-15"
+      ],
+      "r16": [
+        "boundary-16"
+      ],
+      "r17": [
+        "boundary-17"
+      ],
+      "r18": [
+        "boundary-18"
+      ],
+      "r19": [
+        "boundary-19"
+      ]
+    },
+    "evaluation": {
+      "hidden_cases": 60,
+      "hidden_boundary_accuracy": 1.0,
+      "extra_noncausal_atoms_in_updates": 0
+    }
+  },
+  "nonminimal_first": {
+    "compiled_updates": {
+      "r00": [
+        "boundary-00",
+        "n0",
+        "n1",
+        "n2"
+      ],
+      "r01": [
+        "boundary-01",
+        "n1",
+        "n2",
+        "n3"
+      ],
+      "r02": [
+        "boundary-02",
+        "n2",
+        "n3",
+        "n4"
+      ],
+      "r03": [
+        "boundary-03",
+        "n3",
+        "n4",
+        "n5"
+      ],
+      "r04": [
+        "boundary-04",
+        "n4",
+        "n5",
+        "n6"
+      ],
+      "r05": [
+        "boundary-05",
+        "n5",
+        "n6",
+        "n7"
+      ],
+      "r06": [
+        "boundary-06",
+        "n6",
+        "n7",
+        "n8"
+      ],
+      "r07": [
+        "boundary-07",
+        "n7",
+        "n8",
+        "n9"
+      ],
+      "r08": [
+        "boundary-08",
+        "n10",
+        "n8",
+        "n9"
+      ],
+      "r09": [
+        "boundary-09",
+        "n10",
+        "n11",
+        "n9"
+      ],
+      "r10": [
+        "boundary-10",
+        "n0",
+        "n10",
+        "n11"
+      ],
+      "r11": [
+        "boundary-11",
+        "n0",
+        "n1",
+        "n11"
+      ],
+      "r12": [
+        "boundary-12",
+        "n0",
+        "n1",
+        "n2"
+      ],
+      "r13": [
+        "boundary-13",
+        "n1",
+        "n2",
+        "n3"
+      ],
+      "r14": [
+        "boundary-14",
+        "n2",
+        "n3",
+        "n4"
+      ],
+      "r15": [
+        "boundary-15",
+        "n3",
+        "n4",
+        "n5"
+      ],
+      "r16": [
+        "boundary-16",
+        "n4",
+        "n5",
+        "n6"
+      ],
+      "r17": [
+        "boundary-17",
+        "n5",
+        "n6",
+        "n7"
+      ],
+      "r18": [
+        "boundary-18",
+        "n6",
+        "n7",
+        "n8"
+      ],
+      "r19": [
+        "boundary-19",
+        "n7",
+        "n8",
+        "n9"
+      ]
+    },
+    "evaluation": {
+      "hidden_cases": 60,
+      "hidden_boundary_accuracy": 1.0,
+      "extra_noncausal_atoms_in_updates": 60
+    }
+  },
+  "matched_simplification": {
+    "baseline": "intersection of multiple verifier-confirmed non-minimal counterexamples per rule",
+    "same_verified_candidates": true,
+    "same_final_training_tokens": true,
+    "same_hidden_boundary_set": true,
+    "compiled_updates_identical": true,
+    "equivalent": true,
+    "avoided_extra_verifier_calls": 320
+  },
+  "decision": "STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT",
+  "standalone_claim_stop_authorized": true,
+  "p1_authorized": false,
+  "next_action": "Keep verifier counterexamples but drop per-example 1-minimality as a standalone curriculum variable; merge into generic counterexample learning."
+}

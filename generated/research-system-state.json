@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T09:24:17+00:00",
+  "generated_at": "2026-08-11T09:31:20+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "/data/wyt/agent-self-evolution-observatory/publish-persistent-governance-20260811-r3/generated/research-data",
@@ -76,9 +76,9 @@
     "p0_admission_transitioned": 16,
     "p0_admission_settings_complete": 20,
     "p0_admission_execution_authorized": 0,
-    "p0_offline_checks_passed": 41,
-    "p0_offline_checks_failed": 11,
-    "p0_offline_checks_pending": 30,
+    "p0_offline_checks_passed": 43,
+    "p0_offline_checks_failed": 12,
+    "p0_offline_checks_pending": 27,
     "p0_realizability_passed": 14,
     "p0_b10_decision": "STOP_MATCHED_NARY_EQUIVALENT",
     "mem_xfer_support_analysis_status": "support_enriched_analysis_complete",
@@ -89,7 +89,8 @@
     "p0_a7_decision": "STOP_MATCHED_SHALLOW_RULE_EQUIVALENT",
     "p0_b3_screening_decision": "SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED",
     "p0_a5_decision": "STOP_MATCHED_GENERIC_STATE_DIFF_DOMINATES",
-    "p0_c2_decision": "STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT"
+    "p0_c2_decision": "STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT",
+    "p0_d1_decision": "STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT"
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -22387,7 +22388,7 @@
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-11T09:22:47+00:00",
+    "generated_at": "2026-08-11T09:31:00+00:00",
     "source_of_truth_priority": [
       "latest-human-review",
       "explicit-user-update",
@@ -22978,6 +22979,11 @@
           "zh": "non-minimal baseline 等效，或 minimality 只省 token 不提高 unseen boundary generalization，则 DROP。",
           "en": "DROP if the non-minimal baseline is equivalent or minimality only saves tokens without improving unseen-boundary generalization."
         },
+        "current_fact": {
+          "zh": "D-1 CPU P0 已触发 matched-simplification STOP：20 条规则各有 4 个 verifier-confirmed non-minimal counterexamples，1-minimal arm 对 80 个样本逐约束 minimization，额外花 320 次 verifier calls；更简单的 matched baseline 不做 per-example delta-debug，只对同一规则的多条已验证反例取 constraint intersection。两臂最终编译出的 20 个更新逐项完全相同，训练 token 都严格为 320，独立 hidden boundary 60/60 vs 60/60。intersection baseline 无额外 minimization calls，因此 1-minimality 本身没有独立 curriculum 增益，建议并回 generic counterexample learning，等待人工确认 merge/drop。",
+          "en": "D-1 CPU P0 fired a matched-simplification STOP. For 20 rules with four verifier-confirmed non-minimal counterexamples each, the 1-minimal arm performs per-example constraint minimization and spends 320 additional verifier calls. A simpler matched baseline performs no per-example delta debugging and instead intersects the multiple verified counterexamples for each rule. The two arms compile exactly identical updates for all 20 rules, use the same 320-token final training budget, and both score 60/60 on the independent hidden boundary set. The intersection baseline needs no extra minimization calls, so 1-minimality itself provides no standalone curriculum gain and should merge into generic counterexample learning pending human merge/drop review."
+        },
+        "p0_decision": "STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT",
         "p0_entry": {
           "date": "2026-08-11",
           "basis": "p0-admission-contract-frozen",
@@ -51773,12 +51779,12 @@
         "pass": true,
         "detail": {
           "ideas": 16,
-          "checks_passed": 41,
-          "checks_failed": 11,
-          "checks_pending": 30,
+          "checks_passed": 43,
+          "checks_failed": 12,
+          "checks_pending": 27,
           "checks_synthetic_pass": 14,
-          "gpu0_hold_or_conditional": 8,
-          "gpu0_stop": 8
+          "gpu0_hold_or_conditional": 7,
+          "gpu0_stop": 9
         }
       },
       {
@@ -51833,12 +51839,12 @@
   "p0_offline_qualification": {
     "summary": {
       "ideas": 16,
-      "checks_passed": 41,
-      "checks_failed": 11,
-      "checks_pending": 30,
+      "checks_passed": 43,
+      "checks_failed": 12,
+      "checks_pending": 27,
       "checks_synthetic_pass": 14,
-      "gpu0_hold_or_conditional": 8,
-      "gpu0_stop": 8
+      "gpu0_hold_or_conditional": 7,
+      "gpu0_stop": 9
     },
     "policy": {
       "real_reused_may_unblock": true,

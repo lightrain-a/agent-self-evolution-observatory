@@ -74,6 +74,12 @@ def _c2_artifact() -> dict[str, Any]:
     except (OSError,json.JSONDecodeError):return {}
 
 
+def _d1_artifact() -> dict[str, Any]:
+    path=PROJECT_ROOT/"generated"/"p0-d1-minimal-curriculum-cpu.json"
+    try:return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):return {}
+
+
 def _e2_artifact() -> dict[str, Any]:
     path=PROJECT_ROOT/"generated"/"p0-e2-workflow-cpu.json"
     try:return json.loads(path.read_text(encoding="utf-8"))
@@ -204,6 +210,16 @@ def _apply_c2_stop(card: dict[str, Any], result: dict[str, Any]) -> None:
     card["gpu0"]={"status":"stop-simple-anchor-residual-calibration-equivalent","evidence":"Simple frozen-anchor residual calibration reproduces both attribution and repaired evaluator scores with no causal intervention calls; cross-version matrices remain diagnostic only.","source":"generated/p0-c2-evaluator-cpu.json","evidence_kind":"cpu-evaluator-p0","next":result.get("next_action")}
 
 
+def _apply_d1_stop(card: dict[str, Any], result: dict[str, Any]) -> None:
+    if card["idea_id"]!="counterexample-generating-curriculum" or result.get("decision")!="STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT": return
+    minimal=result.get("one_minimal") or {}; inter=result.get("matched_intersection") or {}; m=result.get("matched_simplification") or {}
+    card["checks"]["baseline_disagreement"]=_ck("fail",f"1-minimal and matched intersection compile identical updates={m.get('compiled_updates_identical')} and both reach hidden boundary accuracy {minimal.get('evaluation',{}).get('hidden_boundary_accuracy',0):.3f} vs {inter.get('evaluation',{}).get('hidden_boundary_accuracy',0):.3f}; minimization adds {minimal.get('extra_verifier_calls_for_minimization',0)} verifier calls vs {inter.get('extra_verifier_calls_after_validation',0)}.","generated/p0-d1-minimal-curriculum-cpu.json","cpu-curriculum-p0")
+    card["checks"]["tiny_overfit"]=_ck("pass","The final updates are frozen before evaluation on 60 independently templated hidden boundary cases.","generated/p0-d1-minimal-curriculum-cpu.json","cpu-curriculum-p0")
+    card["checks"]["effect_variation"]=_ck("pass","Twenty independent boundary rules each have four verifier-confirmed counterexamples with varying nuisance constraints.","generated/p0-d1-minimal-curriculum-cpu.json","cpu-curriculum-p0")
+    card["updater_competence"]={"status":"pass","passed":True,"evidence_kind":"cpu-curriculum-p0","reason":"Both curriculum arms compile executable frozen boundary-rule updates under identical final token budgets."}
+    card["gpu0"]={"status":"stop-matched-intersection-filter-equivalent","evidence":"Multiple verified non-minimal counterexamples can be intersected into the same boundary update as per-example 1-minimality without extra minimization calls.","source":"generated/p0-d1-minimal-curriculum-cpu.json","evidence_kind":"cpu-curriculum-p0","next":result.get("next_action")}
+
+
 def _apply_e2_stop(card: dict[str, Any], result: dict[str, Any]) -> None:
     if card["idea_id"]!="workflow-branch-credit" or result.get("decision")!="STOP_MATCHED_E1_DIRECT_EDIT_EQUIVALENT": return
     m=result.get("metrics") or {}
@@ -271,14 +287,14 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
     aw,aa1,aa2,a3p,a67,mem,memfull,ready,we1=alfworld(root),a1(root),a2(root),a3_panel(root),a67_dataset(root),memory(root),memory_full(root),substrate_readiness(root),e1(root)
     up_a1=_updater_config("p0_a1_screening_config.json"); up_a2=_updater_config("p0_a2_screening_config.json")
     realizability=build_p0_realizability_suite(); realizability_by_id={row["idea_id"]:row for row in realizability.get("rows") or []}
-    b10=run_b10_cpu_p0(); a5cpu=_a5_artifact(); a6cpu=run_a6_cpu_p0(); a7cpu=_a7_artifact(); b3cpu=_b3_artifact(); c2cpu=_c2_artifact(); e2cpu=_e2_artifact(); e3real=_e3_artifact(); e3stateful=_e3_stateful_artifact(); e4cpu=_e4_artifact()
+    b10=run_b10_cpu_p0(); a5cpu=_a5_artifact(); a6cpu=run_a6_cpu_p0(); a7cpu=_a7_artifact(); b3cpu=_b3_artifact(); c2cpu=_c2_artifact(); d1cpu=_d1_artifact(); e2cpu=_e2_artifact(); e3real=_e3_artifact(); e3stateful=_e3_stateful_artifact(); e4cpu=_e4_artifact()
     cards=[]
     for idea in NEW_IDS:
         card=_base_card(idea,aw)
         card["updater_competence"]={"status":"pending","passed":False,"evidence_kind":"pending","reason":"mechanism-specific updater/action-stream competence has not been qualified"}
         if idea=="regression-gated-self-evolution": card["updater_competence"]={**up_a1,"evidence_kind":"real-reused"}
         elif idea in {"lineage-aware-rollback","active-causal-minimal-rollback","counterfactual-evolution-decision-controller"}: card["updater_competence"]={**up_a2,"evidence_kind":"real-reused"}
-        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_a5_stop(card,a5cpu); _apply_a6_stop(card,a6cpu); _apply_b10(card,b10); _apply_d1(card,aw); _apply_exact_data_holds(card,a67,memfull); _apply_missing_substrates(card,ready); _apply_a7_stop(card,a7cpu); _apply_b3_screening(card,b3cpu); _apply_c2_stop(card,c2cpu); _apply_e2_stop(card,e2cpu); _apply_e3_reality(card,e3real); _apply_e3_stateful_stop(card,e3stateful); _apply_e4_result(card,e4cpu)
+        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_a5_stop(card,a5cpu); _apply_a6_stop(card,a6cpu); _apply_b10(card,b10); _apply_d1(card,aw); _apply_exact_data_holds(card,a67,memfull); _apply_missing_substrates(card,ready); _apply_a7_stop(card,a7cpu); _apply_b3_screening(card,b3cpu); _apply_c2_stop(card,c2cpu); _apply_d1_stop(card,d1cpu); _apply_e2_stop(card,e2cpu); _apply_e3_reality(card,e3real); _apply_e3_stateful_stop(card,e3stateful); _apply_e4_result(card,e4cpu)
         synthetic=realizability_by_id.get(idea)
         if synthetic and synthetic.get("representability_pass") and card["checks"]["representability"]["status"]=="pending":
             card["checks"]["representability"]=_ck("synthetic-pass","Synthetic mechanism harness passed; this clears representability only and has no reality/method authority.","generated/p0-realizability-suite.json","synthetic-realizability-only")
@@ -295,7 +311,7 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
     }
     return {"schema_version":"1.0","generated_at":_now(),"experiment_root":"profile-resolved-machine-local",
         "policy":{"real_reused_may_unblock":True,"synthetic_harness_may_not_unblock_reality":True,"same_batch_self_authorization_forbidden":True,"method_result_from_offline_qualification_forbidden":True},
-        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"memory_full":memfull,"substrate_readiness":ready,"e1":we1,"a5_history_cpu":{"decision":a5cpu.get("decision"),"semantic":a5cpu.get("semantic_compactor"),"generic":a5cpu.get("generic_state_diff"),"periodic":a5cpu.get("periodic_checkpoint")},"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"a7_counterfactual_cpu":{"decision":a7cpu.get("decision"),"design":a7cpu.get("design"),"linear_hidden":(a7cpu.get("linear_controller") or {}).get("hidden"),"cart_hidden":(a7cpu.get("matched_cart") or {}).get("hidden")},"b3_interference_cpu":{"decision":b3cpu.get("decision"),"metrics":b3cpu.get("metrics"),"runtime_preflight_snapshot":b3cpu.get("runtime_preflight_snapshot")},"c2_evaluator_cpu":{"decision":c2cpu.get("decision"),"attribution":c2cpu.get("attribution"),"matched_simplification":c2cpu.get("matched_simplification")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"e2_workflow_cpu":{"decision":e2cpu.get("decision"),"metrics":e2cpu.get("metrics"),"freeze_sha256":e2cpu.get("freeze_sha256_before_hidden")},"e3_real_api":{"decision":e3real.get("decision"),"metrics":e3real.get("metrics"),"prediction_sha256":e3real.get("prediction_sha256_before_hidden")},"e3_stateful":{"decision":e3stateful.get("decision"),"metrics":e3stateful.get("metrics"),"prediction_sha256":e3stateful.get("prediction_sha256_before_hidden")},"e4_permission_cpu":{"decision":e4cpu.get("decision"),"metrics":e4cpu.get("metrics"),"threshold":e4cpu.get("threshold")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
+        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"memory_full":memfull,"substrate_readiness":ready,"e1":we1,"a5_history_cpu":{"decision":a5cpu.get("decision"),"semantic":a5cpu.get("semantic_compactor"),"generic":a5cpu.get("generic_state_diff"),"periodic":a5cpu.get("periodic_checkpoint")},"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"a7_counterfactual_cpu":{"decision":a7cpu.get("decision"),"design":a7cpu.get("design"),"linear_hidden":(a7cpu.get("linear_controller") or {}).get("hidden"),"cart_hidden":(a7cpu.get("matched_cart") or {}).get("hidden")},"b3_interference_cpu":{"decision":b3cpu.get("decision"),"metrics":b3cpu.get("metrics"),"runtime_preflight_snapshot":b3cpu.get("runtime_preflight_snapshot")},"c2_evaluator_cpu":{"decision":c2cpu.get("decision"),"attribution":c2cpu.get("attribution"),"matched_simplification":c2cpu.get("matched_simplification")},"d1_minimal_curriculum_cpu":{"decision":d1cpu.get("decision"),"design":d1cpu.get("design"),"matched_simplification":d1cpu.get("matched_simplification")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"e2_workflow_cpu":{"decision":e2cpu.get("decision"),"metrics":e2cpu.get("metrics"),"freeze_sha256":e2cpu.get("freeze_sha256_before_hidden")},"e3_real_api":{"decision":e3real.get("decision"),"metrics":e3real.get("metrics"),"prediction_sha256":e3real.get("prediction_sha256_before_hidden")},"e3_stateful":{"decision":e3stateful.get("decision"),"metrics":e3stateful.get("metrics"),"prediction_sha256":e3stateful.get("prediction_sha256_before_hidden")},"e4_permission_cpu":{"decision":e4cpu.get("decision"),"metrics":e4cpu.get("metrics"),"threshold":e4cpu.get("threshold")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
 
 def write_p0_offline_qualification_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS)->dict[str,Any]:
     state=build_p0_offline_qualification_state(); json_path.parent.mkdir(parents=True,exist_ok=True)

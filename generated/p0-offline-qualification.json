@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T09:22:49+00:00",
+  "generated_at": "2026-08-11T09:31:02+00:00",
   "experiment_root": "profile-resolved-machine-local",
   "policy": {
     "real_reused_may_unblock": true,
@@ -725,6 +725,27 @@
         "attribution_tied_or_better": true
       }
     },
+    "d1_minimal_curriculum_cpu": {
+      "decision": "STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT",
+      "design": {
+        "rules": 20,
+        "verified_candidates_per_rule": 4,
+        "verified_candidates": 80,
+        "hidden_boundary_cases": 60,
+        "final_training_tokens_per_arm": 320,
+        "same_final_training_tokens": true,
+        "independent_truth": "programmatic boundary verifier"
+      },
+      "matched_simplification": {
+        "baseline": "intersection of multiple verifier-confirmed non-minimal counterexamples per rule",
+        "same_verified_candidates": true,
+        "same_final_training_tokens": true,
+        "same_hidden_boundary_set": true,
+        "compiled_updates_identical": true,
+        "equivalent": true,
+        "avoided_extra_verifier_calls": 320
+      }
+    },
     "b10": {
       "decision": "STOP_MATCHED_NARY_EQUIVALENT",
       "metrics": {
@@ -816,12 +837,12 @@
   },
   "summary": {
     "ideas": 16,
-    "checks_passed": 41,
-    "checks_failed": 11,
-    "checks_pending": 30,
+    "checks_passed": 43,
+    "checks_failed": 12,
+    "checks_pending": 27,
     "checks_synthetic_pass": 14,
-    "gpu0_hold_or_conditional": 8,
-    "gpu0_stop": 8
+    "gpu0_hold_or_conditional": 7,
+    "gpu0_stop": 9
   },
   "cards": [
     {
@@ -1284,11 +1305,11 @@
     {
       "idea_id": "counterexample-generating-curriculum",
       "gpu0": {
-        "status": "hold-minimality-unmeasured",
-        "evidence": "Task failures are real, but the current artifacts contain 0 verifier-confirmed 1-minimal boundary counterexamples; task failure prevalence is not the curriculum mechanism.",
-        "source": "pre-experiment-qualification-qwen25-react-family-ood134.json",
-        "evidence_kind": "real-reused",
-        "next": "Generate verifier-valid boundary perturbations and measure how often delta debugging reaches 1-minimal counterexamples."
+        "status": "stop-matched-intersection-filter-equivalent",
+        "evidence": "Multiple verified non-minimal counterexamples can be intersected into the same boundary update as per-example 1-minimality without extra minimization calls.",
+        "source": "generated/p0-d1-minimal-curriculum-cpu.json",
+        "evidence_kind": "cpu-curriculum-p0",
+        "next": "Keep verifier counterexamples but drop per-example 1-minimality as a standalone curriculum variable; merge into generic counterexample learning."
       },
       "checks": {
         "target_variation": {
@@ -1298,10 +1319,10 @@
           "evidence_kind": "real-reused"
         },
         "baseline_disagreement": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "fail",
+          "evidence": "1-minimal and matched intersection compile identical updates=True and both reach hidden boundary accuracy 1.000 vs 1.000; minimization adds 320 verifier calls vs 0.",
+          "source": "generated/p0-d1-minimal-curriculum-cpu.json",
+          "evidence_kind": "cpu-curriculum-p0"
         },
         "representability": {
           "status": "synthetic-pass",
@@ -1310,10 +1331,10 @@
           "evidence_kind": "synthetic-realizability-only"
         },
         "tiny_overfit": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "The final updates are frozen before evaluation on 60 independently templated hidden boundary cases.",
+          "source": "generated/p0-d1-minimal-curriculum-cpu.json",
+          "evidence_kind": "cpu-curriculum-p0"
         },
         "competence_window": {
           "status": "pass",
@@ -1322,17 +1343,17 @@
           "evidence_kind": "real-reused"
         },
         "effect_variation": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "Twenty independent boundary rules each have four verifier-confirmed counterexamples with varying nuisance constraints.",
+          "source": "generated/p0-d1-minimal-curriculum-cpu.json",
+          "evidence_kind": "cpu-curriculum-p0"
         }
       },
       "updater_competence": {
-        "status": "pending",
-        "passed": false,
-        "evidence_kind": "pending",
-        "reason": "mechanism-specific updater/action-stream competence has not been qualified"
+        "status": "pass",
+        "passed": true,
+        "evidence_kind": "cpu-curriculum-p0",
+        "reason": "Both curriculum arms compile executable frozen boundary-rule updates under identical final token budgets."
       }
     },
     {

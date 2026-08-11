@@ -6,6 +6,7 @@ function p0A6State(){return window.P0_A6_CPU||{};}
 function p0A7State(){return window.P0_A7_COUNTERFACTUAL_CPU||{};}
 function p0B3State(){return window.P0_B3_INTERFERENCE_CPU||{};}
 function p0C2State(){return window.P0_C2_EVALUATOR_CPU||{};}
+function p0D1State(){return window.P0_D1_MINIMAL_CURRICULUM_CPU||{};}
 function p0E2State(){return window.P0_E2_WORKFLOW_CPU||{};}
 function p0E3State(){return window.P0_E3_STATEFUL||window.P0_E3_REAL_API||{};}
 function p0E4State(){return window.P0_E4_PERMISSION_CPU||{};}
@@ -57,6 +58,10 @@ function terminalExperimentEvidence(row){
   if(id==="evaluator-coadaptation-guard" && p0C2State().decision){
     const c=p0C2State(),a=c.attribution||{},p=c.cross_version_causal_repair||{},s=c.simple_anchor_residual_repair||{};
     return {current_started:true,category:"p0-stop",tone:"fail",label:language==="zh"?"CPU P0 STOP · simple anchor calibration 等效":"CPU P0 STOP · simple anchor calibration equivalent",detail:language==="zh"?`3×3 actor/evaluator + frozen anchors：cross-version attribution accuracy=${experimentNumber(a.cross_accuracy)}，simple anchor-residual=${experimentNumber(a.simple_accuracy)}。causal repair 与简单 intercept+shortcut calibration 参数逐项相同，MAE=${experimentNumber(p.evaluation?.mae)} vs ${experimentNumber(s.evaluation?.mae)}，但额外 intervention calls=${p.extra_intervention_calls??"--"} vs ${s.extra_intervention_calls??"--"}。`:`3x3 actor/evaluator matrix with frozen anchors: cross-version attribution accuracy=${experimentNumber(a.cross_accuracy)}, simple anchor-residual=${experimentNumber(a.simple_accuracy)}. Causal repair and simple intercept+shortcut calibration have identical parameters and MAE=${experimentNumber(p.evaluation?.mae)} vs ${experimentNumber(s.evaluation?.mae)}, but extra intervention calls are ${p.extra_intervention_calls??"--"} vs ${s.extra_intervention_calls??"--"}.`,next:c.next_action||"--",evidence:`${c.decision} · params identical=${c.matched_simplification?.parameters_identical} · P1=${c.p1_authorized?"AUTHORIZED":"LOCKED"}`};
+  }
+  if(id==="counterexample-generating-curriculum" && p0D1State().decision){
+    const d=p0D1State(),m=d.one_minimal||{},i=d.matched_intersection||{},ms=d.matched_simplification||{};
+    return {current_started:true,category:"p0-stop",tone:"fail",label:language==="zh"?"CPU P0 STOP · intersection filter 等效":"CPU P0 STOP · intersection filter equivalent",detail:language==="zh"?`20 条规则×4 个 verified non-minimal counterexamples。1-minimal 与 per-rule constraint intersection 编译出的 20 个更新逐项一致，hidden boundary accuracy=${experimentNumber(m.evaluation?.hidden_boundary_accuracy)} vs ${experimentNumber(i.evaluation?.hidden_boundary_accuracy)}，final training token 完全匹配；但 1-minimal 额外花 ${m.extra_verifier_calls_for_minimization??"--"} verifier calls，而 intersection 为 ${i.extra_verifier_calls_after_validation??"--"}。`:`20 rules × four verified non-minimal counterexamples. The 1-minimal and per-rule constraint-intersection arms compile identical updates, with hidden-boundary accuracy=${experimentNumber(m.evaluation?.hidden_boundary_accuracy)} vs ${experimentNumber(i.evaluation?.hidden_boundary_accuracy)} under exactly matched final training tokens; 1-minimal spends ${m.extra_verifier_calls_for_minimization??"--"} additional verifier calls versus ${i.extra_verifier_calls_after_validation??"--"} for intersection.`,next:d.next_action||"--",evidence:`${d.decision} · updates identical=${ms.compiled_updates_identical} · avoided verifier calls=${ms.avoided_extra_verifier_calls??"--"}`};
   }
   if(id==="workflow-branch-credit" && p0E2State().decision){
     const e=p0E2State(),m=e.metrics||{};
