@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T12:50:07.931212+00:00",
+  "generated_at": "2026-08-11T13:03:40.533800+00:00",
   "idea_id": "budgeted-evolution-controller",
   "code": "A-2",
   "repair": "adaptive evidence-acquisition depth after no early divergence",
@@ -32,6 +32,91 @@
     "action_step_cost": 734,
     "cost_fraction": 0.26093138997511556
   },
+  "categorical_adaptive_sweep": [
+    {
+      "feature": "target_family",
+      "development": {
+        "policy": {
+          "pick_and_place_simple": 2,
+          "pick_clean_then_place_in_recep": 1,
+          "pick_cool_then_place_in_recep": 1,
+          "pick_heat_then_place_in_recep": 1
+        },
+        "flagged_units": 13,
+        "found_nonzero": 5,
+        "nonzero_recall": 0.8333333333333334,
+        "action_step_cost": 947,
+        "cost_fraction": 0.3428674873280232
+      },
+      "future": {
+        "policy": {
+          "pick_and_place_simple": 2,
+          "pick_clean_then_place_in_recep": 1,
+          "pick_cool_then_place_in_recep": 1,
+          "pick_heat_then_place_in_recep": 1
+        },
+        "flagged_units": 8,
+        "found_nonzero": 2,
+        "nonzero_recall": 0.4,
+        "action_step_cost": 734,
+        "cost_fraction": 0.26093138997511556
+      }
+    },
+    {
+      "feature": "source_family",
+      "development": {
+        "policy": {
+          "pick_and_place_simple": 1,
+          "pick_clean_then_place_in_recep": 1,
+          "pick_cool_then_place_in_recep": 5,
+          "pick_heat_then_place_in_recep": 1
+        },
+        "flagged_units": 14,
+        "found_nonzero": 5,
+        "nonzero_recall": 0.8333333333333334,
+        "action_step_cost": 1056,
+        "cost_fraction": 0.38233164373642287
+      },
+      "future": {
+        "policy": {
+          "pick_and_place_simple": 1,
+          "pick_clean_then_place_in_recep": 1,
+          "pick_cool_then_place_in_recep": 5,
+          "pick_heat_then_place_in_recep": 1
+        },
+        "flagged_units": 12,
+        "found_nonzero": 2,
+        "nonzero_recall": 0.4,
+        "action_step_cost": 1037,
+        "cost_fraction": 0.3686455741201564
+      }
+    },
+    {
+      "feature": "source_target_relation",
+      "development": {
+        "policy": {
+          "cross": 2,
+          "same": 1
+        },
+        "flagged_units": 22,
+        "found_nonzero": 5,
+        "nonzero_recall": 0.8333333333333334,
+        "action_step_cost": 1614,
+        "cost_fraction": 0.5843591600289645
+      },
+      "future": {
+        "policy": {
+          "cross": 2,
+          "same": 1
+        },
+        "flagged_units": 13,
+        "found_nonzero": 2,
+        "nonzero_recall": 0.4,
+        "action_step_cost": 1234,
+        "cost_fraction": 0.43867756843227873
+      }
+    }
+  ],
   "development_best_fixed_at_same_recall": {
     "h": 2,
     "flagged_units": 24,

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T12:50:07.054212+00:00",
+  "generated_at": "2026-08-11T13:03:39.564204+00:00",
   "idea_id": "update-trust-region",
   "code": "A-1",
   "repair": "soft audit allocation from early branch divergence",
@@ -112,6 +112,22 @@
       "cost_fraction": 0.18698897973693565,
       "nonzero_recall": 0.4,
       "harm_recall": 1.0
+    }
+  },
+  "context_signature_rescue": {
+    "state_signature": {
+      "signature_acquisition_steps": 236,
+      "action_step_cost": 623,
+      "audited_units": 7,
+      "found_nonzero": 2,
+      "nonzero_recall": 0.4
+    },
+    "target_state_signature": {
+      "signature_acquisition_steps": 236,
+      "action_step_cost": 617,
+      "audited_units": 7,
+      "found_nonzero": 2,
+      "nonzero_recall": 0.4
     }
   },
   "decision": "STOP_REPAIR_SOFT_AUDIT_SIMPLE_TRIAGE_DOMINATES",
