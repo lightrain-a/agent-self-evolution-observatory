@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T09:05:13+00:00",
+  "generated_at": "2026-08-11T09:16:35+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "/data/wyt/agent-self-evolution-observatory/publish-persistent-governance-20260811-r3/generated/research-data",
@@ -76,9 +76,9 @@
     "p0_admission_transitioned": 16,
     "p0_admission_settings_complete": 20,
     "p0_admission_execution_authorized": 0,
-    "p0_offline_checks_passed": 37,
-    "p0_offline_checks_failed": 9,
-    "p0_offline_checks_pending": 36,
+    "p0_offline_checks_passed": 38,
+    "p0_offline_checks_failed": 10,
+    "p0_offline_checks_pending": 34,
     "p0_realizability_passed": 14,
     "p0_b10_decision": "STOP_MATCHED_NARY_EQUIVALENT",
     "mem_xfer_support_analysis_status": "support_enriched_analysis_complete",
@@ -87,7 +87,8 @@
     "p0_e4_decision": "STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT",
     "p0_e2_decision": "STOP_MATCHED_E1_DIRECT_EDIT_EQUIVALENT",
     "p0_a7_decision": "STOP_MATCHED_SHALLOW_RULE_EQUIVALENT",
-    "p0_b3_screening_decision": "SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED"
+    "p0_b3_screening_decision": "SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED",
+    "p0_a5_decision": "STOP_MATCHED_GENERIC_STATE_DIFF_DOMINATES"
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -22385,7 +22386,7 @@
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-11T09:04:49+00:00",
+    "generated_at": "2026-08-11T09:15:01+00:00",
     "source_of_truth_priority": [
       "latest-human-review",
       "explicit-user-update",
@@ -22581,6 +22582,11 @@
           "zh": "periodic checkpoint 同预算达到相同 rollback fidelity，或需要接近 full history 才能正确 rollback，则停止。",
           "en": "Stop if matched-budget periodic checkpoints reach the same rollback fidelity or near-full history is required for correct rollback."
         },
+        "current_fact": {
+          "zh": "A-5 CPU P0 已触发 matched-simplification STOP：40 个 sequential updates、12 个冻结 rollback queries 上，semantic compactor 与 query-matched generic state-diff 都为 12/12 rollback fidelity=1.0、平均 replay 段数同为 6.5；generic 不使用 Prompt/Memory/Workflow 语义，只需 38 storage cells，而 semantic compactor 需 73。相同约 72-cell 预算的 periodic checkpoint 同样 12/12，平均只 replay 2.25 updates。Agent-specific semantic history compaction 没有独立优势，建议并回通用版本/状态差分基础设施，等待人工确认 merge/drop。",
+          "en": "A-5 CPU P0 fired a matched-simplification STOP. Across 40 sequential updates and 12 frozen rollback queries, the semantic compactor and a query-matched generic state-diff baseline both achieve 12/12 rollback fidelity=1.0 with identical 6.5 mean replay segments. The generic baseline uses no Prompt/Memory/Workflow semantics and needs only 38 storage cells versus 73 for semantic compaction. A periodic-checkpoint baseline at roughly the same 72-cell budget also achieves 12/12 and replays only 2.25 updates on average. Agent-specific semantic history compaction has no standalone advantage and should merge into generic version/state-diff infrastructure pending human merge/drop review."
+        },
+        "p0_decision": "STOP_MATCHED_GENERIC_STATE_DIFF_DOMINATES",
         "p0_entry": {
           "date": "2026-08-11",
           "basis": "p0-admission-contract-frozen",
@@ -51761,12 +51767,12 @@
         "pass": true,
         "detail": {
           "ideas": 16,
-          "checks_passed": 37,
-          "checks_failed": 9,
-          "checks_pending": 36,
+          "checks_passed": 38,
+          "checks_failed": 10,
+          "checks_pending": 34,
           "checks_synthetic_pass": 14,
-          "gpu0_hold_or_conditional": 10,
-          "gpu0_stop": 6
+          "gpu0_hold_or_conditional": 9,
+          "gpu0_stop": 7
         }
       },
       {
@@ -51821,12 +51827,12 @@
   "p0_offline_qualification": {
     "summary": {
       "ideas": 16,
-      "checks_passed": 37,
-      "checks_failed": 9,
-      "checks_pending": 36,
+      "checks_passed": 38,
+      "checks_failed": 10,
+      "checks_pending": 34,
       "checks_synthetic_pass": 14,
-      "gpu0_hold_or_conditional": 10,
-      "gpu0_stop": 6
+      "gpu0_hold_or_conditional": 9,
+      "gpu0_stop": 7
     },
     "policy": {
       "real_reused_may_unblock": true,

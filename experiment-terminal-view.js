@@ -1,6 +1,7 @@
 function p0AdmissionState(){return window.P0_ADMISSION_STATE||window.RESEARCH_SYSTEM_STATE?.p0_admission||{summary:{},cards:[]};}
 function p0OfflineState(){return window.P0_OFFLINE_QUALIFICATION||{summary:{},cards:[],shared_evidence:{}};}
 function p0B10State(){return window.P0_B10_CPU||{};}
+function p0A5State(){return window.P0_A5_HISTORY_CPU||{};}
 function p0A6State(){return window.P0_A6_CPU||{};}
 function p0A7State(){return window.P0_A7_COUNTERFACTUAL_CPU||{};}
 function p0B3State(){return window.P0_B3_INTERFERENCE_CPU||{};}
@@ -36,6 +37,10 @@ function terminalExperimentEvidence(row){
   const phase=experimentPilotPhase(id,"P0");
   const preGpu=(preGpuCandidateGateState().candidates||[]).find(x=>x.idea_id===id)||null;
   const mem=window.RESEARCH_SYSTEM_STATE?.mem_xfer_workflow||{};
+  if(id==="lineage-aware-rollback" && p0A5State().decision){
+    const a=p0A5State(),s=a.semantic_compactor||{},g=a.generic_state_diff||{},p=a.periodic_checkpoint||{};
+    return {current_started:true,category:"p0-stop",tone:"fail",label:language==="zh"?"CPU P0 STOP · generic state-diff 支配":"CPU P0 STOP · generic state-diff dominates",detail:language==="zh"?`40 个 sequential updates、12 个冻结 rollback queries：semantic 与 generic 都 12/12 fidelity=${experimentNumber(s.evaluation?.rollback_fidelity)}，平均 replay 段数同为 ${experimentNumber(s.evaluation?.mean_segments_from_base)}；generic storage=${g.storage_cells??"--"} vs semantic=${s.storage_cells??"--"}。同约束预算 periodic checkpoint 同样 fidelity=${experimentNumber(p.rollback_fidelity)}，平均 replay ${experimentNumber(p.mean_updates_replayed)} updates。`:`40 sequential updates and 12 frozen rollback queries: semantic and generic both reach 12/12 fidelity=${experimentNumber(s.evaluation?.rollback_fidelity)} with identical ${experimentNumber(s.evaluation?.mean_segments_from_base)} mean replay segments; generic storage=${g.storage_cells??"--"} vs semantic=${s.storage_cells??"--"}. A matched-budget periodic checkpoint also reaches fidelity=${experimentNumber(p.rollback_fidelity)} and replays ${experimentNumber(p.mean_updates_replayed)} updates on average.`,next:a.next_action||"--",evidence:`${a.decision} · storage saving ${a.matched_simplification?.storage_saving_cells??"--"} cells · P1=${a.p1_authorized?"AUTHORIZED":"LOCKED"}`};
+  }
   if(id==="active-causal-minimal-rollback" && p0A6State().decision){
     const a=p0A6State(), s=a.summary||{}, active=s["active-causal"]||{}, simple=s["binary-group-testing"]||{}, dd=s["delta-debugging"]||{}, m=a.matched_simplification||{};
     return {current_started:true,category:"p0-stop",tone:"fail",label:language==="zh"?"CPU P0 STOP · group testing 等效":"CPU P0 STOP · group-testing equivalent",detail:language==="zh"?`24 个冻结稀疏故障案例：active-causal 与 binary group testing 均 exact=${experimentNumber(active.exact_recovery)}，mean tests=${experimentNumber(active.mean_tests)} vs ${experimentNumber(simple.mean_tests)}，逐 case tests identical=${m.per_case_test_counts_identical}; 相对 ddmin ${experimentNumber(dd.mean_tests)} 的优势来自更合适的简单 group testing。`:`24 frozen sparse-fault cases: active-causal and binary group testing both exact=${experimentNumber(active.exact_recovery)}, mean tests=${experimentNumber(active.mean_tests)} vs ${experimentNumber(simple.mean_tests)}, per-case tests identical=${m.per_case_test_counts_identical}; the gain over ddmin ${experimentNumber(dd.mean_tests)} comes from the simpler matched group-testing baseline.`,next:a.next_action||"--",evidence:`${a.decision} · matched p=${experimentNumber(m.paired_sign_p)} · active/ddmin saving=${experimentNumber((a.paired_active_vs_ddmin||{}).relative_mean_test_saving)}`};

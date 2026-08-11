@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T09:04:52+00:00",
+  "generated_at": "2026-08-11T09:15:33+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
@@ -937,14 +937,14 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "hold-history-too-short",
-          "evidence": "Existing frozen sequences contain at most 4 sequential update rounds; the P0 contract requires 30-50 updates plus 12 rollback queries.",
-          "source": "qualification/a2-updater-support-v1/fixed-sequences.jsonl",
-          "evidence_kind": "real-reused",
-          "next": "Extend to 30–50 sequential updates and 12 frozen rollback queries; compare matched-storage periodic checkpoints."
+          "status": "stop-matched-generic-state-diff-dominates",
+          "evidence": "Generic state-diff and periodic checkpoint controls reproduce rollback fidelity with lower storage/replay cost; typed Agent-update semantics add no standalone value.",
+          "source": "generated/p0-a5-history-cpu.json",
+          "evidence_kind": "cpu-history-p0",
+          "next": "Merge A-5 into generic version/history infrastructure; do not spend GPU on a standalone semantic-compaction method."
         },
         "pre_p0": {
-          "passed": 8,
+          "passed": 9,
           "total": 10,
           "checks": [
             {
@@ -959,8 +959,8 @@
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "fail",
+              "evidence": "Generic state-diff matches semantic rollback fidelity 1.000 vs 1.000 while using 38 vs 73 storage cells; matched-storage periodic checkpoints also reach fidelity 1.000."
             },
             {
               "key": "representability",
@@ -969,8 +969,8 @@
             },
             {
               "key": "tiny_overfit",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "pass",
+              "evidence": "The P0 uses 40 sequential updates and 12 preregistered rollback queries with exact full-history replay truth."
             },
             {
               "key": "competence_window",
@@ -1059,11 +1059,7 @@
         },
         "execution_authorized": false,
         "blockers": [
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
