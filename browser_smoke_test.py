@@ -149,10 +149,10 @@ def main() -> None:
               toc2: document.querySelectorAll('.toc-level-2').length,
               toc3: document.querySelectorAll('.toc-level-3').length,
               toc4: document.querySelectorAll('.toc-level-4').length,
-              stages: document.querySelectorAll('.system-stage').length,
               stats: document.querySelectorAll('.system-stat').length,
-              layers: document.querySelectorAll('.system-layer').length,
-              contracts: document.querySelectorAll('.system-contract-table tbody tr').length,
+              mapMetrics: document.querySelectorAll('.system-map-metrics > div').length,
+              responsibilityLayers: document.querySelectorAll('.system-layer-list article').length,
+              aiCheckpoints: document.querySelectorAll('.system-checkpoint-strip > div').length,
               artifacts: document.querySelectorAll('.system-artifact-table tbody tr').length,
               boundaries: document.querySelectorAll('.system-boundary-card').length,
               boundaryRules: document.querySelectorAll('.system-boundary-card li').length,
@@ -187,12 +187,12 @@ def main() -> None:
               text: document.body.textContent || ''
             };""",
         )
-        require(system_overview["chapters"] == 4, f"system overview must have four research-system chapters, got {system_overview['chapters']}")
-        require(system_overview["toc2"] >= 4 and system_overview["toc4"] == 0, f"system overview hierarchy is wrong: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
-        require(system_overview["stats"] == 6, f"research-system hero statistics are incomplete: {system_overview['stats']}")
-        require(system_overview["lifecycleSteps"] >= 11, f"research lifecycle must expose at least eleven end-to-end stages, got {system_overview['lifecycleSteps']}")
+        require(system_overview["chapters"] == 6, f"system overview must have six research-system chapters, got {system_overview['chapters']}")
+        require(system_overview["toc2"] >= 6 and system_overview["toc4"] == 0, f"system overview hierarchy is wrong: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
+        require(system_overview["stats"] == 8, f"research-system hero statistics are incomplete: {system_overview['stats']}")
+        require(system_overview["mapMetrics"] == 7 and system_overview["responsibilityLayers"] == 6, f"six-layer system map is incomplete: metrics={system_overview['mapMetrics']} layers={system_overview['responsibilityLayers']}")
+        require(system_overview["aiCheckpoints"] == 5, f"AI consultation checkpoint strip is incomplete: {system_overview['aiCheckpoints']}")
         require(system_overview["governanceStages"] == 7, f"P0-System v2 must expose seven scientific stages, got {system_overview['governanceStages']}")
-        require(system_overview["contracts"] >= 8, f"research lifecycle contracts are incomplete: {system_overview['contracts']}")
         require(system_overview["outerGates"] == 8 and system_overview["preflightGates"] == 10 and system_overview["quantWorksheets"] == 2, f"Pre-Experiment/identifiability compiler is incomplete: {system_overview['outerGates']}/{system_overview['preflightGates']}/{system_overview['quantWorksheets']}")
         require(system_overview["lessons"] == 6 and system_overview["failureLayers"] == 5 and system_overview["repairLoops"] == 1, f"system learning/diagnosis visualization is incomplete: {system_overview['lessons']}/{system_overview['failureLayers']}/{system_overview['repairLoops']}")
         require(system_overview["artifacts"] >= 14 and system_overview["boundaries"] == 3, f"artifact or automation-boundary documentation is incomplete: {system_overview['artifacts']}/{system_overview['boundaries']}")
@@ -363,8 +363,7 @@ def main() -> None:
             if page == "/evaluation.html":
                 require(result["resources"] == 2, "evaluation live resource indexes are incomplete")
             if page == "/selected-paper.html":
-                review_status_visible = ("all 26 first-round passes" in result["text"] and "4 PASS" in result["text"] and "12 BLOCK" in result["text"]) or ("26 个首轮通过项均已" in result["text"] and "4 个 PASS" in result["text"] and "12 个 BLOCK" in result["text"])
-                require(review_status_visible, "selected-paper external review status is stale or missing")
+                require("Historical ICLR" in result["text"] and "zero launchable directions" in result["text"], "historical selected-paper status or later STOP evidence is missing")
 
         navigate("/research-directions.html", 7)
         direction_map = execute(
@@ -372,6 +371,7 @@ def main() -> None:
             """return {
               directions: document.querySelectorAll('.direction-card').length,
               chips: document.querySelectorAll('.idea-chip').length,
+              chipLinks: document.querySelectorAll('a.idea-chip').length,
               macroCards: document.querySelectorAll('.direction-macro-card').length,
               explanationGrids: document.querySelectorAll('.direction-explanation-grid').length,
               exampleRows: document.querySelectorAll('.direction-running-example tbody tr').length,
@@ -386,7 +386,7 @@ def main() -> None:
             };""",
         )
         require(direction_map["directions"] == 10, f"expected 10 directions, got {direction_map['directions']}")
-        require(direction_map["chips"] == 34, f"expected 34 idea mappings, got {direction_map['chips']}")
+        require(direction_map["chips"] == 34 and direction_map["chipLinks"] == 0, f"expected 34 read-only historical idea-lineage chips, got {direction_map['chips']} with {direction_map['chipLinks']} links")
         require(direction_map["macroCards"] == 4, "four-question direction primer is incomplete")
         require(direction_map["explanationGrids"] == 10, "plain-language direction explanations are incomplete")
         require(direction_map["exampleRows"] == 10, "running example does not cover all directions")
@@ -404,241 +404,31 @@ def main() -> None:
         idea_portfolio = execute(
             session_id,
             """return {
-              automationComponents: document.querySelectorAll('.automation-component').length,
-              automationStats: document.querySelectorAll('.automation-stats .stat').length,
-              automationCollisionRows: document.querySelectorAll('.automation-collision-table tbody tr').length,
-              automationRepairRows: document.querySelectorAll('.automation-repair-list li').length,
-              automationHealth: document.querySelector('.system-health')?.textContent || '',
-              automationStatePapers: Number(window.RESEARCH_SYSTEM_STATE?.summary?.papers || 0),
-              automationEvidenceNodes: Number(window.RESEARCH_SYSTEM_STATE?.summary?.evidence_nodes || 0),
-              automationPilotPhases: Number(window.RESEARCH_SYSTEM_STATE?.pilot_registry?.summary?.phases || 0),
-              iclrAuditRows: document.querySelectorAll('.iclr-audit-panel .published-audit-table tbody tr').length,
-              visualAuditRows: document.querySelectorAll('.cvpr-followup-archive .published-audit-table tbody tr').length,
-              iclrProtocols: document.querySelectorAll('.iclr-idea-card .cvpr-experiment-protocol').length,
-              iclrProtocolPhases: document.querySelectorAll('.iclr-idea-card .protocol-phases article').length,
-              iclrProtocolModels: document.querySelectorAll('.iclr-idea-card .protocol-model-grid section').length,
-              iclrProjectWebReviews: document.querySelectorAll('.iclr-idea-card .project-web-gpt-review').length,
-              iclrExternalProgress: document.querySelector('.external-review-progress')?.textContent || '',
-              iclrExternalReviewed: Number(window.ICLR_LOW_RESOURCE_IDEAS?.summary?.project_web_gpt_reviewed || 0),
-              iclrExternalPending: Number(window.ICLR_LOW_RESOURCE_IDEAS?.summary?.project_web_gpt_pending || 0),
-              iclrExternalPass: Number(window.ICLR_LOW_RESOURCE_IDEAS?.summary?.external_pass || 0),
-              iclrExternalRevise: Number(window.ICLR_LOW_RESOURCE_IDEAS?.summary?.external_revise || 0),
-              iclrExternalBlock: Number(window.ICLR_LOW_RESOURCE_IDEAS?.summary?.external_block || 0),
-              iclrVerdictPassCards: document.querySelectorAll('.iclr-idea-card[data-external-verdict="pass"]').length,
-              iclrVerdictReviseCards: document.querySelectorAll('.iclr-idea-card[data-external-verdict="revise"]').length,
-              iclrVerdictBlockCards: document.querySelectorAll('.iclr-idea-card[data-external-verdict="block"]').length,
-              iclrFirstFourVerdicts: [...document.querySelectorAll('.iclr-idea-card')].slice(0,4).map(x=>x.dataset.externalVerdict),
-              iclrStructuredBlocked: document.querySelectorAll('#iclr-low-resource-bank ~ * .structured-blocked, .iclr-bank-panel .structured-blocked').length,
-              iclrCards: document.querySelectorAll('.iclr-idea-card').length,
-              iclrReviews: document.querySelectorAll('.iclr-idea-card .cvpr-review-pass').length,
-              iclrTrackFilters: document.querySelectorAll('.iclr-filter-btn[data-iclr-filter-type="track"]').length,
-              iclrBudgetFilters: document.querySelectorAll('.iclr-filter-btn[data-iclr-filter-type="budget"]').length,
-              iclrTopRows: document.querySelectorAll('.iclr-top-table tbody tr').length,
-              iclrRejected: document.querySelectorAll('.iclr-bank-panel .cvpr-rejected li').length,
-              iclrMaxGpus: Math.max(...(window.ICLR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).map(x=>Number(x.budget?.max_gpus||0))),
-              iclrMaxHours: Math.max(...(window.ICLR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).map(x=>Number(x.budget?.gpu_hours||0))),
-              inspiredPanel: document.querySelectorAll('.machine-school-panel').length,
-              inspiredStats: document.querySelectorAll('.machine-school-stats .stat').length,
-              inspiredInspirations: document.querySelectorAll('.machine-school-inspirations article').length,
-              inspiredGroups: document.querySelectorAll('.machine-school-group').length,
-              inspiredCards: document.querySelectorAll('.machine-school-idea').length,
-              inspiredExternalReviews: document.querySelectorAll('.machine-school-group.tone-pass .project-web-gpt-review').length,
-              inspiredExternalPass: document.querySelectorAll('.machine-school-group.tone-pass .machine-school-idea.verdict-pass').length,
-              inspiredExternalRevise: document.querySelectorAll('.machine-school-group.tone-pass .machine-school-idea.verdict-revise').length,
-              inspiredExternalBlock: document.querySelectorAll('.machine-school-group.tone-pass .machine-school-idea.verdict-block').length,
-              inspiredShortlist: document.querySelectorAll('.machine-shortlist-item').length,
-              inspiredSummary: window.MACHINE_SCHOOL_IDEAS?.summary || {},
-              inspiredFirstTitle: window.MACHINE_SCHOOL_IDEAS?.passed_ideas?.[0]?.title?.en || '',
-              v5Panel: document.querySelectorAll('.v5-panel').length,
-              v5Stats: document.querySelectorAll('.v5-panel .v4-stats .stat').length,
-              v5Cards: document.querySelectorAll('.v5-panel > .v4-group .v4-idea-card').length,
-              v5Finalist: document.querySelectorAll('.v5-panel > .v4-group.tone-discussion .v4-idea-card').length,
-              v5Revival: document.querySelectorAll('.v5-panel > .v4-group.tone-revival .v4-idea-card').length,
-              v5Repair: document.querySelectorAll('.v5-panel > .v4-group.tone-repair .v4-idea-card').length,
-              v5Component: document.querySelectorAll('.v5-panel > .v4-group.tone-component .v4-idea-card').length,
-              v5RenderedReviews: document.querySelectorAll('.v5-panel > .v4-group .v4-review').length,
-              v5Summary: window.IDEA_DISCOVERY_V5?.summary || {},
-              v51Cards: document.querySelectorAll('.v51-round .v4-idea-card').length,
-              v51Summary: window.IDEA_DISCOVERY_V51?.summary || {},
-              v52Cards: document.querySelectorAll('.v52-round .v4-idea-card').length,
-              v52Summary: window.IDEA_DISCOVERY_V52?.summary || {},
-              v53Cards: document.querySelectorAll('.v53-round .v4-idea-card').length,
-              v53Summary: window.IDEA_DISCOVERY_V53?.summary || {},
-              discussionPortfolio: window.DISCUSSION_READY_IDEAS || {},
-              v4Panel: document.querySelectorAll('.v4-panel:not(.v5-panel)').length,
-              v4Stats: document.querySelectorAll('.v4-panel:not(.v5-panel) .v4-stats .stat').length,
-              v4Repos: document.querySelectorAll('.v4-panel:not(.v5-panel) .v4-repo-patterns article').length,
-              v4Stages: document.querySelectorAll('.v4-panel:not(.v5-panel) .v4-flow article').length,
-              v4Finalists: document.querySelectorAll('.v4-panel:not(.v5-panel) .v4-finalists a').length,
-              v4Cards: document.querySelectorAll('.v4-panel:not(.v5-panel) .v4-idea-card').length,
-              v4Discussion: document.querySelectorAll('.v4-panel:not(.v5-panel) .v4-group.tone-discussion .v4-idea-card').length,
-              v4Revival: document.querySelectorAll('.v4-panel:not(.v5-panel) .v4-group.tone-revival .v4-idea-card').length,
-              v4Repair: document.querySelectorAll('.v4-panel:not(.v5-panel) .v4-group.tone-repair .v4-idea-card').length,
-              v4Component: document.querySelectorAll('.v4-panel:not(.v5-panel) .v4-group.tone-component .v4-idea-card').length,
-              v4RevivalConditions: document.querySelectorAll('.v4-panel:not(.v5-panel) .v4-revival-condition').length,
-              v4Atoms: document.querySelectorAll('.v4-panel:not(.v5-panel) .v4-mechanism-atoms span').length,
-              v4RenderedReviews: document.querySelectorAll('.v4-panel:not(.v5-panel) .v4-review').length,
-              v4Summary: window.IDEA_DISCOVERY_V4?.summary || {},
-              solutionPanel: document.querySelectorAll('.solution-v3-panel').length,
-              solutionStats: document.querySelectorAll('.solution-v3-stats .stat').length,
-              solutionRepos: document.querySelectorAll('.solution-v3-repos article').length,
-              solutionStages: document.querySelectorAll('.solution-v3-flow article').length,
-              solutionGates: document.querySelectorAll('.solution-v3-gates article').length,
-              solutionShortlist: document.querySelectorAll('.solution-v3-group.tone-shortlist .solution-v3-card').length,
-              solutionRepair: document.querySelectorAll('.solution-v3-panel > .solution-v3-group.tone-repair .solution-v3-card').length,
-              solutionMechanisms: document.querySelectorAll('.solution-v3-panel > .solution-v3-group .solution-v3-card .mechanism').length,
-              solutionExternalReviewed: Number(window.IDEA_DISCOVERY_V3?.summary?.external_reviewed || 0),
-              solutionExternalPass: Number(window.IDEA_DISCOVERY_V3?.summary?.external_pass || 0),
-              solutionExternalRevise: Number(window.IDEA_DISCOVERY_V3?.summary?.external_revise || 0),
-              solutionExternalBlock: Number(window.IDEA_DISCOVERY_V3?.summary?.external_block || 0),
-              solutionRenderedReviews: document.querySelectorAll('.solution-v3-group.tone-shortlist .solution-v3-review').length,
-              repairRound: document.querySelectorAll('.solution-v3-panel > .solution-v31-round').length,
-              repairChildren: document.querySelectorAll('.solution-v3-panel > .solution-v31-round .solution-v3-card').length,
-              repairReviewed: Number(window.IDEA_DISCOVERY_V31?.summary?.external_reviewed || 0),
-              repairPass: Number(window.IDEA_DISCOVERY_V31?.summary?.external_pass || 0),
-              repairRevise: Number(window.IDEA_DISCOVERY_V31?.summary?.external_revise || 0),
-              repairBlock: Number(window.IDEA_DISCOVERY_V31?.summary?.external_block || 0),
-              repairRenderedReviews: document.querySelectorAll('.solution-v3-panel > .solution-v31-round .solution-v3-review').length,
-              localizedMainAction: document.querySelector('.iclr-idea-card .project-web-gpt-review small')?.textContent || '',
-              localizedInspiredAction: document.querySelector('.machine-school-group.tone-pass .project-web-gpt-review small')?.textContent || '',
-              componentGraphLabel: [...document.querySelectorAll('.automation-component h4')].map(x=>x.textContent).find(x=>x.includes('图谱')||x.includes('Citation')) || '',
-              experimentProtocols: document.querySelectorAll('.cvpr-followup-archive .cvpr-experiment-protocol').length,
-              protocolPhases: document.querySelectorAll('.cvpr-followup-archive .protocol-phases article').length,
-              protocolModels: document.querySelectorAll('.cvpr-followup-archive .protocol-model-grid section').length,
-              projectWebReviews: document.querySelectorAll('.cvpr-followup-archive .project-web-gpt-review').length,
-              structuredBlocked: document.querySelectorAll('.cvpr-followup-archive .structured-blocked').length,
-              backendStages: document.querySelectorAll('.idea-backend-flow article').length,
-              funnelStages: document.querySelectorAll('.idea-funnel-stage').length,
-              operators: document.querySelectorAll('.idea-operator-grid article').length,
-              reviewers: document.querySelectorAll('.reviewer-gate-grid article').length,
-              cvprCards: document.querySelectorAll('.cvpr-followup-archive .cvpr-idea-card').length,
-              cvprReviews: document.querySelectorAll('.cvpr-followup-archive .cvpr-review-pass').length,
-              cvprTrackFilters: document.querySelectorAll('.cvpr-filter-btn[data-cvpr-filter-type="track"]').length,
-              cvprBudgetFilters: document.querySelectorAll('.cvpr-filter-btn[data-cvpr-filter-type="budget"]').length,
-              cvprTopRows: document.querySelectorAll('.cvpr-followup-archive .cvpr-top-table tbody tr').length,
-              cvprRejected: document.querySelectorAll('.cvpr-followup-archive .cvpr-rejected li').length,
-              cvprMaxGpus: Math.max(...(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).map(x=>Number(x.budget?.max_gpus||0))),
-              cvprMaxHours: Math.max(...(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).map(x=>Number(x.budget?.gpu_hours||0))),
-              filters: document.querySelectorAll('.idea-board-filter').length,
-              dossiers: document.querySelectorAll('.idea-dossier').length,
-              dossierFields: document.querySelectorAll('.idea-dossier-grid section').length,
-              evidenceCards: document.querySelectorAll('.idea-evidence-list article').length,
-              archiveDirections: document.querySelectorAll('.idea-archive-direction').length,
-              archiveIdeas: document.querySelectorAll('.idea-plan-card').length,
-              archiveShortlist: document.querySelectorAll('.archive-shortlist-link').length,
-              rows: document.querySelectorAll('#idea-ranking tbody tr').length,
-              directionCards: document.querySelectorAll('.direction-rank-card').length,
-              trackCards: document.querySelectorAll('.track-rank-card').length,
-              purpose: document.body.textContent.includes('Purpose / problem') || document.body.textContent.includes('目的／要解决的问题'),
-              core: document.body.textContent.includes('Core idea') || document.body.textContent.includes('核心思想'),
-              rationale: document.body.textContent.includes('Why it is reasonable') || document.body.textContent.includes('为什么合理'),
-              logic: document.body.textContent.includes('Method logic') || document.body.textContent.includes('方法逻辑'),
-              importance: document.body.textContent.includes('Research importance') || document.body.textContent.includes('研究重要性'),
-              advantage: document.body.textContent.includes('Comparative advantage') || document.body.textContent.includes('相对优势'),
-              pilot: document.body.textContent.includes('Decisive pilot') || document.body.textContent.includes('决定性 Pilot'),
-              auditActor: document.querySelector('.iclr-audit-panel .published-audit-table tbody tr td:nth-child(2) p')?.textContent || '',
-              auditApi: document.querySelector('.iclr-audit-panel .published-audit-table tbody tr td:nth-child(3) p')?.textContent || '',
-              auditVerification: document.querySelector('.iclr-audit-panel .published-audit-table tbody tr .verification-badge')?.textContent || '',
+              chapters: document.querySelectorAll('.page-chapter').length,
+              parentCards: document.querySelectorAll('.human-review-idea-card').length,
+              standaloneCards: document.querySelectorAll('.supplemental-idea-card').length,
+              terminalGroups: document.querySelectorAll('.human-status-block').length,
+              terminalStats: document.querySelectorAll('.human-review-stats .human-stat').length,
+              legacyPreGpuBoards: document.querySelectorAll('.pre-gpu-candidate-board').length,
+              legacyP0Entry: document.querySelectorAll('.p0-entry-panel').length,
+              finalPass: Number(window.RESEARCH_SYSTEM_STATE?.summary?.final_pass || 0),
+              experimentStops: Number(window.RESEARCH_SYSTEM_STATE?.p0_decision_ledger?.summary?.experiment_stopped || 0),
+              launchable: Number(window.RESEARCH_SYSTEM_STATE?.p0_decision_ledger?.summary?.launchable || 0),
               text: document.body.textContent || ''
             };""",
         )
-        require(idea_portfolio["automationComponents"] == 11, f"expected eleven running/reference components, got {idea_portfolio['automationComponents']}")
-        require(idea_portfolio["automationStats"] == 6, f"expected six automation statistics, got {idea_portfolio['automationStats']}")
-        require(idea_portfolio["automationCollisionRows"] > 0 and idea_portfolio["automationRepairRows"] > 0, "automation collision or repair queue did not render")
-        require("healthy" in idea_portfolio["automationHealth"].lower(), f"research system health is not visible: {idea_portfolio['automationHealth']}")
-        require(idea_portfolio["automationStatePapers"] >= 200 and idea_portfolio["automationEvidenceNodes"] > idea_portfolio["automationStatePapers"], "automation evidence graph is incomplete")
-        require(idea_portfolio["automationPilotPhases"] == 78, f"expected 78 registered pilot phases, got {idea_portfolio['automationPilotPhases']}")
-        require(idea_portfolio["iclrAuditRows"] == 12, f"expected 12 ICLR experiment-substrate audits, got {idea_portfolio['iclrAuditRows']}")
-        require(idea_portfolio["visualAuditRows"] == 12, f"expected 12 preserved visual-paper audits, got {idea_portfolio['visualAuditRows']}")
-        require("语言 Agent 与一个可训练 retrospective model 配对" in idea_portfolio["auditActor"], f"ICLR audit actor did not switch to Chinese: {idea_portfolio['auditActor']}")
-        require("API 不是" in idea_portfolio["auditApi"], f"ICLR audit API role did not switch to Chinese: {idea_portfolio['auditApi']}")
-        require("ICLR 官方摘要" in idea_portfolio["auditVerification"], f"ICLR audit verification label did not switch to Chinese: {idea_portfolio['auditVerification']}")
-        require(idea_portfolio["iclrCards"] == 26, f"expected 26 passed ICLR ideas, got {idea_portfolio['iclrCards']}")
-        require(idea_portfolio["iclrReviews"] == 182, f"expected 182 seven-dimension ICLR reviews, got {idea_portfolio['iclrReviews']}")
-        require(idea_portfolio["iclrProtocols"] == 26, f"expected 26 ICLR experiment protocols, got {idea_portfolio['iclrProtocols']}")
-        require(idea_portfolio["iclrProtocolPhases"] == 78, f"expected 78 ICLR P0/P1/P2 phase cards, got {idea_portfolio['iclrProtocolPhases']}")
-        require(idea_portfolio["iclrProtocolModels"] == 156, f"expected six model/API fields for each ICLR idea, got {idea_portfolio['iclrProtocolModels']}")
-        require(idea_portfolio["iclrProjectWebReviews"] == 26, f"expected 26 rendered ICLR project-web-GPT reviews, got {idea_portfolio['iclrProjectWebReviews']}")
-        require(idea_portfolio["iclrExternalReviewed"] == 26 and idea_portfolio["iclrExternalPending"] == 0, f"external ICLR review counts are wrong: {idea_portfolio['iclrExternalReviewed']}/{idea_portfolio['iclrExternalPending']}")
-        require((idea_portfolio["iclrExternalPass"], idea_portfolio["iclrExternalRevise"], idea_portfolio["iclrExternalBlock"]) == (4,10,12), f"external verdict distribution is wrong: {idea_portfolio['iclrExternalPass']}/{idea_portfolio['iclrExternalRevise']}/{idea_portfolio['iclrExternalBlock']}")
-        require((idea_portfolio["iclrVerdictPassCards"], idea_portfolio["iclrVerdictReviseCards"], idea_portfolio["iclrVerdictBlockCards"]) == (4,10,12), "rendered R2 verdict-card counts are wrong")
-        require(idea_portfolio["iclrFirstFourVerdicts"] == ["pass","pass","pass","pass"], f"R2 ranking does not place the four PASS ideas first: {idea_portfolio['iclrFirstFourVerdicts']}")
-        require("4 PASS" in idea_portfolio["iclrExternalProgress"] and "12 BLOCK" in idea_portfolio["iclrExternalProgress"], f"external review progress is not rendered: {idea_portfolio['iclrExternalProgress']}")
-        require(idea_portfolio["iclrStructuredBlocked"] == 3, f"expected three structured ICLR blocks, got {idea_portfolio['iclrStructuredBlocked']}")
-        require(idea_portfolio["iclrTrackFilters"] == 9 and idea_portfolio["iclrBudgetFilters"] == 3, "ICLR track or budget filters are incomplete")
-        require(idea_portfolio["iclrTopRows"] == 15 and idea_portfolio["iclrRejected"] == 15, "ICLR comparison table or rejection archive is incomplete")
-        require(idea_portfolio["iclrMaxGpus"] <= 2 and idea_portfolio["iclrMaxHours"] <= 48, "ICLR idea bank violates the low-resource policy")
-        require(idea_portfolio["inspiredPanel"] == 1 and idea_portfolio["inspiredStats"] == 5, "internet-inspired decision panel or stats did not render")
-        require(idea_portfolio["inspiredInspirations"] == 6 and idea_portfolio["inspiredGroups"] == 3, "six inspirations or three screening groups are missing")
-        require(idea_portfolio["inspiredCards"] == 24 and idea_portfolio["inspiredExternalReviews"] == 11, f"inspired idea or external-review counts are wrong: {idea_portfolio['inspiredCards']}/{idea_portfolio['inspiredExternalReviews']}")
-        require((idea_portfolio["inspiredExternalPass"], idea_portfolio["inspiredExternalRevise"], idea_portfolio["inspiredExternalBlock"]) == (1,7,3), "inspired external verdict-card counts are wrong")
-        require(idea_portfolio["inspiredShortlist"] == 8, f"expected eight teacher-discussion candidates, got {idea_portfolio['inspiredShortlist']}")
-        require(idea_portfolio["inspiredSummary"].get("raw") == 24 and idea_portfolio["inspiredSummary"].get("external_reviewed") == 11, f"inspired data summary is wrong: {idea_portfolio['inspiredSummary']}")
-        require(idea_portfolio["inspiredFirstTitle"] == "Regression-Probe Half-Life", f"wrong top inspired idea: {idea_portfolio['inspiredFirstTitle']}")
-        require(idea_portfolio["v5Panel"] == 1 and idea_portfolio["v5Stats"] == 6, "Idea Discovery v5 panel or statistics did not render")
-        require((idea_portfolio["v5Cards"], idea_portfolio["v5Finalist"], idea_portfolio["v5Revival"], idea_portfolio["v5Repair"], idea_portfolio["v5Component"]) == (36,24,8,2,2), "Idea Discovery v5 status groups are inconsistent")
-        require(idea_portfolio["v5RenderedReviews"] == int(idea_portfolio["v5Summary"].get("external_reviewed", 0)), "Idea Discovery v5 rendered reviews disagree with the public summary")
-        require((idea_portfolio["v51Cards"], int(idea_portfolio["v51Summary"].get("reviewed", 0)), int(idea_portfolio["v51Summary"].get("pass", 0))) == (19,19,3), f"v5.1 repair round is inconsistent: {idea_portfolio['v51Cards']}/{idea_portfolio['v51Summary']}")
-        require((idea_portfolio["v52Cards"], int(idea_portfolio["v52Summary"].get("reviewed", 0)), int(idea_portfolio["v52Summary"].get("pass", 0))) == (12,12,1), f"v5.2 repair round is inconsistent: {idea_portfolio['v52Cards']}/{idea_portfolio['v52Summary']}")
-        require((idea_portfolio["v53Cards"], int(idea_portfolio["v53Summary"].get("reviewed", 0)), int(idea_portfolio["v53Summary"].get("pass", 0))) == (4,4,3), f"v5.3 repair round is inconsistent: {idea_portfolio['v53Cards']}/{idea_portfolio['v53Summary']}")
-        require((int(idea_portfolio["discussionPortfolio"].get("count", 0)), int(idea_portfolio["discussionPortfolio"].get("target", 0)), bool(idea_portfolio["discussionPortfolio"].get("ready"))) == (22,20,True), f"strict discussion-ready portfolio has not reached target: {idea_portfolio['discussionPortfolio']}")
-        require(idea_portfolio["v4Panel"] == 1 and idea_portfolio["v4Stats"] == 6, "Idea Discovery v4 panel or statistics did not render")
-        require((idea_portfolio["v4Repos"], idea_portfolio["v4Stages"], idea_portfolio["v4Finalists"], idea_portfolio["v4Cards"]) == (11,9,16,28), f"Idea Discovery v4 workflow or candidate counts are wrong: {idea_portfolio['v4Repos']}/{idea_portfolio['v4Stages']}/{idea_portfolio['v4Finalists']}/{idea_portfolio['v4Cards']}")
-        require((idea_portfolio["v4Discussion"], idea_portfolio["v4Revival"], idea_portfolio["v4Repair"], idea_portfolio["v4Component"]) == (14,8,4,2), "Idea Discovery v4 status groups are inconsistent")
-        require(idea_portfolio["v4RevivalConditions"] == 8 and idea_portfolio["v4Atoms"] >= 28, "Idea Discovery v4 revival conditions or mechanism atoms are incomplete")
-        require(idea_portfolio["v4RenderedReviews"] == int(idea_portfolio["v4Summary"].get("external_reviewed", 0)), "Idea Discovery v4 rendered reviews disagree with the public summary")
-        require(idea_portfolio["solutionPanel"] == 1 and idea_portfolio["solutionStats"] == 5, "solution-first v3 panel or statistics did not render")
-        require((idea_portfolio["solutionRepos"], idea_portfolio["solutionStages"], idea_portfolio["solutionGates"], idea_portfolio["solutionShortlist"], idea_portfolio["solutionRepair"]) == (7,9,5,10,4), f"solution-first v3 counts are wrong: {idea_portfolio['solutionRepos']}/{idea_portfolio['solutionStages']}/{idea_portfolio['solutionGates']}/{idea_portfolio['solutionShortlist']}/{idea_portfolio['solutionRepair']}")
-        require(idea_portfolio["solutionMechanisms"] == 14, "solution-first children must expose exact mechanisms")
-        require((idea_portfolio["solutionExternalReviewed"], idea_portfolio["solutionExternalPass"], idea_portfolio["solutionExternalRevise"], idea_portfolio["solutionExternalBlock"], idea_portfolio["solutionRenderedReviews"]) == (10,0,6,4,10), "solution-first v3 R2 results are inconsistent")
-        require(idea_portfolio["repairRound"] == 1 and idea_portfolio["repairChildren"] == 6, "reviewer-vector v3.1 repair round did not render")
-        require((idea_portfolio["repairReviewed"], idea_portfolio["repairPass"], idea_portfolio["repairRevise"], idea_portfolio["repairBlock"], idea_portfolio["repairRenderedReviews"]) == (6,0,2,4,6), "reviewer-vector v3.1 R2 results are inconsistent")
-        require("每一轮进化后" in idea_portfolio["localizedMainAction"] and "Report persistent" not in idea_portfolio["localizedMainAction"], "main required action is not localized")
-        require("按时间顺序" in idea_portfolio["localizedInspiredAction"] and "Pre-register" not in idea_portfolio["localizedInspiredAction"], "inspired required action is not localized")
-        require(idea_portfolio["componentGraphLabel"] == "引文与证据图谱", f"research component label is not localized: {idea_portfolio['componentGraphLabel']}")
-        require(idea_portfolio["experimentProtocols"] == 42, f"expected 42 preserved CVPR protocols, got {idea_portfolio['experimentProtocols']}")
-        require(idea_portfolio["protocolPhases"] == 126, f"expected 126 preserved CVPR phase cards, got {idea_portfolio['protocolPhases']}")
-        require(idea_portfolio["protocolModels"] == 252, f"expected six model/API fields per CVPR idea, got {idea_portfolio['protocolModels']}")
-        require(idea_portfolio["projectWebReviews"] == 2, f"expected two preserved CVPR project-web-GPT reviews, got {idea_portfolio['projectWebReviews']}")
-        require(idea_portfolio["structuredBlocked"] == 1, f"expected one preserved CVPR structured block, got {idea_portfolio['structuredBlocked']}")
-        require(idea_portfolio["backendStages"] == 8, f"expected 8 backend stages, got {idea_portfolio['backendStages']}")
-        require(idea_portfolio["funnelStages"] == 0, f"legacy funnel should not lead the ICLR-first page, got {idea_portfolio['funnelStages']}")
-        require(idea_portfolio["operators"] == 8 and idea_portfolio["reviewers"] == 7, "ICLR idea generation or reviewer architecture is incomplete")
-        require(idea_portfolio["cvprCards"] == 42, f"expected 42 self-reviewed CVPR ideas, got {idea_portfolio['cvprCards']}")
-        require(idea_portfolio["cvprReviews"] == 210, "every passed CVPR idea must expose five programmatic review records")
-        require(idea_portfolio["cvprTrackFilters"] == 9 and idea_portfolio["cvprBudgetFilters"] == 3, "CVPR track or budget filters are incomplete")
-        require(idea_portfolio["cvprTopRows"] == 15 and idea_portfolio["cvprRejected"] == 19, "CVPR comparison table or rejection archive is incomplete")
-        require(idea_portfolio["cvprMaxGpus"] <= 2 and idea_portfolio["cvprMaxHours"] <= 48, "CVPR idea bank violates the low-resource policy")
-        require(idea_portfolio["filters"] == 5, "advisor filters are incomplete")
-        require(idea_portfolio["dossiers"] == 12 and idea_portfolio["dossierFields"] == 72, "advisor shortlist dossiers are incomplete")
-        require(idea_portfolio["evidenceCards"] == 36, "shortlist literature neighborhoods are incomplete")
-        require(idea_portfolio["archiveDirections"] == 10, "candidate archive does not cover all directions")
-        require(idea_portfolio["archiveIdeas"] + idea_portfolio["archiveShortlist"] == 34, "candidate archive does not preserve all 34 ideas")
-        require(idea_portfolio["rows"] == 34, f"expected 34 traceable ranked ideas, got {idea_portfolio['rows']}")
-        require(idea_portfolio["directionCards"] == 10 and idea_portfolio["trackCards"] == 4, "legacy traceability rankings are incomplete")
-        require(idea_portfolio["purpose"] and idea_portfolio["core"] and idea_portfolio["rationale"] and idea_portfolio["logic"], "idea dossiers are missing required reasoning fields")
-        require(idea_portfolio["importance"] and idea_portfolio["advantage"] and idea_portfolio["pilot"], "idea dossiers are missing importance, advantage, or pilot evidence")
-        require("GroundEvo-Admission" in idea_portfolio["text"] and "PluralLineage-Evo" in idea_portfolio["text"], "idea portfolio is incomplete")
-        execute(session_id, "document.querySelector('.language-toggle')?.click();")
-        time.sleep(1)
-        audit_english = execute(session_id, "return {actor:document.querySelector('.iclr-audit-panel .published-audit-table tbody tr td:nth-child(2) p')?.textContent||'', api:document.querySelector('.iclr-audit-panel .published-audit-table tbody tr td:nth-child(3) p')?.textContent||'', verification:document.querySelector('.iclr-audit-panel .published-audit-table tbody tr .verification-badge')?.textContent||''};")
-        require("language agent is paired with a trainable retrospective model" in audit_english["actor"].lower(), f"ICLR audit actor did not switch back to English: {audit_english['actor']}")
-        require("api access is not structurally required" in audit_english["api"].lower(), f"ICLR audit API role did not switch back to English: {audit_english['api']}")
-        require("official ICLR abstract" in audit_english["verification"], f"ICLR audit verification label did not switch back to English: {audit_english['verification']}")
-        iclr_filter = execute(session_id, """const b=[...document.querySelectorAll('.iclr-filter-btn')].find(x=>x.dataset.iclrFilterType==='budget'&&x.dataset.iclrFilterValue==='24'); b?.click(); const expected=(window.ICLR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).filter(x=>Number(x.budget?.gpu_hours||0)<=24).length; const visible=[...document.querySelectorAll('.iclr-filter-target')].filter(x=>!x.closest('[id^=\"iclr-\"]')?.classList.contains('cvpr-filter-hidden')).length; return {expected,visible};""")
-        require(iclr_filter["visible"] == iclr_filter["expected"] and iclr_filter["visible"] > 0, f"ICLR budget filter failed: {iclr_filter}")
-        iclr_track = execute(session_id, """const b=[...document.querySelectorAll('.iclr-filter-btn')].find(x=>x.dataset.iclrFilterType==='track'&&x.dataset.iclrFilterValue==='memory'); b?.click(); const expected=(window.ICLR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).filter(x=>x.track_id==='memory'&&Number(x.budget?.gpu_hours||0)<=24).length; const visible=[...document.querySelectorAll('.iclr-filter-target')].filter(x=>!x.closest('[id^=\"iclr-\"]')?.classList.contains('cvpr-filter-hidden')).length; return {expected,visible};""")
-        require(iclr_track["visible"] == iclr_track["expected"], f"ICLR track filter failed: {iclr_track}")
-        cvpr_filter = execute(session_id, """const b=[...document.querySelectorAll('.cvpr-filter-btn')].find(x=>x.dataset.cvprFilterType==='budget'&&x.dataset.cvprFilterValue==='16'); b?.click(); const expected=(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).filter(x=>Number(x.budget?.gpu_hours||0)<=16).length; const visible=[...document.querySelectorAll('.cvpr-filter-target')].filter(x=>!x.closest('[id^=\"cvpr-\"]')?.classList.contains('cvpr-filter-hidden')).length; return {expected,visible};""")
-        require(cvpr_filter["visible"] == cvpr_filter["expected"] and cvpr_filter["visible"] > 0, f"CVPR budget filter failed: {cvpr_filter}")
-        cvpr_track = execute(session_id, """const b=[...document.querySelectorAll('.cvpr-filter-btn')].find(x=>x.dataset.cvprFilterType==='track'&&x.dataset.cvprFilterValue==='video'); b?.click(); const expected=(window.CVPR_LOW_RESOURCE_IDEAS?.passed_ideas||[]).filter(x=>x.track_id==='video'&&Number(x.budget?.gpu_hours||0)<=16).length; const visible=[...document.querySelectorAll('.cvpr-filter-target')].filter(x=>!x.closest('[id^=\"cvpr-\"]')?.classList.contains('cvpr-filter-hidden')).length; return {expected,visible};""")
-        require(cvpr_track["visible"] == cvpr_track["expected"], f"CVPR track filter failed: {cvpr_track}")
-        filter_result = execute(session_id, """const b=[...document.querySelectorAll('.idea-board-filter')].find(x=>x.dataset.ideaFilter==='selected'); b?.click(); return {hidden:document.querySelectorAll('.idea-filter-hidden').length, visible:[...document.querySelectorAll('.idea-filter-target')].filter(x=>!x.classList.contains('idea-filter-hidden')).length};""")
-        require(filter_result["hidden"] > 0 and filter_result["visible"] == 2, f"advisor filter failed: {filter_result}")
+        require(idea_portfolio["chapters"] == 2, f"Paper Ideas must have two canonical chapters, got {idea_portfolio['chapters']}")
+        require(idea_portfolio["parentCards"] == 26, f"expected all 26 human-parent histories, got {idea_portfolio['parentCards']}")
+        require(idea_portfolio["standaloneCards"] == 7, f"expected seven terminal standalone methods, got {idea_portfolio['standaloneCards']}")
+        require(idea_portfolio["terminalGroups"] >= 3 and idea_portfolio["terminalStats"] == 4, f"terminal routing UI is incomplete: {idea_portfolio['terminalGroups']}/{idea_portfolio['terminalStats']}")
+        require(idea_portfolio["legacyPreGpuBoards"] == 0 and idea_portfolio["legacyP0Entry"] == 0, "legacy Pre-GPU/P0-entry boards leaked back into canonical Paper Ideas")
+        require((idea_portfolio["finalPass"], idea_portfolio["experimentStops"], idea_portfolio["launchable"]) == (20,20,0), f"current portfolio state is wrong: {idea_portfolio}")
+        require("Historical ICLR Paper Workspace" not in idea_portfolio["text"] and "Selected ICLR Paper Workspace" not in idea_portfolio["text"], "historical paper workspace content leaked into Paper Ideas")
+        require(("当前科研状态" in idea_portfolio["text"] and "终态独立方法" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "Terminal standalone" in idea_portfolio["text"]), "Paper Ideas current-state labels are incomplete")
 
         redirect_checks = {
             "/memory-evolution.html": "mechanisms.html#group-memory-evolution",
-            "/direction-board.html": "paper-ideas.html#idea-ranking",
+            "/direction-board.html": "paper-ideas.html#discussed-ideas",
             "/paper-roadmap.html": "selected-paper.html#group-paper-roadmap",
         }
         for old_path, expected_suffix in redirect_checks.items():

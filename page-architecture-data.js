@@ -2,8 +2,8 @@ window.PAGE_ARCHITECTURES = {
   home:{
     chapters:[
       {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, what can change, and where does the field come from?",zh:"什么算自进化、哪些对象可以变化，以及这个领域从哪里发展而来？"},links:["foundations.html","mechanisms.html","domains.html","evaluation.html"]},
-      {id:"select-research",title:{en:"Select a research direction",zh:"选择研究方向"},question:{en:"How does the research system produce candidates, and which concrete paper idea should be pursued next?",zh:"科研系统如何产生候选，下一步又应该选择哪个具体论文 Idea？"},links:["system-overview.html","research-directions.html","paper-ideas.html"]},
-      {id:"execute-audit",title:{en:"Execute and audit",zh:"执行与审计"},question:{en:"How are pilots tracked, how is one selected paper developed, and how is its evidence traced back to the literature?",zh:"Pilot 如何跟踪，一个选中论文如何继续执行，以及证据如何追溯到文献？"},links:["experiments.html","selected-paper.html","bibliography.html"]}
+      {id:"select-research",title:{en:"Choose the next research formulation",zh:"选择下一轮研究 formulation"},question:{en:"How does the research system generate and falsify candidates, and which materially new formulation deserves the next validation cycle?",zh:"科研系统如何生成并证伪候选，哪一个实质性新 formulation 值得进入下一轮验证？"},links:["system-overview.html","research-directions.html","paper-ideas.html"]},
+      {id:"execute-audit",title:{en:"Execute and audit",zh:"执行与审计"},question:{en:"What are the current experiment decisions, how are they audited, and how can one historical formulation be reconstructed without confusing it with the current plan?",zh:"当前实验结论是什么、如何核查决定性证据，以及怎样复盘一个历史 formulation 而不把它误当成当前计划？"},links:["experiments.html","selected-paper.html","bibliography.html"]}
     ]
   },
   foundations:{
@@ -46,7 +46,7 @@ window.PAGE_ARCHITECTURES = {
   "research-directions":{
     chapters:[
       {id:"orientation",title:{en:"I · Orientation: four lifecycle questions",zh:"第一章 · 入门：四个生命周期问题"},question:{en:"How do the ten directions fit into one evolution lifecycle?",zh:"十个方向如何放进同一条自进化生命周期？"}},
-      {id:"landscape",title:{en:"II · Field landscape and direction map",zh:"第二章 · 领域全景与方向地图"},question:{en:"How are directions, paper ideas, and the selected-paper workspace related?",zh:"研究方向、论文 Idea 与选中论文工作区之间是什么关系？"}},
+      {id:"landscape",title:{en:"II · Field landscape and direction map",zh:"第二章 · 领域全景与方向地图"},question:{en:"How do stable directions, current paper contracts, and the historical formulation archive relate without becoming the same object?",zh:"稳定研究方向、当前论文研究合同和历史 formulation 档案之间是什么关系，为什么不能混为同一层？"}},
       {id:"direction-clusters",title:{en:"III · Ten directions grouped by four big questions",zh:"第三章 · 按四个大问题组织十个方向"},question:{en:"What does each direction study, and how is it different from its neighbors?",zh:"每个方向研究什么，又与相邻方向有何区别？"}},
       {id:"long-term-agenda",title:{en:"IV · Long-term research agenda",zh:"第四章 · 长期研究议程"},question:{en:"Which dependencies and staged priorities turn the direction map into a research program?",zh:"哪些依赖关系和阶段优先级能把方向地图转化为研究计划？"},sourceIds:["research-agenda"]}
     ]
@@ -66,10 +66,10 @@ window.PAGE_ARCHITECTURES = {
   },
   "selected-paper":{
     chapters:[
-      {id:"problem-scope",title:{en:"I · ICLR learning problem and claim boundary",zh:"第一章 · ICLR 学习问题与主张边界"},question:{en:"Why is local repair not reliable self-evolution, and what can Regression-Gated Self-Evolution legitimately claim?",zh:"为什么局部修复不等于可靠自进化，Regression-Gated Self-Evolution 可以合法主张什么？"},sourceIds:["paper-problem"]},
-      {id:"evidence-experiments",title:{en:"II · Persistent-learning and regression experiments",zh:"第二章 · 持久学习与非回退实验"},question:{en:"Which matched-budget, multi-round experiments distinguish learning from extra inference and establish stability?",zh:"哪些等预算、多轮实验能够区分学习与额外推理并验证稳定性？"},sourceIds:["paper-experiments"]},
-      {id:"narrative-execution",title:{en:"III · ICLR narrative and execution roadmap",zh:"第三章 · ICLR 论文叙事与执行路线"},question:{en:"How do the constrained-improvement formulation, main table, four-week plan, and CVPR follow-ups fit together?",zh:"受约束改进形式化、主表、四周计划与 CVPR 后续如何衔接？"},sourceIds:["paper-roadmap"]},
-      {id:"review-gates",title:{en:"IV · ICLR review loop and maturity gates",zh:"第四章 · ICLR 评审闭环与成熟门槛"},question:{en:"Which learning-dynamics objections remain unresolved before submission?",zh:"投稿前还需解决哪些学习动力学质疑？"},sourceIds:["review-log"]}
+      {id:"problem-scope",title:{en:"I · Historical problem formulation and claim boundary",zh:"第一章 · 历史问题表述与主张边界"},question:{en:"What scientific problem was Regression-Gated Self-Evolution trying to isolate, and which assumptions did the archived formulation add?",zh:"Regression-Gated Self-Evolution 当时试图隔离什么科学问题，又额外加入了哪些后来需要检验的假设？"},sourceIds:["paper-problem"]},
+      {id:"evidence-experiments",title:{en:"II · Proposed falsification protocol",zh:"第二章 · 当时拟定的可证伪实验协议"},question:{en:"What matched-budget experiment was proposed, and which parts were never authorized as a current paper experiment?",zh:"当时提出了怎样的等预算实验，哪些部分后来并没有获得当前论文实验授权？"},sourceIds:["paper-experiments"]},
+      {id:"narrative-execution",title:{en:"III · Superseded execution roadmap",zh:"第三章 · 已被后续证据取代的执行路线"},question:{en:"What was the intended roadmap, and why should it now be read as provenance rather than an active schedule?",zh:"当时计划怎样推进，为什么现在只能把它当作溯源档案而不是活跃日程？"},sourceIds:["paper-roadmap"]},
+      {id:"review-gates",title:{en:"IV · What later evidence taught us",zh:"第四章 · 后续证据最终教会了什么"},question:{en:"Which later substrate, simplification, and falsification results stopped this formulation and became system-level rules?",zh:"哪些后续底座、简化基线和 falsifier 结果停止了这一 formulation，并进一步沉淀成系统规则？"},sourceIds:["review-log"]}
     ]
   },
   bibliography:{

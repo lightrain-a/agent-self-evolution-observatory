@@ -37,7 +37,7 @@ REDIRECT_PAGES = {
     "repositories.html": "evaluation.html#group-repositories",
     "coverage-method.html": "bibliography.html#group-coverage-method",
     "research-agenda.html": "research-directions.html#group-research-agenda",
-    "direction-board.html": "paper-ideas.html#idea-ranking",
+    "direction-board.html": "paper-ideas.html#discussed-ideas",
     "paper-problem.html": "selected-paper.html#group-paper-problem",
     "paper-experiments.html": "selected-paper.html#group-paper-experiments",
     "paper-roadmap.html": "selected-paper.html#group-paper-roadmap",
@@ -98,6 +98,7 @@ def main() -> None:
         fail(f"HTML set mismatch; missing={sorted(expected-html_files)}, extra={sorted(html_files-expected)}")
 
     referenced_scripts: set[str] = set()
+    canonical_scripts: dict[str, list[str]] = {}
     for filename, page_id in CANONICAL_PAGES.items():
         text = (ROOT / filename).read_text(encoding="utf-8")
         match = re.search(r'<body\s+data-page="([^"]+)"', text)
@@ -106,6 +107,11 @@ def main() -> None:
         if 'class="sidebar"' not in text or 'id="site-search"' not in text or 'id="dynamic-page"' not in text:
             fail(f"{filename} is missing canonical page UI")
         scripts = re.findall(r'<script\s+src="([^"]+)"', text)
+        canonical_scripts[filename] = scripts
+        title = re.search(r'<title>(.*?)</title>', text)
+        description = re.search(r'<meta\s+name="description"\s+content="([^"]*)"', text)
+        if not title or not title.group(1).strip() or not description or not description.group(1).strip():
+            fail(f"{filename} must have a non-empty title and meta description")
         if "data.js" not in scripts or "app.js" not in scripts:
             fail(f"{filename} must load data.js and app.js")
         if "page-architecture-data.js" not in scripts:
@@ -114,6 +120,37 @@ def main() -> None:
             referenced_scripts.add(script)
             if not (ROOT / script).exists():
                 fail(f"{filename} references missing script {script}")
+
+    current_state_pages = {"index.html", "research-directions.html", "paper-ideas.html", "experiments.html", "selected-paper.html"}
+    for filename in current_state_pages:
+        if "generated/research-system-state.js" not in canonical_scripts.get(filename, []):
+            fail(f"{filename} must load the unified current research-system state")
+    stable_reference_pages = {"foundations.html", "mechanisms.html", "domains.html", "evaluation.html", "bibliography.html"}
+    for filename in stable_reference_pages:
+        if "generated/research-system-state.js" in canonical_scripts.get(filename, []):
+            fail(f"{filename} is a stable reference page and must not mix in current P0 state")
+    selected_scripts = set(canonical_scripts.get("selected-paper.html", []))
+    if {"content-review.js", "content-review-external.js"} & selected_scripts:
+        fail("historical selected-paper workspace must not load stale review overrides")
+    if "Historical ICLR Paper Workspace" not in (ROOT / "selected-paper.html").read_text(encoding="utf-8"):
+        fail("selected-paper must be explicitly labeled as a historical workspace")
+
+    stale_markers = (
+        "Selected ICLR Paper Workspace", "选中 ICLR 论文工作区",
+        "No executed pilot results yet", "尚无真实 Pilot",
+        "minimum pilot evidence remains missing", "仍缺最小 Pilot",
+    )
+    for filename in CANONICAL_PAGES:
+        html = (ROOT / filename).read_text(encoding="utf-8")
+        loaded = [html]
+        for script in canonical_scripts.get(filename, []):
+            path = ROOT / script
+            if path.exists() and not script.startswith("generated/"):
+                loaded.append(path.read_text(encoding="utf-8", errors="ignore"))
+        rendered_source = "\n".join(loaded)
+        for marker in stale_markers:
+            if marker in rendered_source:
+                fail(f"{filename} still exposes stale current-state marker: {marker}")
 
     for filename, target in REDIRECT_PAGES.items():
         text = (ROOT / filename).read_text(encoding="utf-8")

@@ -224,7 +224,9 @@ function setLanguage(next) {
 
 function renderFooter() {
   const footer = document.querySelector(".footer");
-  if (footer) footer.innerHTML = `${language === "zh" ? "Agent 自进化研究站" : "Agent Self-Evolution Observatory"} · <a href="bibliography.html#group-coverage-method">${language === "zh" ? "覆盖协议" : "Coverage protocol"}</a> · <a href="bibliography.html">${language === "zh" ? "动态文献库" : "Live bibliography"}</a> · <a href="https://www.semanticscholar.org/product/api" target="_blank" rel="noopener">${language === "zh" ? "文献元数据由 Semantic Scholar 提供" : "Literature metadata powered by Semantic Scholar"}</a> · <a href="https://github.com/lightrain-a/agent-self-evolution-observatory" target="_blank" rel="noopener">GitHub</a> · 8 August 2026`;
+  const updated = window.RESEARCH_SYSTEM_STATE?.generated_at || window.S2_LITERATURE_META?.retrieved_at || "";
+  const updatedLabel = updated ? new Date(updated).toLocaleDateString(language === "zh" ? "zh-CN" : "en-US", {year:"numeric",month:"short",day:"numeric"}) : (language === "zh" ? "持续维护" : "continuously maintained");
+  if (footer) footer.innerHTML = `${language === "zh" ? "Agent 自进化研究站" : "Agent Self-Evolution Observatory"} · <a href="bibliography.html#group-coverage-method">${language === "zh" ? "覆盖协议" : "Coverage protocol"}</a> · <a href="bibliography.html">${language === "zh" ? "动态文献库" : "Live bibliography"}</a> · <a href="https://www.semanticscholar.org/product/api" target="_blank" rel="noopener">${language === "zh" ? "文献元数据由 Semantic Scholar 提供" : "Literature metadata powered by Semantic Scholar"}</a> · <a href="https://github.com/lightrain-a/agent-self-evolution-observatory" target="_blank" rel="noopener">GitHub</a> · ${updatedLabel}`;
 }
 function renderSemanticScholarStatus() {
   const meta = window.S2_LITERATURE_META;
@@ -701,8 +703,19 @@ function updateCounter(extra = "") {
   counter.textContent = label;
 }
 
+function projectStatusState(){ return window.RESEARCH_SYSTEM_STATE || {}; }
+function renderProjectStatusStrip(){
+  if(!["home","research-directions","paper-ideas","experiments","selected-paper"].includes(pageId)) return "";
+  const state=projectStatusState(), summary=state.summary||{}, ledger=state.p0_decision_ledger?.summary||{}, economy=state.p0_economy_gate?.summary||{}, ai=state.ai_consultation_automation?.summary||{};
+  if(!Object.keys(summary).length && !Object.keys(ledger).length) return "";
+  const historical=pageId==="selected-paper";
+  const message=historical
+    ? (language==="zh"?"本页是历史 ICLR formulation / protocol 档案，不再代表当前选中论文。当前实验决策请以 Experiments 的统一账本为准。":"This is a historical ICLR formulation/protocol archive, not the current selected paper. Use the unified Experiments ledger for current decisions.")
+    : (language==="zh"?"当前研究状态由 Human Terminal + P0 Decision Ledger 统一给出；P0 生命周期不等于仍值得继续执行。":"Current research status comes from the Human Terminal and unified P0 Decision Ledger; P0 lifecycle entry does not mean execution is still worthwhile.");
+  return `<section class="project-status-strip ${historical?"historical":"current"}"><div><b>${historical?(language==="zh"?"历史工作区":"Historical workspace"):(language==="zh"?"当前科研状态":"Current research state")}</b><span>${message}</span></div><dl><div><dt>${language==="zh"?"FINAL PASS":"FINAL PASS"}</dt><dd>${summary.final_pass??20}</dd></div><div><dt>${language==="zh"?"实验 STOP":"experiment STOP"}</dt><dd>${ledger.experiment_stopped??summary.p0_decision_ledger_stopped??0}</dd></div><div><dt>${language==="zh"?"可启动":"launchable"}</dt><dd>${ledger.launchable??summary.p0_decision_ledger_launchable??0}</dd></div><div><dt>${language==="zh"?"简化基线 STOP":"simplification STOP"}</dt><dd>${economy.matched_simplification_stops??summary.p0_economy_matched_simplification_stops??0}</dd></div><div><dt>${language==="zh"?"AI 未处理高风险":"AI unresolved risk"}</dt><dd>${ai.unresolved_high_risk??0}</dd></div></dl></section>`;
+}
 function pageHeader(config) {
-  return `<div class="eyebrow">${esc(textOf(config.eyebrow))}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p>${config.callout ? `<div class="callout">${textOf(config.callout)}</div>` : ""}`;
+  return `<div class="eyebrow">${esc(textOf(config.eyebrow))}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p>${config.callout ? `<div class="callout">${textOf(config.callout)}</div>` : ""}${renderProjectStatusStrip()}`;
 }
 function renderSectionForPage(section, index, citationPageId = pageId, extraClass = "", headingLevel = 2) {
   const title = textOf(section.title);
@@ -776,7 +789,7 @@ function renderDirectionLiterature(direction) {
 function renderDirectionCard(direction) {
   const directionIdeas = direction.ideaIds.map(ideaByName).filter(Boolean).sort((a, b) => a.rank - b.rank);
   const detail = directionGuide(direction.id);
-  return `<article class="direction-card" style="--direction-color:${esc(direction.color || "#5b5bd6")}"><div class="direction-card-head"><span class="direction-code">${esc(direction.code)}</span><span class="direction-count">${directionIdeas.length} ${language === "zh" ? "个 Idea" : "ideas"}</span></div><h4 id="${esc(direction.id)}">${textOf(direction.title)}</h4><p class="direction-question">${textOf(direction.question)}</p><div class="direction-plain"><b>${language === "zh" ? "通俗理解" : "In plain language"}</b><span>${textOf(detail.plain)}</span></div><div class="direction-explanation-grid"><div><b>${language === "zh" ? "主要研究对象" : "Main object"}</b><p>${textOf(detail.object)}</p></div><div><b>${language === "zh" ? "典型例子" : "Typical example"}</b><p>${textOf(detail.example)}</p></div><div><b>${language === "zh" ? "与邻近方向的区别" : "Difference from neighbors"}</b><p>${textOf(detail.distinction)}</p></div><div><b>${language === "zh" ? "科学边界" : "Scientific boundary"}</b><p>${textOf(direction.boundary)}</p></div></div>${renderDirectionLiterature(direction)}<div class="idea-chip-list">${directionIdeas.map((idea) => `<a class="idea-chip" href="paper-ideas.html#${ideaAnchor(idea.name)}"><span>#${idea.rank}</span>${esc(idea.name)}</a>`).join("")}</div></article>`;
+  return `<article class="direction-card" style="--direction-color:${esc(direction.color || "#5b5bd6")}"><div class="direction-card-head"><span class="direction-code">${esc(direction.code)}</span><span class="direction-count">${directionIdeas.length} ${language === "zh" ? "个历史 Idea" : "historical ideas"}</span></div><h4 id="${esc(direction.id)}">${textOf(direction.title)}</h4><p class="direction-question">${textOf(direction.question)}</p><div class="direction-plain"><b>${language === "zh" ? "通俗理解" : "In plain language"}</b><span>${textOf(detail.plain)}</span></div><div class="direction-explanation-grid"><div><b>${language === "zh" ? "主要研究对象" : "Main object"}</b><p>${textOf(detail.object)}</p></div><div><b>${language === "zh" ? "典型例子" : "Typical example"}</b><p>${textOf(detail.example)}</p></div><div><b>${language === "zh" ? "与邻近方向的区别" : "Difference from neighbors"}</b><p>${textOf(detail.distinction)}</p></div><div><b>${language === "zh" ? "科学边界" : "Scientific boundary"}</b><p>${textOf(direction.boundary)}</p></div></div>${renderDirectionLiterature(direction)}<div class="idea-chip-list" aria-label="historical idea lineage">${directionIdeas.map((idea) => `<span class="idea-chip" title="${language === "zh" ? "历史候选谱系，不代表当前合同" : "Historical candidate lineage; not a current contract"}"><span>#${idea.rank}</span>${esc(idea.name)}</span>`).join("")}</div></article>`;
 }
 function renderDirectionMap(config) {
   const directions = portfolioDirections();
@@ -786,8 +799,8 @@ function renderDirectionMap(config) {
   const macroCards = (guide.macroGroups || []).map((group) => `<article class="direction-macro-card"><span>${esc(group.code)}</span><h4>${textOf(group.title)}</h4><p>${textOf(group.plain)}</p><div>${(group.directionIds || []).map((id) => { const direction = directionById(id); return direction ? `<a href="#${esc(id)}">${esc(direction.code)} · ${textOf(direction.title)}</a>` : ""; }).join("")}</div></article>`).join("");
   const exampleRows = directions.map((direction) => { const detail = directionGuide(direction.id); return `<tr><th>${esc(direction.code)}</th><td><a href="#${esc(direction.id)}"><strong>${textOf(direction.title)}</strong></a><span>${textOf(detail.plain)}</span></td><td>${textOf(detail.example)}</td></tr>`; }).join("");
   const orientation = `<section class="panel direction-primer"><h3 id="four-big-questions">${language === "zh" ? "四个大问题" : "Four big questions"}</h3><p class="section-intro">${language === "zh" ? "十个方向不是十种互相竞争的方法，而是自进化生命周期中四类大问题的进一步拆分。" : "The ten directions are not ten competing methods. They decompose four large questions across the evolution lifecycle."}</p><div class="direction-macro-grid">${macroCards}</div></section><section class="panel direction-running-example"><h3 id="running-example">${textOf(guide.runningExample?.title)}</h3><p class="section-intro">${textOf(guide.runningExample?.intro)}</p><div class="history-table-scroll"><table class="matrix"><thead><tr><th>ID</th><th>${language === "zh" ? "这个方向在研究什么" : "What the direction studies"}</th><th>${language === "zh" ? "在这个案例中会问什么" : "Question in this example"}</th></tr></thead><tbody>${exampleRows}</tbody></table></div></section>${(config.sections || []).map((section, index) => renderSectionForPage(section, index, pageId, "direction-foundation-section", 3)).join("")}`;
-  const stats = `<div class="grid direction-stats"><div class="stat"><b>${directions.length}</b><span>${language === "zh" ? "个研究方向" : "research directions"}</span></div><div class="stat"><b>${ideas.length}</b><span>${language === "zh" ? "个具体论文 Idea" : "concrete paper ideas"}</span></div><div class="stat"><b>${portfolioTracks().length}</b><span>${language === "zh" ? "类论文赛道" : "paper tracks"}</span></div></div>`;
-  const landscape = `${renderOverviewFigure(config, language === "zh" ? "Agent 自进化研究方向与论文 Idea 地图" : "Agent self-evolution direction and paper-idea map")}${stats}`;
+  const stats = `<div class="grid direction-stats"><div class="stat"><b>${directions.length}</b><span>${language === "zh" ? "个研究方向" : "research directions"}</span></div><div class="stat"><b>${ideas.length}</b><span>${language === "zh" ? "个历史 Idea formulation" : "historical idea formulations"}</span></div><div class="stat"><b>${portfolioTracks().length}</b><span>${language === "zh" ? "类历史论文赛道" : "historical paper tracks"}</span></div></div>`;
+  const landscape = `${renderOverviewFigure(config, language === "zh" ? "Agent 自进化研究方向与历史 Idea 谱系图" : "Agent self-evolution direction and historical idea-lineage map")}${stats}`;
   const clusters = (guide.macroGroups || []).map((group, index) => { const groupDirections = (group.directionIds || []).map(directionById).filter(Boolean); return `<section class="direction-cluster"><header><span>${esc(group.code)}</span><div><h3 id="direction-cluster-${esc(group.id)}">${textOf(group.title)}</h3><p>${textOf(group.plain)}</p></div></header><div class="direction-grid">${groupDirections.map(renderDirectionCard).join("")}</div></section>`; }).join("");
   const agendaGroups = config.groupsAfter || [];
   const agenda = `${renderGroupNav(agendaGroups)}${renderMergedGroups(agendaGroups)}`;
@@ -1686,7 +1699,7 @@ function renderIdeaPortfolio(config) {
   const chapters = pageArchitecture("paper-ideas").chapters || [];
   const discussed = renderDiscussedIdeaBank();
   const newIdeas = renderNewIdeaCandidates();
-  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderPreGpuCandidateGateBoard()}${renderP0ExperimentEntry()}${renderCustomChapter(chapters[0],0,discussed)}${renderCustomChapter(chapters[1],1,newIdeas)}`;
+  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderCustomChapter(chapters[0],0,discussed)}${renderCustomChapter(chapters[1],1,newIdeas)}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;

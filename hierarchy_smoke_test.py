@@ -17,11 +17,11 @@ EXPECTATIONS = {
     "mechanisms": (3, 4, 6, 26),
     "domains": (3, 4, 3, 14),
     "evaluation": (3, 4, 5, 16),
-    "system-overview": (2, 3, 10, 0),
+    "system-overview": (6, 7, 20, 0),
     "research-directions": (4, 5, 9, 23),
-    "paper-ideas": (4, 5, 3, 0),
+    "paper-ideas": (2, 3, 9, 0),
     "experiments": (3, 4, 3, 0),
-    "selected-paper": (4, 5, 5, 20),
+    "selected-paper": (4, 5, 4, 13),
     "bibliography": (4, 5, 8, 6),
 }
 

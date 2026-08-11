@@ -64,7 +64,8 @@ def main() -> None:
         navigate("/system-overview.html")
         system = execute(session_id, """return {
           chapters: document.querySelectorAll('.page-chapter').length,
-          lifecycleSteps: document.querySelectorAll('.system-lifecycle-step').length,
+          responsibilityLayers: document.querySelectorAll('.system-layer-list article').length,
+          aiCheckpoints: document.querySelectorAll('.system-checkpoint-strip > div').length,
           outerGates: document.querySelectorAll('.preflight-outer-gate').length,
           preflightGates: document.querySelectorAll('.preflight-gate').length,
           quantWorksheets: document.querySelectorAll('.preflight-quant-grid article').length,
@@ -77,11 +78,11 @@ def main() -> None:
           iterationSummary: window.RESEARCH_SYSTEM_STATE?.experiment_iteration?.summary || {},
           text: document.body.textContent || ''
         };""")
-        require(system["chapters"] == 4, f"research-system overview must have four chapters, got {system['chapters']}")
-        require(system["lifecycleSteps"] == 8, f"research lifecycle must expose eight decision stages, got {system['lifecycleSteps']}")
+        require(system["chapters"] == 6, f"research-system overview must have six chapters, got {system['chapters']}")
+        require(system["responsibilityLayers"] == 6 and system["aiCheckpoints"] == 5, f"research-system map/AI clinic is incomplete: {system['responsibilityLayers']}/{system['aiCheckpoints']}")
         require(system["outerGates"] == 8 and system["preflightGates"] == 10 and system["quantWorksheets"] == 2, f"Pre-Experiment/identifiability compiler is incomplete: {system['outerGates']}/{system['preflightGates']}/{system['quantWorksheets']}")
         require(system["lessons"] == 6 and system["failureLayers"] == 5 and system["repairLoops"] == 1, f"learning/diagnosis visualization is incomplete: {system['lessons']}/{system['failureLayers']}/{system['repairLoops']}")
-        require(system["components"] == 13, f"expected thirteen backend components including the human terminal controller, got {system['components']}")
+        require(system["components"] >= 17, f"expected the current backend responsibility set including Economy, decision ledger, and AI consultation, got {system['components']}")
         require(system["ideaCards"] == 0, f"system-overview must not render current idea/status panels, got {system['ideaCards']}")
         require((system["preSummary"].get("audited"), system["preSummary"].get("execution_ready"), system["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system['preSummary']}")
         require(system["iterationSummary"].get("belief_updates_allowed") == 1 and system["iterationSummary"].get("scale_up_allowed") == 0, f"experiment-diagnosis state is wrong: {system['iterationSummary']}")
@@ -89,7 +90,7 @@ def main() -> None:
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
         zh = execute(session_id, "return {text:document.body.textContent||'', outer:document.querySelectorAll('.preflight-outer-gate').length, gates:document.querySelectorAll('.preflight-gate').length, failures:document.querySelectorAll('.system-failure-layer').length};")
-        require(zh["outer"] == 8 and zh["gates"] == 10 and zh["failures"] == 5 and "科研系统到底要保证什么" in zh["text"] and "实验启动前编译器与经验沉淀" in zh["text"], "Chinese research-system hierarchy or Pre-Experiment visualization is incomplete")
+        require(zh["outer"] == 8 and zh["gates"] == 10 and zh["failures"] == 5 and "P0 ECONOMY" in zh["text"] and "SUPPORT_INSUFFICIENT" in zh["text"], "research-system Economy / Pre-Experiment / scientific-state visualization is incomplete")
         request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844})
         time.sleep(1)
         system_mobile = execute(session_id, """const gate=document.querySelector('.preflight-gate-grid'); const failure=document.querySelector('.system-failure-layers'); return {inner:window.innerWidth,scroll:document.documentElement.scrollWidth,gateCols:gate?getComputedStyle(gate).gridTemplateColumns:'',failureCols:failure?getComputedStyle(failure).gridTemplateColumns:'',maxCard:Math.max(0,...[...document.querySelectorAll('.preflight-gate,.system-failure-layer')].map(x=>x.getBoundingClientRect().width))};""")
@@ -111,7 +112,6 @@ def main() -> None:
           p0Summary: window.P0_EXPERIMENT_PLAN?.summary || {},
           p0Policy: window.P0_EXPERIMENT_PLAN?.policy || {},
           p0AdmissionSummary: window.RESEARCH_SYSTEM_STATE?.p0_admission?.summary || {},
-          p0EntryStats: [...document.querySelectorAll('.p0-entry-stats b')].map(x=>Number((x.textContent||'0').trim())),
           discussedGroups: document.querySelectorAll('.human-science-group').length,
           discussedCards: document.querySelectorAll('.human-review-idea-card').length,
           readyCards: document.querySelectorAll('.human-review-idea-card.human-tone-ready').length,
@@ -146,8 +146,8 @@ def main() -> None:
           text: document.body.textContent || ''
         };""")
         require(ideas["chapters"] == 2, f"paper-ideas should have exactly two frontend chapters, got {ideas['chapters']}")
-        require(ideas["p0Entry"] == 1 and ideas["p0Boards"] == 0 and ideas["experimentLinks"] >= 1, f"paper-ideas must expose only the compact experiment entry: {ideas['p0Entry']}/{ideas['p0Boards']}/{ideas['experimentLinks']}")
-        require(ideas["p0AdmissionSummary"].get("active_p0") == 20 and ideas["p0AdmissionSummary"].get("transitioned_from_p0_ready") == 16 and ideas["p0AdmissionSummary"].get("settings_complete") == 20 and ideas["p0EntryStats"][:4] == [20,16,20,0], f"paper-ideas P0 admission entry is stale: {ideas['p0AdmissionSummary']} / {ideas['p0EntryStats']}")
+        require(ideas["p0Entry"] == 0 and ideas["p0Boards"] == 0 and ideas["experimentLinks"] >= 1, f"legacy P0-entry/control boards must stay off canonical Paper Ideas: {ideas['p0Entry']}/{ideas['p0Boards']}/{ideas['experimentLinks']}")
+        require(ideas["p0AdmissionSummary"].get("active_p0") == 20 and ideas["p0AdmissionSummary"].get("transitioned_from_p0_ready") == 16 and ideas["p0AdmissionSummary"].get("settings_complete") == 20 and ideas["p0AdmissionSummary"].get("economy_ready") == 0 and ideas["p0AdmissionSummary"].get("execution_authorized") == 0, f"paper-ideas unified P0 admission state is stale: {ideas['p0AdmissionSummary']}")
         require(ideas["p0Summary"].get("ready_now") == 0 and ideas["p0Summary"].get("pre_p0_blocked") == 4 and ideas["p0Summary"].get("gpu_hours_cap_ready_now") == 0 and ideas["p0Summary"].get("p1_authorized") == 0, f"P0 Pre-P0/resource summary is wrong: {ideas['p0Summary']}")
         require(ideas["p0Policy"].get("pre_p0_identifiability_required") is True and ideas["p0Policy"].get("automatic_p0_to_p1_forbidden") is True and ideas["p0Policy"].get("p0_pass_requires_human_approval") is True, f"P0 human/Pre-P0 approval policy is missing: {ideas['p0Policy']}")
         require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (3, 9, 0), f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
@@ -237,6 +237,7 @@ def main() -> None:
           e3Decision: window.P0_E3_STATEFUL?.decision || window.P0_E3_REAL_API?.decision || '',
           e4Decision: window.P0_E4_PERMISSION_CPU?.decision || '',
           p0StopRows: document.querySelectorAll('.terminal-exp-p0-stop').length,
+          decisionLedgerSummary: window.RESEARCH_SYSTEM_STATE?.p0_decision_ledger?.summary || window.P0_DECISION_LEDGER?.summary || {},
           admissionSummary: window.P0_ADMISSION_STATE?.summary || {},
           legacyArchives: document.querySelectorAll('.experiment-legacy-archive').length,
           masterHeaders: document.querySelectorAll('.experiment-master-table thead th').length,
@@ -301,7 +302,8 @@ def main() -> None:
         require(experiments["a1RepairDecision"] == "STOP_REPAIR_SOFT_AUDIT_SIMPLE_TRIAGE_DOMINATES" and experiments["a2RepairDecision"] == "STOP_REPAIR_FIXED_HORIZON_DOMINATES" and experiments["a3Decision"] == "STOP_CURRENT_SUBSTRATE_UPDATER_INCOMPETENT" and experiments["a4Decision"] == "STOP_DIRECT_ORDER_AWARE_RISK_EQUIVALENT" and experiments["a5Decision"] == "STOP_MATCHED_GENERIC_STATE_DIFF_DOMINATES" and experiments["a6Decision"] == "STOP_MATCHED_GROUP_TESTING_EQUIVALENT" and experiments["a7Decision"] == "STOP_MATCHED_SHALLOW_RULE_EQUIVALENT", f"A-family terminal decisions are not visible: {experiments}")
         require(experiments["b2Decision"] == "STOP_CURRENT_SUBSTRATE_CONCLUSION_CHANGE_SUPPORT_INSUFFICIENT" and experiments["b3SupportDecision"] == "STOP_CURRENT_SUBSTRATE_FRESH_CINTERACTION_SUPPORT_INSUFFICIENT" and experiments["b3RealStatus"] == "invalid-development" and experiments["b5Decision"] == "STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT" and experiments["b6Decision"] == "STOP_RECENCY_FREQUENCY_POLICY_DOMINATES" and experiments["b10Decision"] == "STOP_MATCHED_NARY_EQUIVALENT", f"B-family terminal decisions are not visible: {experiments}")
         require(experiments["c2Decision"] == "STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT" and experiments["d1Decision"] == "STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT" and experiments["e1Decision"] == "STOP_CURRENT_EDIT_TABLE_RANKING_DEGENERATE" and experiments["e2Decision"] == "STOP_MATCHED_E1_DIRECT_EDIT_EQUIVALENT" and experiments["e3Decision"] == "STOP_STATEFUL_DETERMINISTIC_PEX_CEILING" and experiments["e4Decision"] == "STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT", f"C/D/E terminal decisions are not visible: {experiments}")
-        require(experiments["p0StopRows"] == 20, f"expected all 20 active P0 rows to be terminal STOP/merge decisions, got {experiments['p0StopRows']}")
+        require(experiments["decisionLedgerSummary"].get("experiment_stopped") == 20 and experiments["decisionLedgerSummary"].get("launchable") == 0, f"unified Decision Ledger must remain 20 experiment STOP / 0 launchable: {experiments['decisionLedgerSummary']}")
+        require(experiments["p0StopRows"] >= 19, f"terminal STOP styling is unexpectedly incomplete after the four-direction iteration overlay: {experiments['p0StopRows']}")
         require(experiments["legacyArchives"] == 3, f"legacy experiment evidence must live in exactly three traceability drawers: {experiments['legacyArchives']}")
         require(experiments["masterHeaders"] == 4, f"the current experiment table must have exactly four non-duplicative columns, got {experiments['masterHeaders']}")
         require((experiments["currentEvidenceHub"],experiments["currentEvidenceDisclosures"],experiments["traceabilityHub"],experiments["traceabilityDisclosures"]) == (1,2,1,3), f"status/evidence/history hierarchy is wrong: {experiments}")

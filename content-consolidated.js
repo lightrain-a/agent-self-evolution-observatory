@@ -70,24 +70,24 @@
   if (sources["research-directions"]) {
     pages["research-directions"] = Object.assign({}, sources["research-directions"], {
       title:{en:"Research directions and long-term agenda",zh:"研究方向地图与长期议程"},
-      lead:{en:"Ten stable scientific directions organize the concrete paper ideas; the same page now records the longer-term program, dependencies, and staged research priorities.",zh:"十个稳定科学方向组织具体论文 Idea；同一页面进一步给出长期研究计划、方向依赖和分阶段优先级。"},
+      lead:{en:"Ten stable scientific directions organize the field. The historical idea lineage explains how the search evolved, while the 20 current FINAL-PASS contracts and all current experiment decisions live on Paper Ideas and Experiments respectively.",zh:"十个稳定科学方向组织领域结构。历史 Idea 谱系解释搜索如何演化；20 个当前 FINAL-PASS 合同与所有当前实验决策分别由 Paper Ideas 和 Experiments 负责。"},
       groupsAfter:[group("research-agenda")]
     });
   }
 
   if (sources["paper-ideas"]) {
     pages["paper-ideas"] = Object.assign({}, sources["paper-ideas"], {
-      title:{en:"ICLR-first self-evolution mechanisms and paper decisions",zh:"ICLR-first Agent 自进化机制与论文决策"},
-      lead:{en:"The page leads with an ICLR literature audit, eight general learning-mechanism tracks, seven review gates, and twenty-six cross-domain low-resource candidates. The historical advisor board and CVPR visual specializations remain available as secondary evidence and follow-up directions.",zh:"页面首先展示 ICLR 文献基座审计、八个一般学习机制轨道、七维评审和二十六个跨域低资源候选；历史导师决策板与 CVPR 视觉专门化作为第二层证据和后续方向继续保留。"},
+      title:{en:"ICLR-first current research contracts and terminal decisions",zh:"ICLR-first 当前研究合同与终态决策"},
+      lead:{en:"The canonical page now centers the 20 current FINAL-PASS formulations and their human-terminal/P0 contracts. Earlier 26-idea R1/R2 banks, advisor rankings, and visual specialization rounds are retained only as provenance for how the current contracts were produced.",zh:"规范页面现在以 20 个当前 FINAL-PASS 表述及其人工终态/P0 合同为主；更早的 26-Idea R1/R2 候选池、导师排序和视觉专门化轮次仅作为形成当前合同的历史溯源。"},
       includeRanking:true
     });
   }
 
   pages["selected-paper"] = {
-    eyebrow:{en:"Selected ICLR Paper Workspace",zh:"选中 ICLR 论文工作区"},
-    title:{en:"Regression-Gated Self-Evolution: problem, experiments, roadmap, and review",zh:"Regression-Gated Self-Evolution：问题、实验、路线图与评审"},
-    lead:{en:"The ICLR-first direction is presented as one complete reviewer-oriented workspace: constrained-improvement formulation, matched-budget experiments, multi-round regression evidence, execution roadmap, and maturity gates.",zh:"ICLR-first 方向以一个完整 Reviewer-oriented 工作区呈现：受约束改进形式化、等预算实验、多轮回归证据、执行路线和成熟门槛。"},
-    callout:{en:"This workspace is specific to Regression-Gated Self-Evolution. GroundEvo and other visual mechanisms remain CVPR follow-ups rather than being mixed into the ICLR claim.",zh:"该工作区只服务于 Regression-Gated Self-Evolution。GroundEvo 与其他视觉机制保留为 CVPR 后续，不混入 ICLR 主张。"},
+    eyebrow:{en:"Historical ICLR Paper Workspace",zh:"历史 ICLR 论文工作区"},
+    title:{en:"Regression-Gated Self-Evolution: archived formulation, protocol, and failure evidence",zh:"Regression-Gated Self-Evolution：归档表述、实验协议与失败证据"},
+    lead:{en:"This archived workspace preserves the original constrained-improvement formulation and proposed matched-budget protocol so later STOP evidence can be interpreted against the exact claim that was being tested. It is not the current selected paper or an active execution plan.",zh:"本历史工作区保留当时的受约束改进表述与拟定的等预算协议，方便把后续 STOP 证据对应回最初被检验的精确主张；它不再代表当前选中论文或活跃执行计划。"},
+    callout:{en:"Current decision: the Regression-Gated formulation is stopped under the unified experiment ledger. Keep this page only as provenance; use Paper Ideas for current research contracts and Experiments for current execution decisions.",zh:"当前决策：Regression-Gated formulation 已在统一实验账本中停止。本页只保留为溯源档案；当前研究合同请看 Paper Ideas，当前执行结论请看 Experiments。"},
     renderMode:"merged-hub",
     chapters:chaptersFor("selected-paper")
   };
