@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T09:31:02+00:00",
+  "generated_at": "2026-08-11T09:39:12+00:00",
   "experiment_root": "profile-resolved-machine-local",
   "policy": {
     "real_reused_may_unblock": true,
@@ -138,6 +138,27 @@
         "discovery": 2
       },
       "identifiable": false
+    },
+    "a4_composition_cpu": {
+      "decision": "STOP_DIRECT_ORDER_AWARE_RISK_EQUIVALENT",
+      "metrics": {
+        "registry_prediction_accuracy": 1.0,
+        "direct_prediction_accuracy": 1.0,
+        "prediction_agreement": 1.0,
+        "registry_repair_success": 1.0,
+        "direct_repair_success": 1.0,
+        "repair_exact_agreement": 1.0,
+        "registry_candidate_checks": 49,
+        "direct_candidate_checks": 49
+      },
+      "matched_simplification": {
+        "baseline": "direct ordered-descriptor pair risk table + equal-budget local constrained repair search",
+        "same_pair_intervention_table": true,
+        "same_descriptor_language": true,
+        "same_hidden_cases": true,
+        "same_candidate_check_budget": true,
+        "equivalent": true
+      }
     },
     "a5_history_cpu": {
       "decision": "STOP_MATCHED_GENERIC_STATE_DIFF_DOMINATES",
@@ -837,12 +858,12 @@
   },
   "summary": {
     "ideas": 16,
-    "checks_passed": 43,
-    "checks_failed": 12,
-    "checks_pending": 27,
+    "checks_passed": 46,
+    "checks_failed": 13,
+    "checks_pending": 23,
     "checks_synthetic_pass": 14,
-    "gpu0_hold_or_conditional": 7,
-    "gpu0_stop": 9
+    "gpu0_hold_or_conditional": 6,
+    "gpu0_stop": 10
   },
   "cards": [
     {
@@ -911,24 +932,24 @@
     {
       "idea_id": "compositional-update-compatibility",
       "gpu0": {
-        "status": "hold-composition-matrix-missing",
-        "evidence": "Registered updater artifacts contain 0 pair/order/rollback composition rows for held-out update-identity evaluation.",
-        "source": "runs/round1-20260810/a12-v4/evaluations.jsonl",
-        "evidence_kind": "registered-artifact-audit",
-        "next": "Collect a frozen pair/order/rollback composition matrix with held-out update identities and template×surface splits."
+        "status": "stop-direct-order-aware-risk-equivalent",
+        "evidence": "Direct ordered-descriptor risk plus equal-budget constrained repair exactly reproduces the typed registry on held-out identities/triples.",
+        "source": "generated/p0-a4-composition-cpu.json",
+        "evidence_kind": "cpu-composition-p0",
+        "next": "Merge A-4 into a direct ordered-composition risk/repair baseline; the typed registry adds no held-out prediction or repair value."
       },
       "checks": {
         "target_variation": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "The frozen pair table includes compatible, precedence-sensitive, and no-good typed update interactions, then tests unseen triples and identities.",
+          "source": "generated/p0-a4-composition-cpu.json",
+          "evidence_kind": "cpu-composition-p0"
         },
         "baseline_disagreement": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "fail",
+          "evidence": "Typed registry and direct ordered-risk baseline tie at prediction 1.000 vs 1.000, repair 1.000 vs 1.000, exact repair agreement 1.000, and candidate checks 49 vs 49.",
+          "source": "generated/p0-a4-composition-cpu.json",
+          "evidence_kind": "cpu-composition-p0"
         },
         "representability": {
           "status": "synthetic-pass",
@@ -937,10 +958,10 @@
           "evidence_kind": "synthetic-realizability-only"
         },
         "tiny_overfit": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "All hidden update identities are unseen and all evaluated three-update compositions are absent from pair training.",
+          "source": "generated/p0-a4-composition-cpu.json",
+          "evidence_kind": "cpu-composition-p0"
         },
         "competence_window": {
           "status": "pass",
@@ -949,17 +970,17 @@
           "evidence_kind": "real-reused"
         },
         "effect_variation": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "The intervention table contains order-sensitive and incompatible typed pairs that induce distinct repair outcomes.",
+          "source": "generated/p0-a4-composition-cpu.json",
+          "evidence_kind": "cpu-composition-p0"
         }
       },
       "updater_competence": {
-        "status": "pending",
-        "passed": false,
-        "evidence_kind": "pending",
-        "reason": "mechanism-specific updater/action-stream competence has not been qualified"
+        "status": "pass",
+        "passed": true,
+        "evidence_kind": "cpu-composition-p0",
+        "reason": "Pair/order interventions expose executable interaction outcomes and both repair systems operate on the frozen table."
       }
     },
     {

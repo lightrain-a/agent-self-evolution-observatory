@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "decision_date": "2026-08-11",
-  "generated_at": "2026-08-11T09:31:00+00:00",
+  "generated_at": "2026-08-11T09:38:27+00:00",
   "source_of_truth_priority": [
     "latest-human-review",
     "explicit-user-update",
@@ -160,6 +160,11 @@
         "zh": "直接 order-aware risk model 或等预算 repair search 追平，或规则只记 identity/template，则停止独立方法。",
         "en": "Stop if the direct order-aware risk model or equal-budget repair search ties it, or rules memorize identities/templates."
       },
+      "current_fact": {
+        "zh": "A-4 CPU P0 已触发 frozen matched-simplification STOP：用同一 15 条 typed pair/order intervention table，registry 编译 no-good / precedence / compatibility clauses；matched baseline 只存 ordered descriptor pair 风险表，并在 hidden triple 上做 equal-budget local constrained repair。20 个 held-out triples、全部 update identities 未见，双方 prediction accuracy=1.0、repair success=1.0、逐 case repair agreement=1.0，candidate checks 49 vs 49。typed registry 没有提供超出 direct order-aware risk + repair 的独立价值，建议 merge/drop，等待人工确认。",
+        "en": "A-4 CPU P0 fired the frozen matched-simplification STOP. From the same 15 typed pair/order intervention rows, the registry compiles no-good/precedence/compatibility clauses while the matched baseline stores only an ordered descriptor-pair risk table and performs equal-budget local constrained repair on hidden triples. Across 20 held-out triples with entirely unseen update identities, both reach prediction accuracy=1.0, repair success=1.0, exact per-case repair agreement=1.0, and 49 vs 49 candidate checks. The typed registry adds no standalone value beyond direct order-aware risk plus repair; recommend merge/drop pending human review."
+      },
+      "p0_decision": "STOP_DIRECT_ORDER_AWARE_RISK_EQUIVALENT",
       "p0_entry": {
         "date": "2026-08-11",
         "basis": "p0-admission-contract-frozen",

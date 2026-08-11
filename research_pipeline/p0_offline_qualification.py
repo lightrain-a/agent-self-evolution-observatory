@@ -50,6 +50,12 @@ def _ck(status: str, evidence: str, source: str = "", kind: str = "real-reused")
 def _pending() -> dict[str, Any]:
     return _ck("pending", "No mechanism-aligned real offline evidence has cleared this check yet.", kind="pending")
 
+def _a4_artifact() -> dict[str, Any]:
+    path=PROJECT_ROOT/"generated"/"p0-a4-composition-cpu.json"
+    try:return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):return {}
+
+
 def _a5_artifact() -> dict[str, Any]:
     path=PROJECT_ROOT/"generated"/"p0-a5-history-cpu.json"
     try:return json.loads(path.read_text(encoding="utf-8"))
@@ -150,6 +156,17 @@ def _apply_a6_stop(card: dict[str, Any], result: dict[str, Any]) -> None:
     m=result.get("matched_simplification") or {}; s=result.get("summary") or {}
     card["checks"]["baseline_disagreement"]=_ck("fail",f"Non-learning binary group testing exactly reproduces active-causal recovery and per-case intervention counts: mean tests {s.get('active-causal',{}).get('mean_tests',0):.3f} vs {s.get('binary-group-testing',{}).get('mean_tests',0):.3f}; per-case identical={m.get('per_case_test_counts_identical')}.","generated/p0-a6-cpu.json","cpu-p0-falsifier")
     card["gpu0"]={"status":"stop-matched-group-testing-equivalent","evidence":"CPU P0 shows the active query policy is exactly a non-learning binary group-testing simplification under the same sparse-fault prior.","source":"generated/p0-a6-cpu.json","evidence_kind":"cpu-p0-falsifier","next":result.get("next_action")}
+
+
+def _apply_a4_stop(card: dict[str, Any], result: dict[str, Any]) -> None:
+    if card["idea_id"]!="compositional-update-compatibility" or result.get("decision")!="STOP_DIRECT_ORDER_AWARE_RISK_EQUIVALENT": return
+    m=result.get("metrics") or {}
+    card["checks"]["target_variation"]=_ck("pass","The frozen pair table includes compatible, precedence-sensitive, and no-good typed update interactions, then tests unseen triples and identities.","generated/p0-a4-composition-cpu.json","cpu-composition-p0")
+    card["checks"]["baseline_disagreement"]=_ck("fail",f"Typed registry and direct ordered-risk baseline tie at prediction {m.get('registry_prediction_accuracy',0):.3f} vs {m.get('direct_prediction_accuracy',0):.3f}, repair {m.get('registry_repair_success',0):.3f} vs {m.get('direct_repair_success',0):.3f}, exact repair agreement {m.get('repair_exact_agreement',0):.3f}, and candidate checks {m.get('registry_candidate_checks',0)} vs {m.get('direct_candidate_checks',0)}.","generated/p0-a4-composition-cpu.json","cpu-composition-p0")
+    card["checks"]["tiny_overfit"]=_ck("pass","All hidden update identities are unseen and all evaluated three-update compositions are absent from pair training.","generated/p0-a4-composition-cpu.json","cpu-composition-p0")
+    card["checks"]["effect_variation"]=_ck("pass","The intervention table contains order-sensitive and incompatible typed pairs that induce distinct repair outcomes.","generated/p0-a4-composition-cpu.json","cpu-composition-p0")
+    card["updater_competence"]={"status":"pass","passed":True,"evidence_kind":"cpu-composition-p0","reason":"Pair/order interventions expose executable interaction outcomes and both repair systems operate on the frozen table."}
+    card["gpu0"]={"status":"stop-direct-order-aware-risk-equivalent","evidence":"Direct ordered-descriptor risk plus equal-budget constrained repair exactly reproduces the typed registry on held-out identities/triples.","source":"generated/p0-a4-composition-cpu.json","evidence_kind":"cpu-composition-p0","next":result.get("next_action")}
 
 
 def _apply_a5_stop(card: dict[str, Any], result: dict[str, Any]) -> None:
@@ -262,6 +279,7 @@ def _apply_e4_result(card: dict[str, Any], result: dict[str, Any]) -> None:
 
 
 def _apply_missing_substrates(card: dict[str, Any], ready: dict[str, Any]) -> None:
+    if str((card.get("gpu0") or {}).get("status") or "").startswith("stop"): return
     idea=card["idea_id"]
     if idea=="compositional-update-compatibility" and int(ready.get("a4_composition_pair_order_rows") or 0)==0:
         card["gpu0"]={"status":"hold-composition-matrix-missing","evidence":"Registered updater artifacts contain 0 pair/order/rollback composition rows for held-out update-identity evaluation.","source":"runs/round1-20260810/a12-v4/evaluations.jsonl","evidence_kind":"registered-artifact-audit","next":NEXT_ACTION[idea]}
@@ -287,14 +305,14 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
     aw,aa1,aa2,a3p,a67,mem,memfull,ready,we1=alfworld(root),a1(root),a2(root),a3_panel(root),a67_dataset(root),memory(root),memory_full(root),substrate_readiness(root),e1(root)
     up_a1=_updater_config("p0_a1_screening_config.json"); up_a2=_updater_config("p0_a2_screening_config.json")
     realizability=build_p0_realizability_suite(); realizability_by_id={row["idea_id"]:row for row in realizability.get("rows") or []}
-    b10=run_b10_cpu_p0(); a5cpu=_a5_artifact(); a6cpu=run_a6_cpu_p0(); a7cpu=_a7_artifact(); b3cpu=_b3_artifact(); c2cpu=_c2_artifact(); d1cpu=_d1_artifact(); e2cpu=_e2_artifact(); e3real=_e3_artifact(); e3stateful=_e3_stateful_artifact(); e4cpu=_e4_artifact()
+    b10=run_b10_cpu_p0(); a4cpu=_a4_artifact(); a5cpu=_a5_artifact(); a6cpu=run_a6_cpu_p0(); a7cpu=_a7_artifact(); b3cpu=_b3_artifact(); c2cpu=_c2_artifact(); d1cpu=_d1_artifact(); e2cpu=_e2_artifact(); e3real=_e3_artifact(); e3stateful=_e3_stateful_artifact(); e4cpu=_e4_artifact()
     cards=[]
     for idea in NEW_IDS:
         card=_base_card(idea,aw)
         card["updater_competence"]={"status":"pending","passed":False,"evidence_kind":"pending","reason":"mechanism-specific updater/action-stream competence has not been qualified"}
         if idea=="regression-gated-self-evolution": card["updater_competence"]={**up_a1,"evidence_kind":"real-reused"}
         elif idea in {"lineage-aware-rollback","active-causal-minimal-rollback","counterfactual-evolution-decision-controller"}: card["updater_competence"]={**up_a2,"evidence_kind":"real-reused"}
-        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_a5_stop(card,a5cpu); _apply_a6_stop(card,a6cpu); _apply_b10(card,b10); _apply_d1(card,aw); _apply_exact_data_holds(card,a67,memfull); _apply_missing_substrates(card,ready); _apply_a7_stop(card,a7cpu); _apply_b3_screening(card,b3cpu); _apply_c2_stop(card,c2cpu); _apply_d1_stop(card,d1cpu); _apply_e2_stop(card,e2cpu); _apply_e3_reality(card,e3real); _apply_e3_stateful_stop(card,e3stateful); _apply_e4_result(card,e4cpu)
+        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_a4_stop(card,a4cpu); _apply_a5_stop(card,a5cpu); _apply_a6_stop(card,a6cpu); _apply_b10(card,b10); _apply_d1(card,aw); _apply_exact_data_holds(card,a67,memfull); _apply_missing_substrates(card,ready); _apply_a7_stop(card,a7cpu); _apply_b3_screening(card,b3cpu); _apply_c2_stop(card,c2cpu); _apply_d1_stop(card,d1cpu); _apply_e2_stop(card,e2cpu); _apply_e3_reality(card,e3real); _apply_e3_stateful_stop(card,e3stateful); _apply_e4_result(card,e4cpu)
         synthetic=realizability_by_id.get(idea)
         if synthetic and synthetic.get("representability_pass") and card["checks"]["representability"]["status"]=="pending":
             card["checks"]["representability"]=_ck("synthetic-pass","Synthetic mechanism harness passed; this clears representability only and has no reality/method authority.","generated/p0-realizability-suite.json","synthetic-realizability-only")
@@ -311,7 +329,7 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
     }
     return {"schema_version":"1.0","generated_at":_now(),"experiment_root":"profile-resolved-machine-local",
         "policy":{"real_reused_may_unblock":True,"synthetic_harness_may_not_unblock_reality":True,"same_batch_self_authorization_forbidden":True,"method_result_from_offline_qualification_forbidden":True},
-        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"memory_full":memfull,"substrate_readiness":ready,"e1":we1,"a5_history_cpu":{"decision":a5cpu.get("decision"),"semantic":a5cpu.get("semantic_compactor"),"generic":a5cpu.get("generic_state_diff"),"periodic":a5cpu.get("periodic_checkpoint")},"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"a7_counterfactual_cpu":{"decision":a7cpu.get("decision"),"design":a7cpu.get("design"),"linear_hidden":(a7cpu.get("linear_controller") or {}).get("hidden"),"cart_hidden":(a7cpu.get("matched_cart") or {}).get("hidden")},"b3_interference_cpu":{"decision":b3cpu.get("decision"),"metrics":b3cpu.get("metrics"),"runtime_preflight_snapshot":b3cpu.get("runtime_preflight_snapshot")},"c2_evaluator_cpu":{"decision":c2cpu.get("decision"),"attribution":c2cpu.get("attribution"),"matched_simplification":c2cpu.get("matched_simplification")},"d1_minimal_curriculum_cpu":{"decision":d1cpu.get("decision"),"design":d1cpu.get("design"),"matched_simplification":d1cpu.get("matched_simplification")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"e2_workflow_cpu":{"decision":e2cpu.get("decision"),"metrics":e2cpu.get("metrics"),"freeze_sha256":e2cpu.get("freeze_sha256_before_hidden")},"e3_real_api":{"decision":e3real.get("decision"),"metrics":e3real.get("metrics"),"prediction_sha256":e3real.get("prediction_sha256_before_hidden")},"e3_stateful":{"decision":e3stateful.get("decision"),"metrics":e3stateful.get("metrics"),"prediction_sha256":e3stateful.get("prediction_sha256_before_hidden")},"e4_permission_cpu":{"decision":e4cpu.get("decision"),"metrics":e4cpu.get("metrics"),"threshold":e4cpu.get("threshold")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
+        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"memory_full":memfull,"substrate_readiness":ready,"e1":we1,"a4_composition_cpu":{"decision":a4cpu.get("decision"),"metrics":a4cpu.get("metrics"),"matched_simplification":a4cpu.get("matched_simplification")},"a5_history_cpu":{"decision":a5cpu.get("decision"),"semantic":a5cpu.get("semantic_compactor"),"generic":a5cpu.get("generic_state_diff"),"periodic":a5cpu.get("periodic_checkpoint")},"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"a7_counterfactual_cpu":{"decision":a7cpu.get("decision"),"design":a7cpu.get("design"),"linear_hidden":(a7cpu.get("linear_controller") or {}).get("hidden"),"cart_hidden":(a7cpu.get("matched_cart") or {}).get("hidden")},"b3_interference_cpu":{"decision":b3cpu.get("decision"),"metrics":b3cpu.get("metrics"),"runtime_preflight_snapshot":b3cpu.get("runtime_preflight_snapshot")},"c2_evaluator_cpu":{"decision":c2cpu.get("decision"),"attribution":c2cpu.get("attribution"),"matched_simplification":c2cpu.get("matched_simplification")},"d1_minimal_curriculum_cpu":{"decision":d1cpu.get("decision"),"design":d1cpu.get("design"),"matched_simplification":d1cpu.get("matched_simplification")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"e2_workflow_cpu":{"decision":e2cpu.get("decision"),"metrics":e2cpu.get("metrics"),"freeze_sha256":e2cpu.get("freeze_sha256_before_hidden")},"e3_real_api":{"decision":e3real.get("decision"),"metrics":e3real.get("metrics"),"prediction_sha256":e3real.get("prediction_sha256_before_hidden")},"e3_stateful":{"decision":e3stateful.get("decision"),"metrics":e3stateful.get("metrics"),"prediction_sha256":e3stateful.get("prediction_sha256_before_hidden")},"e4_permission_cpu":{"decision":e4cpu.get("decision"),"metrics":e4cpu.get("metrics"),"threshold":e4cpu.get("threshold")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
 
 def write_p0_offline_qualification_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS)->dict[str,Any]:
     state=build_p0_offline_qualification_state(); json_path.parent.mkdir(parents=True,exist_ok=True)

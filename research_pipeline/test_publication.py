@@ -57,6 +57,8 @@ class PublicationTest(unittest.TestCase):
                 "generated/p0-realizability-suite.js",
                 "generated/p0-b10-cpu.json",
                 "generated/p0-b10-cpu.js",
+                "generated/p0-a4-composition-cpu.json",
+                "generated/p0-a4-composition-cpu.js",
                 "generated/p0-a5-history-cpu.json",
                 "generated/p0-a5-history-cpu.js",
                 "generated/p0-a6-cpu.json",

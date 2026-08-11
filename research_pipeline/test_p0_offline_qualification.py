@@ -30,6 +30,8 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(by_id["regression-gated-self-evolution"]["checks"]["representability"]["status"],"fail")
         self.assertEqual(by_id["workflow-generalization-certificate"]["checks"]["target_variation"]["status"],"fail")
         self.assertEqual(by_id["workflow-generalization-certificate"]["checks"]["effect_variation"]["status"],"fail")
+        self.assertEqual(by_id["compositional-update-compatibility"]["gpu0"]["status"],"stop-direct-order-aware-risk-equivalent")
+        self.assertEqual(by_id["compositional-update-compatibility"]["checks"]["baseline_disagreement"]["status"],"fail")
         self.assertEqual(by_id["lineage-aware-rollback"]["gpu0"]["status"],"stop-matched-generic-state-diff-dominates")
         self.assertEqual(by_id["lineage-aware-rollback"]["checks"]["baseline_disagreement"]["status"],"fail")
         self.assertEqual(by_id["counterfactual-evolution-decision-controller"]["checks"]["representability"]["status"],"synthetic-pass")
@@ -47,7 +49,7 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(by_id["evaluator-coadaptation-guard"]["checks"]["baseline_disagreement"]["status"],"fail")
         self.assertEqual(by_id["counterexample-generating-curriculum"]["gpu0"]["status"],"stop-matched-intersection-filter-equivalent")
         self.assertEqual(by_id["counterexample-generating-curriculum"]["checks"]["baseline_disagreement"]["status"],"fail")
-        self.assertEqual(self.state["summary"]["gpu0_stop"],9)
+        self.assertEqual(self.state["summary"]["gpu0_stop"],10)
 
     def test_reused_artifacts_capture_current_blockers(self) -> None:
         shared=self.state["shared_evidence"]
@@ -76,7 +78,6 @@ class P0OfflineQualificationTest(unittest.TestCase):
         by_id={row["idea_id"]:row for row in self.state["cards"]}
         expected={
             "regression-gated-self-evolution":"hold",
-            "compositional-update-compatibility":"hold-composition-matrix-missing",
             "contradiction-preserving-consolidation":"hold-support-cardinality-insufficient",
             "retrieval-interference-auditor":"hold-real-cinteraction-runtime",
             "local-counterexample-memory-repair":"hold-boundary-dataset-missing",
@@ -85,7 +86,7 @@ class P0OfflineQualificationTest(unittest.TestCase):
         }
         for idea_id,status in expected.items():
             self.assertEqual(by_id[idea_id]["gpu0"]["status"],status,idea_id)
-        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],7)
+        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],6)
 
 
 if __name__=="__main__":

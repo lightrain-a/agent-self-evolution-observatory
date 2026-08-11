@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T09:31:04+00:00",
+  "generated_at": "2026-08-11T09:39:14+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
@@ -733,14 +733,14 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "hold-composition-matrix-missing",
-          "evidence": "Registered updater artifacts contain 0 pair/order/rollback composition rows for held-out update-identity evaluation.",
-          "source": "runs/round1-20260810/a12-v4/evaluations.jsonl",
-          "evidence_kind": "registered-artifact-audit",
-          "next": "Collect a frozen pair/order/rollback composition matrix with held-out update identities and template×surface splits."
+          "status": "stop-direct-order-aware-risk-equivalent",
+          "evidence": "Direct ordered-descriptor risk plus equal-budget constrained repair exactly reproduces the typed registry on held-out identities/triples.",
+          "source": "generated/p0-a4-composition-cpu.json",
+          "evidence_kind": "cpu-composition-p0",
+          "next": "Merge A-4 into a direct ordered-composition risk/repair baseline; the typed registry adds no held-out prediction or repair value."
         },
         "pre_p0": {
-          "passed": 6,
+          "passed": 9,
           "total": 10,
           "checks": [
             {
@@ -750,13 +750,13 @@
             },
             {
               "key": "target_variation",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "pass",
+              "evidence": "The frozen pair table includes compatible, precedence-sensitive, and no-good typed update interactions, then tests unseen triples and identities."
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "fail",
+              "evidence": "Typed registry and direct ordered-risk baseline tie at prediction 1.000 vs 1.000, repair 1.000 vs 1.000, exact repair agreement 1.000, and candidate checks 49 vs 49."
             },
             {
               "key": "representability",
@@ -765,8 +765,8 @@
             },
             {
               "key": "tiny_overfit",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "pass",
+              "evidence": "All hidden update identities are unseen and all evaluated three-update compositions are absent from pair training."
             },
             {
               "key": "competence_window",
@@ -775,8 +775,8 @@
             },
             {
               "key": "effect_variation",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "pass",
+              "evidence": "The intervention table contains order-sensitive and incompatible typed pairs that induce distinct repair outcomes."
             },
             {
               "key": "cost_plan",
@@ -796,10 +796,10 @@
           ]
         },
         "updater_competence": {
-          "status": "pending",
-          "passed": false,
-          "evidence_kind": "pending",
-          "reason": "mechanism-specific updater/action-stream competence has not been qualified",
+          "status": "pass",
+          "passed": true,
+          "evidence_kind": "cpu-composition-p0",
+          "reason": "Pair/order interventions expose executable interaction outcomes and both repair systems operate on the frozen table.",
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
@@ -845,11 +845,7 @@
         },
         "execution_authorized": false,
         "blockers": [
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
