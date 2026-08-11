@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T06:24:45+00:00",
+  "generated_at": "2026-08-11T08:06:48+00:00",
   "experiment_root": "profile-resolved-machine-local",
   "policy": {
     "real_reused_may_unblock": true,
@@ -53,6 +53,7 @@
       "source": "qualification/a2-updater-support-v1/fixed-sequences.jsonl",
       "sequences": 9,
       "prefix_states": 36,
+      "max_rounds_per_sequence": 4,
       "a6_nonprefix_interventions": 0,
       "a6_minimal_fault_oracle": false,
       "a7_same_state_four_action_rows": 0,
@@ -98,6 +99,26 @@
       "harm": 2,
       "benefit": 4,
       "families": 4
+    },
+    "memory_full": {
+      "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-enriched-analysis/offline_decision.json",
+      "status": "complete",
+      "full_completed_executions": 216,
+      "full_completed_units": 72,
+      "replicated_harm_candidates": 0,
+      "replicated_benefit_candidates": 1,
+      "controlled_nonzero": 11,
+      "eligible_target_folds": 3,
+      "co_retrieval_pair_arms": 0,
+      "longitudinal_reuse_sequences": 0
+    },
+    "substrate_readiness": {
+      "a4_composition_pair_order_rows": 0,
+      "b5_boundary_counterexample_artifacts": [],
+      "c2_cross_version_matrix_artifacts": [],
+      "e2_group_intervention_artifacts": [],
+      "e3_api_transition_artifacts": [],
+      "e4_permission_canary_artifacts": []
     },
     "e1": {
       "source": "runs/round1-20260810/e1-r5/evaluations.jsonl",
@@ -199,6 +220,47 @@
         "matched_edge_budget_factor_matches": true
       }
     },
+    "e3_real_api": {
+      "decision": "READ_ONLY_SUBSTRATE_REDUCIBLE",
+      "metrics": {
+        "logical_target_probes": 12,
+        "total_hidden": 12,
+        "correct_hidden": 12,
+        "hidden_semantic_accuracy": 1.0,
+        "family_accuracy": {
+          "gitlab": 1.0,
+          "codeberg": 1.0
+        }
+      },
+      "prediction_sha256": "0490f17747742159e22846e881a258b38ba04f8d49587df0cb7d27a5704a85d9"
+    },
+    "e3_stateful": {
+      "decision": "STOP_STATEFUL_DETERMINISTIC_PEX_CEILING",
+      "metrics": {
+        "total_hidden": 12,
+        "correct_hidden": 12,
+        "stateful_semantic_accuracy": 1.0,
+        "family_accuracy": {
+          "ledger": 1.0,
+          "vault": 1.0
+        }
+      },
+      "prediction_sha256": "3a36a263495ad7a0705fa7add635cea61c383b8da62807610c357d73c33d8d0d"
+    },
+    "e4_permission_cpu": {
+      "decision": "STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT",
+      "metrics": {
+        "learned_reauthorizations": 53,
+        "deterministic_envelope_reauthorizations": 72,
+        "matched_rule_reauthorizations": 29,
+        "full_reauthorizations": 96,
+        "learned_missed_risky": 0,
+        "envelope_missed_risky": 0,
+        "matched_rule_missed_risky": 0,
+        "relative_reauthorization_saving_vs_envelope": 0.26388888888888884
+      },
+      "threshold": 0.129669062576449
+    },
     "realizability_summary": {
       "audited": 14,
       "synthetic_pass": 14,
@@ -207,12 +269,12 @@
   },
   "summary": {
     "ideas": 16,
-    "checks_passed": 27,
-    "checks_failed": 5,
-    "checks_pending": 50,
+    "checks_passed": 33,
+    "checks_failed": 7,
+    "checks_pending": 42,
     "checks_synthetic_pass": 14,
-    "gpu0_hold_or_conditional": 7,
-    "gpu0_stop": 2
+    "gpu0_hold_or_conditional": 12,
+    "gpu0_stop": 4
   },
   "cards": [
     {
@@ -281,9 +343,10 @@
     {
       "idea_id": "compositional-update-compatibility",
       "gpu0": {
-        "status": "pending",
-        "evidence": "Run the frozen mechanism-specific offline/trace phenomenon gate.",
-        "evidence_kind": "pending",
+        "status": "hold-composition-matrix-missing",
+        "evidence": "Registered updater artifacts contain 0 pair/order/rollback composition rows for held-out update-identity evaluation.",
+        "source": "runs/round1-20260810/a12-v4/evaluations.jsonl",
+        "evidence_kind": "registered-artifact-audit",
         "next": "Collect a frozen pair/order/rollback composition matrix with held-out update identities and template×surface splits."
       },
       "checks": {
@@ -334,8 +397,8 @@
     {
       "idea_id": "lineage-aware-rollback",
       "gpu0": {
-        "status": "partial-pass",
-        "evidence": "Sequential rollback need is real, but long-history compaction itself is not yet qualified.",
+        "status": "hold-history-too-short",
+        "evidence": "Existing frozen sequences contain at most 4 sequential update rounds; the P0 contract requires 30-50 updates plus 12 rollback queries.",
         "source": "qualification/a2-updater-support-v1/fixed-sequences.jsonl",
         "evidence_kind": "real-reused",
         "next": "Extend to 30–50 sequential updates and 12 frozen rollback queries; compare matched-storage periodic checkpoints."
@@ -398,9 +461,9 @@
     {
       "idea_id": "contradiction-preserving-consolidation",
       "gpu0": {
-        "status": "partial-pass",
-        "evidence": "Memory effects are real, but this direction still needs its deletion/co-retrieval/reuse-specific phenomenon gate.",
-        "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-qualification/analysis.json",
+        "status": "hold-support-cardinality-insufficient",
+        "evidence": "The completed shared Memory table contains only 11 controlled-nonzero unit effects. These are not automatically conclusion-change cases and cannot satisfy the dedicated >=30 reproducible conclusion-change gate.",
+        "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-enriched-analysis/offline_decision.json",
         "evidence_kind": "real-reused",
         "next": "Build >=30 reproducible conclusion-change deletion cases and matched NLI/utility selection sets before hidden evaluation."
       },
@@ -452,9 +515,9 @@
     {
       "idea_id": "retrieval-interference-auditor",
       "gpu0": {
-        "status": "partial-pass",
-        "evidence": "Memory effects are real, but this direction still needs its deletion/co-retrieval/reuse-specific phenomenon gate.",
-        "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-qualification/analysis.json",
+        "status": "hold-co-retrieval-arms-missing",
+        "evidence": "The completed shared Memory table contains no randomized co-retrieval pair arm, so an interaction-pathway claim is not identifiable from it.",
+        "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-enriched-analysis/offline_decision.json",
         "evidence_kind": "real-reused",
         "next": "Collect candidate co-retrieval pairs and randomized retrieval/content/rank/co-retrieval arms at matched audit cost."
       },
@@ -506,9 +569,10 @@
     {
       "idea_id": "local-counterexample-memory-repair",
       "gpu0": {
-        "status": "pending",
-        "evidence": "Run the frozen mechanism-specific offline/trace phenomenon gate.",
-        "evidence_kind": "pending",
+        "status": "hold-boundary-dataset-missing",
+        "evidence": "No registered real skill/predicate boundary-counterexample artifact exists for the frozen external applicability-gate P0.",
+        "source": "registered experiment artifact inventory",
+        "evidence_kind": "registered-artifact-audit",
         "next": "Freeze a real skill/predicate vocabulary and collect boundary counterexamples plus old-positive protection cases."
       },
       "checks": {
@@ -559,9 +623,9 @@
     {
       "idea_id": "memory-half-life",
       "gpu0": {
-        "status": "partial-pass",
-        "evidence": "Memory effects are real, but this direction still needs its deletion/co-retrieval/reuse-specific phenomenon gate.",
-        "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-qualification/analysis.json",
+        "status": "hold-longitudinal-reuse-missing",
+        "evidence": "The completed shared Memory table is a treatment table, not a longitudinal reuse stream; it contains 0 repeated reuse sequences for utility-hazard learning.",
+        "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-enriched-analysis/offline_decision.json",
         "evidence_kind": "real-reused",
         "next": "Collect repeated real reuse opportunities with matched memory ON/OFF utility labels under the frozen 20% audit budget."
       },
@@ -613,9 +677,10 @@
     {
       "idea_id": "evaluator-coadaptation-guard",
       "gpu0": {
-        "status": "pending",
-        "evidence": "Run the frozen mechanism-specific offline/trace phenomenon gate.",
-        "evidence_kind": "pending",
+        "status": "hold-cross-version-matrix-missing",
+        "evidence": "No registered 3x3 actor/evaluator cross-version score matrix with frozen external anchors exists yet.",
+        "source": "registered experiment artifact inventory",
+        "evidence_kind": "registered-artifact-audit",
         "next": "Build a 3×3 actor/evaluator cross-version score matrix with frozen external anchors before any rubric repair."
       },
       "checks": {
@@ -666,8 +731,8 @@
     {
       "idea_id": "counterexample-generating-curriculum",
       "gpu0": {
-        "status": "conditional",
-        "evidence": "Task failures are real; 1-minimal boundary-counterexample prevalence is still unmeasured.",
+        "status": "hold-minimality-unmeasured",
+        "evidence": "Task failures are real, but the current artifacts contain 0 verifier-confirmed 1-minimal boundary counterexamples; task failure prevalence is not the curriculum mechanism.",
         "source": "pre-experiment-qualification-qwen25-react-family-ood134.json",
         "evidence_kind": "real-reused",
         "next": "Generate verifier-valid boundary perturbations and measure how often delta debugging reaches 1-minimal counterexamples."
@@ -774,9 +839,10 @@
     {
       "idea_id": "workflow-branch-credit",
       "gpu0": {
-        "status": "pending",
-        "evidence": "Run the frozen mechanism-specific offline/trace phenomenon gate.",
-        "evidence_kind": "pending",
+        "status": "hold-group-interventions-missing",
+        "evidence": "No registered identity/API-disjoint group-intervention artifact exists for causal motif validation.",
+        "source": "registered experiment artifact inventory",
+        "evidence_kind": "registered-artifact-audit",
         "next": "Collect identity/API-disjoint workflow failures and matched group interventions to test recurring causal motifs."
       },
       "checks": {
@@ -827,23 +893,24 @@
     {
       "idea_id": "bounded-probe-api-transition-operator",
       "gpu0": {
-        "status": "pending",
-        "evidence": "Run the frozen mechanism-specific offline/trace phenomenon gate.",
-        "evidence_kind": "pending",
-        "next": "Freeze two unseen API families, N=6 target probes/family, deterministic P/E/X rule-quality gate, and hidden recovery harness."
+        "status": "stop-stateful-deterministic-pex-ceiling",
+        "evidence": "The read-only ceiling persists after adding state-changing E semantics and recovery. Isomorphic deterministic P/E/X exactly matches all hidden final states; no learned-arm headroom remains for standalone E-3.",
+        "source": "generated/p0-e3-stateful.json",
+        "evidence_kind": "executable-stateful-p0",
+        "next": "Return E-3 to human DROP/merge review; deterministic isomorphic P/E/X matches hidden state-changing effects and recovery under the same six-probe budget."
       },
       "checks": {
         "target_variation": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "Two heterogeneous live target API families expose distinct endpoint/response/error semantics under the frozen N=6 probe budget.",
+          "source": "generated/p0-e3-real-api.json",
+          "evidence_kind": "real-public-api-p0"
         },
         "baseline_disagreement": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "fail",
+          "evidence": "Stateful deterministic P/E/X also reaches exact hidden transition/recovery accuracy 1.000; ledger=1.000, vault=1.000 under the same six-probe budget.",
+          "source": "generated/p0-e3-stateful.json",
+          "evidence_kind": "executable-stateful-p0"
         },
         "representability": {
           "status": "synthetic-pass",
@@ -864,10 +931,10 @@
           "evidence_kind": "pending"
         },
         "effect_variation": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "Stateful hidden cases cover create/update/delete effects plus duplicate, stale-version refresh-retry, and missing-resource abort semantics across two different status-code families.",
+          "source": "generated/p0-e3-stateful.json",
+          "evidence_kind": "executable-stateful-p0"
         }
       },
       "updater_competence": {
@@ -880,23 +947,24 @@
     {
       "idea_id": "interventional-permission-triage-under-ceiling",
       "gpu0": {
-        "status": "pending",
-        "evidence": "Run the frozen mechanism-specific offline/trace phenomenon gate.",
-        "evidence_kind": "pending",
-        "next": "Freeze permission ceiling, mutation-family split, deterministic envelope baseline, canaries, and external-effect oracle."
+        "status": "stop-matched-boolean-rule-equivalent",
+        "evidence": "Matched monotone-DNF rule is equally safe and uses no more reauthorizations than learned q.",
+        "source": "generated/p0-e4-permission-cpu.json",
+        "evidence_kind": "cpu-permission-p0",
+        "next": "Return E-4 to human DROP/merge review; the matched non-learning Boolean rule is equivalent or the safe-workload gate failed."
       },
       "checks": {
         "target_variation": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "Executable permission sandbox has both risky and safe outcomes across 32 unseen mutation operators.",
+          "source": "generated/p0-e4-permission-cpu.json",
+          "evidence_kind": "cpu-permission-p0"
         },
         "baseline_disagreement": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "fail",
+          "evidence": "Zero-miss reauthorizations: learned=53, envelope=72, matched Boolean rule=29.",
+          "source": "generated/p0-e4-permission-cpu.json",
+          "evidence_kind": "cpu-permission-p0"
         },
         "representability": {
           "status": "synthetic-pass",
@@ -905,29 +973,29 @@
           "evidence_kind": "synthetic-realizability-only"
         },
         "tiny_overfit": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "Linear q is trained on feature combinations disjoint from all test combinations; threshold freezes on calibration.",
+          "source": "generated/p0-e4-permission-cpu.json",
+          "evidence_kind": "cpu-permission-p0"
         },
         "competence_window": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "Held-out permission labels contain both risky and safe outcomes under the immutable ceiling.",
+          "source": "generated/p0-e4-permission-cpu.json",
+          "evidence_kind": "cpu-permission-p0"
         },
         "effect_variation": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "Unseen mutations induce permission-specific effects while many conservative envelope flags are harmless.",
+          "source": "generated/p0-e4-permission-cpu.json",
+          "evidence_kind": "cpu-permission-p0"
         }
       },
       "updater_competence": {
-        "status": "pending",
-        "passed": false,
-        "evidence_kind": "pending",
-        "reason": "mechanism-specific updater/action-stream competence has not been qualified"
+        "status": "pass",
+        "passed": true,
+        "evidence_kind": "cpu-permission-p0",
+        "reason": "Randomized permission canaries provide positive and negative induced-risk labels."
       }
     },
     {
@@ -1051,8 +1119,8 @@
     {
       "idea_id": "counterfactual-evolution-decision-controller",
       "gpu0": {
-        "status": "pass-existing-target",
-        "evidence": "Same-sequence decision target is non-degenerate; learner/baseline separation is still unproven.",
+        "status": "hold-four-action-counterfactuals-missing",
+        "evidence": "The existing 9-sequence artifact has 0 same-state continue/commit/rollback/stop counterfactual rows; optimal-round variation alone cannot train the frozen four-action controller.",
         "source": "qualification/a2-updater-support-v1/fixed-sequences.jsonl",
         "evidence_kind": "real-reused",
         "next": "Replay continue/commit/rollback/stop from the same frozen states without regenerating candidates; then fit only if all four actions have support."

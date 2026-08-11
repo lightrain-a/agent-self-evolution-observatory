@@ -109,7 +109,9 @@ class ResearchSystemTest(unittest.TestCase):
         if workflow["full_support"]["status"] != "full_support_ready":
             self.assertGreaterEqual(int(progress.get("completed_episodes") or 0), 72)
             self.assertEqual(int(progress.get("total_episodes") or 0), 216)
-        if workflow["full_support"].get("provenance_deviation"):
+        if workflow["full_support"].get("provenance_regeneration"):
+            self.assertEqual(workflow["full_support"]["scientific_authority"], "provenance-inconclusive")
+        elif workflow["full_support"].get("provenance_deviation"):
             self.assertEqual(workflow["full_support"]["scientific_authority"], "provisional-only")
         self.assertEqual(workflow["second_model"]["status"], "second_model_hold")
         self.assertFalse(workflow["second_model"]["authorized"])
@@ -158,6 +160,8 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["p0_realizability"]["summary"]["synthetic_pass"], 14)
         self.assertEqual(self.state["summary"]["p0_b10_decision"], "STOP_MATCHED_NARY_EQUIVALENT")
         self.assertEqual(self.state["summary"]["p0_a6_decision"], "STOP_MATCHED_GROUP_TESTING_EQUIVALENT")
+        self.assertEqual(self.state["summary"]["p0_e3_decision"], "STOP_STATEFUL_DETERMINISTIC_PEX_CEILING")
+        self.assertEqual(self.state["summary"]["p0_e4_decision"], "STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT")
         self.assertTrue(self.state["p0_offline_qualification"]["policy"]["method_result_from_offline_qualification_forbidden"])
         self.assertEqual(self.state["summary"]["discussion_ready"], 20)
         self.assertEqual(self.state["summary"]["discussion_target"], 20)

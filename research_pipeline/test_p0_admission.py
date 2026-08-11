@@ -44,6 +44,12 @@ class P0AdmissionTest(unittest.TestCase):
         a6=next(row for row in transitioned if row["idea_id"]=="active-causal-minimal-rollback")
         self.assertEqual(a6["execution_preflight"]["blockers"],["p0-stop-await-human-review"])
         self.assertEqual(a6["execution_preflight"]["gpu0"]["status"],"stop-matched-group-testing-equivalent")
+        e3=next(row for row in transitioned if row["idea_id"]=="bounded-probe-api-transition-operator")
+        self.assertEqual(e3["execution_preflight"]["blockers"],["p0-stop-await-human-review"])
+        self.assertEqual(e3["execution_preflight"]["gpu0"]["status"],"stop-stateful-deterministic-pex-ceiling")
+        e4=next(row for row in transitioned if row["idea_id"]=="interventional-permission-triage-under-ceiling")
+        self.assertEqual(e4["execution_preflight"]["blockers"],["p0-stop-await-human-review"])
+        self.assertEqual(e4["execution_preflight"]["gpu0"]["status"],"stop-matched-boolean-rule-equivalent")
 
 
 if __name__ == "__main__":

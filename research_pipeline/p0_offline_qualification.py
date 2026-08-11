@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT, StorageSettings, resolve_experiment_data_root
-from .p0_offline_evidence import alfworld, a1, a2, a3_panel, a67_dataset, memory, e1
+from .p0_offline_evidence import alfworld, a1, a2, a3_panel, a67_dataset, memory, memory_full, substrate_readiness, e1
 from .p0_realizability_suite import build_p0_realizability_suite
 from .p0_b10_cpu import run_b10_cpu_p0
 from .p0_a6_cpu import run_a6_cpu_p0
@@ -49,6 +49,21 @@ def _ck(status: str, evidence: str, source: str = "", kind: str = "real-reused")
 
 def _pending() -> dict[str, Any]:
     return _ck("pending", "No mechanism-aligned real offline evidence has cleared this check yet.", kind="pending")
+
+def _e3_artifact() -> dict[str, Any]:
+    path=PROJECT_ROOT/"generated"/"p0-e3-real-api.json"
+    try:return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):return {}
+
+def _e3_stateful_artifact() -> dict[str, Any]:
+    path=PROJECT_ROOT/"generated"/"p0-e3-stateful.json"
+    try:return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):return {}
+
+def _e4_artifact() -> dict[str, Any]:
+    path=PROJECT_ROOT/"generated"/"p0-e4-permission-cpu.json"
+    try:return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):return {}
 
 def _updater_config(name: str) -> dict[str, Any]:
     path=PROJECT_ROOT/"research_pipeline"/name
@@ -110,24 +125,84 @@ def _apply_b10(card: dict[str, Any], result: dict[str, Any]) -> None:
     card["gpu0"]={"status":"stop-matched-nary-equivalent","evidence":"CPU P0 fired the preregistered matched-simplification stop; no GPU or real-agent expansion is warranted for standalone B-10.","source":"generated/p0-b10-cpu.json","evidence_kind":"cpu-p0-falsifier","next":result.get("next_action")}
 
 
+def _apply_exact_data_holds(card: dict[str, Any], a67: dict[str, Any], memfull: dict[str, Any]) -> None:
+    idea=card["idea_id"]
+    if idea=="lineage-aware-rollback" and int(a67.get("max_rounds_per_sequence") or 0)<30:
+        card["gpu0"]={"status":"hold-history-too-short","evidence":f"Existing frozen sequences contain at most {int(a67.get('max_rounds_per_sequence') or 0)} sequential update rounds; the P0 contract requires 30-50 updates plus 12 rollback queries.","source":a67.get("source"),"evidence_kind":"real-reused","next":NEXT_ACTION[idea]}
+    elif idea=="counterfactual-evolution-decision-controller" and int(a67.get("a7_same_state_four_action_rows") or 0)==0:
+        card["gpu0"]={"status":"hold-four-action-counterfactuals-missing","evidence":"The existing 9-sequence artifact has 0 same-state continue/commit/rollback/stop counterfactual rows; optimal-round variation alone cannot train the frozen four-action controller.","source":a67.get("source"),"evidence_kind":"real-reused","next":NEXT_ACTION[idea]}
+    elif idea=="contradiction-preserving-consolidation" and int(memfull.get("controlled_nonzero") or 0)<30:
+        card["gpu0"]={"status":"hold-support-cardinality-insufficient","evidence":f"The completed shared Memory table contains only {int(memfull.get('controlled_nonzero') or 0)} controlled-nonzero unit effects. These are not automatically conclusion-change cases and cannot satisfy the dedicated >=30 reproducible conclusion-change gate.","source":memfull.get("source"),"evidence_kind":"real-reused","next":NEXT_ACTION[idea]}
+    elif idea=="retrieval-interference-auditor" and int(memfull.get("co_retrieval_pair_arms") or 0)==0:
+        card["gpu0"]={"status":"hold-co-retrieval-arms-missing","evidence":"The completed shared Memory table contains no randomized co-retrieval pair arm, so an interaction-pathway claim is not identifiable from it.","source":memfull.get("source"),"evidence_kind":"real-reused","next":NEXT_ACTION[idea]}
+    elif idea=="memory-half-life" and int(memfull.get("longitudinal_reuse_sequences") or 0)==0:
+        card["gpu0"]={"status":"hold-longitudinal-reuse-missing","evidence":"The completed shared Memory table is a treatment table, not a longitudinal reuse stream; it contains 0 repeated reuse sequences for utility-hazard learning.","source":memfull.get("source"),"evidence_kind":"real-reused","next":NEXT_ACTION[idea]}
+
+
+def _apply_e3_reality(card: dict[str, Any], result: dict[str, Any]) -> None:
+    if card["idea_id"]!="bounded-probe-api-transition-operator" or result.get("decision")!="READ_ONLY_SUBSTRATE_REDUCIBLE": return
+    m=result.get("metrics") or {}; fam=m.get("family_accuracy") or {}
+    card["checks"]["target_variation"]=_ck("pass","Two heterogeneous live target API families expose distinct endpoint/response/error semantics under the frozen N=6 probe budget.","generated/p0-e3-real-api.json","real-public-api-p0")
+    card["checks"]["baseline_disagreement"]=_ck("fail",f"On the read-only public-API substrate, isomorphic deterministic P/E/X reaches hidden semantic accuracy {m.get('hidden_semantic_accuracy',0):.3f}; GitLab={fam.get('gitlab',0):.3f}, Codeberg={fam.get('codeberg',0):.3f}. There is no learned-arm headroom on this substrate.","generated/p0-e3-real-api.json","real-public-api-p0")
+    card["checks"]["effect_variation"]=_ck("pass","Frozen probes cover success, missing-resource/reference, and auth-required outcomes; hidden branches cover unseen normal, missing-resource, and authentication recovery.","generated/p0-e3-real-api.json","real-public-api-p0")
+    card["gpu0"]={"status":"hold-read-only-substrate-reducible","evidence":"The real read-only API substrate is reducible to deterministic P/E/X, but state-changing E semantics were not tested; this blocks the learned arm here without stopping full E-3.","source":"generated/p0-e3-real-api.json","evidence_kind":"real-public-api-p0","next":result.get("next_action")}
+
+
+def _apply_e3_stateful_stop(card: dict[str, Any], result: dict[str, Any]) -> None:
+    if card["idea_id"]!="bounded-probe-api-transition-operator" or result.get("decision")!="STOP_STATEFUL_DETERMINISTIC_PEX_CEILING": return
+    m=result.get("metrics") or {}; fam=m.get("family_accuracy") or {}
+    card["checks"]["baseline_disagreement"]=_ck("fail",f"Stateful deterministic P/E/X also reaches exact hidden transition/recovery accuracy {m.get('stateful_semantic_accuracy',0):.3f}; ledger={fam.get('ledger',0):.3f}, vault={fam.get('vault',0):.3f} under the same six-probe budget.","generated/p0-e3-stateful.json","executable-stateful-p0")
+    card["checks"]["effect_variation"]=_ck("pass","Stateful hidden cases cover create/update/delete effects plus duplicate, stale-version refresh-retry, and missing-resource abort semantics across two different status-code families.","generated/p0-e3-stateful.json","executable-stateful-p0")
+    card["gpu0"]={"status":"stop-stateful-deterministic-pex-ceiling","evidence":"The read-only ceiling persists after adding state-changing E semantics and recovery. Isomorphic deterministic P/E/X exactly matches all hidden final states; no learned-arm headroom remains for standalone E-3.","source":"generated/p0-e3-stateful.json","evidence_kind":"executable-stateful-p0","next":result.get("next_action")}
+
+
+def _apply_e4_result(card: dict[str, Any], result: dict[str, Any]) -> None:
+    verdict=result.get("decision")
+    if card["idea_id"]!="interventional-permission-triage-under-ceiling" or verdict not in {"P0_SIGNAL_CONTINUE","STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT"}: return
+    m=result.get("metrics") or {}; d=result.get("design") or {}; stop=verdict=="STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT"
+    card["checks"]["target_variation"]=_ck("pass",f"Executable permission sandbox has both risky and safe outcomes across {d.get('unseen_test_operators',0)} unseen mutation operators.","generated/p0-e4-permission-cpu.json","cpu-permission-p0")
+    card["checks"]["baseline_disagreement"]=_ck("fail" if stop else "pass",f"Zero-miss reauthorizations: learned={m.get('learned_reauthorizations',0)}, envelope={m.get('deterministic_envelope_reauthorizations',0)}, matched Boolean rule={m.get('matched_rule_reauthorizations',0)}.","generated/p0-e4-permission-cpu.json","cpu-permission-p0")
+    card["checks"]["tiny_overfit"]=_ck("pass","Linear q is trained on feature combinations disjoint from all test combinations; threshold freezes on calibration.","generated/p0-e4-permission-cpu.json","cpu-permission-p0")
+    card["checks"]["competence_window"]=_ck("pass","Held-out permission labels contain both risky and safe outcomes under the immutable ceiling.","generated/p0-e4-permission-cpu.json","cpu-permission-p0")
+    card["checks"]["effect_variation"]=_ck("pass","Unseen mutations induce permission-specific effects while many conservative envelope flags are harmless.","generated/p0-e4-permission-cpu.json","cpu-permission-p0")
+    card["updater_competence"]={"status":"pass","passed":True,"evidence_kind":"cpu-permission-p0","reason":"Randomized permission canaries provide positive and negative induced-risk labels."}
+    card["gpu0"]={"status":"stop-matched-boolean-rule-equivalent" if stop else "p0-signal-continue","evidence":"Matched monotone-DNF rule is equally safe and uses no more reauthorizations than learned q." if stop else "Interventional q safely reduces reauthorization workload versus deterministic envelope.","source":"generated/p0-e4-permission-cpu.json","evidence_kind":"cpu-permission-p0","next":result.get("next_action")}
+
+
+def _apply_missing_substrates(card: dict[str, Any], ready: dict[str, Any]) -> None:
+    idea=card["idea_id"]
+    if idea=="compositional-update-compatibility" and int(ready.get("a4_composition_pair_order_rows") or 0)==0:
+        card["gpu0"]={"status":"hold-composition-matrix-missing","evidence":"Registered updater artifacts contain 0 pair/order/rollback composition rows for held-out update-identity evaluation.","source":"runs/round1-20260810/a12-v4/evaluations.jsonl","evidence_kind":"registered-artifact-audit","next":NEXT_ACTION[idea]}
+    elif idea=="local-counterexample-memory-repair" and not ready.get("b5_boundary_counterexample_artifacts"):
+        card["gpu0"]={"status":"hold-boundary-dataset-missing","evidence":"No registered real skill/predicate boundary-counterexample artifact exists for the frozen external applicability-gate P0.","source":"registered experiment artifact inventory","evidence_kind":"registered-artifact-audit","next":NEXT_ACTION[idea]}
+    elif idea=="evaluator-coadaptation-guard" and not ready.get("c2_cross_version_matrix_artifacts"):
+        card["gpu0"]={"status":"hold-cross-version-matrix-missing","evidence":"No registered 3x3 actor/evaluator cross-version score matrix with frozen external anchors exists yet.","source":"registered experiment artifact inventory","evidence_kind":"registered-artifact-audit","next":NEXT_ACTION[idea]}
+    elif idea=="workflow-branch-credit" and not ready.get("e2_group_intervention_artifacts"):
+        card["gpu0"]={"status":"hold-group-interventions-missing","evidence":"No registered identity/API-disjoint group-intervention artifact exists for causal motif validation.","source":"registered experiment artifact inventory","evidence_kind":"registered-artifact-audit","next":NEXT_ACTION[idea]}
+    elif idea=="bounded-probe-api-transition-operator" and not ready.get("e3_api_transition_artifacts"):
+        card["gpu0"]={"status":"hold-real-api-substrate-missing","evidence":"No registered executable multi-family API transition/recovery substrate exists; unrelated local services are not accepted as a transfer benchmark.","source":"registered experiment artifact inventory","evidence_kind":"registered-artifact-audit","next":NEXT_ACTION[idea]}
+    elif idea=="interventional-permission-triage-under-ceiling" and not ready.get("e4_permission_canary_artifacts"):
+        card["gpu0"]={"status":"hold-permission-sandbox-missing","evidence":"No registered permission-ceiling mutation/canary sandbox with independent external-effect logs exists yet.","source":"registered experiment artifact inventory","evidence_kind":"registered-artifact-audit","next":NEXT_ACTION[idea]}
+
+
 def _apply_d1(card: dict[str, Any], aw: dict[str, Any]) -> None:
     if card["idea_id"]!="counterexample-generating-curriculum" or not aw["passed"]: return
     card["checks"]["target_variation"]=_ck("pass",f"Base OOD set contains both successes ({aw['successes']}) and failures ({aw['total']-aw['successes']}); boundary candidates can exist.",aw["source"])
-    card["gpu0"]={"status":"conditional","evidence":"Task failures are real; 1-minimal boundary-counterexample prevalence is still unmeasured.","source":aw["source"],"evidence_kind":"real-reused"}
+    card["gpu0"]={"status":"hold-minimality-unmeasured","evidence":"Task failures are real, but the current artifacts contain 0 verifier-confirmed 1-minimal boundary counterexamples; task failure prevalence is not the curriculum mechanism.","source":aw["source"],"evidence_kind":"real-reused","next":NEXT_ACTION[card['idea_id']]}
 
 def build_p0_offline_qualification_state() -> dict[str, Any]:
     root=resolve_experiment_data_root(StorageSettings.from_env())
-    aw,aa1,aa2,a3p,a67,mem,we1=alfworld(root),a1(root),a2(root),a3_panel(root),a67_dataset(root),memory(root),e1(root)
+    aw,aa1,aa2,a3p,a67,mem,memfull,ready,we1=alfworld(root),a1(root),a2(root),a3_panel(root),a67_dataset(root),memory(root),memory_full(root),substrate_readiness(root),e1(root)
     up_a1=_updater_config("p0_a1_screening_config.json"); up_a2=_updater_config("p0_a2_screening_config.json")
     realizability=build_p0_realizability_suite(); realizability_by_id={row["idea_id"]:row for row in realizability.get("rows") or []}
-    b10=run_b10_cpu_p0(); a6cpu=run_a6_cpu_p0()
+    b10=run_b10_cpu_p0(); a6cpu=run_a6_cpu_p0(); e3real=_e3_artifact(); e3stateful=_e3_stateful_artifact(); e4cpu=_e4_artifact()
     cards=[]
     for idea in NEW_IDS:
         card=_base_card(idea,aw)
         card["updater_competence"]={"status":"pending","passed":False,"evidence_kind":"pending","reason":"mechanism-specific updater/action-stream competence has not been qualified"}
         if idea=="regression-gated-self-evolution": card["updater_competence"]={**up_a1,"evidence_kind":"real-reused"}
         elif idea in {"lineage-aware-rollback","active-causal-minimal-rollback","counterfactual-evolution-decision-controller"}: card["updater_competence"]={**up_a2,"evidence_kind":"real-reused"}
-        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_a6_stop(card,a6cpu); _apply_b10(card,b10); _apply_d1(card,aw)
+        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_a6_stop(card,a6cpu); _apply_b10(card,b10); _apply_d1(card,aw); _apply_exact_data_holds(card,a67,memfull); _apply_missing_substrates(card,ready); _apply_e3_reality(card,e3real); _apply_e3_stateful_stop(card,e3stateful); _apply_e4_result(card,e4cpu)
         synthetic=realizability_by_id.get(idea)
         if synthetic and synthetic.get("representability_pass") and card["checks"]["representability"]["status"]=="pending":
             card["checks"]["representability"]=_ck("synthetic-pass","Synthetic mechanism harness passed; this clears representability only and has no reality/method authority.","generated/p0-realizability-suite.json","synthetic-realizability-only")
@@ -139,12 +214,12 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
         "checks_failed":sum(v["status"]=="fail" for c in cards for v in c["checks"].values()),
         "checks_pending":sum(v["status"]=="pending" for c in cards for v in c["checks"].values()),
         "checks_synthetic_pass":sum(v["status"]=="synthetic-pass" for c in cards for v in c["checks"].values()),
-        "gpu0_hold_or_conditional":sum(c["gpu0"]["status"] in {"hold","conditional","partial-pass"} for c in cards),
+        "gpu0_hold_or_conditional":sum(str(c["gpu0"]["status"]).startswith("hold") or c["gpu0"]["status"] in {"conditional","partial-pass"} for c in cards),
         "gpu0_stop":sum(str(c["gpu0"]["status"]).startswith("stop") for c in cards),
     }
     return {"schema_version":"1.0","generated_at":_now(),"experiment_root":"profile-resolved-machine-local",
         "policy":{"real_reused_may_unblock":True,"synthetic_harness_may_not_unblock_reality":True,"same_batch_self_authorization_forbidden":True,"method_result_from_offline_qualification_forbidden":True},
-        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"e1":we1,"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
+        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"memory_full":memfull,"substrate_readiness":ready,"e1":we1,"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"e3_real_api":{"decision":e3real.get("decision"),"metrics":e3real.get("metrics"),"prediction_sha256":e3real.get("prediction_sha256_before_hidden")},"e3_stateful":{"decision":e3stateful.get("decision"),"metrics":e3stateful.get("metrics"),"prediction_sha256":e3stateful.get("prediction_sha256_before_hidden")},"e4_permission_cpu":{"decision":e4cpu.get("decision"),"metrics":e4cpu.get("metrics"),"threshold":e4cpu.get("threshold")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
 
 def write_p0_offline_qualification_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS)->dict[str,Any]:
     state=build_p0_offline_qualification_state(); json_path.parent.mkdir(parents=True,exist_ok=True)

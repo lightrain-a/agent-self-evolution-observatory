@@ -35,7 +35,10 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(by_id["constraint-complete-typed-memory-order-logic"]["gpu0"]["status"],"stop-matched-nary-equivalent")
         self.assertEqual(by_id["active-causal-minimal-rollback"]["checks"]["baseline_disagreement"]["status"],"fail")
         self.assertEqual(by_id["active-causal-minimal-rollback"]["gpu0"]["status"],"stop-matched-group-testing-equivalent")
-        self.assertEqual(self.state["summary"]["gpu0_stop"],2)
+        self.assertEqual(by_id["bounded-probe-api-transition-operator"]["checks"]["baseline_disagreement"]["status"],"fail")
+        self.assertEqual(by_id["bounded-probe-api-transition-operator"]["gpu0"]["status"],"stop-stateful-deterministic-pex-ceiling")
+        self.assertEqual(by_id["interventional-permission-triage-under-ceiling"]["gpu0"]["status"],"stop-matched-boolean-rule-equivalent")
+        self.assertEqual(self.state["summary"]["gpu0_stop"],4)
 
     def test_reused_artifacts_capture_current_blockers(self) -> None:
         shared=self.state["shared_evidence"]
@@ -44,11 +47,38 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(shared["a3_mastered_panel"]["mastered_candidates"],41)
         self.assertEqual(shared["a6_a7_dataset"]["a6_nonprefix_interventions"],0)
         self.assertEqual(shared["a6_a7_dataset"]["a7_same_state_four_action_rows"],0)
+        self.assertEqual(shared["a6_a7_dataset"]["max_rounds_per_sequence"],4)
         self.assertFalse(shared["e1"]["identifiable"])
+        self.assertEqual(shared["memory_full"]["status"],"complete")
+        self.assertEqual(shared["memory_full"]["full_completed_executions"],216)
+        self.assertEqual(shared["memory_full"]["full_completed_units"],72)
+        self.assertEqual(shared["memory_full"]["controlled_nonzero"],11)
+        self.assertEqual(shared["memory_full"]["co_retrieval_pair_arms"],0)
+        self.assertEqual(shared["memory_full"]["longitudinal_reuse_sequences"],0)
         self.assertFalse(shared["updater_competence"]["a1"]["passed"])
         self.assertEqual(shared["updater_competence"]["a1"]["status"],"stop-substrate")
         self.assertFalse(shared["updater_competence"]["a2"]["passed"])
         self.assertAlmostEqual(shared["updater_competence"]["a2"]["evidence"]["nonzero_update_effect_fraction"],7/36)
+
+    def test_exact_data_deficits_are_explicit_holds(self) -> None:
+        by_id={row["idea_id"]:row for row in self.state["cards"]}
+        expected={
+            "regression-gated-self-evolution":"hold",
+            "compositional-update-compatibility":"hold-composition-matrix-missing",
+            "lineage-aware-rollback":"hold-history-too-short",
+            "counterfactual-evolution-decision-controller":"hold-four-action-counterfactuals-missing",
+            "contradiction-preserving-consolidation":"hold-support-cardinality-insufficient",
+            "retrieval-interference-auditor":"hold-co-retrieval-arms-missing",
+            "local-counterexample-memory-repair":"hold-boundary-dataset-missing",
+            "memory-half-life":"hold-longitudinal-reuse-missing",
+            "evaluator-coadaptation-guard":"hold-cross-version-matrix-missing",
+            "counterexample-generating-curriculum":"hold-minimality-unmeasured",
+            "workflow-generalization-certificate":"hold",
+            "workflow-branch-credit":"hold-group-interventions-missing",
+        }
+        for idea_id,status in expected.items():
+            self.assertEqual(by_id[idea_id]["gpu0"]["status"],status,idea_id)
+        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],12)
 
 
 if __name__=="__main__":

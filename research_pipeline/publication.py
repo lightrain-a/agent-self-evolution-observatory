@@ -24,6 +24,12 @@ DAILY_ARTIFACTS = (
     "generated/p0-b10-cpu.js",
     "generated/p0-a6-cpu.json",
     "generated/p0-a6-cpu.js",
+    "generated/p0-e3-real-api.json",
+    "generated/p0-e3-real-api.js",
+    "generated/p0-e3-stateful.json",
+    "generated/p0-e3-stateful.js",
+    "generated/p0-e4-permission-cpu.json",
+    "generated/p0-e4-permission-cpu.js",
     "generated/research-system-state.json",
     "generated/research-system-state.js",
 )

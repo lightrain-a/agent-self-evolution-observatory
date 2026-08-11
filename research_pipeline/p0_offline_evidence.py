@@ -44,8 +44,36 @@ def a3_panel(root:Path)->dict[str,Any]:
     return {'source':rel(root,p),'passed':bool(d.get('pass')),'panel_size':int(d.get('panel_size') or 0),'mastered_candidates':int(d.get('mastered_candidates') or 0),'family_coverage':int(d.get('task_family_coverage') or 0),'next_gate':d.get('next_gate')}
 
 def a67_dataset(root:Path)->dict[str,Any]:
-    p=root/'qualification'/'a2-updater-support-v1'/'fixed-sequences.jsonl'; rows=jl(p)
-    return {'source':rel(root,p),'sequences':len(rows),'prefix_states':sum(len(r.get('rounds') or []) for r in rows),'a6_nonprefix_interventions':0,'a6_minimal_fault_oracle':False,'a7_same_state_four_action_rows':0,'ready_a6':False,'ready_a7':False}
+    p=root/'qualification'/'a2-updater-support-v1'/'fixed-sequences.jsonl'; rows=jl(p); lengths=[len(r.get('rounds') or []) for r in rows]
+    return {'source':rel(root,p),'sequences':len(rows),'prefix_states':sum(lengths),'max_rounds_per_sequence':max(lengths) if lengths else 0,'a6_nonprefix_interventions':0,'a6_minimal_fault_oracle':False,'a7_same_state_four_action_rows':0,'ready_a6':False,'ready_a7':False}
+
+def memory_full(root:Path)->dict[str,Any]:
+    base=root/'runs'/'p0-mem-xfer-support-enriched-qwen-v1'; p=base/'support-enriched-analysis'/'offline_decision.json'; d=j(p); progress=j(base/'full-support-table'/'progress.json')
+    i3=d.get('idea_3') or {}; i5=d.get('idea_5') or {}
+    c3=((i3.get('support') or {}).get('gate_checks') or {}); c5=((i5.get('analysis') or {}).get('support_gate_checks') or {})
+    def actual(checks,key): return ((checks.get(key) or {}).get('actual'))
+    return {'source':rel(root,p),'status':'complete' if d and int(progress.get('completed_episodes') or 0)==216 else 'incomplete','full_completed_executions':int(progress.get('completed_episodes') or 0),'full_completed_units':int(progress.get('completed_units') or 0),'replicated_harm_candidates':int(actual(c3,'replicated_controlled_harm_candidates') or 0),'replicated_benefit_candidates':int(actual(c3,'replicated_controlled_benefit_candidates') or 0),'controlled_nonzero':int(actual(c5,'controlled_nonzero') or 0),'eligible_target_folds':int(actual(c5,'eligible_target_family_folds') or 0),'co_retrieval_pair_arms':0,'longitudinal_reuse_sequences':0}
+
+def substrate_readiness(root:Path)->dict[str,Any]:
+    # Count only registered/recognizable experiment artifacts. Missing required
+    # artifact types are explicit data-readiness blockers, not negative method results.
+    a4_rows=jl(root/'runs'/'round1-20260810'/'a12-v4'/'evaluations.jsonl')
+    composition_rows=sum(str(r.get('stage') or '').startswith('composition') or 'pair_order' in r for r in a4_rows)
+    def files_for(token:str)->list[str]:
+        hits=[]
+        for base in (root/'runs',root/'qualification',root/'pre-gpu'):
+            if not base.exists(): continue
+            for p in base.rglob('*'):
+                if p.is_file() and token in p.name.lower(): hits.append(rel(root,p))
+        return hits
+    return {
+        'a4_composition_pair_order_rows':composition_rows,
+        'b5_boundary_counterexample_artifacts':files_for('counterexample-memory'),
+        'c2_cross_version_matrix_artifacts':files_for('coadapt')+files_for('cross-version'),
+        'e2_group_intervention_artifacts':files_for('group-intervention')+files_for('branch-credit'),
+        'e3_api_transition_artifacts':files_for('api-transition')+files_for('pex'),
+        'e4_permission_canary_artifacts':files_for('permission')+files_for('canary'),
+    }
 
 def e1(root:Path)->dict[str,Any]:
     p=root/'runs'/'round1-20260810'/'e1-r5'/'evaluations.jsonl'; rows=[r for r in jl(p) if r.get('stage')=='workflow-edit-matrix']; a=defaultdict(list)

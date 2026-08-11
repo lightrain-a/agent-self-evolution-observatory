@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "decision_date": "2026-08-11",
-  "generated_at": "2026-08-11T07:43:36+00:00",
+  "generated_at": "2026-08-11T08:06:44+00:00",
   "source_of_truth_priority": [
     "latest-human-review",
     "explicit-user-update",
@@ -865,8 +865,8 @@
         "api-error-semantic-adapter"
       ],
       "current_fact": {
-        "zh": "已编号为 E-3 并由 P0-ready 正式迁入 P0；API error semantics 仅为 X/error-semantics 分支。P0 admission 设置已冻结，真实执行仍需通过 GPU-0 / Pre-P0 / Pre-Experiment / runtime 门禁。",
-        "en": "Now coded E-3 and formally transitioned from P0-ready into P0; API error semantics remains only the X/error-semantics branch. P0 admission settings are frozen, while real execution still requires GPU-0, Pre-P0, Pre-Experiment, and runtime gates."
+        "zh": "E-3 已完成两层 P0：先在 GitLab/Codeberg 无泄漏 read-only reality P0 上 deterministic P/E/X 12/12；随后补 stateful side-effect/recovery harness，ledger/vault 两个不同状态码 family 各 N=6 probes，hidden create/update/delete、duplicate，以及跨操作的 stale-update→hidden stale-delete、missing-delete→hidden missing-update，共 12/12 final-state + recovery 精确。read-only 与 state-changing E 两层都被同构 deterministic P/E/X ceiling，触发 STOP_STATEFUL_DETERMINISTIC_PEX_CEILING；learned arm 不再运行，等待人工 DROP/merge。",
+        "en": "E-3 completed two P0 layers: first a leakage-free read-only reality P0 on GitLab/Codeberg where deterministic P/E/X scored 12/12; then a stateful side-effect/recovery harness with ledger/vault as two distinct status-code families, N=6 probes each, and hidden create/update/delete, duplicate, plus cross-operation stale-update→hidden stale-delete and missing-delete→hidden missing-update cases. The deterministic isomorphic P/E/X baseline again achieved 12/12 exact final-state plus recovery semantics. Both read-only and state-changing E layers are at ceiling, firing STOP_STATEFUL_DETERMINISTIC_PEX_CEILING; the learned arm is not run and E-3 awaits human DROP/merge review."
       },
       "code": "E-3",
       "group": "E",
@@ -881,6 +881,10 @@
       "title": {
         "zh": "固定上限下的干预式权限重授权筛选",
         "en": "Interventional Permission Triage Under a Fixed Ceiling"
+      },
+      "current_fact": {
+        "zh": "E-4 executable permission CPU P0 已收口：在 train/test mutation feature combinations 0 重叠的 32 个 unseen operators 上，线性 q 虽以 0 missed-risk 将重授权从 deterministic envelope 的 72 降到 53，但同一 mutation representation + 同一 intervention labels 的 monotone-DNF 简单规则同样 0 missed-risk，只需 29 次重授权。触发 STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT；learned q 独立机制不再保留，等待人工 DROP/merge。",
+        "en": "E-4 executable-permission CPU P0 is closed: on 32 unseen operators with zero overlap between train and test mutation feature combinations, the linear q reduces reauthorizations from 72 for the deterministic envelope to 53 at zero missed risk, but a monotone-DNF simplification induced from the identical mutation representation and intervention labels also has zero missed risk and needs only 29 reauthorizations. STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT fires; the learned-q mechanism is not retained as a standalone method and awaits human DROP/merge review."
       },
       "code": "E-4",
       "group": "E",
