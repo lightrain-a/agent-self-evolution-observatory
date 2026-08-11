@@ -387,6 +387,11 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     falsifier = state["mem_xfer_workflow"].get("applicability_falsifier") or {}
     if falsifier.get("status") != "r1_not_authorized": errors.append("mem-xfer clean R1 must remain unauthorized after the frozen applicability VOI screen fails")
     if (falsifier.get("decision") or {}).get("decision") != "NO_R1_VOI_STOP_STANDALONE": errors.append("mem-xfer applicability falsifier terminal decision mismatch")
+    diagnosis = state["mem_xfer_workflow"].get("mechanism_diagnosis") or {}
+    if diagnosis.get("status") != "mechanism_diagnosis_complete": errors.append("mem-xfer retrospective first-divergence mechanism diagnosis must be complete")
+    if (diagnosis.get("first_divergence") or {}).get("decision") != "WEAK_OR_NO_STATE_LOCALIZATION": errors.append("mem-xfer first-divergence localization decision mismatch")
+    if (diagnosis.get("route_reproducibility") or {}).get("decision") != "REPRODUCIBLE_EARLY_BRANCH_CONTEXT_DEPENDENT_SIGN": errors.append("mem-xfer route reproducibility diagnosis mismatch")
+    if (diagnosis.get("route_reproducibility") or {}).get("new_idea_authorized") is not False: errors.append("mem-xfer diagnosis must not auto-authorize a replacement idea")
     if state["mem_xfer_workflow"].get("formal_method",{}).get("authorized") is not False: errors.append("mem-xfer formal method experiment must remain HOLD after the failed VOI screen")
     if state["mem_xfer_workflow"]["second_model"]["status"] != "second_model_hold": errors.append("mem-xfer second backbone must remain on HOLD unless the CPU-only full-support gate explicitly authorizes it")
     terminal_summary = state["human_terminal_ideas"]["summary"]

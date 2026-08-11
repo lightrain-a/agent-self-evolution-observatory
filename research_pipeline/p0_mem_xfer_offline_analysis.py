@@ -358,6 +358,24 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
         r1_status = "r1_eligible_human_authorization"
     else:
         r1_status = "r1_screen_pending"
+    divergence_dir = support_dir / "first-divergence-audit-v1"
+    divergence_raw = _read_json(divergence_dir / "decision.json")
+    divergence_decision = None
+    if divergence_raw:
+        divergence_decision = {
+            key: divergence_raw.get(key)
+            for key in (
+                "schema_version", "audit_id", "contract_sha256", "decision", "diagnostic_only",
+                "method_pass_authorized", "method_failure_authorized", "r1_authorized",
+                "formal_method_authorized", "second_model_authorized", "table_shape", "replay",
+                "best_task_baseline", "best_state_model", "metrics", "future_prevalence",
+                "state_brier_relative_improvement", "state_average_precision_multiple",
+                "state_signature_mi", "checks", "divergence_timing", "interpretation",
+            )
+        }
+        divergence_decision["signature_concentration_top"] = (divergence_raw.get("signature_concentration") or [])[:6]
+    route_reproducibility = _read_json(divergence_dir / "route-reproducibility-diagnostic.json")
+    mechanism_diagnosis_complete = bool(divergence_decision and route_reproducibility)
     second_model_authorized = bool(
         support_analysis_complete
         and support_analysis_decision.get("second_model_authorized") is True
@@ -376,7 +394,7 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             "full_support_pending", "full_support_ready", "full_qwen_support_running", "full_qwen_support_checkpoint",
             "full_support_hold", "full_support_complete", "support_enriched_analysis_pending", "support_enriched_analysis_complete",
             "support_enriched_analysis_blocked", "r1_screen_pending", "r1_eligible_human_authorization", "r1_not_authorized",
-            "second_model_hold", "second_model_authorized",
+            "mechanism_diagnosis_pending", "mechanism_diagnosis_complete", "second_model_hold", "second_model_authorized",
         ],
         "full_table": {
             "status": "full_table_collected" if full_complete else "collecting",
@@ -416,6 +434,12 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             "cpu_only": True,
             "scientific_role": "retrospective VOI screen; cannot emit method PASS/FAIL",
         },
+        "mechanism_diagnosis": {
+            "status": "mechanism_diagnosis_complete" if mechanism_diagnosis_complete else "mechanism_diagnosis_pending",
+            "first_divergence": divergence_decision,
+            "route_reproducibility": route_reproducibility,
+            "scientific_role": "retrospective failure explanation only; does not revive B-8/B-9 or authorize a new idea",
+        },
         "formal_method": {
             "status": "formal_method_hold",
             "authorized": False,
@@ -431,6 +455,7 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             {"from": "support_qualification_pass", "to": "full_support_pending", "condition": "same frozen plan; reuse 72 support episodes and collect only remaining 144"},
             {"from": "full_support_complete", "to": "support_enriched_analysis_complete", "automatic": True, "action": "run frozen CPU-only #3 candidate support/gate and #5 strict LOTO support analysis"},
             {"from": "support_enriched_analysis_complete", "to": "r1_screen_pending", "action": "run frozen CPU-only candidate×applicability VOI falsifier before any clean R1"},
+            {"from": "r1_not_authorized", "to": "mechanism_diagnosis_complete", "action": "retrospectively localize retrieved-vs-placebo first trajectory divergence and compare matched-hardware regeneration; diagnosis cannot reopen execution"},
             {"from": "r1_eligible_human_authorization", "to": "second_model_authorized", "condition": "only after a fresh source-locked Qwen R1 and separate explicit authorization; never from the old table"},
         ],
     }
