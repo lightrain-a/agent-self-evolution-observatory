@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T15:13:49+00:00",
+  "generated_at": "2026-08-11T15:20:55+00:00",
   "policy": {
     "schema_version": "1.0",
     "content_addressed_triggers": true,
@@ -21,13 +21,13 @@
   },
   "summary": {
     "baseline_initialized": true,
-    "baseline_subjects": 1,
-    "cases": 1,
+    "baseline_subjects": 43,
+    "cases": 0,
     "created_this_cycle": 0,
     "executed_this_cycle": 0,
     "pending": 0,
     "partial": 0,
-    "complete": 1,
+    "complete": 0,
     "reviewer_unavailable": 0,
     "retryable": 0,
     "waived_cases": 0,
@@ -41,16 +41,5 @@
     "matched_baseline_added",
     "stop_or_merge_before_expensive_transition"
   ],
-  "recent_cases": [
-    {
-      "case_id": "aic-7e35ca4e841d53ac048e",
-      "checkpoint": "pre_launch_stress_review",
-      "subject_id": "x",
-      "status": "complete",
-      "completed_reviewers": 0,
-      "missing_reviewers": 0,
-      "unresolved_high_risk": 0,
-      "human_waiver": false
-    }
-  ]
+  "recent_cases": []
 }

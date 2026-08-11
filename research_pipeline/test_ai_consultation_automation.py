@@ -18,7 +18,7 @@ from .ai_consultation_automation import (
 
 class AIConsultationAutomationTest(unittest.TestCase):
     def _storage(self, root: Path):
-        return SimpleNamespace(run_dir=root / "runs", ensure=lambda: None)
+        return SimpleNamespace(run_dir=root / "runs", site_artifact_dir=root / "generated", ensure=lambda: None)
 
     def test_first_observation_is_baseline_and_changed_hash_triggers_once(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

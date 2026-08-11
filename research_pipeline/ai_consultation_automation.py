@@ -223,7 +223,7 @@ def consultation_launch_clearance(storage: StorageSettings, subject_id: str) -> 
         return {"pass": False, "subject_id": subject_id, "blockers": ["ai-consultation-baseline-not-initialized"], "checkpoints": []}
     state, created = sync_triggers(storage)
     if created:
-        write_public_state(public_state(state, created, []))
+        write_public_state(public_state(state, created, []), storage=storage)
     current = [row for row in detect_candidates() if row.get("subject_id") == subject_id and row.get("checkpoint") in PRELAUNCH_CHECKPOINTS]
     blockers, details = [], []
     for row in current:
@@ -266,7 +266,7 @@ def write_residual_risk_waiver(storage: StorageSettings, case_id: str, reason: s
         case["updated_at"] = _now()
         state["updated_at"] = _now()
         _atomic_json(_state_path(storage), state)
-    write_public_state(public_state(state, [], []))
+    write_public_state(public_state(state, [], []), storage=storage)
     return payload
 
 
@@ -299,7 +299,7 @@ def record_finding_disposition(
     case["updated_at"] = _now()
     state["updated_at"] = _now()
     _atomic_json(path, state)
-    write_public_state(public_state(state, [], []))
+    write_public_state(public_state(state, [], []), storage=storage)
     return {"case_id": case_id, "request_index": request_index, "disposition": disposition, "unresolved_high_risk": case["unresolved_high_risk"]}
 
 
@@ -474,7 +474,16 @@ def public_state(state: dict[str, Any], created: list[str], executed: list[str])
     }
 
 
-def write_public_state(payload: dict[str, Any], json_path: Path = DEFAULT_JSON, js_path: Path = DEFAULT_JS) -> dict[str, Any]:
+def write_public_state(
+    payload: dict[str, Any],
+    *,
+    storage: StorageSettings | Any | None = None,
+    json_path: Path | None = None,
+    js_path: Path | None = None,
+) -> dict[str, Any]:
+    artifact_dir = Path(getattr(storage, "site_artifact_dir", PROJECT_ROOT / "generated")) if storage is not None else PROJECT_ROOT / "generated"
+    json_path = json_path or artifact_dir / "ai-consultation-automation.json"
+    js_path = js_path or artifact_dir / "ai-consultation-automation.js"
     json_path.parent.mkdir(parents=True, exist_ok=True)
     json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     js_path.write_text("window.AI_CONSULTATION_AUTOMATION = " + json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
@@ -503,7 +512,7 @@ def run_ai_consultation_automation(
             web_enabled=os.getenv("AUTOMATION_AI_CLINIC_WEB", "1") != "0",
             domestic_models=models,
         )
-    return write_public_state(public_state(state, created, executed))
+    return write_public_state(public_state(state, created, executed), storage=storage)
 
 
 def main() -> int:
