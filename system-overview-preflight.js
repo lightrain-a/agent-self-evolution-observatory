@@ -118,5 +118,7 @@
     </div><div class="system-repair-loop"><span>${pick("诊断失败层","Diagnose layer")}</span><i>→</i><span>${pick("只改一个变量","Change one variable")}</span><i>→</i><span>Pre-P0 recompile</span><i>→</i><span>${pick("新的小 Screening","New small screen")}</span><i>→</i><span>${pick("Confirmatory / Merge / Stop","Confirm / Merge / Stop")}</span><i>→</i><span>${pick("人工批准扩大","Human-approved scale-up")}</span></div></section>`;
   }
 
-  api.renderPreflight = (state) => `${api.renderGovernanceV2 ? api.renderGovernanceV2(state || {}) : ""}${renderSurvivorGate(state || {})}${renderEconomyGate(state || {})}${renderAIClinic(state || {})}${renderCompiler(state || {})}${renderLessons(state || {})}${renderFailureSemantics(state || {})}`;
+  api.renderPreflight = (state) => `${renderEconomyGate(state || {})}${renderCompiler(state || {})}`;
+  api.renderLessons = (state) => renderLessons(state || {});
+  api.renderFailureSemantics = (state) => renderFailureSemantics(state || {});
 })();

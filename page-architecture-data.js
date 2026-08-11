@@ -35,10 +35,12 @@ window.PAGE_ARCHITECTURES = {
   },
   "system-overview":{
     chapters:[
-      {id:"system-purpose",title:{en:"I · What the research system is designed to guarantee",zh:"第一章 · 科研系统到底要保证什么"},question:{en:"What makes this more than an automation script, and which guarantees should remain stable across projects?",zh:"这套系统为什么不只是自动化脚本，哪些保证应该跨项目保持稳定？"}},
-      {id:"research-lifecycle",title:{en:"II · How one research question moves through the system",zh:"第二章 · 一项研究如何流过系统"},question:{en:"What must be answered at each stage from evidence collection to an auditable scientific decision?",zh:"从证据收集到可审计科学结论，每一阶段必须回答什么问题？"}},
-      {id:"pre-experiment-compiler",title:{en:"III · Pre-Experiment Compiler and lessons learned",zh:"第三章 · 实验启动前编译器与经验沉淀"},question:{en:"How does the system detect unidentifiable, underpowered, or wasteful experiments before GPU spend?",zh:"系统如何在消耗 GPU 之前发现不可辨识、统计不足或资源浪费的实验设计？"}},
-      {id:"operations-recovery",title:{en:"IV · Execution, artifacts, automation, and recovery",zh:"第四章 · 执行、工件、自动化与失败恢复"},question:{en:"How are long-running experiments isolated, scheduled, persisted, recovered, and kept under human scientific control?",zh:"长时间实验如何隔离、调度、持久化、恢复，并始终保留人工科学控制？"}}
+      {id:"system-map",title:{en:"I · System map and current operating state",zh:"第一章 · 系统全景与当前运行状态"},question:{en:"What are the major layers of the research system, and where is the current bottleneck?",zh:"整套科研系统由哪些层组成，当前真正的瓶颈在哪里？"}},
+      {id:"evidence-consultation",title:{en:"II · Evidence, idea formation, and AI consultation",zh:"第二章 · 证据、Idea 形成与 AI 会诊"},question:{en:"How do literature, evidence graphs, collision review, idea search, and multi-model consultation turn a broad problem into a falsifiable research contract?",zh:"文献、证据图、撞车审查、Idea 搜索和多模型会诊如何把宽泛问题压成可证伪研究合同？"}},
+      {id:"economy-compile",title:{en:"III · P0 Economy Gate and experiment compilation",zh:"第三章 · P0 经济门与实验启动前编译"},question:{en:"How does the system reject reducible, unsupported, mis-specified, or low-VOI experiments before expensive execution?",zh:"系统如何在昂贵执行前淘汰可约简、底座不足、建模错误或低 VOI 的实验？"}},
+      {id:"scientific-state-machine",title:{en:"IV · Scientific state machine and failure semantics",zh:"第四章 · 科学状态机与失败语义"},question:{en:"How are phenomenon support, method evaluation, replication, and typed failure classes kept scientifically distinct?",zh:"现象支持、方法实验、复现和各种失败类型如何保持科学语义分离？"}},
+      {id:"runtime-authority",title:{en:"V · Runtime, authority, automation, and recovery",zh:"第五章 · 运行时、权限、自动化与恢复"},question:{en:"How are servers, GPU leases, single-writer authority, traces, budgets, AI triggers, and recovery managed safely?",zh:"服务器、GPU 租约、单写者权限、Trace、预算、AI 自动触发与恢复如何安全管理？"}},
+      {id:"learning-publication",title:{en:"VI · Decision feedback, learning, and publication",zh:"第六章 · 决策回流、经验沉淀与发布"},question:{en:"How do experiment decisions become repair rules, system constraints, durable artifacts, and public snapshots without rewriting scientific history?",zh:"实验决策如何变成修复规则、系统约束、长期工件和公开快照，同时不改写科学历史？"}}
     ]
   },
   "research-directions":{

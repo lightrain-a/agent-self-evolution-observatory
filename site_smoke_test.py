@@ -65,7 +65,7 @@ REQUIRED_STATIC = [
     "generated/idea-discovery-v4.json", "generated/idea-discovery-v4.js", "generated/idea-discovery-v4-external-reviews.json",
     "generated/idea-discovery-v3.json", "generated/idea-discovery-v3.js", "generated/idea-discovery-v3-external-reviews.json",
     "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
-    "content-system-overview.js", "system-overview-core.js", "system-overview-lifecycle.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
+    "content-system-overview.js", "system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
     "idea-lab.css", "emerging-niche-view.js", "generated/emerging-niche-policy.json", "generated/emerging-niche-policy.js",
     "generated/p0-experiment-plan.js", "generated/p0-collision-recheck.js", "generated/p0-runtime-readiness.js",
 ]
@@ -247,8 +247,10 @@ def main() -> None:
     if (summary.get("v5_candidates"), summary.get("v5_finalists"), summary.get("v5_revivals")) != (36,32,8):
         fail("research-system state must expose the v5 wide-search round")
     components = research_state.get("components", [])
-    if len(components) != 13:
-        fail(f"research-system state must expose thirteen backend components including the human terminal controller, got {len(components)}")
+    required_component_sources = {"ResearchAgent", "Human terminal ledger", "P0 retrospective economy review", "Unified P0 decision ledger", "Web GPT + domestic-model independent consultation", "Content-addressed AI consultation automation"}
+    component_sources = {str(item.get("source") or "") for item in components}
+    if len(components) < 17 or not required_component_sources.issubset(component_sources):
+        fail(f"research-system state is missing current backend responsibilities: count={len(components)}, missing={sorted(required_component_sources-component_sources)}")
     pre_p0 = research_state.get("pre_p0_identifiability", {})
     if pre_p0.get("summary", {}).get("audited") != 4 or pre_p0.get("summary", {}).get("execution_ready") != 0:
         fail(f"Pre-P0 identifiability state is inconsistent: {pre_p0.get('summary')}")
@@ -389,16 +391,16 @@ def main() -> None:
     forbidden_system_scripts = ("generated/iclr-low-resource-ideas.js", "generated/machine-school-inspired-ideas.js", "generated/discussion-ready-ideas.js", "generated/idea-discovery-v5.js")
     if any(f'src="{name}"' in system_page for name in forbidden_system_scripts):
         fail("system overview must not load current idea-bank or discussion-pool artifacts")
-    system_files = ["system-overview-core.js", "system-overview-lifecycle.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-view.js"]
+    system_files = ["system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-governance-v2.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js"]
     system_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in system_files)
-    for marker in ("RESEARCH SYSTEM CONTRACT", "system-lifecycle-step", "PRE-EXPERIMENT COMPILER", "8 / 8", "GATE 3 · IDENTIFIABILITY SUB-AUDIT", "10 / 10", "system-failure-layer", "system-repair-loop", "MCP-Yu + Experiment Orchestrator", "system-components-panel"):
+    for marker in ("RESEARCH SYSTEM CONTRACT", "CURRENT SYSTEM MAP", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "GATE 3 · IDENTIFIABILITY SUB-AUDIT", "10 / 10", "P0-SYSTEM v2", "system-failure-layer", "MCP-Yu + Experiment Orchestrator", "DECISION → LEARN → PUBLISH"):
         if marker not in system_text:
             fail(f"system overview implementation is missing {marker}")
     system_content = (ROOT / "content-system-overview.js").read_text(encoding="utf-8")
     forbidden_idea_markers = ("主 ICLR Idea Bank", "最终师兄讨论门槛", "Main ICLR idea bank", "Final advisor gate", "paper-ideas.html#discussed-ideas")
     if any(marker in system_text or marker in system_content for marker in forbidden_idea_markers):
         fail("system overview must contain only the research system, not current idea decisions")
-    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "实验启动前编译器与经验沉淀"):
+    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "系统全景与当前运行状态", "P0 经济门与实验启动前编译", "科学状态机与失败语义"):
         if marker not in system_text and marker not in system_content and marker not in (ROOT / "page-architecture-data.js").read_text(encoding="utf-8"):
             fail(f"Chinese research-system documentation is missing {marker}")
 
