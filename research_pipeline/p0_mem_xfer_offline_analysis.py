@@ -375,6 +375,7 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
         }
         divergence_decision["signature_concentration_top"] = (divergence_raw.get("signature_concentration") or [])[:6]
     route_reproducibility = _read_json(divergence_dir / "route-reproducibility-diagnostic.json")
+    audit_priority = _read_json(support_dir / "branch-audit-priority-v1" / "decision.json")
     mechanism_diagnosis_complete = bool(divergence_decision and route_reproducibility)
     second_model_authorized = bool(
         support_analysis_complete
@@ -438,7 +439,8 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             "status": "mechanism_diagnosis_complete" if mechanism_diagnosis_complete else "mechanism_diagnosis_pending",
             "first_divergence": divergence_decision,
             "route_reproducibility": route_reproducibility,
-            "scientific_role": "retrospective failure explanation only; does not revive B-8/B-9 or authorize a new idea",
+            "audit_priority": audit_priority,
+            "scientific_role": "retrospective failure explanation plus soft experiment-scheduling signal; does not revive B-8/B-9, authorize a new idea, or exclude confirmatory candidates",
         },
         "formal_method": {
             "status": "formal_method_hold",

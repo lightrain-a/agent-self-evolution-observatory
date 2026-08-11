@@ -22396,7 +22396,7 @@
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-11T11:52:07+00:00",
+    "generated_at": "2026-08-11T12:18:30+00:00",
     "source_of_truth_priority": [
       "latest-human-review",
       "explicit-user-update",
@@ -23286,8 +23286,8 @@
           "en": "Replicated-Effect Memory Gate"
         },
         "current_fact": {
-          "zh": "B-8 standalone 已停止升级，clean R1 不授权。旧共享 P0 仍是 SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE + PROVENANCE_INCONCLUSIVE，不得改写成旧方法 FAIL。后续 CPU-only failure diagnosis 解释了“为什么原理看起来成立但 gate 学不出来”：retrieved vs token-matched placebo 的 first-divergence 在 nonzero effect 中显著更早；同物理 RTX3090 regeneration 对 11 个原 nonzero unit 的首分叉位置 11/11 复现、具体首分叉 action pair 10/11 复现，排除了纯随机噪声。但 state-signature localization 很弱（相对最佳 task baseline Brier 仅改善 3.46%，MI permutation p=0.216）；同一 memory se-m-pick_cool_then_place_in_recep-1 在完全相同的 index-0 pre_acquire|navigate>navigate signature 下对 cool/heat/clean target 分别产生 -1/+1/-1。当前最符合的解释是：memory 稳定地改变早期 trajectory branch，但最终 benefit/harm sign 由 downstream context 放大决定；因此 candidate-global replicated-effect 假设过强。该诊断不复活 B-8，也不自动授权替代 idea。",
-          "en": "Standalone B-8 escalation is stopped and a clean R1 is not authorized. The old shared P0 remains SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE plus PROVENANCE_INCONCLUSIVE and must not be rewritten as an old-method FAIL. A later CPU-only failure diagnosis explains why the principle can look right while the gate remains unlearnable: retrieved versus token-matched placebo diverges significantly earlier on nonzero-effect units. On matched physical RTX3090 regeneration, the first-divergence index reproduces for 11/11 original nonzero units and the exact first-divergent action pair for 10/11, ruling out pure stochastic noise. Yet state-signature localization is weak (only 3.46% Brier improvement over the best task baseline; MI permutation p=0.216). The same memory se-m-pick_cool_then_place_in_recep-1 yields -1/+1/-1 on cool/heat/clean targets under the identical index-0 pre_acquire|navigate>navigate signature. The best current explanation is reproducible early trajectory-branch steering whose downstream context determines benefit versus harm, so the candidate-global replicated-effect assumption was too strong. This diagnosis does not revive B-8 or auto-authorize a replacement idea."
+          "zh": "B-8 standalone 已停止升级，clean R1 不授权。旧共享 P0 仍是 SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE + PROVENANCE_INCONCLUSIVE，不得改写成旧方法 FAIL。后续 CPU-only failure diagnosis 解释了“为什么原理看起来成立但 gate 学不出来”：retrieved vs token-matched placebo 的 first-divergence 在 nonzero effect 中显著更早；同物理 RTX3090 regeneration 对 11 个原 nonzero unit 的首分叉位置 11/11 复现、具体首分叉 action pair 10/11 复现，排除了纯随机噪声。但 state-signature localization 很弱（相对最佳 task baseline Brier 仅改善 3.46%，MI permutation p=0.216）；同一 memory se-m-pick_cool_then_place_in_recep-1 在完全相同的 index-0 pre_acquire|navigate>navigate signature 下对 cool/heat/clean target 分别产生 -1/+1/-1。当前最符合的解释是：memory 稳定地改变早期 trajectory branch，但最终 benefit/harm sign 由 downstream context 放大决定；因此 candidate-global replicated-effect 假设过强。该诊断不复活 B-8，也不自动授权替代 idea。 工程上仅保留为 soft audit-priority signal：1-step 约 25% paired-rollout 成本可覆盖 54.5% nonzero effects，但达到 90.9% recall 时 5-step 成本已约 90.1%；因此只能用于审计排序，禁止作为 hard gate 淘汰 confirmatory cases。",
+          "en": "Standalone B-8 escalation is stopped and a clean R1 is not authorized. The old shared P0 remains SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE plus PROVENANCE_INCONCLUSIVE and must not be rewritten as an old-method FAIL. A later CPU-only failure diagnosis explains why the principle can look right while the gate remains unlearnable: retrieved versus token-matched placebo diverges significantly earlier on nonzero-effect units. On matched physical RTX3090 regeneration, the first-divergence index reproduces for 11/11 original nonzero units and the exact first-divergent action pair for 10/11, ruling out pure stochastic noise. Yet state-signature localization is weak (only 3.46% Brier improvement over the best task baseline; MI permutation p=0.216). The same memory se-m-pick_cool_then_place_in_recep-1 yields -1/+1/-1 on cool/heat/clean targets under the identical index-0 pre_acquire|navigate>navigate signature. The best current explanation is reproducible early trajectory-branch steering whose downstream context determines benefit versus harm, so the candidate-global replicated-effect assumption was too strong. This diagnosis does not revive B-8 or auto-authorize a replacement idea. Operationally, retain this only as a soft audit-priority signal: a 1-step screen uses about 25% of paired-rollout cost and captures 54.5% of nonzero effects, but reaching 90.9% recall at 5 steps already costs about 90.1%. It may prioritize audit order but must never hard-exclude confirmatory cases."
         },
         "code": "B-8",
         "group": "B",
@@ -23301,8 +23301,8 @@
           "en": "Cross-Task Effect Transport Certificate"
         },
         "current_fact": {
-          "zh": "B-9 standalone 已停止，strict-LOTO 仅保留为 archived secondary diagnostic。旧结果仍是 TRANSPORT_SUPPORT_INSUFFICIENT，不是方法 FAIL。后续 first-divergence diagnosis 进一步表明，memory effect 的可复现部分主要是“早期 trajectory branch 被稳定改变”，而不是可由 local state/task signature 稳定预测的最终 effect sign：11 个 nonzero unit 的同卡 regeneration 首分叉位置 11/11 复现、action pair 10/11 复现，但完全相同的早期 signature 可在不同 target context 下翻转 sign。因而 B-9 的 task-level effect transport 假设也过强；当前不授权 clean R1、formal-method、第二 backbone 或自动替代 idea。",
-          "en": "Standalone B-9 is stopped; strict LOTO remains only as an archived secondary diagnostic. The old result remains TRANSPORT_SUPPORT_INSUFFICIENT, not a method FAIL. The later first-divergence diagnosis shows that the reproducible component of memory effect is mainly stable early trajectory-branch steering rather than a final effect sign that is stable under local-state or task signatures: matched-hardware regeneration reproduces the first-divergence index for 11/11 nonzero units and the action pair for 10/11, while an identical early signature can flip sign across downstream target contexts. The task-level effect-transport assumption was therefore also too strong. Clean R1, formal-method work, a second backbone, and automatic replacement-idea creation remain unauthorized."
+          "zh": "B-9 standalone 已停止，strict-LOTO 仅保留为 archived secondary diagnostic。旧结果仍是 TRANSPORT_SUPPORT_INSUFFICIENT，不是方法 FAIL。后续 first-divergence diagnosis 进一步表明，memory effect 的可复现部分主要是“早期 trajectory branch 被稳定改变”，而不是可由 local state/task signature 稳定预测的最终 effect sign：11 个 nonzero unit 的同卡 regeneration 首分叉位置 11/11 复现、action pair 10/11 复现，但完全相同的早期 signature 可在不同 target context 下翻转 sign。因而 B-9 的 task-level effect transport 假设也过强；当前不授权 clean R1、formal-method、第二 backbone 或自动替代 idea。 工程上仅保留为 soft audit-priority signal：1-step 约 25% paired-rollout 成本可覆盖 54.5% nonzero effects，但达到 90.9% recall 时 5-step 成本已约 90.1%；因此只能用于审计排序，禁止作为 hard gate 淘汰 confirmatory cases。",
+          "en": "Standalone B-9 is stopped; strict LOTO remains only as an archived secondary diagnostic. The old result remains TRANSPORT_SUPPORT_INSUFFICIENT, not a method FAIL. The later first-divergence diagnosis shows that the reproducible component of memory effect is mainly stable early trajectory-branch steering rather than a final effect sign that is stable under local-state or task signatures: matched-hardware regeneration reproduces the first-divergence index for 11/11 nonzero units and the action pair for 10/11, while an identical early signature can flip sign across downstream target contexts. The task-level effect-transport assumption was therefore also too strong. Clean R1, formal-method work, a second backbone, and automatic replacement-idea creation remain unauthorized. Operationally, retain this only as a soft audit-priority signal: a 1-step screen uses about 25% of paired-rollout cost and captures 54.5% of nonzero effects, but reaching 90.9% recall at 5 steps already costs about 90.1%. It may prioritize audit order but must never hard-exclude confirmatory cases."
         },
         "code": "B-9",
         "group": "B",
@@ -51873,7 +51873,80 @@
         "new_idea_status": "collision_review_required_before_any_new_method",
         "recorded_at": "2026-08-11T11:45:44+00:00"
       },
-      "scientific_role": "retrospective failure explanation only; does not revive B-8/B-9 or authorize a new idea"
+      "audit_priority": {
+        "schema_version": "1.0",
+        "analysis_id": "P0-MEM-XFER-BRANCH-AUDIT-PRIORITY-V1",
+        "decision": "MERGE_AS_SOFT_GOVERNANCE_SIGNAL",
+        "scientific_role": "retrospective experiment-scheduling diagnostic only; cannot emit method PASS/FAIL and cannot exclude candidates from confirmatory evaluation",
+        "source_mechanism": "REPRODUCIBLE_EARLY_BRANCH_CONTEXT_DEPENDENT_SIGN",
+        "full_paired_action_steps": 5575,
+        "units": 72,
+        "nonzero_effect_units": 11,
+        "cost_recall_curve": [
+          {
+            "h_steps": 1,
+            "flagged_units": 17,
+            "coverage": 0.2361111111,
+            "nonzero_recall": 0.5454545455,
+            "precision": 0.3529411765,
+            "cost_fraction": 0.25,
+            "saving_fraction": 0.75
+          },
+          {
+            "h_steps": 2,
+            "flagged_units": 43,
+            "coverage": 0.5972222222,
+            "nonzero_recall": 0.7272727273,
+            "precision": 0.1860465116,
+            "cost_fraction": 0.619,
+            "saving_fraction": 0.381
+          },
+          {
+            "h_steps": 3,
+            "flagged_units": 52,
+            "coverage": 0.7222222222,
+            "nonzero_recall": 0.8181818182,
+            "precision": 0.1730769231,
+            "cost_fraction": 0.761,
+            "saving_fraction": 0.239
+          },
+          {
+            "h_steps": 5,
+            "flagged_units": 62,
+            "coverage": 0.8611111111,
+            "nonzero_recall": 0.9090909091,
+            "precision": 0.1612903226,
+            "cost_fraction": 0.901,
+            "saving_fraction": 0.099
+          },
+          {
+            "h_steps": 8,
+            "flagged_units": 67,
+            "coverage": 0.9305555556,
+            "nonzero_recall": 1.0,
+            "precision": 0.1641791045,
+            "cost_fraction": 0.955,
+            "saving_fraction": 0.045
+          }
+        ],
+        "simple_trigger": {
+          "rule": "first divergent action-family pair == navigate>navigate",
+          "flagged_units": 20,
+          "coverage": 0.2777777778,
+          "nonzero_recall": 0.6363636364,
+          "precision": 0.35
+        },
+        "interpretation": "Early branch divergence enriches high-impact memory uses, but the cost advantage collapses when recall approaches confirmatory levels. Use only to prioritize audit order or allocate exploratory budget; never as a hard scientific gate.",
+        "standalone_paper_authorized": false,
+        "hard_gate_authorized": false,
+        "candidate_exclusion_authorized": false,
+        "formal_method_authorized": false,
+        "second_model_authorized": false,
+        "recommended_home": "research-system pre-experiment/update-governance scheduling heuristic; merge with impact triage rather than a standalone memory paper",
+        "next_action": "Archive B-8/B-9 standalone escalation. If reused elsewhere, treat branch amplification only as a soft priority score and independently verify outcomes for all confirmatory cases.",
+        "created_at": "2026-08-11T12:15:51+00:00"
+      },
+      "scientific_role": "retrospective failure explanation plus soft experiment-scheduling signal; does not revive B-8/B-9, authorize a new idea, or exclude confirmatory candidates"
     },
     "formal_method": {
       "status": "formal_method_hold",

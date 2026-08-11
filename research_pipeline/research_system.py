@@ -392,6 +392,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if (diagnosis.get("first_divergence") or {}).get("decision") != "WEAK_OR_NO_STATE_LOCALIZATION": errors.append("mem-xfer first-divergence localization decision mismatch")
     if (diagnosis.get("route_reproducibility") or {}).get("decision") != "REPRODUCIBLE_EARLY_BRANCH_CONTEXT_DEPENDENT_SIGN": errors.append("mem-xfer route reproducibility diagnosis mismatch")
     if (diagnosis.get("route_reproducibility") or {}).get("new_idea_authorized") is not False: errors.append("mem-xfer diagnosis must not auto-authorize a replacement idea")
+    audit_priority = diagnosis.get("audit_priority") or {}
+    if audit_priority.get("decision") != "MERGE_AS_SOFT_GOVERNANCE_SIGNAL": errors.append("mem-xfer branch-amplification audit signal must remain a soft-governance merge")
+    if audit_priority.get("hard_gate_authorized") is not False or audit_priority.get("candidate_exclusion_authorized") is not False: errors.append("mem-xfer branch amplification must never become a hard candidate-exclusion gate")
     if state["mem_xfer_workflow"].get("formal_method",{}).get("authorized") is not False: errors.append("mem-xfer formal method experiment must remain HOLD after the failed VOI screen")
     if state["mem_xfer_workflow"]["second_model"]["status"] != "second_model_hold": errors.append("mem-xfer second backbone must remain on HOLD unless the CPU-only full-support gate explicitly authorizes it")
     terminal_summary = state["human_terminal_ideas"]["summary"]
