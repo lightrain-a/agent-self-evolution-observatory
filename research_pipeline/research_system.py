@@ -24,6 +24,8 @@ from .live_pipeline import load_live_corpus
 from .pilot_registry import build_pilot_registry
 from .p0_mem_xfer_offline_analysis import build_mem_xfer_workflow_state
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
+from .p0_offline_qualification import build_p0_offline_qualification_state, write_p0_offline_qualification_state
+from .p0_realizability_suite import build_p0_realizability_suite, write_p0_realizability_suite
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
 from .pre_experiment_specs import GATES as PRE_EXPERIMENT_GATES, POLICY as PRE_EXPERIMENT_POLICY
 from .pre_p0_identifiability import build_pre_p0_identifiability_audit
@@ -187,8 +189,12 @@ def build_research_system_state() -> dict[str, Any]:
     experiment_iteration = build_experiment_iteration_state()
     pre_gpu_candidate_gates = build_pre_gpu_candidate_gate_state()
     human_terminal_ideas = build_human_terminal_state()
+    p0_realizability = build_p0_realizability_suite()
+    p0_offline_qualification = build_p0_offline_qualification_state()
     p0_admission = build_p0_admission_state()
     p0_admission_public = {"summary": p0_admission["summary"], "policy": p0_admission["policy"]}
+    p0_offline_public = {"summary": p0_offline_qualification["summary"], "policy": p0_offline_qualification["policy"]}
+    p0_realizability_public = {"summary": p0_realizability["summary"], "policy": p0_realizability["policy"]}
     repair_queue = build_repair_queue(idea_bank, collision_engine, pilot_registry, experiment_iteration)
     idea_discovery_v3 = build_idea_discovery_v3()
     idea_discovery_v31 = build_idea_discovery_v31()
@@ -244,6 +250,10 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_admission_transitioned":p0_admission["summary"]["transitioned_from_p0_ready"],
             "p0_admission_settings_complete":p0_admission["summary"]["settings_complete"],
             "p0_admission_execution_authorized":p0_admission["summary"]["execution_authorized"],
+            "p0_offline_checks_passed":p0_offline_qualification["summary"]["checks_passed"],
+            "p0_offline_checks_failed":p0_offline_qualification["summary"]["checks_failed"],
+            "p0_offline_checks_pending":p0_offline_qualification["summary"]["checks_pending"],
+            "p0_realizability_passed":p0_realizability["summary"]["synthetic_pass"],
             "solution_children":idea_discovery_v3["summary"]["raw_children"],
             "solution_shortlist":idea_discovery_v3["summary"]["internal_shortlist"],
             "pre_gpu_candidates":pre_gpu_candidate_gates["summary"]["total"],
@@ -285,6 +295,8 @@ def build_research_system_state() -> dict[str, Any]:
         "experiment_iteration":experiment_iteration,
         "human_terminal_ideas":human_terminal_ideas,
         "p0_admission":p0_admission_public,
+        "p0_offline_qualification":p0_offline_public,
+        "p0_realizability":p0_realizability_public,
         "repair_queue":repair_queue,
         "idea_discovery_v3":idea_discovery_v3,
         "idea_discovery_v31":idea_discovery_v31,
@@ -315,6 +327,8 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"mem-xfer-workflow", "pass":state["mem_xfer_workflow"]["full_table"]["status"] == "full_table_collected" and state["mem_xfer_workflow"]["offline_analysis"]["status"] == "offline_analysis_complete" and state["mem_xfer_workflow"]["second_model"]["status"] == "second_model_hold", "detail":{"full":state["mem_xfer_workflow"]["full_table"]["status"],"offline":state["mem_xfer_workflow"]["offline_analysis"]["status"],"support":state["mem_xfer_workflow"]["support_qualification"]["status"],"second_model":state["mem_xfer_workflow"]["second_model"]["status"]}},
         {"key":"human-terminal-ledger", "pass":state["human_terminal_ideas"]["summary"].get("human_parents") == 26 and (state["human_terminal_ideas"]["summary"].get("p0"),state["human_terminal_ideas"]["summary"].get("p0_ready"),state["human_terminal_ideas"]["summary"].get("merge"),state["human_terminal_ideas"]["summary"].get("drop")) == (13,0,6,7), "detail":state["human_terminal_ideas"]["summary"]},
         {"key":"p0-admission", "pass":state["p0_admission"]["summary"].get("active_p0") == 20 and state["p0_admission"]["summary"].get("admitted") == 20 and state["p0_admission"]["summary"].get("transitioned_from_p0_ready") == 16 and state["p0_admission"]["summary"].get("settings_complete") == 20, "detail":state["p0_admission"]["summary"]},
+        {"key":"p0-offline-qualification", "pass":state["p0_offline_qualification"]["summary"].get("ideas") == 16 and state["p0_offline_qualification"]["policy"].get("method_result_from_offline_qualification_forbidden") is True, "detail":state["p0_offline_qualification"]["summary"]},
+        {"key":"p0-realizability", "pass":state["p0_realizability"]["summary"].get("audited") == 14 and state["p0_realizability"]["policy"].get("cannot_emit_method_result") is True, "detail":state["p0_realizability"]["summary"]},
         {"key":"final-advisor-gate", "pass":state["summary"]["final_ready"] and state["summary"]["final_pass"] == state["summary"]["discussion_target"] and state["summary"]["final_revise"] == 0 and state["summary"]["final_block"] == 0, "detail":{"pass":state["summary"]["final_pass"],"target":state["summary"]["discussion_target"],"revise":state["summary"]["final_revise"],"block":state["summary"]["final_block"]}},
     ]
     return {"status":"healthy" if all(item["pass"] for item in checks) else "degraded", "checks":checks}
@@ -346,6 +360,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     terminal_summary = state["human_terminal_ideas"]["summary"]
     if terminal_summary.get("human_parents") != 26 or (terminal_summary.get("p0"), terminal_summary.get("p0_ready"), terminal_summary.get("merge"), terminal_summary.get("drop")) != (13,0,6,7): errors.append("human terminal ledger mismatch")
     if state["p0_admission"]["summary"].get("active_p0") != 20 or state["p0_admission"]["summary"].get("admitted") != 20 or state["p0_admission"]["summary"].get("transitioned_from_p0_ready") != 16 or state["p0_admission"]["summary"].get("settings_complete") != 20: errors.append("P0 admission ledger mismatch")
+    if state["p0_offline_qualification"]["summary"].get("ideas") != 16 or state["p0_offline_qualification"]["policy"].get("method_result_from_offline_qualification_forbidden") is not True: errors.append("P0 offline qualification policy mismatch")
+    if state["p0_realizability"]["summary"].get("audited") != 14 or state["p0_realizability"]["policy"].get("cannot_emit_method_result") is not True: errors.append("P0 realizability policy mismatch")
     if state["repair_queue"]["policy"].get("terminal_human_parent_repair_forbidden") is not True or state["repair_queue"]["policy"].get("absorbed_child_repair_forbidden") is not True: errors.append("terminal repair policy missing")
     if state["pilot_registry"]["summary"]["invalid_approval_files"] != 0: errors.append("invalid pilot approval files")
     if not state["summary"]["final_ready"] or state["summary"]["final_pass"] != state["summary"]["discussion_target"]: errors.append("final advisor gate not ready")
@@ -354,6 +370,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
 
 def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAULT_JS) -> dict[str, Any]:
     write_human_terminal_state()
+    write_p0_realizability_suite()
+    write_p0_offline_qualification_state()
     write_p0_admission_state()
     state=build_research_system_state()
     errors=validate_state(state)

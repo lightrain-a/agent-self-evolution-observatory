@@ -16,6 +16,10 @@ DAILY_ARTIFACTS = (
     "generated/human-terminal-idea-state.js",
     "generated/p0-admission-state.json",
     "generated/p0-admission-state.js",
+    "generated/p0-offline-qualification.json",
+    "generated/p0-offline-qualification.js",
+    "generated/p0-realizability-suite.json",
+    "generated/p0-realizability-suite.js",
     "generated/research-system-state.json",
     "generated/research-system-state.js",
 )

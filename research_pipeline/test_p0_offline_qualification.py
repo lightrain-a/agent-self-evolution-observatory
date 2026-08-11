@@ -1,0 +1,50 @@
+from __future__ import annotations
+
+import unittest
+from pathlib import Path
+
+from .config import StorageSettings, resolve_experiment_data_root
+from .p0_offline_qualification import build_p0_offline_qualification_state
+
+
+class P0OfflineQualificationTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        root=resolve_experiment_data_root(StorageSettings.from_env())
+        required=root/"pre-experiment-a1-screening-review-20260810.json"
+        if not required.exists():
+            raise unittest.SkipTest("machine-local P0 evidence is unavailable")
+        cls.state=build_p0_offline_qualification_state()
+
+    def test_real_and_synthetic_evidence_stay_separate(self) -> None:
+        s=self.state["summary"]
+        self.assertEqual(s["ideas"],16)
+        self.assertGreaterEqual(s["checks_passed"],20)
+        self.assertGreaterEqual(s["checks_failed"],3)
+        self.assertEqual(s["checks_synthetic_pass"],14)
+        self.assertTrue(self.state["policy"]["method_result_from_offline_qualification_forbidden"])
+        self.assertTrue(self.state["policy"]["same_batch_self_authorization_forbidden"])
+
+    def test_a3_and_e1_failures_are_not_overridden_by_synthetic_harnesses(self) -> None:
+        by_id={row["idea_id"]:row for row in self.state["cards"]}
+        self.assertEqual(by_id["regression-gated-self-evolution"]["checks"]["representability"]["status"],"fail")
+        self.assertEqual(by_id["workflow-generalization-certificate"]["checks"]["target_variation"]["status"],"fail")
+        self.assertEqual(by_id["workflow-generalization-certificate"]["checks"]["effect_variation"]["status"],"fail")
+        self.assertEqual(by_id["counterfactual-evolution-decision-controller"]["checks"]["representability"]["status"],"synthetic-pass")
+
+    def test_reused_artifacts_capture_current_blockers(self) -> None:
+        shared=self.state["shared_evidence"]
+        self.assertTrue(shared["a3_mastered_panel"]["passed"])
+        self.assertEqual(shared["a3_mastered_panel"]["panel_size"],6)
+        self.assertEqual(shared["a3_mastered_panel"]["mastered_candidates"],41)
+        self.assertEqual(shared["a6_a7_dataset"]["a6_nonprefix_interventions"],0)
+        self.assertEqual(shared["a6_a7_dataset"]["a7_same_state_four_action_rows"],0)
+        self.assertFalse(shared["e1"]["identifiable"])
+        self.assertFalse(shared["updater_competence"]["a1"]["passed"])
+        self.assertEqual(shared["updater_competence"]["a1"]["status"],"stop-substrate")
+        self.assertFalse(shared["updater_competence"]["a2"]["passed"])
+        self.assertAlmostEqual(shared["updater_competence"]["a2"]["evidence"]["nonzero_update_effect_fraction"],7/36)
+
+
+if __name__=="__main__":
+    unittest.main()

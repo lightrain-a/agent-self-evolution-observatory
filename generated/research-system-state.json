@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T04:47:28+00:00",
+  "generated_at": "2026-08-11T05:40:42+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "/data/wyt/agent-self-evolution-observatory/publish-persistent-governance-20260811-r3/generated/research-data",
@@ -75,7 +75,11 @@
     "p0_admission_active": 20,
     "p0_admission_transitioned": 16,
     "p0_admission_settings_complete": 20,
-    "p0_admission_execution_authorized": 2
+    "p0_admission_execution_authorized": 2,
+    "p0_offline_checks_passed": 26,
+    "p0_offline_checks_failed": 3,
+    "p0_offline_checks_pending": 53,
+    "p0_realizability_passed": 14
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -50592,6 +50596,44 @@
         "admission_method_training_authorized": false,
         "second_model_authorized": false
       },
+      "provenance_deviation": {
+        "schema_version": "1.0",
+        "type": "LIVE_SOURCE_SNAPSHOT_DEVIATION",
+        "run_stage": "full-support-table",
+        "process_pid": 1688090,
+        "process_started_at": "2026-08-11T03:38:27Z",
+        "loaded_module": "research_pipeline.p0_mem_xfer_support_enriched",
+        "loaded_function": "run_full_support_table",
+        "disk_source_replaced_after_process_import": true,
+        "disk_source_replaced_at": "2026-08-11T03:40:39Z",
+        "exact_loaded_source_snapshot_available": false,
+        "frozen_plan_hash": "47dbaebf7c0f26079ccc0d6116e8e66305331ba64a40e793e6abd8726daffc6b",
+        "thresholds_changed": false,
+        "scientific_plan_changed": false,
+        "support_rows_reused_exactly": true,
+        "duplicate_unit_arm_observed": false,
+        "scientific_authority_before_postrun_integrity_replay": "PROVISIONAL_ONLY",
+        "method_failure_authorized": false,
+        "admission_method_training_authorized": false,
+        "second_model_authorized": false,
+        "required_postrun_repair": "Independently replay every recorded ALFWorld action trace to verify environment success and audit every unit/arm against the frozen plan before granting paper-level authority. Preserve sequencing-deviation.json as separate provenance evidence."
+      },
+      "sequencing_deviation": {
+        "schema_version": "1.0",
+        "type": "PRE_GPU_AUDIT_SEQUENCE_DEVIATION",
+        "new_executions_before_full_stage_audit_completed": 1,
+        "audit_reads_full_stage_outcomes": false,
+        "audit_path": "/home/hdd/yutong/agent-evolution-p0-data/pre-gpu/p0-mem-xfer-support-full-audit.json",
+        "audit_sha256": "8a924dee7c56e6e17ca0d1fe14259d1093a0135f7c913ea01876a23fb810c621",
+        "audit_decision": "PASS",
+        "plan_hash": "47dbaebf7c0f26079ccc0d6116e8e66305331ba64a40e793e6abd8726daffc6b",
+        "thresholds_changed": false,
+        "scientific_plan_changed": false,
+        "method_failure_authorized": false,
+        "second_model_authorized": false,
+        "resolution": "Continue the unchanged frozen full-stage block; preserve this sequencing deviation in provenance."
+      },
+      "scientific_authority": "provisional-only",
       "authorized": true
     },
     "second_model": {
@@ -50943,6 +50985,27 @@
           "revise": 0,
           "block": 0
         }
+      },
+      {
+        "key": "p0-offline-qualification",
+        "pass": true,
+        "detail": {
+          "ideas": 16,
+          "checks_passed": 26,
+          "checks_failed": 3,
+          "checks_pending": 53,
+          "checks_synthetic_pass": 14,
+          "gpu0_hold_or_conditional": 8
+        }
+      },
+      {
+        "key": "p0-realizability",
+        "pass": true,
+        "detail": {
+          "audited": 14,
+          "synthetic_pass": 14,
+          "synthetic_fail": 0
+        }
       }
     ]
   },
@@ -50982,6 +51045,34 @@
         "IMPLEMENTATION-ERROR",
         "BUDGET-STOP"
       ]
+    }
+  },
+  "p0_offline_qualification": {
+    "summary": {
+      "ideas": 16,
+      "checks_passed": 26,
+      "checks_failed": 3,
+      "checks_pending": 53,
+      "checks_synthetic_pass": 14,
+      "gpu0_hold_or_conditional": 8
+    },
+    "policy": {
+      "real_reused_may_unblock": true,
+      "synthetic_harness_may_not_unblock_reality": true,
+      "same_batch_self_authorization_forbidden": true,
+      "method_result_from_offline_qualification_forbidden": true
+    }
+  },
+  "p0_realizability": {
+    "summary": {
+      "audited": 14,
+      "synthetic_pass": 14,
+      "synthetic_fail": 0
+    },
+    "policy": {
+      "representability_only": true,
+      "cannot_unblock_reality_or_effect_variation": true,
+      "cannot_emit_method_result": true
     }
   }
 }

@@ -212,6 +212,9 @@ def main() -> None:
           auditItems: document.querySelectorAll('.terminal-audit-item').length,
           admissionPanel: document.querySelectorAll('#p0-admission-settings').length,
           admissionRows: document.querySelectorAll('.p0-admission-table tbody tr').length,
+          offlinePanel: document.querySelectorAll('#p0-offline-qualification').length,
+          offlineSummary: window.P0_OFFLINE_QUALIFICATION?.summary || {},
+          realizabilitySummary: window.P0_REALIZABILITY_SUITE?.summary || {},
           admissionSummary: window.P0_ADMISSION_STATE?.summary || {},
           legacyArchives: document.querySelectorAll('.experiment-legacy-archive').length,
           toc2: document.querySelectorAll('.toc-level-2').length,
@@ -263,6 +266,8 @@ def main() -> None:
         require((experiments["terminalPortfolio"],experiments["terminalRows"],experiments["terminalP0"],experiments["terminalP0Ready"]) == (1,20,20,0), f"terminal experiment portfolio is not aligned with Paper Ideas: {experiments}")
         require((experiments["terminalStarted"],experiments["terminalPending"],experiments["auditQueue"],experiments["auditItems"]) == (4,16,1,16), f"started/pending audit split is wrong: {experiments}")
         require(experiments["admissionPanel"] == 1 and experiments["admissionRows"] == 16 and experiments["admissionSummary"].get("active_p0") == 20 and experiments["admissionSummary"].get("transitioned_from_p0_ready") == 16 and experiments["admissionSummary"].get("settings_complete") == 20, f"P0 admission/settings panel is incomplete: {experiments}")
+        require(experiments["offlinePanel"] == 1 and experiments["offlineSummary"].get("ideas") == 16 and experiments["offlineSummary"].get("checks_failed",0) >= 3 and experiments["offlineSummary"].get("checks_synthetic_pass") == 14, f"offline qualification panel/state is incomplete: {experiments}")
+        require(experiments["realizabilitySummary"].get("audited") == 14 and experiments["realizabilitySummary"].get("synthetic_pass") == 14, f"synthetic realizability summary is wrong: {experiments}")
         require(experiments["legacyArchives"] >= 3, f"legacy experiment evidence must be demoted into traceability archives: {experiments['legacyArchives']}")
         require((experiments["toc2"], experiments["toc3"], experiments["toc4"]) == (4, 3, 0), f"experiments TOC hierarchy is wrong: {experiments['toc2']}/{experiments['toc3']}/{experiments['toc4']}")
         require(experiments["board"] == 1 and experiments["cards"] == 5, f"experiment queue is incomplete: {experiments['board']}/{experiments['cards']}")

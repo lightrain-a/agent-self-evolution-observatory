@@ -109,6 +109,8 @@ class ResearchSystemTest(unittest.TestCase):
         if workflow["full_support"]["status"] != "full_support_ready":
             self.assertGreaterEqual(int(progress.get("completed_episodes") or 0), 72)
             self.assertEqual(int(progress.get("total_episodes") or 0), 216)
+        if workflow["full_support"].get("provenance_deviation"):
+            self.assertEqual(workflow["full_support"]["scientific_authority"], "provisional-only")
         self.assertEqual(workflow["second_model"]["status"], "second_model_hold")
         self.assertFalse(workflow["second_model"]["authorized"])
 
@@ -151,6 +153,10 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["p0_admission_active"], 20)
         self.assertEqual(self.state["summary"]["p0_admission_transitioned"], 16)
         self.assertEqual(self.state["summary"]["p0_admission_settings_complete"], 20)
+        self.assertEqual(self.state["p0_offline_qualification"]["summary"]["ideas"], 16)
+        self.assertEqual(self.state["p0_realizability"]["summary"]["audited"], 14)
+        self.assertEqual(self.state["p0_realizability"]["summary"]["synthetic_pass"], 14)
+        self.assertTrue(self.state["p0_offline_qualification"]["policy"]["method_result_from_offline_qualification_forbidden"])
         self.assertEqual(self.state["summary"]["discussion_ready"], 20)
         self.assertEqual(self.state["summary"]["discussion_target"], 20)
         self.assertTrue(self.state["summary"]["final_ready"])

@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "idea_id": "regression-gated-self-evolution",
+  "phase": "P0-qualification-probe-fidelity",
+  "models": ["Qwen2.5-7B-Instruct"],
+  "datasets": ["ALFWorld"],
+  "seeds": [42],
+  "execution_authorized": false,
+  "blocked_by": ["updater-competence", "fresh-candidate-batch-not-collected"],
+  "scope": {
+    "collector_compatibility": "update-trust-region ALFWorld candidate stream only",
+    "policy_mode": "react-family",
+    "stratify_by_task_type": true,
+    "update_surface": "persistent-prompt-patch candidate stream",
+    "discovery_failures_target": 8,
+    "candidate_updates_target": [8, 8],
+    "behavior_probes": 4,
+    "hidden_original_tasks_target": 16,
+    "hidden_tasks_per_candidate": 6,
+    "discovery_episode_cap": 16,
+    "max_steps": 50,
+    "splits": {
+      "discovery": "train",
+      "behavior_probes": "eval_in_distribution",
+      "hidden": "eval_out_of_distribution"
+    },
+    "mastered_probe_panel": {
+      "artifact": "pre-gpu/a3-mastered-probe-panel-v1.json",
+      "sha256": "0fdcf97245e25e1057f0631a405fe3eca53f8b9ce7af7779e65cb93d5ef789ca",
+      "panel_size": 6,
+      "mastered_candidates": 41,
+      "task_family_coverage": 5
+    }
+  },
+  "analysis": {
+    "minimum_harmful_candidates": 3,
+    "minimum_mastered_panel_auc": 0.65,
+    "fresh_candidate_validation_required": true,
+    "same_candidate_batch_may_select_and_validate_panel": false,
+    "method_result_from_this_qualification_forbidden": true
+  },
+  "resource_cap": {
+    "max_gpus": 1,
+    "gpu_hours": 2.0,
+    "wall_hours": 3.0,
+    "episodes": 140,
+    "estimated_worst_case_episodes": 124
+  },
+  "prerequisites": {
+    "mastered_probe_panel_pass": true,
+    "updater_competence_required": true,
+    "updater_competence_pass": false,
+    "updater_competence_evidence": "p0_a1_screening_config.json::pre_experiment.updater_competence",
+    "reason": "The current prompt-patch updater/action stream is still below the frozen competence requirement. The mastered panel may be frozen now, but fresh model collection must not start until updater competence is repaired."
+  },
+  "outputs": [
+    "candidate-patches.jsonl",
+    "candidate-evaluation.jsonl",
+    "mastered-probe-replay.json",
+    "fresh-candidate-fidelity.json",
+    "cost.json",
+    "progress.json"
+  ]
+}

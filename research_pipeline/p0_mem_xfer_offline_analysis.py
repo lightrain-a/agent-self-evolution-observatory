@@ -237,6 +237,8 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
     full_support_audit = _read_json(support_dir / "full-pre-gpu-audit.json")
     full_support_progress = _read_json(full_support_dir / "progress.json") or {}
     full_support_decision = _read_json(full_support_dir / "decision.json")
+    full_support_provenance_deviation = _read_json(full_support_dir / "source-provenance-deviation.json")
+    full_support_sequencing_deviation = _read_json(full_support_dir / "sequencing-deviation.json")
     expand_allowed = bool(offline_decision and offline_decision.get("workflow_decision") == "EXPAND")
     if not expand_allowed:
         support_status = "support_qualification_hold"
@@ -293,6 +295,9 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
         "full_support": {
             "status": full_support_status, "progress": full_support_progress,
             "decision": full_support_decision, "pre_gpu_audit": full_support_audit,
+            "provenance_deviation": full_support_provenance_deviation,
+            "sequencing_deviation": full_support_sequencing_deviation,
+            "scientific_authority": "provisional-only" if full_support_provenance_deviation else ("decision-authority" if full_support_decision else "incomplete"),
             "authorized": support_status == "support_qualification_pass" and bool(full_support_audit and full_support_audit.get("execution_ready") is True),
         },
         "second_model": {

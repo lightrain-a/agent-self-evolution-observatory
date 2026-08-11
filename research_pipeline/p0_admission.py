@@ -9,6 +9,7 @@ from .config import PROJECT_ROOT
 from .human_terminal_state import load_independent_methods, load_parents
 from .pre_experiment_specs import GATES as OUTER_GATES
 from .pre_p0_identifiability import CHECKS as PRE_P0_CHECKS
+from .p0_offline_qualification import build_p0_offline_qualification_state
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "p0-admission-state.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "p0-admission-state.js"
@@ -129,25 +130,36 @@ def _gpu0(idea_id: str) -> dict[str,str]:
     if idea_id in {"regression-gated-self-evolution","lineage-aware-rollback","workflow-generalization-certificate"}: return {"offline":"pass","reality":"pass","phenomenon":"pass-existing-artifact","next":"Compile the current frozen mechanism against Pre-P0 before execution."}
     return {"offline":"pass","reality":"pass","phenomenon":"pending","next":"Run the frozen offline/trace phenomenon qualification before any GPU method run."}
 
-def _preflight(idea_id: str) -> dict[str, Any]:
+def _preflight(idea_id: str, offline: dict[str, Any] | None = None) -> dict[str, Any]:
     running=idea_id in {"replicated-effect-memory-gate","cross-task-effect-transport-certificate"}
-    gpu0=_gpu0(idea_id)
+    gpu0=(offline or {}).get("gpu0") or _gpu0(idea_id)
     pre=[]
+    empirical=(offline or {}).get("checks") or {}
     for c in PRE_P0_CHECKS:
         ok=running or c["key"] in {"claim_alignment","cost_plan","provenance_plan","interpretation_matrix"}
-        pre.append({"key":c["key"],"status":"pass" if ok else "pending-evidence"})
+        status="pass" if ok else "pending-evidence"
+        if c["key"] in empirical and empirical[c["key"]].get("status") in {"pass","fail"}:
+            status=empirical[c["key"]]["status"]
+        elif c["key"]=="representability" and empirical.get(c["key"],{}).get("status")=="synthetic-pass":
+            status="pass"
+        pre.append({"key":c["key"],"status":status,"evidence":empirical.get(c["key"],{}).get("evidence","")})
     outer=[]
+    competence_pass=any(x["key"]=="competence_window" and x["status"]=="pass" for x in pre)
     for g in OUTER_GATES:
-        ok=running or g["key"] in {"parameter_provenance","statistical_resolution","compute_graph","observability_recovery","outcome_semantics"}
+        ok=running or g["key"] in {"parameter_provenance","statistical_resolution","compute_graph","observability_recovery","outcome_semantics"} or (g["key"]=="baseline_competence" and competence_pass)
         outer.append({"key":g["key"],"status":"pass" if ok else "pending-evidence"})
+    updater=(offline or {}).get("updater_competence") or {"status":"pass" if running else "pending-evidence","passed":running}
     blockers=[] if running else []
     if not running:
-        if gpu0["phenomenon"] not in {"pass","pass-existing-artifact"}: blockers.append("gpu0-phenomenon")
-        blockers += ["pre-p0-empirical-checks","updater-competence","outer-identifiability/competence/throughput","runtime-smoke"]
+        gpu0_status=str(gpu0.get("phenomenon") or gpu0.get("status") or "pending")
+        if gpu0_status not in {"pass","pass-existing-artifact","pass-existing-target"}: blockers.append("gpu0-phenomenon")
+        blockers.append("pre-p0-empirical-checks")
+        if not updater.get("passed"): blockers.append("updater-competence")
+        blockers += ["outer-identifiability/competence/throughput","runtime-smoke"]
     return {
       "gpu0":gpu0,
       "pre_p0":{"passed":sum(x["status"]=="pass" for x in pre),"total":len(pre),"checks":pre},
-      "updater_competence":{"status":"pass" if running else "pending-evidence","not_a_ninth_gate":True},
+      "updater_competence":{**updater,"not_a_ninth_gate":True},
       "pre_experiment":{"passed":sum(x["status"]=="pass" for x in outer),"total":len(outer),"gates":outer},
       "runtime_throughput":{"status":"pass" if running else "pending-harness-smoke"},
       "execution_authorized":running,"blockers":blockers,
@@ -164,6 +176,8 @@ def _setup(idea_id: str) -> dict[str, Any]:
 
 def build_p0_admission_state() -> dict[str, Any]:
     rows={**load_parents(),**load_independent_methods()}
+    offline_state=build_p0_offline_qualification_state()
+    offline_by_id={row["idea_id"]:row for row in offline_state.get("cards") or []}
     active=[(i,r) for i,r in rows.items() if r.get("terminal_state")=="p0"]
     active.sort(key=lambda x:(str(x[1].get("group") or "Z"),str(x[1].get("code") or x[0])))
     cards=[]; seen=set()
@@ -184,7 +198,7 @@ def build_p0_admission_state() -> dict[str, Any]:
           "title":row.get("title") or row.get("final_parent_mechanism") or {"en":idea_id,"zh":idea_id},
           "lifecycle":"p0","p0_entry":entry,
           "admission_status":"admitted" if all(x["pass"] for x in checks) else "blocked",
-          "admission_checks":checks,"contract":contract,"setup":setup,"execution_preflight":_preflight(idea_id)})
+          "admission_checks":checks,"contract":contract,"setup":setup,"execution_preflight":_preflight(idea_id,offline_by_id.get(idea_id))})
     transitioned=[c for c in cards if (c.get("p0_entry") or {}).get("date")=="2026-08-11"]
     return {"schema_version":"1.0","generated_at":_now(),"policy":POLICY,
       "summary":{"active_p0":len(cards),"admitted":sum(c["admission_status"]=="admitted" for c in cards),
