@@ -1,16 +1,17 @@
 {
   "schema_version": "1.0",
   "decision_date": "2026-08-11",
-  "generated_at": "2026-08-11T13:04:09+00:00",
+  "generated_at": "2026-08-11T17:32:44+00:00",
   "source_of_truth_priority": [
-    "latest-human-review",
     "explicit-user-update",
+    "latest-human-review",
     "real-experiment",
     "new-multimodel-review",
     "historical-automatic-review"
   ],
   "policy": {
-    "terminal_parent_repair_forbidden": true,
+    "terminal_parent_repair_forbidden": false,
+    "terminal_parent_repair_allowed_until_p0_or_merge": true,
     "absorbed_child_standalone_forbidden": true,
     "absorbed_child_repair_queue_forbidden": true,
     "absorbed_child_independent_p0_forbidden": true,
@@ -19,10 +20,12 @@
   },
   "summary": {
     "human_parents": 26,
-    "p0": 13,
+    "p0": 20,
     "p0_ready": 0,
     "merge": 6,
-    "drop": 7,
+    "drop": 0,
+    "p0_resolved_lineages": 26,
+    "revived_to_p0": 7,
     "absorbed_children": 17,
     "independent_methods": 7
   },
@@ -459,10 +462,9 @@
     "self-label-confidence-flow": {
       "code": "C-1",
       "group": "C",
-      "terminal_state": "drop",
+      "terminal_state": "p0",
       "final_parent_mechanism": {
-        "zh": "本周期停止",
-        "en": "Stopped this cycle"
+        "en": "Maintain a frozen label-lineage graph and effective-evidence weights; each pseudo-label gets a persistent accept, quarantine, or down-weight action across later rounds."
       },
       "terminal_reason": {
         "zh": "人工要求先有真实/公开 4–6 轮 self-label logs，验证 cross-round inheritance、same-source reuse 与 lineage error enrichment；当前 repo 只有 planned pilot。",
@@ -470,8 +472,56 @@
       },
       "absorbed_children": [],
       "exact_stop": {
-        "zh": "当前周期 DROP；自动 reviewer 可行性判断不能升回 P0。",
-        "en": "DROP this cycle; automated reviewer plausibility cannot promote it back to P0."
+        "en": "Stop/merge into ordinary pseudo-label filtering if lineage enrichment is absent or a same-information direct/simple source-discount baseline is equivalent."
+      },
+      "revival_history": [
+        {
+          "date": "2026-08-12",
+          "prior_terminal_state": "drop",
+          "prior_terminal_reason": {
+            "zh": "人工要求先有真实/公开 4–6 轮 self-label logs，验证 cross-round inheritance、same-source reuse 与 lineage error enrichment；当前 repo 只有 planned pilot。",
+            "en": "Human review requires real/public 4–6-round self-label logs establishing cross-round inheritance, same-source reuse, and lineage error enrichment; the repo currently contains only a planned pilot."
+          }
+        }
+      ],
+      "title": {
+        "en": "Lineage-Conditioned Pseudo-Label Quarantine",
+        "zh": "谱系条件伪标签隔离器"
+      },
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "revival": {
+        "revision": "R4.0",
+        "changed_assumption": "Repeated self-labels from one ancestor are correlated evidence; learn persistent lineage-conditioned discount/quarantine rather than confidence flow."
+      },
+      "strongest_baseline": {
+        "en": "Same-feature capacity-matched direct history classifier plus confidence, EMA-teacher, and simple source-discount rules."
+      },
+      "pre_p0_gate": {
+        "en": "Require same-ancestor error enrichment beyond confidence-matched independent sources and >=20% held-out decision disagreement versus the strongest direct baseline."
+      },
+      "minimum_p0": {
+        "en": "Freeze 4-6 rounds and >=200 lineage-linked label decisions; hold out ancestors and later rounds; compare false accepts, clean-label retention, and next-round utility at matched accepted count."
+      },
+      "economy_contract": {
+        "substrate_inventory": {
+          "effective_candidates_min": 40,
+          "fresh_heldout_min": 80,
+          "reserve_fraction_min": 0.25,
+          "target_variation_rule": "correct/incorrect labels from repeated and independent lineages"
+        },
+        "causal_unit": "pseudo-label decision",
+        "prediction_unit": "pseudo-label decision",
+        "effect_observable": "future-round truth error and training-utility delta",
+        "effect_moderators": "ancestor, depth, round, confidence, task family",
+        "effect_stability_scope": "unseen ancestors and later rounds",
+        "aggregation_risk": "same-ancestor descendants are correlated",
+        "cheapest_falsifier": "CPU lineage replay versus matched-confidence independent sources and a same-feature classifier",
+        "decision_changing_outcomes": "enrichment+disagreement permits P0 collection; equivalence forces merge/stop",
+        "abandonment_condition": "no enrichment or same-information equivalence"
       }
     },
     "evaluator-coadaptation-guard": {
@@ -545,10 +595,9 @@
     "self-correction-collapse-detector": {
       "code": "C-4",
       "group": "C",
-      "terminal_state": "drop",
+      "terminal_state": "p0",
       "final_parent_mechanism": {
-        "zh": "本周期停止",
-        "en": "Stopped this cycle"
+        "en": "Freeze a policy over replan/retrieve/rewrite/rollback/stop from failure signature, previous mode, and verifier delta; no test-time retraining."
       },
       "terminal_reason": {
         "zh": "问题大但需要更大范围调研，本轮先搁置。",
@@ -556,17 +605,64 @@
       },
       "absorbed_children": [],
       "exact_stop": {
-        "zh": "本周期不自动复活。",
-        "en": "No automatic revival this cycle."
+        "en": "Stop/merge if repetition caps, shallow CART, or A-2-style rules match under identical state information and calls."
+      },
+      "revival_history": [
+        {
+          "date": "2026-08-12",
+          "prior_terminal_state": "drop",
+          "prior_terminal_reason": {
+            "zh": "问题大但需要更大范围调研，本轮先搁置。",
+            "en": "Important problem but requires broader research; stopped for this cycle."
+          }
+        }
+      ],
+      "title": {
+        "en": "Self-Correction Mode-Transition Controller",
+        "zh": "自纠正模式转移控制器"
+      },
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "revival": {
+        "revision": "R4.0",
+        "changed_assumption": "Learn a persistent correction-mode transition policy rather than a scalar collapse detector."
+      },
+      "strongest_baseline": {
+        "en": "Depth-3 CART/finite-state rule on identical state, fixed order, repetition cap, entropy heuristic, and A-2-style stopping at identical calls."
+      },
+      "pre_p0_gate": {
+        "en": "Require >=3 correction modes, nontrivial order effects, and >=20% held-out decision disagreement versus the strongest shallow rule; otherwise merge into A-2/A-3."
+      },
+      "minimum_p0": {
+        "en": "Use >=30 failures with <=3 correction rounds, frozen candidate traces, failure-family holdout, and matched-call recovery/regression evaluation."
+      },
+      "economy_contract": {
+        "substrate_inventory": {
+          "effective_candidates_min": 30,
+          "fresh_heldout_min": 12,
+          "reserve_fraction_min": 0.25,
+          "target_variation_rule": "three correction modes with beneficial/destructive transitions"
+        },
+        "causal_unit": "correction-decision state",
+        "prediction_unit": "correction-decision state",
+        "effect_observable": "verified recovery/regression after a mode choice",
+        "effect_moderators": "failure family, previous mode, verifier delta, depth",
+        "effect_stability_scope": "held-out failure families and mode sequences",
+        "aggregation_risk": "episode success can hide order effects",
+        "cheapest_falsifier": "offline same-trace comparison versus repetition caps and depth-3 CART",
+        "decision_changing_outcomes": "mode-order variation+disagreement permits P0; equivalence forces merge",
+        "abandonment_condition": "shallow-rule equivalence or no mode-order effect"
       }
     },
     "intervention-validated-self-correction": {
       "code": "C-5",
       "group": "C",
-      "terminal_state": "drop",
+      "terminal_state": "p0",
       "final_parent_mechanism": {
-        "zh": "本周期停止 RL/self-correction",
-        "en": "RL/self-correction stopped this cycle"
+        "en": "Share the correction generator; compute delete/insert necessity-sufficiency signatures and freeze a commit/reject gate before hidden future tasks open."
       },
       "terminal_reason": {
         "zh": "人工明确本轮暂不涉及 RL/self-correction。",
@@ -574,8 +670,56 @@
       },
       "absorbed_children": [],
       "exact_stop": {
-        "zh": "本周期不自动复活。",
-        "en": "No automatic revival this cycle."
+        "en": "Merge into A-3 if A-3 or a same-feature threshold is equivalent, or stop if intervention signatures do not predict future commit utility."
+      },
+      "revival_history": [
+        {
+          "date": "2026-08-12",
+          "prior_terminal_state": "drop",
+          "prior_terminal_reason": {
+            "zh": "人工明确本轮暂不涉及 RL/self-correction。",
+            "en": "Human review explicitly excludes RL/self-correction this cycle."
+          }
+        }
+      ],
+      "title": {
+        "en": "Intervention-Certified Correction Commit Gate",
+        "zh": "干预认证纠错提交门"
+      },
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "revival": {
+        "revision": "R4.0",
+        "changed_assumption": "Study persistent correction commitment from matched deletion/insertion necessity-sufficiency evidence, not generic self-correction/RL."
+      },
+      "strongest_baseline": {
+        "en": "A-3 regression panel, current gain, success-only admission, and simple thresholds using identical necessity/sufficiency features at matched calls and accepted count."
+      },
+      "pre_p0_gate": {
+        "en": "Require >=20% commit-decision disagreement versus A-3/simple thresholds plus additional signal for future harm/benefit on existing traces."
+      },
+      "minimum_p0": {
+        "en": "Freeze >=24 candidates, 8 probes, and a 24-task hidden pool; equalize intervention budgets and compare harmful commits/retained gain at matched accepted count."
+      },
+      "economy_contract": {
+        "substrate_inventory": {
+          "effective_candidates_min": 24,
+          "fresh_heldout_min": 24,
+          "reserve_fraction_min": 0.25,
+          "target_variation_rule": "beneficial, neutral, and harmful persistent corrections"
+        },
+        "causal_unit": "correction candidate",
+        "prediction_unit": "correction candidate",
+        "effect_observable": "future-task utility after persistent commit",
+        "effect_moderators": "failure family, correction type, deletion effect, insertion effect",
+        "effect_stability_scope": "held-out correction sources and future tasks",
+        "aggregation_risk": "current repair can mask later negative transfer",
+        "cheapest_falsifier": "offline delete/insert audit versus A-3 and same-feature thresholds",
+        "decision_changing_outcomes": "extra disagreement+future-utility signal permits P0; equivalence merges into A-3",
+        "abandonment_condition": "A-3/simple-threshold equivalence or no future signal"
       }
     },
     "correction-policy-credit": {
@@ -642,10 +786,9 @@
     "failure-frontier-curriculum": {
       "code": "D-2",
       "group": "D",
-      "terminal_state": "drop",
+      "terminal_state": "p0",
       "final_parent_mechanism": {
-        "zh": "本周期停止",
-        "en": "Stopped this cycle"
+        "en": "Freeze a typed mutation library and selector; each version chooses operators from current failure signatures to generate later training tasks without target-reward search."
       },
       "terminal_reason": {
         "zh": "当前自动 curriculum 场景不够成熟。",
@@ -653,8 +796,56 @@
       },
       "absorbed_children": [],
       "exact_stop": {
-        "zh": "本周期不自动复活。",
-        "en": "No automatic revival this cycle."
+        "en": "Merge into D-1/ordinary curriculum if uniform, uncertainty, or direct-yield selection is equivalent or gains come only from more samples."
+      },
+      "revival_history": [
+        {
+          "date": "2026-08-12",
+          "prior_terminal_state": "drop",
+          "prior_terminal_reason": {
+            "zh": "当前自动 curriculum 场景不够成熟。",
+            "en": "The current automatic-curriculum setting is not mature enough."
+          }
+        }
+      ],
+      "title": {
+        "en": "Cross-Version Boundary Mutation Policy",
+        "zh": "跨版本边界变异策略"
+      },
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "revival": {
+        "revision": "R4.0",
+        "changed_assumption": "Use a frozen selector over verifier-approved semantics-preserving boundary mutation operators, not an online difficulty scheduler."
+      },
+      "strongest_baseline": {
+        "en": "Uniform fuzzing, failure-frequency, uncertainty sampling, D-1 verifier-filtered generation, and a same-feature direct mutation-yield predictor."
+      },
+      "pre_p0_gate": {
+        "en": "Require >=3 mutation classes with rank changes across versions and nonzero held-out-version regret differences versus direct/frequency baselines."
+      },
+      "minimum_p0": {
+        "en": "Use >=3 sequential agent versions and 30 typed mutation operators with fixed train tokens; hold out the final version/task family and measure boundary coverage and next-version utility."
+      },
+      "economy_contract": {
+        "substrate_inventory": {
+          "effective_candidates_min": 30,
+          "fresh_heldout_min": 20,
+          "reserve_fraction_min": 0.25,
+          "target_variation_rule": "mutation utility rankings vary across versions while verifier validity is fixed"
+        },
+        "causal_unit": "mutation-operator application",
+        "prediction_unit": "mutation-operator application",
+        "effect_observable": "verified boundary yield and next-version training utility",
+        "effect_moderators": "model version, failure family, mutation type, task family",
+        "effect_stability_scope": "held-out version and task family",
+        "aggregation_risk": "average difficulty can hide version-specific utility reversals",
+        "cheapest_falsifier": "CPU mutation table with held-out-version regret against simple controls",
+        "decision_changing_outcomes": "cross-version ranking variation+selector headroom permits P0",
+        "abandonment_condition": "no ranking variation or strongest selector equivalence"
       }
     },
     "curriculum-drift-controller": {
@@ -766,10 +957,9 @@
     "world-model-error-gated-learning": {
       "code": "F-1",
       "group": "F",
-      "terminal_state": "drop",
+      "terminal_state": "p0",
       "final_parent_mechanism": {
-        "zh": "本周期停止",
-        "en": "Stopped this cycle"
+        "en": "Use independent true transitions; only decision-changing residuals may update the world-model residual adapter while the policy remains frozen."
       },
       "terminal_reason": {
         "zh": "严格服从人工 gate：需先与子龙确认 real continual-adaptation scenario、重做 novelty audit、精确定义 persistent update object；当前 repo 仅有 scenario-check，无确认记录。",
@@ -777,17 +967,64 @@
       },
       "absorbed_children": [],
       "exact_stop": {
-        "zh": "本周期 DROP；确认记录出现前不得自动升 P0。",
-        "en": "DROP this cycle; no automatic P0 promotion before a confirmation record exists."
+        "en": "Stop if value-aware/CVAML or direct action-disagreement is equivalent, or if genuine decision-changing cases are too rare."
+      },
+      "revival_history": [
+        {
+          "date": "2026-08-12",
+          "prior_terminal_state": "drop",
+          "prior_terminal_reason": {
+            "zh": "严格服从人工 gate：需先与子龙确认 real continual-adaptation scenario、重做 novelty audit、精确定义 persistent update object；当前 repo 仅有 scenario-check，无确认记录。",
+            "en": "Strictly follows the human gate: first confirm a real continual-adaptation scenario with Zilong, rerun novelty audit, and precisely define the persistent update object; the repo contains only scenario-check and no confirmation record."
+          }
+        }
+      ],
+      "title": {
+        "en": "Decision-Conditioned World-Model Residual Adapter",
+        "zh": "决策条件世界模型残差适配器"
+      },
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "revival": {
+        "revision": "R4.0",
+        "changed_assumption": "Use a localized residual adapter to a frozen world model; candidate transition errors matter only if correcting them changes frozen-policy action/value ordering."
+      },
+      "strongest_baseline": {
+        "en": "Learn-all, residual-magnitude top-k, random equal-count, value-aware/CVAML-style weighting, and same-data direct action-disagreement selection."
+      },
+      "pre_p0_gate": {
+        "en": "In exact-dynamics MDP/gridworld, decision-changing labels must not reduce to magnitude/value-aware scoring and must disagree on >=20% candidates versus the strongest baseline."
+      },
+      "minimum_p0": {
+        "en": "Freeze a small world model+policy, collect >=100 transition errors with disjoint hidden state regions, update only the adapter, and use <=50% of learn-all transitions."
+      },
+      "economy_contract": {
+        "substrate_inventory": {
+          "effective_candidates_min": 40,
+          "fresh_heldout_min": 40,
+          "reserve_fraction_min": 0.25,
+          "target_variation_rule": "action-changing and action-invariant residuals under a frozen policy"
+        },
+        "causal_unit": "transition residual",
+        "prediction_unit": "transition residual",
+        "effect_observable": "hidden action/value-order correction and downstream utility",
+        "effect_moderators": "state region, action, residual type, policy margin",
+        "effect_stability_scope": "unseen state regions under frozen policy",
+        "aggregation_risk": "large error can be irrelevant while small error crosses an action margin",
+        "cheapest_falsifier": "tabular/gridworld truth versus magnitude, value-aware, and direct selectors",
+        "decision_changing_outcomes": "non-reducible decision-changing subset permits P0",
+        "abandonment_condition": "value-aware/direct equivalence or insufficient action-changing support"
       }
     },
     "irreversible-action-counterfactuals": {
       "code": "F-2",
       "group": "F",
-      "terminal_state": "drop",
+      "terminal_state": "p0",
       "final_parent_mechanism": {
-        "zh": "本周期停止",
-        "en": "Stopped this cycle"
+        "en": "Use predecessor deletion/substitution on failing counterfactuals to induce state-predicate -> forbidden-action/required-checkpoint clauses enforced by an external executor."
       },
       "terminal_reason": {
         "zh": "verified counterfactuals + simulator-off persistent memory 仍主要是 data generation/evaluation design，独立 method substance 不足。",
@@ -795,21 +1032,64 @@
       },
       "absorbed_children": [],
       "strongest_baseline": {
-        "zh": "hand rules；test-time counterfactual planner；matched simulator calls。",
-        "en": "Hand rules; test-time counterfactual planner; matched simulator calls."
+        "en": "Same-label capacity-matched direct risk classifier/shield, hand irreversible mask, and nearest failed-trajectory memory with equal simulator calls and runtime checks."
       },
       "exact_stop": {
-        "zh": "不得换名复活；只有实质不同的 persistent method 才能重新立项。",
-        "en": "Do not revive under a new name; only a materially different persistent method can create a new direction."
+        "en": "Stop/merge into generic shielding if the same-capacity direct shield matches the held-out safety/false-block frontier or clauses require a stronger runtime oracle."
+      },
+      "revival_history": [
+        {
+          "date": "2026-08-12",
+          "prior_terminal_state": "drop",
+          "prior_terminal_reason": {
+            "zh": "verified counterfactuals + simulator-off persistent memory 仍主要是 data generation/evaluation design，独立 method substance 不足。",
+            "en": "Verified counterfactuals plus simulator-off persistent memory remain primarily a data-generation/evaluation design with insufficient standalone method substance."
+          }
+        }
+      ],
+      "title": {
+        "en": "Irreversibility-Precondition Compiler",
+        "zh": "不可逆前置条件编译器"
+      },
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "revival": {
+        "revision": "R4.0",
+        "changed_assumption": "Counterfactual rollouts are supervision only; persist a typed precondition/constraint library that changes future action admissibility after the simulator is removed."
+      },
+      "pre_p0_gate": {
+        "en": "Finite-state exhaustive truth must expose similar-risk cases with different minimal predecessor constraints and held-out-topology decision differences versus the direct shield."
+      },
+      "minimum_p0": {
+        "en": "Use >=40 irreversible failures + 20 matched safe cases held out by topology; freeze clauses and run simulator-off measuring unsafe entries, false blocks, success, and cost."
+      },
+      "economy_contract": {
+        "substrate_inventory": {
+          "effective_candidates_min": 40,
+          "fresh_heldout_min": 20,
+          "reserve_fraction_min": 0.25,
+          "target_variation_rule": "irreversible failures and matched safe predecessor states across held-out topologies"
+        },
+        "causal_unit": "state-action predecessor condition",
+        "prediction_unit": "state-action predecessor condition",
+        "effect_observable": "simulator-off irreversible-failure prevention and false-block outcome",
+        "effect_moderators": "topology, state predicate, action type, checkpoint",
+        "effect_stability_scope": "held-out layouts/topologies",
+        "aggregation_risk": "episode failures can hide the necessary predecessor",
+        "cheapest_falsifier": "finite-state exhaustive truth versus equal-capacity direct shield",
+        "decision_changing_outcomes": "held-out topology advantage permits P0; equivalence collapses to shielding",
+        "abandonment_condition": "direct-shield equivalence or no reusable predecessor structure"
       }
     },
     "recovery-conditioned-experience": {
       "code": "F-3",
       "group": "F",
-      "terminal_state": "drop",
+      "terminal_state": "p0",
       "final_parent_mechanism": {
-        "zh": "本周期停止",
-        "en": "Stopped this cycle"
+        "en": "From same-start successful normal/perturbed pairs extract the earliest recovery state-action residual; write an operator+applicability predicate only after replication across >=2 contexts."
       },
       "terminal_reason": {
         "zh": "缺少人工要求的 exact-state phenomenon artifact：至少 100 对 same-start normal/perturbed success、直接 residual Δs、success-only writer audit 与预注册 prevalence。",
@@ -817,8 +1097,56 @@
       },
       "absorbed_children": [],
       "exact_stop": {
-        "zh": "当前周期 DROP；phenomenon artifact 完成前不能直接进入 P0b。",
-        "en": "DROP this cycle; do not enter P0b before the phenomenon artifact exists."
+        "en": "Stop if residuals do not replicate, or if same-data direct recovery/full-trajectory memory is equivalent at matched budget."
+      },
+      "revival_history": [
+        {
+          "date": "2026-08-12",
+          "prior_terminal_state": "drop",
+          "prior_terminal_reason": {
+            "zh": "缺少人工要求的 exact-state phenomenon artifact：至少 100 对 same-start normal/perturbed success、直接 residual Δs、success-only writer audit 与预注册 prevalence。",
+            "en": "Missing the human-required exact-state phenomenon artifact: at least 100 same-start normal/perturbed success pairs, direct residual Delta s, a success-only writer audit, and preregistered prevalence."
+          }
+        }
+      ],
+      "title": {
+        "en": "Recovery-Residual Operator Library",
+        "zh": "恢复残差算子库"
+      },
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "revival": {
+        "revision": "R4.0",
+        "changed_assumption": "Persist minimal state-conditioned recovery residual operators that must replicate across independent perturbations, not paired-trajectory data or full recovery memory."
+      },
+      "strongest_baseline": {
+        "en": "Full recovery-episode memory, nearest trajectory retrieval, same-pair direct conditional recovery policy, and success-only writer with matched memory/tokens/calls."
+      },
+      "pre_p0_gate": {
+        "en": "First satisfy >=100 same-start successful pairs with direct state residuals and success-only writer audit; >=20% of pairs must support residual operators reusable across identities/contexts."
+      },
+      "minimum_p0": {
+        "en": "After the phenomenon gate freeze 10-20 operators and evaluate simulator-free on held-out perturbation types/scenes for recovery, extra steps, clean interference, and memory cost."
+      },
+      "economy_contract": {
+        "substrate_inventory": {
+          "effective_candidates_min": 100,
+          "fresh_heldout_min": 30,
+          "reserve_fraction_min": 0.2,
+          "target_variation_rule": "same-start pairs contain recurrent and non-recurrent recovery residuals"
+        },
+        "causal_unit": "same-start recovery pair",
+        "prediction_unit": "same-start recovery pair",
+        "effect_observable": "future recovery success and step reduction from a frozen operator",
+        "effect_moderators": "perturbation type, scene, recovery state, applicability",
+        "effect_stability_scope": "held-out perturbation types and scenes",
+        "aggregation_risk": "successful episodes can hide one-off residuals",
+        "cheapest_falsifier": "100-pair exact-state recurrence audit before training/scale",
+        "decision_changing_outcomes": "recurrent residual support permits P0; lack of recurrence stops",
+        "abandonment_condition": "insufficient recurrence or direct/full-memory equivalence"
       }
     }
   },

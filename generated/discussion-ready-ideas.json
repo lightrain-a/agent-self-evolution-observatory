@@ -1,8 +1,8 @@
 {
   "schema_version": "2.0",
-  "generated_at": "2026-08-10T18:58:21+00:00",
+  "generated_at": "2026-08-11T17:31:28+00:00",
   "target": 20,
-  "count": 20,
+  "count": 27,
   "remaining": 0,
   "ready": true,
   "final_summary": {
@@ -447,6 +447,7 @@
     "absorbed_children_excluded_from_advisor_pool": true,
     "independent_terminal_methods_allowed": true,
     "readiness_is_terminalization_not_legacy_pass_count": true,
+    "target_is_minimum_not_exact_cap": true,
     "legacy_r3_rows_are_traceability_only": true,
     "legacy_r3_required_two_model_and_collision_gates": true,
     "no_portfolio_shortlist": true
@@ -472,7 +473,7 @@
         "zh": "类型化更新交互规则注册表",
         "en": "Typed Update-Interaction Rule Registry"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
       "human_parent": true,
       "reviewed": true,
       "final_verdict": "terminal-human-decision",
@@ -485,7 +486,7 @@
         "zh": "因果结论改变保留",
         "en": "Causal Conclusion-Change Retention"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
       "human_parent": true,
       "reviewed": true,
       "final_verdict": "terminal-human-decision",
@@ -498,7 +499,7 @@
         "zh": "1-最小边界反例课程",
         "en": "1-Minimal Boundary-Counterexample Curriculum"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
       "human_parent": true,
       "reviewed": true,
       "final_verdict": "terminal-human-decision",
@@ -511,7 +512,43 @@
         "zh": "冻结锚点评价器共适应防护",
         "en": "Frozen-Anchor Evaluator Coadaptation Guard"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "failure-frontier-curriculum",
+      "title": {
+        "en": "Freeze a typed mutation library and selector; each version chooses operators from current failure signatures to generate later training tasks without target-reward search."
+      },
+      "terminal_state": "p0",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "intervention-validated-self-correction",
+      "title": {
+        "en": "Share the correction generator; compute delete/insert necessity-sufficiency signatures and freeze a commit/reject gate before hidden future tasks open."
+      },
+      "terminal_state": "p0",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "irreversible-action-counterfactuals",
+      "title": {
+        "en": "Use predecessor deletion/substitution on failing counterfactuals to induce state-predicate -> forbidden-action/required-checkpoint clauses enforced by an external executor."
+      },
+      "terminal_state": "p0",
       "human_parent": true,
       "reviewed": true,
       "final_verdict": "terminal-human-decision",
@@ -524,7 +561,7 @@
         "zh": "回滚等价的更新历史压缩",
         "en": "Rollback-Equivalent Update-History Compaction"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
       "human_parent": true,
       "reviewed": true,
       "final_verdict": "terminal-human-decision",
@@ -537,7 +574,7 @@
         "zh": "紧凑外部适用边界的局部反例修复",
         "en": "Local Counterexample Repair with Compact External Applicability Gate"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
       "human_parent": true,
       "reviewed": true,
       "final_verdict": "terminal-human-decision",
@@ -550,7 +587,19 @@
         "zh": "复用机会驱动的记忆效用复验",
         "en": "Reuse-Opportunity Memory Utility Revalidation"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "recovery-conditioned-experience",
+      "title": {
+        "en": "From same-start successful normal/perturbed pairs extract the earliest recovery state-action residual; write an operator+applicability predicate only after replication across >=2 contexts."
+      },
+      "terminal_state": "p0",
       "human_parent": true,
       "reviewed": true,
       "final_verdict": "terminal-human-decision",
@@ -563,7 +612,7 @@
         "zh": "预算校准的预测性回归面板",
         "en": "Budget-Calibrated Predictive Regression Panel"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
       "human_parent": true,
       "reviewed": true,
       "final_verdict": "terminal-human-decision",
@@ -576,7 +625,31 @@
         "zh": "检索干扰审计器",
         "en": "Retrieval Interference Auditor"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "self-correction-collapse-detector",
+      "title": {
+        "en": "Freeze a policy over replan/retrieve/rewrite/rollback/stop from failure signature, previous mode, and verifier delta; no test-time retraining."
+      },
+      "terminal_state": "p0",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "self-label-confidence-flow",
+      "title": {
+        "en": "Maintain a frozen label-lineage graph and effective-evidence weights; each pseudo-label gets a persistent accept, quarantine, or down-weight action across later rounds."
+      },
+      "terminal_state": "p0",
       "human_parent": true,
       "reviewed": true,
       "final_verdict": "terminal-human-decision",
@@ -602,7 +675,7 @@
         "zh": "失败模式因果重写注册表",
         "en": "Failure-Motif Causal Rewrite Registry"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
       "human_parent": true,
       "reviewed": true,
       "final_verdict": "terminal-human-decision",
@@ -615,7 +688,19 @@
         "zh": "成对编辑效应工作流更新策略",
         "en": "Paired Edit-Effect Workflow Update Policy"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
+      "human_parent": true,
+      "reviewed": true,
+      "final_verdict": "terminal-human-decision",
+      "parent_ids": []
+    },
+    {
+      "source": "human-terminal-parent",
+      "id": "world-model-error-gated-learning",
+      "title": {
+        "en": "Use independent true transitions; only decision-changing residuals may update the world-model residual adapter while the policy remains frozen."
+      },
+      "terminal_state": "p0",
       "human_parent": true,
       "reviewed": true,
       "final_verdict": "terminal-human-decision",
@@ -628,7 +713,7 @@
         "zh": "主动因果最小回滚",
         "en": "Active Causal Minimal Rollback"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
       "human_parent": false,
       "reviewed": true,
       "final_verdict": "terminal-human-compatible",
@@ -641,7 +726,7 @@
         "zh": "限探针 API 转移算子",
         "en": "Bounded-Probe API Transition Operator"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
       "human_parent": false,
       "reviewed": true,
       "final_verdict": "terminal-human-compatible",
@@ -654,7 +739,7 @@
         "zh": "约束完备的类型化记忆顺序逻辑",
         "en": "Constraint-Complete Typed Memory-Order Logic"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
       "human_parent": false,
       "reviewed": true,
       "final_verdict": "terminal-human-compatible",
@@ -667,7 +752,7 @@
         "zh": "反事实进化决策控制器",
         "en": "Counterfactual Evolution Decision Controller"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
       "human_parent": false,
       "reviewed": true,
       "final_verdict": "terminal-human-compatible",
@@ -693,7 +778,7 @@
         "zh": "固定上限下的干预式权限重授权筛选",
         "en": "Interventional Permission Triage Under a Fixed Ceiling"
       },
-      "terminal_state": "p0-ready",
+      "terminal_state": "p0",
       "human_parent": false,
       "reviewed": true,
       "final_verdict": "terminal-human-compatible",

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T15:20:55+00:00",
+  "generated_at": "2026-08-11T17:32:44+00:00",
   "policy": {
     "schema_version": "1.0",
     "content_addressed_triggers": true,
@@ -21,15 +21,15 @@
   },
   "summary": {
     "baseline_initialized": true,
-    "baseline_subjects": 43,
-    "cases": 0,
+    "baseline_subjects": 58,
+    "cases": 2,
     "created_this_cycle": 0,
     "executed_this_cycle": 0,
-    "pending": 0,
+    "pending": 2,
     "partial": 0,
     "complete": 0,
     "reviewer_unavailable": 0,
-    "retryable": 0,
+    "retryable": 2,
     "waived_cases": 0,
     "unresolved_high_risk": 0
   },
@@ -41,5 +41,26 @@
     "matched_baseline_added",
     "stop_or_merge_before_expensive_transition"
   ],
-  "recent_cases": []
+  "recent_cases": [
+    {
+      "case_id": "aic-1aede89a309d8b68a19b",
+      "checkpoint": "economy_red_team",
+      "subject_id": "contradiction-preserving-consolidation",
+      "status": "pending",
+      "completed_reviewers": 0,
+      "missing_reviewers": 0,
+      "unresolved_high_risk": 0,
+      "human_waiver": false
+    },
+    {
+      "case_id": "aic-6595510a4fb47f628636",
+      "checkpoint": "economy_red_team",
+      "subject_id": "workflow-generalization-certificate",
+      "status": "pending",
+      "completed_reviewers": 0,
+      "missing_reviewers": 0,
+      "unresolved_high_risk": 0,
+      "human_waiver": false
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T13:17:11+00:00",
+  "generated_at": "2026-08-11T17:33:09+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
@@ -30,10 +30,18 @@
       "BUDGET-STOP"
     ],
     "economy": {
-      "schema_version": "1.0",
+      "schema_version": "1.1",
       "stage_semantics": "resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate",
       "all_five_required_before_execution_compilation": true,
       "matched_simplification_must_precede_gpu": true,
+      "complexity_ladder_required_before_gpu": true,
+      "complexity_ladder_order": [
+        "constant-or-mean",
+        "threshold-or-lookup",
+        "shallow-or-sparse",
+        "proposed-mechanism"
+      ],
+      "lower_complexity_headroom_required": true,
       "substrate_inventory_must_precede_hidden_or_gpu": true,
       "causal_unit_and_observable_must_be_explicit": true,
       "gpu_requires_decision_changing_voi": true,
@@ -45,12 +53,20 @@
   },
   "economy_gate": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-11T13:17:11+00:00",
+    "generated_at": "2026-08-11T17:33:09+00:00",
     "policy": {
-      "schema_version": "1.0",
+      "schema_version": "1.1",
       "stage_semantics": "resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate",
       "all_five_required_before_execution_compilation": true,
       "matched_simplification_must_precede_gpu": true,
+      "complexity_ladder_required_before_gpu": true,
+      "complexity_ladder_order": [
+        "constant-or-mean",
+        "threshold-or-lookup",
+        "shallow-or-sparse",
+        "proposed-mechanism"
+      ],
+      "lower_complexity_headroom_required": true,
       "substrate_inventory_must_precede_hidden_or_gpu": true,
       "causal_unit_and_observable_must_be_explicit": true,
       "gpu_requires_decision_changing_voi": true,
@@ -82,9 +98,9 @@
       }
     ],
     "summary": {
-      "ideas": 20,
+      "ideas": 27,
       "economy_ready": 0,
-      "blocked_or_stopped": 20,
+      "blocked_or_stopped": 27,
       "stop_classes": {
         "substrate": 4,
         "matched-simplification": 12
@@ -95,13 +111,14 @@
     }
   },
   "summary": {
-    "active_p0": 20,
-    "admitted": 20,
+    "active_p0": 27,
+    "admitted": 27,
     "transitioned_from_p0_ready": 16,
-    "settings_complete": 20,
+    "revived_from_drop": 7,
+    "settings_complete": 27,
     "economy_ready": 0,
     "execution_authorized": 0,
-    "execution_blocked_or_pending": 20
+    "execution_blocked_or_pending": 27
   },
   "cards": [
     {
@@ -3277,12 +3294,14 @@
           ]
         },
         "runtime_throughput": {
-          "status": "complete"
+          "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
           "economy-gate",
-          "p0-complete-second-model-hold"
+          "pre-p0-empirical-checks",
+          "outer-identifiability/competence/throughput",
+          "runtime-smoke"
         ]
       }
     },
@@ -3516,12 +3535,274 @@
           ]
         },
         "runtime_throughput": {
-          "status": "complete"
+          "status": "pending-harness-smoke"
         },
         "execution_authorized": false,
         "blockers": [
           "economy-gate",
-          "p0-complete-second-model-hold"
+          "pre-p0-empirical-checks",
+          "outer-identifiability/competence/throughput",
+          "runtime-smoke"
+        ]
+      }
+    },
+    {
+      "idea_id": "self-label-confidence-flow",
+      "code": "C-1",
+      "group": "C",
+      "title": {
+        "en": "Lineage-Conditioned Pseudo-Label Quarantine",
+        "zh": "谱系条件伪标签隔离器"
+      },
+      "lifecycle": "p0",
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "admission_status": "admitted",
+      "admission_checks": [
+        {
+          "key": "stable_code_group",
+          "pass": true
+        },
+        {
+          "key": "frozen_mechanism",
+          "pass": true
+        },
+        {
+          "key": "collision_review",
+          "pass": true
+        },
+        {
+          "key": "strongest_baseline",
+          "pass": true
+        },
+        {
+          "key": "independent_truth",
+          "pass": true
+        },
+        {
+          "key": "minimum_p0",
+          "pass": true
+        },
+        {
+          "key": "stop_rule",
+          "pass": true
+        },
+        {
+          "key": "resource_ceiling",
+          "pass": true
+        },
+        {
+          "key": "provenance_recovery",
+          "pass": true
+        },
+        {
+          "key": "p1_lock",
+          "pass": true
+        }
+      ],
+      "contract": {
+        "mechanism": "Maintain a frozen label-lineage graph and effective-evidence weights; each pseudo-label gets a persistent accept, quarantine, or down-weight action across later rounds.",
+        "baseline": "Same-feature capacity-matched direct history classifier plus confidence, EMA-teacher, and simple source-discount rules.",
+        "truth": "Frozen external anchors plus program/environment truth; the evolving evaluator never judges itself.",
+        "pre_p0": "Require same-ancestor error enrichment beyond confidence-matched independent sources and >=20% held-out decision disagreement versus the strongest direct baseline.",
+        "minimum_p0": "Freeze 4-6 rounds and >=200 lineage-linked label decisions; hold out ancestors and later rounds; compare false accepts, clean-label retention, and next-round utility at matched accepted count.",
+        "stop": "Stop/merge into ordinary pseudo-label filtering if lineage enrichment is absent or a same-information direct/simple source-discount baseline is equivalent.",
+        "economy": {
+          "substrate_inventory": {
+            "effective_candidates_min": 40,
+            "fresh_heldout_min": 80,
+            "reserve_fraction_min": 0.25,
+            "target_variation_rule": "correct/incorrect labels from repeated and independent lineages"
+          },
+          "causal_unit": "pseudo-label decision",
+          "prediction_unit": "pseudo-label decision",
+          "effect_observable": "future-round truth error and training-utility delta",
+          "effect_moderators": "ancestor, depth, round, confidence, task family",
+          "effect_stability_scope": "unseen ancestors and later rounds",
+          "aggregation_risk": "same-ancestor descendants are correlated",
+          "cheapest_falsifier": "CPU lineage replay versus matched-confidence independent sources and a same-feature classifier",
+          "decision_changing_outcomes": "enrichment+disagreement permits P0 collection; equivalence forces merge/stop",
+          "abandonment_condition": "no enrichment or same-information equivalence"
+        }
+      },
+      "setup": {
+        "phase": "P0",
+        "mode": "offline-self-label-first",
+        "primary_substrate": "4-6 self-label rounds + lineage-linked decisions",
+        "screening_units": 200,
+        "max_gpus": 1,
+        "gpu_hours_cap": 12,
+        "wall_hours_cap": 12,
+        "seed": 42,
+        "second_backbone": "LOCKED until first-model P0 gate + explicit human approval",
+        "adaptive_repeats": "threshold-near/high-variance only; max 3/unit",
+        "checkpoint_every_units": 6,
+        "streaming_trace": "jsonl + atomic progress.json",
+        "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
+        "resume_from_checkpoint": true,
+        "overwrite_nonempty_run": false
+      },
+      "execution_preflight": {
+        "gpu0": {
+          "offline": "pass",
+          "reality": "pass",
+          "phenomenon": "pending",
+          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+        },
+        "pre_p0": {
+          "passed": 4,
+          "total": 10,
+          "checks": [
+            {
+              "key": "claim_alignment",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "target_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "baseline_disagreement",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "representability",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "tiny_overfit",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "competence_window",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "effect_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "cost_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "provenance_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "interpretation_matrix",
+              "status": "pass",
+              "evidence": ""
+            }
+          ]
+        },
+        "updater_competence": {
+          "status": "pending-evidence",
+          "passed": false,
+          "not_a_ninth_gate": true
+        },
+        "pre_experiment": {
+          "passed": 5,
+          "total": 8,
+          "gates": [
+            {
+              "key": "parameter_provenance",
+              "status": "pass"
+            },
+            {
+              "key": "baseline_competence",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "mechanism_identifiability",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "statistical_resolution",
+              "status": "pass"
+            },
+            {
+              "key": "compute_graph",
+              "status": "pass"
+            },
+            {
+              "key": "measured_throughput",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "observability_recovery",
+              "status": "pass"
+            },
+            {
+              "key": "outcome_semantics",
+              "status": "pass"
+            }
+          ]
+        },
+        "economy_gate": {
+          "status": "blocked",
+          "execution_compilation_authorized": false,
+          "passed_gates": 3,
+          "gate_count": 5,
+          "primary_stop_class": "",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pass",
+              "pass": true,
+              "reason": "causal/prediction units, observable, moderators, stability scope, and aggregation risk are frozen"
+            },
+            {
+              "key": "decision_voi",
+              "status": "pass",
+              "pass": true,
+              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
+        "runtime_throughput": {
+          "status": "pending-harness-smoke"
+        },
+        "execution_authorized": false,
+        "blockers": [
+          "economy-gate",
+          "gpu0-phenomenon",
+          "pre-p0-empirical-checks",
+          "updater-competence",
+          "outer-identifiability/competence/throughput",
+          "runtime-smoke"
         ]
       }
     },
@@ -3769,6 +4050,526 @@
       }
     },
     {
+      "idea_id": "self-correction-collapse-detector",
+      "code": "C-4",
+      "group": "C",
+      "title": {
+        "en": "Self-Correction Mode-Transition Controller",
+        "zh": "自纠正模式转移控制器"
+      },
+      "lifecycle": "p0",
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "admission_status": "admitted",
+      "admission_checks": [
+        {
+          "key": "stable_code_group",
+          "pass": true
+        },
+        {
+          "key": "frozen_mechanism",
+          "pass": true
+        },
+        {
+          "key": "collision_review",
+          "pass": true
+        },
+        {
+          "key": "strongest_baseline",
+          "pass": true
+        },
+        {
+          "key": "independent_truth",
+          "pass": true
+        },
+        {
+          "key": "minimum_p0",
+          "pass": true
+        },
+        {
+          "key": "stop_rule",
+          "pass": true
+        },
+        {
+          "key": "resource_ceiling",
+          "pass": true
+        },
+        {
+          "key": "provenance_recovery",
+          "pass": true
+        },
+        {
+          "key": "p1_lock",
+          "pass": true
+        }
+      ],
+      "contract": {
+        "mechanism": "Freeze a policy over replan/retrieve/rewrite/rollback/stop from failure signature, previous mode, and verifier delta; no test-time retraining.",
+        "baseline": "Depth-3 CART/finite-state rule on identical state, fixed order, repetition cap, entropy heuristic, and A-2-style stopping at identical calls.",
+        "truth": "Frozen external anchors plus program/environment truth; the evolving evaluator never judges itself.",
+        "pre_p0": "Require >=3 correction modes, nontrivial order effects, and >=20% held-out decision disagreement versus the strongest shallow rule; otherwise merge into A-2/A-3.",
+        "minimum_p0": "Use >=30 failures with <=3 correction rounds, frozen candidate traces, failure-family holdout, and matched-call recovery/regression evaluation.",
+        "stop": "Stop/merge if repetition caps, shallow CART, or A-2-style rules match under identical state information and calls.",
+        "economy": {
+          "substrate_inventory": {
+            "effective_candidates_min": 30,
+            "fresh_heldout_min": 12,
+            "reserve_fraction_min": 0.25,
+            "target_variation_rule": "three correction modes with beneficial/destructive transitions"
+          },
+          "causal_unit": "correction-decision state",
+          "prediction_unit": "correction-decision state",
+          "effect_observable": "verified recovery/regression after a mode choice",
+          "effect_moderators": "failure family, previous mode, verifier delta, depth",
+          "effect_stability_scope": "held-out failure families and mode sequences",
+          "aggregation_risk": "episode success can hide order effects",
+          "cheapest_falsifier": "offline same-trace comparison versus repetition caps and depth-3 CART",
+          "decision_changing_outcomes": "mode-order variation+disagreement permits P0; equivalence forces merge",
+          "abandonment_condition": "shallow-rule equivalence or no mode-order effect"
+        }
+      },
+      "setup": {
+        "phase": "P0",
+        "mode": "offline-correction-first",
+        "primary_substrate": "frozen multi-mode correction traces",
+        "screening_units": 30,
+        "max_gpus": 1,
+        "gpu_hours_cap": 12,
+        "wall_hours_cap": 12,
+        "seed": 42,
+        "second_backbone": "LOCKED until first-model P0 gate + explicit human approval",
+        "adaptive_repeats": "threshold-near/high-variance only; max 3/unit",
+        "checkpoint_every_units": 6,
+        "streaming_trace": "jsonl + atomic progress.json",
+        "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
+        "resume_from_checkpoint": true,
+        "overwrite_nonempty_run": false
+      },
+      "execution_preflight": {
+        "gpu0": {
+          "offline": "pass",
+          "reality": "pass",
+          "phenomenon": "pending",
+          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+        },
+        "pre_p0": {
+          "passed": 4,
+          "total": 10,
+          "checks": [
+            {
+              "key": "claim_alignment",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "target_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "baseline_disagreement",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "representability",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "tiny_overfit",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "competence_window",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "effect_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "cost_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "provenance_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "interpretation_matrix",
+              "status": "pass",
+              "evidence": ""
+            }
+          ]
+        },
+        "updater_competence": {
+          "status": "pending-evidence",
+          "passed": false,
+          "not_a_ninth_gate": true
+        },
+        "pre_experiment": {
+          "passed": 5,
+          "total": 8,
+          "gates": [
+            {
+              "key": "parameter_provenance",
+              "status": "pass"
+            },
+            {
+              "key": "baseline_competence",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "mechanism_identifiability",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "statistical_resolution",
+              "status": "pass"
+            },
+            {
+              "key": "compute_graph",
+              "status": "pass"
+            },
+            {
+              "key": "measured_throughput",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "observability_recovery",
+              "status": "pass"
+            },
+            {
+              "key": "outcome_semantics",
+              "status": "pass"
+            }
+          ]
+        },
+        "economy_gate": {
+          "status": "blocked",
+          "execution_compilation_authorized": false,
+          "passed_gates": 3,
+          "gate_count": 5,
+          "primary_stop_class": "",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pass",
+              "pass": true,
+              "reason": "causal/prediction units, observable, moderators, stability scope, and aggregation risk are frozen"
+            },
+            {
+              "key": "decision_voi",
+              "status": "pass",
+              "pass": true,
+              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
+        "runtime_throughput": {
+          "status": "pending-harness-smoke"
+        },
+        "execution_authorized": false,
+        "blockers": [
+          "economy-gate",
+          "gpu0-phenomenon",
+          "pre-p0-empirical-checks",
+          "updater-competence",
+          "outer-identifiability/competence/throughput",
+          "runtime-smoke"
+        ]
+      }
+    },
+    {
+      "idea_id": "intervention-validated-self-correction",
+      "code": "C-5",
+      "group": "C",
+      "title": {
+        "en": "Intervention-Certified Correction Commit Gate",
+        "zh": "干预认证纠错提交门"
+      },
+      "lifecycle": "p0",
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "admission_status": "admitted",
+      "admission_checks": [
+        {
+          "key": "stable_code_group",
+          "pass": true
+        },
+        {
+          "key": "frozen_mechanism",
+          "pass": true
+        },
+        {
+          "key": "collision_review",
+          "pass": true
+        },
+        {
+          "key": "strongest_baseline",
+          "pass": true
+        },
+        {
+          "key": "independent_truth",
+          "pass": true
+        },
+        {
+          "key": "minimum_p0",
+          "pass": true
+        },
+        {
+          "key": "stop_rule",
+          "pass": true
+        },
+        {
+          "key": "resource_ceiling",
+          "pass": true
+        },
+        {
+          "key": "provenance_recovery",
+          "pass": true
+        },
+        {
+          "key": "p1_lock",
+          "pass": true
+        }
+      ],
+      "contract": {
+        "mechanism": "Share the correction generator; compute delete/insert necessity-sufficiency signatures and freeze a commit/reject gate before hidden future tasks open.",
+        "baseline": "A-3 regression panel, current gain, success-only admission, and simple thresholds using identical necessity/sufficiency features at matched calls and accepted count.",
+        "truth": "Frozen external anchors plus program/environment truth; the evolving evaluator never judges itself.",
+        "pre_p0": "Require >=20% commit-decision disagreement versus A-3/simple thresholds plus additional signal for future harm/benefit on existing traces.",
+        "minimum_p0": "Freeze >=24 candidates, 8 probes, and a 24-task hidden pool; equalize intervention budgets and compare harmful commits/retained gain at matched accepted count.",
+        "stop": "Merge into A-3 if A-3 or a same-feature threshold is equivalent, or stop if intervention signatures do not predict future commit utility.",
+        "economy": {
+          "substrate_inventory": {
+            "effective_candidates_min": 24,
+            "fresh_heldout_min": 24,
+            "reserve_fraction_min": 0.25,
+            "target_variation_rule": "beneficial, neutral, and harmful persistent corrections"
+          },
+          "causal_unit": "correction candidate",
+          "prediction_unit": "correction candidate",
+          "effect_observable": "future-task utility after persistent commit",
+          "effect_moderators": "failure family, correction type, deletion effect, insertion effect",
+          "effect_stability_scope": "held-out correction sources and future tasks",
+          "aggregation_risk": "current repair can mask later negative transfer",
+          "cheapest_falsifier": "offline delete/insert audit versus A-3 and same-feature thresholds",
+          "decision_changing_outcomes": "extra disagreement+future-utility signal permits P0; equivalence merges into A-3",
+          "abandonment_condition": "A-3/simple-threshold equivalence or no future signal"
+        }
+      },
+      "setup": {
+        "phase": "P0",
+        "mode": "offline-intervention-first",
+        "primary_substrate": "matched correction delete/insert intervention table",
+        "screening_units": 24,
+        "max_gpus": 1,
+        "gpu_hours_cap": 12,
+        "wall_hours_cap": 12,
+        "seed": 42,
+        "second_backbone": "LOCKED until first-model P0 gate + explicit human approval",
+        "adaptive_repeats": "threshold-near/high-variance only; max 3/unit",
+        "checkpoint_every_units": 6,
+        "streaming_trace": "jsonl + atomic progress.json",
+        "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
+        "resume_from_checkpoint": true,
+        "overwrite_nonempty_run": false
+      },
+      "execution_preflight": {
+        "gpu0": {
+          "offline": "pass",
+          "reality": "pass",
+          "phenomenon": "pending",
+          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+        },
+        "pre_p0": {
+          "passed": 4,
+          "total": 10,
+          "checks": [
+            {
+              "key": "claim_alignment",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "target_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "baseline_disagreement",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "representability",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "tiny_overfit",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "competence_window",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "effect_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "cost_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "provenance_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "interpretation_matrix",
+              "status": "pass",
+              "evidence": ""
+            }
+          ]
+        },
+        "updater_competence": {
+          "status": "pending-evidence",
+          "passed": false,
+          "not_a_ninth_gate": true
+        },
+        "pre_experiment": {
+          "passed": 5,
+          "total": 8,
+          "gates": [
+            {
+              "key": "parameter_provenance",
+              "status": "pass"
+            },
+            {
+              "key": "baseline_competence",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "mechanism_identifiability",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "statistical_resolution",
+              "status": "pass"
+            },
+            {
+              "key": "compute_graph",
+              "status": "pass"
+            },
+            {
+              "key": "measured_throughput",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "observability_recovery",
+              "status": "pass"
+            },
+            {
+              "key": "outcome_semantics",
+              "status": "pass"
+            }
+          ]
+        },
+        "economy_gate": {
+          "status": "blocked",
+          "execution_compilation_authorized": false,
+          "passed_gates": 3,
+          "gate_count": 5,
+          "primary_stop_class": "",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pass",
+              "pass": true,
+              "reason": "causal/prediction units, observable, moderators, stability scope, and aggregation risk are frozen"
+            },
+            {
+              "key": "decision_voi",
+              "status": "pass",
+              "pass": true,
+              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
+        "runtime_throughput": {
+          "status": "pending-harness-smoke"
+        },
+        "execution_authorized": false,
+        "blockers": [
+          "economy-gate",
+          "gpu0-phenomenon",
+          "pre-p0-empirical-checks",
+          "updater-competence",
+          "outer-identifiability/competence/throughput",
+          "runtime-smoke"
+        ]
+      }
+    },
+    {
       "idea_id": "counterexample-generating-curriculum",
       "code": "D-1",
       "group": "D",
@@ -4008,6 +4809,266 @@
         "blockers": [
           "economy-gate",
           "p0-stop-await-human-review"
+        ]
+      }
+    },
+    {
+      "idea_id": "failure-frontier-curriculum",
+      "code": "D-2",
+      "group": "D",
+      "title": {
+        "en": "Cross-Version Boundary Mutation Policy",
+        "zh": "跨版本边界变异策略"
+      },
+      "lifecycle": "p0",
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "admission_status": "admitted",
+      "admission_checks": [
+        {
+          "key": "stable_code_group",
+          "pass": true
+        },
+        {
+          "key": "frozen_mechanism",
+          "pass": true
+        },
+        {
+          "key": "collision_review",
+          "pass": true
+        },
+        {
+          "key": "strongest_baseline",
+          "pass": true
+        },
+        {
+          "key": "independent_truth",
+          "pass": true
+        },
+        {
+          "key": "minimum_p0",
+          "pass": true
+        },
+        {
+          "key": "stop_rule",
+          "pass": true
+        },
+        {
+          "key": "resource_ceiling",
+          "pass": true
+        },
+        {
+          "key": "provenance_recovery",
+          "pass": true
+        },
+        {
+          "key": "p1_lock",
+          "pass": true
+        }
+      ],
+      "contract": {
+        "mechanism": "Freeze a typed mutation library and selector; each version chooses operators from current failure signatures to generate later training tasks without target-reward search.",
+        "baseline": "Uniform fuzzing, failure-frequency, uncertainty sampling, D-1 verifier-filtered generation, and a same-feature direct mutation-yield predictor.",
+        "truth": "Environment/program verifier on an independently frozen boundary set.",
+        "pre_p0": "Require >=3 mutation classes with rank changes across versions and nonzero held-out-version regret differences versus direct/frequency baselines.",
+        "minimum_p0": "Use >=3 sequential agent versions and 30 typed mutation operators with fixed train tokens; hold out the final version/task family and measure boundary coverage and next-version utility.",
+        "stop": "Merge into D-1/ordinary curriculum if uniform, uncertainty, or direct-yield selection is equivalent or gains come only from more samples.",
+        "economy": {
+          "substrate_inventory": {
+            "effective_candidates_min": 30,
+            "fresh_heldout_min": 20,
+            "reserve_fraction_min": 0.25,
+            "target_variation_rule": "mutation utility rankings vary across versions while verifier validity is fixed"
+          },
+          "causal_unit": "mutation-operator application",
+          "prediction_unit": "mutation-operator application",
+          "effect_observable": "verified boundary yield and next-version training utility",
+          "effect_moderators": "model version, failure family, mutation type, task family",
+          "effect_stability_scope": "held-out version and task family",
+          "aggregation_risk": "average difficulty can hide version-specific utility reversals",
+          "cheapest_falsifier": "CPU mutation table with held-out-version regret against simple controls",
+          "decision_changing_outcomes": "cross-version ranking variation+selector headroom permits P0",
+          "abandonment_condition": "no ranking variation or strongest selector equivalence"
+        }
+      },
+      "setup": {
+        "phase": "P0",
+        "mode": "cpu-mutation-first",
+        "primary_substrate": "verified typed boundary-mutation table across versions",
+        "screening_units": 30,
+        "max_gpus": 1,
+        "gpu_hours_cap": 12,
+        "wall_hours_cap": 12,
+        "seed": 42,
+        "second_backbone": "LOCKED until first-model P0 gate + explicit human approval",
+        "adaptive_repeats": "threshold-near/high-variance only; max 3/unit",
+        "checkpoint_every_units": 6,
+        "streaming_trace": "jsonl + atomic progress.json",
+        "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
+        "resume_from_checkpoint": true,
+        "overwrite_nonempty_run": false
+      },
+      "execution_preflight": {
+        "gpu0": {
+          "offline": "pass",
+          "reality": "pass",
+          "phenomenon": "pending",
+          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+        },
+        "pre_p0": {
+          "passed": 4,
+          "total": 10,
+          "checks": [
+            {
+              "key": "claim_alignment",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "target_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "baseline_disagreement",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "representability",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "tiny_overfit",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "competence_window",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "effect_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "cost_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "provenance_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "interpretation_matrix",
+              "status": "pass",
+              "evidence": ""
+            }
+          ]
+        },
+        "updater_competence": {
+          "status": "pending-evidence",
+          "passed": false,
+          "not_a_ninth_gate": true
+        },
+        "pre_experiment": {
+          "passed": 5,
+          "total": 8,
+          "gates": [
+            {
+              "key": "parameter_provenance",
+              "status": "pass"
+            },
+            {
+              "key": "baseline_competence",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "mechanism_identifiability",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "statistical_resolution",
+              "status": "pass"
+            },
+            {
+              "key": "compute_graph",
+              "status": "pass"
+            },
+            {
+              "key": "measured_throughput",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "observability_recovery",
+              "status": "pass"
+            },
+            {
+              "key": "outcome_semantics",
+              "status": "pass"
+            }
+          ]
+        },
+        "economy_gate": {
+          "status": "blocked",
+          "execution_compilation_authorized": false,
+          "passed_gates": 3,
+          "gate_count": 5,
+          "primary_stop_class": "",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pass",
+              "pass": true,
+              "reason": "causal/prediction units, observable, moderators, stability scope, and aggregation risk are frozen"
+            },
+            {
+              "key": "decision_voi",
+              "status": "pass",
+              "pass": true,
+              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
+        "runtime_throughput": {
+          "status": "pending-harness-smoke"
+        },
+        "execution_authorized": false,
+        "blockers": [
+          "economy-gate",
+          "gpu0-phenomenon",
+          "pre-p0-empirical-checks",
+          "updater-competence",
+          "outer-identifiability/competence/throughput",
+          "runtime-smoke"
         ]
       }
     },
@@ -4980,6 +6041,786 @@
         "blockers": [
           "economy-gate",
           "p0-stop-await-human-review"
+        ]
+      }
+    },
+    {
+      "idea_id": "world-model-error-gated-learning",
+      "code": "F-1",
+      "group": "F",
+      "title": {
+        "en": "Decision-Conditioned World-Model Residual Adapter",
+        "zh": "决策条件世界模型残差适配器"
+      },
+      "lifecycle": "p0",
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "admission_status": "admitted",
+      "admission_checks": [
+        {
+          "key": "stable_code_group",
+          "pass": true
+        },
+        {
+          "key": "frozen_mechanism",
+          "pass": true
+        },
+        {
+          "key": "collision_review",
+          "pass": true
+        },
+        {
+          "key": "strongest_baseline",
+          "pass": true
+        },
+        {
+          "key": "independent_truth",
+          "pass": true
+        },
+        {
+          "key": "minimum_p0",
+          "pass": true
+        },
+        {
+          "key": "stop_rule",
+          "pass": true
+        },
+        {
+          "key": "resource_ceiling",
+          "pass": true
+        },
+        {
+          "key": "provenance_recovery",
+          "pass": true
+        },
+        {
+          "key": "p1_lock",
+          "pass": true
+        }
+      ],
+      "contract": {
+        "mechanism": "Use independent true transitions; only decision-changing residuals may update the world-model residual adapter while the policy remains frozen.",
+        "baseline": "Learn-all, residual-magnitude top-k, random equal-count, value-aware/CVAML-style weighting, and same-data direct action-disagreement selection.",
+        "truth": "Program/environment truth on a sealed held-out set with paired before/after evaluation.",
+        "pre_p0": "In exact-dynamics MDP/gridworld, decision-changing labels must not reduce to magnitude/value-aware scoring and must disagree on >=20% candidates versus the strongest baseline.",
+        "minimum_p0": "Freeze a small world model+policy, collect >=100 transition errors with disjoint hidden state regions, update only the adapter, and use <=50% of learn-all transitions.",
+        "stop": "Stop if value-aware/CVAML or direct action-disagreement is equivalent, or if genuine decision-changing cases are too rare.",
+        "economy": {
+          "substrate_inventory": {
+            "effective_candidates_min": 40,
+            "fresh_heldout_min": 40,
+            "reserve_fraction_min": 0.25,
+            "target_variation_rule": "action-changing and action-invariant residuals under a frozen policy"
+          },
+          "causal_unit": "transition residual",
+          "prediction_unit": "transition residual",
+          "effect_observable": "hidden action/value-order correction and downstream utility",
+          "effect_moderators": "state region, action, residual type, policy margin",
+          "effect_stability_scope": "unseen state regions under frozen policy",
+          "aggregation_risk": "large error can be irrelevant while small error crosses an action margin",
+          "cheapest_falsifier": "tabular/gridworld truth versus magnitude, value-aware, and direct selectors",
+          "decision_changing_outcomes": "non-reducible decision-changing subset permits P0",
+          "abandonment_condition": "value-aware/direct equivalence or insufficient action-changing support"
+        }
+      },
+      "setup": {
+        "phase": "P0",
+        "mode": "cpu-world-model-first",
+        "primary_substrate": "exact-dynamics transition residual table + frozen policy",
+        "screening_units": 100,
+        "max_gpus": 1,
+        "gpu_hours_cap": 12,
+        "wall_hours_cap": 12,
+        "seed": 42,
+        "second_backbone": "LOCKED until first-model P0 gate + explicit human approval",
+        "adaptive_repeats": "threshold-near/high-variance only; max 3/unit",
+        "checkpoint_every_units": 6,
+        "streaming_trace": "jsonl + atomic progress.json",
+        "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
+        "resume_from_checkpoint": true,
+        "overwrite_nonempty_run": false
+      },
+      "execution_preflight": {
+        "gpu0": {
+          "offline": "pass",
+          "reality": "pass",
+          "phenomenon": "pending",
+          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+        },
+        "pre_p0": {
+          "passed": 4,
+          "total": 10,
+          "checks": [
+            {
+              "key": "claim_alignment",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "target_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "baseline_disagreement",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "representability",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "tiny_overfit",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "competence_window",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "effect_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "cost_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "provenance_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "interpretation_matrix",
+              "status": "pass",
+              "evidence": ""
+            }
+          ]
+        },
+        "updater_competence": {
+          "status": "pending-evidence",
+          "passed": false,
+          "not_a_ninth_gate": true
+        },
+        "pre_experiment": {
+          "passed": 5,
+          "total": 8,
+          "gates": [
+            {
+              "key": "parameter_provenance",
+              "status": "pass"
+            },
+            {
+              "key": "baseline_competence",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "mechanism_identifiability",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "statistical_resolution",
+              "status": "pass"
+            },
+            {
+              "key": "compute_graph",
+              "status": "pass"
+            },
+            {
+              "key": "measured_throughput",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "observability_recovery",
+              "status": "pass"
+            },
+            {
+              "key": "outcome_semantics",
+              "status": "pass"
+            }
+          ]
+        },
+        "economy_gate": {
+          "status": "blocked",
+          "execution_compilation_authorized": false,
+          "passed_gates": 3,
+          "gate_count": 5,
+          "primary_stop_class": "",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pass",
+              "pass": true,
+              "reason": "causal/prediction units, observable, moderators, stability scope, and aggregation risk are frozen"
+            },
+            {
+              "key": "decision_voi",
+              "status": "pass",
+              "pass": true,
+              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
+        "runtime_throughput": {
+          "status": "pending-harness-smoke"
+        },
+        "execution_authorized": false,
+        "blockers": [
+          "economy-gate",
+          "gpu0-phenomenon",
+          "pre-p0-empirical-checks",
+          "updater-competence",
+          "outer-identifiability/competence/throughput",
+          "runtime-smoke"
+        ]
+      }
+    },
+    {
+      "idea_id": "irreversible-action-counterfactuals",
+      "code": "F-2",
+      "group": "F",
+      "title": {
+        "en": "Irreversibility-Precondition Compiler",
+        "zh": "不可逆前置条件编译器"
+      },
+      "lifecycle": "p0",
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "admission_status": "admitted",
+      "admission_checks": [
+        {
+          "key": "stable_code_group",
+          "pass": true
+        },
+        {
+          "key": "frozen_mechanism",
+          "pass": true
+        },
+        {
+          "key": "collision_review",
+          "pass": true
+        },
+        {
+          "key": "strongest_baseline",
+          "pass": true
+        },
+        {
+          "key": "independent_truth",
+          "pass": true
+        },
+        {
+          "key": "minimum_p0",
+          "pass": true
+        },
+        {
+          "key": "stop_rule",
+          "pass": true
+        },
+        {
+          "key": "resource_ceiling",
+          "pass": true
+        },
+        {
+          "key": "provenance_recovery",
+          "pass": true
+        },
+        {
+          "key": "p1_lock",
+          "pass": true
+        }
+      ],
+      "contract": {
+        "mechanism": "Use predecessor deletion/substitution on failing counterfactuals to induce state-predicate -> forbidden-action/required-checkpoint clauses enforced by an external executor.",
+        "baseline": "Same-label capacity-matched direct risk classifier/shield, hand irreversible mask, and nearest failed-trajectory memory with equal simulator calls and runtime checks.",
+        "truth": "Program/environment truth on a sealed held-out set with paired before/after evaluation.",
+        "pre_p0": "Finite-state exhaustive truth must expose similar-risk cases with different minimal predecessor constraints and held-out-topology decision differences versus the direct shield.",
+        "minimum_p0": "Use >=40 irreversible failures + 20 matched safe cases held out by topology; freeze clauses and run simulator-off measuring unsafe entries, false blocks, success, and cost.",
+        "stop": "Stop/merge into generic shielding if the same-capacity direct shield matches the held-out safety/false-block frontier or clauses require a stronger runtime oracle.",
+        "economy": {
+          "substrate_inventory": {
+            "effective_candidates_min": 40,
+            "fresh_heldout_min": 20,
+            "reserve_fraction_min": 0.25,
+            "target_variation_rule": "irreversible failures and matched safe predecessor states across held-out topologies"
+          },
+          "causal_unit": "state-action predecessor condition",
+          "prediction_unit": "state-action predecessor condition",
+          "effect_observable": "simulator-off irreversible-failure prevention and false-block outcome",
+          "effect_moderators": "topology, state predicate, action type, checkpoint",
+          "effect_stability_scope": "held-out layouts/topologies",
+          "aggregation_risk": "episode failures can hide the necessary predecessor",
+          "cheapest_falsifier": "finite-state exhaustive truth versus equal-capacity direct shield",
+          "decision_changing_outcomes": "held-out topology advantage permits P0; equivalence collapses to shielding",
+          "abandonment_condition": "direct-shield equivalence or no reusable predecessor structure"
+        }
+      },
+      "setup": {
+        "phase": "P0",
+        "mode": "simulator-first",
+        "primary_substrate": "finite-state irreversible-predecessor truth + simulator-off executor",
+        "screening_units": 60,
+        "max_gpus": 1,
+        "gpu_hours_cap": 12,
+        "wall_hours_cap": 12,
+        "seed": 42,
+        "second_backbone": "LOCKED until first-model P0 gate + explicit human approval",
+        "adaptive_repeats": "threshold-near/high-variance only; max 3/unit",
+        "checkpoint_every_units": 6,
+        "streaming_trace": "jsonl + atomic progress.json",
+        "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
+        "resume_from_checkpoint": true,
+        "overwrite_nonempty_run": false
+      },
+      "execution_preflight": {
+        "gpu0": {
+          "offline": "pass",
+          "reality": "pass",
+          "phenomenon": "pending",
+          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+        },
+        "pre_p0": {
+          "passed": 4,
+          "total": 10,
+          "checks": [
+            {
+              "key": "claim_alignment",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "target_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "baseline_disagreement",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "representability",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "tiny_overfit",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "competence_window",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "effect_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "cost_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "provenance_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "interpretation_matrix",
+              "status": "pass",
+              "evidence": ""
+            }
+          ]
+        },
+        "updater_competence": {
+          "status": "pending-evidence",
+          "passed": false,
+          "not_a_ninth_gate": true
+        },
+        "pre_experiment": {
+          "passed": 5,
+          "total": 8,
+          "gates": [
+            {
+              "key": "parameter_provenance",
+              "status": "pass"
+            },
+            {
+              "key": "baseline_competence",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "mechanism_identifiability",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "statistical_resolution",
+              "status": "pass"
+            },
+            {
+              "key": "compute_graph",
+              "status": "pass"
+            },
+            {
+              "key": "measured_throughput",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "observability_recovery",
+              "status": "pass"
+            },
+            {
+              "key": "outcome_semantics",
+              "status": "pass"
+            }
+          ]
+        },
+        "economy_gate": {
+          "status": "blocked",
+          "execution_compilation_authorized": false,
+          "passed_gates": 3,
+          "gate_count": 5,
+          "primary_stop_class": "",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pass",
+              "pass": true,
+              "reason": "causal/prediction units, observable, moderators, stability scope, and aggregation risk are frozen"
+            },
+            {
+              "key": "decision_voi",
+              "status": "pass",
+              "pass": true,
+              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
+        "runtime_throughput": {
+          "status": "pending-harness-smoke"
+        },
+        "execution_authorized": false,
+        "blockers": [
+          "economy-gate",
+          "gpu0-phenomenon",
+          "pre-p0-empirical-checks",
+          "updater-competence",
+          "outer-identifiability/competence/throughput",
+          "runtime-smoke"
+        ]
+      }
+    },
+    {
+      "idea_id": "recovery-conditioned-experience",
+      "code": "F-3",
+      "group": "F",
+      "title": {
+        "en": "Recovery-Residual Operator Library",
+        "zh": "恢复残差算子库"
+      },
+      "lifecycle": "p0",
+      "p0_entry": {
+        "date": "2026-08-12",
+        "basis": "user-authorized-material-revival",
+        "execution_authorized": false
+      },
+      "admission_status": "admitted",
+      "admission_checks": [
+        {
+          "key": "stable_code_group",
+          "pass": true
+        },
+        {
+          "key": "frozen_mechanism",
+          "pass": true
+        },
+        {
+          "key": "collision_review",
+          "pass": true
+        },
+        {
+          "key": "strongest_baseline",
+          "pass": true
+        },
+        {
+          "key": "independent_truth",
+          "pass": true
+        },
+        {
+          "key": "minimum_p0",
+          "pass": true
+        },
+        {
+          "key": "stop_rule",
+          "pass": true
+        },
+        {
+          "key": "resource_ceiling",
+          "pass": true
+        },
+        {
+          "key": "provenance_recovery",
+          "pass": true
+        },
+        {
+          "key": "p1_lock",
+          "pass": true
+        }
+      ],
+      "contract": {
+        "mechanism": "From same-start successful normal/perturbed pairs extract the earliest recovery state-action residual; write an operator+applicability predicate only after replication across >=2 contexts.",
+        "baseline": "Full recovery-episode memory, nearest trajectory retrieval, same-pair direct conditional recovery policy, and success-only writer with matched memory/tokens/calls.",
+        "truth": "Program/environment truth on a sealed held-out set with paired before/after evaluation.",
+        "pre_p0": "First satisfy >=100 same-start successful pairs with direct state residuals and success-only writer audit; >=20% of pairs must support residual operators reusable across identities/contexts.",
+        "minimum_p0": "After the phenomenon gate freeze 10-20 operators and evaluate simulator-free on held-out perturbation types/scenes for recovery, extra steps, clean interference, and memory cost.",
+        "stop": "Stop if residuals do not replicate, or if same-data direct recovery/full-trajectory memory is equivalent at matched budget.",
+        "economy": {
+          "substrate_inventory": {
+            "effective_candidates_min": 100,
+            "fresh_heldout_min": 30,
+            "reserve_fraction_min": 0.2,
+            "target_variation_rule": "same-start pairs contain recurrent and non-recurrent recovery residuals"
+          },
+          "causal_unit": "same-start recovery pair",
+          "prediction_unit": "same-start recovery pair",
+          "effect_observable": "future recovery success and step reduction from a frozen operator",
+          "effect_moderators": "perturbation type, scene, recovery state, applicability",
+          "effect_stability_scope": "held-out perturbation types and scenes",
+          "aggregation_risk": "successful episodes can hide one-off residuals",
+          "cheapest_falsifier": "100-pair exact-state recurrence audit before training/scale",
+          "decision_changing_outcomes": "recurrent residual support permits P0; lack of recurrence stops",
+          "abandonment_condition": "insufficient recurrence or direct/full-memory equivalence"
+        }
+      },
+      "setup": {
+        "phase": "P0",
+        "mode": "phenomenon-pairs-first",
+        "primary_substrate": "same-start normal/perturbed successful recovery pairs",
+        "screening_units": 100,
+        "max_gpus": 1,
+        "gpu_hours_cap": 12,
+        "wall_hours_cap": 12,
+        "seed": 42,
+        "second_backbone": "LOCKED until first-model P0 gate + explicit human approval",
+        "adaptive_repeats": "threshold-near/high-variance only; max 3/unit",
+        "checkpoint_every_units": 6,
+        "streaming_trace": "jsonl + atomic progress.json",
+        "exclusive_output_lock": true,
+        "authority_mode": "single-writer-lease",
+        "authority_epoch_required": true,
+        "resume_from_checkpoint": true,
+        "overwrite_nonempty_run": false
+      },
+      "execution_preflight": {
+        "gpu0": {
+          "offline": "pass",
+          "reality": "pass",
+          "phenomenon": "pending",
+          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+        },
+        "pre_p0": {
+          "passed": 4,
+          "total": 10,
+          "checks": [
+            {
+              "key": "claim_alignment",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "target_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "baseline_disagreement",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "representability",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "tiny_overfit",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "competence_window",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "effect_variation",
+              "status": "pending-evidence",
+              "evidence": ""
+            },
+            {
+              "key": "cost_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "provenance_plan",
+              "status": "pass",
+              "evidence": ""
+            },
+            {
+              "key": "interpretation_matrix",
+              "status": "pass",
+              "evidence": ""
+            }
+          ]
+        },
+        "updater_competence": {
+          "status": "pending-evidence",
+          "passed": false,
+          "not_a_ninth_gate": true
+        },
+        "pre_experiment": {
+          "passed": 5,
+          "total": 8,
+          "gates": [
+            {
+              "key": "parameter_provenance",
+              "status": "pass"
+            },
+            {
+              "key": "baseline_competence",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "mechanism_identifiability",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "statistical_resolution",
+              "status": "pass"
+            },
+            {
+              "key": "compute_graph",
+              "status": "pass"
+            },
+            {
+              "key": "measured_throughput",
+              "status": "pending-evidence"
+            },
+            {
+              "key": "observability_recovery",
+              "status": "pass"
+            },
+            {
+              "key": "outcome_semantics",
+              "status": "pass"
+            }
+          ]
+        },
+        "economy_gate": {
+          "status": "blocked",
+          "execution_compilation_authorized": false,
+          "passed_gates": 3,
+          "gate_count": 5,
+          "primary_stop_class": "",
+          "gates": [
+            {
+              "key": "matched_simplification",
+              "status": "pending",
+              "pass": false,
+              "reason": "compiled matched-simplification tournament has not established headroom"
+            },
+            {
+              "key": "substrate_inventory",
+              "status": "pending",
+              "pass": false,
+              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+            },
+            {
+              "key": "causal_unit_observable",
+              "status": "pass",
+              "pass": true,
+              "reason": "causal/prediction units, observable, moderators, stability scope, and aggregation risk are frozen"
+            },
+            {
+              "key": "decision_voi",
+              "status": "pass",
+              "pass": true,
+              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+            },
+            {
+              "key": "single_writer_authority",
+              "status": "pass",
+              "pass": true,
+              "reason": "single-writer lease plus exclusive output lock required"
+            }
+          ]
+        },
+        "runtime_throughput": {
+          "status": "pending-harness-smoke"
+        },
+        "execution_authorized": false,
+        "blockers": [
+          "economy-gate",
+          "gpu0-phenomenon",
+          "pre-p0-empirical-checks",
+          "updater-competence",
+          "outer-identifiability/competence/throughput",
+          "runtime-smoke"
         ]
       }
     }

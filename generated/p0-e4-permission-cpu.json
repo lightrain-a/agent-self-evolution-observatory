@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T08:06:46+00:00",
+  "generated_at": "2026-08-11T17:31:41+00:00",
   "idea_id": "interventional-permission-triage-under-ceiling",
   "code": "E-4",
   "design": {
@@ -16,7 +16,7 @@
     "external_truth": "permission-canary effect log",
     "new_permission_requests_excluded": true
   },
-  "threshold": 0.129669062576449,
+  "threshold": 0.12966906257644908,
   "model_cells": 3,
   "matched_monotone_dnf": {
     "read": [
