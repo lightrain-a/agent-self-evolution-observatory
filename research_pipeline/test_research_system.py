@@ -92,9 +92,22 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(compiler["summary"]["blocked"], 4)
         self.assertEqual(compiler["summary"]["formal_p0_ready"], 0)
         self.assertEqual(compiler["summary"]["formal_p0_total"], 2)
+        self.assertEqual(compiler["summary"]["updater_prerequisite_pass"], 0)
+        self.assertEqual(compiler["summary"]["updater_prerequisite_fail"], 4)
         self.assertEqual(compiler["summary"]["gate_failures"]["mechanism_identifiability"], 4)
+        self.assertTrue(compiler["policy"]["updater_competence_required_before_gate_1"])
+        self.assertTrue(compiler["policy"]["updater_competence_is_not_a_ninth_gate"])
         self.assertTrue(compiler["policy"]["automatic_override_forbidden"])
         self.assertTrue(self.state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"])
+
+    def test_memory_support_workflow_preserves_stage_boundaries(self) -> None:
+        workflow = self.state["mem_xfer_workflow"]
+        self.assertEqual(workflow["support_qualification"]["status"], "support_qualification_pass")
+        self.assertTrue((workflow["full_support"].get("pre_gpu_audit") or {}).get("execution_ready"))
+        self.assertEqual(workflow["full_support"]["status"], "full_support_ready")
+        self.assertEqual(workflow["full_support"]["progress"], {})
+        self.assertEqual(workflow["second_model"]["status"], "second_model_hold")
+        self.assertFalse(workflow["second_model"]["authorized"])
 
     def test_experiment_iteration_distinguishes_pilot_failure_layers(self) -> None:
         iteration = self.state["experiment_iteration"]

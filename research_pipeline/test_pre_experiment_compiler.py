@@ -61,7 +61,7 @@ class PreExperimentCompilerTest(unittest.TestCase):
                     self.assertIn("retrospective-baseline_disagreement", card["blockers"])
                     self.assertIn("retrospective-tiny_overfit", card["blockers"])
 
-    def test_repaired_retrospective_checks_unlock_the_eight_gate_contract(self) -> None:
+    def test_eight_of_eight_does_not_bypass_failed_updater_competence(self) -> None:
         repaired = {"checks": [
             {"key": key, "pass": True, "evidence": "repaired pre-GPU evidence"}
             for key in ("claim_alignment", "target_variation", "baseline_disagreement", "representability", "tiny_overfit", "competence_window", "effect_variation")
@@ -72,7 +72,30 @@ class PreExperimentCompilerTest(unittest.TestCase):
             for name in CONFIGS:
                 config_path = Path(__file__).with_name(name)
                 card = compile_from_path(load_json(config_path)["idea_id"], config_path, root)
+                self.assertEqual(card["gate_count"], 8, name)
                 self.assertEqual(card["passed_gates"], 8, (name, card["blockers"]))
+                self.assertFalse(card["execution_authorized"], name)
+                self.assertFalse(card["updater_competence_prerequisite"]["passed"], name)
+                self.assertIn("updater-competence-prerequisite-failed", card["blockers"])
+
+    def test_updater_competence_plus_eight_of_eight_unlocks_execution(self) -> None:
+        repaired = {"checks": [
+            {"key": key, "pass": True, "evidence": "repaired pre-GPU evidence"}
+            for key in ("claim_alignment", "target_variation", "baseline_disagreement", "representability", "tiny_overfit", "competence_window", "effect_variation")
+        ], "blockers": [], "execution_ready": True, "status": "pass"}
+        with tempfile.TemporaryDirectory() as td, patch("research_pipeline.pre_experiment_science.audit_contract", return_value=repaired):
+            root = Path(td)
+            self.write_evidence(root)
+            for name in CONFIGS:
+                config_path = Path(__file__).with_name(name)
+                config = copy.deepcopy(load_json(config_path))
+                config["pre_experiment"]["updater_competence"]["passed"] = True
+                config["pre_experiment"]["updater_competence"]["status"] = "pass"
+                config["pre_experiment"]["updater_competence"]["decision"] = "UPDATER_COMPETENT"
+                card = compile_pre_experiment_card(config["idea_id"], config, root)
+                self.assertEqual(card["gate_count"], 8, name)
+                self.assertEqual(card["passed_gates"], 8, (name, card["blockers"]))
+                self.assertTrue(card["updater_competence_prerequisite"]["passed"], name)
                 self.assertTrue(card["execution_authorized"], name)
 
     def test_missing_competence_artifact_blocks_launch(self) -> None:

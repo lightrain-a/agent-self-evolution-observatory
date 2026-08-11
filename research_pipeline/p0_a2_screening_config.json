@@ -48,6 +48,24 @@
     "episodes": 420
   },
   "pre_experiment": {
+    "updater_competence": {
+      "required": true,
+      "is_formal_gate": false,
+      "passed": false,
+      "status": "blocked-action-stream",
+      "surface": "current persistent prompt-update stream",
+      "decision": "HOLD_CONTROLLER_TRAINING",
+      "evidence": {
+        "update_rounds": 36,
+        "nonzero_target_effect_rounds": 7,
+        "nonzero_update_effect_fraction": 0.19444444444444445,
+        "minimum_nonzero_effect_fraction": 0.25,
+        "future_benefit_positive_sequences": 4,
+        "future_benefit_nonpositive_sequences": 5
+      },
+      "reason": "Adaptive stopping phenomenon exists, but the updater stream has only 19.4% nonzero target-effect rounds, below the 25% prerequisite.",
+      "scientific_role": "hard prerequisite before Gate 1; failure blocks controller fitting without rejecting the stopping phenomenon"
+    },
     "parameter_provenance": {
       "critical_parameters": [
         "scope.max_steps",

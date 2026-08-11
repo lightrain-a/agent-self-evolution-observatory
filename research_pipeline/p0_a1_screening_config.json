@@ -48,6 +48,23 @@
     "episodes": 300
   },
   "pre_experiment": {
+    "updater_competence": {
+      "required": true,
+      "is_formal_gate": false,
+      "passed": false,
+      "status": "stop-substrate",
+      "surface": "ALFWorld + persistent single-prompt-patch update surface",
+      "decision": "STOP_SUBSTRATE_NOT_GOVERNANCE",
+      "evidence": {
+        "localized_qwen_positive_source_repairs": "2/8",
+        "deepseek_v4_pro_positive_source_repairs": "1/4",
+        "kimi_k3_positive_source_repairs": "0/4",
+        "deepseek_full_context_positive_source_repairs": "0/4",
+        "deterministic_typed_prompt_repairs": "1/8"
+      },
+      "reason": "Prompt-patch updater action space is degenerate; downstream admission learning is blocked. This does not reject Persistent Update Governance.",
+      "scientific_role": "hard prerequisite before Gate 1; failure stops this updater/action surface, not the research problem"
+    },
     "parameter_provenance": {
       "critical_parameters": [
         "scope.max_steps",

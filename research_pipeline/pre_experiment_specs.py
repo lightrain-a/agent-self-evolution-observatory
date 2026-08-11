@@ -35,6 +35,8 @@ TYPED_OUTCOMES = {
 
 POLICY: dict[str, Any] = {
     "schema_version": "2.0",
+    "updater_competence_required_before_gate_1": True,
+    "updater_competence_is_not_a_ninth_gate": True,
     "all_eight_gates_required": True,
     "launch_requires_execution_authorized": True,
     "automatic_override_forbidden": True,

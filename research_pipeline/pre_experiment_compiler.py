@@ -28,9 +28,33 @@ def _hash_payload(payload: Any) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
+def _updater_competence_prerequisite(config: dict[str, Any]) -> dict[str, Any]:
+    contract = (config.get("pre_experiment") or {}).get("updater_competence") or {}
+    if not isinstance(contract, dict) or not contract:
+        return {
+            "required": True,
+            "is_formal_gate": False,
+            "passed": False,
+            "status": "missing-contract",
+            "blockers": ["updater-competence-contract-missing"],
+            "scientific_role": "hard prerequisite before Gate 1; failure blocks execution without counting as method failure",
+        }
+    passed = contract.get("passed") is True
+    blockers = [] if passed else ["updater-competence-prerequisite-failed"]
+    return {
+        **contract,
+        "required": True,
+        "is_formal_gate": False,
+        "passed": passed,
+        "blockers": blockers,
+        "scientific_role": str(contract.get("scientific_role") or "hard prerequisite before Gate 1; failure blocks execution without counting as method failure"),
+    }
+
+
 def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root: Path) -> dict[str, Any]:
     if str(config.get("idea_id") or "") != idea_id:
         raise ValueError(f"config idea_id mismatch: {config.get('idea_id')} != {idea_id}")
+    updater_competence = _updater_competence_prerequisite(config)
     gates = [
         parameter_provenance(config),
         baseline_competence(config, data_root),
@@ -43,8 +67,10 @@ def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root:
     ]
     if [gate["key"] for gate in gates] != [gate["key"] for gate in GATES]:
         raise RuntimeError("pre-experiment gate order drift")
-    blockers = [blocker for gate in gates for blocker in gate["blockers"]]
+    blockers = list(updater_competence.get("blockers") or []) + [blocker for gate in gates for blocker in gate["blockers"]]
     passed = sum(bool(gate["pass"]) for gate in gates)
+    gates_passed = passed == len(gates)
+    updater_competent = updater_competence.get("passed") is True
     config_hash = _hash_payload(config)
     scope = config.get("scope") or {}
     competence = (config.get("pre_experiment") or {}).get("competence") or {}
@@ -60,10 +86,11 @@ def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root:
         },
         "config_hash": config_hash,
         "policy": POLICY,
+        "updater_competence_prerequisite": updater_competence,
         "gate_count": len(gates),
         "passed_gates": passed,
-        "execution_authorized": passed == len(gates),
-        "status": "pass" if passed == len(gates) else "blocked",
+        "execution_authorized": updater_competent and gates_passed,
+        "status": "pass" if updater_competent and gates_passed else "blocked",
         "blockers": blockers,
         "gates": gates,
         "compute_graph": next(gate["detail"] for gate in gates if gate["key"] == "compute_graph"),

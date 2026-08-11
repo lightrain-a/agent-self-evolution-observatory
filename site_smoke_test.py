@@ -236,8 +236,8 @@ def main() -> None:
     if (summary.get("v5_candidates"), summary.get("v5_finalists"), summary.get("v5_revivals")) != (36,32,8):
         fail("research-system state must expose the v5 wide-search round")
     components = research_state.get("components", [])
-    if len(components) != 12:
-        fail(f"research-system state must expose twelve backend components, got {len(components)}")
+    if len(components) != 13:
+        fail(f"research-system state must expose thirteen backend components including the human terminal controller, got {len(components)}")
     pre_p0 = research_state.get("pre_p0_identifiability", {})
     if pre_p0.get("summary", {}).get("audited") != 4 or pre_p0.get("summary", {}).get("execution_ready") != 0:
         fail(f"Pre-P0 identifiability state is inconsistent: {pre_p0.get('summary')}")

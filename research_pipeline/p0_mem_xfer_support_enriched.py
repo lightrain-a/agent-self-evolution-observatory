@@ -2,15 +2,17 @@ from __future__ import annotations
 
 import argparse
 import csv
+import fcntl
 import hashlib
 import json
 import os
 import sys
 import time
 from collections import Counter, defaultdict
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 from .alfworld_react_scaffold import task_family_from_gamefile
 from .p0_alfworld_adapter import ALFWorldGameRunner, HFAdmissiblePolicy, load_config
@@ -33,6 +35,15 @@ SUPPORT_GATES = {
     "minimum_target_families_with_nonzero": 3,
     "requires_controlled_harm_and_benefit": True,
     "minimum_memory_candidates_with_nonzero": 4,
+}
+FULL_SUPPORT_GATES = {
+    "minimum_candidates": 8,
+    "minimum_replicated_harm_candidates": 2,
+    "minimum_replicated_benefit_candidates": 2,
+    "replicated_effect_minimum_nonzero_units": 2,
+    "candidate_level_independent_future_evaluation_required": True,
+    "minimum_nonzero_controlled_effects": 12,
+    "minimum_target_family_folds_with_two_nonzero": 3,
 }
 
 class SupportP0Error(RuntimeError):
@@ -58,6 +69,28 @@ def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
 def _append_jsonl(path: Path, row: dict[str, Any]) -> None:
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(row, ensure_ascii=False) + "\n"); handle.flush()
+
+def _load_jsonl(path: Path) -> list[dict[str, Any]]:
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+@contextmanager
+def _exclusive_run_lock(path: Path) -> Iterator[None]:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    handle = path.open("a+", encoding="utf-8")
+    try:
+        try:
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as error:
+            raise SupportP0Error(f"duplicate-process-lock-held: {path}") from error
+        handle.seek(0); handle.truncate(0)
+        handle.write(json.dumps({"pid": os.getpid(), "locked_at": _now()}) + "\n"); handle.flush()
+        yield
+    finally:
+        try:
+            fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+        finally:
+            handle.close()
+
 def _load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 def _load_trace_rows(paths: list[Path]) -> list[dict[str, Any]]:
@@ -501,7 +534,7 @@ def analyze_support_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "unit_rows": units,
     }
 
-def run_support_qualification(
+def _run_support_qualification_unlocked(
     *, run_dir: Path, alfworld_config: Path, model_path: Path,
     output_dir: Path, gpu_uuid: str, max_steps: int = 50,
     episode_cap: int = 72, wall_hours_cap: float = 2.0,
@@ -596,3 +629,44 @@ def run_support_qualification(
     terminal_status = "support_qualification_pass" if analysis["decision"] == "SUPPORT_QUALIFICATION_PASS" else "support_qualification_hold"
     _atomic_json(output_dir / "progress.json", {"schema_version": "1.0", "status": terminal_status, "completed_episodes": len(records), "total_episodes": 72, "completed_units": analysis["complete_units"], "total_units": 24, "decision": analysis["decision"], "elapsed_hours": elapsed, "model_calls": int(usage.get("generation_calls") or 0), "gpu_uuid": gpu_uuid, "method_failure_authorized": False, "second_model_authorized": False, "updated_at": _now()})
     return {"analysis": analysis, "cost": cost}
+
+
+def run_support_qualification(
+    *, run_dir: Path, alfworld_config: Path, model_path: Path,
+    output_dir: Path, gpu_uuid: str, max_steps: int = 50,
+    episode_cap: int = 72, wall_hours_cap: float = 2.0,
+) -> dict[str, Any]:
+    with _exclusive_run_lock(run_dir / ".support-qualification.lock"):
+        return _run_support_qualification_unlocked(
+            run_dir=run_dir, alfworld_config=alfworld_config, model_path=model_path,
+            output_dir=output_dir, gpu_uuid=gpu_uuid, max_steps=max_steps,
+            episode_cap=episode_cap, wall_hours_cap=wall_hours_cap,
+        )
+
+
+def _support_source_rows(run_dir: Path, plan: dict[str, Any], model_path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    support_dir = run_dir / "support-qualification"
+    decision = _load_json(support_dir / "decision.json")
+    manifest = _load_json(support_dir / "manifest.json")
+    if decision.get("decision") != "SUPPORT_QUALIFICATION_PASS":
+        raise SupportP0Error("full stage requires SUPPORT_QUALIFICATION_PASS")
+    if str(manifest.get("plan_hash") or "") != str(plan.get("plan_hash") or ""):
+        raise SupportP0Error("support/full plan hash mismatch")
+    if str(manifest.get("model_path") or "") != str(model_path):
+        raise SupportP0Error("support/full model path mismatch")
+    rows = _load_jsonl(support_dir / "raw-traces.jsonl")
+    material = _verified_material(plan)
+    support_ids = set(material["support_qualification_unit_ids"])
+    expected = {(str(unit_id), arm) for unit_id in support_ids for arm in ARMS}
+    actual = {(str(row.get("unit_id") or ""), str(row.get("arm") or "")) for row in rows}
+    if len(rows) != 72 or len(actual) != 72 or actual != expected:
+        raise SupportP0Error(f"support source integrity failed: rows={len(rows)}, unique={len(actual)}")
+    if any(abs(int(row.get("token_match_gap") or 0)) > 1 for row in rows):
+        raise SupportP0Error("support source contains placebo token mismatch")
+    return rows, {
+        "support_decision_sha256": _file_hash(support_dir / "decision.json"),
+        "support_raw_sha256": _file_hash(support_dir / "raw-traces.jsonl"),
+        "support_cost_sha256": _file_hash(support_dir / "cost.json"),
+        "reused_support_executions": len(rows),
+        "reused_support_units": len(support_ids),
+    }

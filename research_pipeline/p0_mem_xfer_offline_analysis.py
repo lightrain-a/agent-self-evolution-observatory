@@ -232,6 +232,10 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
     support_dir = experiment_root / "runs" / SUPPORT_RUN_ID
     support_progress = _read_json(support_dir / "support-qualification" / "progress.json") or _read_json(support_dir / "progress.json") or {}
     support_decision = _read_json(support_dir / "support-qualification" / "decision.json") or _read_json(support_dir / "decision.json")
+    full_support_dir = support_dir / "full-qwen"
+    full_support_audit = _read_json(support_dir / "full-pre-gpu-audit.json")
+    full_support_progress = _read_json(full_support_dir / "progress.json") or {}
+    full_support_decision = _read_json(full_support_dir / "decision.json")
     expand_allowed = bool(offline_decision and offline_decision.get("workflow_decision") == "EXPAND")
     if not expand_allowed:
         support_status = "support_qualification_hold"
@@ -244,6 +248,17 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
     else:
         support_status = "support_qualification_pending"
 
+    if support_status != "support_qualification_pass":
+        full_support_status = "full_support_hold"
+    elif full_support_decision and full_support_progress.get("status") == "full_qwen_support_complete":
+        full_support_status = "full_support_complete"
+    elif full_support_progress.get("status") in {"full_qwen_support_running", "full_qwen_support_checkpoint"}:
+        full_support_status = str(full_support_progress.get("status"))
+    elif full_support_audit and full_support_audit.get("decision") == "PASS" and full_support_audit.get("execution_ready") is True:
+        full_support_status = "full_support_ready"
+    else:
+        full_support_status = "full_support_pending"
+
     second_model_authorized = False
     second_model_status = "second_model_authorized" if second_model_authorized else "second_model_hold"
     return {
@@ -255,7 +270,8 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             "full_table_collected", "offline_analysis_pending", "offline_analysis_complete",
             "support_qualification_pending", "support_qualification_running",
             "support_qualification_hold", "support_qualification_pass",
-            "second_model_hold", "second_model_authorized",
+            "full_support_pending", "full_support_ready", "full_qwen_support_running", "full_qwen_support_checkpoint",
+            "full_support_hold", "full_support_complete", "second_model_hold", "second_model_authorized",
         ],
         "full_table": {
             "status": "full_table_collected" if full_complete else "collecting",
@@ -271,13 +287,19 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             "status": support_status, "progress": support_progress,
             "decision": support_decision, "authorized": expand_allowed,
         },
+        "full_support": {
+            "status": full_support_status, "progress": full_support_progress,
+            "decision": full_support_decision, "pre_gpu_audit": full_support_audit,
+            "authorized": support_status == "support_qualification_pass" and bool(full_support_audit and full_support_audit.get("execution_ready") is True),
+        },
         "second_model": {
             "status": second_model_status, "authorized": second_model_authorized,
-            "rule": "Remain HOLD until support-enriched Qwen reaches its frozen mechanism/support gate; never authorize from the old full table alone.",
+            "rule": "Remain HOLD through support qualification and the full Qwen support table; second-backbone authorization requires an explicit CPU-only full-support decision and is never implied by the old full table or qualification PASS alone.",
         },
         "dependencies": [
             {"from": "full_table_collected", "to": "offline_analysis_complete", "automatic": True, "action": "run CPU-only frozen offline analyzer"},
             {"from": "offline_analysis_complete", "to": "support_qualification_pending", "condition": "workflow_decision == EXPAND"},
-            {"from": "support_qualification_pass", "to": "second_model_authorized", "condition": "explicit downstream authorization after support-enriched Qwen gate"},
+            {"from": "support_qualification_pass", "to": "full_support_pending", "condition": "same frozen plan; reuse 72 support episodes and collect only remaining 144"},
+            {"from": "full_support_complete", "to": "second_model_authorized", "condition": "explicit downstream authorization after CPU-only full-support analysis"},
         ],
     }

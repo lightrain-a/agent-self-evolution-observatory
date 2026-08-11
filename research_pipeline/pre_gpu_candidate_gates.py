@@ -125,9 +125,16 @@ def build_pre_gpu_candidate_gate_state() -> dict[str, Any]:
     small_p0 = [row for row in candidates if row["decision"] == "small-p0"]
     qualification = _qualification_state(experiment_root)
     mem_xfer_workflow = build_mem_xfer_workflow_state(experiment_root)
-    status = "qualification-pass" if qualification["status"] == "pass" else (
-        "qualification-running" if qualification["status"] == "running" else qualification["status"]
-    )
+    support_status = str((mem_xfer_workflow.get("support_qualification") or {}).get("status") or "")
+    full_support_status = str((mem_xfer_workflow.get("full_support") or {}).get("status") or "")
+    if full_support_status in {"full_support_ready", "full_qwen_support_running", "full_qwen_support_checkpoint", "full_support_hold", "full_support_complete"}:
+        status = full_support_status
+    elif support_status in {"support_qualification_pass", "support_qualification_running", "support_qualification_hold"}:
+        status = support_status
+    else:
+        status = "qualification-pass" if qualification["status"] == "pass" else (
+            "qualification-running" if qualification["status"] == "running" else qualification["status"]
+        )
     return {
         "schema_version": "1.0",
         "generated_at": _now(),
@@ -170,7 +177,7 @@ def build_pre_gpu_candidate_gate_state() -> dict[str, Any]:
             "qualification": qualification,
             "signal_stage": {
                 "status": "complete",
-                "decision": "signal-pass",
+                "decision": "legacy-development-superseded",
                 "started_at": "2026-08-10T13:50:01Z",
                 "finished_at": "2026-08-10T14:02:15Z",
                 "server_id": "60",
@@ -193,7 +200,33 @@ def build_pre_gpu_candidate_gate_state() -> dict[str, Any]:
                 "model_calls": 823,
                 "tokens": 764363,
                 "method_failure_authorized": False,
-                "scientific_authority": "Development/sensitivity evidence only. Passing means the manipulation exposes arm-dependent outcomes; it is not evidence that either #3 or #5 already beats a baseline.",
+                "scientific_authority": "Legacy development block only. Current memory-substrate interpretation must use placebo-controlled v0c/v1 plus the outcome-independent full/support-enriched tables.",
+            },
+            "memory_development": {
+                "v0c": {
+                    "status": "complete",
+                    "decision": "context-only-success-effect",
+                    "complete_units": 4,
+                    "retrieved_benefit_vs_placebo_units": 0,
+                    "retrieved_harm_vs_placebo_units": 0,
+                    "mean_controlled_effect_vs_placebo": 0.0,
+                    "posthoc_efficiency_only": True,
+                    "posthoc_mean_step_saving_vs_placebo": 4.333333333333333,
+                    "evidence_path": str(experiment_root / "qualification" / "mem-xfer-instruct-signal-v0c" / "analysis-v2.json"),
+                },
+                "fresh_v1": {
+                    "status": "complete",
+                    "decision": "memory-specific-success-signal",
+                    "complete_units": 4,
+                    "retrieved_benefit_vs_placebo_units": 2,
+                    "retrieved_harm_vs_placebo_units": 0,
+                    "mean_controlled_effect_vs_placebo": 0.5,
+                    "efficiency_gate_passed": False,
+                    "matched_success_units": 1,
+                    "minimum_matched_success_units": 2,
+                    "mean_relative_call_saving_vs_placebo": 0.6111111111111112,
+                    "evidence_path": str(experiment_root / "qualification" / "mem-xfer-instruct-efficiency-v1" / "efficiency-analysis.json"),
+                },
             },
             "full_qwen_stage": {
                 "status": mem_xfer_workflow["full_table"]["status"],
@@ -215,6 +248,22 @@ def build_pre_gpu_candidate_gate_state() -> dict[str, Any]:
                 "retrieved_benefit_units": 3,
                 "placebo_nonzero_units": 5,
                 "controlled_nonzero_units": 5,
+                "controlled_benefit_vs_placebo_units": 2,
+                "controlled_harm_vs_placebo_units": 3,
+                "controlled_tie_units": 27,
+                "controlled_nonzero_fraction": 0.15625,
+                "mean_controlled_effect_vs_placebo": -0.03125,
+                "same_family_effects": {"units": 8, "benefit_units": 1, "harm_units": 0},
+                "cross_family_effects": {"units": 24, "benefit_units": 1, "harm_units": 3},
+                "placebo_exact_token_match": True,
+                "matched_retrieved_placebo_success_units": 4,
+                "mean_relative_call_saving_vs_placebo": 0.16011904761904762,
+                "efficiency_gate_passed": False,
+                "deterministic_actor_generation": True,
+                "unique_unit_arm_rows": 96,
+                "plan_sequence_exact_match": True,
+                "historical_run_has_modern_directory_lock_manifest": False,
+                "future_runs_require_exclusive_lock_before_model_load": True,
                 "gpu_hours": 0.9954,
                 "model_calls": 3716,
                 "tokens": 3803375,
@@ -227,6 +276,20 @@ def build_pre_gpu_candidate_gate_state() -> dict[str, Any]:
                     "frozen_plan_hash": "2e99261fcfe8a7b44fc53a95ad6788e9a4d8a558e2c40ba8592928f1014ea2c6",
                 },
             },
+            "frozen_seed73_validation": {
+                "status": "not-run",
+                "seed": 73,
+                "units": 8,
+                "planned_executions": 24,
+                "minimum_memory_specific_success_disagreement_units": 2,
+                "minimum_retrieved_benefit_vs_placebo_units": 1,
+                "target_overlap_with_full_run": 4,
+                "source_memory_identity_overlap_with_full_run": 1,
+                "same_experiment_as_full_run": False,
+                "quantitative_gate_claimed_pass": False,
+                "reason_not_run": "The larger outcome-independent full table already established bidirectional placebo-controlled semantic effects. Seed-73 remains a distinct replication protocol, so its 2/8=25% gate is not claimed as passed.",
+                "evidence_path": str(experiment_root / "qualification" / "mem-xfer-instruct-outcome-independent-v2-plan" / "plan.json"),
+            },
             "offline_analysis": mem_xfer_workflow["offline_analysis"],
             "support_enriched_stage": {
                 "id": "P0-MEM-XFER-SUPPORT-ENRICHED",
@@ -234,16 +297,35 @@ def build_pre_gpu_candidate_gate_state() -> dict[str, Any]:
                 "status": mem_xfer_workflow["support_qualification"]["status"],
                 "progress": mem_xfer_workflow["support_qualification"].get("progress") or {},
                 "decision": mem_xfer_workflow["support_qualification"].get("decision"),
+                "gate_checks": ((mem_xfer_workflow["support_qualification"].get("decision") or {}).get("gate_checks") or {}),
+                "next_action": (mem_xfer_workflow["support_qualification"].get("decision") or {}).get("next_action"),
                 "plan_hash": "47dbaebf7c0f26079ccc0d6116e8e66305331ba64a40e793e6abd8726daffc6b",
                 "support_units": 24,
                 "support_executions": 72,
                 "full_units": 72,
                 "full_executions": 216,
+                "full_stage": mem_xfer_workflow.get("full_support") or {},
                 "candidate_split": "candidate 1/2 development; candidate 3 completely held out",
                 "second_model_authorized": False,
             },
+            "phenomenon_decision": {
+                "case": "A",
+                "status": "pass-bidirectional-memory-effect",
+                "full_table_basis": "retrieved-vs-token-matched-placebo controlled benefit=2, harm=3, ties=27 on 32 outcome-independent units",
+                "support_qualification_basis": "controlled benefit=4, harm=2, nonzero=6 on 24 frozen support units" if support_status == "support_qualification_pass" else "support qualification pending",
+                "memory_surface_qualified": True,
+                "admission_method_training_authorized": False,
+                "admission_hold_reason": "Support qualification passing authorizes only the frozen full Qwen support table. Do not fit an admission classifier before candidate-level future evaluation and strongest-simplification comparison are complete.",
+                "a1_a2_merge_authorized": False,
+            },
             "second_backbone": mem_xfer_workflow["second_model"],
-            "next_gate": "Finish the frozen 24-unit / 72-execution Qwen support qualification. Expand only if all support gates pass; otherwise HOLD without method failure. Keep the second backbone on HOLD.",
+            "next_gate": (
+                "Full-stage Pre-GPU audit PASS: collect only the remaining 48 frozen units / 144 new episodes, reusing the 72 support-qualification episodes; keep the second backbone and admission classifier on HOLD."
+                if full_support_status == "full_support_ready"
+                else "Open the frozen 72-unit / 216-execution full Qwen support table, reusing the 24-unit support-qualification subset and collecting only the remaining frozen units; keep the second backbone on HOLD."
+                if support_status == "support_qualification_pass"
+                else "Finish the frozen 24-unit / 72-execution Qwen support qualification. Expand only if all support gates pass; otherwise HOLD without method failure. Keep the second backbone on HOLD."
+            ),
         }
     }
 
