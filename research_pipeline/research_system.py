@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT, StorageSettings, resolve_experiment_data_root
+from .ai_consultation_clinic import build_ai_consultation_clinic_state, write_ai_consultation_clinic_state
 from .discussion_portfolio import build_discussion_portfolio
 from .evidence_graph import build_evidence_graph
 from .experiment_iteration import build_experiment_iteration_state
@@ -103,6 +104,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     pre_experiment = state["pre_experiment_compiler"]["summary"]
     economy = state["p0_economy_gate"]["summary"]
     p0_ledger = state["p0_decision_ledger"]["summary"]
+    ai_clinic = state["ai_consultation_clinic"]["summary"]
     iteration = state["experiment_iteration"]["summary"]
     repairs = state["repair_queue"]["summary"]
     terminal = state["human_terminal_ideas"]["summary"]
@@ -121,6 +123,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"HypoRefine / IdeaForge / ScholarEval / InnoEval / SciAtlas / InternAgent / AutoScientists", "component":{"en":"Wide-search simplification-challenge ideation","zh":"宽搜索与简化挑战式 Idea 发现"}, "status":"running", "evidence":{"en":f"{v5['raw_candidates']} v5 candidates / {v5['external_reviewed']} R2 reviewed / {v5['external_pass']} PASS","zh":f"{v5['raw_candidates']} 个 v5 候选 / {v5['external_reviewed']} 个 R2 已审 / {v5['external_pass']} 个 PASS"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Pre-P0 identifiability auditor","zh":"Pre-P0 实验可识别性审计"}, "status":"running", "evidence":{"en":f"{pre_p0['execution_ready']}/{pre_p0['audited']} retrospective contracts execution-ready","zh":f"当前 {pre_p0['execution_ready']}/{pre_p0['audited']} 份 retrospective 合同允许启动"}},
         {"source":"P0 retrospective economy review", "component":{"en":"Five-gate P0 Economy layer","zh":"P0 五门资源经济层"}, "status":"running", "evidence":{"en":f"{economy['matched_simplification_stops']} matched-simplification stops / {economy['substrate_stops']} substrate stops / {economy['economy_ready']} currently economy-ready","zh":f"{economy['matched_simplification_stops']} 个简化基线 STOP / {economy['substrate_stops']} 个底座 STOP / 当前 {economy['economy_ready']} 个 Economy-ready"}},
+        {"source":"Web GPT + domestic-model independent consultation", "component":{"en":"Five-checkpoint AI consultation clinic","zh":"五节点 AI 会诊诊断层"}, "status":"running", "evidence":{"en":f"{ai_clinic['checkpoints']} checkpoints / {ai_clinic['pre_gpu_checkpoints']} before GPU / zero AI-authoritative checkpoints","zh":f"{ai_clinic['checkpoints']} 个会诊节点 / {ai_clinic['pre_gpu_checkpoints']} 个位于 GPU 前 / AI 直接授权节点为 0"}},
         {"source":"Unified P0 decision ledger", "component":{"en":"Current experiment-decision ledger","zh":"统一 P0 当前决策账本"}, "status":"running", "evidence":{"en":f"{p0_ledger['active_p0']} active rows / {p0_ledger['experiment_stopped']} stopped awaiting review / {p0_ledger['launchable']} launchable","zh":f"{p0_ledger['active_p0']} 条活跃记录 / {p0_ledger['experiment_stopped']} 条实验 STOP 待人工 / {p0_ledger['launchable']} 条可启动"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Updater-competence prerequisite + eight-gate Pre-Experiment Compiler","zh":"Updater Competence 前置条件 + 八门实验启动前编译器"}, "status":"running", "evidence":{"en":f"updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / launch-ready {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']} / formal P0 {pre_experiment['formal_p0_ready']}/{pre_experiment['formal_p0_total']}","zh":f"Updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / 可启动 {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']} / formal P0 {pre_experiment['formal_p0_ready']}/{pre_experiment['formal_p0_total']}"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Pilot registry and result feedback","zh":"Pilot 注册表与结果回流"}, "status":"running", "evidence":{"en":f"{pilots['phases']} phases / {pilots['valid_result_files']} executed results","zh":f"{pilots['phases']} 个阶段 / {pilots['valid_result_files']} 个已执行结果"}},
@@ -199,7 +202,9 @@ def build_research_system_state() -> dict[str, Any]:
     p0_realizability = build_p0_realizability_suite()
     p0_offline_qualification = build_p0_offline_qualification_state()
     p0_admission = build_p0_admission_state()
+    ai_consultation_clinic = build_ai_consultation_clinic_state()
     p0_admission_public = {"summary": p0_admission["summary"], "policy": p0_admission["policy"]}
+    ai_consultation_public = {"summary": ai_consultation_clinic["summary"], "policy": ai_consultation_clinic["policy"], "panel": ai_consultation_clinic["panel"], "checkpoints": ai_consultation_clinic["checkpoints"], "finding_dispositions": ai_consultation_clinic["finding_dispositions"]}
     p0_economy_gate = p0_admission["economy_gate"]
     p0_economy_public = {"summary": p0_economy_gate["summary"], "policy": p0_economy_gate["policy"], "gates": p0_economy_gate["gates"]}
     p0_decision_ledger = build_p0_decision_ledger(p0_admission, p0_offline_qualification, human_terminal_ideas)
@@ -262,6 +267,8 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_admission_settings_complete":p0_admission["summary"]["settings_complete"],
             "p0_admission_economy_ready":p0_admission["summary"]["economy_ready"],
             "p0_admission_execution_authorized":p0_admission["summary"]["execution_authorized"],
+            "ai_consultation_checkpoints":ai_consultation_clinic["summary"]["checkpoints"],
+            "ai_consultation_pre_gpu_checkpoints":ai_consultation_clinic["summary"]["pre_gpu_checkpoints"],
             "p0_economy_matched_simplification_stops":p0_economy_gate["summary"]["matched_simplification_stops"],
             "p0_economy_substrate_stops":p0_economy_gate["summary"]["substrate_stops"],
             "p0_decision_ledger_stopped":p0_decision_ledger["summary"]["experiment_stopped"],
@@ -332,6 +339,7 @@ def build_research_system_state() -> dict[str, Any]:
         "experiment_iteration":experiment_iteration,
         "human_terminal_ideas":human_terminal_ideas,
         "p0_admission":p0_admission_public,
+        "ai_consultation_clinic":ai_consultation_public,
         "p0_economy_gate":p0_economy_public,
         "p0_decision_ledger":p0_decision_ledger_public,
         "p0_offline_qualification":p0_offline_public,
@@ -367,6 +375,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"human-terminal-ledger", "pass":state["human_terminal_ideas"]["summary"].get("human_parents") == 26 and (state["human_terminal_ideas"]["summary"].get("p0"),state["human_terminal_ideas"]["summary"].get("p0_ready"),state["human_terminal_ideas"]["summary"].get("merge"),state["human_terminal_ideas"]["summary"].get("drop")) == (13,0,6,7), "detail":state["human_terminal_ideas"]["summary"]},
         {"key":"p0-admission", "pass":state["p0_admission"]["summary"].get("active_p0") == 20 and state["p0_admission"]["summary"].get("admitted") == 20 and state["p0_admission"]["summary"].get("transitioned_from_p0_ready") == 16 and state["p0_admission"]["summary"].get("settings_complete") == 20, "detail":state["p0_admission"]["summary"]},
         {"key":"p0-economy-gate", "pass":state["p0_economy_gate"]["summary"].get("matched_simplification_stops") == 12 and state["p0_economy_gate"]["summary"].get("substrate_stops") == 4 and state["p0_economy_gate"]["policy"].get("all_five_required_before_execution_compilation") is True, "detail":state["p0_economy_gate"]["summary"]},
+        {"key":"ai-consultation-clinic", "pass":state["ai_consultation_clinic"]["summary"].get("checkpoints") == 5 and state["ai_consultation_clinic"]["policy"].get("ai_vote_can_authorize_gpu") is False and state["ai_consultation_clinic"]["policy"].get("high_risk_findings_must_be_compiled_into_machine_checks") is True, "detail":state["ai_consultation_clinic"]["summary"]},
         {"key":"p0-decision-ledger", "pass":state["p0_decision_ledger"]["summary"].get("active_p0") == 20 and state["p0_decision_ledger"]["summary"].get("launchable") == 0 and state["p0_decision_ledger"]["policy"].get("economy_stop_overrides_planned_registry_display") is True, "detail":state["p0_decision_ledger"]["summary"]},
         {"key":"p0-offline-qualification", "pass":state["p0_offline_qualification"]["summary"].get("ideas") == 16 and state["p0_offline_qualification"]["policy"].get("method_result_from_offline_qualification_forbidden") is True, "detail":state["p0_offline_qualification"]["summary"]},
         {"key":"p0-realizability", "pass":state["p0_realizability"]["summary"].get("audited") == 14 and state["p0_realizability"]["policy"].get("cannot_emit_method_result") is True, "detail":state["p0_realizability"]["summary"]},
@@ -423,6 +432,10 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     economy = state.get("p0_economy_gate") or {}
     if (economy.get("summary") or {}).get("matched_simplification_stops") != 12 or (economy.get("summary") or {}).get("substrate_stops") != 4: errors.append("P0 Economy retrospective stop classification mismatch")
     if (economy.get("policy") or {}).get("all_five_required_before_execution_compilation") is not True: errors.append("P0 Economy 5/5 must precede execution compilation")
+    ai_clinic = state.get("ai_consultation_clinic") or {}
+    if (ai_clinic.get("summary") or {}).get("checkpoints") != 5: errors.append("AI consultation clinic must expose five checkpoints")
+    if (ai_clinic.get("policy") or {}).get("ai_vote_can_authorize_gpu") is not False: errors.append("AI consultation must never authorize GPU execution")
+    if (ai_clinic.get("policy") or {}).get("high_risk_findings_must_be_compiled_into_machine_checks") is not True: errors.append("AI consultation findings must compile into machine checks")
     ledger = state.get("p0_decision_ledger") or {}
     if (ledger.get("summary") or {}).get("active_p0") != 20: errors.append("P0 decision ledger must cover all 20 active P0 directions")
     if (ledger.get("summary") or {}).get("launchable") != state["p0_admission"]["summary"].get("execution_authorized"): errors.append("P0 decision ledger launchability must match execution authorization")
@@ -442,6 +455,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_a6_cpu_p0()
     write_p0_offline_qualification_state()
     write_p0_admission_state()
+    write_ai_consultation_clinic_state()
     state=build_research_system_state()
     write_p0_decision_ledger(state["p0_decision_ledger"])
     errors=validate_state(state)
