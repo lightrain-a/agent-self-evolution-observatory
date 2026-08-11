@@ -57,9 +57,9 @@ window.PAGE_ARCHITECTURES = {
   },
   experiments:{
     chapters:[
-      {id:"experiment-queue",title:{en:"I · Active terminal ideas and current experiment status",zh:"第一章 · 终态活跃 Idea 与当前实验状态"},question:{en:"Across the 20 active P0/P0-ready directions on Paper Ideas, which experiments have actually started, which only cleared pre-GPU gates, and which have not started?",zh:"Paper Ideas 的 20 个活跃 P0/P0-ready 方向中，哪些实验已经真正开始、哪些只完成了 GPU 前置门、哪些仍未启动？"}},
-      {id:"experiment-results",title:{en:"II · Results, effects, and resource accounting",zh:"第二章 · 实验结果、效果与资源账本"},question:{en:"What has actually run, what effect was measured, how much did it cost, and did it cross the Go/Stop threshold?",zh:"哪些实验真的跑过、测到了什么效果、花了多少资源，以及是否越过 Go/Stop 门槛？"}},
-      {id:"experiment-approvals",title:{en:"III · Unstarted audit queue and next-phase locks",zh:"第三章 · 未启动方向审计队列与下一阶段锁"},question:{en:"Which P0/P0-ready directions still need human audit before launch, and is any later-stage execution explicitly authorized?",zh:"哪些 P0/P0-ready 方向仍需人工审计后才能启动，以及是否有任何后续阶段获得显式执行授权？"}}
+      {id:"experiment-queue",title:{en:"I · Current terminal decisions",zh:"第一章 · 当前终态决策"},question:{en:"What is the single current decision for each of the 20 active P0 directions, and what evidence is decisive for that decision?",zh:"20 个活跃 P0 方向现在各自唯一的终态结论是什么，哪条证据真正决定了这个结论？"}},
+      {id:"experiment-evidence",title:{en:"II · Current evidence audit",zh:"第二章 · 当前证据审计"},question:{en:"When a row needs auditing, which frozen P0 contract and qualification evidence support it without restating the verdict?",zh:"当需要核查某一行时，应查看哪些冻结 P0 合同与资格证据，而不再重复终态结论？"}},
+      {id:"experiment-traceability",title:{en:"III · Historical traceability archive",zh:"第三章 · 历史追溯档案"},question:{en:"Which earlier Pre-GPU, runtime, pilot-registry, resource, and approval artifacts are retained for provenance without competing with the current decision table?",zh:"哪些旧 Pre-GPU、runtime、Pilot Registry、资源与审批工件需要保留追溯，但不能再与当前终态总表竞争主叙事？"}}
     ]
   },
   "selected-paper":{

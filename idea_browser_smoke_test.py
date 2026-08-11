@@ -237,6 +237,14 @@ def main() -> None:
           p0StopRows: document.querySelectorAll('.terminal-exp-p0-stop').length,
           admissionSummary: window.P0_ADMISSION_STATE?.summary || {},
           legacyArchives: document.querySelectorAll('.experiment-legacy-archive').length,
+          masterHeaders: document.querySelectorAll('.experiment-master-table thead th').length,
+          currentEvidenceHub: document.querySelectorAll('#experiment-current-evidence').length,
+          currentEvidenceDisclosures: document.querySelectorAll('#experiment-current-evidence .experiment-evidence-disclosure').length,
+          traceabilityHub: document.querySelectorAll('#experiment-traceability-archive').length,
+          traceabilityDisclosures: document.querySelectorAll('#experiment-traceability-archive .experiment-legacy-archive').length,
+          openEvidenceDisclosures: document.querySelectorAll('#experiment-current-evidence .experiment-evidence-disclosure[open]').length,
+          openTraceabilityDisclosures: document.querySelectorAll('#experiment-traceability-archive .experiment-legacy-archive[open]').length,
+          chapterDirectPanels: [...document.querySelectorAll('.page-chapter')].map(ch=>ch.querySelectorAll(':scope > .panel').length),
           toc2: document.querySelectorAll('.toc-level-2').length,
           toc3: document.querySelectorAll('.toc-level-3').length,
           toc4: document.querySelectorAll('.toc-level-4').length,
@@ -292,7 +300,11 @@ def main() -> None:
         require(experiments["b2Decision"] == "STOP_CURRENT_SUBSTRATE_CONCLUSION_CHANGE_SUPPORT_INSUFFICIENT" and experiments["b3SupportDecision"] == "STOP_CURRENT_SUBSTRATE_FRESH_CINTERACTION_SUPPORT_INSUFFICIENT" and experiments["b3RealStatus"] == "invalid-development" and experiments["b5Decision"] == "STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT" and experiments["b6Decision"] == "STOP_RECENCY_FREQUENCY_POLICY_DOMINATES" and experiments["b10Decision"] == "STOP_MATCHED_NARY_EQUIVALENT", f"B-family terminal decisions are not visible: {experiments}")
         require(experiments["c2Decision"] == "STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT" and experiments["d1Decision"] == "STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT" and experiments["e1Decision"] == "STOP_CURRENT_EDIT_TABLE_RANKING_DEGENERATE" and experiments["e2Decision"] == "STOP_MATCHED_E1_DIRECT_EDIT_EQUIVALENT" and experiments["e3Decision"] == "STOP_STATEFUL_DETERMINISTIC_PEX_CEILING" and experiments["e4Decision"] == "STOP_MATCHED_BOOLEAN_RULE_EQUIVALENT", f"C/D/E terminal decisions are not visible: {experiments}")
         require(experiments["p0StopRows"] == 18, f"expected 18 P0 stop rows after full terminalization, got {experiments['p0StopRows']}")
-        require(experiments["legacyArchives"] >= 3, f"legacy experiment evidence must be demoted into traceability archives: {experiments['legacyArchives']}")
+        require(experiments["legacyArchives"] == 3, f"legacy experiment evidence must live in exactly three traceability drawers: {experiments['legacyArchives']}")
+        require(experiments["masterHeaders"] == 4, f"the current experiment table must have exactly four non-duplicative columns, got {experiments['masterHeaders']}")
+        require((experiments["currentEvidenceHub"],experiments["currentEvidenceDisclosures"],experiments["traceabilityHub"],experiments["traceabilityDisclosures"]) == (1,2,1,3), f"status/evidence/history hierarchy is wrong: {experiments}")
+        require((experiments["openEvidenceDisclosures"],experiments["openTraceabilityDisclosures"]) == (0,0), f"evidence/history drawers must be collapsed by default: {experiments}")
+        require(experiments["chapterDirectPanels"] == [1,1,1], f"each experiments chapter must expose one primary panel only: {experiments['chapterDirectPanels']}")
         require((experiments["toc2"], experiments["toc3"], experiments["toc4"]) == (4, 3, 0), f"experiments TOC hierarchy is wrong: {experiments['toc2']}/{experiments['toc3']}/{experiments['toc4']}")
         require(experiments["board"] == 1 and experiments["cards"] == 5, f"experiment queue is incomplete: {experiments['board']}/{experiments['cards']}")
         require((experiments["authorized"], experiments["collision"], experiments["redesign"], experiments["scenario"], experiments["openCards"]) == (0, 0, 2, 1, 0), f"experiment gate counts are wrong: {experiments['authorized']}/{experiments['collision']}/{experiments['redesign']}/{experiments['scenario']}/{experiments['openCards']}")
