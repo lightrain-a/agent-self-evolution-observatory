@@ -13,7 +13,7 @@ DEFAULT_JS = PROJECT_ROOT / "generated" / "human-terminal-idea-state.js"
 GROUP_FILES = tuple(Path(__file__).with_name(f"human_terminal_state_{g}.json") for g in "abcdef")
 INDEPENDENT_FILE = Path(__file__).with_name("human_terminal_independent.json")
 VALID_STATES = {"p0", "p0-ready", "merge", "drop"}
-EXPECTED = Counter({"p0": 2, "p0-ready": 11, "merge": 6, "drop": 7})
+EXPECTED = Counter({"p0": 13, "merge": 6, "drop": 7})
 
 
 def _load(path: Path) -> dict[str, Any]:

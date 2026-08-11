@@ -51,8 +51,8 @@ window.PAGE_ARCHITECTURES = {
   },
   "paper-ideas":{
     chapters:[
-      {id:"discussed-ideas",title:{en:"I · Discussed ideas",zh:"第一章 · 已讨论 Idea"},question:{en:"What scientific problems have already received human review, and which are ready for P0, still need method redesign, or should be paused/merged?",zh:"哪些科学问题已经完成当前人工讨论，哪些可以进入 P0、哪些需要继续打磨方法、哪些应暂停或合并？"}},
-      {id:"new-ideas",title:{en:"II · New ideas awaiting discussion",zh:"第二章 · 新增 Idea"},question:{en:"Which additional candidates have not yet received the current human discussion, and should they merge into an existing problem or survive as independent ideas?",zh:"哪些新增候选还没有完成当前人工讨论，它们应并入已有科学问题，还是保留为真正独立的新 Idea？"}}
+      {id:"discussed-ideas",title:{en:"I · Discussed ideas",zh:"第一章 · 已讨论 Idea"},question:{en:"Which reviewed scientific directions have entered P0, and which parents are terminally merged or dropped?",zh:"哪些已审科学方向已经进入 P0，哪些 parent 已终态合并或弃掉？"}},
+      {id:"new-ideas",title:{en:"II · Standalone methods outside the original parent set",zh:"第二章 · 原 Parent 集之外的独立方法"},question:{en:"Which standalone methods survive outside the original 26 parents, what stable codes do they use, and what is their P0 contract?",zh:"哪些方法在原 26 个 parent 之外仍独立存活，它们的正式编号是什么，P0 合同是什么？"}}
     ]
   },
   experiments:{

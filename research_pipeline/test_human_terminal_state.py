@@ -19,7 +19,7 @@ class HumanTerminalStateTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["human_parents"], 26)
         self.assertEqual(
             (self.state["summary"]["p0"], self.state["summary"]["p0_ready"], self.state["summary"]["merge"], self.state["summary"]["drop"]),
-            (2, 11, 6, 7),
+            (13, 0, 6, 7),
         )
         self.assertEqual(len(terminal_parent_ids()), 26)
 
@@ -33,14 +33,15 @@ class HumanTerminalStateTest(unittest.TestCase):
         parents = self.state["parents"]
         self.assertEqual(parents["outcome-equivalent-trajectory-contrast"]["merge_into"], "replicated-effect-memory-gate")
         self.assertEqual(parents["causally-verified-experience-admission"]["merge_into"], "regression-gated-self-evolution")
-        self.assertEqual(parents["workflow-branch-credit"]["terminal_state"], "p0-ready")
+        self.assertEqual(parents["workflow-branch-credit"]["terminal_state"], "p0")
         self.assertIn("failure-localization-before-reflection", parents["workflow-branch-credit"]["absorbed_children"])
 
     def test_only_seven_extra_methods_remain_standalone(self) -> None:
         independent = self.state["independent_methods"]
         self.assertEqual(len(independent), 7)
-        self.assertEqual(sum(row["terminal_state"] == "p0" for row in independent.values()), 2)
-        self.assertEqual(sum(row["terminal_state"] == "p0-ready" for row in independent.values()), 5)
+        self.assertEqual(sum(row["terminal_state"] == "p0" for row in independent.values()), 7)
+        self.assertEqual(sum(row["terminal_state"] == "p0-ready" for row in independent.values()), 0)
+        self.assertEqual({row.get("code") for row in independent.values()}, {"A-6","A-7","B-8","B-9","B-10","E-3","E-4"})
         self.assertIn("replicated-effect-memory-gate", independent)
         self.assertIn("cross-task-effect-transport-certificate", independent)
 

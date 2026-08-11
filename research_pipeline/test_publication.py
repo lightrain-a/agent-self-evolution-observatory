@@ -49,6 +49,8 @@ class PublicationTest(unittest.TestCase):
             (
                 "generated/human-terminal-idea-state.json",
                 "generated/human-terminal-idea-state.js",
+                "generated/p0-admission-state.json",
+                "generated/p0-admission-state.js",
                 "generated/research-system-state.json",
                 "generated/research-system-state.js",
             ),

@@ -15,6 +15,7 @@ from .config import PROJECT_ROOT, StorageSettings
 from .cvpr_idea_factory import write_cvpr_idea_bank
 from .discussion_portfolio import write_discussion_portfolio
 from .human_terminal_state import write_human_terminal_state
+from .p0_admission import write_p0_admission_state
 from .iclr_experiment_audit import write_audit as write_iclr_audit
 from .iclr_idea_factory import write_iclr_idea_bank
 from .idea_discovery_v3 import write_idea_discovery_v3
@@ -92,6 +93,7 @@ def run_cycle(
             report["steps"].append(_step("cvpr-followup-bank", write_cvpr_idea_bank))
             report["steps"].append(_step("published-visual-audit", write_published_audit))
         report["steps"].append(_step("human-terminal-idea-state", write_human_terminal_state))
+        report["steps"].append(_step("p0-admission-state", write_p0_admission_state))
         report["steps"].append(_step("research-system-state", write_research_system_state))
         if web_review_limit > 0:
             report["steps"].append(_step("project-web-gpt-repair-review", lambda: _run_web_reviews(web_review_limit, storage)))
@@ -106,6 +108,7 @@ def run_cycle(
         # Rebuild once so the public state can include the latest cycle report, then publish
         # only if normalized content has changed.
         write_human_terminal_state()
+        write_p0_admission_state()
         write_research_system_state()
         publication_started = time.time()
         try:

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T04:10:17+00:00",
+  "generated_at": "2026-08-11T04:47:28+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "/data/wyt/agent-self-evolution-observatory/publish-persistent-governance-20260811-r3/generated/research-data",
@@ -38,8 +38,8 @@
     "experiment_scale_up": 0,
     "repair_queue": 1,
     "human_terminal_parents": 26,
-    "human_terminal_p0": 2,
-    "human_terminal_p0_ready": 11,
+    "human_terminal_p0": 13,
+    "human_terminal_p0_ready": 0,
     "human_terminal_merge": 6,
     "human_terminal_drop": 7,
     "solution_children": 14,
@@ -71,7 +71,11 @@
     "mem_xfer_offline_analysis_status": "offline_analysis_complete",
     "mem_xfer_support_qualification_status": "support_qualification_pass",
     "mem_xfer_support_full_status": "full_qwen_support_running",
-    "mem_xfer_second_model_status": "second_model_hold"
+    "mem_xfer_second_model_status": "second_model_hold",
+    "p0_admission_active": 20,
+    "p0_admission_transitioned": 16,
+    "p0_admission_settings_complete": 20,
+    "p0_admission_execution_authorized": 2
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -18069,7 +18073,7 @@
   },
   "pilot_registry": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-11T03:41:41+00:00",
+    "generated_at": "2026-08-11T04:47:28+00:00",
     "result_dir": "/data/wyt/agent-self-evolution-observatory/runs/pilots/results",
     "approval_dir": "/data/wyt/agent-self-evolution-observatory/runs/pilots/approvals",
     "result_schema": {
@@ -18160,7 +18164,7 @@
         },
         "rank": 1,
         "state": "planned",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "terminal_merge_into": null,
         "p0_gate_status": "ready",
         "pre_p0_gate_status": "missing-contract",
@@ -18181,7 +18185,7 @@
         },
         "rank": 2,
         "state": "planned",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "terminal_merge_into": null,
         "p0_gate_status": "ready",
         "pre_p0_gate_status": "missing-contract",
@@ -18202,7 +18206,7 @@
         },
         "rank": 3,
         "state": "planned",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "terminal_merge_into": null,
         "p0_gate_status": "ready",
         "pre_p0_gate_status": "missing-contract",
@@ -18765,7 +18769,7 @@
         },
         "rank": 5,
         "state": "planned",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "terminal_merge_into": null,
         "p0_gate_status": "ready",
         "pre_p0_gate_status": "missing-contract",
@@ -18828,7 +18832,7 @@
         },
         "rank": 8,
         "state": "planned",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "terminal_merge_into": null,
         "p0_gate_status": "ready",
         "pre_p0_gate_status": "missing-contract",
@@ -18870,7 +18874,7 @@
         },
         "rank": 10,
         "state": "planned",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "terminal_merge_into": null,
         "p0_gate_status": "ready",
         "pre_p0_gate_status": "missing-contract",
@@ -18891,7 +18895,7 @@
         },
         "rank": 11,
         "state": "planned",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "terminal_merge_into": null,
         "p0_gate_status": "ready",
         "pre_p0_gate_status": "repair-required",
@@ -19561,7 +19565,7 @@
         },
         "rank": 13,
         "state": "planned",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "terminal_merge_into": null,
         "p0_gate_status": "ready",
         "pre_p0_gate_status": "missing-contract",
@@ -19645,7 +19649,7 @@
         },
         "rank": 17,
         "state": "planned",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "terminal_merge_into": null,
         "p0_gate_status": "ready",
         "pre_p0_gate_status": "missing-contract",
@@ -19708,7 +19712,7 @@
         },
         "rank": 20,
         "state": "planned",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "terminal_merge_into": null,
         "p0_gate_status": "ready",
         "pre_p0_gate_status": "missing-contract",
@@ -19750,7 +19754,7 @@
         },
         "rank": 22,
         "state": "planned",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "terminal_merge_into": null,
         "p0_gate_status": "ready",
         "pre_p0_gate_status": "missing-contract",
@@ -22305,7 +22309,7 @@
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-11T04:10:17+00:00",
+    "generated_at": "2026-08-11T04:48:20+00:00",
     "source_of_truth_priority": [
       "latest-human-review",
       "explicit-user-update",
@@ -22323,8 +22327,8 @@
     },
     "summary": {
       "human_parents": 26,
-      "p0": 2,
-      "p0_ready": 11,
+      "p0": 13,
+      "p0_ready": 0,
       "merge": 6,
       "drop": 7,
       "absorbed_children": 17,
@@ -22394,7 +22398,7 @@
       "regression-gated-self-evolution": {
         "code": "A-3",
         "group": "A",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "final_parent_mechanism": {
           "zh": "预算校准的预测性回归面板",
           "en": "Budget-Calibrated Predictive Regression Panel"
@@ -22421,12 +22425,17 @@
         "exact_stop": {
           "zh": "固定 K/固定 gate 在同 probe 预算下等效，或 marginal probe value 不能预测 hidden-original fidelity，则停止独立机制。",
           "en": "Stop if fixed-K/fixed gating is equivalent at the same probe budget or marginal probe value cannot predict hidden-original fidelity."
+        },
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "compositional-update-compatibility": {
         "code": "A-4",
         "group": "A",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "final_parent_mechanism": {
           "zh": "类型化更新交互规则注册表",
           "en": "Typed Update-Interaction Rule Registry"
@@ -22458,12 +22467,17 @@
         "exact_stop": {
           "zh": "直接 order-aware risk model 或等预算 repair search 追平，或规则只记 identity/template，则停止独立方法。",
           "en": "Stop if the direct order-aware risk model or equal-budget repair search ties it, or rules memorize identities/templates."
+        },
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "lineage-aware-rollback": {
         "code": "A-5",
         "group": "A",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "final_parent_mechanism": {
           "zh": "回滚等价的更新历史压缩",
           "en": "Rollback-Equivalent Update-History Compaction"
@@ -22490,6 +22504,11 @@
         "exact_stop": {
           "zh": "periodic checkpoint 同预算达到相同 rollback fidelity，或需要接近 full history 才能正确 rollback，则停止。",
           "en": "Stop if matched-budget periodic checkpoints reach the same rollback fidelity or near-full history is required for correct rollback."
+        },
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "outcome-equivalent-trajectory-contrast": {
@@ -22514,7 +22533,7 @@
       "contradiction-preserving-consolidation": {
         "code": "B-2",
         "group": "B",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "final_parent_mechanism": {
           "zh": "因果结论改变保留",
           "en": "Causal Conclusion-Change Retention"
@@ -22539,12 +22558,17 @@
         "exact_stop": {
           "zh": "任一 disagreement/cost gate 不过直接 DROP，不再修。",
           "en": "If any disagreement/cost gate fails, DROP directly with no further repair."
+        },
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "retrieval-interference-auditor": {
         "code": "B-3",
         "group": "B",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "final_parent_mechanism": {
           "zh": "检索干扰审计器",
           "en": "Retrieval Interference Auditor"
@@ -22572,6 +22596,11 @@
         "exact_stop": {
           "zh": "路径分解不优于 matched per-item/co-occurrence baseline 则停止路径机制主张。",
           "en": "Stop the pathway claim if decomposition does not beat matched per-item/co-occurrence controls."
+        },
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "causally-verified-experience-admission": {
@@ -22600,7 +22629,7 @@
       "local-counterexample-memory-repair": {
         "code": "B-5",
         "group": "B",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "final_parent_mechanism": {
           "zh": "紧凑外部适用边界的局部反例修复",
           "en": "Local Counterexample Repair with Compact External Applicability Gate"
@@ -22628,12 +22657,17 @@
         "exact_stop": {
           "zh": "同复杂度 baseline 等效则停止独立 monotone/generalization claim。",
           "en": "Stop the standalone monotone/generalization claim if a complexity-matched baseline is equivalent."
+        },
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "memory-half-life": {
         "code": "B-6",
         "group": "B",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "final_parent_mechanism": {
           "zh": "复用机会驱动的记忆效用复验",
           "en": "Reuse-Opportunity Memory Utility Revalidation"
@@ -22658,6 +22692,11 @@
         "exact_stop": {
           "zh": "simple cache policy 同预算等效则只保留 cache component。",
           "en": "If a simple cache policy is equivalent at matched budget, retain only a cache component."
+        },
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "applicability-bounded-lessons": {
@@ -22700,7 +22739,7 @@
       "evaluator-coadaptation-guard": {
         "code": "C-2",
         "group": "C",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "final_parent_mechanism": {
           "zh": "冻结锚点评价器共适应防护",
           "en": "Frozen-Anchor Evaluator Coadaptation Guard"
@@ -22734,6 +22773,11 @@
         "exact_stop": {
           "zh": "cross-version attribution 不优于 disagreement，或 causal+sparse repair 被简单 cell 追平，则停止相应机制。",
           "en": "Stop the corresponding claim if cross-version attribution does not beat disagreement or causal+sparse repair is tied by a simpler cell."
+        },
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "reward-invariance-audit": {
@@ -22815,7 +22859,7 @@
       "counterexample-generating-curriculum": {
         "code": "D-1",
         "group": "D",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "final_parent_mechanism": {
           "zh": "1-最小边界反例课程",
           "en": "1-Minimal Boundary-Counterexample Curriculum"
@@ -22840,6 +22884,11 @@
         "exact_stop": {
           "zh": "non-minimal baseline 等效，或 minimality 只省 token 不提高 unseen boundary generalization，则 DROP。",
           "en": "DROP if the non-minimal baseline is equivalent or minimality only saves tokens without improving unseen-boundary generalization."
+        },
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "failure-frontier-curriculum": {
@@ -22882,7 +22931,7 @@
       "workflow-generalization-certificate": {
         "code": "E-1",
         "group": "E",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "final_parent_mechanism": {
           "zh": "成对编辑效应工作流更新策略",
           "en": "Paired Edit-Effect Workflow Update Policy"
@@ -22910,12 +22959,17 @@
         "exact_stop": {
           "zh": "predictor+threshold 同等有效，或提升只有 prediction accuracy 而未改善 persistent committed outcome，则停止。",
           "en": "Stop if predictor+threshold is equally effective or gains improve only prediction accuracy without persistent committed outcomes."
+        },
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "workflow-branch-credit": {
         "code": "E-2",
         "group": "E",
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "final_parent_mechanism": {
           "zh": "失败模式因果重写注册表",
           "en": "Failure-Motif Causal Rewrite Registry"
@@ -22944,6 +22998,11 @@
         "exact_stop": {
           "zh": "E-1/CE-Graph 等效则 merge into E-1/drop；规则只记 node/API name 也停止独立 E-2。",
           "en": "If E-1/CE-Graph is equivalent, merge into E-1/drop; also stop standalone E-2 if rules memorize node/API names."
+        },
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "world-model-error-gated-learning": {
@@ -23086,7 +23145,9 @@
         "current_fact": {
           "zh": "已进入共享 P0。完整 Qwen 表 96/96 executions、32 units 已收齐，冻结离线判定为 PHENOMENON PASS / METHOD INCONCLUSIVE。support qualification 72/72 executions、24/24 units 已 PASS；其后 full Qwen support table 已正式启动，实时进度以 Experiments 页的 workflow artifact 为准。第二 backbone 仍 HOLD。",
           "en": "Entered shared P0. The full Qwen table is complete at 96/96 executions over 32 units with a frozen PHENOMENON PASS / METHOD INCONCLUSIVE verdict. Support qualification passed at 72/72 executions over 24/24 units; the full Qwen support table has now formally started, with live progress taken from the Experiments workflow artifact. The second backbone remains on HOLD."
-        }
+        },
+        "code": "B-8",
+        "group": "B"
       },
       "cross-task-effect-transport-certificate": {
         "terminal_state": "p0",
@@ -23098,10 +23159,12 @@
         "current_fact": {
           "zh": "与 Replicated-Effect Memory Gate 共享 P0。旧完整 Qwen 表冻结为 PHENOMENON PASS / TRANSPORT SUPPORT INSUFFICIENT；support qualification 72/72 executions 已 PASS，随后 full Qwen support table 已正式启动，用于冻结的 candidate replication / transport-support 判定。第二 backbone 仍 HOLD，尚无跨模型 confirmatory PASS。",
           "en": "Shares P0 with Replicated-Effect Memory Gate. The old full Qwen table froze at PHENOMENON PASS / TRANSPORT SUPPORT INSUFFICIENT; support qualification passed at 72/72 executions, and the full Qwen support table has now formally started for the frozen candidate-replication and transport-support decision. The second backbone remains on HOLD, with no cross-model confirmatory PASS yet."
-        }
+        },
+        "code": "B-9",
+        "group": "B"
       },
       "bounded-probe-api-transition-operator": {
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "title": {
           "zh": "限探针 API 转移算子",
           "en": "Bounded-Probe API Transition Operator"
@@ -23110,36 +23173,71 @@
           "api-error-semantic-adapter"
         ],
         "current_fact": {
-          "zh": "保留为人工 26-parent 之外的独立 P0-ready 方法；API error semantics 仅为 X/error-semantics 分支。",
-          "en": "Retained as an independent P0-ready method outside the 26 human parents; API error semantics is only the X/error-semantics branch."
+          "zh": "已编号为 E-3 并由 P0-ready 正式迁入 P0；API error semantics 仅为 X/error-semantics 分支。P0 admission 设置已冻结，真实执行仍需通过 GPU-0 / Pre-P0 / Pre-Experiment / runtime 门禁。",
+          "en": "Now coded E-3 and formally transitioned from P0-ready into P0; API error semantics remains only the X/error-semantics branch. P0 admission settings are frozen, while real execution still requires GPU-0, Pre-P0, Pre-Experiment, and runtime gates."
+        },
+        "code": "E-3",
+        "group": "E",
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "interventional-permission-triage-under-ceiling": {
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "title": {
           "zh": "固定上限下的干预式权限重授权筛选",
           "en": "Interventional Permission Triage Under a Fixed Ceiling"
+        },
+        "code": "E-4",
+        "group": "E",
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "constraint-complete-typed-memory-order-logic": {
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "title": {
           "zh": "约束完备的类型化记忆顺序逻辑",
           "en": "Constraint-Complete Typed Memory-Order Logic"
+        },
+        "code": "B-10",
+        "group": "B",
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "active-causal-minimal-rollback": {
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "title": {
           "zh": "主动因果最小回滚",
           "en": "Active Causal Minimal Rollback"
+        },
+        "code": "A-6",
+        "group": "A",
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       },
       "counterfactual-evolution-decision-controller": {
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "title": {
           "zh": "反事实进化决策控制器",
           "en": "Counterfactual Evolution Decision Controller"
+        },
+        "code": "A-7",
+        "group": "A",
+        "p0_entry": {
+          "date": "2026-08-11",
+          "basis": "p0-admission-contract-frozen",
+          "execution_authorized": false
         }
       }
     }
@@ -49561,7 +49659,7 @@
   },
   "discussion_portfolio": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-11T03:41:41+00:00",
+    "generated_at": "2026-08-11T04:47:28+00:00",
     "target": 20,
     "count": 20,
     "remaining": 0,
@@ -50033,7 +50131,7 @@
           "zh": "类型化更新交互规则注册表",
           "en": "Typed Update-Interaction Rule Registry"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": true,
         "reviewed": true,
         "final_verdict": "terminal-human-decision",
@@ -50046,7 +50144,7 @@
           "zh": "因果结论改变保留",
           "en": "Causal Conclusion-Change Retention"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": true,
         "reviewed": true,
         "final_verdict": "terminal-human-decision",
@@ -50059,7 +50157,7 @@
           "zh": "1-最小边界反例课程",
           "en": "1-Minimal Boundary-Counterexample Curriculum"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": true,
         "reviewed": true,
         "final_verdict": "terminal-human-decision",
@@ -50072,7 +50170,7 @@
           "zh": "冻结锚点评价器共适应防护",
           "en": "Frozen-Anchor Evaluator Coadaptation Guard"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": true,
         "reviewed": true,
         "final_verdict": "terminal-human-decision",
@@ -50085,7 +50183,7 @@
           "zh": "回滚等价的更新历史压缩",
           "en": "Rollback-Equivalent Update-History Compaction"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": true,
         "reviewed": true,
         "final_verdict": "terminal-human-decision",
@@ -50098,7 +50196,7 @@
           "zh": "紧凑外部适用边界的局部反例修复",
           "en": "Local Counterexample Repair with Compact External Applicability Gate"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": true,
         "reviewed": true,
         "final_verdict": "terminal-human-decision",
@@ -50111,7 +50209,7 @@
           "zh": "复用机会驱动的记忆效用复验",
           "en": "Reuse-Opportunity Memory Utility Revalidation"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": true,
         "reviewed": true,
         "final_verdict": "terminal-human-decision",
@@ -50124,7 +50222,7 @@
           "zh": "预算校准的预测性回归面板",
           "en": "Budget-Calibrated Predictive Regression Panel"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": true,
         "reviewed": true,
         "final_verdict": "terminal-human-decision",
@@ -50137,7 +50235,7 @@
           "zh": "检索干扰审计器",
           "en": "Retrieval Interference Auditor"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": true,
         "reviewed": true,
         "final_verdict": "terminal-human-decision",
@@ -50163,7 +50261,7 @@
           "zh": "失败模式因果重写注册表",
           "en": "Failure-Motif Causal Rewrite Registry"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": true,
         "reviewed": true,
         "final_verdict": "terminal-human-decision",
@@ -50176,7 +50274,7 @@
           "zh": "成对编辑效应工作流更新策略",
           "en": "Paired Edit-Effect Workflow Update Policy"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": true,
         "reviewed": true,
         "final_verdict": "terminal-human-decision",
@@ -50189,7 +50287,7 @@
           "zh": "主动因果最小回滚",
           "en": "Active Causal Minimal Rollback"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": false,
         "reviewed": true,
         "final_verdict": "terminal-human-compatible",
@@ -50202,7 +50300,7 @@
           "zh": "限探针 API 转移算子",
           "en": "Bounded-Probe API Transition Operator"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": false,
         "reviewed": true,
         "final_verdict": "terminal-human-compatible",
@@ -50215,7 +50313,7 @@
           "zh": "约束完备的类型化记忆顺序逻辑",
           "en": "Constraint-Complete Typed Memory-Order Logic"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": false,
         "reviewed": true,
         "final_verdict": "terminal-human-compatible",
@@ -50228,7 +50326,7 @@
           "zh": "反事实进化决策控制器",
           "en": "Counterfactual Evolution Decision Controller"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": false,
         "reviewed": true,
         "final_verdict": "terminal-human-compatible",
@@ -50254,7 +50352,7 @@
           "zh": "固定上限下的干预式权限重授权筛选",
           "en": "Interventional Permission Triage Under a Fixed Ceiling"
         },
-        "terminal_state": "p0-ready",
+        "terminal_state": "p0",
         "human_parent": false,
         "reviewed": true,
         "final_verdict": "terminal-human-compatible",
@@ -50428,18 +50526,18 @@
       "progress": {
         "schema_version": "1.0",
         "status": "full_support_table_running",
-        "completed_episodes": 108,
+        "completed_episodes": 121,
         "total_episodes": 216,
-        "completed_units": 36,
+        "completed_units": 40,
         "total_units": 72,
         "reused_support_executions": 72,
-        "new_completed_episodes": 36,
-        "current_unit": "se-m-pick_and_place_simple-3-u06",
-        "current_arm": "placebo",
-        "elapsed_new_gpu_hours": 0.4145216429841498,
-        "new_model_calls": 1488,
+        "new_completed_episodes": 49,
+        "current_unit": "se-m-pick_clean_then_place_in_recep-2-u04",
+        "current_arm": "retrieved",
+        "elapsed_new_gpu_hours": 0.5678061401365428,
+        "new_model_calls": 2014,
         "gpu_uuid": "GPU-814cd021-31d8-2c6f-76a5-b8d4739b34d1",
-        "updated_at": "2026-08-11T04:03:30+00:00"
+        "updated_at": "2026-08-11T04:12:42+00:00"
       },
       "decision": null,
       "pre_gpu_audit": {
@@ -50570,8 +50668,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "26 parents: 2 P0 / 11 P0-ready / 6 merged / 7 dropped",
-        "zh": "26 个 Parent：2 P0 / 11 P0 Ready / 6 合并 / 7 停止"
+        "en": "26 parents: 13 P0 / 0 P0-ready / 6 merged / 7 dropped",
+        "zh": "26 个 Parent：13 P0 / 0 P0 Ready / 6 合并 / 7 停止"
       }
     },
     {
@@ -50816,12 +50914,24 @@
         "pass": true,
         "detail": {
           "human_parents": 26,
-          "p0": 2,
-          "p0_ready": 11,
+          "p0": 13,
+          "p0_ready": 0,
           "merge": 6,
           "drop": 7,
           "absorbed_children": 17,
           "independent_methods": 7
+        }
+      },
+      {
+        "key": "p0-admission",
+        "pass": true,
+        "detail": {
+          "active_p0": 20,
+          "admitted": 20,
+          "transitioned_from_p0_ready": 16,
+          "settings_complete": 20,
+          "execution_authorized": 2,
+          "execution_blocked_or_pending": 18
         }
       },
       {
@@ -50835,5 +50945,43 @@
         }
       }
     ]
+  },
+  "p0_admission": {
+    "summary": {
+      "active_p0": 20,
+      "admitted": 20,
+      "transitioned_from_p0_ready": 16,
+      "settings_complete": 20,
+      "execution_authorized": 2,
+      "execution_blocked_or_pending": 18
+    },
+    "policy": {
+      "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
+      "entry_requires": "10/10 admission checks",
+      "execution_requires": "GPU-0 + Pre-P0 10/10 + updater competence + Pre-Experiment 8/8 + runtime smoke",
+      "max_gpus": 1,
+      "gpu_hours_cap": 12,
+      "wall_hours_cap": 12,
+      "seed": 42,
+      "second_backbone_locked": true,
+      "hidden_test_locked_before_freeze": true,
+      "p1_requires_human_approval": true,
+      "streaming_artifacts": true,
+      "exclusive_lock": true,
+      "resume": true,
+      "overwrite_nonempty": false,
+      "typed_outcomes": [
+        "METHOD-PASS",
+        "METHOD-FAIL",
+        "SCREENING-SIGNAL",
+        "SCREENING-NO-SIGNAL",
+        "INCONCLUSIVE",
+        "BASELINE-FLOOR",
+        "BASELINE-CEILING",
+        "RUNTIME-ERROR",
+        "IMPLEMENTATION-ERROR",
+        "BUDGET-STOP"
+      ]
+    }
   }
 }

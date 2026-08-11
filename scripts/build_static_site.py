@@ -126,6 +126,7 @@ def build() -> Path:
         OUTPUT / "deployment-manifest.json",
         OUTPUT / "generated" / "iclr-low-resource-ideas.js",
         OUTPUT / "generated" / "human-terminal-idea-state.js",
+        OUTPUT / "generated" / "p0-admission-state.js",
         OUTPUT / "generated" / "discussion-ready-ideas.js",
         OUTPUT / "generated" / "current-final-ideas.js",
         OUTPUT / "generated" / "final-collision-recheck.js",

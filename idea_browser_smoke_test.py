@@ -110,6 +110,8 @@ def main() -> None:
           experimentLinks: [...document.querySelectorAll('a')].filter(x=>x.getAttribute('href')==='experiments.html').length,
           p0Summary: window.P0_EXPERIMENT_PLAN?.summary || {},
           p0Policy: window.P0_EXPERIMENT_PLAN?.policy || {},
+          p0AdmissionSummary: window.RESEARCH_SYSTEM_STATE?.p0_admission?.summary || {},
+          p0EntryStats: [...document.querySelectorAll('.p0-entry-stats b')].map(x=>Number((x.textContent||'0').trim())),
           discussedGroups: document.querySelectorAll('.human-science-group').length,
           discussedCards: document.querySelectorAll('.human-review-idea-card').length,
           readyCards: document.querySelectorAll('.human-review-idea-card.human-tone-ready').length,
@@ -134,6 +136,7 @@ def main() -> None:
           codes: [...document.querySelectorAll('.human-idea-code')].map(x=>(x.textContent||'').trim()),
           newGroups: document.querySelectorAll('.supplemental-group').length,
           newCards: document.querySelectorAll('.supplemental-idea-card').length,
+          standaloneCodes: [...document.querySelectorAll('.supplemental-idea-card summary>div>span')].map(x=>(x.textContent||'').trim()),
           openNewCards: document.querySelectorAll('.supplemental-idea-card[open]').length,
           newFinal: [...document.querySelectorAll('.supplemental-idea-card summary small')].filter(x=>/FINAL20|merge audit/.test(x.textContent||'')).length,
           newInspired: [...document.querySelectorAll('.supplemental-idea-card summary small')].filter(x=>/网络灵感|internet-inspired/.test(x.textContent||'')).length,
@@ -144,17 +147,18 @@ def main() -> None:
         };""")
         require(ideas["chapters"] == 2, f"paper-ideas should have exactly two frontend chapters, got {ideas['chapters']}")
         require(ideas["p0Entry"] == 1 and ideas["p0Boards"] == 0 and ideas["experimentLinks"] >= 1, f"paper-ideas must expose only the compact experiment entry: {ideas['p0Entry']}/{ideas['p0Boards']}/{ideas['experimentLinks']}")
+        require(ideas["p0AdmissionSummary"].get("active_p0") == 20 and ideas["p0AdmissionSummary"].get("transitioned_from_p0_ready") == 16 and ideas["p0AdmissionSummary"].get("settings_complete") == 20 and ideas["p0EntryStats"][:4] == [20,16,20,2], f"paper-ideas P0 admission entry is stale: {ideas['p0AdmissionSummary']} / {ideas['p0EntryStats']}")
         require(ideas["p0Summary"].get("ready_now") == 0 and ideas["p0Summary"].get("pre_p0_blocked") == 4 and ideas["p0Summary"].get("gpu_hours_cap_ready_now") == 0 and ideas["p0Summary"].get("p1_authorized") == 0, f"P0 Pre-P0/resource summary is wrong: {ideas['p0Summary']}")
         require(ideas["p0Policy"].get("pre_p0_identifiability_required") is True and ideas["p0Policy"].get("automatic_p0_to_p1_forbidden") is True and ideas["p0Policy"].get("p0_pass_requires_human_approval") is True, f"P0 human/Pre-P0 approval policy is missing: {ideas['p0Policy']}")
         require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (3, 9, 0), f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
         require(ideas["discussedGroups"] == 6 and ideas["discussedCards"] == 26, f"expected six scientific groups and 26 discussed ideas, got {ideas['discussedGroups']}/{ideas['discussedCards']}")
         require((ideas["readyCards"], ideas["mergedCards"], ideas["droppedCards"]) == (13, 6, 7), f"terminal tone counts are wrong: {ideas['readyCards']}/{ideas['mergedCards']}/{ideas['droppedCards']}")
-        require(ideas["terminalCounts"] == {"p0":2,"p0-ready":11,"merge":6,"drop":7}, f"terminal parent counts are wrong: {ideas['terminalCounts']}")
+        require(ideas["terminalCounts"].get("p0") == 13 and ideas["terminalCounts"].get("p0-ready",0) == 0 and ideas["terminalCounts"].get("merge") == 6 and ideas["terminalCounts"].get("drop") == 7, f"terminal parent counts are wrong: {ideas['terminalCounts']}")
         require((ideas["terminalSummary"].get("human_parents"), ideas["absorbedChildCount"]) == (26,17), f"terminal ledger or absorbed-child count is wrong: {ideas['terminalSummary']}/{ideas['absorbedChildCount']}")
         require(ideas["feedbackSummaries"] == 26, f"every discussed idea must expose one current summary, got {ideas['feedbackSummaries']}")
         require(ideas["humanOpinionBoxes"] == 26, f"all 26 discussed ideas must preserve the human opinion, got {ideas['humanOpinionBoxes']}")
         require(ideas["iterationBoxes"] == 17 and ideas["finalRefinementBoxes"] == 17, f"all 17 refined methods must show the final iteration and routing: {ideas['iterationBoxes']}/{ideas['finalRefinementBoxes']}")
-        require(ideas["finalRefinementCounts"] == [2,11,6,7], f"terminal routing must be 2 P0 / 11 P0-ready / 6 merge / 7 drop, got {ideas['finalRefinementCounts']}")
+        require(ideas["finalRefinementCounts"] == [13,0,6,7], f"terminal routing must be 13 P0 / 0 P0-ready / 6 merge / 7 drop, got {ideas['finalRefinementCounts']}")
         require(ideas["methodologyPanels"] == 1 and ideas["originalEvalGuides"] == 1, f"human-opinion audit/original-eval methodology panels are missing: {ideas['methodologyPanels']}/{ideas['originalEvalGuides']}")
         require(ideas["canonicalReviewCount"] == 26, f"canonical human-review map must cover all 26 ideas, got {ideas['canonicalReviewCount']}")
         require(ideas["humanRecommendationStats"] == [4,14,7,1], f"canonical human recommendation counts are wrong: {ideas['humanRecommendationStats']}")
@@ -164,6 +168,7 @@ def main() -> None:
         require(len(ideas["codes"]) == 26 and len(set(ideas["codes"])) == 26, f"group codes are missing or duplicated: {ideas['codes']}")
         require(all(code in ideas["codes"] for code in ("A-1","A-5","B-1","B-7","C-1","D-1","E-1","F-1","F-3")), f"expected stable group codes are missing: {ideas['codes']}")
         require(ideas["newGroups"] == 3 and ideas["newCards"] == 7, f"terminal standalone-method area is incomplete: {ideas['newGroups']}/{ideas['newCards']}")
+        require(set(ideas["standaloneCodes"]) == {"A-6","A-7","B-8","B-9","B-10","E-3","E-4"}, f"standalone methods must have stable scientific-group codes: {ideas['standaloneCodes']}")
         require((ideas["newFinal"], ideas["newInspired"]) == (0, 0), f"legacy supplemental candidates must not remain active: {ideas['newFinal']}/{ideas['newInspired']}")
         require(ideas["mergedMethods"] >= 8, f"merged FINAL method provenance is not visible on discussed ideas: {ideas['mergedMethods']}")
         require(ideas["freshCollisionBlocks"] == 17 and ideas["freshCollisionLinks"] >= 40, f"fresh reducibility sources are missing from refined ideas: {ideas['freshCollisionBlocks']}/{ideas['freshCollisionLinks']}")
@@ -205,6 +210,9 @@ def main() -> None:
           terminalP0Ready: document.querySelectorAll('.terminal-experiment-row[data-terminal-lifecycle="p0-ready"]').length,
           auditQueue: document.querySelectorAll('#terminal-unstarted-audit').length,
           auditItems: document.querySelectorAll('.terminal-audit-item').length,
+          admissionPanel: document.querySelectorAll('#p0-admission-settings').length,
+          admissionRows: document.querySelectorAll('.p0-admission-table tbody tr').length,
+          admissionSummary: window.P0_ADMISSION_STATE?.summary || {},
           legacyArchives: document.querySelectorAll('.experiment-legacy-archive').length,
           toc2: document.querySelectorAll('.toc-level-2').length,
           toc3: document.querySelectorAll('.toc-level-3').length,
@@ -252,8 +260,9 @@ def main() -> None:
           text: document.body.textContent || ''
         };""")
         require(experiments["chapters"] == 3, f"experiments page must have three chapters, got {experiments['chapters']}")
-        require((experiments["terminalPortfolio"],experiments["terminalRows"],experiments["terminalP0"],experiments["terminalP0Ready"]) == (1,20,4,16), f"terminal experiment portfolio is not aligned with Paper Ideas: {experiments}")
+        require((experiments["terminalPortfolio"],experiments["terminalRows"],experiments["terminalP0"],experiments["terminalP0Ready"]) == (1,20,20,0), f"terminal experiment portfolio is not aligned with Paper Ideas: {experiments}")
         require((experiments["terminalStarted"],experiments["terminalPending"],experiments["auditQueue"],experiments["auditItems"]) == (4,16,1,16), f"started/pending audit split is wrong: {experiments}")
+        require(experiments["admissionPanel"] == 1 and experiments["admissionRows"] == 16 and experiments["admissionSummary"].get("active_p0") == 20 and experiments["admissionSummary"].get("transitioned_from_p0_ready") == 16 and experiments["admissionSummary"].get("settings_complete") == 20, f"P0 admission/settings panel is incomplete: {experiments}")
         require(experiments["legacyArchives"] >= 3, f"legacy experiment evidence must be demoted into traceability archives: {experiments['legacyArchives']}")
         require((experiments["toc2"], experiments["toc3"], experiments["toc4"]) == (4, 3, 0), f"experiments TOC hierarchy is wrong: {experiments['toc2']}/{experiments['toc3']}/{experiments['toc4']}")
         require(experiments["board"] == 1 and experiments["cards"] == 5, f"experiment queue is incomplete: {experiments['board']}/{experiments['cards']}")
