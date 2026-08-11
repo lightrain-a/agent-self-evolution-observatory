@@ -262,6 +262,8 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_a6_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("a6_cpu",{}).get("decision"),
             "p0_a7_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("a7_counterfactual_cpu",{}).get("decision"),
             "p0_b3_screening_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("b3_interference_cpu",{}).get("decision"),
+            "p0_b5_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("b5_applicability_cpu",{}).get("decision"),
+            "p0_b6_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("b6_memory_utility_cpu",{}).get("decision"),
             "p0_c2_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("c2_evaluator_cpu",{}).get("decision"),
             "p0_d1_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("d1_minimal_curriculum_cpu",{}).get("decision"),
             "p0_e2_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("e2_workflow_cpu",{}).get("decision"),

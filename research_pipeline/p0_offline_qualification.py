@@ -68,6 +68,18 @@ def _b3_artifact() -> dict[str, Any]:
     except (OSError,json.JSONDecodeError):return {}
 
 
+def _b5_artifact() -> dict[str, Any]:
+    path=PROJECT_ROOT/"generated"/"p0-b5-applicability-cpu.json"
+    try:return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):return {}
+
+
+def _b6_artifact() -> dict[str, Any]:
+    path=PROJECT_ROOT/"generated"/"p0-b6-memory-utility-cpu.json"
+    try:return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):return {}
+
+
 def _a7_artifact() -> dict[str, Any]:
     path=PROJECT_ROOT/"generated"/"p0-a7-counterfactual-cpu.json"
     try:return json.loads(path.read_text(encoding="utf-8"))
@@ -192,6 +204,30 @@ def _apply_b3_screening(card: dict[str, Any], result: dict[str, Any]) -> None:
     card["screening_signal"]={"status":"pass","real_method_authority":False,"runtime_decision":runtime.get("decision"),"relative_net_utility_gain":m.get("relative_net_utility_gain")}
 
 
+def _apply_b5_stop(card: dict[str, Any], result: dict[str, Any]) -> None:
+    if card["idea_id"]!="local-counterexample-memory-repair" or result.get("decision")!="STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT": return
+    m=result.get("metrics") or {}; matched=result.get("matched_simplification") or {}
+    card["checks"]["target_variation"]=_ck("pass","Twelve frozen skills contain verified old-positive and boundary-counterexample sets under independent programmatic applicability truth.","generated/p0-b5-applicability-cpu.json","cpu-applicability-p0")
+    card["checks"]["baseline_disagreement"]=_ck("fail",f"Monotone repair and complexity-matched ILP agree on all gates ({m.get('exact_gate_agreement',0):.3f}); true-gate recovery is {m.get('monotone_true_gate_recovery',0):.3f} vs {m.get('ilp_true_gate_recovery',0):.3f}.","generated/p0-b5-applicability-cpu.json","cpu-applicability-p0")
+    card["checks"]["tiny_overfit"]=_ck("pass","Gate fitting and held-out positive/negative assignments are separated under the frozen predicate vocabulary.","generated/p0-b5-applicability-cpu.json","cpu-applicability-p0")
+    card["checks"]["effect_variation"]=_ck("pass","The skill set spans multiple applicability-boundary complexities, including cases both methods fail identically.","generated/p0-b5-applicability-cpu.json","cpu-applicability-p0")
+    card["updater_competence"]={"status":"pass","passed":True,"evidence_kind":"cpu-applicability-p0","reason":"Both learners produce executable compact applicability gates within the same complexity budget."}
+    card["gpu0"]={"status":"stop-complexity-matched-ilp-equivalent","evidence":"A complexity-matched exhaustive ILP/precondition learner reproduces the monotone counterexample repair gate and held-out behavior exactly.","source":"generated/p0-b5-applicability-cpu.json","evidence_kind":"cpu-applicability-p0","next":result.get("next_action")}
+    card["matched_simplification"]={"equivalent":bool(matched.get("equivalent")),"baseline":matched.get("baseline")}
+
+
+def _apply_b6_stop(card: dict[str, Any], result: dict[str, Any]) -> None:
+    if card["idea_id"]!="memory-half-life" or result.get("decision")!="STOP_RECENCY_FREQUENCY_POLICY_DOMINATES": return
+    d=result.get("design") or {}; learned=(result.get("utility_hazard") or {}).get("future") or {}; simple=(result.get("recency_frequency") or {}).get("future") or {}; matched=result.get("matched_simplification") or {}
+    card["checks"]["target_variation"]=_ck("pass",f"Frozen reuse stream has {d.get('future_activations',0)} held-out activations with both harmful and beneficial ON/OFF utility outcomes.","generated/p0-b6-memory-utility-cpu.json","cpu-memory-utility-p0")
+    card["checks"]["baseline_disagreement"]=_ck("fail",f"Learned hazard retains {learned.get('retained_harm',0)} harmful future events while matched recency+frequency retains {simple.get('retained_harm',0)}, with benefit retained {learned.get('retained_benefit',0)} vs {simple.get('retained_benefit',0)}.","generated/p0-b6-memory-utility-cpu.json","cpu-memory-utility-p0")
+    card["checks"]["tiny_overfit"]=_ck("pass",f"Only the frozen {d.get('audit_fraction',0):.1%} audited activations are used for fitting/tuning; {d.get('future_activations',0)} non-audited activations remain future evaluation.","generated/p0-b6-memory-utility-cpu.json","cpu-memory-utility-p0")
+    card["checks"]["effect_variation"]=_ck("pass","Independent matched memory ON/OFF utility contains both negative and positive reuse effects across recency/frequency regimes.","generated/p0-b6-memory-utility-cpu.json","cpu-memory-utility-p0")
+    card["updater_competence"]={"status":"pass","passed":True,"evidence_kind":"cpu-memory-utility-p0","reason":"The audited ON/OFF stream supports executable hazard/cache decisions with non-degenerate utility labels."}
+    card["gpu0"]={"status":"stop-recency-frequency-policy-dominates","evidence":"A recency+frequency threshold tuned on the identical 20% audit labels strictly dominates the learned utility-hazard model on future harm with no benefit-retention loss.","source":"generated/p0-b6-memory-utility-cpu.json","evidence_kind":"cpu-memory-utility-p0","next":result.get("next_action")}
+    card["matched_simplification"]={"simple_dominates":bool(matched.get("simple_dominates")),"baseline":matched.get("baseline")}
+
+
 def _apply_b10(card: dict[str, Any], result: dict[str, Any]) -> None:
     if card["idea_id"]!="constraint-complete-typed-memory-order-logic": return
     if result.get("decision")!="STOP_MATCHED_NARY_EQUIVALENT": return
@@ -305,14 +341,14 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
     aw,aa1,aa2,a3p,a67,mem,memfull,ready,we1=alfworld(root),a1(root),a2(root),a3_panel(root),a67_dataset(root),memory(root),memory_full(root),substrate_readiness(root),e1(root)
     up_a1=_updater_config("p0_a1_screening_config.json"); up_a2=_updater_config("p0_a2_screening_config.json")
     realizability=build_p0_realizability_suite(); realizability_by_id={row["idea_id"]:row for row in realizability.get("rows") or []}
-    b10=run_b10_cpu_p0(); a4cpu=_a4_artifact(); a5cpu=_a5_artifact(); a6cpu=run_a6_cpu_p0(); a7cpu=_a7_artifact(); b3cpu=_b3_artifact(); c2cpu=_c2_artifact(); d1cpu=_d1_artifact(); e2cpu=_e2_artifact(); e3real=_e3_artifact(); e3stateful=_e3_stateful_artifact(); e4cpu=_e4_artifact()
+    b10=run_b10_cpu_p0(); a4cpu=_a4_artifact(); a5cpu=_a5_artifact(); a6cpu=run_a6_cpu_p0(); a7cpu=_a7_artifact(); b3cpu=_b3_artifact(); b5cpu=_b5_artifact(); b6cpu=_b6_artifact(); c2cpu=_c2_artifact(); d1cpu=_d1_artifact(); e2cpu=_e2_artifact(); e3real=_e3_artifact(); e3stateful=_e3_stateful_artifact(); e4cpu=_e4_artifact()
     cards=[]
     for idea in NEW_IDS:
         card=_base_card(idea,aw)
         card["updater_competence"]={"status":"pending","passed":False,"evidence_kind":"pending","reason":"mechanism-specific updater/action-stream competence has not been qualified"}
         if idea=="regression-gated-self-evolution": card["updater_competence"]={**up_a1,"evidence_kind":"real-reused"}
         elif idea in {"lineage-aware-rollback","active-causal-minimal-rollback","counterfactual-evolution-decision-controller"}: card["updater_competence"]={**up_a2,"evidence_kind":"real-reused"}
-        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_a4_stop(card,a4cpu); _apply_a5_stop(card,a5cpu); _apply_a6_stop(card,a6cpu); _apply_b10(card,b10); _apply_d1(card,aw); _apply_exact_data_holds(card,a67,memfull); _apply_missing_substrates(card,ready); _apply_a7_stop(card,a7cpu); _apply_b3_screening(card,b3cpu); _apply_c2_stop(card,c2cpu); _apply_d1_stop(card,d1cpu); _apply_e2_stop(card,e2cpu); _apply_e3_reality(card,e3real); _apply_e3_stateful_stop(card,e3stateful); _apply_e4_result(card,e4cpu)
+        _apply_a1(card,aa1); _apply_a2(card,aa2); _apply_memory(card,mem); _apply_e1(card,we1); _apply_a4_stop(card,a4cpu); _apply_a5_stop(card,a5cpu); _apply_a6_stop(card,a6cpu); _apply_b10(card,b10); _apply_d1(card,aw); _apply_exact_data_holds(card,a67,memfull); _apply_missing_substrates(card,ready); _apply_a7_stop(card,a7cpu); _apply_b3_screening(card,b3cpu); _apply_b5_stop(card,b5cpu); _apply_b6_stop(card,b6cpu); _apply_c2_stop(card,c2cpu); _apply_d1_stop(card,d1cpu); _apply_e2_stop(card,e2cpu); _apply_e3_reality(card,e3real); _apply_e3_stateful_stop(card,e3stateful); _apply_e4_result(card,e4cpu)
         synthetic=realizability_by_id.get(idea)
         if synthetic and synthetic.get("representability_pass") and card["checks"]["representability"]["status"]=="pending":
             card["checks"]["representability"]=_ck("synthetic-pass","Synthetic mechanism harness passed; this clears representability only and has no reality/method authority.","generated/p0-realizability-suite.json","synthetic-realizability-only")
@@ -329,7 +365,7 @@ def build_p0_offline_qualification_state() -> dict[str, Any]:
     }
     return {"schema_version":"1.0","generated_at":_now(),"experiment_root":"profile-resolved-machine-local",
         "policy":{"real_reused_may_unblock":True,"synthetic_harness_may_not_unblock_reality":True,"same_batch_self_authorization_forbidden":True,"method_result_from_offline_qualification_forbidden":True},
-        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"memory_full":memfull,"substrate_readiness":ready,"e1":we1,"a4_composition_cpu":{"decision":a4cpu.get("decision"),"metrics":a4cpu.get("metrics"),"matched_simplification":a4cpu.get("matched_simplification")},"a5_history_cpu":{"decision":a5cpu.get("decision"),"semantic":a5cpu.get("semantic_compactor"),"generic":a5cpu.get("generic_state_diff"),"periodic":a5cpu.get("periodic_checkpoint")},"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"a7_counterfactual_cpu":{"decision":a7cpu.get("decision"),"design":a7cpu.get("design"),"linear_hidden":(a7cpu.get("linear_controller") or {}).get("hidden"),"cart_hidden":(a7cpu.get("matched_cart") or {}).get("hidden")},"b3_interference_cpu":{"decision":b3cpu.get("decision"),"metrics":b3cpu.get("metrics"),"runtime_preflight_snapshot":b3cpu.get("runtime_preflight_snapshot")},"c2_evaluator_cpu":{"decision":c2cpu.get("decision"),"attribution":c2cpu.get("attribution"),"matched_simplification":c2cpu.get("matched_simplification")},"d1_minimal_curriculum_cpu":{"decision":d1cpu.get("decision"),"design":d1cpu.get("design"),"matched_simplification":d1cpu.get("matched_simplification")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"e2_workflow_cpu":{"decision":e2cpu.get("decision"),"metrics":e2cpu.get("metrics"),"freeze_sha256":e2cpu.get("freeze_sha256_before_hidden")},"e3_real_api":{"decision":e3real.get("decision"),"metrics":e3real.get("metrics"),"prediction_sha256":e3real.get("prediction_sha256_before_hidden")},"e3_stateful":{"decision":e3stateful.get("decision"),"metrics":e3stateful.get("metrics"),"prediction_sha256":e3stateful.get("prediction_sha256_before_hidden")},"e4_permission_cpu":{"decision":e4cpu.get("decision"),"metrics":e4cpu.get("metrics"),"threshold":e4cpu.get("threshold")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
+        "shared_evidence":{"alfworld":aw,"a1":aa1,"a2":aa2,"a3_mastered_panel":a3p,"a6_a7_dataset":a67,"updater_competence":{"a1":up_a1,"a2":up_a2},"memory":mem,"memory_full":memfull,"substrate_readiness":ready,"e1":we1,"a4_composition_cpu":{"decision":a4cpu.get("decision"),"metrics":a4cpu.get("metrics"),"matched_simplification":a4cpu.get("matched_simplification")},"a5_history_cpu":{"decision":a5cpu.get("decision"),"semantic":a5cpu.get("semantic_compactor"),"generic":a5cpu.get("generic_state_diff"),"periodic":a5cpu.get("periodic_checkpoint")},"a6_cpu":{"decision":a6cpu.get("decision"),"summary":a6cpu.get("summary"),"matched_simplification":a6cpu.get("matched_simplification")},"a7_counterfactual_cpu":{"decision":a7cpu.get("decision"),"design":a7cpu.get("design"),"linear_hidden":(a7cpu.get("linear_controller") or {}).get("hidden"),"cart_hidden":(a7cpu.get("matched_cart") or {}).get("hidden")},"b3_interference_cpu":{"decision":b3cpu.get("decision"),"metrics":b3cpu.get("metrics"),"runtime_preflight_snapshot":b3cpu.get("runtime_preflight_snapshot")},"b5_applicability_cpu":{"decision":b5cpu.get("decision"),"metrics":b5cpu.get("metrics"),"matched_simplification":b5cpu.get("matched_simplification")},"b6_memory_utility_cpu":{"decision":b6cpu.get("decision"),"design":b6cpu.get("design"),"matched_simplification":b6cpu.get("matched_simplification")},"c2_evaluator_cpu":{"decision":c2cpu.get("decision"),"attribution":c2cpu.get("attribution"),"matched_simplification":c2cpu.get("matched_simplification")},"d1_minimal_curriculum_cpu":{"decision":d1cpu.get("decision"),"design":d1cpu.get("design"),"matched_simplification":d1cpu.get("matched_simplification")},"b10":{"decision":b10.get("decision"),"metrics":b10.get("metrics"),"gates":b10.get("gates")},"e2_workflow_cpu":{"decision":e2cpu.get("decision"),"metrics":e2cpu.get("metrics"),"freeze_sha256":e2cpu.get("freeze_sha256_before_hidden")},"e3_real_api":{"decision":e3real.get("decision"),"metrics":e3real.get("metrics"),"prediction_sha256":e3real.get("prediction_sha256_before_hidden")},"e3_stateful":{"decision":e3stateful.get("decision"),"metrics":e3stateful.get("metrics"),"prediction_sha256":e3stateful.get("prediction_sha256_before_hidden")},"e4_permission_cpu":{"decision":e4cpu.get("decision"),"metrics":e4cpu.get("metrics"),"threshold":e4cpu.get("threshold")},"realizability_summary":realizability.get("summary") or {}},"summary":summary,"cards":cards}
 
 def write_p0_offline_qualification_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS)->dict[str,Any]:
     state=build_p0_offline_qualification_state(); json_path.parent.mkdir(parents=True,exist_ok=True)

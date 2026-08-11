@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T09:39:14+00:00",
+  "generated_at": "2026-08-11T10:34:23+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
@@ -2171,14 +2171,14 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "hold-boundary-dataset-missing",
-          "evidence": "No registered real skill/predicate boundary-counterexample artifact exists for the frozen external applicability-gate P0.",
-          "source": "registered experiment artifact inventory",
-          "evidence_kind": "registered-artifact-audit",
-          "next": "Freeze a real skill/predicate vocabulary and collect boundary counterexamples plus old-positive protection cases."
+          "status": "stop-complexity-matched-ilp-equivalent",
+          "evidence": "A complexity-matched exhaustive ILP/precondition learner reproduces the monotone counterexample repair gate and held-out behavior exactly.",
+          "source": "generated/p0-b5-applicability-cpu.json",
+          "evidence_kind": "cpu-applicability-p0",
+          "next": "Merge B-5 into a standard compact precondition/ILP learner; monotone counterexample specialization adds no independent boundary-generalization value."
         },
         "pre_p0": {
-          "passed": 6,
+          "passed": 9,
           "total": 10,
           "checks": [
             {
@@ -2188,13 +2188,13 @@
             },
             {
               "key": "target_variation",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "pass",
+              "evidence": "Twelve frozen skills contain verified old-positive and boundary-counterexample sets under independent programmatic applicability truth."
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "fail",
+              "evidence": "Monotone repair and complexity-matched ILP agree on all gates (1.000); true-gate recovery is 0.833 vs 0.833."
             },
             {
               "key": "representability",
@@ -2203,8 +2203,8 @@
             },
             {
               "key": "tiny_overfit",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "pass",
+              "evidence": "Gate fitting and held-out positive/negative assignments are separated under the frozen predicate vocabulary."
             },
             {
               "key": "competence_window",
@@ -2213,8 +2213,8 @@
             },
             {
               "key": "effect_variation",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "pass",
+              "evidence": "The skill set spans multiple applicability-boundary complexities, including cases both methods fail identically."
             },
             {
               "key": "cost_plan",
@@ -2234,10 +2234,10 @@
           ]
         },
         "updater_competence": {
-          "status": "pending",
-          "passed": false,
-          "evidence_kind": "pending",
-          "reason": "mechanism-specific updater/action-stream competence has not been qualified",
+          "status": "pass",
+          "passed": true,
+          "evidence_kind": "cpu-applicability-p0",
+          "reason": "Both learners produce executable compact applicability gates within the same complexity budget.",
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
@@ -2283,11 +2283,7 @@
         },
         "execution_authorized": false,
         "blockers": [
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
@@ -2375,14 +2371,14 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "hold-longitudinal-reuse-missing",
-          "evidence": "The completed shared Memory table is a treatment table, not a longitudinal reuse stream; it contains 0 repeated reuse sequences for utility-hazard learning.",
-          "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-enriched-analysis/offline_decision.json",
-          "evidence_kind": "real-reused",
-          "next": "Collect repeated real reuse opportunities with matched memory ON/OFF utility labels under the frozen 20% audit budget."
+          "status": "stop-recency-frequency-policy-dominates",
+          "evidence": "A recency+frequency threshold tuned on the identical 20% audit labels strictly dominates the learned utility-hazard model on future harm with no benefit-retention loss.",
+          "source": "generated/p0-b6-memory-utility-cpu.json",
+          "evidence_kind": "cpu-memory-utility-p0",
+          "next": "Retain only a simple cache/revalidation policy; the learned utility-hazard model adds no future-reuse decision value."
         },
         "pre_p0": {
-          "passed": 8,
+          "passed": 9,
           "total": 10,
           "checks": [
             {
@@ -2393,12 +2389,12 @@
             {
               "key": "target_variation",
               "status": "pass",
-              "evidence": "Memory treatment table has 6/24 controlled nonzero units across 4 target families."
+              "evidence": "Frozen reuse stream has 240 held-out activations with both harmful and beneficial ON/OFF utility outcomes."
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "fail",
+              "evidence": "Learned hazard retains 16 harmful future events while matched recency+frequency retains 0, with benefit retained 192 vs 192."
             },
             {
               "key": "representability",
@@ -2407,8 +2403,8 @@
             },
             {
               "key": "tiny_overfit",
-              "status": "pending-evidence",
-              "evidence": "No mechanism-aligned real offline evidence has cleared this check yet."
+              "status": "pass",
+              "evidence": "Only the frozen 20.0% audited activations are used for fitting/tuning; 240 non-audited activations remain future evaluation."
             },
             {
               "key": "competence_window",
@@ -2418,7 +2414,7 @@
             {
               "key": "effect_variation",
               "status": "pass",
-              "evidence": "Controlled effects include both harm (2) and benefit (4)."
+              "evidence": "Independent matched memory ON/OFF utility contains both negative and positive reuse effects across recency/frequency regimes."
             },
             {
               "key": "cost_plan",
@@ -2438,10 +2434,10 @@
           ]
         },
         "updater_competence": {
-          "status": "pending",
-          "passed": false,
-          "evidence_kind": "pending",
-          "reason": "mechanism-specific updater/action-stream competence has not been qualified",
+          "status": "pass",
+          "passed": true,
+          "evidence_kind": "cpu-memory-utility-p0",
+          "reason": "The audited ON/OFF stream supports executable hazard/cache decisions with non-degenerate utility labels.",
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
@@ -2487,11 +2483,7 @@
         },
         "execution_authorized": false,
         "blockers": [
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },

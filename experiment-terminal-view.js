@@ -6,6 +6,8 @@ function p0A5State(){return window.P0_A5_HISTORY_CPU||{};}
 function p0A6State(){return window.P0_A6_CPU||{};}
 function p0A7State(){return window.P0_A7_COUNTERFACTUAL_CPU||{};}
 function p0B3State(){return window.P0_B3_INTERFERENCE_CPU||{};}
+function p0B5State(){return window.P0_B5_APPLICABILITY_CPU||{};}
+function p0B6State(){return window.P0_B6_MEMORY_UTILITY_CPU||{};}
 function p0C2State(){return window.P0_C2_EVALUATOR_CPU||{};}
 function p0D1State(){return window.P0_D1_MINIMAL_CURRICULUM_CPU||{};}
 function p0E2State(){return window.P0_E2_WORKFLOW_CPU||{};}
@@ -59,6 +61,14 @@ function terminalExperimentEvidence(row){
   if(id==="retrieval-interference-auditor" && p0B3State().decision){
     const b=p0B3State(),m=b.metrics||{},r=b.runtime_preflight_snapshot||{};
     return {current_started:true,category:"p0-hold",tone:"check",label:language==="zh"?"CPU screening SIGNAL · real co-retrieval runtime HOLD":"CPU screening SIGNAL · real co-retrieval runtime HOLD",detail:language==="zh"?`24 个 programmatic interference cases 中 pathway/simple 各 ${m.pathway_audit_calls||0} 次 audit，future harm 都为 ${m.pathway_future_harm??"--"}/${m.simple_future_harm??"--"}，但 retained benefit=${m.pathway_retained_benefit??"--"} vs ${m.simple_retained_benefit??"--"}。这是 synthetic mechanism signal，不证明真实 co-retrieval interference；60 的 GPU 空闲，但 runtime environment drift 阻止 24-execution ALFWorld reality gate。`:`Across 24 programmatic interference cases, pathway/simple each use ${m.pathway_audit_calls||0} audits and both have future harm ${m.pathway_future_harm??"--"}/${m.simple_future_harm??"--"}, while retained benefit is ${m.pathway_retained_benefit??"--"} vs ${m.simple_retained_benefit??"--"}. This is a synthetic mechanism signal, not evidence of real co-retrieval interference; GPUs on server 60 are idle, but runtime environment drift blocks the 24-execution ALFWorld reality gate.`,next:b.next_action||"--",evidence:`${b.decision} · runtime=${r.decision||"--"} · install/mutation=${r.installation_or_environment_mutation_attempted?"YES":"NO"}`};
+  }
+  if(id==="local-counterexample-memory-repair" && p0B5State().decision){
+    const b=p0B5State(),m=b.metrics||{};
+    return {current_started:true,category:"p0-stop",tone:"fail",label:language==="zh"?"CPU P0 STOP · complexity-matched ILP 等效":"CPU P0 STOP · complexity-matched ILP equivalent",detail:language==="zh"?`12 个冻结 skills 上，monotone repair 与 complexity-matched ILP 的 gate agreement=${experimentNumber(m.exact_gate_agreement)}；true-gate recovery=${experimentNumber(m.monotone_true_gate_recovery)} vs ${experimentNumber(m.ilp_true_gate_recovery)}，held-out boundary 与 old-positive 行为逐项相同。`:`Across 12 frozen skills, monotone repair and complexity-matched ILP have gate agreement=${experimentNumber(m.exact_gate_agreement)}; true-gate recovery=${experimentNumber(m.monotone_true_gate_recovery)} vs ${experimentNumber(m.ilp_true_gate_recovery)}, with identical held-out-boundary and old-positive behavior.`,next:b.next_action||"--",evidence:`${b.decision} · P1=${b.p1_authorized?"AUTHORIZED":"LOCKED"}`};
+  }
+  if(id==="memory-half-life" && p0B6State().decision){
+    const b=p0B6State(),l=b.utility_hazard?.future||{},s=b.recency_frequency?.future||{},d=b.design||{};
+    return {current_started:true,category:"p0-stop",tone:"fail",label:language==="zh"?"CPU P0 STOP · recency+frequency 严格支配":"CPU P0 STOP · recency+frequency dominates",detail:language==="zh"?`固定 ${experimentNumber(d.audit_fraction)} audit（${d.audited_activations||0}/${d.reuse_opportunities||0}）后，在 ${d.future_activations||0} 个 future reuse 上 learned hazard retained harm=${l.retained_harm??"--"}，simple recency+frequency=${s.retained_harm??"--"}；benefit retained=${l.retained_benefit??"--"} vs ${s.retained_benefit??"--"}，simple policy 严格支配。`:`After the frozen ${experimentNumber(d.audit_fraction)} audit (${d.audited_activations||0}/${d.reuse_opportunities||0}), across ${d.future_activations||0} future reuse events the learned hazard retains ${l.retained_harm??"--"} harmful events versus ${s.retained_harm??"--"} for recency+frequency; retained benefit is ${l.retained_benefit??"--"} vs ${s.retained_benefit??"--"}, so the simple policy strictly dominates.`,next:b.next_action||"--",evidence:`${b.decision} · simple dominates=${b.matched_simplification?.simple_dominates} · P1=${b.p1_authorized?"AUTHORIZED":"LOCKED"}`};
   }
   if(id==="evaluator-coadaptation-guard" && p0C2State().decision){
     const c=p0C2State(),a=c.attribution||{},p=c.cross_version_causal_repair||{},s=c.simple_anchor_residual_repair||{};

@@ -49,7 +49,11 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(by_id["evaluator-coadaptation-guard"]["checks"]["baseline_disagreement"]["status"],"fail")
         self.assertEqual(by_id["counterexample-generating-curriculum"]["gpu0"]["status"],"stop-matched-intersection-filter-equivalent")
         self.assertEqual(by_id["counterexample-generating-curriculum"]["checks"]["baseline_disagreement"]["status"],"fail")
-        self.assertEqual(self.state["summary"]["gpu0_stop"],10)
+        self.assertEqual(by_id["local-counterexample-memory-repair"]["gpu0"]["status"],"stop-complexity-matched-ilp-equivalent")
+        self.assertEqual(by_id["local-counterexample-memory-repair"]["checks"]["baseline_disagreement"]["status"],"fail")
+        self.assertEqual(by_id["memory-half-life"]["gpu0"]["status"],"stop-recency-frequency-policy-dominates")
+        self.assertEqual(by_id["memory-half-life"]["checks"]["baseline_disagreement"]["status"],"fail")
+        self.assertEqual(self.state["summary"]["gpu0_stop"],12)
 
     def test_reused_artifacts_capture_current_blockers(self) -> None:
         shared=self.state["shared_evidence"]
@@ -73,6 +77,8 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(shared["a7_counterfactual_cpu"]["decision"],"STOP_MATCHED_SHALLOW_RULE_EQUIVALENT")
         self.assertEqual(shared["b3_interference_cpu"]["decision"],"SCREENING_SIGNAL_REAL_COINTERACTION_REQUIRED")
         self.assertEqual(shared["b3_interference_cpu"]["runtime_preflight_snapshot"]["decision"],"HOLD_RUNTIME_ENVIRONMENT_DRIFT")
+        self.assertEqual(shared["b5_applicability_cpu"]["decision"],"STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT")
+        self.assertEqual(shared["b6_memory_utility_cpu"]["decision"],"STOP_RECENCY_FREQUENCY_POLICY_DOMINATES")
 
     def test_exact_data_deficits_are_explicit_holds(self) -> None:
         by_id={row["idea_id"]:row for row in self.state["cards"]}
@@ -80,13 +86,11 @@ class P0OfflineQualificationTest(unittest.TestCase):
             "regression-gated-self-evolution":"hold",
             "contradiction-preserving-consolidation":"hold-support-cardinality-insufficient",
             "retrieval-interference-auditor":"hold-real-cinteraction-runtime",
-            "local-counterexample-memory-repair":"hold-boundary-dataset-missing",
-            "memory-half-life":"hold-longitudinal-reuse-missing",
             "workflow-generalization-certificate":"hold",
         }
         for idea_id,status in expected.items():
             self.assertEqual(by_id[idea_id]["gpu0"]["status"],status,idea_id)
-        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],6)
+        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],4)
 
 
 if __name__=="__main__":

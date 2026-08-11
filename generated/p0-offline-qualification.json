@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T09:39:12+00:00",
+  "generated_at": "2026-08-11T10:34:21+00:00",
   "experiment_root": "profile-resolved-machine-local",
   "policy": {
     "real_reused_may_unblock": true,
@@ -715,6 +715,41 @@
         "decision": "HOLD_RUNTIME_ENVIRONMENT_DRIFT"
       }
     },
+    "b5_applicability_cpu": {
+      "decision": "STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT",
+      "metrics": {
+        "monotone_true_gate_recovery": 0.8333333333333334,
+        "ilp_true_gate_recovery": 0.8333333333333334,
+        "exact_gate_agreement": 1.0
+      },
+      "matched_simplification": {
+        "baseline": "complexity-matched exhaustive ILP/precondition learner",
+        "same_predicate_vocabulary": true,
+        "same_counterexamples": true,
+        "same_old_positive_set": true,
+        "same_complexity_budget": true,
+        "equivalent": true
+      }
+    },
+    "b6_memory_utility_cpu": {
+      "decision": "STOP_RECENCY_FREQUENCY_POLICY_DOMINATES",
+      "design": {
+        "memories": 12,
+        "reuse_opportunities": 300,
+        "audit_fraction": 0.2,
+        "audited_activations": 60,
+        "future_activations": 240,
+        "independent_truth": "programmatic matched memory ON/OFF utility",
+        "same_audit_labels": true
+      },
+      "matched_simplification": {
+        "baseline": "recency+frequency threshold tuned on the identical 20% audited ON/OFF labels",
+        "same_audit_budget": true,
+        "same_future_reuse_stream": true,
+        "decision_equivalent": false,
+        "simple_dominates": true
+      }
+    },
     "c2_evaluator_cpu": {
       "decision": "STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT",
       "attribution": {
@@ -858,12 +893,12 @@
   },
   "summary": {
     "ideas": 16,
-    "checks_passed": 46,
-    "checks_failed": 13,
-    "checks_pending": 23,
+    "checks_passed": 50,
+    "checks_failed": 15,
+    "checks_pending": 17,
     "checks_synthetic_pass": 14,
-    "gpu0_hold_or_conditional": 6,
-    "gpu0_stop": 10
+    "gpu0_hold_or_conditional": 4,
+    "gpu0_stop": 12
   },
   "cards": [
     {
@@ -1164,24 +1199,24 @@
     {
       "idea_id": "local-counterexample-memory-repair",
       "gpu0": {
-        "status": "hold-boundary-dataset-missing",
-        "evidence": "No registered real skill/predicate boundary-counterexample artifact exists for the frozen external applicability-gate P0.",
-        "source": "registered experiment artifact inventory",
-        "evidence_kind": "registered-artifact-audit",
-        "next": "Freeze a real skill/predicate vocabulary and collect boundary counterexamples plus old-positive protection cases."
+        "status": "stop-complexity-matched-ilp-equivalent",
+        "evidence": "A complexity-matched exhaustive ILP/precondition learner reproduces the monotone counterexample repair gate and held-out behavior exactly.",
+        "source": "generated/p0-b5-applicability-cpu.json",
+        "evidence_kind": "cpu-applicability-p0",
+        "next": "Merge B-5 into a standard compact precondition/ILP learner; monotone counterexample specialization adds no independent boundary-generalization value."
       },
       "checks": {
         "target_variation": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "Twelve frozen skills contain verified old-positive and boundary-counterexample sets under independent programmatic applicability truth.",
+          "source": "generated/p0-b5-applicability-cpu.json",
+          "evidence_kind": "cpu-applicability-p0"
         },
         "baseline_disagreement": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "fail",
+          "evidence": "Monotone repair and complexity-matched ILP agree on all gates (1.000); true-gate recovery is 0.833 vs 0.833.",
+          "source": "generated/p0-b5-applicability-cpu.json",
+          "evidence_kind": "cpu-applicability-p0"
         },
         "representability": {
           "status": "synthetic-pass",
@@ -1190,10 +1225,10 @@
           "evidence_kind": "synthetic-realizability-only"
         },
         "tiny_overfit": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "Gate fitting and held-out positive/negative assignments are separated under the frozen predicate vocabulary.",
+          "source": "generated/p0-b5-applicability-cpu.json",
+          "evidence_kind": "cpu-applicability-p0"
         },
         "competence_window": {
           "status": "pass",
@@ -1202,40 +1237,44 @@
           "evidence_kind": "real-reused"
         },
         "effect_variation": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "The skill set spans multiple applicability-boundary complexities, including cases both methods fail identically.",
+          "source": "generated/p0-b5-applicability-cpu.json",
+          "evidence_kind": "cpu-applicability-p0"
         }
       },
       "updater_competence": {
-        "status": "pending",
-        "passed": false,
-        "evidence_kind": "pending",
-        "reason": "mechanism-specific updater/action-stream competence has not been qualified"
+        "status": "pass",
+        "passed": true,
+        "evidence_kind": "cpu-applicability-p0",
+        "reason": "Both learners produce executable compact applicability gates within the same complexity budget."
+      },
+      "matched_simplification": {
+        "equivalent": true,
+        "baseline": "complexity-matched exhaustive ILP/precondition learner"
       }
     },
     {
       "idea_id": "memory-half-life",
       "gpu0": {
-        "status": "hold-longitudinal-reuse-missing",
-        "evidence": "The completed shared Memory table is a treatment table, not a longitudinal reuse stream; it contains 0 repeated reuse sequences for utility-hazard learning.",
-        "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-enriched-analysis/offline_decision.json",
-        "evidence_kind": "real-reused",
-        "next": "Collect repeated real reuse opportunities with matched memory ON/OFF utility labels under the frozen 20% audit budget."
+        "status": "stop-recency-frequency-policy-dominates",
+        "evidence": "A recency+frequency threshold tuned on the identical 20% audit labels strictly dominates the learned utility-hazard model on future harm with no benefit-retention loss.",
+        "source": "generated/p0-b6-memory-utility-cpu.json",
+        "evidence_kind": "cpu-memory-utility-p0",
+        "next": "Retain only a simple cache/revalidation policy; the learned utility-hazard model adds no future-reuse decision value."
       },
       "checks": {
         "target_variation": {
           "status": "pass",
-          "evidence": "Memory treatment table has 6/24 controlled nonzero units across 4 target families.",
-          "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-qualification/analysis.json",
-          "evidence_kind": "real-reused"
+          "evidence": "Frozen reuse stream has 240 held-out activations with both harmful and beneficial ON/OFF utility outcomes.",
+          "source": "generated/p0-b6-memory-utility-cpu.json",
+          "evidence_kind": "cpu-memory-utility-p0"
         },
         "baseline_disagreement": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "fail",
+          "evidence": "Learned hazard retains 16 harmful future events while matched recency+frequency retains 0, with benefit retained 192 vs 192.",
+          "source": "generated/p0-b6-memory-utility-cpu.json",
+          "evidence_kind": "cpu-memory-utility-p0"
         },
         "representability": {
           "status": "synthetic-pass",
@@ -1244,10 +1283,10 @@
           "evidence_kind": "synthetic-realizability-only"
         },
         "tiny_overfit": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "Only the frozen 20.0% audited activations are used for fitting/tuning; 240 non-audited activations remain future evaluation.",
+          "source": "generated/p0-b6-memory-utility-cpu.json",
+          "evidence_kind": "cpu-memory-utility-p0"
         },
         "competence_window": {
           "status": "pass",
@@ -1257,16 +1296,20 @@
         },
         "effect_variation": {
           "status": "pass",
-          "evidence": "Controlled effects include both harm (2) and benefit (4).",
-          "source": "runs/p0-mem-xfer-support-enriched-qwen-v1/support-qualification/analysis.json",
-          "evidence_kind": "real-reused"
+          "evidence": "Independent matched memory ON/OFF utility contains both negative and positive reuse effects across recency/frequency regimes.",
+          "source": "generated/p0-b6-memory-utility-cpu.json",
+          "evidence_kind": "cpu-memory-utility-p0"
         }
       },
       "updater_competence": {
-        "status": "pending",
-        "passed": false,
-        "evidence_kind": "pending",
-        "reason": "mechanism-specific updater/action-stream competence has not been qualified"
+        "status": "pass",
+        "passed": true,
+        "evidence_kind": "cpu-memory-utility-p0",
+        "reason": "The audited ON/OFF stream supports executable hazard/cache decisions with non-degenerate utility labels."
+      },
+      "matched_simplification": {
+        "simple_dominates": true,
+        "baseline": "recency+frequency threshold tuned on the identical 20% audited ON/OFF labels"
       }
     },
     {

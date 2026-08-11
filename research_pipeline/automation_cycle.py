@@ -22,6 +22,8 @@ from .p0_a5_history_cpu import write_a5_cpu_p0
 from .p0_a6_cpu import write_a6_cpu_p0
 from .p0_a7_counterfactual_cpu import write_a7_cpu_p0
 from .p0_b3_interference_cpu import write_b3_cpu_screen
+from .p0_b5_applicability_cpu import write_b5_cpu_p0
+from .p0_b6_memory_utility_cpu import write_b6_cpu_p0
 from .p0_c2_evaluator_cpu import write_c2_cpu_p0
 from .p0_d1_minimal_curriculum_cpu import write_d1_cpu_p0
 from .p0_e2_workflow_cpu import write_e2_cpu_p0
@@ -114,6 +116,8 @@ def run_cycle(
         report["steps"].append(_step("p0-a6-cpu", write_a6_cpu_p0))
         report["steps"].append(_step("p0-a7-counterfactual-cpu", write_a7_cpu_p0))
         report["steps"].append(_step("p0-b3-interference-cpu", write_b3_cpu_screen))
+        report["steps"].append(_step("p0-b5-applicability-cpu", write_b5_cpu_p0))
+        report["steps"].append(_step("p0-b6-memory-utility-cpu", write_b6_cpu_p0))
         report["steps"].append(_step("p0-c2-evaluator-cpu", write_c2_cpu_p0))
         report["steps"].append(_step("p0-d1-minimal-curriculum-cpu", write_d1_cpu_p0))
         report["steps"].append(_step("p0-e2-workflow-cpu", write_e2_cpu_p0))
@@ -143,6 +147,8 @@ def run_cycle(
         write_a6_cpu_p0()
         write_a7_cpu_p0()
         write_b3_cpu_screen()
+        write_b5_cpu_p0()
+        write_b6_cpu_p0()
         write_c2_cpu_p0()
         write_d1_cpu_p0()
         write_e2_cpu_p0()

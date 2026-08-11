@@ -365,6 +365,11 @@
         "zh": "同复杂度 baseline 等效则停止独立 monotone/generalization claim。",
         "en": "Stop the standalone monotone/generalization claim if a complexity-matched baseline is equivalent."
       },
+      "current_fact": {
+        "zh": "B-5 CPU P0 已触发 matched-simplification STOP：冻结同一 skill body/predicate vocabulary、counterexamples、old-positive set 与 complexity budget 后，monotone counterexample repair 与 complexity-matched exhaustive ILP/precondition learner 在 12/12 skills 上学习到完全相同的 gate，held-out boundary 与 old-positive 指标逐项相同；双方 true-gate recovery 都为 10/12，连失败 case 也完全一致。独立 monotone/generalization claim 被同复杂度 ILP 完整复现，建议 merge/drop，等待人工确认。",
+        "en": "B-5 CPU P0 fired a matched-simplification STOP. With the same frozen skill body/predicate vocabulary, counterexamples, old-positive set, and complexity budget, monotone counterexample repair and a complexity-matched exhaustive ILP/precondition learner produce exactly the same gate on all 12 skills and identical held-out-boundary/old-positive metrics. Both recover the true gate on 10/12 skills and fail the same cases. The standalone monotone/generalization claim is fully reproduced by a matched ILP baseline; recommend merge/drop pending human review."
+      },
+      "p0_decision": "STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT",
       "p0_entry": {
         "date": "2026-08-11",
         "basis": "p0-admission-contract-frozen",
@@ -400,6 +405,11 @@
         "zh": "simple cache policy 同预算等效则只保留 cache component。",
         "en": "If a simple cache policy is equivalent at matched budget, retain only a cache component."
       },
+      "current_fact": {
+        "zh": "B-6 CPU P0 已触发更强的 matched-simplification STOP：12 memories×25 reuse opportunities，固定每 5 次 activation 审计一次，严格 20%=60/300 matched ON/OFF labels。learned utility-hazard 在 240 future reuse 上仍漏留 16 个 harmful memory；同一 audit 标签调出的 recency>=4 && frequency<=2 simple rule 为 0 harmful retained、0 beneficial quarantine，保留 benefit 同为 192。simple recency+frequency policy 严格支配 learned hazard，因此只保留 cache/revalidation component，等待人工 merge/drop。",
+        "en": "B-6 CPU P0 fired a stronger matched-simplification STOP. Across 12 memories × 25 reuse opportunities, every fifth activation is audited, giving exactly 20%=60/300 matched ON/OFF utility labels. On 240 future reuse events, the learned utility-hazard model still retains 16 harmful memories, while a recency>=4 && frequency<=2 rule tuned on the identical audit labels retains zero harmful memories, quarantines zero beneficial memories, and retains the same 192 beneficial events. The simple recency+frequency policy strictly dominates the learned hazard; retain only a cache/revalidation component pending human merge/drop review."
+      },
+      "p0_decision": "STOP_RECENCY_FREQUENCY_POLICY_DOMINATES",
       "p0_entry": {
         "date": "2026-08-11",
         "basis": "p0-admission-contract-frozen",

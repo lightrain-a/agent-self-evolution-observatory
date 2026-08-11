@@ -1,0 +1,377 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-11T10:32:00+00:00",
+  "idea_id": "local-counterexample-memory-repair",
+  "code": "B-5",
+  "scientific_role": "CPU applicability-gate P0 with frozen predicate vocabulary, old-positive protection, hidden boundaries, and independent programmatic truth",
+  "design": {
+    "skills": 12,
+    "predicate_vocabulary": 6,
+    "old_positive_protection": true,
+    "complexity_matched": true,
+    "independent_truth": "programmatic applicability predicate"
+  },
+  "rows": [
+    {
+      "skill_id": "s00",
+      "true_gate": [
+        "p0",
+        "p2",
+        "p4"
+      ],
+      "monotone_gate": [
+        "p0",
+        "p2",
+        "p4"
+      ],
+      "ilp_gate": [
+        "p0",
+        "p2",
+        "p4"
+      ],
+      "same_gate": true,
+      "monotone_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 3
+      },
+      "ilp_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 3
+      }
+    },
+    {
+      "skill_id": "s01",
+      "true_gate": [
+        "p1",
+        "p3"
+      ],
+      "monotone_gate": [
+        "p1",
+        "p3"
+      ],
+      "ilp_gate": [
+        "p1",
+        "p3"
+      ],
+      "same_gate": true,
+      "monotone_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      },
+      "ilp_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      }
+    },
+    {
+      "skill_id": "s02",
+      "true_gate": [
+        "p2",
+        "p4"
+      ],
+      "monotone_gate": [
+        "p2",
+        "p4"
+      ],
+      "ilp_gate": [
+        "p2",
+        "p4"
+      ],
+      "same_gate": true,
+      "monotone_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      },
+      "ilp_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      }
+    },
+    {
+      "skill_id": "s03",
+      "true_gate": [
+        "p1",
+        "p3",
+        "p5"
+      ],
+      "monotone_gate": [
+        "p3",
+        "p5"
+      ],
+      "ilp_gate": [
+        "p3",
+        "p5"
+      ],
+      "same_gate": true,
+      "monotone_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 0.3333333333333333,
+        "gate_size": 2
+      },
+      "ilp_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 0.3333333333333333,
+        "gate_size": 2
+      }
+    },
+    {
+      "skill_id": "s04",
+      "true_gate": [
+        "p0",
+        "p4"
+      ],
+      "monotone_gate": [
+        "p0",
+        "p4"
+      ],
+      "ilp_gate": [
+        "p0",
+        "p4"
+      ],
+      "same_gate": true,
+      "monotone_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      },
+      "ilp_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      }
+    },
+    {
+      "skill_id": "s05",
+      "true_gate": [
+        "p1",
+        "p5"
+      ],
+      "monotone_gate": [
+        "p1",
+        "p5"
+      ],
+      "ilp_gate": [
+        "p1",
+        "p5"
+      ],
+      "same_gate": true,
+      "monotone_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      },
+      "ilp_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      }
+    },
+    {
+      "skill_id": "s06",
+      "true_gate": [
+        "p0",
+        "p2",
+        "p4"
+      ],
+      "monotone_gate": [
+        "p0",
+        "p2",
+        "p4"
+      ],
+      "ilp_gate": [
+        "p0",
+        "p2",
+        "p4"
+      ],
+      "same_gate": true,
+      "monotone_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 3
+      },
+      "ilp_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 3
+      }
+    },
+    {
+      "skill_id": "s07",
+      "true_gate": [
+        "p1",
+        "p3"
+      ],
+      "monotone_gate": [
+        "p1",
+        "p3"
+      ],
+      "ilp_gate": [
+        "p1",
+        "p3"
+      ],
+      "same_gate": true,
+      "monotone_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      },
+      "ilp_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      }
+    },
+    {
+      "skill_id": "s08",
+      "true_gate": [
+        "p2",
+        "p4"
+      ],
+      "monotone_gate": [
+        "p2",
+        "p4"
+      ],
+      "ilp_gate": [
+        "p2",
+        "p4"
+      ],
+      "same_gate": true,
+      "monotone_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      },
+      "ilp_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      }
+    },
+    {
+      "skill_id": "s09",
+      "true_gate": [
+        "p1",
+        "p3",
+        "p5"
+      ],
+      "monotone_gate": [
+        "p3",
+        "p5"
+      ],
+      "ilp_gate": [
+        "p3",
+        "p5"
+      ],
+      "same_gate": true,
+      "monotone_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 0.3333333333333333,
+        "gate_size": 2
+      },
+      "ilp_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 0.3333333333333333,
+        "gate_size": 2
+      }
+    },
+    {
+      "skill_id": "s10",
+      "true_gate": [
+        "p0",
+        "p4"
+      ],
+      "monotone_gate": [
+        "p0",
+        "p4"
+      ],
+      "ilp_gate": [
+        "p0",
+        "p4"
+      ],
+      "same_gate": true,
+      "monotone_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      },
+      "ilp_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      }
+    },
+    {
+      "skill_id": "s11",
+      "true_gate": [
+        "p1",
+        "p5"
+      ],
+      "monotone_gate": [
+        "p1",
+        "p5"
+      ],
+      "ilp_gate": [
+        "p1",
+        "p5"
+      ],
+      "same_gate": true,
+      "monotone_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      },
+      "ilp_eval": {
+        "old_positive_preserved": 1.0,
+        "hidden_positive_accuracy": 1.0,
+        "hidden_negative_accuracy": 1.0,
+        "gate_size": 2
+      }
+    }
+  ],
+  "metrics": {
+    "monotone_true_gate_recovery": 0.8333333333333334,
+    "ilp_true_gate_recovery": 0.8333333333333334,
+    "exact_gate_agreement": 1.0
+  },
+  "matched_simplification": {
+    "baseline": "complexity-matched exhaustive ILP/precondition learner",
+    "same_predicate_vocabulary": true,
+    "same_counterexamples": true,
+    "same_old_positive_set": true,
+    "same_complexity_budget": true,
+    "equivalent": true
+  },
+  "decision": "STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT",
+  "standalone_claim_stop_authorized": true,
+  "p1_authorized": false,
+  "next_action": "Merge B-5 into a standard compact precondition/ILP learner; monotone counterexample specialization adds no independent boundary-generalization value."
+}
