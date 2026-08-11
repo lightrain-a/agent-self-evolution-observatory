@@ -9,6 +9,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .p0_mem_xfer_support_analysis import ensure_analysis as ensure_support_enriched_analysis
+
 EXPERIMENT_ID = "P0-MEM-XFER-CAUSAL"
 IDEA_3 = "replicated-effect-memory-gate"
 IDEA_5 = "cross-task-effect-transport-certificate"
@@ -232,13 +234,44 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
     support_dir = experiment_root / "runs" / SUPPORT_RUN_ID
     support_progress = _read_json(support_dir / "support-qualification" / "progress.json") or _read_json(support_dir / "progress.json") or {}
     support_decision = _read_json(support_dir / "support-qualification" / "decision.json") or _read_json(support_dir / "decision.json")
-    full_support_candidates = (support_dir / "full-support-table", support_dir / "full-qwen")
-    full_support_dir = next((path for path in full_support_candidates if path.exists()), full_support_candidates[0])
-    full_support_audit = _read_json(support_dir / "full-pre-gpu-audit.json")
-    full_support_progress = _read_json(full_support_dir / "progress.json") or {}
+    full_support_candidates = (
+        support_dir / "full-support-table",
+        support_dir / "full-qwen-support-table",
+        support_dir / "full-qwen",
+    )
+    completed_full_support_dirs = []
+    for candidate in full_support_candidates:
+        candidate_progress = _read_json(candidate / "progress.json") or {}
+        candidate_decision = _read_json(candidate / "decision.json") or {}
+        candidate_completed = int(candidate_progress.get("completed_executions") or candidate_progress.get("completed_episodes") or 0)
+        candidate_units = int(candidate_progress.get("completed_units") or 0)
+        if candidate_decision.get("decision") == "FULL_SUPPORT_TABLE_COLLECTED" and candidate_completed == 216 and candidate_units == 72:
+            completed_full_support_dirs.append(candidate)
+    if len(completed_full_support_dirs) > 1:
+        raise OfflineAnalysisError(f"multiple completed full-support streams found: {[str(path) for path in completed_full_support_dirs]}")
+    full_support_dir = completed_full_support_dirs[0] if completed_full_support_dirs else next(
+        (path for path in full_support_candidates if (path / "progress.json").exists()),
+        full_support_candidates[0],
+    )
+    full_support_audit = _read_json(support_dir / "full-pre-gpu-audit.json") or _read_json(experiment_root / "pre-gpu" / "p0-mem-xfer-support-full-audit.json")
+    full_support_progress_raw = _read_json(full_support_dir / "progress.json") or {}
+    completed_full_support_executions = int(full_support_progress_raw.get("completed_executions") or full_support_progress_raw.get("completed_episodes") or 0)
+    total_full_support_executions = int(full_support_progress_raw.get("total_executions") or full_support_progress_raw.get("total_episodes") or 216)
+    full_support_progress = {
+        **full_support_progress_raw,
+        "completed_episodes": completed_full_support_executions,
+        "total_episodes": total_full_support_executions,
+        "selected_evidence_dir": str(full_support_dir),
+    }
     full_support_decision = _read_json(full_support_dir / "decision.json")
     full_support_provenance_deviation = _read_json(full_support_dir / "source-provenance-deviation.json")
     full_support_sequencing_deviation = _read_json(full_support_dir / "sequencing-deviation.json")
+    full_support_complete = bool(
+        full_support_decision
+        and full_support_decision.get("decision") == "FULL_SUPPORT_TABLE_COLLECTED"
+        and completed_full_support_executions == 216
+        and int(full_support_progress_raw.get("completed_units") or 0) == 72
+    )
     expand_allowed = bool(offline_decision and offline_decision.get("workflow_decision") == "EXPAND")
     if not expand_allowed:
         support_status = "support_qualification_hold"
@@ -253,18 +286,27 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
 
     if support_status != "support_qualification_pass":
         full_support_status = "full_support_hold"
-    elif full_support_decision and full_support_progress.get("status") in {"full_qwen_support_complete", "full_support_table_complete"}:
+    elif full_support_complete:
         full_support_status = "full_support_complete"
-    elif full_support_progress.get("status") in {"full_qwen_support_running", "full_support_table_running"}:
+    elif full_support_progress_raw.get("status") in {"full_qwen_support_running", "full_support_table_running", "full_support_running"}:
         full_support_status = "full_qwen_support_running"
-    elif full_support_progress.get("status") in {"full_qwen_support_checkpoint", "full_support_table_checkpoint"}:
+    elif full_support_progress_raw.get("status") in {"full_qwen_support_checkpoint", "full_support_table_checkpoint", "runtime-blocker", "budget-stop"}:
         full_support_status = "full_qwen_support_checkpoint"
     elif full_support_audit and full_support_audit.get("decision") == "PASS" and full_support_audit.get("execution_ready") is True:
         full_support_status = "full_support_ready"
     else:
         full_support_status = "full_support_pending"
 
-    second_model_authorized = False
+    support_analysis_dir = support_dir / "support-enriched-analysis"
+    support_analysis_error = None
+    support_analysis_decision = _read_json(support_analysis_dir / "offline_decision.json")
+    if full_support_complete and support_analysis_decision is None:
+        try:
+            support_analysis_decision = ensure_support_enriched_analysis(support_dir, support_analysis_dir)
+        except Exception as error:
+            support_analysis_error = f"{type(error).__name__}: {error}"
+    support_analysis_complete = bool(support_analysis_decision) and support_analysis_error is None
+    second_model_authorized = bool(support_analysis_complete and support_analysis_decision.get("second_model_authorized") is True)
     second_model_status = "second_model_authorized" if second_model_authorized else "second_model_hold"
     return {
         "schema_version": "1.0",
@@ -276,7 +318,8 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             "support_qualification_pending", "support_qualification_running",
             "support_qualification_hold", "support_qualification_pass",
             "full_support_pending", "full_support_ready", "full_qwen_support_running", "full_qwen_support_checkpoint",
-            "full_support_hold", "full_support_complete", "second_model_hold", "second_model_authorized",
+            "full_support_hold", "full_support_complete", "support_enriched_analysis_pending", "support_enriched_analysis_complete",
+            "support_enriched_analysis_blocked", "second_model_hold", "second_model_authorized",
         ],
         "full_table": {
             "status": "full_table_collected" if full_complete else "collecting",
@@ -300,6 +343,13 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             "scientific_authority": "provisional-only" if full_support_provenance_deviation else ("decision-authority" if full_support_decision else "incomplete"),
             "authorized": support_status == "support_qualification_pass" and bool(full_support_audit and full_support_audit.get("execution_ready") is True),
         },
+        "support_enriched_analysis": {
+            "status": "support_enriched_analysis_complete" if support_analysis_complete else ("support_enriched_analysis_pending" if not full_support_complete else "support_enriched_analysis_blocked"),
+            "complete": support_analysis_complete,
+            "error": support_analysis_error,
+            "decision": support_analysis_decision,
+            "automatic_trigger": "full_support_complete",
+        },
         "second_model": {
             "status": second_model_status, "authorized": second_model_authorized,
             "rule": "Remain HOLD through support qualification and the full Qwen support table; second-backbone authorization requires an explicit CPU-only full-support decision and is never implied by the old full table or qualification PASS alone.",
@@ -308,6 +358,7 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
             {"from": "full_table_collected", "to": "offline_analysis_complete", "automatic": True, "action": "run CPU-only frozen offline analyzer"},
             {"from": "offline_analysis_complete", "to": "support_qualification_pending", "condition": "workflow_decision == EXPAND"},
             {"from": "support_qualification_pass", "to": "full_support_pending", "condition": "same frozen plan; reuse 72 support episodes and collect only remaining 144"},
-            {"from": "full_support_complete", "to": "second_model_authorized", "condition": "explicit downstream authorization after CPU-only full-support analysis"},
+            {"from": "full_support_complete", "to": "support_enriched_analysis_complete", "automatic": True, "action": "run frozen CPU-only #3 candidate support/gate and #5 strict LOTO support analysis"},
+            {"from": "support_enriched_analysis_complete", "to": "second_model_authorized", "condition": "explicit CPU decision authorizes second model; support counts alone do not imply method PASS"},
         ],
     }

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T06:05:56+00:00",
+  "generated_at": "2026-08-11T06:19:11+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "/data/wyt/agent-self-evolution-observatory/publish-persistent-governance-20260811-r3/generated/research-data",
@@ -70,7 +70,7 @@
     "mem_xfer_full_table_status": "full_table_collected",
     "mem_xfer_offline_analysis_status": "offline_analysis_complete",
     "mem_xfer_support_qualification_status": "support_qualification_pass",
-    "mem_xfer_support_full_status": "full_qwen_support_running",
+    "mem_xfer_support_full_status": "full_support_complete",
     "mem_xfer_second_model_status": "second_model_hold",
     "p0_admission_active": 20,
     "p0_admission_transitioned": 16,
@@ -80,7 +80,8 @@
     "p0_offline_checks_failed": 4,
     "p0_offline_checks_pending": 51,
     "p0_realizability_passed": 14,
-    "p0_b10_decision": "STOP_MATCHED_NARY_EQUIVALENT"
+    "p0_b10_decision": "STOP_MATCHED_NARY_EQUIVALENT",
+    "mem_xfer_support_analysis_status": "support_enriched_analysis_complete"
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -15706,7 +15707,7 @@
   },
   "pre_gpu_candidate_gates": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-11T03:41:41+00:00",
+    "generated_at": "2026-08-11T06:19:07+00:00",
     "policy": {
       "gate_order": [
         "offline",
@@ -15835,7 +15836,7 @@
     ],
     "shared_p0": {
       "id": "P0-MEM-XFER-CAUSAL",
-      "status": "full_support_ready",
+      "status": "full_support_complete",
       "ideas": [
         "replicated-effect-memory-gate",
         "cross-task-effect-transport-certificate"
@@ -16166,9 +16167,35 @@
         "full_units": 72,
         "full_executions": 216,
         "full_stage": {
-          "status": "full_support_ready",
-          "progress": {},
-          "decision": null,
+          "status": "full_support_complete",
+          "progress": {
+            "schema_version": "1.0",
+            "status": "full_support_table_collected",
+            "completed_episodes": 216,
+            "total_episodes": 216,
+            "completed_units": 72,
+            "total_units": 72,
+            "reused_support_executions": 72,
+            "new_completed_episodes": 144,
+            "decision": "FULL_SUPPORT_TABLE_COLLECTED",
+            "new_gpu_hours": 1.6863030522823748,
+            "new_model_calls": 5895,
+            "gpu_uuid": "GPU-814cd021-31d8-2c6f-76a5-b8d4739b34d1",
+            "method_failure_authorized": false,
+            "second_model_authorized": false,
+            "updated_at": "2026-08-11T05:19:48+00:00",
+            "selected_evidence_dir": "/data/wyt/agent-self-evolution-observatory/runs/p0-mem-xfer-support-enriched-qwen-v1/full-support-table"
+          },
+          "decision": {
+            "schema_version": "1.0",
+            "experiment_id": "P0-MEM-XFER-SUPPORT-ENRICHED",
+            "stage": "full-support-table",
+            "decision": "FULL_SUPPORT_TABLE_COLLECTED",
+            "method_failure_authorized": false,
+            "second_model_authorized": false,
+            "next_action": "Run frozen CPU-only #3/#5 enriched offline analysis before any second-backbone authorization.",
+            "created_at": "2026-08-11T05:19:48+00:00"
+          },
           "pre_gpu_audit": {
             "schema_version": "1.0",
             "experiment_id": "P0-MEM-XFER-SUPPORT-ENRICHED",
@@ -16221,6 +16248,44 @@
             "admission_method_training_authorized": false,
             "second_model_authorized": false
           },
+          "provenance_deviation": {
+            "schema_version": "1.0",
+            "type": "LIVE_SOURCE_SNAPSHOT_DEVIATION",
+            "run_stage": "full-support-table",
+            "process_pid": 1688090,
+            "process_started_at": "2026-08-11T03:38:27Z",
+            "loaded_module": "research_pipeline.p0_mem_xfer_support_enriched",
+            "loaded_function": "run_full_support_table",
+            "disk_source_replaced_after_process_import": true,
+            "disk_source_replaced_at": "2026-08-11T03:40:39Z",
+            "exact_loaded_source_snapshot_available": false,
+            "frozen_plan_hash": "47dbaebf7c0f26079ccc0d6116e8e66305331ba64a40e793e6abd8726daffc6b",
+            "thresholds_changed": false,
+            "scientific_plan_changed": false,
+            "support_rows_reused_exactly": true,
+            "duplicate_unit_arm_observed": false,
+            "scientific_authority_before_postrun_integrity_replay": "PROVISIONAL_ONLY",
+            "method_failure_authorized": false,
+            "admission_method_training_authorized": false,
+            "second_model_authorized": false,
+            "required_postrun_repair": "Independently replay every recorded ALFWorld action trace to verify environment success and audit every unit/arm against the frozen plan before granting paper-level authority. Preserve sequencing-deviation.json as separate provenance evidence."
+          },
+          "sequencing_deviation": {
+            "schema_version": "1.0",
+            "type": "PRE_GPU_AUDIT_SEQUENCE_DEVIATION",
+            "new_executions_before_full_stage_audit_completed": 1,
+            "audit_reads_full_stage_outcomes": false,
+            "audit_path": "/home/hdd/yutong/agent-evolution-p0-data/pre-gpu/p0-mem-xfer-support-full-audit.json",
+            "audit_sha256": "8a924dee7c56e6e17ca0d1fe14259d1093a0135f7c913ea01876a23fb810c621",
+            "audit_decision": "PASS",
+            "plan_hash": "47dbaebf7c0f26079ccc0d6116e8e66305331ba64a40e793e6abd8726daffc6b",
+            "thresholds_changed": false,
+            "scientific_plan_changed": false,
+            "method_failure_authorized": false,
+            "second_model_authorized": false,
+            "resolution": "Continue the unchanged frozen full-stage block; preserve this sequencing deviation in provenance."
+          },
+          "scientific_authority": "provisional-only",
           "authorized": true
         },
         "candidate_split": "candidate 1/2 development; candidate 3 completely held out",
@@ -16241,7 +16306,7 @@
         "authorized": false,
         "rule": "Remain HOLD through support qualification and the full Qwen support table; second-backbone authorization requires an explicit CPU-only full-support decision and is never implied by the old full table or qualification PASS alone."
       },
-      "next_gate": "Full-stage Pre-GPU audit PASS: collect only the remaining 48 frozen units / 144 new episodes, reusing the 72 support-qualification episodes; keep the second backbone and admission classifier on HOLD."
+      "next_gate": "Open the frozen 72-unit / 216-execution full Qwen support table, reusing the 24-unit support-qualification subset and collecting only the remaining frozen units; keep the second backbone on HOLD."
     }
   },
   "pre_experiment_compiler": {
@@ -50402,6 +50467,9 @@
       "full_qwen_support_checkpoint",
       "full_support_hold",
       "full_support_complete",
+      "support_enriched_analysis_pending",
+      "support_enriched_analysis_complete",
+      "support_enriched_analysis_blocked",
       "second_model_hold",
       "second_model_authorized"
     ],
@@ -50532,24 +50600,35 @@
       "authorized": true
     },
     "full_support": {
-      "status": "full_qwen_support_running",
+      "status": "full_support_complete",
       "progress": {
         "schema_version": "1.0",
-        "status": "full_support_table_running",
-        "completed_episodes": 121,
+        "status": "full_support_table_collected",
+        "completed_episodes": 216,
         "total_episodes": 216,
-        "completed_units": 40,
+        "completed_units": 72,
         "total_units": 72,
         "reused_support_executions": 72,
-        "new_completed_episodes": 49,
-        "current_unit": "se-m-pick_clean_then_place_in_recep-2-u04",
-        "current_arm": "retrieved",
-        "elapsed_new_gpu_hours": 0.5678061401365428,
-        "new_model_calls": 2014,
+        "new_completed_episodes": 144,
+        "decision": "FULL_SUPPORT_TABLE_COLLECTED",
+        "new_gpu_hours": 1.6863030522823748,
+        "new_model_calls": 5895,
         "gpu_uuid": "GPU-814cd021-31d8-2c6f-76a5-b8d4739b34d1",
-        "updated_at": "2026-08-11T04:12:42+00:00"
+        "method_failure_authorized": false,
+        "second_model_authorized": false,
+        "updated_at": "2026-08-11T05:19:48+00:00",
+        "selected_evidence_dir": "/data/wyt/agent-self-evolution-observatory/runs/p0-mem-xfer-support-enriched-qwen-v1/full-support-table"
       },
-      "decision": null,
+      "decision": {
+        "schema_version": "1.0",
+        "experiment_id": "P0-MEM-XFER-SUPPORT-ENRICHED",
+        "stage": "full-support-table",
+        "decision": "FULL_SUPPORT_TABLE_COLLECTED",
+        "method_failure_authorized": false,
+        "second_model_authorized": false,
+        "next_action": "Run frozen CPU-only #3/#5 enriched offline analysis before any second-backbone authorization.",
+        "created_at": "2026-08-11T05:19:48+00:00"
+      },
       "pre_gpu_audit": {
         "schema_version": "1.0",
         "experiment_id": "P0-MEM-XFER-SUPPORT-ENRICHED",
@@ -50642,6 +50721,520 @@
       "scientific_authority": "provisional-only",
       "authorized": true
     },
+    "support_enriched_analysis": {
+      "status": "support_enriched_analysis_complete",
+      "complete": true,
+      "error": null,
+      "decision": {
+        "schema_version": "1.0",
+        "analysis_id": "p0-mem-xfer-support-enriched-offline-v1",
+        "created_at": "2026-08-11T06:15:50+00:00",
+        "experiment_id": "P0-MEM-XFER-SUPPORT-ENRICHED",
+        "source_evidence": {
+          "plan_hash": "47dbaebf7c0f26079ccc0d6116e8e66305331ba64a40e793e6abd8726daffc6b",
+          "full_table_dir": "/data/wyt/agent-self-evolution-observatory/runs/p0-mem-xfer-support-enriched-qwen-v1/full-support-table",
+          "full_table_stage": "full-support-table",
+          "progress_sha256": "340d40407466dd1322654740e22e806cec37dd379f47e62d27f9ee670ff4912c",
+          "decision_sha256": "59b4166768972108d253b542b88b1bb588ff90fdad02dae01e42ca269af118ff",
+          "main_table_sha256": "eb861663351041e1f1a297b6791c7d31b4ba18285c3a13f0603d5d80c09b324f",
+          "raw_sha256": "45d9954a14f370936b5e1129f985130f4b9ef2b742e72a4c6e1e01bc068b1fbf"
+        },
+        "idea_3": {
+          "idea_id": "replicated-effect-memory-gate",
+          "support": {
+            "replication_contract": "same candidate must exhibit the same controlled-effect sign in both probe_development and future_eval; require >=2 harm candidates and >=2 benefit candidates",
+            "candidates": [
+              {
+                "memory_id": "se-m-pick_and_place_simple-1",
+                "source_family": "pick_and_place_simple",
+                "candidate_role": "development",
+                "probe_nonzero": 1,
+                "future_nonzero": 0,
+                "probe_harm": 0,
+                "future_harm": 0,
+                "probe_benefit": 1,
+                "future_benefit": 0,
+                "controlled_nonzero": 1,
+                "mean_controlled_effect": 0.16666666666666666,
+                "replicated_harm": false,
+                "replicated_benefit": false
+              },
+              {
+                "memory_id": "se-m-pick_and_place_simple-2",
+                "source_family": "pick_and_place_simple",
+                "candidate_role": "development",
+                "probe_nonzero": 0,
+                "future_nonzero": 0,
+                "probe_harm": 0,
+                "future_harm": 0,
+                "probe_benefit": 0,
+                "future_benefit": 0,
+                "controlled_nonzero": 0,
+                "mean_controlled_effect": 0.0,
+                "replicated_harm": false,
+                "replicated_benefit": false
+              },
+              {
+                "memory_id": "se-m-pick_and_place_simple-3",
+                "source_family": "pick_and_place_simple",
+                "candidate_role": "heldout_candidate",
+                "probe_nonzero": 0,
+                "future_nonzero": 0,
+                "probe_harm": 0,
+                "future_harm": 0,
+                "probe_benefit": 0,
+                "future_benefit": 0,
+                "controlled_nonzero": 0,
+                "mean_controlled_effect": 0.0,
+                "replicated_harm": false,
+                "replicated_benefit": false
+              },
+              {
+                "memory_id": "se-m-pick_clean_then_place_in_recep-1",
+                "source_family": "pick_clean_then_place_in_recep",
+                "candidate_role": "development",
+                "probe_nonzero": 1,
+                "future_nonzero": 2,
+                "probe_harm": 0,
+                "future_harm": 0,
+                "probe_benefit": 1,
+                "future_benefit": 2,
+                "controlled_nonzero": 3,
+                "mean_controlled_effect": 0.5,
+                "replicated_harm": false,
+                "replicated_benefit": true
+              },
+              {
+                "memory_id": "se-m-pick_clean_then_place_in_recep-2",
+                "source_family": "pick_clean_then_place_in_recep",
+                "candidate_role": "development",
+                "probe_nonzero": 0,
+                "future_nonzero": 1,
+                "probe_harm": 0,
+                "future_harm": 0,
+                "probe_benefit": 0,
+                "future_benefit": 1,
+                "controlled_nonzero": 1,
+                "mean_controlled_effect": 0.16666666666666666,
+                "replicated_harm": false,
+                "replicated_benefit": false
+              },
+              {
+                "memory_id": "se-m-pick_clean_then_place_in_recep-3",
+                "source_family": "pick_clean_then_place_in_recep",
+                "candidate_role": "heldout_candidate",
+                "probe_nonzero": 0,
+                "future_nonzero": 0,
+                "probe_harm": 0,
+                "future_harm": 0,
+                "probe_benefit": 0,
+                "future_benefit": 0,
+                "controlled_nonzero": 0,
+                "mean_controlled_effect": 0.0,
+                "replicated_harm": false,
+                "replicated_benefit": false
+              },
+              {
+                "memory_id": "se-m-pick_cool_then_place_in_recep-1",
+                "source_family": "pick_cool_then_place_in_recep",
+                "candidate_role": "development",
+                "probe_nonzero": 3,
+                "future_nonzero": 0,
+                "probe_harm": 2,
+                "future_harm": 0,
+                "probe_benefit": 1,
+                "future_benefit": 0,
+                "controlled_nonzero": 3,
+                "mean_controlled_effect": -0.16666666666666666,
+                "replicated_harm": false,
+                "replicated_benefit": false
+              },
+              {
+                "memory_id": "se-m-pick_cool_then_place_in_recep-2",
+                "source_family": "pick_cool_then_place_in_recep",
+                "candidate_role": "development",
+                "probe_nonzero": 1,
+                "future_nonzero": 0,
+                "probe_harm": 0,
+                "future_harm": 0,
+                "probe_benefit": 1,
+                "future_benefit": 0,
+                "controlled_nonzero": 1,
+                "mean_controlled_effect": 0.16666666666666666,
+                "replicated_harm": false,
+                "replicated_benefit": false
+              },
+              {
+                "memory_id": "se-m-pick_cool_then_place_in_recep-3",
+                "source_family": "pick_cool_then_place_in_recep",
+                "candidate_role": "heldout_candidate",
+                "probe_nonzero": 0,
+                "future_nonzero": 1,
+                "probe_harm": 0,
+                "future_harm": 1,
+                "probe_benefit": 0,
+                "future_benefit": 0,
+                "controlled_nonzero": 1,
+                "mean_controlled_effect": -0.16666666666666666,
+                "replicated_harm": false,
+                "replicated_benefit": false
+              },
+              {
+                "memory_id": "se-m-pick_heat_then_place_in_recep-1",
+                "source_family": "pick_heat_then_place_in_recep",
+                "candidate_role": "development",
+                "probe_nonzero": 0,
+                "future_nonzero": 0,
+                "probe_harm": 0,
+                "future_harm": 0,
+                "probe_benefit": 0,
+                "future_benefit": 0,
+                "controlled_nonzero": 0,
+                "mean_controlled_effect": 0.0,
+                "replicated_harm": false,
+                "replicated_benefit": false
+              },
+              {
+                "memory_id": "se-m-pick_heat_then_place_in_recep-2",
+                "source_family": "pick_heat_then_place_in_recep",
+                "candidate_role": "development",
+                "probe_nonzero": 0,
+                "future_nonzero": 0,
+                "probe_harm": 0,
+                "future_harm": 0,
+                "probe_benefit": 0,
+                "future_benefit": 0,
+                "controlled_nonzero": 0,
+                "mean_controlled_effect": 0.0,
+                "replicated_harm": false,
+                "replicated_benefit": false
+              },
+              {
+                "memory_id": "se-m-pick_heat_then_place_in_recep-3",
+                "source_family": "pick_heat_then_place_in_recep",
+                "candidate_role": "heldout_candidate",
+                "probe_nonzero": 0,
+                "future_nonzero": 1,
+                "probe_harm": 0,
+                "future_harm": 0,
+                "probe_benefit": 0,
+                "future_benefit": 1,
+                "controlled_nonzero": 1,
+                "mean_controlled_effect": 0.16666666666666666,
+                "replicated_harm": false,
+                "replicated_benefit": false
+              }
+            ],
+            "heldout_future_units": 12,
+            "gate_checks": {
+              "candidate_count": {
+                "required": 8,
+                "actual": 12,
+                "pass": true
+              },
+              "replicated_controlled_harm_candidates": {
+                "required": 2,
+                "actual": 0,
+                "pass": false
+              },
+              "replicated_controlled_benefit_candidates": {
+                "required": 2,
+                "actual": 1,
+                "pass": false
+              },
+              "candidate_level_independent_heldout_future_evaluation": {
+                "required": true,
+                "actual": true,
+                "pass": true
+              }
+            },
+            "support_gate_pass": false
+          },
+          "analysis": {
+            "train_contract": "development candidates x probe_development only",
+            "development_future": {
+              "units": 24,
+              "policies": [
+                {
+                  "policy": "no-memory",
+                  "eval_units": 24,
+                  "accepted_units": 0,
+                  "coverage": 0.0,
+                  "future_harm_events": 0,
+                  "future_benefit_events": 0,
+                  "net_utility_vs_no_memory": 0,
+                  "effect_sign_accuracy": null
+                },
+                {
+                  "policy": "write-all",
+                  "eval_units": 24,
+                  "accepted_units": 24,
+                  "coverage": 1.0,
+                  "future_harm_events": 2,
+                  "future_benefit_events": 6,
+                  "net_utility_vs_no_memory": 4,
+                  "effect_sign_accuracy": null
+                },
+                {
+                  "policy": "two-arm-candidate-mean",
+                  "eval_units": 24,
+                  "accepted_units": 6,
+                  "coverage": 0.25,
+                  "future_harm_events": 0,
+                  "future_benefit_events": 3,
+                  "net_utility_vs_no_memory": 3,
+                  "effect_sign_accuracy": 1.0
+                },
+                {
+                  "policy": "placebo-controlled-candidate-mean",
+                  "eval_units": 24,
+                  "accepted_units": 9,
+                  "coverage": 0.375,
+                  "future_harm_events": 1,
+                  "future_benefit_events": 3,
+                  "net_utility_vs_no_memory": 2,
+                  "effect_sign_accuracy": 1.0
+                }
+              ]
+            },
+            "heldout_candidate_future": {
+              "units": 12,
+              "policies": [
+                {
+                  "policy": "no-memory",
+                  "eval_units": 12,
+                  "accepted_units": 0,
+                  "coverage": 0.0,
+                  "future_harm_events": 0,
+                  "future_benefit_events": 0,
+                  "net_utility_vs_no_memory": 0,
+                  "effect_sign_accuracy": null
+                },
+                {
+                  "policy": "write-all",
+                  "eval_units": 12,
+                  "accepted_units": 12,
+                  "coverage": 1.0,
+                  "future_harm_events": 1,
+                  "future_benefit_events": 4,
+                  "net_utility_vs_no_memory": 3,
+                  "effect_sign_accuracy": null
+                },
+                {
+                  "policy": "two-arm-source-family-shrinkage",
+                  "eval_units": 12,
+                  "accepted_units": 3,
+                  "coverage": 0.25,
+                  "future_harm_events": 0,
+                  "future_benefit_events": 2,
+                  "net_utility_vs_no_memory": 2,
+                  "effect_sign_accuracy": null
+                },
+                {
+                  "policy": "placebo-controlled-source-family-shrinkage",
+                  "eval_units": 12,
+                  "accepted_units": 6,
+                  "coverage": 0.5,
+                  "future_harm_events": 0,
+                  "future_benefit_events": 2,
+                  "net_utility_vs_no_memory": 2,
+                  "effect_sign_accuracy": null
+                }
+              ]
+            },
+            "two_arm_vs_controlled_attribution_disagreement_units": 12,
+            "method_pass_authorized": false,
+            "method_pass_note": "No numeric minimum-coverage threshold was frozen for the qualitative method-PASS condition; report evidence without inventing a post-hoc threshold."
+          },
+          "verdict": "SUPPORT_INSUFFICIENT_METHOD_INCONCLUSIVE"
+        },
+        "idea_5": {
+          "idea_id": "cross-task-effect-transport-certificate",
+          "analysis": {
+            "strict_loto_contract": "Hold out target family; train only development-candidate probe rows from other target families; evaluate candidate-3 future_eval.",
+            "support_gate_checks": {
+              "controlled_nonzero": {
+                "required": 12,
+                "actual": 11,
+                "pass": false
+              },
+              "eligible_target_family_folds": {
+                "required": 3,
+                "actual": 3,
+                "pass": true
+              }
+            },
+            "support_gate_pass": false,
+            "target_family_nonzero": {
+              "pick_clean_then_place_in_recep": 5,
+              "pick_heat_then_place_in_recep": 3,
+              "pick_and_place_simple": 2,
+              "pick_cool_then_place_in_recep": 1
+            },
+            "baselines": [
+              {
+                "baseline": "source_family_mean_loto",
+                "eval_units": 12,
+                "selective_coverage": 0.5833333333333334,
+                "nonzero_effects_covered": 0,
+                "effect_sign_error": null,
+                "negative_transfer_events": 0,
+                "net_utility_vs_no_memory": 2
+              },
+              {
+                "baseline": "semantic_similarity_loto",
+                "eval_units": 12,
+                "selective_coverage": 0.25,
+                "nonzero_effects_covered": 2,
+                "effect_sign_error": 0.5,
+                "negative_transfer_events": 1,
+                "net_utility_vs_no_memory": 1
+              },
+              {
+                "baseline": "nearest_family_task_signature_loto",
+                "eval_units": 12,
+                "selective_coverage": 0.6666666666666666,
+                "nonzero_effects_covered": 1,
+                "effect_sign_error": 1.0,
+                "negative_transfer_events": 1,
+                "net_utility_vs_no_memory": 1
+              }
+            ],
+            "r_learner_status": "BASELINE_ESTIMATION_UNDERPOWERED",
+            "r_learner_note": "A distinct R-learner is not estimated from only 24 development-probe paired-effect units; this is baseline underpower, not method failure.",
+            "proposed_transport_status": "MECHANISM_NOT_YET_IMPLEMENTED_AS_DISTINCT_FROM_MATCHED_SIMPLIFICATIONS",
+            "method_failure_authorized": false,
+            "predictions": [
+              {
+                "unit_id": "se-m-pick_and_place_simple-3-u02",
+                "source_family": "pick_and_place_simple",
+                "target_family": "pick_and_place_simple",
+                "actual_controlled_delta": 0,
+                "actual_retrieved_delta": 0,
+                "source_family_mean_loto": 0.25,
+                "semantic_similarity_loto": 0.0,
+                "nearest_family_task_signature_loto": 0.25
+              },
+              {
+                "unit_id": "se-m-pick_and_place_simple-3-u04",
+                "source_family": "pick_and_place_simple",
+                "target_family": "pick_cool_then_place_in_recep",
+                "actual_controlled_delta": 0,
+                "actual_retrieved_delta": 0,
+                "source_family_mean_loto": 0.16666666666666666,
+                "semantic_similarity_loto": 0.0,
+                "nearest_family_task_signature_loto": 0.25
+              },
+              {
+                "unit_id": "se-m-pick_and_place_simple-3-u06",
+                "source_family": "pick_and_place_simple",
+                "target_family": "pick_heat_then_place_in_recep",
+                "actual_controlled_delta": 0,
+                "actual_retrieved_delta": 0,
+                "source_family_mean_loto": 0.25,
+                "semantic_similarity_loto": 0.0,
+                "nearest_family_task_signature_loto": 0.5
+              },
+              {
+                "unit_id": "se-m-pick_clean_then_place_in_recep-3-u02",
+                "source_family": "pick_clean_then_place_in_recep",
+                "target_family": "pick_clean_then_place_in_recep",
+                "actual_controlled_delta": 0,
+                "actual_retrieved_delta": 1,
+                "source_family_mean_loto": 0.25,
+                "semantic_similarity_loto": 1.0,
+                "nearest_family_task_signature_loto": 0.25
+              },
+              {
+                "unit_id": "se-m-pick_clean_then_place_in_recep-3-u04",
+                "source_family": "pick_clean_then_place_in_recep",
+                "target_family": "pick_heat_then_place_in_recep",
+                "actual_controlled_delta": 0,
+                "actual_retrieved_delta": 1,
+                "source_family_mean_loto": 0.16666666666666666,
+                "semantic_similarity_loto": 0.0,
+                "nearest_family_task_signature_loto": 0.25
+              },
+              {
+                "unit_id": "se-m-pick_clean_then_place_in_recep-3-u06",
+                "source_family": "pick_clean_then_place_in_recep",
+                "target_family": "pick_and_place_simple",
+                "actual_controlled_delta": 0,
+                "actual_retrieved_delta": 0,
+                "source_family_mean_loto": 0.0,
+                "semantic_similarity_loto": 0.0,
+                "nearest_family_task_signature_loto": 0.0
+              },
+              {
+                "unit_id": "se-m-pick_cool_then_place_in_recep-3-u02",
+                "source_family": "pick_cool_then_place_in_recep",
+                "target_family": "pick_cool_then_place_in_recep",
+                "actual_controlled_delta": 0,
+                "actual_retrieved_delta": 0,
+                "source_family_mean_loto": 0.25,
+                "semantic_similarity_loto": 0.0,
+                "nearest_family_task_signature_loto": 0.25
+              },
+              {
+                "unit_id": "se-m-pick_cool_then_place_in_recep-3-u04",
+                "source_family": "pick_cool_then_place_in_recep",
+                "target_family": "pick_and_place_simple",
+                "actual_controlled_delta": -1,
+                "actual_retrieved_delta": -1,
+                "source_family_mean_loto": 0.0,
+                "semantic_similarity_loto": 1.0,
+                "nearest_family_task_signature_loto": 0.25
+              },
+              {
+                "unit_id": "se-m-pick_cool_then_place_in_recep-3-u06",
+                "source_family": "pick_cool_then_place_in_recep",
+                "target_family": "pick_clean_then_place_in_recep",
+                "actual_controlled_delta": 0,
+                "actual_retrieved_delta": 0,
+                "source_family_mean_loto": 0.25,
+                "semantic_similarity_loto": 0.0,
+                "nearest_family_task_signature_loto": 1.0
+              },
+              {
+                "unit_id": "se-m-pick_heat_then_place_in_recep-3-u02",
+                "source_family": "pick_heat_then_place_in_recep",
+                "target_family": "pick_heat_then_place_in_recep",
+                "actual_controlled_delta": 0,
+                "actual_retrieved_delta": 1,
+                "source_family_mean_loto": 0.0,
+                "semantic_similarity_loto": 0.0,
+                "nearest_family_task_signature_loto": 0.0
+              },
+              {
+                "unit_id": "se-m-pick_heat_then_place_in_recep-3-u04",
+                "source_family": "pick_heat_then_place_in_recep",
+                "target_family": "pick_clean_then_place_in_recep",
+                "actual_controlled_delta": 1,
+                "actual_retrieved_delta": 1,
+                "source_family_mean_loto": 0.0,
+                "semantic_similarity_loto": 1.0,
+                "nearest_family_task_signature_loto": 0.0
+              },
+              {
+                "unit_id": "se-m-pick_heat_then_place_in_recep-3-u06",
+                "source_family": "pick_heat_then_place_in_recep",
+                "target_family": "pick_cool_then_place_in_recep",
+                "actual_controlled_delta": 0,
+                "actual_retrieved_delta": 0,
+                "source_family_mean_loto": 0.0,
+                "semantic_similarity_loto": 0.0,
+                "nearest_family_task_signature_loto": 0.0
+              }
+            ]
+          },
+          "verdict": "TRANSPORT_SUPPORT_INSUFFICIENT"
+        },
+        "second_model_authorized": false,
+        "second_model_rule": "Authorization requires both frozen full-table mechanism/support gates; it does not imply #3/#5 method PASS.",
+        "method_failure_authorized": false
+      },
+      "automatic_trigger": "full_support_complete"
+    },
     "second_model": {
       "status": "second_model_hold",
       "authorized": false,
@@ -50666,8 +51259,14 @@
       },
       {
         "from": "full_support_complete",
+        "to": "support_enriched_analysis_complete",
+        "automatic": true,
+        "action": "run frozen CPU-only #3 candidate support/gate and #5 strict LOTO support analysis"
+      },
+      {
+        "from": "support_enriched_analysis_complete",
         "to": "second_model_authorized",
-        "condition": "explicit downstream authorization after CPU-only full-support analysis"
+        "condition": "explicit CPU decision authorizes second model; support counts alone do not imply method PASS"
       }
     ]
   },
@@ -50951,9 +51550,11 @@
         "key": "mem-xfer-workflow",
         "pass": true,
         "detail": {
-          "full": "full_table_collected",
-          "offline": "offline_analysis_complete",
-          "support": "support_qualification_pass",
+          "old_full": "full_table_collected",
+          "old_offline": "offline_analysis_complete",
+          "support_qualification": "support_qualification_pass",
+          "full_support": "full_support_complete",
+          "cpu_gate": "support_enriched_analysis_complete",
           "second_model": "second_model_hold"
         }
       },

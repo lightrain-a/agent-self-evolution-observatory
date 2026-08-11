@@ -25,6 +25,7 @@ from .pilot_registry import build_pilot_registry
 from .p0_mem_xfer_offline_analysis import build_mem_xfer_workflow_state
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
 from .p0_b10_cpu import write_b10_cpu_p0
+from .p0_a6_cpu import write_a6_cpu_p0
 from .p0_offline_qualification import build_p0_offline_qualification_state, write_p0_offline_qualification_state
 from .p0_realizability_suite import build_p0_realizability_suite, write_p0_realizability_suite
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
@@ -256,6 +257,7 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_offline_checks_pending":p0_offline_qualification["summary"]["checks_pending"],
             "p0_realizability_passed":p0_realizability["summary"]["synthetic_pass"],
             "p0_b10_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("b10",{}).get("decision"),
+            "p0_a6_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("a6_cpu",{}).get("decision"),
             "solution_children":idea_discovery_v3["summary"]["raw_children"],
             "solution_shortlist":idea_discovery_v3["summary"]["internal_shortlist"],
             "pre_gpu_candidates":pre_gpu_candidate_gates["summary"]["total"],
@@ -285,6 +287,7 @@ def build_research_system_state() -> dict[str, Any]:
             "mem_xfer_offline_analysis_status":mem_xfer_workflow["offline_analysis"]["status"],
             "mem_xfer_support_qualification_status":mem_xfer_workflow["support_qualification"]["status"],
             "mem_xfer_support_full_status":mem_xfer_workflow["full_support"]["status"],
+            "mem_xfer_support_analysis_status":mem_xfer_workflow["support_enriched_analysis"]["status"],
             "mem_xfer_second_model_status":mem_xfer_workflow["second_model"]["status"],
         },
         "evidence_graph":evidence_graph,
@@ -326,7 +329,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == 4, "detail":state["pre_experiment_compiler"]["summary"]},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
-        {"key":"mem-xfer-workflow", "pass":state["mem_xfer_workflow"]["full_table"]["status"] == "full_table_collected" and state["mem_xfer_workflow"]["offline_analysis"]["status"] == "offline_analysis_complete" and state["mem_xfer_workflow"]["second_model"]["status"] == "second_model_hold", "detail":{"full":state["mem_xfer_workflow"]["full_table"]["status"],"offline":state["mem_xfer_workflow"]["offline_analysis"]["status"],"support":state["mem_xfer_workflow"]["support_qualification"]["status"],"second_model":state["mem_xfer_workflow"]["second_model"]["status"]}},
+        {"key":"mem-xfer-workflow", "pass":state["mem_xfer_workflow"]["full_table"]["status"] == "full_table_collected" and state["mem_xfer_workflow"]["offline_analysis"]["status"] == "offline_analysis_complete" and state["mem_xfer_workflow"]["support_qualification"]["status"] == "support_qualification_pass" and state["mem_xfer_workflow"]["full_support"]["status"] == "full_support_complete" and state["mem_xfer_workflow"]["support_enriched_analysis"]["status"] == "support_enriched_analysis_complete" and (state["mem_xfer_workflow"]["support_enriched_analysis"].get("decision") or {}).get("method_failure_authorized") is False and state["mem_xfer_workflow"]["second_model"]["status"] == "second_model_hold", "detail":{"old_full":state["mem_xfer_workflow"]["full_table"]["status"],"old_offline":state["mem_xfer_workflow"]["offline_analysis"]["status"],"support_qualification":state["mem_xfer_workflow"]["support_qualification"]["status"],"full_support":state["mem_xfer_workflow"]["full_support"]["status"],"cpu_gate":state["mem_xfer_workflow"]["support_enriched_analysis"]["status"],"second_model":state["mem_xfer_workflow"]["second_model"]["status"]}},
         {"key":"human-terminal-ledger", "pass":state["human_terminal_ideas"]["summary"].get("human_parents") == 26 and (state["human_terminal_ideas"]["summary"].get("p0"),state["human_terminal_ideas"]["summary"].get("p0_ready"),state["human_terminal_ideas"]["summary"].get("merge"),state["human_terminal_ideas"]["summary"].get("drop")) == (13,0,6,7), "detail":state["human_terminal_ideas"]["summary"]},
         {"key":"p0-admission", "pass":state["p0_admission"]["summary"].get("active_p0") == 20 and state["p0_admission"]["summary"].get("admitted") == 20 and state["p0_admission"]["summary"].get("transitioned_from_p0_ready") == 16 and state["p0_admission"]["summary"].get("settings_complete") == 20, "detail":state["p0_admission"]["summary"]},
         {"key":"p0-offline-qualification", "pass":state["p0_offline_qualification"]["summary"].get("ideas") == 16 and state["p0_offline_qualification"]["policy"].get("method_result_from_offline_qualification_forbidden") is True, "detail":state["p0_offline_qualification"]["summary"]},
@@ -358,7 +361,11 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"]: errors.append("non-identifiable pilots must not update scientific belief")
     if state["mem_xfer_workflow"]["full_table"]["status"] != "full_table_collected": errors.append("mem-xfer full table must remain collected immutable evidence")
     if state["mem_xfer_workflow"]["offline_analysis"]["status"] != "offline_analysis_complete": errors.append("mem-xfer offline analysis must automatically follow a complete full table")
-    if state["mem_xfer_workflow"]["second_model"]["status"] != "second_model_hold": errors.append("mem-xfer second backbone must remain on HOLD before support gate authorization")
+    if state["mem_xfer_workflow"]["support_qualification"]["status"] != "support_qualification_pass": errors.append("mem-xfer support qualification must remain PASS before the frozen full-support table")
+    if state["mem_xfer_workflow"]["full_support"]["status"] != "full_support_complete": errors.append("mem-xfer frozen 216-execution Qwen full-support table must be complete")
+    if state["mem_xfer_workflow"]["support_enriched_analysis"]["status"] != "support_enriched_analysis_complete": errors.append("mem-xfer CPU-only #3/#5 downstream gate must automatically follow the complete full-support table")
+    if (state["mem_xfer_workflow"]["support_enriched_analysis"].get("decision") or {}).get("method_failure_authorized") is not False: errors.append("mem-xfer support gate must not authorize method failure from support insufficiency")
+    if state["mem_xfer_workflow"]["second_model"]["status"] != "second_model_hold": errors.append("mem-xfer second backbone must remain on HOLD unless the CPU-only full-support gate explicitly authorizes it")
     terminal_summary = state["human_terminal_ideas"]["summary"]
     if terminal_summary.get("human_parents") != 26 or (terminal_summary.get("p0"), terminal_summary.get("p0_ready"), terminal_summary.get("merge"), terminal_summary.get("drop")) != (13,0,6,7): errors.append("human terminal ledger mismatch")
     if state["p0_admission"]["summary"].get("active_p0") != 20 or state["p0_admission"]["summary"].get("admitted") != 20 or state["p0_admission"]["summary"].get("transitioned_from_p0_ready") != 16 or state["p0_admission"]["summary"].get("settings_complete") != 20: errors.append("P0 admission ledger mismatch")
@@ -374,6 +381,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_human_terminal_state()
     write_p0_realizability_suite()
     write_b10_cpu_p0()
+    write_a6_cpu_p0()
     write_p0_offline_qualification_state()
     write_p0_admission_state()
     state=build_research_system_state()
