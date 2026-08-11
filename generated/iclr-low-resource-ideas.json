@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-10T18:58:21+00:00",
+  "generated_at": "2026-08-11T12:33:11+00:00",
   "target_venue": "ICLR",
   "secondary_venue": "CVPR",
   "review_mode": "iclr-seven-dimension-programmatic-plus-project-web-gpt",
@@ -405,6 +405,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "pass",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -936,6 +941,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "pass",
       "external_confidence": "medium",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -1458,6 +1468,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "pass",
       "external_confidence": "medium",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -1933,6 +1948,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "pass",
       "external_confidence": "medium",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -2467,6 +2487,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "revise",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -2998,6 +3023,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "revise",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -3517,6 +3547,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "revise",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -4041,6 +4076,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "revise",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -4560,6 +4600,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "revise",
       "external_confidence": "medium",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -5084,6 +5129,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "revise",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -5611,6 +5661,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "revise",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -6087,6 +6142,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "revise",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -6616,6 +6676,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "revise",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -7091,6 +7156,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "revise",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -7616,6 +7686,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "block",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -8092,6 +8167,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "block",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -8617,6 +8697,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "block",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -9094,6 +9179,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "block",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -9571,6 +9661,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "block",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -10100,6 +10195,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "block",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -10618,6 +10718,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "block",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -11159,6 +11264,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "block",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -11643,6 +11753,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "block",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -12117,6 +12232,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "block",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -12646,6 +12766,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "block",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -13122,6 +13247,11 @@
       "external_review_status": "reviewed",
       "external_verdict": "block",
       "external_confidence": "high",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -13556,6 +13686,11 @@
       "external_review_status": "pending",
       "external_verdict": "pending",
       "external_confidence": "",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -13994,6 +14129,11 @@
       "external_review_status": "pending",
       "external_verdict": "pending",
       "external_confidence": "",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",
@@ -14431,6 +14571,11 @@
       "external_review_status": "pending",
       "external_verdict": "pending",
       "external_confidence": "",
+      "emerging_niche": {
+        "status": "pending",
+        "score": null,
+        "priority_eligible": false
+      },
       "experiment_protocol": {
         "execution_mode": {
           "zh": "ICLR 主结果使用开放权重、冻结基础模型和持久小组件更新；视觉专门版本留给 CVPR。",

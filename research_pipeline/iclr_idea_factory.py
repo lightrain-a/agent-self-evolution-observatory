@@ -823,6 +823,7 @@ def build_iclr_idea_bank() -> dict[str, Any]:
             "external_review_status":"reviewed" if idea_external_reviews else "pending",
             "external_verdict":external_verdict,
             "external_confidence":latest_external_review.get("confidence", ""),
+            "emerging_niche":latest_external_review.get("emerging_niche", {"status":"pending", "score":None, "priority_eligible":False}),
             "experiment_protocol":_protocol(spec, fields),
             "priority":_priority(spec),
             "status":"pass" if ok else "block",
@@ -835,7 +836,13 @@ def build_iclr_idea_bank() -> dict[str, Any]:
     for rank,item in enumerate(passed, start=1):
         item["programmatic_rank"] = rank
     external_order = {"pass": 0, "revise": 1, "pending": 2, "block": 3}
-    passed.sort(key=lambda item:(external_order[item["external_verdict"]], -item["priority"], item["budget"]["gpu_hours"], item["id"]))
+    def niche_order(item: dict[str, Any]) -> tuple[int, float]:
+        niche = item.get("emerging_niche") or {}
+        score = niche.get("score")
+        if niche.get("priority_eligible") and isinstance(score, (int, float)):
+            return (0, -float(score))
+        return (1, 0.0)
+    passed.sort(key=lambda item:(external_order[item["external_verdict"]], *niche_order(item), -item["priority"], item["budget"]["gpu_hours"], item["id"]))
     for rank,item in enumerate(passed, start=1):
         item["rank"] = rank
     external_counts = {verdict:sum(item["external_verdict"] == verdict for item in passed) for verdict in ("pass", "revise", "block", "pending")}

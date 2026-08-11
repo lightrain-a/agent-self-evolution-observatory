@@ -16,7 +16,7 @@ CURRENT_TITLES=[
 
 def _tool(n:int)->list[dict[str,Any]]:
  bi={"type":"object","properties":{"en":{"type":"string"},"zh":{"type":"string"}},"required":["en","zh"],"additionalProperties":False}
- props={"id":{"type":"string"},"title":bi,"problem":bi,"importance":bi,"core_idea":bi,"why_not_current_portfolio":bi,"persistent_update_object":{"type":"string"},"learning_signal":bi,"independent_ground_truth":bi,"strongest_matched_baseline":bi,"shared_information_budget":bi,"mechanism_irreducibility":bi,"decisive_pilot":bi,"stop_condition":bi,"collision_search_queries":{"type":"array","minItems":3,"maxItems":6,"items":{"type":"string"}},"low_resource_assets":{"type":"array","minItems":2,"maxItems":6,"items":{"type":"string"}},"remaining_risk":bi}
+ props={"id":{"type":"string"},"title":bi,"problem":bi,"importance":bi,"core_idea":bi,"why_not_current_portfolio":bi,"emerging_niche_hypothesis":bi,"persistent_update_object":{"type":"string"},"learning_signal":bi,"independent_ground_truth":bi,"strongest_matched_baseline":bi,"shared_information_budget":bi,"mechanism_irreducibility":bi,"decisive_pilot":bi,"stop_condition":bi,"collision_search_queries":{"type":"array","minItems":3,"maxItems":6,"items":{"type":"string"}},"low_resource_assets":{"type":"array","minItems":2,"maxItems":6,"items":{"type":"string"}},"remaining_risk":bi}
  return [{"type":"function","name":"submit_ideas","description":"Submit novel ICLR agent self-evolution ideas.","parameters":{"type":"object","properties":{"ideas":{"type":"array","minItems":n,"maxItems":n,"items":{"type":"object","properties":props,"required":list(props),"additionalProperties":False}}},"required":["ideas"],"additionalProperties":False}}]
 
 
@@ -38,8 +38,10 @@ Hard design constraints:
 7. Prefer underexplored mechanism questions such as persistent credit across evolution rounds, failure localization before reflection, learned update-surface choice with counterfactual necessity, self-evolution under tool/environment nonstationarity, causal internalization of inference-time corrections, temporal dependency/obsolescence of learned assets, self-evolving world-model abstractions, or other genuinely different problems. These are hints, not required templates.
 8. Combination ideas are allowed only when each component is logically necessary to close a real failure loop; explain why the result is not a simple union of existing components.
 9. Do NOT invent literature citations. Instead provide 3-6 precise collision_search_queries that an independent reviewer can use against official/primary sources.
-10. ids must be unique lowercase slugs ending in -buffer-{model.replace('.','-').replace('_','-')}.
-11. Call submit_ideas exactly once, bilingual English/Chinese.
+10. Add an `emerging_niche_hypothesis`: explain why the neighborhood may be newly forming, why the exact problem-mechanism cell may still be sparse, and why the problem matters. This is a hypothesis only; never assign your own Emerging-Niche Score.
+11. Prefer ideas whose decisive P0 can distinguish the exact mechanism from the strongest same-information simplification before a large experiment.
+12. ids must be unique lowercase slugs ending in -buffer-{model.replace('.','-').replace('_','-')}.
+13. Call submit_ideas exactly once, bilingual English/Chinese.
 
 Model label: {model}
 """

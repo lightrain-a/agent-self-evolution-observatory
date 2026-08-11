@@ -66,7 +66,8 @@ REQUIRED_STATIC = [
     "generated/idea-discovery-v3.json", "generated/idea-discovery-v3.js", "generated/idea-discovery-v3-external-reviews.json",
     "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
     "content-system-overview.js", "system-overview-core.js", "system-overview-lifecycle.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
-    "idea-lab.css", "generated/p0-experiment-plan.js", "generated/p0-collision-recheck.js", "generated/p0-runtime-readiness.js",
+    "idea-lab.css", "emerging-niche-view.js", "generated/emerging-niche-policy.json", "generated/emerging-niche-policy.js",
+    "generated/p0-experiment-plan.js", "generated/p0-collision-recheck.js", "generated/p0-runtime-readiness.js",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
 
@@ -86,7 +87,7 @@ def main() -> None:
     for marker in (
         "research_pipeline", "scripts", "deploy", "deliveries", "downloads",
         "advisor-priority-view.js", "generated/advisor-priority-ideas.json",
-        "browser_smoke_test.py", "site_smoke_test.py",
+        "browser_smoke_test.py", "emerging_niche_browser_smoke_test.py", "site_smoke_test.py",
     ):
         if marker not in pages_config:
             fail(f"Pages exclusion config is missing {marker}")
@@ -216,6 +217,16 @@ def main() -> None:
     ]
     if any(position < 0 for position in system_script_order) or system_script_order != sorted(system_script_order):
         fail("paper ideas page must load the human-review idea data and current supplemental candidates before app.js")
+    for filename in ("paper-ideas.html", "system-overview.html"):
+        page = (ROOT / filename).read_text(encoding="utf-8")
+        policy_pos = page.find('src="generated/emerging-niche-policy.js"')
+        app_pos = page.find('src="app.js"')
+        view_pos = page.find('src="emerging-niche-view.js"')
+        if min(policy_pos, app_pos, view_pos) < 0 or not policy_pos < app_pos < view_pos:
+            fail(f"{filename} must load ENS policy before app.js and ENS view after app.js")
+    niche_policy = json.loads((ROOT / "generated" / "emerging-niche-policy.json").read_text(encoding="utf-8"))
+    if niche_policy.get("short_name") != "ENS" or "experiment_stop" not in niche_policy.get("hard_policy", {}).get("never_overrides", []):
+        fail("Emerging-Niche policy must remain prioritization-only and subordinate to experiment STOP")
     state_path = ROOT / "generated" / "research-system-state.json"
     if not state_path.exists():
         fail("research-system-state.json is missing")

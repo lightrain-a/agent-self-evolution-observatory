@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 from .config import PROJECT_ROOT, StorageSettings
+from .emerging_niche import COMPONENTS as EMERGING_NICHE_COMPONENTS, score_emerging_niche
 from .iclr_idea_factory import DEFAULT_EXTERNAL_REVIEW_JSON, DEFAULT_JSON, load_external_reviews, write_iclr_idea_bank
 
 REVIEWER = "agent-project-web-gpt-iclr-area-chair"
@@ -76,6 +77,16 @@ def build_prompt(ideas: Sequence[dict[str, Any]], *, batch_index: int, batch_cou
                     ],
                     "surviving_difference": "narrow novelty boundary or empty when blocked",
                 },
+                "emerging_niche": {
+                    "evidence_fresh": True,
+                    "exact_problem_sparsity": 0,
+                    "emerging_signal": 0,
+                    "collision_margin": 0,
+                    "decisive_p0": 0,
+                    "importance_floor": 0,
+                    "evidence_note": "brief primary-source justification",
+                    "neighbors": [{"title": "title", "venue_year": "venue/year", "official_url": "official URL", "relation": "exact|adjacent"}],
+                },
                 "iclr_fit": "strong|conditional|weak",
                 "strongest_baseline": "baseline most likely to erase the claim",
                 "decisive_pilot": "one normal-setting comparison",
@@ -86,9 +97,11 @@ def build_prompt(ideas: Sequence[dict[str, Any]], *, batch_index: int, batch_cou
     }
     return f"""# Independent ICLR idea audit — batch {batch_index}/{batch_count}
 
-Act as a strict ICLR area chair and mechanism-level novelty auditor. Review every supplied idea independently. Use web search and consult only official paper pages/PDFs, OpenReview/CVF/ACL/NeurIPS proceedings, official project pages, and author-maintained repositories. Check work available through 2026-08-01. Never infer a method from a title.
+Act as a strict ICLR area chair and mechanism-level novelty auditor. Review every supplied idea independently. Use web search and consult only official paper pages/PDFs, OpenReview/CVF/ACL/NeurIPS proceedings, official project pages, and author-maintained repositories. Check work available through {utc_now()[:10]}. Never infer a method from a title.
 
 For each idea test: persistent learning versus extra inference; exact update surface; identifiable credit; multi-round stability; out-of-loop generalization; independent feedback; matched interaction/token/call/training budgets; direct problem/mechanism/combination/experiment collision; and whether a low-resource P0/P1/P2 pilot can falsify the claim.
+
+Also fill `emerging_niche` only after the literature search. Score each component 0-5: exact_problem_sparsity rewards a sparse exact problem-mechanism pair; emerging_signal rewards a visibly forming recent neighborhood rather than a dead topic; collision_margin rewards a narrow surviving variable against the closest work and same-information simplifications; decisive_p0 rewards a cheap normal-setting falsifier; importance_floor prevents rarity-for-rarity's-sake. Do not provide a composite ENS: code recomputes it. If the search is incomplete, set evidence_fresh=false instead of guessing high.
 
 Verdicts:
 - `pass`: a standalone ICLR thesis survives after explicit narrowing.
@@ -139,6 +152,19 @@ def normalize_response(payload: dict[str, Any], expected_ids: Sequence[str], *, 
         action_zh = str(row.get("required_action_zh", "")).strip()
         if not finding or not action:
             raise ValueError(f"review for {idea_id} lacks finding or required_action")
+        collision = row.get("direct_collision", {}) if isinstance(row.get("direct_collision"), dict) else {}
+        niche_input = row.get("emerging_niche", {}) if isinstance(row.get("emerging_niche"), dict) else {}
+        niche_components = {key: niche_input.get(key) for key in EMERGING_NICHE_COMPONENTS}
+        try:
+            niche = score_emerging_niche(
+                niche_components,
+                evidence_fresh=bool(niche_input.get("evidence_fresh", False)),
+                authoritative_blocks={"direct_collision": collision.get("status") == "direct"},
+            )
+        except ValueError:
+            niche = score_emerging_niche({}, evidence_fresh=False)
+        niche["evidence_note"] = str(niche_input.get("evidence_note") or "")
+        niche["neighbors"] = niche_input.get("neighbors", []) if isinstance(niche_input.get("neighbors"), list) else []
         seen[idea_id] = {
             "reviewer": str(payload.get("reviewer") or REVIEWER),
             "review_date": str(payload.get("review_date") or utc_now()[:10]),
@@ -148,7 +174,8 @@ def normalize_response(payload: dict[str, Any], expected_ids: Sequence[str], *, 
             "finding_zh": finding_zh,
             "required_action": action,
             "required_action_zh": action_zh,
-            "direct_collision": row.get("direct_collision", {}),
+            "direct_collision": collision,
+            "emerging_niche": niche,
             "iclr_fit": str(row.get("iclr_fit") or "conditional"),
             "strongest_baseline": str(row.get("strongest_baseline") or ""),
             "decisive_pilot": str(row.get("decisive_pilot") or ""),

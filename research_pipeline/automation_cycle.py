@@ -14,6 +14,7 @@ from typing import Any, Iterator
 from .config import PROJECT_ROOT, StorageSettings
 from .cvpr_idea_factory import write_cvpr_idea_bank
 from .discussion_portfolio import write_discussion_portfolio
+from .emerging_niche import write_emerging_niche_policy
 from .human_terminal_state import write_human_terminal_state
 from .p0_admission import write_p0_admission_state
 from .p0_b10_cpu import write_b10_cpu_p0
@@ -113,6 +114,7 @@ def run_cycle(
             report["steps"].append(_step("iclr-audit", write_iclr_audit))
             report["steps"].append(_step("cvpr-followup-bank", write_cvpr_idea_bank))
             report["steps"].append(_step("published-visual-audit", write_published_audit))
+        report["steps"].append(_step("emerging-niche-policy", write_emerging_niche_policy))
         report["steps"].append(_step("human-terminal-idea-state", write_human_terminal_state))
         report["steps"].append(_step("p0-realizability-suite", write_p0_realizability_suite))
         report["steps"].append(_step("p0-b10-cpu", write_b10_cpu_p0))
@@ -149,6 +151,7 @@ def run_cycle(
     if publish:
         # Rebuild once so the public state can include the latest cycle report, then publish
         # only if normalized content has changed.
+        write_emerging_niche_policy()
         write_human_terminal_state()
         write_p0_realizability_suite()
         write_b10_cpu_p0()

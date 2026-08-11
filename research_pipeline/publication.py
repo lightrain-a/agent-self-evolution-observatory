@@ -12,6 +12,8 @@ from typing import Any
 from .config import PROJECT_ROOT, StorageSettings
 
 DAILY_ARTIFACTS = (
+    "generated/emerging-niche-policy.json",
+    "generated/emerging-niche-policy.js",
     "generated/human-terminal-idea-state.json",
     "generated/human-terminal-idea-state.js",
     "generated/p0-admission-state.json",
