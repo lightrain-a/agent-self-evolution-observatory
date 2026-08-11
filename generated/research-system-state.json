@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T03:41:41+00:00",
+  "generated_at": "2026-08-11T04:10:17+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "/data/wyt/agent-self-evolution-observatory/publish-persistent-governance-20260811-r3/generated/research-data",
@@ -70,7 +70,7 @@
     "mem_xfer_full_table_status": "full_table_collected",
     "mem_xfer_offline_analysis_status": "offline_analysis_complete",
     "mem_xfer_support_qualification_status": "support_qualification_pass",
-    "mem_xfer_support_full_status": "full_support_ready",
+    "mem_xfer_support_full_status": "full_qwen_support_running",
     "mem_xfer_second_model_status": "second_model_hold"
   },
   "evidence_graph": {
@@ -22305,7 +22305,7 @@
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-11T03:41:41+00:00",
+    "generated_at": "2026-08-11T04:10:17+00:00",
     "source_of_truth_priority": [
       "latest-human-review",
       "explicit-user-update",
@@ -23084,8 +23084,8 @@
           "en": "Replicated-Effect Memory Gate"
         },
         "current_fact": {
-          "zh": "已进入共享 P0。完整 Qwen 表已收齐：96/96 executions、32 units；离线冻结判定为 PHENOMENON PASS / METHOD INCONCLUSIVE（candidate support 不足）。随后 support qualification 已 72/72 executions、24/24 units 全部完成并 PASS：controlled-nonzero=6、4 个 target families、同时存在 harm/benefit、4 个 memory candidates。下一步仅授权 Qwen support full table；第二 backbone 仍 HOLD。",
-          "en": "Entered shared P0. The full Qwen table is complete at 96/96 executions over 32 units; the frozen offline verdict is PHENOMENON PASS / METHOD INCONCLUSIVE because candidate support is insufficient. Support qualification then completed 72/72 executions over 24/24 units and PASSED: controlled-nonzero=6, four target families, both harm and benefit, and four memory candidates. Only the Qwen support full table is authorized next; the second backbone remains on HOLD."
+          "zh": "已进入共享 P0。完整 Qwen 表 96/96 executions、32 units 已收齐，冻结离线判定为 PHENOMENON PASS / METHOD INCONCLUSIVE。support qualification 72/72 executions、24/24 units 已 PASS；其后 full Qwen support table 已正式启动，实时进度以 Experiments 页的 workflow artifact 为准。第二 backbone 仍 HOLD。",
+          "en": "Entered shared P0. The full Qwen table is complete at 96/96 executions over 32 units with a frozen PHENOMENON PASS / METHOD INCONCLUSIVE verdict. Support qualification passed at 72/72 executions over 24/24 units; the full Qwen support table has now formally started, with live progress taken from the Experiments workflow artifact. The second backbone remains on HOLD."
         }
       },
       "cross-task-effect-transport-certificate": {
@@ -23096,8 +23096,8 @@
           "en": "Cross-Task Effect Transport Certificate"
         },
         "current_fact": {
-          "zh": "与 Replicated-Effect Memory Gate 共享 P0。完整 Qwen 表的冻结判定为 PHENOMENON PASS / TRANSPORT SUPPORT INSUFFICIENT：controlled nonzero=5、eligible target folds=2，未达到 transport support 门。support qualification 随后 72/72 executions PASS，已允许继续 Qwen support full table；第二 backbone 仍 HOLD，尚无跨模型 confirmatory PASS。",
-          "en": "Shares P0 with Replicated-Effect Memory Gate. The full Qwen table froze at PHENOMENON PASS / TRANSPORT SUPPORT INSUFFICIENT: controlled nonzero=5 and only two eligible target folds, below the transport-support gate. Support qualification subsequently passed 72/72 executions, authorizing the Qwen support full table; the second backbone remains on HOLD, so there is no cross-model confirmatory PASS yet."
+          "zh": "与 Replicated-Effect Memory Gate 共享 P0。旧完整 Qwen 表冻结为 PHENOMENON PASS / TRANSPORT SUPPORT INSUFFICIENT；support qualification 72/72 executions 已 PASS，随后 full Qwen support table 已正式启动，用于冻结的 candidate replication / transport-support 判定。第二 backbone 仍 HOLD，尚无跨模型 confirmatory PASS。",
+          "en": "Shares P0 with Replicated-Effect Memory Gate. The old full Qwen table froze at PHENOMENON PASS / TRANSPORT SUPPORT INSUFFICIENT; support qualification passed at 72/72 executions, and the full Qwen support table has now formally started for the frozen candidate-replication and transport-support decision. The second backbone remains on HOLD, with no cross-model confirmatory PASS yet."
         }
       },
       "bounded-probe-api-transition-operator": {
@@ -50424,8 +50424,23 @@
       "authorized": true
     },
     "full_support": {
-      "status": "full_support_ready",
-      "progress": {},
+      "status": "full_qwen_support_running",
+      "progress": {
+        "schema_version": "1.0",
+        "status": "full_support_table_running",
+        "completed_episodes": 108,
+        "total_episodes": 216,
+        "completed_units": 36,
+        "total_units": 72,
+        "reused_support_executions": 72,
+        "new_completed_episodes": 36,
+        "current_unit": "se-m-pick_and_place_simple-3-u06",
+        "current_arm": "placebo",
+        "elapsed_new_gpu_hours": 0.4145216429841498,
+        "new_model_calls": 1488,
+        "gpu_uuid": "GPU-814cd021-31d8-2c6f-76a5-b8d4739b34d1",
+        "updated_at": "2026-08-11T04:03:30+00:00"
+      },
       "decision": null,
       "pre_gpu_audit": {
         "schema_version": "1.0",

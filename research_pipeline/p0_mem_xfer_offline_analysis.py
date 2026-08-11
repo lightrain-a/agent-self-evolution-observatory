@@ -232,7 +232,8 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
     support_dir = experiment_root / "runs" / SUPPORT_RUN_ID
     support_progress = _read_json(support_dir / "support-qualification" / "progress.json") or _read_json(support_dir / "progress.json") or {}
     support_decision = _read_json(support_dir / "support-qualification" / "decision.json") or _read_json(support_dir / "decision.json")
-    full_support_dir = support_dir / "full-qwen"
+    full_support_candidates = (support_dir / "full-support-table", support_dir / "full-qwen")
+    full_support_dir = next((path for path in full_support_candidates if path.exists()), full_support_candidates[0])
     full_support_audit = _read_json(support_dir / "full-pre-gpu-audit.json")
     full_support_progress = _read_json(full_support_dir / "progress.json") or {}
     full_support_decision = _read_json(full_support_dir / "decision.json")
@@ -250,10 +251,12 @@ def build_mem_xfer_workflow_state(experiment_root: Path) -> dict[str, Any]:
 
     if support_status != "support_qualification_pass":
         full_support_status = "full_support_hold"
-    elif full_support_decision and full_support_progress.get("status") == "full_qwen_support_complete":
+    elif full_support_decision and full_support_progress.get("status") in {"full_qwen_support_complete", "full_support_table_complete"}:
         full_support_status = "full_support_complete"
-    elif full_support_progress.get("status") in {"full_qwen_support_running", "full_qwen_support_checkpoint"}:
-        full_support_status = str(full_support_progress.get("status"))
+    elif full_support_progress.get("status") in {"full_qwen_support_running", "full_support_table_running"}:
+        full_support_status = "full_qwen_support_running"
+    elif full_support_progress.get("status") in {"full_qwen_support_checkpoint", "full_support_table_checkpoint"}:
+        full_support_status = "full_qwen_support_checkpoint"
     elif full_support_audit and full_support_audit.get("decision") == "PASS" and full_support_audit.get("execution_ready") is True:
         full_support_status = "full_support_ready"
     else:

@@ -26,8 +26,14 @@ function terminalExperimentEvidence(row){
   const preGpu=(preGpuCandidateGateState().candidates||[]).find(x=>x.idea_id===id)||null;
   const mem=window.RESEARCH_SYSTEM_STATE?.mem_xfer_workflow||{};
   if(["replicated-effect-memory-gate","cross-task-effect-transport-certificate"].includes(id)){
-    const support=mem.support_qualification||{}, progress=support.progress||{}, decision=support.decision||{};
-    return {current_started:true,category:"started",tone:String(support.status||"").includes("pass")?"pass":"running",label:language==="zh"?`共享 P0 已开始 · ${String(support.status||"running").toUpperCase()}`:`Shared P0 started · ${String(support.status||"running").toUpperCase()}`,detail:textOf(terminal.current_fact||{})||`${progress.completed_episodes||0}/${progress.total_episodes||0} executions`,next:decision.next_action||(language==="zh"?"按冻结 support gate 继续；第二 backbone 仍 HOLD。":"Continue only under the frozen support gate; second backbone remains on HOLD."),evidence:`${progress.completed_episodes||0}/${progress.total_episodes||0} executions · ${progress.completed_units||0}/${progress.total_units||0} units · ${progress.model_calls||0} calls`};
+    const support=mem.support_qualification||{}, supportProgress=support.progress||{}, supportDecision=support.decision||{};
+    const full=mem.full_support||{}, fullProgress=full.progress||{}, fullDecision=full.decision||{};
+    const fullLive=["full_qwen_support_running","full_qwen_support_checkpoint","full_support_complete"].includes(full.status);
+    const status=fullLive?full.status:support.status;
+    const progress=fullLive?fullProgress:supportProgress;
+    const fullLabel=fullLive?(language==="zh"?"共享 P0 · full Qwen support 已启动":"Shared P0 · full Qwen support started"):null;
+    const detail=fullLive?(language==="zh"?`support qualification 已 PASS；full Qwen support 最新 artifact 为 ${progress.completed_episodes||0}/${progress.total_episodes||216} executions、${progress.completed_units||0}/${progress.total_units||72} units，尚无最终 decision。`:`Support qualification passed; the latest full Qwen support artifact is ${progress.completed_episodes||0}/${progress.total_episodes||216} executions and ${progress.completed_units||0}/${progress.total_units||72} units, with no final decision yet.`):textOf(terminal.current_fact||{});
+    return {current_started:true,category:"started",tone:full.status==="full_support_complete"?"pass":"running",label:fullLabel||(language==="zh"?`共享 P0 已开始 · ${String(status||"running").toUpperCase()}`:`Shared P0 started · ${String(status||"running").toUpperCase()}`),detail:detail||`${progress.completed_episodes||0}/${progress.total_episodes||0} executions`,next:fullDecision.next_action||supportDecision.next_action||(language==="zh"?"第二 backbone 仍 HOLD，直到 full-support CPU-only decision 显式授权。":"Second backbone remains on HOLD until the full-support CPU-only decision explicitly authorizes it."),evidence:`${progress.completed_episodes||0}/${progress.total_episodes||0} executions · ${progress.completed_units||0}/${progress.total_units||0} units · ${progress.new_model_calls||progress.model_calls||0} calls`};
   }
   const runtimeStatus=String(runtime?.status||"").toLowerCase();
   const registryStarted=!!phase?.result||Boolean(phase?.status&&phase.status!=="planned");

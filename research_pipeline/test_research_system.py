@@ -104,8 +104,11 @@ class ResearchSystemTest(unittest.TestCase):
         workflow = self.state["mem_xfer_workflow"]
         self.assertEqual(workflow["support_qualification"]["status"], "support_qualification_pass")
         self.assertTrue((workflow["full_support"].get("pre_gpu_audit") or {}).get("execution_ready"))
-        self.assertEqual(workflow["full_support"]["status"], "full_support_ready")
-        self.assertEqual(workflow["full_support"]["progress"], {})
+        self.assertIn(workflow["full_support"]["status"], {"full_support_ready", "full_qwen_support_running", "full_qwen_support_checkpoint", "full_support_complete"})
+        progress = workflow["full_support"]["progress"]
+        if workflow["full_support"]["status"] != "full_support_ready":
+            self.assertGreaterEqual(int(progress.get("completed_episodes") or 0), 72)
+            self.assertEqual(int(progress.get("total_episodes") or 0), 216)
         self.assertEqual(workflow["second_model"]["status"], "second_model_hold")
         self.assertFalse(workflow["second_model"]["authorized"])
 
