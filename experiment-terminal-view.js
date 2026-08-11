@@ -5,6 +5,7 @@ function p0A5State(){return window.P0_A5_HISTORY_CPU||{};}
 function p0A6State(){return window.P0_A6_CPU||{};}
 function p0A7State(){return window.P0_A7_COUNTERFACTUAL_CPU||{};}
 function p0B3State(){return window.P0_B3_INTERFERENCE_CPU||{};}
+function p0C2State(){return window.P0_C2_EVALUATOR_CPU||{};}
 function p0E2State(){return window.P0_E2_WORKFLOW_CPU||{};}
 function p0E3State(){return window.P0_E3_STATEFUL||window.P0_E3_REAL_API||{};}
 function p0E4State(){return window.P0_E4_PERMISSION_CPU||{};}
@@ -52,6 +53,10 @@ function terminalExperimentEvidence(row){
   if(id==="retrieval-interference-auditor" && p0B3State().decision){
     const b=p0B3State(),m=b.metrics||{},r=b.runtime_preflight_snapshot||{};
     return {current_started:true,category:"p0-hold",tone:"check",label:language==="zh"?"CPU screening SIGNAL · real co-retrieval runtime HOLD":"CPU screening SIGNAL · real co-retrieval runtime HOLD",detail:language==="zh"?`24 个 programmatic interference cases 中 pathway/simple 各 ${m.pathway_audit_calls||0} 次 audit，future harm 都为 ${m.pathway_future_harm??"--"}/${m.simple_future_harm??"--"}，但 retained benefit=${m.pathway_retained_benefit??"--"} vs ${m.simple_retained_benefit??"--"}。这是 synthetic mechanism signal，不证明真实 co-retrieval interference；60 的 GPU 空闲，但 runtime environment drift 阻止 24-execution ALFWorld reality gate。`:`Across 24 programmatic interference cases, pathway/simple each use ${m.pathway_audit_calls||0} audits and both have future harm ${m.pathway_future_harm??"--"}/${m.simple_future_harm??"--"}, while retained benefit is ${m.pathway_retained_benefit??"--"} vs ${m.simple_retained_benefit??"--"}. This is a synthetic mechanism signal, not evidence of real co-retrieval interference; GPUs on server 60 are idle, but runtime environment drift blocks the 24-execution ALFWorld reality gate.`,next:b.next_action||"--",evidence:`${b.decision} · runtime=${r.decision||"--"} · install/mutation=${r.installation_or_environment_mutation_attempted?"YES":"NO"}`};
+  }
+  if(id==="evaluator-coadaptation-guard" && p0C2State().decision){
+    const c=p0C2State(),a=c.attribution||{},p=c.cross_version_causal_repair||{},s=c.simple_anchor_residual_repair||{};
+    return {current_started:true,category:"p0-stop",tone:"fail",label:language==="zh"?"CPU P0 STOP · simple anchor calibration 等效":"CPU P0 STOP · simple anchor calibration equivalent",detail:language==="zh"?`3×3 actor/evaluator + frozen anchors：cross-version attribution accuracy=${experimentNumber(a.cross_accuracy)}，simple anchor-residual=${experimentNumber(a.simple_accuracy)}。causal repair 与简单 intercept+shortcut calibration 参数逐项相同，MAE=${experimentNumber(p.evaluation?.mae)} vs ${experimentNumber(s.evaluation?.mae)}，但额外 intervention calls=${p.extra_intervention_calls??"--"} vs ${s.extra_intervention_calls??"--"}。`:`3x3 actor/evaluator matrix with frozen anchors: cross-version attribution accuracy=${experimentNumber(a.cross_accuracy)}, simple anchor-residual=${experimentNumber(a.simple_accuracy)}. Causal repair and simple intercept+shortcut calibration have identical parameters and MAE=${experimentNumber(p.evaluation?.mae)} vs ${experimentNumber(s.evaluation?.mae)}, but extra intervention calls are ${p.extra_intervention_calls??"--"} vs ${s.extra_intervention_calls??"--"}.`,next:c.next_action||"--",evidence:`${c.decision} · params identical=${c.matched_simplification?.parameters_identical} · P1=${c.p1_authorized?"AUTHORIZED":"LOCKED"}`};
   }
   if(id==="workflow-branch-credit" && p0E2State().decision){
     const e=p0E2State(),m=e.metrics||{};

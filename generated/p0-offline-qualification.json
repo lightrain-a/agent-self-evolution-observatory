@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T09:15:31+00:00",
+  "generated_at": "2026-08-11T09:22:49+00:00",
   "experiment_root": "profile-resolved-machine-local",
   "policy": {
     "real_reused_may_unblock": true,
@@ -694,6 +694,37 @@
         "decision": "HOLD_RUNTIME_ENVIRONMENT_DRIFT"
       }
     },
+    "c2_evaluator_cpu": {
+      "decision": "STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT",
+      "attribution": {
+        "truth": {
+          "e0": 0,
+          "e1": 1,
+          "e2": 1
+        },
+        "cross_version": {
+          "e0": 0,
+          "e1": 1,
+          "e2": 1
+        },
+        "simple_anchor_residual": {
+          "e0": 0,
+          "e1": 1,
+          "e2": 1
+        },
+        "cross_accuracy": 1.0,
+        "simple_accuracy": 1.0
+      },
+      "matched_simplification": {
+        "baseline": "per-evaluator anchor residual intercept+shortcut calibration",
+        "same_anchor_truth": true,
+        "same_observed_cross_scores": true,
+        "same_parameter_count": true,
+        "parameters_identical": true,
+        "repair_tied_or_better": true,
+        "attribution_tied_or_better": true
+      }
+    },
     "b10": {
       "decision": "STOP_MATCHED_NARY_EQUIVALENT",
       "metrics": {
@@ -785,12 +816,12 @@
   },
   "summary": {
     "ideas": 16,
-    "checks_passed": 38,
-    "checks_failed": 10,
-    "checks_pending": 34,
+    "checks_passed": 41,
+    "checks_failed": 11,
+    "checks_pending": 30,
     "checks_synthetic_pass": 14,
-    "gpu0_hold_or_conditional": 9,
-    "gpu0_stop": 7
+    "gpu0_hold_or_conditional": 8,
+    "gpu0_stop": 8
   },
   "cards": [
     {
@@ -1199,24 +1230,24 @@
     {
       "idea_id": "evaluator-coadaptation-guard",
       "gpu0": {
-        "status": "hold-cross-version-matrix-missing",
-        "evidence": "No registered 3x3 actor/evaluator cross-version score matrix with frozen external anchors exists yet.",
-        "source": "registered experiment artifact inventory",
-        "evidence_kind": "registered-artifact-audit",
-        "next": "Build a 3×3 actor/evaluator cross-version score matrix with frozen external anchors before any rubric repair."
+        "status": "stop-simple-anchor-residual-calibration-equivalent",
+        "evidence": "Simple frozen-anchor residual calibration reproduces both attribution and repaired evaluator scores with no causal intervention calls; cross-version matrices remain diagnostic only.",
+        "source": "generated/p0-c2-evaluator-cpu.json",
+        "evidence_kind": "cpu-evaluator-p0",
+        "next": "Keep cross-version matrices only as diagnostics; merge evaluator repair into simple frozen-anchor calibration and do not spend GPU on standalone C-2."
       },
       "checks": {
         "target_variation": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "The frozen 3x3 actor/evaluator matrix contains evaluator-specific bias and shortcut drift under independent external anchor truth.",
+          "source": "generated/p0-c2-evaluator-cpu.json",
+          "evidence_kind": "cpu-evaluator-p0"
         },
         "baseline_disagreement": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "fail",
+          "evidence": "Cross-version attribution accuracy 1.000 is tied by direct anchor-residual attribution 1.000; simple calibration exactly matches repaired scores while using 0 extra interventions vs 54 for causal neutralization.",
+          "source": "generated/p0-c2-evaluator-cpu.json",
+          "evidence_kind": "cpu-evaluator-p0"
         },
         "representability": {
           "status": "synthetic-pass",
@@ -1225,10 +1256,10 @@
           "evidence_kind": "synthetic-realizability-only"
         },
         "tiny_overfit": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "Actor/evaluator drift is evaluated against frozen external/program anchor truth rather than self-evaluator labels.",
+          "source": "generated/p0-c2-evaluator-cpu.json",
+          "evidence_kind": "cpu-evaluator-p0"
         },
         "competence_window": {
           "status": "pending",
@@ -1237,17 +1268,17 @@
           "evidence_kind": "pending"
         },
         "effect_variation": {
-          "status": "pending",
-          "evidence": "No mechanism-aligned real offline evidence has cleared this check yet.",
-          "source": "",
-          "evidence_kind": "pending"
+          "status": "pass",
+          "evidence": "Evaluator versions include scalar bias and rubric-shortcut drift while actor abilities remain separately identifiable on anchors.",
+          "source": "generated/p0-c2-evaluator-cpu.json",
+          "evidence_kind": "cpu-evaluator-p0"
         }
       },
       "updater_competence": {
-        "status": "pending",
-        "passed": false,
-        "evidence_kind": "pending",
-        "reason": "mechanism-specific updater/action-stream competence has not been qualified"
+        "status": "pass",
+        "passed": true,
+        "evidence_kind": "cpu-evaluator-p0",
+        "reason": "The frozen anchor matrix identifies evaluator-side drift and both repair parameterizations are executable."
       }
     },
     {

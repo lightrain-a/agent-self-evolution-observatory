@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "decision_date": "2026-08-11",
-  "generated_at": "2026-08-11T09:15:01+00:00",
+  "generated_at": "2026-08-11T09:22:47+00:00",
   "source_of_truth_priority": [
     "latest-human-review",
     "explicit-user-update",
@@ -476,6 +476,11 @@
         "zh": "cross-version attribution 不优于 disagreement，或 causal+sparse repair 被简单 cell 追平，则停止相应机制。",
         "en": "Stop the corresponding claim if cross-version attribution does not beat disagreement or causal+sparse repair is tied by a simpler cell."
       },
+      "current_fact": {
+        "zh": "C-2 CPU P0 已触发 matched-simplification STOP：3×3 actor/evaluator cross-score 使用 frozen external anchors。cross-version attribution 与简单 per-evaluator anchor residual 都 3/3 正确定位 evaluator drift；causal neutralization 估出的 evaluator bias / shortcut-weight 与同一 anchor outputs 上的简单 intercept+shortcut calibration 参数逐项完全相同，repair MAE/max-error 也完全相同。proposed 还额外需要 54 次 causal intervention calls，而简单校准为 0。cross-version matrix 只保留诊断价值，独立 attribution + causal sparse repair 机制不再推进，等待人工确认 merge/drop。",
+        "en": "C-2 CPU P0 fired a matched-simplification STOP on a 3x3 actor/evaluator cross-score matrix with frozen external anchors. Cross-version attribution and a simple per-evaluator anchor-residual baseline both identify evaluator drift correctly in 3/3 evaluators. The evaluator bias/shortcut parameters estimated by causal neutralization are exactly identical to simple intercept+shortcut calibration on the same anchor outputs, with identical repair MAE/max error. The proposed mechanism additionally requires 54 causal intervention calls versus 0 for simple calibration. Keep the cross-version matrix only as a diagnostic; the standalone attribution + causal sparse-repair mechanism should not progress pending human merge/drop review."
+      },
+      "p0_decision": "STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT",
       "p0_entry": {
         "date": "2026-08-11",
         "basis": "p0-admission-contract-frozen",

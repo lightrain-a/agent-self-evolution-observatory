@@ -21,6 +21,7 @@ from .p0_a5_history_cpu import write_a5_cpu_p0
 from .p0_a6_cpu import write_a6_cpu_p0
 from .p0_a7_counterfactual_cpu import write_a7_cpu_p0
 from .p0_b3_interference_cpu import write_b3_cpu_screen
+from .p0_c2_evaluator_cpu import write_c2_cpu_p0
 from .p0_e2_workflow_cpu import write_e2_cpu_p0
 from .p0_e3_real_api import write as write_e3_real_api_p0
 from .p0_e3_stateful import write_stateful as write_e3_stateful_p0
@@ -110,6 +111,7 @@ def run_cycle(
         report["steps"].append(_step("p0-a6-cpu", write_a6_cpu_p0))
         report["steps"].append(_step("p0-a7-counterfactual-cpu", write_a7_cpu_p0))
         report["steps"].append(_step("p0-b3-interference-cpu", write_b3_cpu_screen))
+        report["steps"].append(_step("p0-c2-evaluator-cpu", write_c2_cpu_p0))
         report["steps"].append(_step("p0-e2-workflow-cpu", write_e2_cpu_p0))
         report["steps"].append(_step("p0-e3-real-api", write_e3_real_api_p0))
         report["steps"].append(_step("p0-e3-stateful", write_e3_stateful_p0))
@@ -136,6 +138,7 @@ def run_cycle(
         write_a6_cpu_p0()
         write_a7_cpu_p0()
         write_b3_cpu_screen()
+        write_c2_cpu_p0()
         write_e2_cpu_p0()
         write_e3_real_api_p0()
         write_e3_stateful_p0()

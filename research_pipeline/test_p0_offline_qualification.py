@@ -43,7 +43,9 @@ class P0OfflineQualificationTest(unittest.TestCase):
         self.assertEqual(by_id["bounded-probe-api-transition-operator"]["gpu0"]["status"],"stop-stateful-deterministic-pex-ceiling")
         self.assertEqual(by_id["interventional-permission-triage-under-ceiling"]["gpu0"]["status"],"stop-matched-boolean-rule-equivalent")
         self.assertEqual(by_id["workflow-branch-credit"]["gpu0"]["status"],"stop-matched-e1-direct-edit-equivalent")
-        self.assertEqual(self.state["summary"]["gpu0_stop"],7)
+        self.assertEqual(by_id["evaluator-coadaptation-guard"]["gpu0"]["status"],"stop-simple-anchor-residual-calibration-equivalent")
+        self.assertEqual(by_id["evaluator-coadaptation-guard"]["checks"]["baseline_disagreement"]["status"],"fail")
+        self.assertEqual(self.state["summary"]["gpu0_stop"],8)
 
     def test_reused_artifacts_capture_current_blockers(self) -> None:
         shared=self.state["shared_evidence"]
@@ -77,13 +79,12 @@ class P0OfflineQualificationTest(unittest.TestCase):
             "retrieval-interference-auditor":"hold-real-cinteraction-runtime",
             "local-counterexample-memory-repair":"hold-boundary-dataset-missing",
             "memory-half-life":"hold-longitudinal-reuse-missing",
-            "evaluator-coadaptation-guard":"hold-cross-version-matrix-missing",
             "counterexample-generating-curriculum":"hold-minimality-unmeasured",
             "workflow-generalization-certificate":"hold",
         }
         for idea_id,status in expected.items():
             self.assertEqual(by_id[idea_id]["gpu0"]["status"],status,idea_id)
-        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],9)
+        self.assertEqual(self.state["summary"]["gpu0_hold_or_conditional"],8)
 
 
 if __name__=="__main__":

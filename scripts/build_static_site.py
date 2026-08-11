@@ -134,6 +134,7 @@ def build() -> Path:
         OUTPUT / "generated" / "p0-a6-cpu.js",
         OUTPUT / "generated" / "p0-a7-counterfactual-cpu.js",
         OUTPUT / "generated" / "p0-b3-interference-cpu.js",
+        OUTPUT / "generated" / "p0-c2-evaluator-cpu.js",
         OUTPUT / "generated" / "p0-e2-workflow-cpu.js",
         OUTPUT / "generated" / "p0-e3-real-api.js",
         OUTPUT / "generated" / "p0-e3-stateful.js",
