@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "iteration_id": "a1-a2-a3-a5-iteration-20260811-final",
+  "source_authority_sha256": "02ccea494856309b2fecaeae1a2bb76f9272f5ee135bdaf0ffa86a32decf86f4",
+  "policy": {
+    "lifecycle_unchanged": true,
+    "no_threshold_relaxation": true,
+    "support_and_method_separate": true,
+    "no_more_gpu_current_substrate": true,
+    "second_backbone_authorized": false
+  },
+  "ideas": {
+    "update-trust-region": {
+      "code": "A-1",
+      "decision": "MERGE_DIAGNOSTIC_INTO_5",
+      "current_state": "experiment-merge",
+      "failure_class": "FAIL_REPRESENTATION",
+      "execution_authorized": false,
+      "standalone_method_authorized": false,
+      "next_action": "Retain zero-reward blast-radius only as a diagnostic under cross-task effect transport; no standalone GPU.",
+      "metrics": {"harm_auc": 0.6231617647058824, "required_harm_auc": 0.65, "pick_cool_family_gap": -0.01679169302129454},
+      "evidence_sha256": "29528662864bdeb42db83feb4d8d75ef8716573c890d8f8643f3c370412c9516"
+    },
+    "budgeted-evolution-controller": {
+      "code": "A-2",
+      "decision": "KEEP_PROBLEM_HOLD_UPSTREAM",
+      "current_state": "upstream-hold",
+      "failure_class": "FAIL_SUBSTRATE",
+      "execution_authorized": false,
+      "controller_training_authorized": false,
+      "next_action": "Keep the sequential-control problem; do not train a controller until a materially new persistent updater/admission stream passes qualification.",
+      "metrics": {"best_fixed_oracle_equivalence": 0.5555555555555556, "fixed_horizon_ceiling": 0.95},
+      "evidence_sha256": "d211f6946c8c08484cbdcd8b1aacf47661a40a984a318e1535c48a46184157f7"
+    },
+    "replicated-effect-memory-gate": {
+      "code": "B-8",
+      "decision": "STOP_STANDALONE_MERGE_DIAGNOSTIC_INTO_5",
+      "current_state": "experiment-merge",
+      "failure_class": "SUPPORT_INSUFFICIENT",
+      "execution_authorized": false,
+      "p0_support_status": "HOLD",
+      "p0_method_authorized": false,
+      "next_action": "Stop standalone replication-gate escalation on this memory substrate; retain replication quality only as a diagnostic under B-9. Reopen only for a materially different update substrate.",
+      "metrics": {"candidate_count": 12, "replicated_stable_harm_candidates": 0, "required_harm_candidates": 2, "replicated_stable_benefit_candidates": 1, "required_benefit_candidates": 2},
+      "evidence_sha256": "b02d167d22da386f144d198b0688300c22e9b13ab101f8377bc89f96c81fa58f"
+    },
+    "cross-task-effect-transport-certificate": {
+      "code": "B-9",
+      "decision": "P0_SUPPORT_PASS_METHOD_DEVELOPMENT_STOP",
+      "current_state": "method-development-stop",
+      "failure_class": "FAIL_REPRESENTATION",
+      "execution_authorized": false,
+      "p0_support_status": "PASS",
+      "formal_method_result_authorized": false,
+      "fresh_heldout_gpu_authorized": false,
+      "next_action": "Archive the current transport-method line for this substrate/cycle. Support phenomenon remains valid, but no current representation beats simple baselines; no fresh-heldout GPU or second backbone.",
+      "support_metrics": {"stable_controlled_nonzero": 12, "required_stable_controlled_nonzero": 12, "eligible_target_family_folds": 3, "required_target_family_folds": 3},
+      "final_method_metrics": {"nonzero_sign_auc": 0.3214285714285714, "strongest_baseline_auc": 0.6428571428571429, "auc_advantage": -0.3214285714285715, "permutation_p": 0.7831084457771115},
+      "evidence_sha256": "b30281ba241d2dbbd66e7f028f60dad440b516b5f1a8e86be975e2347048758a"
+    }
+  }
+}

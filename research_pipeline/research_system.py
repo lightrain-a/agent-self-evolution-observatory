@@ -33,6 +33,7 @@ from .p0_a6_cpu import write_a6_cpu_p0
 from .p0_offline_qualification import build_p0_offline_qualification_state, write_p0_offline_qualification_state
 from .p0_realizability_suite import build_p0_realizability_suite, write_p0_realizability_suite
 from .p0_decision_ledger import build_p0_decision_ledger, write_p0_decision_ledger
+from .p0_four_direction_iteration import build_four_direction_iteration, write_four_direction_iteration
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
 from .pre_experiment_specs import GATES as PRE_EXPERIMENT_GATES, POLICY as PRE_EXPERIMENT_POLICY
 from .pre_p0_identifiability import build_pre_p0_identifiability_audit
@@ -251,6 +252,7 @@ def build_research_system_state() -> dict[str, Any]:
     p0_realizability = build_p0_realizability_suite()
     p0_offline_qualification = build_p0_offline_qualification_state()
     p0_admission = build_p0_admission_state()
+    four_direction_iteration = build_four_direction_iteration()
     ai_consultation_clinic = build_ai_consultation_clinic_state()
     ai_consultation_automation = _load_ai_consultation_automation_public()
     p0_admission_public = {"summary": p0_admission["summary"], "policy": p0_admission["policy"]}
@@ -264,7 +266,7 @@ def build_research_system_state() -> dict[str, Any]:
     }
     p0_economy_gate = p0_admission["economy_gate"]
     p0_economy_public = {"summary": p0_economy_gate["summary"], "policy": p0_economy_gate["policy"], "gates": p0_economy_gate["gates"]}
-    p0_decision_ledger = build_p0_decision_ledger(p0_admission, p0_offline_qualification, human_terminal_ideas)
+    p0_decision_ledger = build_p0_decision_ledger(p0_admission, p0_offline_qualification, human_terminal_ideas, four_direction_iteration)
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
     p0_offline_public = {"summary": p0_offline_qualification["summary"], "policy": p0_offline_qualification["policy"]}
     p0_realizability_public = {"summary": p0_realizability["summary"], "policy": p0_realizability["policy"]}
@@ -406,6 +408,7 @@ def build_research_system_state() -> dict[str, Any]:
         "ai_consultation_automation":ai_consultation_automation_public,
         "p0_economy_gate":p0_economy_public,
         "p0_decision_ledger":p0_decision_ledger_public,
+        "p0_four_direction_iteration":{"policy":four_direction_iteration["policy"],"ideas":four_direction_iteration["ideas"],"source_authority_sha256":four_direction_iteration["source_authority_sha256"]},
         "research_governance_v2":research_governance_v2,
         "p0_offline_qualification":p0_offline_public,
         "p0_realizability":p0_realizability_public,
@@ -530,6 +533,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_a6_cpu_p0()
     write_p0_offline_qualification_state()
     write_p0_admission_state()
+    write_four_direction_iteration()
     write_ai_consultation_clinic_state()
     state=build_research_system_state()
     write_p0_decision_ledger(state["p0_decision_ledger"])

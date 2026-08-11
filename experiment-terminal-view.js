@@ -1,5 +1,6 @@
 function p0AdmissionState(){return window.P0_ADMISSION_STATE||window.RESEARCH_SYSTEM_STATE?.p0_admission||{summary:{},cards:[]};}
 function p0DecisionLedgerState(){return window.P0_DECISION_LEDGER||window.RESEARCH_SYSTEM_STATE?.p0_decision_ledger||{summary:{},rows:[]};}
+function p0FourDirectionIteration(){return window.P0_FOUR_DIRECTION_ITERATION||window.RESEARCH_SYSTEM_STATE?.p0_four_direction_iteration||{ideas:{},policy:{}};}
 function p0OfflineState(){return window.P0_OFFLINE_QUALIFICATION||{summary:{},cards:[],shared_evidence:{}};}
 function p0B10State(){return window.P0_B10_CPU||{};}
 function p0A1SoftAuditState(){return window.P0_A1_SOFT_AUDIT_F0||{};}
@@ -50,6 +51,7 @@ function terminalExperimentEvidence(row){
   const phase=experimentPilotPhase(id,"P0");
   const preGpu=(preGpuCandidateGateState().candidates||[]).find(x=>x.idea_id===id)||null;
   const mem=window.RESEARCH_SYSTEM_STATE?.mem_xfer_workflow||{};
+  const latestEvidence=fourDirectionExperimentEvidence(id); if(latestEvidence)return latestEvidence;
   if(id==="update-trust-region" && p0A1SoftAuditState().decision){
     const a=p0A1SoftAuditState(),b=a.future_branch_policy||{},p=a.matched_baselines?.target_family_prior||{},t=a.matched_baselines?.simple_h1_navigate_trigger||{};
     return {current_started:true,category:"p0-stop",tone:"fail",label:language==="zh"?"Repair F0 STOP · soft audit 被简单 triage 支配":"Repair F0 STOP · soft audit dominated by simple triage",detail:language==="zh"?`36 development→36 future 冻结验证：branch h=${a.selected_h} 的 nonzero recall=${experimentNumber(b.nonzero_recall)}、cost=${experimentNumber(b.cost_fraction)}；target-family prior recall=${experimentNumber(p.nonzero_recall)} 且 cost ${p.action_step_cost||0}<${b.action_step_cost||0}，h=1 navigate trigger 同 recall=${experimentNumber(t.nonzero_recall)} 但 cost=${experimentNumber(t.cost_fraction)}。future harmful 仅 ${a.split?.future_harm||0}，不授权 harm claim。`:`Frozen 36-development→36-future evaluation: branch h=${a.selected_h} has nonzero recall=${experimentNumber(b.nonzero_recall)} at cost=${experimentNumber(b.cost_fraction)}; target-family prior reaches recall=${experimentNumber(p.nonzero_recall)} at ${p.action_step_cost||0}<${b.action_step_cost||0} steps, while the h=1 navigate trigger matches recall=${experimentNumber(t.nonzero_recall)} at cost=${experimentNumber(t.cost_fraction)}. Only ${a.split?.future_harm||0} future harmful unit exists, so no harm claim is authorized.`,next:a.next_action||"--",evidence:`${a.decision} · formal P0=${a.formal_p0_authorized?"AUTHORIZED":"LOCKED"}`};
