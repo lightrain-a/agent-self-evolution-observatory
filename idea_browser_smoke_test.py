@@ -197,6 +197,15 @@ def main() -> None:
         navigate("/experiments.html", 6)
         experiments = execute(session_id, """return {
           chapters: document.querySelectorAll('.page-chapter').length,
+          terminalPortfolio: document.querySelectorAll('#terminal-experiment-portfolio').length,
+          terminalRows: document.querySelectorAll('.terminal-experiment-row').length,
+          terminalStarted: document.querySelectorAll('.terminal-experiment-row[data-current-p0-started="1"]').length,
+          terminalPending: document.querySelectorAll('.terminal-experiment-row[data-current-p0-started="0"]').length,
+          terminalP0: document.querySelectorAll('.terminal-experiment-row[data-terminal-lifecycle="p0"]').length,
+          terminalP0Ready: document.querySelectorAll('.terminal-experiment-row[data-terminal-lifecycle="p0-ready"]').length,
+          auditQueue: document.querySelectorAll('#terminal-unstarted-audit').length,
+          auditItems: document.querySelectorAll('.terminal-audit-item').length,
+          legacyArchives: document.querySelectorAll('.experiment-legacy-archive').length,
           toc2: document.querySelectorAll('.toc-level-2').length,
           toc3: document.querySelectorAll('.toc-level-3').length,
           toc4: document.querySelectorAll('.toc-level-4').length,
@@ -243,6 +252,9 @@ def main() -> None:
           text: document.body.textContent || ''
         };""")
         require(experiments["chapters"] == 3, f"experiments page must have three chapters, got {experiments['chapters']}")
+        require((experiments["terminalPortfolio"],experiments["terminalRows"],experiments["terminalP0"],experiments["terminalP0Ready"]) == (1,20,4,16), f"terminal experiment portfolio is not aligned with Paper Ideas: {experiments}")
+        require((experiments["terminalStarted"],experiments["terminalPending"],experiments["auditQueue"],experiments["auditItems"]) == (4,16,1,16), f"started/pending audit split is wrong: {experiments}")
+        require(experiments["legacyArchives"] >= 3, f"legacy experiment evidence must be demoted into traceability archives: {experiments['legacyArchives']}")
         require((experiments["toc2"], experiments["toc3"], experiments["toc4"]) == (4, 3, 0), f"experiments TOC hierarchy is wrong: {experiments['toc2']}/{experiments['toc3']}/{experiments['toc4']}")
         require(experiments["board"] == 1 and experiments["cards"] == 5, f"experiment queue is incomplete: {experiments['board']}/{experiments['cards']}")
         require((experiments["authorized"], experiments["collision"], experiments["redesign"], experiments["scenario"], experiments["openCards"]) == (0, 0, 2, 1, 0), f"experiment gate counts are wrong: {experiments['authorized']}/{experiments['collision']}/{experiments['redesign']}/{experiments['scenario']}/{experiments['openCards']}")

@@ -8,9 +8,9 @@ Object.assign(window.PAGE_CONTENT,{
 },
 "experiments":{
   eyebrow:{en:"ICLR · Experiment Tracker",zh:"ICLR · 实验跟踪"},
-  title:{en:"P0 experiment progress, measured effects, and release gates",zh:"P0 实验进展、效果与阶段门禁"},
-  lead:{en:"A single operational page for the current Agent self-evolution pilots. It separates scientific idea review from experiment execution and reads live pilot-registry state so plans, results, resource use, and approvals do not drift apart.",zh:"当前 Agent 自进化 Pilot 的统一执行页。这里把科学 Idea 审查与实验执行分开，并直接读取 Pilot registry，使实验计划、结果、资源消耗和人工审批不会出现多套口径。"},
-  callout:{en:"P0 is the only currently executable phase. A P0 PASS is evidence to review, not permission to start P1; P1 remains locked until an explicit human approval artifact exists.",zh:"当前只允许执行 P0。P0 PASS 只是需要人工复核的证据，不等于允许启动 P1；只有存在显式人工批准工件后，P1 才可能解锁。"},
+  title:{en:"Experiment status for the 20 active P0 / P0-ready directions",zh:"20 个活跃 P0 / P0-ready 方向的实验状态"},
+  lead:{en:"This page now uses the same human terminal ledger as Paper Ideas. The canonical queue is the 20 active standalone directions; real execution evidence, historical pilots, pre-GPU gates, and legacy registry plans are explicitly separated so old artifacts cannot masquerade as the current experiment state.",zh:"本页现在与 Paper Ideas 共用同一份 human terminal ledger。当前唯一正式队列是 20 个仍独立存在的活跃方向；真实执行证据、历史 Pilot、GPU 前置门和旧 registry 计划被明确分开，避免旧工件冒充当前实验状态。"},
+  callout:{en:"Four directions have entered the P0 lifecycle. The current frozen P0 has not started for the other sixteen P0-ready directions; those sixteen form the immediate human audit queue. P1/P2 remain locked without explicit human authorization.",zh:"当前 4 个方向已经进入 P0 生命周期；其余 16 个 P0-ready 的当前冻结 P0 尚未启动，它们构成下一轮人工审计主队列。没有显式人工授权时，P1/P2 继续保持锁定。"},
   sections:[]
 },
 "direction-board":{

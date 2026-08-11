@@ -120,6 +120,7 @@ def build() -> Path:
         OUTPUT / "experiments.html",
         OUTPUT / "system-overview.html",
         OUTPUT / "app.js",
+        OUTPUT / "experiment-terminal-view.js",
         OUTPUT / "system-overview-view.js",
         OUTPUT / "discussion-ready-view.js",
         OUTPUT / "deployment-manifest.json",

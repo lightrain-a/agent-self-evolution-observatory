@@ -57,9 +57,9 @@ window.PAGE_ARCHITECTURES = {
   },
   experiments:{
     chapters:[
-      {id:"experiment-queue",title:{en:"I · Current P0 queue and execution gates",zh:"第一章 · 当前 P0 队列与执行门禁"},question:{en:"Which pilots are executable now, what prerequisites remain, and what is the smallest decisive experiment?",zh:"哪些 Pilot 现在可以执行、还缺哪些前置条件，以及最小决定性实验是什么？"}},
+      {id:"experiment-queue",title:{en:"I · Active terminal ideas and current experiment status",zh:"第一章 · 终态活跃 Idea 与当前实验状态"},question:{en:"Across the 20 active P0/P0-ready directions on Paper Ideas, which experiments have actually started, which only cleared pre-GPU gates, and which have not started?",zh:"Paper Ideas 的 20 个活跃 P0/P0-ready 方向中，哪些实验已经真正开始、哪些只完成了 GPU 前置门、哪些仍未启动？"}},
       {id:"experiment-results",title:{en:"II · Results, effects, and resource accounting",zh:"第二章 · 实验结果、效果与资源账本"},question:{en:"What has actually run, what effect was measured, how much did it cost, and did it cross the Go/Stop threshold?",zh:"哪些实验真的跑过、测到了什么效果、花了多少资源，以及是否越过 Go/Stop 门槛？"}},
-      {id:"experiment-approvals",title:{en:"III · Human approvals and next-phase locks",zh:"第三章 · 人工审批与下一阶段锁"},question:{en:"Which P0 results are awaiting review, and is any P1/P2 execution explicitly authorized?",zh:"哪些 P0 结果等待人工复核，以及是否有任何 P1/P2 获得显式执行授权？"}}
+      {id:"experiment-approvals",title:{en:"III · Unstarted audit queue and next-phase locks",zh:"第三章 · 未启动方向审计队列与下一阶段锁"},question:{en:"Which P0/P0-ready directions still need human audit before launch, and is any later-stage execution explicitly authorized?",zh:"哪些 P0/P0-ready 方向仍需人工审计后才能启动，以及是否有任何后续阶段获得显式执行授权？"}}
     ]
   },
   "selected-paper":{
