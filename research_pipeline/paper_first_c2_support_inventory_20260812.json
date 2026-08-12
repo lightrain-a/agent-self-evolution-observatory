@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "trajectory-mediated-memory-effect-transport",
+  "inventory_date": "2026-08-12",
+  "scientific_role": "support inventory before C2 gate freeze; no C2 outcome authority",
+  "source_host": "222.20.126.69",
+  "source_root": "/data/wyt/agent-self-evolution-observatory/runs/p0-mem-xfer-support-enriched-qwen-v1",
+  "paper_level_authority": {
+    "source": "research_pipeline/p0_four_direction_iteration_20260811.json",
+    "source_sha256": "34460dcfacdfba1c8d77de9404fd09e96cc24c50d1ce3d170550acc2e49e9f0f",
+    "stable_controlled_nonzero": 12,
+    "eligible_target_family_folds": 3,
+    "experimental_use": false,
+    "reason": "The four-direction adjudication is a paper-level terminal authority, but the twelfth stable-support unit is not traceable to the frozen 216-row raw table on the current evidence host."
+  },
+  "raw_trace_authority": {
+    "main_table": {
+      "path": "full-support-table/main_table.csv",
+      "sha256": "eb861663351041e1f1a297b6791c7d31b4ba18285c3a13f0603d5d80c09b324f"
+    },
+    "raw_traces": {
+      "path": "full-support-table/raw-traces.jsonl",
+      "sha256": "45d9954a14f370936b5e1129f985130f4b9ef2b742e72a4c6e1e01bc068b1fbf",
+      "rows": 216,
+      "arms_per_unit": 3
+    },
+    "state_table": {
+      "path": "first-divergence-audit-v1/state-table.csv",
+      "sha256": "49a6ded445997c76e21811041601ca2b5661b4702936a5d2d07a32c864fabf63"
+    },
+    "route_reproducibility": {
+      "path": "first-divergence-audit-v1/route-reproducibility-diagnostic.json",
+      "sha256": "79b9f4f5191e9cc46fcdbd613891bed395dc612926c734c2af1c14a125351ed1"
+    },
+    "support_decision": {
+      "path": "support-enriched-analysis/offline_decision.json",
+      "sha256": "e644429dbb60e43b9cd236298704de66efdf42666104252f3e0b2c879e9b172a"
+    }
+  },
+  "summary": {
+    "full_support_units": 72,
+    "full_support_raw_trajectories": 216,
+    "raw_controlled_nonzero_units": 11,
+    "environment_replay_eligible_units": 11,
+    "matched_hardware_first_divergence_index_matches": 11,
+    "matched_hardware_exact_action_pair_matches": 10,
+    "matched_hardware_effect_sign_matches": 10,
+    "strict_route_reproducible_units": 10,
+    "source_families": 4,
+    "target_families": 4,
+    "same_candidate_sign_flip_candidates": 1,
+    "paper_authority_raw_discrepancy": 1,
+    "c2_support_ceiling_before_null_and_pi0_checks": 10
+  },
+  "same_candidate_sign_flip_example": {
+    "memory_id": "se-m-pick_cool_then_place_in_recep-1",
+    "shared_state_signature": "pre_acquire|navigate>navigate",
+    "shared_first_divergence_index": 0,
+    "context_effects": [
+      {"target_family": "pick_cool_then_place_in_recep", "controlled_delta": -1},
+      {"target_family": "pick_heat_then_place_in_recep", "controlled_delta": 1},
+      {"target_family": "pick_clean_then_place_in_recep", "controlled_delta": -1}
+    ]
+  },
+  "units": [
+    {"unit_id":"se-m-pick_and_place_simple-1-u03","memory_id":"se-m-pick_and_place_simple-1","source_family":"pick_and_place_simple","target_family":"pick_clean_then_place_in_recep","controlled_delta":1,"divergence_index":0,"phase":"pre_acquire","retrieved_action":"go to countertop 1","placebo_action":"go to sinkbasin 1","environment_replay_pass":true,"matched_hardware_route_exact":true},
+    {"unit_id":"se-m-pick_clean_then_place_in_recep-1-u02","memory_id":"se-m-pick_clean_then_place_in_recep-1","source_family":"pick_clean_then_place_in_recep","target_family":"pick_clean_then_place_in_recep","controlled_delta":1,"divergence_index":2,"phase":"pre_acquire","retrieved_action":"go to countertop 1","placebo_action":"go to cabinet 1","environment_replay_pass":true,"matched_hardware_route_exact":true},
+    {"unit_id":"se-m-pick_clean_then_place_in_recep-1-u04","memory_id":"se-m-pick_clean_then_place_in_recep-1","source_family":"pick_clean_then_place_in_recep","target_family":"pick_heat_then_place_in_recep","controlled_delta":1,"divergence_index":6,"phase":"post_place_or_recovery","retrieved_action":"take mug 2 from microwave 1","placebo_action":"close microwave 1","environment_replay_pass":true,"matched_hardware_route_exact":true},
+    {"unit_id":"se-m-pick_clean_then_place_in_recep-1-u05","memory_id":"se-m-pick_clean_then_place_in_recep-1","source_family":"pick_clean_then_place_in_recep","target_family":"pick_and_place_simple","controlled_delta":1,"divergence_index":1,"phase":"pre_acquire","retrieved_action":"examine countertop 1","placebo_action":"go to cabinet 1","environment_replay_pass":true,"matched_hardware_route_exact":true},
+    {"unit_id":"se-m-pick_clean_then_place_in_recep-2-u02","memory_id":"se-m-pick_clean_then_place_in_recep-2","source_family":"pick_clean_then_place_in_recep","target_family":"pick_clean_then_place_in_recep","controlled_delta":1,"divergence_index":1,"phase":"pre_acquire","retrieved_action":"go to cabinet 1","placebo_action":"examine countertop 1","environment_replay_pass":true,"matched_hardware_route_exact":true},
+    {"unit_id":"se-m-pick_cool_then_place_in_recep-1-u01","memory_id":"se-m-pick_cool_then_place_in_recep-1","source_family":"pick_cool_then_place_in_recep","target_family":"pick_cool_then_place_in_recep","controlled_delta":-1,"divergence_index":0,"phase":"pre_acquire","retrieved_action":"go to countertop 1","placebo_action":"go to fridge 1","environment_replay_pass":true,"matched_hardware_route_exact":true},
+    {"unit_id":"se-m-pick_cool_then_place_in_recep-1-u03","memory_id":"se-m-pick_cool_then_place_in_recep-1","source_family":"pick_cool_then_place_in_recep","target_family":"pick_heat_then_place_in_recep","controlled_delta":1,"divergence_index":0,"phase":"pre_acquire","retrieved_action":"go to countertop 1","placebo_action":"go to coffeemachine 1","environment_replay_pass":true,"matched_hardware_route_exact":true},
+    {"unit_id":"se-m-pick_cool_then_place_in_recep-1-u05","memory_id":"se-m-pick_cool_then_place_in_recep-1","source_family":"pick_cool_then_place_in_recep","target_family":"pick_clean_then_place_in_recep","controlled_delta":-1,"divergence_index":0,"phase":"pre_acquire","retrieved_action":"go to countertop 1","placebo_action":"go to fridge 1","environment_replay_pass":true,"matched_hardware_route_exact":true},
+    {"unit_id":"se-m-pick_cool_then_place_in_recep-2-u03","memory_id":"se-m-pick_cool_then_place_in_recep-2","source_family":"pick_cool_then_place_in_recep","target_family":"pick_heat_then_place_in_recep","controlled_delta":1,"divergence_index":4,"phase":"post_acquire_pre_transform","retrieved_action":"move mug 2 to microwave 1","placebo_action":"close microwave 1","environment_replay_pass":true,"matched_hardware_route_exact":false,"route_mismatch_reason":"sole matched-hardware first-action-pair and effect-sign mismatch"},
+    {"unit_id":"se-m-pick_cool_then_place_in_recep-3-u04","memory_id":"se-m-pick_cool_then_place_in_recep-3","source_family":"pick_cool_then_place_in_recep","target_family":"pick_and_place_simple","controlled_delta":-1,"divergence_index":0,"phase":"pre_acquire","retrieved_action":"go to shelf 1","placebo_action":"go to desk 1","environment_replay_pass":true,"matched_hardware_route_exact":true},
+    {"unit_id":"se-m-pick_heat_then_place_in_recep-3-u04","memory_id":"se-m-pick_heat_then_place_in_recep-3","source_family":"pick_heat_then_place_in_recep","target_family":"pick_clean_then_place_in_recep","controlled_delta":1,"divergence_index":0,"phase":"pre_acquire","retrieved_action":"go to countertop 1","placebo_action":"go to sinkbasin 1","environment_replay_pass":true,"matched_hardware_route_exact":true}
+  ],
+  "policy": {
+    "paper_level_12_cannot_fill_missing_raw_unit": true,
+    "environment_replay_does_not_override_route_regeneration_mismatch": true,
+    "strict_c2_pool_excludes_route_mismatch_by_default": true,
+    "null_same_action_and_pi0_support_checks_still_required_before_c2": true,
+    "no_new_full_table_or_second_backbone_for_support_rescue": true,
+    "numeric_c2_gate_must_be_frozen_after_support_inventory_and_before_branch_outcomes": true
+  }
+}

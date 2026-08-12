@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.1",
+  "paper_id": "trajectory-mediated-memory-effect-transport",
+  "adjudication_date": "2026-08-12",
+  "scientific_role": "Traceable support-aware AI constraints compiled into a frozen pre-outcome C2 rule. AI is advisory only and this artifact does not authorize execution.",
+  "raw_support": {
+    "paper_level_nonzero": 12,
+    "raw_traceable_nonzero": 11,
+    "strict_route_reproducible_units": 10,
+    "paper_level_12th_unit_experimental_use": false,
+    "sole_route_mismatch_experimental_use": false
+  },
+  "structural_precheck": {
+    "status": "pending-real-artifact",
+    "required_decision": "C2_STRUCTURAL_PRECHECK_PASS",
+    "valid_units_required": 10,
+    "outcome_opened": false,
+    "note": "A prior concurrent JSON stated PASS without a traceable structural-precheck output file. That claim is invalidated; a real artifact must be produced before local outcome authorization."
+  },
+  "reviewers": {
+    "web_gpt": {
+      "status": "missing",
+      "reason": "browser upstream 502"
+    },
+    "deepseek_v4_pro": {
+      "status": "complete",
+      "raw_sha256": "a1de0fe3ebb6cd321475aeee2e1cab514e3e969034bdab367c06e6c9439f2017",
+      "decision": "ADVANCE_C2_WITH_10",
+      "confidence": "high",
+      "valid_units_required": 10,
+      "minimum_nonzero_and_parent_sign_concordant_units": 9,
+      "same_memory_three_context_gate": "exact parent sign pattern -1,+1,-1",
+      "median_absolute_tau_rule": ">=50% of median absolute parent endpoint controlled delta",
+      "claim_limit": "local mechanism falsifier only"
+    },
+    "glm_5_2": {
+      "status": "complete-with-truncated-tail-after-numeric-gate",
+      "raw_sha256": "0a32b8c9bf152bbcd1df1ba94c91fe52ad09e3ce07ad94413c46f45959250614",
+      "decision": "ADVANCE_C2_WITH_10",
+      "valid_units_required": 10,
+      "minimum_nonzero_tau_units": 8,
+      "minimum_parent_sign_concordant_units": 9,
+      "same_memory_three_context_sign_reversal_required": true,
+      "claim_limit": "local mechanism falsifier only; no paper confirmation"
+    }
+  },
+  "synthesis": {
+    "decision": "FREEZE_EXACT_10_UNIT_C2_RULE_PENDING_STRUCTURAL_PRECHECK",
+    "rule": "Use the conservative intersection of traceable reviewer constraints. Missing/truncated fields cannot relax a requirement.",
+    "valid_units_required": 10,
+    "same_action_null_required": "A0 repeat and A1 repeat must be deterministic-exact for every unit; any unit failure makes valid_units<=9 and forces STOP.",
+    "minimum_nonzero_tau_units": 9,
+    "minimum_parent_sign_concordant_units": 9,
+    "same_memory_three_context_sign_pattern_required": true,
+    "same_memory_three_context_gate": "all 3 preregistered contexts must reproduce the parent tau sign pattern -1,+1,-1",
+    "median_absolute_tau_rule": "Redundant under the stricter machine rule: parent absolute deltas are all 1 and tau_A is in {-1,0,1}; >=9 nonzero tau units implies median absolute tau_A=1 >=0.5.",
+    "claim_limit": "existence/local mechanism falsifier only; no population inference, no C3, no full experiment",
+    "no_threshold_relaxation": true,
+    "no_unit_replacement": true,
+    "no_new_full_table": true,
+    "no_second_backbone": true,
+    "local_validation_authorized": false,
+    "full_experiment_authorized": false
+  }
+}
