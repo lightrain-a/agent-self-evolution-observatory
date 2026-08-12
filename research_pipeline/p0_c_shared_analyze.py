@@ -177,7 +177,15 @@ def analyze_shared(root:Path)->dict[str,Any]:
     c4_frozen=root/'c4-f0-at-30.json'
     try: c4=json.loads(c4_frozen.read_text(encoding='utf-8'))
     except (OSError,json.JSONDecodeError): c4=analyze_c4(data,effects)
-    out={'schema_version':'1.0','scientific_role':'shared upstream substrate qualification only; no automatic METHOD-PASS/FAIL','shards_complete':len(complete),'candidates_total':len(data['candidates']),'self_label_decisions':len(data['labels']),'C-1':analyze_c1(data,effects),'C-4':c4,'C-5':analyze_c5(data,effects)}
+    c1_data={**data,'future':[row for row in data['future'] if row.get('truth_completion')=='C-1']}
+    c1_effects=candidate_effects(c1_data)
+    c1=analyze_c1(c1_data,c1_effects)
+    c1_contract=(c1.get('candidates_with_future_truth')==40 and c1.get('hidden_candidate_task_evaluations')==80)
+    c1['truth_contract_pass']=bool(c1_contract)
+    c1['truth_contract_expected']={'candidates':40,'hidden_pairs':80,'hidden_per_candidate':2}
+    if not c1_contract:
+        c1['decision']='HOLD_C1_TRUTH_CONTRACT_INCOMPLETE'; c1['f0_signal_continue']=False
+    out={'schema_version':'1.0','scientific_role':'shared upstream substrate qualification only; no automatic METHOD-PASS/FAIL','shards_complete':len(complete),'candidates_total':len(data['candidates']),'self_label_decisions':len(data['labels']),'C-1':c1,'C-4':c4,'C-5':analyze_c5(data,effects)}
     (root/'analysis.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8'); return out
 
 if __name__=='__main__':
