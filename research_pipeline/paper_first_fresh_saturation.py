@@ -22,6 +22,10 @@ REDUCTION_PATTERNS: tuple[dict[str, Any], ...] = (
     {"key":"evolution-induced-task-non-equivalence","mature_theories":["inter-MDP generalized bisimulation","MDP homomorphism","behavioral equivalence"],"veto":"Pre/post scaffold semantics comparability is domain transfer when generalized inter-MDP equivalence solves the same question."},
     {"key":"persistent-update-vs-test-time-compute","mature_theories":["amortized inference","test-time scaling","search-vs-learning evaluation"],"veto":"Persistent update necessity is already an explicit harness/skill evaluation question; require a new structural prediction, not another comparison."},
     {"key":"typed-epistemic-authority","mature_theories":["filtered/source-sensitive belief revision","Bayesian source-reliability networks","dynamic epistemic/justification logic"],"veto":"NO-AUTHORITY evidence transitions are not novel if typed credibility partitions or conditional independence reproduce the same belief update."},
+    {"key":"model-scaffold-enactability","mature_theories":["cross-model prompt transfer","instruction following / compliance","model-artifact compatibility"],"veto":"A harness/skill that is valid but not activated or faithfully followed by a target model is not a new object unless it escapes cross-model prompt/artifact compatibility under the same information."},
+    {"key":"artifact-uptake-after-retrieval","mature_theories":["retrieval-versus-utilization diagnostics","instruction following","externalized skill execution"],"veto":"Retrieved experience that fails to change behavior is already a utilization/uptake bottleneck; require a new causal object beyond retrieval and instruction-following decomposition."},
+    {"key":"environment-mediated-history","mature_theories":["POMDP state sufficiency","causal mediation through physical state","state-conditioned embodied memory"],"veto":"Past actions affecting future behavior through the current world state are not evidence of internal memory; this distinction is mature state/mediation theory unless a new embodied-only prediction survives."},
+    {"key":"multimodal-procedural-compression","mature_theories":["multimodal representation","rate-distortion / information preservation","visual grounding and domain adaptation"],"veto":"Visual details that cannot be compressed into text are not a new self-evolution problem when multimodal skills already preserve state cards/keyframes and rate-distortion captures information loss."},
 )
 
 DRAFTS: tuple[dict[str, Any], ...] = (
@@ -39,6 +43,10 @@ DRAFTS: tuple[dict[str, Any], ...] = (
     {"id":"X2","title":"Evolution-Induced Task Non-Equivalence","decision":"STOP_REDUCTION","reduction":"evolution-induced-task-non-equivalence"},
     {"id":"X3","title":"Persistent-Update Necessity / Compute Substitutability","decision":"STOP_COLLISION","reduction":"persistent-update-vs-test-time-compute"},
     {"id":"X4","title":"Epistemic Authority of Autonomous Experiment Outcomes","decision":"STOP_REDUCTION","reduction":"typed-epistemic-authority"},
+    {"id":"X5","title":"Model-Scaffold Enactability Across Policy Models","decision":"STOP_REDUCTION","reduction":"model-scaffold-enactability"},
+    {"id":"X6","title":"Persistent Artifact Uptake After Successful Retrieval","decision":"STOP_REDUCTION","reduction":"artifact-uptake-after-retrieval"},
+    {"id":"X7","title":"Environment-Mediated History Versus Internal Embodied Memory","decision":"STOP_REDUCTION","reduction":"environment-mediated-history"},
+    {"id":"X8","title":"Irreducible Visual Detail in Multimodal Procedural Consolidation","decision":"STOP_REDUCTION","reduction":"multimodal-procedural-compression"},
 )
 
 POLICY: dict[str, Any] = {
