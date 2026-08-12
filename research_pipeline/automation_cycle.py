@@ -40,6 +40,7 @@ from .p0_e3_stateful import write_stateful as write_e3_stateful_p0
 from .p0_e4_permission_cpu import write_state as write_e4_permission_p0
 from .p0_offline_qualification import write_p0_offline_qualification_state
 from .p0_realizability_suite import write_p0_realizability_suite
+from .p0_revived_batch_f0 import write_revived_batch_f0
 from .iclr_experiment_audit import write_audit as write_iclr_audit
 from .iclr_idea_factory import write_iclr_idea_bank
 from .idea_discovery_v3 import write_idea_discovery_v3
@@ -123,6 +124,7 @@ def run_cycle(
         report["steps"].append(_step("emerging-niche-policy", write_emerging_niche_policy))
         report["steps"].append(_step("human-terminal-idea-state", write_human_terminal_state))
         report["steps"].append(_step("p0-realizability-suite", write_p0_realizability_suite))
+        report["steps"].append(_step("p0-revived-batch-f0", write_revived_batch_f0))
         report["steps"].append(_step("p0-b10-cpu", write_b10_cpu_p0))
         report["steps"].append(_step("p0-a12-soft-audit-f0", lambda: _preserve_on_missing_historical_source(write_a12_soft_audit_f0)))
         report["steps"].append(_step("p0-a3-substrate-stop", lambda: _preserve_on_missing_historical_source(write_a3_substrate_stop)))
@@ -170,6 +172,7 @@ def run_cycle(
         write_emerging_niche_policy()
         write_human_terminal_state()
         write_p0_realizability_suite()
+        write_revived_batch_f0()
         write_b10_cpu_p0()
         _preserve_on_missing_historical_source(write_a12_soft_audit_f0)
         _preserve_on_missing_historical_source(write_a3_substrate_stop)

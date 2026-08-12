@@ -142,6 +142,7 @@ def build() -> Path:
         OUTPUT / "generated" / "p0-decision-ledger.js",
         OUTPUT / "generated" / "p0-offline-qualification.js",
         OUTPUT / "generated" / "p0-realizability-suite.js",
+        OUTPUT / "generated" / "p0-revived-batch-f0.js",
         OUTPUT / "generated" / "p0-b10-cpu.js",
         OUTPUT / "generated" / "p0-a1-soft-audit-f0.js",
         OUTPUT / "generated" / "p0-a2-evidence-depth-f0.js",

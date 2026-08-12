@@ -51,9 +51,18 @@ def build_p0_decision_ledger(
         if override:
             current_state = str(override.get("current_state") or "experiment-stop-await-human-review")
             next_action = str(override.get("next_action") or "review-latest-experiment-decision")
-        elif p0_decision or primary_stop:
+        elif p0_decision:
             current_state = "experiment-stop-await-human-review"
             next_action = "human-merge-drop-or-pivot-review"
+        elif primary_stop == "matched-simplification":
+            current_state = "experiment-stop-await-human-review"
+            next_action = "human-merge-drop-or-pivot-review"
+        elif primary_stop == "substrate":
+            current_state = "upstream-hold"
+            next_action = "collect-or-qualify-required-substrate"
+        elif primary_stop == "voi":
+            current_state = "method-development-stop"
+            next_action = "repair-decision-changing-value-before-more-compute"
         elif preflight.get("execution_authorized") is True:
             current_state = "launchable"
             next_action = "launch-under-single-writer-authority"

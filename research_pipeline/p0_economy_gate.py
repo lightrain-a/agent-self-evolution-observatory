@@ -10,7 +10,7 @@ GATES=(
  {"key":"single_writer_authority","title":"Single-Writer Experiment Authority"},
 )
 POLICY={"schema_version":"1.1","stage_semantics":"resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate","all_five_required_before_execution_compilation":True,"matched_simplification_must_precede_gpu":True,"complexity_ladder_required_before_gpu":True,"complexity_ladder_order":["constant-or-mean","threshold-or-lookup","shallow-or-sparse","proposed-mechanism"],"lower_complexity_headroom_required":True,"substrate_inventory_must_precede_hidden_or_gpu":True,"causal_unit_and_observable_must_be_explicit":True,"gpu_requires_decision_changing_voi":True,"single_writer_authority_required":True,"economy_failure_cannot_emit_method_fail":True,"micro_p0_fraction_max":0.20,"second_backbone_cannot_rescue_failed_economy_gate":True}
-SIMPLIFICATION_TOKENS=("matched","equivalent","dominates","ceiling","group-testing","generic-state-diff","recency-frequency","simple-anchor","intersection-filter","boolean-rule","shallow-rule","nary","complexity-matched","direct-order-aware-risk")
+SIMPLIFICATION_TOKENS=("equivalent","dominates","ceiling","group-testing","generic-state-diff","recency-frequency","simple-anchor","intersection-filter","boolean-rule","shallow-rule","nary","complexity-matched","direct-order-aware-risk")
 SUBSTRATE_TOKENS=("substrate","support-insufficient","support_cardinality","support-cardinality","fresh-cinteraction-support-insufficient","ranking-degenerate","updater-incompetent")
 def _now(): return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 def _gate(key,status,reason,evidence=None): return {"key":key,"status":status,"pass":status=="pass","reason":reason,"evidence":evidence or {}}
@@ -25,7 +25,11 @@ def evaluate_economy_card(idea_id:str,offline_card:dict[str,Any]|None,contract:d
  if any(t in text for t in SIMPLIFICATION_TOKENS) or baseline=='fail': simpl=_gate('matched_simplification','fail','matched simpler baseline reproduces or dominates current mechanism',{'gpu0_status':status,'compiler':simpl_plan})
  elif baseline=='pass' and simpl_plan['baseline_count']>=simpl_plan['minimum_required_baselines']: simpl=_gate('matched_simplification','pass','method-versus-simplification disagreement is empirically present against a compiled baseline tournament',{'gpu0_status':status,'compiler':simpl_plan})
  else: simpl=_gate('matched_simplification','pending','compiled matched-simplification tournament has not established headroom',{'gpu0_status':status,'compiler':simpl_plan})
- inventory=econ.get('substrate_inventory') or {}; inv_fields=('effective_candidates_min','fresh_heldout_min','reserve_fraction_min','target_variation_rule','observed_effective_candidates','observed_fresh_heldout','observed_reserve_fraction'); inv_missing=[k for k in inv_fields if inventory.get(k) in (None,'')]
+ inventory=dict(econ.get('substrate_inventory') or {})
+ observed=offline.get('substrate_inventory') or {}
+ for key in ('observed_effective_candidates','observed_fresh_heldout','observed_reserve_fraction'):
+  if observed.get(key) is not None: inventory[key]=observed.get(key)
+ inv_fields=('effective_candidates_min','fresh_heldout_min','reserve_fraction_min','target_variation_rule','observed_effective_candidates','observed_fresh_heldout','observed_reserve_fraction'); inv_missing=[k for k in inv_fields if inventory.get(k) in (None,'')]
  if any(t in text for t in SUBSTRATE_TOKENS): substrate=_gate('substrate_inventory','fail','current substrate/support inventory cannot instantiate the frozen test',{'gpu0_status':status})
  else:
   effect,competence=_check(offline,'effect_variation'),_check(offline,'competence_window'); updater=offline.get('updater_competence') or {}

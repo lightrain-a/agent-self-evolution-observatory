@@ -10,6 +10,7 @@ from .human_terminal_state import load_independent_methods, load_parents
 from .pre_experiment_specs import GATES as OUTER_GATES
 from .pre_p0_identifiability import CHECKS as PRE_P0_CHECKS
 from .p0_offline_qualification import build_p0_offline_qualification_state
+from .p0_revived_batch_f0 import build_revived_batch_f0
 from .p0_economy_gate import evaluate_economy_card, build_economy_state, POLICY as ECONOMY_POLICY
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "p0-admission-state.json"
@@ -212,6 +213,8 @@ def build_p0_admission_state() -> dict[str, Any]:
     rows={**load_parents(),**load_independent_methods()}
     offline_state=build_p0_offline_qualification_state()
     offline_by_id={row["idea_id"]:row for row in offline_state.get("cards") or []}
+    revived_f0=build_revived_batch_f0()
+    offline_by_id.update({row["idea_id"]:row for row in revived_f0.get("revived") or []})
     active=[(i,r) for i,r in rows.items() if r.get("terminal_state")=="p0"]
     active.sort(key=lambda x:(str(x[1].get("group") or "Z"),str(x[1].get("code") or x[0])))
     cards=[]; seen=set()

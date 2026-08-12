@@ -32,6 +32,7 @@ from .p0_b10_cpu import write_b10_cpu_p0
 from .p0_a6_cpu import write_a6_cpu_p0
 from .p0_offline_qualification import build_p0_offline_qualification_state, write_p0_offline_qualification_state
 from .p0_realizability_suite import build_p0_realizability_suite, write_p0_realizability_suite
+from .p0_revived_batch_f0 import build_revived_batch_f0, write_revived_batch_f0
 from .p0_decision_ledger import build_p0_decision_ledger, write_p0_decision_ledger
 from .p0_four_direction_iteration import build_four_direction_iteration, write_four_direction_iteration
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
@@ -250,6 +251,7 @@ def build_research_system_state() -> dict[str, Any]:
     pre_gpu_candidate_gates = build_pre_gpu_candidate_gate_state()
     human_terminal_ideas = build_human_terminal_state()
     p0_realizability = build_p0_realizability_suite()
+    p0_revived_batch = build_revived_batch_f0()
     p0_offline_qualification = build_p0_offline_qualification_state()
     p0_admission = build_p0_admission_state()
     four_direction_iteration = build_four_direction_iteration()
@@ -270,6 +272,7 @@ def build_research_system_state() -> dict[str, Any]:
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
     p0_offline_public = {"summary": p0_offline_qualification["summary"], "policy": p0_offline_qualification["policy"]}
     p0_realizability_public = {"summary": p0_realizability["summary"], "policy": p0_realizability["policy"]}
+    p0_revived_batch_public = {"summary": p0_revived_batch["summary"], "policy": p0_revived_batch["policy"], "parent_batch": p0_revived_batch["parent_batch"]}
     repair_queue = build_repair_queue(idea_bank, collision_engine, pilot_registry, experiment_iteration)
     idea_discovery_v3 = build_idea_discovery_v3()
     idea_discovery_v31 = build_idea_discovery_v31()
@@ -342,6 +345,12 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_offline_checks_failed":p0_offline_qualification["summary"]["checks_failed"],
             "p0_offline_checks_pending":p0_offline_qualification["summary"]["checks_pending"],
             "p0_realizability_passed":p0_realizability["summary"]["synthetic_pass"],
+            "p0_batch_parent_p0":p0_revived_batch["summary"]["parent_p0"],
+            "p0_batch_reused_existing":p0_revived_batch["summary"]["reused_existing_p0"],
+            "p0_batch_fresh_cpu_f0":p0_revived_batch["summary"]["fresh_cpu_f0"],
+            "p0_batch_matched_stops":p0_revived_batch["summary"]["fresh_matched_simplification_stop"],
+            "p0_batch_upstream_holds":p0_revived_batch["summary"]["fresh_upstream_hold"],
+            "p0_batch_gpu_candidates":p0_revived_batch["summary"]["gpu_queue_candidates_before_economy"],
             "p0_b10_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("b10",{}).get("decision"),
             "p0_a1_repair_decision":(human_terminal_ideas.get("parents") or {}).get("update-trust-region",{}).get("p0_decision"),
             "p0_a2_repair_decision":(human_terminal_ideas.get("parents") or {}).get("budgeted-evolution-controller",{}).get("p0_decision"),
@@ -412,6 +421,7 @@ def build_research_system_state() -> dict[str, Any]:
         "research_governance_v2":research_governance_v2,
         "p0_offline_qualification":p0_offline_public,
         "p0_realizability":p0_realizability_public,
+        "p0_revived_batch_f0":p0_revived_batch_public,
         "repair_queue":repair_queue,
         "idea_discovery_v3":idea_discovery_v3,
         "idea_discovery_v31":idea_discovery_v31,
@@ -470,6 +480,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"research-governance-v2", "pass":state["research_governance_v2"]["policy"].get("support_and_method_are_distinct") is True and state["research_governance_v2"]["policy"].get("p0_method_requires_frozen_support_pass") is True and state["research_governance_v2"]["policy"].get("raw_trace_is_mandatory_for_gpu_runs") is True and len(state["research_governance_v2"].get("stages") or []) == 7, "detail":state["research_governance_v2"]},
         {"key":"p0-offline-qualification", "pass":state["p0_offline_qualification"]["summary"].get("ideas") == 16 and state["p0_offline_qualification"]["policy"].get("method_result_from_offline_qualification_forbidden") is True, "detail":state["p0_offline_qualification"]["summary"]},
         {"key":"p0-realizability", "pass":state["p0_realizability"]["summary"].get("audited") == 14 and state["p0_realizability"]["policy"].get("cannot_emit_method_result") is True, "detail":state["p0_realizability"]["summary"]},
+        {"key":"p0-20idea-batch", "pass":state["p0_revived_batch_f0"]["summary"].get("parent_p0") == 20 and state["p0_revived_batch_f0"]["summary"].get("fresh_cpu_f0") == 7 and state["p0_revived_batch_f0"]["summary"].get("fresh_matched_simplification_stop") == 4 and state["p0_revived_batch_f0"]["summary"].get("fresh_upstream_hold") == 3, "detail":state["p0_revived_batch_f0"]["summary"]},
         {"key":"final-advisor-gate", "pass":state["summary"]["final_ready"] and state["summary"]["final_pass"] == state["summary"]["discussion_target"] and state["summary"]["final_revise"] == 0 and state["summary"]["final_block"] == 0, "detail":{"pass":state["summary"]["final_pass"],"target":state["summary"]["discussion_target"],"revise":state["summary"]["final_revise"],"block":state["summary"]["final_block"]}},
     ]
     return {"status":"healthy" if all(item["pass"] for item in checks) else "degraded", "checks":checks}
@@ -524,6 +535,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if (governance.get("policy") or {}).get("raw_trace_is_mandatory_for_gpu_runs") is not True or (governance.get("policy") or {}).get("pre_model_load_audit_required") is not True: errors.append("GPU trace/pre-model-load governance policy missing")
     if state["p0_offline_qualification"]["summary"].get("ideas") != 16 or state["p0_offline_qualification"]["policy"].get("method_result_from_offline_qualification_forbidden") is not True: errors.append("P0 offline qualification policy mismatch")
     if state["p0_realizability"]["summary"].get("audited") != 14 or state["p0_realizability"]["policy"].get("cannot_emit_method_result") is not True: errors.append("P0 realizability policy mismatch")
+    batch = state.get("p0_revived_batch_f0") or {}; bs = batch.get("summary") or {}
+    if (bs.get("parent_p0"), bs.get("reused_existing_p0"), bs.get("fresh_cpu_f0"), bs.get("fresh_matched_simplification_stop"), bs.get("fresh_upstream_hold")) != (20,13,7,4,3): errors.append("20-Idea P0 batch accounting mismatch")
     if state["repair_queue"]["policy"].get("terminal_human_parent_repair_forbidden") is not False or state["repair_queue"]["policy"].get("stop_automatic_idea_iteration_at_p0") is not True or state["repair_queue"]["policy"].get("absorbed_child_repair_forbidden") is not True: errors.append("terminal repair policy missing")
     if state["pilot_registry"]["summary"]["invalid_approval_files"] != 0: errors.append("invalid pilot approval files")
     if not state["summary"]["final_ready"] or state["summary"]["final_pass"] != state["summary"]["discussion_target"]: errors.append("final advisor gate not ready")
@@ -533,6 +546,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
 def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAULT_JS) -> dict[str, Any]:
     write_human_terminal_state()
     write_p0_realizability_suite()
+    write_revived_batch_f0()
     write_b10_cpu_p0()
     write_a6_cpu_p0()
     write_p0_offline_qualification_state()

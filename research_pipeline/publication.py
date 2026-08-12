@@ -30,6 +30,8 @@ DAILY_ARTIFACTS = (
     "generated/p0-offline-qualification.js",
     "generated/p0-realizability-suite.json",
     "generated/p0-realizability-suite.js",
+    "generated/p0-revived-batch-f0.json",
+    "generated/p0-revived-batch-f0.js",
     "generated/p0-b10-cpu.json",
     "generated/p0-b10-cpu.js",
     "generated/p0-a1-soft-audit-f0.json",

@@ -11,15 +11,18 @@ class P0DecisionLedgerTest(unittest.TestCase):
   state=build_p0_decision_ledger(build_p0_admission_state(),build_p0_offline_qualification_state(),build_human_terminal_state())
   self.assertEqual(state['summary']['active_p0'],27)
   self.assertEqual(state['summary']['launchable'],0)
-  self.assertGreaterEqual(state['summary']['experiment_stopped'],16)
-  self.assertEqual(state['summary']['economy_blocked'],7)
+  self.assertGreaterEqual(state['summary']['experiment_stopped'],20)
+  self.assertEqual(state['summary']['economy_blocked'],0)
+  self.assertGreaterEqual(state['summary']['upstream_hold'],3)
   by={r['idea_id']:r for r in state['rows']}
   self.assertEqual(by['active-causal-minimal-rollback']['current_state'],'experiment-stop-await-human-review')
   self.assertEqual(by['active-causal-minimal-rollback']['economy_stop_class'],'matched-simplification')
   self.assertEqual(by['regression-gated-self-evolution']['economy_stop_class'],'substrate')
   for row in state['rows']:
-   if row['p0_decision'] or row['economy_stop_class']:
+   if row['p0_decision'] or row['economy_stop_class']=='matched-simplification':
     self.assertEqual(row['current_state'],'experiment-stop-await-human-review')
+   elif row['economy_stop_class']=='substrate':
+    self.assertEqual(row['current_state'],'upstream-hold')
   self.assertTrue(state['policy']['economy_stop_overrides_planned_registry_display'])
  def test_latest_four_direction_iteration_overrides_experiment_decision_not_lifecycle(self):
   state=build_p0_decision_ledger(build_p0_admission_state(),build_p0_offline_qualification_state(),build_human_terminal_state(),build_four_direction_iteration())
@@ -30,6 +33,7 @@ class P0DecisionLedgerTest(unittest.TestCase):
   self.assertEqual(by['cross-task-effect-transport-certificate']['current_state'],'method-development-stop')
   self.assertEqual(by['cross-task-effect-transport-certificate']['lifecycle'],'p0')
   self.assertEqual(state['summary']['latest_iteration_overrides'],4)
+  self.assertEqual(state['summary']['upstream_hold'],4)
   self.assertEqual(state['summary']['launchable'],0)
 
 if __name__=='__main__': unittest.main()
