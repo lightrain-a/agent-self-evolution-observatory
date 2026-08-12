@@ -13,6 +13,7 @@ from .p0_four_direction_iteration import build_four_direction_iteration
 from .p0_offline_qualification import build_p0_offline_qualification_state
 from .paper_design_contract import audit_paper_design_contract
 from .paper_first_collision_review import build_fresh_collision_review
+from .paper_first_post_c2_adjudication import build_post_c2_adjudication
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-stop-triage.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-stop-triage.js"
@@ -53,6 +54,8 @@ def _now() -> str:
 
 def _paper_candidate() -> dict[str, Any]:
     collision_review = build_fresh_collision_review()
+    post_c2 = build_post_c2_adjudication()
+    post_c2_terminal = bool((post_c2.get("authority") or {}).get("clean_mechanism_stop") is True)
     replay_path = PROJECT_ROOT / "generated" / "paper-first-replay-feasibility.json"
     try:
         replay_feasibility = json.loads(replay_path.read_text(encoding="utf-8"))
@@ -283,6 +286,15 @@ def _paper_candidate() -> dict[str, Any]:
         "fresh_collision_review_complete": collision_review["decision"].startswith("PASS_"),
         "ai_premortem_required_before_local_validation": True,
         "environment_feasibility_complete": replay_pass,
+        "lifecycle_status": "terminated-after-c2" if post_c2_terminal else "paper-design-frozen",
+        "post_c2_adjudication": {
+            "decision": post_c2.get("decision"),
+            "current_paper_formulation_status": post_c2.get("current_paper_formulation_status"),
+            "broad_parent_phenomenon_status": post_c2.get("broad_parent_phenomenon_status"),
+            "C3_locked": (post_c2.get("authority") or {}).get("C3_locked"),
+            "full_experiment_authorized": (post_c2.get("authority") or {}).get("full_experiment_authorized"),
+            "new_paper_problem_auto_authorized": (post_c2.get("authority") or {}).get("new_paper_problem_auto_authorized"),
+        },
         "local_validation_authorized": False,
         "full_experiment_authorized": False,
     }
@@ -340,7 +352,8 @@ def build_paper_first_stop_triage() -> dict[str, Any]:
         "policy": POLICY,
         "summary": {
             "active_p0_rows": len(rows),
-            "paper_redesign_candidates": 1,
+            "paper_redesign_candidates": 0 if candidate.get("lifecycle_status") == "terminated-after-c2" else 1,
+            "paper_archived_after_c2": int(candidate.get("lifecycle_status") == "terminated-after-c2"),
             "old_methods_reactivated": 0,
             "local_validation_authorized": int(bool(candidate.get("local_validation_authorized"))),
             "full_experiment_authorized": 0,

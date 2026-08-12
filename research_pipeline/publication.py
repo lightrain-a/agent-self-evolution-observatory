@@ -78,6 +78,8 @@ DAILY_ARTIFACTS = (
     "generated/research-system-state.js",
     "generated/paper-first-p0-f0-state.json",
     "generated/paper-first-p0-f0-state.js",
+    "generated/paper-first-post-c2-adjudication.json",
+    "generated/paper-first-post-c2-adjudication.js",
 )
 WEEKLY_ARTIFACTS = DAILY_ARTIFACTS + (
     "generated/iclr-low-resource-ideas.json",

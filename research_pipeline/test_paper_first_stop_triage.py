@@ -18,14 +18,19 @@ class PaperFirstStopTriageTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["old_methods_reactivated"], 0)
         self.assertTrue(all(row["execution_authorized"] is False for row in self.state["rows"]))
 
-    def test_only_one_genuinely_new_paper_problem_is_opened(self) -> None:
-        self.assertEqual(self.state["summary"]["paper_redesign_candidates"], 1)
+    def test_historical_new_paper_problem_is_now_archived_after_c2(self) -> None:
+        self.assertEqual(self.state["summary"]["paper_redesign_candidates"], 0)
+        self.assertEqual(self.state["summary"]["paper_archived_after_c2"], 1)
         self.assertEqual(self.candidate["paper_id"], "trajectory-mediated-memory-effect-transport")
         self.assertEqual(
             self.candidate["parent_evidence"],
             ["B-8 replicated-effect-memory-gate", "B-9 cross-task-effect-transport-certificate"],
         )
         self.assertIn("Genuinely new research problem", self.candidate["relationship_to_closed_program"])
+        self.assertEqual(self.candidate["lifecycle_status"], "terminated-after-c2")
+        self.assertEqual(self.candidate["post_c2_adjudication"]["decision"], "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM")
+        self.assertTrue(self.candidate["post_c2_adjudication"]["C3_locked"])
+        self.assertFalse(self.candidate["post_c2_adjudication"]["new_paper_problem_auto_authorized"])
         self.assertFalse(self.candidate["local_validation_authorized"])
         self.assertFalse(self.candidate["full_experiment_authorized"])
 
