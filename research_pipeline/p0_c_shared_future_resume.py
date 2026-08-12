@@ -26,10 +26,14 @@ def run_part(plan_path:Path, source_shard:int, part_index:int, num_parts:int, mo
         raise RuntimeError(f"baseline table incomplete for shard {source_shard}: probes={len(probe_base)}/{len(plan['probe_tasks'])}, hidden={len(hidden_base)}/{len(plan['hidden_tasks'])}")
     selected=[c for idx,c in enumerate(candidates) if idx%int(num_parts)==int(part_index)]
     out=shard_dir/f'future-extra-part-{part_index}-of-{num_parts}.jsonl'
-    existing=_rows(out); done={(r.get('candidate_id'),r.get('role'),r.get('task')) for r in existing}
+    existing=_rows(out)
+    main_done={(r.get('candidate_id'),r.get('role'),r.get('task')) for r in future if r.get('role') in {'candidate-probe','candidate-hidden'}}
+    done=main_done|{(r.get('candidate_id'),r.get('role'),r.get('task')) for r in existing}
     gpu=check_gpu_free(); cfg=load_config(alfworld_config); cfg.setdefault('general',{})['save_path']=str(shard_dir/f'future-extra-runtime-{part_index}-of-{num_parts}')
     policy=HFAdmissiblePolicy(model_path,policy_mode='react-family'); runner=ALFWorldGameRunner(cfg); started=time.time()
-    completed=len(existing); total=len(selected)*(len(plan['probe_tasks'])+int(plan['contracts']['C-5']['hidden_per_candidate']))
+    selected_ids={c['candidate_id'] for c in selected}
+    inherited=sum(1 for cid,role,task in main_done if cid in selected_ids)
+    completed=inherited+len(existing); total=len(selected)*(len(plan['probe_tasks'])+int(plan['contracts']['C-5']['hidden_per_candidate']))
     for c in selected:
         cid=c['candidate_id']; patch=c['patch']
         for task in plan['probe_tasks']:
@@ -46,7 +50,7 @@ def run_part(plan_path:Path, source_shard:int, part_index:int, num_parts:int, mo
             append_jsonl(out,{'role':'candidate-hidden','resume_part':f'{part_index}/{num_parts}','candidate_id':cid,'task':task,'baseline_success':hidden_base[task],'trace':tr})
             done.add(key); completed+=1
             write_json(shard_dir/f'future-extra-progress-{part_index}-of-{num_parts}.json',{'source_shard':source_shard,'part_index':part_index,'num_parts':num_parts,'completed_pairs':completed,'total_pairs':total,'usage':policy.usage_snapshot()})
-    result={'schema_version':'1.0','status':'complete','source_shard':source_shard,'part_index':part_index,'num_parts':num_parts,'candidate_ids':[c['candidate_id'] for c in selected],'completed_pairs':completed,'total_pairs':total,'usage':policy.usage_snapshot(),'elapsed_hours':(time.time()-started)/3600.0,'gpu_preflight':gpu,'scientific_role':'resume-only C-5 future evaluation over frozen candidates/baselines; no source or label changes'}
+    result={'schema_version':'1.0','status':'complete','source_shard':source_shard,'part_index':part_index,'num_parts':num_parts,'candidate_ids':[c['candidate_id'] for c in selected],'inherited_main_pairs':inherited,'completed_pairs':completed,'total_pairs':total,'usage':policy.usage_snapshot(),'elapsed_hours':(time.time()-started)/3600.0,'gpu_preflight':gpu,'scientific_role':'resume-only C-5 future evaluation over frozen candidates/baselines; no source or label changes'}
     write_json(shard_dir/f'future-extra-complete-{part_index}-of-{num_parts}.json',result); return result
 
 if __name__=='__main__':
