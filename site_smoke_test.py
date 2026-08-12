@@ -176,7 +176,7 @@ def main() -> None:
         "domains": ["multimodal-reasoning", "digital-interaction", "physical-world"],
         "evaluation": ["validity-safety", "tasks-benchmarks", "reproducibility"],
         "research-directions": ["orientation", "landscape", "direction-clusters", "long-term-agenda"],
-        "paper-ideas": ["discussed-ideas", "new-ideas"],
+        "paper-ideas": ["discussed-ideas", "new-ideas", "paper-first-incubation"],
         "selected-paper": ["problem-scope", "evidence-experiments", "narrative-execution", "review-gates"],
         "bibliography": ["coverage-protocol", "ranking-reading", "field-maps", "search-corpus"],
     }
@@ -248,8 +248,10 @@ def main() -> None:
         idea_page.find('src="generated/machine-school-inspired-ideas.js"'),
         idea_page.find('src="idea-human-review-data.js"'),
         idea_page.find('src="generated/current-final-ideas.js"'),
+        idea_page.find('src="generated/paper-first-idea-incubation.js"'),
         idea_page.find('src="content-idea-portfolio.js"'),
         idea_page.find('src="page-architecture-data.js"'),
+        idea_page.find('src="paper-first-incubation-view.js"'),
         idea_page.find('src="app.js"'),
     ]
     if any(position < 0 for position in system_script_order) or system_script_order != sorted(system_script_order):
@@ -261,6 +263,12 @@ def main() -> None:
         view_pos = page.find('src="emerging-niche-view.js"')
         if min(policy_pos, app_pos, view_pos) < 0 or not policy_pos < app_pos < view_pos:
             fail(f"{filename} must load ENS policy before app.js and ENS view after app.js")
+    incubation = json.loads((ROOT / "generated" / "paper-first-idea-incubation.json").read_text(encoding="utf-8"))
+    incubation_summary = incubation.get("summary") or {}
+    if (incubation_summary.get("candidates"),incubation_summary.get("advance_to_paper_design"),incubation_summary.get("revise_novelty_boundary"),incubation_summary.get("blocked_collision"),incubation_summary.get("p0_authorized"),incubation_summary.get("gpu_authorized")) != (8,4,3,1,0,0):
+        fail(f"paper-first incubation summary is invalid: {incubation_summary}")
+    if len({str(row.get("theme") or "") for row in incubation.get("candidates") or []}) < 6:
+        fail("paper-first incubation queue collapsed into too few themes")
     niche_policy = json.loads((ROOT / "generated" / "emerging-niche-policy.json").read_text(encoding="utf-8"))
     if niche_policy.get("short_name") != "ENS" or "experiment_stop" not in niche_policy.get("hard_policy", {}).get("never_overrides", []):
         fail("Emerging-Niche policy must remain prioritization-only and subordinate to experiment STOP")

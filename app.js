@@ -1699,7 +1699,8 @@ function renderIdeaPortfolio(config) {
   const chapters = pageArchitecture("paper-ideas").chapters || [];
   const discussed = renderDiscussedIdeaBank();
   const newIdeas = renderNewIdeaCandidates();
-  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderCustomChapter(chapters[0],0,discussed)}${renderCustomChapter(chapters[1],1,newIdeas)}`;
+  const incubation = window.renderPaperFirstIdeaIncubation ? window.renderPaperFirstIdeaIncubation() : "";
+  return `${pageHeader(config)}${renderArchitectureOverview(pageArchitecture("paper-ideas"))}${renderCustomChapter(chapters[0],0,discussed)}${renderCustomChapter(chapters[1],1,newIdeas)}${renderCustomChapter(chapters[2],2,incubation)}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;

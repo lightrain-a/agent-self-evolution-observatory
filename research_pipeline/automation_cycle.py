@@ -53,6 +53,7 @@ from .idea_discovery_v4 import write_idea_discovery_v4
 from .machine_school_idea_factory import write_machine_school_bank
 from .live_pipeline import sync_semantic_scholar
 from .published_experiment_audit import write_audit as write_published_audit
+from .paper_first_idea_incubation import write_paper_first_idea_incubation
 from .research_system import write_research_system_state
 from .publication import PUBLICATION_OK_STATES, publish_generated_state
 
@@ -117,6 +118,7 @@ def run_cycle(
             report["steps"].append(_step("second-order-idea-discovery-v52", write_idea_discovery_v52))
             report["steps"].append(_step("final-boundary-idea-discovery-v53", write_idea_discovery_v53))
             report["steps"].append(_step("discussion-ready-portfolio", write_discussion_portfolio))
+            report["steps"].append(_step("paper-first-idea-incubation", write_paper_first_idea_incubation))
             report["steps"].append(_step("constrained-combination-idea-discovery-v4", write_idea_discovery_v4))
             report["steps"].append(_step("iclr-audit", write_iclr_audit))
             report["steps"].append(_step("cvpr-followup-bank", write_cvpr_idea_bank))

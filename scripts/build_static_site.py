@@ -117,6 +117,7 @@ def build() -> Path:
     required = (
         OUTPUT / "index.html",
         OUTPUT / "paper-ideas.html",
+        OUTPUT / "paper-first-incubation-view.js",
         OUTPUT / "experiments.html",
         OUTPUT / "system-overview.html",
         OUTPUT / "app.js",
@@ -167,6 +168,7 @@ def build() -> Path:
         OUTPUT / "generated" / "p0-e3-stateful.js",
         OUTPUT / "generated" / "p0-e4-permission-cpu.js",
         OUTPUT / "generated" / "discussion-ready-ideas.js",
+        OUTPUT / "generated" / "paper-first-idea-incubation.js",
         OUTPUT / "generated" / "current-final-ideas.js",
         OUTPUT / "generated" / "final-collision-recheck.js",
         OUTPUT / "generated" / "final-advisor-audit.js",

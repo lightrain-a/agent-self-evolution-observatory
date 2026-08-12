@@ -151,14 +151,20 @@ def main() -> None:
           mergedMethods: document.querySelectorAll('.human-absorbed-methods').length,
           freshCollisionBlocks: document.querySelectorAll('.human-fresh-collision').length,
           freshCollisionLinks: document.querySelectorAll('.human-fresh-collision nav a').length,
+          incubationCards: document.querySelectorAll('.paper-incubation-card').length,
+          incubationAdvance: document.querySelectorAll('.paper-incubation-card.incubation-advance').length,
+          incubationRevise: document.querySelectorAll('.paper-incubation-card.incubation-revise').length,
+          incubationBlock: document.querySelectorAll('.paper-incubation-card.incubation-block').length,
+          incubationOpen: document.querySelectorAll('.paper-incubation-card[open]').length,
+          incubationSummary: window.PAPER_FIRST_IDEA_INCUBATION?.summary || {},
           text: document.body.textContent || ''
         };""")
-        require(ideas["chapters"] == 2, f"paper-ideas should have exactly two frontend chapters, got {ideas['chapters']}")
+        require(ideas["chapters"] == 3, f"paper-ideas should have exactly three frontend chapters including Paper-first incubation, got {ideas['chapters']}")
         require(ideas["p0Entry"] == 0 and ideas["p0Boards"] == 0 and ideas["experimentLinks"] >= 1, f"legacy P0-entry/control boards must stay off canonical Paper Ideas: {ideas['p0Entry']}/{ideas['p0Boards']}/{ideas['experimentLinks']}")
         require(ideas["p0AdmissionSummary"].get("active_p0") == 27 and ideas["p0AdmissionSummary"].get("transitioned_from_p0_ready") == 16 and ideas["p0AdmissionSummary"].get("revived_from_drop") == 7 and ideas["p0AdmissionSummary"].get("settings_complete") == 27 and ideas["p0AdmissionSummary"].get("economy_ready") == 0 and ideas["p0AdmissionSummary"].get("execution_authorized") == 0, f"paper-ideas unified P0 admission state is stale: {ideas['p0AdmissionSummary']}")
         require(ideas["p0Summary"].get("ready_now") == 0 and ideas["p0Summary"].get("pre_p0_blocked") == 4 and ideas["p0Summary"].get("gpu_hours_cap_ready_now") == 0 and ideas["p0Summary"].get("p1_authorized") == 0, f"P0 Pre-P0/resource summary is wrong: {ideas['p0Summary']}")
         require(ideas["p0Policy"].get("pre_p0_identifiability_required") is True and ideas["p0Policy"].get("automatic_p0_to_p1_forbidden") is True and ideas["p0Policy"].get("p0_pass_requires_human_approval") is True, f"P0 human/Pre-P0 approval policy is missing: {ideas['p0Policy']}")
-        require((ideas["toc2"], ideas["toc3"], ideas["toc4"]) == (3, 9, 0), f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
+        require(ideas["toc2"] >= 4 and ideas["toc4"] == 0, f"paper-ideas TOC hierarchy is wrong: {ideas['toc2']}/{ideas['toc3']}/{ideas['toc4']}")
         require(ideas["discussedGroups"] == 6 and ideas["discussedCards"] == 26, f"expected six scientific groups and 26 discussed ideas, got {ideas['discussedGroups']}/{ideas['discussedCards']}")
         require((ideas["readyCards"], ideas["mergedCards"], ideas["droppedCards"]) == (20, 6, 0), f"terminal tone counts are wrong: {ideas['readyCards']}/{ideas['mergedCards']}/{ideas['droppedCards']}")
         require(ideas["terminalCounts"].get("p0") == 20 and ideas["terminalCounts"].get("p0-ready",0) == 0 and ideas["terminalCounts"].get("merge") == 6 and ideas["terminalCounts"].get("drop",0) == 0, f"terminal parent counts are wrong: {ideas['terminalCounts']}")
@@ -181,6 +187,9 @@ def main() -> None:
         require(ideas["mergedMethods"] >= 8, f"merged FINAL method provenance is not visible on discussed ideas: {ideas['mergedMethods']}")
         require(ideas["freshCollisionBlocks"] == 17 and ideas["freshCollisionLinks"] >= 40, f"fresh reducibility sources are missing from refined ideas: {ideas['freshCollisionBlocks']}/{ideas['freshCollisionLinks']}")
         require(all(marker in ideas["text"] for marker in ("ChronoMem","DeltaBox","CausalFlow")), "latest load-bearing collision sources are not visible in refined idea cards")
+        require((ideas["incubationCards"],ideas["incubationAdvance"],ideas["incubationRevise"],ideas["incubationBlock"],ideas["incubationOpen"]) == (8,4,3,1,0), f"Paper-first incubation rendering is wrong: {ideas['incubationCards']}/{ideas['incubationAdvance']}/{ideas['incubationRevise']}/{ideas['incubationBlock']}/{ideas['incubationOpen']}")
+        require((ideas["incubationSummary"].get("p0_authorized"),ideas["incubationSummary"].get("gpu_authorized")) == (0,0), f"incubation must remain outside P0/GPU authority: {ideas['incubationSummary']}")
+        require(all(marker in ideas["text"] for marker in ("PF-1","PF-2","PF-4","PF-6")) and (("面向未来可学习性的自进化" in ideas["text"] and "跨 Agent 更新表面的因果修复路由" in ideas["text"]) or ("Future-Learnability-Preserving Self-Evolution" in ideas["text"] and "Causal Routing Across Agent Update Surfaces" in ideas["text"])), "four Paper-first ADVANCE candidates are not visible")
         require("Human terminal ledger" in ideas["text"] and ideas["newCards"] == 7 and ideas["absorbedChildCount"] == 17, "terminal/current idea summary or standalone-method rendering is missing")
 
         expanded_before_refresh = execute(session_id, """document.documentElement.style.scrollBehavior='auto'; const card=document.getElementById('idea-a-1'); if(!card) return null; card.open=true; card.querySelectorAll('details').forEach(x=>x.open=true); const top=card.getBoundingClientRect().top+window.scrollY; window.scrollTo(0, top+Math.min(900,Math.max(500,card.scrollHeight*.55))); return {y:window.scrollY,open:document.querySelectorAll('#dynamic-page details[open]').length};""")

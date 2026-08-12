@@ -103,6 +103,8 @@ WEEKLY_ARTIFACTS = DAILY_ARTIFACTS + (
     "generated/idea-discovery-v53-external-reviews.json",
     "generated/discussion-ready-ideas.json",
     "generated/discussion-ready-ideas.js",
+    "generated/paper-first-idea-incubation.json",
+    "generated/paper-first-idea-incubation.js",
     "generated/idea-discovery-v4.json",
     "generated/idea-discovery-v4.js",
     "generated/idea-discovery-v4-external-reviews.json",
