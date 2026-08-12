@@ -40,6 +40,7 @@ REDUCTION_PATTERNS: tuple[dict[str, Any], ...] = (
     {"key":"cross-layer-behavior-persistence","mature_theories":["skill distillation/internalization","unlearning / persistent contamination","descendant inheritance / source-deletion persistence"],"veto":"External-to-internal migration and ghost behavior after source removal are not novel when cross-layer promotion and descendant contamination already predict persistence."},
     {"key":"experience-sharing-sign-reversal","mature_theories":["diversity-consensus tradeoff","negative transfer / distributed heterogeneity","information redundancy / correlation","portfolio/submodular diversity"],"veto":"Sharing-helpful versus sharing-collapse contradictions are not novel if complementarity/redundancy under matched budget predicts the sign."},
     {"key":"feedback-polarity-by-update-surface","mature_theories":["supervised imitation / behavioral cloning","error-driven and corrective learning","positive-only versus positive+negative concept learning","information gain / active learning"],"veto":"Success-only versus failure-containing feedback is not a new Agent object when imitation learns positive behavior while corrective/rule learning uses failures as counterexamples that expose missing applicability boundaries."},
+    {"key":"harness-update-scope-heterogeneity","mature_theories":["conditional average treatment effects / effect heterogeneity","invariant causal prediction / invariant risk minimization","domain generalization","software configuration scoping"],"veto":"Task-, pathology-, executor-, or trace-conditioned harness validity is not a new Agent object when the candidate condition is simply an effect modifier and the minimal invariant is a CATE/ICP/IRM target."},
 )
 
 DRAFTS: tuple[dict[str, Any], ...] = (
@@ -79,6 +80,7 @@ DRAFTS: tuple[dict[str, Any], ...] = (
     {"id":"D1","title":"Dual-Residency Ghost Effect after External Skill Internalization","decision":"STOP_COLLISION","reduction":"cross-layer-behavior-persistence"},
     {"id":"C1","title":"Experience Sharing: Complementarity versus Diversity Collapse","decision":"STOP_REDUCTION","reduction":"experience-sharing-sign-reversal"},
     {"id":"C2","title":"Does Update Surface Change the Scientific Value of Success versus Failure Feedback?","decision":"STOP_REDUCTION","reduction":"feedback-polarity-by-update-surface"},
+    {"id":"C3","title":"Task Identity versus Failure Pathology as the Scope of Harness Updates","decision":"STOP_REDUCTION","reduction":"harness-update-scope-heterogeneity"},
 )
 
 POLICY: dict[str, Any] = {

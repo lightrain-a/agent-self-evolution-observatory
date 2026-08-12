@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-12T18:44:46+00:00",
+  "generated_at": "2026-08-12T18:49:39+00:00",
   "review_id": "fresh-problem-saturation-20260813-r2",
   "policy": {
     "schema_version": "1.1",
@@ -17,10 +17,10 @@
     "gpu_authorized": false
   },
   "summary": {
-    "drafts_reviewed": 36,
+    "drafts_reviewed": 37,
     "survivors": 0,
-    "stopped": 36,
-    "reduction_patterns": 29,
+    "stopped": 37,
+    "reduction_patterns": 30,
     "local_validation_authorized": 0,
     "p0_authorized": 0
   },
@@ -240,6 +240,12 @@
       "title": "Does Update Surface Change the Scientific Value of Success versus Failure Feedback?",
       "decision": "STOP_REDUCTION",
       "reduction": "feedback-polarity-by-update-surface"
+    },
+    {
+      "id": "C3",
+      "title": "Task Identity versus Failure Pathology as the Scope of Harness Updates",
+      "decision": "STOP_REDUCTION",
+      "reduction": "harness-update-scope-heterogeneity"
     }
   ],
   "reduction_patterns": [
@@ -510,6 +516,16 @@
         "information gain / active learning"
       ],
       "veto": "Success-only versus failure-containing feedback is not a new Agent object when imitation learns positive behavior while corrective/rule learning uses failures as counterexamples that expose missing applicability boundaries."
+    },
+    {
+      "key": "harness-update-scope-heterogeneity",
+      "mature_theories": [
+        "conditional average treatment effects / effect heterogeneity",
+        "invariant causal prediction / invariant risk minimization",
+        "domain generalization",
+        "software configuration scoping"
+      ],
+      "veto": "Task-, pathology-, executor-, or trace-conditioned harness validity is not a new Agent object when the candidate condition is simply an effect modifier and the minimal invariant is a CATE/ICP/IRM target."
     }
   ],
   "generator_revision": {
