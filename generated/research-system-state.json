@@ -170,7 +170,10 @@
     "mem_xfer_support_analysis_status": "support_enriched_analysis_complete",
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 11,
-    "architecture_functional_layers": 6
+    "architecture_functional_layers": 6,
+    "paper_first_premature_method_diagnostics": 2,
+    "paper_first_premature_method_reducibility_findings": 2,
+    "paper_first_premature_method_scientific_authority": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -60846,6 +60849,20 @@
         }
       },
       {
+        "key": "paper-first-premature-method-diagnostics",
+        "pass": true,
+        "detail": {
+          "directions": 2,
+          "completed_diagnostics": 2,
+          "design_holds": 1,
+          "same_information_reducibility_findings": 2,
+          "hidden_executions": 0,
+          "scientifically_authorized": 0,
+          "p0_lifecycle_mutations": 0,
+          "full_experiment_authorized": 0
+        }
+      },
+      {
         "key": "final-advisor-gate",
         "pass": true,
         "detail": {
@@ -60856,5 +60873,174 @@
         }
       }
     ]
-  }
+  },
+  "paper_first_premature_method_diagnostics": {
+    "schema_version": "1.0",
+    "generated_at": "2026-08-12T18:48:51+00:00",
+    "run_root": "/data/wyt/agent-self-evolution-observatory/runs/paper-first-p0-method-20260812",
+    "authority": {
+      "authority_type": "premature-paper-first-method-diagnostic-only",
+      "scientific_authority": false,
+      "p0_lifecycle_authority": false,
+      "local_validation_authority": false,
+      "method_authority": false,
+      "principle_authority": false,
+      "full_experiment_authority": false,
+      "cannot_retroactively_authorize": true,
+      "cannot_override_problem_or_design_adjudication": true,
+      "can_only_supply_reducibility_or_failure_asset_evidence": true
+    },
+    "policy": {
+      "preserve_machine_artifacts_even_when_execution_lacked_authority": true,
+      "diagnostic_results_cannot_create_or_restore_p0_lifecycle": true,
+      "diagnostic_results_cannot_override_problem_or_design_adjudication": true,
+      "same_information_reducibility_can_be_reused_as_failure_asset": true,
+      "no_additional_gpu_or_hidden_execution_is_authorized": true
+    },
+    "summary": {
+      "directions": 2,
+      "completed_diagnostics": 2,
+      "design_holds": 1,
+      "same_information_reducibility_findings": 2,
+      "hidden_executions": 0,
+      "scientifically_authorized": 0,
+      "p0_lifecycle_mutations": 0,
+      "full_experiment_authorized": 0
+    },
+    "cards": [
+      {
+        "incubation_id": "PF-1",
+        "historical_code": "A-8",
+        "idea_id": "future-learnability-preserving-self-evolution",
+        "status": "complete-diagnostic-quarantined",
+        "authority": {
+          "authority_type": "premature-paper-first-method-diagnostic-only",
+          "scientific_authority": false,
+          "p0_lifecycle_authority": false,
+          "local_validation_authority": false,
+          "method_authority": false,
+          "principle_authority": false,
+          "full_experiment_authority": false,
+          "cannot_retroactively_authorize": true,
+          "cannot_override_problem_or_design_adjudication": true,
+          "can_only_supply_reducibility_or_failure_asset_evidence": true
+        },
+        "v1_design_diagnosis": {
+          "decision": "HOLD_METHOD_NONIDENTIFIABLE_RETENTION_FLOOR",
+          "diagnosis": "design-nonidentifiable",
+          "current_baseline": 0.5,
+          "retention_baseline": 0.0,
+          "raw_trace_rows": 18,
+          "hidden_executed": false,
+          "artifact_sha256": "2d611901952a4981bafd9acb5b930c4109d04c48d59615ab0e4e762db416dd66",
+          "raw_trace_sha256": "a19636090e08f01700d8aa6b44ead7a4efcc2523d46900d72df40fd3b10ca490"
+        },
+        "v2_observed_method_diagnostic": {
+          "decision": "STOP_MATCHED_POST_ONLY_EQUIVALENT",
+          "baseline_reverification": {
+            "passed": true,
+            "current_success": 4,
+            "current_n": 4,
+            "current_rate": 1.0,
+            "retention_success": 4,
+            "retention_n": 4,
+            "retention_rate": 1.0,
+            "required": {
+              "current_min_successes": 2,
+              "current_n": 4,
+              "retention_min_successes": 2,
+              "retention_n": 4,
+              "failure_decision": "HOLD_METHOD_NONIDENTIFIABLE_MASTERED_SET_NOT_REPRODUCED",
+              "candidate_evaluation_forbidden_if_failed": true
+            }
+          },
+          "eligible_candidates": 6,
+          "selected_proposed": "c2",
+          "selected_same_information_post_only": "c2",
+          "same_information_decision_disagreement": false,
+          "selected_probe_adaptation_gain": 0.5,
+          "hidden_authorized": false,
+          "hidden_executed": false,
+          "artifact_sha256": "16ab7c7602831923d7e36c1d67eea0736a920af2e431dff0ce4d78a2dd0cbd39",
+          "decision_freeze_sha256": "694558c65ca0663c80e383fd5bd16857c33fa7c9225d6220c5504aea1132be60",
+          "raw_trace_sha256": "3b83e48a571ef825ec2ee939c410cfc546fed1735fa55d229937342853aa6f49",
+          "completed_at": "2026-08-12T16:48:30+00:00"
+        },
+        "dominant_problem_authority": {
+          "decision": "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT",
+          "paper_problem_status": "TERMINATED_AS_STANDALONE_AFTER_FINAL_COLLISION_REVIEW",
+          "artifact_generated_at": "2026-08-12T16:48:27+00:00",
+          "artifact_sha256": "aca168a8a0bb491bc4ea366c637a07df07d0d9687fd66bdc8f34839699c1f013",
+          "timestamp_is_not_authority": true,
+          "problem_stop_dominates_diagnostic_regardless_of_rebuild_timestamp": true,
+          "p0_authorized": false,
+          "gpu_authorized": false
+        },
+        "diagnostic_interpretation": "The v1 retention floor is evidence of an experiment-design failure, not a method negative. After repairing only the mastered-task substrate, v2 reverified current/retention at 4/4 and 4/4, but the Future-Learnability selector and the strongest same-information post-adaptation-success baseline both selected c2. This corroborates reducibility of the historical gate, but cannot reopen or override the already-terminal PF-1 paper-problem adjudication.",
+        "surviving_asset": "future-update-responsiveness may remain a cross-cutting audit dimension; the standalone gate/paper thesis remains closed"
+      },
+      {
+        "incubation_id": "PF-4",
+        "historical_code": "C-7",
+        "idea_id": "diagnosability-preserving-self-evolution",
+        "status": "complete-diagnostic-quarantined",
+        "authority": {
+          "authority_type": "premature-paper-first-method-diagnostic-only",
+          "scientific_authority": false,
+          "p0_lifecycle_authority": false,
+          "local_validation_authority": false,
+          "method_authority": false,
+          "principle_authority": false,
+          "full_experiment_authority": false,
+          "cannot_retroactively_authorize": true,
+          "cannot_override_problem_or_design_adjudication": true,
+          "can_only_supply_reducibility_or_failure_asset_evidence": true
+        },
+        "observed_method_diagnostic": {
+          "decision": "STOP_MATCHED_SOFT_SCALAR_EQUIVALENT",
+          "same_information_decision_disagreement": false,
+          "proposed_selection": "workflow",
+          "same_information_soft_scalar_selection": "workflow",
+          "fresh_gpu_authorized": false,
+          "baseline_no_repair_diagnostic_accuracy": 0.6666666666666666,
+          "surface_metrics_development_only": {
+            "prompt": {
+              "utility": 0.0,
+              "mean_steps": 50.0,
+              "trace_diversity": 0.21333333333333335,
+              "wrong_surface_diagnostic_accuracy": 1.0,
+              "diagnostic_drop_from_no_repair": -0.33333333333333337
+            },
+            "workflow": {
+              "utility": 0.1111111111111111,
+              "mean_steps": 45.77777777777778,
+              "trace_diversity": 0.25703703703703706,
+              "wrong_surface_diagnostic_accuracy": 0.6666666666666666,
+              "diagnostic_drop_from_no_repair": 0.0
+            },
+            "tool": {
+              "utility": 0.1111111111111111,
+              "mean_steps": 45.77777777777778,
+              "trace_diversity": 0.27037037037037037,
+              "wrong_surface_diagnostic_accuracy": 0.5,
+              "diagnostic_drop_from_no_repair": 0.16666666666666663
+            }
+          },
+          "artifact_sha256": "ec5582d28f8474a44c6dbf0bdc0167e5363132a8ad626783747102b319e2a57f",
+          "source_trace_sha256": "6d206e4912489aa058992faffc4566f1c1d4d4be1b9ab03fac5c6efb1427874b"
+        },
+        "dominant_design_authority": {
+          "verdict": "MERGE_AS_CROSS_CUTTING_INVARIANT",
+          "current_method_disposition": "STOP_STANDALONE_CERTIFICATE",
+          "merge_target": "PF-2 repair-surface-identifiability-under-persistent-agent-updates",
+          "merge_role": "cross-cutting commit invariant / secondary claim measuring whether the chosen repair surface preserves future causal distinguishability",
+          "local_validation_authorized": false,
+          "full_experiment_authorized": false
+        },
+        "diagnostic_interpretation": "The historical hard diagnosability constraint and a same-information utility+diagnosability scalarization both selected workflow, with no fresh GPU authorized. This corroborates the latest Paper Design decision to treat diagnosability preservation as a cross-cutting invariant rather than an irreducible standalone method.",
+        "surviving_asset": "diagnosability preservation remains a cross-cutting commit/verification invariant merged into the repair-surface problem"
+      }
+    ]
+  },
+  "paper_first_premature_method_projection_at": "2026-08-13T03:57:00+08:00"
 }
