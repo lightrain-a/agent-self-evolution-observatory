@@ -22,6 +22,8 @@ def load_shared(root:Path)->dict[str,list[dict[str,Any]]]:
         out['candidates']+=_rows(shard/'correction-candidates.jsonl')
         out['labels']+=_rows(shard/'self-labels.jsonl')
         out['future']+=_rows(shard/'future-runs.jsonl')
+        for extra in sorted(shard.glob('future-extra-part-*.jsonl')):
+            out['future']+=_rows(extra)
         out['modes']+=_rows(shard/'mode-runs.jsonl')
     out['future']+=_rows(root/'c1-future-runs.jsonl')
     return out
