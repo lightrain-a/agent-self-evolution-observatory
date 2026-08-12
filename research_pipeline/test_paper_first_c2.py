@@ -3,7 +3,7 @@ from __future__ import annotations
 import unittest
 
 from .paper_first_c2_contract import build_c2_contract
-from .paper_first_c2_local import adjudicate_c2_outcomes, _repeat_equal, _semantic_contract
+from .paper_first_c2_local import adjudicate_c2_outcomes, _repeat_equal, _semantic_contract, _validate_authorization_artifact
 
 
 class PaperFirstC2Test(unittest.TestCase):
@@ -104,6 +104,11 @@ class PaperFirstC2Test(unittest.TestCase):
         changed = {"generated_at": "t2", "paper_id": "x", "gate": {"k": 2}}
         self.assertEqual(_semantic_contract(left), _semantic_contract(right))
         self.assertNotEqual(_semantic_contract(left), _semantic_contract(changed))
+
+    def test_runner_requires_machine_authorization_artifact(self) -> None:
+        auth = _validate_authorization_artifact()
+        self.assertTrue(auth["pass"])
+        self.assertEqual(auth["decision"], "C2_LOCAL_VALIDATION_AUTHORIZED")
 
     def test_repeat_equality_is_exact(self) -> None:
         trace = {

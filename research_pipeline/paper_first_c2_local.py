@@ -12,8 +12,11 @@ from pathlib import Path
 from typing import Any
 
 from .alfworld_react_scaffold import extract_task_goal, task_family_from_gamefile
+from .config import PROJECT_ROOT
 from .paper_first_c2_contract import build_c2_contract
 from .p0_alfworld_adapter import ALFWorldGameRunner, HFAdmissiblePolicy, load_config
+
+AUTHORIZATION_PATH = PROJECT_ROOT / "generated" / "paper-first-c2-authorization.json"
 
 
 def _now() -> str:
@@ -200,6 +203,31 @@ def _repeat_equal(left: dict[str, Any], right: dict[str, Any]) -> bool:
     return all(left.get(key) == right.get(key) for key in keys)
 
 
+def _validate_authorization_artifact(path: Path = AUTHORIZATION_PATH) -> dict[str, Any]:
+    if not path.exists():
+        return {"pass": False, "reason": "authorization-artifact-missing", "path": str(path)}
+    try:
+        state = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {"pass": False, "reason": "authorization-artifact-invalid", "path": str(path)}
+    passed = bool(
+        state.get("decision") == "C2_LOCAL_VALIDATION_AUTHORIZED"
+        and state.get("local_validation_authorized") is True
+        and state.get("C3_locked") is True
+        and state.get("full_experiment_authorized") is False
+        and int(state.get("checks_passed") or 0) == int(state.get("checks_total") or -1) == 7
+        and state.get("old_b9_formal_method_reopened") is False
+    )
+    return {
+        "pass": passed,
+        "reason": "authorized" if passed else "authorization-artifact-does-not-authorize-c2",
+        "path": str(path),
+        "sha256": _sha(path),
+        "decision": state.get("decision"),
+        "code_commit": state.get("code_commit"),
+    }
+
+
 def _validate_runtime(contract: dict[str, Any], parent_root: Path, model_path: Path) -> dict[str, Any]:
     import torch
     import transformers
@@ -288,6 +316,9 @@ def run_c2_local(
     parent_root: Path,
     alfworld_config: Path,
 ) -> dict[str, Any]:
+    authorization = _validate_authorization_artifact()
+    if not authorization["pass"]:
+        raise RuntimeError(f"C2 local validation is locked: {authorization['reason']}")
     contract = build_c2_contract()
     output_dir.mkdir(parents=True, exist_ok=True)
     contract_path = output_dir / "frozen-contract.json"
@@ -307,6 +338,7 @@ def run_c2_local(
             return json.loads(decision_path.read_text(encoding="utf-8"))
 
         runtime_check = _validate_runtime(contract, parent_root, model_path)
+        runtime_check["authorization"] = authorization
         _atomic_json(output_dir / "runtime-check.json", runtime_check)
         if not runtime_check["pass"]:
             result = {
