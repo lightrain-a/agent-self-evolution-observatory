@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-12T18:38:16+00:00",
+  "generated_at": "2026-08-12T18:44:46+00:00",
   "review_id": "fresh-problem-saturation-20260813-r2",
   "policy": {
     "schema_version": "1.1",
@@ -17,10 +17,10 @@
     "gpu_authorized": false
   },
   "summary": {
-    "drafts_reviewed": 35,
+    "drafts_reviewed": 36,
     "survivors": 0,
-    "stopped": 35,
-    "reduction_patterns": 28,
+    "stopped": 36,
+    "reduction_patterns": 29,
     "local_validation_authorized": 0,
     "p0_authorized": 0
   },
@@ -234,6 +234,12 @@
       "title": "Experience Sharing: Complementarity versus Diversity Collapse",
       "decision": "STOP_REDUCTION",
       "reduction": "experience-sharing-sign-reversal"
+    },
+    {
+      "id": "C2",
+      "title": "Does Update Surface Change the Scientific Value of Success versus Failure Feedback?",
+      "decision": "STOP_REDUCTION",
+      "reduction": "feedback-polarity-by-update-surface"
     }
   ],
   "reduction_patterns": [
@@ -494,6 +500,16 @@
         "portfolio/submodular diversity"
       ],
       "veto": "Sharing-helpful versus sharing-collapse contradictions are not novel if complementarity/redundancy under matched budget predicts the sign."
+    },
+    {
+      "key": "feedback-polarity-by-update-surface",
+      "mature_theories": [
+        "supervised imitation / behavioral cloning",
+        "error-driven and corrective learning",
+        "positive-only versus positive+negative concept learning",
+        "information gain / active learning"
+      ],
+      "veto": "Success-only versus failure-containing feedback is not a new Agent object when imitation learns positive behavior while corrective/rule learning uses failures as counterexamples that expose missing applicability boundaries."
     }
   ],
   "generator_revision": {

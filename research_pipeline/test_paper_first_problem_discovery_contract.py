@@ -39,7 +39,7 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertTrue(p["same_information_nonreducibility_required"])
         self.assertTrue(p["domain_transfer_veto_required"])
         self.assertTrue(p["saturation_map_check_required"])
-        self.assertEqual(state["summary"]["saturation_patterns"],28)
+        self.assertEqual(state["summary"]["saturation_patterns"],29)
         self.assertEqual((state["summary"]["automatic_method_authority"],state["summary"]["automatic_experiment_authority"]),(0,0))
 
     def test_valid_problem_can_only_reach_human_paper_design_review(self) -> None:

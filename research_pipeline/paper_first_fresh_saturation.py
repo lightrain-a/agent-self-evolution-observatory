@@ -39,6 +39,7 @@ REDUCTION_PATTERNS: tuple[dict[str, Any], ...] = (
     {"key":"population-lineage-generic-evolution","mature_theories":["genetic hitchhiking / linkage","epistasis / crossover incompatibility","winner's curse / adaptive selection","heritability / catastrophic forgetting"],"veto":"Population, fork, recombination, selection, or inheritance claims are not novel when classical evolutionary/statistical objects give the same prediction."},
     {"key":"cross-layer-behavior-persistence","mature_theories":["skill distillation/internalization","unlearning / persistent contamination","descendant inheritance / source-deletion persistence"],"veto":"External-to-internal migration and ghost behavior after source removal are not novel when cross-layer promotion and descendant contamination already predict persistence."},
     {"key":"experience-sharing-sign-reversal","mature_theories":["diversity-consensus tradeoff","negative transfer / distributed heterogeneity","information redundancy / correlation","portfolio/submodular diversity"],"veto":"Sharing-helpful versus sharing-collapse contradictions are not novel if complementarity/redundancy under matched budget predicts the sign."},
+    {"key":"feedback-polarity-by-update-surface","mature_theories":["supervised imitation / behavioral cloning","error-driven and corrective learning","positive-only versus positive+negative concept learning","information gain / active learning"],"veto":"Success-only versus failure-containing feedback is not a new Agent object when imitation learns positive behavior while corrective/rule learning uses failures as counterexamples that expose missing applicability boundaries."},
 )
 
 DRAFTS: tuple[dict[str, Any], ...] = (
@@ -77,6 +78,7 @@ DRAFTS: tuple[dict[str, Any], ...] = (
     {"id":"L4","title":"Heritability of Self-Evolved Capability","decision":"STOP_REDUCTION","reduction":"population-lineage-generic-evolution"},
     {"id":"D1","title":"Dual-Residency Ghost Effect after External Skill Internalization","decision":"STOP_COLLISION","reduction":"cross-layer-behavior-persistence"},
     {"id":"C1","title":"Experience Sharing: Complementarity versus Diversity Collapse","decision":"STOP_REDUCTION","reduction":"experience-sharing-sign-reversal"},
+    {"id":"C2","title":"Does Update Surface Change the Scientific Value of Success versus Failure Feedback?","decision":"STOP_REDUCTION","reduction":"feedback-polarity-by-update-surface"},
 )
 
 POLICY: dict[str, Any] = {
