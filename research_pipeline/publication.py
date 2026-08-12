@@ -80,6 +80,8 @@ DAILY_ARTIFACTS = (
     "generated/paper-first-p0-f0-state.js",
     "generated/paper-first-design-adjudication.json",
     "generated/paper-first-design-adjudication.js",
+    "generated/paper-first-pf1-problem-adjudication.json",
+    "generated/paper-first-pf1-problem-adjudication.js",
     "generated/paper-first-pf2-method-adjudication.json",
     "generated/paper-first-pf2-method-adjudication.js",
     "generated/paper-first-post-c2-adjudication.json",

@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-12T16:32:23+00:00",
+  "generated_at": "2026-08-12T16:48:31+00:00",
   "target_venue": "ICLR",
   "storage": {
-    "data_root": "/home/wyt/code/agent-self-evolution-observatory-pf4-paperdesign-20260812/generated/research-data",
-    "run_dir": "/home/wyt/code/agent-self-evolution-observatory-pf4-paperdesign-20260812/generated/research-data/runs"
+    "data_root": "/home/wyt/code/agent-self-evolution-observatory-pf1-20260813/generated/research-data",
+    "run_dir": "/home/wyt/code/agent-self-evolution-observatory-pf1-20260813/generated/research-data/runs"
   },
   "automation": {
     "daily": {
@@ -45,6 +45,9 @@
     "paper_first_design_revise_problem": 1,
     "paper_first_design_merge_invariant": 1,
     "paper_first_design_stop_standalone": 1,
+    "paper_first_pf1_problem_decision": "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT",
+    "paper_first_pf1_problem_active": false,
+    "paper_first_pf1_method_design_authorized": false,
     "paper_first_pf2_method_decision": "STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL",
     "paper_first_pf2_method_active": false,
     "paper_first_pf2_experiment_blueprint_authorized": false,
@@ -10866,7 +10869,7 @@
   },
   "lineage": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:19+00:00",
+    "generated_at": "2026-08-12T16:48:27+00:00",
     "summary": {
       "nodes": 278,
       "edges": 258,
@@ -10896,7 +10899,7 @@
           "zh": "受约束持续进化",
           "en": "Constrained continual evolution"
         },
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "track-root:credit",
@@ -10906,7 +10909,7 @@
           "zh": "失败归因与经验准入",
           "en": "Failure credit and experience admission"
         },
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "track-root:memory",
@@ -10916,7 +10919,7 @@
           "zh": "记忆与技能巩固",
           "en": "Memory and skill consolidation"
         },
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "track-root:correction",
@@ -10926,7 +10929,7 @@
           "zh": "自纠正与策略内化",
           "en": "Self-correction and policy internalization"
         },
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "track-root:curriculum",
@@ -10936,7 +10939,7 @@
           "zh": "课程与任务进化",
           "en": "Curriculum and task evolution"
         },
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "track-root:workflow",
@@ -10946,7 +10949,7 @@
           "zh": "工作流与更新表面搜索",
           "en": "Workflow and update-surface search"
         },
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "track-root:evaluator",
@@ -10956,7 +10959,7 @@
           "zh": "奖励与评价器进化",
           "en": "Reward and evaluator evolution"
         },
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "track-root:world",
@@ -10966,7 +10969,7 @@
           "zh": "世界模型与具身持续适应",
           "en": "World models and embodied adaptation"
         },
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "regression-gated-self-evolution",
@@ -10988,7 +10991,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:regression-gated-self-evolution:1",
@@ -11096,7 +11099,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:contradiction-preserving-consolidation:1",
@@ -11204,7 +11207,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:compositional-update-compatibility:1",
@@ -11312,7 +11315,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:update-trust-region:1",
@@ -11420,7 +11423,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:retrieval-interference-auditor:1",
@@ -11528,7 +11531,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:irreversible-action-counterfactuals:1",
@@ -11635,7 +11638,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:self-label-confidence-flow:1",
@@ -11743,7 +11746,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:evaluator-coadaptation-guard:1",
@@ -11851,7 +11854,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:recovery-conditioned-experience:1",
@@ -11959,7 +11962,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:counterexample-generating-curriculum:1",
@@ -12068,7 +12071,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:workflow-generalization-certificate:1",
@@ -12176,7 +12179,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:budgeted-evolution-controller:1",
@@ -12284,7 +12287,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:lineage-aware-rollback:1",
@@ -12392,7 +12395,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:failure-frontier-curriculum:1",
@@ -12500,7 +12503,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:causally-verified-experience-admission:1",
@@ -12608,7 +12611,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:reward-invariance-audit:1",
@@ -12716,7 +12719,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:local-counterexample-memory-repair:1",
@@ -12824,7 +12827,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:self-correction-collapse-detector:1",
@@ -12932,7 +12935,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:intervention-validated-self-correction:1",
@@ -13040,7 +13043,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:workflow-branch-credit:1",
@@ -13148,7 +13151,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:world-model-error-gated-learning:1",
@@ -13256,7 +13259,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:memory-half-life:1",
@@ -13364,7 +13367,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:correction-policy-credit:1",
@@ -13472,7 +13475,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:curriculum-drift-controller:1",
@@ -13581,7 +13584,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:outcome-equivalent-trajectory-contrast:1",
@@ -13689,7 +13692,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "review:applicability-bounded-lessons:1",
@@ -13799,7 +13802,7 @@
         "blocking_reasons": [
           "Module-level intervention labels may require expensive environment-specific instrumentation."
         ],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "programmatic-review:failure-localization-before-reflection:1",
@@ -13900,7 +13903,7 @@
         "blocking_reasons": [
           "Cross-family disagreement may reflect formatting and style rather than distinct error mechanisms."
         ],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "programmatic-review:heterogeneous-critic-disagreement:1",
@@ -14001,7 +14004,7 @@
         "blocking_reasons": [
           "Oracle labels require executing all update surfaces, making supervision close to exhaustive search."
         ],
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "programmatic-review:update-surface-router:1",
@@ -14085,84 +14088,84 @@
         "kind": "early-rejected",
         "title": "更大模型做更多反思",
         "reason": "只增加推理计算，不能证明持久学习。",
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "early-rejected:268",
         "kind": "early-rejected",
         "title": "全参数训练 70B 自进化 Agent",
         "reason": "超出低资源约束且机制难归因。",
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "early-rejected:269",
         "kind": "early-rejected",
         "title": "只在自生成任务上提升",
         "reason": "缺少圈外泛化。",
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "early-rejected:270",
         "kind": "early-rejected",
         "title": "仅商业 API 闭环",
         "reason": "不可复现且依赖供应商快照。",
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "early-rejected:271",
         "kind": "early-rejected",
         "title": "固定多轮 Self-Refine",
         "reason": "属于更多采样，不是进化机制。",
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "early-rejected:272",
         "kind": "early-rejected",
         "title": "同模型 Actor 与 Judge 自我确认",
         "reason": "反馈完整性无法独立验证。",
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "early-rejected:273",
         "kind": "early-rejected",
         "title": "只报告最佳 checkpoint",
         "reason": "掩盖多轮回退与坍塌。",
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "early-rejected:274",
         "kind": "early-rejected",
         "title": "从头训练世界模型和策略",
         "reason": "资源高且无法分离贡献。",
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "early-rejected:275",
         "kind": "early-rejected",
         "title": "单一视觉 benchmark 技巧",
         "reason": "保留为 CVPR 后续，不作为 ICLR 主候选。",
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "early-rejected:276",
         "kind": "early-rejected",
         "title": "只做平均准确率的记忆消融",
         "reason": "无法识别有害条目和负迁移。",
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "early-rejected:277",
         "kind": "early-rejected",
         "title": "无隔离划分的在线适应",
         "reason": "无法排除测试泄漏。",
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       },
       {
         "id": "early-rejected:278",
         "kind": "early-rejected",
         "title": "泛化 Agent 自进化综述",
         "reason": "不是方法或可证伪 benchmark 贡献。",
-        "created_at": "2026-08-12T16:32:19+00:00"
+        "created_at": "2026-08-12T16:48:27+00:00"
       }
     ],
     "edges": [
@@ -15933,7 +15936,7 @@
   },
   "pre_gpu_candidate_gates": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:19+00:00",
+    "generated_at": "2026-08-12T16:48:27+00:00",
     "policy": {
       "gate_order": [
         "offline",
@@ -16780,7 +16783,7 @@
     "cards": [
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-12T16:32:19+00:00",
+        "compiled_at": "2026-08-12T16:48:27+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -17559,7 +17562,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-12T16:32:19+00:00",
+        "compiled_at": "2026-08-12T16:48:27+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0",
         "expected_runtime": {
@@ -18346,7 +18349,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-12T16:32:19+00:00",
+        "compiled_at": "2026-08-12T16:48:27+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -19142,7 +19145,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-12T16:32:19+00:00",
+        "compiled_at": "2026-08-12T16:48:27+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0",
         "expected_runtime": {
@@ -19982,7 +19985,7 @@
   },
   "paper_first_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:19+00:00",
+    "generated_at": "2026-08-12T16:48:27+00:00",
     "review_id": "paper-first-pf1-pf2-pf4-pf6-design-20260812",
     "target_venue": "ICLR",
     "policy": {
@@ -20258,9 +20261,147 @@
     "portfolio_decision": "Advance PF-2 only to method design; revise PF-1 at the paper-problem boundary; merge PF-4 as an interventional diagnosability invariant; stop PF-6 standalone and retain it as failure-risk analysis.",
     "next_action": "Design and red-team one irreducible PF-2 method against generic same-information routing/CATE baselines. In parallel revise PF-1 problem wording and rerun collision review. Do not run local validation for any PF candidate."
   },
+  "paper_first_pf1_problem_adjudication": {
+    "schema_version": "1.0",
+    "generated_at": "2026-08-12T16:48:27+00:00",
+    "incubation_id": "PF-1",
+    "paper_id": "evolvability-debt-under-persistent-agent-updates",
+    "prior_design_verdict": "REVISE_PAPER_PROBLEM",
+    "decision": "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT",
+    "paper_problem_status": "TERMINATED_AS_STANDALONE_AFTER_FINAL_COLLISION_REVIEW",
+    "reason": "After successively narrowing PF-1 from generic future learnability to fixed-evolver state compatibility and finally to discrete artifact reachable-set/search-geometry effects, the remaining claim is still expressible using established plasticity, meta-learning, evolvability, and representation/search-locality concepts. The only residual distinction is the agent-artifact domain.",
+    "failed_novelty_escape_routes": [
+      {
+        "route": "future-learnability AUC under fixed update budget",
+        "collision": "continual-learning plasticity / TeLAPA",
+        "status": "closed"
+      },
+      {
+        "route": "fixed autonomous evolver E applied to matched R0/R1",
+        "collision": "fixed-rule future plasticity / transfer-optimality",
+        "status": "closed"
+      },
+      {
+        "route": "non-weight prompt-memory-workflow-code surfaces",
+        "collision": "domain transfer alone; CPE already spans these persistent agent surfaces",
+        "status": "closed"
+      },
+      {
+        "route": "state-operator compatibility / reachable-set contraction",
+        "collision": "general evolvability and representation/search-landscape theory; Continuous Program Search directly studies representation-locality effects under a fixed optimizer",
+        "status": "closed"
+      }
+    ],
+    "same_information_reduction": {
+      "statement": "Given the same current state, frozen future task distribution, frozen adaptation/evolution operator, and future budget, PF-1's proposed outcome is a future-adaptation/evolvability functional already representable by standard plasticity/evolvability baselines.",
+      "irreducible_agent_only_variable": null,
+      "domain_transfer_is_sufficient_novelty": false
+    },
+    "reviewers": {
+      "deepseek_v4_pro": {
+        "requested_model": "deepseek-v4-pro",
+        "resolved_model": "deepseek-v4-pro-260425",
+        "verdict": "STOP_STANDALONE_PROBLEM",
+        "confidence": 0.94,
+        "raw_backend_path": "/data/wyt/agent-evolution-paper-first-reviews/pf1-final-20260813/deepseek-v4-pro.json",
+        "raw_sha256": "4d5d6a1f275a1b9f852d6283fc3d05ed1311004188ec065fdf70feb75e670d52",
+        "authority": "advisory-only"
+      },
+      "glm_5_2": {
+        "requested_model": "glm-5.2",
+        "resolved_model": "glm-5-2-260617",
+        "verdict": "STOP_STANDALONE_PROBLEM",
+        "confidence": 0.95,
+        "raw_backend_path": "/data/wyt/agent-evolution-paper-first-reviews/pf1-final-20260813/glm-5.2.json",
+        "raw_sha256": "89c644d33fca1786008bb3fa96a5e1b96930f911b55f4b062ed57e80b1a8390a",
+        "authority": "advisory-only"
+      }
+    },
+    "review_synthesis": {
+      "agreement": "Both independent reviewers conclude that no formal object survived once continual-learning plasticity and operator-dependent evolvability/search-locality work were included.",
+      "ai_is_authority": false
+    },
+    "primary_collisions": [
+      {
+        "ref": "arXiv:2605.09315",
+        "title": "Do Self-Evolving Agents Forget? Capability Degradation and Preservation in Lifelong LLM Agent Adaptation",
+        "role": "capability erosion/preservation across workflow, skill/tool, model, and memory self-evolution"
+      },
+      {
+        "ref": "arXiv:2604.15414",
+        "title": "Beyond Single-Model Optimization: Preserving Plasticity in Continual Reinforcement Learning",
+        "role": "source/retained states can be poor starting points for future adaptation; source-optimal is not necessarily transfer-optimal"
+      },
+      {
+        "ref": "arXiv:2602.07755",
+        "title": "Learning to Continually Learn via Meta-learning Agentic Memory Designs",
+        "role": "meta-learns executable agent memory designs so agents become better continual learners"
+      },
+      {
+        "ref": "arXiv:2604.20714",
+        "title": "Learning to Evolve: A Self-Improving Framework for Multi-Agent Systems via Textual Parameter Graph Optimization",
+        "role": "meta-optimizer learns from optimization history to become a better future agent optimizer"
+      },
+      {
+        "ref": "arXiv:2604.15034",
+        "title": "Autogenesis: A Self-Evolving Agent Protocol",
+        "role": "separates versioned persistent resources from the closed-loop operator that proposes, assesses, and commits evolution"
+      },
+      {
+        "ref": "arXiv:2602.00359",
+        "title": "Position: Agentic Evolution is the Path to Evolving LLMs",
+        "role": "autonomous evolver over persistent system state"
+      },
+      {
+        "ref": "arXiv:2605.22505",
+        "title": "Towards Direct Evaluation of Harness Optimizers via Priority Ranking",
+        "role": "intermediate optimizer choices can hinder multi-step harness optimization; direct optimizer quality predicts later improvement"
+      },
+      {
+        "ref": "arXiv:2005.06224",
+        "title": "Novelty Search makes Evolvability Inevitable",
+        "role": "evolvability is already a property of current representations under evolutionary variation/search"
+      },
+      {
+        "ref": "arXiv:2306.09849",
+        "title": "On Evolvability and Behavior Landscapes in Neuroevolutionary Divergent Search",
+        "role": "representation/behavior landscapes and operator-dependent evolvability are already formalized"
+      },
+      {
+        "ref": "arXiv:2602.07659",
+        "title": "Continuous Program Search",
+        "role": "program representation/locality and mutation geometry affect search efficiency under a fixed evolutionary optimizer"
+      }
+    ],
+    "what_survives": {
+      "scientific_lesson": "Preserving current capability and old-task retention does not imply preserving future update responsiveness; this remains a useful cross-cutting systems audit.",
+      "engineering_rule": "For long-horizon self-evolution, optionally report fixed-evolver future-update responsiveness as a diagnostic dimension when the cost is justified, but do not treat it as a standalone novel method/problem.",
+      "failure_asset": "An attractive Agent-specific term can still collapse to a mature cross-domain scientific object; require the irreducible formal object before implementation."
+    },
+    "what_is_closed": [
+      "Future-Learnability Probe Gate as a standalone method",
+      "evolvability debt as a renamed generic plasticity metric",
+      "non-parametric agent surfaces as novelty by themselves",
+      "reachable-set/search-locality formulation under a fixed evolver as a standalone ICLR problem without an additional irreducible object",
+      "automatic transition to method design, experiment blueprint, local validation, P0, or GPU"
+    ],
+    "revival_rule": "PF-1 may only be revived if a new primary-source review identifies a genuinely agent-specific formal object that cannot be expressed as future plasticity, meta-learning initial-state quality, operator-dependent evolvability, representation/search locality, or optimizer quality. A new metric, surface, model, task domain, or probe budget is insufficient.",
+    "authority": {
+      "paper_problem_active": false,
+      "method_design_authorized": false,
+      "experiment_blueprint_authorized": false,
+      "local_validation_authorized": false,
+      "p0_authorized": false,
+      "gpu_authorized": false,
+      "full_experiment_authorized": false,
+      "premature_pf_f0_used": false,
+      "automatic_replacement_problem_authorized": false
+    },
+    "next_action": "Archive PF-1 standalone. Continue paper-first review with unresolved PF-3/PF-5/PF-7 rather than attempting another PF-1 terminology or substrate rescue."
+  },
   "paper_first_pf2_method_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:19+00:00",
+    "generated_at": "2026-08-12T16:48:27+00:00",
     "paper_id": "repair-surface-identifiability-under-persistent-agent-updates",
     "incubation_id": "PF-2",
     "reviewed_method": "Repair-Surface Identification Certificate",
@@ -20331,7 +20472,7 @@
   },
   "paper_first_post_c2": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:19+00:00",
+    "generated_at": "2026-08-12T16:48:27+00:00",
     "paper_id": "trajectory-mediated-memory-effect-transport",
     "decision": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
     "reason": "All ten strict C2 units are execution-valid and the full pre-divergence policy decision context is reproducible, yet only 2/10 controlled action contrasts are nonzero and the preregistered same-memory cross-context sign reversal is absent. The earliest-divergent-action controlled-mediator mechanism is therefore unsupported by its local falsifier.",
@@ -20445,7 +20586,7 @@
   },
   "pilot_registry": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:19+00:00",
+    "generated_at": "2026-08-12T16:48:27+00:00",
     "result_dir": "/data/wyt/agent-self-evolution-observatory/runs/pilots/results",
     "approval_dir": "/data/wyt/agent-self-evolution-observatory/runs/pilots/approvals",
     "result_schema": {
@@ -20696,7 +20837,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.2",
-          "compiled_at": "2026-08-12T16:32:19+00:00",
+          "compiled_at": "2026-08-12T16:48:27+00:00",
           "idea_id": "update-trust-region",
           "phase": "P0",
           "expected_runtime": {
@@ -21829,7 +21970,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.2",
-          "compiled_at": "2026-08-12T16:32:19+00:00",
+          "compiled_at": "2026-08-12T16:48:27+00:00",
           "idea_id": "budgeted-evolution-controller",
           "phase": "P0",
           "expected_runtime": {
@@ -26391,7 +26532,7 @@
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-12T16:32:19+00:00",
+    "generated_at": "2026-08-12T16:48:27+00:00",
     "source_of_truth_priority": [
       "explicit-user-update",
       "latest-human-review",
@@ -28335,7 +28476,7 @@
   },
   "research_governance_v2": {
     "schema_version": "2.2",
-    "generated_at": "2026-08-12T16:32:19+00:00",
+    "generated_at": "2026-08-12T16:48:27+00:00",
     "policy": {
       "schema_version": "2.2",
       "paper_novelty_precedes_method_design": true,
@@ -28698,7 +28839,7 @@
   },
   "paper_first_p0_f0": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-12T16:32:19+00:00",
+    "generated_at": "2026-08-12T16:48:27+00:00",
     "run_root": "/data/wyt/agent-self-evolution-observatory/runs/paper-first-p0-20260812",
     "authority": {
       "promotion_authorized": false,
@@ -29272,7 +29413,7 @@
   },
   "idea_discovery_v3": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:23+00:00",
+    "generated_at": "2026-08-12T16:48:31+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -32228,7 +32369,7 @@
   },
   "idea_discovery_v31": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:23+00:00",
+    "generated_at": "2026-08-12T16:48:31+00:00",
     "round": "v3.1",
     "status": "external-reviewed",
     "policy": {
@@ -32941,7 +33082,7 @@
   },
   "idea_discovery_v4": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:23+00:00",
+    "generated_at": "2026-08-12T16:48:31+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -42616,7 +42757,7 @@
   },
   "idea_discovery_v5": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:23+00:00",
+    "generated_at": "2026-08-12T16:48:31+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -52609,7 +52750,7 @@
   },
   "idea_discovery_v51": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:23+00:00",
+    "generated_at": "2026-08-12T16:48:31+00:00",
     "target_venue": "ICLR",
     "policy": {
       "generated_only_from_review_vectors": true,
@@ -54301,7 +54442,7 @@
   },
   "idea_discovery_v52": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:23+00:00",
+    "generated_at": "2026-08-12T16:48:31+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v51_revise": true,
@@ -55279,7 +55420,7 @@
   },
   "idea_discovery_v53": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:32:23+00:00",
+    "generated_at": "2026-08-12T16:48:31+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v52_revise_with_single_surviving_boundary": true,
@@ -55618,7 +55759,7 @@
   },
   "discussion_portfolio": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-12T16:32:23+00:00",
+    "generated_at": "2026-08-12T16:48:31+00:00",
     "target": 20,
     "count": 27,
     "remaining": 0,
@@ -58888,6 +59029,14 @@
         }
       },
       {
+        "key": "paper-first-pf1-problem-stop",
+        "pass": true,
+        "detail": {
+          "decision": "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT",
+          "status": "TERMINATED_AS_STANDALONE_AFTER_FINAL_COLLISION_REVIEW"
+        }
+      },
+      {
         "key": "paper-first-pf2-method-stop",
         "pass": true,
         "detail": {
@@ -59254,7 +59403,7 @@
         "pass": true,
         "detail": {
           "schema_version": "2.2",
-          "generated_at": "2026-08-12T16:32:19+00:00",
+          "generated_at": "2026-08-12T16:48:27+00:00",
           "policy": {
             "schema_version": "2.2",
             "paper_novelty_precedes_method_design": true,
