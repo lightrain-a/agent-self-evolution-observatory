@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-12T18:49:39+00:00",
+  "generated_at": "2026-08-12T20:05:01+00:00",
   "review_id": "fresh-problem-saturation-20260813-r2",
   "policy": {
     "schema_version": "1.1",
@@ -17,10 +17,10 @@
     "gpu_authorized": false
   },
   "summary": {
-    "drafts_reviewed": 37,
+    "drafts_reviewed": 38,
     "survivors": 0,
-    "stopped": 37,
-    "reduction_patterns": 30,
+    "stopped": 38,
+    "reduction_patterns": 31,
     "local_validation_authorized": 0,
     "p0_authorized": 0
   },
@@ -246,6 +246,12 @@
       "title": "Task Identity versus Failure Pathology as the Scope of Harness Updates",
       "decision": "STOP_REDUCTION",
       "reduction": "harness-update-scope-heterogeneity"
+    },
+    {
+      "id": "C4",
+      "title": "Compounding Self-Evolution versus Agent Aging in Fixed-Weight Durable Runtimes",
+      "decision": "STOP_REDUCTION",
+      "reduction": "durable-runtime-improvement-vs-aging"
     }
   ],
   "reduction_patterns": [
@@ -526,6 +532,16 @@
         "software configuration scoping"
       ],
       "veto": "Task-, pathology-, executor-, or trace-conditioned harness validity is not a new Agent object when the candidate condition is simply an effect modifier and the minimal invariant is a CATE/ICP/IRM target."
+    },
+    {
+      "key": "durable-runtime-improvement-vs-aging",
+      "mature_theories": [
+        "non-stationary stochastic dynamical systems / Lyapunov stability",
+        "continual-memory interference and stability-plasticity",
+        "reliability and maintenance engineering",
+        "state-space system identification"
+      ],
+      "veto": "Fixed-weight durable runtime state producing either compounding improvement or aging is not a new Agent object when the sign is expressible as monotonicity/contraction or interference/drift of a state-transition operator with respect to task value."
     }
   ],
   "generator_revision": {

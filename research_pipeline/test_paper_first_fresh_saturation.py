@@ -12,7 +12,7 @@ class PaperFirstFreshSaturationTest(unittest.TestCase):
 
     def test_current_scan_keeps_zero_survivors_instead_of_forcing_shortlist(self) -> None:
         s=self.state["summary"]
-        self.assertEqual((s["drafts_reviewed"],s["survivors"],s["stopped"]),(37,0,37))
+        self.assertEqual((s["drafts_reviewed"],s["survivors"],s["stopped"]),(38,0,38))
         self.assertEqual(self.state["decision"],"NO_FRESH_SURVIVOR_CURRENT_SCAN")
         self.assertTrue(self.state["policy"]["zero_survivors_is_valid_and_preferred_to_forced_shortlist"])
         self.assertFalse(self.state["policy"]["local_validation_authorized"])
