@@ -1,0 +1,321 @@
+{
+  "schema_version": "2.2",
+  "idea_id": "future-learnability-preserving-self-evolution",
+  "phase": "P0",
+  "governance": {
+    "schema_version": "2.2",
+    "scientific_stage": "p0-method",
+    "substrate_id": "Qwen2.5-7B-Instruct + ALFWorld sealed two-stage adaptation",
+    "support_evidence": "runs/paper-first-p0-20260812/future-learnability/support-evidence.json"
+  },
+  "models": [
+    "Qwen2.5-7B-Instruct"
+  ],
+  "datasets": [
+    "ALFWorld"
+  ],
+  "seeds": [
+    42
+  ],
+  "scope": {
+    "policy_mode": "react-family",
+    "max_steps": 50,
+    "expected_environment_episodes": 48,
+    "worst_case_environment_episodes": 72,
+    "expected_extra_model_calls": 32,
+    "screening_units": 48
+  },
+  "analysis": {
+    "primary_metric": "future adaptation AUC / improvement-per-example after matching current gain and retention",
+    "bootstrap_confidence": 0.95,
+    "screening_only": false
+  },
+  "resource_cap": {
+    "max_gpus": 1,
+    "gpu_hours": 1.25,
+    "wall_hours": 3,
+    "episodes": 72
+  },
+  "pre_experiment": {
+    "paper_design": {
+      "novelty": {
+        "paper_problem": "A persistent update may preserve current reward and old-task retention yet reduce the agent's capacity to learn the next task efficiently.",
+        "closest_work": [
+          {
+            "identity": "Do Self-Evolving Agents Forget?",
+            "difference": "Retention/capability preservation protects current or old behavior; this paper treats future adaptation capacity as a separate update-admission quantity.",
+            "source_ref": "arXiv:2605.09315"
+          },
+          {
+            "identity": "Beyond Single-Model Optimization",
+            "difference": "Retention/capability preservation protects current or old behavior; this paper treats future adaptation capacity as a separate update-admission quantity.",
+            "source_ref": "arXiv:2604.15414"
+          }
+        ],
+        "novelty_axis": "mechanism-and-problem-formulation",
+        "contribution_claim": "Future learnability can vary across persistent updates even after matching current utility and old-task retention.",
+        "irreducible_difference": "Retention/capability preservation protects current or old behavior; this paper treats future adaptation capacity as a separate update-admission quantity.",
+        "collision_status": "2026-08-12 paper-first premortem ADVANCE; exact boundary frozen before implementation"
+      },
+      "method": {
+        "method_name": "Future-Learnability-Preserving Self-Evolution",
+        "core_mechanism": "Probe candidate updates with an identical sealed second-stage adaptation budget and gate commits using future-adaptation AUC after matching current gain and retention.",
+        "novelty_to_method_mapping": [
+          {
+            "novelty": "Retention/capability preservation protects current or old behavior; this paper treats future adaptation capacity as a separate update-admission quantity.",
+            "component": "future-learnability commit gate"
+          }
+        ],
+        "components": [
+          "matched-current/retention filter",
+          "sealed second-stage adaptation probe",
+          "future-learnability commit gate"
+        ],
+        "strongest_simplification": "Current-gain + retention gate with the same candidate updates, tasks, model calls, and second-stage adaptation budget.",
+        "method_change_rule": "Changing the causal quantity, update surface set, primary metric, or commit rule is a core-method change and returns to Paper Novelty/Method review."
+      },
+      "experiment_blueprint": {
+        "claim_experiment_matrix": [
+          {
+            "claim_id": "C1",
+            "claim": "Future learnability can vary across persistent updates even after matching current utility and old-task retention.",
+            "local_test": "Find matched candidate-update pairs with similar current/retention performance, then compare future-adaptation AUC and improvement-per-example on sealed task families.",
+            "full_test": "Frozen multi-seed / second-backbone / natural-failure evidence matrix after Method Freeze",
+            "metric": "future-adaptation AUC / improvement-per-example at matched current+retention",
+            "strongest_baseline": "Current-gain + retention gate with the same candidate updates, tasks, model calls, and second-stage adaptation budget."
+          }
+        ],
+        "local_validation_scope": "Find matched candidate-update pairs with similar current/retention performance, then compare future-adaptation AUC and improvement-per-example on sealed task families.",
+        "full_experiment_scope": "Only after local validation and Method Freeze: >=3 seeds, second open backbone, stronger natural-failure/task-family coverage, full baseline/ablation/efficiency matrix.",
+        "baseline_matrix": [
+          "Current-gain + retention gate with the same candidate updates, tasks, model calls, and second-stage adaptation budget.",
+          "constant/majority or best-fixed policy",
+          "shallow same-feature baseline where applicable"
+        ],
+        "ablation_matrix": [
+          "remove future-learnability commit gate",
+          "replace outcome-derived quantity with direct aggregate utility"
+        ],
+        "freeze_rule": "Freeze method hash, split hash, metric/taxonomy, prompt/tool policy, and experiment-blueprint hash before any full experiment.",
+        "experimental_integrity": {
+          "model_and_inference": "Qwen2.5-7B-Instruct, deterministic decoding, react-family ALFWorld scaffold, max_steps=50; model/checkpoint frozen per run.",
+          "prompt_tool_policy": "Prompt patches, injected faults, tool/workflow wrappers, and allowed repair surfaces are versioned; hidden labels are never placed in prompts.",
+          "task_sample_split": "Discovery/development and sealed held-out task files are frozen before result inspection; no task moves after launch.",
+          "metric_analysis_plan": "Primary metric: future-adaptation AUC / improvement-per-example at matched current+retention; report per-unit/family outcomes before macro aggregation and compare strongest same-information baselines.",
+          "randomness_replication_plan": "Local P0 uses seed 42 deterministic generation; threshold-near cases may repeat <=3 times only under the frozen rule. Full experiments require >=3 seeds.",
+          "stopping_exclusion_rules": "Runtime/implementation invalid rows are excluded with explicit typed status; no performance-based row exclusion. Budget stop cannot register a method result.",
+          "allowed_adaptations": "Only execution/runtime repair that leaves the frozen method, tasks, metrics, baselines, and analysis unchanged; core changes require a new Paper Design Contract.",
+          "hidden_evaluation_access_policy": "No web search, benchmark solution lookup, hidden-label inspection, or evaluator introspection during execution; search trajectory is disabled for local P0."
+        }
+      }
+    },
+    "principle_certificate": {
+      "principle_id": "future-learnability-preserving-self-evolution-principle-v1",
+      "primitives": [
+        "persistent agent update",
+        "paired held-out intervention",
+        "independent environment truth",
+        "matched baseline"
+      ],
+      "scope_conditions": [
+        "base policy is competent but imperfect",
+        "candidate updates/fault probes induce nontrivial variation",
+        "held-out truth is independent of update construction"
+      ],
+      "assumptions": [
+        {
+          "id": "A-VAR",
+          "statement": "The local substrate contains enough effect variation to identify the registered quantity.",
+          "observable_check": "F0 support counts and target/effect variation."
+        },
+        {
+          "id": "A-IND",
+          "statement": "Environment/fault truth is independent of the method decision rule.",
+          "observable_check": "sealed task/fault labels and same-information baseline audit."
+        }
+      ],
+      "mechanism": "Current capability is state value; future learnability is option value. An update can preserve the former while changing the latter.",
+      "predictions": [
+        {
+          "id": "P0-PHENOMENON",
+          "statement": "At least some candidate updates matched on current utility/retention produce nonzero future-adaptation differences.",
+          "observable": "future adaptation AUC / improvement-per-example after matching current gain and retention",
+          "role": "phenomenon-prerequisite"
+        },
+        {
+          "id": "P1-MECHANISM",
+          "statement": "A future-learnability probe improves commit decisions beyond current-gain/retention-only gating on held-out future adaptation.",
+          "observable": "held-out method-vs-matched-baseline decision/effect difference",
+          "role": "mechanism-test"
+        }
+      ],
+      "operationalization": [
+        {
+          "concept": "registered causal quantity",
+          "measure": "future adaptation AUC / improvement-per-example after matching current gain and retention",
+          "validity_check": "Find matched candidate-update pairs with similar current/retention performance, then compare future-adaptation AUC and improvement-per-example on sealed task families."
+        },
+        {
+          "concept": "method headroom",
+          "measure": "same-information disagreement plus held-out outcome difference",
+          "validity_check": "compare against Current-gain + retention gate with the same candidate updates, tasks, model calls, and second-stage adaptation budget."
+        }
+      ],
+      "falsification": {
+        "prediction_ids": [
+          "P1-MECHANISM"
+        ],
+        "requires": [
+          "assumptions_hold",
+          "experiment_identifiable",
+          "independent_truth",
+          "matched_baseline",
+          "operationalization_valid",
+          "optimization_adequate",
+          "protocol_validity",
+          "registered_prediction",
+          "scope_conditions_hold"
+        ],
+        "contradiction_rule": "Stop the standalone method if future-learnability deltas vanish after matching current gain/retention or are fully predicted by those quantities."
+      },
+      "failure_update_rules": {
+        "execution-invalid": "repair execution only; preserve the scientific contract and do not update principle belief",
+        "design-nonidentifiable": "repair substrate/task/variation so the principle becomes testable; do not register a principle negative",
+        "operationalization-failure": "repair the measurement, representation, or objective bridge before retesting the same principle",
+        "assumption-violation": "revise the omitted assumption or scope condition, derive a new prediction, and keep the core mechanism unresolved",
+        "matched-simplification": "weaken or merge the current method realization/novelty claim; do not automatically reject the broader principle",
+        "registered-prediction-contradicted": "only after all falsification preconditions hold may the registered principle prediction be rejected"
+      }
+    },
+    "protocol_validity": {
+      "hidden_evaluation_sealed": {
+        "passed": true,
+        "evidence": "Local validation freezes task/fault splits before metric inspection; held-out cases are never used to construct candidate repairs or thresholds."
+      },
+      "evaluation_artifacts_inaccessible": {
+        "passed": true,
+        "evidence": "Environment success labels and held-out fault ownership are withheld from the policy/update generator; only the independent analyzer sees them."
+      },
+      "independent_truth_source": {
+        "passed": true,
+        "evidence": "ALFWorld environment execution and preregistered controlled-fault labels define truth; the evolving agent never grades itself."
+      },
+      "same_information_baselines": {
+        "passed": true,
+        "evidence": "Matched baselines receive identical tasks, candidate updates/fault traces, calls, held-out budget, and observable features."
+      },
+      "claim_metric_alignment": {
+        "passed": true,
+        "evidence": "Primary metrics directly instantiate the registered paper claim and are frozen before local validation."
+      },
+      "versioned_evaluator": {
+        "passed": true,
+        "evidence": "Config hash, source commit, task split, parser, failure taxonomy, and analysis code are versioned in each run manifest."
+      },
+      "shortcut_audit": {
+        "passed": true,
+        "evidence": "Hidden answer/benchmark lookup, fault metadata leakage to the router, post-hoc split changes, and cached hidden outcomes are forbidden."
+      }
+    },
+    "updater_competence": {
+      "required": true,
+      "is_formal_gate": false,
+      "passed": true,
+      "status": "support-qualified",
+      "surface": "gpu-two-stage-adaptation-first",
+      "evidence": {
+        "artifact": "runs/paper-first-p0-20260812/future-learnability/support-evidence.json",
+        "source_result": "runs/paper-first-p0-20260812/future-learnability/result.json",
+        "raw_rows": 64,
+        "matched_candidates": 3,
+        "nonzero_matched_candidates": 1,
+        "future_learnability_range": 0.25
+      },
+      "reason": "Frozen F0/P0-Support passed the preregistered variation gate: 3 matched current/retention candidates, one nonzero future-learnability delta, and range 0.25. This qualifies the local support substrate but is not a METHOD-PASS.",
+      "scientific_role": "hard prerequisite before Gate 1; failure blocks this local realization without rejecting the paper problem"
+    },
+    "parameter_provenance": {
+      "critical_parameters": [
+        "scope.max_steps",
+        "scope.expected_environment_episodes",
+        "resource_cap.gpu_hours",
+        "analysis.primary_metric"
+      ],
+      "entries": [
+        {
+          "parameter": "scope.max_steps",
+          "value": 50,
+          "source_type": "literature",
+          "basis": "ALFWorld/ReAct-style text-agent evaluation uses a 50-step horizon; do not shorten the task for convenience."
+        },
+        {
+          "parameter": "scope.expected_environment_episodes",
+          "value": 48,
+          "source_type": "statistical-calculation",
+          "basis": "Local F0 balances >=3 fault/task families with held-out units while keeping the test below 20% of a paper-scale experiment."
+        },
+        {
+          "parameter": "resource_cap.gpu_hours",
+          "value": 1.25,
+          "source_type": "measured-throughput",
+          "basis": "Server60 measured throughput is 4230.5 model calls/GPUh; cap covers the frozen worst-case call graph plus margin."
+        },
+        {
+          "parameter": "analysis.primary_metric",
+          "value": "future adaptation AUC / improvement-per-example after matching current gain and retention",
+          "source_type": "explicit-protocol-choice",
+          "basis": "The metric is the direct observable registered by the Principle Certificate and Paper Claim C1."
+        }
+      ]
+    },
+    "competence": {
+      "evidence_id": "qwen25-react-family-ood134",
+      "model_name": "Qwen2.5-7B-Instruct",
+      "policy_mode": "react-family",
+      "minimum_success_rate": 0.3,
+      "maximum_success_rate": 0.9,
+      "minimum_task_types_with_success": 5
+    },
+    "identifiability": {
+      "synthetic_true_false_separation": true,
+      "true_false_question": "Find matched candidate-update pairs with similar current/retention performance, then compare future-adaptation AUC and improvement-per-example on sealed task families."
+    },
+    "statistics": {},
+    "compute": {
+      "minimum_gpu_hour_margin": 1.1
+    },
+    "throughput": {
+      "measurement_id": "qwen25-react-family-id24-server60-20260810",
+      "reference": "Qwen2.5-7B-Instruct react-family on server60 RTX3090, 24 ALFWorld episodes",
+      "calibration_episodes": 24,
+      "calibration_model_calls": 969,
+      "calibration_gpu_hours": 0.22905,
+      "calls_per_gpu_hour": 4230.5,
+      "mean_steps_per_episode": 40.375
+    },
+    "recovery": {
+      "incremental_trace": true,
+      "atomic_progress": true,
+      "heartbeat_state": true,
+      "online_budget_watchdog": true,
+      "per_run_lock": true,
+      "gpu_uuid_binding": true,
+      "restart_policy": "Preserve completed atomic rows and restart only incomplete rows under the identical config/source/runtime hash.",
+      "partial_artifact_policy": "Partial rows remain diagnostic only and cannot register a scientific method result."
+    },
+    "outcomes": {
+      "allowed": [
+        "METHOD-PASS",
+        "METHOD-FAIL",
+        "INCONCLUSIVE",
+        "BASELINE-FLOOR",
+        "BASELINE-CEILING",
+        "RUNTIME-ERROR",
+        "IMPLEMENTATION-ERROR",
+        "BUDGET-STOP"
+      ],
+      "budget_stop_registers_scientific_result": false,
+      "floor_or_ceiling_counts_as_method_fail": false
+    }
+  }
+}

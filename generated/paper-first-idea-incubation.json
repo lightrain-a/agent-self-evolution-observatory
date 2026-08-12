@@ -1,13 +1,13 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "review_date": "2026-08-12",
   "policy": {
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "paper_first_only": true,
-    "separate_from_current_p0_ledger": true,
-    "cannot_authorize_p0_or_gpu": true,
     "novelty_premortem_precedes_method_implementation": true,
-    "advance_means_enter_paper_design_not_enter_p0": true,
+    "incubation_cannot_self_authorize_p0_or_gpu": true,
+    "explicit_human_promotion_required_for_p0": true,
+    "p0_lifecycle_does_not_equal_execution_authority": true,
     "blocked_candidates_remain_visible": true,
     "review_cutoff": "2026-08-12"
   },
@@ -16,7 +16,7 @@
     "advance_to_paper_design": 4,
     "revise_novelty_boundary": 3,
     "blocked_collision": 1,
-    "p0_authorized": 0,
+    "p0_authorized": 4,
     "gpu_authorized": 0,
     "themes": 8
   },
@@ -46,8 +46,12 @@
         }
       ],
       "collision_risk": "medium：必须证明 future learnability 不是 retention/current gain 的重命名。",
-      "p0_authorized": false,
-      "gpu_authorized": false
+      "p0_authorized": true,
+      "gpu_authorized": false,
+      "p0_idea_id": "future-learnability-preserving-self-evolution",
+      "p0_code": "A-8",
+      "p0_group": "A",
+      "p0_entry_basis": "explicit-user-paper-first-p0-promotion"
     },
     {
       "id": "PF-2",
@@ -78,8 +82,12 @@
         }
       ],
       "collision_risk": "low-medium：若只是 LLM 分类器，或一个表面对所有 failure 都支配，novelty 消失。",
-      "p0_authorized": false,
-      "gpu_authorized": false
+      "p0_authorized": true,
+      "gpu_authorized": false,
+      "p0_idea_id": "cross-surface-repair-routing",
+      "p0_code": "E-5",
+      "p0_group": "E",
+      "p0_entry_basis": "explicit-user-paper-first-p0-promotion"
     },
     {
       "id": "PF-3",
@@ -142,8 +150,12 @@
         }
       ],
       "collision_risk": "medium：必须证明不是普通 trace-completeness 或 AHE observability。",
-      "p0_authorized": false,
-      "gpu_authorized": false
+      "p0_authorized": true,
+      "gpu_authorized": false,
+      "p0_idea_id": "diagnosability-preserving-self-evolution",
+      "p0_code": "C-7",
+      "p0_group": "C",
+      "p0_entry_basis": "explicit-user-paper-first-p0-promotion"
     },
     {
       "id": "PF-5",
@@ -206,8 +218,12 @@
         }
       ],
       "collision_risk": "medium：必须做 paired transport，不可只加一个 failure-weighted metric。",
-      "p0_authorized": false,
-      "gpu_authorized": false
+      "p0_authorized": true,
+      "gpu_authorized": false,
+      "p0_idea_id": "failure-mode-transport-under-self-evolution",
+      "p0_code": "A-9",
+      "p0_group": "A",
+      "p0_entry_basis": "explicit-user-paper-first-p0-promotion"
     },
     {
       "id": "PF-7",

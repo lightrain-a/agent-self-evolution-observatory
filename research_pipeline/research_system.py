@@ -42,6 +42,7 @@ from .p0_realizability_suite import build_p0_realizability_suite, write_p0_reali
 from .p0_revived_batch_f0 import build_revived_batch_f0, write_revived_batch_f0
 from .p0_decision_ledger import build_p0_decision_ledger, write_p0_decision_ledger
 from .p0_four_direction_iteration import build_four_direction_iteration, write_four_direction_iteration
+from .paper_first_p0_f0 import build_paper_first_p0_f0_state, write_paper_first_p0_f0_state
 from .persistent_updater_program_final import build_persistent_updater_program_final, write_persistent_updater_program_final
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
 from .pre_experiment_specs import GATES as PRE_EXPERIMENT_GATES, POLICY as PRE_EXPERIMENT_POLICY
@@ -67,6 +68,10 @@ PRE_EXPERIMENT_CONFIGS = (
     Path(__file__).with_name("p0_a1_confirm_config.json"),
     Path(__file__).with_name("p0_a2_screening_config.json"),
     Path(__file__).with_name("p0_a2_confirm_config.json"),
+    Path(__file__).with_name("p0_pf1_future_learnability_config.json"),
+    Path(__file__).with_name("p0_pf2_cross_surface_config.json"),
+    Path(__file__).with_name("p0_pf4_diagnosability_config.json"),
+    Path(__file__).with_name("p0_pf6_failure_transport_config.json"),
 )
 
 
@@ -297,6 +302,7 @@ def build_research_system_state() -> dict[str, Any]:
     human_terminal_ideas = build_human_terminal_state()
     p0_realizability = build_p0_realizability_suite()
     p0_revived_batch = build_revived_batch_f0()
+    paper_first_p0_f0 = build_paper_first_p0_f0_state(experiment_data_root)
     p0_offline_qualification = build_p0_offline_qualification_state()
     p0_admission = build_p0_admission_state()
     four_direction_iteration = build_four_direction_iteration()
@@ -422,6 +428,10 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_batch_matched_stops":p0_revived_batch["summary"]["fresh_matched_simplification_stop"],
             "p0_batch_upstream_holds":p0_revived_batch["summary"]["fresh_upstream_hold"],
             "p0_batch_gpu_candidates":p0_revived_batch["summary"]["gpu_queue_candidates_before_economy"],
+            "paper_first_p0_promoted":paper_first_p0_f0["summary"]["ideas"],
+            "paper_first_p0_f0_running":paper_first_p0_f0["summary"]["running"],
+            "paper_first_p0_f0_support_pass":paper_first_p0_f0["summary"]["support_pass"],
+            "paper_first_p0_f0_support_hold":paper_first_p0_f0["summary"]["support_hold"],
             "p0_b10_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("b10",{}).get("decision"),
             "p0_a1_repair_decision":(human_terminal_ideas.get("parents") or {}).get("update-trust-region",{}).get("p0_decision"),
             "p0_a2_repair_decision":(human_terminal_ideas.get("parents") or {}).get("budgeted-evolution-controller",{}).get("p0_decision"),
@@ -505,6 +515,7 @@ def build_research_system_state() -> dict[str, Any]:
         "p0_offline_qualification":p0_offline_public,
         "p0_realizability":p0_realizability_public,
         "p0_revived_batch_f0":p0_revived_batch_public,
+        "paper_first_p0_f0":paper_first_p0_f0,
         "repair_queue":repair_queue,
         "idea_discovery_v3":idea_discovery_v3,
         "idea_discovery_v31":idea_discovery_v31,
@@ -546,6 +557,7 @@ def _mem_xfer_semantic_errors(workflow: dict[str, Any]) -> list[str]:
 def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
     terminal_summary = state["human_terminal_ideas"]["summary"]
     expected_active_p0 = int(terminal_summary.get("p0") or 0) + int(terminal_summary.get("independent_methods") or 0)
+    expected_pre_experiment_cards = len(PRE_EXPERIMENT_CONFIGS)
     checks = [
         {"key":"corpus", "pass":bool(corpus.get("papers")), "detail":f"{len(corpus.get('papers') or [])} papers"},
         {"key":"evidence-coverage", "pass":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"] >= 20, "detail":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"]},
@@ -557,8 +569,9 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"pre-gpu-survivor-gate", "pass":state["pre_gpu_candidate_gates"]["summary"]["total"] == 10 and state["pre_gpu_candidate_gates"]["summary"]["small_p0"] == 2 and state["pre_gpu_candidate_gates"]["policy"]["hold_or_inconclusive_is_not_method_failure"], "detail":state["pre_gpu_candidate_gates"]["summary"]},
         {"key":"paper-first-research-contract", "pass":state["paper_first_workflow"]["policy"]["paper_novelty_precedes_method_design"] and state["paper_first_workflow"]["policy"]["method_design_precedes_experiment_blueprint"] and state["paper_first_workflow"]["policy"]["local_validation_is_for_falsification_not_method_discovery"] and state["paper_first_workflow"]["policy"]["full_experiment_requires_frozen_method_and_blueprint"], "detail":state["paper_first_workflow"]["summary"]},
         {"key":"backend-architecture-manifest", "pass":state["system_architecture"]["summary"]["temporal_stages"] == 11 and state["system_architecture"]["summary"]["functional_layers"] == 6 and state["system_architecture"]["summary"]["assigned_components"] == len(state["components"]) and state["system_architecture"]["summary"]["unassigned_components"] == 0 and state["system_architecture"]["summary"]["duplicate_component_keys"] == 0 and state["system_architecture"]["summary"]["cross_cutting_controls"] == 3 and state["system_architecture"]["summary"]["orphan_cross_cutting_controls"] == 0, "detail":state["system_architecture"]["summary"]},
-        {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == 4, "detail":state["principle_layer"]["summary"]},
-        {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["paper_design_contract_required_before_principle_and_implementation"] and state["pre_experiment_compiler"]["policy"]["paper_design_contract_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["summary"]["protocol_validity_pass"] == 4 and state["pre_experiment_compiler"]["policy"]["research_execution_plan_required_before_launch"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_is_derived_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_cannot_authorize_execution"] and state["pre_experiment_compiler"]["summary"]["research_execution_plans"] == 4 and state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == 4, "detail":state["pre_experiment_compiler"]["summary"]},
+        {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == expected_pre_experiment_cards, "detail":state["principle_layer"]["summary"]},
+        {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["paper_design_contract_required_before_principle_and_implementation"] and state["pre_experiment_compiler"]["policy"]["paper_design_contract_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["summary"]["protocol_validity_pass"] == expected_pre_experiment_cards and state["pre_experiment_compiler"]["policy"]["research_execution_plan_required_before_launch"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_is_derived_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_cannot_authorize_execution"] and state["pre_experiment_compiler"]["summary"]["research_execution_plans"] == expected_pre_experiment_cards and state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == expected_pre_experiment_cards, "detail":state["pre_experiment_compiler"]["summary"]},
+        {"key":"paper-first-p0-f0", "pass":state["paper_first_p0_f0"]["summary"].get("ideas") == 4 and state["paper_first_p0_f0"]["summary"].get("method_fail_authorized") == 0 and state["paper_first_p0_f0"]["policy"].get("f0_cannot_emit_method_fail") is True, "detail":state["paper_first_p0_f0"]["summary"]},
         {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
@@ -581,6 +594,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
 
 def validate_state(state: dict[str, Any]) -> list[str]:
     errors=[]
+    expected_pre_experiment_cards = len(PRE_EXPERIMENT_CONFIGS)
     if state.get("target_venue") != "ICLR": errors.append("target venue mismatch")
     if state["summary"]["papers"] < 100: errors.append("literature corpus too small")
     if state["summary"]["ideas"] < 24: errors.append("idea bank too small")
@@ -614,23 +628,26 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if architecture_summary.get("cross_cutting_controls") != 3 or architecture_summary.get("orphan_cross_cutting_controls") != 0: errors.append("all cross-cutting methodology controls must resolve to an existing owner component")
     if not state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"]: errors.append("experiments must remain evidence about principles rather than votes on ideas")
     if not state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"]: errors.append("true negatives must not automatically falsify principles")
-    if state["principle_layer"]["summary"]["certificates_passed"] != 4: errors.append("all four current pre-experiment cards must have valid principle certificates")
+    if state["principle_layer"]["summary"]["certificates_passed"] != expected_pre_experiment_cards: errors.append(f"all {expected_pre_experiment_cards} current pre-experiment cards must have valid principle certificates")
     if not state["pre_experiment_compiler"]["policy"]["paper_design_contract_required_before_principle_and_implementation"]: errors.append("Paper Design Contract must precede implementation and experiment execution")
     if not state["pre_experiment_compiler"]["policy"]["paper_design_contract_is_not_a_formal_gate"]: errors.append("Paper Design Contract must not inflate the formal eight-gate experiment compiler")
     if not state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"]: errors.append("Principle Certificate must be a hard prerequisite before updater competence")
     if not state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"]: errors.append("Principle Certificate must not inflate the formal gate count beyond eight")
     if not state["pre_experiment_compiler"]["policy"]["protocol_validity_required_before_updater_competence"]: errors.append("Protocol Validity must be a hard prerequisite before updater competence")
     if not state["pre_experiment_compiler"]["policy"]["protocol_validity_is_not_a_formal_gate"]: errors.append("Protocol Validity must not inflate the formal gate count beyond eight")
-    if state["pre_experiment_compiler"]["summary"].get("protocol_validity_pass") != 4: errors.append("all four current pre-experiment cards must pass Protocol Validity")
+    if state["pre_experiment_compiler"]["summary"].get("protocol_validity_pass") != expected_pre_experiment_cards: errors.append(f"all {expected_pre_experiment_cards} current pre-experiment cards must pass Protocol Validity")
     if not state["pre_experiment_compiler"]["policy"]["research_execution_plan_required_before_launch"]: errors.append("a derived Research Execution Plan must exist before launch")
     if not state["pre_experiment_compiler"]["policy"]["research_execution_plan_is_derived_not_a_formal_gate"]: errors.append("Research Execution Plan must not inflate the formal gate count")
     if not state["pre_experiment_compiler"]["policy"]["research_execution_plan_cannot_authorize_execution"]: errors.append("Research Execution Plan must never authorize execution")
-    if state["pre_experiment_compiler"]["summary"].get("research_execution_plans") != 4: errors.append("all four current cards must expose a derived Research Execution Plan")
+    if state["pre_experiment_compiler"]["summary"].get("research_execution_plans") != expected_pre_experiment_cards: errors.append(f"all {expected_pre_experiment_cards} current cards must expose a derived Research Execution Plan")
     if not state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"]: errors.append("Updater competence must be a hard prerequisite before Gate 1")
     if not state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"]: errors.append("Updater competence must not inflate the formal gate count beyond eight")
     if not state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"]: errors.append("Pre-Experiment Compiler must require all eight gates")
     if not state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"]: errors.append("Pre-Experiment Compiler override must stay forbidden")
-    if state["pre_experiment_compiler"]["summary"]["compiled_cards"] != 4: errors.append("expected four frozen pre-experiment cards")
+    if state["pre_experiment_compiler"]["summary"]["compiled_cards"] != expected_pre_experiment_cards: errors.append(f"expected {expected_pre_experiment_cards} frozen pre-experiment cards")
+    paper_first_f0 = state.get("paper_first_p0_f0") or {}; pf0_summary = paper_first_f0.get("summary") or {}
+    if pf0_summary.get("ideas") != 4 or pf0_summary.get("method_fail_authorized") != 0: errors.append("paper-first P0 F0 must cover four promotions and cannot authorize METHOD-FAIL")
+    if (paper_first_f0.get("policy") or {}).get("p0_method_requires_support_pass_and_pre_experiment_authority") is not True: errors.append("paper-first P0 method work must remain locked behind support plus Pre-Experiment authority")
     if not state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"]: errors.append("P0 execution must require an 8/8 Pre-Experiment Card")
     if not state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"]: errors.append("automatic P0-to-P1 escalation must stay forbidden")
     if not state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"]: errors.append("non-identifiable pilots must not update scientific belief")
@@ -688,6 +705,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_human_terminal_state()
     write_p0_realizability_suite()
     write_revived_batch_f0()
+    write_paper_first_p0_f0_state()
     write_b10_cpu_p0()
     write_a6_cpu_p0()
     write_p0_offline_qualification_state()

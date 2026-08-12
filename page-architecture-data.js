@@ -54,8 +54,7 @@ window.PAGE_ARCHITECTURES = {
   "paper-ideas":{
     chapters:[
       {id:"discussed-ideas",title:{en:"I · Discussed ideas",zh:"第一章 · 已讨论 Idea"},question:{en:"Which reviewed scientific directions have entered P0, and which parents are terminally merged or dropped?",zh:"哪些已审科学方向已经进入 P0，哪些 parent 已终态合并或弃掉？"}},
-      {id:"new-ideas",title:{en:"II · Standalone methods outside the original parent set",zh:"第二章 · 原 Parent 集之外的独立方法"},question:{en:"Which standalone methods survive outside the original 26 parents, what stable codes do they use, and what is their P0 contract?",zh:"哪些方法在原 26 个 parent 之外仍独立存活，它们的正式编号是什么，P0 合同是什么？"}},
-      {id:"paper-first-incubation",title:{en:"III · Paper-first incubation queue",zh:"第三章 · Paper-first 新 Idea 孵化队列"},question:{en:"Which new paper problems survive closest-work collision and an irreducible-novelty premortem before implementation?",zh:"哪些新论文问题能在实现之前通过 closest-work 撞车审查与不可约简 Novelty 预审？"}}
+      {id:"new-ideas",title:{en:"II · Standalone methods and paper-first new problems",zh:"第二章 · 独立方法与 Paper-first 新问题"},question:{en:"Which methods remain standalone, which new paper-first problems have been promoted into P0, and which candidates remain REVISE/BLOCK before implementation?",zh:"哪些方法仍保持独立身份，哪些 Paper-first 新问题已进入 P0，哪些候选仍需 REVISE/BLOCK 后才能实现？"}}
     ]
   },
   experiments:{

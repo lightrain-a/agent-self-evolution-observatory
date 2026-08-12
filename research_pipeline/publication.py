@@ -76,6 +76,8 @@ DAILY_ARTIFACTS = (
     "generated/p0-e4-permission-cpu.js",
     "generated/research-system-state.json",
     "generated/research-system-state.js",
+    "generated/paper-first-p0-f0-state.json",
+    "generated/paper-first-p0-f0-state.js",
 )
 WEEKLY_ARTIFACTS = DAILY_ARTIFACTS + (
     "generated/iclr-low-resource-ideas.json",

@@ -10,7 +10,7 @@ DEFAULT_JSON = PROJECT_ROOT / "generated" / "p0-decision-ledger.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "p0-decision-ledger.js"
 
 POLICY = {
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "one_current_row_per_active_p0": True,
     "lifecycle_and_execution_decision_are_separate": True,
     "economy_stop_overrides_planned_registry_display": True,
@@ -48,12 +48,18 @@ def build_p0_decision_ledger(
         override = overrides.get(idea_id) or {}
         p0_decision = str(override.get("decision") or term.get("p0_decision") or term.get("p0_screening_decision") or "")
         primary_stop = str(economy.get("primary_stop_class") or "")
+        updater_status = str(((preflight.get("updater_competence") or {}).get("status") or ""))
+        gpu0_status = str(gpu0.get("status") or gpu0.get("phenomenon") or "")
+        support_hold = gpu0_status.startswith("hold-f0-support-insufficient") or updater_status.startswith("hold-support-insufficient")
         if override:
             current_state = str(override.get("current_state") or "experiment-stop-await-human-review")
             next_action = str(override.get("next_action") or "review-latest-experiment-decision")
         elif p0_decision:
             current_state = "experiment-stop-await-human-review"
             next_action = "human-merge-drop-or-pivot-review"
+        elif support_hold:
+            current_state = "upstream-hold"
+            next_action = "repair-or-expand-local-support-substrate-before-method-admission"
         elif primary_stop == "matched-simplification":
             current_state = "experiment-stop-await-human-review"
             next_action = "human-merge-drop-or-pivot-review"
@@ -70,8 +76,8 @@ def build_p0_decision_ledger(
             current_state = "economy-blocked"
             next_action = "repair-economy-contract-before-pre-experiment"
         else:
-            current_state = "compile-blocked"
-            next_action = "complete-pre-experiment-and-runtime-gates"
+            current_state = "method-admission-blocked"
+            next_action = "complete-post-support-method-admission-and-runtime-gates"
         rows.append({
             "idea_id": idea_id,
             "code": card.get("code"),
@@ -106,6 +112,7 @@ def build_p0_decision_ledger(
             "latest_iteration_overrides": sum(row.get("decision_source") == "four-direction-iteration" for row in rows),
             "economy_blocked": counts.get("economy-blocked", 0),
             "compile_blocked": counts.get("compile-blocked", 0),
+            "method_admission_blocked": counts.get("method-admission-blocked", 0),
             "launchable": counts.get("launchable", 0),
             "execution_authorized": sum(bool(row["execution_authorized"]) for row in rows),
         },

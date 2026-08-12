@@ -9,7 +9,7 @@ GATES=(
  {"key":"decision_voi","title":"Decision-Changing Value of Information"},
  {"key":"single_writer_authority","title":"Single-Writer Experiment Authority"},
 )
-POLICY={"schema_version":"1.1","stage_semantics":"resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate","all_five_required_before_execution_compilation":True,"matched_simplification_must_precede_gpu":True,"complexity_ladder_required_before_gpu":True,"complexity_ladder_order":["constant-or-mean","threshold-or-lookup","shallow-or-sparse","proposed-mechanism"],"lower_complexity_headroom_required":True,"substrate_inventory_must_precede_hidden_or_gpu":True,"causal_unit_and_observable_must_be_explicit":True,"gpu_requires_decision_changing_voi":True,"single_writer_authority_required":True,"economy_failure_cannot_emit_method_fail":True,"micro_p0_fraction_max":0.20,"second_backbone_cannot_rescue_failed_economy_gate":True}
+POLICY={"schema_version":"1.2","stage_semantics":"resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate","all_five_required_before_execution_compilation":True,"matched_simplification_must_precede_gpu":True,"support_insufficient_cannot_be_relabelled_as_matched_simplification_stop":True,"complexity_ladder_required_before_gpu":True,"complexity_ladder_order":["constant-or-mean","threshold-or-lookup","shallow-or-sparse","proposed-mechanism"],"lower_complexity_headroom_required":True,"substrate_inventory_must_precede_hidden_or_gpu":True,"causal_unit_and_observable_must_be_explicit":True,"gpu_requires_decision_changing_voi":True,"single_writer_authority_required":True,"economy_failure_cannot_emit_method_fail":True,"micro_p0_fraction_max":0.20,"second_backbone_cannot_rescue_failed_economy_gate":True}
 SIMPLIFICATION_TOKENS=("equivalent","dominates","ceiling","group-testing","generic-state-diff","recency-frequency","simple-anchor","intersection-filter","boolean-rule","shallow-rule","nary","complexity-matched","direct-order-aware-risk")
 SUBSTRATE_TOKENS=("substrate","support-insufficient","support_cardinality","support-cardinality","fresh-cinteraction-support-insufficient","ranking-degenerate","updater-incompetent")
 def _now(): return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -21,8 +21,9 @@ def _econ(contract):
 def evaluate_economy_card(idea_id:str,offline_card:dict[str,Any]|None,contract:dict[str,Any]|None,setup:dict[str,Any]|None)->dict[str,Any]:
  offline=offline_card or {}; gpu0=offline.get('gpu0') or {}; status=str(gpu0.get('status') or gpu0.get('phenomenon') or 'pending').lower(); text=' '.join((status,str(gpu0.get('evidence') or '').lower())); econ=_econ(contract); setup=setup or {}
  simpl_plan=compile_matched_simplifications(idea_id,str((contract or {}).get('mechanism') or ''),str((contract or {}).get('baseline') or ''))
- baseline=_check(offline,'baseline_disagreement')
- if any(t in text for t in SIMPLIFICATION_TOKENS) or baseline=='fail': simpl=_gate('matched_simplification','fail','matched simpler baseline reproduces or dominates current mechanism',{'gpu0_status':status,'compiler':simpl_plan})
+ baseline=_check(offline,'baseline_disagreement'); updater=offline.get('updater_competence') or {}; decision=str(offline.get('decision') or '').upper(); support_hold=status.startswith('hold-f0-support-insufficient') or str(updater.get('status') or '').startswith('hold-support-insufficient') or decision=='HOLD_F0_SUPPORT_INSUFFICIENT'
+ if support_hold: simpl=_gate('matched_simplification','pending','F0 support is insufficient, so lack of observed disagreement cannot be promoted into a matched-simplification STOP',{'gpu0_status':status,'compiler':simpl_plan})
+ elif any(t in text for t in SIMPLIFICATION_TOKENS) or baseline=='fail': simpl=_gate('matched_simplification','fail','matched simpler baseline reproduces or dominates current mechanism',{'gpu0_status':status,'compiler':simpl_plan})
  elif baseline=='pass' and simpl_plan['baseline_count']>=simpl_plan['minimum_required_baselines']: simpl=_gate('matched_simplification','pass','method-versus-simplification disagreement is empirically present against a compiled baseline tournament',{'gpu0_status':status,'compiler':simpl_plan})
  else: simpl=_gate('matched_simplification','pending','compiled matched-simplification tournament has not established headroom',{'gpu0_status':status,'compiler':simpl_plan})
  inventory=dict(econ.get('substrate_inventory') or {})
@@ -30,9 +31,10 @@ def evaluate_economy_card(idea_id:str,offline_card:dict[str,Any]|None,contract:d
  for key in ('observed_effective_candidates','observed_fresh_heldout','observed_reserve_fraction'):
   if observed.get(key) is not None: inventory[key]=observed.get(key)
  inv_fields=('effective_candidates_min','fresh_heldout_min','reserve_fraction_min','target_variation_rule','observed_effective_candidates','observed_fresh_heldout','observed_reserve_fraction'); inv_missing=[k for k in inv_fields if inventory.get(k) in (None,'')]
- if any(t in text for t in SUBSTRATE_TOKENS): substrate=_gate('substrate_inventory','fail','current substrate/support inventory cannot instantiate the frozen test',{'gpu0_status':status})
+ if support_hold: substrate=_gate('substrate_inventory','pending','local F0 support is insufficient; keep the research problem on HOLD rather than emitting an Economy/Method STOP',{'gpu0_status':status,'inventory':inventory})
+ elif any(t in text for t in SUBSTRATE_TOKENS): substrate=_gate('substrate_inventory','fail','current substrate/support inventory cannot instantiate the frozen test',{'gpu0_status':status})
  else:
-  effect,competence=_check(offline,'effect_variation'),_check(offline,'competence_window'); updater=offline.get('updater_competence') or {}
+  effect,competence=_check(offline,'effect_variation'),_check(offline,'competence_window')
   if status.startswith('stop'): substrate=_gate('substrate_inventory','pass','substrate was sufficient to reach a non-substrate scientific simplification stop')
   elif inv_missing: substrate=_gate('substrate_inventory','pending','explicit substrate inventory contract missing: '+', '.join(inv_missing),{'missing':inv_missing})
   elif int(inventory.get('observed_effective_candidates') or 0)<int(inventory.get('effective_candidates_min') or 0) or int(inventory.get('observed_fresh_heldout') or 0)<int(inventory.get('fresh_heldout_min') or 0) or float(inventory.get('observed_reserve_fraction') or 0)<float(inventory.get('reserve_fraction_min') or 0): substrate=_gate('substrate_inventory','fail','observed substrate inventory is below the frozen minimum',{'inventory':inventory})

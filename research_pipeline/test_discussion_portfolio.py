@@ -9,7 +9,7 @@ class DiscussionPortfolioTest(unittest.TestCase):
     def test_terminal_active_pool_accounting(self) -> None:
         payload = build_discussion_portfolio()
         self.assertEqual(payload["target"], TARGET)
-        self.assertEqual(payload["count"], 27)
+        self.assertEqual(payload["count"], 31)
         self.assertGreaterEqual(payload["count"], TARGET)
         self.assertEqual(payload["remaining"], 0)
         self.assertTrue(payload["ready"])
@@ -22,8 +22,8 @@ class DiscussionPortfolioTest(unittest.TestCase):
         self.assertTrue(payload["policy"]["no_portfolio_shortlist"])
         self.assertTrue(all(row["terminal_state"] in {"p0", "p0-ready"} for row in payload["ideas"]))
         self.assertEqual(sum(row["source"] == "human-terminal-parent" for row in payload["ideas"]), 20)
-        self.assertEqual(sum(row["source"] == "terminal-independent-method" for row in payload["ideas"]), 7)
-        self.assertEqual(len({row["id"] for row in payload["ideas"]}), 27)
+        self.assertEqual(sum(row["source"] == "terminal-independent-method" for row in payload["ideas"]), 11)
+        self.assertEqual(len({row["id"] for row in payload["ideas"]}), 31)
 
     def test_merged_dropped_and_absorbed_methods_are_absent_from_active_pool(self) -> None:
         ids = {row["id"] for row in build_discussion_portfolio()["ideas"]}

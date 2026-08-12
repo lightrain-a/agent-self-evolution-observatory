@@ -415,7 +415,7 @@ def main() -> None:
               parentCards: document.querySelectorAll('.human-review-idea-card').length,
               standaloneCards: document.querySelectorAll('.supplemental-idea-card').length,
               incubationCards: document.querySelectorAll('.paper-incubation-card').length,
-              incubationAdvance: document.querySelectorAll('.paper-incubation-card.incubation-advance').length,
+              incubationP0: document.querySelectorAll('.paper-incubation-card.incubation-p0').length,
               incubationSummary: window.PAPER_FIRST_IDEA_INCUBATION?.summary || {},
               terminalGroups: document.querySelectorAll('.human-status-block').length,
               terminalStats: document.querySelectorAll('.human-review-stats .human-stat').length,
@@ -427,10 +427,10 @@ def main() -> None:
               text: document.body.textContent || ''
             };""",
         )
-        require(idea_portfolio["chapters"] == 3, f"Paper Ideas must have three canonical chapters including incubation, got {idea_portfolio['chapters']}")
+        require(idea_portfolio["chapters"] == 2, f"Paper Ideas must merge standalone methods and paper-first new problems into Chapter II, got {idea_portfolio['chapters']}")
         require(idea_portfolio["parentCards"] == 26, f"expected all 26 human-parent histories, got {idea_portfolio['parentCards']}")
-        require(idea_portfolio["standaloneCards"] == 7, f"expected seven terminal standalone methods, got {idea_portfolio['standaloneCards']}")
-        require((idea_portfolio["incubationCards"],idea_portfolio["incubationAdvance"],idea_portfolio["incubationSummary"].get("p0_authorized"),idea_portfolio["incubationSummary"].get("gpu_authorized")) == (8,4,0,0), f"paper-first incubation must remain separate from P0/GPU: {idea_portfolio}")
+        require(idea_portfolio["standaloneCards"] == 11, f"expected seven prior standalone methods plus four paper-first P0 promotions, got {idea_portfolio['standaloneCards']}")
+        require((idea_portfolio["incubationCards"],idea_portfolio["incubationP0"],idea_portfolio["incubationSummary"].get("p0_authorized"),idea_portfolio["incubationSummary"].get("gpu_authorized")) == (8,4,4,0), f"paper-first queue must expose four P0-lifecycle promotions with zero direct GPU authority: {idea_portfolio}")
         require(idea_portfolio["terminalGroups"] >= 3 and idea_portfolio["terminalStats"] == 4, f"terminal routing UI is incomplete: {idea_portfolio['terminalGroups']}/{idea_portfolio['terminalStats']}")
         require(idea_portfolio["legacyPreGpuBoards"] == 0 and idea_portfolio["legacyP0Entry"] == 0, "legacy Pre-GPU/P0-entry boards leaked back into canonical Paper Ideas")
         require(idea_portfolio["finalPass"] == 20 and idea_portfolio["experimentStops"] >= 16 and idea_portfolio["launchable"] == 0, f"current portfolio state is wrong: {idea_portfolio}")

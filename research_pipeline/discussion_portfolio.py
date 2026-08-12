@@ -83,11 +83,11 @@ def build_discussion_portfolio() -> dict[str, Any]:
     for idea_id, meta in terminal["parents"].items():
         if meta.get("terminal_state") not in {"p0", "p0-ready"}:
             continue
-        rows.append({"source":"human-terminal-parent","id":idea_id,"title":meta.get("final_parent_mechanism") or {},"terminal_state":meta.get("terminal_state"),"human_parent":True,"reviewed":True,"final_verdict":"terminal-human-decision","parent_ids":[]})
+        rows.append({"source":"human-terminal-parent","id":idea_id,"code":meta.get("code"),"group":meta.get("group"),"title":meta.get("final_parent_mechanism") or {},"terminal_state":meta.get("terminal_state"),"human_parent":True,"reviewed":True,"final_verdict":"terminal-human-decision","parent_ids":[]})
     for idea_id, meta in terminal["independent_methods"].items():
         if meta.get("terminal_state") not in {"p0", "p0-ready"}:
             continue
-        rows.append({"source":"terminal-independent-method","id":idea_id,"title":meta.get("title") or {},"terminal_state":meta.get("terminal_state"),"human_parent":False,"reviewed":True,"final_verdict":"terminal-human-compatible","parent_ids":[]})
+        rows.append({"source":"terminal-independent-method","id":idea_id,"code":meta.get("code"),"group":meta.get("group"),"source_incubation_id":meta.get("source_incubation_id"),"title":meta.get("title") or {},"terminal_state":meta.get("terminal_state"),"human_parent":False,"reviewed":True,"final_verdict":"terminal-human-compatible","parent_ids":[]})
     rows.sort(key=lambda row: (0 if row.get("human_parent") else 1, str(row.get("id"))))
     ready = terminal["summary"].get("human_parents") == 26
     return {

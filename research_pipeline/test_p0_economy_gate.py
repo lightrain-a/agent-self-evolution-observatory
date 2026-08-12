@@ -8,8 +8,8 @@ class P0EconomyGateTest(unittest.TestCase):
  def setUpClass(cls): cls.state=build_p0_admission_state()['economy_gate']
  def test_retrospective_failure_classes_are_front_loaded(self):
   s=self.state['summary']
-  self.assertEqual(s['ideas'],27)
-  self.assertEqual(s['economy_ready'],0)
+  self.assertEqual(s['ideas'],31)
+  self.assertEqual(s['economy_ready'],2)
   self.assertEqual(s['matched_simplification_stops'],19)
   self.assertEqual(s['substrate_stops'],4)
   self.assertEqual(s['voi_stops'],0)
@@ -34,5 +34,13 @@ class P0EconomyGateTest(unittest.TestCase):
   econ['substrate_inventory']['observed_fresh_heldout']=5
   row=evaluate_economy_card('x',offline,{'mechanism':'memory gate','baseline':'mean rule','economy':econ},setup)
   self.assertEqual(next(g for g in row['gates'] if g['key']=='substrate_inventory')['status'],'fail')
+ def test_support_hold_cannot_be_relabelled_as_simplification_stop(self):
+  offline={'decision':'HOLD_F0_SUPPORT_INSUFFICIENT','gpu0':{'status':'hold-f0-support-insufficient'},'checks':{'baseline_disagreement':{'status':'fail'},'effect_variation':{'status':'fail'},'competence_window':{'status':'pass'}},'updater_competence':{'passed':False,'status':'hold-support-insufficient'},'substrate_inventory':{'observed_effective_candidates':18,'observed_fresh_heldout':9,'observed_reserve_fraction':0.5}}
+  setup={'exclusive_output_lock':True,'authority_mode':'single-writer-lease'}
+  econ={'causal_unit':'fault x repair','prediction_unit':'fault x repair','effect_observable':'repair gain','effect_moderators':'fault','effect_stability_scope':'local','aggregation_risk':'macro can hide local support','cheapest_falsifier':'local f0','decision_changing_outcomes':'support pass -> method admission','abandonment_condition':'support remains insufficient','substrate_inventory':{'effective_candidates_min':18,'fresh_heldout_min':9,'reserve_fraction_min':0.25,'target_variation_rule':'heterogeneous repair ownership'}}
+  row=evaluate_economy_card('support-hold',offline,{'mechanism':'router','baseline':'fixed surface','economy':econ},setup)
+  self.assertEqual(next(g for g in row['gates'] if g['key']=='matched_simplification')['status'],'pending')
+  self.assertEqual(next(g for g in row['gates'] if g['key']=='substrate_inventory')['status'],'pending')
+  self.assertEqual(row['primary_stop_class'],'')
 
 if __name__=='__main__': unittest.main()

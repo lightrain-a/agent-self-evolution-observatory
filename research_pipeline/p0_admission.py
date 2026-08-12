@@ -12,6 +12,8 @@ from .pre_p0_identifiability import CHECKS as PRE_P0_CHECKS
 from .p0_offline_qualification import build_p0_offline_qualification_state
 from .p0_revived_batch_f0 import build_revived_batch_f0
 from .p0_economy_gate import evaluate_economy_card, build_economy_state, POLICY as ECONOMY_POLICY
+from .paper_first_p0_promotions import PROMOTIONS as PAPER_FIRST_P0_PROMOTIONS
+from .paper_first_p0_f0 import build_paper_first_p0_f0_state
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "p0-admission-state.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "p0-admission-state.js"
@@ -107,6 +109,20 @@ FALLBACK.update({
   "minimum_p0":"Complete full-Qwen support and evaluate controlled-effect transport by target-family fold; second backbone remains locked.",
   "stop":"If support is insufficient remain TRANSPORT SUPPORT INSUFFICIENT; never auto-unlock the second backbone."},
 })
+
+# Paper-first promotions reuse the canonical admission/economy machinery rather than
+# creating a parallel P0 system. Their local F0 evidence is filled by paper_first_p0_f0.py.
+for _idea_id, _spec in PAPER_FIRST_P0_PROMOTIONS.items():
+    _mode, _substrate, _units = _spec["setup"]
+    SETUPS[_idea_id] = (_mode, _substrate, _units)
+    FALLBACK[_idea_id] = {
+        "mechanism": _spec["mechanism"],
+        "baseline": _spec["baseline"],
+        "truth": _spec["truth"],
+        "pre_p0": _spec["minimum_p0"],
+        "minimum_p0": _spec["minimum_p0"],
+        "stop": _spec["stop"],
+    }
 
 def _now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -215,6 +231,8 @@ def build_p0_admission_state() -> dict[str, Any]:
     offline_by_id={row["idea_id"]:row for row in offline_state.get("cards") or []}
     revived_f0=build_revived_batch_f0()
     offline_by_id.update({row["idea_id"]:row for row in revived_f0.get("revived") or []})
+    paper_first_f0=build_paper_first_p0_f0_state()
+    offline_by_id.update({row["idea_id"]:row for row in paper_first_f0.get("cards") or []})
     active=[(i,r) for i,r in rows.items() if r.get("terminal_state")=="p0"]
     active.sort(key=lambda x:(str(x[1].get("group") or "Z"),str(x[1].get("code") or x[0])))
     cards=[]; seen=set()

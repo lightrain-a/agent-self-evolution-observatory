@@ -176,7 +176,7 @@ def main() -> None:
         "domains": ["multimodal-reasoning", "digital-interaction", "physical-world"],
         "evaluation": ["validity-safety", "tasks-benchmarks", "reproducibility"],
         "research-directions": ["orientation", "landscape", "direction-clusters", "long-term-agenda"],
-        "paper-ideas": ["discussed-ideas", "new-ideas", "paper-first-incubation"],
+        "paper-ideas": ["discussed-ideas", "new-ideas"],
         "selected-paper": ["problem-scope", "evidence-experiments", "narrative-execution", "review-gates"],
         "bibliography": ["coverage-protocol", "ranking-reading", "field-maps", "search-corpus"],
     }
@@ -265,7 +265,7 @@ def main() -> None:
             fail(f"{filename} must load ENS policy before app.js and ENS view after app.js")
     incubation = json.loads((ROOT / "generated" / "paper-first-idea-incubation.json").read_text(encoding="utf-8"))
     incubation_summary = incubation.get("summary") or {}
-    if (incubation_summary.get("candidates"),incubation_summary.get("advance_to_paper_design"),incubation_summary.get("revise_novelty_boundary"),incubation_summary.get("blocked_collision"),incubation_summary.get("p0_authorized"),incubation_summary.get("gpu_authorized")) != (8,4,3,1,0,0):
+    if (incubation_summary.get("candidates"),incubation_summary.get("advance_to_paper_design"),incubation_summary.get("revise_novelty_boundary"),incubation_summary.get("blocked_collision"),incubation_summary.get("p0_authorized"),incubation_summary.get("gpu_authorized")) != (8,4,3,1,4,0):
         fail(f"paper-first incubation summary is invalid: {incubation_summary}")
     if len({str(row.get("theme") or "") for row in incubation.get("candidates") or []}) < 6:
         fail("paper-first incubation queue collapsed into too few themes")

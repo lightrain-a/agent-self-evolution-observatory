@@ -54,6 +54,7 @@ from .machine_school_idea_factory import write_machine_school_bank
 from .live_pipeline import sync_semantic_scholar
 from .published_experiment_audit import write_audit as write_published_audit
 from .paper_first_idea_incubation import write_paper_first_idea_incubation
+from .paper_first_p0_f0 import write_paper_first_p0_f0_state
 from .research_system import write_research_system_state
 from .publication import PUBLICATION_OK_STATES, publish_generated_state
 
@@ -125,6 +126,7 @@ def run_cycle(
             report["steps"].append(_step("published-visual-audit", write_published_audit))
         report["steps"].append(_step("emerging-niche-policy", write_emerging_niche_policy))
         report["steps"].append(_step("human-terminal-idea-state", write_human_terminal_state))
+        report["steps"].append(_step("paper-first-p0-f0-state", write_paper_first_p0_f0_state))
         report["steps"].append(_step("p0-realizability-suite", write_p0_realizability_suite))
         report["steps"].append(_step("p0-revived-batch-f0", write_revived_batch_f0))
         report["steps"].append(_step("p0-b10-cpu", write_b10_cpu_p0))

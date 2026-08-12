@@ -13,8 +13,8 @@ class PaperFirstStopTriageTest(unittest.TestCase):
         cls.candidate = cls.state["paper_candidates"][0]
 
     def test_all_current_p0_rows_are_triaged_without_reactivation(self) -> None:
-        self.assertEqual(self.state["summary"]["active_p0_rows"], 27)
-        self.assertEqual(len(self.state["rows"]), 27)
+        self.assertEqual(self.state["summary"]["active_p0_rows"], 31)
+        self.assertEqual(len(self.state["rows"]), 31)
         self.assertEqual(self.state["summary"]["old_methods_reactivated"], 0)
         self.assertTrue(all(row["execution_authorized"] is False for row in self.state["rows"]))
 
@@ -69,6 +69,14 @@ class PaperFirstStopTriageTest(unittest.TestCase):
             "workflow-generalization-certificate",
         ):
             self.assertEqual(self.rows[idea_id]["disposition"], "PAPER_NOVELTY_HOLD_NO_SUBSTRATE_RESCUE")
+
+    def test_new_paper_first_p0_rows_remain_non_authoritative(self) -> None:
+        for idea_id in ("future-learnability-preserving-self-evolution", "diagnosability-preserving-self-evolution"):
+            self.assertEqual(self.rows[idea_id]["disposition"], "NO_ACTION")
+            self.assertFalse(self.rows[idea_id]["execution_authorized"])
+        for idea_id in ("cross-surface-repair-routing", "failure-mode-transport-under-self-evolution"):
+            self.assertEqual(self.rows[idea_id]["disposition"], "PROBLEM_HOLD_NO_METHOD")
+            self.assertFalse(self.rows[idea_id]["execution_authorized"])
 
     def test_b8_b9_are_evidence_only_not_reactivated_methods(self) -> None:
         for idea_id in ("replicated-effect-memory-gate", "cross-task-effect-transport-certificate"):

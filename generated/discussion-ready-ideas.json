@@ -1,8 +1,8 @@
 {
   "schema_version": "2.0",
-  "generated_at": "2026-08-12T01:07:03+00:00",
+  "generated_at": "2026-08-12T14:20:08+00:00",
   "target": 20,
-  "count": 27,
+  "count": 31,
   "remaining": 0,
   "ready": true,
   "final_summary": {
@@ -456,6 +456,8 @@
     {
       "source": "human-terminal-parent",
       "id": "budgeted-evolution-controller",
+      "code": "A-2",
+      "group": "A",
       "title": {
         "zh": "预算化进化控制器",
         "en": "Budgeted Evolution Controller"
@@ -469,6 +471,8 @@
     {
       "source": "human-terminal-parent",
       "id": "compositional-update-compatibility",
+      "code": "A-4",
+      "group": "A",
       "title": {
         "zh": "类型化更新交互规则注册表",
         "en": "Typed Update-Interaction Rule Registry"
@@ -482,6 +486,8 @@
     {
       "source": "human-terminal-parent",
       "id": "contradiction-preserving-consolidation",
+      "code": "B-2",
+      "group": "B",
       "title": {
         "zh": "因果结论改变保留",
         "en": "Causal Conclusion-Change Retention"
@@ -495,6 +501,8 @@
     {
       "source": "human-terminal-parent",
       "id": "counterexample-generating-curriculum",
+      "code": "D-1",
+      "group": "D",
       "title": {
         "zh": "1-最小边界反例课程",
         "en": "1-Minimal Boundary-Counterexample Curriculum"
@@ -508,6 +516,8 @@
     {
       "source": "human-terminal-parent",
       "id": "evaluator-coadaptation-guard",
+      "code": "C-2",
+      "group": "C",
       "title": {
         "zh": "冻结锚点评价器共适应防护",
         "en": "Frozen-Anchor Evaluator Coadaptation Guard"
@@ -521,6 +531,8 @@
     {
       "source": "human-terminal-parent",
       "id": "failure-frontier-curriculum",
+      "code": "D-2",
+      "group": "D",
       "title": {
         "en": "Freeze a typed mutation library and selector; each version chooses operators from current failure signatures to generate later training tasks without target-reward search."
       },
@@ -533,6 +545,8 @@
     {
       "source": "human-terminal-parent",
       "id": "intervention-validated-self-correction",
+      "code": "C-5",
+      "group": "C",
       "title": {
         "en": "Share the correction generator; compute delete/insert necessity-sufficiency signatures and freeze a commit/reject gate before hidden future tasks open."
       },
@@ -545,6 +559,8 @@
     {
       "source": "human-terminal-parent",
       "id": "irreversible-action-counterfactuals",
+      "code": "F-2",
+      "group": "F",
       "title": {
         "en": "Use predecessor deletion/substitution on failing counterfactuals to induce state-predicate -> forbidden-action/required-checkpoint clauses enforced by an external executor."
       },
@@ -557,6 +573,8 @@
     {
       "source": "human-terminal-parent",
       "id": "lineage-aware-rollback",
+      "code": "A-5",
+      "group": "A",
       "title": {
         "zh": "回滚等价的更新历史压缩",
         "en": "Rollback-Equivalent Update-History Compaction"
@@ -570,6 +588,8 @@
     {
       "source": "human-terminal-parent",
       "id": "local-counterexample-memory-repair",
+      "code": "B-5",
+      "group": "B",
       "title": {
         "zh": "紧凑外部适用边界的局部反例修复",
         "en": "Local Counterexample Repair with Compact External Applicability Gate"
@@ -583,6 +603,8 @@
     {
       "source": "human-terminal-parent",
       "id": "memory-half-life",
+      "code": "B-6",
+      "group": "B",
       "title": {
         "zh": "复用机会驱动的记忆效用复验",
         "en": "Reuse-Opportunity Memory Utility Revalidation"
@@ -596,6 +618,8 @@
     {
       "source": "human-terminal-parent",
       "id": "recovery-conditioned-experience",
+      "code": "F-3",
+      "group": "F",
       "title": {
         "en": "From same-start successful normal/perturbed pairs extract the earliest recovery state-action residual; write an operator+applicability predicate only after replication across >=2 contexts."
       },
@@ -608,6 +632,8 @@
     {
       "source": "human-terminal-parent",
       "id": "regression-gated-self-evolution",
+      "code": "A-3",
+      "group": "A",
       "title": {
         "zh": "预算校准的预测性回归面板",
         "en": "Budget-Calibrated Predictive Regression Panel"
@@ -621,6 +647,8 @@
     {
       "source": "human-terminal-parent",
       "id": "retrieval-interference-auditor",
+      "code": "B-3",
+      "group": "B",
       "title": {
         "zh": "检索干扰审计器",
         "en": "Retrieval Interference Auditor"
@@ -634,6 +662,8 @@
     {
       "source": "human-terminal-parent",
       "id": "self-correction-collapse-detector",
+      "code": "C-4",
+      "group": "C",
       "title": {
         "en": "Freeze a policy over replan/retrieve/rewrite/rollback/stop from failure signature, previous mode, and verifier delta; no test-time retraining."
       },
@@ -646,6 +676,8 @@
     {
       "source": "human-terminal-parent",
       "id": "self-label-confidence-flow",
+      "code": "C-1",
+      "group": "C",
       "title": {
         "en": "Maintain a frozen label-lineage graph and effective-evidence weights; each pseudo-label gets a persistent accept, quarantine, or down-weight action across later rounds."
       },
@@ -658,6 +690,8 @@
     {
       "source": "human-terminal-parent",
       "id": "update-trust-region",
+      "code": "A-1",
+      "group": "A",
       "title": {
         "zh": "行为散度信赖域",
         "en": "Behavioral Trust Region for Agent Updates"
@@ -671,6 +705,8 @@
     {
       "source": "human-terminal-parent",
       "id": "workflow-branch-credit",
+      "code": "E-2",
+      "group": "E",
       "title": {
         "zh": "失败模式因果重写注册表",
         "en": "Failure-Motif Causal Rewrite Registry"
@@ -684,6 +720,8 @@
     {
       "source": "human-terminal-parent",
       "id": "workflow-generalization-certificate",
+      "code": "E-1",
+      "group": "E",
       "title": {
         "zh": "成对编辑效应工作流更新策略",
         "en": "Paired Edit-Effect Workflow Update Policy"
@@ -697,6 +735,8 @@
     {
       "source": "human-terminal-parent",
       "id": "world-model-error-gated-learning",
+      "code": "F-1",
+      "group": "F",
       "title": {
         "en": "Use independent true transitions; only decision-changing residuals may update the world-model residual adapter while the policy remains frozen."
       },
@@ -709,6 +749,9 @@
     {
       "source": "terminal-independent-method",
       "id": "active-causal-minimal-rollback",
+      "code": "A-6",
+      "group": "A",
+      "source_incubation_id": null,
       "title": {
         "zh": "主动因果最小回滚",
         "en": "Active Causal Minimal Rollback"
@@ -722,6 +765,9 @@
     {
       "source": "terminal-independent-method",
       "id": "bounded-probe-api-transition-operator",
+      "code": "E-3",
+      "group": "E",
+      "source_incubation_id": null,
       "title": {
         "zh": "限探针 API 转移算子",
         "en": "Bounded-Probe API Transition Operator"
@@ -735,6 +781,9 @@
     {
       "source": "terminal-independent-method",
       "id": "constraint-complete-typed-memory-order-logic",
+      "code": "B-10",
+      "group": "B",
+      "source_incubation_id": null,
       "title": {
         "zh": "约束完备的类型化记忆顺序逻辑",
         "en": "Constraint-Complete Typed Memory-Order Logic"
@@ -748,6 +797,9 @@
     {
       "source": "terminal-independent-method",
       "id": "counterfactual-evolution-decision-controller",
+      "code": "A-7",
+      "group": "A",
+      "source_incubation_id": null,
       "title": {
         "zh": "反事实进化决策控制器",
         "en": "Counterfactual Evolution Decision Controller"
@@ -760,7 +812,26 @@
     },
     {
       "source": "terminal-independent-method",
+      "id": "cross-surface-repair-routing",
+      "code": "E-5",
+      "group": "E",
+      "source_incubation_id": "PF-2",
+      "title": {
+        "zh": "跨 Agent 更新表面的因果修复路由",
+        "en": "Causal Routing Across Agent Update Surfaces"
+      },
+      "terminal_state": "p0",
+      "human_parent": false,
+      "reviewed": true,
+      "final_verdict": "terminal-human-compatible",
+      "parent_ids": []
+    },
+    {
+      "source": "terminal-independent-method",
       "id": "cross-task-effect-transport-certificate",
+      "code": "B-9",
+      "group": "B",
+      "source_incubation_id": null,
       "title": {
         "zh": "跨任务效应迁移证书",
         "en": "Cross-Task Effect Transport Certificate"
@@ -773,7 +844,58 @@
     },
     {
       "source": "terminal-independent-method",
+      "id": "diagnosability-preserving-self-evolution",
+      "code": "C-7",
+      "group": "C",
+      "source_incubation_id": "PF-4",
+      "title": {
+        "zh": "保持可诊断性的自进化",
+        "en": "Diagnosability-Preserving Self-Evolution"
+      },
+      "terminal_state": "p0",
+      "human_parent": false,
+      "reviewed": true,
+      "final_verdict": "terminal-human-compatible",
+      "parent_ids": []
+    },
+    {
+      "source": "terminal-independent-method",
+      "id": "failure-mode-transport-under-self-evolution",
+      "code": "A-9",
+      "group": "A",
+      "source_incubation_id": "PF-6",
+      "title": {
+        "zh": "自进化中的失败模式迁移",
+        "en": "Failure-Mode Transport Under Self-Evolution"
+      },
+      "terminal_state": "p0",
+      "human_parent": false,
+      "reviewed": true,
+      "final_verdict": "terminal-human-compatible",
+      "parent_ids": []
+    },
+    {
+      "source": "terminal-independent-method",
+      "id": "future-learnability-preserving-self-evolution",
+      "code": "A-8",
+      "group": "A",
+      "source_incubation_id": "PF-1",
+      "title": {
+        "zh": "面向未来可学习性的自进化",
+        "en": "Future-Learnability-Preserving Self-Evolution"
+      },
+      "terminal_state": "p0",
+      "human_parent": false,
+      "reviewed": true,
+      "final_verdict": "terminal-human-compatible",
+      "parent_ids": []
+    },
+    {
+      "source": "terminal-independent-method",
       "id": "interventional-permission-triage-under-ceiling",
+      "code": "E-4",
+      "group": "E",
+      "source_incubation_id": null,
       "title": {
         "zh": "固定上限下的干预式权限重授权筛选",
         "en": "Interventional Permission Triage Under a Fixed Ceiling"
@@ -787,6 +909,9 @@
     {
       "source": "terminal-independent-method",
       "id": "replicated-effect-memory-gate",
+      "code": "B-8",
+      "group": "B",
+      "source_incubation_id": null,
       "title": {
         "zh": "重复效应记忆门控",
         "en": "Replicated-Effect Memory Gate"

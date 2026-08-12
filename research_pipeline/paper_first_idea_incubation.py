@@ -5,13 +5,14 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 from .config import PROJECT_ROOT
+from .paper_first_p0_promotions import PROMOTION_BY_INCUBATION, PROMOTIONS
 
 DEFAULT_JSON=PROJECT_ROOT/'generated'/'paper-first-idea-incubation.json'
 DEFAULT_JS=PROJECT_ROOT/'generated'/'paper-first-idea-incubation.js'
 POLICY={
- 'schema_version':'1.0','paper_first_only':True,'separate_from_current_p0_ledger':True,
- 'cannot_authorize_p0_or_gpu':True,'novelty_premortem_precedes_method_implementation':True,
- 'advance_means_enter_paper_design_not_enter_p0':True,'blocked_candidates_remain_visible':True,
+ 'schema_version':'1.1','paper_first_only':True,'novelty_premortem_precedes_method_implementation':True,
+ 'incubation_cannot_self_authorize_p0_or_gpu':True,'explicit_human_promotion_required_for_p0':True,
+ 'p0_lifecycle_does_not_equal_execution_authority':True,'blocked_candidates_remain_visible':True,
  'review_cutoff':'2026-08-12',
 }
 
@@ -95,12 +96,17 @@ CANDIDATES=(
 )
 
 def build_paper_first_idea_incubation():
- counts=Counter(str(r['verdict']) for r in CANDIDATES)
- return {'schema_version':'1.0','review_date':'2026-08-12','policy':POLICY,
+ counts=Counter(str(r['verdict']) for r in CANDIDATES); rows=[]
+ for raw in CANDIDATES:
+  row=dict(raw); idea_id=PROMOTION_BY_INCUBATION.get(str(row['id']))
+  if idea_id:
+   spec=PROMOTIONS[idea_id]; row.update({'p0_authorized':True,'gpu_authorized':False,'p0_idea_id':idea_id,'p0_code':spec['code'],'p0_group':spec['group'],'p0_entry_basis':'explicit-user-paper-first-p0-promotion'})
+  rows.append(row)
+ return {'schema_version':'1.1','review_date':'2026-08-12','policy':POLICY,
   'summary':{'candidates':len(CANDIDATES),'advance_to_paper_design':counts['ADVANCE_TO_PAPER_DESIGN'],
    'revise_novelty_boundary':counts['REVISE_NOVELTY_BOUNDARY'],'blocked_collision':counts['BLOCK_COLLISION'],
-   'p0_authorized':0,'gpu_authorized':0,'themes':len({r['theme'] for r in CANDIDATES})},
-  'candidates':[dict(r) for r in CANDIDATES]}
+   'p0_authorized':sum(bool(r.get('p0_authorized')) for r in rows),'gpu_authorized':sum(bool(r.get('gpu_authorized')) for r in rows),'themes':len({r['theme'] for r in CANDIDATES})},
+  'candidates':rows}
 
 def validate_paper_first_idea_incubation(p):
  rows=list(p.get('candidates') or []); ids=[str(r.get('id') or '') for r in rows]; errors=[]
@@ -109,7 +115,8 @@ def validate_paper_first_idea_incubation(p):
  allowed={'ADVANCE_TO_PAPER_DESIGN','REVISE_NOVELTY_BOUNDARY','BLOCK_COLLISION'}
  if any(r.get('verdict') not in allowed for r in rows): errors.append('unknown incubation verdict')
  if any(not r.get('nearest_work') or not r.get('novelty_boundary') or not r.get('local_falsifier') for r in rows): errors.append('incomplete paper-first premortem')
- if (p.get('summary') or {}).get('p0_authorized')!=0 or (p.get('summary') or {}).get('gpu_authorized')!=0: errors.append('incubation cannot authorize execution')
+ if (p.get('summary') or {}).get('p0_authorized')!=4 or (p.get('summary') or {}).get('gpu_authorized')!=0: errors.append('expected four explicit-human P0 promotions and zero direct GPU authority')
+ if any(r.get('p0_authorized') and r.get('verdict')!='ADVANCE_TO_PAPER_DESIGN' for r in rows): errors.append('only ADVANCE candidates may be explicitly promoted to P0')
  if (p.get('summary') or {}).get('advance_to_paper_design')!=4: errors.append('expected four advances in current premortem')
  return errors
 
