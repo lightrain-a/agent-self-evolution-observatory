@@ -125,6 +125,8 @@ class PublicationTest(unittest.TestCase):
                 "generated/paper-first-fresh-saturation.js",
                 "generated/paper-first-post-c2-adjudication.json",
                 "generated/paper-first-post-c2-adjudication.js",
+                "generated/paper-first-premature-method-diagnostics.json",
+                "generated/paper-first-premature-method-diagnostics.js",
             ),
         )
 

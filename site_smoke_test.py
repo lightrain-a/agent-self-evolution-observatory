@@ -279,6 +279,15 @@ def main() -> None:
     if research_state.get("health", {}).get("status") != "healthy":
         fail("continuous research system is not healthy")
     summary = research_state.get("summary") or {}
+    premature_method_path = ROOT / "generated" / "paper-first-premature-method-diagnostics.json"
+    if not premature_method_path.exists():
+        fail("paper-first-premature-method-diagnostics.json is missing")
+    premature_method = json.loads(premature_method_path.read_text(encoding="utf-8"))
+    pmd_summary = premature_method.get("summary") or {}
+    if (pmd_summary.get("directions"),pmd_summary.get("completed_diagnostics"),pmd_summary.get("design_holds"),pmd_summary.get("same_information_reducibility_findings"),pmd_summary.get("hidden_executions"),pmd_summary.get("scientifically_authorized"),pmd_summary.get("p0_lifecycle_mutations")) != (2,2,1,2,0,0,0):
+        fail(f"premature Paper-first Method diagnostic archive is missing or authoritative: {pmd_summary}")
+    if (premature_method.get("authority") or {}).get("cannot_retroactively_authorize") is not True:
+        fail("premature Paper-first Method diagnostics must never retroactively create P0 authority")
     if summary.get("papers", 0) < 200 or summary.get("evidence_nodes", 0) <= summary.get("papers", 0):
         fail("continuous research evidence graph is incomplete")
     if research_state.get("collision_engine", {}).get("summary", {}).get("pairwise_comparisons") != 406:

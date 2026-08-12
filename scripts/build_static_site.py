@@ -177,6 +177,8 @@ def build() -> Path:
         OUTPUT / "generated" / "research-system-state.js",
         OUTPUT / "generated" / "paper-first-p0-f0-state.js",
         OUTPUT / "generated" / "paper-first-p0-f0-state.json",
+        OUTPUT / "generated" / "paper-first-premature-method-diagnostics.js",
+        OUTPUT / "generated" / "paper-first-premature-method-diagnostics.json",
         OUTPUT / "generated" / "p0-experiment-plan.js",
         OUTPUT / "generated" / "p0-collision-recheck.js",
         OUTPUT / "generated" / "p0-runtime-readiness.js",

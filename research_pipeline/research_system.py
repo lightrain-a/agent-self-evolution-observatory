@@ -41,6 +41,7 @@ from .paper_first_pf357_problem_adjudication import build_pf357_problem_adjudica
 from .paper_first_fresh_saturation import build_fresh_saturation_state, write_fresh_saturation_state
 from .paper_first_problem_discovery_contract import build_problem_discovery_contract_state
 from .paper_first_post_c2_adjudication import build_post_c2_adjudication, write_post_c2_adjudication
+from .paper_first_premature_method_diagnostics import build_premature_method_diagnostics, write_premature_method_diagnostics
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
 from .p0_b10_cpu import write_b10_cpu_p0
 from .p0_a6_cpu import write_a6_cpu_p0
@@ -298,6 +299,7 @@ def build_research_system_state() -> dict[str, Any]:
         if card.get("phase") == "P0" and card.get("idea_id")
     }
     experiment_data_root = resolve_experiment_data_root(storage)
+    paper_first_premature_method_diagnostics = build_premature_method_diagnostics(experiment_data_root)
     research_governance_v2 = build_governance_state()
     research_governance_v2["runtime"] = {
         "active_gpu_leases": len(list_gpu_leases(experiment_data_root, True)),
@@ -417,6 +419,9 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_post_c2_decision":paper_first_post_c2["decision"],
             "paper_first_post_c2_current_formulation":paper_first_post_c2["current_paper_formulation_status"],
             "paper_first_post_c2_c3_locked":paper_first_post_c2["authority"]["C3_locked"],
+            "paper_first_premature_method_diagnostics":paper_first_premature_method_diagnostics["summary"]["completed_diagnostics"],
+            "paper_first_premature_method_reducibility_findings":paper_first_premature_method_diagnostics["summary"]["same_information_reducibility_findings"],
+            "paper_first_premature_method_scientific_authority":paper_first_premature_method_diagnostics["summary"]["scientifically_authorized"],
             "pre_experiment_ready":pre_experiment_compiler["summary"]["execution_ready"],
             "pre_experiment_formal_ready":pre_experiment_compiler["summary"]["formal_p0_ready"],
             "research_execution_plans":pre_experiment_compiler["summary"]["research_execution_plans"],
@@ -544,6 +549,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_fresh_saturation":paper_first_fresh_saturation,
         "paper_first_problem_discovery_contract":paper_first_problem_discovery_contract,
         "paper_first_post_c2":paper_first_post_c2,
+        "paper_first_premature_method_diagnostics":paper_first_premature_method_diagnostics,
         "pilot_registry":pilot_registry,
         "experiment_iteration":experiment_iteration,
         "principle_layer":principle_layer,
@@ -630,6 +636,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["paper_design_contract_required_before_principle_and_implementation"] and state["pre_experiment_compiler"]["policy"]["paper_design_contract_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["summary"]["protocol_validity_pass"] == expected_pre_experiment_cards and state["pre_experiment_compiler"]["policy"]["research_execution_plan_required_before_launch"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_is_derived_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_cannot_authorize_execution"] and state["pre_experiment_compiler"]["summary"]["research_execution_plans"] == expected_pre_experiment_cards and state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["policy"]["terminal_outcome_requires_endpoint_headroom_audit"] and state["pre_experiment_compiler"]["policy"]["execution_cap_censoring_must_be_typed_separately"] and state["pre_experiment_compiler"]["policy"]["cap_censored_branch_cannot_count_as_natural_terminal_failure"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == expected_pre_experiment_cards, "detail":state["pre_experiment_compiler"]["summary"]},
         {"key":"paper-first-p0-human-authority", "pass":state["paper_first_p0_authority"]["summary"].get("promoted") == 0 or state["paper_first_p0_authority"]["summary"].get("authority_status") == "EXTERNAL_HUMAN_P0_PROMOTION_AUTHORITY_VALID", "detail":state["paper_first_p0_authority"]},
         {"key":"paper-first-p0-f0", "pass":state["paper_first_p0_f0"]["summary"].get("ideas") == 4 and state["paper_first_p0_f0"]["summary"].get("quarantined") == 4 and state["paper_first_p0_f0"]["summary"].get("scientifically_authorized") == 0 and state["paper_first_p0_f0"]["summary"].get("method_fail_authorized") == 0 and state["paper_first_p0_f0"]["policy"].get("unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority") is True, "detail":state["paper_first_p0_f0"]["summary"]},
+        {"key":"paper-first-premature-method-diagnostics", "pass":state["paper_first_premature_method_diagnostics"]["summary"].get("directions") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("completed_diagnostics") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("same_information_reducibility_findings") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("scientifically_authorized") == 0 and state["paper_first_premature_method_diagnostics"]["summary"].get("p0_lifecycle_mutations") == 0 and state["paper_first_premature_method_diagnostics"]["authority"].get("cannot_retroactively_authorize") is True, "detail":state["paper_first_premature_method_diagnostics"]["summary"]},
         {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
@@ -735,6 +742,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if pf0_summary.get("ideas") != 4 or pf0_summary.get("quarantined") != 4 or pf0_summary.get("scientifically_authorized") != 0 or pf0_summary.get("method_fail_authorized") != 0: errors.append("paper-first premature local F0 must remain four diagnostic-only quarantined executions with zero scientific authority")
     if (paper_first_f0.get("policy") or {}).get("unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority") is not True: errors.append("paper-first premature execution must be preserved without creating scientific authority")
     if (paper_first_f0.get("policy") or {}).get("p0_method_requires_support_pass_and_pre_experiment_authority") is not True: errors.append("paper-first P0 method work must remain locked behind support plus Pre-Experiment authority")
+    premature_method = state.get("paper_first_premature_method_diagnostics") or {}; pmd_summary = premature_method.get("summary") or {}; pmd_auth = premature_method.get("authority") or {}
+    if (pmd_summary.get("directions"),pmd_summary.get("completed_diagnostics"),pmd_summary.get("design_holds"),pmd_summary.get("same_information_reducibility_findings"),pmd_summary.get("scientifically_authorized"),pmd_summary.get("p0_lifecycle_mutations"),pmd_summary.get("full_experiment_authorized")) != (2,2,1,2,0,0,0): errors.append("premature Paper-first Method diagnostics must remain two completed non-authoritative reducibility records")
+    if pmd_auth.get("cannot_retroactively_authorize") is not True or pmd_auth.get("cannot_override_problem_or_design_adjudication") is not True or pmd_auth.get("scientific_authority") is not False: errors.append("premature Method diagnostics must remain subordinate to frozen paper authority")
     if not state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"]: errors.append("P0 execution must require an 8/8 Pre-Experiment Card")
     if not state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"]: errors.append("automatic P0-to-P1 escalation must stay forbidden")
     if not state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"]: errors.append("non-identifiable pilots must not update scientific belief")
@@ -805,6 +815,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_pf357_problem_adjudication()
     write_fresh_saturation_state()
     write_post_c2_adjudication()
+    write_premature_method_diagnostics()
     write_ai_consultation_clinic_state()
     state=build_research_system_state()
     write_p0_decision_ledger(state["p0_decision_ledger"])

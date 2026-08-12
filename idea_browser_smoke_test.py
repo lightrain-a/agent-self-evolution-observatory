@@ -173,6 +173,8 @@ def main() -> None:
           freshDecision: window.PAPER_FIRST_FRESH_SATURATION?.decision || '',
           freshZeroSurvivorPolicy: Boolean(window.PAPER_FIRST_FRESH_SATURATION?.policy?.zero_survivors_is_valid_and_preferred_to_forced_shortlist),
           freshPanel: document.querySelectorAll('.paper-first-fresh-saturation').length,
+          prematureMethodSummary: window.PAPER_FIRST_PREMATURE_METHOD_DIAGNOSTICS?.summary || window.RESEARCH_SYSTEM_STATE?.paper_first_premature_method_diagnostics?.summary || {},
+          prematureMethodPanels: document.querySelectorAll('.premature-method-diagnostic').length,
           designCards: document.querySelectorAll('.paper-incubation-card small').length,
           text: document.body.textContent || ''
         };""")
@@ -215,6 +217,9 @@ def main() -> None:
         require(set(ideas["pf357Decisions"]) == {"PF-3","PF-5","PF-7"} and all(str(v).startswith("STOP_PF") for v in ideas["pf357Decisions"].values()), f"PF-3/5/7 decisions are wrong: {ideas['pf357Decisions']}")
         require((ideas["freshSummary"].get("drafts_reviewed"),ideas["freshSummary"].get("survivors"),ideas["freshSummary"].get("stopped"),ideas["freshSummary"].get("local_validation_authorized"),ideas["freshSummary"].get("p0_authorized")) == (37,0,37,0,0) and ideas["freshDecision"] == "NO_FRESH_SURVIVOR_CURRENT_SCAN" and ideas["freshZeroSurvivorPolicy"] and ideas["freshPanel"] == 1, f"fresh saturation scan must show 37 reviewed / 0 survivor / 37 stop with zero-survivor policy: {ideas}")
         require(all(marker in ideas["text"] for marker in ("PF-1","PF-2","PF-3","PF-4","PF-5","PF-6","PF-7","STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT","STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL","STOP_PF3_STANDALONE_MERGE_COMPRESSION_LIFECYCLE_CONTROL","STOP_PF5_STANDALONE_MERGE_DIFFERENTIAL_VERIFICATION_COMPONENT","STOP_PF7_STANDALONE_MERGE_EVIDENCE_IMPACT_REVALIDATION_COMPONENT","Fresh contradiction-first")), "Paper-first terminal/fresh-saturation verdicts are not visible")
+        pmd=ideas["prematureMethodSummary"]
+        require((pmd.get("directions"),pmd.get("completed_diagnostics"),pmd.get("design_holds"),pmd.get("same_information_reducibility_findings"),pmd.get("hidden_executions"),pmd.get("scientifically_authorized")) == (2,2,1,2,0,0) and ideas["prematureMethodPanels"] == 2, f"premature Method diagnostics must be visible as two non-authoritative PF-1/PF-4 archives: {pmd}/{ideas['prematureMethodPanels']}")
+        require("STOP_MATCHED_POST_ONLY_EQUIVALENT" in ideas["text"] and "STOP_MATCHED_SOFT_SCALAR_EQUIVALENT" in ideas["text"] and "DIAGNOSTIC ONLY" in ideas["text"], "Paper-first diagnostic archive markers are not visible")
         require("Human terminal ledger" in ideas["text"] and ideas["newCards"] == 7 and ideas["absorbedChildCount"] == 17, "terminal/current idea summary or standalone-method rendering is missing")
 
         expanded_before_refresh = execute(session_id, """document.documentElement.style.scrollBehavior='auto'; const card=document.getElementById('idea-a-1'); if(!card) return null; card.open=true; card.querySelectorAll('details').forEach(x=>x.open=true); const top=card.getBoundingClientRect().top+window.scrollY; window.scrollTo(0, top+Math.min(900,Math.max(500,card.scrollHeight*.55))); return {y:window.scrollY,open:document.querySelectorAll('#dynamic-page details[open]').length};""")
@@ -259,6 +264,8 @@ def main() -> None:
           postC2FullAuthorized: Boolean(window.PAPER_FIRST_POST_C2_ADJUDICATION?.authority?.full_experiment_authorized),
           prematurePfF0Panel: document.querySelectorAll('.paper-first-premature-f0-audit').length,
           prematurePfF0Summary: window.RESEARCH_SYSTEM_STATE?.paper_first_p0_f0?.summary || {},
+          prematurePfMethodPanel: document.querySelectorAll('.paper-first-premature-method-audit').length,
+          prematurePfMethodSummary: window.PAPER_FIRST_PREMATURE_METHOD_DIAGNOSTICS?.summary || window.RESEARCH_SYSTEM_STATE?.paper_first_premature_method_diagnostics?.summary || {},
           paperFirstP0Authority: window.RESEARCH_SYSTEM_STATE?.paper_first_p0_authority?.summary || {},
           auditQueue: document.querySelectorAll('#terminal-unstarted-audit').length,
           auditItems: document.querySelectorAll('.terminal-audit-item').length,
@@ -351,6 +358,8 @@ def main() -> None:
         require(experiments["batchPanel"] == 1 and (experiments["batchSummary"].get("parent_p0"),experiments["batchSummary"].get("reused_existing_p0"),experiments["batchSummary"].get("fresh_cpu_f0"),experiments["batchSummary"].get("fresh_matched_simplification_stop"),experiments["batchSummary"].get("fresh_upstream_hold"),experiments["batchSummary"].get("gpu_queue_candidates_before_economy")) == (20,13,7,7,0,0), f"20-Idea P0 batch is missing or stale: {experiments['batchSummary']}")
         require(experiments["postC2Panel"] == 1 and experiments["postC2Decision"] == "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" and experiments["postC2ScienceWorldDecision"] == "SYMMETRIC_F0_HOLD" and experiments["postC2C3Locked"] and not experiments["postC2FullAuthorized"], f"paper-first C2 terminal authority is not rendered conservatively: {experiments}")
         require(experiments["prematurePfF0Panel"] == 1 and experiments["prematurePfF0Summary"].get("quarantined") == 4 and experiments["prematurePfF0Summary"].get("scientifically_authorized") == 0 and experiments["paperFirstP0Authority"].get("promoted") == 0, f"premature PF F0 must remain visible but quarantined from P0/scientific authority: {experiments}")
+        pmdx=experiments["prematurePfMethodSummary"]
+        require(experiments["prematurePfMethodPanel"] == 1 and (pmdx.get("completed_diagnostics"),pmdx.get("same_information_reducibility_findings"),pmdx.get("hidden_executions"),pmdx.get("scientifically_authorized"),pmdx.get("p0_lifecycle_mutations")) == (2,2,0,0,0), f"premature PF Method results must remain visible only as non-authoritative diagnostic evidence: {experiments}")
         require(experiments["admissionPanel"] == 1 and experiments["admissionRows"] >= 16 and experiments["admissionSummary"].get("active_p0") == 27 and experiments["admissionSummary"].get("transitioned_from_p0_ready") == 16 and experiments["admissionSummary"].get("revived_from_drop") == 7 and experiments["admissionSummary"].get("settings_complete") == 27, f"P0 admission/settings panel is incomplete: {experiments}")
         require(experiments["offlinePanel"] == 1 and experiments["offlineSummary"].get("ideas") == 16 and experiments["offlineSummary"].get("checks_failed",0) >= 15 and experiments["offlineSummary"].get("checks_synthetic_pass") == 14 and experiments["offlineSummary"].get("gpu0_stop") == 16 and experiments["offlineSummary"].get("gpu0_hold_or_conditional") == 0, f"offline qualification panel/state is incomplete: {experiments}")
         require(experiments["realizabilitySummary"].get("audited") == 14 and experiments["realizabilitySummary"].get("synthetic_pass") == 14, f"synthetic realizability summary is wrong: {experiments}")

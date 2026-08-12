@@ -243,6 +243,17 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["paper_first_p0_f0_quarantined"], 4)
         self.assertEqual((self.state["paper_first_p0_f0"]["summary"]["observed_support_pass"], self.state["paper_first_p0_f0"]["summary"]["observed_support_hold"]), (2, 2))
         self.assertEqual(self.state["paper_first_p0_f0"]["summary"]["method_fail_authorized"], 0)
+        premature_method=self.state["paper_first_premature_method_diagnostics"]
+        self.assertEqual((premature_method["summary"]["directions"],premature_method["summary"]["completed_diagnostics"],premature_method["summary"]["design_holds"],premature_method["summary"]["same_information_reducibility_findings"]),(2,2,1,2))
+        self.assertEqual((premature_method["summary"]["scientifically_authorized"],premature_method["summary"]["p0_lifecycle_mutations"],premature_method["summary"]["full_experiment_authorized"]),(0,0,0))
+        self.assertTrue(premature_method["authority"]["cannot_retroactively_authorize"])
+        pmd_by={row["incubation_id"]:row for row in premature_method["cards"]}
+        self.assertEqual(pmd_by["PF-1"]["v2_observed_method_diagnostic"]["decision"],"STOP_MATCHED_POST_ONLY_EQUIVALENT")
+        self.assertEqual(pmd_by["PF-1"]["v2_observed_method_diagnostic"]["selected_proposed"],"c2")
+        self.assertEqual(pmd_by["PF-1"]["v2_observed_method_diagnostic"]["selected_same_information_post_only"],"c2")
+        self.assertFalse(pmd_by["PF-1"]["v2_observed_method_diagnostic"]["hidden_executed"])
+        self.assertEqual(pmd_by["PF-4"]["observed_method_diagnostic"]["decision"],"STOP_MATCHED_SOFT_SCALAR_EQUIVALENT")
+        self.assertFalse(pmd_by["PF-4"]["observed_method_diagnostic"]["fresh_gpu_authorized"])
         authority_assets=[row for row in self.state["failure_asset_library"]["assets"] if row.get("diagnosis")=="authority-provenance-mismatch"]
         self.assertEqual(len(authority_assets), 1)
         self.assertFalse(authority_assets[0]["can_authorize_p0"])
