@@ -167,6 +167,8 @@ def main() -> None:
           pf2MethodProblemStatus: window.PAPER_FIRST_PF2_METHOD_ADJUDICATION?.paper_problem_status || '',
           pf2MethodBlueprintAuthorized: Boolean(window.PAPER_FIRST_PF2_METHOD_ADJUDICATION?.authority?.experiment_blueprint_authorized),
           pf2MethodLocalAuthorized: Boolean(window.PAPER_FIRST_PF2_METHOD_ADJUDICATION?.authority?.local_validation_authorized),
+          pf357Summary: window.PAPER_FIRST_PF357_PROBLEM_ADJUDICATION?.summary || {},
+          pf357Decisions: Object.fromEntries((window.PAPER_FIRST_PF357_PROBLEM_ADJUDICATION?.rows || []).map(x=>[x.id,x.decision])),
           designCards: document.querySelectorAll('.paper-incubation-card small').length,
           text: document.body.textContent || ''
         };""")
@@ -205,7 +207,9 @@ def main() -> None:
         require(ideas["designVerdicts"] == {"PF-2":"ADVANCE_TO_METHOD_DESIGN","PF-1":"REVISE_PAPER_PROBLEM","PF-4":"MERGE_AS_CROSS_CUTTING_INVARIANT","PF-6":"STOP_STANDALONE_MERGE_RISK_AXIS"}, f"Paper Design historical verdicts are wrong: {ideas['designVerdicts']}")
         require(ideas["pf1ProblemDecision"] == "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT" and not ideas["pf1ProblemActive"] and not ideas["pf1MethodAuthorized"], f"PF-1 final problem STOP is not rendered conservatively: {ideas}")
         require(ideas["pf2MethodDecision"] == "STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL" and ideas["pf2MethodProblemStatus"] == "SURVIVES_AS_PROBLEM_AND_EVALUATION_PROTOCOL_ONLY" and not ideas["pf2MethodBlueprintAuthorized"] and not ideas["pf2MethodLocalAuthorized"], f"PF-2 method-level STOP is not rendered conservatively: {ideas}")
-        require(all(marker in ideas["text"] for marker in ("PF-1","PF-2","PF-4","PF-6","ADVANCE_TO_METHOD_DESIGN","REVISE_PAPER_PROBLEM","MERGE_AS_CROSS_CUTTING_INVARIANT","STOP_STANDALONE_MERGE_RISK_AXIS","STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT","STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL")), "Paper-first design/problem/method verdicts are not visible")
+        require((ideas["pf357Summary"].get("reviewed"),ideas["pf357Summary"].get("stopped_standalone"),ideas["pf357Summary"].get("paper_design_authorized"),ideas["pf357Summary"].get("local_validation_authorized")) == (3,3,0,0), f"PF-3/5/7 final adjudication is stale: {ideas['pf357Summary']}")
+        require(set(ideas["pf357Decisions"]) == {"PF-3","PF-5","PF-7"} and all(str(v).startswith("STOP_PF") for v in ideas["pf357Decisions"].values()), f"PF-3/5/7 decisions are wrong: {ideas['pf357Decisions']}")
+        require(all(marker in ideas["text"] for marker in ("PF-1","PF-2","PF-3","PF-4","PF-5","PF-6","PF-7","STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT","STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL","STOP_PF3_STANDALONE_MERGE_COMPRESSION_LIFECYCLE_CONTROL","STOP_PF5_STANDALONE_MERGE_DIFFERENTIAL_VERIFICATION_COMPONENT","STOP_PF7_STANDALONE_MERGE_EVIDENCE_IMPACT_REVALIDATION_COMPONENT")), "Paper-first terminal verdicts are not visible")
         require("Human terminal ledger" in ideas["text"] and ideas["newCards"] == 7 and ideas["absorbedChildCount"] == 17, "terminal/current idea summary or standalone-method rendering is missing")
 
         expanded_before_refresh = execute(session_id, """document.documentElement.style.scrollBehavior='auto'; const card=document.getElementById('idea-a-1'); if(!card) return null; card.open=true; card.querySelectorAll('details').forEach(x=>x.open=true); const top=card.getBoundingClientRect().top+window.scrollY; window.scrollTo(0, top+Math.min(900,Math.max(500,card.scrollHeight*.55))); return {y:window.scrollY,open:document.querySelectorAll('#dynamic-page details[open]').length};""")

@@ -37,6 +37,7 @@ from .paper_design_contract import build_paper_first_workflow_state
 from .paper_first_design_adjudication import build_paper_first_design_adjudication, write_paper_first_design_adjudication
 from .paper_first_pf1_problem_adjudication import build_pf1_problem_adjudication, write_pf1_problem_adjudication
 from .paper_first_pf2_method_adjudication import build_pf2_method_adjudication, write_pf2_method_adjudication
+from .paper_first_pf357_problem_adjudication import build_pf357_problem_adjudication, write_pf357_problem_adjudication
 from .paper_first_post_c2_adjudication import build_post_c2_adjudication, write_post_c2_adjudication
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
 from .p0_b10_cpu import write_b10_cpu_p0
@@ -285,6 +286,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_design = build_paper_first_design_adjudication()
     paper_first_pf1_problem = build_pf1_problem_adjudication()
     paper_first_pf2_method = build_pf2_method_adjudication()
+    paper_first_pf357 = build_pf357_problem_adjudication()
     paper_first_post_c2 = build_post_c2_adjudication()
     formal_cards = {
         str(card.get("idea_id")): card
@@ -401,6 +403,8 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_pf2_method_decision":paper_first_pf2_method["decision"],
             "paper_first_pf2_method_active":paper_first_pf2_method["authority"]["method_thesis_active"],
             "paper_first_pf2_experiment_blueprint_authorized":paper_first_pf2_method["authority"]["experiment_blueprint_authorized"],
+            "paper_first_pf357_reviewed":paper_first_pf357["summary"]["reviewed"],
+            "paper_first_pf357_stopped":paper_first_pf357["summary"]["stopped_standalone"],
             "paper_first_post_c2_decision":paper_first_post_c2["decision"],
             "paper_first_post_c2_current_formulation":paper_first_post_c2["current_paper_formulation_status"],
             "paper_first_post_c2_c3_locked":paper_first_post_c2["authority"]["C3_locked"],
@@ -527,6 +531,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_design_adjudication":paper_first_design,
         "paper_first_pf1_problem_adjudication":paper_first_pf1_problem,
         "paper_first_pf2_method_adjudication":paper_first_pf2_method,
+        "paper_first_pf357_problem_adjudication":paper_first_pf357,
         "paper_first_post_c2":paper_first_post_c2,
         "pilot_registry":pilot_registry,
         "experiment_iteration":experiment_iteration,
@@ -605,6 +610,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-design-adjudication", "pass":state["paper_first_design_adjudication"]["summary"]["reviewed"] == 4 and state["paper_first_design_adjudication"]["summary"]["advance_to_method_design"] == 1 and state["paper_first_design_adjudication"]["summary"]["local_validation_authorized"] == 0 and state["paper_first_design_adjudication"]["policy"]["premature_f0_cannot_support_problem_or_method_selection"] is True, "detail":state["paper_first_design_adjudication"]["summary"]},
         {"key":"paper-first-pf1-problem-stop", "pass":state["paper_first_pf1_problem_adjudication"]["decision"] == "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT" and state["paper_first_pf1_problem_adjudication"]["authority"]["paper_problem_active"] is False and state["paper_first_pf1_problem_adjudication"]["authority"]["method_design_authorized"] is False and state["paper_first_pf1_problem_adjudication"]["authority"]["local_validation_authorized"] is False, "detail":{"decision":state["paper_first_pf1_problem_adjudication"]["decision"],"status":state["paper_first_pf1_problem_adjudication"]["paper_problem_status"]}},
         {"key":"paper-first-pf2-method-stop", "pass":state["paper_first_pf2_method_adjudication"]["decision"] == "STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL" and state["paper_first_pf2_method_adjudication"]["same_information_stop"]["triggered"] is True and state["paper_first_pf2_method_adjudication"]["authority"]["method_thesis_active"] is False and state["paper_first_pf2_method_adjudication"]["authority"]["experiment_blueprint_authorized"] is False and state["paper_first_pf2_method_adjudication"]["authority"]["local_validation_authorized"] is False, "detail":{"decision":state["paper_first_pf2_method_adjudication"]["decision"],"problem_status":state["paper_first_pf2_method_adjudication"]["paper_problem_status"]}},
+        {"key":"paper-first-pf357-stops", "pass":state["paper_first_pf357_problem_adjudication"]["summary"]["reviewed"] == 3 and state["paper_first_pf357_problem_adjudication"]["summary"]["stopped_standalone"] == 3 and state["paper_first_pf357_problem_adjudication"]["summary"]["paper_design_authorized"] == 0 and state["paper_first_pf357_problem_adjudication"]["summary"]["local_validation_authorized"] == 0, "detail":state["paper_first_pf357_problem_adjudication"]["summary"]},
         {"key":"paper-first-post-c2-terminal", "pass":state["paper_first_post_c2"]["decision"] == "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" and state["paper_first_post_c2"]["authority"]["clean_mechanism_stop"] is True and state["paper_first_post_c2"]["authority"]["C3_locked"] is True and state["paper_first_post_c2"]["authority"]["full_experiment_authorized"] is False and state["paper_first_post_c2"]["authority"]["new_method_auto_authorized"] is False and state["paper_first_post_c2"]["authority"]["new_paper_problem_auto_authorized"] is False, "detail":{"decision":state["paper_first_post_c2"]["decision"],"c2":state["paper_first_post_c2"]["c2_result"],"gate_provenance":state["paper_first_post_c2"]["gate_provenance"]}},
         {"key":"backend-architecture-manifest", "pass":state["system_architecture"]["summary"]["temporal_stages"] == 11 and state["system_architecture"]["summary"]["functional_layers"] == 6 and state["system_architecture"]["summary"]["assigned_components"] == len(state["components"]) and state["system_architecture"]["summary"]["unassigned_components"] == 0 and state["system_architecture"]["summary"]["duplicate_component_keys"] == 0 and state["system_architecture"]["summary"]["cross_cutting_controls"] == 3 and state["system_architecture"]["summary"]["orphan_cross_cutting_controls"] == 0, "detail":state["system_architecture"]["summary"]},
         {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == expected_pre_experiment_cards, "detail":state["principle_layer"]["summary"]},
@@ -669,6 +675,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     pf2_method = state.get("paper_first_pf2_method_adjudication") or {}; pf2_auth = pf2_method.get("authority") or {}
     if pf2_method.get("decision") != "STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL" or not (pf2_method.get("same_information_stop") or {}).get("triggered"): errors.append("PF-2 RSIC method thesis must stop on same-information generic partial-identification equivalence")
     if any(pf2_auth.get(key) is not False for key in ("method_thesis_active","experiment_blueprint_authorized","local_validation_authorized","p0_authorized","gpu_authorized","full_experiment_authorized","premature_pf_f0_used","new_method_auto_authorized")): errors.append("PF-2 method STOP cannot authorize a replacement method, blueprint, or experiment")
+    pf357 = state.get("paper_first_pf357_problem_adjudication") or {}; pf357_summary = pf357.get("summary") or {}
+    if (pf357_summary.get("reviewed"),pf357_summary.get("stopped_standalone"),pf357_summary.get("paper_design_authorized"),pf357_summary.get("local_validation_authorized")) != (3,3,0,0): errors.append("PF-3/PF-5/PF-7 must all terminate standalone before Paper Design/local validation")
     post_c2 = state.get("paper_first_post_c2") or {}; post_c2_auth = post_c2.get("authority") or {}
     if post_c2.get("decision") != "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" or post_c2_auth.get("clean_mechanism_stop") is not True: errors.append("post-C2 paper mechanism terminal adjudication must preserve the clean local falsifier STOP")
     if post_c2_auth.get("C3_locked") is not True or post_c2_auth.get("full_experiment_authorized") is not False: errors.append("post-C2 STOP must keep C3/full experiments locked")
@@ -775,6 +783,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_paper_first_design_adjudication()
     write_pf1_problem_adjudication()
     write_pf2_method_adjudication()
+    write_pf357_problem_adjudication()
     write_post_c2_adjudication()
     write_ai_consultation_clinic_state()
     state=build_research_system_state()
