@@ -13,13 +13,13 @@ def complete_c1_truth(plan_path:Path,root:Path,model_path:Path,alfworld_config:P
     plan=json.loads(plan_path.read_text(encoding='utf-8')); complete=root/'c1-truth-complete.json'; out=root/'c1-future-runs.jsonl'
     if complete.exists(): return json.loads(complete.read_text(encoding='utf-8'))
     if out.exists() and out.stat().st_size: raise RuntimeError('refusing to overwrite partial C1 truth completion')
-    candidates=[]; existing=[]; baseline={}
+    candidates=[]; labels=[]; existing=[]; baseline={}
     for shard in sorted(root.glob('shard-*')):
-        if not (shard/'complete.json').exists(): raise RuntimeError(f'{shard.name} not complete')
-        candidates+=_rows(shard/'correction-candidates.jsonl'); existing+=_rows(shard/'future-runs.jsonl')
+        candidates+=_rows(shard/'correction-candidates.jsonl'); labels+=_rows(shard/'self-labels.jsonl'); existing+=_rows(shard/'future-runs.jsonl')
+    if len(candidates)!=40 or len(labels)!=400:
+        raise RuntimeError(f'C-1 truth requires frozen 40 candidates + 400 labels before hidden truth opens; got {len(candidates)} candidates / {len(labels)} labels')
     for r in existing:
         if r.get('role')=='hidden-baseline': baseline.setdefault(r['task'],int((r.get('trace') or {}).get('success',0)))
-    if len(baseline)<len(plan['hidden_tasks']): raise RuntimeError('hidden baseline table incomplete')
     have={(r.get('candidate_id'),r.get('task')) for r in existing if r.get('role')=='candidate-hidden'}
     todo=[]; seed=int(plan['seed'])
     for c in candidates:
@@ -28,11 +28,15 @@ def complete_c1_truth(plan_path:Path,root:Path,model_path:Path,alfworld_config:P
     gpu=check_gpu_free(); cfg=load_config(alfworld_config); cfg.setdefault('general',{})['save_path']=str(root/'c1-truth-alfworld-runtime')
     policy=HFAdmissiblePolicy(model_path,policy_mode='react-family'); runner=ALFWorldGameRunner(cfg); started=time.time()
     out.write_text('',encoding='utf-8')
+    for task in plan['hidden_tasks']:
+        if task in baseline: continue
+        tr=runner.run_game_file('eval_out_of_distribution',task,policy,max_steps=int(plan['max_steps']))
+        baseline[task]=int(tr.get('success',0)); append_jsonl(out,{'role':'hidden-baseline','truth_completion':'C-1','task':task,'trace':tr})
     for idx,(c,task) in enumerate(todo,1):
         tr=runner.run_game_file('eval_out_of_distribution',task,policy,c['patch'],max_steps=int(plan['max_steps']))
         append_jsonl(out,{'role':'candidate-hidden','truth_completion':'C-1','candidate_id':c['candidate_id'],'task':task,'baseline_success':baseline[task],'trace':tr})
         write_json(root/'c1-truth-progress.json',{'completed':idx,'total':len(todo),'usage':policy.usage_snapshot()})
-    result={'schema_version':'1.0','status':'complete','candidates_total':len(candidates),'required_hidden_per_candidate':2,'existing_candidate_task_pairs':len(have),'new_candidate_task_pairs':len(todo),'planned_total_candidate_task_pairs':len(candidates)*2,'usage':policy.usage_snapshot(),'elapsed_hours':(time.time()-started)/3600.0,'gpu_preflight':gpu,'plan_sha256':hashlib.sha256(plan_path.read_bytes()).hexdigest()}
+    result={'schema_version':'1.0','status':'complete','candidates_total':len(candidates),'frozen_self_label_decisions':len(labels),'hidden_baselines':len(baseline),'required_hidden_per_candidate':2,'existing_candidate_task_pairs':len(have),'new_candidate_task_pairs':len(todo),'planned_total_candidate_task_pairs':len(candidates)*2,'usage':policy.usage_snapshot(),'elapsed_hours':(time.time()-started)/3600.0,'gpu_preflight':gpu,'plan_sha256':hashlib.sha256(plan_path.read_bytes()).hexdigest()}
     write_json(complete,result); return result
 
 if __name__=='__main__':
