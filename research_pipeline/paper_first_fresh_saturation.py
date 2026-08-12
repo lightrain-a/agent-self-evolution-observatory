@@ -27,6 +27,18 @@ REDUCTION_PATTERNS: tuple[dict[str, Any], ...] = (
     {"key":"environment-mediated-history","mature_theories":["POMDP state sufficiency","causal mediation through physical state","state-conditioned embodied memory"],"veto":"Past actions affecting future behavior through the current world state are not evidence of internal memory; this distinction is mature state/mediation theory unless a new embodied-only prediction survives."},
     {"key":"multimodal-procedural-compression","mature_theories":["multimodal representation","rate-distortion / information preservation","visual grounding and domain adaptation"],"veto":"Visual details that cannot be compressed into text are not a new self-evolution problem when multimodal skills already preserve state cards/keyframes and rate-distortion captures information loss."},
     {"key":"externalization-internalization-portability","mature_theories":["parametric-versus-externalized capability tradeoff","skill distillation / internalization","cross-model prompt and skill transfer","multivariate information decomposition"],"veto":"A component becoming internalized in one policy while remaining useful to another is not a new object when externalization/internalization and component-wise transfer are expressible under the same information."},
+    {"key":"horizon-censored-attribution","mature_theories":["right-censored causal inference","partial identification","adaptive follow-up / active sequential testing"],"veto":"Finite-horizon nulls, horizon-stability certificates, or frontier-first continuation are not novel when censoring bounds plus target-specific active testing express the same decision."},
+    {"key":"self-model-lineage-desynchronization","mature_theories":["behavioral self-awareness","self-preference / own-output bias","anchoring and context interference","configuration/cache invalidation"],"veto":"A SELF-vs-static prediction gap is not a self-evolution problem if retained authorship/history context or ordinary interface comprehension explains it."},
+    {"key":"future-evolvability-debt","mature_theories":["loss of plasticity","evolvability in evolutionary computation","software technical debt / changeability"],"veto":"Reduced future response to a frozen updater is not novel when the same object is plasticity/evolvability or future change cost."},
+    {"key":"persistent-world-gain-decomposition","mature_theories":["2x2 factorial decomposition / difference-in-differences","longitudinal mediation / g-methods","counterfactual replay"],"veto":"Internal-version versus inherited-world contributions are not novel when frozen version x world snapshots or longitudinal mediation identify the same quantities."},
+    {"key":"cross-module-longitudinal-stability","mature_theories":["coupled optimization / game dynamics","component-interference consolidation","identity-preserving continual evolution"],"veto":"Locally valid module updates failing to compose globally are not novel without a structural constraint beyond generic coupled-dynamics stability."},
+    {"key":"autonomous-goal-extension","mature_theories":["requirements refinement","BDI goal revision","temporal-logic/specification consistency"],"veto":"Autonomously added goals are not a new scientific object if ordinary contract/refinement checking decides legitimacy."},
+    {"key":"self-play-evidence-endogeneity","mature_theories":["performative prediction / endogenous distribution shift","curriculum coverage / active learning","self-play mode collapse / diversity measurement","data gating"],"veto":"Self-generated evidence blind spots are not novel if coverage, diversity, performative-shift, or data-gating baselines express the same failure."},
+    {"key":"lineage-conditioned-communication-semantics","mature_theories":["emergent-language drift","semantic interoperability / protocol negotiation","versioned interface contracts"],"veto":"Private evolving conventions are not novel when semantic alignment/versioning solves same-schema different-meaning failures."},
+    {"key":"embodiment-task-comparability","mature_theories":["morphology-conditioned feasibility/control","cross-embodiment transfer","task-space/benchmark normalization"],"veto":"Changing embodiment does not create a new task-identity problem if feasibility and embodiment-invariant outcome normalization solve comparability."},
+    {"key":"population-lineage-generic-evolution","mature_theories":["genetic hitchhiking / linkage","epistasis / crossover incompatibility","winner's curse / adaptive selection","heritability / catastrophic forgetting"],"veto":"Population, fork, recombination, selection, or inheritance claims are not novel when classical evolutionary/statistical objects give the same prediction."},
+    {"key":"cross-layer-behavior-persistence","mature_theories":["skill distillation/internalization","unlearning / persistent contamination","descendant inheritance / source-deletion persistence"],"veto":"External-to-internal migration and ghost behavior after source removal are not novel when cross-layer promotion and descendant contamination already predict persistence."},
+    {"key":"experience-sharing-sign-reversal","mature_theories":["diversity-consensus tradeoff","negative transfer / distributed heterogeneity","information redundancy / correlation","portfolio/submodular diversity"],"veto":"Sharing-helpful versus sharing-collapse contradictions are not novel if complementarity/redundancy under matched budget predicts the sign."},
 )
 
 DRAFTS: tuple[dict[str, Any], ...] = (
@@ -49,10 +61,26 @@ DRAFTS: tuple[dict[str, Any], ...] = (
     {"id":"X7","title":"Environment-Mediated History Versus Internal Embodied Memory","decision":"STOP_REDUCTION","reduction":"environment-mediated-history"},
     {"id":"X8","title":"Irreducible Visual Detail in Multimodal Procedural Consolidation","decision":"STOP_REDUCTION","reduction":"multimodal-procedural-compression"},
     {"id":"X9","title":"Harness-Internalization vs. Harness-Transfer: When Annealing Reduces Cross-Model Reusability","decision":"STOP_REDUCTION","reduction":"externalization-internalization-portability"},
+    {"id":"H1","title":"Horizon-Censored Causal Attribution","decision":"STOP_REDUCTION","reduction":"horizon-censored-attribution"},
+    {"id":"H2","title":"Horizon-Valid Ordered Causal Locus","decision":"STOP_REDUCTION","reduction":"horizon-censored-attribution"},
+    {"id":"H3","title":"Post-Self-Modification Self-Model Desynchronization","decision":"STOP_REDUCTION","reduction":"self-model-lineage-desynchronization"},
+    {"id":"H4","title":"Evolvability Debt of Accepted Agent Updates","decision":"STOP_REDUCTION","reduction":"future-evolvability-debt"},
+    {"id":"H5","title":"Internal Adaptation versus Persistent-World Shaping","decision":"STOP_REDUCTION","reduction":"persistent-world-gain-decomposition"},
+    {"id":"H6","title":"Cross-Module Identity Drift under Local Update Gates","decision":"STOP_REDUCTION","reduction":"cross-module-longitudinal-stability"},
+    {"id":"N1","title":"Autonomous Goal Conservative Extension","decision":"STOP_REDUCTION","reduction":"autonomous-goal-extension"},
+    {"id":"N2","title":"Self-Play Evidence Endogeneity","decision":"STOP_REDUCTION","reduction":"self-play-evidence-endogeneity"},
+    {"id":"N3","title":"Lineage-Specific Communication Semantics","decision":"STOP_REDUCTION","reduction":"lineage-conditioned-communication-semantics"},
+    {"id":"N4","title":"Task Semantics under Embodiment Evolution","decision":"STOP_REDUCTION","reduction":"embodiment-task-comparability"},
+    {"id":"L1","title":"Component Hitchhiking under Whole-Agent Selection","decision":"STOP_REDUCTION","reduction":"population-lineage-generic-evolution"},
+    {"id":"L2","title":"Cross-Lineage Recombination Epistasis","decision":"STOP_REDUCTION","reduction":"population-lineage-generic-evolution"},
+    {"id":"L3","title":"Winner-Lineage Selection Bias","decision":"STOP_REDUCTION","reduction":"population-lineage-generic-evolution"},
+    {"id":"L4","title":"Heritability of Self-Evolved Capability","decision":"STOP_REDUCTION","reduction":"population-lineage-generic-evolution"},
+    {"id":"D1","title":"Dual-Residency Ghost Effect after External Skill Internalization","decision":"STOP_COLLISION","reduction":"cross-layer-behavior-persistence"},
+    {"id":"C1","title":"Experience Sharing: Complementarity versus Diversity Collapse","decision":"STOP_REDUCTION","reduction":"experience-sharing-sign-reversal"},
 )
 
 POLICY: dict[str, Any] = {
-    "schema_version":"1.0",
+    "schema_version":"1.1",
     "problem_first_not_method_first":True,
     "mathematical_renaming_is_not_novelty":True,
     "mature_domain_transfer_is_hard_veto":True,
@@ -75,7 +103,7 @@ def build_fresh_saturation_state() -> dict[str, Any]:
     return {
         "schema_version":"1.0",
         "generated_at":_now(),
-        "review_id":"fresh-problem-saturation-20260813",
+        "review_id":"fresh-problem-saturation-20260813-r2",
         "policy":POLICY,
         "summary":{
             "drafts_reviewed":len(DRAFTS),
@@ -89,7 +117,7 @@ def build_fresh_saturation_state() -> dict[str, Any]:
         "reduction_patterns":[dict(row) for row in REDUCTION_PATTERNS],
         "generator_revision":{
             "old_failure":"Free-form generators produced mathematically named versions of mature problems and malformed long JSON; formatting repair was treated as advisory-only and never as scientific evidence.",
-            "new_rule":"Start from a documented contradiction between recent primary-source results; name the two strongest mature theories first; a candidate is generated only if an exact prediction remains that both theories cannot express under the same information.",
+            "new_rule":"Start from a documented contradiction between recent primary-source results; query the accumulated Generic Reduction / Negative-Space Ledger first; name the strongest mature theories before naming an Agent candidate; generate only if an exact same-information prediction remains outside those theories.",
             "required_fields":["empirical contradiction","irreducible object","mature-theory non-reducibility","same-information baseline","cheapest problem falsifier","endpoint headroom"],
         },
         "decision":"NO_FRESH_SURVIVOR_CURRENT_SCAN",

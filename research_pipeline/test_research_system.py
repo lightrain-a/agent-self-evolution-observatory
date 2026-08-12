@@ -224,7 +224,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual((self.state["summary"]["paper_first_pf357_reviewed"],self.state["summary"]["paper_first_pf357_stopped"]),(3,3))
         self.assertEqual(self.state["paper_first_pf357_problem_adjudication"]["summary"]["paper_design_authorized"],0)
         self.assertEqual(self.state["paper_first_pf357_problem_adjudication"]["summary"]["local_validation_authorized"],0)
-        self.assertEqual((self.state["summary"]["paper_first_fresh_drafts_reviewed"],self.state["summary"]["paper_first_fresh_survivors"],self.state["summary"]["paper_first_fresh_stopped"]),(19,0,19))
+        self.assertEqual((self.state["summary"]["paper_first_fresh_drafts_reviewed"],self.state["summary"]["paper_first_fresh_survivors"],self.state["summary"]["paper_first_fresh_stopped"]),(35,0,35))
         self.assertEqual(self.state["paper_first_fresh_saturation"]["decision"],"NO_FRESH_SURVIVOR_CURRENT_SCAN")
         self.assertTrue(self.state["paper_first_fresh_saturation"]["policy"]["zero_survivors_is_valid_and_preferred_to_forced_shortlist"])
         self.assertFalse(self.state["paper_first_fresh_saturation"]["policy"]["local_validation_authorized"])
