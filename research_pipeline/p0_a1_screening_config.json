@@ -134,6 +134,82 @@
       ],
       "budget_stop_registers_scientific_result": false,
       "floor_or_ceiling_counts_as_method_fail": false
+    },
+    "principle_certificate": {
+      "principle_id": "persistent-update-drift-governance-v1",
+      "primitives": [
+        "persistent update",
+        "behavioral drift",
+        "cross-task harm",
+        "admission decision"
+      ],
+      "scope_conditions": [
+        "updater produces nontrivial effects",
+        "hidden truth is independent of update construction"
+      ],
+      "assumptions": [
+        {
+          "id": "A1-U",
+          "statement": "The updater produces enough effect variation for admission to matter.",
+          "observable_check": "updater competence plus beneficial/neutral/harmful effect distribution"
+        },
+        {
+          "id": "A1-D",
+          "statement": "Pre-commit behavioral drift can contain incremental information about later harm.",
+          "observable_check": "same-information disagreement and hidden harm ranking versus the strongest simplification"
+        }
+      ],
+      "mechanism": "Harmful persistent updates should induce measurable pre-commit behavioral divergence; a gate can use this signal to avoid harmful commits while retaining useful updates.",
+      "predictions": [
+        {
+          "id": "A1-P0",
+          "statement": "A qualified updater produces nonzero and sign-varying downstream effects.",
+          "observable": "beneficial/neutral/harmful candidate counts",
+          "role": "phenomenon-prerequisite"
+        },
+        {
+          "id": "A1-P1",
+          "statement": "With a qualified updater, drift-informed admission separates harmful updates from matched simplifications.",
+          "observable": "held-out harmful-commit reduction at bounded utility loss plus decision disagreement",
+          "role": "mechanism-test"
+        }
+      ],
+      "operationalization": [
+        {
+          "concept": "behavioral drift",
+          "measure": "pre-commit action/invalid-action/choice/plan divergence",
+          "validity_check": "synthetic realizability plus tiny-real-set fit and baseline disagreement"
+        },
+        {
+          "concept": "cross-task harm",
+          "measure": "paired hidden-task utility delta after commit",
+          "validity_check": "independent hidden truth under matched update budget"
+        }
+      ],
+      "falsification": {
+        "prediction_ids": [
+          "A1-P1"
+        ],
+        "requires": [
+          "registered_prediction",
+          "assumptions_hold",
+          "scope_conditions_hold",
+          "operationalization_valid",
+          "experiment_identifiable",
+          "optimization_adequate",
+          "independent_truth",
+          "matched_baseline"
+        ],
+        "contradiction_rule": "Reject only the incremental drift-information sub-principle after a competent updater and valid measurement repeatedly fail the preregistered matched hidden test."
+      },
+      "failure_update_rules": {
+        "execution-invalid": "repair execution; no principle update",
+        "design-nonidentifiable": "repair experiment design; no principle negative",
+        "operationalization-failure": "repair measurement/representation bridge",
+        "assumption-violation": "revise scope/assumption and derive a new prediction",
+        "matched-simplification": "weaken/merge the current method realization, not the broader principle",
+        "registered-prediction-contradicted": "only then permit principle falsification"
+      }
     }
   }
 }

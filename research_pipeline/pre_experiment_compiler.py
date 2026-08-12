@@ -10,6 +10,7 @@ from typing import Any
 from .pre_experiment_execution import compute_graph, measured_throughput, observability_recovery, outcome_semantics
 from .pre_experiment_science import baseline_competence, mechanism_identifiability, parameter_provenance, qualification_path, statistical_resolution
 from .pre_experiment_specs import GATES, POLICY
+from .principle_adjudication import audit_principle_certificate
 
 
 def _now() -> str:
@@ -54,6 +55,7 @@ def _updater_competence_prerequisite(config: dict[str, Any]) -> dict[str, Any]:
 def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root: Path) -> dict[str, Any]:
     if str(config.get("idea_id") or "") != idea_id:
         raise ValueError(f"config idea_id mismatch: {config.get('idea_id')} != {idea_id}")
+    principle_certificate = audit_principle_certificate(config)
     updater_competence = _updater_competence_prerequisite(config)
     gates = [
         parameter_provenance(config),
@@ -67,15 +69,16 @@ def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root:
     ]
     if [gate["key"] for gate in gates] != [gate["key"] for gate in GATES]:
         raise RuntimeError("pre-experiment gate order drift")
-    blockers = list(updater_competence.get("blockers") or []) + [blocker for gate in gates for blocker in gate["blockers"]]
+    blockers = list(principle_certificate.get("blockers") or []) + list(updater_competence.get("blockers") or []) + [blocker for gate in gates for blocker in gate["blockers"]]
     passed = sum(bool(gate["pass"]) for gate in gates)
     gates_passed = passed == len(gates)
+    principle_ready = principle_certificate.get("passed") is True
     updater_competent = updater_competence.get("passed") is True
     config_hash = _hash_payload(config)
     scope = config.get("scope") or {}
     competence = (config.get("pre_experiment") or {}).get("competence") or {}
     return {
-        "schema_version": "2.0",
+        "schema_version": "2.1",
         "compiled_at": _now(),
         "idea_id": idea_id,
         "phase": str(config.get("phase") or "P0"),
@@ -86,11 +89,12 @@ def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root:
         },
         "config_hash": config_hash,
         "policy": POLICY,
+        "principle_certificate_prerequisite": principle_certificate,
         "updater_competence_prerequisite": updater_competence,
         "gate_count": len(gates),
         "passed_gates": passed,
-        "execution_authorized": updater_competent and gates_passed,
-        "status": "pass" if updater_competent and gates_passed else "blocked",
+        "execution_authorized": principle_ready and updater_competent and gates_passed,
+        "status": "pass" if principle_ready and updater_competent and gates_passed else "blocked",
         "blockers": blockers,
         "gates": gates,
         "compute_graph": next(gate["detail"] for gate in gates if gate["key"] == "compute_graph"),

@@ -284,9 +284,9 @@ def main() -> None:
     if (summary.get("v5_candidates"), summary.get("v5_finalists"), summary.get("v5_revivals")) != (36,32,8):
         fail("research-system state must expose the v5 wide-search round")
     components = research_state.get("components", [])
-    required_component_sources = {"ResearchAgent", "Human terminal ledger", "P0 retrospective economy review", "Unified P0 decision ledger", "Web GPT + domestic-model independent consultation", "Content-addressed AI consultation automation"}
+    required_component_sources = {"ResearchAgent", "Human terminal ledger", "P0 retrospective economy review", "Unified P0 decision ledger", "Web GPT + domestic-model independent consultation", "Content-addressed AI consultation automation", "FirstResearch / Popper / Co-Scientist / RD-Agent"}
     component_sources = {str(item.get("source") or "") for item in components}
-    if len(components) < 17 or not required_component_sources.issubset(component_sources):
+    if len(components) < 19 or not required_component_sources.issubset(component_sources):
         fail(f"research-system state is missing current backend responsibilities: count={len(components)}, missing={sorted(required_component_sources-component_sources)}")
     pre_p0 = research_state.get("pre_p0_identifiability", {})
     if pre_p0.get("summary", {}).get("audited") != 4 or pre_p0.get("summary", {}).get("execution_ready") != 0:

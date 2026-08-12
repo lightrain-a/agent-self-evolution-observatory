@@ -142,6 +142,82 @@
       ],
       "budget_stop_registers_scientific_result": false,
       "floor_or_ceiling_counts_as_method_fail": false
+    },
+    "principle_certificate": {
+      "principle_id": "adaptive-update-stopping-v1",
+      "primitives": [
+        "persistent update sequence",
+        "marginal utility",
+        "regression risk",
+        "stop/continue decision"
+      ],
+      "scope_conditions": [
+        "update stream has nonzero target effects",
+        "sequences expose early/late/rollback boundaries"
+      ],
+      "assumptions": [
+        {
+          "id": "A2-V",
+          "statement": "Different update rounds create enough outcome variation to make stopping identifiable.",
+          "observable_check": "nonzero effect fraction plus early-stop/late-stop/rollback-or-harm archetypes"
+        },
+        {
+          "id": "A2-M",
+          "statement": "Observable local state contains information about the marginal value and risk of another update.",
+          "observable_check": "controller-versus-static-rule disagreement on frozen sequences"
+        }
+      ],
+      "mechanism": "When update value diminishes or regression risk rises, an adaptive controller can stop before unnecessary or harmful updates and preserve useful earlier changes.",
+      "predictions": [
+        {
+          "id": "A2-P0",
+          "statement": "Frozen update sequences contain distinct optimal stopping points and nontrivial future-benefit variation.",
+          "observable": "stop/continue/rollback target entropy and oracle headroom",
+          "role": "phenomenon-prerequisite"
+        },
+        {
+          "id": "A2-P1",
+          "statement": "Given qualified sequences, state-dependent stopping saves update calls at matched success versus the strongest fixed/simple stopping rule.",
+          "observable": "held-out call saving at bounded success loss plus policy disagreement",
+          "role": "mechanism-test"
+        }
+      ],
+      "operationalization": [
+        {
+          "concept": "marginal update value",
+          "measure": "gain/probe-regression/disagreement change by round",
+          "validity_check": "target variation plus objective-to-claim alignment"
+        },
+        {
+          "concept": "adaptive stopping",
+          "measure": "stop/continue/rollback choice on frozen sequences",
+          "validity_check": "same sequence access and matched-information baselines"
+        }
+      ],
+      "falsification": {
+        "prediction_ids": [
+          "A2-P1"
+        ],
+        "requires": [
+          "registered_prediction",
+          "assumptions_hold",
+          "scope_conditions_hold",
+          "operationalization_valid",
+          "experiment_identifiable",
+          "optimization_adequate",
+          "independent_truth",
+          "matched_baseline"
+        ],
+        "contradiction_rule": "Reject only the state-dependent stopping sub-principle after a qualified nondegenerate update stream and valid controller target fail the preregistered matched hidden test."
+      },
+      "failure_update_rules": {
+        "execution-invalid": "repair execution; no principle update",
+        "design-nonidentifiable": "repair sequence construction/target variation; no principle negative",
+        "operationalization-failure": "repair controller target/features/objective bridge",
+        "assumption-violation": "revise scope/assumption and derive a new prediction",
+        "matched-simplification": "weaken/merge the learned-controller realization, not the adaptive-stopping phenomenon",
+        "registered-prediction-contradicted": "only then permit principle falsification"
+      }
     }
   }
 }

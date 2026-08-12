@@ -34,7 +34,10 @@ TYPED_OUTCOMES = {
 }
 
 POLICY: dict[str, Any] = {
-    "schema_version": "2.0",
+    "schema_version": "2.1",
+    "principle_certificate_required_before_updater_competence": True,
+    "principle_certificate_is_not_a_formal_gate": True,
+    "experiment_is_evidence_about_principle_not_a_vote_on_idea": True,
     "updater_competence_required_before_gate_1": True,
     "updater_competence_is_not_a_ninth_gate": True,
     "all_eight_gates_required": True,
@@ -44,6 +47,8 @@ POLICY: dict[str, Any] = {
     "baseline_floor_or_ceiling_is_not_method_failure": True,
     "inconclusive_does_not_update_negative_scientific_belief": True,
     "budget_stop_does_not_register_scientific_result": True,
+    "method_fail_does_not_automatically_falsify_principle": True,
+    "principle_falsification_requires_registered_prediction_and_valid_bridge": True,
     "parameters_require_provenance": True,
     "gpu_hours_must_derive_from_measured_throughput": True,
 }

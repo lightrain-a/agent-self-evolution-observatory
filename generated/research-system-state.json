@@ -6278,7 +6278,9 @@
     "mem_xfer_support_qualification_status": "support_qualification_hold",
     "mem_xfer_support_full_status": "full_support_hold",
     "mem_xfer_support_analysis_status": "support_enriched_analysis_pending",
-    "mem_xfer_second_model_status": "second_model_hold"
+    "mem_xfer_second_model_status": "second_model_hold",
+    "principle_certificates_passed": 4,
+    "principle_falsifications": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -57560,6 +57562,18 @@
       }
     },
     {
+      "source": "FirstResearch / Popper / Co-Scientist / RD-Agent",
+      "component": {
+        "en": "Principle Certificate + epistemic adjudicator",
+        "zh": "原理证书 + 认识论裁决器"
+      },
+      "status": "running",
+      "evidence": {
+        "en": "4/4 current principle certificates valid / 0 principle falsifications",
+        "zh": "当前 4/4 份原理证书有效 / 0 个原理级否定"
+      }
+    },
+    {
       "source": "P0 retrospective economy review",
       "component": {
         "en": "Five-gate P0 Economy layer",
@@ -57719,6 +57733,18 @@
           "hold": 3,
           "stop": 4,
           "secondary": 1
+        }
+      },
+      {
+        "key": "principle-layer",
+        "pass": true,
+        "detail": {
+          "cards": 4,
+          "certificates_passed": 4,
+          "certificates_blocked": 0,
+          "postrun_adjudications": 2,
+          "principle_falsifications": 0,
+          "principle_repairs_or_refinements": 0
         }
       },
       {
@@ -58044,6 +58070,105 @@
           "revise": 0,
           "block": 0
         }
+      }
+    ]
+  },
+  "principle_layer": {
+    "schema_version": "1.0",
+    "policy": {
+      "schema_version": "1.0",
+      "principle_certificate_required_before_experiment_compile": true,
+      "principle_certificate_is_not_a_formal_experiment_gate": true,
+      "experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea": true,
+      "negative_result_requires_layer_adjudication": true,
+      "design_failure_cannot_falsify_principle": true,
+      "operationalization_failure_cannot_falsify_principle": true,
+      "substrate_failure_cannot_falsify_broader_problem": true,
+      "true_negative_does_not_automatically_falsify_principle": true,
+      "principle_falsification_requires_registered_prediction": true,
+      "principle_falsification_requires_all_preconditions": true,
+      "omitted_condition_updates_assumption_or_scope_before_core_mechanism": true,
+      "positive_evidence_supports_but_does_not_prove_principle": true
+    },
+    "references": [
+      {
+        "system": "FirstResearch",
+        "adopted": "Research Question Certificate: primitives, assumptions, mechanism, falsifiable hypothesis, minimal decisive test, and explicit failure-update rule"
+      },
+      {
+        "system": "Popper",
+        "adopted": "decompose high-level hypotheses into measurable falsifiable implications and test them sequentially"
+      },
+      {
+        "system": "Google Co-Scientist",
+        "adopted": "separate generation, reflection, ranking, evolution, and meta-review around hypotheses rather than a single proposal chain"
+      },
+      {
+        "system": "AI Scientist-v2",
+        "adopted": "progressive experiment trees preserve alternative branches instead of committing every observation to a single hill-climb"
+      },
+      {
+        "system": "RD-Agent",
+        "adopted": "separate research-hypothesis feedback from development/implementation feedback"
+      }
+    ],
+    "consultation_policy": {
+      "principle_formation": [
+        "hypothesis-generator",
+        "mechanism-critic",
+        "novelty-collision-reviewer",
+        "meta-reviewer"
+      ],
+      "pre_experiment": [
+        "experimentalist",
+        "statistics-reviewer",
+        "systems-cost-reviewer",
+        "falsification-reviewer"
+      ],
+      "negative_result": [
+        "design-critic",
+        "operationalization-critic",
+        "principle-advocate",
+        "principle-falsifier",
+        "meta-adjudicator"
+      ],
+      "scale_up": [
+        "replication-reviewer",
+        "baseline-fairness-reviewer",
+        "human-approval"
+      ],
+      "rule": "No single reviewer may convert a negative run directly into a core-principle STOP; the meta-adjudicator must name the exact belief layer updated."
+    },
+    "summary": {
+      "cards": 4,
+      "certificates_passed": 4,
+      "certificates_blocked": 0,
+      "postrun_adjudications": 2,
+      "principle_falsifications": 0,
+      "principle_repairs_or_refinements": 0
+    },
+    "adjudications": [
+      {
+        "diagnosis": "infrastructure-error",
+        "principle_id": "persistent-update-drift-governance-v1",
+        "principle_falsified": false,
+        "core_mechanism_rejected": false,
+        "scientific_belief_target": "none",
+        "requires_human_review": false,
+        "verdict": "NO_PRINCIPLE_UPDATE",
+        "repair_layer": "execution",
+        "reason": "The run did not validly test the mechanism."
+      },
+      {
+        "diagnosis": "infrastructure-error",
+        "principle_id": "adaptive-update-stopping-v1",
+        "principle_falsified": false,
+        "core_mechanism_rejected": false,
+        "scientific_belief_target": "none",
+        "requires_human_review": false,
+        "verdict": "NO_PRINCIPLE_UPDATE",
+        "repair_layer": "execution",
+        "reason": "The run did not validly test the mechanism."
       }
     ]
   }

@@ -51,6 +51,7 @@ class PreExperimentCompilerTest(unittest.TestCase):
                 card = compile_from_path(idea_id, config_path, root)
                 self.assertEqual(card["gate_count"], 8, name)
                 self.assertEqual(card["passed_gates"], 7, (name, card["blockers"]))
+                self.assertTrue(card["principle_certificate_prerequisite"]["passed"], name)
                 self.assertFalse(card["execution_authorized"], name)
                 self.assertEqual([row["key"] for row in card["gates"]], [row["key"] for row in GATES])
                 if idea_id == "update-trust-region":
@@ -95,6 +96,7 @@ class PreExperimentCompilerTest(unittest.TestCase):
                 card = compile_pre_experiment_card(config["idea_id"], config, root)
                 self.assertEqual(card["gate_count"], 8, name)
                 self.assertEqual(card["passed_gates"], 8, (name, card["blockers"]))
+                self.assertTrue(card["principle_certificate_prerequisite"]["passed"], name)
                 self.assertTrue(card["updater_competence_prerequisite"]["passed"], name)
                 self.assertTrue(card["execution_authorized"], name)
 
@@ -104,6 +106,24 @@ class PreExperimentCompilerTest(unittest.TestCase):
             card = compile_from_path("update-trust-region", config_path, Path(td))
         self.assertFalse(card["execution_authorized"])
         self.assertIn("competence-evidence-file-missing", card["blockers"])
+
+    def test_missing_principle_certificate_blocks_even_otherwise_ready_launch(self) -> None:
+        repaired = {"checks": [
+            {"key": key, "pass": True, "evidence": "repaired pre-GPU evidence"}
+            for key in ("claim_alignment", "target_variation", "baseline_disagreement", "representability", "tiny_overfit", "competence_window", "effect_variation")
+        ], "blockers": [], "execution_ready": True, "status": "pass"}
+        config_path = Path(__file__).with_name("p0_a1_screening_config.json")
+        config = copy.deepcopy(load_json(config_path))
+        config["pre_experiment"].pop("principle_certificate")
+        config["pre_experiment"]["updater_competence"]["passed"] = True
+        config["pre_experiment"]["updater_competence"]["status"] = "pass"
+        with tempfile.TemporaryDirectory() as td, patch("research_pipeline.pre_experiment_science.audit_contract", return_value=repaired):
+            root = Path(td)
+            self.write_evidence(root)
+            card = compile_pre_experiment_card(config["idea_id"], config, root)
+        self.assertEqual(card["passed_gates"], 8)
+        self.assertFalse(card["execution_authorized"])
+        self.assertIn("principle-certificate-missing", card["blockers"])
 
     def test_unresolvable_threshold_is_caught_before_gpu(self) -> None:
         config_path = Path(__file__).with_name("p0_a1_confirm_config.json")

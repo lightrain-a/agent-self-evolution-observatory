@@ -26,12 +26,13 @@
         ${stat(get(ai.unresolved_high_risk,0),"个未处置 AI 高风险","unresolved AI high-risk",get(ai.unresolved_high_risk,0)?"warn":"good")}
       </div>
     </section>
-    <section class="system-principles system-section"><h3>${pick("先读这五条：系统到底保证什么","Five guarantees to read first")}</h3><p class="section-intro">${pick("它们比具体模型、Benchmark 或某一轮实验更稳定，是整个后台的设计约束。","These constraints are more stable than any model, benchmark, or individual experiment.")}</p><div class="system-principle-grid">
+    <section class="system-principles system-section"><h3>${pick("先读这六条：系统到底保证什么","Six guarantees to read first")}</h3><p class="section-intro">${pick("它们比具体模型、Benchmark 或某一轮实验更稳定，是整个后台的设计约束。","These constraints are more stable than any model, benchmark, or individual experiment.")}</p><div class="system-principle-grid">
       ${principle(1,"证据先于结论","Evidence before claims","文献、Baseline、Pilot 和失败证据必须能追到来源；unknown 保持 unknown。","Literature, baselines, pilots, and failures remain traceable to source; unknown stays unknown.")}
-      ${principle(2,"先证明实验可辨识，再消耗 GPU","Identifiability before GPU spend","如果实验区分不了“方法有效”和“Base agent 根本不会”，就没有启动资格。","A run that cannot distinguish method effect from an incapable base agent is not launchable.")}
-      ${principle(3,"小实验负责筛信号，不负责误杀方向","Screening finds signal; it does not kill a direction","Screening 只产生 signal / no-signal / inconclusive；正式 Go/Stop 需要 confirmatory evidence。","Screening produces signal, no-signal, or inconclusive; formal Go/Stop requires confirmatory evidence.")}
-      ${principle(4,"运行过程本身必须可恢复","Runs must be recoverable","每个 episode/candidate 增量写盘，预算在线检查，中断后保留已完成证据。","Episodes and candidates persist incrementally, budgets are checked online, and completed evidence survives interruption.")}
-      ${principle(5,"自动化执行，人工控制科学主张","Automate execution; keep claims under human control","系统可以自动检索、校验、调度和汇总，但研究范围、主张边界、扩预算与最终解释保留人工门。","The system may retrieve, validate, schedule, and aggregate automatically, while scope, claim boundaries, budget escalation, and final interpretation remain human gates.")}
+      ${principle(2,"原理先于实验","Principle before experiment","先冻结原语、假设、机制、适用范围、可观测预测和真正反证条件；实验只是检验这条证据链的接口，不是一张对 Idea 投 PASS/FAIL 的票。","Freeze primitives, assumptions, mechanism, scope, observable predictions, and genuine falsifiers first; an experiment is an evidence interface, not a PASS/FAIL vote on an idea.")}
+      ${principle(3,"先证明实验可辨识，再消耗 GPU","Identifiability before GPU spend","如果实验区分不了“方法有效”和“Base agent 根本不会”，就没有启动资格。","A run that cannot distinguish method effect from an incapable base agent is not launchable.")}
+      ${principle(4,"负结果先定位更新哪一层","Negative evidence updates a layer, not everything","运行、实验设计、测量桥、方法实现、适用范围和核心机制是不同层；只有预注册原理预测在全部前置条件成立时被稳定反驳，才允许原理级 falsification。","Execution, design, operationalization, method realization, scope, and core mechanism are distinct layers; principle falsification requires a registered prediction contradicted with every prerequisite intact.")}
+      ${principle(5,"小实验负责筛信号，不负责误杀方向","Screening finds signal; it does not kill a direction","Screening 只产生 signal / no-signal / inconclusive；正式方法结论仍需要 confirmatory evidence。","Screening produces signal, no-signal, or inconclusive; formal method conclusions require confirmatory evidence.")}
+      ${principle(6,"运行可恢复，科学主张有人类门","Recoverable runs; human-controlled claims","实验增量落盘、预算在线检查；自动化可以执行检索、校验、调度和汇总，但主张边界、扩预算与最终原理解释保留人工门。","Runs persist incrementally with online budget checks; automation may retrieve, validate, schedule, and aggregate, while claim boundaries, budget escalation, and final principle interpretation remain human gates.")}
     </div></section>`;
   };
 })();

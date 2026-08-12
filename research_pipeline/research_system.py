@@ -40,6 +40,7 @@ from .pre_experiment_compiler import compile_from_path as compile_pre_experiment
 from .pre_experiment_specs import GATES as PRE_EXPERIMENT_GATES, POLICY as PRE_EXPERIMENT_POLICY
 from .pre_p0_identifiability import build_pre_p0_identifiability_audit
 from .pre_gpu_candidate_gates import build_pre_gpu_candidate_gate_state
+from .principle_adjudication import build_principle_layer_state
 from .review_repair import build_repair_queue
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "research-system-state.json"
@@ -68,7 +69,7 @@ def _build_pre_experiment_state(storage: StorageSettings) -> dict[str, Any]:
             cards.append({**card, "config": config_file.name})
         except Exception as error:
             cards.append({
-                "schema_version": "2.0", "config": config_file.name, "status": "compile-error",
+                "schema_version": "2.1", "config": config_file.name, "status": "compile-error",
                 "execution_authorized": False, "passed_gates": 0, "gate_count": len(PRE_EXPERIMENT_GATES),
                 "blockers": [f"compile-error:{type(error).__name__}"],
             })
@@ -82,7 +83,7 @@ def _build_pre_experiment_state(storage: StorageSettings) -> dict[str, Any]:
             for row in cards
         )
     return {
-        "schema_version": "2.0",
+        "schema_version": "2.1",
         "experiment_data_root": str(experiment_data_root),
         "policy": PRE_EXPERIMENT_POLICY,
         "gates": list(PRE_EXPERIMENT_GATES),
@@ -90,6 +91,8 @@ def _build_pre_experiment_state(storage: StorageSettings) -> dict[str, Any]:
             "compiled_cards": len(cards),
             "execution_ready": sum(bool(row.get("execution_authorized")) for row in cards),
             "blocked": sum(not bool(row.get("execution_authorized")) for row in cards),
+            "principle_certificate_pass": sum(bool((row.get("principle_certificate_prerequisite") or {}).get("passed")) for row in cards),
+            "principle_certificate_fail": sum(not bool((row.get("principle_certificate_prerequisite") or {}).get("passed")) for row in cards),
             "updater_prerequisite_pass": sum(bool((row.get("updater_competence_prerequisite") or {}).get("passed")) for row in cards),
             "updater_prerequisite_fail": sum(not bool((row.get("updater_competence_prerequisite") or {}).get("passed")) for row in cards),
             "screening_ready": sum(bool(row.get("execution_authorized")) for row in screening),
@@ -108,6 +111,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     pilots = state["pilot_registry"]["summary"]
     pre_p0 = state["pre_p0_identifiability"]["summary"]
     pre_experiment = state["pre_experiment_compiler"]["summary"]
+    principle = state["principle_layer"]["summary"]
     economy = state["p0_economy_gate"]["summary"]
     p0_ledger = state["p0_decision_ledger"]["summary"]
     ai_clinic = state["ai_consultation_clinic"]["summary"]
@@ -130,6 +134,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"ResearchAgent / MOOSE-Chem / Co-Scientist / HypoRefine / Virtual Scientists / autoresearch", "component":{"en":"Constrained composition and conditional revival","zh":"受约束组合与条件复活"}, "status":"running", "evidence":{"en":f"{v4['raw_candidates']} v4 candidates / {v4['tournament_finalists']} finalists / {v4['external_reviewed']} reviewed","zh":f"{v4['raw_candidates']} 个 v4 候选 / {v4['tournament_finalists']} 个 finalists / {v4['external_reviewed']} 个已复核"}},
         {"source":"HypoRefine / IdeaForge / ScholarEval / InnoEval / SciAtlas / InternAgent / AutoScientists", "component":{"en":"Wide-search simplification-challenge ideation","zh":"宽搜索与简化挑战式 Idea 发现"}, "status":"running", "evidence":{"en":f"{v5['raw_candidates']} v5 candidates / {v5['external_reviewed']} R2 reviewed / {v5['external_pass']} PASS","zh":f"{v5['raw_candidates']} 个 v5 候选 / {v5['external_reviewed']} 个 R2 已审 / {v5['external_pass']} 个 PASS"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Pre-P0 identifiability auditor","zh":"Pre-P0 实验可识别性审计"}, "status":"running", "evidence":{"en":f"{pre_p0['execution_ready']}/{pre_p0['audited']} retrospective contracts execution-ready","zh":f"当前 {pre_p0['execution_ready']}/{pre_p0['audited']} 份 retrospective 合同允许启动"}},
+        {"source":"FirstResearch / Popper / Co-Scientist / RD-Agent", "component":{"en":"Principle Certificate + epistemic adjudicator","zh":"原理证书 + 认识论裁决器"}, "status":"running", "evidence":{"en":f"{principle['certificates_passed']}/{principle['cards']} principle certificates valid / {principle['principle_falsifications']} principle falsifications","zh":f"{principle['certificates_passed']}/{principle['cards']} 份原理证书有效 / {principle['principle_falsifications']} 个原理级否定"}},
         {"source":"P0 retrospective economy review", "component":{"en":"Five-gate P0 Economy layer","zh":"P0 五门资源经济层"}, "status":"running", "evidence":{"en":f"{economy['matched_simplification_stops']} matched-simplification stops / {economy['substrate_stops']} substrate stops / {economy['economy_ready']} currently economy-ready","zh":f"{economy['matched_simplification_stops']} 个简化基线 STOP / {economy['substrate_stops']} 个底座 STOP / 当前 {economy['economy_ready']} 个 Economy-ready"}},
         {"source":"Web GPT + domestic-model independent consultation", "component":{"en":"Five-checkpoint AI consultation clinic","zh":"五节点 AI 会诊诊断层"}, "status":"running", "evidence":{"en":f"{ai_clinic['checkpoints']} checkpoints / {ai_clinic['pre_gpu_checkpoints']} before GPU / zero AI-authoritative checkpoints","zh":f"{ai_clinic['checkpoints']} 个会诊节点 / {ai_clinic['pre_gpu_checkpoints']} 个位于 GPU 前 / AI 直接授权节点为 0"}},
         {"source":"Content-addressed AI consultation automation", "component":{"en":"Automatic consultation trigger queue","zh":"AI 会诊自动触发队列"}, "status":"running", "evidence":{"en":f"baseline={ai_automation.get('baseline_initialized')} / {ai_automation.get('cases',0)} cases / {ai_automation.get('pending',0)} pending / {ai_automation.get('unresolved_high_risk',0)} unresolved high-risk","zh":f"baseline={ai_automation.get('baseline_initialized')} / {ai_automation.get('cases',0)} 个 case / {ai_automation.get('pending',0)} 个待执行 / {ai_automation.get('unresolved_high_risk',0)} 个未处置高风险"}},
@@ -249,6 +254,7 @@ def build_research_system_state() -> dict[str, Any]:
         pre_experiment_cards=formal_cards,
     )
     experiment_iteration = build_experiment_iteration_state()
+    principle_layer = build_principle_layer_state(pre_experiment_compiler.get("cards") or [], experiment_iteration.get("nodes") or [])
     pre_gpu_candidate_gates = build_pre_gpu_candidate_gate_state()
     human_terminal_ideas = build_human_terminal_state()
     p0_realizability = build_p0_realizability_suite()
@@ -320,6 +326,8 @@ def build_research_system_state() -> dict[str, Any]:
             "experiment_diagnoses":experiment_iteration["summary"]["nodes"],
             "experiment_repair_children":experiment_iteration["summary"]["repair_children"],
             "experiment_scale_up":experiment_iteration["summary"]["scale_up_allowed"],
+            "principle_certificates_passed":principle_layer["summary"]["certificates_passed"],
+            "principle_falsifications":principle_layer["summary"]["principle_falsifications"],
             "repair_queue":repair_queue["summary"]["queued_ideas"],
             "human_terminal_parents":human_terminal_ideas["summary"]["human_parents"],
             "human_terminal_p0":human_terminal_ideas["summary"]["p0"],
@@ -415,6 +423,7 @@ def build_research_system_state() -> dict[str, Any]:
         "pre_experiment_compiler":pre_experiment_compiler,
         "pilot_registry":pilot_registry,
         "experiment_iteration":experiment_iteration,
+        "principle_layer":principle_layer,
         "human_terminal_ideas":human_terminal_ideas,
         "p0_admission":p0_admission_public,
         "ai_consultation_clinic":ai_consultation_public,
@@ -472,7 +481,8 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"lineage", "pass":state["lineage"]["summary"]["idea_nodes"] >= 24, "detail":state["lineage"]["summary"]["idea_nodes"]},
         {"key":"pre-p0-identifiability", "pass":state["pre_p0_identifiability"]["policy"]["p0_execution_requires_pre_p0_pass"], "detail":state["pre_p0_identifiability"]["summary"]},
         {"key":"pre-gpu-survivor-gate", "pass":state["pre_gpu_candidate_gates"]["summary"]["total"] == 10 and state["pre_gpu_candidate_gates"]["summary"]["small_p0"] == 2 and state["pre_gpu_candidate_gates"]["policy"]["hold_or_inconclusive_is_not_method_failure"], "detail":state["pre_gpu_candidate_gates"]["summary"]},
-        {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == 4, "detail":state["pre_experiment_compiler"]["summary"]},
+        {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == 4, "detail":state["principle_layer"]["summary"]},
+        {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == 4, "detail":state["pre_experiment_compiler"]["summary"]},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
         {"key":"mem-xfer-workflow", "pass":not _mem_xfer_semantic_errors(state["mem_xfer_workflow"]), "detail":{"semantic_errors":_mem_xfer_semantic_errors(state["mem_xfer_workflow"]),"support_qualification":state["mem_xfer_workflow"]["support_qualification"]["status"],"full_support":state["mem_xfer_workflow"]["full_support"]["status"],"cpu_gate":state["mem_xfer_workflow"]["support_enriched_analysis"]["status"],"second_model":state["mem_xfer_workflow"]["second_model"]["status"]}},
@@ -504,6 +514,11 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if state["pre_gpu_candidate_gates"]["summary"]["total"] != 10: errors.append("pre-GPU survivor gate must cover all ten shortlisted candidates")
     if state["pre_gpu_candidate_gates"]["summary"]["small_p0"] != 2: errors.append("pre-GPU survivor gate must expose exactly the two currently cleared small P0 candidates")
     if not state["pre_gpu_candidate_gates"]["policy"]["hold_or_inconclusive_is_not_method_failure"]: errors.append("HOLD/INCONCLUSIVE must remain scientifically neutral")
+    if not state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"]: errors.append("experiments must remain evidence about principles rather than votes on ideas")
+    if not state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"]: errors.append("true negatives must not automatically falsify principles")
+    if state["principle_layer"]["summary"]["certificates_passed"] != 4: errors.append("all four current pre-experiment cards must have valid principle certificates")
+    if not state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"]: errors.append("Principle Certificate must be a hard prerequisite before updater competence")
+    if not state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"]: errors.append("Principle Certificate must not inflate the formal gate count beyond eight")
     if not state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"]: errors.append("Updater competence must be a hard prerequisite before Gate 1")
     if not state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"]: errors.append("Updater competence must not inflate the formal gate count beyond eight")
     if not state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"]: errors.append("Pre-Experiment Compiler must require all eight gates")
