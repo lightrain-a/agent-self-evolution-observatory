@@ -3,17 +3,16 @@
     "active_p0": 27,
     "state_counts": {
       "experiment-merge": 2,
-      "upstream-hold": 1,
-      "experiment-stop-await-human-review": 16,
-      "method-development-stop": 1,
-      "economy-blocked": 7
+      "upstream-hold": 4,
+      "experiment-stop-await-human-review": 20,
+      "method-development-stop": 1
     },
-    "experiment_stopped": 17,
+    "experiment_stopped": 21,
     "experiment_merged": 2,
-    "upstream_hold": 1,
+    "upstream_hold": 4,
     "method_development_stop": 1,
     "latest_iteration_overrides": 4,
-    "economy_blocked": 7,
+    "economy_blocked": 0,
     "compile_blocked": 0,
     "launchable": 0,
     "execution_authorized": 0

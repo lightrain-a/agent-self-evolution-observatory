@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T17:33:09+00:00",
+  "generated_at": "2026-08-12T01:08:44+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
@@ -53,7 +53,7 @@
   },
   "economy_gate": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-11T17:33:09+00:00",
+    "generated_at": "2026-08-12T01:08:44+00:00",
     "policy": {
       "schema_version": "1.1",
       "stage_semantics": "resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate",
@@ -102,11 +102,11 @@
       "economy_ready": 0,
       "blocked_or_stopped": 27,
       "stop_classes": {
-        "substrate": 4,
-        "matched-simplification": 12
+        "substrate": 7,
+        "matched-simplification": 16
       },
-      "matched_simplification_stops": 12,
-      "substrate_stops": 4,
+      "matched_simplification_stops": 16,
+      "substrate_stops": 7,
       "voi_stops": 0
     }
   },
@@ -3649,10 +3649,10 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "offline": "pass",
-          "reality": "pass",
-          "phenomenon": "pending",
-          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+          "status": "hold-substrate-real-traces-missing",
+          "evidence": "No standardized 4-6-round lineage-linked pseudo-label log table satisfying >=200 label decisions with repeated and independent ancestors.",
+          "evidence_kind": "real-substrate-inventory",
+          "next": "Collect/freeze 4-6 real self-label rounds with >=200 lineage-linked decisions, ancestor IDs, independent truth, and ancestor-held-out split; rerun same-feature direct/shallow baselines."
         },
         "pre_p0": {
           "passed": 4,
@@ -3666,32 +3666,32 @@
             {
               "key": "target_variation",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "No standardized 4-6-round lineage-linked pseudo-label log artifact is available."
             },
             {
               "key": "baseline_disagreement",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "Matched baseline headroom requires a real trace table."
             },
             {
               "key": "representability",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "Synthetic traces cannot authorize a real self-evolution claim."
             },
             {
               "key": "tiny_overfit",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "No held-out source/failure split exists."
             },
             {
               "key": "competence_window",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "Real action stream not qualified."
             },
             {
               "key": "effect_variation",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "No real effect table exists."
             },
             {
               "key": "cost_plan",
@@ -3711,8 +3711,9 @@
           ]
         },
         "updater_competence": {
-          "status": "pending-evidence",
+          "status": "blocked-substrate",
           "passed": false,
+          "reason": "real trace/action substrate missing",
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
@@ -3754,11 +3755,11 @@
           ]
         },
         "economy_gate": {
-          "status": "blocked",
+          "status": "stop-before-p0-execution",
           "execution_compilation_authorized": false,
           "passed_gates": 3,
           "gate_count": 5,
-          "primary_stop_class": "",
+          "primary_stop_class": "substrate",
           "gates": [
             {
               "key": "matched_simplification",
@@ -3768,9 +3769,9 @@
             },
             {
               "key": "substrate_inventory",
-              "status": "pending",
+              "status": "fail",
               "pass": false,
-              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+              "reason": "current substrate/support inventory cannot instantiate the frozen test"
             },
             {
               "key": "causal_unit_observable",
@@ -4152,10 +4153,10 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "offline": "pass",
-          "reality": "pass",
-          "phenomenon": "pending",
-          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+          "status": "hold-substrate-real-traces-missing",
+          "evidence": "No standardized multi-mode self-correction traces table satisfying >=30 failures with >=3 correction modes and order effects.",
+          "evidence_kind": "real-substrate-inventory",
+          "next": "Collect/freeze >=30 real failures with replan/retrieve/rewrite/rollback/stop, verifier deltas, <=3 rounds, and failure-family holdout; compare repetition caps and depth-3 CART."
         },
         "pre_p0": {
           "passed": 4,
@@ -4169,32 +4170,32 @@
             {
               "key": "target_variation",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "No standardized multi-mode self-correction traces artifact is available."
             },
             {
               "key": "baseline_disagreement",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "Matched baseline headroom requires a real trace table."
             },
             {
               "key": "representability",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "Synthetic traces cannot authorize a real self-evolution claim."
             },
             {
               "key": "tiny_overfit",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "No held-out source/failure split exists."
             },
             {
               "key": "competence_window",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "Real action stream not qualified."
             },
             {
               "key": "effect_variation",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "No real effect table exists."
             },
             {
               "key": "cost_plan",
@@ -4214,8 +4215,9 @@
           ]
         },
         "updater_competence": {
-          "status": "pending-evidence",
+          "status": "blocked-substrate",
           "passed": false,
+          "reason": "real trace/action substrate missing",
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
@@ -4257,11 +4259,11 @@
           ]
         },
         "economy_gate": {
-          "status": "blocked",
+          "status": "stop-before-p0-execution",
           "execution_compilation_authorized": false,
           "passed_gates": 3,
           "gate_count": 5,
-          "primary_stop_class": "",
+          "primary_stop_class": "substrate",
           "gates": [
             {
               "key": "matched_simplification",
@@ -4271,9 +4273,9 @@
             },
             {
               "key": "substrate_inventory",
-              "status": "pending",
+              "status": "fail",
               "pass": false,
-              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+              "reason": "current substrate/support inventory cannot instantiate the frozen test"
             },
             {
               "key": "causal_unit_observable",
@@ -4412,10 +4414,10 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "offline": "pass",
-          "reality": "pass",
-          "phenomenon": "pending",
-          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+          "status": "hold-substrate-real-traces-missing",
+          "evidence": "No standardized matched correction delete/insert interventions table satisfying >=24 correction candidates plus future-task truth.",
+          "evidence_kind": "real-substrate-inventory",
+          "next": "Collect/freeze >=24 persistent correction candidates with matched deletion/insertion interventions, 8 probes and 24 hidden tasks; compare A-3 and same-feature thresholds at matched accepted count."
         },
         "pre_p0": {
           "passed": 4,
@@ -4429,32 +4431,32 @@
             {
               "key": "target_variation",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "No standardized matched correction delete/insert interventions artifact is available."
             },
             {
               "key": "baseline_disagreement",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "Matched baseline headroom requires a real trace table."
             },
             {
               "key": "representability",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "Synthetic traces cannot authorize a real self-evolution claim."
             },
             {
               "key": "tiny_overfit",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "No held-out source/failure split exists."
             },
             {
               "key": "competence_window",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "Real action stream not qualified."
             },
             {
               "key": "effect_variation",
               "status": "pending-evidence",
-              "evidence": ""
+              "evidence": "No real effect table exists."
             },
             {
               "key": "cost_plan",
@@ -4474,8 +4476,9 @@
           ]
         },
         "updater_competence": {
-          "status": "pending-evidence",
+          "status": "blocked-substrate",
           "passed": false,
+          "reason": "real trace/action substrate missing",
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
@@ -4517,11 +4520,11 @@
           ]
         },
         "economy_gate": {
-          "status": "blocked",
+          "status": "stop-before-p0-execution",
           "execution_compilation_authorized": false,
           "passed_gates": 3,
           "gate_count": 5,
-          "primary_stop_class": "",
+          "primary_stop_class": "substrate",
           "gates": [
             {
               "key": "matched_simplification",
@@ -4531,9 +4534,9 @@
             },
             {
               "key": "substrate_inventory",
-              "status": "pending",
+              "status": "fail",
               "pass": false,
-              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+              "reason": "current substrate/support inventory cannot instantiate the frozen test"
             },
             {
               "key": "causal_unit_observable",
@@ -4915,13 +4918,12 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "offline": "pass",
-          "reality": "pass",
-          "phenomenon": "pending",
-          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+          "status": "stop-matched-direct-yield-equivalent",
+          "evidence": "Cross-version trend selection collapses to same-information direct yield prediction.",
+          "next": "Merge into direct mutation-yield prediction."
         },
         "pre_p0": {
-          "passed": 4,
+          "passed": 9,
           "total": 10,
           "checks": [
             {
@@ -4931,33 +4933,33 @@
             },
             {
               "key": "target_variation",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Mutation rankings vary across frozen versions."
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "fail",
+              "evidence": "The same-information direct per-operator linear yield predictor makes identical held-out decisions."
             },
             {
               "key": "representability",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Validity and utility truth are deterministic and programmatic."
             },
             {
               "key": "tiny_overfit",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Version 2 outcomes are held out when both selectors freeze."
             },
             {
               "key": "competence_window",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "The mutation library contains valid/invalid operators and non-constant utility."
             },
             {
               "key": "effect_variation",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Mutation utility rankings change across versions."
             },
             {
               "key": "cost_plan",
@@ -4977,12 +4979,13 @@
           ]
         },
         "updater_competence": {
-          "status": "pending-evidence",
-          "passed": false,
+          "status": "pass",
+          "passed": true,
+          "reason": "30 verifier-executable mutation operators have non-constant utility.",
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
-          "passed": 5,
+          "passed": 6,
           "total": 8,
           "gates": [
             {
@@ -4991,7 +4994,7 @@
             },
             {
               "key": "baseline_competence",
-              "status": "pending-evidence"
+              "status": "pass"
             },
             {
               "key": "mechanism_identifiability",
@@ -5020,23 +5023,23 @@
           ]
         },
         "economy_gate": {
-          "status": "blocked",
+          "status": "stop-before-p0-execution",
           "execution_compilation_authorized": false,
           "passed_gates": 3,
           "gate_count": 5,
-          "primary_stop_class": "",
+          "primary_stop_class": "matched-simplification",
           "gates": [
             {
               "key": "matched_simplification",
-              "status": "pending",
+              "status": "fail",
               "pass": false,
-              "reason": "compiled matched-simplification tournament has not established headroom"
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
             },
             {
               "key": "substrate_inventory",
-              "status": "pending",
-              "pass": false,
-              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
             },
             {
               "key": "causal_unit_observable",
@@ -5046,9 +5049,9 @@
             },
             {
               "key": "decision_voi",
-              "status": "pass",
-              "pass": true,
-              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
             },
             {
               "key": "single_writer_authority",
@@ -5064,11 +5067,7 @@
         "execution_authorized": false,
         "blockers": [
           "economy-gate",
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
@@ -6147,13 +6146,12 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "offline": "pass",
-          "reality": "pass",
-          "phenomenon": "pending",
-          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+          "status": "stop-matched-direct-action-disagreement-equivalent",
+          "evidence": "Direct action disagreement exactly reproduces the selector.",
+          "next": "Merge F-1 admission into direct action-disagreement/value-aware selection."
         },
         "pre_p0": {
-          "passed": 4,
+          "passed": 9,
           "total": 10,
           "checks": [
             {
@@ -6163,33 +6161,33 @@
             },
             {
               "key": "target_variation",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Action-changing and action-invariant residuals both occur."
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "fail",
+              "evidence": "The proposed decision-change selector is identical to direct action disagreement on the same transition information."
             },
             {
               "key": "representability",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Predicted/true margins and frozen actions are programmatically exact."
             },
             {
               "key": "tiny_overfit",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "The final 40 transition residuals are held out."
             },
             {
               "key": "competence_window",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "The frozen policy has mixed changed/unchanged decisions."
             },
             {
               "key": "effect_variation",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Residual corrections span action-changing and invariant effects."
             },
             {
               "key": "cost_plan",
@@ -6209,12 +6207,13 @@
           ]
         },
         "updater_competence": {
-          "status": "pending-evidence",
-          "passed": false,
+          "status": "pass",
+          "passed": true,
+          "reason": "The residual gate identifies a non-degenerate subset of true transitions.",
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
-          "passed": 5,
+          "passed": 6,
           "total": 8,
           "gates": [
             {
@@ -6223,7 +6222,7 @@
             },
             {
               "key": "baseline_competence",
-              "status": "pending-evidence"
+              "status": "pass"
             },
             {
               "key": "mechanism_identifiability",
@@ -6252,23 +6251,23 @@
           ]
         },
         "economy_gate": {
-          "status": "blocked",
+          "status": "stop-before-p0-execution",
           "execution_compilation_authorized": false,
           "passed_gates": 3,
           "gate_count": 5,
-          "primary_stop_class": "",
+          "primary_stop_class": "matched-simplification",
           "gates": [
             {
               "key": "matched_simplification",
-              "status": "pending",
+              "status": "fail",
               "pass": false,
-              "reason": "compiled matched-simplification tournament has not established headroom"
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
             },
             {
               "key": "substrate_inventory",
-              "status": "pending",
-              "pass": false,
-              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
             },
             {
               "key": "causal_unit_observable",
@@ -6278,9 +6277,9 @@
             },
             {
               "key": "decision_voi",
-              "status": "pass",
-              "pass": true,
-              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
             },
             {
               "key": "single_writer_authority",
@@ -6296,11 +6295,7 @@
         "execution_authorized": false,
         "blockers": [
           "economy-gate",
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
@@ -6407,13 +6402,12 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "offline": "pass",
-          "reality": "pass",
-          "phenomenon": "pending",
-          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+          "status": "stop-matched-direct-shield-equivalent",
+          "evidence": "Equal-capacity direct shield is exactly equivalent.",
+          "next": "Merge into generic shielding."
         },
         "pre_p0": {
-          "passed": 4,
+          "passed": 9,
           "total": 10,
           "checks": [
             {
@@ -6423,33 +6417,33 @@
             },
             {
               "key": "target_variation",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Unsafe and matched safe predecessor states coexist."
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "fail",
+              "evidence": "Capacity-matched monotone direct shield reproduces every hidden decision."
             },
             {
               "key": "representability",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Truth is deterministic."
             },
             {
               "key": "tiny_overfit",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Topologies 4-5 are held out."
             },
             {
               "key": "competence_window",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Five hazard families are executable."
             },
             {
               "key": "effect_variation",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Each family has safe and unsafe states."
             },
             {
               "key": "cost_plan",
@@ -6469,12 +6463,12 @@
           ]
         },
         "updater_competence": {
-          "status": "pending-evidence",
-          "passed": false,
+          "status": "pass",
+          "passed": true,
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
-          "passed": 5,
+          "passed": 6,
           "total": 8,
           "gates": [
             {
@@ -6483,7 +6477,7 @@
             },
             {
               "key": "baseline_competence",
-              "status": "pending-evidence"
+              "status": "pass"
             },
             {
               "key": "mechanism_identifiability",
@@ -6512,23 +6506,23 @@
           ]
         },
         "economy_gate": {
-          "status": "blocked",
+          "status": "stop-before-p0-execution",
           "execution_compilation_authorized": false,
           "passed_gates": 3,
           "gate_count": 5,
-          "primary_stop_class": "",
+          "primary_stop_class": "matched-simplification",
           "gates": [
             {
               "key": "matched_simplification",
-              "status": "pending",
+              "status": "fail",
               "pass": false,
-              "reason": "compiled matched-simplification tournament has not established headroom"
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
             },
             {
               "key": "substrate_inventory",
-              "status": "pending",
-              "pass": false,
-              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
             },
             {
               "key": "causal_unit_observable",
@@ -6538,9 +6532,9 @@
             },
             {
               "key": "decision_voi",
-              "status": "pass",
-              "pass": true,
-              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
             },
             {
               "key": "single_writer_authority",
@@ -6556,11 +6550,7 @@
         "execution_authorized": false,
         "blockers": [
           "economy-gate",
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
@@ -6667,13 +6657,12 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "offline": "pass",
-          "reality": "pass",
-          "phenomenon": "pending",
-          "next": "Run the frozen offline/trace phenomenon qualification before any GPU method run."
+          "status": "stop-matched-direct-recovery-policy-equivalent",
+          "evidence": "Direct residual-conditioned recovery policy is exactly equivalent.",
+          "next": "Merge into direct recovery policy."
         },
         "pre_p0": {
-          "passed": 4,
+          "passed": 9,
           "total": 10,
           "checks": [
             {
@@ -6683,33 +6672,33 @@
             },
             {
               "key": "target_variation",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Recurrent and one-off residuals coexist; recurrent fraction=0.800."
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "fail",
+              "evidence": "Same-data direct residual-conditioned policy exactly reproduces hidden decisions."
             },
             {
               "key": "representability",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Exact residual/operator truth is explicit."
             },
             {
               "key": "tiny_overfit",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Scenes 7-9 are held out."
             },
             {
               "key": "competence_window",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Four operators recur across contexts."
             },
             {
               "key": "effect_variation",
-              "status": "pending-evidence",
-              "evidence": ""
+              "status": "pass",
+              "evidence": "Reusable and non-reusable residuals coexist."
             },
             {
               "key": "cost_plan",
@@ -6729,12 +6718,12 @@
           ]
         },
         "updater_competence": {
-          "status": "pending-evidence",
-          "passed": false,
+          "status": "pass",
+          "passed": true,
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
-          "passed": 5,
+          "passed": 6,
           "total": 8,
           "gates": [
             {
@@ -6743,7 +6732,7 @@
             },
             {
               "key": "baseline_competence",
-              "status": "pending-evidence"
+              "status": "pass"
             },
             {
               "key": "mechanism_identifiability",
@@ -6772,23 +6761,23 @@
           ]
         },
         "economy_gate": {
-          "status": "blocked",
+          "status": "stop-before-p0-execution",
           "execution_compilation_authorized": false,
           "passed_gates": 3,
           "gate_count": 5,
-          "primary_stop_class": "",
+          "primary_stop_class": "matched-simplification",
           "gates": [
             {
               "key": "matched_simplification",
-              "status": "pending",
+              "status": "fail",
               "pass": false,
-              "reason": "compiled matched-simplification tournament has not established headroom"
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
             },
             {
               "key": "substrate_inventory",
-              "status": "pending",
-              "pass": false,
-              "reason": "explicit substrate inventory contract missing: observed_effective_candidates, observed_fresh_heldout, observed_reserve_fraction"
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
             },
             {
               "key": "causal_unit_observable",
@@ -6798,9 +6787,9 @@
             },
             {
               "key": "decision_voi",
-              "status": "pass",
-              "pass": true,
-              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
             },
             {
               "key": "single_writer_authority",
@@ -6816,11 +6805,7 @@
         "execution_authorized": false,
         "blockers": [
           "economy-gate",
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     }

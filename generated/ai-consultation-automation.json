@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-11T17:32:44+00:00",
+  "generated_at": "2026-08-12T01:08:18+00:00",
   "policy": {
     "schema_version": "1.0",
     "content_addressed_triggers": true,
@@ -22,14 +22,14 @@
   "summary": {
     "baseline_initialized": true,
     "baseline_subjects": 58,
-    "cases": 2,
+    "cases": 9,
     "created_this_cycle": 0,
     "executed_this_cycle": 0,
-    "pending": 2,
+    "pending": 9,
     "partial": 0,
     "complete": 0,
     "reviewer_unavailable": 0,
-    "retryable": 2,
+    "retryable": 9,
     "waived_cases": 0,
     "unresolved_high_risk": 0
   },
@@ -43,9 +43,9 @@
   ],
   "recent_cases": [
     {
-      "case_id": "aic-1aede89a309d8b68a19b",
+      "case_id": "aic-51b070a1101c6c3d3229",
       "checkpoint": "economy_red_team",
-      "subject_id": "contradiction-preserving-consolidation",
+      "subject_id": "self-label-confidence-flow",
       "status": "pending",
       "completed_reviewers": 0,
       "missing_reviewers": 0,
@@ -53,9 +53,69 @@
       "human_waiver": false
     },
     {
-      "case_id": "aic-6595510a4fb47f628636",
+      "case_id": "aic-8fdb765124518872bcaf",
       "checkpoint": "economy_red_team",
-      "subject_id": "workflow-generalization-certificate",
+      "subject_id": "self-correction-collapse-detector",
+      "status": "pending",
+      "completed_reviewers": 0,
+      "missing_reviewers": 0,
+      "unresolved_high_risk": 0,
+      "human_waiver": false
+    },
+    {
+      "case_id": "aic-6ebe831bc2f112f495c6",
+      "checkpoint": "economy_red_team",
+      "subject_id": "intervention-validated-self-correction",
+      "status": "pending",
+      "completed_reviewers": 0,
+      "missing_reviewers": 0,
+      "unresolved_high_risk": 0,
+      "human_waiver": false
+    },
+    {
+      "case_id": "aic-9e71b098f0a97f93f0f8",
+      "checkpoint": "economy_red_team",
+      "subject_id": "failure-frontier-curriculum",
+      "status": "pending",
+      "completed_reviewers": 0,
+      "missing_reviewers": 0,
+      "unresolved_high_risk": 0,
+      "human_waiver": false
+    },
+    {
+      "case_id": "aic-03324fe18a1eb0152b34",
+      "checkpoint": "economy_red_team",
+      "subject_id": "world-model-error-gated-learning",
+      "status": "pending",
+      "completed_reviewers": 0,
+      "missing_reviewers": 0,
+      "unresolved_high_risk": 0,
+      "human_waiver": false
+    },
+    {
+      "case_id": "aic-876dabcc4f8ac4c3a1e7",
+      "checkpoint": "economy_red_team",
+      "subject_id": "irreversible-action-counterfactuals",
+      "status": "pending",
+      "completed_reviewers": 0,
+      "missing_reviewers": 0,
+      "unresolved_high_risk": 0,
+      "human_waiver": false
+    },
+    {
+      "case_id": "aic-383ff85e2b22c60dfd20",
+      "checkpoint": "economy_red_team",
+      "subject_id": "recovery-conditioned-experience",
+      "status": "pending",
+      "completed_reviewers": 0,
+      "missing_reviewers": 0,
+      "unresolved_high_risk": 0,
+      "human_waiver": false
+    },
+    {
+      "case_id": "aic-1aede89a309d8b68a19b",
+      "checkpoint": "economy_red_team",
+      "subject_id": "contradiction-preserving-consolidation",
       "status": "pending",
       "completed_reviewers": 0,
       "missing_reviewers": 0,
