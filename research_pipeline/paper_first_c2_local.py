@@ -14,6 +14,7 @@ from typing import Any
 from .alfworld_react_scaffold import extract_task_goal, task_family_from_gamefile
 from .config import PROJECT_ROOT
 from .paper_first_c2_contract import build_c2_contract
+from .paper_first_post_c2_adjudication import build_post_c2_adjudication
 from .p0_alfworld_adapter import ALFWorldGameRunner, HFAdmissiblePolicy, load_config
 
 AUTHORIZATION_PATH = PROJECT_ROOT / "generated" / "paper-first-c2-authorization.json"
@@ -204,6 +205,15 @@ def _repeat_equal(left: dict[str, Any], right: dict[str, Any]) -> bool:
 
 
 def _validate_authorization_artifact(path: Path = AUTHORIZATION_PATH) -> dict[str, Any]:
+    post_c2 = build_post_c2_adjudication()
+    if (post_c2.get("authority") or {}).get("clean_mechanism_stop") is True:
+        return {
+            "pass": False,
+            "reason": "post-c2-terminal-lock",
+            "path": str(path),
+            "decision": "C2_LOCAL_VALIDATION_TERMINAL_LOCKED",
+            "terminal_post_c2_decision": post_c2.get("decision"),
+        }
     if not path.exists():
         return {"pass": False, "reason": "authorization-artifact-missing", "path": str(path)}
     try:

@@ -34,6 +34,7 @@ from .methodology_controls import build_methodology_controls_state
 from .pilot_registry import build_pilot_registry
 from .p0_mem_xfer_offline_analysis import build_mem_xfer_workflow_state
 from .paper_design_contract import build_paper_first_workflow_state
+from .paper_first_post_c2_adjudication import build_post_c2_adjudication, write_post_c2_adjudication
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
 from .p0_b10_cpu import write_b10_cpu_p0
 from .p0_a6_cpu import write_a6_cpu_p0
@@ -131,6 +132,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     pre_p0 = state["pre_p0_identifiability"]["summary"]
     pre_experiment = state["pre_experiment_compiler"]["summary"]
     paper_first = state["paper_first_workflow"]["summary"]
+    paper_post_c2 = state["paper_first_post_c2"]
     principle = state["principle_layer"]["summary"]
     meta_trace = state["scientific_meta_trace"]["summary"]
     failure_assets = state["failure_asset_library"]["summary"]
@@ -161,7 +163,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"ResearchAgent / MOOSE-Chem / Co-Scientist / HypoRefine / Virtual Scientists / autoresearch", "component":{"en":"Constrained composition and conditional revival","zh":"受约束组合与条件复活"}, "status":"running", "evidence":{"en":f"{v4['raw_candidates']} v4 candidates / {v4['tournament_finalists']} finalists / {v4['external_reviewed']} reviewed","zh":f"{v4['raw_candidates']} 个 v4 候选 / {v4['tournament_finalists']} 个 finalists / {v4['external_reviewed']} 个已复核"}},
         {"source":"HypoRefine / IdeaForge / ScholarEval / InnoEval / SciAtlas / InternAgent / AutoScientists", "component":{"en":"Wide-search simplification-challenge ideation","zh":"宽搜索与简化挑战式 Idea 发现"}, "status":"running", "evidence":{"en":f"{v5['raw_candidates']} v5 candidates / {v5['external_reviewed']} R2 reviewed / {v5['external_pass']} PASS","zh":f"{v5['raw_candidates']} 个 v5 候选 / {v5['external_reviewed']} 个 R2 已审 / {v5['external_pass']} 个 PASS"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Pre-P0 identifiability auditor","zh":"Pre-P0 实验可识别性审计"}, "status":"running", "evidence":{"en":f"{pre_p0['execution_ready']}/{pre_p0['audited']} retrospective contracts execution-ready","zh":f"当前 {pre_p0['execution_ready']}/{pre_p0['audited']} 份 retrospective 合同允许启动"}},
-        {"source":"Advisor paper-first research contract", "component":{"en":"Paper novelty → method → experiment blueprint contract","zh":"论文 Novelty → 方法 → 实验蓝图合同"}, "status":"running", "evidence":{"en":f"{paper_first['paper_design_passed']}/{paper_first['cards']} current cards satisfy the new paper-first contract / {paper_first['historical_cards_predating_rule']} historical cards predate it","zh":f"当前 {paper_first['paper_design_passed']}/{paper_first['cards']} 份卡满足新版 paper-first 合同 / {paper_first['historical_cards_predating_rule']} 份历史卡早于该规则"}},
+        {"source":"Advisor paper-first research contract", "component":{"en":"Paper novelty → method → experiment blueprint contract","zh":"论文 Novelty → 方法 → 实验蓝图合同"}, "status":"running", "evidence":{"en":f"{paper_first['paper_design_passed']}/{paper_first['cards']} current cards satisfy the paper-first contract / post-C2: {paper_post_c2['decision']} / C3 locked={paper_post_c2['authority']['C3_locked']}","zh":f"当前 {paper_first['paper_design_passed']}/{paper_first['cards']} 份卡满足 paper-first 合同 / post-C2：{paper_post_c2['decision']} / C3 锁定={paper_post_c2['authority']['C3_locked']}"}},
         {"source":"FirstResearch / Popper / Co-Scientist / RD-Agent", "component":{"en":"Principle Certificate + epistemic adjudicator","zh":"原理证书 + 认识论裁决器"}, "status":"running", "evidence":{"en":f"{principle['certificates_passed']}/{principle['cards']} principle certificates valid / {principle['principle_falsifications']} principle falsifications","zh":f"{principle['certificates_passed']}/{principle['cards']} 份原理证书有效 / {principle['principle_falsifications']} 个原理级否定"}},
         {"source":"Qiushi / Kosmos / MLEvolve", "component":{"en":"Scientific Meta-Trace + cross-branch world state","zh":"Scientific Meta-Trace + 跨分支科研状态"}, "status":"running", "evidence":{"en":f"{meta_trace['principles']} principles / {meta_trace['unresolved_principles']} unresolved / {meta_trace['cross_branch_reference_edges']} cross-branch links","zh":f"{meta_trace['principles']} 个原理 / {meta_trace['unresolved_principles']} 个未决 / {meta_trace['cross_branch_reference_edges']} 条跨分支引用"}},
         {"source":"MLEvolve / InternAgent / AutoResearchClaw", "component":{"en":"Failure Asset + dead-end memory","zh":"失败资产 + Dead-End 记忆库"}, "status":"running", "evidence":{"en":f"{failure_assets['assets']} failure assets / {failure_assets['unique_signatures']} reusable signatures / {failure_assets['economy_dead_ends']} economy dead ends","zh":f"{failure_assets['assets']} 条失败资产 / {failure_assets['unique_signatures']} 类可复用签名 / {failure_assets['economy_dead_ends']} 个 Economy dead end"}},
@@ -271,6 +273,7 @@ def build_research_system_state() -> dict[str, Any]:
     pre_p0_identifiability = build_pre_p0_identifiability_audit(idea_bank)
     pre_experiment_compiler = _build_pre_experiment_state(storage)
     paper_first_workflow = build_paper_first_workflow_state(pre_experiment_compiler)
+    paper_first_post_c2 = build_post_c2_adjudication()
     formal_cards = {
         str(card.get("idea_id")): card
         for card in pre_experiment_compiler.get("cards") or []
@@ -373,6 +376,9 @@ def build_research_system_state() -> dict[str, Any]:
             "pre_experiment_cards":pre_experiment_compiler["summary"]["compiled_cards"],
             "paper_design_contract_passed":paper_first_workflow["summary"]["paper_design_passed"],
             "paper_design_contract_blocked":paper_first_workflow["summary"]["paper_design_blocked"],
+            "paper_first_post_c2_decision":paper_first_post_c2["decision"],
+            "paper_first_post_c2_current_formulation":paper_first_post_c2["current_paper_formulation_status"],
+            "paper_first_post_c2_c3_locked":paper_first_post_c2["authority"]["C3_locked"],
             "pre_experiment_ready":pre_experiment_compiler["summary"]["execution_ready"],
             "pre_experiment_formal_ready":pre_experiment_compiler["summary"]["formal_p0_ready"],
             "research_execution_plans":pre_experiment_compiler["summary"]["research_execution_plans"],
@@ -485,6 +491,7 @@ def build_research_system_state() -> dict[str, Any]:
         "pre_gpu_candidate_gates":pre_gpu_candidate_gates,
         "pre_experiment_compiler":pre_experiment_compiler,
         "paper_first_workflow":paper_first_workflow,
+        "paper_first_post_c2":paper_first_post_c2,
         "pilot_registry":pilot_registry,
         "experiment_iteration":experiment_iteration,
         "principle_layer":principle_layer,
@@ -556,6 +563,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"pre-p0-identifiability", "pass":state["pre_p0_identifiability"]["policy"]["p0_execution_requires_pre_p0_pass"], "detail":state["pre_p0_identifiability"]["summary"]},
         {"key":"pre-gpu-survivor-gate", "pass":state["pre_gpu_candidate_gates"]["summary"]["total"] == 10 and state["pre_gpu_candidate_gates"]["summary"]["small_p0"] == 2 and state["pre_gpu_candidate_gates"]["policy"]["hold_or_inconclusive_is_not_method_failure"], "detail":state["pre_gpu_candidate_gates"]["summary"]},
         {"key":"paper-first-research-contract", "pass":state["paper_first_workflow"]["policy"]["paper_novelty_precedes_method_design"] and state["paper_first_workflow"]["policy"]["method_design_precedes_experiment_blueprint"] and state["paper_first_workflow"]["policy"]["local_validation_is_for_falsification_not_method_discovery"] and state["paper_first_workflow"]["policy"]["full_experiment_requires_frozen_method_and_blueprint"], "detail":state["paper_first_workflow"]["summary"]},
+        {"key":"paper-first-post-c2-terminal", "pass":state["paper_first_post_c2"]["decision"] == "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" and state["paper_first_post_c2"]["authority"]["clean_mechanism_stop"] is True and state["paper_first_post_c2"]["authority"]["C3_locked"] is True and state["paper_first_post_c2"]["authority"]["full_experiment_authorized"] is False and state["paper_first_post_c2"]["authority"]["new_method_auto_authorized"] is False and state["paper_first_post_c2"]["authority"]["new_paper_problem_auto_authorized"] is False, "detail":{"decision":state["paper_first_post_c2"]["decision"],"c2":state["paper_first_post_c2"]["c2_result"],"gate_provenance":state["paper_first_post_c2"]["gate_provenance"]}},
         {"key":"backend-architecture-manifest", "pass":state["system_architecture"]["summary"]["temporal_stages"] == 11 and state["system_architecture"]["summary"]["functional_layers"] == 6 and state["system_architecture"]["summary"]["assigned_components"] == len(state["components"]) and state["system_architecture"]["summary"]["unassigned_components"] == 0 and state["system_architecture"]["summary"]["duplicate_component_keys"] == 0 and state["system_architecture"]["summary"]["cross_cutting_controls"] == 3 and state["system_architecture"]["summary"]["orphan_cross_cutting_controls"] == 0, "detail":state["system_architecture"]["summary"]},
         {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == 4, "detail":state["principle_layer"]["summary"]},
         {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["paper_design_contract_required_before_principle_and_implementation"] and state["pre_experiment_compiler"]["policy"]["paper_design_contract_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["summary"]["protocol_validity_pass"] == 4 and state["pre_experiment_compiler"]["policy"]["research_execution_plan_required_before_launch"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_is_derived_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_cannot_authorize_execution"] and state["pre_experiment_compiler"]["summary"]["research_execution_plans"] == 4 and state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == 4, "detail":state["pre_experiment_compiler"]["summary"]},
@@ -607,6 +615,12 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["paper_first_workflow"]["policy"]["method_design_precedes_experiment_blueprint"]: errors.append("method design must precede experiment blueprint")
     if not state["paper_first_workflow"]["policy"]["local_validation_is_for_falsification_not_method_discovery"]: errors.append("local validation must not discover or redefine the core method")
     if not state["paper_first_workflow"]["policy"]["full_experiment_requires_frozen_method_and_blueprint"]: errors.append("full experiments require frozen method and experiment blueprint")
+    post_c2 = state.get("paper_first_post_c2") or {}; post_c2_auth = post_c2.get("authority") or {}
+    if post_c2.get("decision") != "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" or post_c2_auth.get("clean_mechanism_stop") is not True: errors.append("post-C2 paper mechanism terminal adjudication must preserve the clean local falsifier STOP")
+    if post_c2_auth.get("C3_locked") is not True or post_c2_auth.get("full_experiment_authorized") is not False: errors.append("post-C2 STOP must keep C3/full experiments locked")
+    if post_c2_auth.get("new_method_auto_authorized") is not False or post_c2_auth.get("new_paper_problem_auto_authorized") is not False: errors.append("post-C2 STOP cannot auto-authorize a method or new paper problem")
+    if (post_c2.get("gate_provenance") or {}).get("decision_invariant_to_later_gate_tightening") is not True: errors.append("post-C2 terminal state must report gate-version invariance")
+    if (post_c2.get("decision_context_validity") or {}).get("pass") is not True: errors.append("post-C2 mechanism negative requires full decision-context validity")
     architecture = state.get("system_architecture") or {}; architecture_summary = architecture.get("summary") or {}
     if architecture_summary.get("temporal_stages") != 11 or architecture_summary.get("functional_layers") != 6: errors.append("backend architecture must expose one 11-stage lifecycle and six functional layers")
     if architecture_summary.get("assigned_components") != len(state.get("components") or []) or architecture_summary.get("unassigned_components") != 0: errors.append("every backend component must have exactly one primary architecture layer")
@@ -694,6 +708,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_p0_admission_state()
     write_four_direction_iteration()
     write_persistent_updater_program_final()
+    write_post_c2_adjudication()
     write_ai_consultation_clinic_state()
     state=build_research_system_state()
     write_p0_decision_ledger(state["p0_decision_ledger"])

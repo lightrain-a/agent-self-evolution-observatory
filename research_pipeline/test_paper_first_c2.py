@@ -105,10 +105,11 @@ class PaperFirstC2Test(unittest.TestCase):
         self.assertEqual(_semantic_contract(left), _semantic_contract(right))
         self.assertNotEqual(_semantic_contract(left), _semantic_contract(changed))
 
-    def test_runner_requires_machine_authorization_artifact(self) -> None:
+    def test_runner_refuses_terminal_post_c2_authorization_artifact(self) -> None:
         auth = _validate_authorization_artifact()
-        self.assertTrue(auth["pass"])
-        self.assertEqual(auth["decision"], "C2_LOCAL_VALIDATION_AUTHORIZED")
+        self.assertFalse(auth["pass"])
+        self.assertEqual(auth["decision"], "C2_LOCAL_VALIDATION_TERMINAL_LOCKED")
+        self.assertEqual(auth["reason"], "post-c2-terminal-lock")
 
     def test_repeat_equality_is_exact(self) -> None:
         trace = {

@@ -11,6 +11,7 @@ from .config import PROJECT_ROOT
 from .paper_first_c2_contract import build_c2_contract
 from .paper_first_collision_review import build_fresh_collision_review
 from .paper_first_stop_triage import build_paper_first_stop_triage
+from .paper_first_post_c2_adjudication import build_post_c2_adjudication
 
 STRUCTURAL = PROJECT_ROOT / "generated" / "paper-first-c2-structural-precheck.json"
 PROVENANCE = PROJECT_ROOT / "generated" / "paper-first-c2-provenance-authority.json"
@@ -200,6 +201,28 @@ def evaluate_c2_authorization(
 
 
 def build_c2_authorization() -> dict[str, Any]:
+    post_c2 = build_post_c2_adjudication()
+    if (post_c2.get("authority") or {}).get("clean_mechanism_stop") is True:
+        return {
+            "schema_version": "1.0",
+            "generated_at": _now(),
+            "paper_id": "trajectory-mediated-memory-effect-transport",
+            "decision": "C2_LOCAL_VALIDATION_TERMINAL_LOCKED",
+            "code_commit": _commit(),
+            "checks_passed": 0,
+            "checks_total": 0,
+            "checks": [],
+            "local_validation_authorized": False,
+            "authorized_command_scope": None,
+            "C3_locked": True,
+            "full_experiment_authorized": False,
+            "old_b9_formal_method_reopened": False,
+            "terminal_post_c2_decision": post_c2.get("decision"),
+            "terminal_post_c2_c2_decision_sha256": (post_c2.get("c2_result") or {}).get("decision_sha256"),
+            "historical_machine_authorization_recheck_skipped": True,
+            "next_action": "C2 has already completed and terminalized the current paper mechanism; archive the formulation and do not rerun C2.",
+            "policy": {**POLICY, "post_c2_terminal_lock": True},
+        }
     collision = build_fresh_collision_review()
     triage = build_paper_first_stop_triage()
     replay = _load(REPLAY)

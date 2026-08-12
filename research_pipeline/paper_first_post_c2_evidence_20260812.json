@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "authority_id": "paper-first-post-c2-evidence-20260812",
+  "paper_id": "trajectory-mediated-memory-effect-transport",
+  "source_host": "222.20.126.60",
+  "c2": {
+    "decision_path": "/home/hdd/yutong/agent-evolution-c2-paperfirst/local-v1/decision.json",
+    "decision_sha256": "7456e064fab803bbeea65d449ef18d6cd87682120a06bb69c2257e77f1d1f902",
+    "decision": "C2_STOP_CONTROLLED_ACTION_MECHANISM_NOT_SUPPORTED",
+    "generated_at": "2026-08-12T13:35:54+00:00",
+    "metrics": {
+      "valid_units": 10,
+      "nonzero_tau_units": 2,
+      "parent_sign_concordant_units": 0,
+      "same_memory_cross_context_sign_reversal": false,
+      "sign_flip_memory_id": "se-m-pick_cool_then_place_in_recep-1",
+      "sign_flip_expected_parent_signs": {
+        "pick_cool_then_place_in_recep": -1,
+        "pick_heat_then_place_in_recep": 1,
+        "pick_clean_then_place_in_recep": -1
+      },
+      "sign_flip_observed_tau_signs": {
+        "pick_cool_then_place_in_recep": 1,
+        "pick_heat_then_place_in_recep": 0,
+        "pick_clean_then_place_in_recep": 0
+      }
+    },
+    "branch_runs_path": "/home/hdd/yutong/agent-evolution-c2-paperfirst/local-v1/branch-runs.jsonl",
+    "branch_runs_sha256": "6453889c49e40c10add9364a1e3ed476196ec78b819a18db9e8c9a582dbc0c24",
+    "precheck_path": "/home/hdd/yutong/agent-evolution-c2-paperfirst/local-v1/precheck.json",
+    "precheck_sha256": "44008a82be63b4dae4ffb86cf8c67216b99606e690b585dcb628abe87002867d",
+    "runtime_check_path": "/home/hdd/yutong/agent-evolution-c2-paperfirst/local-v1/runtime-check.json",
+    "runtime_check_sha256": "5065b5cb71ac862341a87f9d08f109a95b4a7530c020fe5e598a73041fd779c8"
+  },
+  "historical_frozen_contract": {
+    "path": "/home/hdd/yutong/agent-evolution-c2-paperfirst/local-v1/frozen-contract.json",
+    "sha256": "03ac5ed61bb52d5e4e06fcb426f1446d3bb235703d138729ab8fb67d6e210aae",
+    "generated_at": "2026-08-12T13:06:57+00:00",
+    "go": {
+      "valid_units": 10,
+      "minimum_nonzero_tau_units": 3,
+      "same_memory_cross_context_sign_reversal_required": true,
+      "parent_sign_concordance_role": "diagnostic-only, not a GO gate"
+    },
+    "provenance_note": "This is the contract actually frozen before the executed local-v1 C2 outcomes. Later source commits tightened future C2 gates; they do not retroactively rewrite this run."
+  },
+  "decision_context_validity": {
+    "path": "/home/hdd/yutong/agent-evolution-c2-paperfirst/decision-context-validity-posthoc-v1.json",
+    "sha256": "7996227488c57c16b6ed2372dfe2e81084960699cd48d80a5eb8e719629d594b",
+    "decision": "POSTHOC_DECISION_CONTEXT_VALIDITY_PASS",
+    "valid_units": 10,
+    "required_units": 10,
+    "replays_per_unit": 4,
+    "context_components": [
+      "react-family system scaffold",
+      "goal_context",
+      "task_family",
+      "recent_history(last6)",
+      "current_observation",
+      "admissible_commands(prompt order)",
+      "empty memory_patch"
+    ],
+    "authority": "Post-hoc validity audit only. It can invalidate interpretation of C2 if it fails, but cannot turn C2 STOP into GO or change any threshold."
+  },
+  "scienceworld_parent_evidence": {
+    "f0_path": "/home/hdd/yutong/agent-evolution-p0-data/audits/scienceworld-correction-closure-symmetric-f0-thinking4096-result-v1.json",
+    "f0_sha256": "d455869a34877fe3fd6c76d933cd2d6afa153d4bbd9813d71f89c5d16beafffe",
+    "f0_decision": "SYMMETRIC_F0_HOLD",
+    "diagnosis_path": "/home/hdd/yutong/agent-evolution-p0-data/audits/scienceworld-correction-closure-full-prompt-diagnosis-v1.json",
+    "diagnosis_sha256": "e82eaa2a217454d21279b1b97d7ab3e814f3c0d3963fb31f2baa791e9d1de6b1",
+    "scope_refinement_candidate": "A persistent correction is behaviorally available only if the post-update trajectory re-enters the same policy decision context and realizes the intended state-action intervention there; observation-level recurrence alone is insufficient.",
+    "principle_authority": "No retrospective principle certificate may be fabricated. This is post-hoc mechanism/scope evidence only.",
+    "cross_surface_rule": "This ScienceWorld LoRA-correction evidence may inform future experimental-validity checks but cannot rescue or silently broaden the ALFWorld memory paper."
+  },
+  "authority_rules": {
+    "historical_c2_contract_must_not_be_rewritten": true,
+    "posthoc_validity_cannot_relax_c2_gate": true,
+    "scienceworld_evidence_cannot_rescue_c2": true,
+    "c3_locked_after_c2_stop": true,
+    "full_experiment_locked_after_c2_stop": true,
+    "new_method_auto_authorized": false,
+    "new_paper_problem_auto_authorized": false,
+    "new_paper_problem_requires_fresh_novelty_method_blueprint_cycle": true
+  }
+}

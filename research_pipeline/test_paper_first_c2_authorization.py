@@ -20,10 +20,11 @@ class PaperFirstC2AuthorizationTest(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.state = build_c2_authorization()
 
-    def test_real_authorization_requires_all_machine_gates(self) -> None:
-        self.assertEqual(self.state["decision"], "C2_LOCAL_VALIDATION_AUTHORIZED")
-        self.assertTrue(self.state["local_validation_authorized"])
-        self.assertEqual(self.state["checks_passed"], self.state["checks_total"])
+    def test_completed_c2_is_terminal_locked_against_rerun(self) -> None:
+        self.assertEqual(self.state["decision"], "C2_LOCAL_VALIDATION_TERMINAL_LOCKED")
+        self.assertFalse(self.state["local_validation_authorized"])
+        self.assertTrue(self.state["historical_machine_authorization_recheck_skipped"])
+        self.assertEqual(self.state["terminal_post_c2_decision"], "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM")
         self.assertTrue(self.state["C3_locked"])
         self.assertFalse(self.state["full_experiment_authorized"])
         self.assertFalse(self.state["old_b9_formal_method_reopened"])
