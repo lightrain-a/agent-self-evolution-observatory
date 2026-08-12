@@ -26,6 +26,7 @@ REDUCTION_PATTERNS: tuple[dict[str, Any], ...] = (
     {"key":"artifact-uptake-after-retrieval","mature_theories":["retrieval-versus-utilization diagnostics","instruction following","externalized skill execution"],"veto":"Retrieved experience that fails to change behavior is already a utilization/uptake bottleneck; require a new causal object beyond retrieval and instruction-following decomposition."},
     {"key":"environment-mediated-history","mature_theories":["POMDP state sufficiency","causal mediation through physical state","state-conditioned embodied memory"],"veto":"Past actions affecting future behavior through the current world state are not evidence of internal memory; this distinction is mature state/mediation theory unless a new embodied-only prediction survives."},
     {"key":"multimodal-procedural-compression","mature_theories":["multimodal representation","rate-distortion / information preservation","visual grounding and domain adaptation"],"veto":"Visual details that cannot be compressed into text are not a new self-evolution problem when multimodal skills already preserve state cards/keyframes and rate-distortion captures information loss."},
+    {"key":"externalization-internalization-portability","mature_theories":["parametric-versus-externalized capability tradeoff","skill distillation / internalization","cross-model prompt and skill transfer","multivariate information decomposition"],"veto":"A component becoming internalized in one policy while remaining useful to another is not a new object when externalization/internalization and component-wise transfer are expressible under the same information."},
 )
 
 DRAFTS: tuple[dict[str, Any], ...] = (
@@ -47,6 +48,7 @@ DRAFTS: tuple[dict[str, Any], ...] = (
     {"id":"X6","title":"Persistent Artifact Uptake After Successful Retrieval","decision":"STOP_REDUCTION","reduction":"artifact-uptake-after-retrieval"},
     {"id":"X7","title":"Environment-Mediated History Versus Internal Embodied Memory","decision":"STOP_REDUCTION","reduction":"environment-mediated-history"},
     {"id":"X8","title":"Irreducible Visual Detail in Multimodal Procedural Consolidation","decision":"STOP_REDUCTION","reduction":"multimodal-procedural-compression"},
+    {"id":"X9","title":"Harness-Internalization vs. Harness-Transfer: When Annealing Reduces Cross-Model Reusability","decision":"STOP_REDUCTION","reduction":"externalization-internalization-portability"},
 )
 
 POLICY: dict[str, Any] = {

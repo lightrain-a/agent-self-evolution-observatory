@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-12T18:16:12+00:00",
+  "generated_at": "2026-08-12T18:30:52+00:00",
   "review_id": "fresh-problem-saturation-20260813",
   "policy": {
     "schema_version": "1.0",
@@ -17,10 +17,10 @@
     "gpu_authorized": false
   },
   "summary": {
-    "drafts_reviewed": 18,
+    "drafts_reviewed": 19,
     "survivors": 0,
-    "stopped": 18,
-    "reduction_patterns": 15,
+    "stopped": 19,
+    "reduction_patterns": 16,
     "local_validation_authorized": 0,
     "p0_authorized": 0
   },
@@ -132,6 +132,12 @@
       "title": "Irreducible Visual Detail in Multimodal Procedural Consolidation",
       "decision": "STOP_REDUCTION",
       "reduction": "multimodal-procedural-compression"
+    },
+    {
+      "id": "X9",
+      "title": "Harness-Internalization vs. Harness-Transfer: When Annealing Reduces Cross-Model Reusability",
+      "decision": "STOP_REDUCTION",
+      "reduction": "externalization-internalization-portability"
     }
   ],
   "reduction_patterns": [
@@ -270,6 +276,16 @@
         "visual grounding and domain adaptation"
       ],
       "veto": "Visual details that cannot be compressed into text are not a new self-evolution problem when multimodal skills already preserve state cards/keyframes and rate-distortion captures information loss."
+    },
+    {
+      "key": "externalization-internalization-portability",
+      "mature_theories": [
+        "parametric-versus-externalized capability tradeoff",
+        "skill distillation / internalization",
+        "cross-model prompt and skill transfer",
+        "multivariate information decomposition"
+      ],
+      "veto": "A component becoming internalized in one policy while remaining useful to another is not a new object when externalization/internalization and component-wise transfer are expressible under the same information."
     }
   ],
   "generator_revision": {

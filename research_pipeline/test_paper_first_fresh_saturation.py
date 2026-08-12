@@ -12,7 +12,7 @@ class PaperFirstFreshSaturationTest(unittest.TestCase):
 
     def test_current_scan_keeps_zero_survivors_instead_of_forcing_shortlist(self) -> None:
         s=self.state["summary"]
-        self.assertEqual((s["drafts_reviewed"],s["survivors"],s["stopped"]),(18,0,18))
+        self.assertEqual((s["drafts_reviewed"],s["survivors"],s["stopped"]),(19,0,19))
         self.assertEqual(self.state["decision"],"NO_FRESH_SURVIVOR_CURRENT_SCAN")
         self.assertTrue(self.state["policy"]["zero_survivors_is_valid_and_preferred_to_forced_shortlist"])
         self.assertFalse(self.state["policy"]["local_validation_authorized"])
@@ -32,7 +32,7 @@ class PaperFirstFreshSaturationTest(unittest.TestCase):
 
     def test_reduction_map_contains_load_bearing_recent_failures(self) -> None:
         keys={row["key"] for row in self.state["reduction_patterns"]}
-        for key in ("verifier-exogeneity","evolution-induced-task-non-equivalence","persistent-update-vs-test-time-compute","typed-epistemic-authority","model-scaffold-enactability","artifact-uptake-after-retrieval","environment-mediated-history","multimodal-procedural-compression"):
+        for key in ("verifier-exogeneity","evolution-induced-task-non-equivalence","persistent-update-vs-test-time-compute","typed-epistemic-authority","model-scaffold-enactability","artifact-uptake-after-retrieval","environment-mediated-history","multimodal-procedural-compression","externalization-internalization-portability"):
             self.assertIn(key,keys)
 
 
