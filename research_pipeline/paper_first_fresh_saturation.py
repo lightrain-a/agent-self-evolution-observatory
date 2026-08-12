@@ -42,6 +42,7 @@ REDUCTION_PATTERNS: tuple[dict[str, Any], ...] = (
     {"key":"feedback-polarity-by-update-surface","mature_theories":["supervised imitation / behavioral cloning","error-driven and corrective learning","positive-only versus positive+negative concept learning","information gain / active learning"],"veto":"Success-only versus failure-containing feedback is not a new Agent object when imitation learns positive behavior while corrective/rule learning uses failures as counterexamples that expose missing applicability boundaries."},
     {"key":"harness-update-scope-heterogeneity","mature_theories":["conditional average treatment effects / effect heterogeneity","invariant causal prediction / invariant risk minimization","domain generalization","software configuration scoping"],"veto":"Task-, pathology-, executor-, or trace-conditioned harness validity is not a new Agent object when the candidate condition is simply an effect modifier and the minimal invariant is a CATE/ICP/IRM target."},
     {"key":"durable-runtime-improvement-vs-aging","mature_theories":["non-stationary stochastic dynamical systems / Lyapunov stability","continual-memory interference and stability-plasticity","reliability and maintenance engineering","state-space system identification"],"veto":"Fixed-weight durable runtime state producing either compounding improvement or aging is not a new Agent object when the sign is expressible as monotonicity/contraction or interference/drift of a state-transition operator with respect to task value."},
+    {"key":"scientific-claim-decomposition-dependence","mature_theories":["claim decomposition and verifier alignment","compositional verification / constraint coverage","specification refinement","proof/decomposition traceability"],"veto":"Scientific verification that changes with a legal subclaim decomposition is not a new self-evolution object when decomposition quality, compositional infeasibility, and verifier alignment already determine downstream claim judgments under the same evidence."},
 )
 
 DRAFTS: tuple[dict[str, Any], ...] = (
@@ -83,6 +84,7 @@ DRAFTS: tuple[dict[str, Any], ...] = (
     {"id":"C2","title":"Does Update Surface Change the Scientific Value of Success versus Failure Feedback?","decision":"STOP_REDUCTION","reduction":"feedback-polarity-by-update-surface"},
     {"id":"C3","title":"Task Identity versus Failure Pathology as the Scope of Harness Updates","decision":"STOP_REDUCTION","reduction":"harness-update-scope-heterogeneity"},
     {"id":"C4","title":"Compounding Self-Evolution versus Agent Aging in Fixed-Weight Durable Runtimes","decision":"STOP_REDUCTION","reduction":"durable-runtime-improvement-vs-aging"},
+    {"id":"C5","title":"Decomposition-Dependent Verification of Autonomous Scientific Claims","decision":"STOP_REDUCTION","reduction":"scientific-claim-decomposition-dependence"},
 )
 
 POLICY: dict[str, Any] = {
