@@ -62,6 +62,8 @@ def _paper_candidate() -> dict[str, Any]:
     except (OSError, json.JSONDecodeError):
         replay_feasibility = {}
     replay_pass = replay_feasibility.get("decision") == "ENVIRONMENT_REPLAY_FEASIBILITY_PASS"
+    decision_context_validity = post_c2.get("decision_context_validity") or {}
+    portable_post_c2_validity_pass = bool(post_c2_terminal and decision_context_validity.get("pass") is True)
     paper_design = {
         "novelty": {
             "paper_problem": (
@@ -279,13 +281,22 @@ def _paper_candidate() -> dict[str, Any]:
                 "state_facts_available": bool((replay_feasibility.get("summary") or {}).get("state_facts_available", False)),
                 "authority": "environment-only feasibility; cannot establish novelty or authorize C2/C3",
             },
-            "snapshot_restore_required": False if replay_pass else "unknown-until-replay-gate",
-            "runtime_patch_required": False if replay_pass else "unknown-until-replay-gate",
+            "portable_decision_context_validity": {
+                "status": decision_context_validity.get("decision") or "unavailable",
+                "sha256": decision_context_validity.get("sha256"),
+                "valid_units": decision_context_validity.get("valid_units", 0),
+                "required_units": decision_context_validity.get("required_units", 0),
+                "pass": portable_post_c2_validity_pass,
+                "authority": "post-hoc portable validity for interpretation of the already-executed C2 negative; it cannot retroactively authorize C2 or replace a missing pre-run replay artifact",
+            },
+            "snapshot_restore_required": False if replay_pass else "historical-pre-run-artifact-unavailable",
+            "runtime_patch_required": False if replay_pass else "historical-pre-run-artifact-unavailable",
         },
         "fresh_collision_review_required_before_local_validation": True,
         "fresh_collision_review_complete": collision_review["decision"].startswith("PASS_"),
         "ai_premortem_required_before_local_validation": True,
-        "environment_feasibility_complete": replay_pass,
+        "environment_feasibility_complete": bool(replay_pass or portable_post_c2_validity_pass),
+        "environment_feasibility_authority": "pre-run-replay-artifact" if replay_pass else ("post-c2-content-addressed-decision-context-validity" if portable_post_c2_validity_pass else "unverified"),
         "lifecycle_status": "terminated-after-c2" if post_c2_terminal else "paper-design-frozen",
         "post_c2_adjudication": {
             "decision": post_c2.get("decision"),

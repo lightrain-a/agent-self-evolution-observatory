@@ -54,7 +54,7 @@ window.PAGE_ARCHITECTURES = {
   "paper-ideas":{
     chapters:[
       {id:"discussed-ideas",title:{en:"I · Discussed ideas",zh:"第一章 · 已讨论 Idea"},question:{en:"Which reviewed scientific directions have entered P0, and which parents are terminally merged or dropped?",zh:"哪些已审科学方向已经进入 P0，哪些 parent 已终态合并或弃掉？"}},
-      {id:"new-ideas",title:{en:"II · Standalone methods and paper-first new problems",zh:"第二章 · 独立方法与 Paper-first 新问题"},question:{en:"Which methods remain standalone, which new paper-first problems have been promoted into P0, and which candidates remain REVISE/BLOCK before implementation?",zh:"哪些方法仍保持独立身份，哪些 Paper-first 新问题已进入 P0，哪些候选仍需 REVISE/BLOCK 后才能实现？"}}
+      {id:"new-ideas",title:{en:"II · Standalone methods and paper-first new problems",zh:"第二章 · 独立方法与 Paper-first 新问题"},question:{en:"Which methods remain standalone, which paper-first problems advance only to Paper Design versus REVISE/BLOCK, and what external human authority would be required before any P0/local validation transition?",zh:"哪些方法仍保持独立身份，哪些 Paper-first 新问题仅推进到 Paper Design、哪些仍需 REVISE/BLOCK，以及任何 P0/local validation 转换前需要怎样的外部人工 authority？"}}
     ]
   },
   experiments:{

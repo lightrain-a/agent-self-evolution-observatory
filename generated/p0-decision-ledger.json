@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-12T14:20:08+00:00",
+  "generated_at": "2026-08-12T15:20:46+00:00",
   "policy": {
     "schema_version": "1.1",
     "one_current_row_per_active_p0": true,
@@ -11,22 +11,21 @@
     "scientific_stop_does_not_rewrite_p0_lifecycle": true
   },
   "summary": {
-    "active_p0": 31,
+    "active_p0": 27,
     "state_counts": {
       "experiment-merge": 2,
-      "upstream-hold": 3,
+      "upstream-hold": 1,
       "experiment-stop-await-human-review": 23,
-      "method-admission-blocked": 2,
       "method-development-stop": 1
     },
     "experiment_stopped": 24,
     "experiment_merged": 2,
-    "upstream_hold": 3,
+    "upstream_hold": 1,
     "method_development_stop": 1,
     "latest_iteration_overrides": 4,
     "economy_blocked": 0,
     "compile_blocked": 0,
-    "method_admission_blocked": 2,
+    "method_admission_blocked": 0,
     "launchable": 0,
     "execution_authorized": 0
   },
@@ -184,50 +183,6 @@
       "execution_authorized": false,
       "current_state": "experiment-stop-await-human-review",
       "next_action": "human-merge-drop-or-pivot-review",
-      "decision_source": "human/economy/offline/preflight",
-      "failure_class": null,
-      "latest_metrics": {},
-      "source_priority": [
-        "human-terminal",
-        "economy-gate",
-        "offline-qualification",
-        "execution-preflight"
-      ]
-    },
-    {
-      "idea_id": "future-learnability-preserving-self-evolution",
-      "code": "A-8",
-      "group": "A",
-      "lifecycle": "p0",
-      "p0_decision": null,
-      "economy_status": "pass",
-      "economy_stop_class": null,
-      "offline_gpu0_status": "f0-support-pass",
-      "execution_authorized": false,
-      "current_state": "method-admission-blocked",
-      "next_action": "complete-post-support-method-admission-and-runtime-gates",
-      "decision_source": "human/economy/offline/preflight",
-      "failure_class": null,
-      "latest_metrics": {},
-      "source_priority": [
-        "human-terminal",
-        "economy-gate",
-        "offline-qualification",
-        "execution-preflight"
-      ]
-    },
-    {
-      "idea_id": "failure-mode-transport-under-self-evolution",
-      "code": "A-9",
-      "group": "A",
-      "lifecycle": "p0",
-      "p0_decision": null,
-      "economy_status": "blocked",
-      "economy_stop_class": null,
-      "offline_gpu0_status": "hold-f0-support-insufficient",
-      "execution_authorized": false,
-      "current_state": "upstream-hold",
-      "next_action": "repair-or-expand-local-support-substrate-before-method-admission",
       "decision_source": "human/economy/offline/preflight",
       "failure_class": null,
       "latest_metrics": {},
@@ -494,28 +449,6 @@
       ]
     },
     {
-      "idea_id": "diagnosability-preserving-self-evolution",
-      "code": "C-7",
-      "group": "C",
-      "lifecycle": "p0",
-      "p0_decision": null,
-      "economy_status": "pass",
-      "economy_stop_class": null,
-      "offline_gpu0_status": "f0-support-pass",
-      "execution_authorized": false,
-      "current_state": "method-admission-blocked",
-      "next_action": "complete-post-support-method-admission-and-runtime-gates",
-      "decision_source": "human/economy/offline/preflight",
-      "failure_class": null,
-      "latest_metrics": {},
-      "source_priority": [
-        "human-terminal",
-        "economy-gate",
-        "offline-qualification",
-        "execution-preflight"
-      ]
-    },
-    {
       "idea_id": "counterexample-generating-curriculum",
       "code": "D-1",
       "group": "D",
@@ -637,28 +570,6 @@
       "execution_authorized": false,
       "current_state": "experiment-stop-await-human-review",
       "next_action": "human-merge-drop-or-pivot-review",
-      "decision_source": "human/economy/offline/preflight",
-      "failure_class": null,
-      "latest_metrics": {},
-      "source_priority": [
-        "human-terminal",
-        "economy-gate",
-        "offline-qualification",
-        "execution-preflight"
-      ]
-    },
-    {
-      "idea_id": "cross-surface-repair-routing",
-      "code": "E-5",
-      "group": "E",
-      "lifecycle": "p0",
-      "p0_decision": null,
-      "economy_status": "blocked",
-      "economy_stop_class": null,
-      "offline_gpu0_status": "hold-f0-support-insufficient",
-      "execution_authorized": false,
-      "current_state": "upstream-hold",
-      "next_action": "repair-or-expand-local-support-substrate-before-method-admission",
       "decision_source": "human/economy/offline/preflight",
       "failure_class": null,
       "latest_metrics": {},

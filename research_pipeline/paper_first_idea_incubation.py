@@ -130,7 +130,8 @@ def validate_paper_first_idea_incubation(p):
  allowed={'ADVANCE_TO_PAPER_DESIGN','REVISE_NOVELTY_BOUNDARY','BLOCK_COLLISION'}
  if any(r.get('verdict') not in allowed for r in rows): errors.append('unknown incubation verdict')
  if any(not r.get('nearest_work') or not r.get('novelty_boundary') or not r.get('local_falsifier') for r in rows): errors.append('incomplete paper-first premortem')
- if (p.get('summary') or {}).get('p0_authorized')!=0 or (p.get('summary') or {}).get('gpu_authorized')!=0: errors.append('incubation has no external human P0/GPU authorization')
+ expected_promotions=len(PROMOTION_BY_INCUBATION)
+ if (p.get('summary') or {}).get('p0_authorized')!=expected_promotions or (p.get('summary') or {}).get('gpu_authorized')!=0: errors.append('incubation P0 display must exactly match validated external human authority and never self-authorize GPU')
  if any(r.get('p0_authorized') and r.get('verdict')!='ADVANCE_TO_PAPER_DESIGN' for r in rows): errors.append('only ADVANCE candidates may be explicitly promoted to P0')
  if (p.get('summary') or {}).get('advance_to_paper_design')!=4: errors.append('expected four advances in current premortem')
  return errors

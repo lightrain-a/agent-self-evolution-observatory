@@ -31,6 +31,7 @@ REUSE_RULES = {
     "representation-signal-mismatch": ("operationalization", "require synthetic realizability and tiny-real fit for the representation"),
     "objective-claim-mismatch": ("operationalization", "freeze claim-objective-primary-metric alignment before training"),
     "decision-context-support-mismatch": ("operationalization", "for persistent updates, verify post-update full decision-context recurrence and intended intervention realization before interpreting downstream task failure"),
+    "authority-provenance-mismatch": ("authority-protocol", "require an external content-addressed human authority artifact before paper-first P0 lifecycle or local-validation transitions; a basis string or AI output has zero authority"),
     "matched-simplification-tie": ("method-realization", "run matched simplification/disagreement mining before scale-up"),
     "true-negative": ("method-realization", "route through principle adjudication before any core-principle stop"),
 }
@@ -40,6 +41,7 @@ def build_failure_asset_library(
     experiment_iteration: dict[str, Any],
     economy_gate: dict[str, Any] | None = None,
     post_c2_adjudication: dict[str, Any] | None = None,
+    paper_first_p0_f0: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     assets: list[dict[str, Any]] = []
     for node in experiment_iteration.get("nodes") or []:
@@ -90,6 +92,32 @@ def build_failure_asset_library(
             "can_authorize_current_paper": False,
             "authority_note": scienceworld.get("principle_authority"),
             "cross_surface_rule": scienceworld.get("relationship_to_current_paper"),
+        })
+
+    pf0 = paper_first_p0_f0 or {}
+    pf0_summary = pf0.get("summary") or {}
+    pf0_authority = pf0.get("authority") or {}
+    if int(pf0_summary.get("quarantined") or 0) > 0 and int(pf0_summary.get("scientifically_authorized") or 0) == 0:
+        diagnosis = "authority-provenance-mismatch"
+        layer, precheck = REUSE_RULES[diagnosis]
+        assets.append({
+            "signature": f"{layer}:{diagnosis}",
+            "idea_id": "paper-first-p0-20260812-premature-local-validation",
+            "diagnosis": diagnosis,
+            "affected_layer": layer,
+            "reusable_precheck": precheck,
+            "evidence_ref": str(pf0.get("run_root") or ""),
+            "does_not_imply": "P0 support PASS/HOLD, method failure, principle failure, or any retrospective scientific authority from the executed rows",
+            "memory_scope": "institutional-research-memory",
+            "reuse_scope": {"transition": "paper-first-to-P0/local-validation", "diagnosis": diagnosis, "affected_layer": layer},
+            "reuse_effectiveness": {"reuse_count": 1, "helped_count": 1, "hurt_count": 0, "status": "helped-authority-audit"},
+            "superseded_by": "external-content-addressed-human-authority-gate",
+            "last_revalidated": "2026-08-12",
+            "source_decision": "PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC",
+            "quarantined_executions": int(pf0_summary.get("quarantined") or 0),
+            "authority_status_at_execution": pf0_authority.get("authority_status"),
+            "can_authorize_p0": False,
+            "can_authorize_method_or_principle": False,
         })
 
     signature_counts = Counter(asset["signature"] for asset in assets)

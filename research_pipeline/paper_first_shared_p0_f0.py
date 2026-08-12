@@ -8,6 +8,7 @@ from typing import Any,Iterable
 
 from .alfworld_react_scaffold import extract_task_goal,task_family_from_gamefile
 from .p0_alfworld_adapter import ALFWorldGameRunner,HFAdmissiblePolicy,load_config
+from .paper_first_p0_promotions import require_local_validation_authority
 
 FAULTS=("prompt","workflow","tool"); SURFACES=("prompt","workflow","tool")
 RISK={"success":0.0,"premature-stop":1.0,"search-timeout":2.0,"missing-required-transform":3.0,"loop-timeout":3.0,"invalid-action":4.0}
@@ -107,7 +108,7 @@ def analyze(rows,tasks):
  return {"schema_version":"1.0","experiment":"PF-SHARED-SURFACE-F0","analyzed_at":now(),"task_count":len(tasks),"rows":len(rows),"pf2":{"support_pass":pf2,"heldout_oracle_repair_rate":oracle,"best_fixed_surface_rate":fixed,"ownership_accuracy":ownacc,"distinct_best_surfaces":distinct,"per_surface":per},"pf4":{"support_pass":pf4,"baseline_diagnostic_accuracy":base_diag,"post_update_wrong_surface_accuracy":post,"diagnostic_drop":drops},"pf6":{"support_pass":pf6,"failure_modes":sorted(modes),"non_diagonal_transitions":non,"repair_summaries":summaries,"decision_relevant_pair":dp,"transport":[{"surface":s,"before":b,"after":a,"count":n} for (s,b,a),n in sorted(transport.items())]},"scientific_semantics":"F0/P0-Support only; no METHOD-PASS/FAIL authority."}
 
 def main():
- p=argparse.ArgumentParser();p.add_argument("--data-root",required=True);p.add_argument("--model-path",required=True);p.add_argument("--alfworld-config",required=True);p.add_argument("--output-dir",required=True);p.add_argument("--device",default="cuda");p.add_argument("--resume",action="store_true");a=p.parse_args(); out=Path(a.output_dir);out.mkdir(parents=True,exist_ok=True); traces=out/"raw-traces.jsonl"; progress=out/"progress.json"
+ p=argparse.ArgumentParser();p.add_argument("--data-root",required=True);p.add_argument("--model-path",required=True);p.add_argument("--alfworld-config",required=True);p.add_argument("--output-dir",required=True);p.add_argument("--device",default="cuda");p.add_argument("--resume",action="store_true");a=p.parse_args(); require_local_validation_authority({"PF-2","PF-4","PF-6"}); out=Path(a.output_dir);out.mkdir(parents=True,exist_ok=True); traces=out/"raw-traces.jsonl"; progress=out/"progress.json"
  if traces.exists() and not a.resume: raise RuntimeError("nonempty output; use --resume")
  tasks=select_tasks(Path(a.data_root),6)
  if len(tasks)<6:raise RuntimeError(f"need 6 competent open-action tasks, got {len(tasks)}")

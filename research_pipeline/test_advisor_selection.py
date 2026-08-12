@@ -10,9 +10,9 @@ class DiscussionPoolPolicyTest(unittest.TestCase):
     def test_all_strict_passes_enter_the_senior_discussion_pool(self) -> None:
         portfolio = build_discussion_portfolio()
         self.assertEqual(portfolio["target"], 20)
-        self.assertEqual(portfolio["count"], 20)
+        self.assertEqual(portfolio["count"], 27)
         self.assertTrue(portfolio["ready"])
-        self.assertEqual(len(portfolio["ideas"]), 20)
+        self.assertEqual(len(portfolio["ideas"]), 27)
         self.assertEqual(portfolio["final_summary"]["pass"], 20)
         self.assertEqual(portfolio["final_summary"]["revise"], 0)
         self.assertEqual(portfolio["final_summary"]["block"], 0)

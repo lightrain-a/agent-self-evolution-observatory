@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from .failure_asset_library import build_failure_asset_library
 from .paper_first_p0_f0 import build_paper_first_p0_f0_state
 
 
@@ -35,6 +36,11 @@ class PaperFirstP0F0StateTest(unittest.TestCase):
         self.assertTrue(all(row["decision"] == "PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC" for row in state["cards"]))
         self.assertTrue(all(row["scientific_gate_authority"] is False for row in state["cards"]))
         self.assertTrue(all(row["method_failure_authorized"] is False for row in state["cards"]))
+        library = build_failure_asset_library({"nodes": []}, {"summary": {}}, None, state)
+        asset = next(row for row in library["assets"] if row["diagnosis"] == "authority-provenance-mismatch")
+        self.assertEqual(asset["affected_layer"], "authority-protocol")
+        self.assertFalse(asset["can_authorize_p0"])
+        self.assertFalse(asset["can_authorize_method_or_principle"])
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from .paper_first_idea_incubation import CANDIDATES
-from .paper_first_p0_promotions import PROMOTIONS
+from .paper_first_p0_promotions import AUTHORITY, PROMOTIONS
 from .principle_adjudication import COMMON_FAILURE_UPDATE_RULES, COMMON_FALSIFICATION_REQUIRES
 
 ROOT = Path(__file__).resolve().parent
@@ -19,6 +19,8 @@ CONFIG_NAMES = {
 INCUBATION_BY_ID = {str(row["id"]): row for row in CANDIDATES}
 
 COMMON_PROTOCOL = {
+    "applies_to_persistent_update": True,
+    "post_update_effect_realization": {"passed": True, "evidence": "Any future authorized local validation must verify recurrence of the full post-update policy decision context and actual realization of the intended intervention before downstream task failure is interpreted as method evidence; observation-only recurrence is insufficient."},
     "hidden_evaluation_sealed": {"passed": True, "evidence": "Local validation freezes task/fault splits before metric inspection; held-out cases are never used to construct candidate repairs or thresholds."},
     "evaluation_artifacts_inaccessible": {"passed": True, "evidence": "Environment success labels and held-out fault ownership are withheld from the policy/update generator; only the independent analyzer sees them."},
     "independent_truth_source": {"passed": True, "evidence": "ALFWorld environment execution and preregistered controlled-fault labels define truth; the evolving agent never grades itself."},
@@ -154,7 +156,8 @@ def _principle(idea_id: str, spec: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def build_config(idea_id: str) -> dict[str, Any]:
+def build_config(idea_id: str, authority: dict[str, Any] | None = None) -> dict[str, Any]:
+    authority = authority or AUTHORITY
     spec = PROMOTIONS[idea_id]
     mode, substrate, units = spec["setup"]
     expected = 48 if idea_id == "future-learnability-preserving-self-evolution" else 36
@@ -162,9 +165,11 @@ def build_config(idea_id: str) -> dict[str, Any]:
     primary_metric = spec["economy"]["effect_observable"]
     f0_result = "runs/paper-first-p0-20260812/future-learnability/result.json" if idea_id == "future-learnability-preserving-self-evolution" else "runs/paper-first-p0-20260812/shared-surface/result.json"
     return {
-        "schema_version": "2.2",
+        "schema_version": "2.3",
         "idea_id": idea_id,
         "phase": "P0",
+        "human_authority": {"authority_status": authority.get("authority_status"), "artifact_sha256": authority.get("artifact_sha256"), "source_message_sha256": authority.get("source_message_sha256"), "p0_lifecycle_authorized": authority.get("promotion_authorized") is True, "local_validation_authorized": authority.get("local_validation_authorized") is True},
+        "historical_unauthorized_f0_reuse_forbidden": True,
         "governance": {"schema_version": "2.2", "scientific_stage": "p0-support", "substrate_id": substrate},
         "models": ["Qwen2.5-7B-Instruct"],
         "datasets": ["ALFWorld"],
@@ -197,7 +202,8 @@ def build_config(idea_id: str) -> dict[str, Any]:
     }
 
 
-def write_configs(root: Path = ROOT, *, preserve_evolved: bool = True) -> dict[str, str]:
+def write_configs(root: Path = ROOT, *, preserve_evolved: bool = True, authority: dict[str, Any] | None = None) -> dict[str, str]:
+    authority = authority or AUTHORITY
     out: dict[str, str] = {}
     for idea_id, name in CONFIG_NAMES.items():
         path = root / name
@@ -207,11 +213,13 @@ def write_configs(root: Path = ROOT, *, preserve_evolved: bool = True) -> dict[s
             except (OSError, json.JSONDecodeError):
                 existing = {}
             status = str((((existing.get("pre_experiment") or {}).get("updater_competence") or {}).get("status") or ""))
-            if status and status != "pending-local-f0":
+            existing_authority = existing.get("human_authority") or {}
+            same_authority = bool(authority.get("promotion_authorized") is True and authority.get("local_validation_authorized") is True and authority.get("artifact_sha256") and existing_authority.get("artifact_sha256") == authority.get("artifact_sha256"))
+            if status and status != "pending-local-f0" and same_authority:
                 out[idea_id] = str(path)
                 continue
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(build_config(idea_id), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        path.write_text(json.dumps(build_config(idea_id, authority), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         out[idea_id] = str(path)
     return out
 

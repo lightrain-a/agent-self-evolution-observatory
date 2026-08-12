@@ -6,10 +6,10 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT,StorageSettings,resolve_experiment_data_root
-from .paper_first_p0_promotions import AUTHORITY
 
 DEFAULT_JSON=PROJECT_ROOT/'generated'/'paper-first-p0-f0-state.json';DEFAULT_JS=PROJECT_ROOT/'generated'/'paper-first-p0-f0-state.js'
 IDEAS=("future-learnability-preserving-self-evolution","cross-surface-repair-routing","diagnosability-preserving-self-evolution","failure-mode-transport-under-self-evolution")
+HISTORICAL_RUN_AUTHORITY={"promotion_authorized":False,"local_validation_authorized":False,"full_experiment_authorized":False,"authority_status":"NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY_AT_EXECUTION_TIME","approved_incubation_ids":[],"executed_f0_disposition":"PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC_ONLY","rule":"This authority is frozen to the 2026-08-12 execution and cannot be retroactively changed by a later human approval artifact."}
 def now():return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 def load(path:Path):
  try:return json.loads(path.read_text(encoding='utf-8'))
@@ -30,7 +30,7 @@ def from_shared(iid,result,key):
 def quarantine(card):
  c=dict(card); observed=str(c.get('decision') or ''); c['observed_f0_decision']=observed
  c['decision']='PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC'
- c['authority_status']=AUTHORITY['authority_status']; c['scientific_gate_authority']=False
+ c['authority_status']=HISTORICAL_RUN_AUTHORITY['authority_status']; c['scientific_gate_authority']=False
  c['p0_lifecycle_authority']=False; c['method_admission_authority']=False; c['execution_authorized']=False; c['method_failure_authorized']=False
  gpu=dict(c.get('gpu0') or {}); gpu['observed_status']=gpu.get('status'); gpu['status']='diagnostic-quarantined'; gpu['evidence_kind']='premature-unauthorized-local-f0-diagnostic'; c['gpu0']=gpu
  updater=dict(c.get('updater_competence') or {}); updater['observed_passed']=bool(updater.get('passed')); updater['passed']=False; updater['status']='diagnostic-only-no-authority'; c['updater_competence']=updater
@@ -42,7 +42,7 @@ def build_paper_first_p0_f0_state(data_root:Path|None=None):
  for iid,key in zip(IDEAS[1:],('pf2','pf4','pf6')):cards.append(from_shared(iid,shared,key) if shared.get('status')=='complete' else pending(iid,sp))
  observed_pass=sum(c['decision']=='F0_SUPPORT_PASS' for c in cards); observed_hold=sum(c['decision']=='HOLD_F0_SUPPORT_INSUFFICIENT' for c in cards); observed_running=sum(c['decision']=='F0_RUNNING' for c in cards)
  cards=[quarantine(c) for c in cards]
- return {"schema_version":"1.1","generated_at":now(),"run_root":str(run),"authority":AUTHORITY,"policy":{"f0_cannot_emit_method_fail":True,"shared_collection_for_pf2_pf4_pf6":True,"p0_method_requires_support_pass_and_pre_experiment_authority":True,"unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority":True,"diagnostic_f0_cannot_create_p0_lifecycle_or_method_admission":True},"summary":{"ideas":4,"running":0,"support_pass":0,"support_hold":0,"observed_running":observed_running,"observed_support_pass":observed_pass,"observed_support_hold":observed_hold,"quarantined":4,"scientifically_authorized":0,"method_fail_authorized":0},"cards":cards}
+ return {"schema_version":"1.1","generated_at":now(),"run_root":str(run),"authority":HISTORICAL_RUN_AUTHORITY,"policy":{"f0_cannot_emit_method_fail":True,"shared_collection_for_pf2_pf4_pf6":True,"p0_method_requires_support_pass_and_pre_experiment_authority":True,"unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority":True,"diagnostic_f0_cannot_create_p0_lifecycle_or_method_admission":True,"later_authority_cannot_retroactively_validate_this_run":True},"summary":{"ideas":4,"running":0,"support_pass":0,"support_hold":0,"observed_running":observed_running,"observed_support_pass":observed_pass,"observed_support_hold":observed_hold,"quarantined":4,"scientifically_authorized":0,"method_fail_authorized":0},"cards":cards}
 def write_paper_first_p0_f0_state(json_path=DEFAULT_JSON,js_path=DEFAULT_JS):
  s=build_paper_first_p0_f0_state();json_path.parent.mkdir(parents=True,exist_ok=True);json_path.write_text(json.dumps(s,ensure_ascii=False,indent=2)+'\n');js_path.write_text('window.PAPER_FIRST_P0_F0_STATE = '+json.dumps(s,ensure_ascii=False,separators=(',',':'))+';\n');return s
 if __name__=='__main__':print(json.dumps(write_paper_first_p0_f0_state(),ensure_ascii=False,indent=2))

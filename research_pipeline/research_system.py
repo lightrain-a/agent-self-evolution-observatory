@@ -44,6 +44,7 @@ from .p0_revived_batch_f0 import build_revived_batch_f0, write_revived_batch_f0
 from .p0_decision_ledger import build_p0_decision_ledger, write_p0_decision_ledger
 from .p0_four_direction_iteration import build_four_direction_iteration, write_four_direction_iteration
 from .paper_first_p0_f0 import build_paper_first_p0_f0_state, write_paper_first_p0_f0_state
+from .paper_first_p0_promotions import AUTHORITY as PAPER_FIRST_P0_AUTHORITY, promotion_summary as paper_first_p0_promotion_summary
 from .persistent_updater_program_final import build_persistent_updater_program_final, write_persistent_updater_program_final
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
 from .pre_experiment_specs import GATES as PRE_EXPERIMENT_GATES, POLICY as PRE_EXPERIMENT_POLICY
@@ -306,6 +307,7 @@ def build_research_system_state() -> dict[str, Any]:
     p0_realizability = build_p0_realizability_suite()
     p0_revived_batch = build_revived_batch_f0()
     paper_first_p0_f0 = build_paper_first_p0_f0_state(experiment_data_root)
+    paper_first_p0_authority = {"schema_version":"1.0", "authority":PAPER_FIRST_P0_AUTHORITY, "summary":paper_first_p0_promotion_summary()}
     p0_offline_qualification = build_p0_offline_qualification_state()
     p0_admission = build_p0_admission_state()
     four_direction_iteration = build_four_direction_iteration()
@@ -326,7 +328,7 @@ def build_research_system_state() -> dict[str, Any]:
     p0_decision_ledger = build_p0_decision_ledger(p0_admission, p0_offline_qualification, human_terminal_ideas, four_direction_iteration)
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
     scientific_meta_trace = build_scientific_meta_trace(pre_experiment_compiler, principle_layer, experiment_iteration, p0_decision_ledger_public)
-    failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public, paper_first_post_c2)
+    failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public, paper_first_post_c2, paper_first_p0_f0)
     experiment_value_scheduler = build_experiment_value_scheduler(experiment_iteration, scientific_meta_trace)
     research_system_replay = build_research_system_replay(pre_experiment_compiler)
     external_system_learning = build_external_system_learning_state()
@@ -434,7 +436,8 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_batch_matched_stops":p0_revived_batch["summary"]["fresh_matched_simplification_stop"],
             "p0_batch_upstream_holds":p0_revived_batch["summary"]["fresh_upstream_hold"],
             "p0_batch_gpu_candidates":p0_revived_batch["summary"]["gpu_queue_candidates_before_economy"],
-            "paper_first_p0_promoted":paper_first_p0_f0["summary"]["scientifically_authorized"],
+            "paper_first_p0_promoted":paper_first_p0_authority["summary"]["promoted"],
+            "paper_first_p0_authority_status":paper_first_p0_authority["summary"]["authority_status"],
             "paper_first_p0_f0_quarantined":paper_first_p0_f0["summary"]["quarantined"],
             "paper_first_p0_f0_running":paper_first_p0_f0["summary"]["running"],
             "paper_first_p0_f0_support_pass":paper_first_p0_f0["summary"]["support_pass"],
@@ -525,6 +528,7 @@ def build_research_system_state() -> dict[str, Any]:
         "p0_offline_qualification":p0_offline_public,
         "p0_realizability":p0_realizability_public,
         "p0_revived_batch_f0":p0_revived_batch_public,
+        "paper_first_p0_authority":paper_first_p0_authority,
         "paper_first_p0_f0":paper_first_p0_f0,
         "repair_queue":repair_queue,
         "idea_discovery_v3":idea_discovery_v3,
@@ -582,6 +586,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"backend-architecture-manifest", "pass":state["system_architecture"]["summary"]["temporal_stages"] == 11 and state["system_architecture"]["summary"]["functional_layers"] == 6 and state["system_architecture"]["summary"]["assigned_components"] == len(state["components"]) and state["system_architecture"]["summary"]["unassigned_components"] == 0 and state["system_architecture"]["summary"]["duplicate_component_keys"] == 0 and state["system_architecture"]["summary"]["cross_cutting_controls"] == 3 and state["system_architecture"]["summary"]["orphan_cross_cutting_controls"] == 0, "detail":state["system_architecture"]["summary"]},
         {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == expected_pre_experiment_cards, "detail":state["principle_layer"]["summary"]},
         {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["paper_design_contract_required_before_principle_and_implementation"] and state["pre_experiment_compiler"]["policy"]["paper_design_contract_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["summary"]["protocol_validity_pass"] == expected_pre_experiment_cards and state["pre_experiment_compiler"]["policy"]["research_execution_plan_required_before_launch"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_is_derived_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_cannot_authorize_execution"] and state["pre_experiment_compiler"]["summary"]["research_execution_plans"] == expected_pre_experiment_cards and state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == expected_pre_experiment_cards, "detail":state["pre_experiment_compiler"]["summary"]},
+        {"key":"paper-first-p0-human-authority", "pass":state["paper_first_p0_authority"]["summary"].get("promoted") == 0 or state["paper_first_p0_authority"]["summary"].get("authority_status") == "EXTERNAL_HUMAN_P0_PROMOTION_AUTHORITY_VALID", "detail":state["paper_first_p0_authority"]},
         {"key":"paper-first-p0-f0", "pass":state["paper_first_p0_f0"]["summary"].get("ideas") == 4 and state["paper_first_p0_f0"]["summary"].get("quarantined") == 4 and state["paper_first_p0_f0"]["summary"].get("scientifically_authorized") == 0 and state["paper_first_p0_f0"]["summary"].get("method_fail_authorized") == 0 and state["paper_first_p0_f0"]["policy"].get("unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority") is True, "detail":state["paper_first_p0_f0"]["summary"]},
         {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
@@ -662,6 +667,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"]: errors.append("Pre-Experiment Compiler must require all eight gates")
     if not state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"]: errors.append("Pre-Experiment Compiler override must stay forbidden")
     if state["pre_experiment_compiler"]["summary"]["compiled_cards"] != expected_pre_experiment_cards: errors.append(f"expected {expected_pre_experiment_cards} frozen pre-experiment cards")
+    paper_first_authority = state.get("paper_first_p0_authority") or {}; pfa_summary = paper_first_authority.get("summary") or {}
+    if int(pfa_summary.get("promoted") or 0) > 0 and pfa_summary.get("authority_status") != "EXTERNAL_HUMAN_P0_PROMOTION_AUTHORITY_VALID": errors.append("paper-first P0 promotion requires a validated external human authority artifact")
     paper_first_f0 = state.get("paper_first_p0_f0") or {}; pf0_summary = paper_first_f0.get("summary") or {}
     if pf0_summary.get("ideas") != 4 or pf0_summary.get("quarantined") != 4 or pf0_summary.get("scientifically_authorized") != 0 or pf0_summary.get("method_fail_authorized") != 0: errors.append("paper-first premature local F0 must remain four diagnostic-only quarantined executions with zero scientific authority")
     if (paper_first_f0.get("policy") or {}).get("unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority") is not True: errors.append("paper-first premature execution must be preserved without creating scientific authority")

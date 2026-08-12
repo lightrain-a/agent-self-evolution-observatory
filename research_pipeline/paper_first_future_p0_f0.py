@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any,Iterable
 
 from .p0_alfworld_adapter import ALFWorldGameRunner,HFAdmissiblePolicy,load_config,run_episode
+from .paper_first_p0_promotions import require_local_validation_authority
 
 
 def now(): return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -48,7 +49,7 @@ def analyze(rows,patch_ids):
  m=[c for c in cs if c["matched_current_retention"]];nz=[c for c in m if abs(c["future_learnability_delta"])>=.25];rng=(max((c["future_learnability_delta"] for c in m),default=0)-min((c["future_learnability_delta"] for c in m),default=0)) if m else 0;support=len(m)>=2 and (len(nz)>=1 or rng>=.25)
  return {"schema_version":"1.0","experiment":"PF-1-FUTURE-LEARNABILITY-F0","support_pass":support,"baseline":{"current":bc,"retention":br,"future_before":bf,"control_future_after":ca,"control_adaptation_gain":cg},"matched_candidates":len(m),"nonzero_matched_candidates":len(nz),"future_learnability_range":rng,"candidates":cs,"scientific_semantics":"F0/P0-Support only; no METHOD-PASS/FAIL authority."}
 def main():
- p=argparse.ArgumentParser();p.add_argument("--data-root",required=True);p.add_argument("--model-path",required=True);p.add_argument("--alfworld-config",required=True);p.add_argument("--output-dir",required=True);p.add_argument("--device",default="cuda");a=p.parse_args();root=Path(a.data_root);out=Path(a.output_dir);out.mkdir(parents=True,exist_ok=True);traces=out/"raw-traces.jsonl";progress=out/"progress.json"
+ p=argparse.ArgumentParser();p.add_argument("--data-root",required=True);p.add_argument("--model-path",required=True);p.add_argument("--alfworld-config",required=True);p.add_argument("--output-dir",required=True);p.add_argument("--device",default="cuda");a=p.parse_args();require_local_validation_authority({"PF-1"});root=Path(a.data_root);out=Path(a.output_dir);out.mkdir(parents=True,exist_ok=True);traces=out/"raw-traces.jsonl";progress=out/"progress.json"
  if traces.exists():raise RuntimeError("PF-1 F0 output must be fresh; refusing to mix adaptation rows")
  train_fail=pick(root,"/train/",False,3);seen_ok=pick(root,"/valid_seen/",True,8);unseen=pick(root,"/valid_unseen/",None,4);seen_fail=pick(root,"/valid_seen/",False,1)
  if len(train_fail)<3 or len(seen_ok)<8 or len(unseen)<4 or not seen_fail:raise RuntimeError(f"insufficient frozen substrate train_fail={len(train_fail)} seen_ok={len(seen_ok)} unseen={len(unseen)} seen_fail={len(seen_fail)}")

@@ -1,29 +1,47 @@
 {
-  "schema_version": "1.0",
-  "generated_at": "2026-08-12T14:20:06+00:00",
+  "schema_version": "1.1",
+  "generated_at": "2026-08-12T15:20:41+00:00",
   "run_root": "/data/wyt/agent-self-evolution-observatory/runs/paper-first-p0-20260812",
+  "authority": {
+    "promotion_authorized": false,
+    "local_validation_authorized": false,
+    "full_experiment_authorized": false,
+    "authority_status": "NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY_AT_EXECUTION_TIME",
+    "approved_incubation_ids": [],
+    "executed_f0_disposition": "PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC_ONLY",
+    "rule": "This authority is frozen to the 2026-08-12 execution and cannot be retroactively changed by a later human approval artifact."
+  },
   "policy": {
     "f0_cannot_emit_method_fail": true,
     "shared_collection_for_pf2_pf4_pf6": true,
-    "p0_method_requires_support_pass_and_pre_experiment_authority": true
+    "p0_method_requires_support_pass_and_pre_experiment_authority": true,
+    "unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority": true,
+    "diagnostic_f0_cannot_create_p0_lifecycle_or_method_admission": true,
+    "later_authority_cannot_retroactively_validate_this_run": true
   },
   "summary": {
     "ideas": 4,
     "running": 0,
-    "support_pass": 2,
-    "support_hold": 2,
+    "support_pass": 0,
+    "support_hold": 0,
+    "observed_running": 0,
+    "observed_support_pass": 2,
+    "observed_support_hold": 2,
+    "quarantined": 4,
+    "scientifically_authorized": 0,
     "method_fail_authorized": 0
   },
   "cards": [
     {
       "idea_id": "future-learnability-preserving-self-evolution",
-      "decision": "F0_SUPPORT_PASS",
+      "decision": "PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC",
       "method_failure_authorized": false,
       "execution_authorized": false,
       "gpu0": {
-        "status": "f0-support-pass",
+        "status": "diagnostic-quarantined",
         "evidence": "matched current/retention=3; nonzero future-learnability=1; range=0.25",
-        "evidence_kind": "paper-first-local-f0"
+        "evidence_kind": "premature-unauthorized-local-f0-diagnostic",
+        "observed_status": "f0-support-pass"
       },
       "checks": {
         "target_variation": {
@@ -58,9 +76,10 @@
         }
       },
       "updater_competence": {
-        "status": "pass",
-        "passed": true,
-        "reason": "candidate updates exhibit matched current/retention future-adaptation variation"
+        "status": "diagnostic-only-no-authority",
+        "passed": false,
+        "reason": "candidate updates exhibit matched current/retention future-adaptation variation",
+        "observed_passed": true
       },
       "substrate_inventory": {
         "observed_effective_candidates": 3,
@@ -159,17 +178,23 @@
             "/home/hdd/yutong/agent-evolution-p0-data/alfworld/json_2.1.1/valid_unseen/look_at_obj_in_light-Bowl-None-DeskLamp-308/trial_T20190907_133935_066606/game.tw-pddl"
           ]
         }
-      }
+      },
+      "observed_f0_decision": "F0_SUPPORT_PASS",
+      "authority_status": "NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY_AT_EXECUTION_TIME",
+      "scientific_gate_authority": false,
+      "p0_lifecycle_authority": false,
+      "method_admission_authority": false
     },
     {
       "idea_id": "cross-surface-repair-routing",
-      "decision": "HOLD_F0_SUPPORT_INSUFFICIENT",
+      "decision": "PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC",
       "method_failure_authorized": false,
       "execution_authorized": false,
       "gpu0": {
-        "status": "hold-f0-support-insufficient",
+        "status": "diagnostic-quarantined",
         "evidence": "oracle=0.8888888888888888 fixed=0.7777777777777778 ownership=0.7777777777777778 distinct=3",
-        "evidence_kind": "paper-first-local-f0"
+        "evidence_kind": "premature-unauthorized-local-f0-diagnostic",
+        "observed_status": "hold-f0-support-insufficient"
       },
       "checks": {
         "target_variation": {
@@ -204,9 +229,10 @@
         }
       },
       "updater_competence": {
-        "status": "hold-support-insufficient",
+        "status": "diagnostic-only-no-authority",
         "passed": false,
-        "reason": "local support/variation qualification insufficient"
+        "reason": "local support/variation qualification insufficient",
+        "observed_passed": false
       },
       "substrate_inventory": {
         "observed_effective_candidates": 18,
@@ -224,17 +250,23 @@
           "workflow": 0.7777777777777778,
           "tool": 0.5555555555555556
         }
-      }
+      },
+      "observed_f0_decision": "HOLD_F0_SUPPORT_INSUFFICIENT",
+      "authority_status": "NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY_AT_EXECUTION_TIME",
+      "scientific_gate_authority": false,
+      "p0_lifecycle_authority": false,
+      "method_admission_authority": false
     },
     {
       "idea_id": "diagnosability-preserving-self-evolution",
-      "decision": "F0_SUPPORT_PASS",
+      "decision": "PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC",
       "method_failure_authorized": false,
       "execution_authorized": false,
       "gpu0": {
-        "status": "f0-support-pass",
+        "status": "diagnostic-quarantined",
         "evidence": "baseline_diag=0.6666666666666666 drops={'prompt': -0.33333333333333337, 'workflow': 0.16666666666666663, 'tool': -0.08333333333333337}",
-        "evidence_kind": "paper-first-local-f0"
+        "evidence_kind": "premature-unauthorized-local-f0-diagnostic",
+        "observed_status": "f0-support-pass"
       },
       "checks": {
         "target_variation": {
@@ -269,9 +301,10 @@
         }
       },
       "updater_competence": {
-        "status": "pass",
-        "passed": true,
-        "reason": "local support/variation qualification passed"
+        "status": "diagnostic-only-no-authority",
+        "passed": false,
+        "reason": "local support/variation qualification passed",
+        "observed_passed": true
       },
       "substrate_inventory": {
         "observed_effective_candidates": 3,
@@ -291,17 +324,23 @@
           "workflow": 0.16666666666666663,
           "tool": -0.08333333333333337
         }
-      }
+      },
+      "observed_f0_decision": "F0_SUPPORT_PASS",
+      "authority_status": "NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY_AT_EXECUTION_TIME",
+      "scientific_gate_authority": false,
+      "p0_lifecycle_authority": false,
+      "method_admission_authority": false
     },
     {
       "idea_id": "failure-mode-transport-under-self-evolution",
-      "decision": "HOLD_F0_SUPPORT_INSUFFICIENT",
+      "decision": "PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC",
       "method_failure_authorized": false,
       "execution_authorized": false,
       "gpu0": {
-        "status": "hold-f0-support-insufficient",
+        "status": "diagnostic-quarantined",
         "evidence": "modes=['loop-timeout', 'missing-required-transform', 'success'] non_diagonal=5 decision_pair=None",
-        "evidence_kind": "paper-first-local-f0"
+        "evidence_kind": "premature-unauthorized-local-f0-diagnostic",
+        "observed_status": "hold-f0-support-insufficient"
       },
       "checks": {
         "target_variation": {
@@ -336,9 +375,10 @@
         }
       },
       "updater_competence": {
-        "status": "hold-support-insufficient",
+        "status": "diagnostic-only-no-authority",
         "passed": false,
-        "reason": "local support/variation qualification insufficient"
+        "reason": "local support/variation qualification insufficient",
+        "observed_passed": false
       },
       "substrate_inventory": {
         "observed_effective_candidates": 27,
@@ -451,7 +491,12 @@
             "count": 4
           }
         ]
-      }
+      },
+      "observed_f0_decision": "HOLD_F0_SUPPORT_INSUFFICIENT",
+      "authority_status": "NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY_AT_EXECUTION_TIME",
+      "scientific_gate_authority": false,
+      "p0_lifecycle_authority": false,
+      "method_admission_authority": false
     }
   ]
 }

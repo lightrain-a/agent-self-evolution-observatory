@@ -2,9 +2,17 @@ from __future__ import annotations
 import json, os, tempfile, unittest
 from pathlib import Path
 from unittest.mock import patch
-from .p0_c_shared_analyze import analyze_c1, analyze_c4, analyze_c5
+try:
+    from .p0_c_shared_analyze import analyze_c1, analyze_c4, analyze_c5
+    _ANALYSIS_DEPS_AVAILABLE = True
+except ModuleNotFoundError as error:
+    if error.name not in {"pandas", "sklearn", "numpy"}:
+        raise
+    analyze_c1 = analyze_c4 = analyze_c5 = None
+    _ANALYSIS_DEPS_AVAILABLE = False
 from .p0_revived_c_f0 import run_c1_f0, run_c4_f0, run_c5_f0
 
+@unittest.skipUnless(_ANALYSIS_DEPS_AVAILABLE, "optional C-shared analysis dependencies (numpy/pandas/sklearn) are not installed in this runtime")
 class CSharedAnalyzeTest(unittest.TestCase):
     def _fixture(self):
         effects={}; labels=[]; modes=[]

@@ -46,10 +46,18 @@ class PaperFirstStopTriageTest(unittest.TestCase):
         self.assertEqual(len(self.candidate["fresh_collision_review"]["sources"]), 7)
         self.assertTrue(self.candidate["ai_premortem_required_before_local_validation"])
         self.assertTrue(self.candidate["environment_feasibility_complete"])
-        self.assertEqual(self.candidate["feasibility"]["prefix_replay_smoke"]["status"], "ENVIRONMENT_REPLAY_FEASIBILITY_PASS")
-        self.assertTrue(self.candidate["feasibility"]["prefix_replay_smoke"]["all_public_steps_equal"])
-        self.assertEqual(self.candidate["feasibility"]["prefix_replay_smoke"]["selected_tasks"], 20)
-        self.assertEqual(self.candidate["feasibility"]["prefix_replay_smoke"]["task_families"], 6)
+        portable = self.candidate["feasibility"]["portable_decision_context_validity"]
+        self.assertTrue(portable["pass"])
+        self.assertEqual((portable["valid_units"], portable["required_units"]), (10, 10))
+        self.assertTrue(portable["sha256"])
+        prefix = self.candidate["feasibility"]["prefix_replay_smoke"]
+        if prefix["status"] == "ENVIRONMENT_REPLAY_FEASIBILITY_PASS":
+            self.assertTrue(prefix["all_public_steps_equal"])
+            self.assertEqual((prefix["selected_tasks"], prefix["task_families"]), (20, 6))
+        else:
+            self.assertEqual(prefix["status"], "unverified-no-raw-artifact")
+            self.assertIsNone(prefix["artifact"])
+            self.assertEqual(self.candidate["environment_feasibility_authority"], "post-c2-content-addressed-decision-context-validity")
 
     def test_closed_and_diagnostic_lines_do_not_become_children(self) -> None:
         self.assertEqual(self.rows["self-label-confidence-flow"]["disposition"], "ARCHIVE_PHENOMENON_MERGE_COMPONENT")

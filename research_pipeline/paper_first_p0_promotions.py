@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+import hashlib
+import json
+import os
+import re
+from pathlib import Path
 from typing import Any
 
 PROMOTIONS: dict[str, dict[str, Any]] = {
@@ -97,23 +102,111 @@ PROMOTIONS: dict[str, dict[str, Any]] = {
     },
 }
 
-AUTHORITY: dict[str, Any] = {
-    "promotion_authorized": False,
-    "local_validation_authorized": False,
-    "full_experiment_authorized": False,
-    "authority_status": "NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY",
-    "basis": "The paper-first authority preceding these executions explicitly kept local validation locked; no external user-authorization artifact is referenced by the promotion code.",
-    "executed_f0_disposition": "PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC_ONLY",
-    "rule": "Executed traces are preserved as historical diagnostics but cannot create P0 lifecycle, method-admission, principle, or scale-up authority.",
-}
+AUTHORITY_ENV = "PAPER_FIRST_P0_HUMAN_AUTHORITY"
+_SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+_REPO_ROOT = Path(__file__).resolve().parents[1]
 
-# Keep the four paper/method specifications as design candidates and historical
-# execution provenance, but expose no live P0 promotion until an external human
-# authority artifact explicitly authorizes that transition.
-AUTHORIZED_PROMOTIONS: dict[str, dict[str, Any]] = {}
-PROMOTION_BY_INCUBATION = {
-    str(row["incubation_id"]): idea_id for idea_id, row in AUTHORIZED_PROMOTIONS.items()
-}
+
+def _no_authority(errors: list[str] | None = None) -> dict[str, Any]:
+    return {
+        "promotion_authorized": False,
+        "local_validation_authorized": False,
+        "full_experiment_authorized": False,
+        "authority_status": "NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY",
+        "approved_incubation_ids": [],
+        "artifact_path": "",
+        "artifact_sha256": "",
+        "source_message_ref": "",
+        "source_message_sha256": "",
+        "errors": list(errors or []),
+        "basis": "The paper-first authority preceding these executions explicitly kept local validation locked; no externally supplied human-authorization artifact is active.",
+        "executed_f0_disposition": "PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC_ONLY",
+        "rule": "Executed traces are preserved as historical diagnostics but cannot create P0 lifecycle, method-admission, principle, or scale-up authority.",
+    }
+
+
+def load_human_authority(path: str | Path | None = None) -> dict[str, Any]:
+    raw_path = str(path or os.environ.get(AUTHORITY_ENV, "")).strip()
+    if not raw_path:
+        return _no_authority([f"missing-external-authority:{AUTHORITY_ENV}"])
+    authority_path = Path(raw_path).expanduser().resolve()
+    errors: list[str] = []
+    try:
+        authority_path.relative_to(_REPO_ROOT)
+        errors.append("authority-artifact-must-be-external-to-repository")
+    except ValueError:
+        pass
+    try:
+        raw = authority_path.read_bytes()
+        payload = json.loads(raw.decode("utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        return _no_authority(errors + [f"authority-artifact-unreadable:{type(error).__name__}"])
+    if not isinstance(payload, dict):
+        return _no_authority(errors + ["authority-artifact-root-must-be-object"])
+    required = ("authority_type", "decision", "reviewed_by", "reviewed_at", "source_message_ref", "source_message_sha256", "approved_incubation_ids", "p0_lifecycle_authorized", "local_validation_authorized")
+    for key in required:
+        if key not in payload:
+            errors.append(f"missing:{key}")
+    if payload.get("authority_type") != "human-paper-first-p0-promotion": errors.append("invalid-authority-type")
+    if payload.get("decision") != "approve": errors.append("decision-not-approve")
+    if str(payload.get("reviewed_by") or "") not in {"user", "human-user"}: errors.append("reviewer-not-human-user")
+    source_sha = str(payload.get("source_message_sha256") or "").lower()
+    if not _SHA256_RE.fullmatch(source_sha): errors.append("invalid-source-message-sha256")
+    ids = [str(x) for x in (payload.get("approved_incubation_ids") or [])]
+    known = {str(row["incubation_id"]) for row in PROMOTIONS.values()}
+    if not ids: errors.append("approved-incubation-ids-empty")
+    if len(ids) != len(set(ids)): errors.append("duplicate-approved-incubation-id")
+    if any(x not in known for x in ids): errors.append("unknown-approved-incubation-id")
+    lifecycle = payload.get("p0_lifecycle_authorized") is True
+    local = payload.get("local_validation_authorized") is True
+    if local and not lifecycle: errors.append("local-validation-requires-p0-lifecycle-authority")
+    if errors:
+        row = _no_authority(errors)
+        row.update({"artifact_path": str(authority_path), "artifact_sha256": hashlib.sha256(raw).hexdigest(), "source_message_ref": str(payload.get("source_message_ref") or ""), "source_message_sha256": source_sha})
+        return row
+    return {
+        "promotion_authorized": lifecycle,
+        "local_validation_authorized": local,
+        "full_experiment_authorized": False,
+        "authority_status": "EXTERNAL_HUMAN_P0_PROMOTION_AUTHORITY_VALID",
+        "approved_incubation_ids": ids,
+        "artifact_path": str(authority_path),
+        "artifact_sha256": hashlib.sha256(raw).hexdigest(),
+        "source_message_ref": str(payload["source_message_ref"]),
+        "source_message_sha256": source_sha,
+        "reviewed_at": str(payload["reviewed_at"]),
+        "errors": [],
+        "basis": "Externally supplied, content-addressed human authority artifact.",
+        "executed_f0_disposition": "AUTHORIZED_LOCAL_VALIDATION" if local else "P0_LIFECYCLE_ONLY_LOCAL_VALIDATION_LOCKED",
+        "rule": "P0 lifecycle and local-validation authority are separate; neither authorizes method conclusions, scale-up, a second backbone, or a full experiment.",
+    }
+
+
+def authorized_promotions(authority: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    if authority.get("promotion_authorized") is not True:
+        return {}
+    approved = set(authority.get("approved_incubation_ids") or [])
+    return {idea_id: spec for idea_id, spec in PROMOTIONS.items() if str(spec["incubation_id"]) in approved}
+
+
+def require_local_validation_authority(incubation_ids: set[str], authority: dict[str, Any] | None = None) -> dict[str, Any]:
+    authority = authority or AUTHORITY
+    if authority.get("local_validation_authorized") is not True:
+        raise RuntimeError("paper-first local validation is locked: external human authority artifact is missing or does not authorize local validation")
+    approved = set(authority.get("approved_incubation_ids") or [])
+    missing = sorted(set(incubation_ids) - approved)
+    if missing:
+        raise RuntimeError("paper-first local validation authority does not cover: " + ",".join(missing))
+    return authority
+
+
+# Keep all four paper/method specifications as design candidates and historical
+# execution provenance. Live promotion is derived only from an external authority
+# artifact injected through PAPER_FIRST_P0_HUMAN_AUTHORITY; repository code cannot
+# self-authorize by inventing a basis string.
+AUTHORITY: dict[str, Any] = load_human_authority()
+AUTHORIZED_PROMOTIONS: dict[str, dict[str, Any]] = authorized_promotions(AUTHORITY)
+PROMOTION_BY_INCUBATION = {str(row["incubation_id"]): idea_id for idea_id, row in AUTHORIZED_PROMOTIONS.items()}
 
 
 def independent_row(idea_id: str) -> dict[str, Any]:
@@ -128,10 +221,10 @@ def independent_row(idea_id: str) -> dict[str, Any]:
         "source_incubation_id": spec["incubation_id"],
         "paper_first_contract_version": "2026-08-12-v1",
         "current_fact": {
-            "zh": "经 Paper-first novelty premortem 与用户明确授权进入 P0 lifecycle。当前只授权局部 F0/P0-Support 资格验证；方法结论、扩预算、第二 backbone 与 full experiment 均保持锁定，必须经过 Economy、Updater/Support、Pre-Experiment 8/8 与 Method Freeze。",
-            "en": "Promoted into the P0 lifecycle after the paper-first novelty premortem and explicit user authorization. Only local F0/P0-Support qualification is currently authorized; method conclusions, budget expansion, a second backbone, and full experiments remain locked behind Economy, updater/support qualification, Pre-Experiment 8/8, and Method Freeze."
+            "zh": "经 Paper-first novelty premortem，并由仓库外、内容寻址的人工授权工件明确批准进入 P0 lifecycle。Local F0 是否允许由独立 local_validation_authorized 位控制；方法结论、扩预算、第二 backbone 与 full experiment 始终继续锁定在后续机器门与人工门之后。",
+            "en": "Promoted into the P0 lifecycle only through an external, content-addressed human authority artifact. Local F0 is controlled by a separate local_validation_authorized bit; method conclusions, budget expansion, a second backbone, and full experiments remain locked behind later machine and human gates."
         },
-        "p0_entry": {"date": "2026-08-12", "basis": "explicit-user-paper-first-p0-promotion", "execution_authorized": False},
+        "p0_entry": {"date": "2026-08-12", "basis": "external-human-paper-first-p0-promotion", "authority_artifact_sha256": AUTHORITY.get("artifact_sha256"), "source_message_sha256": AUTHORITY.get("source_message_sha256"), "local_validation_authorized": AUTHORITY.get("local_validation_authorized") is True, "execution_authorized": False},
         "paper_problem": spec["paper_problem"],
         "novelty_boundary": spec["novelty_boundary"],
         "final_parent_mechanism": {"en": spec["mechanism"], "zh": spec["mechanism"]},
@@ -143,4 +236,4 @@ def independent_row(idea_id: str) -> dict[str, Any]:
 
 
 def promotion_summary() -> dict[str, Any]:
-    return {"promoted": len(PROMOTIONS), "codes": [row["code"] for row in PROMOTIONS.values()], "incubation_ids": [row["incubation_id"] for row in PROMOTIONS.values()]}
+    return {"candidate_specs": len(PROMOTIONS), "promoted": len(AUTHORIZED_PROMOTIONS), "codes": [row["code"] for row in AUTHORIZED_PROMOTIONS.values()], "incubation_ids": [row["incubation_id"] for row in AUTHORIZED_PROMOTIONS.values()], "authority_status": AUTHORITY.get("authority_status"), "local_validation_authorized": AUTHORITY.get("local_validation_authorized") is True}
