@@ -36,14 +36,16 @@ REQUIRED_FIELDS = (
     "saturation_scan",
     "cheapest_problem_falsifier",
     "endpoint_headroom_requirement",
+    "semantic_reduction_review",
     "authority",
 )
 
 
 def source_schema() -> dict[str, Any]:
     return {
-        "required": ["ref", "title", "claim", "primary_source"],
+        "required": ["ref", "title", "claim", "primary_source", "primary_url", "source_sha256"],
         "primary_source_must_be_true": True,
+        "source_sha256_must_match_primary_evidence_registry": True,
         "claim_must_be_observation_not_future_work": True,
     }
 
@@ -71,6 +73,11 @@ def candidate_schema() -> dict[str, Any]:
             "known_patterns": [row["key"] for row in REDUCTION_PATTERNS],
             "matched_patterns_must_be_empty": True,
         },
+        "semantic_reduction_review": {
+            "required": ["reviewed", "block_only", "verdict", "reviewer_model", "raw_sha256"],
+            "verdict_must_be_clear": True,
+            "reviewer_can_block_but_never_authorize": True,
+        },
         "authority": {
             "required_false": ["method_design", "experiment_blueprint", "local_validation", "p0", "gpu", "full_experiment"],
         },
@@ -85,7 +92,12 @@ def _nonempty(value: Any) -> bool:
     return value is not None
 
 
-def audit_problem_candidate(candidate: dict[str, Any]) -> dict[str, Any]:
+def audit_problem_candidate(
+    candidate: dict[str, Any],
+    *,
+    primary_evidence_by_ref: dict[str, dict[str, Any]] | None = None,
+    require_primary_registry: bool = False,
+) -> dict[str, Any]:
     blockers: list[str] = []
     checks: list[dict[str, Any]] = []
 
@@ -98,14 +110,26 @@ def audit_problem_candidate(candidate: dict[str, Any]) -> dict[str, Any]:
     contradiction = candidate.get("empirical_contradiction") or {}
     sources = [contradiction.get("source_a") or {}, contradiction.get("source_b") or {}]
     source_refs: set[str] = set()
+    registry = primary_evidence_by_ref or {}
     for idx, source in enumerate(sources, start=1):
-        passed = all(_nonempty(source.get(key)) for key in ("ref", "title", "claim")) and source.get("primary_source") is True
+        passed = all(_nonempty(source.get(key)) for key in ("ref", "title", "claim", "primary_url", "source_sha256")) and source.get("primary_source") is True
         checks.append({"key": f"primary-source-{idx}", "pass": passed})
         if not passed:
             blockers.append(f"invalid-primary-source:{idx}")
         ref = str(source.get("ref") or "").strip()
         if ref:
             source_refs.add(ref)
+        if require_primary_registry:
+            record = registry.get(ref)
+            if not record:
+                blockers.append(f"primary-source-not-in-registry:{idx}")
+            else:
+                if str(source.get("source_sha256") or "") != str(record.get("source_sha256") or ""):
+                    blockers.append(f"primary-source-sha-mismatch:{idx}")
+                if str(source.get("primary_url") or "") != str(record.get("primary_url") or ""):
+                    blockers.append(f"primary-source-url-mismatch:{idx}")
+                if str(source.get("title") or "").strip() != str(record.get("title") or "").strip():
+                    blockers.append(f"primary-source-title-mismatch:{idx}")
     if len(source_refs) != 2:
         blockers.append("contradiction-requires-two-distinct-primary-sources")
     if not _nonempty(contradiction.get("tension")):
@@ -146,6 +170,16 @@ def audit_problem_candidate(candidate: dict[str, Any]) -> dict[str, Any]:
         blockers.append("problem-falsifier-missing")
     if not _nonempty(candidate.get("endpoint_headroom_requirement")):
         blockers.append("endpoint-headroom-missing")
+
+    semantic_review = candidate.get("semantic_reduction_review") or {}
+    if not isinstance(semantic_review, dict) or semantic_review.get("reviewed") is not True or semantic_review.get("block_only") is not True:
+        blockers.append("semantic-reduction-review-missing")
+    else:
+        verdict = str(semantic_review.get("verdict") or "").upper()
+        if verdict != "CLEAR":
+            blockers.append("semantic-reduction-review-block")
+        if not _nonempty(semantic_review.get("reviewer_model")) or not _nonempty(semantic_review.get("raw_sha256")):
+            blockers.append("semantic-reduction-review-provenance-missing")
 
     authority = candidate.get("authority") or {}
     for key in ("method_design", "experiment_blueprint", "local_validation", "p0", "gpu", "full_experiment"):

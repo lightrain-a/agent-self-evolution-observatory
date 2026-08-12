@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import unittest
 
+from .paper_first_fresh_saturation import REDUCTION_PATTERNS
 from .paper_first_problem_discovery_contract import audit_problem_candidate, build_problem_discovery_contract_state
 
 
@@ -10,8 +11,8 @@ def valid_candidate() -> dict:
         "candidate_id":"N1",
         "title":"A contradiction-first research problem",
         "empirical_contradiction":{
-            "source_a":{"ref":"arXiv:2608.00001","title":"Primary A","claim":"Observed A under frozen setting.","primary_source":True},
-            "source_b":{"ref":"arXiv:2608.00002","title":"Primary B","claim":"Observed not-A under a related frozen setting.","primary_source":True},
+            "source_a":{"ref":"arXiv:2608.00001","title":"Primary A","claim":"Observed A under frozen setting.","primary_source":True,"primary_url":"https://arxiv.org/abs/2608.00001","source_sha256":"a"*64},
+            "source_b":{"ref":"arXiv:2608.00002","title":"Primary B","claim":"Observed not-A under a related frozen setting.","primary_source":True,"primary_url":"https://arxiv.org/abs/2608.00002","source_sha256":"b"*64},
             "tension":"The two observations cannot both be explained by the same current mechanism account.",
         },
         "irreducible_object":"A formally named object that is not one of the saturated reductions.",
@@ -26,6 +27,7 @@ def valid_candidate() -> dict:
         "saturation_scan":{"checked":True,"matched_patterns":[]},
         "cheapest_problem_falsifier":"Check whether condition C ever produces the required sign change before designing a method.",
         "endpoint_headroom_requirement":"At least two valid outcome states and non-censored terminal variation must exist.",
+        "semantic_reduction_review":{"reviewed":True,"block_only":True,"verdict":"CLEAR","reviewer_model":"independent-test-reviewer","raw_sha256":"c"*64,"matched_patterns":[],"strongest_reduction":"none"},
         "authority":{"method_design":False,"experiment_blueprint":False,"local_validation":False,"p0":False,"gpu":False,"full_experiment":False},
     }
 
@@ -39,7 +41,7 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertTrue(p["same_information_nonreducibility_required"])
         self.assertTrue(p["domain_transfer_veto_required"])
         self.assertTrue(p["saturation_map_check_required"])
-        self.assertEqual(state["summary"]["saturation_patterns"],33)
+        self.assertEqual(state["summary"]["saturation_patterns"],len(REDUCTION_PATTERNS))
         self.assertEqual((state["summary"]["automatic_method_authority"],state["summary"]["automatic_experiment_authority"]),(0,0))
 
     def test_valid_problem_can_only_reach_human_paper_design_review(self) -> None:
@@ -62,6 +64,12 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         audit=audit_problem_candidate(c)
         self.assertFalse(audit["passed"])
         self.assertTrue(any(x.startswith("saturation-pattern-match:") for x in audit["blockers"]))
+
+    def test_semantic_reduction_review_is_block_only_and_required(self) -> None:
+        c=valid_candidate(); c["semantic_reduction_review"]["verdict"]="BLOCK"
+        audit=audit_problem_candidate(c)
+        self.assertFalse(audit["passed"])
+        self.assertIn("semantic-reduction-review-block",audit["blockers"])
 
     def test_candidate_cannot_self_authorize_execution(self) -> None:
         c=valid_candidate(); c["authority"]["local_validation"]=True
