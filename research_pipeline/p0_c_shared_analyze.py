@@ -39,6 +39,13 @@ def candidate_effects(data:dict[str,list[dict[str,Any]]])->dict[str,dict[str,Any
         c['future_truth']='benefit' if c['hidden_sum']>0 else ('harm' if c['hidden_sum']<0 else 'neutral')
     return by
 
+def _label_confidence(row:dict[str,Any])->float:
+    import re
+    raw=str(row.get('raw') or '')
+    m=re.search(r'\[(0(?:\.\d+)?|1(?:\.0+)?)\]',raw)
+    if m: return float(m.group(1))
+    return float(row.get('confidence',0.5))
+
 def analyze_c1(data:dict[str,list[dict[str,Any]]],effects:dict[str,dict[str,Any]])->dict[str,Any]:
     labels=[r for r in data['labels'] if r.get('candidate_id') in effects and effects[r['candidate_id']].get('hidden_delta')]
     truth={cid:('ACCEPT' if c['hidden_sum']>0 else 'QUARANTINE') for cid,c in effects.items() if c.get('hidden_delta')}
@@ -55,11 +62,11 @@ def analyze_c1(data:dict[str,list[dict[str,Any]]],effects:dict[str,dict[str,Any]
     for cid in truth:
         rs=[r for r in labels if r['candidate_id']==cid]
         if not rs: continue
-        direct=np.mean([(1 if r['decision']=='ACCEPT' else 0)*r['confidence'] for r in rs])
+        direct=np.mean([(1 if r['decision']=='ACCEPT' else 0)*_label_confidence(r) for r in rs])
         roots=[]
         for root in (0,1):
             rr=[r for r in rs if int(r['root'])==root]
-            roots.append(np.mean([(1 if r['decision']=='ACCEPT' else 0)*r['confidence'] for r in rr]))
+            roots.append(np.mean([(1 if r['decision']=='ACCEPT' else 0)*_label_confidence(r) for r in rr]))
         decor=float(np.mean(roots)); decisions[cid]={'direct':direct>=0.5,'decorrelated':decor>=0.5}
     disagreement=float(np.mean([v['direct']!=v['decorrelated'] for v in decisions.values()])) if decisions else 0.0
     truth_counts={k:sum(v==k for v in truth.values()) for k in ('ACCEPT','QUARANTINE')}
