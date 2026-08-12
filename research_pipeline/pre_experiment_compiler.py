@@ -69,7 +69,7 @@ def _research_execution_plan(
         "prediction_ids": prediction_ids,
         "dependencies": ["principle-certificate", "protocol-validity", "updater-competence", "pre-experiment-8-of-8"],
         "capability_requirements": ["cpu-falsifier", "gpu-experiment", "independent-analysis"],
-        "expected_artifacts": ["frozen-config", "plan-hash", "incremental-raw-trace", "metric-table", "analysis-provenance", "decision-ledger-update"],
+        "expected_artifacts": ["frozen-config", "plan-hash", "incremental-raw-trace", "metric-table", "analysis-provenance", "decision-ledger-update", "persistent-update-effect-realization-audit-when-applicable"],
     }
     checkpoints = [
         {"id": "principle-certificate", "passed": principle_certificate.get("passed") is True},
@@ -92,6 +92,7 @@ def _research_execution_plan(
             {"if": "protocol-invalid-or-shortcut-detected", "action": "invalidate scientific interpretation and repair protocol"},
             {"if": "experiment-nonidentifiable", "action": "repair substrate/variation before method interpretation"},
             {"if": "operationalization-invalid", "action": "repair measurement bridge before principle update"},
+            {"if": "persistent-update-decision-context-support-or-effect-realization-fails", "action": "classify as protocol/operationalization mismatch before method or principle failure; do not rescue by changing scientific thresholds"},
             {"if": "registered-principle-prediction-contradicted-under-all-preconditions", "action": "route to principle adjudicator and human scientific review"},
         ],
         "execution_authority": False,

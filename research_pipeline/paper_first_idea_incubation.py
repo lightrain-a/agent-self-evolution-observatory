@@ -93,6 +93,21 @@ CANDIDATES=(
   'SEAL + 现有 C-2/C-3。','不授权 pilot；novelty collision 已足以 BLOCK。',
   [{'ref':'arXiv:2607.24300','title':'Self-Authored Verification Is Unreliable'}],
   'terminal collision'),
+ _i('PF-9','更新后决策上下文效应实现','Post-Update Decision-Context Effect Realization','protocol-validity','BLOCK_COLLISION',
+  '在 pre-update/base 轨迹上验证过的 correction、skill 或 memory effect，更新后可能因策略改变自身后续访问分布而不再遇到同一决策上下文，或遇到后不执行预期干预。',
+  '该现象不能作为独立论文问题推进：DAgger 已建立 learner-induced observation distribution 的基本问题；HERO 直接指出多轮监督与 student 当前 decision context 不对齐会导致退化；ReOPD/Q-Evolve/OPCD/SEED 系统处理 on-policy 分布一致性；SkillEvolver 还明确审计“skill 有效但运行时从未调用”的 silent-bypass。剩余价值是实验有效性控制，而不是新的 self-evolution mechanism。',
+  '持久更新的局部监督只有在 post-update policy 重新进入完整决策上下文并真实执行目标干预时，才能被解释为行为可实现的 correction evidence；observation-level recurrence 不够。',
+  '不设计新方法。把 full decision-context recurrence + intended-effect realization 加入未来 persistent-update 的 Protocol Validity/Realizability 前置检查，并把失败归为 operationalization/support mismatch 后再判断方法。',
+  'DAgger/on-policy data aggregation、HERO current-context feedback、ReOPD prefix-distribution design、Q-Evolve in-distribution loop、OPCD/SEED on-policy distillation、SkillEvolver deployment audit。',
+  '不授权 pilot。只允许在未来已有科学实验中作为 machine validity check；若检查通过而方法仍失败（如当前 ALFWorld C2），必须保留真实方法负结果。',
+  [{'ref':'PMLR:15:627-635','title':'A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning'},
+   {'ref':'arXiv:2606.11559','title':'HERO: Hindsight-Enhanced Reflection from Environment Observations for Agentic Self-Distillation'},
+   {'ref':'arXiv:2607.04763','title':'Multi-Turn On-Policy Distillation with Prefix Replay'},
+   {'ref':'arXiv:2606.07367','title':'Self-evolving LLM agents with in-distribution Optimization'},
+   {'ref':'arXiv:2602.12275','title':'On-Policy Context Distillation for Language Models'},
+   {'ref':'arXiv:2607.14777','title':'SEED: Self-Evolving On-Policy Distillation for Agentic Reinforcement Learning'},
+   {'ref':'arXiv:2605.10500','title':'SkillEvolver: Skill Learning as a Meta-Skill'}],
+  'terminal collision as standalone paper; integrate as protocol-validity control'),
 )
 
 def build_paper_first_idea_incubation():

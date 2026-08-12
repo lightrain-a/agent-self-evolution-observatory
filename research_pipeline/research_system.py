@@ -326,7 +326,7 @@ def build_research_system_state() -> dict[str, Any]:
     p0_decision_ledger = build_p0_decision_ledger(p0_admission, p0_offline_qualification, human_terminal_ideas, four_direction_iteration)
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
     scientific_meta_trace = build_scientific_meta_trace(pre_experiment_compiler, principle_layer, experiment_iteration, p0_decision_ledger_public)
-    failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public)
+    failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public, paper_first_post_c2)
     experiment_value_scheduler = build_experiment_value_scheduler(experiment_iteration, scientific_meta_trace)
     research_system_replay = build_research_system_replay(pre_experiment_compiler)
     external_system_learning = build_external_system_learning_state()

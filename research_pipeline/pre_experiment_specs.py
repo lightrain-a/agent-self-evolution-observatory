@@ -60,6 +60,10 @@ POLICY: dict[str, Any] = {
     "method_fail_does_not_automatically_falsify_principle": True,
     "principle_falsification_requires_registered_prediction_and_valid_bridge": True,
     "invalid_evaluation_protocol_cannot_emit_method_or_principle_result": True,
+    "future_persistent_update_contracts_require_post_update_effect_realization_check": True,
+    "post_update_effect_realization_is_cross_cutting_protocol_validity_not_a_ninth_gate": True,
+    "observation_level_recurrence_alone_cannot_establish_effect_realization": True,
+    "legacy_contracts_predating_effect_realization_rule_are_not_retroactively_reclassified": True,
     "parameters_require_provenance": True,
     "gpu_hours_must_derive_from_measured_throughput": True,
 }

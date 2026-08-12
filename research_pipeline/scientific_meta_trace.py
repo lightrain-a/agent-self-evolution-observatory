@@ -16,6 +16,7 @@ POLICY: dict[str, Any] = {
     "active_scientific_state_is_separate_from_institutional_memory": True,
     "active_scientific_state_never_time_decays": True,
     "institutional_memory_requires_scope_and_effectiveness_tracking": True,
+    "cross_surface_evidence_requires_explicit_parent_edge_before_entering_active_scientific_state": True,
 }
 
 REFERENCES = [
@@ -122,7 +123,7 @@ def build_scientific_meta_trace(
             "institutional_research_memory": {
                 "contains": ["reusable failure assets", "validated workflow lessons", "retrieval/tool effectiveness", "cross-project safeguards"],
                 "time_decay_allowed": True,
-                "rule": "Reusable cross-project memory must carry scope, validation age, and observed helpful/harmful reuse before affecting future planning.",
+                "rule": "Reusable cross-project memory must carry scope, validation age, and observed helpful/harmful reuse before affecting future planning. Cross-surface evidence stays here unless an explicit parent-evidence edge is registered; topical similarity alone is insufficient.",
             },
         },
     }

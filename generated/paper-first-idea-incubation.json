@@ -1,24 +1,24 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.0",
   "review_date": "2026-08-12",
   "policy": {
-    "schema_version": "1.1",
+    "schema_version": "1.0",
     "paper_first_only": true,
+    "separate_from_current_p0_ledger": true,
+    "cannot_authorize_p0_or_gpu": true,
     "novelty_premortem_precedes_method_implementation": true,
-    "incubation_cannot_self_authorize_p0_or_gpu": true,
-    "explicit_human_promotion_required_for_p0": true,
-    "p0_lifecycle_does_not_equal_execution_authority": true,
+    "advance_means_enter_paper_design_not_enter_p0": true,
     "blocked_candidates_remain_visible": true,
     "review_cutoff": "2026-08-12"
   },
   "summary": {
-    "candidates": 8,
+    "candidates": 9,
     "advance_to_paper_design": 4,
     "revise_novelty_boundary": 3,
-    "blocked_collision": 1,
-    "p0_authorized": 4,
+    "blocked_collision": 2,
+    "p0_authorized": 0,
     "gpu_authorized": 0,
-    "themes": 8
+    "themes": 9
   },
   "candidates": [
     {
@@ -46,12 +46,8 @@
         }
       ],
       "collision_risk": "medium：必须证明 future learnability 不是 retention/current gain 的重命名。",
-      "p0_authorized": true,
-      "gpu_authorized": false,
-      "p0_idea_id": "future-learnability-preserving-self-evolution",
-      "p0_code": "A-8",
-      "p0_group": "A",
-      "p0_entry_basis": "explicit-user-paper-first-p0-promotion"
+      "p0_authorized": false,
+      "gpu_authorized": false
     },
     {
       "id": "PF-2",
@@ -82,12 +78,8 @@
         }
       ],
       "collision_risk": "low-medium：若只是 LLM 分类器，或一个表面对所有 failure 都支配，novelty 消失。",
-      "p0_authorized": true,
-      "gpu_authorized": false,
-      "p0_idea_id": "cross-surface-repair-routing",
-      "p0_code": "E-5",
-      "p0_group": "E",
-      "p0_entry_basis": "explicit-user-paper-first-p0-promotion"
+      "p0_authorized": false,
+      "gpu_authorized": false
     },
     {
       "id": "PF-3",
@@ -150,12 +142,8 @@
         }
       ],
       "collision_risk": "medium：必须证明不是普通 trace-completeness 或 AHE observability。",
-      "p0_authorized": true,
-      "gpu_authorized": false,
-      "p0_idea_id": "diagnosability-preserving-self-evolution",
-      "p0_code": "C-7",
-      "p0_group": "C",
-      "p0_entry_basis": "explicit-user-paper-first-p0-promotion"
+      "p0_authorized": false,
+      "gpu_authorized": false
     },
     {
       "id": "PF-5",
@@ -218,12 +206,8 @@
         }
       ],
       "collision_risk": "medium：必须做 paired transport，不可只加一个 failure-weighted metric。",
-      "p0_authorized": true,
-      "gpu_authorized": false,
-      "p0_idea_id": "failure-mode-transport-under-self-evolution",
-      "p0_code": "A-9",
-      "p0_group": "A",
-      "p0_entry_basis": "explicit-user-paper-first-p0-promotion"
+      "p0_authorized": false,
+      "gpu_authorized": false
     },
     {
       "id": "PF-7",
@@ -278,6 +262,54 @@
         }
       ],
       "collision_risk": "terminal collision",
+      "p0_authorized": false,
+      "gpu_authorized": false
+    },
+    {
+      "id": "PF-9",
+      "title": {
+        "zh": "更新后决策上下文效应实现",
+        "en": "Post-Update Decision-Context Effect Realization"
+      },
+      "theme": "protocol-validity",
+      "verdict": "BLOCK_COLLISION",
+      "paper_problem": "在 pre-update/base 轨迹上验证过的 correction、skill 或 memory effect，更新后可能因策略改变自身后续访问分布而不再遇到同一决策上下文，或遇到后不执行预期干预。",
+      "novelty_boundary": "该现象不能作为独立论文问题推进：DAgger 已建立 learner-induced observation distribution 的基本问题；HERO 直接指出多轮监督与 student 当前 decision context 不对齐会导致退化；ReOPD/Q-Evolve/OPCD/SEED 系统处理 on-policy 分布一致性；SkillEvolver 还明确审计“skill 有效但运行时从未调用”的 silent-bypass。剩余价值是实验有效性控制，而不是新的 self-evolution mechanism。",
+      "principle": "持久更新的局部监督只有在 post-update policy 重新进入完整决策上下文并真实执行目标干预时，才能被解释为行为可实现的 correction evidence；observation-level recurrence 不够。",
+      "method": "不设计新方法。把 full decision-context recurrence + intended-effect realization 加入未来 persistent-update 的 Protocol Validity/Realizability 前置检查，并把失败归为 operationalization/support mismatch 后再判断方法。",
+      "strongest_baseline": "DAgger/on-policy data aggregation、HERO current-context feedback、ReOPD prefix-distribution design、Q-Evolve in-distribution loop、OPCD/SEED on-policy distillation、SkillEvolver deployment audit。",
+      "local_falsifier": "不授权 pilot。只允许在未来已有科学实验中作为 machine validity check；若检查通过而方法仍失败（如当前 ALFWorld C2），必须保留真实方法负结果。",
+      "nearest_work": [
+        {
+          "ref": "PMLR:15:627-635",
+          "title": "A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning"
+        },
+        {
+          "ref": "arXiv:2606.11559",
+          "title": "HERO: Hindsight-Enhanced Reflection from Environment Observations for Agentic Self-Distillation"
+        },
+        {
+          "ref": "arXiv:2607.04763",
+          "title": "Multi-Turn On-Policy Distillation with Prefix Replay"
+        },
+        {
+          "ref": "arXiv:2606.07367",
+          "title": "Self-evolving LLM agents with in-distribution Optimization"
+        },
+        {
+          "ref": "arXiv:2602.12275",
+          "title": "On-Policy Context Distillation for Language Models"
+        },
+        {
+          "ref": "arXiv:2607.14777",
+          "title": "SEED: Self-Evolving On-Policy Distillation for Agentic Reinforcement Learning"
+        },
+        {
+          "ref": "arXiv:2605.10500",
+          "title": "SkillEvolver: Skill Learning as a Meta-Skill"
+        }
+      ],
+      "collision_risk": "terminal collision as standalone paper; integrate as protocol-validity control",
       "p0_authorized": false,
       "gpu_authorized": false
     }
