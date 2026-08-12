@@ -284,9 +284,9 @@ def main() -> None:
     if (summary.get("v5_candidates"), summary.get("v5_finalists"), summary.get("v5_revivals")) != (36,32,8):
         fail("research-system state must expose the v5 wide-search round")
     components = research_state.get("components", [])
-    required_component_sources = {"ResearchAgent", "Human terminal ledger", "P0 retrospective economy review", "Unified P0 decision ledger", "Web GPT + domestic-model independent consultation", "Content-addressed AI consultation automation", "FirstResearch / Popper / Co-Scientist / RD-Agent", "Qiushi / Kosmos / MLEvolve", "MLEvolve / InternAgent / AutoResearchClaw", "ResearchClawBench / HackDetect / ScienceAgentBench / AutoLabs", "External-system intake registry", "Biomni / BioMedAgent / PaperQA2", "AutoResearchBench / PaperQA2 / SciNetBench / ScientistOne / verifier calibration"}
+    required_component_sources = {"ResearchAgent", "Human terminal ledger", "P0 retrospective economy review", "Unified P0 decision ledger", "Web GPT + domestic-model independent consultation", "Content-addressed AI consultation automation", "FirstResearch / Popper / Co-Scientist / RD-Agent", "Qiushi / Kosmos / MLEvolve", "MLEvolve / InternAgent / AutoResearchClaw", "ResearchClawBench / HackDetect / ScienceAgentBench / AutoLabs", "External-system intake registry", "Biomni / BioMedAgent / PaperQA2", "AutoResearchBench / PaperQA2 / SciNetBench / ScientistOne / verifier calibration", "Advisor paper-first research contract"}
     component_sources = {str(item.get("source") or "") for item in components}
-    if len(components) < 26 or not required_component_sources.issubset(component_sources):
+    if len(components) < 27 or not required_component_sources.issubset(component_sources):
         fail(f"research-system state is missing current backend responsibilities: count={len(components)}, missing={sorted(required_component_sources-component_sources)}")
     pre_p0 = research_state.get("pre_p0_identifiability", {})
     if pre_p0.get("summary", {}).get("audited") != 4 or pre_p0.get("summary", {}).get("execution_ready") != 0:
@@ -437,7 +437,7 @@ def main() -> None:
     forbidden_idea_markers = ("主 ICLR Idea Bank", "最终师兄讨论门槛", "Main ICLR idea bank", "Final advisor gate", "paper-ideas.html#discussed-ideas")
     if any(marker in system_text or marker in system_content for marker in forbidden_idea_markers):
         fail("system overview must contain only the research system, not current idea decisions")
-    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "系统全景与当前运行状态", "P0 经济门、协议有效性与实验启动前编译", "科学状态机与失败语义", "SCIENTIFIC META-TRACE"):
+    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "Paper-first 科研生命周期与当前运行状态", "实验蓝图、P0 经济门、协议有效性与编译", "局部验证、方法冻结、全量实验与失败语义", "SCIENTIFIC META-TRACE"):
         if marker not in system_text and marker not in system_content and marker not in (ROOT / "page-architecture-data.js").read_text(encoding="utf-8"):
             fail(f"Chinese research-system documentation is missing {marker}")
 

@@ -34,7 +34,12 @@ TYPED_OUTCOMES = {
 }
 
 POLICY: dict[str, Any] = {
-    "schema_version": "2.1",
+    "schema_version": "2.2",
+    "paper_design_contract_required_before_principle_and_implementation": True,
+    "paper_design_contract_is_not_a_formal_gate": True,
+    "local_validation_cannot_discover_or_redefine_core_method": True,
+    "core_method_change_requires_return_to_paper_design": True,
+    "full_experiment_requires_frozen_method_and_experiment_blueprint": True,
     "principle_certificate_required_before_updater_competence": True,
     "principle_certificate_is_not_a_formal_gate": True,
     "protocol_validity_required_before_updater_competence": True,

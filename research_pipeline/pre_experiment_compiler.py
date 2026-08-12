@@ -10,6 +10,7 @@ from typing import Any
 from .pre_experiment_execution import compute_graph, measured_throughput, observability_recovery, outcome_semantics
 from .pre_experiment_science import baseline_competence, mechanism_identifiability, parameter_provenance, qualification_path, statistical_resolution
 from .pre_experiment_specs import GATES, POLICY
+from .paper_design_contract import audit_paper_design_contract
 from .principle_adjudication import audit_principle_certificate
 from .protocol_validity import audit_protocol_validity
 
@@ -101,6 +102,7 @@ def _research_execution_plan(
 def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root: Path) -> dict[str, Any]:
     if str(config.get("idea_id") or "") != idea_id:
         raise ValueError(f"config idea_id mismatch: {config.get('idea_id')} != {idea_id}")
+    paper_design = audit_paper_design_contract(config)
     principle_certificate = audit_principle_certificate(config)
     protocol_validity = audit_protocol_validity(config)
     updater_competence = _updater_competence_prerequisite(config)
@@ -117,9 +119,10 @@ def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root:
     if [gate["key"] for gate in gates] != [gate["key"] for gate in GATES]:
         raise RuntimeError("pre-experiment gate order drift")
     research_execution_plan = _research_execution_plan(idea_id, principle_certificate, protocol_validity, updater_competence, gates)
-    blockers = list(principle_certificate.get("blockers") or []) + list(protocol_validity.get("blockers") or []) + list(updater_competence.get("blockers") or []) + [blocker for gate in gates for blocker in gate["blockers"]]
+    blockers = list(paper_design.get("blockers") or []) + list(principle_certificate.get("blockers") or []) + list(protocol_validity.get("blockers") or []) + list(updater_competence.get("blockers") or []) + [blocker for gate in gates for blocker in gate["blockers"]]
     passed = sum(bool(gate["pass"]) for gate in gates)
     gates_passed = passed == len(gates)
+    paper_design_ready = paper_design.get("passed") is True
     principle_ready = principle_certificate.get("passed") is True
     protocol_ready = protocol_validity.get("passed") is True
     updater_competent = updater_competence.get("passed") is True
@@ -127,7 +130,7 @@ def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root:
     scope = config.get("scope") or {}
     competence = (config.get("pre_experiment") or {}).get("competence") or {}
     return {
-        "schema_version": "2.1",
+        "schema_version": "2.2",
         "compiled_at": _now(),
         "idea_id": idea_id,
         "phase": str(config.get("phase") or "P0"),
@@ -138,14 +141,15 @@ def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root:
         },
         "config_hash": config_hash,
         "policy": POLICY,
+        "paper_design_prerequisite": paper_design,
         "principle_certificate_prerequisite": principle_certificate,
         "protocol_validity_prerequisite": protocol_validity,
         "updater_competence_prerequisite": updater_competence,
         "research_execution_plan": research_execution_plan,
         "gate_count": len(gates),
         "passed_gates": passed,
-        "execution_authorized": principle_ready and protocol_ready and updater_competent and gates_passed,
-        "status": "pass" if principle_ready and protocol_ready and updater_competent and gates_passed else "blocked",
+        "execution_authorized": paper_design_ready and principle_ready and protocol_ready and updater_competent and gates_passed,
+        "status": "pass" if paper_design_ready and principle_ready and protocol_ready and updater_competent and gates_passed else "blocked",
         "blockers": blockers,
         "gates": gates,
         "compute_graph": next(gate["detail"] for gate in gates if gate["key"] == "compute_graph"),

@@ -20,6 +20,35 @@ CONFIGS = (
 )
 
 
+def paper_design_contract() -> dict:
+    return {
+        "novelty": {
+            "paper_problem": "Test whether a persistent-update method contributes an irreducible mechanism under a frozen paper claim.",
+            "closest_work": [{"identity": "closest-method", "difference": "the proposed mechanism changes a distinct decision variable", "source_ref": "primary-source-placeholder-for-test"}],
+            "novelty_axis": "mechanism",
+            "contribution_claim": "The method contributes a distinct mechanism rather than a larger implementation.",
+            "irreducible_difference": "The strongest matched simplification must make different decisions on preregistered cases.",
+            "collision_status": "reviewed",
+        },
+        "method": {
+            "method_name": "test-method",
+            "core_mechanism": "a frozen mechanism implementing the novelty claim",
+            "novelty_to_method_mapping": [{"novelty": "mechanism", "component": "core"}],
+            "components": ["core"],
+            "strongest_simplification": "matched simple baseline",
+            "method_change_rule": "core changes return to novelty/method review",
+        },
+        "experiment_blueprint": {
+            "claim_experiment_matrix": [{"claim_id": "C1", "claim": "method is irreducible", "local_test": "tiny decisive disagreement test", "full_test": "frozen multi-seed comparison", "metric": "matched advantage", "strongest_baseline": "matched simple baseline"}],
+            "local_validation_scope": "minimal decisive pilot only",
+            "full_experiment_scope": "full frozen evidence matrix",
+            "baseline_matrix": ["matched simple baseline"],
+            "ablation_matrix": ["remove core mechanism"],
+            "freeze_rule": "freeze method and blueprint before full experiment",
+        },
+    }
+
+
 def qualification() -> dict:
     return {
         "schema_version": "1.0",
@@ -51,6 +80,8 @@ class PreExperimentCompilerTest(unittest.TestCase):
                 card = compile_from_path(idea_id, config_path, root)
                 self.assertEqual(card["gate_count"], 8, name)
                 self.assertEqual(card["passed_gates"], 7, (name, card["blockers"]))
+                self.assertFalse(card["paper_design_prerequisite"]["passed"], name)
+                self.assertIn("paper-design-contract-missing", card["blockers"])
                 self.assertTrue(card["principle_certificate_prerequisite"]["passed"], name)
                 plan = card["research_execution_plan"]
                 self.assertEqual(plan["source_design"], "SCION Research Execution Plan")
@@ -95,12 +126,14 @@ class PreExperimentCompilerTest(unittest.TestCase):
             for name in CONFIGS:
                 config_path = Path(__file__).with_name(name)
                 config = copy.deepcopy(load_json(config_path))
+                config["pre_experiment"]["paper_design"] = paper_design_contract()
                 config["pre_experiment"]["updater_competence"]["passed"] = True
                 config["pre_experiment"]["updater_competence"]["status"] = "pass"
                 config["pre_experiment"]["updater_competence"]["decision"] = "UPDATER_COMPETENT"
                 card = compile_pre_experiment_card(config["idea_id"], config, root)
                 self.assertEqual(card["gate_count"], 8, name)
                 self.assertEqual(card["passed_gates"], 8, (name, card["blockers"]))
+                self.assertTrue(card["paper_design_prerequisite"]["passed"], name)
                 self.assertTrue(card["principle_certificate_prerequisite"]["passed"], name)
                 self.assertTrue(card["updater_competence_prerequisite"]["passed"], name)
                 self.assertTrue(card["execution_authorized"], name)

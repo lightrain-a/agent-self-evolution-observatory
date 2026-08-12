@@ -6294,7 +6294,9 @@
     "mem_xfer_support_qualification_status": "support_qualification_hold",
     "mem_xfer_support_full_status": "full_support_hold",
     "mem_xfer_support_analysis_status": "support_enriched_analysis_pending",
-    "mem_xfer_second_model_status": "second_model_hold"
+    "mem_xfer_second_model_status": "second_model_hold",
+    "paper_design_contract_passed": 0,
+    "paper_design_contract_blocked": 4
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -22695,10 +22697,15 @@
     }
   },
   "pre_experiment_compiler": {
-    "schema_version": "2.1",
+    "schema_version": "2.2",
     "experiment_data_root": "/data/wyt/agent-self-evolution-observatory",
     "policy": {
-      "schema_version": "2.1",
+      "schema_version": "2.2",
+      "paper_design_contract_required_before_principle_and_implementation": true,
+      "paper_design_contract_is_not_a_formal_gate": true,
+      "local_validation_cannot_discover_or_redefine_core_method": true,
+      "core_method_change_requires_return_to_paper_design": true,
+      "full_experiment_requires_frozen_method_and_experiment_blueprint": true,
       "principle_certificate_required_before_updater_competence": true,
       "principle_certificate_is_not_a_formal_gate": true,
       "protocol_validity_required_before_updater_competence": true,
@@ -22787,11 +22794,13 @@
         "measured_throughput": 0,
         "observability_recovery": 0,
         "outcome_semantics": 0
-      }
+      },
+      "paper_design_pass": 0,
+      "paper_design_blocked": 4
     },
     "cards": [
       {
-        "schema_version": "2.1",
+        "schema_version": "2.2",
         "compiled_at": "2026-08-12T10:46:42+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0-screening",
@@ -23126,6 +23135,7 @@
         "execution_authorized": false,
         "status": "blocked",
         "blockers": [
+          "paper-design-contract-missing",
           "updater-competence-prerequisite-failed",
           "competence-evidence-file-missing",
           "retrospective-representability",
@@ -23445,10 +23455,30 @@
           }
         },
         "qualification_evidence_path": "/data/wyt/agent-self-evolution-observatory/pre-experiment/evidence/qualifications/qwen25-react-family-ood134.json",
-        "config": "p0_a1_screening_config.json"
+        "config": "p0_a1_screening_config.json",
+        "paper_design_prerequisite": {
+          "required": true,
+          "is_formal_gate": false,
+          "passed": false,
+          "status": "missing-contract",
+          "blockers": [
+            "paper-design-contract-missing"
+          ],
+          "policy": {
+            "schema_version": "1.0",
+            "paper_novelty_precedes_method_design": true,
+            "method_design_precedes_experiment_blueprint": true,
+            "experiment_blueprint_precedes_local_validation": true,
+            "local_validation_is_for_falsification_not_method_discovery": true,
+            "full_experiment_requires_frozen_method_and_blueprint": true,
+            "method_change_after_local_validation_invalidates_full_experiment_authority": true,
+            "pilot_score_cannot_redefine_paper_contribution": true,
+            "novelty_requires_closest_work_and_irreducible_difference": true
+          }
+        }
       },
       {
-        "schema_version": "2.1",
+        "schema_version": "2.2",
         "compiled_at": "2026-08-12T10:46:42+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0",
@@ -23783,6 +23813,7 @@
         "execution_authorized": false,
         "status": "blocked",
         "blockers": [
+          "paper-design-contract-missing",
           "updater-competence-prerequisite-failed",
           "competence-evidence-file-missing",
           "retrospective-representability",
@@ -24110,10 +24141,30 @@
           }
         },
         "qualification_evidence_path": "/data/wyt/agent-self-evolution-observatory/pre-experiment/evidence/qualifications/qwen25-react-family-ood134.json",
-        "config": "p0_a1_confirm_config.json"
+        "config": "p0_a1_confirm_config.json",
+        "paper_design_prerequisite": {
+          "required": true,
+          "is_formal_gate": false,
+          "passed": false,
+          "status": "missing-contract",
+          "blockers": [
+            "paper-design-contract-missing"
+          ],
+          "policy": {
+            "schema_version": "1.0",
+            "paper_novelty_precedes_method_design": true,
+            "method_design_precedes_experiment_blueprint": true,
+            "experiment_blueprint_precedes_local_validation": true,
+            "local_validation_is_for_falsification_not_method_discovery": true,
+            "full_experiment_requires_frozen_method_and_blueprint": true,
+            "method_change_after_local_validation_invalidates_full_experiment_authority": true,
+            "pilot_score_cannot_redefine_paper_contribution": true,
+            "novelty_requires_closest_work_and_irreducible_difference": true
+          }
+        }
       },
       {
-        "schema_version": "2.1",
+        "schema_version": "2.2",
         "compiled_at": "2026-08-12T10:46:42+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0-screening",
@@ -24449,6 +24500,7 @@
         "execution_authorized": false,
         "status": "blocked",
         "blockers": [
+          "paper-design-contract-missing",
           "updater-competence-prerequisite-failed",
           "competence-evidence-file-missing",
           "retrospective-baseline_disagreement",
@@ -24784,10 +24836,30 @@
           }
         },
         "qualification_evidence_path": "/data/wyt/agent-self-evolution-observatory/pre-experiment/evidence/qualifications/qwen25-react-family-ood134.json",
-        "config": "p0_a2_screening_config.json"
+        "config": "p0_a2_screening_config.json",
+        "paper_design_prerequisite": {
+          "required": true,
+          "is_formal_gate": false,
+          "passed": false,
+          "status": "missing-contract",
+          "blockers": [
+            "paper-design-contract-missing"
+          ],
+          "policy": {
+            "schema_version": "1.0",
+            "paper_novelty_precedes_method_design": true,
+            "method_design_precedes_experiment_blueprint": true,
+            "experiment_blueprint_precedes_local_validation": true,
+            "local_validation_is_for_falsification_not_method_discovery": true,
+            "full_experiment_requires_frozen_method_and_blueprint": true,
+            "method_change_after_local_validation_invalidates_full_experiment_authority": true,
+            "pilot_score_cannot_redefine_paper_contribution": true,
+            "novelty_requires_closest_work_and_irreducible_difference": true
+          }
+        }
       },
       {
-        "schema_version": "2.1",
+        "schema_version": "2.2",
         "compiled_at": "2026-08-12T10:46:42+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0",
@@ -25123,6 +25195,7 @@
         "execution_authorized": false,
         "status": "blocked",
         "blockers": [
+          "paper-design-contract-missing",
           "updater-competence-prerequisite-failed",
           "competence-evidence-file-missing",
           "retrospective-baseline_disagreement",
@@ -25466,7 +25539,27 @@
           }
         },
         "qualification_evidence_path": "/data/wyt/agent-self-evolution-observatory/pre-experiment/evidence/qualifications/qwen25-react-family-ood134.json",
-        "config": "p0_a2_confirm_config.json"
+        "config": "p0_a2_confirm_config.json",
+        "paper_design_prerequisite": {
+          "required": true,
+          "is_formal_gate": false,
+          "passed": false,
+          "status": "missing-contract",
+          "blockers": [
+            "paper-design-contract-missing"
+          ],
+          "policy": {
+            "schema_version": "1.0",
+            "paper_novelty_precedes_method_design": true,
+            "method_design_precedes_experiment_blueprint": true,
+            "experiment_blueprint_precedes_local_validation": true,
+            "local_validation_is_for_falsification_not_method_discovery": true,
+            "full_experiment_requires_frozen_method_and_blueprint": true,
+            "method_change_after_local_validation_invalidates_full_experiment_authority": true,
+            "pilot_score_cannot_redefine_paper_contribution": true,
+            "novelty_requires_closest_work_and_irreducible_difference": true
+          }
+        }
       }
     ]
   },
@@ -32708,10 +32801,15 @@
     }
   },
   "research_governance_v2": {
-    "schema_version": "2.0",
+    "schema_version": "2.1",
     "generated_at": "2026-08-12T10:46:42+00:00",
     "policy": {
-      "schema_version": "2.0",
+      "schema_version": "2.1",
+      "paper_novelty_precedes_method_design": true,
+      "method_design_precedes_experiment_plan": true,
+      "local_validation_precedes_full_experiment": true,
+      "core_method_change_returns_to_paper_design": true,
+      "full_experiment_requires_frozen_method_and_experiment_blueprint": true,
       "support_and_method_are_distinct": true,
       "p0_method_requires_frozen_support_pass": true,
       "support_insufficient_is_not_method_fail": true,
@@ -32810,7 +32908,18 @@
       "active_gpu_leases": 0,
       "lease_root": "/data/wyt/agent-self-evolution-observatory/resource-leases",
       "repair_budget_root": "/data/wyt/agent-self-evolution-observatory/governance/repair-budget"
-    }
+    },
+    "paper_first_macro_stages": [
+      "paper-problem-and-evidence",
+      "paper-novelty-contract",
+      "principle-and-method-design",
+      "experiment-blueprint",
+      "economy-and-compile",
+      "local-validation",
+      "method-freeze",
+      "full-experiment",
+      "paper-evidence"
+    ]
   },
   "p0_offline_qualification": {
     "summary": {
@@ -60510,6 +60619,18 @@
       }
     },
     {
+      "source": "Advisor paper-first research contract",
+      "component": {
+        "en": "Paper novelty → method → experiment blueprint contract",
+        "zh": "论文 Novelty → 方法 → 实验蓝图合同"
+      },
+      "status": "running",
+      "evidence": {
+        "en": "0/4 current cards satisfy the new paper-first contract / 4 historical cards predate it",
+        "zh": "当前 0/4 份卡满足新版 paper-first 合同 / 4 份历史卡早于该规则"
+      }
+    },
+    {
       "source": "FirstResearch / Popper / Co-Scientist / RD-Agent",
       "component": {
         "en": "Principle Certificate + epistemic adjudicator",
@@ -60696,7 +60817,7 @@
       {
         "key": "corpus",
         "pass": true,
-        "detail": "281 papers"
+        "detail": "1 papers"
       },
       {
         "key": "evidence-coverage",
@@ -60770,6 +60891,16 @@
         }
       },
       {
+        "key": "paper-first-research-contract",
+        "pass": true,
+        "detail": {
+          "cards": 4,
+          "paper_design_passed": 0,
+          "paper_design_blocked": 4,
+          "historical_cards_predating_rule": 4
+        }
+      },
+      {
         "key": "principle-layer",
         "pass": true,
         "detail": {
@@ -60807,7 +60938,9 @@
             "measured_throughput": 0,
             "observability_recovery": 0,
             "outcome_semantics": 0
-          }
+          },
+          "paper_design_pass": 0,
+          "paper_design_blocked": 4
         }
       },
       {
@@ -61004,10 +61137,15 @@
         "key": "research-governance-v2",
         "pass": true,
         "detail": {
-          "schema_version": "2.0",
+          "schema_version": "2.1",
           "generated_at": "2026-08-12T10:46:42+00:00",
           "policy": {
-            "schema_version": "2.0",
+            "schema_version": "2.1",
+            "paper_novelty_precedes_method_design": true,
+            "method_design_precedes_experiment_plan": true,
+            "local_validation_precedes_full_experiment": true,
+            "core_method_change_returns_to_paper_design": true,
+            "full_experiment_requires_frozen_method_and_experiment_blueprint": true,
             "support_and_method_are_distinct": true,
             "p0_method_requires_frozen_support_pass": true,
             "support_insufficient_is_not_method_fail": true,
@@ -61106,7 +61244,18 @@
             "active_gpu_leases": 0,
             "lease_root": "/data/wyt/agent-self-evolution-observatory/resource-leases",
             "repair_budget_root": "/data/wyt/agent-self-evolution-observatory/governance/repair-budget"
-          }
+          },
+          "paper_first_macro_stages": [
+            "paper-problem-and-evidence",
+            "paper-novelty-contract",
+            "principle-and-method-design",
+            "experiment-blueprint",
+            "economy-and-compile",
+            "local-validation",
+            "method-freeze",
+            "full-experiment",
+            "paper-evidence"
+          ]
         }
       },
       {
@@ -61155,5 +61304,38 @@
         }
       }
     ]
-  }
+  },
+  "paper_first_workflow": {
+    "schema_version": "1.0",
+    "policy": {
+      "schema_version": "1.0",
+      "paper_novelty_precedes_method_design": true,
+      "method_design_precedes_experiment_blueprint": true,
+      "experiment_blueprint_precedes_local_validation": true,
+      "local_validation_is_for_falsification_not_method_discovery": true,
+      "full_experiment_requires_frozen_method_and_blueprint": true,
+      "method_change_after_local_validation_invalidates_full_experiment_authority": true,
+      "pilot_score_cannot_redefine_paper_contribution": true,
+      "novelty_requires_closest_work_and_irreducible_difference": true
+    },
+    "macro_stages": [
+      "paper-problem-and-evidence",
+      "paper-novelty-contract",
+      "principle-and-method-design",
+      "experiment-blueprint",
+      "economy-and-pre-experiment-compile",
+      "local-validation",
+      "method-freeze",
+      "full-experiment",
+      "paper-evidence-and-writing"
+    ],
+    "summary": {
+      "cards": 4,
+      "paper_design_passed": 0,
+      "paper_design_blocked": 4,
+      "historical_cards_predating_rule": 4
+    },
+    "rule": "A local pilot tests a frozen paper-motivated method. If the core method changes, return to novelty/method design and invalidate any full-experiment authorization."
+  },
+  "paper_first_projection_at": "2026-08-12T11:05:42+00:00"
 }

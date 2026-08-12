@@ -10,6 +10,7 @@ from .external_system_learning import build_external_system_learning_state
 from .failure_asset_library import build_failure_asset_library
 from .p0_common import load_json
 from .literature_retrieval_audit import build_literature_retrieval_audit
+from .paper_design_contract import audit_paper_design_contract, build_paper_first_workflow_state
 from .protocol_validity import audit_protocol_validity
 from .research_capability_registry import build_research_capability_registry
 from .research_system_replay import build_research_system_replay
@@ -54,6 +55,42 @@ class ResearchLearningLoopTest(unittest.TestCase):
         broken = audit_claim_chain({"claim_type": "citation", "claim_text": "Prior work supports X.", "artifact_kinds": ["primary-source"]})
         self.assertFalse(broken["passed"])
         self.assertIn("missing-artifact:passage-anchor", broken["blockers"])
+
+    def test_paper_first_contract_orders_novelty_method_plan_before_pilot(self) -> None:
+        config = copy.deepcopy(self.config())
+        self.assertFalse(audit_paper_design_contract(config)["passed"])
+        config["pre_experiment"]["paper_design"] = {
+            "novelty": {
+                "paper_problem": "a paper-level problem",
+                "closest_work": [{"identity": "nearest", "difference": "materially different mechanism", "source_ref": "primary-source"}],
+                "novelty_axis": "mechanism",
+                "contribution_claim": "a distinct publishable contribution",
+                "irreducible_difference": "cannot be reduced to the strongest matched simplification",
+                "collision_status": "reviewed",
+            },
+            "method": {
+                "method_name": "paper-first-method",
+                "core_mechanism": "mechanism designed before implementation",
+                "novelty_to_method_mapping": [{"novelty": "mechanism", "component": "core"}],
+                "components": ["core"],
+                "strongest_simplification": "matched simple baseline",
+                "method_change_rule": "core changes return to novelty/method review",
+            },
+            "experiment_blueprint": {
+                "claim_experiment_matrix": [{"claim_id": "C1", "claim": "core contribution", "local_test": "minimal falsifier", "full_test": "frozen full matrix", "metric": "primary metric", "strongest_baseline": "matched baseline"}],
+                "local_validation_scope": "minimal local validation",
+                "full_experiment_scope": "all main tables, ablations, replication, efficiency",
+                "baseline_matrix": ["matched baseline"],
+                "ablation_matrix": ["remove core"],
+                "freeze_rule": "freeze method and blueprint before full experiment",
+            },
+        }
+        audit = audit_paper_design_contract(config)
+        self.assertTrue(audit["passed"], audit.get("blockers"))
+        workflow = build_paper_first_workflow_state({"cards": [{"paper_design_prerequisite": audit}]})
+        self.assertTrue(workflow["policy"]["local_validation_is_for_falsification_not_method_discovery"])
+        self.assertTrue(workflow["policy"]["method_change_after_local_validation_invalidates_full_experiment_authority"])
+        self.assertEqual(workflow["summary"]["paper_design_passed"], 1)
 
     def test_protocol_validity_contract(self) -> None:
         audit = audit_protocol_validity(self.config())

@@ -21,9 +21,38 @@ RUNNERS:dict[str,Callable[[],dict[str,Any]]]={
  'recovery-conditioned-experience':run_f3_f0,
 }
 def _now(): return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+def _frozen_terminal_fallback(live: list[dict[str,Any]]) -> list[dict[str,Any]]:
+ try:
+  frozen=json.loads(DEFAULT_JSON.read_text(encoding='utf-8'))
+ except (OSError,json.JSONDecodeError):
+  return live
+ by={str(row.get('idea_id') or ''):row for row in frozen.get('revived') or []}
+ out=[]
+ for row in live:
+  decision=str(row.get('decision') or '')
+  candidate=by.get(str(row.get('idea_id') or '')) or {}
+  frozen_decision=str(candidate.get('decision') or '')
+  reusable=(
+   decision=='HOLD_REAL_TRACE_SUBSTRATE_MISSING'
+   and frozen_decision.startswith('STOP_')
+   and candidate.get('method_failure_authorized') is False
+   and candidate.get('execution_authorized') is False
+  )
+  if reusable:
+   out.append({**candidate,'terminal_provenance':{
+    'mode':'frozen-terminal-fallback',
+    'reason':'live shared-analysis source unavailable on this host; reuse versioned terminal F0 artifact',
+    'source':str(DEFAULT_JSON),
+   }})
+  else:
+   out.append(row)
+ return out
+
 def build_revived_batch_f0():
  with ThreadPoolExecutor(max_workers=7) as pool:
   fut={iid:pool.submit(fn) for iid,fn in RUNNERS.items()}; fresh=[fut[iid].result() for iid in RUNNERS]
+ fresh=_frozen_terminal_fallback(fresh)
  by={r['idea_id']:r for r in fresh}; human=build_human_terminal_state(); parents=[]
  for iid,meta in human['parents'].items():
   if meta.get('terminal_state')!='p0': continue

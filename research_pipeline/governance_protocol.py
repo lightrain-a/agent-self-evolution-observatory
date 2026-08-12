@@ -15,7 +15,10 @@ FAILURES={
  "BUDGET_STOP":(False,"replan-cost-before-rerun"),
 }
 POLICY={
- "schema_version":"2.0","support_and_method_are_distinct":True,"p0_method_requires_frozen_support_pass":True,
+ "schema_version":"2.1","paper_novelty_precedes_method_design":True,"method_design_precedes_experiment_plan":True,
+ "local_validation_precedes_full_experiment":True,"core_method_change_returns_to_paper_design":True,
+ "full_experiment_requires_frozen_method_and_experiment_blueprint":True,
+ "support_and_method_are_distinct":True,"p0_method_requires_frozen_support_pass":True,
  "support_insufficient_is_not_method_fail":True,"one_load_bearing_repair_per_child":True,
  "max_representation_or_objective_repairs_per_substrate":2,"second_backbone_cannot_rescue_failed_substrate_or_f0":True,
  "raw_trace_is_mandatory_for_gpu_runs":True,"pre_model_load_audit_required":True,"f0_required_before_p0_support":True,
@@ -91,7 +94,7 @@ def evaluate_stage_contract(idea_id:str,config:dict[str,Any],root:Path)->dict[st
  return {"schema_version":"2.0","idea_id":idea_id,"stage":stage,"stage_index":STAGES.index(stage),"predecessor_authorization":predecessor,"support_authorization":support,"repair_budget":budget,"execution_authorized":not blockers,"blockers":blockers,"policy":POLICY}
 
 def build_governance_state()->dict[str,Any]:
- return {"schema_version":"2.0","generated_at":_now(),"policy":POLICY,"stages":[{"index":i,"key":k} for i,k in enumerate(STAGES)],"predecessor_evidence":PREDECESSOR_EVIDENCE,"failure_classes":{k:{"belief_authority":v[0],"next_action":v[1]} for k,v in FAILURES.items()}}
+ return {"schema_version":"2.1","generated_at":_now(),"policy":POLICY,"paper_first_macro_stages":["paper-problem-and-evidence","paper-novelty-contract","principle-and-method-design","experiment-blueprint","economy-and-compile","local-validation","method-freeze","full-experiment","paper-evidence"],"stages":[{"index":i,"key":k} for i,k in enumerate(STAGES)],"predecessor_evidence":PREDECESSOR_EVIDENCE,"failure_classes":{k:{"belief_authority":v[0],"next_action":v[1]} for k,v in FAILURES.items()}}
 
 def write_governance_state(json_path:Path,js_path:Path)->dict[str,Any]:
  row=build_governance_state(); _atomic(json_path,row); js_path.parent.mkdir(parents=True,exist_ok=True)
