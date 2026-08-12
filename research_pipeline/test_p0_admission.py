@@ -15,11 +15,11 @@ class P0AdmissionTest(unittest.TestCase):
 
     def test_all_active_directions_enter_p0_with_complete_settings(self) -> None:
         self.assertEqual(validate_p0_admission_state(self.state), [])
-        self.assertEqual(self.state["summary"]["active_p0"], 31)
-        self.assertEqual(self.state["summary"]["admitted"], 31)
+        self.assertEqual(self.state["summary"]["active_p0"], 27)
+        self.assertEqual(self.state["summary"]["admitted"], 27)
         self.assertEqual(self.state["summary"]["transitioned_from_p0_ready"], 16)
         self.assertEqual(self.state["summary"]["revived_from_drop"], 7)
-        self.assertEqual(self.state["summary"]["settings_complete"], 31)
+        self.assertEqual(self.state["summary"]["settings_complete"], 27)
 
     def test_codes_are_stable_and_standalones_are_numbered(self) -> None:
         by_id = {row["idea_id"]: row for row in self.state["cards"]}
@@ -40,10 +40,10 @@ class P0AdmissionTest(unittest.TestCase):
             # The second-model hold is emitted when the canonical full-support
             # checkpoint is mounted; a compute-only host may lack that run tree.
             self.assertTrue(row["execution_preflight"]["blockers"])
-        self.assertEqual(self.state["summary"]["economy_ready"], 2)
+        self.assertEqual(self.state["summary"]["economy_ready"], 0)
         self.assertEqual(self.state["economy_gate"]["summary"]["matched_simplification_stops"], 19)
         self.assertEqual(self.state["economy_gate"]["summary"]["substrate_stops"], 4)
-        self.assertEqual(self.state["summary"]["execution_blocked_or_pending"], 31)
+        self.assertEqual(self.state["summary"]["execution_blocked_or_pending"], 27)
         transitioned = [row for row in self.state["cards"] if (row.get("p0_entry") or {}).get("date") == "2026-08-11"]
         self.assertEqual(len(transitioned), 16)
         self.assertTrue(all(not row["execution_preflight"]["execution_authorized"] for row in transitioned))
@@ -61,20 +61,15 @@ class P0AdmissionTest(unittest.TestCase):
         self.assertEqual(e4["execution_preflight"]["blockers"],["economy-gate","p0-stop-await-human-review"])
         self.assertEqual(e4["execution_preflight"]["gpu0"]["status"],"stop-matched-boolean-rule-equivalent")
         entered={row['idea_id']:row for row in self.state['cards'] if (row.get('p0_entry') or {}).get('date')=='2026-08-12'}
-        legacy={iid:row for iid,row in entered.items() if (row.get('p0_entry') or {}).get('basis')!='explicit-user-paper-first-p0-promotion'}
-        promoted={iid:row for iid,row in entered.items() if (row.get('p0_entry') or {}).get('basis')=='explicit-user-paper-first-p0-promotion'}
-        self.assertEqual((len(legacy),len(promoted)),(7,4))
-        self.assertEqual(sum((row['execution_preflight'].get('economy_gate') or {}).get('primary_stop_class')=='matched-simplification' for row in legacy.values()),7)
-        self.assertEqual(sum((row['execution_preflight'].get('economy_gate') or {}).get('primary_stop_class')=='substrate' for row in legacy.values()),0)
-        for iid in ('future-learnability-preserving-self-evolution','diagnosability-preserving-self-evolution'):
-            self.assertNotIn('economy-gate',promoted[iid]['execution_preflight']['blockers'])
-        for iid in ('cross-surface-repair-routing','failure-mode-transport-under-self-evolution'):
-            self.assertIn('economy-gate',promoted[iid]['execution_preflight']['blockers'])
+        self.assertEqual(len(entered),7)
+        self.assertFalse(any((row.get('p0_entry') or {}).get('basis')=='explicit-user-paper-first-p0-promotion' for row in self.state['cards']))
+        self.assertEqual(sum((row['execution_preflight'].get('economy_gate') or {}).get('primary_stop_class')=='matched-simplification' for row in entered.values()),7)
+        self.assertEqual(sum((row['execution_preflight'].get('economy_gate') or {}).get('primary_stop_class')=='substrate' for row in entered.values()),0)
 
     def test_public_admission_compacts_economy_compiler_details(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td); write_p0_admission_state(root/'state.json',root/'state.js'); public=json.loads((root/'state.json').read_text())
-        self.assertEqual(public['summary']['economy_ready'],2)
+        self.assertEqual(public['summary']['economy_ready'],0)
         for card in public['cards']:
             econ=card['execution_preflight']['economy_gate']
             for gate in econ['gates']:

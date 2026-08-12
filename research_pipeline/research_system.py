@@ -68,11 +68,11 @@ PRE_EXPERIMENT_CONFIGS = (
     Path(__file__).with_name("p0_a1_confirm_config.json"),
     Path(__file__).with_name("p0_a2_screening_config.json"),
     Path(__file__).with_name("p0_a2_confirm_config.json"),
-    Path(__file__).with_name("p0_pf1_future_learnability_config.json"),
-    Path(__file__).with_name("p0_pf2_cross_surface_config.json"),
-    Path(__file__).with_name("p0_pf4_diagnosability_config.json"),
-    Path(__file__).with_name("p0_pf6_failure_transport_config.json"),
 )
+
+# The four paper-first PF configs are preserved as design/execution provenance, but
+# they are not live Pre-Experiment authority until an external human P0-promotion
+# artifact exists. Their already-executed local F0 rows are quarantined separately.
 
 
 def _build_pre_experiment_state(storage: StorageSettings) -> dict[str, Any]:
@@ -428,10 +428,13 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_batch_matched_stops":p0_revived_batch["summary"]["fresh_matched_simplification_stop"],
             "p0_batch_upstream_holds":p0_revived_batch["summary"]["fresh_upstream_hold"],
             "p0_batch_gpu_candidates":p0_revived_batch["summary"]["gpu_queue_candidates_before_economy"],
-            "paper_first_p0_promoted":paper_first_p0_f0["summary"]["ideas"],
+            "paper_first_p0_promoted":paper_first_p0_f0["summary"]["scientifically_authorized"],
+            "paper_first_p0_f0_quarantined":paper_first_p0_f0["summary"]["quarantined"],
             "paper_first_p0_f0_running":paper_first_p0_f0["summary"]["running"],
             "paper_first_p0_f0_support_pass":paper_first_p0_f0["summary"]["support_pass"],
             "paper_first_p0_f0_support_hold":paper_first_p0_f0["summary"]["support_hold"],
+            "paper_first_p0_f0_observed_support_pass":paper_first_p0_f0["summary"]["observed_support_pass"],
+            "paper_first_p0_f0_observed_support_hold":paper_first_p0_f0["summary"]["observed_support_hold"],
             "p0_b10_decision":(p0_offline_qualification.get("shared_evidence") or {}).get("b10",{}).get("decision"),
             "p0_a1_repair_decision":(human_terminal_ideas.get("parents") or {}).get("update-trust-region",{}).get("p0_decision"),
             "p0_a2_repair_decision":(human_terminal_ideas.get("parents") or {}).get("budgeted-evolution-controller",{}).get("p0_decision"),
@@ -571,7 +574,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"backend-architecture-manifest", "pass":state["system_architecture"]["summary"]["temporal_stages"] == 11 and state["system_architecture"]["summary"]["functional_layers"] == 6 and state["system_architecture"]["summary"]["assigned_components"] == len(state["components"]) and state["system_architecture"]["summary"]["unassigned_components"] == 0 and state["system_architecture"]["summary"]["duplicate_component_keys"] == 0 and state["system_architecture"]["summary"]["cross_cutting_controls"] == 3 and state["system_architecture"]["summary"]["orphan_cross_cutting_controls"] == 0, "detail":state["system_architecture"]["summary"]},
         {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == expected_pre_experiment_cards, "detail":state["principle_layer"]["summary"]},
         {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["paper_design_contract_required_before_principle_and_implementation"] and state["pre_experiment_compiler"]["policy"]["paper_design_contract_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["summary"]["protocol_validity_pass"] == expected_pre_experiment_cards and state["pre_experiment_compiler"]["policy"]["research_execution_plan_required_before_launch"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_is_derived_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_cannot_authorize_execution"] and state["pre_experiment_compiler"]["summary"]["research_execution_plans"] == expected_pre_experiment_cards and state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == expected_pre_experiment_cards, "detail":state["pre_experiment_compiler"]["summary"]},
-        {"key":"paper-first-p0-f0", "pass":state["paper_first_p0_f0"]["summary"].get("ideas") == 4 and state["paper_first_p0_f0"]["summary"].get("method_fail_authorized") == 0 and state["paper_first_p0_f0"]["policy"].get("f0_cannot_emit_method_fail") is True, "detail":state["paper_first_p0_f0"]["summary"]},
+        {"key":"paper-first-p0-f0", "pass":state["paper_first_p0_f0"]["summary"].get("ideas") == 4 and state["paper_first_p0_f0"]["summary"].get("quarantined") == 4 and state["paper_first_p0_f0"]["summary"].get("scientifically_authorized") == 0 and state["paper_first_p0_f0"]["summary"].get("method_fail_authorized") == 0 and state["paper_first_p0_f0"]["policy"].get("unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority") is True, "detail":state["paper_first_p0_f0"]["summary"]},
         {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
@@ -646,7 +649,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"]: errors.append("Pre-Experiment Compiler override must stay forbidden")
     if state["pre_experiment_compiler"]["summary"]["compiled_cards"] != expected_pre_experiment_cards: errors.append(f"expected {expected_pre_experiment_cards} frozen pre-experiment cards")
     paper_first_f0 = state.get("paper_first_p0_f0") or {}; pf0_summary = paper_first_f0.get("summary") or {}
-    if pf0_summary.get("ideas") != 4 or pf0_summary.get("method_fail_authorized") != 0: errors.append("paper-first P0 F0 must cover four promotions and cannot authorize METHOD-FAIL")
+    if pf0_summary.get("ideas") != 4 or pf0_summary.get("quarantined") != 4 or pf0_summary.get("scientifically_authorized") != 0 or pf0_summary.get("method_fail_authorized") != 0: errors.append("paper-first premature local F0 must remain four diagnostic-only quarantined executions with zero scientific authority")
+    if (paper_first_f0.get("policy") or {}).get("unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority") is not True: errors.append("paper-first premature execution must be preserved without creating scientific authority")
     if (paper_first_f0.get("policy") or {}).get("p0_method_requires_support_pass_and_pre_experiment_authority") is not True: errors.append("paper-first P0 method work must remain locked behind support plus Pre-Experiment authority")
     if not state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"]: errors.append("P0 execution must require an 8/8 Pre-Experiment Card")
     if not state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"]: errors.append("automatic P0-to-P1 escalation must stay forbidden")

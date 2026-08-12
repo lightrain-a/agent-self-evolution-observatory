@@ -12,7 +12,7 @@ from .pre_p0_identifiability import CHECKS as PRE_P0_CHECKS
 from .p0_offline_qualification import build_p0_offline_qualification_state
 from .p0_revived_batch_f0 import build_revived_batch_f0
 from .p0_economy_gate import evaluate_economy_card, build_economy_state, POLICY as ECONOMY_POLICY
-from .paper_first_p0_promotions import PROMOTIONS as PAPER_FIRST_P0_PROMOTIONS
+from .paper_first_p0_promotions import AUTHORIZED_PROMOTIONS as PAPER_FIRST_P0_PROMOTIONS
 from .paper_first_p0_f0 import build_paper_first_p0_f0_state
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "p0-admission-state.json"

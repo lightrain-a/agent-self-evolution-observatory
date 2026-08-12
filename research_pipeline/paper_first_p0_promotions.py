@@ -97,11 +97,29 @@ PROMOTIONS: dict[str, dict[str, Any]] = {
     },
 }
 
-PROMOTION_BY_INCUBATION = {str(row["incubation_id"]): idea_id for idea_id, row in PROMOTIONS.items()}
+AUTHORITY: dict[str, Any] = {
+    "promotion_authorized": False,
+    "local_validation_authorized": False,
+    "full_experiment_authorized": False,
+    "authority_status": "NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY",
+    "basis": "The paper-first authority preceding these executions explicitly kept local validation locked; no external user-authorization artifact is referenced by the promotion code.",
+    "executed_f0_disposition": "PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC_ONLY",
+    "rule": "Executed traces are preserved as historical diagnostics but cannot create P0 lifecycle, method-admission, principle, or scale-up authority.",
+}
+
+# Keep the four paper/method specifications as design candidates and historical
+# execution provenance, but expose no live P0 promotion until an external human
+# authority artifact explicitly authorizes that transition.
+AUTHORIZED_PROMOTIONS: dict[str, dict[str, Any]] = {}
+PROMOTION_BY_INCUBATION = {
+    str(row["incubation_id"]): idea_id for idea_id, row in AUTHORIZED_PROMOTIONS.items()
+}
 
 
 def independent_row(idea_id: str) -> dict[str, Any]:
-    spec = PROMOTIONS[idea_id]
+    if idea_id not in AUTHORIZED_PROMOTIONS:
+        raise RuntimeError(f"paper-first P0 promotion is not authorized: {idea_id}")
+    spec = AUTHORIZED_PROMOTIONS[idea_id]
     return {
         "terminal_state": "p0",
         "title": spec["title"],

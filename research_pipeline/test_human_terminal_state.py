@@ -38,16 +38,15 @@ class HumanTerminalStateTest(unittest.TestCase):
         self.assertEqual(parents["workflow-branch-credit"]["terminal_state"], "p0")
         self.assertIn("failure-localization-before-reflection", parents["workflow-branch-credit"]["absorbed_children"])
 
-    def test_standalone_methods_include_four_paper_first_p0_promotions(self) -> None:
+    def test_standalone_methods_exclude_unapproved_paper_first_promotions(self) -> None:
         independent = self.state["independent_methods"]
-        self.assertEqual(len(independent), 11)
-        self.assertEqual(sum(row["terminal_state"] == "p0" for row in independent.values()), 11)
+        self.assertEqual(len(independent), 7)
+        self.assertEqual(sum(row["terminal_state"] == "p0" for row in independent.values()), 7)
         self.assertEqual(sum(row["terminal_state"] == "p0-ready" for row in independent.values()), 0)
-        self.assertEqual({row.get("code") for row in independent.values()}, {"A-6","A-7","A-8","A-9","B-8","B-9","B-10","C-7","E-3","E-4","E-5"})
+        self.assertEqual({row.get("code") for row in independent.values()}, {"A-6","A-7","B-8","B-9","B-10","E-3","E-4"})
         self.assertIn("replicated-effect-memory-gate", independent)
         self.assertIn("cross-task-effect-transport-certificate", independent)
-        promoted={row.get("source_incubation_id") for row in independent.values() if row.get("source_incubation_id")}
-        self.assertEqual(promoted,{"PF-1","PF-2","PF-4","PF-6"})
+        self.assertFalse(any(row.get("source_incubation_id") for row in independent.values()))
 
 
 if __name__ == "__main__":

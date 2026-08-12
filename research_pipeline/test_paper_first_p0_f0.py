@@ -9,7 +9,7 @@ from .paper_first_p0_f0 import build_paper_first_p0_f0_state
 
 
 class PaperFirstP0F0StateTest(unittest.TestCase):
-    def test_support_pass_and_hold_never_emit_method_fail(self) -> None:
+    def test_premature_f0_is_preserved_but_quarantined_from_scientific_authority(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             run = root / "runs" / "paper-first-p0-20260812"
@@ -23,12 +23,17 @@ class PaperFirstP0F0StateTest(unittest.TestCase):
                 "pf6":{"support_pass":False,"failure_modes":["success","loop-timeout","missing-required-transform"],"non_diagonal_transitions":5,"repair_summaries":{},"decision_relevant_pair":None},
             }}))
             state = build_paper_first_p0_f0_state(root)
-        self.assertEqual(state["summary"], {"ideas":4,"running":0,"support_pass":2,"support_hold":2,"method_fail_authorized":0})
+        self.assertEqual(state["summary"]["ideas"], 4)
+        self.assertEqual((state["summary"]["observed_support_pass"], state["summary"]["observed_support_hold"]), (2, 2))
+        self.assertEqual((state["summary"]["support_pass"], state["summary"]["support_hold"]), (0, 0))
+        self.assertEqual((state["summary"]["quarantined"], state["summary"]["scientifically_authorized"], state["summary"]["method_fail_authorized"]), (4, 0, 0))
         by = {row["idea_id"]: row for row in state["cards"]}
-        self.assertEqual(by["future-learnability-preserving-self-evolution"]["decision"], "F0_SUPPORT_PASS")
-        self.assertEqual(by["diagnosability-preserving-self-evolution"]["decision"], "F0_SUPPORT_PASS")
-        self.assertEqual(by["cross-surface-repair-routing"]["decision"], "HOLD_F0_SUPPORT_INSUFFICIENT")
-        self.assertEqual(by["failure-mode-transport-under-self-evolution"]["decision"], "HOLD_F0_SUPPORT_INSUFFICIENT")
+        self.assertEqual(by["future-learnability-preserving-self-evolution"]["observed_f0_decision"], "F0_SUPPORT_PASS")
+        self.assertEqual(by["diagnosability-preserving-self-evolution"]["observed_f0_decision"], "F0_SUPPORT_PASS")
+        self.assertEqual(by["cross-surface-repair-routing"]["observed_f0_decision"], "HOLD_F0_SUPPORT_INSUFFICIENT")
+        self.assertEqual(by["failure-mode-transport-under-self-evolution"]["observed_f0_decision"], "HOLD_F0_SUPPORT_INSUFFICIENT")
+        self.assertTrue(all(row["decision"] == "PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC" for row in state["cards"]))
+        self.assertTrue(all(row["scientific_gate_authority"] is False for row in state["cards"]))
         self.assertTrue(all(row["method_failure_authorized"] is False for row in state["cards"]))
 
 
