@@ -32,9 +32,9 @@ class PaperFirstDesignAdjudicationTest(unittest.TestCase):
 
     def test_pf2_current_exhaustive_surface_trial_is_not_accepted_as_method(self) -> None:
         pf2 = self.rows["PF-2"]
-        self.assertEqual(pf2["current_method_disposition"], "REVISE_BEFORE_FREEZE")
-        self.assertIn("oracle protocol", pf2["current_method_problem"])
-        self.assertTrue(any("generic multiclass" in baseline for baseline in pf2["strongest_same_information_baselines"]))
+        self.assertEqual(pf2["current_method_disposition"], "OLD_ROUTER_SUPERSEDED_DESIGN_IDENTIFIABILITY_CERTIFICATE")
+        self.assertIn("one-shot learned router", pf2["current_method_problem"])
+        self.assertTrue(any("generic partial-identification" in baseline for baseline in pf2["strongest_same_information_baselines"]))
         self.assertTrue(any("hidden" in item.lower() for item in pf2["method_design_requirements"]))
 
     def test_pf1_redefines_generic_plasticity_as_fixed_operator_evolvability_debt(self) -> None:
@@ -45,7 +45,7 @@ class PaperFirstDesignAdjudicationTest(unittest.TestCase):
 
     def test_pf4_and_pf6_do_not_survive_as_current_standalone_methods(self) -> None:
         self.assertEqual(self.rows["PF-4"]["current_method_disposition"], "STOP_STANDALONE_CERTIFICATE")
-        self.assertEqual(self.rows["PF-4"]["merge_target"], "PF-2 causal-repair-surface-ownership")
+        self.assertEqual(self.rows["PF-4"]["merge_target"], "PF-2 repair-surface-identifiability-under-persistent-agent-updates")
         self.assertEqual(self.rows["PF-6"]["current_method_disposition"], "STOP_STANDALONE_TRANSPORT_MATRIX")
         self.assertIn("PF-2", self.rows["PF-6"]["merge_target"])
 

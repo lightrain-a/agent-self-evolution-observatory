@@ -115,6 +115,8 @@ class PublicationTest(unittest.TestCase):
                 "generated/paper-first-p0-f0-state.js",
                 "generated/paper-first-design-adjudication.json",
                 "generated/paper-first-design-adjudication.js",
+                "generated/paper-first-pf2-method-adjudication.json",
+                "generated/paper-first-pf2-method-adjudication.js",
                 "generated/paper-first-post-c2-adjudication.json",
                 "generated/paper-first-post-c2-adjudication.js",
             ),

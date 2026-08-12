@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-12T16:16:27+00:00",
+  "generated_at": "2026-08-12T16:32:23+00:00",
   "target_venue": "ICLR",
   "storage": {
-    "data_root": "/tmp/ae-v23-publish-20260812/repo/generated/research-data",
-    "run_dir": "/tmp/ae-v23-publish-20260812/repo/generated/research-data/runs"
+    "data_root": "/home/wyt/code/agent-self-evolution-observatory-pf4-paperdesign-20260812/generated/research-data",
+    "run_dir": "/home/wyt/code/agent-self-evolution-observatory-pf4-paperdesign-20260812/generated/research-data/runs"
   },
   "automation": {
     "daily": {
@@ -45,6 +45,9 @@
     "paper_first_design_revise_problem": 1,
     "paper_first_design_merge_invariant": 1,
     "paper_first_design_stop_standalone": 1,
+    "paper_first_pf2_method_decision": "STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL",
+    "paper_first_pf2_method_active": false,
+    "paper_first_pf2_experiment_blueprint_authorized": false,
     "paper_first_post_c2_decision": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
     "paper_first_post_c2_current_formulation": "STOP",
     "paper_first_post_c2_c3_locked": true,
@@ -10863,7 +10866,7 @@
   },
   "lineage": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:16:23+00:00",
+    "generated_at": "2026-08-12T16:32:19+00:00",
     "summary": {
       "nodes": 278,
       "edges": 258,
@@ -10893,7 +10896,7 @@
           "zh": "受约束持续进化",
           "en": "Constrained continual evolution"
         },
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "track-root:credit",
@@ -10903,7 +10906,7 @@
           "zh": "失败归因与经验准入",
           "en": "Failure credit and experience admission"
         },
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "track-root:memory",
@@ -10913,7 +10916,7 @@
           "zh": "记忆与技能巩固",
           "en": "Memory and skill consolidation"
         },
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "track-root:correction",
@@ -10923,7 +10926,7 @@
           "zh": "自纠正与策略内化",
           "en": "Self-correction and policy internalization"
         },
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "track-root:curriculum",
@@ -10933,7 +10936,7 @@
           "zh": "课程与任务进化",
           "en": "Curriculum and task evolution"
         },
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "track-root:workflow",
@@ -10943,7 +10946,7 @@
           "zh": "工作流与更新表面搜索",
           "en": "Workflow and update-surface search"
         },
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "track-root:evaluator",
@@ -10953,7 +10956,7 @@
           "zh": "奖励与评价器进化",
           "en": "Reward and evaluator evolution"
         },
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "track-root:world",
@@ -10963,7 +10966,7 @@
           "zh": "世界模型与具身持续适应",
           "en": "World models and embodied adaptation"
         },
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "regression-gated-self-evolution",
@@ -10985,7 +10988,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:regression-gated-self-evolution:1",
@@ -11093,7 +11096,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:contradiction-preserving-consolidation:1",
@@ -11201,7 +11204,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:compositional-update-compatibility:1",
@@ -11309,7 +11312,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:update-trust-region:1",
@@ -11417,7 +11420,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:retrieval-interference-auditor:1",
@@ -11525,7 +11528,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:irreversible-action-counterfactuals:1",
@@ -11632,7 +11635,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:self-label-confidence-flow:1",
@@ -11740,7 +11743,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:evaluator-coadaptation-guard:1",
@@ -11848,7 +11851,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:recovery-conditioned-experience:1",
@@ -11956,7 +11959,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:counterexample-generating-curriculum:1",
@@ -12065,7 +12068,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:workflow-generalization-certificate:1",
@@ -12173,7 +12176,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:budgeted-evolution-controller:1",
@@ -12281,7 +12284,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:lineage-aware-rollback:1",
@@ -12389,7 +12392,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:failure-frontier-curriculum:1",
@@ -12497,7 +12500,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:causally-verified-experience-admission:1",
@@ -12605,7 +12608,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:reward-invariance-audit:1",
@@ -12713,7 +12716,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:local-counterexample-memory-repair:1",
@@ -12821,7 +12824,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:self-correction-collapse-detector:1",
@@ -12929,7 +12932,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:intervention-validated-self-correction:1",
@@ -13037,7 +13040,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:workflow-branch-credit:1",
@@ -13145,7 +13148,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:world-model-error-gated-learning:1",
@@ -13253,7 +13256,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:memory-half-life:1",
@@ -13361,7 +13364,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:correction-policy-credit:1",
@@ -13469,7 +13472,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:curriculum-drift-controller:1",
@@ -13578,7 +13581,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:outcome-equivalent-trajectory-contrast:1",
@@ -13686,7 +13689,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "review:applicability-bounded-lessons:1",
@@ -13796,7 +13799,7 @@
         "blocking_reasons": [
           "Module-level intervention labels may require expensive environment-specific instrumentation."
         ],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "programmatic-review:failure-localization-before-reflection:1",
@@ -13897,7 +13900,7 @@
         "blocking_reasons": [
           "Cross-family disagreement may reflect formatting and style rather than distinct error mechanisms."
         ],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "programmatic-review:heterogeneous-critic-disagreement:1",
@@ -13998,7 +14001,7 @@
         "blocking_reasons": [
           "Oracle labels require executing all update surfaces, making supervision close to exhaustive search."
         ],
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "programmatic-review:update-surface-router:1",
@@ -14082,84 +14085,84 @@
         "kind": "early-rejected",
         "title": "更大模型做更多反思",
         "reason": "只增加推理计算，不能证明持久学习。",
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "early-rejected:268",
         "kind": "early-rejected",
         "title": "全参数训练 70B 自进化 Agent",
         "reason": "超出低资源约束且机制难归因。",
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "early-rejected:269",
         "kind": "early-rejected",
         "title": "只在自生成任务上提升",
         "reason": "缺少圈外泛化。",
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "early-rejected:270",
         "kind": "early-rejected",
         "title": "仅商业 API 闭环",
         "reason": "不可复现且依赖供应商快照。",
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "early-rejected:271",
         "kind": "early-rejected",
         "title": "固定多轮 Self-Refine",
         "reason": "属于更多采样，不是进化机制。",
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "early-rejected:272",
         "kind": "early-rejected",
         "title": "同模型 Actor 与 Judge 自我确认",
         "reason": "反馈完整性无法独立验证。",
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "early-rejected:273",
         "kind": "early-rejected",
         "title": "只报告最佳 checkpoint",
         "reason": "掩盖多轮回退与坍塌。",
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "early-rejected:274",
         "kind": "early-rejected",
         "title": "从头训练世界模型和策略",
         "reason": "资源高且无法分离贡献。",
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "early-rejected:275",
         "kind": "early-rejected",
         "title": "单一视觉 benchmark 技巧",
         "reason": "保留为 CVPR 后续，不作为 ICLR 主候选。",
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "early-rejected:276",
         "kind": "early-rejected",
         "title": "只做平均准确率的记忆消融",
         "reason": "无法识别有害条目和负迁移。",
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "early-rejected:277",
         "kind": "early-rejected",
         "title": "无隔离划分的在线适应",
         "reason": "无法排除测试泄漏。",
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       },
       {
         "id": "early-rejected:278",
         "kind": "early-rejected",
         "title": "泛化 Agent 自进化综述",
         "reason": "不是方法或可证伪 benchmark 贡献。",
-        "created_at": "2026-08-12T16:16:23+00:00"
+        "created_at": "2026-08-12T16:32:19+00:00"
       }
     ],
     "edges": [
@@ -15930,7 +15933,7 @@
   },
   "pre_gpu_candidate_gates": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:16:23+00:00",
+    "generated_at": "2026-08-12T16:32:19+00:00",
     "policy": {
       "gate_order": [
         "offline",
@@ -16777,7 +16780,7 @@
     "cards": [
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-12T16:16:23+00:00",
+        "compiled_at": "2026-08-12T16:32:19+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -17556,7 +17559,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-12T16:16:23+00:00",
+        "compiled_at": "2026-08-12T16:32:19+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0",
         "expected_runtime": {
@@ -18343,7 +18346,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-12T16:16:23+00:00",
+        "compiled_at": "2026-08-12T16:32:19+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -19139,7 +19142,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-12T16:16:23+00:00",
+        "compiled_at": "2026-08-12T16:32:19+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0",
         "expected_runtime": {
@@ -19979,7 +19982,7 @@
   },
   "paper_first_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:16:23+00:00",
+    "generated_at": "2026-08-12T16:32:19+00:00",
     "review_id": "paper-first-pf1-pf2-pf4-pf6-design-20260812",
     "target_venue": "ICLR",
     "policy": {
@@ -20020,42 +20023,80 @@
     "rows": [
       {
         "id": "PF-2",
-        "paper_problem_id": "causal-repair-surface-ownership",
+        "paper_problem_id": "repair-surface-identifiability-under-persistent-agent-updates",
         "verdict": "ADVANCE_TO_METHOD_DESIGN",
-        "paper_problem": "Which persistent agent update surface is the lowest-scope intervention that is causally sufficient to repair a failure without unnecessary collateral change?",
-        "irreducible_boundary": "The claim is not fault localization inside a preselected surface and not source-level rewriting. It is causal ownership selection across heterogeneous persistent surfaces under a shared intervention/outcome contract before deployment commit.",
-        "current_method_disposition": "REVISE_BEFORE_FREEZE",
-        "current_method_problem": "Trying every eligible surface at deployment and then selecting the best is an oracle protocol, not a publishable routing method.",
+        "problem_revision": {
+          "supersedes": "causal-repair-surface-ownership",
+          "reason": "HarnessFix already performs harness-layer diagnosis plus scoped repair, and Diagnosis Is Not Prescription directly shows that causal responsibility need not identify the best patch locus. A direct cross-surface router would therefore be combination novelty.",
+          "advisory_review": {
+            "provider": "ark-code-latest",
+            "resolved_model": "doubao-seed-evolving",
+            "role": "advisory-only-repair-surface-identifiability-premortem",
+            "raw_backend_path": "/data/wyt/agent-evolution-paper-first-reviews/pf4-design-20260812/pf2-identifiability-premortem.json",
+            "raw_sha256": "d075078ec7586a8114bfac099ac77ab54feab071b232629900edc7be737671c2",
+            "verdict": "ADVANCE_REVISED_PROBLEM_TO_METHOD_DESIGN",
+            "confidence": 0.74,
+            "scientific_authority": false
+          }
+        },
+        "paper_problem": "Given a failed agent trace and pre-intervention evidence, is the minimal causally sufficient persistent repair surface identifiable at all; if not, what reversible cross-surface evidence is required before a system may commit rather than abstain?",
+        "irreducible_boundary": "The paper is about partial identification of the repair locus, not fault attribution, scoped patch generation, or direct surface prediction. Multiple persistent surfaces may remain observationally compatible with the same failure and responsibility diagnosis while implying different repair/collateral outcomes. The method must certify IDENTIFIED(surface) only when the compatible model/effect set agrees on one minimal sufficient surface, otherwise return UNIDENTIFIABLE or PROBE_MORE.",
+        "current_method_disposition": "OLD_ROUTER_SUPERSEDED_DESIGN_IDENTIFIABILITY_CERTIFICATE",
+        "current_method_problem": "A one-shot learned router or hidden-time best-surface trial is too close to HarnessFix/WML plus generic classification/CATE. The revised method must expose non-identifiability and abstain instead of always predicting a surface.",
         "method_design_requirements": [
-          "Freeze a partial order / scope cost over prompt-memory, skill-workflow, tool-code, and weight surfaces before outcomes.",
-          "Define surface-specific potential outcomes for repair gain, collateral regression, persistence, and cost under matched failure context and update-information budget.",
-          "Use source-only cross-surface intervention tables to define minimal sufficient surface ownership; hidden failures cannot trial every surface before prediction.",
-          "A deployed router must freeze before hidden evaluation and select a surface from pre-intervention information only.",
-          "Name a structural component that is not reproduced by a generic multiclass selector or generic CATE/ranker; otherwise retain only the paper problem/protocol and stop the method claim."
+          "Formalize a finite registered set of persistent repair surfaces with explicit persistence, reversibility, scope, and collateral-effect assumptions.",
+          "Define a compatibility set of causal repair models/effect intervals consistent with pre-intervention trace evidence and any already-observed reversible probes.",
+          "Define minimal causal sufficiency under frozen task-success, persistence, collateral, and scope constraints; allow multiple incomparable minimal surfaces.",
+          "Provide a repair-surface non-identifiability construction: identical pre-intervention evidence/responsibility can be compatible with different minimal sufficient repair loci.",
+          "Emit IDENTIFIED(surface) only when every compatible model/effect interval agrees on the same minimal sufficient surface; otherwise abstain.",
+          "PROBE_MORE may propose only reversible diagnostic interventions that reduce the compatible surface set; exhaustive persistent repair trials at hidden time remain forbidden.",
+          "Separate the certificate from any active probe policy so generic active diagnosis is a same-information baseline rather than hidden novelty."
         ],
         "strongest_same_information_baselines": [
-          "generic multiclass surface selector trained on the identical intervention table",
-          "generic CATE/effect ranker over surface-specific potential outcomes",
-          "WML-style smallest-edit localization inside each eligible structured surface",
-          "MOSS/source-level repair as a broad-surface ceiling",
-          "best fixed surface under identical update/evaluation budget"
+          "generic partial-identification/equivalence-class enumeration over the same causal variables and probe outcomes",
+          "generic active diagnosis / information-gain probe selection over the same surface hypotheses",
+          "Diagnosis Is Not Prescription co-adaptation score / best intervention-locus heuristic",
+          "HarnessFix harness-layer attribution plus scoped repair operators",
+          "WML smallest-valid-edit localization inside structured skills",
+          "CausalFlow/CAR counterfactual step attribution and minimal trace repair",
+          "MOSS source-level repair as a broad repair-surface ceiling"
         ],
         "prohibited_claims": [
-          "fault localization itself is novel",
-          "source-level repair itself is novel",
-          "an edit is minimal without matched cross-surface sufficiency comparisons",
-          "exhaustive hidden-time surface trials constitute a learned router"
+          "causal responsibility identifies the repair surface",
+          "fault localization or scoped patch generation itself is novel",
+          "a direct multiclass surface router is the contribution",
+          "generic causal identifiability or information-gain probing is novel merely because variables are agent surfaces",
+          "weight-surface identifiability follows from ordinary trace evidence without explicit intervention assumptions",
+          "exhaustive hidden-time persistent repair trials are a valid primary method"
         ],
-        "next_action": "Design one irreducible frozen router/estimator and its same-information generic baseline. If no structural difference survives, keep the causal-ownership problem as an evaluation protocol and stop the method thesis.",
+        "next_action": "Design a repair-surface identifiability/abstention certificate and its generic partial-identification baseline, then run an independent method-level premortem. Do not compile or run local validation yet.",
         "local_validation_authorized": false,
         "full_experiment_authorized": false,
         "incubation_verdict": "ADVANCE_TO_PAPER_DESIGN",
         "primary_sources": [
           {
+            "ref": "arXiv:2605.21958",
+            "title": "Diagnosis Is Not Prescription: Linguistic Co-Adaptation Explains Patching Hazards in LLM Pipelines",
+            "url": "https://arxiv.org/abs/2605.21958",
+            "boundary_role": "strongest collision: causal responsibility can disagree with the best intervention locus because of downstream co-adaptation"
+          },
+          {
+            "ref": "arXiv:2606.06324",
+            "title": "From Failed Trajectories to Reliable LLM Agents: Diagnosing and Repairing Harness Flaws",
+            "url": "https://arxiv.org/abs/2606.06324",
+            "boundary_role": "HarnessFix attributes failures to harness layers, maps them to scoped repair operators, and validates harness patches"
+          },
+          {
             "ref": "arXiv:2607.20999",
             "title": "Workflow-Localized Mechanism Learning: Attribution-Guided Repair and Knowledge Reuse for Structured Agent Skills",
             "url": "https://arxiv.org/abs/2607.20999",
             "boundary_role": "failed-node/mechanism attribution and smallest valid edit target inside structured skills"
+          },
+          {
+            "ref": "arXiv:2605.25338",
+            "title": "CausalFlow: Causal Attribution and Counterfactual Repair for LLM Agent Failures",
+            "url": "https://arxiv.org/abs/2605.25338",
+            "boundary_role": "counterfactual step attribution and minimal trace repair are already occupied"
           },
           {
             "ref": "arXiv:2605.22794",
@@ -20127,7 +20168,7 @@
         "irreducible_boundary": "Observability, tracing, silent-failure diagnosis, and intervention-supported attribution are already occupied. The only useful residual is preservation of interventional cause distinguishability after an update, but the current commit certificate is a generic multi-metric regression gate rather than an irreducible standalone method.",
         "current_method_disposition": "STOP_STANDALONE_CERTIFICATE",
         "current_method_problem": "Task gain + cause-separability/provenance threshold is directly reproduced by a diagnosability regression gate using the same probes.",
-        "merge_target": "PF-2 causal-repair-surface-ownership",
+        "merge_target": "PF-2 repair-surface-identifiability-under-persistent-agent-updates",
         "merge_role": "cross-cutting commit invariant / secondary claim measuring whether the chosen repair surface preserves future causal distinguishability",
         "strongest_same_information_baselines": [
           "task-regression gate plus fixed diagnosability threshold",
@@ -20217,9 +20258,80 @@
     "portfolio_decision": "Advance PF-2 only to method design; revise PF-1 at the paper-problem boundary; merge PF-4 as an interventional diagnosability invariant; stop PF-6 standalone and retain it as failure-risk analysis.",
     "next_action": "Design and red-team one irreducible PF-2 method against generic same-information routing/CATE baselines. In parallel revise PF-1 problem wording and rerun collision review. Do not run local validation for any PF candidate."
   },
+  "paper_first_pf2_method_adjudication": {
+    "schema_version": "1.0",
+    "generated_at": "2026-08-12T16:32:19+00:00",
+    "paper_id": "repair-surface-identifiability-under-persistent-agent-updates",
+    "incubation_id": "PF-2",
+    "reviewed_method": "Repair-Surface Identification Certificate",
+    "decision": "STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL",
+    "method_status": "TERMINATED_BEFORE_EXPERIMENT_BLUEPRINT",
+    "paper_problem_status": "SURVIVES_AS_PROBLEM_AND_EVALUATION_PROTOCOL_ONLY",
+    "reason": "RSIC's IDENTIFIED/UNIDENTIFIABLE/PROBE_MORE states are currently in one-to-one correspondence with generic partial identification and set-refinement over the same compatible model set, repair-surface hypotheses, intervention table, and probe outcomes. The agent-surface semantics do not yet create an irreducible inference object or guarantee.",
+    "same_information_stop": {
+      "baseline": "generic-partial-identification",
+      "same_information": "identical causal variables, source intervention table, pre-intervention evidence, reversible probe outcomes, support assumptions, and thresholds",
+      "equivalence": "same compatible set and minimal-surface functional imply identical unique-certification versus abstention decisions",
+      "stop_condition_from_method_design": "STOP standalone method novelty if generic partial-identification under the same formal objects yields the same certificate states and decision guarantees.",
+      "triggered": true
+    },
+    "reviewers": {
+      "deepseek_v4_pro": {
+        "requested_model": "deepseek-v4-pro",
+        "resolved_model": "deepseek-v4-pro-260425",
+        "verdict": "REVISE_METHOD_DESIGN",
+        "confidence": 0.92,
+        "raw_backend_path": "/data/wyt/agent-evolution-paper-first-reviews/pf2-method-20260813/deepseek-v4-pro.json",
+        "raw_sha256": "90ddebf42d044fb7919d9f54d614f81e30bf0c8c6d03edafc3f66c0f1cda060c",
+        "authority": "advisory-only"
+      },
+      "glm_5_2": {
+        "requested_model": "glm-5.2",
+        "resolved_model": "glm-5-2-260617",
+        "verdict": "STOP_METHOD_THESIS",
+        "confidence": 0.95,
+        "raw_backend_path": "/data/wyt/agent-evolution-paper-first-reviews/pf2-method-20260813/glm-5.2.json",
+        "raw_sha256": "b044bc0f8c8c07ae90ff1db9db0721946b96e5706f4e9b0ab48d28519e4fc5d6",
+        "authority": "advisory-only"
+      }
+    },
+    "review_synthesis": {
+      "deepseek": "No irreducible method novelty survives if C(E) and A*(M) are shared with generic partial identification; revise only if a new structural guarantee changes decisions under the same evidence.",
+      "glm": "Current method thesis should stop because RSIC is isomorphic to standard partial identification/set refinement under identical causal variables and probe outcomes.",
+      "agreement": "Both reviewers independently identify generic partial-identification equivalence as the load-bearing failure.",
+      "ai_is_authority": false
+    },
+    "what_survives": {
+      "problem": "A failure source/responsibility signal need not identify where a persistent agent should be repaired; repair-surface non-identifiability remains a valid scientific question.",
+      "protocol": "A cross-surface intervention table with explicit abstention/partial-identification evaluation remains useful as an evaluation protocol or diagnostic benchmark.",
+      "collision_memory": "Diagnosis Is Not Prescription and HarnessFix are mandatory nearest-work baselines for any future revival."
+    },
+    "what_is_closed": [
+      "RSIC as a standalone method contribution",
+      "IDENTIFIED/UNIDENTIFIABLE/PROBE_MORE state naming as method novelty",
+      "generic information-gain or set-elimination probing as method novelty",
+      "a new direct router, classifier, CATE ranker, or renamed generic partial-identification rescue under the same problem formulation"
+    ],
+    "revival_requirements": [
+      "A future method revival must introduce a repair-surface-specific structural assumption, theorem, or guarantee that changes decisions relative to generic partial identification given the exact same evidence and structural inputs.",
+      "The difference cannot be merely a different feature representation, classifier, active-probe heuristic, surface taxonomy, or additional metric.",
+      "Any proposed revival must rerun primary-source collision search and a same-information method premortem before an experiment blueprint is written."
+    ],
+    "authority": {
+      "method_thesis_active": false,
+      "experiment_blueprint_authorized": false,
+      "local_validation_authorized": false,
+      "p0_authorized": false,
+      "gpu_authorized": false,
+      "full_experiment_authorized": false,
+      "premature_pf_f0_used": false,
+      "new_method_auto_authorized": false
+    },
+    "next_action": "Archive PF-2 current method thesis and move paper-first effort to the next unresolved problem boundary. PF-1 evolvability-debt is next; no PF-2 experiment blueprint or local validation may be compiled."
+  },
   "paper_first_post_c2": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:16:23+00:00",
+    "generated_at": "2026-08-12T16:32:19+00:00",
     "paper_id": "trajectory-mediated-memory-effect-transport",
     "decision": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
     "reason": "All ten strict C2 units are execution-valid and the full pre-divergence policy decision context is reproducible, yet only 2/10 controlled action contrasts are nonzero and the preregistered same-memory cross-context sign reversal is absent. The earliest-divergent-action controlled-mediator mechanism is therefore unsupported by its local falsifier.",
@@ -20333,7 +20445,7 @@
   },
   "pilot_registry": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:16:23+00:00",
+    "generated_at": "2026-08-12T16:32:19+00:00",
     "result_dir": "/data/wyt/agent-self-evolution-observatory/runs/pilots/results",
     "approval_dir": "/data/wyt/agent-self-evolution-observatory/runs/pilots/approvals",
     "result_schema": {
@@ -20584,7 +20696,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.2",
-          "compiled_at": "2026-08-12T16:16:23+00:00",
+          "compiled_at": "2026-08-12T16:32:19+00:00",
           "idea_id": "update-trust-region",
           "phase": "P0",
           "expected_runtime": {
@@ -21717,7 +21829,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.2",
-          "compiled_at": "2026-08-12T16:16:23+00:00",
+          "compiled_at": "2026-08-12T16:32:19+00:00",
           "idea_id": "budgeted-evolution-controller",
           "phase": "P0",
           "expected_runtime": {
@@ -26279,7 +26391,7 @@
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-12T16:16:23+00:00",
+    "generated_at": "2026-08-12T16:32:19+00:00",
     "source_of_truth_priority": [
       "explicit-user-update",
       "latest-human-review",
@@ -28223,7 +28335,7 @@
   },
   "research_governance_v2": {
     "schema_version": "2.2",
-    "generated_at": "2026-08-12T16:16:23+00:00",
+    "generated_at": "2026-08-12T16:32:19+00:00",
     "policy": {
       "schema_version": "2.2",
       "paper_novelty_precedes_method_design": true,
@@ -28586,7 +28698,7 @@
   },
   "paper_first_p0_f0": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-12T16:16:23+00:00",
+    "generated_at": "2026-08-12T16:32:19+00:00",
     "run_root": "/data/wyt/agent-self-evolution-observatory/runs/paper-first-p0-20260812",
     "authority": {
       "promotion_authorized": false,
@@ -29160,7 +29272,7 @@
   },
   "idea_discovery_v3": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:16:27+00:00",
+    "generated_at": "2026-08-12T16:32:23+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -32116,7 +32228,7 @@
   },
   "idea_discovery_v31": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:16:27+00:00",
+    "generated_at": "2026-08-12T16:32:23+00:00",
     "round": "v3.1",
     "status": "external-reviewed",
     "policy": {
@@ -32829,7 +32941,7 @@
   },
   "idea_discovery_v4": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:16:27+00:00",
+    "generated_at": "2026-08-12T16:32:23+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -42504,7 +42616,7 @@
   },
   "idea_discovery_v5": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:16:27+00:00",
+    "generated_at": "2026-08-12T16:32:23+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -52497,7 +52609,7 @@
   },
   "idea_discovery_v51": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:16:27+00:00",
+    "generated_at": "2026-08-12T16:32:23+00:00",
     "target_venue": "ICLR",
     "policy": {
       "generated_only_from_review_vectors": true,
@@ -54189,7 +54301,7 @@
   },
   "idea_discovery_v52": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:16:27+00:00",
+    "generated_at": "2026-08-12T16:32:23+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v51_revise": true,
@@ -55167,7 +55279,7 @@
   },
   "idea_discovery_v53": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T16:16:27+00:00",
+    "generated_at": "2026-08-12T16:32:23+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v52_revise_with_single_surviving_boundary": true,
@@ -55506,7 +55618,7 @@
   },
   "discussion_portfolio": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-12T16:16:27+00:00",
+    "generated_at": "2026-08-12T16:32:23+00:00",
     "target": 20,
     "count": 27,
     "remaining": 0,
@@ -58776,6 +58888,14 @@
         }
       },
       {
+        "key": "paper-first-pf2-method-stop",
+        "pass": true,
+        "detail": {
+          "decision": "STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL",
+          "problem_status": "SURVIVES_AS_PROBLEM_AND_EVALUATION_PROTOCOL_ONLY"
+        }
+      },
+      {
         "key": "paper-first-post-c2-terminal",
         "pass": true,
         "detail": {
@@ -59134,7 +59254,7 @@
         "pass": true,
         "detail": {
           "schema_version": "2.2",
-          "generated_at": "2026-08-12T16:16:23+00:00",
+          "generated_at": "2026-08-12T16:32:19+00:00",
           "policy": {
             "schema_version": "2.2",
             "paper_novelty_precedes_method_design": true,
