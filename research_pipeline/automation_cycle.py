@@ -158,6 +158,8 @@ def run_cycle(
         ))
         report["steps"].append(_step("research-system-state", write_research_system_state))
         if web_review_limit > 0:
+            if mode in {"weekly", "manual"}:
+                report["steps"].append(_step("external-research-system-learning-review", lambda: _run_external_system_learning_review(storage)))
             report["steps"].append(_step("project-web-gpt-repair-review", lambda: _run_web_reviews(web_review_limit, storage)))
         report["status"] = "pass" if all(step["status"] == "pass" for step in report["steps"]) else "degraded"
     report["completed_at"] = _now()
@@ -281,6 +283,34 @@ def _sync_literature() -> dict[str, Any]:
             os.environ.pop("S2_TIMEOUT_SECONDS", None)
         else:
             os.environ["S2_TIMEOUT_SECONDS"] = old_timeout
+
+
+def _run_external_system_learning_review(storage: StorageSettings) -> dict[str, Any]:
+    output_dir = storage.run_dir / "reviews" / "research-system-learning"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output = output_dir / "latest.md"
+    prompt = (
+        "Search official project pages, primary papers, and author repositories for materially new or updated autonomous scientific-research systems. "
+        "Extract only workflow/control mechanisms that are not superficial agent-role renamings. Compare each mechanism against our current stack: "
+        "Principle Certificate, Protocol Validity, P0 Economy, eight-gate compiler, Scientific Meta-Trace, Failure Asset Library, information-gain scheduler, "
+        "AI consultation, research-system replay, and single-writer scientific authority. For each candidate return source, mechanism, failure mode solved, local collision, "
+        "adopt/merge/watch verdict, cheapest local replay or falsifier, and safety/authority implications. Do not recommend automatic code adoption without a local gap test."
+    )
+    command = [
+        sys.executable,
+        str(PROJECT_ROOT / "scripts" / "project_web_gpt.py"),
+        "--json", "--timeout", os.getenv("AUTOMATION_WEB_GPT_TIMEOUT", "240"),
+        "--slug", "external-research-system-learning",
+        "--output", str(output),
+        prompt,
+    ]
+    completed = subprocess.run(command, cwd=PROJECT_ROOT, text=True, capture_output=True, timeout=300, check=False)
+    return {
+        "returncode": completed.returncode,
+        "output": str(output),
+        "exists": output.exists(),
+        "stderr": completed.stderr[-1000:],
+    }
 
 
 def _run_web_reviews(limit: int, storage: StorageSettings) -> dict[str, Any]:

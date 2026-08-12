@@ -82,7 +82,7 @@ def main() -> None:
         require(system["responsibilityLayers"] == 6 and system["aiCheckpoints"] == 5, f"research-system map/AI clinic is incomplete: {system['responsibilityLayers']}/{system['aiCheckpoints']}")
         require(system["outerGates"] == 8 and system["preflightGates"] == 10 and system["quantWorksheets"] == 2, f"Pre-Experiment/identifiability compiler is incomplete: {system['outerGates']}/{system['preflightGates']}/{system['quantWorksheets']}")
         require(system["lessons"] == 6 and system["failureLayers"] == 6 and system["repairLoops"] == 1, f"learning/diagnosis visualization is incomplete: {system['lessons']}/{system['failureLayers']}/{system['repairLoops']}")
-        require(system["components"] >= 17, f"expected the current backend responsibility set including Economy, decision ledger, and AI consultation, got {system['components']}")
+        require(system["components"] >= 26, f"expected the current backend responsibility set including capability registry, literature audit, Principle, Protocol Validity, Meta-Trace, failure memory, scheduler, replay, Economy, and AI consultation, got {system['components']}")
         require(system["ideaCards"] == 0, f"system-overview must not render current idea/status panels, got {system['ideaCards']}")
         require((system["preSummary"].get("audited"), system["preSummary"].get("execution_ready"), system["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system['preSummary']}")
         iteration = system["iterationSummary"]
@@ -92,7 +92,7 @@ def main() -> None:
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
         zh = execute(session_id, "return {text:document.body.textContent||'', outer:document.querySelectorAll('.preflight-outer-gate').length, gates:document.querySelectorAll('.preflight-gate').length, failures:document.querySelectorAll('.system-failure-layer').length};")
-        require(zh["outer"] == 8 and zh["gates"] == 10 and zh["failures"] == 6 and "P0 ECONOMY" in zh["text"] and "SUPPORT_INSUFFICIENT" in zh["text"] and "PRINCIPLE" in zh["text"], "research-system Economy / Principle / Pre-Experiment / scientific-state visualization is incomplete")
+        require(zh["outer"] == 8 and zh["gates"] == 10 and zh["failures"] == 6 and "P0 ECONOMY" in zh["text"] and "PROTOCOL VALIDITY" in zh["text"] and "SCIENTIFIC META-TRACE" in zh["text"] and "PRINCIPLE" in zh["text"], "research-system Economy / Principle / Protocol Validity / learning-loop visualization is incomplete")
         request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844})
         time.sleep(1)
         system_mobile = execute(session_id, """const gate=document.querySelector('.preflight-gate-grid'); const failure=document.querySelector('.system-failure-layers'); return {inner:window.innerWidth,scroll:document.documentElement.scrollWidth,gateCols:gate?getComputedStyle(gate).gridTemplateColumns:'',failureCols:failure?getComputedStyle(failure).gridTemplateColumns:'',maxCard:Math.max(0,...[...document.querySelectorAll('.preflight-gate,.system-failure-layer')].map(x=>x.getBoundingClientRect().width))};""")

@@ -13,6 +13,7 @@ REQUIRED_FALSIFICATION_PRECONDITIONS = {
     "optimization_adequate",
     "independent_truth",
     "matched_baseline",
+    "protocol_validity",
 }
 
 REQUIRED_FAILURE_UPDATE_RULES = {
@@ -264,6 +265,7 @@ def adjudicate_experiment_evidence(
         "optimization_adequate": evidence.get("optimization_adequate") is True,
         "independent_truth": evidence.get("independent_truth") is True,
         "matched_baseline": evidence.get("matched_baseline") is True,
+        "protocol_validity": evidence.get("protocol_validity") is True,
     }
     missing = [key for key, passed in checks.items() if not passed]
     if missing or evidence.get("falsifier_triggered") is not True:
@@ -286,7 +288,7 @@ def adjudicate_experiment_evidence(
         "requires_human_review": True,
         "preconditions": checks,
         "registered_prediction_id": registered_prediction_id,
-        "reason": "A preregistered principle prediction was contradicted with assumptions, scope, measurement validity, identifiability, optimization, independent truth, and matched baselines all verified.",
+        "reason": "A preregistered principle prediction was contradicted with assumptions, scope, measurement validity, identifiability, optimization, independent truth, matched baselines, and evaluation-protocol validity all verified.",
     }
 
 

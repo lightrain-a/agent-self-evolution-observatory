@@ -25,6 +25,19 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertEqual(report["ai_consultation_limit"], 1)
             self.assertTrue(report["ai_consultations"])
 
+    def test_weekly_web_cycle_includes_external_system_learning_review(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            storage = SimpleNamespace(run_dir=root / "runs", lock_dir=root / "locks", ensure=lambda: None)
+            def fake_step(name, function):
+                return {"name": name, "status": "pass", "duration_seconds": 0.0, "summary": {}}
+            with patch("research_pipeline.automation_cycle.StorageSettings.from_env", return_value=storage), patch("research_pipeline.automation_cycle._step", side_effect=fake_step):
+                report = run_cycle(mode="weekly", web_review_limit=1, ai_consultations=False, publish=False)
+            names = [row["name"] for row in report["steps"]]
+            self.assertIn("external-research-system-learning-review", names)
+            self.assertIn("project-web-gpt-repair-review", names)
+            self.assertLess(names.index("external-research-system-learning-review"), names.index("project-web-gpt-repair-review"))
+
 
 if __name__ == "__main__":
     unittest.main()

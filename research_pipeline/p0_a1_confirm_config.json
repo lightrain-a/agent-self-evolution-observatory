@@ -206,7 +206,8 @@
           "experiment_identifiable",
           "optimization_adequate",
           "independent_truth",
-          "matched_baseline"
+          "matched_baseline",
+          "protocol_validity"
         ],
         "contradiction_rule": "Reject only the incremental drift-information sub-principle after a competent updater and valid measurement repeatedly fail the preregistered matched hidden test."
       },
@@ -218,6 +219,15 @@
         "matched-simplification": "weaken/merge the current method realization, not the broader principle",
         "registered-prediction-contradicted": "only then permit principle falsification"
       }
+    },
+    "protocol_validity": {
+      "hidden_evaluation_sealed": {"passed": true, "evidence": "Hidden ALFWorld confirmatory tasks are outside update construction, model fitting, and threshold selection."},
+      "evaluation_artifacts_inaccessible": {"passed": true, "evidence": "Hidden labels, scorer internals, and confirmatory outputs are not exposed to the updater or admission policy."},
+      "independent_truth_source": {"passed": true, "evidence": "Task success and cross-task harm come from ALFWorld environment execution rather than self-judgment."},
+      "same_information_baselines": {"passed": true, "evidence": "Matched baselines receive the same candidate updates, observable inputs, hidden-task budget, and acceptance count."},
+      "claim_metric_alignment": {"passed": true, "evidence": "Confirmatory metrics directly test harmful-commit reduction at bounded target-gain loss."},
+      "versioned_evaluator": {"passed": true, "evidence": "Config hash, source hash, parser, environment policy, and evaluation artifacts are versioned before execution."},
+      "shortcut_audit": {"passed": true, "evidence": "Protocol forbids hidden-result cache reuse, public-solution lookup, evaluator introspection, and post-hoc split changes."}
     }
   }
 }

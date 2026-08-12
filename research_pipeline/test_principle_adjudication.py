@@ -61,6 +61,7 @@ class PrincipleAdjudicationTest(unittest.TestCase):
                 "optimization_adequate": True,
                 "independent_truth": True,
                 "matched_baseline": True,
+                "protocol_validity": True,
                 "falsifier_triggered": True,
             },
         )

@@ -10,7 +10,11 @@ from .ai_consultation_clinic import build_ai_consultation_clinic_state, write_ai
 from .ai_consultation_automation import DEFAULT_JSON as AI_CONSULTATION_AUTOMATION_JSON, PUBLIC_POLICY as AI_AUTOMATION_POLICY
 from .discussion_portfolio import build_discussion_portfolio
 from .evidence_graph import build_evidence_graph
+from .evidence_integrity import build_evidence_integrity_state
 from .experiment_iteration import build_experiment_iteration_state
+from .experiment_value_scheduler import build_experiment_value_scheduler
+from .external_system_learning import build_external_system_learning_state
+from .failure_asset_library import build_failure_asset_library
 from .human_terminal_state import build_human_terminal_state, write_human_terminal_state
 from .governance_protocol import build_governance_state, write_governance_state
 from .resource_lease import list_gpu_leases
@@ -25,6 +29,7 @@ from .idea_discovery_v53 import build_idea_discovery_v53
 from .idea_collision import analyze_collisions
 from .idea_lineage import build_lineage
 from .live_pipeline import load_live_corpus
+from .literature_retrieval_audit import build_literature_retrieval_audit
 from .pilot_registry import build_pilot_registry
 from .p0_mem_xfer_offline_analysis import build_mem_xfer_workflow_state
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
@@ -41,7 +46,10 @@ from .pre_experiment_specs import GATES as PRE_EXPERIMENT_GATES, POLICY as PRE_E
 from .pre_p0_identifiability import build_pre_p0_identifiability_audit
 from .pre_gpu_candidate_gates import build_pre_gpu_candidate_gate_state
 from .principle_adjudication import build_principle_layer_state
+from .research_capability_registry import build_research_capability_registry
+from .research_system_replay import build_research_system_replay
 from .review_repair import build_repair_queue
+from .scientific_meta_trace import build_scientific_meta_trace
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "research-system-state.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "research-system-state.js"
@@ -93,6 +101,9 @@ def _build_pre_experiment_state(storage: StorageSettings) -> dict[str, Any]:
             "blocked": sum(not bool(row.get("execution_authorized")) for row in cards),
             "principle_certificate_pass": sum(bool((row.get("principle_certificate_prerequisite") or {}).get("passed")) for row in cards),
             "principle_certificate_fail": sum(not bool((row.get("principle_certificate_prerequisite") or {}).get("passed")) for row in cards),
+            "protocol_validity_pass": sum(bool((row.get("protocol_validity_prerequisite") or {}).get("passed")) for row in cards),
+            "protocol_validity_fail": sum(not bool((row.get("protocol_validity_prerequisite") or {}).get("passed")) for row in cards),
+            "research_execution_plans": sum(bool(row.get("research_execution_plan")) for row in cards),
             "updater_prerequisite_pass": sum(bool((row.get("updater_competence_prerequisite") or {}).get("passed")) for row in cards),
             "updater_prerequisite_fail": sum(not bool((row.get("updater_competence_prerequisite") or {}).get("passed")) for row in cards),
             "screening_ready": sum(bool(row.get("execution_authorized")) for row in screening),
@@ -106,12 +117,20 @@ def _build_pre_experiment_state(storage: StorageSettings) -> dict[str, Any]:
 
 def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     graph = state["evidence_graph"]["summary"]
+    capabilities = state["research_capability_registry"]["summary"]
+    literature_audit = state["literature_retrieval_audit"]["summary"]
+    evidence_integrity = state["evidence_integrity"]["summary"]
     collisions = state["collision_engine"]["summary"]
     lineage = state["lineage"]["summary"]
     pilots = state["pilot_registry"]["summary"]
     pre_p0 = state["pre_p0_identifiability"]["summary"]
     pre_experiment = state["pre_experiment_compiler"]["summary"]
     principle = state["principle_layer"]["summary"]
+    meta_trace = state["scientific_meta_trace"]["summary"]
+    failure_assets = state["failure_asset_library"]["summary"]
+    value_scheduler = state["experiment_value_scheduler"]["summary"]
+    replay = state["research_system_replay"]["summary"]
+    external_learning = state["external_system_learning"]["summary"]
     economy = state["p0_economy_gate"]["summary"]
     p0_ledger = state["p0_decision_ledger"]["summary"]
     ai_clinic = state["ai_consultation_clinic"]["summary"]
@@ -126,6 +145,8 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     v5 = state["idea_discovery_v5"]["summary"]
     return [
         {"source":"ResearchAgent", "component":{"en":"Citation and evidence graph","zh":"引文与证据图谱"}, "status":"running", "evidence":{"en":f"{graph['nodes']} nodes / {graph['edges']} edges","zh":f"{graph['nodes']} 个节点 / {graph['edges']} 条边"}},
+        {"source":"Biomni / BioMedAgent / PaperQA2", "component":{"en":"Declarative research capability registry","zh":"声明式科研能力注册表"}, "status":"running", "evidence":{"en":f"{capabilities['capabilities']} typed capabilities / {capabilities['high_risk']} high-risk / least-privilege routing","zh":f"{capabilities['capabilities']} 类 typed capability / {capabilities['high_risk']} 类高风险 / 最小权限路由"}},
+        {"source":"AutoResearchBench / PaperQA2 / SciNetBench / ScientistOne / verifier calibration", "component":{"en":"Literature retrieval + Evidence Integrity layer","zh":"文献检索 + Evidence Integrity 层"}, "status":"running", "evidence":{"en":f"{literature_audit['retrieval_modes']} retrieval modes / {evidence_integrity['claim_types']} claim types / verifier {evidence_integrity['verifier_calibration_status']}","zh":f"{literature_audit['retrieval_modes']} 类检索模式 / {evidence_integrity['claim_types']} 类 claim / verifier {evidence_integrity['verifier_calibration_status']}"}},
         {"source":"AI-Researcher", "component":{"en":"Hybrid semantic deduplication and collision filtering","zh":"混合语义去重与碰撞过滤"}, "status":"running", "evidence":{"en":f"{collisions['pairwise_comparisons']} pair comparisons / {collisions['flagged_pairs']} flagged","zh":f"{collisions['pairwise_comparisons']} 组两两比较 / {collisions['flagged_pairs']} 个标记"}},
         {"source":"MOOSE-Chem / Deep-Ideation", "component":{"en":"Idea lineage and branch preservation","zh":"Idea 谱系与分支保留"}, "status":"running", "evidence":{"en":f"{lineage['idea_nodes']} ideas / {lineage['edges']} lineage edges","zh":f"{lineage['idea_nodes']} 个 Idea / {lineage['edges']} 条谱系边"}},
         {"source":"Human terminal ledger", "component":{"en":"Terminalized human-parent lifecycle controller","zh":"人工 Parent 终态生命周期控制器"}, "status":"running", "evidence":{"en":f"26 parents: {terminal['p0']} P0 / {terminal['p0_ready']} P0-ready / {terminal['merge']} merged / {terminal['drop']} dropped","zh":f"26 个 Parent：{terminal['p0']} P0 / {terminal['p0_ready']} P0 Ready / {terminal['merge']} 合并 / {terminal['drop']} 停止"}},
@@ -135,12 +156,17 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"HypoRefine / IdeaForge / ScholarEval / InnoEval / SciAtlas / InternAgent / AutoScientists", "component":{"en":"Wide-search simplification-challenge ideation","zh":"宽搜索与简化挑战式 Idea 发现"}, "status":"running", "evidence":{"en":f"{v5['raw_candidates']} v5 candidates / {v5['external_reviewed']} R2 reviewed / {v5['external_pass']} PASS","zh":f"{v5['raw_candidates']} 个 v5 候选 / {v5['external_reviewed']} 个 R2 已审 / {v5['external_pass']} 个 PASS"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Pre-P0 identifiability auditor","zh":"Pre-P0 实验可识别性审计"}, "status":"running", "evidence":{"en":f"{pre_p0['execution_ready']}/{pre_p0['audited']} retrospective contracts execution-ready","zh":f"当前 {pre_p0['execution_ready']}/{pre_p0['audited']} 份 retrospective 合同允许启动"}},
         {"source":"FirstResearch / Popper / Co-Scientist / RD-Agent", "component":{"en":"Principle Certificate + epistemic adjudicator","zh":"原理证书 + 认识论裁决器"}, "status":"running", "evidence":{"en":f"{principle['certificates_passed']}/{principle['cards']} principle certificates valid / {principle['principle_falsifications']} principle falsifications","zh":f"{principle['certificates_passed']}/{principle['cards']} 份原理证书有效 / {principle['principle_falsifications']} 个原理级否定"}},
+        {"source":"Qiushi / Kosmos / MLEvolve", "component":{"en":"Scientific Meta-Trace + cross-branch world state","zh":"Scientific Meta-Trace + 跨分支科研状态"}, "status":"running", "evidence":{"en":f"{meta_trace['principles']} principles / {meta_trace['unresolved_principles']} unresolved / {meta_trace['cross_branch_reference_edges']} cross-branch links","zh":f"{meta_trace['principles']} 个原理 / {meta_trace['unresolved_principles']} 个未决 / {meta_trace['cross_branch_reference_edges']} 条跨分支引用"}},
+        {"source":"MLEvolve / InternAgent / AutoResearchClaw", "component":{"en":"Failure Asset + dead-end memory","zh":"失败资产 + Dead-End 记忆库"}, "status":"running", "evidence":{"en":f"{failure_assets['assets']} failure assets / {failure_assets['unique_signatures']} reusable signatures / {failure_assets['economy_dead_ends']} economy dead ends","zh":f"{failure_assets['assets']} 条失败资产 / {failure_assets['unique_signatures']} 类可复用签名 / {failure_assets['economy_dead_ends']} 个 Economy dead end"}},
+        {"source":"Ai2 AutoDiscovery / MLEvolve / AI-Scientist-v2", "component":{"en":"Information-gain experiment portfolio scheduler","zh":"信息增益实验组合调度器"}, "status":"running", "evidence":{"en":f"{value_scheduler['candidates']} candidate tests / {value_scheduler['cross_branch_reference_edges']} cross-branch references / advisory only","zh":f"{value_scheduler['candidates']} 个候选实验 / {value_scheduler['cross_branch_reference_edges']} 条跨分支引用 / 仅建议不授权"}},
+        {"source":"ResearchClawBench / HackDetect / ScienceAgentBench / AutoLabs", "component":{"en":"Protocol-validity auditor + research-system replay benchmark","zh":"协议有效性审计 + 科研系统回放基准"}, "status":"running", "evidence":{"en":f"protocol {pre_experiment['protocol_validity_pass']}/{pre_experiment['compiled_cards']} / replay {replay['passed']}/{replay['cases']}","zh":f"Protocol {pre_experiment['protocol_validity_pass']}/{pre_experiment['compiled_cards']} / 回放 {replay['passed']}/{replay['cases']}"}},
+        {"source":"External-system intake registry", "component":{"en":"Continuous external research-system learning","zh":"持续外部科研系统学习"}, "status":"running", "evidence":{"en":f"{external_learning['systems_reviewed']} systems / {external_learning['adopted']} adopted / {external_learning['next_backlog']} next backlog","zh":f"已审 {external_learning['systems_reviewed']} 个系统 / {external_learning['adopted']} 个已吸收 / {external_learning['next_backlog']} 个下一批"}},
         {"source":"P0 retrospective economy review", "component":{"en":"Five-gate P0 Economy layer","zh":"P0 五门资源经济层"}, "status":"running", "evidence":{"en":f"{economy['matched_simplification_stops']} matched-simplification stops / {economy['substrate_stops']} substrate stops / {economy['economy_ready']} currently economy-ready","zh":f"{economy['matched_simplification_stops']} 个简化基线 STOP / {economy['substrate_stops']} 个底座 STOP / 当前 {economy['economy_ready']} 个 Economy-ready"}},
         {"source":"Web GPT + domestic-model independent consultation", "component":{"en":"Five-checkpoint AI consultation clinic","zh":"五节点 AI 会诊诊断层"}, "status":"running", "evidence":{"en":f"{ai_clinic['checkpoints']} checkpoints / {ai_clinic['pre_gpu_checkpoints']} before GPU / zero AI-authoritative checkpoints","zh":f"{ai_clinic['checkpoints']} 个会诊节点 / {ai_clinic['pre_gpu_checkpoints']} 个位于 GPU 前 / AI 直接授权节点为 0"}},
         {"source":"Content-addressed AI consultation automation", "component":{"en":"Automatic consultation trigger queue","zh":"AI 会诊自动触发队列"}, "status":"running", "evidence":{"en":f"baseline={ai_automation.get('baseline_initialized')} / {ai_automation.get('cases',0)} cases / {ai_automation.get('pending',0)} pending / {ai_automation.get('unresolved_high_risk',0)} unresolved high-risk","zh":f"baseline={ai_automation.get('baseline_initialized')} / {ai_automation.get('cases',0)} 个 case / {ai_automation.get('pending',0)} 个待执行 / {ai_automation.get('unresolved_high_risk',0)} 个未处置高风险"}},
         {"source":"Unified P0 decision ledger", "component":{"en":"Current experiment-decision ledger","zh":"统一 P0 当前决策账本"}, "status":"running", "evidence":{"en":f"{p0_ledger['active_p0']} active rows / {p0_ledger['experiment_stopped']} stopped awaiting review / {p0_ledger['launchable']} launchable","zh":f"{p0_ledger['active_p0']} 条活跃记录 / {p0_ledger['experiment_stopped']} 条实验 STOP 待人工 / {p0_ledger['launchable']} 条可启动"}},
         {"source":"P0-System v2", "component":{"en":"Stage governance, repair budgets, trace contracts, and resource leases","zh":"阶段治理、修复预算、Trace 合同与资源租约"}, "status":"running", "evidence":{"en":f"{len(governance['stages'])} scientific stages / {len(governance['failure_classes'])} typed failure classes / {governance['runtime']['active_gpu_leases']} active GPU leases","zh":f"{len(governance['stages'])} 个科学阶段 / {len(governance['failure_classes'])} 类失败语义 / {governance['runtime']['active_gpu_leases']} 个活跃 GPU 租约"}},
-        {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Updater-competence prerequisite + eight-gate Pre-Experiment Compiler","zh":"Updater Competence 前置条件 + 八门实验启动前编译器"}, "status":"running", "evidence":{"en":f"updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / launch-ready {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']} / formal P0 {pre_experiment['formal_p0_ready']}/{pre_experiment['formal_p0_total']}","zh":f"Updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / 可启动 {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']} / formal P0 {pre_experiment['formal_p0_ready']}/{pre_experiment['formal_p0_total']}"}},
+        {"source":"AIDE / AI-Scientist-v2 / R&D-Agent / SCION", "component":{"en":"Updater prerequisite + derived Research Execution Plan + eight-gate Pre-Experiment Compiler","zh":"Updater 前置 + 派生 Research Execution Plan + 八门实验启动前编译器"}, "status":"running", "evidence":{"en":f"REP {pre_experiment['research_execution_plans']}/{pre_experiment['compiled_cards']} / updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / launch-ready {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']}","zh":f"REP {pre_experiment['research_execution_plans']}/{pre_experiment['compiled_cards']} / Updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / 可启动 {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']}"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Pilot registry and result feedback","zh":"Pilot 注册表与结果回流"}, "status":"running", "evidence":{"en":f"{pilots['phases']} phases / {pilots['valid_result_files']} executed results","zh":f"{pilots['phases']} 个阶段 / {pilots['valid_result_files']} 个已执行结果"}},
         {"source":"AI-Scientist-v2 / AIDE / RD-Agent / ML-Master / AIRA / Agent Laboratory", "component":{"en":"Experiment diagnosis and atomic repair tree","zh":"实验诊断与原子修复树"}, "status":"running", "evidence":{"en":f"{iteration['nodes']} pilot nodes / {iteration['repair_children']} atomic repair children / {iteration['scale_up_allowed']} scale-up","zh":f"{iteration['nodes']} 个 Pilot 节点 / {iteration['repair_children']} 个原子修复子节点 / {iteration['scale_up_allowed']} 个可扩大"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Unrestricted autonomous code execution tree","zh":"不受限制的自主代码执行树"}, "status":"intentionally-disabled", "evidence":{"en":"Only sandboxed/manual experiment execution is allowed; results can still flow back automatically.","zh":"只允许沙箱或人工确认后的实验执行；合法结果仍可自动回流。"}},
@@ -229,6 +255,9 @@ def build_research_system_state() -> dict[str, Any]:
     corpus = _load_corpus_with_site_fallback()
     idea_bank = build_iclr_idea_bank()
     evidence_graph = build_evidence_graph(corpus, idea_bank)
+    research_capability_registry = build_research_capability_registry()
+    literature_retrieval_audit = build_literature_retrieval_audit(evidence_graph, corpus)
+    evidence_integrity = build_evidence_integrity_state()
     collision_engine = analyze_collisions(idea_bank)
     lineage = build_lineage(idea_bank, collision_engine)
     pre_p0_identifiability = build_pre_p0_identifiability_audit(idea_bank)
@@ -278,6 +307,11 @@ def build_research_system_state() -> dict[str, Any]:
     p0_economy_public = {"summary": p0_economy_gate["summary"], "policy": p0_economy_gate["policy"], "gates": p0_economy_gate["gates"]}
     p0_decision_ledger = build_p0_decision_ledger(p0_admission, p0_offline_qualification, human_terminal_ideas, four_direction_iteration)
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
+    scientific_meta_trace = build_scientific_meta_trace(pre_experiment_compiler, principle_layer, experiment_iteration, p0_decision_ledger_public)
+    failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public)
+    experiment_value_scheduler = build_experiment_value_scheduler(experiment_iteration, scientific_meta_trace)
+    research_system_replay = build_research_system_replay(pre_experiment_compiler)
+    external_system_learning = build_external_system_learning_state()
     p0_offline_public = {"summary": p0_offline_qualification["summary"], "policy": p0_offline_qualification["policy"]}
     p0_realizability_public = {"summary": p0_realizability["summary"], "policy": p0_realizability["policy"]}
     p0_revived_batch_public = {"summary": p0_revived_batch["summary"], "policy": p0_revived_batch["policy"], "parent_batch": p0_revived_batch["parent_batch"]}
@@ -304,7 +338,7 @@ def build_research_system_state() -> dict[str, Any]:
         "storage":{"data_root":str(storage.data_root), "run_dir":str(storage.run_dir)},
         "automation":{
             "daily":{"schedule":"02:15 server local time", "mode":"deterministic-offline"},
-            "weekly":{"schedule":"Monday 03:15 server local time", "mode":"literature-sync-plus-two-bounded-web-reviews"},
+            "weekly":{"schedule":"Monday 03:15 server local time", "mode":"literature-sync-plus-bounded-idea-and-research-system-reviews"},
             "fail_safe":"Exclusive locks; partial failure preserves the previous valid deployment artifact.",
             "latest_report":latest_report,
         },
@@ -315,6 +349,11 @@ def build_research_system_state() -> dict[str, Any]:
             "passed_ideas":idea_bank["summary"]["passed"],
             "evidence_nodes":evidence_graph["summary"]["nodes"],
             "evidence_edges":evidence_graph["summary"]["edges"],
+            "research_capabilities":research_capability_registry["summary"]["capabilities"],
+            "literature_retrieval_modes":literature_retrieval_audit["summary"]["retrieval_modes"],
+            "literature_benchmark_status":literature_retrieval_audit["summary"]["benchmark_status"],
+            "evidence_integrity_claim_types":evidence_integrity["summary"]["claim_types"],
+            "evidence_verifier_calibration_status":evidence_integrity["summary"]["verifier_calibration_status"],
             "collision_flags":collision_engine["summary"]["flagged_pairs"],
             "lineage_edges":lineage["summary"]["edges"],
             "pilot_results":pilot_registry["summary"]["valid_result_files"],
@@ -323,11 +362,18 @@ def build_research_system_state() -> dict[str, Any]:
             "pre_experiment_cards":pre_experiment_compiler["summary"]["compiled_cards"],
             "pre_experiment_ready":pre_experiment_compiler["summary"]["execution_ready"],
             "pre_experiment_formal_ready":pre_experiment_compiler["summary"]["formal_p0_ready"],
+            "research_execution_plans":pre_experiment_compiler["summary"]["research_execution_plans"],
             "experiment_diagnoses":experiment_iteration["summary"]["nodes"],
             "experiment_repair_children":experiment_iteration["summary"]["repair_children"],
             "experiment_scale_up":experiment_iteration["summary"]["scale_up_allowed"],
             "principle_certificates_passed":principle_layer["summary"]["certificates_passed"],
             "principle_falsifications":principle_layer["summary"]["principle_falsifications"],
+            "protocol_validity_pass":pre_experiment_compiler["summary"]["protocol_validity_pass"],
+            "meta_trace_unresolved":scientific_meta_trace["summary"]["unresolved_principles"],
+            "failure_assets":failure_asset_library["summary"]["assets"],
+            "value_scheduler_candidates":experiment_value_scheduler["summary"]["candidates"],
+            "research_replay_passed":research_system_replay["summary"]["passed"],
+            "external_systems_reviewed":external_system_learning["summary"]["systems_reviewed"],
             "repair_queue":repair_queue["summary"]["queued_ideas"],
             "human_terminal_parents":human_terminal_ideas["summary"]["human_parents"],
             "human_terminal_p0":human_terminal_ideas["summary"]["p0"],
@@ -416,6 +462,9 @@ def build_research_system_state() -> dict[str, Any]:
             "mem_xfer_second_model_status":mem_xfer_workflow["second_model"]["status"],
         },
         "evidence_graph":evidence_graph,
+        "research_capability_registry":research_capability_registry,
+        "literature_retrieval_audit":literature_retrieval_audit,
+        "evidence_integrity":evidence_integrity,
         "collision_engine":collision_engine,
         "lineage":lineage,
         "pre_p0_identifiability":pre_p0_identifiability,
@@ -424,6 +473,11 @@ def build_research_system_state() -> dict[str, Any]:
         "pilot_registry":pilot_registry,
         "experiment_iteration":experiment_iteration,
         "principle_layer":principle_layer,
+        "scientific_meta_trace":scientific_meta_trace,
+        "failure_asset_library":failure_asset_library,
+        "experiment_value_scheduler":experiment_value_scheduler,
+        "research_system_replay":research_system_replay,
+        "external_system_learning":external_system_learning,
         "human_terminal_ideas":human_terminal_ideas,
         "p0_admission":p0_admission_public,
         "ai_consultation_clinic":ai_consultation_public,
@@ -477,12 +531,14 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
     checks = [
         {"key":"corpus", "pass":bool(corpus.get("papers")), "detail":f"{len(corpus.get('papers') or [])} papers"},
         {"key":"evidence-coverage", "pass":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"] >= 20, "detail":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"]},
+        {"key":"capability-and-literature-audit", "pass":state["research_capability_registry"]["policy"]["capabilities_are_declared_not_prompt_inferred"] and state["research_capability_registry"]["policy"]["model_or_tool_routing_cannot_escalate_scientific_authority"] and state["research_capability_registry"]["summary"]["capabilities"] >= 9 and state["literature_retrieval_audit"]["policy"]["deep_and_wide_retrieval_are_distinct_capabilities"] and state["literature_retrieval_audit"]["policy"]["citation_verifier_must_be_named_versioned_and_calibrated"] and state["literature_retrieval_audit"]["summary"]["benchmark_status"] == "spec-ready-not-yet-scored" and state["evidence_integrity"]["policy"]["every_publishable_claim_requires_evidence_chain"] and state["evidence_integrity"]["policy"]["uncalibrated_verifier_cannot_be_treated_as_ground_truth"], "detail":{"capabilities":state["research_capability_registry"]["summary"],"literature":state["literature_retrieval_audit"]["summary"],"evidence_integrity":state["evidence_integrity"]["summary"]}},
         {"key":"collision-engine", "pass":state["collision_engine"]["summary"]["pairwise_comparisons"] > 0, "detail":state["collision_engine"]["summary"]["pairwise_comparisons"]},
         {"key":"lineage", "pass":state["lineage"]["summary"]["idea_nodes"] >= 24, "detail":state["lineage"]["summary"]["idea_nodes"]},
         {"key":"pre-p0-identifiability", "pass":state["pre_p0_identifiability"]["policy"]["p0_execution_requires_pre_p0_pass"], "detail":state["pre_p0_identifiability"]["summary"]},
         {"key":"pre-gpu-survivor-gate", "pass":state["pre_gpu_candidate_gates"]["summary"]["total"] == 10 and state["pre_gpu_candidate_gates"]["summary"]["small_p0"] == 2 and state["pre_gpu_candidate_gates"]["policy"]["hold_or_inconclusive_is_not_method_failure"], "detail":state["pre_gpu_candidate_gates"]["summary"]},
         {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == 4, "detail":state["principle_layer"]["summary"]},
-        {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == 4, "detail":state["pre_experiment_compiler"]["summary"]},
+        {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["summary"]["protocol_validity_pass"] == 4 and state["pre_experiment_compiler"]["policy"]["research_execution_plan_required_before_launch"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_is_derived_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_cannot_authorize_execution"] and state["pre_experiment_compiler"]["summary"]["research_execution_plans"] == 4 and state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == 4, "detail":state["pre_experiment_compiler"]["summary"]},
+        {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
         {"key":"mem-xfer-workflow", "pass":not _mem_xfer_semantic_errors(state["mem_xfer_workflow"]), "detail":{"semantic_errors":_mem_xfer_semantic_errors(state["mem_xfer_workflow"]),"support_qualification":state["mem_xfer_workflow"]["support_qualification"]["status"],"full_support":state["mem_xfer_workflow"]["full_support"]["status"],"cpu_gate":state["mem_xfer_workflow"]["support_enriched_analysis"]["status"],"second_model":state["mem_xfer_workflow"]["second_model"]["status"]}},
@@ -508,6 +564,13 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if state["summary"]["papers"] < 100: errors.append("literature corpus too small")
     if state["summary"]["ideas"] < 24: errors.append("idea bank too small")
     if state["evidence_graph"]["summary"]["nodes"] <= state["summary"]["papers"]: errors.append("evidence graph lacks non-paper nodes")
+    if not state["research_capability_registry"]["policy"]["capabilities_are_declared_not_prompt_inferred"] or state["research_capability_registry"]["summary"].get("capabilities",0) < 9: errors.append("research capability registry is incomplete")
+    if not state["research_capability_registry"]["policy"]["model_or_tool_routing_cannot_escalate_scientific_authority"]: errors.append("capability routing must not escalate scientific authority")
+    if not state["literature_retrieval_audit"]["policy"]["deep_and_wide_retrieval_are_distinct_capabilities"]: errors.append("deep and wide literature retrieval must remain distinct")
+    if not state["literature_retrieval_audit"]["policy"]["citation_verifier_must_be_named_versioned_and_calibrated"]: errors.append("citation verifier must be versioned and calibrated")
+    if state["literature_retrieval_audit"]["summary"].get("benchmark_status") != "spec-ready-not-yet-scored": errors.append("literature retrieval benchmark status mismatch")
+    if not state["evidence_integrity"]["policy"]["every_publishable_claim_requires_evidence_chain"]: errors.append("publishable claims must require an evidence chain")
+    if not state["evidence_integrity"]["policy"]["uncalibrated_verifier_cannot_be_treated_as_ground_truth"]: errors.append("uncalibrated verifiers must not be treated as ground truth")
     if state["collision_engine"]["summary"]["pairwise_comparisons"] <= 0: errors.append("collision engine did not run")
     if state["pilot_registry"]["summary"]["phases"] != state["summary"]["passed_ideas"] * 3: errors.append("pilot phase count mismatch")
     if not state["pre_p0_identifiability"]["policy"]["p0_execution_requires_pre_p0_pass"]: errors.append("retrospective Pre-P0 audit must remain authoritative evidence")
@@ -519,6 +582,13 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if state["principle_layer"]["summary"]["certificates_passed"] != 4: errors.append("all four current pre-experiment cards must have valid principle certificates")
     if not state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"]: errors.append("Principle Certificate must be a hard prerequisite before updater competence")
     if not state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"]: errors.append("Principle Certificate must not inflate the formal gate count beyond eight")
+    if not state["pre_experiment_compiler"]["policy"]["protocol_validity_required_before_updater_competence"]: errors.append("Protocol Validity must be a hard prerequisite before updater competence")
+    if not state["pre_experiment_compiler"]["policy"]["protocol_validity_is_not_a_formal_gate"]: errors.append("Protocol Validity must not inflate the formal gate count beyond eight")
+    if state["pre_experiment_compiler"]["summary"].get("protocol_validity_pass") != 4: errors.append("all four current pre-experiment cards must pass Protocol Validity")
+    if not state["pre_experiment_compiler"]["policy"]["research_execution_plan_required_before_launch"]: errors.append("a derived Research Execution Plan must exist before launch")
+    if not state["pre_experiment_compiler"]["policy"]["research_execution_plan_is_derived_not_a_formal_gate"]: errors.append("Research Execution Plan must not inflate the formal gate count")
+    if not state["pre_experiment_compiler"]["policy"]["research_execution_plan_cannot_authorize_execution"]: errors.append("Research Execution Plan must never authorize execution")
+    if state["pre_experiment_compiler"]["summary"].get("research_execution_plans") != 4: errors.append("all four current cards must expose a derived Research Execution Plan")
     if not state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"]: errors.append("Updater competence must be a hard prerequisite before Gate 1")
     if not state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"]: errors.append("Updater competence must not inflate the formal gate count beyond eight")
     if not state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"]: errors.append("Pre-Experiment Compiler must require all eight gates")
@@ -527,6 +597,14 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"]: errors.append("P0 execution must require an 8/8 Pre-Experiment Card")
     if not state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"]: errors.append("automatic P0-to-P1 escalation must stay forbidden")
     if not state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"]: errors.append("non-identifiable pilots must not update scientific belief")
+    if not state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"]: errors.append("raw trace must remain separate from compact scientific state")
+    if not state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"]: errors.append("active scientific state must remain separate from institutional memory")
+    if not state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"]: errors.append("active scientific authority must never decay as memory")
+    if not state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"]: errors.append("failure assets must be retrieved before new experiment design")
+    if not state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"]: errors.append("institutional failure memory must track scope and reuse effectiveness")
+    if not state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"]: errors.append("experiment value scheduler must remain advisory")
+    if state["research_system_replay"]["summary"].get("failed") != 0: errors.append("research-system replay benchmark has failing epistemic cases")
+    if not state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"]: errors.append("external system designs require a local gap test before adoption")
     errors.extend(_mem_xfer_semantic_errors(state["mem_xfer_workflow"]))
     if not state["mem_xfer_workflow"].get("allowed_statuses"): errors.append("mem-xfer workflow must publish typed allowed statuses")
     if not state["mem_xfer_workflow"].get("dependencies"): errors.append("mem-xfer workflow must publish stage dependencies")

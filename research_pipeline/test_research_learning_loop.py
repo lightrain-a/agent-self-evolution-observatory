@@ -1,0 +1,126 @@
+from __future__ import annotations
+
+import copy
+import unittest
+from pathlib import Path
+
+from .evidence_integrity import audit_claim_chain, build_evidence_integrity_state
+from .experiment_value_scheduler import build_experiment_value_scheduler
+from .external_system_learning import build_external_system_learning_state
+from .failure_asset_library import build_failure_asset_library
+from .p0_common import load_json
+from .literature_retrieval_audit import build_literature_retrieval_audit
+from .protocol_validity import audit_protocol_validity
+from .research_capability_registry import build_research_capability_registry
+from .research_system_replay import build_research_system_replay
+from .scientific_meta_trace import build_scientific_meta_trace
+
+
+class ResearchLearningLoopTest(unittest.TestCase):
+    def config(self) -> dict:
+        return load_json(Path(__file__).with_name("p0_a1_confirm_config.json"))
+
+    def test_capability_registry_is_typed_and_least_privilege(self) -> None:
+        state = build_research_capability_registry()
+        self.assertGreaterEqual(state["summary"]["capabilities"], 9)
+        self.assertTrue(state["policy"]["capabilities_are_declared_not_prompt_inferred"])
+        self.assertTrue(state["policy"]["least_capable_sufficient_interface_is_preferred"])
+        self.assertTrue(state["policy"]["model_or_tool_routing_cannot_escalate_scientific_authority"])
+        by_id = {row["id"]: row for row in state["capabilities"]}
+        self.assertEqual(by_id["gpu-experiment"]["authority"], "execution-only")
+        self.assertEqual(by_id["ai-consultation"]["authority"], "advisory-only")
+        self.assertIn("literature-relation-search", by_id)
+        self.assertIn("BM25", state["retrieval_router_contract"]["simple_first"])
+
+    def test_literature_audit_separates_deep_wide_relation_and_claim_modes(self) -> None:
+        state = build_literature_retrieval_audit({"summary": {"nodes": 100, "edges": 200}}, {"statistics": {"paper_count": 80}})
+        self.assertEqual(state["summary"]["retrieval_modes"], 4)
+        self.assertEqual(state["summary"]["benchmark_status"], "spec-ready-not-yet-scored")
+        self.assertTrue(state["policy"]["deep_and_wide_retrieval_are_distinct_capabilities"])
+        self.assertTrue(state["policy"]["citation_verifier_must_be_named_versioned_and_calibrated"])
+        self.assertFalse(state["retrieval_qualification"]["benchmark_claim_authority"])
+
+    def test_evidence_integrity_routes_claim_types_and_calibrates_verifier(self) -> None:
+        state = build_evidence_integrity_state()
+        self.assertEqual(state["summary"]["claim_types"], 5)
+        self.assertEqual(state["summary"]["verifier_calibration_status"], "spec-ready-not-yet-calibrated")
+        self.assertTrue(state["policy"]["uncalibrated_verifier_cannot_be_treated_as_ground_truth"])
+        audit = audit_claim_chain({
+            "claim_type": "numeric-result",
+            "claim_text": "Accuracy improves by 3pp.",
+            "artifact_kinds": ["evaluator-log", "metric-table", "run-provenance"],
+        })
+        self.assertTrue(audit["passed"])
+        broken = audit_claim_chain({"claim_type": "citation", "claim_text": "Prior work supports X.", "artifact_kinds": ["primary-source"]})
+        self.assertFalse(broken["passed"])
+        self.assertIn("missing-artifact:passage-anchor", broken["blockers"])
+
+    def test_protocol_validity_contract(self) -> None:
+        audit = audit_protocol_validity(self.config())
+        self.assertTrue(audit["passed"], audit.get("blockers"))
+        self.assertFalse(audit["is_formal_gate"])
+        self.assertEqual(len(audit["checks"]), 7)
+
+    def test_protocol_shortcut_failure_blocks(self) -> None:
+        config = copy.deepcopy(self.config())
+        config["pre_experiment"]["protocol_validity"]["shortcut_audit"]["passed"] = False
+        audit = audit_protocol_validity(config)
+        self.assertFalse(audit["passed"])
+        self.assertIn("protocol-check-failed:shortcut_audit", audit["blockers"])
+
+    def test_failure_assets_preserve_scientific_layer(self) -> None:
+        state = {"nodes": [
+            {"idea_id": "a", "diagnosis": "no-label-variation", "diagnosis_layer": "experiment", "artifact_dir": "/a"},
+            {"idea_id": "b", "diagnosis": "matched-simplification-tie", "diagnosis_layer": "scientific-boundary", "artifact_dir": "/b"},
+        ]}
+        library = build_failure_asset_library(state, {"summary": {"matched_simplification_stops": 3, "substrate_stops": 2}})
+        self.assertEqual(library["summary"]["assets"], 2)
+        by_diag = {row["diagnosis"]: row for row in library["assets"]}
+        self.assertEqual(by_diag["no-label-variation"]["affected_layer"], "experiment")
+        self.assertEqual(by_diag["matched-simplification-tie"]["affected_layer"], "method-realization")
+        self.assertEqual(by_diag["no-label-variation"]["memory_scope"], "institutional-research-memory")
+        self.assertEqual(by_diag["no-label-variation"]["reuse_effectiveness"]["status"], "not-yet-measured")
+
+    def test_value_scheduler_prefers_cheap_decisive_falsifier(self) -> None:
+        iteration = {"nodes": [{"idea_id": "a", "repair_children": [
+            {"operator": "optimization-extension", "child": "train-longer", "changed_variable": "steps", "precondition": "curve not converged"},
+            {"operator": "disagreement-mining", "child": "mine-disagreement", "changed_variable": "cases", "precondition": "find disagreement"},
+        ]}]}
+        scheduler = build_experiment_value_scheduler(iteration, {"principles": [{"idea_id": "a"}]})
+        self.assertEqual(scheduler["ranking"][0]["operator"], "disagreement-mining")
+        self.assertFalse(scheduler["ranking"][0]["execution_authorized"])
+
+    def test_meta_trace_keeps_raw_trace_separate(self) -> None:
+        cert = {"passed": True, "principle_id": "p1", "contract": {"mechanism": "m", "predictions": [{"id": "P"}]}}
+        pre = {"cards": [{"idea_id": "a", "blockers": ["baseline-floor"], "principle_certificate_prerequisite": cert}]}
+        principle = {"adjudications": [{"principle_id": "p1", "verdict": "EXPERIMENT_DESIGN_REPAIR", "scientific_belief_target": "none"}]}
+        iteration = {"nodes": [{"idea_id": "a", "diagnosis": "substrate-degenerate", "repair_children": []}]}
+        meta = build_scientific_meta_trace(pre, principle, iteration, {"summary": {"launchable": 0}})
+        self.assertEqual(meta["summary"]["principles"], 1)
+        self.assertEqual(meta["principles"][0]["next_uncertainty"], "baseline-floor")
+        self.assertTrue(meta["policy"]["raw_execution_trace_is_not_scientific_state"])
+        self.assertTrue(meta["policy"]["active_scientific_state_is_separate_from_institutional_memory"])
+        self.assertFalse(meta["memory_scopes"]["active_scientific_state"]["time_decay_allowed"])
+        self.assertTrue(meta["memory_scopes"]["institutional_research_memory"]["time_decay_allowed"])
+
+    def test_replay_guards_protocol_invalid_negative(self) -> None:
+        config = self.config()
+        cert = {"passed": True, "contract": config["pre_experiment"]["principle_certificate"]}
+        replay = build_research_system_replay({"cards": [{"principle_certificate_prerequisite": cert}]})
+        self.assertEqual(replay["summary"]["failed"], 0)
+        by_id = {row["case_id"]: row for row in replay["cases"]}
+        self.assertEqual(by_id["protocol-invalid-negative"]["actual"], "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED")
+        self.assertEqual(by_id["registered-contradiction"]["actual"], "PRINCIPLE_FALSIFIED")
+        self.assertEqual(replay["paper_scale_reproduction"]["status"], "spec-ready-not-yet-run")
+
+    def test_external_system_intake_requires_gap_test(self) -> None:
+        state = build_external_system_learning_state()
+        self.assertTrue(state["policy"]["every_candidate_design_requires_local_gap_test"])
+        self.assertGreaterEqual(state["summary"]["systems_reviewed"], 10)
+        self.assertGreaterEqual(state["summary"]["adopted"], 15)
+        self.assertEqual(state["summary"]["next_backlog"], 0)
+        self.assertFalse(state["next_backlog"])
+
+
+if __name__ == "__main__":
+    unittest.main()

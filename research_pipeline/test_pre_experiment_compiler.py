@@ -52,6 +52,11 @@ class PreExperimentCompilerTest(unittest.TestCase):
                 self.assertEqual(card["gate_count"], 8, name)
                 self.assertEqual(card["passed_gates"], 7, (name, card["blockers"]))
                 self.assertTrue(card["principle_certificate_prerequisite"]["passed"], name)
+                plan = card["research_execution_plan"]
+                self.assertEqual(plan["source_design"], "SCION Research Execution Plan")
+                self.assertFalse(plan["execution_authority"])
+                self.assertEqual(len(plan["verification_checkpoints"]), 11)
+                self.assertIn("gpu-experiment", plan["capability_requirements"])
                 self.assertFalse(card["execution_authorized"], name)
                 self.assertEqual([row["key"] for row in card["gates"]], [row["key"] for row in GATES])
                 if idea_id == "update-trust-region":

@@ -11,6 +11,7 @@ from .pre_experiment_execution import compute_graph, measured_throughput, observ
 from .pre_experiment_science import baseline_competence, mechanism_identifiability, parameter_provenance, qualification_path, statistical_resolution
 from .pre_experiment_specs import GATES, POLICY
 from .principle_adjudication import audit_principle_certificate
+from .protocol_validity import audit_protocol_validity
 
 
 def _now() -> str:
@@ -52,10 +53,56 @@ def _updater_competence_prerequisite(config: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _research_execution_plan(
+    idea_id: str,
+    principle_certificate: dict[str, Any],
+    protocol_validity: dict[str, Any],
+    updater_competence: dict[str, Any],
+    gates: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Compile scientific intent into an auditable execution plan without adding launch authority."""
+    contract = principle_certificate.get("contract") or {}
+    prediction_ids = [str(row.get("id") or "") for row in contract.get("predictions") or [] if row.get("id")]
+    plan_core = {
+        "idea_id": idea_id,
+        "prediction_ids": prediction_ids,
+        "dependencies": ["principle-certificate", "protocol-validity", "updater-competence", "pre-experiment-8-of-8"],
+        "capability_requirements": ["cpu-falsifier", "gpu-experiment", "independent-analysis"],
+        "expected_artifacts": ["frozen-config", "plan-hash", "incremental-raw-trace", "metric-table", "analysis-provenance", "decision-ledger-update"],
+    }
+    checkpoints = [
+        {"id": "principle-certificate", "passed": principle_certificate.get("passed") is True},
+        {"id": "protocol-validity", "passed": protocol_validity.get("passed") is True},
+        {"id": "updater-competence", "passed": updater_competence.get("passed") is True},
+        *[{"id": f"gate:{gate['key']}", "passed": gate.get("pass") is True} for gate in gates],
+    ]
+    return {
+        "schema_version": "1.0",
+        "source_design": "SCION Research Execution Plan",
+        "plan_hash": _hash_payload(plan_core),
+        "objective": "Generate decision-relevant evidence for the registered principle predictions under the frozen protocol.",
+        "prediction_ids": prediction_ids,
+        "dependencies": plan_core["dependencies"],
+        "verification_checkpoints": checkpoints,
+        "capability_requirements": plan_core["capability_requirements"],
+        "expected_artifacts": plan_core["expected_artifacts"],
+        "fallback_conditions": [
+            {"if": "execution-or-runtime-invalid", "action": "repair execution only; preserve scientific contract"},
+            {"if": "protocol-invalid-or-shortcut-detected", "action": "invalidate scientific interpretation and repair protocol"},
+            {"if": "experiment-nonidentifiable", "action": "repair substrate/variation before method interpretation"},
+            {"if": "operationalization-invalid", "action": "repair measurement bridge before principle update"},
+            {"if": "registered-principle-prediction-contradicted-under-all-preconditions", "action": "route to principle adjudicator and human scientific review"},
+        ],
+        "execution_authority": False,
+        "rule": "This plan makes objectives, dependencies, tools, artifacts, checkpoints, and fallback conditions explicit; it never authorizes execution by itself.",
+    }
+
+
 def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root: Path) -> dict[str, Any]:
     if str(config.get("idea_id") or "") != idea_id:
         raise ValueError(f"config idea_id mismatch: {config.get('idea_id')} != {idea_id}")
     principle_certificate = audit_principle_certificate(config)
+    protocol_validity = audit_protocol_validity(config)
     updater_competence = _updater_competence_prerequisite(config)
     gates = [
         parameter_provenance(config),
@@ -69,10 +116,12 @@ def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root:
     ]
     if [gate["key"] for gate in gates] != [gate["key"] for gate in GATES]:
         raise RuntimeError("pre-experiment gate order drift")
-    blockers = list(principle_certificate.get("blockers") or []) + list(updater_competence.get("blockers") or []) + [blocker for gate in gates for blocker in gate["blockers"]]
+    research_execution_plan = _research_execution_plan(idea_id, principle_certificate, protocol_validity, updater_competence, gates)
+    blockers = list(principle_certificate.get("blockers") or []) + list(protocol_validity.get("blockers") or []) + list(updater_competence.get("blockers") or []) + [blocker for gate in gates for blocker in gate["blockers"]]
     passed = sum(bool(gate["pass"]) for gate in gates)
     gates_passed = passed == len(gates)
     principle_ready = principle_certificate.get("passed") is True
+    protocol_ready = protocol_validity.get("passed") is True
     updater_competent = updater_competence.get("passed") is True
     config_hash = _hash_payload(config)
     scope = config.get("scope") or {}
@@ -90,11 +139,13 @@ def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root:
         "config_hash": config_hash,
         "policy": POLICY,
         "principle_certificate_prerequisite": principle_certificate,
+        "protocol_validity_prerequisite": protocol_validity,
         "updater_competence_prerequisite": updater_competence,
+        "research_execution_plan": research_execution_plan,
         "gate_count": len(gates),
         "passed_gates": passed,
-        "execution_authorized": principle_ready and updater_competent and gates_passed,
-        "status": "pass" if principle_ready and updater_competent and gates_passed else "blocked",
+        "execution_authorized": principle_ready and protocol_ready and updater_competent and gates_passed,
+        "status": "pass" if principle_ready and protocol_ready and updater_competent and gates_passed else "blocked",
         "blockers": blockers,
         "gates": gates,
         "compute_graph": next(gate["detail"] for gate in gates if gate["key"] == "compute_graph"),

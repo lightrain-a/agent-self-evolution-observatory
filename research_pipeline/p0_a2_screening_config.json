@@ -199,7 +199,8 @@
           "experiment_identifiable",
           "optimization_adequate",
           "independent_truth",
-          "matched_baseline"
+          "matched_baseline",
+          "protocol_validity"
         ],
         "contradiction_rule": "Reject only the state-dependent stopping sub-principle after a qualified nondegenerate update stream and valid controller target fail the preregistered matched hidden test."
       },
@@ -211,6 +212,15 @@
         "matched-simplification": "weaken/merge the learned-controller realization, not the adaptive-stopping phenomenon",
         "registered-prediction-contradicted": "only then permit principle falsification"
       }
+    },
+    "protocol_validity": {
+      "hidden_evaluation_sealed": {"passed": true, "evidence": "Hidden frozen update sequences are outside controller fitting, threshold selection, and sequence generation."},
+      "evaluation_artifacts_inaccessible": {"passed": true, "evidence": "Hidden optimal-round labels and final sequence outcomes are not exposed to the controller during fitting."},
+      "independent_truth_source": {"passed": true, "evidence": "Round utility and regression are computed from executed ALFWorld outcomes rather than controller self-evaluation."},
+      "same_information_baselines": {"passed": true, "evidence": "Static and learned stopping policies receive the same frozen sequences, state features, and call accounting."},
+      "claim_metric_alignment": {"passed": true, "evidence": "Screening metrics directly assess call saving at bounded success loss and non-increased regression."},
+      "versioned_evaluator": {"passed": true, "evidence": "Sequence generator, feature extraction, evaluator, config, and source hashes are frozen before execution."},
+      "shortcut_audit": {"passed": true, "evidence": "Protocol forbids future-round truth leakage, hidden-label reuse, evaluator introspection, and post-hoc sequence replacement."}
     }
   }
 }
