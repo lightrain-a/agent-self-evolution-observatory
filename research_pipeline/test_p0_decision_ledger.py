@@ -13,7 +13,7 @@ class P0DecisionLedgerTest(unittest.TestCase):
   self.assertEqual(state['summary']['launchable'],0)
   self.assertGreaterEqual(state['summary']['experiment_stopped'],20)
   self.assertEqual(state['summary']['economy_blocked'],0)
-  self.assertGreaterEqual(state['summary']['upstream_hold'],3)
+  self.assertEqual(state['summary']['upstream_hold'],0)
   by={r['idea_id']:r for r in state['rows']}
   self.assertEqual(by['active-causal-minimal-rollback']['current_state'],'experiment-stop-await-human-review')
   self.assertEqual(by['active-causal-minimal-rollback']['economy_stop_class'],'matched-simplification')
@@ -33,7 +33,7 @@ class P0DecisionLedgerTest(unittest.TestCase):
   self.assertEqual(by['cross-task-effect-transport-certificate']['current_state'],'method-development-stop')
   self.assertEqual(by['cross-task-effect-transport-certificate']['lifecycle'],'p0')
   self.assertEqual(state['summary']['latest_iteration_overrides'],4)
-  self.assertEqual(state['summary']['upstream_hold'],4)
+  self.assertEqual(state['summary']['upstream_hold'],1)
   self.assertEqual(state['summary']['launchable'],0)
 
 if __name__=='__main__': unittest.main()

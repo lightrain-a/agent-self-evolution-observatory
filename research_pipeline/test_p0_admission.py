@@ -41,8 +41,8 @@ class P0AdmissionTest(unittest.TestCase):
             # checkpoint is mounted; a compute-only host may lack that run tree.
             self.assertTrue(row["execution_preflight"]["blockers"])
         self.assertEqual(self.state["summary"]["economy_ready"], 0)
-        self.assertEqual(self.state["economy_gate"]["summary"]["matched_simplification_stops"], 16)
-        self.assertEqual(self.state["economy_gate"]["summary"]["substrate_stops"], 7)
+        self.assertEqual(self.state["economy_gate"]["summary"]["matched_simplification_stops"], 19)
+        self.assertEqual(self.state["economy_gate"]["summary"]["substrate_stops"], 4)
         self.assertEqual(self.state["summary"]["execution_blocked_or_pending"], 27)
         transitioned = [row for row in self.state["cards"] if (row.get("p0_entry") or {}).get("date") == "2026-08-11"]
         self.assertEqual(len(transitioned), 16)
@@ -62,8 +62,8 @@ class P0AdmissionTest(unittest.TestCase):
         self.assertEqual(e4["execution_preflight"]["gpu0"]["status"],"stop-matched-boolean-rule-equivalent")
         revived={row['idea_id']:row for row in self.state['cards'] if (row.get('p0_entry') or {}).get('date')=='2026-08-12'}
         self.assertEqual(len(revived),7)
-        self.assertEqual(sum((row['execution_preflight'].get('economy_gate') or {}).get('primary_stop_class')=='matched-simplification' for row in revived.values()),4)
-        self.assertEqual(sum((row['execution_preflight'].get('economy_gate') or {}).get('primary_stop_class')=='substrate' for row in revived.values()),3)
+        self.assertEqual(sum((row['execution_preflight'].get('economy_gate') or {}).get('primary_stop_class')=='matched-simplification' for row in revived.values()),7)
+        self.assertEqual(sum((row['execution_preflight'].get('economy_gate') or {}).get('primary_stop_class')=='substrate' for row in revived.values()),0)
 
     def test_public_admission_compacts_economy_compiler_details(self) -> None:
         with tempfile.TemporaryDirectory() as td:

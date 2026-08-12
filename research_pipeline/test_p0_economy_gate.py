@@ -10,8 +10,8 @@ class P0EconomyGateTest(unittest.TestCase):
   s=self.state['summary']
   self.assertEqual(s['ideas'],27)
   self.assertEqual(s['economy_ready'],0)
-  self.assertEqual(s['matched_simplification_stops'],16)
-  self.assertEqual(s['substrate_stops'],7)
+  self.assertEqual(s['matched_simplification_stops'],19)
+  self.assertEqual(s['substrate_stops'],4)
   self.assertEqual(s['voi_stops'],0)
  def test_compiler_and_authority_are_required_before_future_pass(self):
   self.assertTrue(self.state['policy']['all_five_required_before_execution_compilation'])
