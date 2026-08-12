@@ -59,6 +59,24 @@ def paper_design_contract() -> dict:
     }
 
 
+
+def mark_endpoint_headroom_pass(config: dict) -> dict:
+    outcomes = config["pre_experiment"]["outcomes"]
+    outcomes["primary_readout_type"] = "terminal-success"
+    outcomes["execution_cap_counts_as_terminal_failure"] = False
+    if "HORIZON-CENSORED" not in outcomes["allowed"]:
+        outcomes["allowed"].append("HORIZON-CENSORED")
+    outcomes["endpoint_headroom"] = {
+        "passed": True,
+        "evidence_id": "unit-test-endpoint-headroom",
+        "measured_non_censored_fraction": 0.80,
+        "minimum_non_censored_fraction": 0.50,
+        "measured_bilateral_cap_fraction": 0.10,
+        "maximum_bilateral_cap_fraction": 0.25,
+    }
+    return config
+
+
 def qualification() -> dict:
     return {
         "schema_version": "1.0",
@@ -89,7 +107,7 @@ class PreExperimentCompilerTest(unittest.TestCase):
                 idea_id = load_json(config_path)["idea_id"]
                 card = compile_from_path(idea_id, config_path, root)
                 self.assertEqual(card["gate_count"], 8, name)
-                self.assertEqual(card["passed_gates"], 7, (name, card["blockers"]))
+                self.assertEqual(card["passed_gates"], 6, (name, card["blockers"]))
                 self.assertFalse(card["paper_design_prerequisite"]["passed"], name)
                 self.assertIn("paper-design-contract-missing", card["blockers"])
                 self.assertTrue(card["principle_certificate_prerequisite"]["passed"], name)
@@ -99,6 +117,8 @@ class PreExperimentCompilerTest(unittest.TestCase):
                 self.assertEqual(len(plan["verification_checkpoints"]), 11)
                 self.assertIn("gpu-experiment", plan["capability_requirements"])
                 self.assertFalse(card["execution_authorized"], name)
+                self.assertIn("primary-readout-type-missing-or-unknown", card["blockers"])
+                self.assertIn("execution-cap-censoring-policy-invalid", card["blockers"])
                 self.assertEqual([row["key"] for row in card["gates"]], [row["key"] for row in GATES])
                 if idea_id == "update-trust-region":
                     self.assertIn("retrospective-representability", card["blockers"])
@@ -118,7 +138,8 @@ class PreExperimentCompilerTest(unittest.TestCase):
             self.write_evidence(root)
             for name in CONFIGS:
                 config_path = Path(__file__).with_name(name)
-                card = compile_from_path(load_json(config_path)["idea_id"], config_path, root)
+                config = mark_endpoint_headroom_pass(copy.deepcopy(load_json(config_path)))
+                card = compile_pre_experiment_card(config["idea_id"], config, root)
                 self.assertEqual(card["gate_count"], 8, name)
                 self.assertEqual(card["passed_gates"], 8, (name, card["blockers"]))
                 self.assertFalse(card["execution_authorized"], name)
@@ -135,7 +156,7 @@ class PreExperimentCompilerTest(unittest.TestCase):
             self.write_evidence(root)
             for name in CONFIGS:
                 config_path = Path(__file__).with_name(name)
-                config = copy.deepcopy(load_json(config_path))
+                config = mark_endpoint_headroom_pass(copy.deepcopy(load_json(config_path)))
                 config["pre_experiment"]["paper_design"] = paper_design_contract()
                 config["pre_experiment"]["updater_competence"]["passed"] = True
                 config["pre_experiment"]["updater_competence"]["status"] = "pass"
@@ -161,7 +182,7 @@ class PreExperimentCompilerTest(unittest.TestCase):
             for key in ("claim_alignment", "target_variation", "baseline_disagreement", "representability", "tiny_overfit", "competence_window", "effect_variation")
         ], "blockers": [], "execution_ready": True, "status": "pass"}
         config_path = Path(__file__).with_name("p0_a1_screening_config.json")
-        config = copy.deepcopy(load_json(config_path))
+        config = mark_endpoint_headroom_pass(copy.deepcopy(load_json(config_path)))
         config["pre_experiment"].pop("principle_certificate")
         config["pre_experiment"]["updater_competence"]["passed"] = True
         config["pre_experiment"]["updater_competence"]["status"] = "pass"
@@ -211,6 +232,34 @@ class PreExperimentCompilerTest(unittest.TestCase):
             card = compile_pre_experiment_card("budgeted-evolution-controller", config, root)
         self.assertFalse(card["execution_authorized"])
         self.assertIn("screening-must-not-allow-method-fail", card["blockers"])
+
+
+    def test_terminal_success_requires_headroom_and_typed_censoring(self) -> None:
+        config = copy.deepcopy(load_json(Path(__file__).with_name("p0_a1_confirm_config.json")))
+        outcomes = config["pre_experiment"]["outcomes"]
+        outcomes["primary_readout_type"] = "terminal-success"
+        outcomes["execution_cap_counts_as_terminal_failure"] = False
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self.write_evidence(root)
+            card = compile_pre_experiment_card("update-trust-region", config, root)
+        self.assertIn("terminal-readout-missing-horizon-censored-outcome", card["blockers"])
+        self.assertIn("endpoint-headroom-contract-missing", card["blockers"])
+
+    def test_failed_endpoint_headroom_blocks_launch(self) -> None:
+        config = mark_endpoint_headroom_pass(copy.deepcopy(load_json(Path(__file__).with_name("p0_a1_confirm_config.json"))))
+        headroom = config["pre_experiment"]["outcomes"]["endpoint_headroom"]
+        headroom["passed"] = False
+        headroom["measured_non_censored_fraction"] = 0.30
+        headroom["measured_bilateral_cap_fraction"] = 0.55
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self.write_evidence(root)
+            card = compile_pre_experiment_card("update-trust-region", config, root)
+        self.assertFalse(card["execution_authorized"])
+        self.assertIn("endpoint-headroom-audit-failed", card["blockers"])
+        self.assertIn("endpoint-headroom-noncensored-insufficient", card["blockers"])
+        self.assertIn("endpoint-headroom-bilateral-cap-too-high", card["blockers"])
 
 
 if __name__ == "__main__":

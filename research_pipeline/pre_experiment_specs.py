@@ -31,10 +31,11 @@ TYPED_OUTCOMES = {
     "RUNTIME-ERROR",
     "IMPLEMENTATION-ERROR",
     "BUDGET-STOP",
+    "HORIZON-CENSORED",
 }
 
 POLICY: dict[str, Any] = {
-    "schema_version": "2.2",
+    "schema_version": "2.3",
     "paper_design_contract_required_before_principle_and_implementation": True,
     "paper_design_contract_is_not_a_formal_gate": True,
     "local_validation_cannot_discover_or_redefine_core_method": True,
@@ -64,6 +65,9 @@ POLICY: dict[str, Any] = {
     "post_update_effect_realization_is_cross_cutting_protocol_validity_not_a_ninth_gate": True,
     "observation_level_recurrence_alone_cannot_establish_effect_realization": True,
     "legacy_contracts_predating_effect_realization_rule_are_not_retroactively_reclassified": True,
+    "terminal_outcome_requires_endpoint_headroom_audit": True,
+    "execution_cap_censoring_must_be_typed_separately": True,
+    "cap_censored_branch_cannot_count_as_natural_terminal_failure": True,
     "parameters_require_provenance": True,
     "gpu_hours_must_derive_from_measured_throughput": True,
 }

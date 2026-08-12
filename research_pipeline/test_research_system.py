@@ -99,6 +99,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(compiler["summary"]["research_execution_plans"], 4)
         self.assertTrue(all((card.get("research_execution_plan") or {}).get("execution_authority") is False for card in compiler["cards"]))
         self.assertEqual(compiler["summary"]["gate_failures"]["mechanism_identifiability"], 4)
+        self.assertEqual(compiler["summary"]["gate_failures"]["outcome_semantics"], 4)
         self.assertTrue(compiler["policy"]["paper_design_contract_required_before_principle_and_implementation"])
         self.assertTrue(compiler["policy"]["local_validation_cannot_discover_or_redefine_core_method"])
         self.assertTrue(compiler["policy"]["full_experiment_requires_frozen_method_and_experiment_blueprint"])
@@ -108,6 +109,9 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(compiler["policy"]["updater_competence_required_before_gate_1"])
         self.assertTrue(compiler["policy"]["updater_competence_is_not_a_ninth_gate"])
         self.assertTrue(compiler["policy"]["automatic_override_forbidden"])
+        self.assertTrue(compiler["policy"]["terminal_outcome_requires_endpoint_headroom_audit"])
+        self.assertTrue(compiler["policy"]["execution_cap_censoring_must_be_typed_separately"])
+        self.assertTrue(compiler["policy"]["cap_censored_branch_cannot_count_as_natural_terminal_failure"])
         self.assertTrue(self.state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"])
 
     def test_memory_support_workflow_preserves_stage_boundaries(self) -> None:

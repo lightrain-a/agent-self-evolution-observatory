@@ -144,4 +144,37 @@ def outcome_semantics(config: dict[str, Any]) -> dict[str, Any]:
         blockers.append("budget-stop-registration-policy-invalid")
     if semantics.get("floor_or_ceiling_counts_as_method_fail") is not False:
         blockers.append("floor-ceiling-interpretation-policy-invalid")
+
+    # Terminal-outcome experiments need more than action/support identifiability.
+    # A replay that stops only because the experiment horizon/cap was exhausted is
+    # computationally censored, not a naturally resolved terminal failure.  The
+    # headroom audit is intentionally part of Outcome Semantics (not a ninth gate).
+    readout_type = str(semantics.get("primary_readout_type") or "").strip()
+    if readout_type not in {"terminal-success", "nonterminal-process", "composite", "not-applicable"}:
+        blockers.append("primary-readout-type-missing-or-unknown")
+    if semantics.get("execution_cap_counts_as_terminal_failure") is not False:
+        blockers.append("execution-cap-censoring-policy-invalid")
+    if readout_type == "terminal-success":
+        if "HORIZON-CENSORED" not in allowed:
+            blockers.append("terminal-readout-missing-horizon-censored-outcome")
+        headroom = semantics.get("endpoint_headroom") or {}
+        if not isinstance(headroom, dict) or not headroom:
+            blockers.append("endpoint-headroom-contract-missing")
+        else:
+            if headroom.get("passed") is not True:
+                blockers.append("endpoint-headroom-audit-failed")
+            if not str(headroom.get("evidence_id") or "").strip():
+                blockers.append("endpoint-headroom-evidence-id-missing")
+            measured = headroom.get("measured_non_censored_fraction")
+            minimum = headroom.get("minimum_non_censored_fraction")
+            bilateral = headroom.get("measured_bilateral_cap_fraction")
+            maximum_bilateral = headroom.get("maximum_bilateral_cap_fraction")
+            if measured is None or minimum is None:
+                blockers.append("endpoint-headroom-noncensored-fraction-missing")
+            elif float(measured) + 1e-12 < float(minimum):
+                blockers.append("endpoint-headroom-noncensored-insufficient")
+            if bilateral is None or maximum_bilateral is None:
+                blockers.append("endpoint-headroom-bilateral-cap-fraction-missing")
+            elif float(bilateral) > float(maximum_bilateral) + 1e-12:
+                blockers.append("endpoint-headroom-bilateral-cap-too-high")
     return gate("outcome_semantics", not blockers, blockers=blockers, detail=semantics)
