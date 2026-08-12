@@ -28,12 +28,16 @@ def run_part(plan_path:Path, source_shard:int, part_index:int, num_parts:int, mo
     out=shard_dir/f'future-extra-part-{part_index}-of-{num_parts}.jsonl'
     existing=_rows(out)
     main_done={(r.get('candidate_id'),r.get('role'),r.get('task')) for r in future if r.get('role') in {'candidate-probe','candidate-hidden'}}
-    done=main_done|{(r.get('candidate_id'),r.get('role'),r.get('task')) for r in existing}
+    all_extra=[]
+    for prior in sorted(shard_dir.glob('future-extra-part-*.jsonl')):
+        all_extra+=_rows(prior)
+    extra_done={(r.get('candidate_id'),r.get('role'),r.get('task')) for r in all_extra if r.get('role') in {'candidate-probe','candidate-hidden'}}
+    done=main_done|extra_done
     gpu=check_gpu_free(); cfg=load_config(alfworld_config); cfg.setdefault('general',{})['save_path']=str(shard_dir/f'future-extra-runtime-{part_index}-of-{num_parts}')
     policy=HFAdmissiblePolicy(model_path,policy_mode='react-family'); runner=ALFWorldGameRunner(cfg); started=time.time()
     selected_ids={c['candidate_id'] for c in selected}
-    inherited=sum(1 for cid,role,task in main_done if cid in selected_ids)
-    completed=inherited+len(existing); total=len(selected)*(len(plan['probe_tasks'])+int(plan['contracts']['C-5']['hidden_per_candidate']))
+    inherited=sum(1 for cid,role,task in done if cid in selected_ids)
+    completed=inherited; total=len(selected)*(len(plan['probe_tasks'])+int(plan['contracts']['C-5']['hidden_per_candidate']))
     for c in selected:
         cid=c['candidate_id']; patch=c['patch']
         for task in plan['probe_tasks']:
