@@ -55,8 +55,8 @@ function terminalExperimentEvidence(row){
   const latestEvidence=fourDirectionExperimentEvidence(id); if(latestEvidence)return latestEvidence;
   const revived=(p0RevivedBatchState().revived||[]).find(x=>x.idea_id===id)||null;
   if(revived){
-    const decision=String(revived.decision||""), hold=decision.startsWith("HOLD"), stop=decision.startsWith("STOP_MATCHED");
-    return {current_started:!hold,category:hold?"p0-hold":(stop?"p0-stop":"p0-signal"),tone:hold?"check":(stop?"fail":"pass"),label:hold?(language==="zh"?"CPU F0 · 上游真实数据 HOLD":"CPU F0 · upstream real-data HOLD"):(stop?(language==="zh"?"CPU F0 STOP · 简化基线等效":"CPU F0 STOP · matched simplification equivalent"):(language==="zh"?"CPU F0 SIGNAL":"CPU F0 SIGNAL")),detail:revived.gpu0?.evidence||revived.scientific_role||"--",next:revived.next_action||revived.gpu0?.next||"--",evidence:`${decision||"CPU_F0"} · ${revived.code||""}`};
+    const decision=String(revived.decision||""), hold=decision.startsWith("HOLD"), stop=decision.startsWith("STOP_");
+    return {current_started:!hold,category:hold?"p0-hold":(stop?"p0-stop":"p0-signal"),tone:hold?"check":(stop?"fail":"pass"),label:hold?(language==="zh"?"CPU F0 · 上游真实数据 HOLD":"CPU F0 · upstream real-data HOLD"):(stop?(language==="zh"?"CPU F0 STOP · 无独立 headroom":"CPU F0 STOP · no standalone headroom"):(language==="zh"?"CPU F0 SIGNAL":"CPU F0 SIGNAL")),detail:revived.gpu0?.evidence||revived.scientific_role||"--",next:revived.next_action||revived.gpu0?.next||"--",evidence:`${decision||"CPU_F0"} · ${revived.code||""}`};
   }
   if(id==="update-trust-region" && p0A1SoftAuditState().decision){
     const a=p0A1SoftAuditState(),b=a.future_branch_policy||{},p=a.matched_baselines?.target_family_prior||{},t=a.matched_baselines?.simple_h1_navigate_trigger||{};
