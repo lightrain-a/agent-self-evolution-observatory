@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-12T20:07:33+00:00",
+  "generated_at": "2026-08-12T20:10:03+00:00",
   "review_id": "fresh-problem-saturation-20260813-r2",
   "policy": {
     "schema_version": "1.1",
@@ -17,10 +17,10 @@
     "gpu_authorized": false
   },
   "summary": {
-    "drafts_reviewed": 39,
+    "drafts_reviewed": 40,
     "survivors": 0,
-    "stopped": 39,
-    "reduction_patterns": 32,
+    "stopped": 40,
+    "reduction_patterns": 33,
     "local_validation_authorized": 0,
     "p0_authorized": 0
   },
@@ -258,6 +258,12 @@
       "title": "Decomposition-Dependent Verification of Autonomous Scientific Claims",
       "decision": "STOP_REDUCTION",
       "reduction": "scientific-claim-decomposition-dependence"
+    },
+    {
+      "id": "C6",
+      "title": "Why Agent-Version Rollback Cannot Undo Irreversible External Consequences",
+      "decision": "STOP_REDUCTION",
+      "reduction": "agent-version-rollback-vs-external-effects"
     }
   ],
   "reduction_patterns": [
@@ -558,6 +564,16 @@
         "proof/decomposition traceability"
       ],
       "veto": "Scientific verification that changes with a legal subclaim decomposition is not a new self-evolution object when decomposition quality, compositional infeasibility, and verifier alignment already determine downstream claim judgments under the same evidence."
+    },
+    {
+      "key": "agent-version-rollback-vs-external-effects",
+      "mature_theories": [
+        "semantic transactions for agent workflows",
+        "irreversible-effect safety / execution fidelity",
+        "checkpoint-restore and semantic rollback semantics",
+        "compensating transactions and recovery"
+      ],
+      "veto": "Rolling back an agent version while external side effects persist is not a new self-evolution object when semantic transactions, irreversible-transition safety, and checkpoint-recovery already formalize commit, rollback, replay, fork, compensation, and audit of external state."
     }
   ],
   "generator_revision": {
