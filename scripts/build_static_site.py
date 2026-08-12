@@ -139,6 +139,8 @@ def build() -> Path:
         OUTPUT / "generated" / "human-terminal-idea-state.js",
         OUTPUT / "generated" / "p0-admission-state.js",
         OUTPUT / "generated" / "p0-four-direction-iteration.js",
+        OUTPUT / "generated" / "persistent-updater-program-final.js",
+        OUTPUT / "generated" / "persistent-updater-program-final.json",
         OUTPUT / "generated" / "p0-decision-ledger.js",
         OUTPUT / "generated" / "p0-offline-qualification.js",
         OUTPUT / "generated" / "p0-realizability-suite.js",

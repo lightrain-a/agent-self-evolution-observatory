@@ -35,6 +35,7 @@ from .p0_realizability_suite import build_p0_realizability_suite, write_p0_reali
 from .p0_revived_batch_f0 import build_revived_batch_f0, write_revived_batch_f0
 from .p0_decision_ledger import build_p0_decision_ledger, write_p0_decision_ledger
 from .p0_four_direction_iteration import build_four_direction_iteration, write_four_direction_iteration
+from .persistent_updater_program_final import build_persistent_updater_program_final, write_persistent_updater_program_final
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
 from .pre_experiment_specs import GATES as PRE_EXPERIMENT_GATES, POLICY as PRE_EXPERIMENT_POLICY
 from .pre_p0_identifiability import build_pre_p0_identifiability_audit
@@ -255,6 +256,7 @@ def build_research_system_state() -> dict[str, Any]:
     p0_offline_qualification = build_p0_offline_qualification_state()
     p0_admission = build_p0_admission_state()
     four_direction_iteration = build_four_direction_iteration()
+    persistent_updater_program_final = build_persistent_updater_program_final()
     ai_consultation_clinic = build_ai_consultation_clinic_state()
     ai_consultation_automation = _load_ai_consultation_automation_public()
     p0_admission_public = {"summary": p0_admission["summary"], "policy": p0_admission["policy"]}
@@ -338,6 +340,8 @@ def build_research_system_state() -> dict[str, Any]:
             "p0_economy_substrate_stops":p0_economy_gate["summary"]["substrate_stops"],
             "p0_decision_ledger_stopped":p0_decision_ledger["summary"]["experiment_stopped"],
             "p0_decision_ledger_launchable":p0_decision_ledger["summary"]["launchable"],
+            "persistent_updater_program_verdict":persistent_updater_program_final["verdict"],
+            "persistent_updater_batch_authorized":persistent_updater_program_final["batch_experiment_authorized"],
             "governance_v2_stages":len(research_governance_v2["stages"]),
             "governance_v2_failure_classes":len(research_governance_v2["failure_classes"]),
             "governance_v2_active_gpu_leases":research_governance_v2["runtime"]["active_gpu_leases"],
@@ -418,6 +422,7 @@ def build_research_system_state() -> dict[str, Any]:
         "p0_economy_gate":p0_economy_public,
         "p0_decision_ledger":p0_decision_ledger_public,
         "p0_four_direction_iteration":{"policy":four_direction_iteration["policy"],"ideas":four_direction_iteration["ideas"],"source_authority_sha256":four_direction_iteration["source_authority_sha256"]},
+        "persistent_updater_program_final":persistent_updater_program_final,
         "research_governance_v2":research_governance_v2,
         "p0_offline_qualification":p0_offline_public,
         "p0_realizability":p0_realizability_public,
@@ -477,6 +482,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"ai-consultation-clinic", "pass":state["ai_consultation_clinic"]["summary"].get("checkpoints") == 5 and state["ai_consultation_clinic"]["policy"].get("ai_vote_can_authorize_gpu") is False and state["ai_consultation_clinic"]["policy"].get("high_risk_findings_must_be_compiled_into_machine_checks") is True, "detail":state["ai_consultation_clinic"]["summary"]},
         {"key":"ai-consultation-automation", "pass":state["ai_consultation_automation"]["policy"].get("content_addressed_triggers") is True and state["ai_consultation_automation"]["policy"].get("ai_output_never_authorizes_execution") is True and state["ai_consultation_automation"]["clinic_policy"].get("ai_vote_can_authorize_gpu") is False, "detail":state["ai_consultation_automation"]["summary"]},
         {"key":"p0-decision-ledger", "pass":state["p0_decision_ledger"]["summary"].get("active_p0") == expected_active_p0 and state["p0_decision_ledger"]["summary"].get("launchable") == 0 and state["p0_decision_ledger"]["policy"].get("economy_stop_overrides_planned_registry_display") is True, "detail":state["p0_decision_ledger"]["summary"]},
+        {"key":"persistent-updater-terminal", "pass":state["persistent_updater_program_final"].get("verdict") == "STOP_CURRENT_PERSISTENT_UPDATER_PROGRAM" and state["persistent_updater_program_final"].get("batch_experiment_authorized") is False and (state["persistent_updater_program_final"].get("states") or {}).get("A2") == "KEEP_PROBLEM_HOLD_NO_QUALIFIED_UPDATER", "detail":{"verdict":state["persistent_updater_program_final"].get("verdict"),"batch":state["persistent_updater_program_final"].get("batch_experiment_authorized"),"A2":(state["persistent_updater_program_final"].get("states") or {}).get("A2")}},
         {"key":"research-governance-v2", "pass":state["research_governance_v2"]["policy"].get("support_and_method_are_distinct") is True and state["research_governance_v2"]["policy"].get("p0_method_requires_frozen_support_pass") is True and state["research_governance_v2"]["policy"].get("raw_trace_is_mandatory_for_gpu_runs") is True and len(state["research_governance_v2"].get("stages") or []) == 7, "detail":state["research_governance_v2"]},
         {"key":"p0-offline-qualification", "pass":state["p0_offline_qualification"]["summary"].get("ideas") == 16 and state["p0_offline_qualification"]["policy"].get("method_result_from_offline_qualification_forbidden") is True, "detail":state["p0_offline_qualification"]["summary"]},
         {"key":"p0-realizability", "pass":state["p0_realizability"]["summary"].get("audited") == 14 and state["p0_realizability"]["policy"].get("cannot_emit_method_result") is True, "detail":state["p0_realizability"]["summary"]},
@@ -529,6 +535,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if (ledger.get("summary") or {}).get("active_p0") != expected_active_p0: errors.append(f"P0 decision ledger must cover all {expected_active_p0} active P0 directions")
     if (ledger.get("summary") or {}).get("launchable") != state["p0_admission"]["summary"].get("execution_authorized"): errors.append("P0 decision ledger launchability must match execution authorization")
     if (ledger.get("policy") or {}).get("economy_stop_overrides_planned_registry_display") is not True: errors.append("P0 decision ledger must override stale planned display with terminal Economy evidence")
+    updater_final = state.get("persistent_updater_program_final") or {}
+    if updater_final.get("verdict") != "STOP_CURRENT_PERSISTENT_UPDATER_PROGRAM" or updater_final.get("batch_experiment_authorized") is not False or updater_final.get("second_backbone_authorized") is not False: errors.append("persistent updater terminal authority must keep batch and second backbone locked")
+    if (updater_final.get("states") or {}).get("A2") != "KEEP_PROBLEM_HOLD_NO_QUALIFIED_UPDATER": errors.append("persistent updater terminal authority must keep A2 as upstream HOLD")
     governance = state.get("research_governance_v2") or {}
     if len(governance.get("stages") or []) != 7: errors.append("Research Governance v2 must expose seven ordered scientific stages")
     if (governance.get("policy") or {}).get("support_and_method_are_distinct") is not True or (governance.get("policy") or {}).get("p0_method_requires_frozen_support_pass") is not True: errors.append("P0 support/method stage separation policy missing")
@@ -552,6 +561,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_p0_offline_qualification_state()
     write_p0_admission_state()
     write_four_direction_iteration()
+    write_persistent_updater_program_final()
     write_ai_consultation_clinic_state()
     state=build_research_system_state()
     write_p0_decision_ledger(state["p0_decision_ledger"])
