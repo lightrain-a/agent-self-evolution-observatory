@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-12T01:08:44+00:00",
+  "generated_at": "2026-08-12T10:46:41+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
@@ -53,7 +53,7 @@
   },
   "economy_gate": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T01:08:44+00:00",
+    "generated_at": "2026-08-12T10:46:41+00:00",
     "policy": {
       "schema_version": "1.1",
       "stage_semantics": "resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate",
@@ -102,11 +102,11 @@
       "economy_ready": 0,
       "blocked_or_stopped": 27,
       "stop_classes": {
-        "substrate": 7,
-        "matched-simplification": 16
+        "substrate": 4,
+        "matched-simplification": 19
       },
-      "matched_simplification_stops": 16,
-      "substrate_stops": 7,
+      "matched_simplification_stops": 19,
+      "substrate_stops": 4,
       "voi_stops": 0
     }
   },
@@ -3649,13 +3649,13 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "hold-substrate-real-traces-missing",
-          "evidence": "No standardized 4-6-round lineage-linked pseudo-label log table satisfying >=200 label decisions with repeated and independent ancestors.",
-          "evidence_kind": "real-substrate-inventory",
-          "next": "Collect/freeze 4-6 real self-label rounds with >=200 lineage-linked decisions, ancestor IDs, independent truth, and ancestor-held-out split; rerun same-feature direct/shallow baselines."
+          "status": "stop-matched-simplification-lineage-weighting-no-headroom",
+          "evidence": "labels=400; enrichment=0.9602564102564102; disagreement=0.025",
+          "evidence_kind": "real-shared-substrate-f0",
+          "next": "Do not open a method GPU run under the current F0 decision."
         },
         "pre_p0": {
-          "passed": 4,
+          "passed": 9,
           "total": 10,
           "checks": [
             {
@@ -3665,33 +3665,33 @@
             },
             {
               "key": "target_variation",
-              "status": "pending-evidence",
-              "evidence": "No standardized 4-6-round lineage-linked pseudo-label log artifact is available."
+              "status": "pass",
+              "evidence": "labels=400; enrichment=0.9602564102564102; disagreement=0.025"
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": "Matched baseline headroom requires a real trace table."
+              "status": "fail",
+              "evidence": "labels=400; enrichment=0.9602564102564102; disagreement=0.025"
             },
             {
               "key": "representability",
-              "status": "pending-evidence",
-              "evidence": "Synthetic traces cannot authorize a real self-evolution claim."
+              "status": "pass",
+              "evidence": "Real Qwen/ALFWorld actions, labels, interventions, and future outcomes were executed."
             },
             {
               "key": "tiny_overfit",
-              "status": "pending-evidence",
-              "evidence": "No held-out source/failure split exists."
+              "status": "pass",
+              "evidence": "Source/probe/hidden tasks and failure-family holdouts were frozen before model execution."
             },
             {
               "key": "competence_window",
-              "status": "pending-evidence",
-              "evidence": "Real action stream not qualified."
+              "status": "pass",
+              "evidence": "labels=400; enrichment=0.9602564102564102; disagreement=0.025"
             },
             {
               "key": "effect_variation",
-              "status": "pending-evidence",
-              "evidence": "No real effect table exists."
+              "status": "pass",
+              "evidence": "labels=400; enrichment=0.9602564102564102; disagreement=0.025"
             },
             {
               "key": "cost_plan",
@@ -3711,13 +3711,13 @@
           ]
         },
         "updater_competence": {
-          "status": "blocked-substrate",
+          "status": "not-required-after-stop",
           "passed": false,
-          "reason": "real trace/action substrate missing",
+          "reason": "labels=400; enrichment=0.9602564102564102; disagreement=0.025",
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
-          "passed": 5,
+          "passed": 6,
           "total": 8,
           "gates": [
             {
@@ -3726,7 +3726,7 @@
             },
             {
               "key": "baseline_competence",
-              "status": "pending-evidence"
+              "status": "pass"
             },
             {
               "key": "mechanism_identifiability",
@@ -3759,19 +3759,19 @@
           "execution_compilation_authorized": false,
           "passed_gates": 3,
           "gate_count": 5,
-          "primary_stop_class": "substrate",
+          "primary_stop_class": "matched-simplification",
           "gates": [
             {
               "key": "matched_simplification",
-              "status": "pending",
+              "status": "fail",
               "pass": false,
-              "reason": "compiled matched-simplification tournament has not established headroom"
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
             },
             {
               "key": "substrate_inventory",
-              "status": "fail",
-              "pass": false,
-              "reason": "current substrate/support inventory cannot instantiate the frozen test"
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
             },
             {
               "key": "causal_unit_observable",
@@ -3781,9 +3781,9 @@
             },
             {
               "key": "decision_voi",
-              "status": "pass",
-              "pass": true,
-              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
             },
             {
               "key": "single_writer_authority",
@@ -3799,11 +3799,7 @@
         "execution_authorized": false,
         "blockers": [
           "economy-gate",
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
@@ -4153,13 +4149,13 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "hold-substrate-real-traces-missing",
-          "evidence": "No standardized multi-mode self-correction traces table satisfying >=30 failures with >=3 correction modes and order effects.",
-          "evidence_kind": "real-substrate-inventory",
-          "next": "Collect/freeze >=30 real failures with replan/retrieve/rewrite/rollback/stop, verifier deltas, <=3 rounds, and failure-family holdout; compare repetition caps and depth-3 CART."
+          "status": "stop-shallow-rule-no-headroom",
+          "evidence": "failures=30; order_effect=0.16666666666666666; learned=0.8; cart=0.7666666666666667; disagreement=0.06666666666666667",
+          "evidence_kind": "real-shared-substrate-f0",
+          "next": "Do not open a method GPU run under the current F0 decision."
         },
         "pre_p0": {
-          "passed": 4,
+          "passed": 9,
           "total": 10,
           "checks": [
             {
@@ -4169,33 +4165,33 @@
             },
             {
               "key": "target_variation",
-              "status": "pending-evidence",
-              "evidence": "No standardized multi-mode self-correction traces artifact is available."
+              "status": "pass",
+              "evidence": "failures=30; order_effect=0.16666666666666666; learned=0.8; cart=0.7666666666666667; disagreement=0.06666666666666667"
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": "Matched baseline headroom requires a real trace table."
+              "status": "fail",
+              "evidence": "failures=30; order_effect=0.16666666666666666; learned=0.8; cart=0.7666666666666667; disagreement=0.06666666666666667"
             },
             {
               "key": "representability",
-              "status": "pending-evidence",
-              "evidence": "Synthetic traces cannot authorize a real self-evolution claim."
+              "status": "pass",
+              "evidence": "Real Qwen/ALFWorld actions, labels, interventions, and future outcomes were executed."
             },
             {
               "key": "tiny_overfit",
-              "status": "pending-evidence",
-              "evidence": "No held-out source/failure split exists."
+              "status": "pass",
+              "evidence": "Source/probe/hidden tasks and failure-family holdouts were frozen before model execution."
             },
             {
               "key": "competence_window",
-              "status": "pending-evidence",
-              "evidence": "Real action stream not qualified."
+              "status": "pass",
+              "evidence": "failures=30; order_effect=0.16666666666666666; learned=0.8; cart=0.7666666666666667; disagreement=0.06666666666666667"
             },
             {
               "key": "effect_variation",
-              "status": "pending-evidence",
-              "evidence": "No real effect table exists."
+              "status": "pass",
+              "evidence": "failures=30; order_effect=0.16666666666666666; learned=0.8; cart=0.7666666666666667; disagreement=0.06666666666666667"
             },
             {
               "key": "cost_plan",
@@ -4215,13 +4211,13 @@
           ]
         },
         "updater_competence": {
-          "status": "blocked-substrate",
+          "status": "not-required-after-stop",
           "passed": false,
-          "reason": "real trace/action substrate missing",
+          "reason": "failures=30; order_effect=0.16666666666666666; learned=0.8; cart=0.7666666666666667; disagreement=0.06666666666666667",
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
-          "passed": 5,
+          "passed": 6,
           "total": 8,
           "gates": [
             {
@@ -4230,7 +4226,7 @@
             },
             {
               "key": "baseline_competence",
-              "status": "pending-evidence"
+              "status": "pass"
             },
             {
               "key": "mechanism_identifiability",
@@ -4263,19 +4259,19 @@
           "execution_compilation_authorized": false,
           "passed_gates": 3,
           "gate_count": 5,
-          "primary_stop_class": "substrate",
+          "primary_stop_class": "matched-simplification",
           "gates": [
             {
               "key": "matched_simplification",
-              "status": "pending",
+              "status": "fail",
               "pass": false,
-              "reason": "compiled matched-simplification tournament has not established headroom"
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
             },
             {
               "key": "substrate_inventory",
-              "status": "fail",
-              "pass": false,
-              "reason": "current substrate/support inventory cannot instantiate the frozen test"
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
             },
             {
               "key": "causal_unit_observable",
@@ -4285,9 +4281,9 @@
             },
             {
               "key": "decision_voi",
-              "status": "pass",
-              "pass": true,
-              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
             },
             {
               "key": "single_writer_authority",
@@ -4303,11 +4299,7 @@
         "execution_authorized": false,
         "blockers": [
           "economy-gate",
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
@@ -4414,13 +4406,13 @@
       },
       "execution_preflight": {
         "gpu0": {
-          "status": "hold-substrate-real-traces-missing",
-          "evidence": "No standardized matched correction delete/insert interventions table satisfying >=24 correction candidates plus future-task truth.",
-          "evidence_kind": "real-substrate-inventory",
-          "next": "Collect/freeze >=24 persistent correction candidates with matched deletion/insertion interventions, 8 probes and 24 hidden tasks; compare A-3 and same-feature thresholds at matched accepted count."
+          "status": "stop-matched-simplification-a3-threshold-no-headroom",
+          "evidence": "candidates=24; future=3/21; learned=0.625; simple=0.7916666666666666; disagreement=0.3333333333333333",
+          "evidence_kind": "real-shared-substrate-f0",
+          "next": "Do not open a method GPU run under the current F0 decision."
         },
         "pre_p0": {
-          "passed": 4,
+          "passed": 9,
           "total": 10,
           "checks": [
             {
@@ -4430,33 +4422,33 @@
             },
             {
               "key": "target_variation",
-              "status": "pending-evidence",
-              "evidence": "No standardized matched correction delete/insert interventions artifact is available."
+              "status": "pass",
+              "evidence": "candidates=24; future=3/21; learned=0.625; simple=0.7916666666666666; disagreement=0.3333333333333333"
             },
             {
               "key": "baseline_disagreement",
-              "status": "pending-evidence",
-              "evidence": "Matched baseline headroom requires a real trace table."
+              "status": "fail",
+              "evidence": "candidates=24; future=3/21; learned=0.625; simple=0.7916666666666666; disagreement=0.3333333333333333"
             },
             {
               "key": "representability",
-              "status": "pending-evidence",
-              "evidence": "Synthetic traces cannot authorize a real self-evolution claim."
+              "status": "pass",
+              "evidence": "Real Qwen/ALFWorld actions, labels, interventions, and future outcomes were executed."
             },
             {
               "key": "tiny_overfit",
-              "status": "pending-evidence",
-              "evidence": "No held-out source/failure split exists."
+              "status": "pass",
+              "evidence": "Source/probe/hidden tasks and failure-family holdouts were frozen before model execution."
             },
             {
               "key": "competence_window",
-              "status": "pending-evidence",
-              "evidence": "Real action stream not qualified."
+              "status": "pass",
+              "evidence": "candidates=24; future=3/21; learned=0.625; simple=0.7916666666666666; disagreement=0.3333333333333333"
             },
             {
               "key": "effect_variation",
-              "status": "pending-evidence",
-              "evidence": "No real effect table exists."
+              "status": "pass",
+              "evidence": "candidates=24; future=3/21; learned=0.625; simple=0.7916666666666666; disagreement=0.3333333333333333"
             },
             {
               "key": "cost_plan",
@@ -4476,13 +4468,13 @@
           ]
         },
         "updater_competence": {
-          "status": "blocked-substrate",
+          "status": "not-required-after-stop",
           "passed": false,
-          "reason": "real trace/action substrate missing",
+          "reason": "candidates=24; future=3/21; learned=0.625; simple=0.7916666666666666; disagreement=0.3333333333333333",
           "not_a_ninth_gate": true
         },
         "pre_experiment": {
-          "passed": 5,
+          "passed": 6,
           "total": 8,
           "gates": [
             {
@@ -4491,7 +4483,7 @@
             },
             {
               "key": "baseline_competence",
-              "status": "pending-evidence"
+              "status": "pass"
             },
             {
               "key": "mechanism_identifiability",
@@ -4524,19 +4516,19 @@
           "execution_compilation_authorized": false,
           "passed_gates": 3,
           "gate_count": 5,
-          "primary_stop_class": "substrate",
+          "primary_stop_class": "matched-simplification",
           "gates": [
             {
               "key": "matched_simplification",
-              "status": "pending",
+              "status": "fail",
               "pass": false,
-              "reason": "compiled matched-simplification tournament has not established headroom"
+              "reason": "matched simpler baseline reproduces or dominates current mechanism"
             },
             {
               "key": "substrate_inventory",
-              "status": "fail",
-              "pass": false,
-              "reason": "current substrate/support inventory cannot instantiate the frozen test"
+              "status": "pass",
+              "pass": true,
+              "reason": "substrate was sufficient to reach a non-substrate scientific simplification stop"
             },
             {
               "key": "causal_unit_observable",
@@ -4546,9 +4538,9 @@
             },
             {
               "key": "decision_voi",
-              "status": "pass",
-              "pass": true,
-              "reason": "cheapest falsifier and decision-changing outcomes frozen"
+              "status": "fail",
+              "pass": false,
+              "reason": "terminal evidence says another GPU run cannot change the current standalone decision"
             },
             {
               "key": "single_writer_authority",
@@ -4564,11 +4556,7 @@
         "execution_authorized": false,
         "blockers": [
           "economy-gate",
-          "gpu0-phenomenon",
-          "pre-p0-empirical-checks",
-          "updater-competence",
-          "outer-identifiability/competence/throughput",
-          "runtime-smoke"
+          "p0-stop-await-human-review"
         ]
       }
     },
