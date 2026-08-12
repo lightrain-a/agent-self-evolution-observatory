@@ -66,11 +66,18 @@ def analyze_c1(data:dict[str,list[dict[str,Any]]],effects:dict[str,dict[str,Any]
         rs=[r for r in labels if r['candidate_id']==cid]
         if not rs: continue
         direct=np.mean([(1 if r['decision']=='ACCEPT' else 0)*_label_confidence(r) for r in rs])
-        roots=[]
+        root_votes=[]
         for root in (0,1):
             rr=[r for r in rs if int(r['root'])==root]
-            roots.append(np.mean([(1 if r['decision']=='ACCEPT' else 0)*_label_confidence(r) for r in rr]))
-        decor=float(np.mean(roots)); decisions[cid]={'direct':direct>=0.5,'decorrelated':decor>=0.5}
+            accept_weight=sum(_label_confidence(r) for r in rr if r['decision']=='ACCEPT')
+            total_weight=sum(_label_confidence(r) for r in rr) or 1.0
+            root_votes.append(int(accept_weight/total_weight>=0.5))
+        # One ancestry/root contributes at most one effective vote.  This is
+        # intentionally not the mean-of-root-means statistic: with equal
+        # lineage lengths that statistic is algebraically identical to the
+        # naive all-descendants average and can never establish disagreement.
+        lineage_collapsed=bool(sum(root_votes)==len(root_votes))
+        decisions[cid]={'direct':direct>=0.5,'decorrelated':lineage_collapsed}
     disagreement=float(np.mean([v['direct']!=v['decorrelated'] for v in decisions.values()])) if decisions else 0.0
     truth_counts={k:sum(v==k for v in truth.values()) for k in ('ACCEPT','QUARANTINE')}
     enrichment=(wrong_rate-correct_rate) if wrong_rate is not None and correct_rate is not None else None
@@ -78,7 +85,7 @@ def analyze_c1(data:dict[str,list[dict[str,Any]]],effects:dict[str,dict[str,Any]
     signal=bool(enough and enrichment is not None and enrichment>=0.15 and disagreement>=0.20)
     decision='F0_LINEAGE_SIGNAL_CONTINUE' if signal else ('HOLD_C1_TARGET_OR_LINEAGE_SUPPORT_INSUFFICIENT' if not enough else 'STOP_SIMPLE_LINEAGE_WEIGHTING_NO_HEADROOM')
     hidden_evals=sum(len(effects[cid].get('hidden_delta') or []) for cid in truth)
-    return {'idea_id':'self-label-confidence-flow','code':'C-1','decision':decision,'labels_with_future_truth':len(labels),'candidates_with_future_truth':len(truth),'hidden_candidate_task_evaluations':hidden_evals,'truth_counts':truth_counts,'wrong_root_descendant_error_rate':wrong_rate,'correct_root_descendant_error_rate':correct_rate,'lineage_error_enrichment':enrichment,'decorrelated_vs_direct_decision_disagreement':disagreement,'f0_signal_continue':signal}
+    return {'idea_id':'self-label-confidence-flow','code':'C-1','decision':decision,'labels_with_future_truth':len(labels),'candidates_with_future_truth':len(truth),'hidden_candidate_task_evaluations':hidden_evals,'truth_counts':truth_counts,'wrong_root_descendant_error_rate':wrong_rate,'correct_root_descendant_error_rate':correct_rate,'lineage_error_enrichment':enrichment,'decorrelated_vs_direct_decision_disagreement':disagreement,'decision_statistic':'one discrete confidence-majority vote per ancestry/root; both independent roots required for ACCEPT','decision_statistic_repair':'frozen before final hidden truth completion because equal-length mean-of-root-means is algebraically identical to naive descendant averaging','f0_signal_continue':signal}
 
 def _loo_mode_predictions(rows:list[dict[str,Any]])->tuple[list[str],list[str],list[str]]:
     truth=[]; logistic=[]; tree=[]
