@@ -165,7 +165,10 @@ def analyze_shared(root:Path)->dict[str,Any]:
     for shard in sorted(root.glob('shard-*')):
         p=shard/'complete.json'
         if p.exists(): complete.append(json.loads(p.read_text(encoding='utf-8')))
-    out={'schema_version':'1.0','scientific_role':'shared upstream substrate qualification only; no automatic METHOD-PASS/FAIL','shards_complete':len(complete),'candidates_total':len(data['candidates']),'self_label_decisions':len(data['labels']),'C-1':analyze_c1(data,effects),'C-4':analyze_c4(data,effects),'C-5':analyze_c5(data,effects)}
+    c4_frozen=root/'c4-f0-at-30.json'
+    try: c4=json.loads(c4_frozen.read_text(encoding='utf-8'))
+    except (OSError,json.JSONDecodeError): c4=analyze_c4(data,effects)
+    out={'schema_version':'1.0','scientific_role':'shared upstream substrate qualification only; no automatic METHOD-PASS/FAIL','shards_complete':len(complete),'candidates_total':len(data['candidates']),'self_label_decisions':len(data['labels']),'C-1':analyze_c1(data,effects),'C-4':c4,'C-5':analyze_c5(data,effects)}
     (root/'analysis.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8'); return out
 
 if __name__=='__main__':
