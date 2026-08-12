@@ -237,6 +237,11 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(discovery["policy"]["domain_transfer_veto_required"])
         self.assertEqual(discovery["summary"]["saturation_patterns"],self.state["paper_first_fresh_saturation"]["summary"]["reduction_patterns"])
         self.assertEqual((discovery["summary"]["automatic_method_authority"],discovery["summary"]["automatic_experiment_authority"]),(0,0))
+        queue=self.state["paper_first_problem_gate_queue"]
+        self.assertEqual((queue["summary"]["submitted"],queue["summary"]["passed_problem_gate"],queue["summary"]["blocked_problem_gate"]),(0,0,0))
+        self.assertEqual((queue["summary"]["method_authorized"],queue["summary"]["experiment_authorized"],queue["summary"]["p0_authorized"]),(0,0,0))
+        self.assertTrue(queue["policy"]["all_candidates_require_problem_gate"])
+        self.assertTrue(queue["policy"]["problem_gate_pass_only_grants_human_paper_design_eligibility"])
         self.assertEqual(self.state["summary"]["paper_first_p0_promoted"], 0)
         self.assertEqual(self.state["summary"]["paper_first_p0_authority_status"], "NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY")
         self.assertEqual(self.state["paper_first_p0_authority"]["summary"]["promoted"], 0)

@@ -20,6 +20,10 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
                 report = run_cycle(mode="daily", ai_consultations=True, ai_consultation_limit=1, publish=False)
             names = [row["name"] for row in report["steps"]]
             self.assertIn("ai-consultation-automation", names)
+            self.assertIn("paper-first-fresh-saturation", names)
+            self.assertIn("paper-first-problem-gate-queue", names)
+            self.assertLess(names.index("paper-first-fresh-saturation"), names.index("paper-first-problem-gate-queue"))
+            self.assertLess(names.index("paper-first-problem-gate-queue"), names.index("human-terminal-idea-state"))
             self.assertLess(names.index("research-system-pre-ai"), names.index("ai-consultation-automation"))
             self.assertLess(names.index("ai-consultation-automation"), names.index("research-system-state"))
             self.assertEqual(report["ai_consultation_limit"], 1)
@@ -36,6 +40,13 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             names = [row["name"] for row in report["steps"]]
             self.assertIn("external-research-system-learning-review", names)
             self.assertIn("project-web-gpt-repair-review", names)
+            self.assertIn("paper-first-fresh-saturation", names)
+            self.assertIn("paper-first-problem-gate-queue", names)
+            self.assertIn("historical-paper-first-idea-incubation", names)
+            self.assertIn("archival-solution-first-idea-discovery-v3", names)
+            self.assertNotIn("solution-first-idea-discovery-v3", names)
+            self.assertLess(names.index("paper-first-fresh-saturation"), names.index("paper-first-problem-gate-queue"))
+            self.assertLess(names.index("paper-first-problem-gate-queue"), names.index("historical-paper-first-idea-incubation"))
             self.assertLess(names.index("external-research-system-learning-review"), names.index("project-web-gpt-repair-review"))
 
 

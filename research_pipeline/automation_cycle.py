@@ -54,6 +54,8 @@ from .machine_school_idea_factory import write_machine_school_bank
 from .live_pipeline import sync_semantic_scholar
 from .published_experiment_audit import write_audit as write_published_audit
 from .paper_first_idea_incubation import write_paper_first_idea_incubation
+from .paper_first_fresh_saturation import write_fresh_saturation_state
+from .paper_first_problem_gate_queue import write_problem_gate_queue
 from .paper_first_p0_f0 import write_paper_first_p0_f0_state
 from .research_system import write_research_system_state
 from .publication import PUBLICATION_OK_STATES, publish_generated_state
@@ -112,19 +114,24 @@ def run_cycle(
         if mode in {"weekly", "manual"}:
             report["steps"].append(_step("iclr-bank", write_iclr_idea_bank))
             report["steps"].append(_step("machine-school-inspired-bank", write_machine_school_bank))
-            report["steps"].append(_step("solution-first-idea-discovery-v3", write_idea_discovery_v3))
-            report["steps"].append(_step("reviewer-repaired-idea-discovery-v31", write_idea_discovery_v31))
-            report["steps"].append(_step("expanded-idea-discovery-v5", write_idea_discovery_v5))
-            report["steps"].append(_step("reviewer-targeted-idea-discovery-v51", write_idea_discovery_v51))
-            report["steps"].append(_step("second-order-idea-discovery-v52", write_idea_discovery_v52))
-            report["steps"].append(_step("final-boundary-idea-discovery-v53", write_idea_discovery_v53))
-            report["steps"].append(_step("discussion-ready-portfolio", write_discussion_portfolio))
-            report["steps"].append(_step("paper-first-idea-incubation", write_paper_first_idea_incubation))
-            report["steps"].append(_step("constrained-combination-idea-discovery-v4", write_idea_discovery_v4))
+            report["steps"].append(_step("archival-solution-first-idea-discovery-v3", write_idea_discovery_v3))
+            report["steps"].append(_step("archival-reviewer-repaired-idea-discovery-v31", write_idea_discovery_v31))
+            report["steps"].append(_step("archival-expanded-idea-discovery-v5", write_idea_discovery_v5))
+            report["steps"].append(_step("archival-reviewer-targeted-idea-discovery-v51", write_idea_discovery_v51))
+            report["steps"].append(_step("archival-second-order-idea-discovery-v52", write_idea_discovery_v52))
+            report["steps"].append(_step("archival-final-boundary-idea-discovery-v53", write_idea_discovery_v53))
+            report["steps"].append(_step("archival-discussion-ready-portfolio", write_discussion_portfolio))
+            report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
+            report["steps"].append(_step("paper-first-problem-gate-queue", write_problem_gate_queue))
+            report["steps"].append(_step("historical-paper-first-idea-incubation", write_paper_first_idea_incubation))
+            report["steps"].append(_step("archival-constrained-combination-idea-discovery-v4", write_idea_discovery_v4))
             report["steps"].append(_step("iclr-audit", write_iclr_audit))
             report["steps"].append(_step("cvpr-followup-bank", write_cvpr_idea_bank))
             report["steps"].append(_step("published-visual-audit", write_published_audit))
         report["steps"].append(_step("emerging-niche-policy", write_emerging_niche_policy))
+        if mode not in {"weekly", "manual"}:
+            report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
+            report["steps"].append(_step("paper-first-problem-gate-queue", write_problem_gate_queue))
         report["steps"].append(_step("human-terminal-idea-state", write_human_terminal_state))
         report["steps"].append(_step("paper-first-p0-f0-state", write_paper_first_p0_f0_state))
         report["steps"].append(_step("p0-realizability-suite", write_p0_realizability_suite))

@@ -40,6 +40,7 @@ from .paper_first_pf2_method_adjudication import build_pf2_method_adjudication, 
 from .paper_first_pf357_problem_adjudication import build_pf357_problem_adjudication, write_pf357_problem_adjudication
 from .paper_first_fresh_saturation import build_fresh_saturation_state, write_fresh_saturation_state
 from .paper_first_problem_discovery_contract import build_problem_discovery_contract_state
+from .paper_first_problem_gate_queue import build_problem_gate_queue, write_problem_gate_queue
 from .paper_first_post_c2_adjudication import build_post_c2_adjudication, write_post_c2_adjudication
 from .paper_first_premature_method_diagnostics import build_premature_method_diagnostics, write_premature_method_diagnostics
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
@@ -292,6 +293,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_pf357 = build_pf357_problem_adjudication()
     paper_first_fresh_saturation = build_fresh_saturation_state()
     paper_first_problem_discovery_contract = build_problem_discovery_contract_state()
+    paper_first_problem_gate_queue = build_problem_gate_queue()
     paper_first_post_c2 = build_post_c2_adjudication()
     formal_cards = {
         str(card.get("idea_id")): card
@@ -416,6 +418,9 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_fresh_stopped":paper_first_fresh_saturation["summary"]["stopped"],
             "paper_first_problem_gate_fields":paper_first_problem_discovery_contract["summary"]["required_top_level_fields"],
             "paper_first_problem_gate_saturation_patterns":paper_first_problem_discovery_contract["summary"]["saturation_patterns"],
+            "paper_first_problem_queue_submitted":paper_first_problem_gate_queue["summary"]["submitted"],
+            "paper_first_problem_queue_passed":paper_first_problem_gate_queue["summary"]["passed_problem_gate"],
+            "paper_first_problem_queue_blocked":paper_first_problem_gate_queue["summary"]["blocked_problem_gate"],
             "paper_first_post_c2_decision":paper_first_post_c2["decision"],
             "paper_first_post_c2_current_formulation":paper_first_post_c2["current_paper_formulation_status"],
             "paper_first_post_c2_c3_locked":paper_first_post_c2["authority"]["C3_locked"],
@@ -548,6 +553,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_pf357_problem_adjudication":paper_first_pf357,
         "paper_first_fresh_saturation":paper_first_fresh_saturation,
         "paper_first_problem_discovery_contract":paper_first_problem_discovery_contract,
+        "paper_first_problem_gate_queue":paper_first_problem_gate_queue,
         "paper_first_post_c2":paper_first_post_c2,
         "paper_first_premature_method_diagnostics":paper_first_premature_method_diagnostics,
         "pilot_registry":pilot_registry,
@@ -630,6 +636,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-pf357-stops", "pass":state["paper_first_pf357_problem_adjudication"]["summary"]["reviewed"] == 3 and state["paper_first_pf357_problem_adjudication"]["summary"]["stopped_standalone"] == 3 and state["paper_first_pf357_problem_adjudication"]["summary"]["paper_design_authorized"] == 0 and state["paper_first_pf357_problem_adjudication"]["summary"]["local_validation_authorized"] == 0, "detail":state["paper_first_pf357_problem_adjudication"]["summary"]},
         {"key":"paper-first-fresh-saturation", "pass":state["paper_first_fresh_saturation"]["summary"]["drafts_reviewed"] == state["paper_first_fresh_saturation"]["summary"]["stopped"] and state["paper_first_fresh_saturation"]["summary"]["drafts_reviewed"] == len(state["paper_first_fresh_saturation"]["drafts"]) and state["paper_first_fresh_saturation"]["summary"]["survivors"] == 0 and state["paper_first_fresh_saturation"]["policy"]["zero_survivors_is_valid_and_preferred_to_forced_shortlist"] is True and state["paper_first_fresh_saturation"]["policy"]["local_validation_authorized"] is False, "detail":state["paper_first_fresh_saturation"]["summary"]},
         {"key":"paper-first-problem-discovery-contract", "pass":state["paper_first_problem_discovery_contract"]["policy"]["contradiction_first_required"] is True and state["paper_first_problem_discovery_contract"]["policy"]["two_primary_source_facts_required"] is True and state["paper_first_problem_discovery_contract"]["policy"]["two_mature_theory_baselines_required"] is True and state["paper_first_problem_discovery_contract"]["policy"]["same_information_nonreducibility_required"] is True and state["paper_first_problem_discovery_contract"]["policy"]["domain_transfer_veto_required"] is True and state["paper_first_problem_discovery_contract"]["summary"]["automatic_method_authority"] == 0 and state["paper_first_problem_discovery_contract"]["summary"]["automatic_experiment_authority"] == 0, "detail":state["paper_first_problem_discovery_contract"]["summary"]},
+        {"key":"paper-first-problem-gate-queue", "pass":state["paper_first_problem_gate_queue"]["summary"]["audited"] == state["paper_first_problem_gate_queue"]["summary"]["submitted"] and state["paper_first_problem_gate_queue"]["summary"]["passed_problem_gate"] + state["paper_first_problem_gate_queue"]["summary"]["blocked_problem_gate"] == state["paper_first_problem_gate_queue"]["summary"]["audited"] and state["paper_first_problem_gate_queue"]["summary"]["inbox_errors"] == 0 and state["paper_first_problem_gate_queue"]["summary"]["method_authorized"] == 0 and state["paper_first_problem_gate_queue"]["summary"]["experiment_authorized"] == 0 and state["paper_first_problem_gate_queue"]["summary"]["p0_authorized"] == 0, "detail":state["paper_first_problem_gate_queue"]["summary"]},
         {"key":"paper-first-post-c2-terminal", "pass":state["paper_first_post_c2"]["decision"] == "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" and state["paper_first_post_c2"]["authority"]["clean_mechanism_stop"] is True and state["paper_first_post_c2"]["authority"]["C3_locked"] is True and state["paper_first_post_c2"]["authority"]["full_experiment_authorized"] is False and state["paper_first_post_c2"]["authority"]["new_method_auto_authorized"] is False and state["paper_first_post_c2"]["authority"]["new_paper_problem_auto_authorized"] is False, "detail":{"decision":state["paper_first_post_c2"]["decision"],"c2":state["paper_first_post_c2"]["c2_result"],"gate_provenance":state["paper_first_post_c2"]["gate_provenance"]}},
         {"key":"backend-architecture-manifest", "pass":state["system_architecture"]["summary"]["temporal_stages"] == 11 and state["system_architecture"]["summary"]["functional_layers"] == 6 and state["system_architecture"]["summary"]["assigned_components"] == len(state["components"]) and state["system_architecture"]["summary"]["unassigned_components"] == 0 and state["system_architecture"]["summary"]["duplicate_component_keys"] == 0 and state["system_architecture"]["summary"]["cross_cutting_controls"] == 3 and state["system_architecture"]["summary"]["orphan_cross_cutting_controls"] == 0, "detail":state["system_architecture"]["summary"]},
         {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == expected_pre_experiment_cards, "detail":state["principle_layer"]["summary"]},
@@ -702,6 +709,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     discovery_contract = state.get("paper_first_problem_discovery_contract") or {}; discovery_policy = discovery_contract.get("policy") or {}; discovery_summary = discovery_contract.get("summary") or {}
     if discovery_policy.get("contradiction_first_required") is not True or discovery_policy.get("two_primary_source_facts_required") is not True or discovery_policy.get("two_mature_theory_baselines_required") is not True or discovery_policy.get("same_information_nonreducibility_required") is not True or discovery_policy.get("domain_transfer_veto_required") is not True: errors.append("paper-first problem discovery contract must require contradiction/theory/domain-transfer checks")
     if discovery_summary.get("saturation_patterns") != fresh_summary.get("reduction_patterns") or discovery_summary.get("automatic_method_authority") != 0 or discovery_summary.get("automatic_experiment_authority") != 0: errors.append("paper-first problem discovery contract must consume the current saturation map and grant no automatic downstream authority")
+    problem_queue = state.get("paper_first_problem_gate_queue") or {}; problem_queue_summary = problem_queue.get("summary") or {}; problem_queue_policy = problem_queue.get("policy") or {}
+    if problem_queue_summary.get("audited") != problem_queue_summary.get("submitted") or int(problem_queue_summary.get("passed_problem_gate") or 0) + int(problem_queue_summary.get("blocked_problem_gate") or 0) != int(problem_queue_summary.get("audited") or 0) or problem_queue_summary.get("inbox_errors") != 0: errors.append("paper-first problem gate queue accounting/inbox error")
+    if problem_queue_policy.get("all_candidates_require_problem_gate") is not True or problem_queue_policy.get("problem_gate_pass_only_grants_human_paper_design_eligibility") is not True or problem_queue_summary.get("method_authorized") != 0 or problem_queue_summary.get("experiment_authorized") != 0 or problem_queue_summary.get("p0_authorized") != 0: errors.append("paper-first problem queue must grant only paper-design eligibility and zero downstream execution authority")
     if (pf357_summary.get("reviewed"),pf357_summary.get("stopped_standalone"),pf357_summary.get("paper_design_authorized"),pf357_summary.get("local_validation_authorized")) != (3,3,0,0): errors.append("PF-3/PF-5/PF-7 must all terminate standalone before Paper Design/local validation")
     post_c2 = state.get("paper_first_post_c2") or {}; post_c2_auth = post_c2.get("authority") or {}
     if post_c2.get("decision") != "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" or post_c2_auth.get("clean_mechanism_stop") is not True: errors.append("post-C2 paper mechanism terminal adjudication must preserve the clean local falsifier STOP")
@@ -814,6 +824,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_pf2_method_adjudication()
     write_pf357_problem_adjudication()
     write_fresh_saturation_state()
+    write_problem_gate_queue()
     write_post_c2_adjudication()
     write_premature_method_diagnostics()
     write_ai_consultation_clinic_state()
