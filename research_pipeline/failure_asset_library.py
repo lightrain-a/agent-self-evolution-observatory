@@ -35,7 +35,11 @@ REUSE_RULES = {
 }
 
 
-def build_failure_asset_library(experiment_iteration: dict[str, Any], economy_gate: dict[str, Any] | None = None) -> dict[str, Any]:
+def build_failure_asset_library(
+    experiment_iteration: dict[str, Any],
+    economy_gate: dict[str, Any] | None = None,
+    historical_evidence: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     assets: list[dict[str, Any]] = []
     for node in experiment_iteration.get("nodes") or []:
         diagnosis = str(node.get("diagnosis") or "unknown")
@@ -55,6 +59,43 @@ def build_failure_asset_library(experiment_iteration: dict[str, Any], economy_ga
             "reuse_effectiveness": {"reuse_count": 0, "helped_count": 0, "hurt_count": 0, "status": "not-yet-measured"},
             "superseded_by": "",
             "last_revalidated": "",
+        })
+
+    for record in (historical_evidence or {}).get("records") or []:
+        diagnosis = str(record.get("diagnosis") or "historical-unknown")
+        layer = str(record.get("affected_scientific_layer") or "unknown")
+        provenance = record.get("provenance") or {}
+        diagnosis_ref = provenance.get("posthoc_diagnosis") or {}
+        assets.append({
+            "signature": f"{layer}:{diagnosis}",
+            "idea_id": "",
+            "evidence_id": str(record.get("evidence_id") or ""),
+            "diagnosis": diagnosis,
+            "affected_layer": layer,
+            "reusable_precheck": str(record.get("reusable_precheck") or "manual review required"),
+            "evidence_ref": str(diagnosis_ref.get("path") or ""),
+            "evidence_timing": str(record.get("evidence_timing") or "historical"),
+            "evidence_class": str(record.get("evidence_class") or "historical"),
+            "original_decision": str(record.get("original_decision") or ""),
+            "original_decision_preserved": bool(record.get("original_decision_preserved")),
+            "does_not_imply": "core-principle failure or execution authority",
+            "memory_scope": "institutional-research-memory",
+            "reuse_scope": {
+                "diagnosis": diagnosis,
+                "affected_layer": layer,
+                "condition": str(record.get("omitted_condition") or ""),
+            },
+            "reuse_effectiveness": {"reuse_count": 0, "helped_count": 0, "hurt_count": 0, "status": "not-yet-measured"},
+            "superseded_by": "",
+            "last_revalidated": "",
+            "scientific_authority": {
+                "active_principle_belief_update_allowed": bool(record.get("active_principle_belief_update_allowed")),
+                "principle_falsified": bool(record.get("principle_falsified")),
+                "retrospective_principle_certificate_allowed": bool(record.get("retrospective_principle_certificate_allowed")),
+                "execution_authorized": bool(record.get("execution_authorized")),
+                "scale_up_authorized": bool(record.get("scale_up_authorized")),
+            },
+            "provenance": provenance,
         })
 
     signature_counts = Counter(asset["signature"] for asset in assets)
@@ -88,6 +129,7 @@ def build_failure_asset_library(experiment_iteration: dict[str, Any], economy_ga
             "assets": len(assets),
             "unique_signatures": len(reusable),
             "economy_dead_ends": dead_end_registry["matched_simplification_stops"] + dead_end_registry["substrate_stops"],
+            "historical_posthoc_assets": sum(asset.get("evidence_timing") == "post-hoc" for asset in assets),
         },
         "assets": assets,
         "reusable_prechecks": reusable,

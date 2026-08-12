@@ -145,6 +145,19 @@ class ResearchSystemTest(unittest.TestCase):
             self.assertTrue(all(row["diagnosis"] == "infrastructure-error" for row in by_code.values()))
             self.assertTrue(all(not row["scientific_belief_update_allowed"] for row in by_code.values()))
 
+    def test_historical_scienceworld_evidence_is_non_authorizing_in_system_state(self) -> None:
+        registry = self.state["historical_scientific_evidence"]
+        self.assertEqual(registry["summary"]["records"], 1)
+        self.assertEqual(registry["summary"]["posthoc_records"], 1)
+        self.assertEqual(registry["summary"]["active_principle_belief_updates"], 0)
+        self.assertEqual(registry["summary"]["execution_authorized"], 0)
+        record = registry["records"][0]
+        self.assertEqual(record["original_decision"], "SYMMETRIC_F0_HOLD")
+        self.assertFalse(record["retrospective_principle_certificate_allowed"])
+        self.assertFalse(record["paper_relationship"]["can_rescue_closed_formulation"])
+        self.assertEqual(self.state["scientific_meta_trace"]["summary"]["historical_boundary_evidence"], 1)
+        self.assertEqual(self.state["failure_asset_library"]["summary"]["historical_posthoc_assets"], 1)
+
     def test_repair_queue_contains_structured_blocks(self) -> None:
         queue = self.state["repair_queue"]
         self.assertEqual(queue["summary"]["queued_ideas"], 1)

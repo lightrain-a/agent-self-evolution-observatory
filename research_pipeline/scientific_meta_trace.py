@@ -42,6 +42,7 @@ def build_scientific_meta_trace(
     principle_layer: dict[str, Any],
     experiment_iteration: dict[str, Any],
     decision_ledger: dict[str, Any] | None = None,
+    historical_evidence: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     principles = _unique_principle_cards(pre_experiment)
     cards_by_idea: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -99,6 +100,27 @@ def build_scientific_meta_trace(
             if len(unique) >= 2:
                 reference_edges.append({"relation": relation, "key": key, "ideas": unique})
 
+    historical_boundary_evidence: list[dict[str, Any]] = []
+    for record in (historical_evidence or {}).get("records") or []:
+        historical_boundary_evidence.append({
+            "evidence_id": str(record.get("evidence_id") or ""),
+            "domain": str(record.get("domain") or ""),
+            "phase": str(record.get("phase") or ""),
+            "original_decision": str(record.get("original_decision") or ""),
+            "original_decision_preserved": bool(record.get("original_decision_preserved")),
+            "evidence_timing": str(record.get("evidence_timing") or "historical"),
+            "evidence_class": str(record.get("evidence_class") or "historical"),
+            "diagnosis": str(record.get("diagnosis") or ""),
+            "affected_scientific_layer": str(record.get("affected_scientific_layer") or ""),
+            "scope_refinement": str(record.get("scope_refinement") or ""),
+            "active_principle_belief_update_allowed": bool(record.get("active_principle_belief_update_allowed")),
+            "principle_falsified": bool(record.get("principle_falsified")),
+            "execution_authorized": bool(record.get("execution_authorized")),
+            "reusable_precheck": str(record.get("reusable_precheck") or ""),
+            "paper_relationship": record.get("paper_relationship") or {},
+            "provenance": record.get("provenance") or {},
+        })
+
     ledger_summary = (decision_ledger or {}).get("summary") or {}
     return {
         "schema_version": "1.0",
@@ -109,8 +131,12 @@ def build_scientific_meta_trace(
             "unresolved_principles": len(unresolved),
             "cross_branch_reference_edges": len(reference_edges),
             "current_launchable": int(ledger_summary.get("launchable") or 0),
+            "historical_boundary_evidence": len(historical_boundary_evidence),
+            "historical_active_principle_belief_updates": sum(bool(row.get("active_principle_belief_update_allowed")) for row in historical_boundary_evidence),
+            "historical_execution_authorized": sum(bool(row.get("execution_authorized")) for row in historical_boundary_evidence),
         },
         "principles": traces,
+        "historical_boundary_evidence": historical_boundary_evidence,
         "unresolved_questions": unresolved,
         "cross_branch_reference_edges": reference_edges,
         "memory_scopes": {
@@ -120,7 +146,7 @@ def build_scientific_meta_trace(
                 "rule": "Current-project scientific truth is authority-bound state and cannot be weakened or rewritten by memory aging.",
             },
             "institutional_research_memory": {
-                "contains": ["reusable failure assets", "validated workflow lessons", "retrieval/tool effectiveness", "cross-project safeguards"],
+                "contains": ["reusable failure assets", "post-hoc boundary evidence", "validated workflow lessons", "retrieval/tool effectiveness", "cross-project safeguards"],
                 "time_decay_allowed": True,
                 "rule": "Reusable cross-project memory must carry scope, validation age, and observed helpful/harmful reuse before affecting future planning.",
             },

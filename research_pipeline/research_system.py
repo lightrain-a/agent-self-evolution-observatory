@@ -16,6 +16,7 @@ from .experiment_value_scheduler import build_experiment_value_scheduler
 from .external_system_learning import build_external_system_learning_state
 from .failure_asset_library import build_failure_asset_library
 from .human_terminal_state import build_human_terminal_state, write_human_terminal_state
+from .historical_scientific_evidence import build_historical_scientific_evidence_registry
 from .governance_protocol import build_governance_state, write_governance_state
 from .resource_lease import list_gpu_leases
 from .iclr_idea_factory import build_iclr_idea_bank
@@ -319,8 +320,15 @@ def build_research_system_state() -> dict[str, Any]:
     p0_economy_public = {"summary": p0_economy_gate["summary"], "policy": p0_economy_gate["policy"], "gates": p0_economy_gate["gates"]}
     p0_decision_ledger = build_p0_decision_ledger(p0_admission, p0_offline_qualification, human_terminal_ideas, four_direction_iteration)
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
-    scientific_meta_trace = build_scientific_meta_trace(pre_experiment_compiler, principle_layer, experiment_iteration, p0_decision_ledger_public)
-    failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public)
+    historical_scientific_evidence = build_historical_scientific_evidence_registry()
+    scientific_meta_trace = build_scientific_meta_trace(
+        pre_experiment_compiler,
+        principle_layer,
+        experiment_iteration,
+        p0_decision_ledger_public,
+        historical_scientific_evidence,
+    )
+    failure_asset_library = build_failure_asset_library(experiment_iteration, p0_economy_public, historical_scientific_evidence)
     experiment_value_scheduler = build_experiment_value_scheduler(experiment_iteration, scientific_meta_trace)
     research_system_replay = build_research_system_replay(pre_experiment_compiler)
     external_system_learning = build_external_system_learning_state()
@@ -389,6 +397,8 @@ def build_research_system_state() -> dict[str, Any]:
             "principle_falsifications":principle_layer["summary"]["principle_falsifications"],
             "protocol_validity_pass":pre_experiment_compiler["summary"]["protocol_validity_pass"],
             "meta_trace_unresolved":scientific_meta_trace["summary"]["unresolved_principles"],
+            "historical_scientific_evidence":historical_scientific_evidence["summary"]["records"],
+            "historical_posthoc_evidence":historical_scientific_evidence["summary"]["posthoc_records"],
             "failure_assets":failure_asset_library["summary"]["assets"],
             "value_scheduler_candidates":experiment_value_scheduler["summary"]["candidates"],
             "research_replay_passed":research_system_replay["summary"]["passed"],
@@ -495,6 +505,7 @@ def build_research_system_state() -> dict[str, Any]:
         "pilot_registry":pilot_registry,
         "experiment_iteration":experiment_iteration,
         "principle_layer":principle_layer,
+        "historical_scientific_evidence":historical_scientific_evidence,
         "scientific_meta_trace":scientific_meta_trace,
         "failure_asset_library":failure_asset_library,
         "experiment_value_scheduler":experiment_value_scheduler,
@@ -567,7 +578,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"backend-architecture-manifest", "pass":state["system_architecture"]["summary"]["temporal_stages"] == 11 and state["system_architecture"]["summary"]["functional_layers"] == 6 and state["system_architecture"]["summary"]["assigned_components"] == len(state["components"]) and state["system_architecture"]["summary"]["unassigned_components"] == 0 and state["system_architecture"]["summary"]["duplicate_component_keys"] == 0 and state["system_architecture"]["summary"]["cross_cutting_controls"] == 3 and state["system_architecture"]["summary"]["orphan_cross_cutting_controls"] == 0, "detail":state["system_architecture"]["summary"]},
         {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == 4, "detail":state["principle_layer"]["summary"]},
         {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["paper_design_contract_required_before_principle_and_implementation"] and state["pre_experiment_compiler"]["policy"]["paper_design_contract_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["summary"]["protocol_validity_pass"] == 4 and state["pre_experiment_compiler"]["policy"]["research_execution_plan_required_before_launch"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_is_derived_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_cannot_authorize_execution"] and state["pre_experiment_compiler"]["summary"]["research_execution_plans"] == 4 and state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == 4, "detail":state["pre_experiment_compiler"]["summary"]},
-        {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
+        {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["historical_scientific_evidence"]["policy"]["posthoc_evidence_cannot_be_relabelled_preregistered"] and state["historical_scientific_evidence"]["policy"]["retrospective_principle_certificate_forbidden"] and state["historical_scientific_evidence"]["summary"]["execution_authorized"] == 0 and state["scientific_meta_trace"]["summary"]["historical_active_principle_belief_updates"] == 0 and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["failure_asset_library"]["summary"]["historical_posthoc_assets"] == state["historical_scientific_evidence"]["summary"]["posthoc_records"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"historical_evidence":state["historical_scientific_evidence"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
         {"key":"mem-xfer-workflow", "pass":not _mem_xfer_semantic_errors(state["mem_xfer_workflow"]), "detail":{"semantic_errors":_mem_xfer_semantic_errors(state["mem_xfer_workflow"]),"support_qualification":state["mem_xfer_workflow"]["support_qualification"]["status"],"full_support":state["mem_xfer_workflow"]["full_support"]["status"],"cpu_gate":state["mem_xfer_workflow"]["support_enriched_analysis"]["status"],"second_model":state["mem_xfer_workflow"]["second_model"]["status"]}},
@@ -651,7 +662,15 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"]: errors.append("raw trace must remain separate from compact scientific state")
     if not state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"]: errors.append("active scientific state must remain separate from institutional memory")
     if not state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"]: errors.append("active scientific authority must never decay as memory")
+    historical = state.get("historical_scientific_evidence") or {}; historical_summary = historical.get("summary") or {}; historical_policy = historical.get("policy") or {}
+    if historical_summary.get("records") != 1 or historical_summary.get("posthoc_records") != 1: errors.append("expected exactly one frozen historical post-hoc ScienceWorld evidence record")
+    if historical_summary.get("active_principle_belief_updates") != 0 or historical_summary.get("execution_authorized") != 0: errors.append("historical post-hoc evidence must not update active principle belief or authorize execution")
+    if historical_policy.get("posthoc_evidence_cannot_be_relabelled_preregistered") is not True or historical_policy.get("retrospective_principle_certificate_forbidden") is not True: errors.append("historical evidence governance must forbid post-hoc preregistration and retrospective principle certificates")
+    historical_records = historical.get("records") or []
+    if not historical_records or historical_records[0].get("original_decision") != "SYMMETRIC_F0_HOLD" or historical_records[0].get("original_decision_preserved") is not True: errors.append("ScienceWorld frozen F0 HOLD must remain immutable")
+    if state["scientific_meta_trace"]["summary"].get("historical_active_principle_belief_updates") != 0 or state["scientific_meta_trace"]["summary"].get("historical_execution_authorized") != 0: errors.append("meta-trace must keep historical ScienceWorld evidence non-authorizing")
     if not state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"]: errors.append("failure assets must be retrieved before new experiment design")
+    if state["failure_asset_library"]["summary"].get("historical_posthoc_assets") != 1: errors.append("ScienceWorld post-hoc omitted-condition evidence must be retrievable as one failure asset")
     if not state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"]: errors.append("institutional failure memory must track scope and reuse effectiveness")
     if not state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"]: errors.append("experiment value scheduler must remain advisory")
     if state["research_system_replay"]["summary"].get("failed") != 0: errors.append("research-system replay benchmark has failing epistemic cases")
