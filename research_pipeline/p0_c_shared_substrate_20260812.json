@@ -20,6 +20,7 @@
   "hidden_ood_tasks":24,
   "hidden_tasks_per_c5_candidate":4,
   "planned_hidden_candidate_task_evaluations":96,
+  "c1_truth_completion":{"hidden_tasks_per_candidate":2,"required_candidates_with_future_truth":40,"required_candidate_task_pairs":80,"reuse_c5_pairs":true,"extra_rollouts_if_all_c5_pairs_complete":32},
   "plan_sha256":"da8100285365f9bdb78950d9e325cf58f75be47116a13eefd76b604e45035a42",
   "plan_runtime_path":"/data/wyt/agent-self-evolution-p0-52-data/runs/p0-c-shared-substrate-v1/plan.json",
   "execution_policy":{"one_gpu_per_shard":true,"minimum_free_gpu_gib_before_model_load":20,"no_preemption_of_other_projects":true,"hidden_outcomes_forbidden_during_candidate_generation_and_self_labeling":true,"analysis_required_before_economy_recompile":true}

@@ -7,7 +7,7 @@ def _ck(status:str,evidence:str)->dict[str,Any]:
 def build_shared_card(key:str,idea_id:str,code:str,row:dict[str,Any],top:dict[str,Any],generated_at:str)->dict[str,Any]:
     decision=str(row.get('decision') or ''); hold=decision.startswith('HOLD_'); signal=decision.startswith('F0_')
     if key=='C-1':
-        effective=int(top.get('candidates_total') or 0); fresh=int(row.get('candidates_with_future_truth') or 0)*4
+        effective=int(row.get('candidates_with_future_truth') or 0); fresh=int(row.get('hidden_candidate_task_evaluations') or 0)
         reserve=fresh/max(1,effective+fresh); counts=row.get('truth_counts') or {}; variation=bool(counts) and min(counts.values())>0
         status='f0-lineage-signal-pass' if signal else ('hold-substrate-lineage-support-insufficient' if hold else 'stop-matched-simplification-lineage-weighting-no-headroom')
         evidence=f"labels={row.get('labels_with_future_truth',0)}; enrichment={row.get('lineage_error_enrichment')}; disagreement={row.get('decorrelated_vs_direct_decision_disagreement')}"

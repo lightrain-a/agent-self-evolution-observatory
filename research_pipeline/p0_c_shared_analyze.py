@@ -23,6 +23,7 @@ def load_shared(root:Path)->dict[str,list[dict[str,Any]]]:
         out['labels']+=_rows(shard/'self-labels.jsonl')
         out['future']+=_rows(shard/'future-runs.jsonl')
         out['modes']+=_rows(shard/'mode-runs.jsonl')
+    out['future']+=_rows(root/'c1-future-runs.jsonl')
     return out
 
 def candidate_effects(data:dict[str,list[dict[str,Any]]])->dict[str,dict[str,Any]]:
@@ -74,7 +75,8 @@ def analyze_c1(data:dict[str,list[dict[str,Any]]],effects:dict[str,dict[str,Any]
     enough=len(labels)>=200 and min(truth_counts.values())>0
     signal=bool(enough and enrichment is not None and enrichment>=0.15 and disagreement>=0.20)
     decision='F0_LINEAGE_SIGNAL_CONTINUE' if signal else ('HOLD_C1_TARGET_OR_LINEAGE_SUPPORT_INSUFFICIENT' if not enough else 'STOP_SIMPLE_LINEAGE_WEIGHTING_NO_HEADROOM')
-    return {'idea_id':'self-label-confidence-flow','code':'C-1','decision':decision,'labels_with_future_truth':len(labels),'candidates_with_future_truth':len(truth),'truth_counts':truth_counts,'wrong_root_descendant_error_rate':wrong_rate,'correct_root_descendant_error_rate':correct_rate,'lineage_error_enrichment':enrichment,'decorrelated_vs_direct_decision_disagreement':disagreement,'f0_signal_continue':signal}
+    hidden_evals=sum(len(effects[cid].get('hidden_delta') or []) for cid in truth)
+    return {'idea_id':'self-label-confidence-flow','code':'C-1','decision':decision,'labels_with_future_truth':len(labels),'candidates_with_future_truth':len(truth),'hidden_candidate_task_evaluations':hidden_evals,'truth_counts':truth_counts,'wrong_root_descendant_error_rate':wrong_rate,'correct_root_descendant_error_rate':correct_rate,'lineage_error_enrichment':enrichment,'decorrelated_vs_direct_decision_disagreement':disagreement,'f0_signal_continue':signal}
 
 def _loo_mode_predictions(rows:list[dict[str,Any]])->tuple[list[str],list[str],list[str]]:
     truth=[]; logistic=[]; tree=[]

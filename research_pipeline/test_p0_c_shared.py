@@ -46,7 +46,7 @@ class CSharedAnalyzeTest(unittest.TestCase):
             with patch.dict(os.environ,{'P0_C_SHARED_ROOT':td}):
                 cards=[run_c1_f0(),run_c4_f0(),run_c5_f0()]
         self.assertTrue(all(c['decision']!='HOLD_REAL_TRACE_SUBSTRATE_MISSING' for c in cards))
-        self.assertEqual(cards[0]['substrate_inventory']['observed_effective_candidates'],40)
+        self.assertEqual(cards[0]['substrate_inventory']['observed_effective_candidates'],32)
         self.assertEqual(cards[2]['substrate_inventory']['observed_effective_candidates'],32)
 
 if __name__=='__main__': unittest.main()
