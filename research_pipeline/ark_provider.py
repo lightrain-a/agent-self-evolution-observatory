@@ -125,7 +125,27 @@ class ArkResponsesClient:
                 text = self.output_text(payload)
                 calls = self.function_calls(payload)
                 if not text and not calls:
-                    raise RuntimeError("Ark response contained neither assistant output_text nor function_call")
+                    status = str(payload.get("status") or "unknown")
+                    incomplete = payload.get("incomplete_details") or {}
+                    reason = incomplete.get("reason") if isinstance(incomplete, dict) else None
+                    usage = payload.get("usage") or {}
+                    output_details = usage.get("output_tokens_details") or {} if isinstance(usage, dict) else {}
+                    reasoning_tokens = output_details.get("reasoning_tokens") if isinstance(output_details, dict) else None
+                    output_tokens = usage.get("output_tokens") if isinstance(usage, dict) else None
+                    resolved_model = payload.get("model") or requested_model
+                    if status == "incomplete":
+                        raise RuntimeError(
+                            "Ark response incomplete before assistant output"
+                            f"; reason={reason or 'unknown'}"
+                            f"; requested_model={requested_model}"
+                            f"; resolved_model={resolved_model}"
+                            f"; output_tokens={output_tokens}"
+                            f"; reasoning_tokens={reasoning_tokens}"
+                        )
+                    raise RuntimeError(
+                        "Ark response contained neither assistant output_text nor function_call"
+                        f"; status={status}; requested_model={requested_model}; resolved_model={resolved_model}"
+                    )
                 return {
                     "requested_model": requested_model,
                     "resolved_model": payload.get("model") or requested_model,
