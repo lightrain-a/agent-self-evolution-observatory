@@ -1,0 +1,223 @@
+from __future__ import annotations
+
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+from .config import PROJECT_ROOT
+from .paper_first_idea_incubation import build_paper_first_idea_incubation
+
+DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-design-adjudication.json"
+DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-design-adjudication.js"
+
+ADVISORY_REVIEW = {
+    "provider": "ark-code-latest",
+    "resolved_model": "doubao-seed-evolving",
+    "role": "advisory-only-paper-first-premortem",
+    "raw_backend_path": "/data/wyt/agent-evolution-paper-first-reviews/pf4-design-20260812/ark-code-latest-auto-premortem.json",
+    "raw_sha256": "08cbef807f83e64afa352d53faff997d27065d9b274f713b89fd7e4995a5d378",
+    "scientific_authority": False,
+}
+
+PRIMARY_SOURCES: dict[str, list[dict[str, str]]] = {
+    "PF-1": [
+        {"ref": "arXiv:2605.09315", "title": "Do Self-Evolving Agents Forget? Capability Degradation and Preservation in Lifelong LLM Agent Adaptation", "url": "https://arxiv.org/abs/2605.09315", "boundary_role": "capability erosion and preservation across self-evolution surfaces"},
+        {"ref": "arXiv:2604.15414", "title": "Beyond Single-Model Optimization: Preserving Plasticity in Continual Reinforcement Learning", "url": "https://arxiv.org/abs/2604.15414", "boundary_role": "past-performance preservation is distinct from future plasticity in continual RL"},
+    ],
+    "PF-2": [
+        {"ref": "arXiv:2607.20999", "title": "Workflow-Localized Mechanism Learning: Attribution-Guided Repair and Knowledge Reuse for Structured Agent Skills", "url": "https://arxiv.org/abs/2607.20999", "boundary_role": "failed-node/mechanism attribution and smallest valid edit target inside structured skills"},
+        {"ref": "arXiv:2605.22794", "title": "MOSS: Self-Evolution through Source-Level Rewriting in Autonomous Agent Systems", "url": "https://arxiv.org/abs/2605.22794", "boundary_role": "source-level repair reaches structural failures inaccessible from text-mutable artifacts"},
+        {"ref": "arXiv:2607.13104", "title": "Self-Improvements in Modern Agentic Systems: A Survey", "url": "https://arxiv.org/abs/2607.13104", "boundary_role": "system-level update-target taxonomy spanning model and scaffold components"},
+    ],
+    "PF-4": [
+        {"ref": "arXiv:2604.25850", "title": "Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses", "url": "https://arxiv.org/abs/2604.25850", "boundary_role": "observability is already a first-class input to harness evolution"},
+        {"ref": "arXiv:2606.09071", "title": "REFLECT: Intervention-Supported Error Attribution for Silent Failures in LLM Agent Traces", "url": "https://arxiv.org/abs/2606.09071", "boundary_role": "controlled replay already supports causal error attribution"},
+        {"ref": "arXiv:2606.14589", "title": "When Errors Become Narratives: A Longitudinal Taxonomy of Silent Failures in a Production LLM Agent Runtime", "url": "https://arxiv.org/abs/2606.14589", "boundary_role": "longitudinal silent-failure taxonomy and actionable-error-signal loss"},
+    ],
+    "PF-6": [
+        {"ref": "arXiv:2606.31270", "title": "Learning from Failure: Inference-Time Self-Improvement for Computer-Use Agents", "url": "https://arxiv.org/abs/2606.31270", "boundary_role": "failure-driven self-improvement already uses failed trajectories as adaptation signal"},
+        {"ref": "arXiv:2606.09863", "title": "From Confident Closing to Silent Failure: Characterizing False Success in LLM Agents", "url": "https://arxiv.org/abs/2606.09863", "boundary_role": "false-success silent failure with text-independent ground truth"},
+        {"ref": "arXiv:2605.19149", "title": "Agent Meltdowns: The Road to Hell Is Paved with Helpful Agents", "url": "https://arxiv.org/abs/2605.19149", "boundary_role": "severe accidental failure taxonomy under benign environmental errors"},
+    ],
+}
+
+ROWS: tuple[dict[str, Any], ...] = (
+    {
+        "id": "PF-2",
+        "paper_problem_id": "causal-repair-surface-ownership",
+        "verdict": "ADVANCE_TO_METHOD_DESIGN",
+        "paper_problem": "Which persistent agent update surface is the lowest-scope intervention that is causally sufficient to repair a failure without unnecessary collateral change?",
+        "irreducible_boundary": "The claim is not fault localization inside a preselected surface and not source-level rewriting. It is causal ownership selection across heterogeneous persistent surfaces under a shared intervention/outcome contract before deployment commit.",
+        "current_method_disposition": "REVISE_BEFORE_FREEZE",
+        "current_method_problem": "Trying every eligible surface at deployment and then selecting the best is an oracle protocol, not a publishable routing method.",
+        "method_design_requirements": [
+            "Freeze a partial order / scope cost over prompt-memory, skill-workflow, tool-code, and weight surfaces before outcomes.",
+            "Define surface-specific potential outcomes for repair gain, collateral regression, persistence, and cost under matched failure context and update-information budget.",
+            "Use source-only cross-surface intervention tables to define minimal sufficient surface ownership; hidden failures cannot trial every surface before prediction.",
+            "A deployed router must freeze before hidden evaluation and select a surface from pre-intervention information only.",
+            "Name a structural component that is not reproduced by a generic multiclass selector or generic CATE/ranker; otherwise retain only the paper problem/protocol and stop the method claim.",
+        ],
+        "strongest_same_information_baselines": [
+            "generic multiclass surface selector trained on the identical intervention table",
+            "generic CATE/effect ranker over surface-specific potential outcomes",
+            "WML-style smallest-edit localization inside each eligible structured surface",
+            "MOSS/source-level repair as a broad-surface ceiling",
+            "best fixed surface under identical update/evaluation budget",
+        ],
+        "prohibited_claims": [
+            "fault localization itself is novel",
+            "source-level repair itself is novel",
+            "an edit is minimal without matched cross-surface sufficiency comparisons",
+            "exhaustive hidden-time surface trials constitute a learned router",
+        ],
+        "next_action": "Design one irreducible frozen router/estimator and its same-information generic baseline. If no structural difference survives, keep the causal-ownership problem as an evaluation protocol and stop the method thesis.",
+        "local_validation_authorized": False,
+        "full_experiment_authorized": False,
+    },
+    {
+        "id": "PF-1",
+        "paper_problem_id": "evolvability-debt-under-persistent-agent-updates",
+        "verdict": "REVISE_PAPER_PROBLEM",
+        "paper_problem": "Can a persistent agent update preserve current utility and old-task retention yet reduce the response of the same frozen future evolution operator to new tasks?",
+        "irreducible_boundary": "Generic future plasticity is already a continual-learning problem. The surviving agent-specific quantity is evolvability debt: hold the future evolution operator fixed and study update-induced loss of its responsiveness across non-parametric persistent surfaces such as prompt, memory, skill, workflow, and code, not only weight plasticity.",
+        "current_method_disposition": "STOP_CURRENT_FUTURE_LEARNABILITY_GATE",
+        "current_method_problem": "A sealed future-adaptation AUC gate is a direct look-ahead evaluation and is reducible to CPE-style preservation plus a standard plasticity measurement unless the causal quantity is redefined around a fixed agent evolution operator.",
+        "required_problem_revision": [
+            "Rename the causal quantity from generic future learnability/plasticity to update-induced evolvability debt.",
+            "Freeze the future evolution operator, its data/call/update budget, and adaptation rule before the candidate update is evaluated.",
+            "Require the phenomenon on at least one non-weight persistent surface; otherwise the contribution collapses toward continual-RL plasticity.",
+            "Separate current capability, old-task retention, and future evolution-operator response as three different potential outcomes.",
+            "After revision, rerun collision review against continual learning, meta-learning, and self-evolving-agent capability-preservation work before method design.",
+        ],
+        "strongest_same_information_baselines": [
+            "CPE-style capability-preservation gate plus identical future-adaptation probes",
+            "standard continual-learning plasticity / adaptation-AUC measurement",
+            "current-gain + retention + direct future adaptation AUC threshold",
+        ],
+        "prohibited_claims": [
+            "measuring next-task adaptation AUC is novel",
+            "retention is equivalent to future adaptability",
+            "continual-learning plasticity does not cover the underlying scientific concern",
+        ],
+        "next_action": "Revise and re-audit the paper problem around fixed-operator evolvability debt; do not design a new gate or run local validation yet.",
+        "local_validation_authorized": False,
+        "full_experiment_authorized": False,
+    },
+    {
+        "id": "PF-4",
+        "paper_problem_id": "interventional-diagnostic-channel-preservation",
+        "verdict": "MERGE_AS_CROSS_CUTTING_INVARIANT",
+        "paper_problem": "Persistent updates should not destroy the interventional evidence channel needed to distinguish future failure causes.",
+        "irreducible_boundary": "Observability, tracing, silent-failure diagnosis, and intervention-supported attribution are already occupied. The only useful residual is preservation of interventional cause distinguishability after an update, but the current commit certificate is a generic multi-metric regression gate rather than an irreducible standalone method.",
+        "current_method_disposition": "STOP_STANDALONE_CERTIFICATE",
+        "current_method_problem": "Task gain + cause-separability/provenance threshold is directly reproduced by a diagnosability regression gate using the same probes.",
+        "merge_target": "PF-2 causal-repair-surface-ownership",
+        "merge_role": "cross-cutting commit invariant / secondary claim measuring whether the chosen repair surface preserves future causal distinguishability",
+        "strongest_same_information_baselines": [
+            "task-regression gate plus fixed diagnosability threshold",
+            "AHE-style observability optimization using the same traces",
+            "REFLECT-style intervention attribution with no persistent-update invariant",
+        ],
+        "prohibited_claims": [
+            "observability/logging/tracing is novel",
+            "current-failure attribution implies future diagnosability",
+            "a threshold certificate is an independent learning mechanism",
+        ],
+        "next_action": "Merge the invariant into PF-2 paper design. Reopen standalone only if a later collision review identifies an irreducible diagnostic-channel mechanism beyond generic constrained gating.",
+        "local_validation_authorized": False,
+        "full_experiment_authorized": False,
+    },
+    {
+        "id": "PF-6",
+        "paper_problem_id": "failure-quality-transport",
+        "verdict": "STOP_STANDALONE_MERGE_RISK_AXIS",
+        "paper_problem": "A persistent update may reduce aggregate failure while moving residual failures toward more silent, severe, or unrecoverable classes.",
+        "irreducible_boundary": "Paired longitudinal class transport is descriptively useful, but the current transport matrix plus risk-weighted accept/reject rule is reducible to class-conditional failure accounting unless the transport structure has decision value beyond before/after class marginals.",
+        "current_method_disposition": "STOP_STANDALONE_TRANSPORT_MATRIX",
+        "current_method_problem": "If decisions depend only on a risk-weighted delta, the full transport matrix is unnecessary; a same-information per-class risk baseline reproduces the update gate.",
+        "merge_target": "PF-2 / PF-4",
+        "merge_role": "secondary risk analysis for harmful failure substitution after a candidate persistent repair",
+        "strongest_same_information_baselines": [
+            "per-class before/after failure rates with identical severity weights",
+            "aggregate success plus static silent/severe failure penalties",
+            "class-conditional update-effect table without transport-path modeling",
+        ],
+        "prohibited_claims": [
+            "a new failure taxonomy is novel",
+            "reporting per-class failure rates is a standalone method",
+            "a transport matrix is necessary when a marginal risk vector makes identical decisions",
+        ],
+        "next_action": "Stop standalone paper development. Preserve failure transport as a secondary analysis and require a future standalone revival to prove decision value beyond class-marginal risk.",
+        "local_validation_authorized": False,
+        "full_experiment_authorized": False,
+    },
+)
+
+
+def _now() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+
+def build_paper_first_design_adjudication() -> dict[str, Any]:
+    incubation = build_paper_first_idea_incubation()
+    candidates = {str(row.get("id")): row for row in incubation.get("candidates") or []}
+    reviewed_ids = [str(row["id"]) for row in ROWS]
+    missing = sorted(set(reviewed_ids) - set(candidates))
+    if missing:
+        raise ValueError("paper-first design adjudication references missing incubation candidates: " + ",".join(missing))
+    rows: list[dict[str, Any]] = []
+    for template in ROWS:
+        row = dict(template)
+        row["incubation_verdict"] = candidates[row["id"]].get("verdict")
+        row["primary_sources"] = PRIMARY_SOURCES[row["id"]]
+        row["premature_f0_used_as_scientific_evidence"] = False
+        row["advisory_ai_used_as_authority"] = False
+        rows.append(row)
+    counts: dict[str, int] = {}
+    for row in rows:
+        counts[row["verdict"]] = counts.get(row["verdict"], 0) + 1
+    return {
+        "schema_version": "1.0",
+        "generated_at": _now(),
+        "review_id": "paper-first-pf1-pf2-pf4-pf6-design-20260812",
+        "target_venue": "ICLR",
+        "policy": {
+            "incubation_advance_does_not_imply_paper_design_pass": True,
+            "primary_source_collision_audit_precedes_method_freeze": True,
+            "domain_transfer_or_new_metric_alone_is_not_novelty": True,
+            "same_information_generic_baseline_required": True,
+            "premature_f0_cannot_support_problem_or_method_selection": True,
+            "ai_consultation_is_advisory_only": True,
+            "method_design_precedes_local_validation": True,
+            "local_validation_authorized": False,
+            "p0_authorized": False,
+            "full_experiment_authorized": False,
+        },
+        "advisory_review": ADVISORY_REVIEW,
+        "summary": {
+            "reviewed": len(rows),
+            "advance_to_method_design": counts.get("ADVANCE_TO_METHOD_DESIGN", 0),
+            "revise_paper_problem": counts.get("REVISE_PAPER_PROBLEM", 0),
+            "merge_as_cross_cutting_invariant": counts.get("MERGE_AS_CROSS_CUTTING_INVARIANT", 0),
+            "stop_standalone_merge_risk_axis": counts.get("STOP_STANDALONE_MERGE_RISK_AXIS", 0),
+            "local_validation_authorized": 0,
+            "full_experiment_authorized": 0,
+        },
+        "portfolio_priority": ["PF-2", "PF-1", "PF-4", "PF-6"],
+        "rows": rows,
+        "portfolio_decision": "Advance PF-2 only to method design; revise PF-1 at the paper-problem boundary; merge PF-4 as an interventional diagnosability invariant; stop PF-6 standalone and retain it as failure-risk analysis.",
+        "next_action": "Design and red-team one irreducible PF-2 method against generic same-information routing/CATE baselines. In parallel revise PF-1 problem wording and rerun collision review. Do not run local validation for any PF candidate.",
+    }
+
+
+def write_paper_first_design_adjudication(json_path: Path = DEFAULT_JSON, js_path: Path = DEFAULT_JS) -> dict[str, Any]:
+    state = build_paper_first_design_adjudication()
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+    json_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    js_path.write_text("window.PAPER_FIRST_DESIGN_ADJUDICATION = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
+    return state
+
+
+if __name__ == "__main__":
+    print(json.dumps(write_paper_first_design_adjudication(), ensure_ascii=False))

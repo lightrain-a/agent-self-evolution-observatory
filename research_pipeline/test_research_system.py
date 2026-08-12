@@ -208,6 +208,8 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual((self.state["summary"]["p0_batch_parent_p0"],self.state["summary"]["p0_batch_reused_existing"],self.state["summary"]["p0_batch_fresh_cpu_f0"]),(20,13,7))
         self.assertEqual((self.state["summary"]["p0_batch_matched_stops"],self.state["summary"]["p0_batch_upstream_holds"],self.state["summary"]["p0_batch_gpu_candidates"]),(7,0,0))
         self.assertEqual(self.state["summary"]["p0_decision_ledger_launchable"], 0)
+        self.assertEqual((self.state["summary"]["paper_first_design_reviewed"], self.state["summary"]["paper_first_design_advance_method"], self.state["summary"]["paper_first_design_revise_problem"], self.state["summary"]["paper_first_design_merge_invariant"], self.state["summary"]["paper_first_design_stop_standalone"]), (4, 1, 1, 1, 1))
+        self.assertFalse(self.state["paper_first_design_adjudication"]["policy"]["local_validation_authorized"])
         self.assertEqual(self.state["summary"]["paper_first_p0_promoted"], 0)
         self.assertEqual(self.state["summary"]["paper_first_p0_authority_status"], "NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY")
         self.assertEqual(self.state["paper_first_p0_authority"]["summary"]["promoted"], 0)

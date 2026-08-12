@@ -158,6 +158,9 @@ def main() -> None:
           incubationBlock: document.querySelectorAll('.paper-incubation-card.incubation-block').length,
           incubationOpen: document.querySelectorAll('.paper-incubation-card[open]').length,
           incubationSummary: window.PAPER_FIRST_IDEA_INCUBATION?.summary || {},
+          designSummary: window.PAPER_FIRST_DESIGN_ADJUDICATION?.summary || {},
+          designVerdicts: Object.fromEntries((window.PAPER_FIRST_DESIGN_ADJUDICATION?.rows || []).map(x=>[x.id,x.verdict])),
+          designCards: document.querySelectorAll('.paper-incubation-card small').length,
           text: document.body.textContent || ''
         };""")
         require(ideas["chapters"] == 2, f"paper-ideas should merge standalone methods and Paper-first new problems into Chapter II, got {ideas['chapters']}")
@@ -190,7 +193,10 @@ def main() -> None:
         require(all(marker in ideas["text"] for marker in ("ChronoMem","DeltaBox","CausalFlow")), "latest load-bearing collision sources are not visible in refined idea cards")
         require((ideas["incubationCards"],ideas["incubationAdvance"],ideas["incubationRevise"],ideas["incubationBlock"],ideas["incubationOpen"]) == (9,4,3,2,0), f"Paper-first incubation rendering is wrong: {ideas['incubationCards']}/{ideas['incubationAdvance']}/{ideas['incubationRevise']}/{ideas['incubationBlock']}/{ideas['incubationOpen']}")
         require((ideas["incubationSummary"].get("p0_authorized"),ideas["incubationSummary"].get("gpu_authorized")) == (0,0), f"incubation must remain outside P0/GPU authority: {ideas['incubationSummary']}")
-        require(all(marker in ideas["text"] for marker in ("PF-1","PF-2","PF-4","PF-6")) and (("面向未来可学习性的自进化" in ideas["text"] and "跨 Agent 更新表面的因果修复路由" in ideas["text"]) or ("Future-Learnability-Preserving Self-Evolution" in ideas["text"] and "Causal Routing Across Agent Update Surfaces" in ideas["text"])), "four Paper-first ADVANCE candidates are not visible")
+        ds=ideas["designSummary"]
+        require((ds.get("reviewed"),ds.get("advance_to_method_design"),ds.get("revise_paper_problem"),ds.get("merge_as_cross_cutting_invariant"),ds.get("stop_standalone_merge_risk_axis"),ds.get("local_validation_authorized")) == (4,1,1,1,1,0), f"Paper Design adjudication routing is stale: {ds}")
+        require(ideas["designVerdicts"] == {"PF-2":"ADVANCE_TO_METHOD_DESIGN","PF-1":"REVISE_PAPER_PROBLEM","PF-4":"MERGE_AS_CROSS_CUTTING_INVARIANT","PF-6":"STOP_STANDALONE_MERGE_RISK_AXIS"}, f"Paper Design verdicts are wrong: {ideas['designVerdicts']}")
+        require(all(marker in ideas["text"] for marker in ("PF-1","PF-2","PF-4","PF-6","ADVANCE_TO_METHOD_DESIGN","REVISE_PAPER_PROBLEM","MERGE_AS_CROSS_CUTTING_INVARIANT","STOP_STANDALONE_MERGE_RISK_AXIS")), "Paper-first design verdicts are not visible")
         require("Human terminal ledger" in ideas["text"] and ideas["newCards"] == 7 and ideas["absorbedChildCount"] == 17, "terminal/current idea summary or standalone-method rendering is missing")
 
         expanded_before_refresh = execute(session_id, """document.documentElement.style.scrollBehavior='auto'; const card=document.getElementById('idea-a-1'); if(!card) return null; card.open=true; card.querySelectorAll('details').forEach(x=>x.open=true); const top=card.getBoundingClientRect().top+window.scrollY; window.scrollTo(0, top+Math.min(900,Math.max(500,card.scrollHeight*.55))); return {y:window.scrollY,open:document.querySelectorAll('#dynamic-page details[open]').length};""")

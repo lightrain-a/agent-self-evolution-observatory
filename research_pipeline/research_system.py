@@ -34,6 +34,7 @@ from .methodology_controls import build_methodology_controls_state
 from .pilot_registry import build_pilot_registry
 from .p0_mem_xfer_offline_analysis import build_mem_xfer_workflow_state
 from .paper_design_contract import build_paper_first_workflow_state
+from .paper_first_design_adjudication import build_paper_first_design_adjudication, write_paper_first_design_adjudication
 from .paper_first_post_c2_adjudication import build_post_c2_adjudication, write_post_c2_adjudication
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
 from .p0_b10_cpu import write_b10_cpu_p0
@@ -279,6 +280,7 @@ def build_research_system_state() -> dict[str, Any]:
     pre_p0_identifiability = build_pre_p0_identifiability_audit(idea_bank)
     pre_experiment_compiler = _build_pre_experiment_state(storage)
     paper_first_workflow = build_paper_first_workflow_state(pre_experiment_compiler)
+    paper_first_design = build_paper_first_design_adjudication()
     paper_first_post_c2 = build_post_c2_adjudication()
     formal_cards = {
         str(card.get("idea_id")): card
@@ -384,6 +386,11 @@ def build_research_system_state() -> dict[str, Any]:
             "pre_experiment_cards":pre_experiment_compiler["summary"]["compiled_cards"],
             "paper_design_contract_passed":paper_first_workflow["summary"]["paper_design_passed"],
             "paper_design_contract_blocked":paper_first_workflow["summary"]["paper_design_blocked"],
+            "paper_first_design_reviewed":paper_first_design["summary"]["reviewed"],
+            "paper_first_design_advance_method":paper_first_design["summary"]["advance_to_method_design"],
+            "paper_first_design_revise_problem":paper_first_design["summary"]["revise_paper_problem"],
+            "paper_first_design_merge_invariant":paper_first_design["summary"]["merge_as_cross_cutting_invariant"],
+            "paper_first_design_stop_standalone":paper_first_design["summary"]["stop_standalone_merge_risk_axis"],
             "paper_first_post_c2_decision":paper_first_post_c2["decision"],
             "paper_first_post_c2_current_formulation":paper_first_post_c2["current_paper_formulation_status"],
             "paper_first_post_c2_c3_locked":paper_first_post_c2["authority"]["C3_locked"],
@@ -507,6 +514,7 @@ def build_research_system_state() -> dict[str, Any]:
         "pre_gpu_candidate_gates":pre_gpu_candidate_gates,
         "pre_experiment_compiler":pre_experiment_compiler,
         "paper_first_workflow":paper_first_workflow,
+        "paper_first_design_adjudication":paper_first_design,
         "paper_first_post_c2":paper_first_post_c2,
         "pilot_registry":pilot_registry,
         "experiment_iteration":experiment_iteration,
@@ -582,6 +590,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"pre-p0-identifiability", "pass":state["pre_p0_identifiability"]["policy"]["p0_execution_requires_pre_p0_pass"], "detail":state["pre_p0_identifiability"]["summary"]},
         {"key":"pre-gpu-survivor-gate", "pass":state["pre_gpu_candidate_gates"]["summary"]["total"] == 10 and state["pre_gpu_candidate_gates"]["summary"]["small_p0"] == 2 and state["pre_gpu_candidate_gates"]["policy"]["hold_or_inconclusive_is_not_method_failure"], "detail":state["pre_gpu_candidate_gates"]["summary"]},
         {"key":"paper-first-research-contract", "pass":state["paper_first_workflow"]["policy"]["paper_novelty_precedes_method_design"] and state["paper_first_workflow"]["policy"]["method_design_precedes_experiment_blueprint"] and state["paper_first_workflow"]["policy"]["local_validation_is_for_falsification_not_method_discovery"] and state["paper_first_workflow"]["policy"]["full_experiment_requires_frozen_method_and_blueprint"], "detail":state["paper_first_workflow"]["summary"]},
+        {"key":"paper-first-design-adjudication", "pass":state["paper_first_design_adjudication"]["summary"]["reviewed"] == 4 and state["paper_first_design_adjudication"]["summary"]["advance_to_method_design"] == 1 and state["paper_first_design_adjudication"]["summary"]["local_validation_authorized"] == 0 and state["paper_first_design_adjudication"]["policy"]["premature_f0_cannot_support_problem_or_method_selection"] is True, "detail":state["paper_first_design_adjudication"]["summary"]},
         {"key":"paper-first-post-c2-terminal", "pass":state["paper_first_post_c2"]["decision"] == "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" and state["paper_first_post_c2"]["authority"]["clean_mechanism_stop"] is True and state["paper_first_post_c2"]["authority"]["C3_locked"] is True and state["paper_first_post_c2"]["authority"]["full_experiment_authorized"] is False and state["paper_first_post_c2"]["authority"]["new_method_auto_authorized"] is False and state["paper_first_post_c2"]["authority"]["new_paper_problem_auto_authorized"] is False, "detail":{"decision":state["paper_first_post_c2"]["decision"],"c2":state["paper_first_post_c2"]["c2_result"],"gate_provenance":state["paper_first_post_c2"]["gate_provenance"]}},
         {"key":"backend-architecture-manifest", "pass":state["system_architecture"]["summary"]["temporal_stages"] == 11 and state["system_architecture"]["summary"]["functional_layers"] == 6 and state["system_architecture"]["summary"]["assigned_components"] == len(state["components"]) and state["system_architecture"]["summary"]["unassigned_components"] == 0 and state["system_architecture"]["summary"]["duplicate_component_keys"] == 0 and state["system_architecture"]["summary"]["cross_cutting_controls"] == 3 and state["system_architecture"]["summary"]["orphan_cross_cutting_controls"] == 0, "detail":state["system_architecture"]["summary"]},
         {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == expected_pre_experiment_cards, "detail":state["principle_layer"]["summary"]},
@@ -637,6 +646,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["paper_first_workflow"]["policy"]["method_design_precedes_experiment_blueprint"]: errors.append("method design must precede experiment blueprint")
     if not state["paper_first_workflow"]["policy"]["local_validation_is_for_falsification_not_method_discovery"]: errors.append("local validation must not discover or redefine the core method")
     if not state["paper_first_workflow"]["policy"]["full_experiment_requires_frozen_method_and_blueprint"]: errors.append("full experiments require frozen method and experiment blueprint")
+    design = state.get("paper_first_design_adjudication") or {}; design_summary = design.get("summary") or {}; design_policy = design.get("policy") or {}
+    if (design_summary.get("reviewed"), design_summary.get("advance_to_method_design"), design_summary.get("revise_paper_problem"), design_summary.get("merge_as_cross_cutting_invariant"), design_summary.get("stop_standalone_merge_risk_axis")) != (4,1,1,1,1): errors.append("paper-first design adjudication must conservatively route PF-1/PF-2/PF-4/PF-6 as 1 method / 1 revise / 1 merge / 1 stop")
+    if design_policy.get("local_validation_authorized") is not False or design_policy.get("p0_authorized") is not False or design_policy.get("premature_f0_cannot_support_problem_or_method_selection") is not True: errors.append("paper-first design adjudication must remain outside P0/local-validation authority and ignore premature F0 as scientific evidence")
     post_c2 = state.get("paper_first_post_c2") or {}; post_c2_auth = post_c2.get("authority") or {}
     if post_c2.get("decision") != "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" or post_c2_auth.get("clean_mechanism_stop") is not True: errors.append("post-C2 paper mechanism terminal adjudication must preserve the clean local falsifier STOP")
     if post_c2_auth.get("C3_locked") is not True or post_c2_auth.get("full_experiment_authorized") is not False: errors.append("post-C2 STOP must keep C3/full experiments locked")
@@ -737,6 +749,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_p0_admission_state()
     write_four_direction_iteration()
     write_persistent_updater_program_final()
+    write_paper_first_design_adjudication()
     write_post_c2_adjudication()
     write_ai_consultation_clinic_state()
     state=build_research_system_state()
