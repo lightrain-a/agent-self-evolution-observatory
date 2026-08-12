@@ -42,6 +42,27 @@ def candidate_effects(data:dict[str,list[dict[str,Any]]])->dict[str,dict[str,Any
         c['future_truth']='benefit' if c['hidden_sum']>0 else ('harm' if c['hidden_sum']<0 else 'neutral')
     return by
 
+def candidate_effects_reanchored(data:dict[str,list[dict[str,Any]]],baseline_success_by_task:dict[str,int])->dict[str,dict[str,Any]]:
+    by={c['candidate_id']:{**c,'probe_delta':[],'hidden_delta':[]} for c in data['candidates']}
+    covered=0
+    for row in data['future']:
+        cid=row.get('candidate_id')
+        if cid not in by: continue
+        role=row.get('role')
+        if role not in {'candidate-probe','candidate-hidden'} or row.get('truth_completion')=='C-1': continue
+        task=str(row.get('task') or '')
+        if task not in baseline_success_by_task: continue
+        covered+=1
+        delta=int((row.get('trace') or {}).get('success',0))-int(baseline_success_by_task[task])
+        if role=='candidate-probe': by[cid]['probe_delta'].append(delta)
+        else: by[cid]['hidden_delta'].append(delta)
+    for c in by.values():
+        c['probe_sum']=sum(c['probe_delta']); c['probe_mean']=float(np.mean(c['probe_delta'])) if c['probe_delta'] else 0.0
+        c['probe_harm']=sum(x<0 for x in c['probe_delta']); c['hidden_sum']=sum(c['hidden_delta']); c['hidden_mean']=float(np.mean(c['hidden_delta'])) if c['hidden_delta'] else 0.0
+        c['future_truth']='benefit' if c['hidden_sum']>0 else ('harm' if c['hidden_sum']<0 else 'neutral')
+    by['_reanchor_meta']={'covered_candidate_rows':covered,'baseline_tasks':len(baseline_success_by_task)}
+    return by
+
 def _label_confidence(row:dict[str,Any])->float:
     import re
     raw=str(row.get('raw') or '')
@@ -185,15 +206,28 @@ def analyze_shared(root:Path)->dict[str,Any]:
     c1['truth_contract_expected']={'candidates':40,'hidden_pairs':80,'hidden_per_candidate':2}
     if not c1_contract:
         c1['decision']='HOLD_C1_TRUTH_CONTRACT_INCOMPLETE'; c1['f0_signal_continue']=False
-    c5=analyze_c5(data,effects)
     portability_path=root/'runtime-portability-audit.json'
+    reanchor_path=root/'runtime-reanchor-60.json'
     try: portability=json.loads(portability_path.read_text(encoding='utf-8'))
     except (OSError,json.JSONDecodeError): portability={}
-    c5['runtime_portability']=portability
-    if portability.get('decision')!='PORTABILITY_PASS':
-        c5['pre_portability_decision']=c5.get('decision')
-        c5['decision']='HOLD_C5_RUNTIME_PORTABILITY_PENDING' if not portability else 'HOLD_C5_RUNTIME_REANCHOR_REQUIRED'
-        c5['f0_signal_continue']=False
+    try: reanchor=json.loads(reanchor_path.read_text(encoding='utf-8'))
+    except (OSError,json.JSONDecodeError): reanchor={}
+    if reanchor.get('decision')=='RUNTIME_REANCHOR_COMPLETE' and int(reanchor.get('tasks') or 0)==32:
+        c5_effects=candidate_effects_reanchored(data,{str(k):int(v) for k,v in (reanchor.get('baseline_success_by_task') or {}).items()})
+        reanchor_meta=c5_effects.pop('_reanchor_meta',{})
+        c5=analyze_c5(data,c5_effects)
+        c5['runtime_reanchor']={**{k:v for k,v in reanchor.items() if k!='baseline_success_by_task'},**reanchor_meta}
+        c5['runtime_portability']=portability
+        if reanchor_meta.get('covered_candidate_rows')!=288:
+            c5['pre_reanchor_decision']=c5.get('decision')
+            c5['decision']='HOLD_C5_RUNTIME_REANCHOR_INCOMPLETE'; c5['f0_signal_continue']=False
+    else:
+        c5=analyze_c5(data,effects)
+        c5['runtime_portability']=portability
+        if portability.get('decision')!='PORTABILITY_PASS':
+            c5['pre_portability_decision']=c5.get('decision')
+            c5['decision']='HOLD_C5_RUNTIME_PORTABILITY_PENDING' if not portability else 'HOLD_C5_RUNTIME_REANCHOR_REQUIRED'
+            c5['f0_signal_continue']=False
     out={'schema_version':'1.0','scientific_role':'shared upstream substrate qualification only; no automatic METHOD-PASS/FAIL','shards_complete':len(complete),'candidates_total':len(data['candidates']),'self_label_decisions':len(data['labels']),'C-1':c1,'C-4':c4,'C-5':c5}
     (root/'analysis.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8'); return out
 
