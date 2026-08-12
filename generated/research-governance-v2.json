@@ -1,8 +1,8 @@
 {
-  "schema_version": "2.1",
+  "schema_version": "2.2",
   "generated_at": "2026-08-12T10:46:42+00:00",
   "policy": {
-    "schema_version": "2.1",
+    "schema_version": "2.2",
     "paper_novelty_precedes_method_design": true,
     "method_design_precedes_experiment_plan": true,
     "local_validation_precedes_full_experiment": true,
@@ -108,14 +108,17 @@
     "repair_budget_root": "/data/wyt/agent-self-evolution-observatory/governance/repair-budget"
   },
   "paper_first_macro_stages": [
-    "paper-problem-and-evidence",
-    "paper-novelty-contract",
-    "principle-and-method-design",
+    "scope",
+    "evidence",
+    "novelty",
+    "method",
     "experiment-blueprint",
-    "economy-and-compile",
+    "economy-compile",
     "local-validation",
     "method-freeze",
     "full-experiment",
-    "paper-evidence"
-  ]
+    "paper-evidence",
+    "learn"
+  ],
+  "stage_scope_note": "The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; they do not replace the paper lifecycle."
 }

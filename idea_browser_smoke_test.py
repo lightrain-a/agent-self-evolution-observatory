@@ -65,6 +65,9 @@ def main() -> None:
         system = execute(session_id, """return {
           chapters: document.querySelectorAll('.page-chapter').length,
           responsibilityLayers: document.querySelectorAll('.system-layer-list article').length,
+          temporalStages: document.querySelectorAll('.system-lifecycle-step').length,
+          componentLayerHeaders: document.querySelectorAll('.system-component-layer').length,
+          architectureSummary: window.RESEARCH_SYSTEM_STATE?.system_architecture?.summary || {},
           aiCheckpoints: document.querySelectorAll('.system-checkpoint-strip > div').length,
           outerGates: document.querySelectorAll('.preflight-outer-gate').length,
           preflightGates: document.querySelectorAll('.preflight-gate').length,
@@ -79,7 +82,8 @@ def main() -> None:
           text: document.body.textContent || ''
         };""")
         require(system["chapters"] == 6, f"research-system overview must have six chapters, got {system['chapters']}")
-        require(system["responsibilityLayers"] == 6 and system["aiCheckpoints"] == 5, f"research-system map/AI clinic is incomplete: {system['responsibilityLayers']}/{system['aiCheckpoints']}")
+        require(system["responsibilityLayers"] == 6 and system["temporalStages"] == 11 and system["componentLayerHeaders"] == 6 and system["aiCheckpoints"] == 5, f"research-system architecture/AI clinic is incomplete: layers={system['responsibilityLayers']} stages={system['temporalStages']} component-groups={system['componentLayerHeaders']} ai={system['aiCheckpoints']}")
+        require((system["architectureSummary"].get("temporal_stages"),system["architectureSummary"].get("functional_layers"),system["architectureSummary"].get("assigned_components"),system["architectureSummary"].get("unassigned_components")) == (11,6,27,0), f"backend architecture manifest is stale in browser state: {system['architectureSummary']}")
         require(system["outerGates"] == 8 and system["preflightGates"] == 10 and system["quantWorksheets"] == 2, f"Pre-Experiment/identifiability compiler is incomplete: {system['outerGates']}/{system['preflightGates']}/{system['quantWorksheets']}")
         require(system["lessons"] == 6 and system["failureLayers"] == 6 and system["repairLoops"] == 1, f"learning/diagnosis visualization is incomplete: {system['lessons']}/{system['failureLayers']}/{system['repairLoops']}")
         require(system["components"] >= 27, f"expected the current backend responsibility set including Paper-first contract, capability registry, literature audit, Principle, Protocol Validity, Meta-Trace, failure memory, scheduler, replay, Economy, and AI consultation, got {system['components']}")

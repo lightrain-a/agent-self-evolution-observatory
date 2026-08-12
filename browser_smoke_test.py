@@ -152,6 +152,8 @@ def main() -> None:
               stats: document.querySelectorAll('.system-stat').length,
               mapMetrics: document.querySelectorAll('.system-map-metrics > div').length,
               responsibilityLayers: document.querySelectorAll('.system-layer-list article').length,
+              componentLayerHeaders: document.querySelectorAll('.system-component-layer').length,
+              architectureSummary: window.RESEARCH_SYSTEM_STATE?.system_architecture?.summary || {},
               aiCheckpoints: document.querySelectorAll('.system-checkpoint-strip > div').length,
               artifacts: document.querySelectorAll('.system-artifact-table tbody tr').length,
               boundaries: document.querySelectorAll('.system-boundary-card').length,
@@ -190,7 +192,8 @@ def main() -> None:
         require(system_overview["chapters"] == 6, f"system overview must have six research-system chapters, got {system_overview['chapters']}")
         require(system_overview["toc2"] >= 6 and system_overview["toc4"] == 0, f"system overview hierarchy is wrong: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
         require(system_overview["stats"] == 8, f"research-system hero statistics are incomplete: {system_overview['stats']}")
-        require(system_overview["mapMetrics"] == 7 and system_overview["responsibilityLayers"] == 6, f"six-layer system map is incomplete: metrics={system_overview['mapMetrics']} layers={system_overview['responsibilityLayers']}")
+        require(system_overview["mapMetrics"] == 7 and system_overview["responsibilityLayers"] == 6 and system_overview["lifecycleSteps"] == 11 and system_overview["componentLayerHeaders"] == 6, f"canonical architecture is incomplete: metrics={system_overview['mapMetrics']} layers={system_overview['responsibilityLayers']} stages={system_overview['lifecycleSteps']} component-groups={system_overview['componentLayerHeaders']}")
+        require((system_overview["architectureSummary"].get("temporal_stages"),system_overview["architectureSummary"].get("functional_layers"),system_overview["architectureSummary"].get("assigned_components"),system_overview["architectureSummary"].get("unassigned_components")) == (11,6,27,0), f"backend architecture manifest is stale in browser state: {system_overview['architectureSummary']}")
         require(system_overview["aiCheckpoints"] == 5, f"AI consultation checkpoint strip is incomplete: {system_overview['aiCheckpoints']}")
         require(system_overview["governanceStages"] == 7, f"P0-System v2 must expose seven scientific stages, got {system_overview['governanceStages']}")
         require(system_overview["outerGates"] == 8 and system_overview["preflightGates"] == 10 and system_overview["quantWorksheets"] == 2, f"Pre-Experiment/identifiability compiler is incomplete: {system_overview['outerGates']}/{system_overview['preflightGates']}/{system_overview['quantWorksheets']}")

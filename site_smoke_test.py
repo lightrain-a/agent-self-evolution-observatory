@@ -288,6 +288,12 @@ def main() -> None:
     component_sources = {str(item.get("source") or "") for item in components}
     if len(components) < 27 or not required_component_sources.issubset(component_sources):
         fail(f"research-system state is missing current backend responsibilities: count={len(components)}, missing={sorted(required_component_sources-component_sources)}")
+    architecture = research_state.get("system_architecture", {})
+    architecture_summary = architecture.get("summary", {})
+    if (architecture_summary.get("temporal_stages"), architecture_summary.get("functional_layers"), architecture_summary.get("assigned_components"), architecture_summary.get("unassigned_components"), architecture_summary.get("duplicate_component_keys")) != (11,6,27,0,0):
+        fail(f"backend architecture manifest is incomplete or stale: {architecture_summary}")
+    if len({str(item.get("key") or "") for item in components}) != len(components) or any(not item.get("primary_layer") for item in components):
+        fail("backend components must expose unique architecture keys and one primary layer each")
     pre_p0 = research_state.get("pre_p0_identifiability", {})
     if pre_p0.get("summary", {}).get("audited") != 4 or pre_p0.get("summary", {}).get("execution_ready") != 0:
         fail(f"Pre-P0 identifiability state is inconsistent: {pre_p0.get('summary')}")
@@ -430,14 +436,14 @@ def main() -> None:
         fail("system overview must not load current idea-bank or discussion-pool artifacts")
     system_files = ["system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-governance-v2.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js"]
     system_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in system_files)
-    for marker in ("RESEARCH SYSTEM CONTRACT", "CURRENT SYSTEM MAP", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "GATE 3 · IDENTIFIABILITY SUB-AUDIT", "10 / 10", "P0-SYSTEM v2", "system-failure-layer", "MCP-Yu + Experiment Orchestrator", "DECISION → LEARN → PUBLISH"):
+    for marker in ("PAPER-FIRST RESEARCH OS", "CURRENT RESEARCH OS", "BACKEND ARCHITECTURE MANIFEST", "CANONICAL TEMPORAL FLOW", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "GATE 3 · IDENTIFIABILITY SUB-AUDIT", "10 / 10", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "MCP-Yu + Experiment Orchestrator", "DECISION → LEARN → PUBLISH"):
         if marker not in system_text:
             fail(f"system overview implementation is missing {marker}")
     system_content = (ROOT / "content-system-overview.js").read_text(encoding="utf-8")
     forbidden_idea_markers = ("主 ICLR Idea Bank", "最终师兄讨论门槛", "Main ICLR idea bank", "Final advisor gate", "paper-ideas.html#discussed-ideas")
     if any(marker in system_text or marker in system_content for marker in forbidden_idea_markers):
         fail("system overview must contain only the research system, not current idea decisions")
-    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "Paper-first 科研生命周期与当前运行状态", "实验蓝图、P0 经济门、协议有效性与编译", "局部验证、方法冻结、全量实验与失败语义", "SCIENTIFIC META-TRACE"):
+    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "总体架构：一条主流程 + 六个后端职责层", "实验设计与启动准入", "科学验证、方法冻结与扩量", "SCIENTIFIC META-TRACE"):
         if marker not in system_text and marker not in system_content and marker not in (ROOT / "page-architecture-data.js").read_text(encoding="utf-8"):
             fail(f"Chinese research-system documentation is missing {marker}")
 

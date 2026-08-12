@@ -5,6 +5,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .system_architecture import TEMPORAL_FLOW
+
 STAGES=("problem","substrate","f0-identifiability","p0-support","p0-method","p1-replication","paper-experiment")
 FAILURES={
  "FAIL_PROBLEM":(True,"stop-or-reframe"),"FAIL_SUBSTRATE":(False,"change-substrate"),
@@ -15,7 +17,7 @@ FAILURES={
  "BUDGET_STOP":(False,"replan-cost-before-rerun"),
 }
 POLICY={
- "schema_version":"2.1","paper_novelty_precedes_method_design":True,"method_design_precedes_experiment_plan":True,
+ "schema_version":"2.2","paper_novelty_precedes_method_design":True,"method_design_precedes_experiment_plan":True,
  "local_validation_precedes_full_experiment":True,"core_method_change_returns_to_paper_design":True,
  "full_experiment_requires_frozen_method_and_experiment_blueprint":True,
  "support_and_method_are_distinct":True,"p0_method_requires_frozen_support_pass":True,
@@ -94,7 +96,7 @@ def evaluate_stage_contract(idea_id:str,config:dict[str,Any],root:Path)->dict[st
  return {"schema_version":"2.0","idea_id":idea_id,"stage":stage,"stage_index":STAGES.index(stage),"predecessor_authorization":predecessor,"support_authorization":support,"repair_budget":budget,"execution_authorized":not blockers,"blockers":blockers,"policy":POLICY}
 
 def build_governance_state()->dict[str,Any]:
- return {"schema_version":"2.1","generated_at":_now(),"policy":POLICY,"paper_first_macro_stages":["paper-problem-and-evidence","paper-novelty-contract","principle-and-method-design","experiment-blueprint","economy-and-compile","local-validation","method-freeze","full-experiment","paper-evidence"],"stages":[{"index":i,"key":k} for i,k in enumerate(STAGES)],"predecessor_evidence":PREDECESSOR_EVIDENCE,"failure_classes":{k:{"belief_authority":v[0],"next_action":v[1]} for k,v in FAILURES.items()}}
+ return {"schema_version":"2.2","generated_at":_now(),"policy":POLICY,"paper_first_macro_stages":[str(row["key"]) for row in TEMPORAL_FLOW],"stages":[{"index":i,"key":k} for i,k in enumerate(STAGES)],"predecessor_evidence":PREDECESSOR_EVIDENCE,"failure_classes":{k:{"belief_authority":v[0],"next_action":v[1]} for k,v in FAILURES.items()},"stage_scope_note":"The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; they do not replace the paper lifecycle."}
 
 def write_governance_state(json_path:Path,js_path:Path)->dict[str,Any]:
  row=build_governance_state(); _atomic(json_path,row); js_path.parent.mkdir(parents=True,exist_ok=True)

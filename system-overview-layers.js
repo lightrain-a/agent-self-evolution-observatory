@@ -1,13 +1,12 @@
 (() => {
   const pick=(zh,en)=>language==="zh"?zh:en;
   const api=window.SYSTEM_OVERVIEW_SECTIONS=window.SYSTEM_OVERVIEW_SECTIONS||{};
-  const row=(n,tag,zh,en,zhb,enb)=>`<article><span>${n}</span><div><small>${tag}</small><b>${pick(zh,en)}</b><p>${pick(zhb,enb)}</p></div></article>`;
-  api.renderSystemLayers=function(){return `<section class="system-layers system-section"><h3>${pick("系统的六个职责层","Six responsibility layers")}</h3><div class="system-layer-list">
-    ${row(1,"EVIDENCE","证据与研究问题","Evidence & framing","文献、证据图、撞车边界和主张范围。","Literature, evidence graph, collision boundary, and claim scope.")}
-    ${row(2,"DISCOVERY","Idea 搜索与 AI 会诊","Idea search & AI clinic","宽搜索、人工终态、Premortem 与 Red Team。","Wide search, human terminal decisions, premortem, and red team.")}
-    ${row(3,"ECONOMY","P0 经济门与实验编译","P0 Economy & compile","简化基线、底座库存、causal unit、VOI、8 Gate。","Matched simplifications, substrate inventory, causal unit, VOI, and eight gates.")}
-    ${row(4,"SCIENCE","科学状态机","Scientific state machine","Problem → Substrate → F0 → P0-S → P0-M → P1 → Paper。","Problem → Substrate → F0 → P0-S → P0-M → P1 → Paper.")}
-    ${row(5,"RUNTIME","执行与权限","Runtime & authority","single-writer、GPU lease、trace、预算、恢复。","Single-writer authority, GPU leases, traces, budgets, and recovery.")}
-    ${row(6,"LEARN","决策回流与发布","Feedback & publication","Decision Ledger、repair queue、automation cycle、公开快照。","Decision Ledger, repair queue, automation cycle, and public snapshots.")}
-  </div></section>`};
+  const text=(value)=>typeof value==="object"&&value!==null?(language==="zh"?(value.zh||value.en):(value.en||value.zh)):String(value||"");
+  api.renderSystemLayers=function(state){
+    const architecture=state.system_architecture||{};
+    const layers=architecture.functional_layers||[];
+    const rows=layers.map((layer,index)=>`<article><span>${layer.index||index+1}</span><div><small>${esc(String(layer.key||"layer").toUpperCase())}</small><b>${esc(text(layer.label))}</b><p>${esc(text(layer.mandate))}</p><footer><strong>${layer.component_count||0}</strong><em>${pick("个主责组件","primary components")}</em></footer></div></article>`).join("");
+    const summary=architecture.summary||{};
+    return `<section class="system-layers system-section"><div class="preflight-heading"><div><span class="system-kicker">BACKEND ARCHITECTURE MANIFEST</span><h3>${pick("一条时间主流程 + 六个职责层","One temporal lifecycle + six responsibility layers")}</h3><p>${pick("11 步 Paper-first 生命周期回答“研究什么时候可以继续”；六个职责层回答“后端哪一层负责什么”。P0-System v2 的 7-stage 只是 Scientific Validation 层内部的实验状态机，不是第二套总流程。","The 11-stage paper-first lifecycle answers when research may advance; the six functional layers answer which backend layer owns each responsibility. The seven-stage P0-System v2 machine is nested inside Scientific Validation, not a competing top-level lifecycle.")}</p></div><div class="preflight-lock"><b>${summary.assigned_components||0}/${summary.components||0}</b><span>${pick("组件已归责","components assigned")}</span></div></div><div class="system-layer-list">${rows}</div><div class="system-retro-note"><b>${pick("唯一架构真源：","Architecture source of truth:")}</b> <code>research_pipeline/system_architecture.py</code> · ${summary.temporal_stages||0} ${pick("个时间阶段","temporal stages")} · ${summary.functional_layers||0} ${pick("个职责层","functional layers")} · ${summary.unassigned_components||0} ${pick("个未归责组件","unassigned components")}</div></section>`;
+  };
 })();

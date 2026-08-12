@@ -11,28 +11,29 @@
     const stats = s2.statistics || {};
     const economy = state.p0_economy_gate?.summary || {};
     const ledger = state.p0_decision_ledger?.summary || {};
-    const ai = state.ai_consultation_automation?.summary || {};
+    const paper = state.paper_first_workflow?.summary || {};
+    const architecture = state.system_architecture?.summary || {};
     const running = (state.components || []).filter((item) => item.status === "running").length;
     return `<section class="system-hero system-section">
-      <div class="system-hero-copy"><span class="system-kicker">RESEARCH SYSTEM CONTRACT</span><h3>${pick("这套系统不是为了自动“产出更多 Idea”，而是为了让研究过程更可验证、更少浪费、更容易复盘。","The system is not optimized to produce more ideas. It is optimized to make research auditable, less wasteful, and easier to repair.")}</h3><p>${pick("核心对象是一条可重复的科研链：证据如何进入、一个科学问题何时值得实验、实验在什么条件下才有资格给出结论、失败如何分类，以及经验如何回流成下一轮的启动规则。","The primary object is a repeatable research loop: how evidence enters, when a question deserves an experiment, when a run is identifiable enough to support a conclusion, how failures are classified, and how lessons become launch rules for the next run.")}</p></div>
+      <div class="system-hero-copy"><span class="system-kicker">PAPER-FIRST RESEARCH OS</span><h3>${pick("后端只保留一个科研主逻辑：先设计一篇有 Novelty 的论文，再设计方法和实验，局部验证后冻结，最后做全量证据。","The backend now has one research logic: design a paper-worthy contribution first, then the method and experiments, validate locally, freeze, and only then collect full-scale evidence.")}</h3><p>${pick("Idea 生成、AI 会诊、P0、实验调度、失败诊断和系统记忆都不再是各自独立的流程，而是服务于同一条 Paper-first 生命周期。后端 Architecture Manifest 负责把每个组件归到唯一主责层，前端直接读取这份结构。","Idea generation, AI consultation, P0, experiment scheduling, failure diagnosis, and scientific memory are no longer separate workflows; each serves the same paper-first lifecycle. A backend Architecture Manifest assigns every component to one primary responsibility layer and the frontend reads that structure directly.")}</p></div>
       <div class="system-stat-grid system-hero-stats">
+        ${stat(get(architecture.temporal_stages,11),"步 Paper-first 生命周期","paper-first temporal stages")}
+        ${stat(get(architecture.functional_layers,6),"个后端职责层","backend responsibility layers")}
+        ${stat(get(architecture.assigned_components,running),"个已归责组件","assigned components",get(architecture.unassigned_components,0)?"warn":"good")}
         ${stat(get(summary.papers,stats.paper_count),"篇去重文献","deduplicated papers")}
-        ${stat(get(summary.evidence_nodes),"个证据节点","evidence nodes")}
-        ${stat(get(summary.evidence_edges),"条证据关系","evidence relations")}
-        ${stat(running,"个核心组件运行中","core components running",running?"good":"warn")}
-        ${stat(get(summary.p0_admission_active,0),"个 active P0 生命周期方向","active P0 lifecycle directions")}
+        ${stat(get(paper.paper_design_passed,0),"份新版 Paper-first 卡","current paper-first cards")}
         ${stat(get(economy.economy_ready,0),"个 Economy-ready","currently Economy-ready",get(economy.economy_ready,0)?"good":"warn")}
-        ${stat(get(ledger.experiment_stopped,0),"个实验 STOP 待人工","experiment STOPs awaiting review")}
-        ${stat(get(ai.unresolved_high_risk,0),"个未处置 AI 高风险","unresolved AI high-risk",get(ai.unresolved_high_risk,0)?"warn":"good")}
+        ${stat(get(ledger.launchable,0),"个当前可启动实验","currently launchable",get(ledger.launchable,0)?"good":"warn")}
+        ${stat(get(architecture.unassigned_components,0),"个未归责组件","unassigned components",get(architecture.unassigned_components,0)?"warn":"good")}
       </div>
     </section>
-    <section class="system-principles system-section"><h3>${pick("先读这六条：系统到底保证什么","Six guarantees to read first")}</h3><p class="section-intro">${pick("它们比具体模型、Benchmark 或某一轮实验更稳定，是整个后台的设计约束。","These constraints are more stable than any model, benchmark, or individual experiment.")}</p><div class="system-principle-grid">
-      ${principle(1,"证据先于结论","Evidence before claims","文献、Baseline、Pilot 和失败证据必须能追到来源；unknown 保持 unknown。","Literature, baselines, pilots, and failures remain traceable to source; unknown stays unknown.")}
-      ${principle(2,"原理先于实验","Principle before experiment","先冻结原语、假设、机制、适用范围、可观测预测和真正反证条件；实验只是检验这条证据链的接口，不是一张对 Idea 投 PASS/FAIL 的票。","Freeze primitives, assumptions, mechanism, scope, observable predictions, and genuine falsifiers first; an experiment is an evidence interface, not a PASS/FAIL vote on an idea.")}
-      ${principle(3,"先证明实验可辨识，再消耗 GPU","Identifiability before GPU spend","如果实验区分不了“方法有效”和“Base agent 根本不会”，就没有启动资格。","A run that cannot distinguish method effect from an incapable base agent is not launchable.")}
-      ${principle(4,"负结果先定位更新哪一层","Negative evidence updates a layer, not everything","运行、实验设计、测量桥、方法实现、适用范围和核心机制是不同层；只有预注册原理预测在全部前置条件成立时被稳定反驳，才允许原理级 falsification。","Execution, design, operationalization, method realization, scope, and core mechanism are distinct layers; principle falsification requires a registered prediction contradicted with every prerequisite intact.")}
-      ${principle(5,"小实验负责筛信号，不负责误杀方向","Screening finds signal; it does not kill a direction","Screening 只产生 signal / no-signal / inconclusive；正式方法结论仍需要 confirmatory evidence。","Screening produces signal, no-signal, or inconclusive; formal method conclusions require confirmatory evidence.")}
-      ${principle(6,"运行可恢复，科学主张有人类门","Recoverable runs; human-controlled claims","实验增量落盘、预算在线检查；自动化可以执行检索、校验、调度和汇总，但主张边界、扩预算与最终原理解释保留人工门。","Runs persist incrementally with online budget checks; automation may retrieve, validate, schedule, and aggregate, while claim boundaries, budget escalation, and final principle interpretation remain human gates.")}
+    <section class="system-principles system-section"><h3>${pick("系统最终保留的六条科研硬约束","Six final research invariants")}</h3><p class="section-intro">${pick("这些约束比某个具体 Idea、模型或实验批次更高层；任何新模块都必须服从它们。","These constraints sit above any individual idea, model, or experiment batch; every new module must obey them.")}</p><div class="system-principle-grid">
+      ${principle(1,"证据先于主张","Evidence before claims","文献、最近邻、Baseline、Pilot 与失败结论都必须能回到真实来源；unknown 保持 unknown。","Literature, closest work, baselines, pilots, and failure claims remain traceable to real sources; unknown stays unknown.")}
+      ${principle(2,"Novelty 先于实现","Novelty before implementation","先回答论文为什么值得发表、和 closest work 的不可约差异是什么；说不清贡献就不进入实现。","First establish why the paper is publishable and what is irreducibly different from the closest work; no clear contribution means no implementation.")}
+      ${principle(3,"原理、方法和实验蓝图先于 Pilot","Principle, method, and blueprint before pilots","先冻结机制、方法组件、最强简化和 Claim→Experiment 关系；局部实验只能验证预注册风险，不能边跑边发明核心方法。","Freeze mechanism, method components, strongest simplification, and Claim→Experiment mapping first; local pilots test preregistered risks and never invent the core method on the fly.")}
+      ${principle(4,"先证明值得且可辨识，再消耗 GPU","Economy and identifiability before GPU","先用最强简化、底座库存、causal unit、VOI、Protocol 与 8 Gate 判断最便宜决定性实验是否有资格启动。","Use strongest simplifications, substrate inventory, causal units, VOI, protocol checks, and eight gates to qualify the cheapest decisive test before GPU spend.")}
+      ${principle(5,"负结果只更新被证据击中的那一层","Negative evidence updates only the affected layer","运行、实验设计、测量桥、方法实现、适用范围和核心原理分开判断；P0 没过不等于 Idea/原理自动失败。","Execution, design, measurement bridge, method realization, scope, and core principle are adjudicated separately; a failed P0 is not an automatic idea/principle failure.")}
+      ${principle(6,"方法冻结后再扩量；运行可恢复，最终主张有人类门","Freeze before scale; recoverable runs and human claim authority","核心方法若因局部结果改变，就回到 Novelty/Method/Blueprint；全量实验只执行冻结方案，且预算扩张、原理解释和最终论文主张保留人工科学权限。","If local evidence changes the core method, return to Novelty/Method/Blueprint. Full experiments execute only frozen designs, while budget escalation, principle interpretation, and final paper claims remain under human scientific authority.")}
     </div></section>`;
   };
 })();

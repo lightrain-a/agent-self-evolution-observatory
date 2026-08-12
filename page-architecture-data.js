@@ -35,12 +35,12 @@ window.PAGE_ARCHITECTURES = {
   },
   "system-overview":{
     chapters:[
-      {id:"system-map",title:{en:"I · Paper-first research lifecycle and current operating state",zh:"第一章 · Paper-first 科研生命周期与当前运行状态"},question:{en:"How does the system move from paper-worthy novelty to method design, local validation, method freeze, and full experiments?",zh:"系统如何从论文级 novelty 出发，依次完成方法设计、局部验证、方法冻结和全量实验？"}},
-      {id:"evidence-consultation",title:{en:"II · Evidence, closest-work review, novelty, and method formation",zh:"第二章 · 证据、最近邻审查、Novelty 与方法形成"},question:{en:"How do literature, collision review, paper-level novelty, principle reasoning, and AI consultation determine what method is worth implementing?",zh:"文献、撞车审查、论文级 Novelty、原理推理和 AI 会诊如何共同决定什么方法值得实现？"}},
-      {id:"economy-compile",title:{en:"III · Experiment blueprint, P0 Economy, protocol validity, and compile",zh:"第三章 · 实验蓝图、P0 经济门、协议有效性与编译"},question:{en:"How are paper claims converted into a complete experiment blueprint before the cheapest local validation is compiled?",zh:"系统如何先把论文主张变成完整实验蓝图，再编译最便宜的局部验证？"}},
-      {id:"scientific-state-machine",title:{en:"IV · Local validation, method freeze, full experiment, and failure semantics",zh:"第四章 · 局部验证、方法冻结、全量实验与失败语义"},question:{en:"How does the system keep pilots from redefining the method and prevent full experiments before a frozen paper-level design?",zh:"系统如何防止 pilot 反过来定义方法，并阻止未冻结论文级设计就直接进入全量实验？"}},
-      {id:"runtime-authority",title:{en:"V · Runtime, authority, automation, and recovery",zh:"第五章 · 运行时、权限、自动化与恢复"},question:{en:"How are servers, GPU leases, single-writer authority, traces, budgets, AI triggers, and recovery managed safely?",zh:"服务器、GPU 租约、单写者权限、Trace、预算、AI 自动触发与恢复如何安全管理？"}},
-      {id:"learning-publication",title:{en:"VI · Scientific memory, system self-evaluation, and publication",zh:"第六章 · 科研记忆、系统自评与发布"},question:{en:"How do decisions become Meta-Trace state, reusable failure assets, information-gain experiment choices, replay-tested system rules, and public snapshots without rewriting scientific history?",zh:"实验决策如何变成 Meta-Trace 科研状态、可复用失败资产、高信息增益实验选择、通过回放评测的系统规则和公开快照，同时不改写科学历史？"}}
+      {id:"system-map",title:{en:"I · Canonical architecture: one lifecycle + six backend layers",zh:"第一章 · 总体架构：一条主流程 + 六个后端职责层"},question:{en:"What is the single paper-first lifecycle, how do the six responsibility layers implement it, and where does the seven-stage P0 sub-machine fit?",zh:"唯一的 Paper-first 主流程是什么、六个职责层如何实现它、P0 的 7-stage 子状态机又位于哪里？"}},
+      {id:"evidence-consultation",title:{en:"II · Evidence and paper design",zh:"第二章 · 证据与论文设计"},question:{en:"How do closest-work evidence, collision review, novelty, principle reasoning, method formation, and AI consultation decide what is worth implementing?",zh:"最近邻证据、撞车审查、Novelty、原理推理、方法形成与 AI 会诊如何共同决定什么值得实现？"}},
+      {id:"economy-compile",title:{en:"III · Experiment design and launch admission",zh:"第三章 · 实验设计与启动准入"},question:{en:"How are paper claims compiled into a complete blueprint, then reduced to the cheapest identifiable and economical local test?",zh:"论文主张如何先编译成完整实验蓝图，再压缩成最便宜、可辨识且值得运行的局部验证？"}},
+      {id:"scientific-state-machine",title:{en:"IV · Scientific validation, method freeze, and scale-up",zh:"第四章 · 科学验证、方法冻结与扩量"},question:{en:"How are support, method evidence, negative-result semantics, method freeze, and full experiments separated without letting pilots redesign the paper?",zh:"如何把现象支持、方法证据、负结果语义、方法冻结与全量实验分开，同时不让 pilot 反过来重写论文方法？"}},
+      {id:"runtime-authority",title:{en:"V · Runtime, resources, and authority",zh:"第五章 · 运行时、资源与权限"},question:{en:"How are servers, GPU leases, single-writer authority, traces, budgets, AI triggers, automation, and recovery managed without escalating scientific authority?",zh:"服务器、GPU 租约、单写者权限、Trace、预算、AI 触发、自动化与恢复如何管理，同时不越权到科学结论？"}},
+      {id:"learning-publication",title:{en:"VI · Scientific memory, system learning, and publication",zh:"第六章 · 科研记忆、系统学习与发布"},question:{en:"How do decisions become Meta-Trace state, Failure Assets, replay-tested rules, and public evidence without rewriting scientific history?",zh:"实验决策如何变成 Meta-Trace、Failure Assets、通过回放评测的系统规则与公开证据，同时不改写科研历史？"}}
     ]
   },
   "research-directions":{
@@ -59,7 +59,7 @@ window.PAGE_ARCHITECTURES = {
   },
   experiments:{
     chapters:[
-      {id:"experiment-queue",title:{en:"I · Current terminal decisions",zh:"第一章 · 当前终态决策"},question:{en:"What is the single current decision for each of the 20 active P0 directions, and what evidence is decisive for that decision?",zh:"20 个活跃 P0 方向现在各自唯一的终态结论是什么，哪条证据真正决定了这个结论？"}},
+      {id:"experiment-queue",title:{en:"I · Current terminal decisions",zh:"第一章 · 当前终态决策"},question:{en:"What is the single current decision for each active P0 direction, and what evidence is decisive for that decision?",zh:"每个活跃 P0 方向现在唯一的终态结论是什么，哪条证据真正决定了这个结论？"}},
       {id:"experiment-evidence",title:{en:"II · Current evidence audit",zh:"第二章 · 当前证据审计"},question:{en:"When a row needs auditing, which frozen P0 contract and qualification evidence support it without restating the verdict?",zh:"当需要核查某一行时，应查看哪些冻结 P0 合同与资格证据，而不再重复终态结论？"}},
       {id:"experiment-traceability",title:{en:"III · Historical traceability archive",zh:"第三章 · 历史追溯档案"},question:{en:"Which earlier Pre-GPU, runtime, pilot-registry, resource, and approval artifacts are retained for provenance without competing with the current decision table?",zh:"哪些旧 Pre-GPU、runtime、Pilot Registry、资源与审批工件需要保留追溯，但不能再与当前终态总表竞争主叙事？"}}
     ]

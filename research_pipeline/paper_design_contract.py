@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from .system_architecture import TEMPORAL_FLOW
+
 
 POLICY: dict[str, Any] = {
     "schema_version": "1.0",
@@ -128,17 +130,7 @@ def build_paper_first_workflow_state(pre_experiment: dict[str, Any]) -> dict[str
     return {
         "schema_version": "1.0",
         "policy": POLICY,
-        "macro_stages": [
-            "paper-problem-and-evidence",
-            "paper-novelty-contract",
-            "principle-and-method-design",
-            "experiment-blueprint",
-            "economy-and-pre-experiment-compile",
-            "local-validation",
-            "method-freeze",
-            "full-experiment",
-            "paper-evidence-and-writing",
-        ],
+        "macro_stages": [str(row["key"]) for row in TEMPORAL_FLOW],
         "summary": {
             "cards": len(cards),
             "paper_design_passed": sum(audit.get("passed") is True for audit in audits),

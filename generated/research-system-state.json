@@ -6296,7 +6296,9 @@
     "mem_xfer_support_analysis_status": "support_enriched_analysis_pending",
     "mem_xfer_second_model_status": "second_model_hold",
     "paper_design_contract_passed": 0,
-    "paper_design_contract_blocked": 4
+    "paper_design_contract_blocked": 4,
+    "architecture_temporal_stages": 11,
+    "architecture_functional_layers": 6
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -32801,10 +32803,10 @@
     }
   },
   "research_governance_v2": {
-    "schema_version": "2.1",
+    "schema_version": "2.2",
     "generated_at": "2026-08-12T10:46:42+00:00",
     "policy": {
-      "schema_version": "2.1",
+      "schema_version": "2.2",
       "paper_novelty_precedes_method_design": true,
       "method_design_precedes_experiment_plan": true,
       "local_validation_precedes_full_experiment": true,
@@ -32910,16 +32912,19 @@
       "repair_budget_root": "/data/wyt/agent-self-evolution-observatory/governance/repair-budget"
     },
     "paper_first_macro_stages": [
-      "paper-problem-and-evidence",
-      "paper-novelty-contract",
-      "principle-and-method-design",
+      "scope",
+      "evidence",
+      "novelty",
+      "method",
       "experiment-blueprint",
-      "economy-and-compile",
+      "economy-compile",
       "local-validation",
       "method-freeze",
       "full-experiment",
-      "paper-evidence"
-    ]
+      "paper-evidence",
+      "learn"
+    ],
+    "stage_scope_note": "The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; they do not replace the paper lifecycle."
   },
   "p0_offline_qualification": {
     "summary": {
@@ -60496,7 +60501,9 @@
       "evidence": {
         "en": "500 nodes / 609 edges",
         "zh": "500 个节点 / 609 条边"
-      }
+      },
+      "key": "evidence-graph",
+      "primary_layer": "evidence-knowledge"
     },
     {
       "source": "Biomni / BioMedAgent / PaperQA2",
@@ -60508,7 +60515,9 @@
       "evidence": {
         "en": "9 typed capabilities / 1 high-risk / least-privilege routing",
         "zh": "9 类 typed capability / 1 类高风险 / 最小权限路由"
-      }
+      },
+      "key": "capability-registry",
+      "primary_layer": "runtime-authority"
     },
     {
       "source": "AutoResearchBench / PaperQA2 / SciNetBench / ScientistOne / verifier calibration",
@@ -60520,7 +60529,9 @@
       "evidence": {
         "en": "4 retrieval modes / 5 claim types / verifier spec-ready-not-yet-calibrated",
         "zh": "4 类检索模式 / 5 类 claim / verifier spec-ready-not-yet-calibrated"
-      }
+      },
+      "key": "literature-evidence-integrity",
+      "primary_layer": "evidence-knowledge"
     },
     {
       "source": "AI-Researcher",
@@ -60532,7 +60543,9 @@
       "evidence": {
         "en": "406 pair comparisons / 87 flagged",
         "zh": "406 组两两比较 / 87 个标记"
-      }
+      },
+      "key": "collision-filter",
+      "primary_layer": "evidence-knowledge"
     },
     {
       "source": "MOOSE-Chem / Deep-Ideation",
@@ -60544,7 +60557,9 @@
       "evidence": {
         "en": "29 ideas / 258 lineage edges",
         "zh": "29 个 Idea / 258 条谱系边"
-      }
+      },
+      "key": "idea-lineage",
+      "primary_layer": "paper-design"
     },
     {
       "source": "Human terminal ledger",
@@ -60556,7 +60571,9 @@
       "evidence": {
         "en": "26 parents: 20 P0 / 0 P0-ready / 6 merged / 0 dropped",
         "zh": "26 个 Parent：20 P0 / 0 P0 Ready / 6 合并 / 0 停止"
-      }
+      },
+      "key": "human-terminal-ledger",
+      "primary_layer": "paper-design"
     },
     {
       "source": "CycleResearcher",
@@ -60568,7 +60585,9 @@
       "evidence": {
         "en": "1 repair candidates after terminal filtering",
         "zh": "终态过滤后 1 个修订候选"
-      }
+      },
+      "key": "review-repair-queue",
+      "primary_layer": "paper-design"
     },
     {
       "source": "ResearchAgent / MOOSE-Chem / SciAgents / AI-Scientist-v2 / RD-Agent",
@@ -60580,7 +60599,9 @@
       "evidence": {
         "en": "14 v3 children / 6 R2 revise / 6 v3.1 repairs",
         "zh": "14 个 v3 子节点 / 6 个 R2 REVISE / 6 个 v3.1 修订"
-      }
+      },
+      "key": "solution-branch-search",
+      "primary_layer": "paper-design"
     },
     {
       "source": "ResearchAgent / MOOSE-Chem / Co-Scientist / HypoRefine / Virtual Scientists / autoresearch",
@@ -60592,7 +60613,9 @@
       "evidence": {
         "en": "28 v4 candidates / 16 finalists / 16 reviewed",
         "zh": "28 个 v4 候选 / 16 个 finalists / 16 个已复核"
-      }
+      },
+      "key": "composition-revival",
+      "primary_layer": "paper-design"
     },
     {
       "source": "HypoRefine / IdeaForge / ScholarEval / InnoEval / SciAtlas / InternAgent / AutoScientists",
@@ -60604,7 +60627,9 @@
       "evidence": {
         "en": "36 v5 candidates / 32 R2 reviewed / 6 PASS",
         "zh": "36 个 v5 候选 / 32 个 R2 已审 / 6 个 PASS"
-      }
+      },
+      "key": "wide-search-ideation",
+      "primary_layer": "paper-design"
     },
     {
       "source": "AIDE / AI-Scientist-v2 / R&D-Agent",
@@ -60616,7 +60641,9 @@
       "evidence": {
         "en": "0/4 retrospective contracts execution-ready",
         "zh": "当前 0/4 份 retrospective 合同允许启动"
-      }
+      },
+      "key": "pre-p0-identifiability",
+      "primary_layer": "experiment-design"
     },
     {
       "source": "Advisor paper-first research contract",
@@ -60628,7 +60655,9 @@
       "evidence": {
         "en": "0/4 current cards satisfy the new paper-first contract / 4 historical cards predate it",
         "zh": "当前 0/4 份卡满足新版 paper-first 合同 / 4 份历史卡早于该规则"
-      }
+      },
+      "key": "paper-design-contract",
+      "primary_layer": "paper-design"
     },
     {
       "source": "FirstResearch / Popper / Co-Scientist / RD-Agent",
@@ -60640,7 +60669,9 @@
       "evidence": {
         "en": "4/4 principle certificates valid / 0 principle falsifications",
         "zh": "4/4 份原理证书有效 / 0 个原理级否定"
-      }
+      },
+      "key": "principle-adjudicator",
+      "primary_layer": "paper-design"
     },
     {
       "source": "Qiushi / Kosmos / MLEvolve",
@@ -60652,7 +60683,9 @@
       "evidence": {
         "en": "2 principles / 2 unresolved / 1 cross-branch links",
         "zh": "2 个原理 / 2 个未决 / 1 条跨分支引用"
-      }
+      },
+      "key": "scientific-meta-trace",
+      "primary_layer": "memory-publication"
     },
     {
       "source": "MLEvolve / InternAgent / AutoResearchClaw",
@@ -60664,7 +60697,9 @@
       "evidence": {
         "en": "4 failure assets / 1 reusable signatures / 23 economy dead ends",
         "zh": "4 条失败资产 / 1 类可复用签名 / 23 个 Economy dead end"
-      }
+      },
+      "key": "failure-assets",
+      "primary_layer": "memory-publication"
     },
     {
       "source": "Ai2 AutoDiscovery / MLEvolve / AI-Scientist-v2",
@@ -60676,7 +60711,9 @@
       "evidence": {
         "en": "0 candidate tests / 0 cross-branch references / advisory only",
         "zh": "0 个候选实验 / 0 条跨分支引用 / 仅建议不授权"
-      }
+      },
+      "key": "experiment-value-scheduler",
+      "primary_layer": "experiment-design"
     },
     {
       "source": "ResearchClawBench / HackDetect / ScienceAgentBench / AutoLabs",
@@ -60688,7 +60725,9 @@
       "evidence": {
         "en": "protocol 4/4 / replay 7/7",
         "zh": "Protocol 4/4 / 回放 7/7"
-      }
+      },
+      "key": "protocol-and-replay",
+      "primary_layer": "experiment-design"
     },
     {
       "source": "External-system intake registry",
@@ -60700,7 +60739,9 @@
       "evidence": {
         "en": "21 systems / 18 adopted / 0 next backlog",
         "zh": "已审 21 个系统 / 18 个已吸收 / 0 个下一批"
-      }
+      },
+      "key": "external-system-learning",
+      "primary_layer": "memory-publication"
     },
     {
       "source": "P0 retrospective economy review",
@@ -60712,7 +60753,9 @@
       "evidence": {
         "en": "19 matched-simplification stops / 4 substrate stops / 0 currently economy-ready",
         "zh": "19 个简化基线 STOP / 4 个底座 STOP / 当前 0 个 Economy-ready"
-      }
+      },
+      "key": "p0-economy",
+      "primary_layer": "experiment-design"
     },
     {
       "source": "Web GPT + domestic-model independent consultation",
@@ -60724,7 +60767,9 @@
       "evidence": {
         "en": "5 checkpoints / 3 before GPU / zero AI-authoritative checkpoints",
         "zh": "5 个会诊节点 / 3 个位于 GPU 前 / AI 直接授权节点为 0"
-      }
+      },
+      "key": "ai-consultation-clinic",
+      "primary_layer": "paper-design"
     },
     {
       "source": "Content-addressed AI consultation automation",
@@ -60736,7 +60781,9 @@
       "evidence": {
         "en": "baseline=True / 9 cases / 9 pending / 0 unresolved high-risk",
         "zh": "baseline=True / 9 个 case / 9 个待执行 / 0 个未处置高风险"
-      }
+      },
+      "key": "ai-consultation-automation",
+      "primary_layer": "runtime-authority"
     },
     {
       "source": "Unified P0 decision ledger",
@@ -60748,7 +60795,9 @@
       "evidence": {
         "en": "27 active rows / 24 stopped awaiting review / 0 launchable",
         "zh": "27 条活跃记录 / 24 条实验 STOP 待人工 / 0 条可启动"
-      }
+      },
+      "key": "p0-decision-ledger",
+      "primary_layer": "memory-publication"
     },
     {
       "source": "P0-System v2",
@@ -60760,7 +60809,9 @@
       "evidence": {
         "en": "7 scientific stages / 11 typed failure classes / 0 active GPU leases",
         "zh": "7 个科学阶段 / 11 类失败语义 / 0 个活跃 GPU 租约"
-      }
+      },
+      "key": "p0-governance",
+      "primary_layer": "scientific-validation"
     },
     {
       "source": "AIDE / AI-Scientist-v2 / R&D-Agent / SCION",
@@ -60772,7 +60823,9 @@
       "evidence": {
         "en": "REP 4/4 / updater prerequisite 0/4 / launch-ready 0/4",
         "zh": "REP 4/4 / Updater prerequisite 0/4 / 可启动 0/4"
-      }
+      },
+      "key": "pre-experiment-compiler",
+      "primary_layer": "experiment-design"
     },
     {
       "source": "AI-Scientist-v2",
@@ -60784,7 +60837,9 @@
       "evidence": {
         "en": "78 phases / 0 executed results",
         "zh": "78 个阶段 / 0 个已执行结果"
-      }
+      },
+      "key": "pilot-registry",
+      "primary_layer": "scientific-validation"
     },
     {
       "source": "AI-Scientist-v2 / AIDE / RD-Agent / ML-Master / AIRA / Agent Laboratory",
@@ -60796,7 +60851,9 @@
       "evidence": {
         "en": "4 pilot nodes / 0 atomic repair children / 0 scale-up",
         "zh": "4 个 Pilot 节点 / 0 个原子修复子节点 / 0 个可扩大"
-      }
+      },
+      "key": "experiment-diagnosis",
+      "primary_layer": "scientific-validation"
     },
     {
       "source": "AI-Scientist-v2",
@@ -60808,7 +60865,9 @@
       "evidence": {
         "en": "Only sandboxed/manual experiment execution is allowed; results can still flow back automatically.",
         "zh": "只允许沙箱或人工确认后的实验执行；合法结果仍可自动回流。"
-      }
+      },
+      "key": "unrestricted-code-execution",
+      "primary_layer": "runtime-authority"
     }
   ],
   "health": {
@@ -61302,6 +61361,18 @@
           "revise": 0,
           "block": 0
         }
+      },
+      {
+        "key": "backend-architecture-manifest",
+        "pass": true,
+        "detail": {
+          "temporal_stages": 11,
+          "functional_layers": 6,
+          "components": 27,
+          "assigned_components": 27,
+          "unassigned_components": 0,
+          "duplicate_component_keys": 0
+        }
       }
     ]
   },
@@ -61319,15 +61390,17 @@
       "novelty_requires_closest_work_and_irreducible_difference": true
     },
     "macro_stages": [
-      "paper-problem-and-evidence",
-      "paper-novelty-contract",
-      "principle-and-method-design",
+      "scope",
+      "evidence",
+      "novelty",
+      "method",
       "experiment-blueprint",
-      "economy-and-pre-experiment-compile",
+      "economy-compile",
       "local-validation",
       "method-freeze",
       "full-experiment",
-      "paper-evidence-and-writing"
+      "paper-evidence",
+      "learn"
     ],
     "summary": {
       "cards": 4,
@@ -61337,5 +61410,340 @@
     },
     "rule": "A local pilot tests a frozen paper-motivated method. If the core method changes, return to novelty/method design and invalidate any full-experiment authorization."
   },
-  "paper_first_projection_at": "2026-08-12T11:05:42+00:00"
+  "paper_first_projection_at": "2026-08-12T11:05:42+00:00",
+  "system_architecture": {
+    "schema_version": "1.0",
+    "model": "one temporal lifecycle + six functional responsibility layers",
+    "temporal_flow": [
+      {
+        "key": "scope",
+        "index": 1,
+        "label": {
+          "en": "Paper scope",
+          "zh": "论文目标与边界"
+        },
+        "output": "research-scope"
+      },
+      {
+        "key": "evidence",
+        "index": 2,
+        "label": {
+          "en": "Evidence and closest work",
+          "zh": "证据与最近邻工作"
+        },
+        "output": "closest-work-and-evidence"
+      },
+      {
+        "key": "novelty",
+        "index": 3,
+        "label": {
+          "en": "Paper Novelty Contract",
+          "zh": "论文 Novelty 合同"
+        },
+        "output": "paper-novelty-contract"
+      },
+      {
+        "key": "method",
+        "index": 4,
+        "label": {
+          "en": "Principle and method design",
+          "zh": "原理与方法设计"
+        },
+        "output": "principle-and-method-contract"
+      },
+      {
+        "key": "experiment-blueprint",
+        "index": 5,
+        "label": {
+          "en": "Experiment Blueprint",
+          "zh": "实验蓝图"
+        },
+        "output": "claim-experiment-matrix"
+      },
+      {
+        "key": "economy-compile",
+        "index": 6,
+        "label": {
+          "en": "Economy and experiment compile",
+          "zh": "资源经济与实验编译"
+        },
+        "output": "launch-contract"
+      },
+      {
+        "key": "local-validation",
+        "index": 7,
+        "label": {
+          "en": "Local validation",
+          "zh": "局部实验验证"
+        },
+        "output": "f0-p0-evidence"
+      },
+      {
+        "key": "method-freeze",
+        "index": 8,
+        "label": {
+          "en": "Method freeze",
+          "zh": "方法冻结"
+        },
+        "output": "method-and-blueprint-hash"
+      },
+      {
+        "key": "full-experiment",
+        "index": 9,
+        "label": {
+          "en": "Full experiment",
+          "zh": "全量实验"
+        },
+        "output": "full-evidence-package"
+      },
+      {
+        "key": "paper-evidence",
+        "index": 10,
+        "label": {
+          "en": "Paper evidence closure",
+          "zh": "论文证据闭环"
+        },
+        "output": "chain-of-evidence"
+      },
+      {
+        "key": "learn",
+        "index": 11,
+        "label": {
+          "en": "System learning",
+          "zh": "系统学习"
+        },
+        "output": "rules-tests-failure-assets"
+      }
+    ],
+    "functional_layers": [
+      {
+        "key": "evidence-knowledge",
+        "index": 1,
+        "label": {
+          "en": "Evidence, scope, and closest work",
+          "zh": "证据、边界与最近邻工作"
+        },
+        "mandate": {
+          "en": "Build provenance-aware evidence, define the research boundary, and detect collisions before a contribution is claimed.",
+          "zh": "建立可追溯证据、冻结研究边界，并在声称贡献前完成最近邻与撞车审查。"
+        },
+        "primary_outputs": [
+          "research scope",
+          "literature/evidence graph",
+          "closest-work evidence",
+          "collision boundary"
+        ],
+        "component_keys": [
+          "evidence-graph",
+          "literature-evidence-integrity",
+          "collision-filter"
+        ],
+        "component_count": 3,
+        "running": 3,
+        "intentionally_disabled": 0
+      },
+      {
+        "key": "paper-design",
+        "index": 2,
+        "label": {
+          "en": "Novelty, principle, and method formation",
+          "zh": "Novelty、原理与方法形成"
+        },
+        "mandate": {
+          "en": "Turn a real gap into a publishable contribution, explicit mechanism, and paper-motivated method before implementation.",
+          "zh": "在实现之前，把真实缺口转成可发表贡献、明确机制和由论文 Novelty 推导的方法。"
+        },
+        "primary_outputs": [
+          "Paper Novelty Contract",
+          "Principle Certificate",
+          "Method Contract",
+          "idea lineage/review state"
+        ],
+        "component_keys": [
+          "idea-lineage",
+          "human-terminal-ledger",
+          "review-repair-queue",
+          "solution-branch-search",
+          "composition-revival",
+          "wide-search-ideation",
+          "paper-design-contract",
+          "principle-adjudicator",
+          "ai-consultation-clinic"
+        ],
+        "component_count": 9,
+        "running": 9,
+        "intentionally_disabled": 0
+      },
+      {
+        "key": "experiment-design",
+        "index": 3,
+        "label": {
+          "en": "Experiment blueprint and launch admission",
+          "zh": "实验蓝图与启动准入"
+        },
+        "mandate": {
+          "en": "Compile paper claims into decisive tests and prove the cheapest local experiment is identifiable, economical, and executable.",
+          "zh": "把论文主张编译成决定性实验，并证明最便宜的局部验证在可识别性、资源与执行条件上具备启动资格。"
+        },
+        "primary_outputs": [
+          "Claim→Experiment matrix",
+          "P0 Economy",
+          "Protocol Validity",
+          "Research Execution Plan",
+          "Pre-Experiment 8/8 card"
+        ],
+        "component_keys": [
+          "pre-p0-identifiability",
+          "experiment-value-scheduler",
+          "protocol-and-replay",
+          "p0-economy",
+          "pre-experiment-compiler"
+        ],
+        "component_count": 5,
+        "running": 5,
+        "intentionally_disabled": 0
+      },
+      {
+        "key": "scientific-validation",
+        "index": 4,
+        "label": {
+          "en": "Scientific validation, freeze, and scale",
+          "zh": "科学验证、冻结与扩展"
+        },
+        "mandate": {
+          "en": "Separate phenomenon support from method evidence, adjudicate negative results by layer, freeze the method, then scale only the frozen design.",
+          "zh": "把现象支持与方法证据分开，按证据层解释负结果，冻结方法后才允许对冻结设计做全量扩展。"
+        },
+        "primary_outputs": [
+          "F0",
+          "P0-Support",
+          "P0-Method",
+          "typed decision",
+          "method freeze",
+          "P1/full experiment evidence"
+        ],
+        "component_keys": [
+          "p0-governance",
+          "pilot-registry",
+          "experiment-diagnosis"
+        ],
+        "component_count": 3,
+        "running": 3,
+        "intentionally_disabled": 0
+      },
+      {
+        "key": "runtime-authority",
+        "index": 5,
+        "label": {
+          "en": "Runtime, resources, and authority",
+          "zh": "运行时、资源与权限"
+        },
+        "mandate": {
+          "en": "Keep code execution, GPU leases, traces, budgets, AI triggers, and scientific authority explicit and recoverable.",
+          "zh": "把代码执行、GPU 租约、Trace、预算、AI 触发与科学权限分离管理，并保证可恢复。"
+        },
+        "primary_outputs": [
+          "resource lease",
+          "single-writer authority",
+          "raw trace",
+          "heartbeat/progress",
+          "automation state"
+        ],
+        "component_keys": [
+          "capability-registry",
+          "ai-consultation-automation",
+          "unrestricted-code-execution"
+        ],
+        "component_count": 3,
+        "running": 2,
+        "intentionally_disabled": 1
+      },
+      {
+        "key": "memory-publication",
+        "index": 6,
+        "label": {
+          "en": "Scientific memory, system learning, and publication",
+          "zh": "科研记忆、系统学习与发布"
+        },
+        "mandate": {
+          "en": "Preserve decisions and dead ends without rewriting history, evaluate the research system itself, and close publishable claims against real artifacts.",
+          "zh": "在不改写科研历史的前提下沉淀决策与死路，评测科研系统本身，并让论文主张逐条回到真实工件。"
+        },
+        "primary_outputs": [
+          "Decision Ledger",
+          "Scientific Meta-Trace",
+          "Failure Assets",
+          "replay benchmark",
+          "public snapshot",
+          "Chain-of-Evidence"
+        ],
+        "component_keys": [
+          "scientific-meta-trace",
+          "failure-assets",
+          "external-system-learning",
+          "p0-decision-ledger"
+        ],
+        "component_count": 4,
+        "running": 4,
+        "intentionally_disabled": 0
+      }
+    ],
+    "authority_boundaries": [
+      {
+        "key": "advisory",
+        "label": {
+          "en": "Advisory only",
+          "zh": "仅建议"
+        },
+        "examples": [
+          "AI consultation",
+          "experiment value scheduler",
+          "review agents"
+        ]
+      },
+      {
+        "key": "machine-gated",
+        "label": {
+          "en": "Machine-gated continuation",
+          "zh": "机器门控继续"
+        },
+        "examples": [
+          "Economy",
+          "Protocol Validity",
+          "Pre-Experiment Compiler",
+          "typed runtime checks"
+        ]
+      },
+      {
+        "key": "human-scientific",
+        "label": {
+          "en": "Human scientific authority",
+          "zh": "人工科学权限"
+        },
+        "examples": [
+          "claim boundary",
+          "core-method change",
+          "budget escalation",
+          "principle interpretation",
+          "final paper claim"
+        ]
+      }
+    ],
+    "summary": {
+      "temporal_stages": 11,
+      "functional_layers": 6,
+      "components": 27,
+      "assigned_components": 27,
+      "unassigned_components": 0,
+      "duplicate_component_keys": 0
+    },
+    "unassigned_components": [],
+    "duplicate_component_keys": [],
+    "invariants": [
+      "Temporal stages answer WHEN work may advance; functional layers answer WHO owns each responsibility.",
+      "A component has one primary responsibility layer even when its evidence is consumed elsewhere.",
+      "No advisory component can grant scientific or GPU authority.",
+      "The P0 seven-stage state machine is nested inside scientific validation; it is not a second paper lifecycle."
+    ]
+  }
 }

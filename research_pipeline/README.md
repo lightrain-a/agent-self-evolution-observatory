@@ -1,204 +1,229 @@
-# Evidence-Gated Literature-to-Idea Pipeline
+# Agent Self-Evolution Research OS
 
-This directory turns the observatory from a static survey into a reproducible ICLR-first literature-to-paper-idea decision system, while preserving a secondary CVPR visual-specialization bank.
+This directory is the backend source of truth for the Agent Self-Evolution Observatory. It is no longer only a literature-to-idea pipeline: it governs the full paper-first research lifecycle from evidence and novelty formation through experiment admission, local scientific validation, method freeze, full experiments, evidence closure, and system learning.
 
-## Design sources
+## 1. Canonical system model
 
-The architecture combines the strongest reusable components from the previously reviewed research-agent repositories:
+The backend exposes **one temporal lifecycle** and **six functional responsibility layers**. These are different views of the same system and must not be treated as competing workflows.
 
-| Pipeline component | Reused idea |
-|---|---|
-| Query planning and perspective expansion | Nova / STORM-style plan-before-search and multi-perspective questions |
-| Citation and concept neighborhood | ResearchAgent-style seed, citation, query, claim, dataset, model, and idea graph |
-| Structured paper evidence | PaperQA/OpenScholar-style evidence retrieval plus the site's six-part paper schema |
-| Candidate generation | AI-Researcher-style high-recall generation with hybrid problem/mechanism/experiment collision filtering |
-| Mechanism transfer | Scideator/MOOSE-style purpose–mechanism–evaluation recombination |
-| Branch history | Deep-Ideation-style non-destructive idea lineage and review provenance |
-| Independent review | CycleResearcher-style role-separated reviewers plus a bounded repair queue |
-| Execution gate | AI-Scientist-style P0/P1/P2 registry and result feedback; unrestricted code execution is disabled |
+### Temporal lifecycle: when research may advance
 
-## End-to-end stages
+The canonical order lives in `system_architecture.py::TEMPORAL_FLOW`:
 
 ```text
-Research scope and assets
-  -> perspective/query plan
-  -> paper retrieval and citation graph
-  -> paper/query/claim/mechanism evidence graph
-  -> gap candidates: limitation, contradiction, missing cell, metric mismatch
-  -> controlled idea operators
-  -> hybrid problem/mechanism/experiment deduplication
-  -> idea lineage and branch preservation
-  -> seven-dimension ICLR reviewer tournament
-  -> blocker-to-operator repair queue
-  -> P0/P1/P2 pilot registry and result ingestion
-  -> evidence-calibrated advance / revise / hold / stop decision
+1  SCOPE                Paper target, research boundary, claim boundary
+2  EVIDENCE             Literature, closest work, provenance, collision evidence
+3  NOVELTY              Paper Novelty Contract
+4  METHOD               Principle Certificate + Method Contract
+5  EXPERIMENT BLUEPRINT Claim → experiment / baseline / ablation / local-full matrix
+6  ECONOMY + COMPILE    Cheapest decisive test + Protocol/REP/Pre-Experiment admission
+7  LOCAL VALIDATION     F0 → P0-Support → minimal P0-Method
+8  METHOD FREEZE        Freeze method hash + experiment-blueprint hash
+9  FULL EXPERIMENT      Main tables, replication, ablations, efficiency, generalization
+10 PAPER EVIDENCE       Chain-of-Evidence and claim closure
+11 LEARN                Rules, tests, Failure Assets, Meta-Trace, public snapshot
 ```
 
-## Data contract
+A local pilot validates an already designed paper method. It does **not** discover the core method. If local evidence forces a core-method change, full-experiment authority is invalidated and the project returns to `NOVELTY → METHOD → EXPERIMENT BLUEPRINT`.
 
-Every idea shown to an advisor must contain:
+### Functional architecture: who owns each responsibility
 
-1. purpose / concrete problem;
-2. core idea;
-3. why the idea is reasonable;
-4. method logic;
-5. scientific importance;
-6. conditional comparative advantage;
-7. nearest-paper evidence and unresolved collision;
-8. decisive pilot, strongest baseline, and Go/Stop rule;
-9. reviewer findings and required actions;
-10. an explicit decision stage rather than a misleading decimal rank.
+The canonical layer registry lives in `system_architecture.py::FUNCTIONAL_LAYERS`:
 
-The canonical schema is implemented in `models.py`. The current static-site portfolio is imported through `export_legacy_portfolio.mjs`, normalized by `pipeline.py`, and exported to `idea-pipeline-data.js` for the browser.
+1. **Evidence, scope, and closest work** — literature retrieval, evidence graph, provenance, collision boundary.
+2. **Novelty, principle, and method formation** — idea search/lineage, human terminal state, Paper Novelty Contract, Principle Certificate, method design, AI clinic.
+3. **Experiment blueprint and launch admission** — Claim→Experiment matrix, information-gain scheduling, P0 Economy, Pre-P0 identifiability, Protocol Validity, Research Execution Plan, Pre-Experiment 8/8 compiler.
+4. **Scientific validation, freeze, and scale** — F0, P0-Support, P0-Method, typed failure semantics, atomic repair, method freeze, P1/full evidence.
+5. **Runtime, resources, and authority** — capability routing, single-writer authority, GPU leases, raw traces, progress/heartbeat, AI trigger automation, restricted execution.
+6. **Scientific memory, system learning, and publication** — Decision Ledger, Scientific Meta-Trace, Failure Assets, research-system replay, external-system learning, public snapshots, Chain-of-Evidence.
 
-## Run
+Every component published in `research-system-state.json/js` has a stable `key` and exactly one `primary_layer`. Adding or renaming a component without updating the architecture manifest is a validation error rather than a silent frontend drift.
 
-From the repository root:
+## 2. Source-of-truth modules
+
+| Responsibility | Canonical backend |
+|---|---|
+| System architecture | `system_architecture.py` |
+| Paper-first contract | `paper_design_contract.py` |
+| Principle / falsification semantics | `principle_adjudication.py` |
+| Experiment protocol compilation | `pre_experiment_compiler.py`, `pre_experiment_specs.py` |
+| P0 Economy | `p0_economy_gate.py` |
+| Scientific validation state machine | `governance_protocol.py` |
+| Pilot/result registry | `pilot_registry.py` |
+| Experiment diagnosis / atomic repair | `experiment_iteration.py` |
+| Current experiment authority | `p0_decision_ledger.py` |
+| Runtime orchestration | `experiment_orchestrator.py`, resource/authority lease modules |
+| Evidence graph / collision / lineage | `evidence_graph.py`, `idea_collision.py`, `idea_lineage.py` |
+| Scientific memory | `scientific_meta_trace.py`, `failure_asset_library.py` |
+| Experiment value advisory | `experiment_value_scheduler.py` |
+| System replay / external learning | `research_system_replay.py`, `external_system_learning.py` |
+| Public system composition | `research_system.py` |
+
+`research_system.py` composes these modules; it should not become a second implementation of their rules. Stable ordering belongs in `system_architecture.py`, experiment gates belong in `pre_experiment_specs.py`, and scientific-stage semantics belong in `governance_protocol.py`.
+
+## 3. Paper-first scientific contract
+
+Before implementation or local experimentation, a new research formulation must define:
+
+### Paper Novelty Contract
+
+- concrete paper problem and claim boundary;
+- closest work with source references;
+- novelty axis;
+- contribution claim;
+- irreducible difference from the closest work / strongest simplification;
+- collision status.
+
+### Principle + Method Contract
+
+- primitives, assumptions, scope conditions, mechanism;
+- observable predictions and genuine falsification conditions;
+- method name and core mechanism;
+- novelty → method mapping;
+- load-bearing components;
+- strongest same-information simplification;
+- explicit rule for what counts as a core-method change.
+
+### Experiment Blueprint
+
+- Claim→Experiment matrix;
+- baseline matrix;
+- ablation matrix;
+- local-validation scope;
+- full-experiment scope;
+- method/blueprint freeze rule.
+
+Historical Pre-Experiment cards that predate this rule remain historical. They are not retroactively rewritten to look paper-first.
+
+## 4. Experiment admission
+
+Experiment admission is intentionally layered. Prerequisites are not silently counted as extra formal gates.
+
+```text
+Paper Design Contract
+  → Principle Certificate
+  → P0 Economy / cheapest decisive test
+  → Protocol Validity
+  → derived Research Execution Plan
+  → Updater / substrate competence
+  → formal Pre-Experiment Gate 1..8
+  → local execution authorization
+```
+
+The formal Pre-Experiment compiler remains exactly **eight gates**. Paper Design, Principle, Protocol Validity, REP, and updater/substrate qualification are explicit prerequisites/derived contracts rather than hidden ninth/tenth gates.
+
+No AI reviewer, value scheduler, or generated plan can override a failed machine gate or grant GPU/scientific authority.
+
+## 5. Scientific validation and failure semantics
+
+`governance_protocol.py` exposes a seven-stage **experiment-evidence sub-state-machine**:
+
+```text
+Problem → Substrate → F0 Identifiability → P0-Support → P0-Method → P1 Replication → Paper Experiment
+```
+
+This seven-stage state machine is nested inside the 11-stage paper lifecycle. It is not a second top-level workflow.
+
+Core rules:
+
+- `P0-Support` asks whether the necessary phenomenon/support exists; support insufficiency is not `METHOD_FAIL`.
+- `P0-Method` requires frozen support evidence.
+- implementation/runtime/provenance failures do not update method or principle belief.
+- representation/operationalization failures repair the measurement bridge rather than falsifying the principle.
+- matched-simplification equivalence weakens method novelty/headroom, not automatically the broader research problem.
+- a principle is falsified only when a registered prediction is contradicted with assumptions, scope, operationalization, identifiability, optimization, independent truth, and matched baseline all intact.
+- one repair child changes one load-bearing variable; repeated representation/objective rescue is budgeted.
+
+## 6. Runtime and authority
+
+Research logic is separated from long-running execution.
+
+- MCP/Codex controls code and remote servers.
+- Experiment Orchestrator owns server/GPU selection, per-run isolation, tmux jobs, heartbeat, budgets, checkpoints, and typed terminal state.
+- Idea scientific authority and GPU UUID resource leases are separate contracts.
+- raw traces are mandatory for GPU scientific runs.
+- a pre-model-load audit freezes code/config/data/model/runtime identity before scientific rows may be produced.
+- long jobs must persist progress incrementally and expose a resumable state.
+- unrestricted autonomous code execution remains intentionally disabled.
+
+A chat disconnect must never be part of the experiment lifecycle.
+
+## 7. Scientific memory and publication
+
+Three state types must remain separate:
+
+1. **Raw execution trace** — observations, actions, choices, logs, checkpoints.
+2. **Active scientific state** — current assumptions, evidence, decisions, unresolved uncertainty.
+3. **Institutional memory** — reusable Failure Assets, dead ends, prior system lessons, external-system patterns.
+
+The Decision Ledger is the single current experiment-decision view; old planned states remain provenance only. Public generation never rewrites historical experiment evidence.
+
+Every publishable claim must close against a real artifact through Evidence Integrity / Chain-of-Evidence. Uncalibrated judges are not ground truth.
+
+## 8. Automation boundary
+
+Automatically allowed:
+
+- deterministic rebuilds, caching, deduplication, schema validation;
+- literature/evidence snapshots;
+- preflight/runtime checks and resource discovery;
+- content-addressed AI consultation triggers;
+- structured result ingestion after validation;
+- public snapshot generation.
+
+Conditionally automated:
+
+- local experiment launch only after all required paper/scientific/runtime contracts pass;
+- screening/qualification progression under frozen protocol;
+- repair generation within explicit repair budgets.
+
+Human scientific authority remains required for:
+
+- research/venue/claim boundary;
+- accepting a materially changed core method;
+- budget escalation and new backbone/domain expansion;
+- final interpretation of negative evidence at the principle level;
+- final paper claims and external wording.
+
+## 9. Storage and public artifacts
+
+The Git checkout stores code, configs, tests, and small browser-consumable snapshots. Large corpora, caches, traces, and runs belong on the configured data disk through `StorageSettings`.
+
+Important public artifacts include:
+
+- `generated/research-system-state.json/js` — composed system state, architecture, health, and public summaries;
+- `generated/research-governance-v2.json/js` — scientific validation governance;
+- `generated/p0-decision-ledger.json/js` — current experiment decisions;
+- `generated/ai-consultation-clinic.json/js` and automation summary;
+- literature/idea/experiment snapshots required by the site.
+
+Raw reviewer output, secrets, raw traces, runtime locks, resource leases, and large datasets remain backend-only.
+
+## 10. Validation and build
+
+From the repository root, the principal checks are:
+
+```bash
+python -m unittest \
+  research_pipeline.test_system_architecture \
+  research_pipeline.test_research_system \
+  research_pipeline.test_pre_experiment_compiler \
+  research_pipeline.test_research_learning_loop \
+  research_pipeline.test_experiment_iteration
+
+python site_smoke_test.py
+python scripts/build_static_site.py
+SYSTEM_OVERVIEW_ONLY=1 python idea_browser_smoke_test.py
+```
+
+Useful CLI entry points remain available through:
 
 ```bash
 python -m research_pipeline --storage-status
-python -m research_pipeline --init-storage
-python -m research_pipeline --s2-status
-python -m research_pipeline --sync-s2
-python -m research_pipeline --iclr-status
-python -m research_pipeline --build-iclr-bank
-python -m research_pipeline --iclr-audit-status
-python -m research_pipeline --build-iclr-audit
 python -m research_pipeline --research-system-status
 python -m research_pipeline --build-research-system
 python -m research_pipeline.automation_cycle --mode manual
 python -m research_pipeline --check
-python -m research_pipeline
 ```
 
-Outputs:
-
-- `generated/iclr-low-resource-ideas.json` / `.js`: ICLR-first mechanism bank;
-- `generated/iclr-experiment-audit.json` / `.js`: ICLR model/API/training substrate audit;
-- `generated/idea-pipeline.json`: historical auditable portfolio artifact;
-- `generated/cvpr-low-resource-ideas.json` / `.js`: secondary visual-specialization bank;
-- `generated/research-system-state.json` / `.js`: evidence graph, collision analysis, lineage, pilot registry, repair queue, component audit, and health state.
-
-The hand-curated `idea-pipeline-data.js` contains the compact advisor-board configuration and is intentionally not overwritten by the generator.
-
-## Storage policy
-
-The Git checkout contains code, configuration templates, and small browser-consumable snapshots only. Large artifacts are redirected by `.env` to a dedicated data disk:
-
-```text
-/home/wyt/code/agent-self-evolution-observatory   # code and small site artifacts
-/data/wyt/agent-self-evolution-observatory        # corpora, datasets, PDFs, indexes, caches, runs
-```
-
-`StorageSettings` in `config.py` owns this contract. `--init-storage` creates the configured directories and `--storage-status` reports both code-disk and data-disk capacity. The server `.env` also redirects Hugging Face, Torch, and XDG caches to the data disk.
-
-## Provider layer
-
-The Semantic Scholar Academic Graph provider is now connected through `semantic_scholar.py`, with a shared rate limiter, disk cache, retry/backoff, citation/reference expansion, and safe attribution metadata. The API key is read only from the ignored server `.env`. Provider contracts remain swappable without changing the frontend schema:
-
-- `QueryPlanner`: produces topic, citation, failure-mode, mechanism, and cross-domain queries;
-- `LiteratureRetriever`: live Semantic Scholar plus future OpenAlex/local PDF indexes;
-- `FacetExtractor`: problem, limitation, claim, intuition, mechanism, evidence, assumptions, failure boundary;
-- `IdeaSynthesizer`: applies one named operator at a time;
-- `NoveltyChecker`: retrieves the nearest work for problem, mechanism, combination, and experiment;
-- `Reviewer`: independently returns pass/revise/block plus required evidence;
-- `PilotPlanner`: freezes a bounded falsification experiment and resource estimate.
-
-No provider may directly mark an idea as accepted. `research_system.py` composes the evidence graph, collision engine, lineage, pilot registry, and repair queue. `automation_cycle.py` runs a fail-safe daily or weekly cycle and records each step under the data-disk run directory. Only structured pilot results may move a candidate into `pilot-ready` or `selected-ready`, and every move remains traceable to evidence.
-
-## Independent review of all first-round ICLR passes
-
-The seven-dimension programmatic gate passes 26 ICLR ideas. On 2026-08-06, the authoritative host completed the Code Oracle → signed-in ChatGPT web UI → exact Agent-project audit for all 26. The external distribution is 4 PASS, 10 REVISE, and 12 BLOCK. The bank now orders ideas by R2 verdict while preserving the original R1 rank and priority.
-
-Prepare the five default batches without invoking the browser:
-
-```bash
-python3 -m research_pipeline.iclr_external_review --batch-size 5
-```
-
-Execute them on the authoritative host that owns the authenticated Oracle/Chrome session:
-
-```bash
-bash scripts/on-52.sh python3 -m research_pipeline.iclr_external_review --run --batch-size 5 --max-attempts 3
-```
-
-The runner refuses other hosts. `generated/iclr-external-reviews.json` is the persistent source of truth, while `generated/iclr-low-resource-ideas.json` merges only stored results into the website. A failed or malformed response is retried without erasing earlier reviews. The completed store reports 26 reviewed, zero pending, and zero failed final batches. R2 PASS does not imply selected-ready: every surviving direction still requires P0/P1/P2 evidence.
-
-## Internet-inspired expansion pipeline
-
-`machine_school_idea_factory.py` translates six informal “machine school” metaphors into scientific variables rather than preserving the joke labels as paper titles. It generates 24 candidates and applies internal collision, identifiability, stability, transfer, budget, and falsification gates. The internal result is 11 PASS, 7 REVISE/MERGE, and 6 REJECT.
-
-`machine_school_external_review.py` sends the 11 internal passes through the same Code Oracle → signed-in Agent-project ChatGPT route in three resumable batches. The completed external distribution is 1 PASS, 7 REVISE, and 3 BLOCK. `Regression-Probe Half-Life` is the sole `pilot-now` direction; seven explicit repair-first alternatives remain in `teacher_shortlist` for senior/teacher selection.
-
-Persistent artifacts:
-
-- `generated/machine-school-inspired-ideas.json/js`: all 24 candidates, internal decisions, external verdicts, final statuses, and the teacher shortlist;
-- `generated/machine-school-external-reviews.json`: full official-source review evidence and required actions;
-- `/data/wyt/agent-self-evolution-observatory/runs/reviews/machine-school-web-gpt/`: frozen prompts and response artifacts.
-
-The weekly automation cycle rebuilds and publishes the inspired bank. Missing or malformed external responses remain pending and never count as passes.
-
-## Solution-first method discovery and reviewer repair
-
-`idea_discovery_v3.py` separates problem discovery from method invention. It records seven official GitHub system patterns, fourteen named idea operators, nine workflow stages, and five mechanism gates. A solution child must specify a changed assumption, exact persistent update surface, learning signal, independent ground truth, strongest irreducibility baseline, decisive pilot, and Stop rule.
-
-The first v3 pool contains 14 children. Ten passed internal screening and were reviewed by `solution_first_external_review.py`; the external result is 0 PASS, 6 REVISE, and 4 BLOCK. `idea_discovery_v31.py` then applies the actual bilingual reviewer vectors to only those six REVISE children. Its six repaired algorithms were audited by `solution_first_v31_external_review.py`; the result is 0 PASS, 2 REVISE, and 4 BLOCK. The blocked children are not regenerated under new names.
-
-The review outcome introduced a mechanism-irreducibility gate before external review. It blocks generic predictors, gates, contextual bandits, offline-RL controllers, and rule learners when a capacity-matched standard method can consume the same logs and reproduce the proposed effect. It also rejects circular verifier supervision, audit-only outputs that do not alter frozen future behavior, and calibration guarantees with insufficient independent units.
-
-Artifacts:
-
-- `generated/idea-discovery-v3.json/js` and `generated/idea-discovery-v3-external-reviews.json`;
-- `generated/idea-discovery-v31.json/js` and `generated/idea-discovery-v31-external-reviews.json`;
-- `/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v3-web-gpt/`;
-- `/data/wyt/agent-self-evolution-observatory/runs/reviews/solution-first-v31-web-gpt/`.
-
-Neither internal shortlist nor external REVISE changes the four formal R2 PASS ideas in the main ICLR bank.
-
-## Constrained composition and conditional revival (v4)
-
-`idea_discovery_v4.py` generates candidates from a real-problem bank, a mechanism-atom bank, and a structural compatibility graph. It permits one-to-three-atom combinations when each atom closes a different necessary link in the failure loop. Earlier REVISE/BLOCK ideas may re-enter only with an explicit revival condition that changes the learned object, independent supervision, deployment boundary, or executable hypothesis language.
-
-The first v4 bank contains 28 candidates: 14 discussion-ready new compositions, 8 conditional revivals, 4 repair candidates, and 2 retained components. Sixteen tournament finalists are reviewed by `solution_first_v4_external_review.py`, whose schema explicitly audits atom necessity, removable atoms, the simplest equivalent baseline, closed-loop completeness, and revival materiality. The completed external distribution is 5 PASS, 8 REVISE, and 3 BLOCK. BLOCK is a current standalone-paper verdict, not deletion.
-
-Artifacts:
-
-- `generated/idea-discovery-v4.json/js`;
-- `generated/idea-discovery-v4-external-reviews.json`;
-- `/data/wyt/agent-self-evolution-observatory/runs/reviews/idea-discovery-v4-web-gpt/`.
-
-The weekly automation cycle rebuilds v4 and publishes its full lineage. The main ICLR bank remains unchanged until a v4 PASS is explicitly promoted into a pilot protocol and receives P0/P1/P2 evidence.
-
-## Target-driven discussion portfolio (v5 → v5.3)
-
-`idea_discovery_v5.py` widens search while keeping the external-review bar fixed. It combines empirical failure capsules, literature and knowledge-graph evidence, multi-team proposal diversity, simplification challenges, conditional revival, and matched-budget falsifiers. Its 36 raw candidates yield 32 reviewed finalists/revivals and an external distribution of **6 PASS / 19 REVISE / 7 BLOCK**.
-
-`generate_v51_repairs.py` reads each v5 REVISE reviewer vector and generates exactly one materially changed child; `solution_first_v51_external_review.py` returns **3 PASS / 12 REVISE / 4 BLOCK**. V5.2 repeats the process only for v5.1 REVISE and returns **1 PASS / 8 REVISE / 3 BLOCK**. Because the strict portfolio remained at 19/20, v5.3 selects only four v5.2 REVISE ideas with one explicitly surviving boundary; the final review returns **3 PASS / 1 REVISE / 0 BLOCK**.
-
-`discussion_portfolio.py` is the authoritative stop controller. It counts only strict external PASS from the main R2 bank, v4, v5, v5.1, v5.2, and v5.3. Internal shortlists, REVISE ideas, and the supplementary internet-inspired batch are excluded. The resulting roster is **22/20**, so further automatic expansion stops. All failed branches remain available for baselines, components, or future materially changed revivals.
-
-Artifacts include `generated/idea-discovery-v5*.json/js`, per-round external-review stores, and `generated/discussion-ready-ideas.json/js`.
-
-## Senior discussion pool policy
-
-`discussion_portfolio.py` is the final pre-advisor gate. Once at least 20 ideas have independently received strict Agent-project web R2 PASS, every qualifying idea is exposed in the senior discussion pool. There is no extra comparative shortlist or first-read ranking in the active workflow. The current pool contains 22 ideas; all 22 are discussion candidates, and only subsequent P0/P1/P2 evidence plus human selection may narrow them further.
-
-## Continuous automation and safety boundary
-
-The daily cycle rebuilds deterministic artifacts without network access. The weekly cycle may refresh Semantic Scholar and request at most two project-scoped web-GPT repair reviews. Both use exclusive locks and keep the previous valid snapshots if one step fails. The repository includes systemd service/timer files under `deploy/systemd/`.
-
-Unrestricted autonomous code execution is intentionally disabled. Controlled experiments may still be run through human-reviewed code or Codex workflows, then written as validated JSON under `runs/pilots/results/`; the pilot registry automatically ingests those results and updates each idea state.
-
-## Decision policy
-
-Legacy scores and ranks remain available for traceability, but they are not the primary interface. The advisor view prioritizes:
-
-- reality of persistent evolution rather than extra inference;
-- mechanistic specificity of the evolving object and update operator;
-- credit assignment and identifiability;
-- stability across multiple evolution rounds;
-- out-of-loop generalization across tasks, environments, tools, and model families;
-- feedback integrity under independent evidence;
-- matched interaction, token, model-call, training, and wall-clock budgets.
-
-A candidate can be held even when it sounds novel, and it can be advanced only with a concrete pilot and Stop condition.
+A release is complete only when backend tests, state validation, static-site build, real-browser smoke, deployment, and live-site verification all agree on the same architecture and scientific state.
