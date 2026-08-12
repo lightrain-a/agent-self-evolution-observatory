@@ -6,7 +6,7 @@ class PaperFirstIdeaIncubationTest(unittest.TestCase):
  def setUp(self): self.state=build_paper_first_idea_incubation()
  def test_premortem_is_valid_and_execution_locked(self):
   self.assertEqual(validate_paper_first_idea_incubation(self.state),[])
-  s=self.state['summary']; self.assertEqual((s['candidates'],s['advance_to_paper_design'],s['revise_novelty_boundary'],s['blocked_collision']),(8,4,3,1))
+  s=self.state['summary']; self.assertEqual((s['candidates'],s['advance_to_paper_design'],s['revise_novelty_boundary'],s['blocked_collision']),(9,4,3,2))
   self.assertEqual((s['p0_authorized'],s['gpu_authorized']),(0,0))
   self.assertTrue(self.state['policy']['separate_from_current_p0_ledger'])
   self.assertTrue(self.state['policy']['advance_means_enter_paper_design_not_enter_p0'])
@@ -19,7 +19,11 @@ class PaperFirstIdeaIncubationTest(unittest.TestCase):
  def test_batch_has_breadth_and_explicit_collision_memory(self):
   self.assertGreaterEqual(self.state['summary']['themes'],6)
   blocked=[r for r in self.state['candidates'] if r['verdict']=='BLOCK_COLLISION']
-  self.assertEqual([r['id'] for r in blocked],['PF-8'])
-  self.assertTrue(any('2607.24300' in x['ref'] for x in blocked[0]['nearest_work']))
+  self.assertEqual([r['id'] for r in blocked],['PF-8','PF-9'])
+  by_id={r['id']:r for r in blocked}
+  self.assertTrue(any('2607.24300' in x['ref'] for x in by_id['PF-8']['nearest_work']))
+  self.assertTrue(any('2606.11559' in x['ref'] for x in by_id['PF-9']['nearest_work']))
+  self.assertEqual(by_id['PF-9']['theme'],'protocol-validity')
+  self.assertFalse(by_id['PF-9']['p0_authorized']); self.assertFalse(by_id['PF-9']['gpu_authorized'])
 
 if __name__=='__main__': unittest.main()

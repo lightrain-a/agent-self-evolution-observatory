@@ -115,6 +115,27 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertFalse(audit["passed"])
         self.assertIn("protocol-check-failed:shortcut_audit", audit["blockers"])
 
+    def test_future_persistent_update_requires_effect_realization_without_retroactive_breakage(self) -> None:
+        legacy = audit_protocol_validity(self.config())
+        self.assertTrue(legacy["passed"])
+        self.assertFalse(legacy["applies_to_persistent_update"])
+        self.assertEqual(len(legacy["required_checks"]), 7)
+
+        future = copy.deepcopy(self.config())
+        future["pre_experiment"]["protocol_validity"]["applies_to_persistent_update"] = True
+        missing = audit_protocol_validity(future)
+        self.assertFalse(missing["passed"])
+        self.assertIn("protocol-check-missing:post_update_effect_realization", missing["blockers"])
+
+        future["pre_experiment"]["protocol_validity"]["post_update_effect_realization"] = {
+            "passed": True,
+            "evidence": "The updated policy revisits the frozen full decision context and executes the intended state-action intervention.",
+        }
+        passed = audit_protocol_validity(future)
+        self.assertTrue(passed["passed"], passed.get("blockers"))
+        self.assertTrue(passed["applies_to_persistent_update"])
+        self.assertEqual(len(passed["required_checks"]), 8)
+
     def test_failure_assets_preserve_scientific_layer(self) -> None:
         state = {"nodes": [
             {"idea_id": "a", "diagnosis": "no-label-variation", "diagnosis_layer": "experiment", "artifact_dir": "/a"},
@@ -127,6 +148,29 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertEqual(by_diag["matched-simplification-tie"]["affected_layer"], "method-realization")
         self.assertEqual(by_diag["no-label-variation"]["memory_scope"], "institutional-research-memory")
         self.assertEqual(by_diag["no-label-variation"]["reuse_effectiveness"]["status"], "not-yet-measured")
+
+    def test_scienceworld_scope_lesson_is_institutional_asset_not_parent_evidence(self) -> None:
+        state = {"nodes": []}
+        post_c2 = {
+            "scienceworld_scope_evidence": {
+                "f0_decision": "SYMMETRIC_F0_HOLD",
+                "f0_sha256": "f0-hash",
+                "diagnosis_sha256": "diag-hash",
+                "scope_refinement_candidate": "Require post-update full decision-context recurrence and intended intervention realization.",
+                "principle_authority": "No retrospective principle certificate may be fabricated.",
+                "relationship_to_current_paper": "Cross-surface protocol lesson only; no rescue authority.",
+            }
+        }
+        library = build_failure_asset_library(state, {"summary": {}}, post_c2)
+        self.assertEqual(library["summary"]["assets"], 1)
+        asset = library["assets"][0]
+        self.assertEqual(asset["diagnosis"], "decision-context-support-mismatch")
+        self.assertEqual(asset["affected_layer"], "operationalization")
+        self.assertEqual(asset["memory_scope"], "institutional-research-memory")
+        self.assertEqual(asset["source_decision"], "SYMMETRIC_F0_HOLD")
+        self.assertFalse(asset["parent_evidence_for_current_paper"])
+        self.assertFalse(asset["can_authorize_current_paper"])
+        self.assertIn("core-principle failure", asset["does_not_imply"])
 
     def test_value_scheduler_prefers_cheap_decisive_falsifier(self) -> None:
         iteration = {"nodes": [{"idea_id": "a", "repair_children": [
@@ -147,6 +191,7 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertEqual(meta["principles"][0]["next_uncertainty"], "baseline-floor")
         self.assertTrue(meta["policy"]["raw_execution_trace_is_not_scientific_state"])
         self.assertTrue(meta["policy"]["active_scientific_state_is_separate_from_institutional_memory"])
+        self.assertTrue(meta["policy"]["cross_surface_evidence_requires_explicit_parent_edge_before_entering_active_scientific_state"])
         self.assertFalse(meta["memory_scopes"]["active_scientific_state"]["time_decay_allowed"])
         self.assertTrue(meta["memory_scopes"]["institutional_research_memory"]["time_decay_allowed"])
 

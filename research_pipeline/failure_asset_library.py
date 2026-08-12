@@ -30,12 +30,17 @@ REUSE_RULES = {
     "underfit": ("optimization", "inspect convergence/tiny-overfit before changing the scientific hypothesis"),
     "representation-signal-mismatch": ("operationalization", "require synthetic realizability and tiny-real fit for the representation"),
     "objective-claim-mismatch": ("operationalization", "freeze claim-objective-primary-metric alignment before training"),
+    "decision-context-support-mismatch": ("operationalization", "for persistent updates, verify post-update full decision-context recurrence and intended intervention realization before interpreting downstream task failure"),
     "matched-simplification-tie": ("method-realization", "run matched simplification/disagreement mining before scale-up"),
     "true-negative": ("method-realization", "route through principle adjudication before any core-principle stop"),
 }
 
 
-def build_failure_asset_library(experiment_iteration: dict[str, Any], economy_gate: dict[str, Any] | None = None) -> dict[str, Any]:
+def build_failure_asset_library(
+    experiment_iteration: dict[str, Any],
+    economy_gate: dict[str, Any] | None = None,
+    post_c2_adjudication: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     assets: list[dict[str, Any]] = []
     for node in experiment_iteration.get("nodes") or []:
         diagnosis = str(node.get("diagnosis") or "unknown")
@@ -55,6 +60,36 @@ def build_failure_asset_library(experiment_iteration: dict[str, Any], economy_ga
             "reuse_effectiveness": {"reuse_count": 0, "helped_count": 0, "hurt_count": 0, "status": "not-yet-measured"},
             "superseded_by": "",
             "last_revalidated": "",
+        })
+
+    scienceworld = (post_c2_adjudication or {}).get("scienceworld_scope_evidence") or {}
+    if scienceworld.get("f0_decision") == "SYMMETRIC_F0_HOLD" and scienceworld.get("scope_refinement_candidate"):
+        diagnosis = "decision-context-support-mismatch"
+        layer, precheck = REUSE_RULES[diagnosis]
+        assets.append({
+            "signature": f"{layer}:{diagnosis}",
+            "idea_id": "scienceworld-persistent-correction-closure",
+            "diagnosis": diagnosis,
+            "affected_layer": layer,
+            "reusable_precheck": precheck,
+            "evidence_ref": f"scienceworld:f0={scienceworld.get('f0_sha256','')};diagnosis={scienceworld.get('diagnosis_sha256','')}",
+            "does_not_imply": "method failure, core-principle failure, or rescue of the current ALFWorld memory paper",
+            "memory_scope": "institutional-research-memory",
+            "reuse_scope": {
+                "environment": "ScienceWorld",
+                "update_family": "persistent correction",
+                "diagnosis": diagnosis,
+                "affected_layer": layer,
+            },
+            "reuse_effectiveness": {"reuse_count": 1, "helped_count": 1, "hurt_count": 0, "status": "helped-protocol-audit"},
+            "superseded_by": "",
+            "last_revalidated": "2026-08-12",
+            "source_decision": scienceworld.get("f0_decision"),
+            "source_scope_refinement": scienceworld.get("scope_refinement_candidate"),
+            "parent_evidence_for_current_paper": False,
+            "can_authorize_current_paper": False,
+            "authority_note": scienceworld.get("principle_authority"),
+            "cross_surface_rule": scienceworld.get("relationship_to_current_paper"),
         })
 
     signature_counts = Counter(asset["signature"] for asset in assets)

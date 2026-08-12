@@ -13,6 +13,10 @@ REQUIRED_CHECKS = (
     "shortcut_audit",
 )
 
+PERSISTENT_UPDATE_REQUIRED_CHECKS = (
+    "post_update_effect_realization",
+)
+
 POLICY: dict[str, Any] = {
     "schema_version": "1.0",
     "required_before_experiment_execution": True,
@@ -21,12 +25,20 @@ POLICY: dict[str, Any] = {
     "evaluation_shortcut_cannot_count_as_capability": True,
     "protocol_change_invalidates_previous_execution_authority": True,
     "benchmark_or_evaluator_false_negative_must_be_separated_from_method_failure": True,
+    "future_persistent_updates_require_post_update_decision_context_support": True,
+    "future_persistent_updates_require_intended_effect_realization": True,
+    "observation_recurrence_is_insufficient_for_full_policy_context_recurrence": True,
+    "effect_realization_failure_updates_protocol_or_operationalization_before_core_principle": True,
+    "legacy_contracts_are_not_retroactively_failed_by_new_effect_realization_rule": True,
 }
 
 REFERENCES = [
     {"system": "ResearchClawBench", "adopted": "treat experimental-protocol mismatch, evidence mismatch, and missing scientific core as distinct end-to-end research failures"},
     {"system": "HackDetect", "adopted": "audit exposure, agent use of the exposure, and score inflation before treating benchmark performance as intended capability"},
     {"system": "ScienceAgentBench verified split", "adopted": "evaluation artifacts themselves can create false negatives and require versioned verification"},
+    {"system": "DAgger", "adopted": "sequential policies must be assessed under the observation distribution they induce rather than only the pre-update data distribution"},
+    {"system": "HERO / ReOPD", "adopted": "multi-turn supervision quality depends on alignment with the learner's current decision context and on-policy prefix distribution"},
+    {"system": "SkillEvolver", "adopted": "a persistent skill may be content-valid yet silently bypassed at runtime, so deployment-time invocation is a separate validity condition"},
 ]
 
 
@@ -42,9 +54,14 @@ def audit_protocol_validity(config: dict[str, Any]) -> dict[str, Any]:
             "policy": POLICY,
         }
 
+    applies_to_persistent_update = contract.get("applies_to_persistent_update") is True
+    required_checks = list(REQUIRED_CHECKS)
+    if applies_to_persistent_update:
+        required_checks.extend(PERSISTENT_UPDATE_REQUIRED_CHECKS)
+
     blockers: list[str] = []
     checks: list[dict[str, Any]] = []
-    for key in REQUIRED_CHECKS:
+    for key in required_checks:
         row = contract.get(key)
         if not isinstance(row, dict):
             blockers.append(f"protocol-check-missing:{key}")
@@ -66,6 +83,8 @@ def audit_protocol_validity(config: dict[str, Any]) -> dict[str, Any]:
         "status": "pass" if passed else "repair-required",
         "blockers": sorted(set(blockers)),
         "checks": checks,
+        "applies_to_persistent_update": applies_to_persistent_update,
+        "required_checks": required_checks,
         "policy": POLICY,
         "references": REFERENCES,
     }
