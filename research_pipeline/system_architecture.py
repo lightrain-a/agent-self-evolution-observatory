@@ -119,11 +119,14 @@ def annotate_components(components: list[dict[str, Any]]) -> list[dict[str, Any]
     return annotated
 
 
-def build_system_architecture(components: list[dict[str, Any]]) -> dict[str, Any]:
+def build_system_architecture(components: list[dict[str, Any]], methodology_controls: dict[str, Any] | None = None) -> dict[str, Any]:
     keys = [str(item.get("key") or "") for item in components]
     layer_keys = {str(row["key"]) for row in FUNCTIONAL_LAYERS}
     unassigned = [_component_title(item) for item in components if item.get("primary_layer") not in layer_keys]
     duplicates = sorted({key for key in keys if key and keys.count(key) > 1})
+    component_keys = {key for key in keys if key}
+    cross_controls = [dict(row) for row in ((methodology_controls or {}).get("controls") or [])]
+    orphan_controls = [str(row.get("key") or "") for row in cross_controls if str(row.get("owner_component") or "") not in component_keys]
     layers: list[dict[str, Any]] = []
     for spec in FUNCTIONAL_LAYERS:
         key = str(spec["key"])
@@ -148,13 +151,18 @@ def build_system_architecture(components: list[dict[str, Any]]) -> dict[str, Any
             "assigned_components":len(components)-len(unassigned),
             "unassigned_components":len(unassigned),
             "duplicate_component_keys":len(duplicates),
+            "cross_cutting_controls":len(cross_controls),
+            "orphan_cross_cutting_controls":len(orphan_controls),
         },
+        "cross_cutting_controls":cross_controls,
         "unassigned_components":unassigned,
         "duplicate_component_keys":duplicates,
+        "orphan_cross_cutting_controls":orphan_controls,
         "invariants":[
             "Temporal stages answer WHEN work may advance; functional layers answer WHO owns each responsibility.",
             "A component has one primary responsibility layer even when its evidence is consumed elsewhere.",
             "No advisory component can grant scientific or GPU authority.",
             "The P0 seven-stage state machine is nested inside scientific validation; it is not a second paper lifecycle.",
+            "Cross-cutting methodology controls attach to an existing owner component and never create an implicit seventh functional layer.",
         ],
     }

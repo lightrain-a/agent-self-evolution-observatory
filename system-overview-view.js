@@ -5,7 +5,7 @@
     const sections = window.SYSTEM_OVERVIEW_SECTIONS || {};
     const chapters = pageArchitecture("system-overview").chapters || [];
     const bodies = [
-      `${sections.renderPurpose ? sections.renderPurpose(state,s2) : ""}${sections.renderSystemMap ? sections.renderSystemMap(state) : ""}${sections.renderSystemLayers ? sections.renderSystemLayers(state) : ""}${sections.renderLifecycle ? sections.renderLifecycle(state) : ""}`,
+      `${sections.renderPurpose ? sections.renderPurpose(state,s2) : ""}${sections.renderSystemMap ? sections.renderSystemMap(state) : ""}${sections.renderSystemLayers ? sections.renderSystemLayers(state) : ""}${sections.renderMethodologyControls ? sections.renderMethodologyControls(state) : ""}${sections.renderLifecycle ? sections.renderLifecycle(state) : ""}`,
       sections.renderResearchIntake ? sections.renderResearchIntake(state) : "",
       sections.renderPreflight ? sections.renderPreflight(state) : "",
       `${sections.renderGovernanceV2 ? sections.renderGovernanceV2(state) : ""}${sections.renderFailureSemantics ? sections.renderFailureSemantics(state) : ""}`,

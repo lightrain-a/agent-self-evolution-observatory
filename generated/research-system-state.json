@@ -6208,7 +6208,7 @@
     "failure_assets": 4,
     "value_scheduler_candidates": 0,
     "research_replay_passed": 7,
-    "external_systems_reviewed": 21,
+    "external_systems_reviewed": 25,
     "repair_queue": 1,
     "human_terminal_parents": 26,
     "human_terminal_p0": 20,
@@ -6298,7 +6298,9 @@
     "paper_design_contract_passed": 0,
     "paper_design_contract_blocked": 4,
     "architecture_temporal_stages": 11,
-    "architecture_functional_layers": 6
+    "architecture_functional_layers": 6,
+    "methodology_cross_cutting_controls": 3,
+    "methodology_primary_components_added": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -30704,9 +30706,9 @@
       "external_system_never_overrides_local_scientific_authority": true
     },
     "summary": {
-      "systems_reviewed": 21,
-      "adopted": 18,
-      "merged_existing": 3,
+      "systems_reviewed": 25,
+      "adopted": 21,
+      "merged_existing": 4,
       "next_backlog": 0
     },
     "designs": [
@@ -30855,6 +30857,34 @@
         "design": "separate Control & Governance Plane from Runtime & Coordination Plane",
         "gap": "policy and authority decisions should not become implicit side effects of runtime routing",
         "local_mapping": "existing scientific-control vs research-runtime architecture",
+        "status": "merged-existing"
+      },
+      {
+        "system": "Exploration-breadth studies / IDEAgent / Heuresis / SwarmResearch",
+        "design": "measure and actively preserve quality-diversity-novelty breadth across a portfolio rather than optimizing isolated ideas",
+        "gap": "pairwise collision checks do not detect portfolio-wide collapse toward seed literature or one high-level approach",
+        "local_mapping": "cross-cutting exploration-frontier control owned by wide-search ideation",
+        "status": "adopted"
+      },
+      {
+        "system": "Agent-experiment preregistration / stochastic experimental design / Search-Time Contamination",
+        "design": "freeze researcher degrees of freedom before outcomes, plan repeated runs for stochastic agents, and audit web/tool access for benchmark metadata, question-context, and answer leakage",
+        "gap": "cheap adaptive iteration and open-web retrieval can silently turn confirmatory experiments into outcome-contingent or contaminated analyses",
+        "local_mapping": "cross-cutting experimental-design-integrity control owned by protocol-and-replay",
+        "status": "adopted"
+      },
+      {
+        "system": "ARA / Artisan / ArtifactCopilot",
+        "design": "reconstruct dependency-aware scientific workflows and require independent re-execution rather than treating trace presence as reproducibility",
+        "gap": "claim provenance can be correct while the result-generating workflow remains impossible for a third party to reconstruct and rerun",
+        "local_mapping": "cross-cutting reproducibility-readiness control owned by Evidence Integrity",
+        "status": "adopted"
+      },
+      {
+        "system": "EurekAgent",
+        "design": "permissions, artifact, budget, and human-in-the-loop environment engineering",
+        "gap": "agent behavior can be shaped more reliably by environment constraints than by another prompt-level workflow",
+        "local_mapping": "existing Runtime & Authority layer: capability permissions + artifact persistence + budget watchdog + human scientific authority",
         "status": "merged-existing"
       }
     ],
@@ -60876,7 +60906,7 @@
       {
         "key": "corpus",
         "pass": true,
-        "detail": "1 papers"
+        "detail": "281 papers"
       },
       {
         "key": "evidence-coverage",
@@ -60907,6 +60937,17 @@
             "publication_gate_active": true,
             "claims_scored": 0
           }
+        }
+      },
+      {
+        "key": "cross-cutting-methodology-controls",
+        "pass": true,
+        "detail": {
+          "controls": 3,
+          "primary_components_added": 0,
+          "functional_layers_added": 0,
+          "measured_controls": 0,
+          "spec_or_contract_ready": 3
         }
       },
       {
@@ -60957,6 +60998,20 @@
           "paper_design_passed": 0,
           "paper_design_blocked": 4,
           "historical_cards_predating_rule": 4
+        }
+      },
+      {
+        "key": "backend-architecture-manifest",
+        "pass": true,
+        "detail": {
+          "temporal_stages": 11,
+          "functional_layers": 6,
+          "components": 27,
+          "assigned_components": 27,
+          "unassigned_components": 0,
+          "duplicate_component_keys": 0,
+          "cross_cutting_controls": 3,
+          "orphan_cross_cutting_controls": 0
         }
       },
       {
@@ -61030,9 +61085,9 @@
             "true_falsification_cases": 1
           },
           "external": {
-            "systems_reviewed": 21,
-            "adopted": 18,
-            "merged_existing": 3,
+            "systems_reviewed": 25,
+            "adopted": 21,
+            "merged_existing": 4,
             "next_backlog": 0
           }
         }
@@ -61196,10 +61251,10 @@
         "key": "research-governance-v2",
         "pass": true,
         "detail": {
-          "schema_version": "2.1",
+          "schema_version": "2.2",
           "generated_at": "2026-08-12T10:46:42+00:00",
           "policy": {
-            "schema_version": "2.1",
+            "schema_version": "2.2",
             "paper_novelty_precedes_method_design": true,
             "method_design_precedes_experiment_plan": true,
             "local_validation_precedes_full_experiment": true,
@@ -61305,16 +61360,19 @@
             "repair_budget_root": "/data/wyt/agent-self-evolution-observatory/governance/repair-budget"
           },
           "paper_first_macro_stages": [
-            "paper-problem-and-evidence",
-            "paper-novelty-contract",
-            "principle-and-method-design",
+            "scope",
+            "evidence",
+            "novelty",
+            "method",
             "experiment-blueprint",
-            "economy-and-compile",
+            "economy-compile",
             "local-validation",
             "method-freeze",
             "full-experiment",
-            "paper-evidence"
-          ]
+            "paper-evidence",
+            "learn"
+          ],
+          "stage_scope_note": "The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; they do not replace the paper lifecycle."
         }
       },
       {
@@ -61360,18 +61418,6 @@
           "target": 20,
           "revise": 0,
           "block": 0
-        }
-      },
-      {
-        "key": "backend-architecture-manifest",
-        "pass": true,
-        "detail": {
-          "temporal_stages": 11,
-          "functional_layers": 6,
-          "components": 27,
-          "assigned_components": 27,
-          "unassigned_components": 0,
-          "duplicate_component_keys": 0
         }
       }
     ]
@@ -61735,15 +61781,256 @@
       "components": 27,
       "assigned_components": 27,
       "unassigned_components": 0,
-      "duplicate_component_keys": 0
+      "duplicate_component_keys": 0,
+      "cross_cutting_controls": 3,
+      "orphan_cross_cutting_controls": 0
     },
+    "cross_cutting_controls": [
+      {
+        "key": "exploration-frontier",
+        "owner_component": "wide-search-ideation",
+        "primary_layer": "paper-design",
+        "status": "spec-ready-not-yet-scored",
+        "purpose": {
+          "en": "Detect portfolio collapse toward a small neighborhood of seed literature even when individual ideas appear novel.",
+          "zh": "检测 Idea 组合是否虽然单项看似新颖，却整体塌缩在 seed 文献附近的同一小片区域。"
+        },
+        "measures": [
+          "quality-thresholded diversity yield",
+          "distance from seed literature",
+          "pairwise semantic dispersion",
+          "novelty-axis coverage",
+          "lineage/branch entropy"
+        ],
+        "rules": {
+          "novelty_prompt_alone_is_not_evidence_of_search_breadth": true,
+          "quality_and_diversity_are_joint_objectives": true,
+          "portfolio_level_collapse_is_distinct_from_pairwise_collision": true,
+          "low_breadth_triggers_search_reallocation_not_paper_rejection": true
+        },
+        "design_sources": [
+          "AI Research Agents Narrow Scientific Exploration",
+          "IDEAgent",
+          "Heuresis",
+          "SwarmResearch"
+        ]
+      },
+      {
+        "key": "experimental-design-integrity",
+        "owner_component": "protocol-and-replay",
+        "primary_layer": "experiment-design",
+        "status": "contract-ready-not-yet-retrospectively-scored",
+        "purpose": {
+          "en": "Freeze researcher degrees of freedom before outcomes are visible and prevent web/tool access from contaminating hidden evaluation.",
+          "zh": "在看到结果前冻结实验者自由度，并防止联网检索或工具访问污染 hidden evaluation。"
+        },
+        "preregistration_fields": [
+          "model/checkpoint and inference settings",
+          "prompt/scaffold and tool policy",
+          "task/sample split",
+          "metric and outcome semantics",
+          "analysis plan and statistical test",
+          "randomness/replication and stochastic-agent variance plan",
+          "stopping/exclusion rules",
+          "allowed adaptations and fallback path"
+        ],
+        "contamination_classes": [
+          "benchmark-metadata leakage",
+          "question-context leakage",
+          "explicit-answer leakage"
+        ],
+        "rules": {
+          "outcome_contingent_redesign_requires_new_contract": true,
+          "search_trajectory_is_part_of_protocol_provenance": true,
+          "hidden_evaluation_access_requires_explicit_allowlist": true,
+          "contaminated_runs_cannot_support_method_or_principle_claims": true
+        },
+        "design_sources": [
+          "Preregistration for Experiments with AI Agents",
+          "Search-Time Contamination in Deep Research Agents",
+          "AstaBench",
+          "An Experimental Design Approach to Evaluating Agentic AI's Autonomous Model Discovery"
+        ]
+      },
+      {
+        "key": "reproducibility-readiness",
+        "owner_component": "literature-evidence-integrity",
+        "primary_layer": "evidence-knowledge",
+        "status": "spec-ready-not-yet-independent-reexecuted",
+        "purpose": {
+          "en": "Require a third party to reconstruct and rerun the result-generating workflow instead of treating logs or citations as sufficient reproducibility evidence.",
+          "zh": "要求第三方能够重建并重跑结果生成流程，而不是把“有日志/有引用”误当成已经可复现。"
+        },
+        "required_graph": [
+          "source/data dependencies",
+          "preprocessing/transformation steps",
+          "method/configuration",
+          "execution commands and environment",
+          "metrics/analysis",
+          "figure/table/claim outputs"
+        ],
+        "required_artifacts": [
+          "dependency-aware workflow graph",
+          "versioned environment manifest",
+          "re-execution entry point",
+          "seed/data split record",
+          "failure/recovery notes",
+          "independent reproduction report"
+        ],
+        "rules": {
+          "claim_traceability_is_not_equivalent_to_reproducibility": true,
+          "reproduction_must_execute_without_copying_checked_in_results": true,
+          "environment_or_dependency_failure_is_reported_separately_from_scientific_failure": true,
+          "paper_ready_status_requires_independent_reexecution_for_load_bearing_results": true
+        },
+        "design_sources": [
+          "ARA: Agentic Reproducibility Assessment",
+          "Artisan",
+          "ArtifactCopilot",
+          "Scaling Reproducibility"
+        ]
+      }
+    ],
     "unassigned_components": [],
     "duplicate_component_keys": [],
+    "orphan_cross_cutting_controls": [],
     "invariants": [
       "Temporal stages answer WHEN work may advance; functional layers answer WHO owns each responsibility.",
       "A component has one primary responsibility layer even when its evidence is consumed elsewhere.",
       "No advisory component can grant scientific or GPU authority.",
-      "The P0 seven-stage state machine is nested inside scientific validation; it is not a second paper lifecycle."
+      "The P0 seven-stage state machine is nested inside scientific validation; it is not a second paper lifecycle.",
+      "Cross-cutting methodology controls attach to an existing owner component and never create an implicit seventh functional layer."
+    ]
+  },
+  "methodology_controls": {
+    "schema_version": "1.0",
+    "policy": {
+      "schema_version": "1.0",
+      "cross_cutting_controls_do_not_create_a_seventh_functional_layer": true,
+      "controls_inherit_authority_from_their_owner_component": true,
+      "unmeasured_controls_must_report_spec_status_not_claim_improvement": true,
+      "post_outcome_protocol_changes_require_a_new_registered_contract": true,
+      "search_or_tool_access_must_not_leak_hidden_evaluation_answers": true,
+      "reproducibility_requires_reexecution_not_only_trace_presence": true
+    },
+    "controls": [
+      {
+        "key": "exploration-frontier",
+        "owner_component": "wide-search-ideation",
+        "primary_layer": "paper-design",
+        "status": "spec-ready-not-yet-scored",
+        "purpose": {
+          "en": "Detect portfolio collapse toward a small neighborhood of seed literature even when individual ideas appear novel.",
+          "zh": "检测 Idea 组合是否虽然单项看似新颖，却整体塌缩在 seed 文献附近的同一小片区域。"
+        },
+        "measures": [
+          "quality-thresholded diversity yield",
+          "distance from seed literature",
+          "pairwise semantic dispersion",
+          "novelty-axis coverage",
+          "lineage/branch entropy"
+        ],
+        "rules": {
+          "novelty_prompt_alone_is_not_evidence_of_search_breadth": true,
+          "quality_and_diversity_are_joint_objectives": true,
+          "portfolio_level_collapse_is_distinct_from_pairwise_collision": true,
+          "low_breadth_triggers_search_reallocation_not_paper_rejection": true
+        },
+        "design_sources": [
+          "AI Research Agents Narrow Scientific Exploration",
+          "IDEAgent",
+          "Heuresis",
+          "SwarmResearch"
+        ]
+      },
+      {
+        "key": "experimental-design-integrity",
+        "owner_component": "protocol-and-replay",
+        "primary_layer": "experiment-design",
+        "status": "contract-ready-not-yet-retrospectively-scored",
+        "purpose": {
+          "en": "Freeze researcher degrees of freedom before outcomes are visible and prevent web/tool access from contaminating hidden evaluation.",
+          "zh": "在看到结果前冻结实验者自由度，并防止联网检索或工具访问污染 hidden evaluation。"
+        },
+        "preregistration_fields": [
+          "model/checkpoint and inference settings",
+          "prompt/scaffold and tool policy",
+          "task/sample split",
+          "metric and outcome semantics",
+          "analysis plan and statistical test",
+          "randomness/replication and stochastic-agent variance plan",
+          "stopping/exclusion rules",
+          "allowed adaptations and fallback path"
+        ],
+        "contamination_classes": [
+          "benchmark-metadata leakage",
+          "question-context leakage",
+          "explicit-answer leakage"
+        ],
+        "rules": {
+          "outcome_contingent_redesign_requires_new_contract": true,
+          "search_trajectory_is_part_of_protocol_provenance": true,
+          "hidden_evaluation_access_requires_explicit_allowlist": true,
+          "contaminated_runs_cannot_support_method_or_principle_claims": true
+        },
+        "design_sources": [
+          "Preregistration for Experiments with AI Agents",
+          "Search-Time Contamination in Deep Research Agents",
+          "AstaBench",
+          "An Experimental Design Approach to Evaluating Agentic AI's Autonomous Model Discovery"
+        ]
+      },
+      {
+        "key": "reproducibility-readiness",
+        "owner_component": "literature-evidence-integrity",
+        "primary_layer": "evidence-knowledge",
+        "status": "spec-ready-not-yet-independent-reexecuted",
+        "purpose": {
+          "en": "Require a third party to reconstruct and rerun the result-generating workflow instead of treating logs or citations as sufficient reproducibility evidence.",
+          "zh": "要求第三方能够重建并重跑结果生成流程，而不是把“有日志/有引用”误当成已经可复现。"
+        },
+        "required_graph": [
+          "source/data dependencies",
+          "preprocessing/transformation steps",
+          "method/configuration",
+          "execution commands and environment",
+          "metrics/analysis",
+          "figure/table/claim outputs"
+        ],
+        "required_artifacts": [
+          "dependency-aware workflow graph",
+          "versioned environment manifest",
+          "re-execution entry point",
+          "seed/data split record",
+          "failure/recovery notes",
+          "independent reproduction report"
+        ],
+        "rules": {
+          "claim_traceability_is_not_equivalent_to_reproducibility": true,
+          "reproduction_must_execute_without_copying_checked_in_results": true,
+          "environment_or_dependency_failure_is_reported_separately_from_scientific_failure": true,
+          "paper_ready_status_requires_independent_reexecution_for_load_bearing_results": true
+        },
+        "design_sources": [
+          "ARA: Agentic Reproducibility Assessment",
+          "Artisan",
+          "ArtifactCopilot",
+          "Scaling Reproducibility"
+        ]
+      }
+    ],
+    "summary": {
+      "controls": 3,
+      "primary_components_added": 0,
+      "functional_layers_added": 0,
+      "measured_controls": 0,
+      "spec_or_contract_ready": 3
+    },
+    "merge_only_external_designs": [
+      {
+        "system": "EurekAgent",
+        "reason": "permissions/artifact/budget/HITL environment engineering already maps to Runtime & Authority; no duplicate component is required"
+      }
     ]
   }
 }

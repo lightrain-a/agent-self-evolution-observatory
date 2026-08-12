@@ -39,11 +39,22 @@ The canonical layer registry lives in `system_architecture.py::FUNCTIONAL_LAYERS
 
 Every component published in `research-system-state.json/js` has a stable `key` and exactly one `primary_layer`. Adding or renaming a component without updating the architecture manifest is a validation error rather than a silent frontend drift.
 
+### Cross-cutting methodology controls
+
+Some methods govern more than one temporal stage but do not deserve a seventh functional layer. `methodology_controls.py` therefore attaches three controls to existing owner components:
+
+1. **Exploration Frontier** (`wide-search-ideation`) — measure portfolio-level quality/diversity/novelty breadth, seed-literature distance, semantic dispersion, novelty-axis coverage, and branch entropy. Pairwise collision is not sufficient to detect portfolio collapse.
+2. **Experimental Design Integrity** (`protocol-and-replay`) — preregister model/prompt/tool/split/metric/analysis/stopping choices before outcomes are visible, and audit web/tool search trajectories for benchmark metadata, question-context, or explicit-answer leakage. Outcome-contingent redesign creates a new contract rather than silently mutating the old one.
+3. **Reproducibility Readiness** (`literature-evidence-integrity`) — reconstruct a dependency-aware workflow graph and require independent re-execution of load-bearing results. Claim traceability is necessary but is not by itself reproducibility.
+
+These controls inherit authority from their owner component. Their current states are deliberately `spec-ready` / `contract-ready` until measured; the system may not claim improved exploration, contamination resistance, or reproducibility before the corresponding evaluation is actually run. EurekAgent-style permissions/artifact/budget/HITL environment engineering is recorded as a merge into the existing Runtime & Authority layer, not duplicated as another component.
+
 ## 2. Source-of-truth modules
 
 | Responsibility | Canonical backend |
 |---|---|
 | System architecture | `system_architecture.py` |
+| Cross-cutting methodology controls | `methodology_controls.py` |
 | Paper-first contract | `paper_design_contract.py` |
 | Principle / falsification semantics | `principle_adjudication.py` |
 | Experiment protocol compilation | `pre_experiment_compiler.py`, `pre_experiment_specs.py` |

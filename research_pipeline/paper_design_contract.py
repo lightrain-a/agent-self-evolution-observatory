@@ -42,6 +42,18 @@ REQUIRED_BLUEPRINT_FIELDS = {
     "baseline_matrix",
     "ablation_matrix",
     "freeze_rule",
+    "experimental_integrity",
+}
+
+REQUIRED_EXPERIMENTAL_INTEGRITY_FIELDS = {
+    "model_and_inference",
+    "prompt_tool_policy",
+    "task_sample_split",
+    "metric_analysis_plan",
+    "randomness_replication_plan",
+    "stopping_exclusion_rules",
+    "allowed_adaptations",
+    "hidden_evaluation_access_policy",
 }
 
 
@@ -95,6 +107,13 @@ def audit_paper_design_contract(config: dict[str, Any]) -> dict[str, Any]:
     for field in sorted(REQUIRED_BLUEPRINT_FIELDS):
         if not _nonempty(blueprint.get(field)):
             blockers.append(f"experiment-blueprint-field-missing:{field}")
+    integrity = blueprint.get("experimental_integrity") or {}
+    if not isinstance(integrity, dict):
+        blockers.append("experimental-integrity-invalid")
+        integrity = {}
+    for field in sorted(REQUIRED_EXPERIMENTAL_INTEGRITY_FIELDS):
+        if not _nonempty(integrity.get(field)):
+            blockers.append(f"experimental-integrity-field-missing:{field}")
     claim_matrix = blueprint.get("claim_experiment_matrix") or []
     if not isinstance(claim_matrix, list) or not claim_matrix:
         blockers.append("claim-experiment-matrix-missing")
@@ -118,6 +137,7 @@ def audit_paper_design_contract(config: dict[str, Any]) -> dict[str, Any]:
             "closest_work": len(closest) if isinstance(closest, list) else 0,
             "method_components": len(method.get("components") or []),
             "paper_claims": len(claim_matrix) if isinstance(claim_matrix, list) else 0,
+            "experimental_integrity_fields": sum(_nonempty(integrity.get(field)) for field in REQUIRED_EXPERIMENTAL_INTEGRITY_FIELDS),
         },
         "contract": contract,
         "policy": POLICY,

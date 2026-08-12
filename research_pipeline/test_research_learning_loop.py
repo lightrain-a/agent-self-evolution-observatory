@@ -83,6 +83,16 @@ class ResearchLearningLoopTest(unittest.TestCase):
                 "baseline_matrix": ["matched baseline"],
                 "ablation_matrix": ["remove core"],
                 "freeze_rule": "freeze method and blueprint before full experiment",
+                "experimental_integrity": {
+                    "model_and_inference": "freeze model/checkpoint/temperature before outcomes",
+                    "prompt_tool_policy": "freeze prompt scaffold and tool/search policy",
+                    "task_sample_split": "freeze train/local/hidden splits",
+                    "metric_analysis_plan": "freeze metric, aggregation, and statistical test",
+                    "randomness_replication_plan": "freeze seeds/replicates and stochastic-agent variance analysis",
+                    "stopping_exclusion_rules": "freeze stopping and exclusion rules",
+                    "allowed_adaptations": "only implementation repair; core changes create a new contract",
+                    "hidden_evaluation_access_policy": "hidden answers and benchmark pages are denied during evaluation",
+                },
             },
         }
         audit = audit_paper_design_contract(config)

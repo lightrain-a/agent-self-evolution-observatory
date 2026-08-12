@@ -45,6 +45,16 @@ def paper_design_contract() -> dict:
             "baseline_matrix": ["matched simple baseline"],
             "ablation_matrix": ["remove core mechanism"],
             "freeze_rule": "freeze method and blueprint before full experiment",
+            "experimental_integrity": {
+                "model_and_inference": "freeze model/checkpoint/inference settings",
+                "prompt_tool_policy": "freeze prompts, tools, and search access",
+                "task_sample_split": "freeze local and hidden splits",
+                "metric_analysis_plan": "freeze metric and statistical analysis",
+                "randomness_replication_plan": "freeze seeds/replicates and stochastic-agent variance analysis",
+                "stopping_exclusion_rules": "freeze stopping and exclusions",
+                "allowed_adaptations": "implementation-only repairs; core changes require new contract",
+                "hidden_evaluation_access_policy": "deny hidden answers and benchmark result pages",
+            },
         },
     }
 

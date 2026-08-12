@@ -290,7 +290,7 @@ def main() -> None:
         fail(f"research-system state is missing current backend responsibilities: count={len(components)}, missing={sorted(required_component_sources-component_sources)}")
     architecture = research_state.get("system_architecture", {})
     architecture_summary = architecture.get("summary", {})
-    if (architecture_summary.get("temporal_stages"), architecture_summary.get("functional_layers"), architecture_summary.get("assigned_components"), architecture_summary.get("unassigned_components"), architecture_summary.get("duplicate_component_keys")) != (11,6,27,0,0):
+    if (architecture_summary.get("temporal_stages"), architecture_summary.get("functional_layers"), architecture_summary.get("assigned_components"), architecture_summary.get("unassigned_components"), architecture_summary.get("duplicate_component_keys"), architecture_summary.get("cross_cutting_controls"), architecture_summary.get("orphan_cross_cutting_controls")) != (11,6,27,0,0,3,0):
         fail(f"backend architecture manifest is incomplete or stale: {architecture_summary}")
     if len({str(item.get("key") or "") for item in components}) != len(components) or any(not item.get("primary_layer") for item in components):
         fail("backend components must expose unique architecture keys and one primary layer each")
@@ -422,6 +422,7 @@ def main() -> None:
         "content-system-overview.js",
         "page-architecture-data.js",
         "system-overview-core.js",
+        "system-overview-methodology.js",
         "system-overview-lifecycle.js",
         "system-overview-preflight.js",
         "system-overview-operations.js",
@@ -434,9 +435,9 @@ def main() -> None:
     forbidden_system_scripts = ("generated/iclr-low-resource-ideas.js", "generated/machine-school-inspired-ideas.js", "generated/discussion-ready-ideas.js", "generated/idea-discovery-v5.js")
     if any(f'src="{name}"' in system_page for name in forbidden_system_scripts):
         fail("system overview must not load current idea-bank or discussion-pool artifacts")
-    system_files = ["system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-governance-v2.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js"]
+    system_files = ["system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-methodology.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-governance-v2.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js"]
     system_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in system_files)
-    for marker in ("PAPER-FIRST RESEARCH OS", "CURRENT RESEARCH OS", "BACKEND ARCHITECTURE MANIFEST", "CANONICAL TEMPORAL FLOW", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "GATE 3 · IDENTIFIABILITY SUB-AUDIT", "10 / 10", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "MCP-Yu + Experiment Orchestrator", "DECISION → LEARN → PUBLISH"):
+    for marker in ("PAPER-FIRST RESEARCH OS", "CURRENT RESEARCH OS", "BACKEND ARCHITECTURE MANIFEST", "CROSS-CUTTING METHODOLOGY CONTROLS", "Exploration Frontier", "Search-Time Contamination", "Reproducibility Readiness", "CANONICAL TEMPORAL FLOW", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "GATE 3 · IDENTIFIABILITY SUB-AUDIT", "10 / 10", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "MCP-Yu + Experiment Orchestrator", "DECISION → LEARN → PUBLISH"):
         if marker not in system_text:
             fail(f"system overview implementation is missing {marker}")
     system_content = (ROOT / "content-system-overview.js").read_text(encoding="utf-8")

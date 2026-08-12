@@ -30,6 +30,7 @@ from .idea_collision import analyze_collisions
 from .idea_lineage import build_lineage
 from .live_pipeline import load_live_corpus
 from .literature_retrieval_audit import build_literature_retrieval_audit
+from .methodology_controls import build_methodology_controls_state
 from .pilot_registry import build_pilot_registry
 from .p0_mem_xfer_offline_analysis import build_mem_xfer_workflow_state
 from .paper_design_contract import build_paper_first_workflow_state
@@ -264,6 +265,7 @@ def build_research_system_state() -> dict[str, Any]:
     research_capability_registry = build_research_capability_registry()
     literature_retrieval_audit = build_literature_retrieval_audit(evidence_graph, corpus)
     evidence_integrity = build_evidence_integrity_state()
+    methodology_controls = build_methodology_controls_state()
     collision_engine = analyze_collisions(idea_bank)
     lineage = build_lineage(idea_bank, collision_engine)
     pre_p0_identifiability = build_pre_p0_identifiability_audit(idea_bank)
@@ -361,6 +363,8 @@ def build_research_system_state() -> dict[str, Any]:
             "literature_benchmark_status":literature_retrieval_audit["summary"]["benchmark_status"],
             "evidence_integrity_claim_types":evidence_integrity["summary"]["claim_types"],
             "evidence_verifier_calibration_status":evidence_integrity["summary"]["verifier_calibration_status"],
+            "methodology_cross_cutting_controls":methodology_controls["summary"]["controls"],
+            "methodology_primary_components_added":methodology_controls["summary"]["primary_components_added"],
             "collision_flags":collision_engine["summary"]["flagged_pairs"],
             "lineage_edges":lineage["summary"]["edges"],
             "pilot_results":pilot_registry["summary"]["valid_result_files"],
@@ -474,6 +478,7 @@ def build_research_system_state() -> dict[str, Any]:
         "research_capability_registry":research_capability_registry,
         "literature_retrieval_audit":literature_retrieval_audit,
         "evidence_integrity":evidence_integrity,
+        "methodology_controls":methodology_controls,
         "collision_engine":collision_engine,
         "lineage":lineage,
         "pre_p0_identifiability":pre_p0_identifiability,
@@ -512,7 +517,7 @@ def build_research_system_state() -> dict[str, Any]:
         "mem_xfer_workflow":mem_xfer_workflow,
     }
     state["components"] = annotate_components(_component_manifest(state))
-    state["system_architecture"] = build_system_architecture(state["components"])
+    state["system_architecture"] = build_system_architecture(state["components"], methodology_controls)
     state["summary"]["architecture_temporal_stages"] = state["system_architecture"]["summary"]["temporal_stages"]
     state["summary"]["architecture_functional_layers"] = state["system_architecture"]["summary"]["functional_layers"]
     state["health"] = _health(state, corpus)
@@ -545,12 +550,13 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"corpus", "pass":bool(corpus.get("papers")), "detail":f"{len(corpus.get('papers') or [])} papers"},
         {"key":"evidence-coverage", "pass":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"] >= 20, "detail":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"]},
         {"key":"capability-and-literature-audit", "pass":state["research_capability_registry"]["policy"]["capabilities_are_declared_not_prompt_inferred"] and state["research_capability_registry"]["policy"]["model_or_tool_routing_cannot_escalate_scientific_authority"] and state["research_capability_registry"]["summary"]["capabilities"] >= 9 and state["literature_retrieval_audit"]["policy"]["deep_and_wide_retrieval_are_distinct_capabilities"] and state["literature_retrieval_audit"]["policy"]["citation_verifier_must_be_named_versioned_and_calibrated"] and state["literature_retrieval_audit"]["summary"]["benchmark_status"] == "spec-ready-not-yet-scored" and state["evidence_integrity"]["policy"]["every_publishable_claim_requires_evidence_chain"] and state["evidence_integrity"]["policy"]["uncalibrated_verifier_cannot_be_treated_as_ground_truth"], "detail":{"capabilities":state["research_capability_registry"]["summary"],"literature":state["literature_retrieval_audit"]["summary"],"evidence_integrity":state["evidence_integrity"]["summary"]}},
+        {"key":"cross-cutting-methodology-controls", "pass":state["methodology_controls"]["summary"]["controls"] == 3 and state["methodology_controls"]["summary"]["primary_components_added"] == 0 and state["methodology_controls"]["summary"]["functional_layers_added"] == 0 and state["methodology_controls"]["policy"]["post_outcome_protocol_changes_require_a_new_registered_contract"] and state["methodology_controls"]["policy"]["search_or_tool_access_must_not_leak_hidden_evaluation_answers"] and state["methodology_controls"]["policy"]["reproducibility_requires_reexecution_not_only_trace_presence"], "detail":state["methodology_controls"]["summary"]},
         {"key":"collision-engine", "pass":state["collision_engine"]["summary"]["pairwise_comparisons"] > 0, "detail":state["collision_engine"]["summary"]["pairwise_comparisons"]},
         {"key":"lineage", "pass":state["lineage"]["summary"]["idea_nodes"] >= 24, "detail":state["lineage"]["summary"]["idea_nodes"]},
         {"key":"pre-p0-identifiability", "pass":state["pre_p0_identifiability"]["policy"]["p0_execution_requires_pre_p0_pass"], "detail":state["pre_p0_identifiability"]["summary"]},
         {"key":"pre-gpu-survivor-gate", "pass":state["pre_gpu_candidate_gates"]["summary"]["total"] == 10 and state["pre_gpu_candidate_gates"]["summary"]["small_p0"] == 2 and state["pre_gpu_candidate_gates"]["policy"]["hold_or_inconclusive_is_not_method_failure"], "detail":state["pre_gpu_candidate_gates"]["summary"]},
         {"key":"paper-first-research-contract", "pass":state["paper_first_workflow"]["policy"]["paper_novelty_precedes_method_design"] and state["paper_first_workflow"]["policy"]["method_design_precedes_experiment_blueprint"] and state["paper_first_workflow"]["policy"]["local_validation_is_for_falsification_not_method_discovery"] and state["paper_first_workflow"]["policy"]["full_experiment_requires_frozen_method_and_blueprint"], "detail":state["paper_first_workflow"]["summary"]},
-        {"key":"backend-architecture-manifest", "pass":state["system_architecture"]["summary"]["temporal_stages"] == 11 and state["system_architecture"]["summary"]["functional_layers"] == 6 and state["system_architecture"]["summary"]["assigned_components"] == len(state["components"]) and state["system_architecture"]["summary"]["unassigned_components"] == 0 and state["system_architecture"]["summary"]["duplicate_component_keys"] == 0, "detail":state["system_architecture"]["summary"]},
+        {"key":"backend-architecture-manifest", "pass":state["system_architecture"]["summary"]["temporal_stages"] == 11 and state["system_architecture"]["summary"]["functional_layers"] == 6 and state["system_architecture"]["summary"]["assigned_components"] == len(state["components"]) and state["system_architecture"]["summary"]["unassigned_components"] == 0 and state["system_architecture"]["summary"]["duplicate_component_keys"] == 0 and state["system_architecture"]["summary"]["cross_cutting_controls"] == 3 and state["system_architecture"]["summary"]["orphan_cross_cutting_controls"] == 0, "detail":state["system_architecture"]["summary"]},
         {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == 4, "detail":state["principle_layer"]["summary"]},
         {"key":"pre-experiment-compiler", "pass":state["pre_experiment_compiler"]["policy"]["paper_design_contract_required_before_principle_and_implementation"] and state["pre_experiment_compiler"]["policy"]["paper_design_contract_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["principle_certificate_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_required_before_updater_competence"] and state["pre_experiment_compiler"]["policy"]["protocol_validity_is_not_a_formal_gate"] and state["pre_experiment_compiler"]["summary"]["protocol_validity_pass"] == 4 and state["pre_experiment_compiler"]["policy"]["research_execution_plan_required_before_launch"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_is_derived_not_a_formal_gate"] and state["pre_experiment_compiler"]["policy"]["research_execution_plan_cannot_authorize_execution"] and state["pre_experiment_compiler"]["summary"]["research_execution_plans"] == 4 and state["pre_experiment_compiler"]["policy"]["updater_competence_required_before_gate_1"] and state["pre_experiment_compiler"]["policy"]["updater_competence_is_not_a_ninth_gate"] and state["pre_experiment_compiler"]["policy"]["all_eight_gates_required"] and state["pre_experiment_compiler"]["policy"]["automatic_override_forbidden"] and state["pre_experiment_compiler"]["summary"]["compiled_cards"] == 4, "detail":state["pre_experiment_compiler"]["summary"]},
         {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
@@ -586,6 +592,11 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if state["literature_retrieval_audit"]["summary"].get("benchmark_status") != "spec-ready-not-yet-scored": errors.append("literature retrieval benchmark status mismatch")
     if not state["evidence_integrity"]["policy"]["every_publishable_claim_requires_evidence_chain"]: errors.append("publishable claims must require an evidence chain")
     if not state["evidence_integrity"]["policy"]["uncalibrated_verifier_cannot_be_treated_as_ground_truth"]: errors.append("uncalibrated verifiers must not be treated as ground truth")
+    methodology = state.get("methodology_controls") or {}; methodology_summary = methodology.get("summary") or {}; methodology_policy = methodology.get("policy") or {}
+    if methodology_summary.get("controls") != 3 or methodology_summary.get("primary_components_added") != 0 or methodology_summary.get("functional_layers_added") != 0: errors.append("cross-cutting methodology controls must add three controls without new primary components or layers")
+    if methodology_policy.get("post_outcome_protocol_changes_require_a_new_registered_contract") is not True: errors.append("post-outcome protocol changes must require a new registered contract")
+    if methodology_policy.get("search_or_tool_access_must_not_leak_hidden_evaluation_answers") is not True: errors.append("search/tool access must not contaminate hidden evaluation")
+    if methodology_policy.get("reproducibility_requires_reexecution_not_only_trace_presence") is not True: errors.append("reproducibility must require re-execution rather than trace presence alone")
     if state["collision_engine"]["summary"]["pairwise_comparisons"] <= 0: errors.append("collision engine did not run")
     if state["pilot_registry"]["summary"]["phases"] != state["summary"]["passed_ideas"] * 3: errors.append("pilot phase count mismatch")
     if not state["pre_p0_identifiability"]["policy"]["p0_execution_requires_pre_p0_pass"]: errors.append("retrospective Pre-P0 audit must remain authoritative evidence")
@@ -600,6 +611,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if architecture_summary.get("temporal_stages") != 11 or architecture_summary.get("functional_layers") != 6: errors.append("backend architecture must expose one 11-stage lifecycle and six functional layers")
     if architecture_summary.get("assigned_components") != len(state.get("components") or []) or architecture_summary.get("unassigned_components") != 0: errors.append("every backend component must have exactly one primary architecture layer")
     if architecture_summary.get("duplicate_component_keys") != 0: errors.append("backend component architecture keys must be unique")
+    if architecture_summary.get("cross_cutting_controls") != 3 or architecture_summary.get("orphan_cross_cutting_controls") != 0: errors.append("all cross-cutting methodology controls must resolve to an existing owner component")
     if not state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"]: errors.append("experiments must remain evidence about principles rather than votes on ideas")
     if not state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"]: errors.append("true negatives must not automatically falsify principles")
     if state["principle_layer"]["summary"]["certificates_passed"] != 4: errors.append("all four current pre-experiment cards must have valid principle certificates")

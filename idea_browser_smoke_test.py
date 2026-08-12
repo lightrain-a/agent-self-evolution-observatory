@@ -67,6 +67,7 @@ def main() -> None:
           responsibilityLayers: document.querySelectorAll('.system-layer-list article').length,
           temporalStages: document.querySelectorAll('.system-lifecycle-step').length,
           componentLayerHeaders: document.querySelectorAll('.system-component-layer').length,
+          methodologyControls: document.querySelectorAll('.methodology-control-card').length,
           architectureSummary: window.RESEARCH_SYSTEM_STATE?.system_architecture?.summary || {},
           aiCheckpoints: document.querySelectorAll('.system-checkpoint-strip > div').length,
           outerGates: document.querySelectorAll('.preflight-outer-gate').length,
@@ -83,7 +84,8 @@ def main() -> None:
         };""")
         require(system["chapters"] == 6, f"research-system overview must have six chapters, got {system['chapters']}")
         require(system["responsibilityLayers"] == 6 and system["temporalStages"] == 11 and system["componentLayerHeaders"] == 6 and system["aiCheckpoints"] == 5, f"research-system architecture/AI clinic is incomplete: layers={system['responsibilityLayers']} stages={system['temporalStages']} component-groups={system['componentLayerHeaders']} ai={system['aiCheckpoints']}")
-        require((system["architectureSummary"].get("temporal_stages"),system["architectureSummary"].get("functional_layers"),system["architectureSummary"].get("assigned_components"),system["architectureSummary"].get("unassigned_components")) == (11,6,27,0), f"backend architecture manifest is stale in browser state: {system['architectureSummary']}")
+        require((system["architectureSummary"].get("temporal_stages"),system["architectureSummary"].get("functional_layers"),system["architectureSummary"].get("assigned_components"),system["architectureSummary"].get("unassigned_components"),system["architectureSummary"].get("cross_cutting_controls"),system["architectureSummary"].get("orphan_cross_cutting_controls")) == (11,6,27,0,3,0), f"backend architecture manifest is stale in browser state: {system['architectureSummary']}")
+        require(system["methodologyControls"] == 3 and "Exploration Frontier" in system["text"] and "Reproducibility Readiness" in system["text"], f"cross-cutting methodology controls are missing: {system['methodologyControls']}")
         require(system["outerGates"] == 8 and system["preflightGates"] == 10 and system["quantWorksheets"] == 2, f"Pre-Experiment/identifiability compiler is incomplete: {system['outerGates']}/{system['preflightGates']}/{system['quantWorksheets']}")
         require(system["lessons"] == 6 and system["failureLayers"] == 6 and system["repairLoops"] == 1, f"learning/diagnosis visualization is incomplete: {system['lessons']}/{system['failureLayers']}/{system['repairLoops']}")
         require(system["components"] >= 27, f"expected the current backend responsibility set including Paper-first contract, capability registry, literature audit, Principle, Protocol Validity, Meta-Trace, failure memory, scheduler, replay, Economy, and AI consultation, got {system['components']}")
@@ -99,7 +101,7 @@ def main() -> None:
         require(zh["outer"] == 8 and zh["gates"] == 10 and zh["failures"] == 6 and "P0 ECONOMY" in zh["text"] and "PROTOCOL VALIDITY" in zh["text"] and "SCIENTIFIC META-TRACE" in zh["text"] and "PRINCIPLE" in zh["text"], "research-system Economy / Principle / Protocol Validity / learning-loop visualization is incomplete")
         request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844})
         time.sleep(1)
-        system_mobile = execute(session_id, """const gate=document.querySelector('.preflight-gate-grid'); const failure=document.querySelector('.system-failure-layers'); return {inner:window.innerWidth,scroll:document.documentElement.scrollWidth,gateCols:gate?getComputedStyle(gate).gridTemplateColumns:'',failureCols:failure?getComputedStyle(failure).gridTemplateColumns:'',maxCard:Math.max(0,...[...document.querySelectorAll('.preflight-gate,.system-failure-layer')].map(x=>x.getBoundingClientRect().width))};""")
+        system_mobile = execute(session_id, """const gate=document.querySelector('.preflight-gate-grid'); const failure=document.querySelector('.system-failure-layers'); return {inner:window.innerWidth,scroll:document.documentElement.scrollWidth,gateCols:gate?getComputedStyle(gate).gridTemplateColumns:'',failureCols:failure?getComputedStyle(failure).gridTemplateColumns:'',maxCard:Math.max(0,...[...document.querySelectorAll('.preflight-gate,.system-failure-layer,.methodology-control-card')].map(x=>x.getBoundingClientRect().width))};""")
         require(system_mobile["scroll"] <= system_mobile["inner"] + 2, f"research-system mobile layout has page-level horizontal overflow: {system_mobile}")
         require(" " not in system_mobile["gateCols"].strip() and " " not in system_mobile["failureCols"].strip(), f"Pre-P0/failure grids must collapse to one column on mobile: {system_mobile}")
         require(system_mobile["maxCard"] <= system_mobile["inner"], f"research-system cards exceed mobile viewport: {system_mobile}")
