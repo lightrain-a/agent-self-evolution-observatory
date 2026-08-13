@@ -21,6 +21,16 @@ from .public_state_redaction import redact_private_paths
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.js"
 DEFAULT_MAX_PAPERS = 32
+DEFAULT_LANE_FLOOR = 1
+PRIMARY_EVIDENCE_LANES: tuple[dict[str, Any], ...] = (
+    {"key":"skill_harness","terms":("skill","harness","workflow evolution","agent workflow")},
+    {"key":"memory_continual","terms":("agent memory","memory","continual agent","lifelong agent","experience management")},
+    {"key":"embodied","terms":("embodied","robot","robotic","navigation","physical autonomy")},
+    {"key":"collective","terms":("multi-agent","multi agent","collaborative harness","collaborative agent","swarm","group-evolving","group evolving","agent society")},
+    {"key":"autonomous_science","terms":("symbolic regression","scientific discovery","scientific agent","research agent","ai scientist","autonomous research","hypothesis generation","experiment planning")},
+    {"key":"runtime_deployment","terms":("runtime","deployment","production agent","customer support","long-horizon agent","monitoring","runtime contract")},
+    {"key":"safety_reliability","terms":("agent safety","safety harness","reliability","robustness","adversarial","security","failure")},
+)
 DEFAULT_MAX_CORPUS_AGE_DAYS = 10.0
 DEFAULT_MAX_PUBLICATION_AGE_DAYS = 60.0
 DEFAULT_MIN_INTERVAL_SECONDS = 0.75
@@ -31,6 +41,12 @@ DEFAULT_ARXIV_QUERIES = (
     'all:"self-improving" AND all:agent',
     'all:"agent evolution" AND all:LLM',
     '(all:"agent skill" OR all:harness) AND all:evolution',
+    '(all:"agent memory" OR all:"continual agent") AND (all:evolution OR all:"self-improving")',
+    'all:"embodied agent" AND (all:evolution OR all:"self-improving")',
+    '(all:"multi-agent" OR all:"collaborative agent") AND (all:evolution OR all:"self-improving")',
+    '(all:"scientific agent" OR all:"research agent" OR all:"symbolic regression") AND (all:evolution OR all:"self-evolving")',
+    '(all:runtime OR all:deployment) AND all:agent AND (all:evolution OR all:"self-improving")',
+    '(all:safety OR all:reliability) AND all:agent AND (all:evolution OR all:"self-improving")',
 )
 
 _RELEVANCE_TERMS = (
@@ -222,14 +238,32 @@ def _relevance_score(paper: dict[str, Any]) -> int:
     return score
 
 
+def _paper_lane_keys(paper: dict[str, Any]) -> tuple[str, ...]:
+    haystack = f"{paper.get('title','')} {paper.get('abstract','')}".lower()
+    return tuple(
+        str(lane["key"])
+        for lane in PRIMARY_EVIDENCE_LANES
+        if any(str(term).lower() in haystack for term in lane["terms"])
+    )
+
+
+def _lane_counts(papers: list[dict[str, Any]]) -> dict[str, int]:
+    counts = {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES}
+    for paper in papers:
+        for key in _paper_lane_keys(paper):
+            counts[key] += 1
+    return counts
+
+
 def select_primary_candidates(
     corpus: dict[str, Any],
     *,
     max_papers: int = DEFAULT_MAX_PAPERS,
     now: datetime | None = None,
     max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
+    lane_floor: int = DEFAULT_LANE_FLOOR,
 ) -> list[dict[str, Any]]:
-    selected: list[tuple[tuple[Any, ...], dict[str, Any]]] = []
+    ranked: list[tuple[tuple[Any, ...], dict[str, Any]]] = []
     seen: set[str] = set()
     current = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
     for paper in corpus.get("papers") or []:
@@ -250,9 +284,49 @@ def select_primary_candidates(
         citation_count = int(metadata.get("citationCount") or 0)
         retrieval_score = float(metadata.get("retrievalScore") or 0.0)
         rank_key = (publication_date, year, score, retrieval_score, citation_count, str(paper.get("title") or ""))
-        selected.append((rank_key, paper))
-    selected.sort(key=lambda item: item[0], reverse=True)
-    return [paper for _, paper in selected[: max(0, max_papers)]]
+        ranked.append((rank_key, paper))
+    ranked.sort(key=lambda item: item[0], reverse=True)
+    limit = max(0, int(max_papers))
+    if limit == 0:
+        return []
+    if lane_floor <= 0 or not ranked:
+        return [paper for _, paper in ranked[:limit]]
+
+    # Coverage is a deterministic membership floor only. Each lane receives the
+    # highest globally-ranked eligible paper when one exists; the remaining
+    # budget is filled in the original global order. One paper may satisfy more
+    # than one lane, and lanes with no eligible papers are never synthesized.
+    selected_ids: set[str] = set()
+    selected: list[dict[str, Any]] = []
+    lane_counts = {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES}
+    for lane in PRIMARY_EVIDENCE_LANES:
+        key = str(lane["key"])
+        while lane_counts[key] < int(lane_floor) and len(selected) < limit:
+            candidate = next(
+                (
+                    paper
+                    for _, paper in ranked
+                    if key in _paper_lane_keys(paper) and _arxiv_id(paper) not in selected_ids
+                ),
+                None,
+            )
+            if candidate is None:
+                break
+            selected.append(candidate)
+            selected_ids.add(_arxiv_id(candidate))
+            for covered in _paper_lane_keys(candidate):
+                lane_counts[covered] += 1
+    for _, paper in ranked:
+        if len(selected) >= limit:
+            break
+        arxiv_id = _arxiv_id(paper)
+        if arxiv_id in selected_ids:
+            continue
+        selected.append(paper)
+        selected_ids.add(arxiv_id)
+    selected_rank = {_arxiv_id(paper): index for index, (_, paper) in enumerate(ranked)}
+    selected.sort(key=lambda paper: selected_rank.get(_arxiv_id(paper), 10**9))
+    return selected
 
 
 def _default_requester(url: str, *, timeout: float, headers: dict[str, str]):
@@ -357,6 +431,7 @@ def build_primary_evidence_pool(
     storage: StorageSettings | None = None,
     corpus_path: Path | None = None,
     max_papers: int = DEFAULT_MAX_PAPERS,
+    lane_floor: int = DEFAULT_LANE_FLOOR,
     max_corpus_age_days: float = DEFAULT_MAX_CORPUS_AGE_DAYS,
     max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
     requester: Callable[..., Any] | None = None,
@@ -389,6 +464,9 @@ def build_primary_evidence_pool(
             "fulltext_enrichment_is_optional": True,
             "fulltext_snippets_remain_private_data_artifacts": True,
             "empirical_fact_candidates_are_not_ground_truth": True,
+            "pre_registered_lane_coverage_floor": True,
+            "lane_coverage_is_discovery_breadth_not_scientific_authority": True,
+            "lane_floor": int(lane_floor),
             "candidate_generation_authority": False,
             "method_authority": False,
             "experiment_authority": False,
@@ -405,6 +483,12 @@ def build_primary_evidence_pool(
             "fulltext_verified": 0,
             "fulltext_fetch_errors": 0,
             "empirical_fact_candidates": 0,
+            "lane_floor": int(lane_floor),
+            "eligible_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
+            "selected_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
+            "verified_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
+            "undercovered_lanes": [],
+            "verified_undercovered_lanes": [],
             "candidate_generation_ready": False,
         },
         "records": [],
@@ -429,12 +513,7 @@ def build_primary_evidence_pool(
     private["corpus_retrieved_at"] = retrieved_at
     discovery_errors: list[str] = []
     if fresh:
-        candidates = select_primary_candidates(
-            corpus or {},
-            max_papers=max_papers,
-            now=current,
-            max_publication_age_days=max_publication_age_days,
-        )
+        discovery_corpus = corpus or {"papers": []}
         public_state["summary"]["discovery_mode"] = "semantic-scholar-corpus"
         private["discovery_mode"] = "semantic-scholar-corpus"
     else:
@@ -443,18 +522,46 @@ def build_primary_evidence_pool(
             requester=arxiv_search_requester,
             min_interval_seconds=arxiv_query_interval_seconds,
         )
-        candidates = select_primary_candidates(
-            {"papers": fallback_rows},
-            max_papers=max_papers,
-            now=current,
-            max_publication_age_days=max_publication_age_days,
-        )
+        discovery_corpus = {"papers": fallback_rows}
         public_state["summary"]["discovery_mode"] = "arxiv-primary-fallback"
         private["discovery_mode"] = "arxiv-primary-fallback"
         public_state["discovery_errors"] = discovery_errors
         private["discovery_errors"] = discovery_errors
 
-    public_state["summary"]["selected"] = len(candidates)
+    eligible_candidates = select_primary_candidates(
+        discovery_corpus,
+        max_papers=len(discovery_corpus.get("papers") or []),
+        now=current,
+        max_publication_age_days=max_publication_age_days,
+        lane_floor=0,
+    )
+    candidates = select_primary_candidates(
+        discovery_corpus,
+        max_papers=max_papers,
+        now=current,
+        max_publication_age_days=max_publication_age_days,
+        lane_floor=lane_floor,
+    )
+    eligible_lane_counts = _lane_counts(eligible_candidates)
+    selected_lane_counts = _lane_counts(candidates)
+    undercovered_lanes = [
+        key for key, eligible_count in eligible_lane_counts.items()
+        if eligible_count > 0 and selected_lane_counts.get(key, 0) < min(int(lane_floor), eligible_count)
+    ]
+    public_state["summary"].update({
+        "selected": len(candidates),
+        "lane_floor": int(lane_floor),
+        "eligible_lane_counts": eligible_lane_counts,
+        "selected_lane_counts": selected_lane_counts,
+        "undercovered_lanes": undercovered_lanes,
+    })
+    private["lane_coverage"] = {
+        "lane_floor": int(lane_floor),
+        "eligible_lane_counts": eligible_lane_counts,
+        "selected_lane_counts": selected_lane_counts,
+        "undercovered_lanes": undercovered_lanes,
+    }
+    candidate_lane_by_ref = {f"arXiv:{_arxiv_id(paper)}": _paper_lane_keys(paper) for paper in candidates}
     fetch = requester or _default_requester
     cache_dir.mkdir(parents=True, exist_ok=True)
     last_fetch_started: float | None = None
@@ -549,14 +656,26 @@ def build_primary_evidence_pool(
                 "cache_path": str(cache_path),
                 "title_similarity": round(similarity, 4),
                 "primary_source_verified": True,
+                "lane_keys": list(candidate_lane_by_ref.get(f"arXiv:{arxiv_id}", ())),
             }
             verified.append(record)
         except Exception as error:  # network/provider failures are evidence absence, not scientific negatives
             errors.append({"ref": f"arXiv:{arxiv_id}", "error": f"{type(error).__name__}:{str(error)[:240]}"})
 
+    verified_lane_counts = {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES}
+    for record in verified:
+        for key in record.get("lane_keys") or []:
+            if key in verified_lane_counts:
+                verified_lane_counts[key] += 1
+    verified_undercovered_lanes = [
+        key for key, eligible_count in eligible_lane_counts.items()
+        if eligible_count > 0 and verified_lane_counts.get(key, 0) < min(int(lane_floor), eligible_count)
+    ]
     private["records"] = verified
     private["errors"] = errors
     private["fulltext_errors"] = fulltext_errors
+    private["lane_coverage"]["verified_lane_counts"] = verified_lane_counts
+    private["lane_coverage"]["verified_undercovered_lanes"] = verified_undercovered_lanes
     private["status"] = "READY" if len(verified) >= 4 else "INSUFFICIENT_PRIMARY_EVIDENCE"
     public_state["summary"].update(
         {
@@ -566,6 +685,8 @@ def build_primary_evidence_pool(
             "fulltext_verified": fulltext_verified,
             "fulltext_fetch_errors": len(fulltext_errors),
             "empirical_fact_candidates": empirical_fact_count,
+            "verified_lane_counts": verified_lane_counts,
+            "verified_undercovered_lanes": verified_undercovered_lanes,
             "candidate_generation_ready": len(verified) >= 4,
         }
     )
@@ -603,6 +724,7 @@ def write_primary_evidence_pool(
     storage: StorageSettings | None = None,
     corpus_path: Path | None = None,
     max_papers: int = DEFAULT_MAX_PAPERS,
+    lane_floor: int = DEFAULT_LANE_FLOOR,
     max_corpus_age_days: float = DEFAULT_MAX_CORPUS_AGE_DAYS,
     max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
     requester: Callable[..., Any] | None = None,
@@ -617,6 +739,7 @@ def write_primary_evidence_pool(
         storage=storage,
         corpus_path=corpus_path,
         max_papers=max_papers,
+        lane_floor=lane_floor,
         max_corpus_age_days=max_corpus_age_days,
         max_publication_age_days=max_publication_age_days,
         requester=requester,

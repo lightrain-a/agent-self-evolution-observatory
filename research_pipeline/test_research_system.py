@@ -242,6 +242,10 @@ class ResearchSystemTest(unittest.TestCase):
             self.assertTrue(primary["policy"]["fulltext_enrichment_is_optional"])
             self.assertTrue(primary["policy"]["fulltext_snippets_remain_private_data_artifacts"])
             self.assertTrue(primary["policy"]["empirical_fact_candidates_are_not_ground_truth"])
+            self.assertTrue(primary["policy"]["pre_registered_lane_coverage_floor"])
+            self.assertTrue(primary["policy"]["lane_coverage_is_discovery_breadth_not_scientific_authority"])
+            self.assertGreaterEqual(int(primary["policy"]["lane_floor"]),1)
+            self.assertEqual(primary["summary"]["undercovered_lanes"],[])
         generator=self.state["paper_first_problem_generator"]
         self.assertIn(generator["status"],{"NOT_RUN","SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE","SKIPPED_STALE_PRIMARY_EVIDENCE","GENERATOR_ERROR_ZERO_AUTHORITY","GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE","STATE_UNREADABLE"})
         self.assertTrue(generator["policy"]["zero_candidates_is_valid"])

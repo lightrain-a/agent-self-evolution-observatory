@@ -8,7 +8,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from .config import StorageSettings
-from .paper_first_primary_evidence import build_primary_evidence_pool, extract_empirical_fact_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
+from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, build_primary_evidence_pool, extract_empirical_fact_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
 
 
 class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
@@ -77,6 +77,14 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
             entries.append(f'''<entry><id>https://arxiv.org/abs/2608.0000{idx}v1</id><title>{title}</title><summary>We study self-evolving autonomous agents, persistent skills, harnesses, and feedback.</summary><published>2026-08-0{idx}T00:00:00Z</published></entry>''')
         return SimpleNamespace(status_code=200,text='<feed xmlns="http://www.w3.org/2005/Atom">'+''.join(entries)+'</feed>')
 
+    def test_fallback_queries_cover_sparse_preregistered_scientific_objects(self) -> None:
+        joined=" ".join(DEFAULT_ARXIV_QUERIES).lower()
+        self.assertIn('multi-agent',joined)
+        self.assertIn('scientific agent',joined)
+        self.assertIn('embodied agent',joined)
+        self.assertIn('agent memory',joined)
+        self.assertIn('safety',joined)
+
     def test_parse_arxiv_page_extracts_title_and_abstract(self) -> None:
         parsed = parse_arxiv_page('<meta name="citation_title" content="Paper A"><blockquote class="abstract mathjax">Abstract: hello <b>world</b></blockquote>')
         self.assertEqual(parsed, {"title":"Paper A","abstract":"hello world"})
@@ -92,6 +100,35 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
     def test_parse_arxiv_atom_extracts_primary_metadata(self) -> None:
         rows=parse_arxiv_atom('<feed xmlns="http://www.w3.org/2005/Atom"><entry><id>https://arxiv.org/abs/2608.12345v2</id><title> Self-Evolving Agent </title><summary> primary abstract </summary><published>2026-08-12T00:00:00Z</published></entry></feed>')
         self.assertEqual(len(rows),1); self.assertEqual(rows[0]["metadata"]["externalIds"]["ArXiv"],"2608.12345"); self.assertEqual(rows[0]["title"],"Self-Evolving Agent")
+
+    def test_lane_floor_adds_only_highest_ranked_sparse_lane_representative(self) -> None:
+        papers=[]
+        for idx in range(1,6):
+            papers.append({
+                "paper_id":f"skill-{idx}","title":f"Self-Evolving Agent Skill Harness {idx}","year":2026,"venue":"arXiv",
+                "abstract":"A self-evolving agent skill harness improves persistent workflow adaptation.",
+                "metadata":{"externalIds":{"ArXiv":f"2608.20{idx:03d}"},"publicationDate":f"2026-08-{13-idx:02d}","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"topic"}]},
+            })
+        papers.append({
+            "paper_id":"collective-1","title":"Collaborative Multi-Agent Evolution Across Isolated Workloads","year":2026,"venue":"arXiv",
+            "abstract":"A self-evolving multi-agent system coordinates collaborative agents across isolated workloads.",
+            "metadata":{"externalIds":{"ArXiv":"2608.19001"},"publicationDate":"2026-08-01","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"topic"}]},
+        })
+        corpus={"papers":papers}
+        no_floor=select_primary_candidates(corpus,max_papers=3,lane_floor=0,now=datetime(2026,8,13,tzinfo=timezone.utc))
+        with_floor=select_primary_candidates(corpus,max_papers=3,lane_floor=1,now=datetime(2026,8,13,tzinfo=timezone.utc))
+        self.assertFalse(any(row["paper_id"]=="collective-1" for row in no_floor))
+        self.assertTrue(any(row["paper_id"]=="collective-1" for row in with_floor))
+        self.assertEqual(len(with_floor),3)
+        self.assertEqual(with_floor[0]["paper_id"],"skill-1")
+        self.assertEqual(with_floor[-1]["paper_id"],"collective-1")
+
+    def test_lane_floor_does_not_synthesize_missing_lane_or_relax_relevance(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            corpus=json.loads(self.corpus(Path(td)).read_text())
+            selected=select_primary_candidates(corpus,max_papers=10,lane_floor=1,now=datetime(2026,8,13,tzinfo=timezone.utc))
+        self.assertEqual(len(selected),4)
+        self.assertFalse(any("Ads Recommendation" in row["title"] for row in selected))
 
     def test_selection_requires_relevance_abstract_arxiv_id_and_recent_publication(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -129,6 +166,11 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertTrue(all(row["empirical_facts"] for row in private["records"]))
         self.assertEqual(public["summary"]["fulltext_verified"],4)
         self.assertEqual(public["summary"]["fulltext_fetch_errors"],0)
+        self.assertEqual(public["summary"]["lane_floor"],1)
+        self.assertEqual(public["summary"]["undercovered_lanes"],[])
+        self.assertEqual(public["summary"]["verified_undercovered_lanes"],[])
+        self.assertTrue(public["policy"]["pre_registered_lane_coverage_floor"])
+        self.assertTrue(public["policy"]["lane_coverage_is_discovery_breadth_not_scientific_authority"])
         self.assertGreaterEqual(public["summary"]["empirical_fact_candidates"],4)
         self.assertTrue(all("abstract" not in row and "empirical_facts" not in row for row in public["records"]))
         self.assertTrue(all(row["empirical_fact_count"] >= 1 for row in public["records"]))
