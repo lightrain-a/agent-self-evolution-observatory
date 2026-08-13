@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-13T14:26:18+00:00",
+  "generated_at": "2026-08-13T15:18:53+00:00",
   "idea_id": "counterfactual-evolution-decision-controller",
   "code": "A-7",
   "scientific_role": "CPU same-state four-action P0 with programmatic counterfactual truth; no candidate regeneration",
