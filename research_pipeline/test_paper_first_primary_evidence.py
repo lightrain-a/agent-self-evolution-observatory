@@ -11,7 +11,7 @@ from unittest.mock import patch
 import requests
 
 from .config import StorageSettings
-from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, _paper_lane_keys, build_primary_evidence_pool, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
+from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, _paper_lane_keys, _source_exposure_state, build_primary_evidence_pool, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
 
 
 class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
@@ -153,6 +153,26 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertEqual(len(selected),4)
         self.assertFalse(any("Ads Recommendation" in row["title"] for row in selected))
 
+    def test_portable_review_receipt_merges_missing_host_run_without_double_count(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);discovery=root/"paper-first-problem-discovery";discovery.mkdir(parents=True)
+            (discovery/"discovery-saturation-ledger.json").write_text(json.dumps({"runs":[{"run_id":"private-run","source_refs":["arXiv:A","arXiv:B","arXiv:C","arXiv:D"]}]}),encoding="utf-8")
+            generator=root/"generator.json";generator.write_text(json.dumps({"saturation_memory":{"portable_review_receipts":[
+                {"run_id":"private-run","source_refs":["arXiv:A","arXiv:B","arXiv:C","arXiv:D"],"status":"GENERATED_ZERO_CANDIDATES","scientific_authority":False},
+                {"run_id":"remote-run","source_refs":["arXiv:C","arXiv:D","arXiv:E","arXiv:F"],"status":"GENERATED_AWAIT_PROBLEM_GATE","scientific_authority":False},
+            ]}}),encoding="utf-8")
+            counts,runs,portable=_source_exposure_state(storage,portable_generator_state_path=generator,portable_primary_state_path=root/"unused.json")
+        self.assertEqual((runs,portable),(2,1))
+        self.assertEqual({k:counts[k] for k in sorted(counts)},{"arXiv:A":1,"arXiv:B":1,"arXiv:C":2,"arXiv:D":2,"arXiv:E":1,"arXiv:F":1})
+
+    def test_pre_receipt_public_transaction_bootstraps_cross_host_exposure(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);generator=root/"generator.json";primary=root/"primary.json"
+            generator.write_text(json.dumps({"run_id":"legacy-public-run","status":"GENERATED_ZERO_CANDIDATES","summary":{"primary_evidence_records":4},"saturation_memory":{"current_run_recorded":True,"scientific_authority":False}}),encoding="utf-8")
+            primary.write_text(json.dumps({"status":"READY","records":[{"ref":f"arXiv:{i}"} for i in range(4)]}),encoding="utf-8")
+            counts,runs,portable=_source_exposure_state(storage,portable_generator_state_path=generator,portable_primary_state_path=primary)
+        self.assertEqual((runs,portable),(1,1));self.assertEqual(len(counts),4);self.assertTrue(all(value==1 for value in counts.values()))
+
     def test_source_coverage_scheduler_preserves_anchors_and_adds_unreviewed_tail(self) -> None:
         papers=[]
         for idx in range(1,7):
@@ -233,8 +253,13 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertTrue(public["summary"]["source_coverage_scheduler_active"])
         self.assertEqual(public["summary"]["saturation_ledger_runs"],1)
         self.assertEqual(public["summary"]["prior_reviewed_sources"],3)
+        self.assertEqual(public["summary"]["portable_review_receipts_merged"],0)
+        self.assertEqual(public["summary"]["eligible_unreviewed"],1)
+        self.assertEqual(public["summary"]["eligible_lane_unreviewed"],1)
+        self.assertEqual(public["summary"]["eligible_no_lane_unreviewed"],0)
         self.assertEqual(public["summary"]["selected_previously_reviewed"]+public["summary"]["selected_unreviewed"],public["summary"]["selected"])
         self.assertGreaterEqual(public["summary"]["selected_unreviewed"],1)
+        self.assertEqual(public["summary"]["selected_lane_unreviewed"],public["summary"]["selected_unreviewed"])
         self.assertEqual(public["summary"]["coverage_anchor_count"],1)
         self.assertTrue(public["policy"]["source_coverage_scheduler_is_discovery_only"])
         self.assertTrue(public["policy"]["source_review_exposure_has_zero_scientific_authority"])

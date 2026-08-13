@@ -21,6 +21,7 @@ from .public_state_redaction import redact_private_paths
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.js"
+DEFAULT_PORTABLE_REVIEW_STATE = PROJECT_ROOT / "generated" / "paper-first-problem-generator-state.json"
 DEFAULT_MAX_PAPERS = 32
 DEFAULT_LANE_FLOOR = 1
 DEFAULT_SOURCE_COVERAGE_ANCHOR_COUNT = 16
@@ -361,25 +362,94 @@ def _source_ref(paper: dict[str, Any]) -> str:
     return f"arXiv:{arxiv_id}" if arxiv_id else ""
 
 
-def _source_exposure_state(storage: StorageSettings) -> tuple[dict[str, int], int]:
-    """Return deterministic prior review exposure from the private saturation ledger.
+def _load_json_object(path: Path | None) -> dict[str, Any]:
+    if path is None or not path.exists():
+        return {}
+    try:
+        payload=json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):
+        return {}
+    return payload if isinstance(payload,dict) else {}
+
+
+def _portable_review_receipts(generator_state_path: Path | None, primary_state_path: Path | None) -> list[dict[str, Any]]:
+    """Read zero-authority source-review receipts that can travel across hosts.
+
+    The generator snapshot carries a bounded receipt history. For repositories
+    created before that history existed, the current public Primary + Generator
+    pair is enough to bootstrap one receipt when the generator explicitly says
+    the run was recorded. Receipts are scheduler metadata only.
+    """
+    generator=_load_json_object(generator_state_path)
+    saturation=generator.get("saturation_memory") or {}
+    receipts=[dict(row) for row in saturation.get("portable_review_receipts") or [] if isinstance(row,dict)]
+    known={str(row.get("run_id") or "") for row in receipts if row.get("run_id")}
+    run_id=str(generator.get("run_id") or "").strip()
+    status=str(generator.get("status") or "").strip()
+    if (
+        run_id and run_id not in known
+        and saturation.get("current_run_recorded") is True
+        and status in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}
+    ):
+        primary=_load_json_object(primary_state_path)
+        records=[row for row in primary.get("records") or [] if isinstance(row,dict) and row.get("ref")]
+        expected=int((generator.get("summary") or {}).get("primary_evidence_records") or 0)
+        if primary.get("status")=="READY" and expected==len(records) and expected>=4:
+            receipts.append({
+                "run_id":run_id,
+                "source_refs":sorted({str(row["ref"]) for row in records}),
+                "status":status,
+                "scientific_authority":False,
+                "bootstrap_from_public_transaction":True,
+            })
+    return receipts[-64:]
+
+
+def _source_exposure_state(
+    storage: StorageSettings,
+    *,
+    portable_generator_state_path: Path | None = None,
+    portable_primary_state_path: Path | None = None,
+) -> tuple[dict[str, int], int, int]:
+    """Return deterministic review exposure from private + portable receipts.
 
     Exposure is retrieval metadata only. It cannot authorize, skip, pass, block,
-    or scientifically interpret a paper/problem candidate.
+    or scientifically interpret a paper/problem candidate. Portable receipts
+    prevent host switches from forgetting the most recently reviewed tranches.
     """
     path = storage.data_root / "paper-first-problem-discovery" / "discovery-saturation-ledger.json"
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
-        return {}, 0
-    runs = [row for row in (payload.get("runs") or []) if isinstance(row, dict)] if isinstance(payload, dict) else []
+        payload={}
+    private_runs = [row for row in (payload.get("runs") or []) if isinstance(row, dict)] if isinstance(payload, dict) else []
     counts: dict[str, int] = {}
-    for row in runs:
+    run_ids:set[str]=set()
+    anonymous_private_runs=0
+    for row in private_runs:
+        run_id=str(row.get("run_id") or "").strip()
+        if run_id:
+            run_ids.add(run_id)
+        else:
+            anonymous_private_runs+=1
         for ref in row.get("source_refs") or []:
             ref = str(ref or "").strip()
             if ref:
                 counts[ref] = counts.get(ref, 0) + 1
-    return counts, len(runs)
+    portable_added=0
+    for row in _portable_review_receipts(portable_generator_state_path,portable_primary_state_path):
+        run_id=str(row.get("run_id") or "").strip()
+        if not run_id or run_id in run_ids or row.get("scientific_authority") is not False:
+            continue
+        if str(row.get("status") or "") not in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}:
+            continue
+        refs=sorted({str(ref).strip() for ref in row.get("source_refs") or [] if str(ref).strip().startswith("arXiv:")})
+        if len(refs)<4:
+            continue
+        for ref in refs:
+            counts[ref]=counts.get(ref,0)+1
+        run_ids.add(run_id);portable_added+=1
+    return counts, len(run_ids)+anonymous_private_runs, portable_added
 
 
 def select_primary_candidates(
@@ -821,6 +891,8 @@ def build_primary_evidence_pool(
     min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
     recent_verified_cache_reuse_hours: float = DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS,
     recent_fulltext_failure_cooldown_hours: float = DEFAULT_RECENT_FULLTEXT_FAILURE_COOLDOWN_HOURS,
+    portable_generator_state_path: Path | None = None,
+    portable_primary_state_path: Path | None = None,
     cache_dir: Path | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     storage = storage or StorageSettings.from_env()
@@ -877,6 +949,7 @@ def build_primary_evidence_pool(
             "lane_floor": int(lane_floor),
             "source_coverage_scheduler_is_discovery_only": True,
             "source_review_exposure_has_zero_scientific_authority": True,
+            "portable_source_review_receipts_have_zero_scientific_authority": True,
             "source_exposure_cannot_skip_generation_or_problem_gate": True,
             "source_exposure_does_not_relax_relevance_or_freshness": True,
             "source_coverage_exploration_prefers_preregistered_lanes": True,
@@ -908,9 +981,15 @@ def build_primary_evidence_pool(
             "lane_floor": int(lane_floor),
             "source_coverage_scheduler_active": False,
             "saturation_ledger_runs": 0,
+            "portable_review_receipts_merged": 0,
             "prior_reviewed_sources": 0,
+            "eligible_unreviewed": 0,
+            "eligible_lane_unreviewed": 0,
+            "eligible_no_lane_unreviewed": 0,
             "selected_previously_reviewed": 0,
             "selected_unreviewed": 0,
+            "selected_lane_unreviewed": 0,
+            "selected_no_lane_unreviewed": 0,
             "coverage_anchor_count": int(coverage_anchor_count),
             "eligible_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
             "selected_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
@@ -933,7 +1012,7 @@ def build_primary_evidence_pool(
         "errors": [],
         "fulltext_errors": [],
         "discovery_errors": [],
-        "source_coverage": {"scheduler_active": False, "saturation_ledger_runs": 0, "prior_reviewed_sources": 0, "coverage_anchor_count": int(coverage_anchor_count), "selected": []},
+        "source_coverage": {"scheduler_active": False, "saturation_ledger_runs": 0, "portable_review_receipts_merged": 0, "prior_reviewed_sources": 0, "coverage_anchor_count": int(coverage_anchor_count), "selected": []},
     }
     retrieved_at = str((corpus or {}).get("retrieved_at") or "")
     corpus_age = _age_days(retrieved_at, current) if corpus else None
@@ -976,7 +1055,11 @@ def build_primary_evidence_pool(
         public_state["discovery_errors"] = discovery_errors
         private["discovery_errors"] = discovery_errors
 
-    source_exposure_counts, saturation_ledger_runs = _source_exposure_state(storage)
+    source_exposure_counts, saturation_ledger_runs, portable_review_receipts_merged = _source_exposure_state(
+        storage,
+        portable_generator_state_path=portable_generator_state_path,
+        portable_primary_state_path=portable_primary_state_path,
+    )
     source_scheduler_active = bool(source_exposure_counts) and int(max_papers) > max(0, int(coverage_anchor_count))
     eligible_candidates = select_primary_candidates(
         discovery_corpus,
@@ -1002,14 +1085,22 @@ def build_primary_evidence_pool(
     ]
     selected_exposures = {_source_ref(paper): int(source_exposure_counts.get(_source_ref(paper), 0)) for paper in candidates}
     selected_previously_reviewed = sum(value > 0 for value in selected_exposures.values())
+    eligible_unreviewed_rows=[paper for paper in eligible_candidates if int(source_exposure_counts.get(_source_ref(paper),0))==0]
+    selected_unreviewed_rows=[paper for paper in candidates if int(selected_exposures.get(_source_ref(paper),0))==0]
     public_state["summary"].update({
         "selected": len(candidates),
         "lane_floor": int(lane_floor),
         "source_coverage_scheduler_active": source_scheduler_active,
         "saturation_ledger_runs": int(saturation_ledger_runs),
+        "portable_review_receipts_merged": int(portable_review_receipts_merged),
         "prior_reviewed_sources": len(source_exposure_counts),
+        "eligible_unreviewed": len(eligible_unreviewed_rows),
+        "eligible_lane_unreviewed": sum(bool(_paper_lane_keys(paper)) for paper in eligible_unreviewed_rows),
+        "eligible_no_lane_unreviewed": sum(not bool(_paper_lane_keys(paper)) for paper in eligible_unreviewed_rows),
         "selected_previously_reviewed": selected_previously_reviewed,
-        "selected_unreviewed": len(candidates) - selected_previously_reviewed,
+        "selected_unreviewed": len(selected_unreviewed_rows),
+        "selected_lane_unreviewed": sum(bool(_paper_lane_keys(paper)) for paper in selected_unreviewed_rows),
+        "selected_no_lane_unreviewed": sum(not bool(_paper_lane_keys(paper)) for paper in selected_unreviewed_rows),
         "coverage_anchor_count": min(max(0, int(coverage_anchor_count)), len(candidates)),
         "eligible_lane_counts": eligible_lane_counts,
         "selected_lane_counts": selected_lane_counts,
@@ -1025,7 +1116,11 @@ def build_primary_evidence_pool(
     private["source_coverage"] = {
         "scheduler_active": source_scheduler_active,
         "saturation_ledger_runs": int(saturation_ledger_runs),
+        "portable_review_receipts_merged": int(portable_review_receipts_merged),
         "prior_reviewed_sources": len(source_exposure_counts),
+        "eligible_unreviewed": len(eligible_unreviewed_rows),
+        "eligible_lane_unreviewed": sum(bool(_paper_lane_keys(paper)) for paper in eligible_unreviewed_rows),
+        "eligible_no_lane_unreviewed": sum(not bool(_paper_lane_keys(paper)) for paper in eligible_unreviewed_rows),
         "coverage_anchor_count": min(max(0, int(coverage_anchor_count)), len(candidates)),
         "selected": [
             {"ref": _source_ref(paper), "prior_review_exposure": selected_exposures.get(_source_ref(paper), 0), "global_rank": eligible_rank.get(_source_ref(paper))}
@@ -1292,6 +1387,7 @@ def write_primary_evidence_pool(
     min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
     recent_verified_cache_reuse_hours: float = DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS,
     recent_fulltext_failure_cooldown_hours: float = DEFAULT_RECENT_FULLTEXT_FAILURE_COOLDOWN_HOURS,
+    portable_generator_state_path: Path | None = DEFAULT_PORTABLE_REVIEW_STATE,
 ) -> dict[str, Any]:
     storage = storage or StorageSettings.from_env()
     state, private = build_primary_evidence_pool(
@@ -1311,6 +1407,8 @@ def write_primary_evidence_pool(
         min_interval_seconds=min_interval_seconds,
         recent_verified_cache_reuse_hours=recent_verified_cache_reuse_hours,
         recent_fulltext_failure_cooldown_hours=recent_fulltext_failure_cooldown_hours,
+        portable_generator_state_path=portable_generator_state_path,
+        portable_primary_state_path=json_path,
     )
     private_pool_path, _ = _private_paths(storage)
     private_pool_path.parent.mkdir(parents=True, exist_ok=True)
