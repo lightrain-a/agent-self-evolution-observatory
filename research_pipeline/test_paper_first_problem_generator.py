@@ -210,11 +210,10 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
 
     def test_public_writer_carries_zero_authority_review_receipts_across_hosts(self) -> None:
         with tempfile.TemporaryDirectory() as td:
-            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);json_path=root/"public.json";js_path=root/"public.js";primary_public=root/"primary-public.json"
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);json_path=root/"public.json";js_path=root/"public.js"
             old_refs=[f"arXiv:old-{i}" for i in range(4)]
             json_path.write_text(json.dumps({"schema_version":"2.1","run_id":"remote-old","status":"GENERATED_ZERO_CANDIDATES","summary":{"primary_evidence_records":4},"policy":{},"saturation_memory":{"current_run_recorded":True,"portable_review_receipts":[{"run_id":"remote-old","source_refs":old_refs,"status":"GENERATED_ZERO_CANDIDATES","scientific_authority":False}]}}),encoding="utf-8")
-            primary_public.write_text(json.dumps({"status":"READY","records":[{"ref":ref} for ref in old_refs]}),encoding="utf-8")
-            state=write_problem_generator_state(json_path=json_path,js_path=js_path,primary_public_state_path=primary_public,storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=self.gen([],notes="No empirical discovery lane survives current evidence."),now=now)
+            state=write_problem_generator_state(json_path=json_path,js_path=js_path,storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=self.gen([],notes="No empirical discovery lane survives current evidence."),now=now)
             public=json.loads(json_path.read_text())
         receipts=public["saturation_memory"]["portable_review_receipts"]
         self.assertEqual(len(receipts),2)

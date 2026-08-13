@@ -16,7 +16,6 @@ from .public_state_redaction import redact_private_paths
 
 DEFAULT_JSON=PROJECT_ROOT/"generated"/"paper-first-problem-generator-state.json"
 DEFAULT_JS=PROJECT_ROOT/"generated"/"paper-first-problem-generator-state.js"
-DEFAULT_PRIMARY_PUBLIC_JSON=PROJECT_ROOT/"generated"/"paper-first-primary-evidence-state.json"
 PORTABLE_REVIEW_RECEIPT_LIMIT=64
 GENERATOR_MODEL="ark-code-latest"; REVIEWER_MODEL="glm-5.2"; MAX_CANDIDATES=5; MAX_POOL_AGE_HOURS=36.0
 Responder=Callable[...,dict[str,Any]]
@@ -100,7 +99,8 @@ def _record_saturation_run(storage:StorageSettings,state:dict[str,Any],pool_sha:
         "raw_sha256":raw.get("sha256"),
         "scientific_authority":False,
     }
-    state["saturation_memory"]={"ledger_entries":len(ledger),"prior_identical_zero_runs":prior_identical,"current_run_recorded":True,"current_review_receipt":receipt,"portable_review_receipts":[],"scientific_authority":False}
+    inherited=[dict(row) for row in (state.get("saturation_memory") or {}).get("portable_review_receipts") or [] if isinstance(row,dict)]
+    state["saturation_memory"]={"ledger_entries":len(ledger),"prior_identical_zero_runs":prior_identical,"current_run_recorded":True,"current_review_receipt":receipt,"portable_review_receipts":inherited[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"scientific_authority":False}
 
 
 def _ark(*,prompt,model,max_output_tokens):
@@ -211,7 +211,8 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     storage=storage or StorageSettings.from_env();primary_pool_path=primary_pool_path or private_primary_pool_path(storage);auto_inbox_path=auto_inbox_path or default_auto_inbox_path(storage)
     generator_model=generator_model or os.getenv("PAPER_FIRST_PROBLEM_GENERATOR_MODEL",GENERATOR_MODEL);reviewer_model=reviewer_model or os.getenv("PAPER_FIRST_PROBLEM_REVIEW_MODEL",REVIEWER_MODEL);current=(now or _now_dt()).astimezone(timezone.utc);run_id=current.strftime("%Y%m%dT%H%M%SZ")
     archived=_archive_previous(storage,auto_inbox_path);pool=load_private_primary_pool(primary_pool_path) or {};reg=_registry(pool);psha=_pool_sha(pool) if pool else "";d=_parse_iso(pool.get("generated_at"));age=None if d is None else max(0.0,(current-d).total_seconds()/3600)
-    state={"schema_version":"2.2","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":_base_policy(),"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":[],"scientific_authority":False},"candidates":[]}
+    inherited_receipts=[dict(row) for row in ((pool.get("source_coverage") or {}).get("portable_review_receipts") or []) if isinstance(row,dict)]
+    state={"schema_version":"2.2","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":_base_policy(),"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"scientific_authority":False},"candidates":[]}
     def finish(status,cands=[]): state["status"]=status;_write_inbox(auto_inbox_path,run_id,status,cands,psha);_record_saturation_run(storage,state,psha,reg);return state
     if pool.get("status")!="READY" or len(reg)<4:return finish("SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE")
     if age is None or age>pool_max_age_hours:state["primary_pool_age_hours"]=age;return finish("SKIPPED_STALE_PRIMARY_EVIDENCE")
@@ -255,41 +256,14 @@ def load_problem_generator_state(path:Path=DEFAULT_JSON):
     return p if isinstance(p,dict) else _empty_state("STATE_INVALID")
 
 
-def _bootstrap_public_review_receipt(previous:dict[str,Any],primary_state_path:Path)->dict[str,Any]|None:
-    saturation=previous.get("saturation_memory") or {}
-    current=saturation.get("current_review_receipt")
-    if isinstance(current,dict) and current.get("run_id") and current.get("scientific_authority") is False:
-        return dict(current)
-    run_id=str(previous.get("run_id") or "").strip();status=str(previous.get("status") or "").strip()
-    if not run_id or saturation.get("current_run_recorded") is not True or status not in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}:
-        return None
-    try: primary=json.loads(primary_state_path.read_text(encoding="utf-8"))
-    except (OSError,json.JSONDecodeError): return None
-    records=[row for row in (primary.get("records") or []) if isinstance(row,dict) and row.get("ref")] if isinstance(primary,dict) else []
-    expected=int((previous.get("summary") or {}).get("primary_evidence_records") or 0)
-    if not isinstance(primary,dict) or primary.get("status")!="READY" or expected<4 or expected!=len(records):
-        return None
-    raw=(previous.get("raw_artifacts") or {}).get("generator") or {}
-    return {
-        "run_id":run_id,
-        "source_refs":sorted({str(row["ref"]) for row in records}),
-        "status":status,
-        "requested_model":previous.get("generator_model"),
-        "resolved_model":raw.get("resolved_model"),
-        "raw_sha256":raw.get("sha256"),
-        "scientific_authority":False,
-        "bootstrap_from_public_transaction":True,
-    }
-
-
-def _merge_portable_review_receipts(state:dict[str,Any],previous:dict[str,Any],primary_state_path:Path)->dict[str,Any]:
+def _merge_portable_review_receipts(state:dict[str,Any],previous:dict[str,Any])->dict[str,Any]:
     saturation=state.setdefault("saturation_memory",{})
     rows=[]
     previous_saturation=previous.get("saturation_memory") or {}
     for row in previous_saturation.get("portable_review_receipts") or []:
         if isinstance(row,dict): rows.append(dict(row))
-    boot=_bootstrap_public_review_receipt(previous,primary_state_path)
-    if boot: rows.append(boot)
+    for row in saturation.get("portable_review_receipts") or []:
+        if isinstance(row,dict): rows.append(dict(row))
     current=saturation.get("current_review_receipt")
     if isinstance(current,dict): rows.append(dict(current))
     by_run:dict[str,dict[str,Any]]={}
@@ -307,10 +281,10 @@ def _merge_portable_review_receipts(state:dict[str,Any],previous:dict[str,Any],p
     return state
 
 
-def write_problem_generator_state(json_path=DEFAULT_JSON,js_path=DEFAULT_JS,primary_public_state_path=DEFAULT_PRIMARY_PUBLIC_JSON,**kwargs):
-    previous=load_problem_generator_state(json_path)
+def write_problem_generator_state(json_path=DEFAULT_JSON,js_path=DEFAULT_JS,previous_public_state_path=None,**kwargs):
+    previous=load_problem_generator_state(Path(previous_public_state_path) if previous_public_state_path is not None else json_path)
     state=run_problem_generator(**kwargs)
-    _merge_portable_review_receipts(state,previous,Path(primary_public_state_path))
+    _merge_portable_review_receipts(state,previous)
     public=public_problem_generator_state(state,storage=kwargs.get("storage"));json_path.parent.mkdir(parents=True,exist_ok=True);json_path.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");js_path.write_text("window.PAPER_FIRST_PROBLEM_GENERATOR = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8");return state
 
 if __name__=="__main__":print(json.dumps(write_problem_generator_state(),ensure_ascii=False))

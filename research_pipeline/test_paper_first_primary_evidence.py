@@ -161,8 +161,8 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
                 {"run_id":"private-run","source_refs":["arXiv:A","arXiv:B","arXiv:C","arXiv:D"],"status":"GENERATED_ZERO_CANDIDATES","scientific_authority":False},
                 {"run_id":"remote-run","source_refs":["arXiv:C","arXiv:D","arXiv:E","arXiv:F"],"status":"GENERATED_AWAIT_PROBLEM_GATE","scientific_authority":False},
             ]}}),encoding="utf-8")
-            counts,runs,portable=_source_exposure_state(storage,portable_generator_state_path=generator,portable_primary_state_path=root/"unused.json")
-        self.assertEqual((runs,portable),(2,1))
+            counts,runs,portable,receipts=_source_exposure_state(storage,portable_generator_state_path=generator,portable_primary_state_path=root/"unused.json")
+        self.assertEqual((runs,portable),(2,1));self.assertEqual({row["run_id"] for row in receipts},{"private-run","remote-run"})
         self.assertEqual({k:counts[k] for k in sorted(counts)},{"arXiv:A":1,"arXiv:B":1,"arXiv:C":2,"arXiv:D":2,"arXiv:E":1,"arXiv:F":1})
 
     def test_pre_receipt_public_transaction_bootstraps_cross_host_exposure(self) -> None:
@@ -170,8 +170,8 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
             root=Path(td);storage=self.storage(root);generator=root/"generator.json";primary=root/"primary.json"
             generator.write_text(json.dumps({"run_id":"legacy-public-run","status":"GENERATED_ZERO_CANDIDATES","summary":{"primary_evidence_records":4},"saturation_memory":{"current_run_recorded":True,"scientific_authority":False}}),encoding="utf-8")
             primary.write_text(json.dumps({"status":"READY","records":[{"ref":f"arXiv:{i}"} for i in range(4)]}),encoding="utf-8")
-            counts,runs,portable=_source_exposure_state(storage,portable_generator_state_path=generator,portable_primary_state_path=primary)
-        self.assertEqual((runs,portable),(1,1));self.assertEqual(len(counts),4);self.assertTrue(all(value==1 for value in counts.values()))
+            counts,runs,portable,receipts=_source_exposure_state(storage,portable_generator_state_path=generator,portable_primary_state_path=primary)
+        self.assertEqual((runs,portable),(1,1));self.assertEqual(len(counts),4);self.assertTrue(all(value==1 for value in counts.values()));self.assertEqual(receipts[0]["run_id"],"legacy-public-run")
 
     def test_source_coverage_scheduler_preserves_anchors_and_adds_unreviewed_tail(self) -> None:
         papers=[]
