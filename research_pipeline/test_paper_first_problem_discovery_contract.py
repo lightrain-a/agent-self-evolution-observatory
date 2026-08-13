@@ -9,6 +9,7 @@ from .paper_first_problem_discovery_contract import (
     LANE_DISTINCT_SOURCE_MINIMUM,
     FORBIDDEN_DISCOVERY_LANES,
     audit_problem_candidate,
+    audit_shadow_problem_candidate,
     build_problem_discovery_contract_state,
 )
 
@@ -167,6 +168,20 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
                 self.assertTrue(audit["authority"]["paper_design_eligible_for_human_review"])
                 for key in ("method_design", "experiment_blueprint", "local_validation", "p0", "gpu", "full_experiment"):
                     self.assertFalse(audit["authority"][key])
+
+    def test_shadow_search_primitives_can_be_machine_audited(self) -> None:
+        for primitive in SEARCH_PORTFOLIO_PRIMITIVES:
+            if primitive in DISCOVERY_LANES:
+                continue
+            candidate = valid_candidate(primitive)
+            live = audit_problem_candidate(candidate)
+            shadow = audit_shadow_problem_candidate(candidate)
+            self.assertFalse(live["passed"])
+            self.assertTrue(shadow["passed"], shadow["blockers"])
+            self.assertEqual(shadow["status"], "SHADOW_MACHINE_REVIEWABLE")
+            self.assertFalse(shadow["scientific_authority"])
+            self.assertFalse(shadow["authority"]["live_problem_gate"])
+            self.assertFalse(shadow["authority"]["paper_design_eligible_for_human_review"])
 
     def test_shadow_search_primitives_cannot_enter_live_problem_gate(self) -> None:
         for primitive in SEARCH_PORTFOLIO_PRIMITIVES:

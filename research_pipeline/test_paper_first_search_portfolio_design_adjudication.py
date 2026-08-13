@@ -38,6 +38,13 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         for key in ("method_design_authorized", "experiment_blueprint_authorized", "local_validation_authorized", "p0_authorized", "gpu_authorized"):
             self.assertEqual(self.state["summary"][key], 0)
 
+    def test_shadow_dead_end_memory_cannot_touch_live_discovery(self) -> None:
+        memory = self.state["shadow_dead_end_memory"]
+        self.assertFalse(memory["scientific_authority"])
+        self.assertFalse(memory["live_source_coverage_effect"])
+        self.assertTrue(memory["cannot_mutate_canonical_generator_or_queue"])
+        self.assertEqual({row["source_candidate_id"] for row in memory["blocked_objects"]}, {"SP-09", "SP-15"})
+
     def test_missing_domestic_reviewers_are_recorded_as_missing_not_pass(self) -> None:
         consultation = self.state["advisory_consultation"]
         self.assertFalse(consultation["scientific_authority"])

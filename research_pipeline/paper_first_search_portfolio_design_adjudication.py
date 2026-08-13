@@ -103,6 +103,39 @@ PRIMARY_SOURCES: dict[str, list[dict[str, str]]] = {
     ],
 }
 
+SHADOW_DEAD_END_MEMORY = {
+    "memory_id": "shadow-paper-design-dead-ends-20260814-r1",
+    "scientific_authority": False,
+    "live_source_coverage_effect": False,
+    "cannot_mutate_canonical_generator_or_queue": True,
+    "search_escape_required": True,
+    "blocked_objects": [
+        {
+            "source_candidate_id": "SP-09",
+            "basin": "skill-deployment-governance-contextual-acceptance",
+            "avoid": [
+                "trust tiers or graduated deployment permission as the novelty",
+                "context-aware scanner followed by install/update/block/escalate policy as the novelty",
+                "model-conditioned skill utility or risk as the novelty",
+                "generic contextual constrained or risk-sensitive scalar acceptance",
+            ],
+            "reopen_only_if": "Current primary evidence supports an ex-ante non-separability or impossibility prediction for the same skill under identical model/trigger/workflow/security/utility information that generic contextual governance cannot express.",
+        },
+        {
+            "source_candidate_id": "SP-15",
+            "basin": "implicit-query-decomposition-skill-routing",
+            "avoid": [
+                "implicit queries are harder",
+                "task decomposition improves skill retrieval",
+                "top-rank relevance differs from complete capability coverage",
+                "query-conditional multi-skill compatibility alone",
+                "generic abstention, uncertainty, or clarification policy",
+            ],
+            "reopen_only_if": "A new provenance-audited query-level unit shows that the same observable or information-equivalent query is compatible with multiple task semantics requiring incompatible sufficient skill sets, and a generic partial-identification/clarification baseline using the same information cannot absorb the claim.",
+        },
+    ],
+}
+
 ADVISORY_CONSULTATION = {
     "run_root": "generated/research-data/runs/ai-consultation/cases/sp-paper-design-20260814",
     "checkpoint": "idea_premortem",
@@ -254,6 +287,7 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "gpu_authorized": False,
         },
         "advisory_consultation": ADVISORY_CONSULTATION,
+        "shadow_dead_end_memory": SHADOW_DEAD_END_MEMORY,
         "shadow_source": {
             "portfolio_status": portfolio.get("status"),
             "portfolio_schema_version": portfolio.get("schema_version"),
@@ -299,6 +333,9 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
         errors.append("SP design audit must remain retrospective shadow feedback with zero live Paper Design authority")
     if (state.get("advisory_consultation") or {}).get("scientific_authority") is not False or (state.get("advisory_consultation") or {}).get("failed_or_missing_review_is_not_pass") is not True:
         errors.append("unavailable AI premortem reviewers must remain zero-authority and cannot count as PASS")
+    memory = state.get("shadow_dead_end_memory") or {}
+    if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True or len(memory.get("blocked_objects") or []) != 2:
+        errors.append("Paper Design dead-end memory must remain shadow-only and contain both SP-09/SP-15 basins")
     for row in rows:
         if not row.get("primary_sources") or not row.get("cheapest_problem_falsifier") or row.get("method_design_authorized") is not False or row.get("gpu_authorized") is not False or row.get("live_paper_design_eligible") is not False or row.get("counterfactual_problem_gate_pass_does_not_grant_live_paper_design") is not True:
             errors.append(f"SP design row incomplete or illegally authoritative:{row.get('id')}")

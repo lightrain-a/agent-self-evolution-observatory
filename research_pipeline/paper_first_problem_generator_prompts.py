@@ -6,6 +6,7 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, reduction_pattern_audit
 from .paper_first_problem_discovery_contract import (
     DISCOVERY_LANES,
+    SEARCH_PORTFOLIO_PRIMITIVES,
     FORBIDDEN_DISCOVERY_LANES,
     LANE_EVIDENCE_REQUIRED,
     LANE_MACHINE_CONTRACTS,
@@ -13,7 +14,7 @@ from .paper_first_problem_discovery_contract import (
 )
 
 
-def _lane_contract_payload() -> list[dict[str, Any]]:
+def _lane_contract_payload(*, shadow_mode: bool = False) -> list[dict[str, Any]]:
     return [
         {
             "lane": lane,
@@ -21,7 +22,7 @@ def _lane_contract_payload() -> list[dict[str, Any]]:
             "required_lane_evidence": list(LANE_EVIDENCE_REQUIRED[lane]),
             "machine_contract": LANE_MACHINE_CONTRACTS[lane],
         }
-        for lane in DISCOVERY_LANES
+        for lane in (SEARCH_PORTFOLIO_PRIMITIVES if shadow_mode else DISCOVERY_LANES)
     ]
 
 
@@ -114,9 +115,9 @@ def generator_prompt(records: list[dict[str, Any]], dead_end_memory: dict[str, A
     )
 
 
-def reviewer_prompt(candidates: list[dict[str, Any]], evidence_by_ref: dict[str, dict[str, Any]]) -> str:
+def reviewer_prompt(candidates: list[dict[str, Any]], evidence_by_ref: dict[str, dict[str, Any]], *, shadow_mode: bool = False) -> str:
     reductions = [{"key": row["key"], "mature_theories": row["mature_theories"], "veto": row["veto"], "audit_class": row["audit_class"]} for row in reduction_pattern_audit()]
-    lane_contracts = _lane_contract_payload()
+    lane_contracts = _lane_contract_payload(shadow_mode=shadow_mode)
     stripped = [{k: v for k, v in row.items() if k not in {"semantic_reduction_review", "authority"}} for row in candidates]
     refs: list[str] = []
     for row in candidates:

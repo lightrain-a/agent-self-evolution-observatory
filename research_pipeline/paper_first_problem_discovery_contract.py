@@ -326,6 +326,44 @@ def _lane_contract_blockers(candidate: dict[str, Any]) -> list[str]:
     return blockers
 
 
+def _shadow_lane_contract_blockers(candidate: dict[str, Any]) -> list[str]:
+    blockers: list[str] = []
+    lane = str(candidate.get("discovery_lane") or "").strip().upper()
+    if lane in FORBIDDEN_DISCOVERY_LANES:
+        return [f"forbidden-discovery-lane:{lane}"]
+    if lane not in SEARCH_PORTFOLIO_PRIMITIVES:
+        return [f"unknown-shadow-search-primitive:{lane or 'EMPTY'}"]
+    evidence = candidate.get("empirical_evidence") or {}
+    source_a = evidence.get("source_a") or {}
+    source_b = evidence.get("source_b") or {}
+    expected_roles = LANE_SOURCE_ROLES[lane]
+    actual_roles = (
+        str(source_a.get("evidence_role") or "").strip().upper(),
+        str(source_b.get("evidence_role") or "").strip().upper(),
+    )
+    if actual_roles != expected_roles:
+        blockers.append(
+            "shadow-primitive-source-role-mismatch:"
+            + lane
+            + ":expected="
+            + "/".join(expected_roles)
+            + ":actual="
+            + "/".join(actual_roles)
+        )
+    lane_evidence = candidate.get("lane_evidence") or {}
+    if not isinstance(lane_evidence, dict):
+        blockers.append("shadow-primitive-evidence-must-be-object")
+        return blockers
+    for key in LANE_EVIDENCE_REQUIRED[lane]:
+        if not _nonempty(lane_evidence.get(key)):
+            blockers.append(f"shadow-primitive-evidence-missing:{lane}:{key}")
+    if lane == "CONVERGENT_FAILURE" and _normalized_evidence_text(lane_evidence.get("method_a")) == _normalized_evidence_text(lane_evidence.get("method_b")):
+        blockers.append("convergent-failure-requires-distinct-methods")
+    if lane == "ASSUMPTION_BREAK" and len(str(lane_evidence.get("assumption") or "").split()) < 4:
+        blockers.append("assumption-break-requires-explicit-operational-assumption")
+    return blockers
+
+
 def audit_problem_candidate(
     candidate: dict[str, Any],
     *,
@@ -510,6 +548,59 @@ def audit_problem_candidate(
         "policy": POLICY,
         "authority": {
             "paper_design_eligible_for_human_review": not blockers,
+            "method_design": False,
+            "experiment_blueprint": False,
+            "local_validation": False,
+            "p0": False,
+            "gpu": False,
+            "full_experiment": False,
+        },
+    }
+
+
+def audit_shadow_problem_candidate(
+    candidate: dict[str, Any],
+    *,
+    primary_evidence_by_ref: dict[str, dict[str, Any]] | None = None,
+    require_primary_registry: bool = False,
+    require_semantic_review: bool = True,
+) -> dict[str, Any]:
+    lane = str(candidate.get("discovery_lane") or "").strip().upper()
+    base = audit_problem_candidate(
+        candidate,
+        primary_evidence_by_ref=primary_evidence_by_ref,
+        require_primary_registry=require_primary_registry,
+        require_semantic_review=require_semantic_review,
+    )
+    blockers = set(str(value) for value in base.get("blockers") or [])
+    if lane in SEARCH_PORTFOLIO_PRIMITIVES:
+        blockers.discard(f"unknown-discovery-lane:{lane}")
+        if lane not in DISCOVERY_LANES:
+            blockers.update(_shadow_lane_contract_blockers(candidate))
+    else:
+        blockers.add(f"unknown-shadow-search-primitive:{lane or 'EMPTY'}")
+    blockers = sorted(blockers)
+    checks = [dict(row) for row in base.get("checks") or []]
+    for row in checks:
+        if row.get("key") == "discovery-lane-contract":
+            row["key"] = "shadow-search-primitive-contract"
+            row["pass"] = not any(
+                blocker.startswith(("unknown-shadow-search-primitive:", "shadow-primitive-", "forbidden-discovery-lane:"))
+                for blocker in blockers
+            )
+            row["lane"] = lane
+    return {
+        "schema_version": "1.0-shadow",
+        "candidate_id": str(candidate.get("candidate_id") or ""),
+        "search_primitive": lane,
+        "passed": not blockers,
+        "status": "SHADOW_MACHINE_REVIEWABLE" if not blockers else "SHADOW_MACHINE_BLOCKED",
+        "blockers": blockers,
+        "checks": checks,
+        "scientific_authority": False,
+        "authority": {
+            "live_problem_gate": False,
+            "paper_design_eligible_for_human_review": False,
             "method_design": False,
             "experiment_blueprint": False,
             "local_validation": False,
