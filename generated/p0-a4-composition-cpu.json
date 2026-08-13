@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-13T12:06:37+00:00",
+  "generated_at": "2026-08-13T13:19:43+00:00",
   "idea_id": "compositional-update-compatibility",
   "code": "A-4",
   "scientific_role": "CPU held-out-identity and held-out-triple composition P0 with independent programmatic execution truth",
