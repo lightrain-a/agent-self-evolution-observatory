@@ -57,6 +57,7 @@ from .paper_first_idea_incubation import write_paper_first_idea_incubation
 from .paper_first_fresh_saturation import write_fresh_saturation_state
 from .paper_first_discovery_transaction import write_problem_discovery_transaction
 from .paper_first_global_relation_recall import write_global_relation_recall_state
+from .paper_first_relation_cache_backfill import backfill_relation_cache
 from .paper_first_paper_design_backlog import write_paper_design_backlog
 from .paper_first_p0_f0 import write_paper_first_p0_f0_state
 from .research_system import write_research_system_state
@@ -141,6 +142,7 @@ def run_cycle(
             report["steps"].append(_step("paper-design-backlog-pre-discovery", write_paper_design_backlog))
             report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
             report["steps"].append(_step("paper-first-discovery-transaction", write_problem_discovery_transaction))
+            report["steps"].append(_step("paper-first-relation-cache-backfill", backfill_relation_cache))
             report["steps"].append(_step("paper-first-global-relation-recall", write_global_relation_recall_state))
             report["steps"].append(_step("iclr-bank", write_iclr_idea_bank))
             report["steps"].append(_step("machine-school-inspired-bank", write_machine_school_bank))

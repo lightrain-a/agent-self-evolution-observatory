@@ -19,7 +19,12 @@ def portable_review_receipts(generator_state: dict[str, Any]) -> list[dict[str, 
 
 
 def relation_universe_digest(receipts: list[dict[str, Any]]) -> str:
-    material = [{"run_id": row["run_id"], "source_refs": row["source_refs"]} for row in receipts]
+    # The relation universe is defined by which sources exist and which source
+    # pairs have ever co-occurred. Run IDs and repeated identical receipts are
+    # scheduler history, not a change in the relation search space.
+    source_refs = sorted({ref for row in receipts for ref in row.get("source_refs") or []})
+    pairs = sorted(coobserved_pairs(receipts))
+    material = {"source_refs": source_refs, "coobserved_source_pairs": [list(pair) for pair in pairs]}
     return hashlib.sha256(json.dumps(material, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
