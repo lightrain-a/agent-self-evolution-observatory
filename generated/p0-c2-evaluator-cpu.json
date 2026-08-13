@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-13T14:26:18+00:00",
+  "generated_at": "2026-08-13T15:18:53+00:00",
   "idea_id": "evaluator-coadaptation-guard",
   "code": "C-2",
   "scientific_role": "CPU 3x3 actor/evaluator anchor P0 with independent external truth",
