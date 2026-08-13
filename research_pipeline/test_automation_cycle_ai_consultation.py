@@ -7,7 +7,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from .automation_cycle import _advisory_step, _sync_literature, cycle_lock, run_cycle
+from .automation_cycle import _advisory_step, _run_external_system_learning_review, _sync_literature, cycle_lock, run_cycle
 
 
 class AutomationCycleAIConsultationTest(unittest.TestCase):
@@ -81,6 +81,20 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertLess(names.index("paper-first-problem-gate-queue"), names.index("archival-solution-first-idea-discovery-v3"))
             self.assertLess(names.index("paper-first-problem-gate-queue"), names.index("historical-paper-first-idea-incubation"))
             self.assertLess(names.index("external-research-system-learning-review"), names.index("project-web-gpt-repair-review"))
+
+    def test_external_system_learning_is_bounded_delta_scan_with_dedicated_timeout(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            storage=SimpleNamespace(run_dir=Path(td)/"runs")
+            completed=SimpleNamespace(returncode=1,stderr="timeout",stdout="")
+            with patch.dict("os.environ",{"AUTOMATION_SYSTEM_LEARNING_TIMEOUT":"300"},clear=False), patch("research_pipeline.automation_cycle.subprocess.run",return_value=completed) as run:
+                result=_run_external_system_learning_review(storage)
+            command=run.call_args.args[0]
+            self.assertIn("--timeout",command)
+            self.assertEqual(command[command.index("--timeout")+1],"300")
+            self.assertIn("at most FOUR",command[-1])
+            self.assertIn("under 900 words",command[-1])
+            self.assertEqual(run.call_args.kwargs["timeout"],360)
+            self.assertFalse(result["ok"])
 
     def test_failed_advisory_external_review_is_warning_not_pass(self) -> None:
         step=_advisory_step("external-review",lambda:{"ok":False,"returncode":1,"exists":False})

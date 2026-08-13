@@ -362,21 +362,22 @@ def _run_external_system_learning_review(storage: StorageSettings) -> dict[str, 
     output_dir.mkdir(parents=True, exist_ok=True)
     output = output_dir / "latest.md"
     prompt = (
-        "Search official project pages, primary papers, and author repositories for materially new or updated autonomous scientific-research systems. "
-        "Extract only workflow/control mechanisms that are not superficial agent-role renamings. Compare each mechanism against our current stack: "
-        "Principle Certificate, Protocol Validity, P0 Economy, eight-gate compiler, Scientific Meta-Trace, Failure Asset Library, information-gain scheduler, "
-        "AI consultation, research-system replay, and single-writer scientific authority. For each candidate return source, mechanism, failure mode solved, local collision, "
-        "adopt/merge/watch verdict, cheapest local replay or falsifier, and safety/authority implications. Do not recommend automatic code adoption without a local gap test."
+        "Run a bounded weekly delta scan, not an exhaustive survey. Search official project pages, primary papers, and author repositories for at most FOUR materially new or updated autonomous scientific-research systems. "
+        "Prefer developments from the last 90 days and omit systems with no meaningful control-plane change. Extract at most ONE workflow/control mechanism per system and reject superficial agent-role renamings. "
+        "Compare each surviving mechanism against our current stack: Principle Certificate, Protocol Validity, P0 Economy, eight-gate compiler, Scientific Meta-Trace, Failure Asset Library, information-gain scheduler, AI consultation, research-system replay, and single-writer scientific authority. "
+        "For each survivor return: primary/official source, mechanism, failure mode solved, local collision, adopt/merge/watch verdict, cheapest local replay or falsifier, and safety/authority implications. "
+        "Do not recommend automatic code adoption without a local gap test. Keep the whole answer under 900 words. If nothing materially new survives, return a concise zero-update result."
     )
+    review_timeout = max(120, int(os.getenv("AUTOMATION_SYSTEM_LEARNING_TIMEOUT", "300")))
     command = [
         sys.executable,
         str(PROJECT_ROOT / "scripts" / "project_web_gpt.py"),
-        "--json", "--timeout", os.getenv("AUTOMATION_WEB_GPT_TIMEOUT", "240"),
+        "--json", "--timeout", str(review_timeout),
         "--slug", "external-research-system-learning",
         "--output", str(output),
         prompt,
     ]
-    completed = subprocess.run(command, cwd=PROJECT_ROOT, text=True, capture_output=True, timeout=300, check=False)
+    completed = subprocess.run(command, cwd=PROJECT_ROOT, text=True, capture_output=True, timeout=review_timeout + 60, check=False)
     exists = output.exists()
     return {
         "ok": completed.returncode == 0 and exists,
