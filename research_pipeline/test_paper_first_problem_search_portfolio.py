@@ -25,7 +25,7 @@ class SearchPortfolioTest(unittest.TestCase):
             for p in parents:children.append({"parent_id":p["seed_id"],"title":p["title"]+" child","problem_seed":p["problem_seed"]+" with changed regime","scientific_tension":p["scientific_tension"]+" sharpened","problem_family":p["problem_family"],"structural_signature":p["structural_signature"]+"|child","agent_specific_constraint":p["agent_specific_constraint"],"changed_assumption":"one assumption","why_deeper":"more precise","scores":{"importance":85,"specificity":85,"seed_distance":85,"evidence_grounding":85}})
             return {"text":json.dumps({"children":children}),"resolved_model":"doubao-seed-evolving"}
         if role.startswith("formulate-"):
-            branches=json.loads(prompt.split("BRANCHES=",1)[1].split(". PRIMARY_EVIDENCE=",1)[0]);rows=[{"candidate_id":f"PORT-{i}","source_branch_id":b["seed_id"],"title":b["title"],"discovery_lane":b["discovery_lane"]} for i,b in enumerate(branches)]
+            branches=json.loads(prompt.split("BRANCHES=",1)[1].split(". DEAD_END_MEMORY=",1)[0]);rows=[{"candidate_id":f"PORT-{i}","source_branch_id":b["seed_id"],"title":b["title"],"discovery_lane":b["discovery_lane"]} for i,b in enumerate(branches)]
             return {"text":json.dumps({"candidates":rows,"rejected":[]}),"resolved_model":"doubao-seed-evolving"}
         raise AssertionError(role)
 
