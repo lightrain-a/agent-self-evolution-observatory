@@ -53,7 +53,7 @@ from .p0_realizability_suite import build_p0_realizability_suite, write_p0_reali
 from .p0_revived_batch_f0 import build_revived_batch_f0, write_revived_batch_f0
 from .p0_decision_ledger import build_p0_decision_ledger, write_p0_decision_ledger
 from .p0_four_direction_iteration import build_four_direction_iteration, write_four_direction_iteration
-from .paper_first_p0_f0 import build_paper_first_p0_f0_state, write_paper_first_p0_f0_state
+from .paper_first_p0_f0 import resolve_paper_first_p0_f0_state, write_paper_first_p0_f0_state
 from .paper_first_p0_promotions import AUTHORITY as PAPER_FIRST_P0_AUTHORITY, promotion_summary as paper_first_p0_promotion_summary
 from .persistent_updater_program_final import build_persistent_updater_program_final, write_persistent_updater_program_final
 from .pre_experiment_compiler import compile_from_path as compile_pre_experiment_from_path
@@ -329,7 +329,7 @@ def build_research_system_state() -> dict[str, Any]:
     human_terminal_ideas = build_human_terminal_state()
     p0_realizability = build_p0_realizability_suite()
     p0_revived_batch = build_revived_batch_f0()
-    paper_first_p0_f0 = build_paper_first_p0_f0_state(experiment_data_root)
+    paper_first_p0_f0 = resolve_paper_first_p0_f0_state(experiment_data_root)
     paper_first_p0_authority = {"schema_version":"1.0", "authority":PAPER_FIRST_P0_AUTHORITY, "summary":paper_first_p0_promotion_summary()}
     p0_offline_qualification = build_p0_offline_qualification_state()
     p0_admission = build_p0_admission_state()

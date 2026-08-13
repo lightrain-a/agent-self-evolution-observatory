@@ -36,6 +36,17 @@ def quarantine(card):
  updater=dict(c.get('updater_competence') or {}); updater['observed_passed']=bool(updater.get('passed')); updater['passed']=False; updater['status']='diagnostic-only-no-authority'; c['updater_competence']=updater
  return c
 
+def _completed_diagnostic_state(state:dict[str,Any])->bool:
+ summary=state.get('summary') or {};cards=state.get('cards') or [];authority=state.get('authority') or {}
+ return bool(summary.get('ideas')==4 and summary.get('quarantined')==4 and summary.get('observed_running')==0 and int(summary.get('observed_support_pass') or 0)+int(summary.get('observed_support_hold') or 0)==4 and summary.get('scientifically_authorized')==0 and summary.get('method_fail_authorized')==0 and authority.get('promotion_authorized') is False and authority.get('local_validation_authorized') is False and authority.get('full_experiment_authorized') is False and len(cards)==4 and {str(row.get('idea_id') or '') for row in cards}==set(IDEAS) and all(str(row.get('decision') or '')=='PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC' and row.get('scientific_gate_authority') is False and row.get('method_failure_authorized') is False for row in cards))
+
+def resolve_paper_first_p0_f0_state(data_root:Path|None=None,frozen_path:Path=DEFAULT_JSON):
+ local=build_paper_first_p0_f0_state(data_root)
+ if _completed_diagnostic_state(local):return local
+ frozen=load(frozen_path)
+ if _completed_diagnostic_state(frozen):return frozen
+ return local
+
 def build_paper_first_p0_f0_state(data_root:Path|None=None):
  root=data_root or resolve_experiment_data_root(StorageSettings.from_env());run=root/'runs'/'paper-first-p0-20260812';future=load(run/'future-learnability'/'result.json');shared=load(run/'shared-surface'/'result.json');fp=load(run/'future-learnability'/'progress.json');sp=load(run/'shared-surface'/'progress.json');cards=[]
  cards.append(from_future(future) if future.get('status')=='complete' else pending(IDEAS[0],fp))
@@ -44,5 +55,5 @@ def build_paper_first_p0_f0_state(data_root:Path|None=None):
  cards=[quarantine(c) for c in cards]
  return {"schema_version":"1.1","generated_at":now(),"run_root":str(run),"authority":HISTORICAL_RUN_AUTHORITY,"policy":{"f0_cannot_emit_method_fail":True,"shared_collection_for_pf2_pf4_pf6":True,"p0_method_requires_support_pass_and_pre_experiment_authority":True,"unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority":True,"diagnostic_f0_cannot_create_p0_lifecycle_or_method_admission":True,"later_authority_cannot_retroactively_validate_this_run":True},"summary":{"ideas":4,"running":0,"support_pass":0,"support_hold":0,"observed_running":observed_running,"observed_support_pass":observed_pass,"observed_support_hold":observed_hold,"quarantined":4,"scientifically_authorized":0,"method_fail_authorized":0},"cards":cards}
 def write_paper_first_p0_f0_state(json_path=DEFAULT_JSON,js_path=DEFAULT_JS):
- s=build_paper_first_p0_f0_state();json_path.parent.mkdir(parents=True,exist_ok=True);json_path.write_text(json.dumps(s,ensure_ascii=False,indent=2)+'\n');js_path.write_text('window.PAPER_FIRST_P0_F0_STATE = '+json.dumps(s,ensure_ascii=False,separators=(',',':'))+';\n');return s
+ s=resolve_paper_first_p0_f0_state(frozen_path=json_path);json_path.parent.mkdir(parents=True,exist_ok=True);json_path.write_text(json.dumps(s,ensure_ascii=False,indent=2)+'\n');js_path.write_text('window.PAPER_FIRST_P0_F0_STATE = '+json.dumps(s,ensure_ascii=False,separators=(',',':'))+';\n');return s
 if __name__=='__main__':print(json.dumps(write_paper_first_p0_f0_state(),ensure_ascii=False,indent=2))

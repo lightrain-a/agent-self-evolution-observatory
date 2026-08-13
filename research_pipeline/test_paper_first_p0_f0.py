@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from .failure_asset_library import build_failure_asset_library
-from .paper_first_p0_f0 import build_paper_first_p0_f0_state
+from .paper_first_p0_f0 import build_paper_first_p0_f0_state, resolve_paper_first_p0_f0_state
 
 
 class PaperFirstP0F0StateTest(unittest.TestCase):
@@ -41,6 +41,23 @@ class PaperFirstP0F0StateTest(unittest.TestCase):
         self.assertEqual(asset["affected_layer"], "authority-protocol")
         self.assertFalse(asset["can_authorize_p0"])
         self.assertFalse(asset["can_authorize_method_or_principle"])
+
+    def test_resolver_preserves_completed_frozen_diagnostic_when_local_history_is_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); complete=root/"complete"; run=complete/"runs"/"paper-first-p0-20260812"; future=run/"future-learnability"; shared=run/"shared-surface"; future.mkdir(parents=True); shared.mkdir(parents=True)
+            (future/"result.json").write_text(json.dumps({"status":"complete","analysis":{"support_pass":True,"matched_candidates":3,"nonzero_matched_candidates":1,"future_learnability_range":0.25}}))
+            (shared/"result.json").write_text(json.dumps({"status":"complete","analysis":{"pf2":{"support_pass":False},"pf4":{"support_pass":True},"pf6":{"support_pass":False}}}))
+            frozen_state=build_paper_first_p0_f0_state(complete); frozen=root/"frozen.json"; frozen.write_text(json.dumps(frozen_state))
+            resolved=resolve_paper_first_p0_f0_state(root/"missing-host",frozen)
+        self.assertEqual((resolved["summary"]["observed_support_pass"],resolved["summary"]["observed_support_hold"]),(2,2))
+        self.assertEqual((resolved["summary"]["quarantined"],resolved["summary"]["scientifically_authorized"]),(4,0))
+
+    def test_resolver_does_not_promote_incomplete_frozen_snapshot(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); frozen=root/"frozen.json"; frozen.write_text(json.dumps({"summary":{"ideas":4,"quarantined":4,"observed_support_pass":0,"observed_support_hold":0},"authority":{"promotion_authorized":False,"local_validation_authorized":False,"full_experiment_authorized":False},"cards":[]}))
+            resolved=resolve_paper_first_p0_f0_state(root/"missing-host",frozen)
+        self.assertEqual((resolved["summary"]["observed_support_pass"],resolved["summary"]["observed_support_hold"]),(0,0))
+        self.assertEqual(resolved["summary"]["quarantined"],4)
 
 
 if __name__ == "__main__":
