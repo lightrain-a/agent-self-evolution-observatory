@@ -26,7 +26,7 @@ def _now() -> str:
 
 def load_scientific_object_config(path: Path = DEFAULT_CONFIG) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(payload.get("candidates"), dict) or not isinstance(payload.get("support_gate"), dict):
+    if not isinstance(payload.get("candidates"), dict) or not isinstance(payload.get("support_gate"), dict) or not isinstance(payload.get("purity_gate"), dict):
         raise ValueError("scientific-object-config-invalid")
     return payload
 
@@ -52,18 +52,33 @@ def _matches_candidate(record: dict[str, Any], spec: dict[str, Any]) -> bool:
     return bool(positive and any(value in text for value in positive) and not any(value in text for value in negative))
 
 
+def _matches_object_purity(record: dict[str, Any], spec: dict[str, Any]) -> bool:
+    text = f"{record.get('title', '')} {record.get('abstract', '')}".lower()
+    positive = tuple(str(value).lower() for value in (spec.get("purity_positive_phrases") or spec.get("positive_phrases") or []))
+    negative = tuple(str(value).lower() for value in (spec.get("purity_negative_phrases") or spec.get("negative_phrases") or []))
+    return bool(positive and any(value in text for value in positive) and not any(value in text for value in negative))
+
+
 def audit_candidate_object(records: list[dict[str, Any]], candidate_key: str, *, config: dict[str, Any] | None = None) -> dict[str, Any]:
     config = config or load_scientific_object_config()
     spec = config["candidates"][candidate_key]
     gate = config["support_gate"]
+    purity_gate = config["purity_gate"]
+    active_objects = {str(key) for key in ((config.get("current_axes") or {}).get("object") or [])}
+    is_active_object = candidate_key in active_objects
     matched = [row for row in records if row.get("primary_source_verified") is True and _matches_candidate(row, spec)]
+    direct = [row for row in matched if _matches_object_purity(row, spec)]
     collisions: Counter[str] = Counter()
     for row in matched:
-        collisions.update(str(key) for key in row.get("lane_keys") or [] if str(key))
+        collisions.update(str(key) for key in row.get("lane_keys") or [] if str(key) and str(key) != candidate_key)
     reviewed = len(matched)
     empirical = sum(bool(row.get("empirical_facts")) for row in matched)
     failures = sum(bool((row.get("typed_evidence") or {}).get("measured_failures")) for row in matched)
     boundaries = sum(bool((row.get("typed_evidence") or {}).get("boundary_observations")) for row in matched)
+    direct_reviewed = len(direct)
+    direct_empirical = sum(bool(row.get("empirical_facts")) for row in direct)
+    direct_failures = sum(bool((row.get("typed_evidence") or {}).get("measured_failures")) for row in direct)
+    direct_fraction = direct_reviewed / reviewed if reviewed else 0.0
     max_collision = max(collisions.values(), default=0) / reviewed if reviewed else 0.0
     gate_pass = bool(
         reviewed >= int(gate["minimum_reviewed_primary_refs"])
@@ -71,29 +86,49 @@ def audit_candidate_object(records: list[dict[str, Any]], candidate_key: str, *,
         and failures >= int(gate["minimum_measured_failure_supported_refs"])
         and max_collision <= float(gate["maximum_single_existing_lane_collision"])
     )
+    purity_gate_pass = bool(
+        direct_reviewed >= int(purity_gate["minimum_direct_object_primary_refs"])
+        and direct_empirical >= int(purity_gate["minimum_direct_empirical_fact_supported_refs"])
+        and direct_failures >= int(purity_gate["minimum_direct_measured_failure_supported_refs"])
+        and direct_fraction >= float(purity_gate["minimum_direct_object_fraction"])
+    )
     purity = str(spec.get("object_purity") or "review-required")
     status = "WATCH_INSUFFICIENT_PRIMARY_SUPPORT"
-    if gate_pass:
+    if gate_pass and not purity_gate_pass:
+        status = "HOLD_OBJECT_PURITY_INSUFFICIENT"
+    elif gate_pass and purity_gate_pass and is_active_object:
+        status = "ACTIVE_OBJECT_LANE_VALIDATED"
+    elif gate_pass and purity_gate_pass:
         status = "SHADOW_READY_FOR_PREREGISTRATION" if purity == "clear" else "HOLD_OBJECT_PURITY_REVIEW"
     refs = sorted(str(row.get("ref") or "") for row in matched)
+    direct_refs = sorted(str(row.get("ref") or "") for row in direct)
     return {
         "candidate_key": candidate_key,
         "scientific_object": spec["scientific_object"],
         "status": status,
         "object_purity": purity,
+        "active_object_lane": is_active_object,
         "support_gate": dict(gate),
+        "purity_gate": dict(purity_gate),
         "observed": {
             "reviewed_primary_refs": reviewed,
             "empirical_fact_supported_refs": empirical,
             "measured_failure_supported_refs": failures,
             "boundary_supported_refs": boundaries,
+            "direct_object_primary_refs": direct_reviewed,
+            "direct_object_empirical_fact_supported_refs": direct_empirical,
+            "direct_object_measured_failure_supported_refs": direct_failures,
+            "direct_object_fraction": round(direct_fraction, 4),
             "current_lane_collision_counts": dict(sorted(collisions.items())),
             "maximum_single_existing_lane_collision": round(max_collision, 4),
             "distinct_current_lanes": len(collisions),
         },
         "support_refs": refs,
         "support_ref_digest": hashlib.sha256("\n".join(refs).encode()).hexdigest(),
+        "direct_object_support_refs": direct_refs,
+        "direct_object_support_ref_digest": hashlib.sha256("\n".join(direct_refs).encode()).hexdigest(),
         "evidence_gate_pass": gate_pass,
+        "purity_gate_pass": purity_gate_pass,
         "activation_authorized": False,
         "scientific_authority": False,
     }
@@ -114,6 +149,11 @@ def audit_scientific_object_ontology(records: list[dict[str, Any]], *, config: d
             "reviewer_call_authorized": False,
             "automatic_lane_activation": False,
             "lane_preregistration_required_before_activation": True,
+            "support_and_object_purity_are_independent_gates": True,
+            "object_purity_uses_verified_primary_title_and_abstract_only": True,
+            "object_purity_never_uses_generator_or_reviewer_judgment": True,
+            "active_object_lanes_must_continue_to_pass_purity_regression": True,
+            "candidate_own_lane_is_excluded_from_collision_reduction": True,
             "freshness_and_relevance_must_remain_unchanged": True,
         },
         "current_taxonomy": {
@@ -122,10 +162,13 @@ def audit_scientific_object_ontology(records: list[dict[str, Any]], *, config: d
             "implication": "current lane coverage is a breadth-floor fact, not evidence of scientific-object completeness",
         },
         "support_gate": dict(config["support_gate"]),
+        "purity_gate": dict(config["purity_gate"]),
         "summary": {
             "reviewed_primary_records": len(records),
             "candidate_objects": len(candidates),
+            "active_object_lanes_validated": sorted(key for key, row in candidates.items() if row["status"] == "ACTIVE_OBJECT_LANE_VALIDATED"),
             "shadow_ready_for_preregistration": sorted(key for key, row in candidates.items() if row["status"] == "SHADOW_READY_FOR_PREREGISTRATION"),
+            "hold_object_purity_insufficient": sorted(key for key, row in candidates.items() if row["status"] == "HOLD_OBJECT_PURITY_INSUFFICIENT"),
             "hold_object_purity_review": sorted(key for key, row in candidates.items() if row["status"] == "HOLD_OBJECT_PURITY_REVIEW"),
             "activation_authorized": 0,
         },

@@ -1,13 +1,19 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "support_gate": {
     "minimum_reviewed_primary_refs": 5,
     "minimum_empirical_fact_supported_refs": 4,
     "minimum_measured_failure_supported_refs": 3,
     "maximum_single_existing_lane_collision": 0.85
   },
+  "purity_gate": {
+    "minimum_direct_object_primary_refs": 4,
+    "minimum_direct_empirical_fact_supported_refs": 3,
+    "minimum_direct_measured_failure_supported_refs": 2,
+    "minimum_direct_object_fraction": 0.45
+  },
   "current_axes": {
-    "object": ["skill_harness", "memory_continual"],
+    "object": ["skill_harness", "memory_continual", "world_model", "parametric_model_state"],
     "context": ["embodied", "collective", "autonomous_science", "runtime_deployment"],
     "property": ["safety_reliability"]
   },
@@ -16,19 +22,25 @@
       "scientific_object": "persistent adaptive agent world-dynamics representation whose content, scope, composition, federation, or optimization state changes from interaction evidence",
       "object_purity": "clear",
       "positive_phrases": ["world model", "world-model", "world modeling", "world modelling", "world action model"],
-      "negative_phrases": []
+      "negative_phrases": [],
+      "purity_positive_phrases": ["self-evolving world model", "self-improving world model", "world model framework that revises", "world model mixture and evolution", "federated world-model protocol", "world-model protocol", "continual framework for evidence-licensed world model optimization", "continual world model optimization", "closed-loop refinement of the world model", "self-modification seam"],
+      "purity_negative_phrases": []
     },
     "parametric_model_state": {
       "scientific_object": "persistent agent policy or model parameters updated from self-generated, interaction-derived, or distilled experience",
       "object_purity": "clear",
       "positive_phrases": ["co-evolving model weights", "policy weight updates", "update policy weights", "continuously evolves via fine-tuning", "fine-tuning on self-curated", "on-policy distillation", "distillation for agentic reinforcement learning", "parameter-based approaches, which internalize experience into model parameters", "update the lora parameters", "internalize reflection knowledge into the model weights"],
-      "negative_phrases": ["without weight updates", "does not update model weights", "without changing a single model weight", "what is updated is not model weights", "model weights remain fixed", "without parameter updates"]
+      "negative_phrases": ["without weight updates", "does not update model weights", "without changing a single model weight", "what is updated is not model weights", "model weights remain fixed", "without parameter updates"],
+      "purity_positive_phrases": ["co-evolving model weights", "policy weight updates", "update policy weights", "continuously evolves via fine-tuning", "fine-tuning on self-curated", "on-policy distillation", "distillation for agentic reinforcement learning", "parameter-based approaches, which internalize experience into model parameters", "update the lora parameters", "internalize reflection knowledge into the model weights"],
+      "purity_negative_phrases": ["without weight updates", "does not update model weights", "without changing a single model weight", "what is updated is not model weights", "model weights remain fixed", "without parameter updates"]
     },
     "policy_strategy_control": {
       "scientific_object": "persistent decision or control policy whose strategy is itself revised from execution evidence",
       "object_purity": "review-required",
       "positive_phrases": ["policy self-improvement", "autonomous policy evolution", "policy evolution", "policy adaptation", "policy optimization", "strategy iteration", "strategy evolution", "strategy optimization", "exploration-exploitation", "exploration exploitation", "control policy"],
-      "negative_phrases": []
+      "negative_phrases": [],
+      "purity_positive_phrases": ["policy self-improvement", "autonomous policy evolution", "persistent runtime state and control policy", "repeatedly edits an executable policy system"],
+      "purity_negative_phrases": ["data construction as feedback-driven construction policy evolution"]
     },
     "knowledge_retrieval_state": {
       "scientific_object": "persistent knowledge or retrieval substrate whose indexed content, graph structure, or retrieval policy evolves from agent experience",
@@ -52,7 +64,9 @@
       "scientific_object": "persistent task, curriculum, or data-generation state that co-evolves with the agent and changes future learning inputs",
       "object_purity": "review-required",
       "positive_phrases": ["task transformation", "task generation", "benchmark coevolution", "data coevolution", "data construction", "synthetic data generation", "curriculum evolution", "curriculum generation", "self-play"],
-      "negative_phrases": []
+      "negative_phrases": [],
+      "purity_positive_phrases": ["benchmark coevolution", "benchmark co-evolution", "persistent curriculum", "curriculum state", "future task distribution", "evolving benchmark"],
+      "purity_negative_phrases": ["curricula lack persistent state", "skill controller", "skill library", "knowledge graph"]
     }
   }
 }
