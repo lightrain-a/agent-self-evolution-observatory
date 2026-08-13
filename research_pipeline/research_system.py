@@ -42,7 +42,7 @@ from .paper_first_fresh_saturation import build_fresh_saturation_state, write_fr
 from .paper_first_primary_evidence import load_primary_evidence_state
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import load_problem_generator_state
-from .paper_first_problem_gate_queue import load_problem_gate_queue_state, write_problem_gate_queue
+from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_post_c2_adjudication import build_post_c2_adjudication, write_post_c2_adjudication
 from .paper_first_premature_method_diagnostics import resolve_premature_method_diagnostics, write_premature_method_diagnostics
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
@@ -867,7 +867,9 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_pf2_method_adjudication()
     write_pf357_problem_adjudication()
     write_fresh_saturation_state()
-    write_problem_gate_queue()
+    # Problem-gate Queue is a frozen output of the Primary -> Generator -> Queue
+    # transaction. Rebuilding it here would couple research-system projection to
+    # whichever host-private inbox happens to be mounted on this machine.
     write_post_c2_adjudication()
     write_premature_method_diagnostics()
     write_ai_consultation_clinic_state()

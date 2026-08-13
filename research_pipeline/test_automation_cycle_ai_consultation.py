@@ -47,11 +47,10 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             names = [row["name"] for row in report["steps"]]
             self.assertIn("ai-consultation-automation", names)
             self.assertIn("paper-first-fresh-saturation", names)
-            self.assertIn("paper-first-problem-gate-queue", names)
+            self.assertNotIn("paper-first-problem-gate-queue", names)
             self.assertNotIn("paper-first-primary-evidence-refresh", names)
             self.assertNotIn("paper-first-problem-generator", names)
-            self.assertLess(names.index("paper-first-fresh-saturation"), names.index("paper-first-problem-gate-queue"))
-            self.assertLess(names.index("paper-first-problem-gate-queue"), names.index("human-terminal-idea-state"))
+            self.assertLess(names.index("paper-first-fresh-saturation"), names.index("human-terminal-idea-state"))
             self.assertLess(names.index("research-system-pre-ai"), names.index("ai-consultation-automation"))
             self.assertLess(names.index("ai-consultation-automation"), names.index("research-system-state"))
             self.assertEqual(report["ai_consultation_limit"], 1)

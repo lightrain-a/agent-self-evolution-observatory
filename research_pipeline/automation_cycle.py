@@ -158,7 +158,10 @@ def run_cycle(
         report["steps"].append(_step("emerging-niche-policy", write_emerging_niche_policy))
         if mode not in {"weekly", "manual"}:
             report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
-            report["steps"].append(_step("paper-first-problem-gate-queue", write_problem_gate_queue))
+            # Queue provenance is transaction-bound to Primary -> Generator -> Queue.
+            # A daily cycle does not run Primary/Generator, so it must preserve the
+            # versioned queue snapshot instead of re-reading a potentially older
+            # host-private auto inbox.
         report["steps"].append(_step("human-terminal-idea-state", write_human_terminal_state))
         report["steps"].append(_step("paper-first-p0-f0-state", write_paper_first_p0_f0_state))
         report["steps"].append(_step("p0-realizability-suite", write_p0_realizability_suite))
