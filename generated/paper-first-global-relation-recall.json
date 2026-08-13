@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-13T17:33:48+00:00",
-  "run_id": "20260813T173327Z",
+  "generated_at": "2026-08-13T17:59:34+00:00",
+  "run_id": "20260813T175913Z",
   "status": "GLOBAL_RELATION_RECALL_COMPLETE",
   "policy": {
     "scientific_authority": false,
@@ -52,7 +52,7 @@
     "maximum_coobserved_neighbors": 213,
     "pairwise_coobservation_complete": false,
     "relation_blind_spot_detected": true,
-    "relation_universe_digest": "695b1fa0e87bb5331f2ea95e4e4df45f8f8fa31b8538bc78a1531a05cd45452d",
+    "relation_universe_digest": "e2f2725901ba9f15cf11ded5b753badb6f123ec763921ece1e04c2b1249c32ae",
     "search_control_only": true,
     "scientific_authority": false
   },
@@ -152,8 +152,8 @@
     }
   ],
   "last_completed_scan": {
-    "run_id": "20260813T173327Z",
-    "relation_universe_digest": "695b1fa0e87bb5331f2ea95e4e4df45f8f8fa31b8538bc78a1531a05cd45452d",
+    "run_id": "20260813T175913Z",
+    "relation_universe_digest": "e2f2725901ba9f15cf11ded5b753badb6f123ec763921ece1e04c2b1249c32ae",
     "relation_coverage": {
       "reviewed_receipt_sources": 214,
       "possible_source_pairs": 22791,
@@ -168,7 +168,7 @@
       "coobserved_source_pairs": 4982,
       "pair_coverage_fraction": 0.2186,
       "relation_blind_spot_detected": true,
-      "relation_universe_digest": "695b1fa0e87bb5331f2ea95e4e4df45f8f8fa31b8538bc78a1531a05cd45452d",
+      "relation_universe_digest": "e2f2725901ba9f15cf11ded5b753badb6f123ec763921ece1e04c2b1249c32ae",
       "relation_proposals": 5,
       "unseen_relation_proposals": 4,
       "lane_pass": 3,
@@ -194,7 +194,7 @@
     "coobserved_source_pairs": 4982,
     "pair_coverage_fraction": 0.2186,
     "relation_blind_spot_detected": true,
-    "relation_universe_digest": "695b1fa0e87bb5331f2ea95e4e4df45f8f8fa31b8538bc78a1531a05cd45452d",
+    "relation_universe_digest": "e2f2725901ba9f15cf11ded5b753badb6f123ec763921ece1e04c2b1249c32ae",
     "relation_proposals": 5,
     "unseen_relation_proposals": 4,
     "lane_pass": 3,
