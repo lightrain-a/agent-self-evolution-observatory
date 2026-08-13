@@ -277,6 +277,48 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertGreaterEqual(public["summary"]["empirical_fact_candidates"],4)
         self.assertEqual(len(private["records"]),4)
 
+    def test_recent_optional_fulltext_failures_use_short_retry_cooldown(self) -> None:
+        calls=[]
+        def fail_requester(*args,**kwargs):
+            calls.append((args,kwargs)); raise AssertionError("recent optional fulltext failures should cool down")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); storage=self.storage(root); corpus=self.corpus(root)
+            cache_dir=root/"paper-first-problem-discovery"/"primary-sources"; cache_dir.mkdir(parents=True)
+            private_dir=root/"paper-first-problem-discovery"; records=[]; fulltext_errors=[]
+            import hashlib
+            for idx,title in enumerate((
+                "Self-Evolving Agent Skills Under Feedback",
+                "Harness Evolution for Autonomous Agents",
+                "Persistent Memory for Self-Improving Agents",
+                "Continual Agent Workflow Evolution",
+            ),start=1):
+                arxiv_id=f"2608.0000{idx}"; ref=f"arXiv:{arxiv_id}"
+                primary=f'''<html><head><meta name="citation_title" content="{title}"></head><body><blockquote class="abstract mathjax">Abstract: Cached primary abstract {idx} about self-evolving agents.</blockquote></body></html>'''.encode()
+                primary_sha=hashlib.sha256(primary).hexdigest(); source_path=cache_dir/f"arxiv-{arxiv_id}-{primary_sha[:12]}.html"; source_path.write_bytes(primary)
+                records.append({
+                    "evidence_id":str(idx)*64,"ref":ref,"title":title,"primary_url":f"https://arxiv.org/abs/{arxiv_id}",
+                    "source_sha256":primary_sha,"abstract_sha256":"b"*64,"abstract":f"Cached primary abstract {idx} about self-evolving agents.",
+                    "fulltext_url":f"https://arxiv.org/html/{arxiv_id}","fulltext_sha256":"","fulltext_cache_path":"","empirical_facts":[],
+                    "cache_path":str(source_path),"fetched_at":"2026-08-13T05:30:00+00:00","primary_source_verified":True,
+                })
+                fulltext_errors.append({"ref":ref,"error":"ReadTimeout:prior optional fulltext failure"})
+            (private_dir/"primary-evidence-pool.json").write_text(json.dumps({
+                "status":"READY","generated_at":"2026-08-13T05:30:00+00:00","records":records,"fulltext_errors":fulltext_errors,
+            }),encoding="utf-8")
+            public,private=build_primary_evidence_pool(
+                storage=storage,corpus_path=corpus,requester=fail_requester,augment_fresh_corpus_with_arxiv=False,
+                now=datetime(2026,8,13,6,0,tzinfo=timezone.utc),min_interval_seconds=0,max_papers=8,
+            )
+        self.assertEqual(calls,[])
+        self.assertEqual(public["status"],"READY")
+        self.assertEqual(public["summary"]["verified"],4)
+        self.assertEqual(public["summary"]["fulltext_verified"],0)
+        self.assertEqual(public["summary"]["recent_raw_primary_cache_reused"],4)
+        self.assertEqual(public["summary"]["recent_fulltext_failure_cooldown_skips"],4)
+        self.assertEqual(public["summary"]["fulltext_fetch_errors"],4)
+        self.assertTrue(all(row["error"]=="recent-fulltext-failure-cooldown" for row in private["fulltext_errors"]))
+        self.assertTrue(public["policy"]["fulltext_failure_cooldown_applies_only_to_optional_enrichment"])
+
     def test_recent_complete_private_pool_is_reused_without_repeat_network_fetch(self) -> None:
         calls=[]
         def fail_requester(*args,**kwargs):

@@ -36,6 +36,7 @@ DEFAULT_MAX_CORPUS_AGE_DAYS = 10.0
 DEFAULT_MAX_PUBLICATION_AGE_DAYS = 60.0
 DEFAULT_MIN_INTERVAL_SECONDS = 0.75
 DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS = 12.0
+DEFAULT_RECENT_FULLTEXT_FAILURE_COOLDOWN_HOURS = 2.0
 DEFAULT_MAX_PRIMARY_RESPONSE_BYTES = 24 * 1024 * 1024
 DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS = 3.1
 DEFAULT_ARXIV_PER_QUERY = 12
@@ -661,6 +662,7 @@ def build_primary_evidence_pool(
     now: datetime | None = None,
     min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
     recent_verified_cache_reuse_hours: float = DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS,
+    recent_fulltext_failure_cooldown_hours: float = DEFAULT_RECENT_FULLTEXT_FAILURE_COOLDOWN_HOURS,
     cache_dir: Path | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     storage = storage or StorageSettings.from_env()
@@ -675,6 +677,12 @@ def build_primary_evidence_pool(
         for row in prior_pool.get("records") or []
         if isinstance(row, dict) and row.get("ref")
     }
+    prior_pool_age_hours = _age_hours(str(prior_pool.get("generated_at") or ""), current) if prior_pool else None
+    prior_fulltext_failure_refs = {
+        str(row.get("ref"))
+        for row in prior_pool.get("fulltext_errors") or []
+        if isinstance(row, dict) and row.get("ref")
+    } if prior_pool_age_hours is not None and prior_pool_age_hours <= recent_fulltext_failure_cooldown_hours else set()
     public_state: dict[str, Any] = {
         "schema_version": "1.0",
         "generated_at": _now(),
@@ -690,7 +698,9 @@ def build_primary_evidence_pool(
             "maximum_publication_age_days": max_publication_age_days,
             "no_parallel_primary_fetch": True,
             "recent_verified_cache_reuse_hours": float(recent_verified_cache_reuse_hours),
+            "recent_fulltext_failure_cooldown_hours": float(recent_fulltext_failure_cooldown_hours),
             "recent_cache_reuse_is_retry_optimization_not_weekly_freshness_relaxation": True,
+            "fulltext_failure_cooldown_applies_only_to_optional_enrichment": True,
             "content_addressed_raw_cache_must_reverify_sha_and_parseability": True,
             "derived_empirical_facts_reused_only_when_extractor_version_matches": True,
             "full_abstracts_remain_private_data_artifacts": True,
@@ -725,6 +735,7 @@ def build_primary_evidence_pool(
             "recent_verified_cache_reused": 0,
             "recent_raw_primary_cache_reused": 0,
             "recent_raw_fulltext_cache_reused": 0,
+            "recent_fulltext_failure_cooldown_skips": 0,
             "lane_floor": int(lane_floor),
             "eligible_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
             "selected_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
@@ -834,6 +845,7 @@ def build_primary_evidence_pool(
     reused_verified = 0
     raw_primary_cache_reused = 0
     raw_fulltext_cache_reused = 0
+    fulltext_failure_cooldown_skips = 0
     for paper in candidates:
         arxiv_id = _arxiv_id(paper)
         ref = f"arXiv:{arxiv_id}"
@@ -917,6 +929,9 @@ def build_primary_evidence_pool(
                 fulltext_verified += 1
                 empirical_fact_count += len(empirical_facts)
                 raw_fulltext_cache_reused += 1
+            elif ref in prior_fulltext_failure_refs:
+                fulltext_errors.append({"ref": ref, "error": "recent-fulltext-failure-cooldown"})
+                fulltext_failure_cooldown_skips += 1
             else:
                 try:
                     if last_fetch_started is not None and min_interval_seconds > 0:
@@ -1009,6 +1024,7 @@ def build_primary_evidence_pool(
             "recent_verified_cache_reused": reused_verified,
             "recent_raw_primary_cache_reused": raw_primary_cache_reused,
             "recent_raw_fulltext_cache_reused": raw_fulltext_cache_reused,
+            "recent_fulltext_failure_cooldown_skips": fulltext_failure_cooldown_skips,
             "verified_lane_counts": verified_lane_counts,
             "verified_undercovered_lanes": verified_undercovered_lanes,
             "candidate_generation_ready": len(verified) >= 4,
@@ -1059,6 +1075,7 @@ def write_primary_evidence_pool(
     now: datetime | None = None,
     min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
     recent_verified_cache_reuse_hours: float = DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS,
+    recent_fulltext_failure_cooldown_hours: float = DEFAULT_RECENT_FULLTEXT_FAILURE_COOLDOWN_HOURS,
 ) -> dict[str, Any]:
     storage = storage or StorageSettings.from_env()
     state, private = build_primary_evidence_pool(
@@ -1076,6 +1093,7 @@ def write_primary_evidence_pool(
         now=now,
         min_interval_seconds=min_interval_seconds,
         recent_verified_cache_reuse_hours=recent_verified_cache_reuse_hours,
+        recent_fulltext_failure_cooldown_hours=recent_fulltext_failure_cooldown_hours,
     )
     private_pool_path, _ = _private_paths(storage)
     private_pool_path.parent.mkdir(parents=True, exist_ok=True)
