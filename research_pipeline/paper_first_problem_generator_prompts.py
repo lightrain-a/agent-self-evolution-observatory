@@ -25,7 +25,7 @@ def _lane_contract_payload() -> list[dict[str, Any]]:
     ]
 
 
-def generator_prompt(records: list[dict[str, Any]]) -> str:
+def generator_prompt(records: list[dict[str, Any]], dead_end_memory: dict[str, Any] | None = None) -> str:
     sources = [
         {
             "ref": row["ref"],
@@ -47,6 +47,7 @@ def generator_prompt(records: list[dict[str, Any]]) -> str:
     ]
     reductions = [{"key": row["key"], "veto": row["veto"]} for row in REDUCTION_PATTERNS]
     lane_contracts = _lane_contract_payload()
+    dead_end_memory = dead_end_memory or {"summary": {}, "recent_blocked_examples": [], "scientific_authority": False}
     shape = {
         "candidates": [
             {
@@ -93,6 +94,9 @@ def generator_prompt(records: list[dict[str, Any]]) -> str:
         "HARD NEGATIVE-SPACE VETO:\n"
         + json.dumps(reductions, ensure_ascii=False, separators=(",", ":"))
         + "\nSATURATION FIELD CONTRACT: matched_patterns may contain ONLY exact known ledger keys that actually apply; any exact match hard-blocks the candidate. If you explicitly considered a known key and argue it does NOT apply, put {key:<exact known key>, reason:<why>} in rejected_patterns instead. Never append explanatory prose to matched_patterns.\n"
+        + "\n\nREVIEWER-PROVEN DEAD-END MEMORY (search-control only; zero scientific authority):\n"
+        + json.dumps(dead_end_memory, ensure_ascii=False, separators=(",", ":"))
+        + "\nThese are prior candidates already BLOCKED by independent review. Do not regenerate a semantically equivalent object by swapping sources, renaming the object, or rephrasing the same reduction escape. In particular, if repeated_reduction_basin=true, actively search outside the top basin. A prior dead end may be reconsidered only when the CURRENT evidence contains a concrete new observable that directly defeats the recorded strongest reduction; mere new wording or a new domain is insufficient.\n"
         + "\n\nVERIFIED PRIMARY SOURCES (private abstracts + bounded full-text fact candidates; output only ref + grounded claim + evidence_role):\n"
         + json.dumps(sources, ensure_ascii=False, separators=(",", ":"))
         + "\n\nReturn syntactically valid JSON only, shape:\n"
@@ -135,7 +139,7 @@ def reviewer_prompt(candidates: list[dict[str, Any]], evidence_by_ref: dict[str,
     return (
         "Independent BLOCK-ONLY multi-lane semantic reduction + source-grounding reviewer. You cannot authorize Paper Design, methods, experiments, P0, or GPU. "
         "For each candidate perform THREE independent checks: "
-        "(1) source grounding: each stated source claim must be supported by its supplied primary abstract or one bounded full-text empirical-fact candidate; "
+        "(1) source grounding: each stated source claim must be supported by its supplied primary abstract or one bounded full-text empirical-fact candidate; the reviewer evidence_source label is audit metadata because code deterministically locates the exact excerpt; "
         "(2) lane contract: the two grounded source claims, evidence roles, relation, and lane_evidence must genuinely satisfy the selected discovery lane; "
         "(3) mature reduction: test whether the exact prediction is already expressible by the Negative-Space ledger or any mature same-information theory. "
         "If any check fails, verdict=BLOCK. CLEAR only means both sources are grounded, lane_contract_verified=true, and no mature reduction was found; it never means scientific approval.\n\n"

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import unittest
 
 from .research_system import build_research_system_state, validate_state
@@ -382,6 +383,15 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(self.state["summary"]["final_ready"])
         disabled = [item for item in self.state["components"] if item["status"] == "intentionally-disabled"]
         self.assertEqual(len(disabled), 1)
+
+    def test_v23_problem_deadend_memory_is_zero_authority_and_requires_basin_escape(self) -> None:
+        state=copy.deepcopy(self.state); generator=state["paper_first_problem_generator"]
+        generator["schema_version"]="2.3"
+        generator["policy"].update({"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True})
+        generator.setdefault("saturation_memory",{})["blocked_problem_memory"]={"blocked_candidate_attempts":5,"top_reduction_basin":{"pattern":"procedural-memory-nonmonotonicity","count":5,"fraction":1.0},"repeated_reduction_basin":True,"search_escape_required":True,"portable_blocked_problem_memory":[{"signature_id":"x","scientific_authority":False}],"scientific_authority":False}
+        self.assertEqual(validate_state(state),[])
+        broken=copy.deepcopy(state); broken["paper_first_problem_generator"]["saturation_memory"]["blocked_problem_memory"]["search_escape_required"]=False
+        self.assertTrue(any("repeated problem-reduction basin" in error for error in validate_state(broken)))
 
 
 if __name__ == "__main__":

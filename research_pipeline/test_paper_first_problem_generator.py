@@ -260,6 +260,51 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertFalse(state["source_coverage"]["scientific_authority"])
         self.assertFalse(state["policy"]["automatic_method_authority"]);self.assertFalse(state["policy"]["automatic_p0_authority"])
 
+    def test_reviewer_blocked_memory_detects_repeated_reduction_basin(self) -> None:
+        captured = {}
+        def generator(**kwargs):
+            captured["prompt"] = kwargs["prompt"]
+            return {"text": json.dumps({"candidates": [], "generation_notes": "No new problem survives prior reviewer reductions."}), "resolved_model": "doubao-seed-evolving"}
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); storage=self.storage(root); now=datetime(2026,8,13,tzinfo=timezone.utc)
+            archive=root/"paper-first-problem-discovery"/"archive"; archive.mkdir(parents=True)
+            for idx in range(5):
+                candidate={"candidate_id":f"AUTO-{idx+1}","title":f"Memory monotonicity variant {idx+1}","discovery_lane":"ASSUMPTION_BREAK","empirical_evidence":{"source_a":{"ref":"arXiv:2608.00001"},"source_b":{"ref":"arXiv:2608.00002"}},"semantic_reduction_review":{"verdict":"BLOCK","lane_contract_verified":True,"source_claims_grounded":True,"matched_patterns":["procedural-memory-nonmonotonicity"],"strongest_reduction":"procedural-memory-nonmonotonicity","reason":"Captured by nonmonotonic belief revision."}}
+                (archive/f"auto-inbox-{idx}.json").write_text(json.dumps({"generator_run_id":f"old-{idx}","candidates":[candidate]}),encoding="utf-8")
+            state=run_problem_generator(storage=storage,primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=generator,now=now)
+        memory=state["saturation_memory"]["blocked_problem_memory"]
+        self.assertEqual(memory["blocked_candidate_attempts"],5)
+        self.assertEqual(memory["top_reduction_basin"]["pattern"],"procedural-memory-nonmonotonicity")
+        self.assertEqual(memory["top_reduction_basin"]["count"],5)
+        self.assertTrue(memory["repeated_reduction_basin"]); self.assertTrue(memory["search_escape_required"])
+        self.assertIn("REVIEWER-PROVEN DEAD-END MEMORY",captured["prompt"])
+        self.assertIn("procedural-memory-nonmonotonicity",captured["prompt"])
+
+    def test_portable_blocked_problem_memory_survives_host_switch(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); storage=self.storage(root); now=datetime(2026,8,13,tzinfo=timezone.utc); j=root/"generator.json"; js=root/"generator.js"
+            row={"signature_id":"deadbeef","title":"Prior blocked object","discovery_lane":"CONVERGENT_FAILURE","matched_patterns":["artifact-uptake-after-retrieval"],"strongest_reduction":"artifact-uptake-after-retrieval","lane_contract_verified":True,"source_claims_grounded":True,"scientific_authority":False}
+            j.write_text(json.dumps({"status":"GENERATED_ZERO_CANDIDATES","summary":{"primary_evidence_records":4},"saturation_memory":{"blocked_problem_memory":{"portable_blocked_problem_memory":[row],"scientific_authority":False}}}),encoding="utf-8")
+            write_problem_generator_state(json_path=j,js_path=js,storage=storage,primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=self.gen([],notes="No new problem survives."),now=now)
+            public=json.loads(j.read_text())
+        memory=public["saturation_memory"]["blocked_problem_memory"]
+        self.assertEqual(memory["blocked_candidate_attempts"],1); self.assertEqual(memory["portable_blocked_problem_memory"][0]["signature_id"],"deadbeef")
+
+    def test_exact_excerpt_machine_location_survives_declared_source_mismatch(self) -> None:
+        base=self.review("CLEAR")
+        def reviewer(**kwargs):
+            response=base(**kwargs); payload=json.loads(response["text"])
+            for source in payload["reviews"][0]["source_claim_support"].values(): source["evidence_source"]="fulltext"
+            response["text"]=json.dumps(payload); return response
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); now=datetime(2026,8,13,tzinfo=timezone.utc); auto=root/"auto.json"
+            state=run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=auto,generator_responder=self.gen([self.raw_candidate()]),reviewer_responder=reviewer,now=now)
+            review=json.loads(auto.read_text())["candidates"][0]["semantic_reduction_review"]
+        grounding=review["source_claim_grounding"]["source_a"]
+        self.assertTrue(review["source_claims_grounded"]); self.assertEqual(review["verdict"],"CLEAR")
+        self.assertEqual(grounding["evidence_source"],"abstract"); self.assertEqual(grounding["declared_evidence_source"],"fulltext"); self.assertFalse(grounding["declared_source_matches"])
+        self.assertTrue(state["policy"]["exact_excerpt_location_is_machine_inferred"])
+
     def test_stale_pool_makes_zero_api_calls(self) -> None:
         calls = []
         def responder(**kwargs):

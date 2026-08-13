@@ -298,6 +298,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_primary_evidence = load_primary_evidence_state()
     paper_first_problem_discovery_contract = build_problem_discovery_contract_state()
     paper_first_problem_generator = load_problem_generator_state()
+    paper_first_problem_memory = ((paper_first_problem_generator.get("saturation_memory") or {}).get("blocked_problem_memory") or {})
     paper_first_problem_gate_queue = load_problem_gate_queue_state()
     paper_first_post_c2 = build_post_c2_adjudication()
     formal_cards = {
@@ -441,6 +442,11 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_problem_generator_semantic_blocked":(paper_first_problem_generator.get("summary") or {}).get("semantic_blocked",0),
             "paper_first_problem_generator_saturation_entries":(paper_first_problem_generator.get("saturation_memory") or {}).get("ledger_entries",0),
             "paper_first_problem_generator_prior_identical_zero":(paper_first_problem_generator.get("saturation_memory") or {}).get("prior_identical_zero_runs",0),
+            "paper_first_problem_blocked_attempts":paper_first_problem_memory.get("blocked_candidate_attempts",0),
+            "paper_first_problem_top_reduction_basin":(paper_first_problem_memory.get("top_reduction_basin") or {}).get("pattern",""),
+            "paper_first_problem_top_reduction_count":(paper_first_problem_memory.get("top_reduction_basin") or {}).get("count",0),
+            "paper_first_problem_repeated_reduction_basin":bool(paper_first_problem_memory.get("repeated_reduction_basin")),
+            "paper_first_problem_search_escape_required":bool(paper_first_problem_memory.get("search_escape_required")),
             "paper_first_problem_queue_submitted":paper_first_problem_gate_queue["summary"]["submitted"],
             "paper_first_problem_queue_passed":paper_first_problem_gate_queue["summary"]["passed_problem_gate"],
             "paper_first_problem_queue_blocked":paper_first_problem_gate_queue["summary"]["blocked_problem_gate"],
@@ -755,7 +761,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     discovery_contract = state.get("paper_first_problem_discovery_contract") or {}; discovery_policy = discovery_contract.get("policy") or {}; discovery_summary = discovery_contract.get("summary") or {}
     if discovery_policy.get("multi_lane_discovery_required") is not True or discovery_policy.get("contradiction_first_required") is not False or discovery_policy.get("contradiction_lane_retained") is not True or tuple(discovery_policy.get("allowed_discovery_lanes") or []) != DISCOVERY_LANES or tuple(discovery_policy.get("forbidden_discovery_lanes") or []) != FORBIDDEN_DISCOVERY_LANES or discovery_policy.get("lane_specific_machine_evidence_contract_required") is not True or discovery_policy.get("no_lane_specific_downstream_relaxation") is not True or discovery_policy.get("two_mature_theory_baselines_required") is not True or discovery_policy.get("same_information_nonreducibility_required") is not True or discovery_policy.get("domain_transfer_veto_required") is not True: errors.append("paper-first problem discovery contract must require four empirical lanes plus shared theory/domain-transfer gates")
     if discovery_summary.get("saturation_patterns") != fresh_summary.get("reduction_patterns") or discovery_summary.get("automatic_method_authority") != 0 or discovery_summary.get("automatic_experiment_authority") != 0: errors.append("paper-first problem discovery contract must consume the current saturation map and grant no automatic downstream authority")
-    generator = state.get("paper_first_problem_generator") or {}; generator_policy = generator.get("policy") or {}; generator_summary = generator.get("summary") or {}
+    generator = state.get("paper_first_problem_generator") or {}; generator_policy = generator.get("policy") or {}; generator_summary = generator.get("summary") or {}; generator_schema = str(generator.get("schema_version") or "0")
     if generator_policy.get("zero_candidates_is_valid") is not True or generator_policy.get("multi_lane_discovery_enabled") is not True or tuple(generator_policy.get("allowed_discovery_lanes") or []) != DISCOVERY_LANES or tuple(generator_policy.get("forbidden_discovery_lanes") or []) != FORBIDDEN_DISCOVERY_LANES or generator_policy.get("semantic_reviewer_is_block_only") is not True or generator_policy.get("independent_reviewer_must_verify_lane_contract") is not True or generator_policy.get("source_coverage_saturation_skips_model_call") is not True or generator_policy.get("source_coverage_saturation_is_compute_control_not_scientific_negative") is not True or generator_policy.get("new_lane_grounded_primary_source_reopens_generation") is not True or generator_policy.get("portable_review_receipts_are_scheduler_metadata_only") is not True or generator_policy.get("portable_review_receipts_have_zero_scientific_authority") is not True or generator_policy.get("primary_source_coverage_receipts_are_inherited_transactionally") is not True or generator_policy.get("candidate_inbox_has_zero_scientific_authority") is not True: errors.append("problem generator must enforce four-lane review plus portable zero-authority source-coverage saturation control")
     if generator.get("status") == "SKIPPED_SOURCE_COVERAGE_SATURATED":
         coverage = generator.get("source_coverage") or {}
@@ -763,8 +769,15 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         if coverage.get("coverage_exhausted") is not True or unreviewed is None or int(unreviewed) != 0:
             errors.append("source-coverage saturation skip requires an exhausted lane-grounded evidence universe")
     if generator_policy.get("generation_notes_are_advisory_not_scientific_authority") is not True or generator_policy.get("zero_candidate_rationale_required") is not True or generator_policy.get("discovery_saturation_memory_has_zero_scientific_authority") is not True: errors.append("problem generator must preserve generation rationale and saturation memory without scientific authority")
+    if generator_schema >= "2.3" and (generator_policy.get("reviewer_blocked_problem_memory_has_zero_scientific_authority") is not True or generator_policy.get("repeated_reduction_basin_requires_search_escape") is not True or generator_policy.get("portable_blocked_problem_memory_is_search_control_only") is not True): errors.append("problem generator must treat reviewer-blocked problem memory as zero-authority search control")
+    if generator_schema >= "2.3" and (generator_policy.get("reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority") is not True or generator_policy.get("exact_excerpt_location_is_machine_inferred") is not True): errors.append("problem generator must infer exact excerpt location rather than trust reviewer source labels")
     saturation_memory = generator.get("saturation_memory") or {}
     if saturation_memory.get("scientific_authority") is not False: errors.append("problem-discovery saturation memory cannot carry scientific authority")
+    blocked_memory = saturation_memory.get("blocked_problem_memory") or {}
+    if generator_schema >= "2.3" and blocked_memory.get("scientific_authority") is not False: errors.append("reviewer-blocked problem memory cannot carry scientific authority")
+    if generator_schema >= "2.3" and any(row.get("scientific_authority") is not False for row in blocked_memory.get("portable_blocked_problem_memory") or [] if isinstance(row,dict)): errors.append("portable reviewer-blocked problem memory cannot carry scientific authority")
+    top_basin = blocked_memory.get("top_reduction_basin") or {}
+    if generator_schema >= "2.3" and blocked_memory.get("repeated_reduction_basin") is True and (blocked_memory.get("search_escape_required") is not True or int(top_basin.get("count") or 0) < 3): errors.append("repeated problem-reduction basin must require search escape with repeated evidence")
     portable_receipts = [row for row in saturation_memory.get("portable_review_receipts") or [] if isinstance(row,dict)]
     if any(row.get("scientific_authority") is not False for row in portable_receipts): errors.append("portable problem-review receipts cannot carry scientific authority")
     portable_review_refs = {str(ref) for row in portable_receipts for ref in row.get("source_refs") or [] if str(ref).startswith("arXiv:")}
