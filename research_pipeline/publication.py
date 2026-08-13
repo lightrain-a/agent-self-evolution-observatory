@@ -98,12 +98,16 @@ DAILY_ARTIFACTS = (
     "generated/paper-first-search-portfolio-design-adjudication.js",
     "generated/paper-first-sp15-identifiability-support.json",
     "generated/paper-first-sp15-identifiability-support.js",
+    "generated/paper-first-paper-design-backlog.json",
+    "generated/paper-first-paper-design-backlog.js",
     "generated/paper-first-post-c2-adjudication.json",
     "generated/paper-first-post-c2-adjudication.js",
     "generated/paper-first-premature-method-diagnostics.json",
     "generated/paper-first-premature-method-diagnostics.js",
 )
 WEEKLY_ARTIFACTS = DAILY_ARTIFACTS + (
+    "generated/paper-first-global-relation-recall.json",
+    "generated/paper-first-global-relation-recall.js",
     "generated/iclr-low-resource-ideas.json",
     "generated/iclr-low-resource-ideas.js",
     "generated/machine-school-inspired-ideas.json",

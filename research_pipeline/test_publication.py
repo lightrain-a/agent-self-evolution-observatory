@@ -135,6 +135,8 @@ class PublicationTest(unittest.TestCase):
                 "generated/paper-first-search-portfolio-design-adjudication.js",
                 "generated/paper-first-sp15-identifiability-support.json",
                 "generated/paper-first-sp15-identifiability-support.js",
+                "generated/paper-first-paper-design-backlog.json",
+                "generated/paper-first-paper-design-backlog.js",
                 "generated/paper-first-post-c2-adjudication.json",
                 "generated/paper-first-post-c2-adjudication.js",
                 "generated/paper-first-premature-method-diagnostics.json",
@@ -157,6 +159,9 @@ class PublicationTest(unittest.TestCase):
         self.assertTrue(set(DAILY_ARTIFACTS).issubset(WEEKLY_ARTIFACTS))
         self.assertIn("generated/s2-literature.js", WEEKLY_ARTIFACTS)
         self.assertIn("generated/iclr-low-resource-ideas.json", WEEKLY_ARTIFACTS)
+        self.assertIn("generated/paper-first-paper-design-backlog.json", DAILY_ARTIFACTS)
+        self.assertIn("generated/paper-first-global-relation-recall.json", WEEKLY_ARTIFACTS)
+        self.assertNotIn("generated/paper-first-global-relation-recall.json", DAILY_ARTIFACTS)
         self.assertIn("generated/machine-school-inspired-ideas.json", WEEKLY_ARTIFACTS)
         self.assertIn("generated/machine-school-external-reviews.json", WEEKLY_ARTIFACTS)
         self.assertIn("generated/idea-discovery-v3.json", WEEKLY_ARTIFACTS)

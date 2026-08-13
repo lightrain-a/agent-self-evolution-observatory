@@ -402,6 +402,34 @@ class ResearchSystemTest(unittest.TestCase):
         multi["paper_first_problem_generator"]["policy"]["one_generator_call_max"]=False
         self.assertTrue(any("at most one generator call" in error for error in validate_state(multi)))
 
+    def test_canonical_paper_design_backlog_is_durable_but_cannot_escalate_authority(self) -> None:
+        state=copy.deepcopy(self.state)
+        state["paper_first_paper_design_backlog"]={
+            "schema_version":"1.0",
+            "policy":{"problem_gate_pass_is_durable_until_human_paper_design_resolution":True,"volatile_discovery_queue_cannot_erase_backlog":True,"paper_design_eligibility_is_not_method_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False,"automatic_gpu_authority":False},
+            "summary":{"entries":1,"pending_human_paper_design":1,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0,"gpu_authorized":0},
+            "entries":[{"backlog_id":"x","candidate_id":"LIVE-1","status":"AWAIT_HUMAN_PAPER_DESIGN_REVIEW","paper_design_eligible":True,"authority":{"paper_design_review":True,"method":False,"experiment":False,"p0":False,"gpu":False},"scientific_authority":False}],
+            "scientific_authority":False,
+        }
+        self.assertEqual(validate_state(state),[])
+        broken=copy.deepcopy(state);broken["paper_first_paper_design_backlog"]["policy"]["automatic_method_authority"]=True
+        self.assertTrue(any("Paper-Design backlog cannot authorize" in error for error in validate_state(broken)))
+
+    def test_global_relation_recall_requires_reduction_and_only_residual_can_reopen(self) -> None:
+        state=copy.deepcopy(self.state);digest="d"*64
+        state["paper_first_global_relation_recall"]={
+            "schema_version":"1.1","status":"GLOBAL_RELATION_RECALL_COMPLETE",
+            "policy":{"source_coverage_exhaustion_is_not_relation_exhaustion":True,"relation_miner_is_search_control_only":True,"cross_source_recall_supplements_but_does_not_replace_search_portfolio":True,"all_lane_pass_proposals_require_reduction_review":True,"not_reduced_only_reopens_focused_problem_generator":True,"automatic_problem_gate_authority":False,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},
+            "summary":{"lane_pass":1,"reduction_reviewed":1,"not_reduced":0,"focused_problem_generator_reopen_required":False,"relation_universe_digest":digest},
+            "relation_coverage":{"scientific_authority":False},"proposals":[],
+            "last_completed_scan":{"run_id":"relation-1","relation_universe_digest":digest,"scientific_authority":False},"scientific_authority":False,
+        }
+        self.assertEqual(validate_state(state),[])
+        missing=copy.deepcopy(state);missing["paper_first_global_relation_recall"]["summary"]["reduction_reviewed"]=0
+        self.assertTrue(any("lane-PASS global relation proposal" in error for error in validate_state(missing)))
+        fake=copy.deepcopy(state);fake["paper_first_global_relation_recall"]["summary"]["focused_problem_generator_reopen_required"]=True
+        self.assertTrue(any("focused problem-generator reopen" in error for error in validate_state(fake)))
+
     def test_v23_problem_deadend_memory_is_zero_authority_and_requires_basin_escape(self) -> None:
         state=copy.deepcopy(self.state); generator=state["paper_first_problem_generator"]
         generator["schema_version"]="2.3"

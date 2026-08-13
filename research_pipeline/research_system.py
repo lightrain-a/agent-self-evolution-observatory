@@ -45,6 +45,8 @@ from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_search_portfolio_design_adjudication import build_search_portfolio_design_adjudication, write_search_portfolio_design_adjudication
 from .paper_first_sp15_identifiability_support import build_sp15_identifiability_support, write_sp15_identifiability_support
+from .paper_first_global_relation_recall import load_global_relation_recall_state
+from .paper_first_paper_design_backlog import load_paper_design_backlog
 from .paper_first_post_c2_adjudication import build_post_c2_adjudication, write_post_c2_adjudication
 from .paper_first_premature_method_diagnostics import resolve_premature_method_diagnostics, write_premature_method_diagnostics
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
@@ -306,6 +308,8 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_problem_gate_queue = load_problem_gate_queue_state()
     paper_first_search_portfolio_design = build_search_portfolio_design_adjudication()
     paper_first_sp15_support = build_sp15_identifiability_support()
+    paper_first_paper_design_backlog = load_paper_design_backlog()
+    paper_first_global_relation_recall = load_global_relation_recall_state()
     paper_first_post_c2 = build_post_c2_adjudication()
     formal_cards = {
         str(card.get("idea_id")): card
@@ -472,6 +476,19 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_sp15_identifiability_support_status":paper_first_sp15_support["summary"]["support_status"],
             "paper_first_sp15_identifiability_units":paper_first_sp15_support["summary"]["query_level_identifiability_units"],
             "paper_first_search_portfolio_method_design_authorized":paper_first_search_portfolio_design["summary"]["method_design_authorized"],
+            "paper_first_paper_design_backlog_pending":(paper_first_paper_design_backlog.get("summary") or {}).get("pending_human_paper_design",0),
+            "paper_first_global_relation_status":paper_first_global_relation_recall.get("status","NOT_RUN"),
+            "paper_first_global_relation_reviewed_sources":(paper_first_global_relation_recall.get("summary") or {}).get("reviewed_receipt_sources",0),
+            "paper_first_global_relation_pair_coverage":(paper_first_global_relation_recall.get("summary") or {}).get("pair_coverage_fraction",0.0),
+            "paper_first_global_relation_blind_spot":bool((paper_first_global_relation_recall.get("summary") or {}).get("relation_blind_spot_detected")),
+            "paper_first_global_relation_cache_fraction":(paper_first_global_relation_recall.get("summary") or {}).get("cache_completeness_fraction",0.0),
+            "paper_first_global_relation_proposals":(paper_first_global_relation_recall.get("summary") or {}).get("relation_proposals",0),
+            "paper_first_global_relation_unseen_proposals":(paper_first_global_relation_recall.get("summary") or {}).get("unseen_relation_proposals",0),
+            "paper_first_global_relation_lane_pass":(paper_first_global_relation_recall.get("summary") or {}).get("lane_pass",0),
+            "paper_first_global_relation_unseen_lane_pass":(paper_first_global_relation_recall.get("summary") or {}).get("unseen_lane_pass",0),
+            "paper_first_global_relation_reducible":(paper_first_global_relation_recall.get("summary") or {}).get("reducible",0),
+            "paper_first_global_relation_not_reduced":(paper_first_global_relation_recall.get("summary") or {}).get("not_reduced",0),
+            "paper_first_global_relation_focused_reopen":bool((paper_first_global_relation_recall.get("summary") or {}).get("focused_problem_generator_reopen_required")),
             "paper_first_post_c2_decision":paper_first_post_c2["decision"],
             "paper_first_post_c2_current_formulation":paper_first_post_c2["current_paper_formulation_status"],
             "paper_first_post_c2_c3_locked":paper_first_post_c2["authority"]["C3_locked"],
@@ -609,6 +626,8 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_problem_gate_queue":paper_first_problem_gate_queue,
         "paper_first_search_portfolio_design_adjudication":paper_first_search_portfolio_design,
         "paper_first_sp15_identifiability_support":paper_first_sp15_support,
+        "paper_first_paper_design_backlog":paper_first_paper_design_backlog,
+        "paper_first_global_relation_recall":paper_first_global_relation_recall,
         "paper_first_post_c2":paper_first_post_c2,
         "paper_first_premature_method_diagnostics":paper_first_premature_method_diagnostics,
         "pilot_registry":pilot_registry,
@@ -856,6 +875,25 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if (sp_design_summary.get("reviewed"),sp_design_summary.get("advance_to_method_design"),sp_design_summary.get("revise_paper_problem"),sp_design_summary.get("stop_standalone")) != (2,0,1,1) or any(int(sp_design_summary.get(key) or 0) != 0 for key in ("method_design_authorized","experiment_blueprint_authorized","local_validation_authorized","p0_authorized","gpu_authorized")) or sp_design_policy.get("source_is_shadow_search_portfolio") is not True or sp_design_policy.get("shadow_queue_has_zero_paper_design_authority") is not True or sp_design_policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True: errors.append("Search Portfolio retrospective design audit must route SP-09/SP-15 as 0 method advance / 1 revise / 1 stop while remaining shadow-only and zero-authority")
     sp15_support = state.get("paper_first_sp15_identifiability_support") or {}; sp15_summary = sp15_support.get("summary") or {}; sp15_policy = sp15_support.get("policy") or {}
     if sp15_summary.get("query_level_identifiability_units") != 0 or sp15_summary.get("support_status") != "INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM" or sp15_support.get("decision") != "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT" or sp15_policy.get("phenomenon_support_is_not_identifiability_support") is not True or any(int(sp15_summary.get(key) or 0) != 0 for key in ("method_design_authorized","experiment_blueprint_authorized","local_validation_authorized","p0_authorized","gpu_authorized")): errors.append("SP-15 revised identifiability problem must remain HOLD until nonzero matched query-level support exists")
+    paper_backlog=state.get("paper_first_paper_design_backlog") or {};backlog_policy=paper_backlog.get("policy") or {};backlog_summary=paper_backlog.get("summary") or {};backlog_entries=[row for row in paper_backlog.get("entries") or [] if isinstance(row,dict)]
+    if paper_backlog.get("status")!="NOT_RUN":
+        if backlog_policy.get("problem_gate_pass_is_durable_until_human_paper_design_resolution") is not True or backlog_policy.get("volatile_discovery_queue_cannot_erase_backlog") is not True or backlog_policy.get("paper_design_eligibility_is_not_method_authority") is not True: errors.append("Problem-Gate PASS must persist in a durable Paper-Design backlog without downstream authority")
+        if any(backlog_policy.get(key) is not False for key in ("automatic_method_authority","automatic_experiment_authority","automatic_p0_authority","automatic_gpu_authority")) or any(int(backlog_summary.get(key) or 0)!=0 for key in ("method_authorized","experiment_authorized","p0_authorized","gpu_authorized")): errors.append("Paper-Design backlog cannot authorize method, experiment, P0, or GPU")
+        if int(backlog_summary.get("pending_human_paper_design") or 0)!=sum(row.get("status")=="AWAIT_HUMAN_PAPER_DESIGN_REVIEW" for row in backlog_entries): errors.append("Paper-Design backlog pending accounting mismatch")
+        current_pass_ids={str(row.get("candidate_id") or "") for row in problem_queue.get("passed") or [] if isinstance(row,dict)};backlog_candidate_ids={str(row.get("candidate_id") or "") for row in backlog_entries}
+        if not current_pass_ids.issubset(backlog_candidate_ids): errors.append("current Problem-Gate PASS candidates must be represented in the durable Paper-Design backlog")
+    relation=state.get("paper_first_global_relation_recall") or {};relation_policy=relation.get("policy") or {};relation_summary=relation.get("summary") or {};relation_coverage=relation.get("relation_coverage") or {};relation_status=str(relation.get("status") or "NOT_RUN")
+    allowed_relation_statuses={"NOT_RUN","SKIPPED_SOURCE_COVERAGE_OPEN","SKIPPED_PAIR_COVERAGE_COMPLETE","HOLD_RELATION_CACHE_INCOMPLETE","RELATION_PROVIDER_ERROR_ZERO_AUTHORITY","LANE_REVIEW_ERROR_ZERO_AUTHORITY","REDUCTION_REVIEW_ERROR_ZERO_AUTHORITY","GLOBAL_RELATION_RECALL_COMPLETE","SKIPPED_RELATION_UNIVERSE_UNCHANGED","STATE_UNREADABLE","STATE_INVALID"}
+    if relation_status not in allowed_relation_statuses: errors.append("Global Relation Recall status invalid")
+    if relation_status not in {"NOT_RUN","STATE_UNREADABLE","STATE_INVALID"}:
+        if relation_policy.get("source_coverage_exhaustion_is_not_relation_exhaustion") is not True or relation_policy.get("relation_miner_is_search_control_only") is not True or relation_policy.get("cross_source_recall_supplements_but_does_not_replace_search_portfolio") is not True or relation_policy.get("all_lane_pass_proposals_require_reduction_review") is not True or relation_policy.get("not_reduced_only_reopens_focused_problem_generator") is not True: errors.append("Global Relation Recall must remain a zero-authority cross-source supplement after Search Portfolio")
+        if any(relation_policy.get(key) is not False for key in ("automatic_problem_gate_authority","automatic_method_authority","automatic_experiment_authority","automatic_p0_authority")): errors.append("Global Relation Recall cannot authorize Problem Gate, method, experiment, or P0")
+        if relation_coverage.get("scientific_authority") is not False or relation.get("scientific_authority") is not False: errors.append("Global relation coverage/recall cannot carry scientific authority")
+        if int(relation_summary.get("reduction_reviewed") or 0)!=int(relation_summary.get("lane_pass") or 0): errors.append("every lane-PASS global relation proposal must receive reduction review")
+        if bool(relation_summary.get("focused_problem_generator_reopen_required"))!=(int(relation_summary.get("not_reduced") or 0)>0): errors.append("focused problem-generator reopen must be equivalent to a NOT_REDUCED global relation residual")
+        if relation_status in {"GLOBAL_RELATION_RECALL_COMPLETE","SKIPPED_RELATION_UNIVERSE_UNCHANGED"}:
+            last_scan=relation.get("last_completed_scan") or {}
+            if not str(last_scan.get("run_id") or "") or last_scan.get("scientific_authority") is not False or str(last_scan.get("relation_universe_digest") or "")!=str(relation_summary.get("relation_universe_digest") or ""): errors.append("completed Global Relation Recall must preserve a matching zero-authority portable scan receipt")
     if (pf357_summary.get("reviewed"),pf357_summary.get("stopped_standalone"),pf357_summary.get("paper_design_authorized"),pf357_summary.get("local_validation_authorized")) != (3,3,0,0): errors.append("PF-3/PF-5/PF-7 must all terminate standalone before Paper Design/local validation")
     post_c2 = state.get("paper_first_post_c2") or {}; post_c2_auth = post_c2.get("authority") or {}
     if post_c2.get("decision") != "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" or post_c2_auth.get("clean_mechanism_stop") is not True: errors.append("post-C2 paper mechanism terminal adjudication must preserve the clean local falsifier STOP")

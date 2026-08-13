@@ -56,6 +56,8 @@ from .published_experiment_audit import write_audit as write_published_audit
 from .paper_first_idea_incubation import write_paper_first_idea_incubation
 from .paper_first_fresh_saturation import write_fresh_saturation_state
 from .paper_first_discovery_transaction import write_problem_discovery_transaction
+from .paper_first_global_relation_recall import write_global_relation_recall_state
+from .paper_first_paper_design_backlog import write_paper_design_backlog
 from .paper_first_p0_f0 import write_paper_first_p0_f0_state
 from .research_system import write_research_system_state
 from .publication import PUBLICATION_OK_STATES, publish_generated_state
@@ -133,11 +135,13 @@ def run_cycle(
         if sync_literature:
             report["steps"].append(_step("literature-sync", _sync_literature))
         if mode in {"weekly", "manual"}:
-            # Active paper discovery uses four empirically grounded lanes and consumes only verified primary evidence.
-            # Public Primary/Generator/Queue state is committed as one transaction; private raw evidence remains zero-authority.
-            # Old solution-first banks are rebuilt below as archival inspiration and cannot bypass this queue.
+            # Preserve already-passed Problem-Gate candidates before the volatile discovery queue can refresh.
+            # Canonical live discovery remains the four-lane atomic transaction; the ten-primitive Search Portfolio is shadow-only.
+            # Global Relation Recall supplements cross-tranche live-lane pair recall without gaining canonical Problem-Gate authority.
+            report["steps"].append(_step("paper-design-backlog-pre-discovery", write_paper_design_backlog))
             report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
             report["steps"].append(_step("paper-first-discovery-transaction", write_problem_discovery_transaction))
+            report["steps"].append(_step("paper-first-global-relation-recall", write_global_relation_recall_state))
             report["steps"].append(_step("iclr-bank", write_iclr_idea_bank))
             report["steps"].append(_step("machine-school-inspired-bank", write_machine_school_bank))
             report["steps"].append(_step("archival-solution-first-idea-discovery-v3", write_idea_discovery_v3))
@@ -156,9 +160,8 @@ def run_cycle(
         if mode not in {"weekly", "manual"}:
             report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
             # Queue provenance is transaction-bound to Primary -> Generator -> Queue.
-            # A daily cycle does not run Primary/Generator, so it must preserve the
-            # versioned queue snapshot instead of re-reading a potentially older
-            # host-private auto inbox.
+            # A daily cycle does not run Primary/Generator, so it preserves the versioned queue snapshot.
+        report["steps"].append(_step("paper-design-backlog", write_paper_design_backlog))
         report["steps"].append(_step("human-terminal-idea-state", write_human_terminal_state))
         report["steps"].append(_step("paper-first-p0-f0-state", write_paper_first_p0_f0_state))
         report["steps"].append(_step("p0-realizability-suite", write_p0_realizability_suite))
