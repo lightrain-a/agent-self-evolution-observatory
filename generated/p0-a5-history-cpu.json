@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-13T15:18:53+00:00",
+  "generated_at": "2026-08-13T18:31:05+00:00",
   "idea_id": "lineage-aware-rollback",
   "code": "A-5",
   "scientific_role": "CPU rollback-equivalence P0 on a 40-update typed stream with 12 frozen rollback queries",
