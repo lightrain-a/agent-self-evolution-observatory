@@ -259,6 +259,39 @@ def build_problem_gate_queue(
     }
 
 
+def load_problem_gate_queue_state(path: Path = DEFAULT_JSON) -> dict[str, Any]:
+    """Load the frozen public queue snapshot without re-reading host-private inboxes."""
+    if not path.exists():
+        return {
+            "schema_version": "2.0",
+            "status": "NOT_RUN",
+            "policy": {
+                "candidate_inbox_is_not_authority": True,
+                "all_candidates_require_problem_gate": True,
+                "problem_gate_pass_only_grants_human_paper_design_eligibility": True,
+                "automatic_method_authority": False,
+                "automatic_experiment_authority": False,
+                "automatic_p0_authority": False,
+            },
+            "summary": {
+                "submitted": 0, "audited": 0, "passed_problem_gate": 0, "blocked_problem_gate": 0,
+                "paper_design_eligible": 0, "inbox_errors": 0, "primary_evidence_records": 0,
+                "submitted_by_lane": _count_by_lane([]), "passed_by_lane": _count_by_lane([]), "blocked_by_lane": _count_by_lane([]),
+                "method_authorized": 0, "experiment_authorized": 0, "p0_authorized": 0,
+            },
+            "inbox_errors": [], "passed": [], "blocked": [], "audited": [],
+        }
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {
+            "schema_version": "2.0", "status": "STATE_UNREADABLE", "policy": {},
+            "summary": {"submitted": 0, "audited": 0, "passed_problem_gate": 0, "blocked_problem_gate": 0, "paper_design_eligible": 0, "inbox_errors": 1, "primary_evidence_records": 0, "method_authorized": 0, "experiment_authorized": 0, "p0_authorized": 0},
+            "inbox_errors": ["state-unreadable"], "passed": [], "blocked": [], "audited": [],
+        }
+    return payload if isinstance(payload, dict) else {"schema_version": "2.0", "status": "STATE_INVALID", "policy": {}, "summary": {}, "passed": [], "blocked": [], "audited": []}
+
+
 def write_problem_gate_queue(
     json_path: Path = DEFAULT_JSON,
     js_path: Path = DEFAULT_JS,

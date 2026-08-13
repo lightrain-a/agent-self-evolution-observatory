@@ -42,7 +42,7 @@ from .paper_first_fresh_saturation import build_fresh_saturation_state, write_fr
 from .paper_first_primary_evidence import load_primary_evidence_state
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import load_problem_generator_state
-from .paper_first_problem_gate_queue import build_problem_gate_queue, write_problem_gate_queue
+from .paper_first_problem_gate_queue import load_problem_gate_queue_state, write_problem_gate_queue
 from .paper_first_post_c2_adjudication import build_post_c2_adjudication, write_post_c2_adjudication
 from .paper_first_premature_method_diagnostics import resolve_premature_method_diagnostics, write_premature_method_diagnostics
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
@@ -298,7 +298,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_primary_evidence = load_primary_evidence_state()
     paper_first_problem_discovery_contract = build_problem_discovery_contract_state()
     paper_first_problem_generator = load_problem_generator_state()
-    paper_first_problem_gate_queue = build_problem_gate_queue()
+    paper_first_problem_gate_queue = load_problem_gate_queue_state()
     paper_first_post_c2 = build_post_c2_adjudication()
     formal_cards = {
         str(card.get("idea_id")): card

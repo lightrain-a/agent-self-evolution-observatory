@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, FORBIDDEN_DISCOVERY_LANES
-from .paper_first_problem_gate_queue import build_problem_gate_queue
+from .paper_first_problem_gate_queue import build_problem_gate_queue, load_problem_gate_queue_state
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
 
@@ -37,6 +37,14 @@ def write_primary_pool(root: Path, candidate: dict | None = None) -> Path:
 
 
 class PaperFirstProblemGateQueueTest(unittest.TestCase):
+    def test_frozen_queue_loader_does_not_recompute_host_private_inboxes(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); snapshot=root/"queue.json"
+            expected={"schema_version":"2.0","summary":{"submitted":2,"passed_problem_gate":0,"blocked_problem_gate":2,"paper_design_eligible":0},"policy":{"all_candidates_require_problem_gate":True},"passed":[],"blocked":[{"candidate_id":"A"},{"candidate_id":"B"}],"audited":[]}
+            snapshot.write_text(json.dumps(expected),encoding="utf-8")
+            loaded=load_problem_gate_queue_state(snapshot)
+        self.assertEqual(loaded,expected)
+
     def test_missing_inboxes_are_valid_empty_multilane_queue(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
