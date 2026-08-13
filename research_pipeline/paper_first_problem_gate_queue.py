@@ -9,6 +9,7 @@ from typing import Any
 from .config import PROJECT_ROOT, StorageSettings
 from .paper_first_primary_evidence import load_private_primary_pool, private_primary_pool_path
 from .paper_first_problem_discovery_contract import audit_problem_candidate
+from .public_state_redaction import redact_private_paths
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-gate-queue.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-problem-gate-queue.js"
@@ -248,15 +249,17 @@ def write_problem_gate_queue(
     primary_pool_path: Path | None = None,
     storage: StorageSettings | None = None,
 ) -> dict[str, Any]:
+    storage = storage or StorageSettings.from_env()
     state = build_problem_gate_queue(
         inbox_path,
         auto_inbox_path=auto_inbox_path,
         primary_pool_path=primary_pool_path,
         storage=storage,
     )
+    public_state = redact_private_paths(state, storage=storage)
     json_path.parent.mkdir(parents=True, exist_ok=True)
-    json_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    js_path.write_text("window.PAPER_FIRST_PROBLEM_GATE_QUEUE = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
+    json_path.write_text(json.dumps(public_state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    js_path.write_text("window.PAPER_FIRST_PROBLEM_GATE_QUEUE = " + json.dumps(public_state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
     return state
 
 

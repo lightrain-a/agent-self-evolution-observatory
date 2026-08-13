@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "generated_at": "2026-08-13T07:02:29+00:00",
-  "corpus_path": "/home/wyt/code/agent-self-evolution-observatory-problem-generator-20260813/generated/research-data/corpora/semantic-scholar-corpus.json",
-  "private_pool_path": "/home/wyt/code/agent-self-evolution-observatory-problem-generator-20260813/generated/research-data/paper-first-problem-discovery/primary-evidence-pool.json",
+  "corpus_path": "private-data://external/semantic-scholar-corpus.json",
+  "private_pool_path": "private-data://external/primary-evidence-pool.json",
   "policy": {
     "semantic_scholar_is_discovery_metadata_not_primary_evidence": true,
     "verified_primary_page_required": true,

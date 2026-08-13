@@ -12,6 +12,7 @@ from .paper_first_primary_evidence import load_private_primary_pool,private_prim
 from .paper_first_problem_discovery_contract import audit_problem_candidate
 from .paper_first_problem_gate_queue import default_auto_inbox_path
 from .paper_first_problem_generator_prompts import generator_prompt,reviewer_prompt
+from .public_state_redaction import redact_private_paths
 
 DEFAULT_JSON=PROJECT_ROOT/"generated"/"paper-first-problem-generator-state.json"
 DEFAULT_JS=PROJECT_ROOT/"generated"/"paper-first-problem-generator-state.js"
@@ -123,13 +124,13 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     return finish("GENERATED_ZERO_CANDIDATES" if not cands else "GENERATED_AWAIT_PROBLEM_GATE",cands)
 
 
-def public_problem_generator_state(state:dict[str,Any])->dict[str,Any]:
+def public_problem_generator_state(state:dict[str,Any],storage:StorageSettings|None=None)->dict[str,Any]:
     public=json.loads(json.dumps(state,ensure_ascii=False))
     for key in ("primary_pool_path","auto_inbox_path","archived_previous_auto_inbox"):
         public.pop(key,None)
     for artifact in (public.get("raw_artifacts") or {}).values():
         if isinstance(artifact,dict):artifact.pop("path",None)
-    return public
+    return redact_private_paths(public,storage=storage or StorageSettings.from_env())
 
 
 def load_problem_generator_state(path:Path=DEFAULT_JSON):
@@ -141,6 +142,6 @@ def load_problem_generator_state(path:Path=DEFAULT_JSON):
 
 
 def write_problem_generator_state(json_path=DEFAULT_JSON,js_path=DEFAULT_JS,**kwargs):
-    state=run_problem_generator(**kwargs);public=public_problem_generator_state(state);json_path.parent.mkdir(parents=True,exist_ok=True);json_path.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");js_path.write_text("window.PAPER_FIRST_PROBLEM_GENERATOR = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8");return state
+    state=run_problem_generator(**kwargs);public=public_problem_generator_state(state,storage=kwargs.get("storage"));json_path.parent.mkdir(parents=True,exist_ok=True);json_path.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");js_path.write_text("window.PAPER_FIRST_PROBLEM_GENERATOR = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8");return state
 
 if __name__=="__main__":print(json.dumps(write_problem_generator_state(),ensure_ascii=False))

@@ -15,6 +15,7 @@ import requests
 
 from .config import PROJECT_ROOT, StorageSettings
 from .live_pipeline import DEFAULT_CORPUS_JSON, load_live_corpus
+from .public_state_redaction import redact_private_paths
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.js"
@@ -484,9 +485,10 @@ def write_primary_evidence_pool(
     private_pool_path, _ = _private_paths(storage)
     private_pool_path.parent.mkdir(parents=True, exist_ok=True)
     private_pool_path.write_text(json.dumps(private, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    public_state = redact_private_paths(state, storage=storage)
     json_path.parent.mkdir(parents=True, exist_ok=True)
-    json_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    js_path.write_text("window.PAPER_FIRST_PRIMARY_EVIDENCE = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
+    json_path.write_text(json.dumps(public_state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    js_path.write_text("window.PAPER_FIRST_PRIMARY_EVIDENCE = " + json.dumps(public_state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
     return state
 
 

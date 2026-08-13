@@ -62,6 +62,7 @@ from .pre_p0_identifiability import build_pre_p0_identifiability_audit
 from .pre_gpu_candidate_gates import build_pre_gpu_candidate_gate_state
 from .principle_adjudication import build_principle_layer_state
 from .research_capability_registry import build_research_capability_registry
+from .public_state_redaction import redact_private_paths
 from .research_system_replay import build_research_system_replay
 from .review_repair import build_repair_queue
 from .scientific_meta_trace import build_scientific_meta_trace
@@ -857,7 +858,8 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_governance_state(PROJECT_ROOT / "generated" / "research-governance-v2.json", PROJECT_ROOT / "generated" / "research-governance-v2.js")
     errors=validate_state(state)
     if errors: raise ValueError("Invalid research system state:\n- " + "\n- ".join(errors))
+    public_state=redact_private_paths(state,storage=StorageSettings.from_env())
     json_path.parent.mkdir(parents=True, exist_ok=True)
-    json_path.write_text(json.dumps(state, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
-    js_path.write_text("window.RESEARCH_SYSTEM_STATE = "+json.dumps(state, ensure_ascii=False, separators=(",",":"))+";\n", encoding="utf-8")
+    json_path.write_text(json.dumps(public_state, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+    js_path.write_text("window.RESEARCH_SYSTEM_STATE = "+json.dumps(public_state, ensure_ascii=False, separators=(",",":"))+";\n", encoding="utf-8")
     return state
