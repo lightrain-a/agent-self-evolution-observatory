@@ -26,15 +26,22 @@ DEFAULT_PORTABLE_REVIEW_STATE = PROJECT_ROOT / "generated" / "paper-first-proble
 DEFAULT_MAX_PAPERS = 32
 DEFAULT_LANE_FLOOR = 1
 DEFAULT_SOURCE_COVERAGE_ANCHOR_COUNT = 16
-PRIMARY_EVIDENCE_LANES: tuple[dict[str, Any], ...] = (
+PRIMARY_EVIDENCE_OBJECT_LANES: tuple[dict[str, Any], ...] = (
     {"key":"skill_harness","terms":("skill","harness","workflow evolution","agent workflow")},
     {"key":"memory_continual","terms":("agent memory","memory","continual agent","lifelong agent","experience management")},
+    {"key":"world_model","terms":("world model","world-model","world modeling","world modelling","world action model")},
+    {"key":"parametric_model_state","terms":("model weights","model parameters","lora parameters","policy weights","policy weight","parameter update","weight update","post-train","post-training","on-policy distillation","self-distillation"),"exclude_terms":("without weight updates","does not update model weights","without changing a single model weight","what is updated is not model weights","model weights remain fixed","without parameter updates")},
+)
+PRIMARY_EVIDENCE_CONTEXT_TAGS: tuple[dict[str, Any], ...] = (
     {"key":"embodied","terms":("embodied","robot","robotic","navigation","physical autonomy")},
     {"key":"collective","terms":("multi-agent","multi agent","collaborative harness","collaborative agent","swarm","group-evolving","group evolving","agent society")},
     {"key":"autonomous_science","terms":("symbolic regression","scientific discovery","scientific agent","research agent","ai scientist","autonomous research","hypothesis generation","experiment planning")},
     {"key":"runtime_deployment","terms":("runtime","deployment","production agent","customer support","long-horizon agent","monitoring","runtime contract")},
+)
+PRIMARY_EVIDENCE_PROPERTY_TAGS: tuple[dict[str, Any], ...] = (
     {"key":"safety_reliability","terms":("agent safety","safety harness","reliability","robustness","adversarial","security","failure")},
 )
+PRIMARY_EVIDENCE_LANES = PRIMARY_EVIDENCE_OBJECT_LANES + PRIMARY_EVIDENCE_CONTEXT_TAGS + PRIMARY_EVIDENCE_PROPERTY_TAGS
 DEFAULT_MAX_CORPUS_AGE_DAYS = 10.0
 DEFAULT_MAX_PUBLICATION_AGE_DAYS = 60.0
 DEFAULT_MIN_INTERVAL_SECONDS = 0.75
@@ -342,19 +349,37 @@ def _relevance_score(paper: dict[str, Any]) -> int:
     return score
 
 
-def _paper_lane_keys(paper: dict[str, Any]) -> tuple[str, ...]:
+def _paper_keys_for_registry(paper: dict[str, Any], registry: tuple[dict[str, Any], ...]) -> tuple[str, ...]:
     haystack = f"{paper.get('title','')} {paper.get('abstract','')}".lower()
-    return tuple(
-        str(lane["key"])
-        for lane in PRIMARY_EVIDENCE_LANES
-        if any(str(term).lower() in haystack for term in lane["terms"])
-    )
+    keys=[]
+    for lane in registry:
+        terms=tuple(str(term).lower() for term in lane.get("terms") or ())
+        exclude_terms=tuple(str(term).lower() for term in lane.get("exclude_terms") or ())
+        if any(term in haystack for term in terms) and not any(term in haystack for term in exclude_terms):
+            keys.append(str(lane["key"]))
+    return tuple(keys)
+
+
+def _paper_object_lane_keys(paper: dict[str, Any]) -> tuple[str, ...]:
+    return _paper_keys_for_registry(paper,PRIMARY_EVIDENCE_OBJECT_LANES)
+
+
+def _paper_lane_keys(paper: dict[str, Any]) -> tuple[str, ...]:
+    return _paper_keys_for_registry(paper,PRIMARY_EVIDENCE_LANES)
 
 
 def _lane_counts(papers: list[dict[str, Any]]) -> dict[str, int]:
     counts = {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES}
     for paper in papers:
         for key in _paper_lane_keys(paper):
+            counts[key] += 1
+    return counts
+
+
+def _object_lane_counts(papers: list[dict[str, Any]]) -> dict[str, int]:
+    counts = {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_OBJECT_LANES}
+    for paper in papers:
+        for key in _paper_object_lane_keys(paper):
             counts[key] += 1
     return counts
 
@@ -562,7 +587,11 @@ def select_primary_candidates(
     # alter paper relevance/freshness eligibility or scientific authority.
     tail = sorted(
         ranked_papers[anchor_count:],
-        key=lambda paper: (0 if _paper_lane_keys(paper) else 1, exposure.get(_source_ref(paper), 0), rank_index[_arxiv_id(paper)]),
+        key=lambda paper: (
+            0 if _paper_object_lane_keys(paper) else (1 if _paper_lane_keys(paper) else 2),
+            exposure.get(_source_ref(paper), 0),
+            rank_index[_arxiv_id(paper)],
+        ),
     )
     for paper in tail:
         if len(selected) >= limit:
@@ -1011,8 +1040,14 @@ def build_primary_evidence_pool(
             "typed_evidence_extraction_version": TYPED_EVIDENCE_EXTRACTION_VERSION,
             "pre_registered_lane_coverage_floor": True,
             "lane_coverage_is_discovery_breadth_not_scientific_authority": True,
+            "scientific_object_lanes": [str(lane["key"]) for lane in PRIMARY_EVIDENCE_OBJECT_LANES],
+            "context_tags": [str(lane["key"]) for lane in PRIMARY_EVIDENCE_CONTEXT_TAGS],
+            "property_tags": [str(lane["key"]) for lane in PRIMARY_EVIDENCE_PROPERTY_TAGS],
+            "new_object_lanes_require_shadow_primary_support_and_collision_gate": True,
+            "context_and_property_tags_have_zero_scientific_authority": True,
             "lane_floor": int(lane_floor),
             "source_coverage_scheduler_is_discovery_only": True,
+            "source_coverage_exploration_prefers_scientific_objects": True,
             "source_review_exposure_has_zero_scientific_authority": True,
             "portable_source_review_receipts_have_zero_scientific_authority": True,
             "private_saturation_ledger_runs_exported_as_zero_authority_portable_receipts": True,
@@ -1057,8 +1092,12 @@ def build_primary_evidence_pool(
             "eligible_no_lane_unreviewed": 0,
             "selected_previously_reviewed": 0,
             "selected_unreviewed": 0,
+            "selected_object_unreviewed": 0,
             "selected_lane_unreviewed": 0,
             "selected_no_lane_unreviewed": 0,
+            "eligible_object_linked_sources": 0,
+            "reviewed_object_linked_sources": 0,
+            "unreviewed_object_linked_sources": 0,
             "eligible_lane_linked_sources": 0,
             "reviewed_lane_linked_sources": 0,
             "unreviewed_lane_linked_sources": 0,
@@ -1066,6 +1105,8 @@ def build_primary_evidence_pool(
             "source_coverage_exhausted": False,
             "source_retrieval_complete": False,
             "coverage_anchor_count": int(coverage_anchor_count),
+            "eligible_object_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_OBJECT_LANES},
+            "selected_object_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_OBJECT_LANES},
             "eligible_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
             "selected_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
             "verified_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
@@ -1159,6 +1200,8 @@ def build_primary_evidence_pool(
     )
     eligible_lane_counts = _lane_counts(eligible_candidates)
     selected_lane_counts = _lane_counts(candidates)
+    eligible_object_lane_counts = _object_lane_counts(eligible_candidates)
+    selected_object_lane_counts = _object_lane_counts(candidates)
     undercovered_lanes = [
         key for key, eligible_count in eligible_lane_counts.items()
         if eligible_count > 0 and selected_lane_counts.get(key, 0) < min(int(lane_floor), eligible_count)
@@ -1167,6 +1210,9 @@ def build_primary_evidence_pool(
     selected_previously_reviewed = sum(value > 0 for value in selected_exposures.values())
     eligible_unreviewed_rows=[paper for paper in eligible_candidates if int(source_exposure_counts.get(_source_ref(paper),0))==0]
     selected_unreviewed_rows=[paper for paper in candidates if int(selected_exposures.get(_source_ref(paper),0))==0]
+    eligible_object_linked_refs = {_source_ref(paper) for paper in eligible_candidates if _paper_object_lane_keys(paper)}
+    reviewed_object_linked_refs = {ref for ref in eligible_object_linked_refs if int(source_exposure_counts.get(ref, 0)) > 0}
+    unreviewed_object_linked_refs = eligible_object_linked_refs - reviewed_object_linked_refs
     eligible_lane_linked_refs = {_source_ref(paper) for paper in eligible_candidates if _paper_lane_keys(paper)}
     reviewed_lane_linked_refs = {ref for ref in eligible_lane_linked_refs if int(source_exposure_counts.get(ref, 0)) > 0}
     unreviewed_lane_linked_refs = eligible_lane_linked_refs - reviewed_lane_linked_refs
@@ -1184,8 +1230,12 @@ def build_primary_evidence_pool(
         "eligible_no_lane_unreviewed": sum(not bool(_paper_lane_keys(paper)) for paper in eligible_unreviewed_rows),
         "selected_previously_reviewed": selected_previously_reviewed,
         "selected_unreviewed": len(selected_unreviewed_rows),
+        "selected_object_unreviewed": sum(bool(_paper_object_lane_keys(paper)) for paper in selected_unreviewed_rows),
         "selected_lane_unreviewed": sum(bool(_paper_lane_keys(paper)) for paper in selected_unreviewed_rows),
         "selected_no_lane_unreviewed": sum(not bool(_paper_lane_keys(paper)) for paper in selected_unreviewed_rows),
+        "eligible_object_linked_sources": len(eligible_object_linked_refs),
+        "reviewed_object_linked_sources": len(reviewed_object_linked_refs),
+        "unreviewed_object_linked_sources": len(unreviewed_object_linked_refs),
         "eligible_lane_linked_sources": len(eligible_lane_linked_refs),
         "reviewed_lane_linked_sources": len(reviewed_lane_linked_refs),
         "unreviewed_lane_linked_sources": len(unreviewed_lane_linked_refs),
@@ -1193,12 +1243,16 @@ def build_primary_evidence_pool(
         "source_coverage_exhausted": source_coverage_exhausted,
         "source_retrieval_complete": source_retrieval_complete,
         "coverage_anchor_count": min(max(0, int(coverage_anchor_count)), len(candidates)),
+        "eligible_object_lane_counts": eligible_object_lane_counts,
+        "selected_object_lane_counts": selected_object_lane_counts,
         "eligible_lane_counts": eligible_lane_counts,
         "selected_lane_counts": selected_lane_counts,
         "undercovered_lanes": undercovered_lanes,
     })
     private["lane_coverage"] = {
         "lane_floor": int(lane_floor),
+        "eligible_object_lane_counts": eligible_object_lane_counts,
+        "selected_object_lane_counts": selected_object_lane_counts,
         "eligible_lane_counts": eligible_lane_counts,
         "selected_lane_counts": selected_lane_counts,
         "undercovered_lanes": undercovered_lanes,
@@ -1213,6 +1267,9 @@ def build_primary_evidence_pool(
         "eligible_unreviewed": len(eligible_unreviewed_rows),
         "eligible_lane_unreviewed": sum(bool(_paper_lane_keys(paper)) for paper in eligible_unreviewed_rows),
         "eligible_no_lane_unreviewed": sum(not bool(_paper_lane_keys(paper)) for paper in eligible_unreviewed_rows),
+        "eligible_object_linked_sources": len(eligible_object_linked_refs),
+        "reviewed_object_linked_sources": len(reviewed_object_linked_refs),
+        "unreviewed_object_linked_sources": len(unreviewed_object_linked_refs),
         "eligible_lane_linked_sources": len(eligible_lane_linked_refs),
         "reviewed_lane_linked_sources": len(reviewed_lane_linked_refs),
         "unreviewed_lane_linked_sources": len(unreviewed_lane_linked_refs),

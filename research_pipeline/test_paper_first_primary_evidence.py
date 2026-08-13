@@ -11,7 +11,7 @@ from unittest.mock import patch
 import requests
 
 from .config import StorageSettings
-from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, _paper_lane_keys, _source_exposure_state, build_primary_evidence_pool, discover_arxiv_fallback, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
+from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, _paper_lane_keys, _paper_object_lane_keys, _source_exposure_state, build_primary_evidence_pool, discover_arxiv_fallback, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
 
 
 class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
@@ -87,6 +87,24 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertIn('embodied agent',joined)
         self.assertIn('agent memory',joined)
         self.assertIn('safety',joined)
+
+    def test_world_model_and_parametric_state_are_scientific_object_lanes(self) -> None:
+        world={"title":"Self-Evolving World Models for Agent Planning","abstract":"A world model is continually optimized from interaction evidence."}
+        param={"title":"Recursive Agent Improvement","abstract":"We post-train the agent and update LoRA parameters from execution-grounded feedback."}
+        frozen={"title":"Harness Evolution","abstract":"Model weights remain fixed; adaptation changes only the external harness."}
+        self.assertIn("world_model",_paper_object_lane_keys(world))
+        self.assertIn("parametric_model_state",_paper_object_lane_keys(param))
+        self.assertNotIn("parametric_model_state",_paper_object_lane_keys(frozen))
+
+    def test_source_scheduler_prefers_object_grounded_exploration_over_context_only(self) -> None:
+        papers=[
+            {"paper_id":"anchor","title":"Agent Skill Harness Anchor","abstract":"A self-evolving agent skill harness.","year":2026,"metadata":{"externalIds":{"ArXiv":"2608.41001"},"publicationDate":"2026-08-13","citationCount":0,"retrievalScore":0,"matches":[{"route":"topic"}]}},
+            {"paper_id":"context","title":"Autonomous Agent Runtime Deployment","abstract":"A self-evolving autonomous agent is studied in runtime deployment.","year":2026,"metadata":{"externalIds":{"ArXiv":"2608.41002"},"publicationDate":"2026-08-12","citationCount":0,"retrievalScore":0,"matches":[{"route":"topic"}]}},
+            {"paper_id":"world","title":"Adaptive World Model for Self-Evolving Agents","abstract":"A world model evolves from interaction evidence.","year":2026,"metadata":{"externalIds":{"ArXiv":"2608.41003"},"publicationDate":"2026-08-11","citationCount":0,"retrievalScore":0,"matches":[{"route":"topic"}]}},
+        ]
+        exposure={"arXiv:2608.41001":1,"arXiv:2608.41002":0,"arXiv:2608.41003":0}
+        selected=select_primary_candidates({"papers":papers},max_papers=2,lane_floor=0,source_exposure_counts=exposure,coverage_anchor_count=1,now=datetime(2026,8,13,tzinfo=timezone.utc))
+        self.assertEqual([row["paper_id"] for row in selected],["anchor","world"])
 
     def test_parse_arxiv_page_extracts_title_and_abstract(self) -> None:
         parsed = parse_arxiv_page('<meta name="citation_title" content="Paper A"><blockquote class="abstract mathjax">Abstract: hello <b>world</b></blockquote>')
