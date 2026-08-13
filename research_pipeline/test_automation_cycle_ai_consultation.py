@@ -7,7 +7,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from .automation_cycle import _sync_literature, cycle_lock, run_cycle
+from .automation_cycle import _advisory_step, _sync_literature, cycle_lock, run_cycle
 
 
 class AutomationCycleAIConsultationTest(unittest.TestCase):
@@ -63,7 +63,7 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             storage = SimpleNamespace(run_dir=root / "runs", lock_dir=root / "locks", ensure=lambda: None)
             def fake_step(name, function):
                 return {"name": name, "status": "pass", "duration_seconds": 0.0, "summary": {}}
-            with patch("research_pipeline.automation_cycle.StorageSettings.from_env", return_value=storage), patch("research_pipeline.automation_cycle._step", side_effect=fake_step):
+            with patch("research_pipeline.automation_cycle.StorageSettings.from_env", return_value=storage), patch("research_pipeline.automation_cycle._step", side_effect=fake_step), patch("research_pipeline.automation_cycle._advisory_step", side_effect=fake_step):
                 report = run_cycle(mode="weekly", web_review_limit=1, ai_consultations=False, publish=False)
             names = [row["name"] for row in report["steps"]]
             self.assertIn("external-research-system-learning-review", names)
@@ -81,6 +81,22 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertLess(names.index("paper-first-problem-gate-queue"), names.index("archival-solution-first-idea-discovery-v3"))
             self.assertLess(names.index("paper-first-problem-gate-queue"), names.index("historical-paper-first-idea-incubation"))
             self.assertLess(names.index("external-research-system-learning-review"), names.index("project-web-gpt-repair-review"))
+
+    def test_failed_advisory_external_review_is_warning_not_pass(self) -> None:
+        step=_advisory_step("external-review",lambda:{"ok":False,"returncode":1,"exists":False})
+        self.assertEqual(step["status"],"warning")
+        self.assertTrue(step["advisory"])
+        self.assertEqual(step["summary"]["ok"],False)
+
+    def test_advisory_warning_yields_pass_with_warnings_without_masking_core_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); storage=SimpleNamespace(run_dir=root/"runs",lock_dir=root/"locks",ensure=lambda:None)
+            def hard_pass(name,function): return {"name":name,"status":"pass","duration_seconds":0.0,"summary":{}}
+            def advisory_warning(name,function): return {"name":name,"status":"warning","advisory":True,"duration_seconds":0.0,"summary":{"ok":False}}
+            with patch("research_pipeline.automation_cycle.StorageSettings.from_env",return_value=storage), patch("research_pipeline.automation_cycle._step",side_effect=hard_pass), patch("research_pipeline.automation_cycle._advisory_step",side_effect=advisory_warning):
+                report=run_cycle(mode="weekly",web_review_limit=1,ai_consultations=False,publish=False)
+            self.assertEqual(report["status"],"pass_with_warnings")
+            self.assertEqual(sum(step["status"]=="warning" for step in report["steps"]),2)
 
 
 if __name__ == "__main__":

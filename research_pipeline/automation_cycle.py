@@ -197,9 +197,11 @@ def run_cycle(
         report["steps"].append(_step("research-system-state", write_research_system_state))
         if web_review_limit > 0:
             if mode in {"weekly", "manual"}:
-                report["steps"].append(_step("external-research-system-learning-review", lambda: _run_external_system_learning_review(storage)))
-            report["steps"].append(_step("project-web-gpt-repair-review", lambda: _run_web_reviews(web_review_limit, storage)))
-        report["status"] = "pass" if all(step["status"] == "pass" for step in report["steps"]) else "degraded"
+                report["steps"].append(_advisory_step("external-research-system-learning-review", lambda: _run_external_system_learning_review(storage)))
+            report["steps"].append(_advisory_step("project-web-gpt-repair-review", lambda: _run_web_reviews(web_review_limit, storage)))
+        hard_failures = [step for step in report["steps"] if step["status"] == "fail"]
+        advisory_warnings = [step for step in report["steps"] if step["status"] == "warning"]
+        report["status"] = "degraded" if hard_failures else ("pass_with_warnings" if advisory_warnings else "pass")
     report["completed_at"] = _now()
     stamp = report["completed_at"].replace(":", "-")
     report_path = run_dir / f"cycle-{stamp}.json"
@@ -289,6 +291,29 @@ def _step(name: str, function: Any) -> dict[str, Any]:
         }
 
 
+def _advisory_step(name: str, function: Any) -> dict[str, Any]:
+    """Record optional external consultations truthfully without blocking core publication."""
+    started = time.time()
+    try:
+        result = function()
+        ok = not isinstance(result, dict) or result.get("ok") is not False
+        return {
+            "name": name,
+            "status": "pass" if ok else "warning",
+            "advisory": True,
+            "duration_seconds": round(time.time() - started, 3),
+            "summary": _safe_summary(result),
+        }
+    except Exception as error:
+        return {
+            "name": name,
+            "status": "warning",
+            "advisory": True,
+            "duration_seconds": round(time.time() - started, 3),
+            "error": f"{type(error).__name__}: {error}",
+        }
+
+
 def _safe_summary(result: Any) -> Any:
     if not isinstance(result, dict):
         return str(result)[:500]
@@ -352,10 +377,12 @@ def _run_external_system_learning_review(storage: StorageSettings) -> dict[str, 
         prompt,
     ]
     completed = subprocess.run(command, cwd=PROJECT_ROOT, text=True, capture_output=True, timeout=300, check=False)
+    exists = output.exists()
     return {
+        "ok": completed.returncode == 0 and exists,
         "returncode": completed.returncode,
         "output": str(output),
-        "exists": output.exists(),
+        "exists": exists,
         "stderr": completed.stderr[-1000:],
     }
 
@@ -394,7 +421,8 @@ def _run_web_reviews(limit: int, storage: StorageSettings) -> dict[str, Any]:
             "exists": output.exists(),
             "stderr": completed_process.stderr[-1000:],
         })
-    return {"requested": limit, "completed": completed}
+    ok = all(row.get("returncode") == 0 and row.get("exists") is True for row in completed)
+    return {"ok": ok, "requested": limit, "completed": completed}
 
 
 def parse_args() -> argparse.Namespace:
@@ -419,7 +447,7 @@ def main() -> int:
         publish=args.publish,
     )
     print(json.dumps(report, ensure_ascii=False, indent=2))
-    return 0 if report["status"] == "pass" else 1
+    return 0 if report["status"] in {"pass", "pass_with_warnings"} else 1
 
 
 if __name__ == "__main__":
