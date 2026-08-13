@@ -243,7 +243,7 @@ def _ensure_git_identity() -> dict[str, str]:
 
 def _push_with_timeout() -> subprocess.CompletedProcess[str]:
     return _run(
-        "git", "-c", "http.proxy=", "-c", "https.proxy=", "push", "origin", "main",
+        "git", "-c", "http.proxy=", "-c", "https.proxy=", "push", "origin", "HEAD:main",
         check=True, timeout=float(os.getenv("AUTOMATION_GIT_PUSH_TIMEOUT", "90")),
     )
 
@@ -304,6 +304,12 @@ def publish_generated_state(*, mode: str) -> dict[str, Any]:
     if local != remote:
         recovered = _recover_pending_push(local, remote)
         if recovered and recovered.get("status") != "recovered":
+            if recovered.get("status") == "deferred" and recovered.get("remote_ahead"):
+                # This cycle ran on a now-stale revision. Its generated outputs are
+                # reproducible, so restore them before deferring; otherwise the next
+                # service preflight cannot fast-forward the dedicated automation checkout.
+                _restore(tuple(path for path in artifacts if (PROJECT_ROOT / path).exists()))
+                recovered["working_tree_restored"] = True
             return recovered
 
     digest = _artifact_digest(artifacts)

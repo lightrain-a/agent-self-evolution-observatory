@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from unittest.mock import patch
 
 from .publication import (
     DAILY_ARTIFACTS,
@@ -8,6 +9,7 @@ from .publication import (
     WEEKLY_ARTIFACTS,
     _normalize,
     _normalized_text_digest,
+    _push_with_timeout,
 )
 
 
@@ -139,6 +141,13 @@ class PublicationTest(unittest.TestCase):
     def test_transient_network_deferral_is_non_fatal(self) -> None:
         self.assertIn("deferred", PUBLICATION_OK_STATES)
         self.assertNotIn("blocked", PUBLICATION_OK_STATES)
+
+    def test_publication_pushes_current_checkout_head_to_main(self) -> None:
+        with patch("research_pipeline.publication._run") as run:
+            _push_with_timeout()
+        args=run.call_args.args
+        self.assertEqual(args[:7],("git","-c","http.proxy=","-c","https.proxy=","push","origin"))
+        self.assertEqual(args[7],"HEAD:main")
 
     def test_weekly_publication_includes_literature_and_banks(self) -> None:
         self.assertTrue(set(DAILY_ARTIFACTS).issubset(WEEKLY_ARTIFACTS))

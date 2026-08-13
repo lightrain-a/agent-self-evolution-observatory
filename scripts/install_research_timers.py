@@ -10,6 +10,8 @@ from pathlib import Path
 
 EXPECTED_HOST = os.getenv("EXPECTED_RESEARCH_HOST", "admin01-NF5468M5")
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+CANONICAL_ROOT = Path(os.getenv("RESEARCH_CANONICAL_ROOT", "/home/wyt/code/agent-self-evolution-observatory"))
+AUTOMATION_ROOT = Path(os.getenv("RESEARCH_AUTOMATION_ROOT", "/home/wyt/code/agent-self-evolution-observatory-automation"))
 UNIT_SOURCE = PROJECT_ROOT / "deploy" / "systemd"
 UNIT_TARGET = Path("/etc/systemd/system")
 UNITS = (
@@ -24,6 +26,18 @@ def run(*args: str) -> None:
     subprocess.run(list(args), check=True)
 
 
+def ensure_automation_checkout() -> None:
+    if not CANONICAL_ROOT.exists():
+        raise SystemExit(f"Missing canonical checkout: {CANONICAL_ROOT}")
+    run("git", "-C", str(CANONICAL_ROOT), "-c", "http.proxy=", "-c", "https.proxy=", "fetch", "origin", "main")
+    if not AUTOMATION_ROOT.exists():
+        run("git", "-C", str(CANONICAL_ROOT), "worktree", "add", "--detach", str(AUTOMATION_ROOT), "origin/main")
+    elif not (AUTOMATION_ROOT / ".git").exists():
+        raise SystemExit(f"Automation root exists but is not a git worktree: {AUTOMATION_ROOT}")
+    run("git", "-C", str(AUTOMATION_ROOT), "-c", "http.proxy=", "-c", "https.proxy=", "fetch", "origin", "main")
+    run("git", "-C", str(AUTOMATION_ROOT), "merge", "--ff-only", "origin/main")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Install and enable continuous research systemd timers on server 52.")
     parser.add_argument("--disable", action="store_true", help="Disable timers without deleting unit files.")
@@ -36,6 +50,7 @@ def main() -> int:
     if args.disable:
         run("systemctl", "disable", "--now", *timer_units)
         return 0
+    ensure_automation_checkout()
     for unit in UNITS:
         source = UNIT_SOURCE / unit
         if not source.exists():

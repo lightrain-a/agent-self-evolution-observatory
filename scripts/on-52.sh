@@ -9,7 +9,7 @@ if [[ "${ACTUAL_HOST}" != "${EXPECTED_HOST}" ]]; then
 fi
 
 PROJECT_ROOT="${PROJECT_ROOT:-/home/wyt/code/agent-self-evolution-observatory}"
-ENV_FILE="${PROJECT_ROOT}/.env"
+ENV_FILE="${RESEARCH_ENV_FILE:-${PROJECT_ROOT}/.env}"
 if [[ ! -f "${ENV_FILE}" ]]; then
   echo "Missing server environment file: ${ENV_FILE}" >&2
   exit 3

@@ -10,6 +10,14 @@ The authoritative execution host is `10.42.8.52` (`admin01-NF5468M5`).
 
 Keep only source code, configuration templates, tests, documentation, and small browser-consumable generated snapshots here.
 
+## Automation checkout
+
+```text
+/home/wyt/code/agent-self-evolution-observatory-automation
+```
+
+The daily and weekly systemd cycles run only from this detached Git worktree. The installer creates it from `origin/main`; every service invocation fetches and performs an `--ff-only` merge before starting. The canonical checkout remains available for human work and supplies the ignored `.env`, so uncommitted research files cannot block timer publication.
+
 ## Local data disk
 
 ```text
