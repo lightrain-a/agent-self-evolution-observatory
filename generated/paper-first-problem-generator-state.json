@@ -1,6 +1,6 @@
 {
-  "schema_version": "3.1",
-  "generated_at": "2026-08-13T14:57:42+00:00",
+  "schema_version": "3.2",
+  "generated_at": "2026-08-13T15:37:57+00:00",
   "run_id": "search-portfolio-20260813-r1",
   "status": "GENERATED_AWAIT_PROBLEM_GATE",
   "generator_model": "ark-code-latest",
@@ -55,6 +55,8 @@
     "lane_search_diagnostics_have_zero_scientific_authority": true,
     "historically_underexplored_lanes_are_searched_first": true,
     "lane_search_never_requires_candidate": true,
+    "last_completed_lane_search_is_portable_zero_authority_receipt": true,
+    "terminal_zero_call_skip_preserves_last_completed_lane_search": true,
     "portable_review_receipts_are_scheduler_metadata_only": true,
     "portable_review_receipts_have_zero_scientific_authority": true,
     "primary_source_coverage_receipts_are_inherited_transactionally": true,
@@ -210,6 +212,88 @@
         "reason": "Staged Search Portfolio expansion produced grounded seeds."
       }
     ],
+    "last_completed_lane_search": {
+      "run_id": "search-portfolio-20260813-r1",
+      "generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
+      "generated_at": "2026-08-13T15:37:57+00:00",
+      "mode": "portfolio_expansion",
+      "lane_search_priority": [
+        "CONTRADICTION",
+        "CONVERGENT_FAILURE",
+        "ASSUMPTION_BREAK",
+        "UNEXPLAINED_BOUNDARY",
+        "IDENTIFIABILITY_GAP",
+        "MISSING_DECISION_OBJECT",
+        "COMPOSITION_INTERACTION",
+        "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+        "NEW_CAPABILITY_QUESTION",
+        "LONGITUDINAL_EMERGENCE"
+      ],
+      "lane_search": [
+        {
+          "lane": "CONTRADICTION",
+          "status": "EXPANDED",
+          "raw_seed_count": 12,
+          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+        },
+        {
+          "lane": "CONVERGENT_FAILURE",
+          "status": "EXPANDED",
+          "raw_seed_count": 6,
+          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+        },
+        {
+          "lane": "ASSUMPTION_BREAK",
+          "status": "EXPANDED",
+          "raw_seed_count": 7,
+          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+        },
+        {
+          "lane": "UNEXPLAINED_BOUNDARY",
+          "status": "EXPANDED",
+          "raw_seed_count": 12,
+          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+        },
+        {
+          "lane": "IDENTIFIABILITY_GAP",
+          "status": "EXPANDED",
+          "raw_seed_count": 12,
+          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+        },
+        {
+          "lane": "MISSING_DECISION_OBJECT",
+          "status": "EXPANDED",
+          "raw_seed_count": 11,
+          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+        },
+        {
+          "lane": "COMPOSITION_INTERACTION",
+          "status": "EXPANDED",
+          "raw_seed_count": 12,
+          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+        },
+        {
+          "lane": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+          "status": "EXPANDED",
+          "raw_seed_count": 12,
+          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+        },
+        {
+          "lane": "NEW_CAPABILITY_QUESTION",
+          "status": "EXPANDED",
+          "raw_seed_count": 12,
+          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+        },
+        {
+          "lane": "LONGITUDINAL_EMERGENCE",
+          "status": "EXPANDED",
+          "raw_seed_count": 12,
+          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+        }
+      ],
+      "generation_notes": "Staged Search Portfolio completed all discovery-lane expansion audits.",
+      "scientific_authority": false
+    },
     "scientific_authority": false
   },
   "search_portfolio": {
@@ -310,7 +394,7 @@
     }
   },
   "saturation_memory": {
-    "ledger_entries": 16,
+    "ledger_entries": 17,
     "prior_identical_zero_runs": 0,
     "current_run_recorded": true,
     "current_review_receipt": {

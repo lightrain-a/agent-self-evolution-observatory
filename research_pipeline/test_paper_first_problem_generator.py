@@ -378,6 +378,42 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertEqual(state["search_diagnostics"]["lane_search_priority"],expected)
         self.assertIn('"lane_search_priority":'+json.dumps(expected,separators=(",",":")),captured["prompt"])
 
+    def test_completed_lane_search_becomes_portable_zero_authority_receipt(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);j=root/"generator.json";js=root/"generator.js"
+            state=write_problem_generator_state(json_path=j,js_path=js,storage=storage,primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=self.gen([],notes="All four lanes were audited; none survives."),now=now)
+            public=json.loads(j.read_text())
+        receipt=public["search_diagnostics"]["last_completed_lane_search"]
+        self.assertEqual(receipt["run_id"],state["run_id"]);self.assertEqual(receipt["generator_status"],"GENERATED_ZERO_CANDIDATES")
+        self.assertEqual([row["lane"] for row in receipt["lane_search"]],receipt["lane_search_priority"])
+        self.assertEqual(len(receipt["lane_search"]),len(DISCOVERY_LANES));self.assertFalse(receipt["scientific_authority"])
+        self.assertTrue(public["policy"]["last_completed_lane_search_is_portable_zero_authority_receipt"])
+
+    def test_saturated_zero_call_preserves_previous_completed_lane_search(self) -> None:
+        calls=[]
+        def forbidden(**kwargs):calls.append(1);raise AssertionError("saturated follow-up must not call a model")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);j=root/"generator.json";js=root/"generator.js";pool=self.pool(root,now)
+            first=write_problem_generator_state(json_path=j,js_path=js,storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto1.json",generator_responder=self.gen([],notes="Initial complete lane audit."),now=now)
+            payload=json.loads(pool.read_text());payload["source_coverage"]={"coverage_exhausted":True,"eligible_lane_linked_sources":4,"reviewed_lane_linked_sources":4,"unreviewed_lane_linked_sources":0,"unreviewed_no_lane_sources":0,"scientific_authority":False};pool.write_text(json.dumps(payload),encoding="utf-8")
+            second=write_problem_generator_state(json_path=j,js_path=js,storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto2.json",generator_responder=forbidden,reviewer_responder=forbidden,now=now+timedelta(minutes=1))
+            public=json.loads(j.read_text())
+        self.assertEqual(calls,[]);self.assertEqual(second["status"],"SKIPPED_SOURCE_COVERAGE_SATURATED");self.assertFalse(public["search_diagnostics"]["lane_search_complete"])
+        receipt=public["search_diagnostics"]["last_completed_lane_search"]
+        self.assertEqual(receipt["run_id"],first["run_id"]);self.assertEqual(len(receipt["lane_search"]),len(DISCOVERY_LANES));self.assertFalse(receipt["scientific_authority"])
+
+    def test_saturated_migration_seed_backfills_last_completed_lane_search(self) -> None:
+        priority=list(DISCOVERY_LANES)
+        seed={"run_id":"historic-real-call","generator_status":"GENERATED_ZERO_CANDIDATES","generated_at":"2026-08-13T14:12:22+00:00","lane_search_priority":priority,"lane_search":[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair survived this historical lane audit."} for lane in priority],"generation_notes":"Historic completed lane audit.","scientific_authority":False}
+        calls=[]
+        def forbidden(**kwargs):calls.append(1);raise AssertionError
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now);payload=json.loads(pool.read_text());payload["source_coverage"]={"coverage_exhausted":True,"eligible_lane_linked_sources":4,"reviewed_lane_linked_sources":4,"unreviewed_lane_linked_sources":0,"unreviewed_no_lane_sources":0,"scientific_authority":False};pool.write_text(json.dumps(payload),encoding="utf-8")
+            j=root/"generator.json";js=root/"generator.js";write_problem_generator_state(json_path=j,js_path=js,storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto.json",generator_responder=forbidden,reviewer_responder=forbidden,last_completed_lane_search_seed=seed,now=now)
+            public=json.loads(j.read_text())
+        self.assertEqual(calls,[]);self.assertFalse(public["search_diagnostics"]["lane_search_complete"]);self.assertEqual(public["search_diagnostics"]["last_completed_lane_search"]["run_id"],"historic-real-call")
+        self.assertFalse(public["search_diagnostics"]["last_completed_lane_search"]["scientific_authority"])
+
     def test_stale_pool_makes_zero_api_calls(self) -> None:
         calls = []
         def responder(**kwargs):

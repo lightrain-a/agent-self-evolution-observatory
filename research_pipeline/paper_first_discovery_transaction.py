@@ -21,6 +21,7 @@ from .paper_first_problem_discovery_contract import DISCOVERY_LANES
 from .paper_first_problem_generator import (
     DEFAULT_JSON as GENERATOR_JSON,
     DEFAULT_JS as GENERATOR_JS,
+    _normalize_last_completed_lane_search_receipt,
     write_problem_generator_state,
 )
 from .paper_first_problem_gate_queue import (
@@ -128,6 +129,14 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
         allowed_statuses={"EXPANDED","EMPTY"} if gp.get("search_portfolio_enabled") is True else {"NO_PAIR","REDUCIBLE","CANDIDATE"}
         if diagnostics.get("scientific_authority") is not False or diagnostics.get("lane_search_complete") is not True or len(lane_rows)!=len(DISCOVERY_LANES) or lane_names!=set(DISCOVERY_LANES) or not lane_statuses.issubset(allowed_statuses):
             errors.append("generator-lane-search-audit-incomplete")
+    if generator_schema >= "2.5":
+        gp=generator.get("policy") or {}; diagnostics=generator.get("search_diagnostics") or {}; last=diagnostics.get("last_completed_lane_search") or {}
+        normalized_last=_normalize_last_completed_lane_search_receipt(last) if last else {}
+        if gp.get("last_completed_lane_search_is_portable_zero_authority_receipt") is not True or gp.get("terminal_zero_call_skip_preserves_last_completed_lane_search") is not True: errors.append("generator-last-lane-search-receipt-policy-missing")
+        if last and not normalized_last: errors.append("generator-last-lane-search-receipt-invalid")
+        if generator_status in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}:
+            current_rows=[row for row in diagnostics.get("lane_search") or [] if isinstance(row,dict)]
+            if not normalized_last or str(normalized_last.get("run_id") or "")!=str(generator.get("run_id") or "") or normalized_last.get("lane_search")!=current_rows: errors.append("generator-last-lane-search-receipt-not-current")
     if generator_status == "GENERATED_ZERO_CANDIDATES" and generated != 0:
         errors.append("zero-status-with-nonzero-candidates")
     if generator_status == "GENERATED_AWAIT_PROBLEM_GATE" and generated <= 0:

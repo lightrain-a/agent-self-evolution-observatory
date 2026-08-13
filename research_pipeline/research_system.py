@@ -41,7 +41,7 @@ from .paper_first_pf357_problem_adjudication import build_pf357_problem_adjudica
 from .paper_first_fresh_saturation import build_fresh_saturation_state, write_fresh_saturation_state
 from .paper_first_primary_evidence import load_primary_evidence_state
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
-from .paper_first_problem_generator import load_problem_generator_state
+from .paper_first_problem_generator import _normalize_last_completed_lane_search_receipt, load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_post_c2_adjudication import build_post_c2_adjudication, write_post_c2_adjudication
 from .paper_first_premature_method_diagnostics import resolve_premature_method_diagnostics, write_premature_method_diagnostics
@@ -300,6 +300,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_problem_generator = load_problem_generator_state()
     paper_first_problem_memory = ((paper_first_problem_generator.get("saturation_memory") or {}).get("blocked_problem_memory") or {})
     paper_first_lane_search = paper_first_problem_generator.get("search_diagnostics") or {}
+    paper_first_last_lane_search = paper_first_lane_search.get("last_completed_lane_search") or {}
     paper_first_problem_gate_queue = load_problem_gate_queue_state()
     paper_first_post_c2 = build_post_c2_adjudication()
     formal_cards = {
@@ -454,6 +455,13 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_problem_lane_search_no_pair_lanes":sum(str(row.get("status") or "") == "NO_PAIR" for row in paper_first_lane_search.get("lane_search") or [] if isinstance(row,dict)),
             "paper_first_problem_lane_search_expanded_lanes":sum(str(row.get("status") or "") == "EXPANDED" for row in paper_first_lane_search.get("lane_search") or [] if isinstance(row,dict)),
             "paper_first_problem_lane_search_empty_lanes":sum(str(row.get("status") or "") == "EMPTY" for row in paper_first_lane_search.get("lane_search") or [] if isinstance(row,dict)),
+            "paper_first_problem_last_lane_search_available":bool(paper_first_last_lane_search),
+            "paper_first_problem_last_lane_search_run_id":paper_first_last_lane_search.get("run_id",""),
+            "paper_first_problem_last_lane_search_expanded_lanes":sum(str(row.get("status") or "") == "EXPANDED" for row in paper_first_last_lane_search.get("lane_search") or [] if isinstance(row,dict)),
+            "paper_first_problem_last_lane_search_empty_lanes":sum(str(row.get("status") or "") == "EMPTY" for row in paper_first_last_lane_search.get("lane_search") or [] if isinstance(row,dict)),
+            "paper_first_problem_last_lane_search_candidate_lanes":sum(str(row.get("status") or "") == "CANDIDATE" for row in paper_first_last_lane_search.get("lane_search") or [] if isinstance(row,dict)),
+            "paper_first_problem_last_lane_search_reducible_lanes":sum(str(row.get("status") or "") == "REDUCIBLE" for row in paper_first_last_lane_search.get("lane_search") or [] if isinstance(row,dict)),
+            "paper_first_problem_last_lane_search_no_pair_lanes":sum(str(row.get("status") or "") == "NO_PAIR" for row in paper_first_last_lane_search.get("lane_search") or [] if isinstance(row,dict)),
             "paper_first_problem_queue_submitted":paper_first_problem_gate_queue["summary"]["submitted"],
             "paper_first_problem_queue_passed":paper_first_problem_gate_queue["summary"]["passed_problem_gate"],
             "paper_first_problem_queue_blocked":paper_first_problem_gate_queue["summary"]["blocked_problem_gate"],
@@ -790,6 +798,12 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         lane_statuses=[str(row.get("status") or "") for row in lane_rows]
         allowed_lane_statuses={"EXPANDED","EMPTY"} if generator_policy.get("search_portfolio_enabled") is True else {"NO_PAIR","REDUCIBLE","CANDIDATE"}
         if lane_search.get("lane_search_complete") is not True or len(lane_rows)!=len(expected_lane_set) or set(lane_names)!=expected_lane_set or any(status not in allowed_lane_statuses for status in lane_statuses): errors.append("generated problem state must preserve one complete machine-audited status for every discovery lane")
+    if generator_schema >= "2.5":
+        last_lane_search=lane_search.get("last_completed_lane_search") or {}; normalized_last=_normalize_last_completed_lane_search_receipt(last_lane_search) if last_lane_search else {}
+        if generator_policy.get("last_completed_lane_search_is_portable_zero_authority_receipt") is not True or generator_policy.get("terminal_zero_call_skip_preserves_last_completed_lane_search") is not True: errors.append("problem generator must preserve the last completed lane search only as a portable zero-authority receipt")
+        if last_lane_search and not normalized_last: errors.append("last completed lane-search receipt is invalid")
+        current_receipt_required=generator.get("status") in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}
+        if current_receipt_required and (not normalized_last or str(normalized_last.get("run_id") or "")!=str(generator.get("run_id") or "")): errors.append("generated problem state must refresh the last completed lane-search receipt")
     saturation_memory = generator.get("saturation_memory") or {}
     if saturation_memory.get("scientific_authority") is not False: errors.append("problem-discovery saturation memory cannot carry scientific authority")
     blocked_memory = saturation_memory.get("blocked_problem_memory") or {}

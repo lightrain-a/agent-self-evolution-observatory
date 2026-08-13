@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-13T14:13:08+00:00",
+  "generated_at": "2026-08-13T15:10:25+00:00",
   "policy": {
     "semantic_scholar_is_discovery_metadata_not_primary_evidence": true,
     "verified_primary_page_required": true,
@@ -98,9 +98,9 @@
       "measured_failures": 34,
       "boundary_observations": 8
     },
-    "recent_verified_cache_reused": 16,
-    "recent_raw_primary_cache_reused": 16,
-    "recent_raw_fulltext_cache_reused": 15,
+    "recent_verified_cache_reused": 31,
+    "recent_raw_primary_cache_reused": 1,
+    "recent_raw_fulltext_cache_reused": 0,
     "recent_fulltext_failure_cooldown_skips": 1,
     "lane_floor": 1,
     "source_coverage_scheduler_active": true,
@@ -274,7 +274,7 @@
       "abstract_sha256": "c8a69484dcd81327d0d4d403524e625473d01ebb99b3de3bea2dcbaac0c6245f",
       "year": 2026,
       "publication_date": "2026-08-11",
-      "fetched_at": "2026-08-13T14:13:59+00:00",
+      "fetched_at": "2026-08-13T15:11:15+00:00",
       "fulltext_sha256": "",
       "empirical_fact_count": 0,
       "typed_evidence_counts": {
@@ -755,7 +755,7 @@
   "errors": [],
   "discovery_errors": [],
   "corpus_retrieved_at": "2026-08-13T07:06:23+00:00",
-  "corpus_age_days": 0.29635820907407406,
+  "corpus_age_days": 0.33613436149305553,
   "fulltext_errors": [
     {
       "ref": "arXiv:2608.10504",
@@ -763,6 +763,6 @@
     }
   ],
   "status": "READY",
-  "discovery_transaction_id": "2346c05b3dfb5c959f168b0d21aeb60565441b3fbd3ec5984ec80146c4a26124",
+  "discovery_transaction_id": "e0b0e247dea1f1376cdaffbbb04f54724dc225d6776ef4058c5382c6f5b37183",
   "discovery_transaction_role": "primary"
 }

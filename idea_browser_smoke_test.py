@@ -114,7 +114,7 @@ def main() -> None:
         if generator.get("status") == "GENERATED_ZERO_CANDIDATES": require(bool(str(generator.get("generation_notes") or "").strip()), "zero-candidate rationale missing from browser state")
         require("SATURATION / DEAD-END MEMORY" in system["text"] and "precision-v2" in system["text"], "problem-discovery precision/saturation controls are not rendered")
         require("SCIENTIFIC OBJECT AXIS" in system["text"] and "world_model" in system["text"] and "parametric_model_state" in system["text"] and "object-grounded reviewed=" in system["text"], "scientific-object discovery axis is not rendered")
-        require("SEARCH PORTFOLIO" in system["text"] and "108" in system["text"] and "Problem Gate" in system["text"] and "v3.1 · MACHINE-ENFORCED" in system["text"], "problem-discovery Search Portfolio controls are not rendered")
+        require("SEARCH PORTFOLIO" in system["text"] and "108" in system["text"] and "Problem Gate" in system["text"] and "v3.2 · MACHINE-ENFORCED" in system["text"], "problem-discovery Search Portfolio/portable lane-audit controls are not rendered")
         require((system["preSummary"].get("audited"), system["preSummary"].get("execution_ready"), system["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system['preSummary']}")
         iteration = system["iterationSummary"]
         infra_only = iteration.get("diagnosis_counts") == {"infrastructure-error": 4}
