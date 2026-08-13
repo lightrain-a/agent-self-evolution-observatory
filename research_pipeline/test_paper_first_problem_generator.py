@@ -73,6 +73,7 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             "lane_evidence": source["lane_evidence"],
             "irreducible_object": source["irreducible_object"],
             "mature_theory_baselines": source["mature_theory_baselines"],
+            "reduction_falsifiability_contract": source["reduction_falsifiability_contract"],
             "same_information_nonreducibility": source["same_information_nonreducibility"],
             "exact_prediction": source["exact_prediction"],
             "strongest_same_information_baseline": source["strongest_same_information_baseline"],
@@ -130,6 +131,8 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
                                 "lane_contract_reason": "grounded relation satisfies lane" if lane_verified else "lane relation unsupported",
                                 "source_claim_support": support,
                                 "matched_patterns": matched or [],
+                                "reduction_class": "VALID_HARD_VETO" if verdict == "BLOCK" and matched else "NONE",
+                                "exact_reduction_test": "matched exact reduction" if verdict == "BLOCK" and matched else "none",
                                 "strongest_reduction": "none" if verdict == "CLEAR" else "mature reduction",
                                 "reason": "review",
                             }
@@ -140,7 +143,7 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             }
         return responder
 
-    def test_generator_prompt_exposes_four_allowed_and_three_forbidden_lanes(self) -> None:
+    def test_generator_prompt_exposes_ten_allowed_and_three_forbidden_lanes(self) -> None:
         records = []
         for i in range(32):
             records.append(
@@ -479,7 +482,7 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             queue = build_problem_gate_queue(root / "manual.json", auto_inbox_path=auto, primary_pool_path=pool, storage=self.storage(root))
         self.assertEqual(state["summary"]["semantic_blocked"], 1)
         self.assertEqual(queue["summary"]["passed_problem_gate"], 0)
-        self.assertTrue(any(value == "semantic-reduction-review-block" or value.startswith("saturation-pattern-match:") for value in queue["blocked"][0]["blockers"]))
+        self.assertTrue(any(value == "semantic-reduction-review-block" or value.startswith("saturation-proven-hard-reduction:") for value in queue["blocked"][0]["blockers"]))
 
     def test_same_resolved_model_is_not_independent(self) -> None:
         with tempfile.TemporaryDirectory() as td:

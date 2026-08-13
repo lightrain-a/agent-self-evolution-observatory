@@ -4,6 +4,7 @@ import copy
 import unittest
 
 from .research_system import build_research_system_state, validate_state
+from .paper_first_problem_discovery_contract import DISCOVERY_LANES
 
 
 class ResearchSystemTest(unittest.TestCase):
@@ -282,7 +283,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertFalse((generator.get("saturation_memory") or {}).get("scientific_authority"))
         if generator["status"]=="GENERATED_ZERO_CANDIDATES": self.assertTrue(str(generator.get("generation_notes") or "").strip())
         self.assertTrue(generator["policy"]["multi_lane_discovery_enabled"])
-        self.assertEqual(generator["policy"]["allowed_discovery_lanes"],["CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"])
+        self.assertEqual(tuple(generator["policy"]["allowed_discovery_lanes"]),DISCOVERY_LANES); self.assertTrue(generator["policy"]["search_portfolio_enabled"]); self.assertTrue(generator["policy"]["expansion_precedes_reduction"]); self.assertTrue(generator["policy"]["diversity_archives_required"])
         self.assertEqual(generator["policy"]["forbidden_discovery_lanes"],["MISSING_CELL","SHARED_LIMITATION","PURE_TOPIC_BRAINSTORM"])
         self.assertTrue(generator["policy"]["independent_reviewer_must_verify_lane_contract"])
         self.assertTrue(generator["policy"]["source_coverage_saturation_skips_model_call"])
@@ -306,7 +307,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(discovery["policy"]["multi_lane_discovery_required"])
         self.assertFalse(discovery["policy"]["contradiction_first_required"])
         self.assertTrue(discovery["policy"]["contradiction_lane_retained"])
-        self.assertEqual(discovery["policy"]["allowed_discovery_lanes"],["CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"])
+        self.assertEqual(tuple(discovery["policy"]["allowed_discovery_lanes"]),DISCOVERY_LANES); self.assertEqual(discovery["summary"]["allowed_discovery_lanes"],10); self.assertTrue(discovery["policy"]["expansion_reduction_separated"]); self.assertTrue(discovery["policy"]["reduction_falsifiability_contract_required"])
         self.assertEqual(discovery["policy"]["forbidden_discovery_lanes"],["MISSING_CELL","SHARED_LIMITATION","PURE_TOPIC_BRAINSTORM"])
         self.assertTrue(discovery["policy"]["lane_specific_machine_evidence_contract_required"])
         self.assertTrue(discovery["policy"]["no_lane_specific_downstream_relaxation"])

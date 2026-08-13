@@ -47,6 +47,70 @@ REDUCTION_PATTERNS: tuple[dict[str, Any], ...] = (
     {"key":"procedural-memory-nonmonotonicity","mature_theories":["nonmonotonic / defeasible logic","belief revision / AGM-style belief change","rule-conflict and priority semantics"],"veto":"Adding a relevant memory, skill, or procedural rule that retracts, suppresses, or harms previously correct behavior is not a new self-evolution object when nonmonotonic reasoning or belief revision expresses the same retraction under the same conflict information."},
 )
 
+
+# Ledger entries are candidate reduction hypotheses, not automatic scientific vetoes.
+# Even a VALID_HARD_VETO pattern may block only after the concrete candidate
+# satisfies the Reduction Falsifiability Contract below.
+_REDUCTION_AUDIT_CLASS: dict[str, str] = {
+    "operator-closure-reachability":"VALID_HARD_VETO",
+    "evolution-induced-task-non-equivalence":"VALID_HARD_VETO",
+    "environment-mediated-history":"VALID_HARD_VETO",
+    "autonomous-goal-extension":"VALID_HARD_VETO",
+    "embodiment-task-comparability":"VALID_HARD_VETO",
+    "agent-version-rollback-vs-external-effects":"VALID_HARD_VETO",
+
+    "typed-epistemic-authority":"SOFT_COLLISION",
+    "persistent-update-vs-test-time-compute":"SOFT_COLLISION",
+    "model-scaffold-enactability":"SOFT_COLLISION",
+    "artifact-uptake-after-retrieval":"SOFT_COLLISION",
+    "multimodal-procedural-compression":"SOFT_COLLISION",
+    "externalization-internalization-portability":"SOFT_COLLISION",
+    "cross-layer-behavior-persistence":"SOFT_COLLISION",
+    "scientific-claim-decomposition-dependence":"SOFT_COLLISION",
+
+    "update-order-path-dependence":"TOO_GENERIC_TO_VETO",
+    "feedback-view-intransitivity":"TOO_GENERIC_TO_VETO",
+    "stream-instability":"TOO_GENERIC_TO_VETO",
+    "validation-filter-information-loss":"TOO_GENERIC_TO_VETO",
+    "cross-module-longitudinal-stability":"TOO_GENERIC_TO_VETO",
+    "population-lineage-generic-evolution":"TOO_GENERIC_TO_VETO",
+    "experience-sharing-sign-reversal":"TOO_GENERIC_TO_VETO",
+    "harness-update-scope-heterogeneity":"TOO_GENERIC_TO_VETO",
+    "durable-runtime-improvement-vs-aging":"TOO_GENERIC_TO_VETO",
+
+    "snapshot-validity-horizon":"NEEDS_EXACT_REDUCTION_TEST",
+    "self-generated-supervision-information-limit":"NEEDS_EXACT_REDUCTION_TEST",
+    "verifier-exogeneity":"NEEDS_EXACT_REDUCTION_TEST",
+    "horizon-censored-attribution":"NEEDS_EXACT_REDUCTION_TEST",
+    "self-model-lineage-desynchronization":"NEEDS_EXACT_REDUCTION_TEST",
+    "future-evolvability-debt":"NEEDS_EXACT_REDUCTION_TEST",
+    "persistent-world-gain-decomposition":"NEEDS_EXACT_REDUCTION_TEST",
+    "self-play-evidence-endogeneity":"NEEDS_EXACT_REDUCTION_TEST",
+    "lineage-conditioned-communication-semantics":"NEEDS_EXACT_REDUCTION_TEST",
+    "feedback-polarity-by-update-surface":"NEEDS_EXACT_REDUCTION_TEST",
+    "procedural-memory-nonmonotonicity":"NEEDS_EXACT_REDUCTION_TEST",
+}
+
+REDUCTION_FALSIFIABILITY_CONTRACT: dict[str, Any] = {
+    "same_observable_information_required": True,
+    "ex_ante_exact_prediction_required": True,
+    "testable_distinguishing_prediction_required": True,
+    "explicit_scope_boundary_required": True,
+    "generic_theory_name_is_not_a_veto": True,
+    "pattern_match_alone_blocks": False,
+    "unresolved_exact_reduction_blocks_problem_gate": True,
+}
+
+def reduction_pattern_audit() -> list[dict[str, Any]]:
+    rows=[]
+    for row in REDUCTION_PATTERNS:
+        key=str(row["key"])
+        rows.append({**row,"audit_class":_REDUCTION_AUDIT_CLASS[key],"automatic_veto":False})
+    return rows
+
+if set(_REDUCTION_AUDIT_CLASS) != {str(row["key"]) for row in REDUCTION_PATTERNS}:
+    raise RuntimeError("reduction audit classification must cover every current reduction pattern exactly")
+
 DRAFTS: tuple[dict[str, Any], ...] = (
     {"id":"G1","title":"Non-Commutativity of Update Trajectories Under Live Evaluator Drift","decision":"STOP_REDUCTION","reduction":"update-order-path-dependence"},
     {"id":"G2","title":"Temporal Validity Kernel of Intermediate Harness Snapshots","decision":"STOP_REDUCTION","reduction":"snapshot-validity-horizon"},
@@ -129,11 +193,12 @@ def build_fresh_saturation_state() -> dict[str, Any]:
         "reduction_patterns":[dict(row) for row in REDUCTION_PATTERNS],
         "generator_revision":{
             "old_failure":"Free-form generators produced mathematically named versions of mature problems and malformed long JSON; formatting repair was treated as advisory-only and never as scientific evidence.",
-            "new_rule":"Use four empirically grounded discovery lanes—CONTRADICTION, CONVERGENT_FAILURE, ASSUMPTION_BREAK, and UNEXPLAINED_BOUNDARY. Every lane must satisfy its machine evidence contract, query the Generic Reduction / Negative-Space Ledger, name the strongest mature theories before naming an Agent candidate, and survive the same downstream non-reduction gates.",
+            "historical_rule":"The historical scan used four empirically grounded lanes and immediate mature-theory reduction; its zero-survivor outcome remains diagnostic rather than a mandatory search policy.",
+            "new_rule":"Use a multi-lane Search Portfolio: expand grounded seeds first, preserve structural diversity and lineage, evolve promising branches, formulate paper-shaped problems, and only then run closest-work plus the Reduction Falsifiability Contract. The final novelty bar remains unchanged.",
             "required_fields":["discovery lane","two primary evidence items","lane-specific machine evidence","irreducible object","mature-theory non-reducibility","same-information baseline","cheapest problem falsifier","endpoint headroom"],
         },
         "decision":"NO_FRESH_SURVIVOR_CURRENT_SCAN",
-        "next_action":"Continue four-lane empirical problem discovery; do not create methods, experiments, P0 entries, or GPU work until a problem survives its lane contract and the shared mature-theory veto.",
+        "next_action":"Continue multi-lane portfolio discovery with delayed exact reduction; do not create methods, experiments, P0 entries, or GPU work until a formulated problem survives the Problem Gate.",
     }
 
 

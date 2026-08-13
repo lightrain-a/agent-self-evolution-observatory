@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from .paper_first_fresh_saturation import build_fresh_saturation_state
+from .paper_first_fresh_saturation import build_fresh_saturation_state, reduction_pattern_audit
 
 
 class PaperFirstFreshSaturationTest(unittest.TestCase):
@@ -23,14 +23,19 @@ class PaperFirstFreshSaturationTest(unittest.TestCase):
         self.assertTrue(all(row["decision"].startswith("STOP_") for row in self.state["drafts"]))
         self.assertTrue(all(row.get("reduction") for row in self.state["drafts"]))
 
-    def test_generator_is_now_four_lane_empirical_and_theory_first(self) -> None:
+    def test_historical_scan_is_diagnostic_and_current_search_delays_reduction(self) -> None:
         revision=self.state["generator_revision"]
-        for lane in ("CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"):
-            self.assertIn(lane,revision["new_rule"])
-        self.assertIn("lane-specific machine evidence",revision["required_fields"])
+        self.assertIn("remains diagnostic",revision["historical_rule"])
+        self.assertIn("multi-lane Search Portfolio",revision["new_rule"])
+        self.assertIn("Reduction Falsifiability Contract",revision["new_rule"])
+        self.assertIn("discovery lane",revision["required_fields"])
         self.assertIn("mature-theory non-reducibility",revision["required_fields"])
         self.assertIn("same-information baseline",revision["required_fields"])
         self.assertIn("endpoint headroom",revision["required_fields"])
+        audit=reduction_pattern_audit()
+        self.assertEqual(len(audit),34)
+        self.assertTrue(all(row["automatic_veto"] is False for row in audit))
+        self.assertEqual({row["audit_class"] for row in audit},{"VALID_HARD_VETO","SOFT_COLLISION","NEEDS_EXACT_REDUCTION_TEST","TOO_GENERIC_TO_VETO"})
 
     def test_reduction_map_contains_load_bearing_recent_failures(self) -> None:
         keys={row["key"] for row in self.state["reduction_patterns"]}

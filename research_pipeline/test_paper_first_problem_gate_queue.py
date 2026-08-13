@@ -93,7 +93,7 @@ class PaperFirstProblemGateQueueTest(unittest.TestCase):
             root = Path(td); path = root / "inbox.json"; path.write_text(json.dumps({"candidates": [candidate]}), encoding="utf-8")
             state = build_problem_gate_queue(path, auto_inbox_path=root / "none.json", primary_pool_path=write_primary_pool(root, candidate))
         self.assertEqual((state["summary"]["passed_problem_gate"], state["summary"]["blocked_problem_gate"]), (0, 1))
-        self.assertTrue(any(value.startswith("saturation-pattern-match:") for value in state["blocked"][0]["blockers"]))
+        self.assertTrue(any(value.startswith("saturation-proven-hard-reduction:") for value in state["blocked"][0]["blockers"]))
 
     def test_manual_and_auto_inboxes_merge_but_duplicate_ids_are_never_eligible(self) -> None:
         first = valid_candidate(); second = valid_candidate("ASSUMPTION_BREAK"); second["title"] = "duplicate"

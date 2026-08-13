@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .paper_first_fresh_saturation import REDUCTION_PATTERNS
+from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
 DISCOVERY_LANES: tuple[str, ...] = (
@@ -10,6 +10,12 @@ DISCOVERY_LANES: tuple[str, ...] = (
     "CONVERGENT_FAILURE",
     "ASSUMPTION_BREAK",
     "UNEXPLAINED_BOUNDARY",
+    "IDENTIFIABILITY_GAP",
+    "MISSING_DECISION_OBJECT",
+    "COMPOSITION_INTERACTION",
+    "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+    "NEW_CAPABILITY_QUESTION",
+    "LONGITUDINAL_EMERGENCE",
 )
 
 FORBIDDEN_DISCOVERY_LANES: tuple[str, ...] = (
@@ -28,7 +34,27 @@ LANE_SOURCE_ROLES: dict[str, tuple[str, str]] = {
     "CONVERGENT_FAILURE": ("EMPIRICAL_FACT", "EMPIRICAL_FACT"),
     "ASSUMPTION_BREAK": ("OPERATIONAL_ASSUMPTION", "EMPIRICAL_FACT"),
     "UNEXPLAINED_BOUNDARY": ("EMPIRICAL_FACT", "EMPIRICAL_FACT"),
+    "IDENTIFIABILITY_GAP": ("EMPIRICAL_FACT", "EMPIRICAL_FACT"),
+    "MISSING_DECISION_OBJECT": ("EMPIRICAL_FACT", "EMPIRICAL_FACT"),
+    "COMPOSITION_INTERACTION": ("EMPIRICAL_FACT", "EMPIRICAL_FACT"),
+    "CROSS_DOMAIN_STRUCTURAL_ANALOGY": ("EMPIRICAL_FACT", "EMPIRICAL_FACT"),
+    "NEW_CAPABILITY_QUESTION": ("EMPIRICAL_FACT", "EMPIRICAL_FACT"),
+    "LONGITUDINAL_EMERGENCE": ("EMPIRICAL_FACT", "EMPIRICAL_FACT"),
 }
+
+LANE_DISTINCT_SOURCE_MINIMUM: dict[str, int] = {
+    "CONTRADICTION": 2,
+    "CONVERGENT_FAILURE": 2,
+    "ASSUMPTION_BREAK": 2,
+    "UNEXPLAINED_BOUNDARY": 1,
+    "IDENTIFIABILITY_GAP": 1,
+    "MISSING_DECISION_OBJECT": 2,
+    "COMPOSITION_INTERACTION": 1,
+    "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 1,
+    "NEW_CAPABILITY_QUESTION": 1,
+    "LONGITUDINAL_EMERGENCE": 1,
+}
+
 
 LANE_EVIDENCE_REQUIRED: dict[str, tuple[str, ...]] = {
     "CONTRADICTION": (
@@ -54,6 +80,43 @@ LANE_EVIDENCE_REQUIRED: dict[str, tuple[str, ...]] = {
         "adjacent_regime",
         "unexplained_transition",
     ),
+    "IDENTIFIABILITY_GAP": (
+        "target_question",
+        "observational_equivalence",
+        "measured_proxy",
+        "decision_consequence",
+    ),
+    "MISSING_DECISION_OBJECT": (
+        "surrogate_a",
+        "surrogate_b",
+        "downstream_decision",
+        "mismatch_evidence",
+    ),
+    "COMPOSITION_INTERACTION": (
+        "component_a",
+        "component_b",
+        "composition_condition",
+        "interaction_observation",
+        "nonadditivity_basis",
+    ),
+    "CROSS_DOMAIN_STRUCTURAL_ANALOGY": (
+        "source_domain_structure",
+        "agent_specific_constraint",
+        "agent_evidence_link",
+        "why_not_simple_transfer",
+    ),
+    "NEW_CAPABILITY_QUESTION": (
+        "new_capability",
+        "newly_observable_signal",
+        "previous_measurement_limit",
+        "capability_specific_constraint",
+    ),
+    "LONGITUDINAL_EMERGENCE": (
+        "shared_measurement",
+        "short_horizon_regime",
+        "long_horizon_regime",
+        "emergence_signature",
+    ),
 }
 
 LANE_MACHINE_CONTRACTS: dict[str, str] = {
@@ -61,6 +124,12 @@ LANE_MACHINE_CONTRACTS: dict[str, str] = {
     "CONVERGENT_FAILURE": "Two independent method families show quantitative failure under the same bounded operational condition; the candidate names a common failure object rather than a better-method claim.",
     "ASSUMPTION_BREAK": "Source A contains an explicit operational assumption and independent source B contains empirical evidence that violates it in a scope-linked setting.",
     "UNEXPLAINED_BOUNDARY": "Primary evidence quantitatively establishes an anomalous boundary/regime and an adjacent expected regime for the same measured phenomenon; the candidate targets the unexplained transition.",
+    "IDENTIFIABILITY_GAP": "Two grounded results show that the field's measured proxy or observational record cannot distinguish scientifically different mechanisms or decisions under the same available information.",
+    "MISSING_DECISION_OBJECT": "Two grounded works optimize or report different surrogates while an explicit downstream scientific/deployment decision remains unresolved; the candidate defines the missing decision object rather than another metric.",
+    "COMPOSITION_INTERACTION": "Grounded evidence supports individually understood components and a composition regime whose behavior is not explained by simply adding their isolated accounts.",
+    "CROSS_DOMAIN_STRUCTURAL_ANALOGY": "Grounded Agent-side evidence instantiates a mature external problem structure, while an explicit Agent-specific structural constraint changes a testable prediction; domain transfer alone is forbidden.",
+    "NEW_CAPABILITY_QUESTION": "Grounded recent capabilities expose a measurement/intervention signal that was previously unavailable, creating a falsifiable scientific question rather than a feature request.",
+    "LONGITUDINAL_EMERGENCE": "Grounded evidence under a shared measurement separates short- and long-horizon/scaling regimes and identifies an emergence signature that must survive ordinary dynamics as the strongest reduction.",
 }
 
 POLICY: dict[str, Any] = {
@@ -71,7 +140,15 @@ POLICY: dict[str, Any] = {
     "allowed_discovery_lanes": list(DISCOVERY_LANES),
     "forbidden_discovery_lanes": list(FORBIDDEN_DISCOVERY_LANES),
     "lane_specific_machine_evidence_contract_required": True,
-    "two_primary_source_evidence_items_required": True,
+    "search_portfolio_required": True,
+    "expansion_reduction_separated": True,
+    "mature_theory_veto_delayed_until_formulated_branch": True,
+    "diversity_archives_required": True,
+    "branch_lineage_required": True,
+    "reduction_falsifiability_contract_required": True,
+    "generic_theory_label_cannot_veto": True,
+    "two_primary_evidence_items_required": True,
+    "distinct_primary_source_minimum_is_lane_specific": True,
     "shared_limitation_without_empirical_failure_forbidden": True,
     "pure_topic_brainstorm_forbidden": True,
     "open_world_missing_cell_claim_forbidden": True,
@@ -99,6 +176,7 @@ REQUIRED_FIELDS = (
     "lane_evidence",
     "irreducible_object",
     "mature_theory_baselines",
+    "reduction_falsifiability_contract",
     "same_information_nonreducibility",
     "exact_prediction",
     "strongest_same_information_baseline",
@@ -139,8 +217,10 @@ def candidate_schema() -> dict[str, Any]:
         },
         "mature_theory_baselines": {
             "minimum": 2,
-            "each_required": ["name", "same_information_projection", "reduction_test"],
+            "each_required": ["name", "same_information_projection", "ex_ante_prediction", "distinguishing_prediction", "cannot_express", "reduction_class", "exact_reduction_test"],
+            "allowed_reduction_classes": ["VALID_HARD_VETO", "SOFT_COLLISION", "NEEDS_EXACT_REDUCTION_TEST", "TOO_GENERIC_TO_VETO"],
         },
+        "reduction_falsifiability_contract": dict(REDUCTION_FALSIFIABILITY_CONTRACT),
         "same_information_nonreducibility": {
             "required": ["claim", "why_each_baseline_cannot_express_prediction"],
         },
@@ -150,8 +230,10 @@ def candidate_schema() -> dict[str, Any]:
         "saturation_scan": {
             "required": ["checked", "matched_patterns"],
             "known_patterns": [row["key"] for row in REDUCTION_PATTERNS],
-            "matched_patterns_must_be_exact_known_keys_and_empty": True,
+            "matched_patterns_are_proven_hard_reductions_only": True,
+            "pending_patterns_require_exact_reduction_test": True,
             "rejected_patterns_are_advisory_and_independently_reviewed": True,
+            "pattern_match_alone_is_not_a_veto": True,
             "invalid_entries_must_be_empty": True,
         },
         "semantic_reduction_review": {
@@ -282,18 +364,34 @@ def audit_problem_candidate(
                     blockers.append(f"primary-source-url-mismatch:{idx}")
                 if str(source.get("title") or "").strip() != str(record.get("title") or "").strip():
                     blockers.append(f"primary-source-title-mismatch:{idx}")
-    if len(source_refs) != 2:
-        blockers.append("discovery-lane-requires-two-distinct-primary-sources")
+    minimum_distinct=LANE_DISTINCT_SOURCE_MINIMUM.get(lane,2)
+    if len(source_refs) < minimum_distinct:
+        blockers.append(f"discovery-lane-requires-{minimum_distinct}-distinct-primary-sources:{lane}")
     if not _nonempty(evidence.get("relation")):
         blockers.append("empirical-evidence-relation-missing")
 
     baselines = candidate.get("mature_theory_baselines") or []
+    allowed_reduction_classes={"VALID_HARD_VETO","SOFT_COLLISION","NEEDS_EXACT_REDUCTION_TEST","TOO_GENERIC_TO_VETO"}
     if not isinstance(baselines, list) or len(baselines) < 2:
         blockers.append("need-at-least-two-mature-theory-baselines")
     else:
         for idx, row in enumerate(baselines, start=1):
-            if not isinstance(row, dict) or not all(_nonempty(row.get(key)) for key in ("name", "same_information_projection", "reduction_test")):
+            required=("name","same_information_projection","ex_ante_prediction","distinguishing_prediction","cannot_express","reduction_class","exact_reduction_test")
+            if not isinstance(row, dict) or not all(_nonempty(row.get(key)) for key in required):
                 blockers.append(f"invalid-mature-theory-baseline:{idx}")
+                continue
+            reduction_class=str(row.get("reduction_class") or "").strip().upper()
+            if reduction_class not in allowed_reduction_classes:
+                blockers.append(f"invalid-reduction-class:{idx}")
+            elif reduction_class == "VALID_HARD_VETO":
+                blockers.append(f"mature-theory-valid-hard-veto:{idx}")
+            elif reduction_class == "NEEDS_EXACT_REDUCTION_TEST":
+                blockers.append(f"unresolved-exact-reduction-test:{idx}")
+
+    reduction_contract=candidate.get("reduction_falsifiability_contract") or {}
+    required_contract=("same_observable_information_checked","ex_ante_exact_prediction_checked","distinguishing_prediction_checked","scope_boundary_checked","all_exact_reduction_tests_resolved")
+    if not isinstance(reduction_contract,dict) or any(reduction_contract.get(key) is not True for key in required_contract):
+        blockers.append("reduction-falsifiability-contract-incomplete")
 
     nonred = candidate.get("same_information_nonreducibility") or {}
     if not isinstance(nonred, dict) or not _nonempty(nonred.get("claim")) or not _nonempty(nonred.get("why_each_baseline_cannot_express_prediction")):
@@ -305,16 +403,25 @@ def audit_problem_candidate(
 
     saturation = candidate.get("saturation_scan") or {}
     matched = list(saturation.get("matched_patterns") or []) if isinstance(saturation, dict) else []
+    pending = list(saturation.get("pending_patterns") or []) if isinstance(saturation, dict) else []
     rejected = list(saturation.get("rejected_patterns") or []) if isinstance(saturation, dict) else []
     invalid_entries = list(saturation.get("invalid_entries") or []) if isinstance(saturation, dict) else []
     known = {row["key"] for row in REDUCTION_PATTERNS}
     unknown_matches = sorted(set(str(x) for x in matched) - known)
     if not isinstance(saturation, dict) or saturation.get("checked") is not True:
         blockers.append("saturation-scan-not-run")
+    # matched_patterns is now reserved for an exact candidate-level hard reduction
+    # that already satisfied the falsifiability contract. Mere pattern similarity
+    # belongs in rejected_patterns or pending_patterns and cannot auto-veto.
     if matched:
-        blockers.append("saturation-pattern-match:" + ",".join(sorted(str(x) for x in matched)))
+        blockers.append("saturation-proven-hard-reduction:" + ",".join(sorted(str(x) for x in matched)))
     if unknown_matches:
         blockers.append("unknown-saturation-pattern:" + ",".join(unknown_matches))
+    for row in pending:
+        if not isinstance(row,dict) or str(row.get("key") or "").strip() not in known or not (_nonempty(row.get("exact_reduction_test")) or _nonempty(row.get("reason"))):
+            blockers.append("invalid-pending-saturation-pattern")
+        else:
+            blockers.append("saturation-exact-reduction-pending:"+str(row.get("key")))
     for row in rejected:
         if not isinstance(row,dict) or str(row.get("key") or "").strip() not in known or not _nonempty(row.get("reason")):
             blockers.append("invalid-rejected-saturation-pattern")
@@ -403,39 +510,35 @@ def audit_problem_candidate(
 
 
 def build_problem_discovery_contract_state() -> dict[str, Any]:
+    audit_rows=reduction_pattern_audit()
+    classes={name:sum(row["audit_class"]==name for row in audit_rows) for name in ("VALID_HARD_VETO","SOFT_COLLISION","NEEDS_EXACT_REDUCTION_TEST","TOO_GENERIC_TO_VETO")}
     return {
-        "schema_version": "2.0",
-        "policy": POLICY,
-        "candidate_schema": candidate_schema(),
-        "summary": {
-            "required_top_level_fields": len(REQUIRED_FIELDS),
-            "allowed_discovery_lanes": len(DISCOVERY_LANES),
-            "forbidden_discovery_lanes": len(FORBIDDEN_DISCOVERY_LANES),
-            "saturation_patterns": len(REDUCTION_PATTERNS),
-            "minimum_primary_sources": 2,
-            "minimum_mature_theory_baselines": 2,
-            "automatic_method_authority": 0,
-            "automatic_experiment_authority": 0,
+        "schema_version":"2.1",
+        "policy":POLICY,
+        "candidate_schema":candidate_schema(),
+        "reduction_falsifiability_contract":dict(REDUCTION_FALSIFIABILITY_CONTRACT),
+        "reduction_pattern_audit":audit_rows,
+        "summary":{
+            "required_top_level_fields":len(REQUIRED_FIELDS),
+            "allowed_discovery_lanes":len(DISCOVERY_LANES),
+            "forbidden_discovery_lanes":len(FORBIDDEN_DISCOVERY_LANES),
+            "saturation_patterns":len(REDUCTION_PATTERNS),
+            "reduction_audit_classes":classes,
+            "minimum_primary_sources":2,
+            "minimum_mature_theory_baselines":2,
+            "automatic_method_authority":0,
+            "automatic_experiment_authority":0,
         },
-        "lane_contracts": [
-            {
-                "lane": lane,
-                "source_roles": list(LANE_SOURCE_ROLES[lane]),
-                "required_lane_evidence": list(LANE_EVIDENCE_REQUIRED[lane]),
-                "machine_contract": LANE_MACHINE_CONTRACTS[lane],
-            }
-            for lane in DISCOVERY_LANES
-        ],
-        "generator_order": [
-            "select one allowed discovery lane from grounded primary evidence",
-            "satisfy the lane-specific machine evidence contract before naming a new object",
-            "name two strongest mature theories before naming a new object",
-            "project identical observable information into each mature theory",
-            "state one exact prediction neither theory can express",
-            "run saturation/domain-transfer veto",
-            "freeze cheapest problem falsifier and endpoint headroom",
+        "lane_contracts":[{"lane":lane,"source_roles":list(LANE_SOURCE_ROLES[lane]),"minimum_distinct_primary_sources":LANE_DISTINCT_SOURCE_MINIMUM[lane],"required_lane_evidence":list(LANE_EVIDENCE_REQUIRED[lane]),"machine_contract":LANE_MACHINE_CONTRACTS[lane]} for lane in DISCOVERY_LANES],
+        "generator_order":[
+            "EXPAND grounded seeds across all allowed discovery lanes without mature-theory veto",
+            "DEDUP + structural clustering + breadth/novelty/contradiction/anomaly/cross-domain archives",
+            "EVOLVE structurally distinct lineages with extra test-time compute",
+            "FORMULATE promising branches into paper-shaped scientific problems",
+            "REDUCE only now using closest work + mature theories under the Reduction Falsifiability Contract",
             "require independent lane-contract + exact source grounding review",
-            "audit problem candidate",
-            "human paper-design review only if problem gate passes",
+            "freeze cheapest problem falsifier and endpoint headroom",
+            "audit Problem Gate",
+            "human Paper Design only if Problem Gate passes",
         ],
     }

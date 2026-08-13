@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from .paper_first_fresh_saturation import REDUCTION_PATTERNS
+from .paper_first_fresh_saturation import REDUCTION_PATTERNS, reduction_pattern_audit
 from .paper_first_problem_discovery_contract import (
     DISCOVERY_LANES,
     FORBIDDEN_DISCOVERY_LANES,
@@ -115,7 +115,7 @@ def generator_prompt(records: list[dict[str, Any]], dead_end_memory: dict[str, A
 
 
 def reviewer_prompt(candidates: list[dict[str, Any]], evidence_by_ref: dict[str, dict[str, Any]]) -> str:
-    reductions = [{"key": row["key"], "mature_theories": row["mature_theories"], "veto": row["veto"]} for row in REDUCTION_PATTERNS]
+    reductions = [{"key": row["key"], "mature_theories": row["mature_theories"], "veto": row["veto"], "audit_class": row["audit_class"]} for row in reduction_pattern_audit()]
     lane_contracts = _lane_contract_payload()
     stripped = [{k: v for k, v in row.items() if k not in {"semantic_reduction_review", "authority"}} for row in candidates]
     refs: list[str] = []
@@ -150,8 +150,10 @@ def reviewer_prompt(candidates: list[dict[str, Any]], evidence_by_ref: dict[str,
         "For each candidate perform THREE independent checks: "
         "(1) source grounding: each stated source claim must be supported by its supplied primary abstract or one bounded full-text empirical-fact candidate; the reviewer evidence_source label is audit metadata because code deterministically locates the exact excerpt; "
         "(2) lane contract: the two grounded source claims, evidence roles, relation, and lane_evidence must genuinely satisfy the selected discovery lane; "
-        "(3) mature reduction: test whether the exact prediction is already expressible by the Negative-Space ledger or any mature same-information theory. "
-        "If any check fails, verdict=BLOCK. CLEAR only means both sources are grounded, lane_contract_verified=true, and no mature reduction was found; it never means scientific approval.\n\n"
+        "(3) mature reduction: audit the candidate under the Reduction Falsifiability Contract. A theory/pattern name alone is NOT a veto. "
+        "A VALID_HARD_VETO requires the same observable information, an ex-ante exact candidate-level prediction, a testable distinguishing/reduction test, and explicit scope boundary. "
+        "If an exact reduction remains unresolved, use NEEDS_EXACT_REDUCTION_TEST and BLOCK. If similarity is real but not an exact reduction, use SOFT_COLLISION or TOO_GENERIC_TO_VETO; those classes do not by themselves force BLOCK. "
+        "If source grounding or the lane contract fails, verdict=BLOCK. CLEAR only means both sources are grounded, lane_contract_verified=true, and no proven/pending exact mature reduction remains; it never means scientific approval.\n\n"
         "LANE CONTRACTS:\n"
         + json.dumps(lane_contracts, ensure_ascii=False, separators=(",", ":"))
         + "\n\nLEDGER:\n"
@@ -160,6 +162,6 @@ def reviewer_prompt(candidates: list[dict[str, Any]], evidence_by_ref: dict[str,
         + json.dumps(evidence_rows, ensure_ascii=False, separators=(",", ":"))
         + "\n\nCANDIDATES:\n"
         + json.dumps(stripped, ensure_ascii=False, separators=(",", ":"))
-        + '\n\nReturn JSON only: {"reviews":[{"candidate_id":"...","verdict":"CLEAR|BLOCK","lane_contract_verified":true,"lane_contract_reason":"...","source_claim_support":{"source_a":{"supported":true,"evidence_source":"abstract|fulltext","evidence_excerpt":"exact words from supplied primary evidence"},"source_b":{"supported":true,"evidence_source":"abstract|fulltext","evidence_excerpt":"exact words from supplied primary evidence"}},"matched_patterns":["known-key"],"strongest_reduction":"mature theory/object or none","reason":"..."}]}. '
-        "Each supported source claim requires one SHORT exact contiguous excerpt (4-30 words). If BLOCK uses a mature reduction not in the ledger, matched_patterns may be [] but strongest_reduction must name it."
+        + '\n\nReturn JSON only: {"reviews":[{"candidate_id":"...","verdict":"CLEAR|BLOCK","lane_contract_verified":true,"lane_contract_reason":"...","source_claim_support":{"source_a":{"supported":true,"evidence_source":"abstract|fulltext","evidence_excerpt":"exact words from supplied primary evidence"},"source_b":{"supported":true,"evidence_source":"abstract|fulltext","evidence_excerpt":"exact words from supplied primary evidence"}},"matched_patterns":["known-key"],"reduction_class":"VALID_HARD_VETO|NEEDS_EXACT_REDUCTION_TEST|SOFT_COLLISION|TOO_GENERIC_TO_VETO|NONE","exact_reduction_test":"specific candidate-level reduction/distinguishing test or none","strongest_reduction":"mature theory/object or none","reason":"..."}]}. '
+        "Each supported source claim requires one SHORT exact contiguous excerpt (4-30 words). matched_patterns should list only relevant known keys; its presence alone does not determine the verdict. If a mature reduction is outside the ledger, matched_patterns may be [] but strongest_reduction must name it and reduction_class must still be explicit."
     )

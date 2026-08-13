@@ -5,6 +5,7 @@ import unittest
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS
 from .paper_first_problem_discovery_contract import (
     DISCOVERY_LANES,
+    LANE_DISTINCT_SOURCE_MINIMUM,
     FORBIDDEN_DISCOVERY_LANES,
     audit_problem_candidate,
     build_problem_discovery_contract_state,
@@ -33,12 +34,19 @@ def _lane_evidence(lane: str) -> dict:
             "scope_link": "The deployment setting falls within the method's stated operational scope.",
         }
     if lane == "UNEXPLAINED_BOUNDARY":
-        return {
-            "shared_measurement": "Both sources use the same success metric for the same phenomenon.",
-            "boundary_observation": "Source A measures a robust sign or regime change near boundary B.",
-            "adjacent_regime": "Source B establishes the expected behavior in the adjacent regime.",
-            "unexplained_transition": "Neither grounded source explains the transition location or shape.",
-        }
+        return {"shared_measurement":"Both sources use the same success metric for the same phenomenon.","boundary_observation":"Source A measures a robust sign or regime change near boundary B.","adjacent_regime":"Source B establishes the expected behavior in the adjacent regime.","unexplained_transition":"Neither grounded source explains the transition location or shape."}
+    if lane == "IDENTIFIABILITY_GAP":
+        return {"target_question":"Which causal mechanism produced the same observed endpoint?","observational_equivalence":"Both mechanisms generate the same available observation.","measured_proxy":"Current work measures only endpoint success.","decision_consequence":"The repair decision differs across the observationally equivalent mechanisms."}
+    if lane == "MISSING_DECISION_OBJECT":
+        return {"surrogate_a":"Source A optimizes immediate success.","surrogate_b":"Source B optimizes retention.","downstream_decision":"A persistent update must be accepted, rejected, or probed further.","mismatch_evidence":"The two surrogates can recommend different actions under the same update."}
+    if lane == "COMPOSITION_INTERACTION":
+        return {"component_a":"Component A has an isolated account.","component_b":"Component B has an isolated account.","composition_condition":"Both components are active in the same persistent agent.","interaction_observation":"The composed outcome differs from isolated behavior.","nonadditivity_basis":"The deviation is not reproduced by adding isolated effects."}
+    if lane == "CROSS_DOMAIN_STRUCTURAL_ANALOGY":
+        return {"source_domain_structure":"Partial-failure consistency in distributed systems.","agent_specific_constraint":"The agent rewrites the persistent artifact that later conditions its own policy.","agent_evidence_link":"The grounded Agent results exhibit self-authored persistent state plus downstream reuse.","why_not_simple_transfer":"The feedback from self-authored state changes the observable intervention structure."}
+    if lane == "NEW_CAPABILITY_QUESTION":
+        return {"new_capability":"Recent agents can persist and revise executable skills across episodes.","newly_observable_signal":"The same skill can now be intervened on and re-used downstream.","previous_measurement_limit":"Earlier stateless settings could not expose persistent cross-episode consequences.","capability_specific_constraint":"The persistent artifact becomes part of future decision context."}
+    if lane == "LONGITUDINAL_EMERGENCE":
+        return {"shared_measurement":"Both sources measure task success over repeated adaptation.","short_horizon_regime":"Short runs remain stable.","long_horizon_regime":"Longer runs exhibit a different regime.","emergence_signature":"The transition survives matched per-step improvement controls."}
     return {}
 
 
@@ -78,17 +86,10 @@ def valid_candidate(lane: str = "CONTRADICTION") -> dict:
         "lane_evidence": _lane_evidence(lane),
         "irreducible_object": "A formally named object that is not one of the saturated reductions.",
         "mature_theory_baselines": [
-            {
-                "name": "Theory A",
-                "same_information_projection": "Uses all observed variables and metadata.",
-                "reduction_test": "Cannot express prediction P under these observations.",
-            },
-            {
-                "name": "Theory B",
-                "same_information_projection": "Uses the same observations and interventions.",
-                "reduction_test": "Cannot express prediction P without an extra object.",
-            },
+            {"name":"Theory A","same_information_projection":"Uses all observed variables and metadata.","ex_ante_prediction":"Predicts invariance under condition C.","distinguishing_prediction":"Candidate predicts a sign change under C.","cannot_express":"Cannot express the sign change without the candidate structure.","reduction_class":"SOFT_COLLISION","exact_reduction_test":"Fit Theory A on identical observables and test the preregistered sign contrast."},
+            {"name":"Theory B","same_information_projection":"Uses the same observations and interventions.","ex_ante_prediction":"Predicts the same outcome in both regimes.","distinguishing_prediction":"Candidate predicts regime-specific divergence.","cannot_express":"Cannot express the regime-specific divergence under identical information.","reduction_class":"TOO_GENERIC_TO_VETO","exact_reduction_test":"Fit Theory B with the identical information set and test the regime contrast."},
         ],
+        "reduction_falsifiability_contract":{"same_observable_information_checked":True,"ex_ante_exact_prediction_checked":True,"distinguishing_prediction_checked":True,"scope_boundary_checked":True,"all_exact_reduction_tests_resolved":True},
         "same_information_nonreducibility": {
             "claim": "Prediction P differs from both mature theories.",
             "why_each_baseline_cannot_express_prediction": "Theory A lacks X; Theory B lacks Y under identical information.",
@@ -131,7 +132,7 @@ def valid_candidate(lane: str = "CONTRADICTION") -> dict:
 
 
 class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
-    def test_contract_is_multilane_empirical_and_theory_first(self) -> None:
+    def test_contract_is_multilane_portfolio_and_reduction_is_delayed(self) -> None:
         state = build_problem_discovery_contract_state()
         policy = state["policy"]
         self.assertTrue(policy["multi_lane_discovery_required"])
@@ -140,6 +141,7 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertEqual(tuple(policy["allowed_discovery_lanes"]), DISCOVERY_LANES)
         self.assertEqual(tuple(policy["forbidden_discovery_lanes"]), FORBIDDEN_DISCOVERY_LANES)
         self.assertTrue(policy["lane_specific_machine_evidence_contract_required"])
+        self.assertTrue(policy["search_portfolio_required"]); self.assertTrue(policy["expansion_reduction_separated"]); self.assertTrue(policy["mature_theory_veto_delayed_until_formulated_branch"]); self.assertTrue(policy["reduction_falsifiability_contract_required"]); self.assertTrue(policy["generic_theory_label_cannot_veto"])
         self.assertTrue(policy["no_lane_specific_downstream_relaxation"])
         self.assertTrue(policy["two_mature_theory_baselines_required"])
         self.assertTrue(policy["same_information_nonreducibility_required"])
@@ -147,12 +149,12 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertTrue(policy["saturation_map_check_required"])
         self.assertTrue(state["candidate_schema"]["semantic_reduction_review"]["both_source_claims_require_exact_primary_evidence_grounding"])
         self.assertTrue(state["candidate_schema"]["semantic_reduction_review"]["lane_contract_must_be_independently_verified"])
-        self.assertEqual(state["summary"]["allowed_discovery_lanes"], 4)
+        self.assertEqual(state["summary"]["allowed_discovery_lanes"], 10)
         self.assertEqual(state["summary"]["forbidden_discovery_lanes"], 3)
         self.assertEqual(state["summary"]["saturation_patterns"], len(REDUCTION_PATTERNS))
         self.assertEqual((state["summary"]["automatic_method_authority"], state["summary"]["automatic_experiment_authority"]), (0, 0))
 
-    def test_all_four_allowed_lanes_can_reach_only_human_paper_design(self) -> None:
+    def test_all_ten_allowed_lanes_can_reach_only_human_paper_design(self) -> None:
         for lane in DISCOVERY_LANES:
             with self.subTest(lane=lane):
                 audit = audit_problem_candidate(valid_candidate(lane))
@@ -172,13 +174,19 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
                 self.assertFalse(audit["passed"])
                 self.assertIn(f"forbidden-discovery-lane:{lane}", audit["blockers"])
 
-    def test_two_distinct_primary_sources_are_required_in_every_lane(self) -> None:
-        candidate = valid_candidate("CONVERGENT_FAILURE")
-        candidate["empirical_evidence"]["source_b"] = {}
-        audit = audit_problem_candidate(candidate)
-        self.assertFalse(audit["passed"])
-        self.assertIn("invalid-primary-source:2", audit["blockers"])
-        self.assertIn("discovery-lane-requires-two-distinct-primary-sources", audit["blockers"])
+    def test_distinct_primary_source_minimum_is_lane_specific(self) -> None:
+        for lane in DISCOVERY_LANES:
+            with self.subTest(lane=lane):
+                candidate=valid_candidate(lane)
+                candidate["empirical_evidence"]["source_b"]=dict(candidate["empirical_evidence"]["source_a"])
+                audit=audit_problem_candidate(candidate)
+                if LANE_DISTINCT_SOURCE_MINIMUM[lane]==2:
+                    self.assertFalse(audit["passed"]);self.assertTrue(any(x.startswith("discovery-lane-requires-2-distinct-primary-sources") for x in audit["blockers"]))
+                else:
+                    # Only the duplicate-source condition is under test; role must still match.
+                    candidate["empirical_evidence"]["source_b"]["evidence_role"]="EMPIRICAL_FACT"
+                    audit=audit_problem_candidate(candidate)
+                    self.assertTrue(audit["passed"],audit["blockers"])
 
     def test_assumption_break_requires_explicit_assumption_role(self) -> None:
         candidate = valid_candidate("ASSUMPTION_BREAK")
@@ -201,7 +209,20 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         candidate["saturation_scan"] = {"checked": True, "matched_patterns": ["typed-epistemic-authority"]}
         audit = audit_problem_candidate(candidate)
         self.assertFalse(audit["passed"])
-        self.assertTrue(any(value.startswith("saturation-pattern-match:") for value in audit["blockers"]))
+        self.assertTrue(any(value.startswith("saturation-proven-hard-reduction:") for value in audit["blockers"]))
+
+
+    def test_generic_pattern_similarity_does_not_hard_veto(self) -> None:
+        candidate=valid_candidate("LONGITUDINAL_EMERGENCE")
+        candidate["saturation_scan"]={"checked":True,"matched_patterns":[],"pending_patterns":[],"rejected_patterns":[{"key":"stream-instability","reason":"Generic dynamics does not give the candidate-level intervention prediction."}]}
+        audit=audit_problem_candidate(candidate)
+        self.assertTrue(audit["passed"],audit["blockers"])
+
+    def test_pending_exact_reduction_blocks_problem_gate(self) -> None:
+        candidate=valid_candidate("IDENTIFIABILITY_GAP")
+        candidate["saturation_scan"]={"checked":True,"matched_patterns":[],"pending_patterns":[{"key":"horizon-censored-attribution","exact_reduction_test":"Fit the exact partial-identification baseline on the same observables."}],"rejected_patterns":[]}
+        audit=audit_problem_candidate(candidate)
+        self.assertFalse(audit["passed"]); self.assertIn("saturation-exact-reduction-pending:horizon-censored-attribution",audit["blockers"])
 
     def test_semantic_review_must_verify_lane_contract(self) -> None:
         candidate = valid_candidate("CONTRADICTION")

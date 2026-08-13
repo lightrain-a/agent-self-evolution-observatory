@@ -93,10 +93,16 @@ def _candidate_snapshot(candidate: dict[str, Any]) -> dict[str, Any]:
             "candidate_id",
             "title",
             "discovery_lane",
+            "source_branch_id",
+            "branch_depth",
             "empirical_evidence",
             "lane_evidence",
             "irreducible_object",
+            "novelty_category",
+            "closest_work",
+            "closest_work_distance",
             "mature_theory_baselines",
+            "reduction_falsifiability_contract",
             "same_information_nonreducibility",
             "exact_prediction",
             "strongest_same_information_baseline",
@@ -105,6 +111,8 @@ def _candidate_snapshot(candidate: dict[str, Any]) -> dict[str, Any]:
             "semantic_reduction_review",
             "cheapest_problem_falsifier",
             "endpoint_headroom_requirement",
+            "importance",
+            "likely_iclr_story",
         )
     }
 

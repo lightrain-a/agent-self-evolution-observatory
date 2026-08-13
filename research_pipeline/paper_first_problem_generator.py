@@ -8,11 +8,12 @@ from typing import Any,Callable
 
 from .ark_provider import ArkResponsesClient,ArkSettings,extract_json_object
 from .config import PROJECT_ROOT,StorageSettings
-from .paper_first_fresh_saturation import REDUCTION_PATTERNS
+from .paper_first_fresh_saturation import REDUCTION_PATTERNS, reduction_pattern_audit
 from .paper_first_primary_evidence import load_private_primary_pool,private_primary_pool_path
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, FORBIDDEN_DISCOVERY_LANES, audit_problem_candidate
 from .paper_first_problem_gate_queue import default_auto_inbox_path
 from .paper_first_problem_generator_prompts import generator_prompt,reviewer_prompt
+from .paper_first_problem_search_portfolio import DEFAULT_RAW_SEEDS, run_search_portfolio
 from .public_state_redaction import redact_private_paths
 
 DEFAULT_JSON=PROJECT_ROOT/"generated"/"paper-first-problem-generator-state.json"
@@ -69,7 +70,7 @@ def _saturation_ledger_path(storage:StorageSettings)->Path:
 
 
 def _negative_space_sha()->str:
-    payload=[{"key":row.get("key"),"veto":row.get("veto"),"mature_theories":row.get("mature_theories")} for row in REDUCTION_PATTERNS]
+    payload=[{"key":row.get("key"),"veto":row.get("veto"),"mature_theories":row.get("mature_theories"),"audit_class":row.get("audit_class")} for row in reduction_pattern_audit()]
     return hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()).hexdigest()
 
 
@@ -198,11 +199,11 @@ def _record_saturation_run(storage:StorageSettings,state:dict[str,Any],pool_sha:
     state["saturation_memory"]={"ledger_entries":len(ledger),"prior_identical_zero_runs":prior_identical,"current_run_recorded":True,"current_review_receipt":receipt,"portable_review_receipts":inherited[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":prior_saturation.get("blocked_problem_memory") or {"blocked_candidate_attempts":0,"portable_blocked_problem_memory":[],"scientific_authority":False},"scientific_authority":False}
 
 
-def _ark(*,prompt,model,max_output_tokens):
+def _ark(*,prompt,model,max_output_tokens,temperature=0.0):
     s=ArkSettings.from_env(required=False)
     if not s.api_key: raise RuntimeError("ARK_API_KEY_NOT_CONFIGURED")
     s=ArkSettings(api_key=s.api_key,base_url=s.base_url,default_model=s.default_model,timeout_seconds=min(max(s.timeout_seconds,90.0),180.0),max_retries=0)
-    return ArkResponsesClient(s).respond(prompt,model=model,max_output_tokens=max_output_tokens,temperature=0.0,thinking="disabled")
+    return ArkResponsesClient(s).respond(prompt,model=model,max_output_tokens=max_output_tokens,temperature=temperature,thinking="disabled")
 
 def _source(raw,key,reg):
     src=(raw.get("empirical_evidence") or {}).get(key) or {};ref=str(src.get("ref") or "").strip();r=reg.get(ref) or {}
@@ -210,7 +211,7 @@ def _source(raw,key,reg):
 def _normalize_saturation_scan(raw_scan):
     scan=raw_scan if isinstance(raw_scan,dict) else {}
     known={str(row.get("key") or "") for row in REDUCTION_PATTERNS}
-    matched=[];rejected=[];invalid=[]
+    matched=[];pending=[];rejected=[];invalid=[]
     for value in scan.get("matched_patterns") or []:
         text=str(value or "").strip()
         if not text: continue
@@ -220,6 +221,11 @@ def _normalize_saturation_scan(raw_scan):
         if key and "reject" in text[len(key):].lower():
             rejected.append({"key":key,"reason":text[len(key):].strip(" :-—")});continue
         invalid.append(text)
+    for row in scan.get("pending_patterns") or []:
+        if not isinstance(row,dict): invalid.append(str(row));continue
+        key=str(row.get("key") or "").strip();test=str(row.get("exact_reduction_test") or "").strip();reason=str(row.get("reason") or "").strip()
+        if key in known and (test or reason): pending.append({"key":key,"exact_reduction_test":test,"reason":reason})
+        else: invalid.append(json.dumps(row,ensure_ascii=False,sort_keys=True))
     for row in scan.get("rejected_patterns") or []:
         if not isinstance(row,dict): invalid.append(str(row));continue
         key=str(row.get("key") or "").strip();reason=str(row.get("reason") or "").strip()
@@ -229,7 +235,7 @@ def _normalize_saturation_scan(raw_scan):
     for row in rejected:
         signature=(row["key"],row["reason"])
         if signature not in seen: seen.add(signature);dedup_rejected.append(row)
-    return {"checked":scan.get("checked") is True,"matched_patterns":sorted(set(matched)),"rejected_patterns":dedup_rejected,"invalid_entries":invalid}
+    return {"checked":scan.get("checked") is True,"matched_patterns":sorted(set(matched)),"pending_patterns":pending,"rejected_patterns":dedup_rejected,"invalid_entries":invalid}
 
 
 def _normalize(raw,reg):
@@ -238,11 +244,14 @@ def _normalize(raw,reg):
         "candidate_id":str(raw.get("candidate_id") or "").strip(),"title":str(raw.get("title") or "").strip(),"discovery_lane":lane,
         "empirical_evidence":{"source_a":_source(raw,"source_a",reg),"source_b":_source(raw,"source_b",reg),"relation":str(evidence.get("relation") or "").strip()},
         "lane_evidence":dict(lane_evidence) if isinstance(lane_evidence,dict) else {},
-        "irreducible_object":str(raw.get("irreducible_object") or "").strip(),"mature_theory_baselines":raw.get("mature_theory_baselines") or [],
+        "source_branch_id":str(raw.get("source_branch_id") or "").strip(),"branch_depth":int(raw.get("branch_depth") or 0),
+        "irreducible_object":str(raw.get("irreducible_object") or "").strip(),"novelty_category":str(raw.get("novelty_category") or "").strip(),
+        "closest_work":dict(raw.get("closest_work") or {}) if isinstance(raw.get("closest_work"),dict) else {},"closest_work_distance":raw.get("closest_work_distance"),
+        "mature_theory_baselines":raw.get("mature_theory_baselines") or [],"reduction_falsifiability_contract":raw.get("reduction_falsifiability_contract") or {},
         "same_information_nonreducibility":raw.get("same_information_nonreducibility") or {},"exact_prediction":str(raw.get("exact_prediction") or "").strip(),
         "strongest_same_information_baseline":str(raw.get("strongest_same_information_baseline") or "").strip(),"domain_transfer_audit":raw.get("domain_transfer_audit") or {},
         "saturation_scan":_normalize_saturation_scan(raw.get("saturation_scan")),"cheapest_problem_falsifier":str(raw.get("cheapest_problem_falsifier") or "").strip(),
-        "endpoint_headroom_requirement":str(raw.get("endpoint_headroom_requirement") or "").strip(),
+        "endpoint_headroom_requirement":str(raw.get("endpoint_headroom_requirement") or "").strip(),"importance":str(raw.get("importance") or "").strip(),"likely_iclr_story":str(raw.get("likely_iclr_story") or "").strip(),
         "semantic_reduction_review":{"reviewed":False,"block_only":True,"verdict":"BLOCK","reviewer_model":"","raw_sha256":"","source_claims_grounded":False,"source_claim_grounding":{},"lane_contract_verified":False,"lane_contract_reason":"unreviewed","matched_patterns":[],"strongest_reduction":"unreviewed"},
         "authority":{k:False for k in ("method_design","experiment_blueprint","local_validation","p0","gpu","full_experiment")}}
 def _reviewable(c,reg):
@@ -277,13 +286,19 @@ def _source_grounding(review:dict[str,Any],candidate:dict[str,Any],registry:dict
     return out,all_grounded
 
 def _apply_reviews(cands,payload,requested,resolved,generator_resolved,raw_sha,registry):
-    by={str(r.get("candidate_id") or ""):r for r in (payload or {}).get("reviews") or [] if isinstance(r,dict)};known={r["key"] for r in REDUCTION_PATTERNS};ind=bool(resolved and resolved!=generator_resolved)
+    by={str(r.get("candidate_id") or ""):r for r in (payload or {}).get("reviews") or [] if isinstance(r,dict)};known={r["key"] for r in REDUCTION_PATTERNS};generator_models={x for x in str(generator_resolved or "").split("|") if x};ind=bool(resolved and resolved not in generator_models)
     for c in cands:
-        r=by.get(c["candidate_id"]) or {};v=str(r.get("verdict") or "BLOCK").upper();matched=sorted({str(x) for x in r.get("matched_patterns") or [] if str(x) in known});grounding,grounded=_source_grounding(r,c,registry);lane_verified=r.get("lane_contract_verified") is True
+        r=by.get(c["candidate_id"]) or {};v=str(r.get("verdict") or "BLOCK").upper();matched=sorted({str(x) for x in r.get("matched_patterns") or [] if str(x) in known});grounding,grounded=_source_grounding(r,c,registry);lane_verified=r.get("lane_contract_verified") is True;reduction_class=str(r.get("reduction_class") or "").strip().upper();exact_test=str(r.get("exact_reduction_test") or "").strip()
+        if reduction_class in {"VALID_HARD_VETO","NEEDS_EXACT_REDUCTION_TEST"}:v="BLOCK"
         if not ind or not grounded or not lane_verified:v="BLOCK"
-        c["semantic_reduction_review"]={"reviewed":bool(r) and bool(raw_sha),"block_only":True,"verdict":"CLEAR" if v=="CLEAR" and ind and grounded and lane_verified else "BLOCK","reviewer_model":resolved or requested,"reviewer_requested_model":requested,"generator_resolved_model":generator_resolved,"independent_resolved_model":ind,"raw_sha256":raw_sha,"source_claims_grounded":grounded,"source_claim_grounding":grounding,"lane_contract_verified":lane_verified,"lane_contract_reason":str(r.get("lane_contract_reason") or ""),"matched_patterns":matched,"strongest_reduction":str(r.get("strongest_reduction") or ("reviewer-not-independent" if not ind else ("source-claim-grounding-failed" if not grounded else ("lane-contract-review-failed" if not lane_verified else "review-unavailable")))),"reason":str(r.get("reason") or ""),"authority":False}
-        if matched:
-            scan=dict(c.get("saturation_scan") or {});scan["checked"]=True;scan["matched_patterns"]=sorted(set(list(scan.get("matched_patterns") or [])+matched));c["saturation_scan"]=scan
+        c["semantic_reduction_review"]={"reviewed":bool(r) and bool(raw_sha),"block_only":True,"verdict":"CLEAR" if v=="CLEAR" and ind and grounded and lane_verified else "BLOCK","reviewer_model":resolved or requested,"reviewer_requested_model":requested,"generator_resolved_model":generator_resolved,"independent_resolved_model":ind,"raw_sha256":raw_sha,"source_claims_grounded":grounded,"source_claim_grounding":grounding,"lane_contract_verified":lane_verified,"lane_contract_reason":str(r.get("lane_contract_reason") or ""),"matched_patterns":matched,"reduction_class":reduction_class,"exact_reduction_test":exact_test,"strongest_reduction":str(r.get("strongest_reduction") or ("reviewer-not-independent" if not ind else ("source-claim-grounding-failed" if not grounded else ("lane-contract-review-failed" if not lane_verified else "review-unavailable")))),"reason":str(r.get("reason") or ""),"authority":False}
+        scan=dict(c.get("saturation_scan") or {});scan["checked"]=True
+        if matched and reduction_class=="VALID_HARD_VETO":scan["matched_patterns"]=sorted(set(list(scan.get("matched_patterns") or [])+matched))
+        elif matched and reduction_class=="NEEDS_EXACT_REDUCTION_TEST":
+            pending=list(scan.get("pending_patterns") or []);pending.extend({"key":key,"exact_reduction_test":exact_test or "independent reviewer requested exact reduction test"} for key in matched);scan["pending_patterns"]=pending
+        elif matched and reduction_class in {"SOFT_COLLISION","TOO_GENERIC_TO_VETO"}:
+            rejected=list(scan.get("rejected_patterns") or []);rejected.extend({"key":key,"reason":str(r.get("reason") or "reviewer found similarity but not exact candidate-level reduction")} for key in matched);scan["rejected_patterns"]=rejected
+        c["saturation_scan"]=scan
     return cands
 
 
@@ -332,23 +347,23 @@ def _validate_lane_search_candidates(lane_search:list[dict[str,Any]],candidates:
             if not any(_candidate_ref_pair(candidate)==pair for candidate in lane_candidates): raise ValueError("generator-lane-search-candidate-pair-mismatch")
 
 
-def _base_policy():
-    return {"zero_candidates_is_valid":True,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"format_retry_forbidden":True,"thinking_disabled":True,"multi_lane_discovery_enabled":True,"allowed_discovery_lanes":list(DISCOVERY_LANES),"forbidden_discovery_lanes":list(FORBIDDEN_DISCOVERY_LANES),"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"independent_reviewer_must_verify_lane_contract":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"portable_review_receipts_are_scheduler_metadata_only":True,"portable_review_receipts_have_zero_scientific_authority":True,"primary_source_coverage_receipts_are_inherited_transactionally":True,"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False}
+def _base_policy(*,portfolio:bool=True):
+    return {"zero_candidates_is_valid":True,"search_portfolio_enabled":portfolio,"one_generator_call_max":not portfolio,"one_semantic_reviewer_call_max":not portfolio,"expansion_precedes_reduction":portfolio,"mature_theory_veto_delayed_until_formulation":portfolio,"diversity_archives_required":portfolio,"branch_lineage_required":portfolio,"reduction_falsifiability_contract_required":portfolio,"generic_theory_label_cannot_veto":portfolio,"format_retry_forbidden":True,"thinking_disabled":True,"multi_lane_discovery_enabled":True,"allowed_discovery_lanes":list(DISCOVERY_LANES),"forbidden_discovery_lanes":list(FORBIDDEN_DISCOVERY_LANES),"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"independent_reviewer_must_verify_lane_contract":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"one_generator_call_must_audit_all_discovery_lanes":not portfolio,"portfolio_expansion_must_audit_all_discovery_lanes":portfolio,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"portable_review_receipts_are_scheduler_metadata_only":True,"portable_review_receipts_have_zero_scientific_authority":True,"primary_source_coverage_receipts_are_inherited_transactionally":True,"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_source_reopens_generation":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False}
 
 
 def _empty_summary(primary_evidence_records=0):
     lanes={lane:0 for lane in DISCOVERY_LANES};lanes["OTHER"]=0
-    return {"primary_evidence_records":primary_evidence_records,"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0,"generated_by_lane":dict(lanes),"structurally_reviewable_by_lane":dict(lanes),"semantic_clear_by_lane":dict(lanes),"semantic_blocked_by_lane":dict(lanes)}
+    return {"primary_evidence_records":primary_evidence_records,"raw_seeds":0,"semantic_unique_seeds":0,"unique_problem_families":0,"breadth_archive":0,"archive_pairwise_distance":0.0,"evolved_branches":0,"max_branch_depth":0,"portfolio_calls":0,"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0,"generated_by_lane":dict(lanes),"structurally_reviewable_by_lane":dict(lanes),"semantic_clear_by_lane":dict(lanes),"semantic_blocked_by_lane":dict(lanes)}
 
 
-def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=None,generator_model=None,reviewer_model=None,generator_responder:Responder|None=None,reviewer_responder:Responder|None=None,now=None,pool_max_age_hours=MAX_POOL_AGE_HOURS,max_candidates=MAX_CANDIDATES,blocked_problem_memory:dict[str,Any]|None=None):
+def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=None,generator_model=None,reviewer_model=None,generator_responder:Responder|None=None,reviewer_responder:Responder|None=None,now=None,pool_max_age_hours=MAX_POOL_AGE_HOURS,max_candidates=MAX_CANDIDATES,blocked_problem_memory:dict[str,Any]|None=None,portfolio_mode:bool|None=None,target_raw_seeds:int=DEFAULT_RAW_SEEDS):
     storage=storage or StorageSettings.from_env();primary_pool_path=primary_pool_path or private_primary_pool_path(storage);auto_inbox_path=auto_inbox_path or default_auto_inbox_path(storage)
-    generator_model=generator_model or os.getenv("PAPER_FIRST_PROBLEM_GENERATOR_MODEL",GENERATOR_MODEL);reviewer_model=reviewer_model or os.getenv("PAPER_FIRST_PROBLEM_REVIEW_MODEL",REVIEWER_MODEL);current=(now or _now_dt()).astimezone(timezone.utc);run_id=current.strftime("%Y%m%dT%H%M%SZ")
+    generator_model=generator_model or os.getenv("PAPER_FIRST_PROBLEM_GENERATOR_MODEL",GENERATOR_MODEL);reviewer_model=reviewer_model or os.getenv("PAPER_FIRST_PROBLEM_REVIEW_MODEL",REVIEWER_MODEL);current=(now or _now_dt()).astimezone(timezone.utc);run_id=current.strftime("%Y%m%dT%H%M%SZ");portfolio_mode=(generator_responder is None) if portfolio_mode is None else bool(portfolio_mode)
     archived=_archive_previous(storage,auto_inbox_path);pool=load_private_primary_pool(primary_pool_path) or {};reg=_registry(pool);psha=_pool_sha(pool) if pool else "";d=_parse_iso(pool.get("generated_at"));age=None if d is None else max(0.0,(current-d).total_seconds()/3600)
     inherited_receipts=[dict(row) for row in ((pool.get("source_coverage") or {}).get("portable_review_receipts") or []) if isinstance(row,dict)]
     blocked_problem_memory=blocked_problem_memory or _public_blocked_problem_memory(storage)
     dead_end_prompt_memory=_private_dead_end_prompt_memory(storage,blocked_problem_memory)
-    state={"schema_version":"2.4","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":_base_policy(),"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","search_diagnostics":{"lane_search_priority":list(dead_end_prompt_memory.get("lane_search_priority") or DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"scientific_authority":False},"saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},"candidates":[]}
+    state={"schema_version":"3.1" if portfolio_mode else "2.4","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":_base_policy(portfolio=portfolio_mode),"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","search_diagnostics":{"lane_search_priority":list(dead_end_prompt_memory.get("lane_search_priority") or DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"scientific_authority":False},"saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},"candidates":[]}
     def finish(status,cands=[]): state["status"]=status;_write_inbox(auto_inbox_path,run_id,status,cands,psha);_record_saturation_run(storage,state,psha,reg);return state
     if pool.get("status")!="READY" or len(reg)<4:return finish("SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE")
     if age is None or age>pool_max_age_hours:state["primary_pool_age_hours"]=age;return finish("SKIPPED_STALE_PRIMARY_EVIDENCE")
@@ -358,36 +373,62 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     if state["source_coverage"]["coverage_exhausted"] and state["source_coverage"]["unreviewed_lane_linked_sources"]==0:
         state["coverage_skip_reason"]="No unreviewed freshness/relevance-qualified source remains inside preregistered scientific-object lanes; generation resumes automatically when a new lane-grounded primary source appears."
         return finish("SKIPPED_SOURCE_COVERAGE_SATURATED")
-    call=generator_responder or _ark
-    try:
-        res=call(prompt=generator_prompt(list(reg.values()),dead_end_memory=dead_end_prompt_memory),model=generator_model,max_output_tokens=6500);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved};payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"]);rows=payload.get("candidates") or []
-        if not isinstance(rows,list) or len(rows)>max_candidates or any(not isinstance(r,dict) for r in rows):raise ValueError("generator-candidate-array-invalid")
-        if not rows and not state["generation_notes"]:raise ValueError("zero-candidate-generation-notes-required")
-    except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
-    cands=[_normalize(r,reg) for r in rows]
-    try:
-        _validate_lane_search_candidates(lane_search,cands)
-    except Exception as e:
-        state["error"]=f"{type(e).__name__}:{str(e)[:300]}";return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
-    state["search_diagnostics"].update({"lane_search_complete":True,"lane_search":lane_search})
-    reviewable=[c for c in cands if _reviewable(c,reg)]
-    state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
-    if reviewable:
-        call2=reviewer_responder or _ark
+    call=generator_responder or _ark;rows=[];generator_resolved_models=[]
+    if portfolio_mode:
+        provenance=[]
+        def portfolio_call(*,role,prompt,model,max_output_tokens):
+            temperature=0.85 if role.startswith("expand-") else (0.60 if role.startswith("evolve-g1") else (0.35 if role.startswith("evolve-g2") else 0.15))
+            res=call(prompt=prompt,model=model,max_output_tokens=max_output_tokens,temperature=temperature);raw=str(res.get("text") or "");path,sha=_write_raw(storage,run_id,role,model,raw);resolved=str(res.get("resolved_model") or model);generator_resolved_models.append(resolved);provenance.append({"role":role,"sha256":sha,"requested_model":model,"resolved_model":resolved,"temperature":temperature});return res
         try:
-            res=call2(prompt=reviewer_prompt(reviewable,reg),model=reviewer_model,max_output_tokens=4200);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"semantic-review",reviewer_model,raw);rresolved=str(res.get("resolved_model") or reviewer_model);state["raw_artifacts"]["semantic_reviewer"]={"path":p,"sha256":sha,"requested_model":reviewer_model,"resolved_model":rresolved};_apply_reviews(cands,extract_json_object(raw),reviewer_model,rresolved,resolved,sha,reg)
-        except Exception as e:state["semantic_review_error"]=f"{type(e).__name__}:{str(e)[:300]}";_apply_reviews(cands,None,reviewer_model,"",resolved,"",reg)
+            portfolio=run_search_portfolio(records=list(reg.values()),call=portfolio_call,model=generator_model,target_raw_seeds=target_raw_seeds,dead_end_memory=dead_end_prompt_memory)
+            formulated=portfolio.get("formulated_candidates") or [];machine_reviewable=[];machine_blocked=[]
+            for raw_candidate in formulated:
+                normalized=_normalize(raw_candidate,reg);audit=audit_problem_candidate(normalized,primary_evidence_by_ref=reg,require_primary_registry=True,require_semantic_review=False)
+                if audit.get("passed"):machine_reviewable.append(raw_candidate)
+                else:machine_blocked.append({"candidate_id":normalized.get("candidate_id"),"title":normalized.get("title"),"discovery_lane":normalized.get("discovery_lane"),"blockers":audit.get("blockers") or []})
+            rows=machine_reviewable;portfolio["machine_reduction_audit"]={"reviewable":len(machine_reviewable),"blocked":len(machine_blocked),"blocked_rows":machine_blocked,"scientific_authority":False}
+            private_dir=_root(storage)/"search-portfolios";private_dir.mkdir(parents=True,exist_ok=True);private_path=private_dir/f"{run_id}-portfolio.json";private_text=json.dumps(portfolio,ensure_ascii=False,indent=2)+"\n";private_path.write_text(private_text,encoding="utf-8");private_sha=_sha(private_text)
+            state["search_portfolio_private_path"]=str(private_path);state["portfolio_provenance"]=provenance
+            public_keys=("policy","config","summary","lane_counts","archive_lane_counts","family_counts");state["search_portfolio"]={k:portfolio.get(k) for k in public_keys};state["search_portfolio"]["archive_counts"]={k:len(v) for k,v in (portfolio.get("archives") or {}).items()};state["search_portfolio"]["scientific_authority"]=False
+            ps=portfolio.get("summary") or {};ps["machine_reviewable"]=len(machine_reviewable);ps["machine_reduction_blocked"]=len(machine_blocked);state["search_portfolio"]["summary"]=ps;state["summary"].update({"raw_seeds":ps.get("raw_seeds",0),"semantic_unique_seeds":ps.get("semantic_unique",0),"unique_problem_families":ps.get("unique_problem_families",0),"breadth_archive":ps.get("breadth_archive",0),"archive_pairwise_distance":ps.get("mean_archive_pairwise_distance",0.0),"evolved_branches":ps.get("evolved_branches",0),"max_branch_depth":ps.get("max_branch_depth",0),"portfolio_calls":ps.get("portfolio_calls",0)})
+            lane_counts=portfolio.get("lane_counts") or {};priority=list(state["search_diagnostics"]["lane_search_priority"]);state["search_diagnostics"].update({"lane_search_complete":True,"lane_search":[{"lane":lane,"status":"EXPANDED" if int(lane_counts.get(lane) or 0)>0 else "EMPTY","raw_seed_count":int(lane_counts.get(lane) or 0),"reason":"Search Portfolio expansion shard produced grounded seeds." if int(lane_counts.get(lane) or 0)>0 else "No machine-valid grounded seed survived expansion contract."} for lane in priority]})
+            state["generation_notes"]=(f"Search Portfolio expanded {ps.get('raw_seeds',0)} grounded raw seeds into {ps.get('semantic_unique',0)} semantic-unique / {ps.get('unique_problem_families',0)} structural families, evolved {ps.get('evolved_branches',0)} branches, formulated {ps.get('formulated_candidates',0)}, and left {len(machine_reviewable)} machine-reviewable candidates after delayed exact reduction. Zero final candidates remains valid and is not by itself evidence of field saturation.")
+            synth=_sha(json.dumps({"portfolio_sha256":private_sha,"calls":[x["sha256"] for x in provenance]},sort_keys=True,separators=(",",":")));resolved_join="|".join(sorted(set(generator_resolved_models))) or generator_model;state["raw_artifacts"]["generator"]={"sha256":synth,"requested_model":generator_model,"resolved_model":resolved_join,"portfolio":True,"portfolio_sha256":private_sha,"calls":len(provenance)}
+        except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";state["portfolio_provenance"]=provenance;return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
+    else:
+        try:
+            res=call(prompt=generator_prompt(list(reg.values()),dead_end_memory=dead_end_prompt_memory),model=generator_model,max_output_tokens=6500);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);generator_resolved_models=[resolved];state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved};payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"]);rows=payload.get("candidates") or []
+            if not isinstance(rows,list) or len(rows)>max_candidates or any(not isinstance(r,dict) for r in rows):raise ValueError("generator-candidate-array-invalid")
+            if not rows and not state["generation_notes"]:raise ValueError("zero-candidate-generation-notes-required")
+        except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
+        cands=[_normalize(r,reg) for r in rows]
+        try:_validate_lane_search_candidates(lane_search,cands)
+        except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
+        state["search_diagnostics"].update({"lane_search_complete":True,"lane_search":lane_search});reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
+    if portfolio_mode:
+        cands=[_normalize(r,reg) for r in rows];reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
+    if reviewable:
+        call2=reviewer_responder or _ark;batch_size=6 if portfolio_mode else max(1,len(reviewable));review_receipts=[];gen_resolved="|".join(sorted(set(generator_resolved_models))) or generator_model
+        for start in range(0,len(reviewable),batch_size):
+            batch=reviewable[start:start+batch_size]
+            try:
+                res=call2(prompt=reviewer_prompt(batch,reg),model=reviewer_model,max_output_tokens=5200 if portfolio_mode else 4200);raw=str(res.get("text") or "");role=f"semantic-review-{start//batch_size+1}" if portfolio_mode else "semantic-review";p,sha=_write_raw(storage,run_id,role,reviewer_model,raw);rresolved=str(res.get("resolved_model") or reviewer_model);review_receipts.append({"sha256":sha,"requested_model":reviewer_model,"resolved_model":rresolved});_apply_reviews(batch,extract_json_object(raw),reviewer_model,rresolved,gen_resolved,sha,reg)
+            except Exception as e:state.setdefault("semantic_review_errors",[]).append(f"batch-{start//batch_size+1}:{type(e).__name__}:{str(e)[:240]}");_apply_reviews(batch,None,reviewer_model,"",gen_resolved,"",reg)
+        if portfolio_mode:
+            state["semantic_reviewer_batches"]=review_receipts
+            if review_receipts:state["raw_artifacts"]["semantic_reviewer"]={"sha256":_sha("|".join(str(row.get("sha256") or "") for row in review_receipts)),"requested_model":reviewer_model,"resolved_model":"|".join(sorted({str(row.get('resolved_model') or '') for row in review_receipts if row.get('resolved_model')})),"calls":len(review_receipts)}
+        elif review_receipts:state["raw_artifacts"]["semantic_reviewer"]={**review_receipts[0]}
     for c in cands:
         if c not in reviewable:c["semantic_reduction_review"].update({"reviewed":False,"verdict":"BLOCK","lane_contract_verified":False,"lane_contract_reason":"structural-or-provenance-gate-failed","strongest_reduction":"structural-or-provenance-gate-failed"})
     clear_rows=[c for c in cands if (c.get("semantic_reduction_review") or {}).get("verdict")=="CLEAR"];blocked_rows=[c for c in cands if c not in clear_rows]
     state["summary"].update({"semantic_clear":len(clear_rows),"semantic_blocked":len(blocked_rows),"written_to_auto_inbox":len(cands),"semantic_clear_by_lane":_count_by_lane(clear_rows),"semantic_blocked_by_lane":_count_by_lane(blocked_rows)})
-    state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"source_refs":[c["empirical_evidence"]["source_a"]["ref"],c["empirical_evidence"]["source_b"]["ref"]],"semantic_verdict":c["semantic_reduction_review"]["verdict"],"lane_contract_verified":c["semantic_reduction_review"].get("lane_contract_verified") is True,"matched_patterns":c["semantic_reduction_review"].get("matched_patterns") or []} for c in cands]
+    state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"source_branch_id":c.get("source_branch_id") or "","source_refs":[c["empirical_evidence"]["source_a"]["ref"],c["empirical_evidence"]["source_b"]["ref"]],"semantic_verdict":c["semantic_reduction_review"]["verdict"],"lane_contract_verified":c["semantic_reduction_review"].get("lane_contract_verified") is True,"matched_patterns":c["semantic_reduction_review"].get("matched_patterns") or []} for c in cands]
     return finish("GENERATED_ZERO_CANDIDATES" if not cands else "GENERATED_AWAIT_PROBLEM_GATE",cands)
 
 
 def public_problem_generator_state(state:dict[str,Any],storage:StorageSettings|None=None)->dict[str,Any]:
     public=json.loads(json.dumps(state,ensure_ascii=False))
-    for key in ("primary_pool_path","auto_inbox_path","archived_previous_auto_inbox"):
+    for key in ("primary_pool_path","auto_inbox_path","archived_previous_auto_inbox","search_portfolio_private_path"):
         public.pop(key,None)
     for artifact in (public.get("raw_artifacts") or {}).values():
         if isinstance(artifact,dict):artifact.pop("path",None)

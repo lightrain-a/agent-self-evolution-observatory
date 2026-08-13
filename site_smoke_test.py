@@ -304,6 +304,17 @@ def main() -> None:
         fail("zero-candidate problem discovery must expose an auditable rationale")
     if generator_policy.get("zero_candidate_rationale_required") is not True or generator_policy.get("generation_notes_are_advisory_not_scientific_authority") is not True or generator_policy.get("discovery_saturation_memory_has_zero_scientific_authority") is not True or saturation.get("scientific_authority") is not False:
         fail("problem-discovery rationale/saturation memory authority policy is stale")
+    portfolio = generator.get("search_portfolio") or {}
+    ps = portfolio.get("summary") or {}
+    if generator_policy.get("search_portfolio_enabled") is not True or generator_policy.get("expansion_precedes_reduction") is not True or generator_policy.get("mature_theory_veto_delayed_until_formulation") is not True or generator_policy.get("diversity_archives_required") is not True:
+        fail("problem discovery must expose the multi-lane Search Portfolio contract")
+    if (ps.get("raw_seeds"),ps.get("semantic_unique"),ps.get("evolved_branches"),ps.get("formulated_candidates"),ps.get("machine_reviewable"),ps.get("problem_gate_passed"),ps.get("paper_design_eligible")) != (108,46,35,17,4,2,2):
+        fail(f"Search Portfolio funnel is stale: {ps}")
+    if portfolio.get("scientific_authority") is not False or (portfolio.get("policy") or {}).get("scheduler_rollover_cannot_change_frozen_transaction") is not True:
+        fail("Search Portfolio must use frozen zero-authority provenance")
+    problem_queue = research_state.get("paper_first_problem_gate_queue") or {}; pqs=problem_queue.get("summary") or {}
+    if (pqs.get("submitted"),pqs.get("passed_problem_gate"),pqs.get("blocked_problem_gate"),pqs.get("paper_design_eligible"),pqs.get("method_authorized"),pqs.get("experiment_authorized"),pqs.get("p0_authorized")) != (4,2,2,2,0,0,0):
+        fail(f"Problem Gate funnel/authority is stale: {pqs}")
     if research_state.get("collision_engine", {}).get("summary", {}).get("pairwise_comparisons") != 406:
         fail("collision engine did not compare all 29 structured ICLR candidates")
     if research_state.get("pilot_registry", {}).get("summary", {}).get("phases") != 78:
