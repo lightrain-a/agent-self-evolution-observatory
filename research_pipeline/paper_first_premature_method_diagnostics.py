@@ -193,8 +193,36 @@ def build_premature_method_diagnostics(data_root: Path | None = None) -> dict[st
     }
 
 
+def _is_complete_frozen_snapshot(state: dict[str, Any]) -> bool:
+    summary = state.get("summary") or {}
+    cards = state.get("cards") or []
+    return bool(
+        summary.get("directions") == 2
+        and summary.get("completed_diagnostics") == 2
+        and summary.get("same_information_reducibility_findings") == 2
+        and summary.get("hidden_executions") == 0
+        and summary.get("scientifically_authorized") == 0
+        and summary.get("p0_lifecycle_mutations") == 0
+        and summary.get("full_experiment_authorized") == 0
+        and len(cards) == 2
+        and all((row.get("status") == "complete-diagnostic-quarantined") for row in cards if isinstance(row, dict))
+        and len([row for row in cards if isinstance(row, dict)]) == 2
+    )
+
+
 def write_premature_method_diagnostics(json_path: Path = DEFAULT_JSON, js_path: Path = DEFAULT_JS) -> dict[str, Any]:
     state = build_premature_method_diagnostics()
+    if not _is_complete_frozen_snapshot(state):
+        previous = _load(json_path)
+        if _is_complete_frozen_snapshot(previous):
+            if not js_path.exists():
+                js_path.parent.mkdir(parents=True, exist_ok=True)
+                js_path.write_text(
+                    "window.PAPER_FIRST_PREMATURE_METHOD_DIAGNOSTICS = " + json.dumps(previous, ensure_ascii=False, separators=(",", ":")) + ";\n",
+                    encoding="utf-8",
+                )
+            return previous
+        raise RuntimeError("premature method diagnostic source is incomplete and no valid frozen snapshot is available")
     json_path.parent.mkdir(parents=True, exist_ok=True)
     json_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     js_path.write_text(

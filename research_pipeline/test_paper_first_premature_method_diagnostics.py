@@ -1,9 +1,34 @@
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
-from .paper_first_premature_method_diagnostics import build_premature_method_diagnostics
+from .paper_first_premature_method_diagnostics import build_premature_method_diagnostics, write_premature_method_diagnostics
+
+
+class PrematurePaperFirstMethodDiagnosticsWriterTest(unittest.TestCase):
+    def test_missing_local_source_preserves_valid_frozen_snapshot(self) -> None:
+        frozen={
+            "schema_version":"1.0",
+            "summary":{"directions":2,"completed_diagnostics":2,"design_holds":1,"same_information_reducibility_findings":2,"hidden_executions":0,"scientifically_authorized":0,"p0_lifecycle_mutations":0,"full_experiment_authorized":0},
+            "cards":[{"status":"complete-diagnostic-quarantined"},{"status":"complete-diagnostic-quarantined"}],
+        }
+        incomplete={
+            "schema_version":"1.0",
+            "summary":{"directions":2,"completed_diagnostics":0,"design_holds":0,"same_information_reducibility_findings":0,"hidden_executions":0,"scientifically_authorized":0,"p0_lifecycle_mutations":0,"full_experiment_authorized":0},
+            "cards":[{"status":"diagnostic-artifact-incomplete"},{"status":"diagnostic-artifact-incomplete"}],
+        }
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); json_path=root/"state.json"; js_path=root/"state.js"
+            json_path.write_text(json.dumps(frozen),encoding="utf-8")
+            js_path.write_text("frozen-js",encoding="utf-8")
+            with patch("research_pipeline.paper_first_premature_method_diagnostics.build_premature_method_diagnostics",return_value=incomplete):
+                state=write_premature_method_diagnostics(json_path=json_path,js_path=js_path)
+            persisted=json.loads(json_path.read_text(encoding="utf-8")); js=js_path.read_text(encoding="utf-8")
+        self.assertEqual(state,frozen); self.assertEqual(persisted,frozen); self.assertEqual(js,"frozen-js")
 
 
 class PrematurePaperFirstMethodDiagnosticsTest(unittest.TestCase):
