@@ -61,7 +61,19 @@ def main() -> None:
             request("POST", f"/session/{session_id}/url", {"url": base + path})
             time.sleep(wait)
 
-        navigate("/system-overview.html")
+        def wait_for(script: str, timeout: float = 20.0, interval: float = 0.5) -> bool:
+            deadline = time.monotonic() + timeout
+            while time.monotonic() < deadline:
+                try:
+                    if execute(session_id, script):
+                        return True
+                except Exception:
+                    pass
+                time.sleep(interval)
+            return False
+
+        navigate("/system-overview.html", wait=1)
+        require(wait_for("return (document.body.textContent||'').includes('SATURATION / DEAD-END MEMORY') && (document.body.textContent||'').includes('PAPER-FIRST');"), "research-system dynamic sections did not become ready")
         system = execute(session_id, """return {
           chapters: document.querySelectorAll('.page-chapter').length,
           responsibilityLayers: document.querySelectorAll('.system-layer-list article').length,
@@ -95,10 +107,13 @@ def main() -> None:
         primary = system["primaryEvidence"]
         generator = system["problemGenerator"]
         require(primary.get("status") == "READY" and (primary.get("policy") or {}).get("empirical_fact_extraction_version") == "precision-v2" and (primary.get("policy") or {}).get("empirical_fact_precision_gate") is True, f"browser primary-evidence precision state is stale: {primary}")
+        require((primary.get("policy") or {}).get("scientific_object_lanes") == ["skill_harness","memory_continual","world_model","parametric_model_state"] and (primary.get("policy") or {}).get("source_coverage_exploration_prefers_scientific_objects") is True and (primary.get("policy") or {}).get("context_and_property_tags_have_zero_scientific_authority") is True, f"browser scientific-object policy is stale: {primary.get('policy')}")
+        if (primary.get("summary") or {}).get("source_coverage_exhausted") is True: require(int((primary.get("summary") or {}).get("reviewed_object_linked_sources") or 0) == int((primary.get("summary") or {}).get("eligible_object_linked_sources") or 0) and int((primary.get("summary") or {}).get("unreviewed_object_linked_sources") or 0) == 0, f"object coverage is not exhausted consistently: {primary.get('summary')}")
         require(sum(int(v or 0) for v in ((primary.get("summary") or {}).get("empirical_fact_tier_counts") or {}).values()) == int((primary.get("summary") or {}).get("empirical_fact_candidates") or 0), f"browser fact-tier accounting is stale: {primary.get('summary')}")
         require((generator.get("policy") or {}).get("zero_candidate_rationale_required") is True and (generator.get("policy") or {}).get("discovery_saturation_memory_has_zero_scientific_authority") is True and (generator.get("saturation_memory") or {}).get("scientific_authority") is False, f"browser saturation-memory authority state is stale: {generator}")
         if generator.get("status") == "GENERATED_ZERO_CANDIDATES": require(bool(str(generator.get("generation_notes") or "").strip()), "zero-candidate rationale missing from browser state")
-        require("SATURATION MEMORY" in system["text"] and "precision-v2" in system["text"], "problem-discovery precision/saturation controls are not rendered")
+        require("SATURATION / DEAD-END MEMORY" in system["text"] and "precision-v2" in system["text"], "problem-discovery precision/saturation controls are not rendered")
+        require("SCIENTIFIC OBJECT AXIS" in system["text"] and "world_model" in system["text"] and "parametric_model_state" in system["text"] and "object-grounded reviewed=" in system["text"] and "v2.7 · MACHINE-ENFORCED" in system["text"], "scientific-object discovery axis is not rendered")
         require((system["preSummary"].get("audited"), system["preSummary"].get("execution_ready"), system["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system['preSummary']}")
         iteration = system["iterationSummary"]
         infra_only = iteration.get("diagnosis_counts") == {"infrastructure-error": 4}
