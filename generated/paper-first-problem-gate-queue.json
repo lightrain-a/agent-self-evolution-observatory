@@ -1,13 +1,13 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-13T08:54:06+00:00",
+  "generated_at": "2026-08-13T09:17:15+00:00",
   "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
   "source_inboxes": [
     "private-data://paper-first-problem-discovery/candidate-inbox.json",
     "private-data://paper-first-problem-discovery/auto-candidate-inbox.json"
   ],
   "primary_evidence_pool": "private-data://paper-first-problem-discovery/primary-evidence-pool.json",
-  "primary_evidence_records": 32,
+  "primary_evidence_records": 30,
   "source_exists": true,
   "policy": {
     "candidate_inbox_is_not_authority": true,
@@ -30,7 +30,7 @@
     "blocked_problem_gate": 0,
     "paper_design_eligible": 0,
     "inbox_errors": 0,
-    "primary_evidence_records": 32,
+    "primary_evidence_records": 30,
     "method_authorized": 0,
     "experiment_authorized": 0,
     "p0_authorized": 0

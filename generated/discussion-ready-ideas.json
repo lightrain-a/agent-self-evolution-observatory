@@ -1,8 +1,8 @@
 {
   "schema_version": "2.0",
-  "generated_at": "2026-08-12T14:20:08+00:00",
+  "generated_at": "2026-08-13T09:05:29+00:00",
   "target": 20,
-  "count": 31,
+  "count": 27,
   "remaining": 0,
   "ready": true,
   "final_summary": {
@@ -812,22 +812,6 @@
     },
     {
       "source": "terminal-independent-method",
-      "id": "cross-surface-repair-routing",
-      "code": "E-5",
-      "group": "E",
-      "source_incubation_id": "PF-2",
-      "title": {
-        "zh": "跨 Agent 更新表面的因果修复路由",
-        "en": "Causal Routing Across Agent Update Surfaces"
-      },
-      "terminal_state": "p0",
-      "human_parent": false,
-      "reviewed": true,
-      "final_verdict": "terminal-human-compatible",
-      "parent_ids": []
-    },
-    {
-      "source": "terminal-independent-method",
       "id": "cross-task-effect-transport-certificate",
       "code": "B-9",
       "group": "B",
@@ -835,54 +819,6 @@
       "title": {
         "zh": "跨任务效应迁移证书",
         "en": "Cross-Task Effect Transport Certificate"
-      },
-      "terminal_state": "p0",
-      "human_parent": false,
-      "reviewed": true,
-      "final_verdict": "terminal-human-compatible",
-      "parent_ids": []
-    },
-    {
-      "source": "terminal-independent-method",
-      "id": "diagnosability-preserving-self-evolution",
-      "code": "C-7",
-      "group": "C",
-      "source_incubation_id": "PF-4",
-      "title": {
-        "zh": "保持可诊断性的自进化",
-        "en": "Diagnosability-Preserving Self-Evolution"
-      },
-      "terminal_state": "p0",
-      "human_parent": false,
-      "reviewed": true,
-      "final_verdict": "terminal-human-compatible",
-      "parent_ids": []
-    },
-    {
-      "source": "terminal-independent-method",
-      "id": "failure-mode-transport-under-self-evolution",
-      "code": "A-9",
-      "group": "A",
-      "source_incubation_id": "PF-6",
-      "title": {
-        "zh": "自进化中的失败模式迁移",
-        "en": "Failure-Mode Transport Under Self-Evolution"
-      },
-      "terminal_state": "p0",
-      "human_parent": false,
-      "reviewed": true,
-      "final_verdict": "terminal-human-compatible",
-      "parent_ids": []
-    },
-    {
-      "source": "terminal-independent-method",
-      "id": "future-learnability-preserving-self-evolution",
-      "code": "A-8",
-      "group": "A",
-      "source_incubation_id": "PF-1",
-      "title": {
-        "zh": "面向未来可学习性的自进化",
-        "en": "Future-Learnability-Preserving Self-Evolution"
       },
       "terminal_state": "p0",
       "human_parent": false,

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-13T08:51:16+00:00",
-  "run_id": "20260813T085116Z",
+  "generated_at": "2026-08-13T09:05:20+00:00",
+  "run_id": "20260813T090520Z",
   "generator_model": "ark-code-latest",
   "reviewer_model": "glm-5.2",
   "policy": {
@@ -24,7 +24,7 @@
     "automatic_p0_authority": false
   },
   "summary": {
-    "primary_evidence_records": 32,
+    "primary_evidence_records": 30,
     "generated": 0,
     "structurally_reviewable": 0,
     "semantic_clear": 0,
@@ -33,19 +33,19 @@
   },
   "raw_artifacts": {
     "generator": {
-      "sha256": "82c80427b43be04b7480c2149c40ffb92f81091c2ceda47715d06457c18fb13e",
+      "sha256": "181697c051724f98e4745a81d3e0ae651d08295c64a17ae382d6efbbc6a08e2a",
       "requested_model": "ark-code-latest",
       "resolved_model": "doubao-seed-evolving"
     }
   },
-  "generation_notes": "No candidate survives the strict contradiction-first gate. The supplied primary sources contain many directional findings about skills, harnesses, memory, safety, and self-evolution, but no pair of distinct verified empirical facts creates a non-reducible contradiction that is not already expressible by mature theories or explicitly excluded by the hard negative-space vetoes. In particular, apparent tensions such as skills helping versus harming, retrieval helping versus hurting, or harness evolution succeeding versus failing are already explained by condition-specific utility, complementarity/redundancy, coverage/precision, CATE/effect modification, compensation for model defects, verifier/evidence quality, or ordinary transfer/validation theory. Returning zero candidates is therefore preferred.",
+  "generation_notes": "No candidate survives the strict contradiction-first gate. The supplied primary sources contain several within-paper performance observations, but no pair of distinct sources reports the same observable information under contradictory predictions. Cross-source differences are attributable to different tasks, models, harnesses, optimizers, retrieval settings, or evaluation protocols rather than a shared irreducible object. The apparent tensions that were checked—such as test-time scaling underperforming a seed agent in SHAPER versus gains from self-evolution/test-time adaptation in other papers, retrieval helping in GeoForge while excessive retrieval hurts, or harness evolution succeeding in some domains but struggling in Office tasks—are expressible by mature baselines such as effect modification/CATE, retrieval quality/noise, domain-specific defect compensation, capability-dependent scaffolding, or ordinary benchmark/task heterogeneity. They therefore fall under the hard negative-space vetoes, especially feedback-view-intransitivity, harness-update-scope-heterogeneity, artifact-uptake-after-retrieval, and validation-filter-information-loss. Zero candidates are preferred to weak candidates.",
   "saturation_memory": {
-    "ledger_entries": 2,
-    "prior_identical_zero_runs": 1,
+    "ledger_entries": 1,
+    "prior_identical_zero_runs": 0,
     "current_run_recorded": true,
     "scientific_authority": false
   },
   "candidates": [],
-  "primary_pool_age_hours": 0.015,
+  "primary_pool_age_hours": 0.0582,
   "status": "GENERATED_ZERO_CANDIDATES"
 }
