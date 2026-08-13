@@ -1,6 +1,6 @@
 {
   "schema_version": "2.2",
-  "generated_at": "2026-08-12T10:46:42+00:00",
+  "generated_at": "2026-08-13T08:11:18+00:00",
   "policy": {
     "schema_version": "2.2",
     "paper_novelty_precedes_method_design": true,
@@ -18,6 +18,19 @@
     "pre_model_load_audit_required": true,
     "f0_required_before_p0_support": true
   },
+  "paper_first_macro_stages": [
+    "scope",
+    "evidence",
+    "novelty",
+    "method",
+    "experiment-blueprint",
+    "economy-compile",
+    "local-validation",
+    "method-freeze",
+    "full-experiment",
+    "paper-evidence",
+    "learn"
+  ],
   "stages": [
     {
       "index": 0,
@@ -102,23 +115,5 @@
       "next_action": "replan-cost-before-rerun"
     }
   },
-  "runtime": {
-    "active_gpu_leases": 0,
-    "lease_root": "/data/wyt/agent-self-evolution-observatory/resource-leases",
-    "repair_budget_root": "/data/wyt/agent-self-evolution-observatory/governance/repair-budget"
-  },
-  "paper_first_macro_stages": [
-    "scope",
-    "evidence",
-    "novelty",
-    "method",
-    "experiment-blueprint",
-    "economy-compile",
-    "local-validation",
-    "method-freeze",
-    "full-experiment",
-    "paper-evidence",
-    "learn"
-  ],
   "stage_scope_note": "The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; they do not replace the paper lifecycle."
 }
