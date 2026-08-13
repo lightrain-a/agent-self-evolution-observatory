@@ -403,6 +403,29 @@ def discover_arxiv_fallback(
     return rows, errors
 
 
+def _augment_discovery_corpus(corpus: dict[str, Any], augmentation: list[dict[str, Any]]) -> tuple[dict[str, Any], int]:
+    merged: dict[str, dict[str, Any]] = {}
+    passthrough: list[dict[str, Any]] = []
+    for paper in corpus.get("papers") or []:
+        if not isinstance(paper, dict):
+            continue
+        arxiv_id = _arxiv_id(paper)
+        if arxiv_id:
+            merged.setdefault(arxiv_id, paper)
+        else:
+            passthrough.append(paper)
+    added = 0
+    for paper in augmentation:
+        if not isinstance(paper, dict):
+            continue
+        arxiv_id = _arxiv_id(paper)
+        if not arxiv_id or arxiv_id in merged:
+            continue
+        merged[arxiv_id] = paper
+        added += 1
+    return {"papers": [*merged.values(), *passthrough]}, added
+
+
 def private_primary_pool_path(storage: StorageSettings | None = None) -> Path:
     storage = storage or StorageSettings.from_env()
     return storage.data_root / "paper-first-problem-discovery" / "primary-evidence-pool.json"
@@ -438,6 +461,7 @@ def build_primary_evidence_pool(
     arxiv_search_requester: Callable[..., Any] | None = None,
     arxiv_queries: tuple[str, ...] = DEFAULT_ARXIV_QUERIES,
     arxiv_query_interval_seconds: float = DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS,
+    augment_fresh_corpus_with_arxiv: bool = True,
     now: datetime | None = None,
     min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
     cache_dir: Path | None = None,
@@ -456,6 +480,8 @@ def build_primary_evidence_pool(
             "verified_primary_page_required": True,
             "arxiv_source_sha_required": True,
             "stale_s2_triggers_primary_arxiv_fallback": True,
+            "fresh_s2_is_augmented_by_preregistered_arxiv_lanes": bool(augment_fresh_corpus_with_arxiv),
+            "arxiv_augmentation_failure_does_not_invalidate_fresh_corpus": True,
             "arxiv_fallback_is_primary_metadata_not_a_scientific_claim": True,
             "primary_publication_age_is_bounded": True,
             "maximum_publication_age_days": max_publication_age_days,
@@ -476,6 +502,8 @@ def build_primary_evidence_pool(
             "corpus_available": bool(corpus),
             "corpus_fresh": False,
             "discovery_mode": "none",
+            "augmentation_discovered": 0,
+            "augmentation_added": 0,
             "selected": 0,
             "verified": 0,
             "fetch_errors": 0,
@@ -514,8 +542,25 @@ def build_primary_evidence_pool(
     discovery_errors: list[str] = []
     if fresh:
         discovery_corpus = corpus or {"papers": []}
-        public_state["summary"]["discovery_mode"] = "semantic-scholar-corpus"
-        private["discovery_mode"] = "semantic-scholar-corpus"
+        if augment_fresh_corpus_with_arxiv:
+            augmentation_rows, discovery_errors = discover_arxiv_fallback(
+                queries=arxiv_queries,
+                requester=arxiv_search_requester,
+                min_interval_seconds=arxiv_query_interval_seconds,
+            )
+            discovery_corpus, augmentation_added = _augment_discovery_corpus(discovery_corpus, augmentation_rows)
+            public_state["summary"].update({
+                "discovery_mode": "semantic-scholar-plus-arxiv-augmentation",
+                "augmentation_discovered": len(augmentation_rows),
+                "augmentation_added": augmentation_added,
+            })
+            private["discovery_mode"] = "semantic-scholar-plus-arxiv-augmentation"
+            private["augmentation"] = {"discovered": len(augmentation_rows), "added": augmentation_added}
+            public_state["discovery_errors"] = discovery_errors
+            private["discovery_errors"] = discovery_errors
+        else:
+            public_state["summary"]["discovery_mode"] = "semantic-scholar-corpus"
+            private["discovery_mode"] = "semantic-scholar-corpus"
     else:
         fallback_rows, discovery_errors = discover_arxiv_fallback(
             queries=arxiv_queries,
@@ -731,6 +776,7 @@ def write_primary_evidence_pool(
     arxiv_search_requester: Callable[..., Any] | None = None,
     arxiv_queries: tuple[str, ...] = DEFAULT_ARXIV_QUERIES,
     arxiv_query_interval_seconds: float = DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS,
+    augment_fresh_corpus_with_arxiv: bool = True,
     now: datetime | None = None,
     min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
 ) -> dict[str, Any]:
@@ -746,6 +792,7 @@ def write_primary_evidence_pool(
         arxiv_search_requester=arxiv_search_requester,
         arxiv_queries=arxiv_queries,
         arxiv_query_interval_seconds=arxiv_query_interval_seconds,
+        augment_fresh_corpus_with_arxiv=augment_fresh_corpus_with_arxiv,
         now=now,
         min_interval_seconds=min_interval_seconds,
     )

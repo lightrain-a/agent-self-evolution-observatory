@@ -153,6 +153,7 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
                 storage=storage,
                 corpus_path=corpus,
                 requester=self.fake_requester,
+                augment_fresh_corpus_with_arxiv=False,
                 now=datetime(2026,8,13,tzinfo=timezone.utc),
                 min_interval_seconds=0,
                 max_papers=8,
@@ -177,6 +178,45 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertTrue(all(len(row["fulltext_sha256"]) == 64 for row in public["records"]))
         self.assertNotIn("corpus_path",public); self.assertNotIn("private_pool_path",public)
         self.assertTrue(all(len(row["source_sha256"]) == 64 for row in public["records"]))
+
+    def test_fresh_corpus_is_augmented_by_missing_arxiv_lane_evidence(self) -> None:
+        science_title="A-SR: Self-Evolving Agentic LLMs for Symbolic Regression via Hierarchical Coordination"
+        def search(**kwargs):
+            return SimpleNamespace(status_code=200,text=f'''<feed xmlns="http://www.w3.org/2005/Atom"><entry><id>https://arxiv.org/abs/2608.99999v1</id><title>{science_title}</title><summary>We present a self-evolving scientific discovery agent for symbolic regression and experiment planning.</summary><published>2026-08-06T00:00:00Z</published></entry></feed>''')
+        def primary(url: str, *, timeout: float, headers: dict[str,str]):
+            arxiv_id=url.rsplit('/',1)[-1]
+            if arxiv_id=='2608.99999':
+                if '/html/' in url:
+                    return SimpleNamespace(status_code=200,text='<html><body><section><h2>Results</h2><p>We find that the self-evolving scientific agent improves held-out symbolic regression accuracy by 12.0 percent across scientific domains.</p></section></body></html>')
+                return SimpleNamespace(status_code=200,text=f'<meta name="citation_title" content="{science_title}"><blockquote class="abstract mathjax">Abstract: We present a self-evolving scientific discovery agent for symbolic regression and experiment planning.</blockquote>')
+            return self.fake_requester(url,timeout=timeout,headers=headers)
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); storage=self.storage(root); corpus=self.corpus(root)
+            public,private=build_primary_evidence_pool(
+                storage=storage,corpus_path=corpus,requester=primary,arxiv_search_requester=search,
+                arxiv_queries=('science-lane',),arxiv_query_interval_seconds=0,now=datetime(2026,8,13,tzinfo=timezone.utc),
+                min_interval_seconds=0,max_papers=4,cache_dir=root/'primary-cache')
+        refs={row['ref'] for row in public['records']}
+        self.assertEqual(public['summary']['discovery_mode'],'semantic-scholar-plus-arxiv-augmentation')
+        self.assertEqual(public['summary']['augmentation_discovered'],1)
+        self.assertEqual(public['summary']['augmentation_added'],1)
+        self.assertIn('arXiv:2608.99999',refs)
+        self.assertEqual(public['summary']['selected_lane_counts']['autonomous_science'],1)
+        self.assertEqual(public['summary']['undercovered_lanes'],[])
+        self.assertEqual(len(private['records']),4)
+
+    def test_fresh_augmentation_failure_is_metadata_error_not_primary_failure(self) -> None:
+        def failed_search(**kwargs): return SimpleNamespace(status_code=503,text='')
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); storage=self.storage(root); corpus=self.corpus(root)
+            public,_=build_primary_evidence_pool(
+                storage=storage,corpus_path=corpus,requester=self.fake_requester,arxiv_search_requester=failed_search,
+                arxiv_queries=('science-lane',),arxiv_query_interval_seconds=0,now=datetime(2026,8,13,tzinfo=timezone.utc),min_interval_seconds=0)
+        self.assertEqual(public['status'],'READY')
+        self.assertEqual(public['summary']['verified'],4)
+        self.assertEqual(public['summary']['augmentation_added'],0)
+        self.assertTrue(public['discovery_errors'])
+        self.assertTrue(public['policy']['arxiv_augmentation_failure_does_not_invalidate_fresh_corpus'])
 
     def test_stale_corpus_uses_arxiv_primary_fallback(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -213,7 +253,7 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
             return SimpleNamespace(status_code=200,text='<meta name="citation_title" content="Completely Different"><blockquote class="abstract mathjax">Abstract: evidence</blockquote>')
         with tempfile.TemporaryDirectory() as td:
             root=Path(td); storage=self.storage(root); corpus=self.corpus(root)
-            public, _ = build_primary_evidence_pool(storage=storage,corpus_path=corpus,requester=wrong,now=datetime(2026,8,13,tzinfo=timezone.utc),min_interval_seconds=0)
+            public, _ = build_primary_evidence_pool(storage=storage,corpus_path=corpus,requester=wrong,augment_fresh_corpus_with_arxiv=False,now=datetime(2026,8,13,tzinfo=timezone.utc),min_interval_seconds=0)
         self.assertEqual(public["summary"]["verified"],0)
         self.assertEqual(public["summary"]["title_mismatches"],4)
         self.assertEqual(public["status"],"INSUFFICIENT_PRIMARY_EVIDENCE")

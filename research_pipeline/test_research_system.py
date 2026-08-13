@@ -242,6 +242,8 @@ class ResearchSystemTest(unittest.TestCase):
             self.assertTrue(primary["policy"]["fulltext_enrichment_is_optional"])
             self.assertTrue(primary["policy"]["fulltext_snippets_remain_private_data_artifacts"])
             self.assertTrue(primary["policy"]["empirical_fact_candidates_are_not_ground_truth"])
+            self.assertTrue(primary["policy"]["fresh_s2_is_augmented_by_preregistered_arxiv_lanes"])
+            self.assertTrue(primary["policy"]["arxiv_augmentation_failure_does_not_invalidate_fresh_corpus"])
             self.assertTrue(primary["policy"]["pre_registered_lane_coverage_floor"])
             self.assertTrue(primary["policy"]["lane_coverage_is_discovery_breadth_not_scientific_authority"])
             self.assertGreaterEqual(int(primary["policy"]["lane_floor"]),1)
