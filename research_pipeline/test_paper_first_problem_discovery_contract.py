@@ -41,6 +41,7 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertTrue(p["same_information_nonreducibility_required"])
         self.assertTrue(p["domain_transfer_veto_required"])
         self.assertTrue(p["saturation_map_check_required"])
+        self.assertTrue(state["candidate_schema"]["semantic_reduction_review"]["both_source_claims_require_exact_primary_evidence_grounding"])
         self.assertEqual(state["summary"]["saturation_patterns"],len(REDUCTION_PATTERNS))
         self.assertEqual((state["summary"]["automatic_method_authority"],state["summary"]["automatic_experiment_authority"]),(0,0))
 

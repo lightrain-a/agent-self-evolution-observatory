@@ -30,7 +30,16 @@ def _parse_iso(v):
 def _root(s:StorageSettings): return s.data_root/"paper-first-problem-discovery"
 def _sha(text:str): return hashlib.sha256(text.encode()).hexdigest()
 def _pool_sha(pool):
-    rows=[{"ref":r.get("ref"),"source_sha256":r.get("source_sha256"),"abstract_sha256":r.get("abstract_sha256")} for r in pool.get("records") or [] if isinstance(r,dict)]
+    rows=[]
+    for r in pool.get("records") or []:
+        if not isinstance(r,dict): continue
+        rows.append({
+            "ref":r.get("ref"),
+            "source_sha256":r.get("source_sha256"),
+            "abstract_sha256":r.get("abstract_sha256"),
+            "fulltext_sha256":r.get("fulltext_sha256"),
+            "empirical_fact_sha256":[str(f.get("text_sha256") or "") for f in (r.get("empirical_facts") or []) if isinstance(f,dict)],
+        })
     return hashlib.sha256(json.dumps(rows,sort_keys=True,separators=(",",":")).encode()).hexdigest()
 def _registry(pool): return {str(r.get("ref")):r for r in pool.get("records") or [] if isinstance(r,dict) and r.get("primary_source_verified") is True and r.get("ref")}
 
@@ -80,11 +89,16 @@ def _source_grounding(review:dict[str,Any],candidate:dict[str,Any],registry:dict
     contradiction=candidate.get("empirical_contradiction") or {}
     for key in ("source_a","source_b"):
         source=contradiction.get(key) or {};ref=str(source.get("ref") or "").strip();record=registry.get(ref) or {}
-        item=support.get(key) or {};supported=item.get("supported") is True;excerpt=str(item.get("evidence_excerpt") or "").strip()
-        words=excerpt.split();abstract=_norm_text(record.get("abstract") or "");excerpt_norm=_norm_text(excerpt)
-        excerpt_verified=bool(4<=len(words)<=30 and excerpt_norm and excerpt_norm in abstract)
+        item=support.get(key) or {};supported=item.get("supported") is True;excerpt=str(item.get("evidence_excerpt") or "").strip();declared_source=str(item.get("evidence_source") or "").strip().lower()
+        words=excerpt.split();excerpt_norm=_norm_text(excerpt);abstract=_norm_text(record.get("abstract") or "")
+        facts=[_norm_text(str(fact.get("text") or "")) for fact in (record.get("empirical_facts") or []) if isinstance(fact,dict)]
+        abstract_match=bool(excerpt_norm and excerpt_norm in abstract)
+        fulltext_match=bool(excerpt_norm and any(excerpt_norm in fact for fact in facts))
+        evidence_source="abstract" if abstract_match else ("fulltext" if fulltext_match else "")
+        source_consistent=declared_source in {"","abstract","fulltext"} and (not declared_source or declared_source==evidence_source)
+        excerpt_verified=bool(4<=len(words)<=30 and evidence_source and source_consistent)
         grounded=bool(supported and excerpt_verified and record.get("primary_source_verified") is True)
-        out[key]={"ref":ref,"supported":supported,"evidence_excerpt":excerpt,"excerpt_verified":excerpt_verified,"grounded":grounded}
+        out[key]={"ref":ref,"supported":supported,"evidence_source":evidence_source,"declared_evidence_source":declared_source,"evidence_excerpt":excerpt,"excerpt_verified":excerpt_verified,"grounded":grounded}
         all_grounded=all_grounded and grounded
     return out,all_grounded
 
@@ -103,7 +117,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     storage=storage or StorageSettings.from_env();primary_pool_path=primary_pool_path or private_primary_pool_path(storage);auto_inbox_path=auto_inbox_path or default_auto_inbox_path(storage)
     generator_model=generator_model or os.getenv("PAPER_FIRST_PROBLEM_GENERATOR_MODEL",GENERATOR_MODEL);reviewer_model=reviewer_model or os.getenv("PAPER_FIRST_PROBLEM_REVIEW_MODEL",REVIEWER_MODEL);current=(now or _now_dt()).astimezone(timezone.utc);run_id=current.strftime("%Y%m%dT%H%M%SZ")
     archived=_archive_previous(storage,auto_inbox_path);pool=load_private_primary_pool(primary_pool_path) or {};reg=_registry(pool);psha=_pool_sha(pool) if pool else "";d=_parse_iso(pool.get("generated_at"));age=None if d is None else max(0.0,(current-d).total_seconds()/3600)
-    state={"schema_version":"1.1","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":{"zero_candidates_is_valid":True,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"format_retry_forbidden":True,"thinking_disabled":True,"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_abstract_excerpts":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"summary":{"primary_evidence_records":len(reg),"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0},"raw_artifacts":{},"candidates":[]}
+    state={"schema_version":"1.1","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":{"zero_candidates_is_valid":True,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"format_retry_forbidden":True,"thinking_disabled":True,"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"summary":{"primary_evidence_records":len(reg),"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0},"raw_artifacts":{},"candidates":[]}
     def finish(status,cands=[]): state["status"]=status;_write_inbox(auto_inbox_path,run_id,status,cands,psha);return state
     if pool.get("status")!="READY" or len(reg)<4:return finish("SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE")
     if age is None or age>pool_max_age_hours:state["primary_pool_age_hours"]=age;return finish("SKIPPED_STALE_PRIMARY_EVIDENCE")

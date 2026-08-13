@@ -77,7 +77,7 @@ def candidate_schema() -> dict[str, Any]:
             "required": ["reviewed", "block_only", "verdict", "reviewer_model", "raw_sha256", "source_claims_grounded", "source_claim_grounding"],
             "verdict_must_be_clear": True,
             "reviewer_can_block_but_never_authorize": True,
-            "both_source_claims_require_exact_primary_abstract_grounding": True,
+            "both_source_claims_require_exact_primary_evidence_grounding": True,
         },
         "authority": {
             "required_false": ["method_design", "experiment_blueprint", "local_validation", "p0", "gpu", "full_experiment"],
@@ -199,8 +199,13 @@ def audit_problem_candidate(
                     excerpt = str(grounded.get("evidence_excerpt") or "").strip()
                     words = excerpt.split()
                     abstract = _normalized_evidence_text(record.get("abstract") or "")
+                    facts = [_normalized_evidence_text(str(fact.get("text") or "")) for fact in (record.get("empirical_facts") or []) if isinstance(fact,dict)]
                     excerpt_norm = _normalized_evidence_text(excerpt)
-                    if not (4 <= len(words) <= 30 and excerpt_norm and excerpt_norm in abstract):
+                    evidence_source = str(grounded.get("evidence_source") or "").strip().lower()
+                    abstract_match = bool(excerpt_norm and excerpt_norm in abstract)
+                    fulltext_match = bool(excerpt_norm and any(excerpt_norm in fact for fact in facts))
+                    source_match = abstract_match if evidence_source == "abstract" else (fulltext_match if evidence_source == "fulltext" else (abstract_match or fulltext_match))
+                    if not (4 <= len(words) <= 30 and source_match):
                         blockers.append(f"source-claim-evidence-excerpt-mismatch:{source_key}")
             if not _nonempty(semantic_review.get("reviewer_model")) or not _nonempty(semantic_review.get("raw_sha256")):
                 blockers.append("semantic-reduction-review-provenance-missing")

@@ -10,7 +10,11 @@ def generator_prompt(records: list[dict[str, Any]]) -> str:
     sources=[{
         "ref":row["ref"],"title":row["title"],"primary_url":row["primary_url"],
         "source_sha256":row["source_sha256"],"abstract":str(row.get("abstract") or "")[:2200],
-    } for row in records[:16]]
+        "empirical_facts":[
+            {"section":str(fact.get("section") or ""),"text":str(fact.get("text") or "")[:520]}
+            for fact in (row.get("empirical_facts") or [])[:4] if isinstance(fact,dict)
+        ],
+    } for row in records[:32]]
     reductions=[{"key":row["key"],"veto":row["veto"]} for row in REDUCTION_PATTERNS]
     shape={"candidates":[{
         "candidate_id":"AUTO-1","title":"problem title",
@@ -32,11 +36,12 @@ def generator_prompt(records: list[dict[str, Any]]) -> str:
         "Strict contradiction-first ICLR research-problem generator for self-evolving LLM agents. "
         "Return zero to five research PROBLEMS, never methods. Zero is preferred to a weak candidate.\n\n"
         "Use ONLY the verified primary-source registry below. A contradiction must cite two distinct refs exactly as provided. "
-        "Claims must be supported by the supplied abstract; future-work statements are not empirical facts.\n\n"
+        "Claims must be supported by the supplied primary abstract or one of its bounded deterministic full-text empirical-fact candidates; future-work statements are not empirical facts. "
+        "Empirical-fact candidates are discovery evidence, not automatic ground truth, and will be independently grounded before Problem Gate eligibility.\n\n"
         "Before naming a new object, project identical observable information into at least two mature theories. "
         "If either theory expresses the exact prediction, discard the candidate. Domain transfer, mathematical renaming, another benchmark/metric/taxonomy/test-generator, or combining occupied atoms is not novelty.\n\n"
         "HARD NEGATIVE-SPACE VETO:\n"+json.dumps(reductions,ensure_ascii=False,separators=(",",":"))+
-        "\n\nVERIFIED PRIMARY SOURCES (private abstracts; output only ref + paraphrased claim):\n"+
+        "\n\nVERIFIED PRIMARY SOURCES (private abstracts + bounded full-text fact candidates; output only ref + paraphrased claim):\n"+
         json.dumps(sources,ensure_ascii=False,separators=(",",":"))+
         "\n\nReturn syntactically valid JSON only, shape:\n"+json.dumps(shape,ensure_ascii=False,separators=(",",":"))+
         "\nNo markdown/trailing commas. IDs AUTO-1..AUTO-5. Do not include authority fields; code forces them false."
@@ -61,15 +66,19 @@ def reviewer_prompt(candidates: list[dict[str, Any]], evidence_by_ref: dict[str,
             "title":record.get("title"),
             "source_sha256":record.get("source_sha256"),
             "abstract":record.get("abstract"),
+            "empirical_facts":[
+                {"section":str(fact.get("section") or ""),"text":str(fact.get("text") or "")[:520]}
+                for fact in (record.get("empirical_facts") or [])[:4] if isinstance(fact,dict)
+            ],
         })
     return (
         "Independent BLOCK-ONLY semantic reduction + source-grounding reviewer. You cannot authorize Paper Design, methods, experiments, P0, or GPU. "
-        "For each candidate: (1) verify each stated source claim is actually supported by its supplied primary abstract; (2) test whether the exact prediction is already expressible by the negative-space ledger or any mature same-information theory. "
-        "For each source claim marked supported, return one SHORT exact contiguous excerpt copied from that abstract (4-30 words). If no exact abstract excerpt supports the claim, mark supported=false and BLOCK. "
+        "For each candidate: (1) verify each stated source claim is actually supported by its supplied primary abstract or one bounded deterministic full-text empirical-fact candidate; (2) test whether the exact prediction is already expressible by the negative-space ledger or any mature same-information theory. "
+        "For each source claim marked supported, return one SHORT exact contiguous excerpt (4-30 words) copied from the abstract or a supplied empirical-fact candidate, and set evidence_source to abstract or fulltext. If neither source contains such an excerpt, mark supported=false and BLOCK. "
         "CLEAR means only that both source claims are grounded and no mature reduction was found in this review; it never means scientific approval.\n\nLEDGER:\n"+
-        json.dumps(reductions,ensure_ascii=False,separators=(",",":"))+"\n\nPRIMARY ABSTRACTS:\n"+
+        json.dumps(reductions,ensure_ascii=False,separators=(",",":"))+"\n\nPRIMARY EVIDENCE:\n"+
         json.dumps(evidence,ensure_ascii=False,separators=(",",":"))+"\n\nCANDIDATES:\n"+
         json.dumps(stripped,ensure_ascii=False,separators=(",",":"))+
-        '\n\nReturn JSON only: {"reviews":[{"candidate_id":"...","verdict":"CLEAR|BLOCK","source_claim_support":{"source_a":{"supported":true,"evidence_excerpt":"exact words from abstract"},"source_b":{"supported":true,"evidence_excerpt":"exact words from abstract"}},"matched_patterns":["known-key"],"strongest_reduction":"mature theory/object or none","reason":"..."}]}. '
+        '\n\nReturn JSON only: {"reviews":[{"candidate_id":"...","verdict":"CLEAR|BLOCK","source_claim_support":{"source_a":{"supported":true,"evidence_source":"abstract|fulltext","evidence_excerpt":"exact words from supplied primary evidence"},"source_b":{"supported":true,"evidence_source":"abstract|fulltext","evidence_excerpt":"exact words from supplied primary evidence"}},"matched_patterns":["known-key"],"strongest_reduction":"mature theory/object or none","reason":"..."}]}. '
         "If BLOCK uses a mature reduction not in the ledger, matched_patterns may be [] but strongest_reduction must name it."
     )

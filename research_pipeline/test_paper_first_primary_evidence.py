@@ -8,7 +8,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from .config import StorageSettings
-from .paper_first_primary_evidence import build_primary_evidence_pool, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
+from .paper_first_primary_evidence import build_primary_evidence_pool, extract_empirical_fact_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
 
 
 class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
@@ -64,8 +64,11 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
             "3": "Persistent Memory for Self-Improving Agents",
             "4": "Continual Agent Workflow Evolution",
         }
-        page = f'''<html><head><meta name="citation_title" content="{titles.get(suffix,'Unknown')}"></head>
-        <body><blockquote class="abstract mathjax">Abstract: Primary abstract for {arxiv_id} about self-evolving agents and persistent adaptation.</blockquote></body></html>'''
+        if "/html/" in url:
+            page = f'''<html><body><section><h2>Experimental Results</h2><p>We find that verified persistent adaptation improves held-out success by 12.5% for primary source {arxiv_id}, while an ablation without verification fails more often.</p></section></body></html>'''
+        else:
+            page = f'''<html><head><meta name="citation_title" content="{titles.get(suffix,'Unknown')}"></head>
+            <body><blockquote class="abstract mathjax">Abstract: Primary abstract for {arxiv_id} about self-evolving agents and persistent adaptation.</blockquote></body></html>'''
         return SimpleNamespace(status_code=200, text=page)
 
     def fake_arxiv_search(self, *, query: str, max_results: int, timeout: float, headers: dict[str,str]):
@@ -77,6 +80,14 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
     def test_parse_arxiv_page_extracts_title_and_abstract(self) -> None:
         parsed = parse_arxiv_page('<meta name="citation_title" content="Paper A"><blockquote class="abstract mathjax">Abstract: hello <b>world</b></blockquote>')
         self.assertEqual(parsed, {"title":"Paper A","abstract":"hello world"})
+
+    def test_fulltext_empirical_fact_extraction_is_section_and_cue_bounded(self) -> None:
+        page='''<html><body><section><h2>Experimental Results</h2><p>We find that the verified skill improves held-out success by 17.5% across five tasks, while the unverified ablation fails on two tasks.</p></section><section><h2>Related Work</h2><p>We find many papers interesting but this is not an experimental result.</p></section></body></html>'''
+        facts=extract_empirical_fact_candidates(page,max_facts=4)
+        self.assertEqual(len(facts),1)
+        self.assertEqual(facts[0]["section"],"Experimental Results")
+        self.assertIn("17.5%",facts[0]["text"])
+        self.assertEqual(len(facts[0]["text_sha256"]),64)
 
     def test_parse_arxiv_atom_extracts_primary_metadata(self) -> None:
         rows=parse_arxiv_atom('<feed xmlns="http://www.w3.org/2005/Atom"><entry><id>https://arxiv.org/abs/2608.12345v2</id><title> Self-Evolving Agent </title><summary> primary abstract </summary><published>2026-08-12T00:00:00Z</published></entry></feed>')
@@ -115,7 +126,13 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertTrue(public["summary"]["candidate_generation_ready"])
         self.assertEqual(len(private["records"]), 4)
         self.assertTrue(all(row["abstract"] for row in private["records"]))
-        self.assertTrue(all("abstract" not in row for row in public["records"]))
+        self.assertTrue(all(row["empirical_facts"] for row in private["records"]))
+        self.assertEqual(public["summary"]["fulltext_verified"],4)
+        self.assertEqual(public["summary"]["fulltext_fetch_errors"],0)
+        self.assertGreaterEqual(public["summary"]["empirical_fact_candidates"],4)
+        self.assertTrue(all("abstract" not in row and "empirical_facts" not in row for row in public["records"]))
+        self.assertTrue(all(row["empirical_fact_count"] >= 1 for row in public["records"]))
+        self.assertTrue(all(len(row["fulltext_sha256"]) == 64 for row in public["records"]))
         self.assertNotIn("corpus_path",public); self.assertNotIn("private_pool_path",public)
         self.assertTrue(all(len(row["source_sha256"]) == 64 for row in public["records"]))
 

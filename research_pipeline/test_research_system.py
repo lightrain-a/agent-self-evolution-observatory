@@ -239,13 +239,16 @@ class ResearchSystemTest(unittest.TestCase):
         if primary["status"]=="READY":
             self.assertTrue(primary["policy"]["primary_publication_age_is_bounded"])
             self.assertLessEqual(float(primary["policy"]["maximum_publication_age_days"]),60.0)
+            self.assertTrue(primary["policy"]["fulltext_enrichment_is_optional"])
+            self.assertTrue(primary["policy"]["fulltext_snippets_remain_private_data_artifacts"])
+            self.assertTrue(primary["policy"]["empirical_fact_candidates_are_not_ground_truth"])
         generator=self.state["paper_first_problem_generator"]
         self.assertIn(generator["status"],{"NOT_RUN","SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE","SKIPPED_STALE_PRIMARY_EVIDENCE","GENERATOR_ERROR_ZERO_AUTHORITY","GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE","STATE_UNREADABLE"})
         self.assertTrue(generator["policy"]["zero_candidates_is_valid"])
         self.assertTrue(generator["policy"]["semantic_reviewer_is_block_only"])
         self.assertTrue(generator["policy"]["candidate_inbox_has_zero_scientific_authority"])
         if generator["status"] in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}:
-            self.assertTrue(generator["policy"]["independent_reviewer_must_ground_both_source_claims_to_exact_abstract_excerpts"])
+            self.assertTrue(generator["policy"]["independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts"])
         self.assertEqual((generator["policy"]["automatic_method_authority"],generator["policy"]["automatic_experiment_authority"],generator["policy"]["automatic_p0_authority"]),(False,False,False))
         discovery=self.state["paper_first_problem_discovery_contract"]
         self.assertTrue(discovery["policy"]["contradiction_first_required"])

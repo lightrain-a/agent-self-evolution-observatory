@@ -8,6 +8,7 @@ import time
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from difflib import SequenceMatcher
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Callable
 
@@ -19,7 +20,7 @@ from .public_state_redaction import redact_private_paths
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.js"
-DEFAULT_MAX_PAPERS = 16
+DEFAULT_MAX_PAPERS = 32
 DEFAULT_MAX_CORPUS_AGE_DAYS = 10.0
 DEFAULT_MAX_PUBLICATION_AGE_DAYS = 60.0
 DEFAULT_MIN_INTERVAL_SECONDS = 0.75
@@ -114,6 +115,90 @@ def parse_arxiv_page(page: str) -> dict[str, str]:
     abstract = _strip_html(abstract_match.group(1)) if abstract_match else ""
     abstract = re.sub(r"^Abstract:\s*", "", abstract, flags=re.I).strip()
     return {"title": title, "abstract": abstract}
+
+
+_FULLTEXT_SECTION_TERMS = (
+    "result", "experiment", "evaluation", "analysis", "ablation", "discussion",
+    "limitation", "conclusion", "finding", "failure", "safety", "robust",
+)
+_EMPIRICAL_CUE_RE = re.compile(
+    r"\b(we\s+(?:find|found|observe|observed|show|demonstrate|report)|"
+    r"results?\s+(?:show|shows|indicate|indicates|demonstrate|demonstrates)|"
+    r"outperform(?:s|ed)?|improv(?:e|es|ed|ement)|decreas(?:e|es|ed)|"
+    r"increas(?:e|es|ed)|drop(?:s|ped)?|fail(?:s|ed|ure|ures)?|"
+    r"harm(?:s|ed|ful)?|attack(?:s|ed)?|ablation|success\s+rate|pass@|accuracy)\b",
+    flags=re.I,
+)
+
+
+class _ArxivFullTextParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.current_section = ""
+        self._capture: str | None = None
+        self._buffer: list[str] = []
+        self.paragraphs: list[tuple[str, str]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        low = tag.lower()
+        if self._capture is None and low in {"h1", "h2", "h3", "h4", "p"}:
+            self._capture = low
+            self._buffer = []
+
+    def handle_data(self, data: str) -> None:
+        if self._capture is not None:
+            self._buffer.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        low = tag.lower()
+        if self._capture != low:
+            return
+        text = " ".join("".join(self._buffer).split())
+        if low in {"h1", "h2", "h3", "h4"}:
+            if text:
+                self.current_section = text
+        elif low == "p" and text:
+            self.paragraphs.append((self.current_section, text))
+        self._capture = None
+        self._buffer = []
+
+
+def extract_empirical_fact_candidates(page: str, *, max_facts: int = 4) -> list[dict[str, str]]:
+    parser = _ArxivFullTextParser()
+    try:
+        parser.feed(page)
+    except Exception:
+        return []
+    ranked: list[tuple[int, int, dict[str, str]]] = []
+    seen: set[str] = set()
+    order = 0
+    for section, paragraph in parser.paragraphs:
+        section_low = section.lower()
+        if not any(term in section_low for term in _FULLTEXT_SECTION_TERMS):
+            continue
+        for sentence in re.split(r"(?<=[.!?])\s+", paragraph):
+            sentence = " ".join(sentence.split()).strip()
+            if len(sentence) < 60 or len(sentence) > 520 or not _EMPIRICAL_CUE_RE.search(sentence):
+                continue
+            normalized = re.sub(r"\W+", " ", sentence.lower()).strip()
+            if not normalized or normalized in seen:
+                continue
+            seen.add(normalized)
+            score = 2
+            if re.search(r"\b\d+(?:\.\d+)?\s*%|\b\d+\.\d+\b|\b\d+/\d+\b", sentence):
+                score += 2
+            if re.search(r"\bwe\s+(?:find|found|observe|observed|show|demonstrate|report)\b", sentence, flags=re.I):
+                score += 2
+            if any(term in section_low for term in ("result", "experiment", "evaluation", "ablation")):
+                score += 1
+            ranked.append((score, -order, {
+                "section": section or "unnamed",
+                "text": sentence,
+                "text_sha256": hashlib.sha256(sentence.encode("utf-8")).hexdigest(),
+            }))
+            order += 1
+    ranked.sort(key=lambda row: (row[0], row[1]), reverse=True)
+    return [row[2] for row in ranked[: max(0, max_facts)]]
 
 
 def _arxiv_id(paper: dict[str, Any]) -> str:
@@ -301,6 +386,9 @@ def build_primary_evidence_pool(
             "maximum_publication_age_days": max_publication_age_days,
             "no_parallel_primary_fetch": True,
             "full_abstracts_remain_private_data_artifacts": True,
+            "fulltext_enrichment_is_optional": True,
+            "fulltext_snippets_remain_private_data_artifacts": True,
+            "empirical_fact_candidates_are_not_ground_truth": True,
             "candidate_generation_authority": False,
             "method_authority": False,
             "experiment_authority": False,
@@ -314,6 +402,9 @@ def build_primary_evidence_pool(
             "verified": 0,
             "fetch_errors": 0,
             "title_mismatches": 0,
+            "fulltext_verified": 0,
+            "fulltext_fetch_errors": 0,
+            "empirical_fact_candidates": 0,
             "candidate_generation_ready": False,
         },
         "records": [],
@@ -326,6 +417,7 @@ def build_primary_evidence_pool(
         "corpus_path": str(corpus_path),
         "records": [],
         "errors": [],
+        "fulltext_errors": [],
         "discovery_errors": [],
     }
     retrieved_at = str((corpus or {}).get("retrieved_at") or "")
@@ -368,7 +460,10 @@ def build_primary_evidence_pool(
     last_fetch_started: float | None = None
     verified: list[dict[str, Any]] = []
     errors: list[dict[str, Any]] = []
+    fulltext_errors: list[dict[str, Any]] = []
     title_mismatches = 0
+    fulltext_verified = 0
+    empirical_fact_count = 0
     for paper in candidates:
         arxiv_id = _arxiv_id(paper)
         url = f"https://arxiv.org/abs/{arxiv_id}"
@@ -398,6 +493,42 @@ def build_primary_evidence_pool(
             abstract_sha = hashlib.sha256(parsed["abstract"].encode("utf-8")).hexdigest()
             cache_path = cache_dir / f"arxiv-{re.sub(r'[^0-9A-Za-z._-]+','_',arxiv_id)}-{source_sha[:12]}.html"
             cache_path.write_bytes(raw_bytes)
+
+            fulltext_url = f"https://arxiv.org/html/{arxiv_id}"
+            fulltext_sha = ""
+            fulltext_cache_path = ""
+            empirical_facts: list[dict[str, str]] = []
+            try:
+                if last_fetch_started is not None and min_interval_seconds > 0:
+                    wait = min_interval_seconds - (time.monotonic() - last_fetch_started)
+                    if wait > 0:
+                        time.sleep(wait)
+                last_fetch_started = time.monotonic()
+                full_response = fetch(
+                    fulltext_url,
+                    timeout=25.0,
+                    headers={"User-Agent": "Agent-Self-Evolution-Observatory/fulltext-evidence"},
+                )
+                full_status = int(getattr(full_response, "status_code", 200))
+                if full_status >= 400:
+                    raise RuntimeError(f"HTTP {full_status}")
+                full_text = str(getattr(full_response, "text", "") or "")
+                if not full_text or "<section" not in full_text.lower():
+                    raise RuntimeError("fulltext-page-missing-sections")
+                full_bytes = full_text.encode("utf-8")
+                fulltext_sha = hashlib.sha256(full_bytes).hexdigest()
+                full_path = cache_dir / f"arxiv-full-{re.sub(r'[^0-9A-Za-z._-]+','_',arxiv_id)}-{fulltext_sha[:12]}.html"
+                full_path.write_bytes(full_bytes)
+                fulltext_cache_path = str(full_path)
+                empirical_facts = extract_empirical_fact_candidates(full_text, max_facts=4)
+                fulltext_verified += 1
+                empirical_fact_count += len(empirical_facts)
+            except Exception as full_error:
+                fulltext_errors.append({
+                    "ref": f"arXiv:{arxiv_id}",
+                    "error": f"{type(full_error).__name__}:{str(full_error)[:240]}",
+                })
+
             record = {
                 "evidence_id": hashlib.sha256(f"arXiv:{arxiv_id}:{source_sha}".encode("utf-8")).hexdigest(),
                 "ref": f"arXiv:{arxiv_id}",
@@ -406,6 +537,10 @@ def build_primary_evidence_pool(
                 "source_sha256": source_sha,
                 "abstract_sha256": abstract_sha,
                 "abstract": parsed["abstract"],
+                "fulltext_url": fulltext_url,
+                "fulltext_sha256": fulltext_sha,
+                "fulltext_cache_path": fulltext_cache_path,
+                "empirical_facts": empirical_facts,
                 "year": paper.get("year"),
                 "publication_date": (paper.get("metadata") or {}).get("publicationDate"),
                 "s2_paper_id": paper.get("paper_id"),
@@ -421,20 +556,29 @@ def build_primary_evidence_pool(
 
     private["records"] = verified
     private["errors"] = errors
+    private["fulltext_errors"] = fulltext_errors
     private["status"] = "READY" if len(verified) >= 4 else "INSUFFICIENT_PRIMARY_EVIDENCE"
     public_state["summary"].update(
         {
             "verified": len(verified),
             "fetch_errors": sum(1 for row in errors if row.get("error") != "title-mismatch"),
             "title_mismatches": title_mismatches,
+            "fulltext_verified": fulltext_verified,
+            "fulltext_fetch_errors": len(fulltext_errors),
+            "empirical_fact_candidates": empirical_fact_count,
             "candidate_generation_ready": len(verified) >= 4,
         }
     )
     public_state["records"] = [
-        {key: row[key] for key in ("evidence_id", "ref", "title", "primary_url", "source_sha256", "abstract_sha256", "year", "publication_date", "fetched_at")}
+        {
+            **{key: row[key] for key in ("evidence_id", "ref", "title", "primary_url", "source_sha256", "abstract_sha256", "year", "publication_date", "fetched_at")},
+            "fulltext_sha256": str(row.get("fulltext_sha256") or ""),
+            "empirical_fact_count": len(row.get("empirical_facts") or []),
+        }
         for row in verified
     ]
     public_state["errors"] = errors
+    public_state["fulltext_errors"] = fulltext_errors
     public_state["status"] = private["status"]
     return public_state, private
 
@@ -443,12 +587,12 @@ def load_primary_evidence_state(path: Path = DEFAULT_JSON) -> dict[str, Any]:
     if not path.exists():
         return {
             "schema_version":"1.0","status":"NOT_RUN","policy":{"candidate_generation_authority":False,"method_authority":False,"experiment_authority":False,"p0_authority":False},
-            "summary":{"corpus_available":False,"corpus_fresh":False,"selected":0,"verified":0,"fetch_errors":0,"title_mismatches":0,"candidate_generation_ready":False},"records":[],"errors":[],
+            "summary":{"corpus_available":False,"corpus_fresh":False,"selected":0,"verified":0,"fetch_errors":0,"title_mismatches":0,"fulltext_verified":0,"fulltext_fetch_errors":0,"empirical_fact_candidates":0,"candidate_generation_ready":False},"records":[],"errors":[],
         }
     try:
         payload=json.loads(path.read_text(encoding="utf-8"))
     except (OSError,json.JSONDecodeError):
-        return {"schema_version":"1.0","status":"STATE_UNREADABLE","policy":{"candidate_generation_authority":False,"method_authority":False,"experiment_authority":False,"p0_authority":False},"summary":{"corpus_available":False,"corpus_fresh":False,"selected":0,"verified":0,"fetch_errors":1,"title_mismatches":0,"candidate_generation_ready":False},"records":[],"errors":["state-unreadable"]}
+        return {"schema_version":"1.0","status":"STATE_UNREADABLE","policy":{"candidate_generation_authority":False,"method_authority":False,"experiment_authority":False,"p0_authority":False},"summary":{"corpus_available":False,"corpus_fresh":False,"selected":0,"verified":0,"fetch_errors":1,"title_mismatches":0,"fulltext_verified":0,"fulltext_fetch_errors":0,"empirical_fact_candidates":0,"candidate_generation_ready":False},"records":[],"errors":["state-unreadable"]}
     return payload if isinstance(payload,dict) else {"schema_version":"1.0","status":"STATE_INVALID","summary":{},"records":[],"errors":["state-invalid"]}
 
 
