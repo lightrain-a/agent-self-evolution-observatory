@@ -507,17 +507,33 @@ def launch_plan(plan: dict[str, Any], profiles: list[ServerProfile]) -> dict[str
     authority = acquire_authority(root, owner_id, plan_hash, "experiment-orchestrator", stage, str(plan["run_id"]))
     expected = (plan.get("pre_experiment_card") or {}).get("expected_runtime") or {}
     wall_hours = float(expected.get("worst_wall_hours") or expected.get("expected_wall_hours") or 10.0)
-    gpu_lease = acquire_gpu_lease(root, str(plan["server_id"]), str(plan["gpu_uuid"]), str(plan["run_id"]), owner_id, max(120, int((wall_hours + 2.0) * 60)))
+    gpu_lease = acquire_gpu_lease(
+        root,
+        str(plan["server_id"]),
+        str(plan["gpu_uuid"]),
+        str(plan["run_id"]),
+        owner_id,
+        idea_id=owner_id,
+        authority_id=str(authority["authority_id"]),
+        plan_hash=plan_hash,
+        ttl_minutes=max(120, int((wall_hours + 2.0) * 60)),
+    )
     try:
         run_remote(profile, str(plan["remote_command"]), timeout=15)
         session = str(plan["tmux_session"])
         verify = run_remote(profile, f"tmux has-session -t {shlex.quote(session)} 2>/dev/null && echo running || echo missing")
         if verify.strip() != "running":
-            release_gpu_lease(root, str(plan["server_id"]), str(plan["gpu_uuid"]), str(gpu_lease["lease_id"]), "launch-missing")
+            release_gpu_lease(
+                root, str(plan["server_id"]), str(plan["gpu_uuid"]), str(gpu_lease["lease_id"]),
+                idea_id=owner_id, authority_id=str(authority["authority_id"]), plan_hash=plan_hash, outcome="launch-missing",
+            )
             release_authority(root, owner_id, str(authority["authority_id"]), "launch-missing")
         return {**plan, "authority": authority, "gpu_lease": gpu_lease, "launch_checked_at": utc_now(), "tmux_status": verify.strip()}
     except Exception:
-        release_gpu_lease(root, str(plan["server_id"]), str(plan["gpu_uuid"]), str(gpu_lease["lease_id"]), "launch-error")
+        release_gpu_lease(
+            root, str(plan["server_id"]), str(plan["gpu_uuid"]), str(gpu_lease["lease_id"]),
+            idea_id=owner_id, authority_id=str(authority["authority_id"]), plan_hash=plan_hash, outcome="launch-error",
+        )
         release_authority(root, owner_id, str(authority["authority_id"]), "launch-error")
         raise
 
@@ -551,9 +567,18 @@ def stop_plan(plan: dict[str, Any], profiles: list[ServerProfile]) -> dict[str, 
     root = resolve_experiment_data_root(StorageSettings.from_env())
     owner_id = str(plan.get("idea_id") or f"qualification:{plan.get('run_id')}")
     lease = plan.get("gpu_lease") or {}
-    if lease.get("lease_id"):
-        release_gpu_lease(root, str(plan["server_id"]), str(plan["gpu_uuid"]), str(lease["lease_id"]), "orchestrator-stop")
     authority = plan.get("authority") or {}
+    if lease.get("lease_id"):
+        release_gpu_lease(
+            root,
+            str(plan["server_id"]),
+            str(plan["gpu_uuid"]),
+            str(lease["lease_id"]),
+            idea_id=owner_id,
+            authority_id=str(authority.get("authority_id") or ""),
+            plan_hash=str(authority.get("plan_hash") or lease.get("plan_hash") or ""),
+            outcome="orchestrator-stop",
+        )
     if authority.get("authority_id"):
         release_authority(root, owner_id, str(authority["authority_id"]), "orchestrator-stop")
     return {**plan, "stopped_at": utc_now(), "tmux_status": "stopped"}
