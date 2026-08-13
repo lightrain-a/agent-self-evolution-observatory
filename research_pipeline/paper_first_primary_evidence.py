@@ -5,6 +5,7 @@ import html
 import json
 import re
 import time
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from difflib import SequenceMatcher
 from pathlib import Path
@@ -19,7 +20,16 @@ DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.js"
 DEFAULT_MAX_PAPERS = 16
 DEFAULT_MAX_CORPUS_AGE_DAYS = 10.0
+DEFAULT_MAX_PUBLICATION_AGE_DAYS = 60.0
 DEFAULT_MIN_INTERVAL_SECONDS = 0.75
+DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS = 3.1
+DEFAULT_ARXIV_PER_QUERY = 12
+DEFAULT_ARXIV_QUERIES = (
+    'all:"self-evolving" AND all:agent',
+    'all:"self-improving" AND all:agent',
+    'all:"agent evolution" AND all:LLM',
+    '(all:"agent skill" OR all:harness) AND all:evolution',
+)
 
 _RELEVANCE_TERMS = (
     "self-evol",
@@ -126,9 +136,16 @@ def _relevance_score(paper: dict[str, Any]) -> int:
     return score
 
 
-def select_primary_candidates(corpus: dict[str, Any], *, max_papers: int = DEFAULT_MAX_PAPERS) -> list[dict[str, Any]]:
+def select_primary_candidates(
+    corpus: dict[str, Any],
+    *,
+    max_papers: int = DEFAULT_MAX_PAPERS,
+    now: datetime | None = None,
+    max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
+) -> list[dict[str, Any]]:
     selected: list[tuple[tuple[Any, ...], dict[str, Any]]] = []
     seen: set[str] = set()
+    current = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
     for paper in corpus.get("papers") or []:
         if not isinstance(paper, dict):
             continue
@@ -140,6 +157,9 @@ def select_primary_candidates(corpus: dict[str, Any], *, max_papers: int = DEFAU
         seen.add(arxiv_id)
         metadata = paper.get("metadata") or {}
         publication_date = str(metadata.get("publicationDate") or "")
+        publication_age = _age_days(publication_date, current)
+        if publication_age is None or publication_age > max_publication_age_days:
+            continue
         year = int(paper.get("year") or 0)
         citation_count = int(metadata.get("citationCount") or 0)
         retrieval_score = float(metadata.get("retrievalScore") or 0.0)
@@ -151,6 +171,76 @@ def select_primary_candidates(corpus: dict[str, Any], *, max_papers: int = DEFAU
 
 def _default_requester(url: str, *, timeout: float, headers: dict[str, str]):
     return requests.get(url, timeout=timeout, headers=headers)
+
+
+def _default_arxiv_search_requester(*, query: str, max_results: int, timeout: float, headers: dict[str, str]):
+    return requests.get(
+        "https://export.arxiv.org/api/query",
+        params={"search_query": query, "start": 0, "max_results": max_results, "sortBy": "submittedDate", "sortOrder": "descending"},
+        timeout=timeout,
+        headers=headers,
+    )
+
+
+def parse_arxiv_atom(text: str) -> list[dict[str, Any]]:
+    try:
+        root = ET.fromstring(text)
+    except ET.ParseError:
+        return []
+    ns = {"a": "http://www.w3.org/2005/Atom"}
+    rows: list[dict[str, Any]] = []
+    for entry in root.findall("a:entry", ns):
+        raw_id = str(entry.findtext("a:id", default="", namespaces=ns) or "")
+        arxiv_id = raw_id.rsplit("/", 1)[-1].split("v", 1)[0].strip()
+        title = " ".join(str(entry.findtext("a:title", default="", namespaces=ns) or "").split())
+        abstract = " ".join(str(entry.findtext("a:summary", default="", namespaces=ns) or "").split())
+        published = str(entry.findtext("a:published", default="", namespaces=ns) or "")
+        if not arxiv_id or not title or not abstract:
+            continue
+        year = None
+        try:
+            year = int(published[:4]) if len(published) >= 4 else None
+        except ValueError:
+            year = None
+        rows.append({
+            "paper_id": f"arxiv:{arxiv_id}", "title": title, "year": year, "venue": "arXiv",
+            "abstract": abstract, "url": f"https://arxiv.org/abs/{arxiv_id}",
+            "metadata": {"externalIds": {"ArXiv": arxiv_id}, "publicationDate": published[:10], "citationCount": 0, "retrievalScore": 0.0, "retrievedAt": _now(), "matches": [{"route": "arxiv-fallback"}]},
+        })
+    return rows
+
+
+def discover_arxiv_fallback(
+    *,
+    queries: tuple[str, ...] = DEFAULT_ARXIV_QUERIES,
+    per_query: int = DEFAULT_ARXIV_PER_QUERY,
+    requester: Callable[..., Any] | None = None,
+    min_interval_seconds: float = DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS,
+) -> tuple[list[dict[str, Any]], list[str]]:
+    fetch = requester or _default_arxiv_search_requester
+    merged: dict[str, dict[str, Any]] = {}
+    errors: list[str] = []
+    last_started: float | None = None
+    for query in queries:
+        if last_started is not None and min_interval_seconds > 0:
+            wait = min_interval_seconds - (time.monotonic() - last_started)
+            if wait > 0:
+                time.sleep(wait)
+        last_started = time.monotonic()
+        try:
+            response = fetch(query=query, max_results=per_query, timeout=30.0, headers={"User-Agent": "Agent-Self-Evolution-Observatory/arxiv-fallback"})
+            status = int(getattr(response, "status_code", 200))
+            if status >= 400:
+                raise RuntimeError(f"HTTP {status}")
+            for row in parse_arxiv_atom(str(getattr(response, "text", "") or "")):
+                arxiv_id = _arxiv_id(row)
+                if arxiv_id and _relevance_score(row) >= 2:
+                    merged.setdefault(arxiv_id, row)
+        except Exception as error:
+            errors.append(f"{query}:{type(error).__name__}:{str(error)[:160]}")
+    rows = list(merged.values())
+    rows.sort(key=lambda row: (str((row.get("metadata") or {}).get("publicationDate") or ""), _relevance_score(row), str(row.get("title") or "")), reverse=True)
+    return rows, errors
 
 
 def private_primary_pool_path(storage: StorageSettings | None = None) -> Path:
@@ -182,7 +272,11 @@ def build_primary_evidence_pool(
     corpus_path: Path | None = None,
     max_papers: int = DEFAULT_MAX_PAPERS,
     max_corpus_age_days: float = DEFAULT_MAX_CORPUS_AGE_DAYS,
+    max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
     requester: Callable[..., Any] | None = None,
+    arxiv_search_requester: Callable[..., Any] | None = None,
+    arxiv_queries: tuple[str, ...] = DEFAULT_ARXIV_QUERIES,
+    arxiv_query_interval_seconds: float = DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS,
     now: datetime | None = None,
     min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
     cache_dir: Path | None = None,
@@ -196,13 +290,14 @@ def build_primary_evidence_pool(
     public_state: dict[str, Any] = {
         "schema_version": "1.0",
         "generated_at": _now(),
-        "corpus_path": str(corpus_path),
-        "private_pool_path": str(private_pool_path),
         "policy": {
             "semantic_scholar_is_discovery_metadata_not_primary_evidence": True,
             "verified_primary_page_required": True,
             "arxiv_source_sha_required": True,
-            "stale_corpus_blocks_generation": True,
+            "stale_s2_triggers_primary_arxiv_fallback": True,
+            "arxiv_fallback_is_primary_metadata_not_a_scientific_claim": True,
+            "primary_publication_age_is_bounded": True,
+            "maximum_publication_age_days": max_publication_age_days,
             "no_parallel_primary_fetch": True,
             "full_abstracts_remain_private_data_artifacts": True,
             "candidate_generation_authority": False,
@@ -213,6 +308,7 @@ def build_primary_evidence_pool(
         "summary": {
             "corpus_available": bool(corpus),
             "corpus_fresh": False,
+            "discovery_mode": "none",
             "selected": 0,
             "verified": 0,
             "fetch_errors": 0,
@@ -221,6 +317,7 @@ def build_primary_evidence_pool(
         },
         "records": [],
         "errors": [],
+        "discovery_errors": [],
     }
     private: dict[str, Any] = {
         "schema_version": "1.0",
@@ -228,24 +325,42 @@ def build_primary_evidence_pool(
         "corpus_path": str(corpus_path),
         "records": [],
         "errors": [],
+        "discovery_errors": [],
     }
-    if not corpus:
-        public_state["status"] = "NO_CORPUS"
-        private["status"] = "NO_CORPUS"
-        return public_state, private
-    retrieved_at = str(corpus.get("retrieved_at") or "")
-    corpus_age = _age_days(retrieved_at, current)
-    fresh = corpus_age is not None and corpus_age <= max_corpus_age_days
+    retrieved_at = str((corpus or {}).get("retrieved_at") or "")
+    corpus_age = _age_days(retrieved_at, current) if corpus else None
+    fresh = bool(corpus) and corpus_age is not None and corpus_age <= max_corpus_age_days
     public_state["corpus_retrieved_at"] = retrieved_at
     public_state["corpus_age_days"] = corpus_age
     public_state["summary"]["corpus_fresh"] = fresh
     private["corpus_retrieved_at"] = retrieved_at
-    if not fresh:
-        public_state["status"] = "STALE_CORPUS_BLOCKED"
-        private["status"] = "STALE_CORPUS_BLOCKED"
-        return public_state, private
+    discovery_errors: list[str] = []
+    if fresh:
+        candidates = select_primary_candidates(
+            corpus or {},
+            max_papers=max_papers,
+            now=current,
+            max_publication_age_days=max_publication_age_days,
+        )
+        public_state["summary"]["discovery_mode"] = "semantic-scholar-corpus"
+        private["discovery_mode"] = "semantic-scholar-corpus"
+    else:
+        fallback_rows, discovery_errors = discover_arxiv_fallback(
+            queries=arxiv_queries,
+            requester=arxiv_search_requester,
+            min_interval_seconds=arxiv_query_interval_seconds,
+        )
+        candidates = select_primary_candidates(
+            {"papers": fallback_rows},
+            max_papers=max_papers,
+            now=current,
+            max_publication_age_days=max_publication_age_days,
+        )
+        public_state["summary"]["discovery_mode"] = "arxiv-primary-fallback"
+        private["discovery_mode"] = "arxiv-primary-fallback"
+        public_state["discovery_errors"] = discovery_errors
+        private["discovery_errors"] = discovery_errors
 
-    candidates = select_primary_candidates(corpus, max_papers=max_papers)
     public_state["summary"]["selected"] = len(candidates)
     fetch = requester or _default_requester
     cache_dir.mkdir(parents=True, exist_ok=True)
@@ -344,7 +459,11 @@ def write_primary_evidence_pool(
     corpus_path: Path | None = None,
     max_papers: int = DEFAULT_MAX_PAPERS,
     max_corpus_age_days: float = DEFAULT_MAX_CORPUS_AGE_DAYS,
+    max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
     requester: Callable[..., Any] | None = None,
+    arxiv_search_requester: Callable[..., Any] | None = None,
+    arxiv_queries: tuple[str, ...] = DEFAULT_ARXIV_QUERIES,
+    arxiv_query_interval_seconds: float = DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS,
     now: datetime | None = None,
     min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
 ) -> dict[str, Any]:
@@ -354,7 +473,11 @@ def write_primary_evidence_pool(
         corpus_path=corpus_path,
         max_papers=max_papers,
         max_corpus_age_days=max_corpus_age_days,
+        max_publication_age_days=max_publication_age_days,
         requester=requester,
+        arxiv_search_requester=arxiv_search_requester,
+        arxiv_queries=arxiv_queries,
+        arxiv_query_interval_seconds=arxiv_query_interval_seconds,
         now=now,
         min_interval_seconds=min_interval_seconds,
     )

@@ -18,12 +18,16 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             ref=f"arXiv:2608.1000{i}";records.append({"ref":ref,"title":f"Primary {i}","primary_url":f"https://arxiv.org/abs/2608.1000{i}","source_sha256":str(i)*64,"abstract_sha256":str(i+4)*64,"abstract":f"Primary abstract fact {i} about self-evolving agents.","primary_source_verified":True})
         p=root/"primary.json";p.write_text(json.dumps({"status":"READY","generated_at":now.isoformat(),"records":records}),encoding="utf-8");return p
     def raw_candidate(self)->dict:
-        return {"candidate_id":"AUTO-1","title":"Contradiction candidate","empirical_contradiction":{"source_a":{"ref":"arXiv:2608.10001","claim":"Fact A was observed."},"source_b":{"ref":"arXiv:2608.10002","claim":"Fact B was observed."},"tension":"A and B contradict the current explanation."},"irreducible_object":"Object Q","mature_theory_baselines":[{"name":"Theory A","same_information_projection":"same variables","reduction_test":"cannot predict Q"},{"name":"Theory B","same_information_projection":"same variables","reduction_test":"cannot predict Q"}],"same_information_nonreducibility":{"claim":"Q remains","why_each_baseline_cannot_express_prediction":"A lacks X and B lacks Y"},"exact_prediction":"Prediction Q changes sign.","strongest_same_information_baseline":"Theory A+B","domain_transfer_audit":{"mature_source_domain":"generic","mature_object":"Z","why_not_domain_transfer":"Q is not Z"},"saturation_scan":{"checked":True,"matched_patterns":[]},"cheapest_problem_falsifier":"Check Q before method design.","endpoint_headroom_requirement":"Two non-censored outcomes."}
+        return {"candidate_id":"AUTO-1","title":"Contradiction candidate","empirical_contradiction":{"source_a":{"ref":"arXiv:2608.10001","claim":"Primary abstract fact 1 about self-evolving agents."},"source_b":{"ref":"arXiv:2608.10002","claim":"Primary abstract fact 2 about self-evolving agents."},"tension":"A and B contradict the current explanation."},"irreducible_object":"Object Q","mature_theory_baselines":[{"name":"Theory A","same_information_projection":"same variables","reduction_test":"cannot predict Q"},{"name":"Theory B","same_information_projection":"same variables","reduction_test":"cannot predict Q"}],"same_information_nonreducibility":{"claim":"Q remains","why_each_baseline_cannot_express_prediction":"A lacks X and B lacks Y"},"exact_prediction":"Prediction Q changes sign.","strongest_same_information_baseline":"Theory A+B","domain_transfer_audit":{"mature_source_domain":"generic","mature_object":"Z","why_not_domain_transfer":"Q is not Z"},"saturation_scan":{"checked":True,"matched_patterns":[]},"cheapest_problem_falsifier":"Check Q before method design.","endpoint_headroom_requirement":"Two non-censored outcomes."}
     def gen(self,candidates,resolved="doubao-seed-evolving"):
         def responder(**kwargs):return {"text":json.dumps({"candidates":candidates}),"resolved_model":resolved}
         return responder
-    def review(self,verdict="CLEAR",resolved="glm-5-2-260617",matched=None):
-        def responder(**kwargs):return {"text":json.dumps({"reviews":[{"candidate_id":"AUTO-1","verdict":verdict,"matched_patterns":matched or [],"strongest_reduction":"none" if verdict=="CLEAR" else "mature reduction","reason":"review"}]}),"resolved_model":resolved}
+    def review(self,verdict="CLEAR",resolved="glm-5-2-260617",matched=None,grounded=True):
+        support={
+            "source_a":{"supported":grounded,"evidence_excerpt":"Primary abstract fact 1 about self-evolving agents" if grounded else "unsupported excerpt"},
+            "source_b":{"supported":grounded,"evidence_excerpt":"Primary abstract fact 2 about self-evolving agents" if grounded else "unsupported excerpt"},
+        }
+        def responder(**kwargs):return {"text":json.dumps({"reviews":[{"candidate_id":"AUTO-1","verdict":verdict,"source_claim_support":support,"matched_patterns":matched or [],"strongest_reduction":"none" if verdict=="CLEAR" else "mature reduction","reason":"review"}]}),"resolved_model":resolved}
         return responder
 
     def test_zero_candidates_is_valid_and_skips_reviewer(self)->None:
@@ -74,6 +78,19 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             state=run_problem_generator(storage=self.storage(root),primary_pool_path=pool,auto_inbox_path=auto,generator_responder=self.gen([self.raw_candidate()],resolved="glm-5-2-260617"),reviewer_responder=self.review("CLEAR",resolved="glm-5-2-260617"),now=now)
             inbox=json.loads(auto.read_text())
         review=inbox["candidates"][0]["semantic_reduction_review"];self.assertFalse(review["independent_resolved_model"]);self.assertEqual(review["verdict"],"BLOCK");self.assertEqual(state["summary"]["semantic_clear"],0)
+
+    def test_reviewer_clear_cannot_pass_if_source_claim_excerpt_is_not_in_primary_abstract(self)->None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);auto=root/"auto.json";pool=self.pool(root,now)
+            state=run_problem_generator(storage=self.storage(root),primary_pool_path=pool,auto_inbox_path=auto,generator_responder=self.gen([self.raw_candidate()]),reviewer_responder=self.review("CLEAR",grounded=False),now=now)
+            inbox=json.loads(auto.read_text())
+            queue=build_problem_gate_queue(root/"manual.json",auto_inbox_path=auto,primary_pool_path=pool,storage=self.storage(root))
+        review=inbox["candidates"][0]["semantic_reduction_review"]
+        self.assertFalse(review["source_claims_grounded"])
+        self.assertEqual(review["verdict"],"BLOCK")
+        self.assertEqual(state["summary"]["semantic_clear"],0)
+        self.assertEqual(queue["summary"]["passed_problem_gate"],0)
+        self.assertTrue(any(x in {"semantic-reduction-review-block","source-claim-grounding-failed"} for x in queue["blocked"][0]["blockers"]))
 
 
 if __name__=="__main__":unittest.main()

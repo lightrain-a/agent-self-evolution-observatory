@@ -6,10 +6,19 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from .automation_cycle import run_cycle
+from .automation_cycle import _sync_literature, run_cycle
 
 
 class AutomationCycleAIConsultationTest(unittest.TestCase):
+    def test_missing_s2_key_degrades_to_arxiv_primary_fallback_without_calling_s2(self) -> None:
+        settings=SimpleNamespace(api_key="")
+        with patch("research_pipeline.automation_cycle.SemanticScholarSettings.from_env", return_value=settings), patch("research_pipeline.automation_cycle.sync_semantic_scholar") as sync:
+            result=_sync_literature()
+        self.assertEqual(result["status"],"SKIPPED_PROVIDER_UNCONFIGURED")
+        self.assertEqual(result["fallback"],"paper-first-primary-evidence will use low-rate arXiv primary discovery")
+        self.assertFalse(result["scientific_authority"])
+        sync.assert_not_called()
+
     def test_cycle_places_ai_consultation_between_pre_state_and_final_state(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

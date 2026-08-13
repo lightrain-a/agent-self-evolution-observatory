@@ -20,7 +20,7 @@ def write_primary_pool(root: Path) -> Path:
             "primary_url":src["primary_url"],
             "source_sha256":src["source_sha256"],
             "primary_source_verified":True,
-            "abstract":"private abstract",
+            "abstract":src["claim"] + " Additional private abstract context.",
         })
     path=root/"primary.json"; path.write_text(json.dumps({"records":records}),encoding="utf-8"); return path
 

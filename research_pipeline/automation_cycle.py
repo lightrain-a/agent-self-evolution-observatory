@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator
 
-from .config import PROJECT_ROOT, StorageSettings
+from .config import PROJECT_ROOT, SemanticScholarSettings, StorageSettings
 from .ai_consultation_automation import run_ai_consultation_automation
 from .cvpr_idea_factory import write_cvpr_idea_bank
 from .discussion_portfolio import write_discussion_portfolio
@@ -278,6 +278,15 @@ def _safe_summary(result: Any) -> Any:
 
 
 def _sync_literature() -> dict[str, Any]:
+    s2 = SemanticScholarSettings.from_env(required=False)
+    if not s2.api_key:
+        return {
+            "status":"SKIPPED_PROVIDER_UNCONFIGURED",
+            "provider":"semantic-scholar",
+            "configured":False,
+            "fallback":"paper-first-primary-evidence will use low-rate arXiv primary discovery",
+            "scientific_authority":False,
+        }
     old_retries = os.environ.get("S2_MAX_RETRIES")
     old_timeout = os.environ.get("S2_TIMEOUT_SECONDS")
     os.environ["S2_MAX_RETRIES"] = os.getenv("AUTOMATION_S2_MAX_RETRIES", "2")

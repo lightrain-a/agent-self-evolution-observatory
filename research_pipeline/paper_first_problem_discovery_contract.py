@@ -74,9 +74,10 @@ def candidate_schema() -> dict[str, Any]:
             "matched_patterns_must_be_empty": True,
         },
         "semantic_reduction_review": {
-            "required": ["reviewed", "block_only", "verdict", "reviewer_model", "raw_sha256"],
+            "required": ["reviewed", "block_only", "verdict", "reviewer_model", "raw_sha256", "source_claims_grounded", "source_claim_grounding"],
             "verdict_must_be_clear": True,
             "reviewer_can_block_but_never_authorize": True,
+            "both_source_claims_require_exact_primary_abstract_grounding": True,
         },
         "authority": {
             "required_false": ["method_design", "experiment_blueprint", "local_validation", "p0", "gpu", "full_experiment"],
@@ -92,11 +93,16 @@ def _nonempty(value: Any) -> bool:
     return value is not None
 
 
+def _normalized_evidence_text(value: Any) -> str:
+    return " ".join(str(value or "").lower().split())
+
+
 def audit_problem_candidate(
     candidate: dict[str, Any],
     *,
     primary_evidence_by_ref: dict[str, dict[str, Any]] | None = None,
     require_primary_registry: bool = False,
+    require_semantic_review: bool = True,
 ) -> dict[str, Any]:
     blockers: list[str] = []
     checks: list[dict[str, Any]] = []
@@ -171,15 +177,33 @@ def audit_problem_candidate(
     if not _nonempty(candidate.get("endpoint_headroom_requirement")):
         blockers.append("endpoint-headroom-missing")
 
-    semantic_review = candidate.get("semantic_reduction_review") or {}
-    if not isinstance(semantic_review, dict) or semantic_review.get("reviewed") is not True or semantic_review.get("block_only") is not True:
-        blockers.append("semantic-reduction-review-missing")
-    else:
-        verdict = str(semantic_review.get("verdict") or "").upper()
-        if verdict != "CLEAR":
-            blockers.append("semantic-reduction-review-block")
-        if not _nonempty(semantic_review.get("reviewer_model")) or not _nonempty(semantic_review.get("raw_sha256")):
-            blockers.append("semantic-reduction-review-provenance-missing")
+    if require_semantic_review:
+        semantic_review = candidate.get("semantic_reduction_review") or {}
+        if not isinstance(semantic_review, dict) or semantic_review.get("reviewed") is not True or semantic_review.get("block_only") is not True:
+            blockers.append("semantic-reduction-review-missing")
+        else:
+            verdict = str(semantic_review.get("verdict") or "").upper()
+            if verdict != "CLEAR":
+                blockers.append("semantic-reduction-review-block")
+            if semantic_review.get("source_claims_grounded") is not True:
+                blockers.append("source-claim-grounding-failed")
+            grounding = semantic_review.get("source_claim_grounding") or {}
+            if not isinstance(grounding, dict) or any((grounding.get(key) or {}).get("grounded") is not True for key in ("source_a", "source_b")):
+                blockers.append("source-claim-grounding-incomplete")
+            if require_primary_registry and isinstance(grounding, dict):
+                for source_key in ("source_a", "source_b"):
+                    source = contradiction.get(source_key) or {}
+                    ref = str(source.get("ref") or "").strip()
+                    record = registry.get(ref) or {}
+                    grounded = grounding.get(source_key) or {}
+                    excerpt = str(grounded.get("evidence_excerpt") or "").strip()
+                    words = excerpt.split()
+                    abstract = _normalized_evidence_text(record.get("abstract") or "")
+                    excerpt_norm = _normalized_evidence_text(excerpt)
+                    if not (4 <= len(words) <= 30 and excerpt_norm and excerpt_norm in abstract):
+                        blockers.append(f"source-claim-evidence-excerpt-mismatch:{source_key}")
+            if not _nonempty(semantic_review.get("reviewer_model")) or not _nonempty(semantic_review.get("raw_sha256")):
+                blockers.append("semantic-reduction-review-provenance-missing")
 
     authority = candidate.get("authority") or {}
     for key in ("method_design", "experiment_blueprint", "local_validation", "p0", "gpu", "full_experiment"):

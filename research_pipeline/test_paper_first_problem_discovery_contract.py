@@ -27,7 +27,7 @@ def valid_candidate() -> dict:
         "saturation_scan":{"checked":True,"matched_patterns":[]},
         "cheapest_problem_falsifier":"Check whether condition C ever produces the required sign change before designing a method.",
         "endpoint_headroom_requirement":"At least two valid outcome states and non-censored terminal variation must exist.",
-        "semantic_reduction_review":{"reviewed":True,"block_only":True,"verdict":"CLEAR","reviewer_model":"independent-test-reviewer","raw_sha256":"c"*64,"matched_patterns":[],"strongest_reduction":"none"},
+        "semantic_reduction_review":{"reviewed":True,"block_only":True,"verdict":"CLEAR","reviewer_model":"independent-test-reviewer","raw_sha256":"c"*64,"source_claims_grounded":True,"source_claim_grounding":{"source_a":{"grounded":True,"evidence_excerpt":"Observed A under frozen setting"},"source_b":{"grounded":True,"evidence_excerpt":"Observed not-A under a related frozen setting"}},"matched_patterns":[],"strongest_reduction":"none"},
         "authority":{"method_design":False,"experiment_blueprint":False,"local_validation":False,"p0":False,"gpu":False,"full_experiment":False},
     }
 

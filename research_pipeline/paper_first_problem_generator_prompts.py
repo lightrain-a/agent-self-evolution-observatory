@@ -43,15 +43,33 @@ def generator_prompt(records: list[dict[str, Any]]) -> str:
     )
 
 
-def reviewer_prompt(candidates: list[dict[str, Any]]) -> str:
+def reviewer_prompt(candidates: list[dict[str, Any]], evidence_by_ref: dict[str, dict[str, Any]]) -> str:
     reductions=[{"key":row["key"],"mature_theories":row["mature_theories"],"veto":row["veto"]} for row in REDUCTION_PATTERNS]
     stripped=[{k:v for k,v in row.items() if k not in {"semantic_reduction_review","authority"}} for row in candidates]
+    refs=[]
+    for row in candidates:
+        contradiction=row.get("empirical_contradiction") or {}
+        for source_key in ("source_a","source_b"):
+            ref=str((contradiction.get(source_key) or {}).get("ref") or "").strip()
+            if ref and ref not in refs:
+                refs.append(ref)
+    evidence=[]
+    for ref in refs:
+        record=evidence_by_ref.get(ref) or {}
+        evidence.append({
+            "ref":ref,
+            "title":record.get("title"),
+            "source_sha256":record.get("source_sha256"),
+            "abstract":record.get("abstract"),
+        })
     return (
-        "Independent BLOCK-ONLY semantic reduction reviewer. You cannot authorize Paper Design, methods, experiments, P0, or GPU. "
-        "For each candidate, test whether its exact prediction is already expressible by the negative-space ledger or any mature same-information theory. "
-        "CLEAR means only no reduction found in this review; it never means scientific approval.\n\nLEDGER:\n"+
-        json.dumps(reductions,ensure_ascii=False,separators=(",",":"))+"\n\nCANDIDATES:\n"+
+        "Independent BLOCK-ONLY semantic reduction + source-grounding reviewer. You cannot authorize Paper Design, methods, experiments, P0, or GPU. "
+        "For each candidate: (1) verify each stated source claim is actually supported by its supplied primary abstract; (2) test whether the exact prediction is already expressible by the negative-space ledger or any mature same-information theory. "
+        "For each source claim marked supported, return one SHORT exact contiguous excerpt copied from that abstract (4-30 words). If no exact abstract excerpt supports the claim, mark supported=false and BLOCK. "
+        "CLEAR means only that both source claims are grounded and no mature reduction was found in this review; it never means scientific approval.\n\nLEDGER:\n"+
+        json.dumps(reductions,ensure_ascii=False,separators=(",",":"))+"\n\nPRIMARY ABSTRACTS:\n"+
+        json.dumps(evidence,ensure_ascii=False,separators=(",",":"))+"\n\nCANDIDATES:\n"+
         json.dumps(stripped,ensure_ascii=False,separators=(",",":"))+
-        '\n\nReturn JSON only: {"reviews":[{"candidate_id":"...","verdict":"CLEAR|BLOCK","matched_patterns":["known-key"],"strongest_reduction":"mature theory/object or none","reason":"..."}]}. '
+        '\n\nReturn JSON only: {"reviews":[{"candidate_id":"...","verdict":"CLEAR|BLOCK","source_claim_support":{"source_a":{"supported":true,"evidence_excerpt":"exact words from abstract"},"source_b":{"supported":true,"evidence_excerpt":"exact words from abstract"}},"matched_patterns":["known-key"],"strongest_reduction":"mature theory/object or none","reason":"..."}]}. '
         "If BLOCK uses a mature reduction not in the ledger, matched_patterns may be [] but strongest_reduction must name it."
     )
