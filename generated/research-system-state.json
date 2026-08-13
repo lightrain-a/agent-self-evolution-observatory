@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-13T09:17:33+00:00",
+  "generated_at": "2026-08-13T10:24:45+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -18,858 +18,21 @@
     "fail_safe": "Exclusive locks; partial failure preserves the previous valid deployment artifact.",
     "latest_report": {
       "schema_version": "1.0",
-      "started_at": "2026-08-13T09:01:51+00:00",
-      "mode": "weekly",
-      "sync_literature": true,
-      "web_review_limit": 2,
+      "started_at": "2026-08-13T10:19:46+00:00",
+      "mode": "daily",
+      "sync_literature": false,
+      "web_review_limit": 0,
       "ai_consultation_limit": 1,
       "ai_consultations": true,
       "publish": true,
       "steps": [
-        {
-          "name": "literature-sync",
-          "status": "pass",
-          "duration_seconds": 0.35,
-          "summary": {
-            "query_count": 26,
-            "paper_count": 334,
-            "with_abstract": 319,
-            "open_access": 54,
-            "route_counts": {
-              "seed": 77,
-              "mechanism": 60,
-              "analogy": 60,
-              "topic": 48,
-              "citation": 44,
-              "reference": 36,
-              "failure": 18
-            },
-            "year_counts": {
-              "unknown": 1,
-              "2026": 142,
-              "2025": 117,
-              "2024": 52,
-              "2023": 16,
-              "2022": 4,
-              "2009": 1,
-              "2004": 1
-            },
-            "top_venues": {
-              "arXiv.org": 124,
-              "International Conference on Learning Representations": 17,
-              "Neural Information Processing Systems": 12,
-              "Annual Meeting of the Association for Computational Linguistics": 9,
-              "International Conference on Machine Learning": 7,
-              "Conference on Empirical Methods in Natural Language Processing": 7,
-              "AAAI Conference on Artificial Intelligence": 6,
-              "IEEE Access": 4,
-              "Trans. Mach. Learn. Res.": 3,
-              "North American Chapter of the Association for Computational Linguistics": 2,
-              "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval": 2,
-              "Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2": 2,
-              "IEEE International Joint Conference on Neural Network": 2,
-              "Electronics": 2,
-              "ACM Cloud and Autonomic Computing Conference": 2,
-              "IEEE Transactions on Neural Networks and Learning Systems": 2,
-              "International Joint Conference on Artificial Intelligence": 2,
-              "ITM Web of Conferences": 1,
-              "2025 IEEE 19th International Conference on Control & Automation (ICCA)": 1,
-              "IFIP TC13 International Conference on Human-Computer Interaction": 1
-            },
-            "provider_error_count": 0
-          }
-        },
-        {
-          "name": "paper-first-primary-evidence-refresh",
-          "status": "pass",
-          "duration_seconds": 208.922,
-          "summary": {
-            "corpus_available": true,
-            "corpus_fresh": true,
-            "discovery_mode": "semantic-scholar-plus-arxiv-augmentation",
-            "augmentation_discovered": 51,
-            "augmentation_added": 50,
-            "selected": 32,
-            "verified": 30,
-            "fetch_errors": 2,
-            "title_mismatches": 0,
-            "fulltext_verified": 13,
-            "fulltext_fetch_errors": 17,
-            "empirical_fact_candidates": 45,
-            "empirical_fact_tier_counts": {
-              "strong-observation": 8,
-              "quantitative-directional": 26,
-              "owned-directional": 4,
-              "result-section-directional": 7
-            },
-            "recent_verified_cache_reused": 0,
-            "recent_raw_primary_cache_reused": 24,
-            "recent_raw_fulltext_cache_reused": 8,
-            "recent_fulltext_failure_cooldown_skips": 16,
-            "lane_floor": 1,
-            "eligible_lane_counts": {
-              "skill_harness": 35,
-              "memory_continual": 22,
-              "embodied": 10,
-              "collective": 6,
-              "autonomous_science": 3,
-              "runtime_deployment": 12,
-              "safety_reliability": 20
-            },
-            "selected_lane_counts": {
-              "skill_harness": 18,
-              "memory_continual": 7,
-              "embodied": 3,
-              "collective": 4,
-              "autonomous_science": 2,
-              "runtime_deployment": 8,
-              "safety_reliability": 13
-            },
-            "verified_lane_counts": {
-              "skill_harness": 17,
-              "memory_continual": 7,
-              "embodied": 3,
-              "collective": 3,
-              "autonomous_science": 2,
-              "runtime_deployment": 7,
-              "safety_reliability": 12
-            },
-            "undercovered_lanes": [],
-            "verified_undercovered_lanes": [],
-            "candidate_generation_ready": true
-          }
-        },
-        {
-          "name": "paper-first-fresh-saturation",
-          "status": "pass",
-          "duration_seconds": 0.002,
-          "summary": {
-            "drafts_reviewed": 40,
-            "survivors": 0,
-            "stopped": 40,
-            "reduction_patterns": 33,
-            "local_validation_authorized": 0,
-            "p0_authorized": 0
-          }
-        },
-        {
-          "name": "paper-first-problem-generator",
-          "status": "pass",
-          "duration_seconds": 9.089,
-          "summary": {
-            "primary_evidence_records": 30,
-            "generated": 0,
-            "structurally_reviewable": 0,
-            "semantic_clear": 0,
-            "semantic_blocked": 0,
-            "written_to_auto_inbox": 0
-          }
-        },
-        {
-          "name": "paper-first-problem-gate-queue",
-          "status": "pass",
-          "duration_seconds": 0.005,
-          "summary": {
-            "submitted": 0,
-            "audited": 0,
-            "passed_problem_gate": 0,
-            "blocked_problem_gate": 0,
-            "paper_design_eligible": 0,
-            "inbox_errors": 0,
-            "primary_evidence_records": 30,
-            "method_authorized": 0,
-            "experiment_authorized": 0,
-            "p0_authorized": 0
-          }
-        },
-        {
-          "name": "iclr-bank",
-          "status": "pass",
-          "duration_seconds": 0.074,
-          "summary": {
-            "raw_candidates": 41,
-            "structured_candidates": 29,
-            "passed": 26,
-            "blocked_after_structured_review": 3,
-            "early_rejected": 12,
-            "tracks": 8,
-            "project_web_gpt_reviewed": 26,
-            "project_web_gpt_pending": 0,
-            "project_web_gpt_complete": true,
-            "external_verdict_counts": {
-              "pass": 4,
-              "revise": 10,
-              "block": 12,
-              "pending": 0
-            },
-            "external_pass": 4,
-            "external_revise": 10,
-            "external_block": 12,
-            "final_method_refinement": {
-              "reviewed": 17,
-              "advance": 10,
-              "merge": 3,
-              "hold": 4
-            }
-          }
-        },
-        {
-          "name": "machine-school-inspired-bank",
-          "status": "pass",
-          "duration_seconds": 0.02,
-          "summary": {
-            "raw": 24,
-            "internal_pass": 11,
-            "internal_revise": 7,
-            "internal_reject": 6,
-            "external_reviewed": 11,
-            "external_pass": 1,
-            "external_revise": 7,
-            "external_block": 3
-          }
-        },
-        {
-          "name": "archival-solution-first-idea-discovery-v3",
-          "status": "pass",
-          "duration_seconds": 0.013,
-          "summary": {
-            "repository_patterns": 7,
-            "workflow_stages": 9,
-            "mechanism_gates": 5,
-            "raw_children": 14,
-            "internal_shortlist": 10,
-            "repair": 4,
-            "stop": 0,
-            "external_reviewed": 10,
-            "external_pending": 0,
-            "external_pass": 0,
-            "external_revise": 6,
-            "external_block": 4
-          }
-        },
-        {
-          "name": "archival-reviewer-repaired-idea-discovery-v31",
-          "status": "pass",
-          "duration_seconds": 0.004,
-          "summary": {
-            "children": 6,
-            "external_reviewed": 6,
-            "external_pending": 0,
-            "external_pass": 0,
-            "external_revise": 2,
-            "external_block": 4
-          }
-        },
-        {
-          "name": "archival-expanded-idea-discovery-v5",
-          "status": "pass",
-          "duration_seconds": 0.049,
-          "summary": {
-            "repository_patterns": 13,
-            "workflow_stages": 9,
-            "raw_candidates": 36,
-            "finalist": 24,
-            "revival": 8,
-            "repair": 2,
-            "component": 2,
-            "external_reviewed": 32,
-            "external_pending": 0,
-            "external_pass": 6,
-            "external_revise": 19,
-            "external_block": 7,
-            "discussion_ready": 6
-          }
-        },
-        {
-          "name": "archival-reviewer-targeted-idea-discovery-v51",
-          "status": "pass",
-          "duration_seconds": 0.013,
-          "summary": {
-            "children": 19,
-            "reviewed": 19,
-            "pending": 0,
-            "pass": 3,
-            "revise": 12,
-            "block": 4
-          }
-        },
-        {
-          "name": "archival-second-order-idea-discovery-v52",
-          "status": "pass",
-          "duration_seconds": 0.008,
-          "summary": {
-            "children": 12,
-            "reviewed": 12,
-            "pending": 0,
-            "pass": 1,
-            "revise": 8,
-            "block": 3
-          }
-        },
-        {
-          "name": "archival-final-boundary-idea-discovery-v53",
-          "status": "pass",
-          "duration_seconds": 0.003,
-          "summary": {
-            "children": 4,
-            "reviewed": 4,
-            "pending": 0,
-            "pass": 3,
-            "revise": 1,
-            "block": 0
-          }
-        },
-        {
-          "name": "archival-discussion-ready-portfolio",
-          "status": "pass",
-          "duration_seconds": 0.038,
-          "summary": {
-            "schema_version": "2.0",
-            "generated_at": "2026-08-13T09:05:29+00:00",
-            "target": 20,
-            "count": 27,
-            "remaining": 0,
-            "ready": true,
-            "final_summary": {
-              "total": 20,
-              "pass": 20,
-              "revise": 0,
-              "block": 0,
-              "ready": true,
-              "unanimous_internal_pass": 20,
-              "fresh_collision_rechecks": 20,
-              "targeted_r32_rechecks": 6
-            },
-            "legacy_r3_final_passes": [
-              {
-                "source": "main-r2",
-                "id": "contradiction-preserving-consolidation",
-                "title": {
-                  "zh": "固定容量下基于交叉删除干预的保留矛盾记忆巩固",
-                  "en": "Contradiction-Preserving Memory Consolidation under Fixed Capacity with Crossed Deletion Interventions"
-                },
-                "verdict": "pass",
-                "revision": "R3.2",
-                "rank": 2,
-                "parent_ids": [],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "main-r2",
-                "id": "compositional-update-compatibility",
-                "title": {
-                  "en": "Compositional Update Compatibility with Frozen Update Surface, Preregistered N=12 Updates, and Architecture-Matched Ablation",
-                  "zh": "组合更新兼容性：冻结更新表面、预注册N=12更新与架构匹配消融"
-                },
-                "verdict": "pass",
-                "revision": "R3.2",
-                "rank": 3,
-                "parent_ids": [],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "main-r2",
-                "id": "update-trust-region",
-                "title": {
-                  "en": "Frozen Non-Parametric Behavioral-Divergence Trust Region for Discrete Agent Updates",
-                  "zh": "面向离散智能体更新的冻结非参数行为散度信赖域"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 4,
-                "parent_ids": [],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v4-r2",
-                "id": "correction-action-causal-compiler",
-                "title": {
-                  "en": "Minimal Causally Necessary Typed-Action Conjunction Compiler",
-                  "zh": "最小型因果必要类型化动作合取编译器"
-                },
-                "verdict": "pass",
-                "revision": "R3.2",
-                "rank": 1,
-                "parent_ids": [
-                  "correction-policy-credit",
-                  "failure-localization-before-reflection"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v4-r2",
-                "id": "memory-interaction-clause-learner",
-                "title": {
-                  "zh": "身份与组合类型不相交的记忆交互子句归纳器",
-                  "en": "Identity- and Composition-Disjoint Memory Interaction Clause Induction"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 2,
-                "parent_ids": [
-                  "contradiction-preserving-consolidation",
-                  "compositional-update-compatibility"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v4-r2",
-                "id": "probe-mutation-retirement-policy",
-                "title": {
-                  "en": "Probe Mutation and Retirement Policy: Prequential Crossed Mutation vs. Matched Learned Future-Value Selection",
-                  "zh": "Probe 变异与退役策略：序贯交叉的变异对照匹配的学习型未来价值选择"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 3,
-                "parent_ids": [
-                  "regression-probe-half-life",
-                  "change-triggered-regression-exams"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v4-r2",
-                "id": "update-composition-repair-compiler",
-                "title": {
-                  "zh": "冻结免搜索更新组合修复编译器",
-                  "en": "Frozen No-Search Update-Composition Repair Compiler"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 4,
-                "parent_ids": [
-                  "compositional-update-compatibility",
-                  "restoration-clause-learning"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v4-r2",
-                "id": "monotone-applicability-specializer-v4",
-                "title": {
-                  "en": "Monotone Applicability-Set Specializer vs Complexity-Matched Symbolic Baselines on a Frozen Predicate Vocabulary",
-                  "zh": "冻结谓词词表上的单调适用集合专化器对阵复杂度匹配符号基线"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 5,
-                "parent_ids": [
-                  "local-counterexample-memory-repair",
-                  "monotone-applicability-specializer"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v5-r2",
-                "id": "api-error-semantic-adapter",
-                "title": {
-                  "en": "API Error-Semantics Adapter: Learned Discrete Taxonomy vs. Structured Bottleneck Under Matched Resources with Human-Design Control",
-                  "zh": "API 错误语义适配器：学习离散分类法与结构化瓶颈在匹配资源下的对比（含人工设计控制）"
-                },
-                "verdict": "pass",
-                "revision": "R3.2",
-                "rank": 1,
-                "parent_ids": [
-                  "api-semantic-workflow-compiler"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v5-r2",
-                "id": "workflow-repair-grammar-v5",
-                "title": {
-                  "en": "Workflow Repair Grammar v5: Composition-Caused Transfer Isolation on Full Distribution",
-                  "zh": "工作流修复语法 v5：全分布上的组合因果迁移隔离"
-                },
-                "verdict": "pass",
-                "revision": "R3.2",
-                "rank": 2,
-                "parent_ids": [
-                  "workflow-failure-motif-rewriter"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v5-r2",
-                "id": "restoration-clause-induction-v5",
-                "title": {
-                  "en": "Restoration-Clause Induction v5: Crossed Isolation Against a Direct Order-Aware Composition-Risk Model",
-                  "zh": "恢复子句归纳 v5：与直接序感知组合风险模型的交叉隔离比较"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 3,
-                "parent_ids": [
-                  "restoration-clause-learning",
-                  "update-composition-repair-compiler"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v5-r2",
-                "id": "rubric-intervention-sparse-solver",
-                "title": {
-                  "en": "Rubric Intervention Sparse Solver: Causal-Effect × Sparse-Constrained Factorial",
-                  "zh": "Rubric 干预稀疏求解器：因果效应 × 稀疏约束因子分解"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 4,
-                "parent_ids": [
-                  "counterfactual-rubric-rewrite"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v5-r2",
-                "id": "update-history-semantic-compactor",
-                "title": {
-                  "en": "Update-History Semantic Compactor: Non-Local Order-Sensitivity Isolated by a Crossed Semantic-Dedup Ablation",
-                  "zh": "更新历史语义压缩器：以交叉语义去重消融隔离非局部顺序敏感性"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 5,
-                "parent_ids": [
-                  "compositional-update-compatibility"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v51-r2",
-                "id": "bounded-probe-api-transition-operator",
-                "title": {
-                  "zh": "限探针 API 转移算子：跨源学习参数化 vs 同构非学习实例化",
-                  "en": "Bounded-Probe API Transition Operator: Cross-Source Learned Parameterization vs. Identically-Structured Non-Learned Instantiation"
-                },
-                "verdict": "pass",
-                "revision": "R3.2",
-                "rank": 1,
-                "parent_ids": [
-                  "api-semantic-workflow-ir-v5"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v51-r2",
-                "id": "interventional-permission-triage-under-ceiling",
-                "title": {
-                  "zh": "固定权限上限下的干预式重授权筛选：冻结租约门控 vs 确定性迁移包络",
-                  "en": "Interventional Reauthorization Triage Under a Fixed Ceiling: Frozen Lease Gating vs. Deterministic Transition Envelope"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 2,
-                "parent_ids": [
-                  "permission-diff-causal-reauthorizer"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v51-r2",
-                "id": "nested-pathway-memory-repair",
-                "title": {
-                  "zh": "嵌套路径识别记忆修复",
-                  "en": "Nested-Pathway Memory Repair"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 3,
-                "parent_ids": [
-                  "retrieval-mediated-harm-factorial-repair-v5"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v52-r2",
-                "id": "constraint-complete-typed-memory-order-logic",
-                "title": {
-                  "zh": "约束完备型类型化记忆顺序逻辑：表征 × 解码器分解",
-                  "en": "Constraint-Complete Typed Memory-Order Logic: Representation × Decoder Factorization"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 1,
-                "parent_ids": [
-                  "higher-order-typed-memory-order-logic"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v53-r2",
-                "id": "certified-out-of-span-interaction-inverter-v53",
-                "title": {
-                  "zh": "可认证张成空间外交互逆算子：混合参数化与全空间求解器对照",
-                  "en": "Certified Out-of-Span Interaction Inverter: Mixed-Parameterization and Full-Space Solver Controls"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 1,
-                "parent_ids": [
-                  "certified-out-of-span-interaction-inverter"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v53-r2",
-                "id": "compiler-residual-contract-editor-v53",
-                "title": {
-                  "en": "Compiler-Residual Contract Editor: Typed-Residual vs Generic Local-Delta Isolation",
-                  "zh": "编译器残差式契约编辑器：类型化残差与通用局部增量编辑的隔离对比"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 2,
-                "parent_ids": [
-                  "compiler-residual-contract-editor"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              },
-              {
-                "source": "v53-r2",
-                "id": "filtered-chronological-evaluator-state-v53",
-                "title": {
-                  "en": "Filtered Longitudinal Evaluator-State Extrapolation: Retrained Recurrent Transition-Free Control",
-                  "zh": "滤波式纵向评价器状态外推：重训练循环无转移对照"
-                },
-                "verdict": "pass",
-                "revision": "R3.1",
-                "rank": 3,
-                "parent_ids": [
-                  "filtered-chronological-evaluator-state"
-                ],
-                "reviewed": true,
-                "final_verdict": "pass",
-                "reviewers": {
-                  "glm-5.2": "pass",
-                  "deepseek-v4-pro": "pass"
-                },
-                "collision_gate": "pass"
-              }
-            ]
-          }
-        },
-        {
-          "name": "historical-paper-first-idea-incubation",
-          "status": "pass",
-          "duration_seconds": 0.002,
-          "summary": {
-            "candidates": 9,
-            "advance_to_paper_design": 4,
-            "revise_novelty_boundary": 3,
-            "blocked_collision": 2,
-            "p0_authorized": 0,
-            "gpu_authorized": 0,
-            "themes": 9
-          }
-        },
-        {
-          "name": "archival-constrained-combination-idea-discovery-v4",
-          "status": "pass",
-          "duration_seconds": 0.041,
-          "summary": {
-            "repository_patterns": 11,
-            "workflow_stages": 9,
-            "raw_candidates": 28,
-            "discussion": 14,
-            "revival": 8,
-            "repair": 4,
-            "component": 2,
-            "tournament_finalists": 16,
-            "external_reviewed": 16,
-            "external_pending": 0,
-            "external_pass": 5,
-            "external_revise": 8,
-            "external_block": 3
-          }
-        },
-        {
-          "name": "iclr-audit",
-          "status": "pass",
-          "duration_seconds": 0.002,
-          "summary": {
-            "papers": 12,
-            "substrate_counts": {
-              "hybrid-retrospective-training": 1,
-              "in-context-optimizer": 1,
-              "hybrid-evolutionary-search": 1,
-              "trained-embodied-continual-policy": 1,
-              "workflow-search-hybrid": 1,
-              "open-weight-online-rl": 1,
-              "proprietary-online-rl": 1,
-              "open-weight-reward-training": 1,
-              "benchmark-plus-open-training": 1,
-              "world-model-augmented-inference": 1,
-              "hybrid-synthetic-instruction-tuning": 1,
-              "dynamic-workflow-inference": 1
-            },
-            "primary_recommendation": {
-              "zh": "主结果使用开放 7B/8B 模型；商业 API 只作为可选上界/数据生成器；严格匹配交互、token、调用、训练和墙钟。",
-              "en": "Use open 7B/8B models for primary results; proprietary APIs only as optional ceilings/data generators; match interaction, token, call, training, and wall-clock budgets."
-            }
-          }
-        },
-        {
-          "name": "cvpr-followup-bank",
-          "status": "pass",
-          "duration_seconds": 0.051,
-          "summary": {
-            "raw_candidates": 61,
-            "structured_candidates": 43,
-            "passed": 42,
-            "blocked_after_structured_review": 1,
-            "early_rejected": 18,
-            "tracks": 8,
-            "project_web_gpt_reviewed": 3
-          }
-        },
-        {
-          "name": "published-visual-audit",
-          "status": "pass",
-          "duration_seconds": 0.003,
-          "summary": {
-            "papers": 12,
-            "substrate_counts": {
-              "hybrid": 2,
-              "open-weight": 1,
-              "open-or-hybrid-unknown-exact": 1,
-              "trained-open-critic-exact-backbone-pending": 1,
-              "api-and-model-agnostic-inference": 1,
-              "trained-policy-plus-mllm": 1,
-              "llm-program-synthesis-exact-model-pending": 1,
-              "open-weight-high-resource-training": 1,
-              "open-weight-model-plus-proprietary-tool": 1,
-              "multi-tool-router-exact-substrates-pending": 1,
-              "graph-and-web-tool-agent-exact-backbone-pending": 1
-            },
-            "primary_recommendation": {
-              "zh": "主结果使用开源权重；第二个开源架构验证迁移；商业 API 仅作为可选上界或 Judge。",
-              "en": "Open-weight primary results, second open architecture for transfer, commercial API only as optional ceiling/judge."
-            }
-          }
-        },
         {
           "name": "emerging-niche-policy",
           "status": "pass",
           "duration_seconds": 0.001,
           "summary": {
             "schema_version": "1.0",
-            "generated_at": "2026-08-13T09:05:30+00:00",
+            "generated_at": "2026-08-13T10:19:46+00:00",
             "name": "Emerging-Niche Score",
             "short_name": "ENS",
             "scale": "0-100",
@@ -905,9 +68,60 @@
           }
         },
         {
+          "name": "paper-first-fresh-saturation",
+          "status": "pass",
+          "duration_seconds": 0.002,
+          "summary": {
+            "drafts_reviewed": 41,
+            "survivors": 0,
+            "stopped": 41,
+            "reduction_patterns": 34,
+            "local_validation_authorized": 0,
+            "p0_authorized": 0
+          }
+        },
+        {
+          "name": "paper-first-problem-gate-queue",
+          "status": "pass",
+          "duration_seconds": 0.003,
+          "summary": {
+            "submitted": 0,
+            "audited": 0,
+            "passed_problem_gate": 0,
+            "blocked_problem_gate": 0,
+            "paper_design_eligible": 0,
+            "inbox_errors": 0,
+            "primary_evidence_records": 30,
+            "submitted_by_lane": {
+              "CONTRADICTION": 0,
+              "CONVERGENT_FAILURE": 0,
+              "ASSUMPTION_BREAK": 0,
+              "UNEXPLAINED_BOUNDARY": 0,
+              "OTHER": 0
+            },
+            "passed_by_lane": {
+              "CONTRADICTION": 0,
+              "CONVERGENT_FAILURE": 0,
+              "ASSUMPTION_BREAK": 0,
+              "UNEXPLAINED_BOUNDARY": 0,
+              "OTHER": 0
+            },
+            "blocked_by_lane": {
+              "CONTRADICTION": 0,
+              "CONVERGENT_FAILURE": 0,
+              "ASSUMPTION_BREAK": 0,
+              "UNEXPLAINED_BOUNDARY": 0,
+              "OTHER": 0
+            },
+            "method_authorized": 0,
+            "experiment_authorized": 0,
+            "p0_authorized": 0
+          }
+        },
+        {
           "name": "human-terminal-idea-state",
           "status": "pass",
-          "duration_seconds": 0.009,
+          "duration_seconds": 0.011,
           "summary": {
             "human_parents": 26,
             "p0": 20,
@@ -950,7 +164,7 @@
         {
           "name": "p0-revived-batch-f0",
           "status": "pass",
-          "duration_seconds": 0.026,
+          "duration_seconds": 0.028,
           "summary": {
             "parent_p0": 20,
             "reused_existing_p0": 13,
@@ -964,11 +178,11 @@
         {
           "name": "p0-b10-cpu",
           "status": "pass",
-          "duration_seconds": 7.959,
+          "duration_seconds": 7.965,
           "summary": {
             "schema_version": "1.0",
             "experiment_id": "P0-B10-TYPED-MEMORY-ORDER",
-            "created_at": "2026-08-13T09:05:38+00:00",
+            "created_at": "2026-08-13T10:19:54+00:00",
             "design": {
               "worlds": 4,
               "held_out_combinations": 32,
@@ -1047,10 +261,10 @@
         {
           "name": "p0-a4-composition-cpu",
           "status": "pass",
-          "duration_seconds": 0.004,
+          "duration_seconds": 0.003,
           "summary": {
             "schema_version": "1.0",
-            "generated_at": "2026-08-13T09:05:38+00:00",
+            "generated_at": "2026-08-13T10:19:54+00:00",
             "idea_id": "compositional-update-compatibility",
             "code": "A-4",
             "scientific_role": "CPU held-out-identity and held-out-triple composition P0 with independent programmatic execution truth",
@@ -1138,10 +352,10 @@
         {
           "name": "p0-a5-history-cpu",
           "status": "pass",
-          "duration_seconds": 0.002,
+          "duration_seconds": 0.001,
           "summary": {
             "schema_version": "1.0",
-            "generated_at": "2026-08-13T09:05:38+00:00",
+            "generated_at": "2026-08-13T10:19:54+00:00",
             "idea_id": "lineage-aware-rollback",
             "code": "A-5",
             "scientific_role": "CPU rollback-equivalence P0 on a 40-update typed stream with 12 frozen rollback queries",
@@ -1318,7 +532,7 @@
         {
           "name": "p0-a6-cpu",
           "status": "pass",
-          "duration_seconds": 0.044,
+          "duration_seconds": 0.045,
           "summary": {
             "active-causal": {
               "exact_recovery": 1.0,
@@ -1367,10 +581,10 @@
         {
           "name": "p0-a7-counterfactual-cpu",
           "status": "pass",
-          "duration_seconds": 0.53,
+          "duration_seconds": 0.528,
           "summary": {
             "schema_version": "1.0",
-            "generated_at": "2026-08-13T09:05:38+00:00",
+            "generated_at": "2026-08-13T10:19:54+00:00",
             "idea_id": "counterfactual-evolution-decision-controller",
             "code": "A-7",
             "scientific_role": "CPU same-state four-action P0 with programmatic counterfactual truth; no candidate regeneration",
@@ -1760,7 +974,7 @@
           "duration_seconds": 0.005,
           "summary": {
             "schema_version": "1.0",
-            "generated_at": "2026-08-13T09:05:38+00:00",
+            "generated_at": "2026-08-13T10:19:54+00:00",
             "idea_id": "retrieval-interference-auditor",
             "code": "B-3",
             "scientific_role": "synthetic mechanism screening only; cannot establish that real memory co-retrieval interference exists",
@@ -1851,7 +1065,7 @@
           "duration_seconds": 0.01,
           "summary": {
             "schema_version": "1.0",
-            "generated_at": "2026-08-13T09:05:38+00:00",
+            "generated_at": "2026-08-13T10:19:54+00:00",
             "idea_id": "local-counterexample-memory-repair",
             "code": "B-5",
             "scientific_role": "CPU applicability-gate P0 with frozen predicate vocabulary, old-positive protection, hidden boundaries, and independent programmatic truth",
@@ -2218,10 +1432,10 @@
         {
           "name": "p0-b6-memory-utility-cpu",
           "status": "pass",
-          "duration_seconds": 0.325,
+          "duration_seconds": 0.327,
           "summary": {
             "schema_version": "1.0",
-            "generated_at": "2026-08-13T09:05:38+00:00",
+            "generated_at": "2026-08-13T10:19:55+00:00",
             "idea_id": "memory-half-life",
             "code": "B-6",
             "scientific_role": "CPU longitudinal reuse P0 with frozen 20% activation audit and independent ON/OFF utility truth",
@@ -5152,7 +4366,7 @@
           "duration_seconds": 0.002,
           "summary": {
             "schema_version": "1.0",
-            "generated_at": "2026-08-13T09:05:38+00:00",
+            "generated_at": "2026-08-13T10:19:55+00:00",
             "idea_id": "evaluator-coadaptation-guard",
             "code": "C-2",
             "scientific_role": "CPU 3x3 actor/evaluator anchor P0 with independent external truth",
@@ -5204,7 +4418,7 @@
           "duration_seconds": 0.003,
           "summary": {
             "schema_version": "1.0",
-            "generated_at": "2026-08-13T09:05:38+00:00",
+            "generated_at": "2026-08-13T10:19:55+00:00",
             "idea_id": "counterexample-generating-curriculum",
             "code": "D-1",
             "scientific_role": "CPU verifier-grounded curriculum P0; proposer is frozen and independent hidden boundaries are never used in minimization/selection",
@@ -5385,10 +4599,10 @@
         {
           "name": "p0-e2-workflow-cpu",
           "status": "pass",
-          "duration_seconds": 0.002,
+          "duration_seconds": 0.003,
           "summary": {
             "schema_version": "1.0",
-            "generated_at": "2026-08-13T09:05:38+00:00",
+            "generated_at": "2026-08-13T10:19:55+00:00",
             "idea_id": "workflow-branch-credit",
             "code": "E-2",
             "design": {
@@ -5785,7 +4999,7 @@
           "duration_seconds": 0.004,
           "summary": {
             "schema_version": "1.0",
-            "generated_at": "2026-08-13T09:05:38+00:00",
+            "generated_at": "2026-08-13T10:19:55+00:00",
             "idea_id": "bounded-probe-api-transition-operator",
             "code": "E-3",
             "design": {
@@ -6048,10 +5262,10 @@
         {
           "name": "p0-e4-permission",
           "status": "pass",
-          "duration_seconds": 3.427,
+          "duration_seconds": 3.42,
           "summary": {
             "schema_version": "1.0",
-            "generated_at": "2026-08-13T09:05:42+00:00",
+            "generated_at": "2026-08-13T10:19:58+00:00",
             "idea_id": "interventional-permission-triage-under-ceiling",
             "code": "E-4",
             "design": {
@@ -6098,7 +5312,7 @@
         {
           "name": "p0-offline-qualification",
           "status": "pass",
-          "duration_seconds": 8.045,
+          "duration_seconds": 8.074,
           "summary": {
             "ideas": 16,
             "checks_passed": 50,
@@ -6112,7 +5326,7 @@
         {
           "name": "p0-admission-state",
           "status": "pass",
-          "duration_seconds": 8.197,
+          "duration_seconds": 8.176,
           "summary": {
             "active_p0": 27,
             "admitted": 27,
@@ -6127,7 +5341,7 @@
         {
           "name": "research-system-pre-ai",
           "status": "pass",
-          "duration_seconds": 45.729,
+          "duration_seconds": 45.887,
           "summary": {
             "papers": 334,
             "queries": 26,
@@ -6163,19 +5377,20 @@
             "paper_first_pf2_experiment_blueprint_authorized": false,
             "paper_first_pf357_reviewed": 3,
             "paper_first_pf357_stopped": 3,
-            "paper_first_fresh_drafts_reviewed": 40,
+            "paper_first_fresh_drafts_reviewed": 41,
             "paper_first_fresh_survivors": 0,
-            "paper_first_fresh_stopped": 40,
+            "paper_first_fresh_stopped": 41,
             "paper_first_primary_evidence_status": "READY",
-            "paper_first_primary_evidence_verified": 30,
+            "paper_first_primary_evidence_verified": 32,
             "paper_first_primary_fact_extraction_version": "precision-v2",
+            "paper_first_primary_typed_extraction_version": "typed-v1",
             "paper_first_primary_generation_ready": true,
-            "paper_first_problem_gate_fields": 14,
-            "paper_first_problem_gate_saturation_patterns": 33,
-            "paper_first_problem_generator_status": "GENERATED_ZERO_CANDIDATES",
-            "paper_first_problem_generator_generated": 0,
+            "paper_first_problem_gate_fields": 16,
+            "paper_first_problem_gate_saturation_patterns": 34,
+            "paper_first_problem_generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
+            "paper_first_problem_generator_generated": 2,
             "paper_first_problem_generator_semantic_clear": 0,
-            "paper_first_problem_generator_semantic_blocked": 0,
+            "paper_first_problem_generator_semantic_blocked": 2,
             "paper_first_problem_generator_saturation_entries": 1,
             "paper_first_problem_generator_prior_identical_zero": 0,
             "paper_first_problem_queue_submitted": 0,
@@ -6200,7 +5415,7 @@
             "failure_assets": 6,
             "value_scheduler_candidates": 0,
             "research_replay_passed": 7,
-            "external_systems_reviewed": 25,
+            "external_systems_reviewed": 26,
             "repair_queue": 1,
             "human_terminal_parents": 26,
             "human_terminal_p0": 20,
@@ -6302,26 +5517,26 @@
         {
           "name": "ai-consultation-automation",
           "status": "pass",
-          "duration_seconds": 137.437,
+          "duration_seconds": 107.76,
           "summary": {
             "baseline_initialized": true,
             "baseline_subjects": 61,
             "cases": 4,
             "created_this_cycle": 0,
             "executed_this_cycle": 1,
-            "pending": 2,
+            "pending": 1,
             "partial": 1,
-            "complete": 1,
+            "complete": 2,
             "reviewer_unavailable": 0,
-            "retryable": 2,
+            "retryable": 1,
             "waived_cases": 0,
-            "unresolved_high_risk": 8
+            "unresolved_high_risk": 12
           }
         },
         {
           "name": "research-system-state",
           "status": "pass",
-          "duration_seconds": 45.712,
+          "duration_seconds": 45.894,
           "summary": {
             "papers": 334,
             "queries": 26,
@@ -6357,19 +5572,20 @@
             "paper_first_pf2_experiment_blueprint_authorized": false,
             "paper_first_pf357_reviewed": 3,
             "paper_first_pf357_stopped": 3,
-            "paper_first_fresh_drafts_reviewed": 40,
+            "paper_first_fresh_drafts_reviewed": 41,
             "paper_first_fresh_survivors": 0,
-            "paper_first_fresh_stopped": 40,
+            "paper_first_fresh_stopped": 41,
             "paper_first_primary_evidence_status": "READY",
-            "paper_first_primary_evidence_verified": 30,
+            "paper_first_primary_evidence_verified": 32,
             "paper_first_primary_fact_extraction_version": "precision-v2",
+            "paper_first_primary_typed_extraction_version": "typed-v1",
             "paper_first_primary_generation_ready": true,
-            "paper_first_problem_gate_fields": 14,
-            "paper_first_problem_gate_saturation_patterns": 33,
-            "paper_first_problem_generator_status": "GENERATED_ZERO_CANDIDATES",
-            "paper_first_problem_generator_generated": 0,
+            "paper_first_problem_gate_fields": 16,
+            "paper_first_problem_gate_saturation_patterns": 34,
+            "paper_first_problem_generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
+            "paper_first_problem_generator_generated": 2,
             "paper_first_problem_generator_semantic_clear": 0,
-            "paper_first_problem_generator_semantic_blocked": 0,
+            "paper_first_problem_generator_semantic_blocked": 2,
             "paper_first_problem_generator_saturation_entries": 1,
             "paper_first_problem_generator_prior_identical_zero": 0,
             "paper_first_problem_queue_submitted": 0,
@@ -6394,7 +5610,7 @@
             "failure_assets": 6,
             "value_scheduler_candidates": 0,
             "research_replay_passed": 7,
-            "external_systems_reviewed": 25,
+            "external_systems_reviewed": 26,
             "repair_queue": 1,
             "human_terminal_parents": 26,
             "human_terminal_p0": 20,
@@ -6492,38 +5708,10 @@
             "architecture_temporal_stages": 11,
             "architecture_functional_layers": 6
           }
-        },
-        {
-          "name": "external-research-system-learning-review",
-          "status": "pass",
-          "duration_seconds": 270.213,
-          "summary": {
-            "returncode": 1,
-            "output": "private-data://runs/reviews/research-system-learning/latest.md",
-            "exists": false,
-            "stderr": "--force', '--slug', 'external-research-system-learning', '--timeout', '240s', '--no-notify', '--write-output', 'private-data://runs/reviews/research-system-learning/latest.md', '-p', 'Search official project pages, primary papers, and author repositories for materially new or updated autonomous scientific-research systems. Extract only workflow/control mechanisms that are not superficial agent-role renamings. Compare each mechanism against our current stack: Principle Certificate, Protocol Validity, P0 Economy, eight-gate compiler, Scientific Meta-Trace, Failure Asset Library, information-gain scheduler, AI consultation, research-system replay, and single-writer scientific authority. For each candidate return source, mechanism, failure mode solved, local collision, adopt/merge/watch verdict, cheapest local replay or falsifier, and safety/authority implications. Do not recommend automatic code adoption without a local gap test.']' timed out after 270 seconds\n"
-          }
-        },
-        {
-          "name": "project-web-gpt-repair-review",
-          "status": "pass",
-          "duration_seconds": 124.651,
-          "summary": {
-            "requested": 2,
-            "completed": [
-              {
-                "idea_id": "update-surface-router",
-                "returncode": 0,
-                "output": "private-data://runs/reviews/automatic-repairs/update-surface-router.md",
-                "exists": true,
-                "stderr": ""
-              }
-            ]
-          }
         }
       ],
       "status": "pass",
-      "completed_at": "2026-08-13T09:16:22+00:00"
+      "completed_at": "2026-08-13T10:23:34+00:00"
     }
   },
   "summary": {
@@ -6567,6 +5755,7 @@
     "paper_first_primary_evidence_status": "READY",
     "paper_first_primary_evidence_verified": 32,
     "paper_first_primary_fact_extraction_version": "precision-v2",
+    "paper_first_primary_typed_extraction_version": "typed-v1",
     "paper_first_primary_generation_ready": true,
     "paper_first_problem_gate_fields": 16,
     "paper_first_problem_gate_saturation_patterns": 34,
@@ -6576,9 +5765,9 @@
     "paper_first_problem_generator_semantic_blocked": 2,
     "paper_first_problem_generator_saturation_entries": 1,
     "paper_first_problem_generator_prior_identical_zero": 0,
-    "paper_first_problem_queue_submitted": 2,
+    "paper_first_problem_queue_submitted": 0,
     "paper_first_problem_queue_passed": 0,
-    "paper_first_problem_queue_blocked": 2,
+    "paper_first_problem_queue_blocked": 0,
     "paper_first_post_c2_decision": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
     "paper_first_post_c2_current_formulation": "STOP",
     "paper_first_post_c2_c3_locked": true,
@@ -6598,7 +5787,7 @@
     "failure_assets": 6,
     "value_scheduler_candidates": 0,
     "research_replay_passed": 7,
-    "external_systems_reviewed": 25,
+    "external_systems_reviewed": 26,
     "repair_queue": 1,
     "human_terminal_parents": 26,
     "human_terminal_p0": 20,
@@ -6694,8 +5883,7 @@
     "mem_xfer_support_analysis_status": "support_enriched_analysis_pending",
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 11,
-    "architecture_functional_layers": 6,
-    "paper_first_primary_typed_extraction_version": "typed-v1"
+    "architecture_functional_layers": 6
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -20689,7 +19877,7 @@
   },
   "lineage": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:16+00:00",
+    "generated_at": "2026-08-13T10:24:29+00:00",
     "summary": {
       "nodes": 278,
       "edges": 258,
@@ -20719,7 +19907,7 @@
           "zh": "受约束持续进化",
           "en": "Constrained continual evolution"
         },
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "track-root:credit",
@@ -20729,7 +19917,7 @@
           "zh": "失败归因与经验准入",
           "en": "Failure credit and experience admission"
         },
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "track-root:memory",
@@ -20739,7 +19927,7 @@
           "zh": "记忆与技能巩固",
           "en": "Memory and skill consolidation"
         },
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "track-root:correction",
@@ -20749,7 +19937,7 @@
           "zh": "自纠正与策略内化",
           "en": "Self-correction and policy internalization"
         },
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "track-root:curriculum",
@@ -20759,7 +19947,7 @@
           "zh": "课程与任务进化",
           "en": "Curriculum and task evolution"
         },
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "track-root:workflow",
@@ -20769,7 +19957,7 @@
           "zh": "工作流与更新表面搜索",
           "en": "Workflow and update-surface search"
         },
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "track-root:evaluator",
@@ -20779,7 +19967,7 @@
           "zh": "奖励与评价器进化",
           "en": "Reward and evaluator evolution"
         },
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "track-root:world",
@@ -20789,7 +19977,7 @@
           "zh": "世界模型与具身持续适应",
           "en": "World models and embodied adaptation"
         },
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "regression-gated-self-evolution",
@@ -20811,7 +19999,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:regression-gated-self-evolution:1",
@@ -20919,7 +20107,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:contradiction-preserving-consolidation:1",
@@ -21027,7 +20215,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:compositional-update-compatibility:1",
@@ -21135,7 +20323,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:update-trust-region:1",
@@ -21243,7 +20431,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:retrieval-interference-auditor:1",
@@ -21351,7 +20539,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:irreversible-action-counterfactuals:1",
@@ -21458,7 +20646,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:self-label-confidence-flow:1",
@@ -21566,7 +20754,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:evaluator-coadaptation-guard:1",
@@ -21674,7 +20862,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:recovery-conditioned-experience:1",
@@ -21782,7 +20970,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:counterexample-generating-curriculum:1",
@@ -21891,7 +21079,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:workflow-generalization-certificate:1",
@@ -21999,7 +21187,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:budgeted-evolution-controller:1",
@@ -22107,7 +21295,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:lineage-aware-rollback:1",
@@ -22215,7 +21403,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:failure-frontier-curriculum:1",
@@ -22323,7 +21511,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:causally-verified-experience-admission:1",
@@ -22431,7 +21619,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:reward-invariance-audit:1",
@@ -22539,7 +21727,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:local-counterexample-memory-repair:1",
@@ -22647,7 +21835,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:self-correction-collapse-detector:1",
@@ -22755,7 +21943,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:intervention-validated-self-correction:1",
@@ -22863,7 +22051,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:workflow-branch-credit:1",
@@ -22971,7 +22159,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:world-model-error-gated-learning:1",
@@ -23079,7 +22267,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:memory-half-life:1",
@@ -23187,7 +22375,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:correction-policy-credit:1",
@@ -23295,7 +22483,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:curriculum-drift-controller:1",
@@ -23404,7 +22592,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:outcome-equivalent-trajectory-contrast:1",
@@ -23512,7 +22700,7 @@
         "review_count": 7,
         "external_review_count": 1,
         "blocking_reasons": [],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "review:applicability-bounded-lessons:1",
@@ -23622,7 +22810,7 @@
         "blocking_reasons": [
           "Module-level intervention labels may require expensive environment-specific instrumentation."
         ],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "programmatic-review:failure-localization-before-reflection:1",
@@ -23723,7 +22911,7 @@
         "blocking_reasons": [
           "Cross-family disagreement may reflect formatting and style rather than distinct error mechanisms."
         ],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "programmatic-review:heterogeneous-critic-disagreement:1",
@@ -23824,7 +23012,7 @@
         "blocking_reasons": [
           "Oracle labels require executing all update surfaces, making supervision close to exhaustive search."
         ],
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "programmatic-review:update-surface-router:1",
@@ -23908,84 +23096,84 @@
         "kind": "early-rejected",
         "title": "更大模型做更多反思",
         "reason": "只增加推理计算，不能证明持久学习。",
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "early-rejected:268",
         "kind": "early-rejected",
         "title": "全参数训练 70B 自进化 Agent",
         "reason": "超出低资源约束且机制难归因。",
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "early-rejected:269",
         "kind": "early-rejected",
         "title": "只在自生成任务上提升",
         "reason": "缺少圈外泛化。",
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "early-rejected:270",
         "kind": "early-rejected",
         "title": "仅商业 API 闭环",
         "reason": "不可复现且依赖供应商快照。",
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "early-rejected:271",
         "kind": "early-rejected",
         "title": "固定多轮 Self-Refine",
         "reason": "属于更多采样，不是进化机制。",
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "early-rejected:272",
         "kind": "early-rejected",
         "title": "同模型 Actor 与 Judge 自我确认",
         "reason": "反馈完整性无法独立验证。",
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "early-rejected:273",
         "kind": "early-rejected",
         "title": "只报告最佳 checkpoint",
         "reason": "掩盖多轮回退与坍塌。",
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "early-rejected:274",
         "kind": "early-rejected",
         "title": "从头训练世界模型和策略",
         "reason": "资源高且无法分离贡献。",
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "early-rejected:275",
         "kind": "early-rejected",
         "title": "单一视觉 benchmark 技巧",
         "reason": "保留为 CVPR 后续，不作为 ICLR 主候选。",
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "early-rejected:276",
         "kind": "early-rejected",
         "title": "只做平均准确率的记忆消融",
         "reason": "无法识别有害条目和负迁移。",
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "early-rejected:277",
         "kind": "early-rejected",
         "title": "无隔离划分的在线适应",
         "reason": "无法排除测试泄漏。",
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       },
       {
         "id": "early-rejected:278",
         "kind": "early-rejected",
         "title": "泛化 Agent 自进化综述",
         "reason": "不是方法或可证伪 benchmark 贡献。",
-        "created_at": "2026-08-13T09:17:15+00:00"
+        "created_at": "2026-08-13T10:24:27+00:00"
       }
     ],
     "edges": [
@@ -25756,7 +24944,7 @@
   },
   "pre_gpu_candidate_gates": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:16+00:00",
+    "generated_at": "2026-08-13T10:24:29+00:00",
     "policy": {
       "gate_order": [
         "offline",
@@ -26227,7 +25415,7 @@
     "cards": [
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-13T09:17:16+00:00",
+        "compiled_at": "2026-08-13T10:24:29+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -26954,7 +26142,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-13T09:17:16+00:00",
+        "compiled_at": "2026-08-13T10:24:29+00:00",
         "idea_id": "update-trust-region",
         "phase": "P0",
         "expected_runtime": {
@@ -27689,7 +26877,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-13T09:17:16+00:00",
+        "compiled_at": "2026-08-13T10:24:29+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0-screening",
         "expected_runtime": {
@@ -28433,7 +27621,7 @@
       },
       {
         "schema_version": "2.2",
-        "compiled_at": "2026-08-13T09:17:16+00:00",
+        "compiled_at": "2026-08-13T10:24:29+00:00",
         "idea_id": "budgeted-evolution-controller",
         "phase": "P0",
         "expected_runtime": {
@@ -29221,7 +28409,7 @@
   },
   "paper_first_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:16+00:00",
+    "generated_at": "2026-08-13T10:24:29+00:00",
     "review_id": "paper-first-pf1-pf2-pf4-pf6-design-20260812",
     "target_venue": "ICLR",
     "policy": {
@@ -29499,7 +28687,7 @@
   },
   "paper_first_pf1_problem_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:16+00:00",
+    "generated_at": "2026-08-13T10:24:29+00:00",
     "incubation_id": "PF-1",
     "paper_id": "evolvability-debt-under-persistent-agent-updates",
     "prior_design_verdict": "REVISE_PAPER_PROBLEM",
@@ -29637,7 +28825,7 @@
   },
   "paper_first_pf2_method_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:16+00:00",
+    "generated_at": "2026-08-13T10:24:29+00:00",
     "paper_id": "repair-surface-identifiability-under-persistent-agent-updates",
     "incubation_id": "PF-2",
     "reviewed_method": "Repair-Surface Identification Certificate",
@@ -29708,7 +28896,7 @@
   },
   "paper_first_pf357_problem_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:16+00:00",
+    "generated_at": "2026-08-13T10:24:29+00:00",
     "review_id": "paper-first-pf357-final-20260813",
     "policy": {
       "domain_transfer_is_not_novelty": true,
@@ -29853,7 +29041,7 @@
   },
   "paper_first_fresh_saturation": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T10:03:46+00:00",
+    "generated_at": "2026-08-13T10:24:29+00:00",
     "review_id": "fresh-problem-saturation-20260813-r2",
     "policy": {
       "schema_version": "1.1",
@@ -31593,14 +30781,14 @@
   },
   "paper_first_problem_gate_queue": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-13T10:03:46+00:00",
+    "generated_at": "2026-08-13T10:24:27+00:00",
     "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
     "source_inboxes": [
       "private-data://paper-first-problem-discovery/candidate-inbox.json",
       "private-data://paper-first-problem-discovery/auto-candidate-inbox.json"
     ],
     "primary_evidence_pool": "private-data://paper-first-problem-discovery/primary-evidence-pool.json",
-    "primary_evidence_records": 32,
+    "primary_evidence_records": 30,
     "source_exists": true,
     "policy": {
       "candidate_inbox_is_not_authority": true,
@@ -31619,18 +30807,18 @@
       "automatic_p0_authority": false
     },
     "summary": {
-      "submitted": 2,
-      "audited": 2,
+      "submitted": 0,
+      "audited": 0,
       "passed_problem_gate": 0,
-      "blocked_problem_gate": 2,
+      "blocked_problem_gate": 0,
       "paper_design_eligible": 0,
       "inbox_errors": 0,
-      "primary_evidence_records": 32,
+      "primary_evidence_records": 30,
       "submitted_by_lane": {
         "CONTRADICTION": 0,
         "CONVERGENT_FAILURE": 0,
-        "ASSUMPTION_BREAK": 1,
-        "UNEXPLAINED_BOUNDARY": 1,
+        "ASSUMPTION_BREAK": 0,
+        "UNEXPLAINED_BOUNDARY": 0,
         "OTHER": 0
       },
       "passed_by_lane": {
@@ -31643,8 +30831,8 @@
       "blocked_by_lane": {
         "CONTRADICTION": 0,
         "CONVERGENT_FAILURE": 0,
-        "ASSUMPTION_BREAK": 1,
-        "UNEXPLAINED_BOUNDARY": 1,
+        "ASSUMPTION_BREAK": 0,
+        "UNEXPLAINED_BOUNDARY": 0,
         "OTHER": 0
       },
       "method_authorized": 0,
@@ -31653,576 +30841,13 @@
     },
     "inbox_errors": [],
     "passed": [],
-    "blocked": [
-      {
-        "candidate_id": "AUTO-1",
-        "title": "Non-monotone memory coverage under added stored events",
-        "discovery_lane": "ASSUMPTION_BREAK",
-        "status": "PROBLEM_GATE_BLOCKED",
-        "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
-        "blockers": [
-          "saturation-pattern-match:procedural-memory-nonmonotonicity",
-          "semantic-reduction-review-block"
-        ]
-      },
-      {
-        "candidate_id": "AUTO-2",
-        "title": "Skill-harness gains vanish at near-zero recoverable execution defects",
-        "discovery_lane": "UNEXPLAINED_BOUNDARY",
-        "status": "PROBLEM_GATE_BLOCKED",
-        "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
-        "blockers": [
-          "saturation-pattern-match:harness-update-scope-heterogeneity",
-          "semantic-reduction-review-block",
-          "source-claim-grounding-failed",
-          "source-claim-grounding-incomplete"
-        ]
-      }
-    ],
-    "audited": [
-      {
-        "candidate_id": "AUTO-1",
-        "title": "Non-monotone memory coverage under added stored events",
-        "discovery_lane": "ASSUMPTION_BREAK",
-        "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
-        "candidate": {
-          "candidate_id": "AUTO-1",
-          "title": "Non-monotone memory coverage under added stored events",
-          "discovery_lane": "ASSUMPTION_BREAK",
-          "empirical_evidence": {
-            "source_a": {
-              "ref": "arXiv:2608.11654",
-              "title": "Towards a Formal Definition of Agent Memory: Basis, Span, Optimality, and the Sequential Memory Problem",
-              "claim": "The formal memory framework assumes monotonicity: more memory is never worse, so coverage is non-decreasing in the stored set.",
-              "evidence_role": "OPERATIONAL_ASSUMPTION",
-              "primary_source": true,
-              "primary_url": "https://arxiv.org/abs/2608.11654",
-              "source_sha256": "aa1d1d148bbd18b7a163315b870e74499a27878bdaf3c49fbad3d312827c140a"
-            },
-            "source_b": {
-              "ref": "arXiv:2608.10494",
-              "title": "GeoForge: Non-Parametric Self-Evolving Agents for Earth-Observation Reasoning",
-              "claim": "In GeoForge sensitivity analysis, retrieving a small number of high-quality skills achieves the best performance, while excessive retrieval slightly degrades trajectory quality due to redundant guidance.",
-              "evidence_role": "EMPIRICAL_FACT",
-              "primary_source": true,
-              "primary_url": "https://arxiv.org/abs/2608.10494",
-              "source_sha256": "4deacf27a61f286ea2e3f3b40a44ce9a5bfb51b1f5db568f4f243b104213c595"
-            },
-            "relation": "The operational assumption that adding stored memory cannot reduce coverage is violated in a scope-linked agent-memory setting where additional retrieved skill guidance is part of the stored/retrieved memory used to answer or execute tasks."
-          },
-          "lane_evidence": {
-            "assumption": "Coverage is non-decreasing in the stored event set under the generation-operator model.",
-            "violation": "Adding more retrieved skill memory beyond a small high-quality subset degrades trajectory quality because redundant guidance changes execution.",
-            "scope_link": "Both concern agent memory/retrieval used to guide task execution; the violation occurs in the same operational role of stored procedural guidance, not an unrelated domain."
-          },
-          "irreducible_object": "Coverage response function C(S ∪ {m}) < C(S) for a memory item m that is individually relevant but introduces a conflicting or redundant procedural entailment under the generation operator.",
-          "mature_theory_baselines": [
-            {
-              "name": "Monotone set-cover / answerability basis",
-              "same_information_projection": "Treat each memory item as adding covered queries only, so union cannot remove coverage.",
-              "reduction_test": "It predicts no decrease when m is added; it cannot represent m causing an existing covered query to become uncovered unless the generation operator is allowed to retract."
-            },
-            {
-              "name": "Nonmonotonic reasoning / belief revision",
-              "same_information_projection": "Model added guidance as a defeasible rule that can suppress a prior conclusion when conflict information is present.",
-              "reduction_test": "It can express retraction from explicit conflict, but the observed degradation is attributed to redundant guidance rather than a represented contradiction or priority relation."
-            }
-          ],
-          "same_information_nonreducibility": {
-            "claim": "The object is not merely generic nonmonotonicity because the empirical failure occurs without an explicitly encoded conflict; redundancy itself changes which generated procedure covers the task.",
-            "why_each_baseline_cannot_express_prediction": "Monotone coverage forbids the sign reversal by construction; belief revision requires conflict or defeat information that is absent from the supplied redundant-guidance observation."
-          },
-          "exact_prediction": "For a fixed query/task and fixed base memory S, there exists an added relevant skill/experience m such that answerability or successful trajectory coverage decreases, even though m contains no false claim and no explicit contradiction with S.",
-          "strongest_same_information_baseline": "Nonmonotonic reasoning with priority-ordered rules.",
-          "domain_transfer_audit": {
-            "mature_source_domain": "Knowledge representation and belief revision",
-            "mature_object": "Defeasible inference and contraction/revision operators",
-            "why_not_domain_transfer": "The candidate is specific to memory coverage under a generation operator whose stated assumption is monotonicity; the anomaly is that redundancy, not represented conflict, produces coverage loss."
-          },
-          "saturation_scan": {
-            "checked": true,
-            "matched_patterns": [
-              "procedural-memory-nonmonotonicity"
-            ],
-            "rejected_patterns": [
-              {
-                "key": "procedural-memory-nonmonotonicity",
-                "reason": "considered and rejected because the evidence does not supply same-information conflict that belief revision can use"
-              }
-            ],
-            "invalid_entries": []
-          },
-          "semantic_reduction_review": {
-            "reviewed": true,
-            "block_only": true,
-            "verdict": "BLOCK",
-            "reviewer_model": "glm-5-2-260617",
-            "reviewer_requested_model": "glm-5.2",
-            "generator_resolved_model": "doubao-seed-evolving",
-            "independent_resolved_model": true,
-            "raw_sha256": "2caed5a7eb654058f0f180bf92757290a216f170c995eaa7c60a389faae72240",
-            "source_claims_grounded": true,
-            "source_claim_grounding": {
-              "source_a": {
-                "ref": "arXiv:2608.11654",
-                "supported": true,
-                "evidence_role": "OPERATIONAL_ASSUMPTION",
-                "evidence_kind": "operational_assumption",
-                "evidence_source": "fulltext",
-                "declared_evidence_source": "fulltext",
-                "evidence_excerpt": "We assume \\newtermmonotonicity (Assumption 11): more memory is never worse, so coverage is non-decreasing in the stored set.",
-                "excerpt_verified": true,
-                "grounded": true
-              },
-              "source_b": {
-                "ref": "arXiv:2608.10494",
-                "supported": true,
-                "evidence_role": "EMPIRICAL_FACT",
-                "evidence_kind": "measured_failure",
-                "evidence_source": "fulltext",
-                "declared_evidence_source": "fulltext",
-                "evidence_excerpt": "Retrieving a small number of high-quality skills achieves the best performance, while excessive retrieval slightly degrades trajectory quality due to redundant guidance.",
-                "excerpt_verified": true,
-                "grounded": true
-              }
-            },
-            "lane_contract_verified": true,
-            "lane_contract_reason": "The lane contract is verified: Source A provides an operational assumption (monotonicity of memory coverage) and Source B provides empirical evidence (excessive retrieval degrades trajectory quality) that violates it in a scope-linked agent-memory setting.",
-            "matched_patterns": [
-              "procedural-memory-nonmonotonicity"
-            ],
-            "strongest_reduction": "procedural-memory-nonmonotonicity (nonmonotonic / defeasible logic, belief revision / AGM-style belief change, rule-conflict and priority semantics)",
-            "reason": "The candidate attempts to bypass the 'procedural-memory-nonmonotonicity' ledger veto by claiming redundancy without explicit conflict, but ordinary belief revision / nonmonotonic logic fully captures retraction or suppression of correct behavior when adding a relevant memory, skill, or procedural rule, even under redundancy or noise. The observed degradation from excessive retrieval is a standard utilization/interference bottleneck, easily expressible by generic nonmonotonic reasoning or constraint conflict under the same information.",
-            "authority": false
-          },
-          "cheapest_problem_falsifier": "Construct a controlled memory set S and added item m from GeoForge-like skill retrievals where m is redundant but non-contradictory; show that task success/coverage never decreases when m is added under matched model, task, and retrieval budget.",
-          "endpoint_headroom_requirement": "The problem remains open only if the decrease survives matched token/context controls and cannot be reproduced by adding an explicit conflict marker or priority ordering to the memory."
-        },
-        "audit": {
-          "schema_version": "2.0",
-          "candidate_id": "AUTO-1",
-          "discovery_lane": "ASSUMPTION_BREAK",
-          "passed": false,
-          "status": "PROBLEM_GATE_BLOCKED",
-          "blockers": [
-            "saturation-pattern-match:procedural-memory-nonmonotonicity",
-            "semantic-reduction-review-block"
-          ],
-          "checks": [
-            {
-              "key": "field:candidate_id",
-              "pass": true
-            },
-            {
-              "key": "field:title",
-              "pass": true
-            },
-            {
-              "key": "field:discovery_lane",
-              "pass": true
-            },
-            {
-              "key": "field:empirical_evidence",
-              "pass": true
-            },
-            {
-              "key": "field:lane_evidence",
-              "pass": true
-            },
-            {
-              "key": "field:irreducible_object",
-              "pass": true
-            },
-            {
-              "key": "field:mature_theory_baselines",
-              "pass": true
-            },
-            {
-              "key": "field:same_information_nonreducibility",
-              "pass": true
-            },
-            {
-              "key": "field:exact_prediction",
-              "pass": true
-            },
-            {
-              "key": "field:strongest_same_information_baseline",
-              "pass": true
-            },
-            {
-              "key": "field:domain_transfer_audit",
-              "pass": true
-            },
-            {
-              "key": "field:saturation_scan",
-              "pass": true
-            },
-            {
-              "key": "field:cheapest_problem_falsifier",
-              "pass": true
-            },
-            {
-              "key": "field:endpoint_headroom_requirement",
-              "pass": true
-            },
-            {
-              "key": "field:semantic_reduction_review",
-              "pass": true
-            },
-            {
-              "key": "field:authority",
-              "pass": true
-            },
-            {
-              "key": "discovery-lane-contract",
-              "pass": true,
-              "lane": "ASSUMPTION_BREAK"
-            },
-            {
-              "key": "primary-source-1",
-              "pass": true,
-              "role": "OPERATIONAL_ASSUMPTION"
-            },
-            {
-              "key": "primary-source-2",
-              "pass": true,
-              "role": "EMPIRICAL_FACT"
-            }
-          ],
-          "policy": {
-            "schema_version": "2.0",
-            "multi_lane_discovery_required": true,
-            "contradiction_first_required": false,
-            "contradiction_lane_retained": true,
-            "allowed_discovery_lanes": [
-              "CONTRADICTION",
-              "CONVERGENT_FAILURE",
-              "ASSUMPTION_BREAK",
-              "UNEXPLAINED_BOUNDARY"
-            ],
-            "forbidden_discovery_lanes": [
-              "MISSING_CELL",
-              "SHARED_LIMITATION",
-              "PURE_TOPIC_BRAINSTORM"
-            ],
-            "lane_specific_machine_evidence_contract_required": true,
-            "two_primary_source_evidence_items_required": true,
-            "shared_limitation_without_empirical_failure_forbidden": true,
-            "pure_topic_brainstorm_forbidden": true,
-            "open_world_missing_cell_claim_forbidden": true,
-            "two_mature_theory_baselines_required": true,
-            "same_information_nonreducibility_required": true,
-            "domain_transfer_veto_required": true,
-            "saturation_map_check_required": true,
-            "problem_falsifier_required_before_method_design": true,
-            "endpoint_headroom_required_before_terminal_interpretation": true,
-            "independent_reviewer_must_verify_lane_contract": true,
-            "no_lane_specific_downstream_relaxation": true,
-            "ai_generation_is_advisory_only": true,
-            "zero_survivors_is_valid": true,
-            "method_design_authorized_by_problem_gate": false,
-            "local_validation_authorized_by_problem_gate": false,
-            "p0_authorized_by_problem_gate": false,
-            "gpu_authorized_by_problem_gate": false
-          },
-          "authority": {
-            "paper_design_eligible_for_human_review": false,
-            "method_design": false,
-            "experiment_blueprint": false,
-            "local_validation": false,
-            "p0": false,
-            "gpu": false,
-            "full_experiment": false
-          }
-        },
-        "paper_design_eligible": false,
-        "authority": {
-          "method_design": false,
-          "experiment_blueprint": false,
-          "local_validation": false,
-          "p0": false,
-          "gpu": false,
-          "full_experiment": false
-        }
-      },
-      {
-        "candidate_id": "AUTO-2",
-        "title": "Skill-harness gains vanish at near-zero recoverable execution defects",
-        "discovery_lane": "UNEXPLAINED_BOUNDARY",
-        "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
-        "candidate": {
-          "candidate_id": "AUTO-2",
-          "title": "Skill-harness gains vanish at near-zero recoverable execution defects",
-          "discovery_lane": "UNEXPLAINED_BOUNDARY",
-          "empirical_evidence": {
-            "source_a": {
-              "ref": "arXiv:2608.10178",
-              "title": "One Recipe, Many Harnesses: What Self-Evolution Encodes Across Languages and Models",
-              "claim": "Across languages and models, self-evolved harness gains compensate recoverable execution defects: where defect mass is near zero, gain is near zero; a harness closes the gap between what a policy can do and what it does.",
-              "evidence_role": "EMPIRICAL_FACT",
-              "primary_source": true,
-              "primary_url": "https://arxiv.org/abs/2608.10178",
-              "source_sha256": "2314ffd6b08b20fc687eb99c4e84d82acb0a18763cf6ef0daa3ff085b06180d1"
-            },
-            "source_b": {
-              "ref": "arXiv:2608.08466",
-              "title": "Hierarchical Self-Improvement: A Framework for Task-Specific Evolvable Agent Harnesses",
-              "claim": "HSI reports harness-benefit as non-monotonic across backbone capability: mid-tier models benefit most, strong-tier models hit a ceiling, and weak-tier models benefit least due to low skill-load rates.",
-              "evidence_role": "EMPIRICAL_FACT",
-              "primary_source": true,
-              "primary_url": "https://arxiv.org/abs/2608.08466",
-              "source_sha256": "7a5a4581148c989a7837a8bb139975e8f61f80d03676539d508b0d4c5d281dd4"
-            },
-            "relation": "Both measure harness improvement as a function of the same underlying phenomenon—the gap between a frozen policy's latent capability and its observed execution—but identify adjacent regimes: recoverable-defect compensation and a strong-model ceiling/weak-model non-activation boundary."
-          },
-          "lane_evidence": {
-            "shared_measurement": "Harness-induced task-performance gain for a frozen base policy under evolved external guidance.",
-            "boundary_observation": "When recoverable execution-defect mass is near zero, evolved harness gain is near zero; strong-tier models also show low gain due to a ceiling.",
-            "adjacent_regime": "Mid-tier models show large harness gains, while weak-tier models show low gains because skill-load rates are low.",
-            "unexplained_transition": "The transition from large compensation gains to zero gains is not explained by a single scalar defect mass: weak models have defects but cannot load/use skills, whereas strong models can use skills but have little recoverable defect left."
-          },
-          "irreducible_object": "Capability-gap activation surface G(π, H) = latent-capacity gap × harness-following activation, with a non-monotone boundary separating non-activated defects, compensable defects, and saturated defects.",
-          "mature_theory_baselines": [
-            {
-              "name": "Treatment effect / CATE heterogeneity",
-              "same_information_projection": "View harness benefit as an effect modified by model tier, defect mass, and skill-load rate.",
-              "reduction_test": "It can estimate conditional gains but does not predict the structural three-regime boundary from the interaction of latent capability and activation."
-            },
-            {
-              "name": "Compensation-layer / scaffold theory",
-              "same_information_projection": "Treat the harness as compensating execution defects until the base policy already performs the behavior.",
-              "reduction_test": "It predicts low gains when defects are absent but does not by itself predict low gains for weak models with defects because activation fails."
-            }
-          ],
-          "same_information_nonreducibility": {
-            "claim": "The irreducible object is the joint activation-defect boundary, not a generic effect modifier or generic scaffold limitation.",
-            "why_each_baseline_cannot_express_prediction": "CATE can fit the observed interaction after the fact but does not identify when defect mass is present yet non-compensable; compensation theory explains the strong-model ceiling but not the weak-model non-activation regime under the same defect-gap construct."
-          },
-          "exact_prediction": "For frozen policies ordered by latent capability, harness gain is zero in two separated regimes—low activation despite high defect mass and low residual defect mass despite high activation—and positive only where both activation and recoverable defect mass exceed nonzero thresholds.",
-          "strongest_same_information_baseline": "A two-factor CATE model with defect mass and skill-load rate as covariates.",
-          "domain_transfer_audit": {
-            "mature_source_domain": "Applied causal inference and educational scaffolding",
-            "mature_object": "Heterogeneous treatment effects and zone of proximal development / scaffolding",
-            "why_not_domain_transfer": "The candidate targets a measurable agent-harness boundary where the same evolved artifact is applied across frozen policies; the novel claim is the two-sided zero-gain boundary under a shared defect-activation measurement."
-          },
-          "saturation_scan": {
-            "checked": true,
-            "matched_patterns": [
-              "harness-update-scope-heterogeneity"
-            ],
-            "rejected_patterns": [
-              {
-                "key": "harness-update-scope-heterogeneity",
-                "reason": "considered and rejected because the candidate is not merely a CATE target; it predicts a non-monotone two-zero-regime boundary"
-              },
-              {
-                "key": "model-scaffold-enactability",
-                "reason": "considered and rejected because the weak-model failure is paired with a distinct strong-model saturation boundary under the same measurement"
-              }
-            ],
-            "invalid_entries": []
-          },
-          "semantic_reduction_review": {
-            "reviewed": true,
-            "block_only": true,
-            "verdict": "BLOCK",
-            "reviewer_model": "glm-5-2-260617",
-            "reviewer_requested_model": "glm-5.2",
-            "generator_resolved_model": "doubao-seed-evolving",
-            "independent_resolved_model": true,
-            "raw_sha256": "2caed5a7eb654058f0f180bf92757290a216f170c995eaa7c60a389faae72240",
-            "source_claims_grounded": false,
-            "source_claim_grounding": {
-              "source_a": {
-                "ref": "arXiv:2608.10178",
-                "supported": true,
-                "evidence_role": "EMPIRICAL_FACT",
-                "evidence_kind": "abstract",
-                "evidence_source": "abstract",
-                "declared_evidence_source": "fulltext",
-                "evidence_excerpt": "Gains compensate recoverable execution defects, where defect mass is near zero, and gain is near zero; which defect dominates is cell-specific.",
-                "excerpt_verified": false,
-                "grounded": false
-              },
-              "source_b": {
-                "ref": "arXiv:2608.08466",
-                "supported": true,
-                "evidence_role": "EMPIRICAL_FACT",
-                "evidence_kind": "empirical_fact",
-                "evidence_source": "fulltext",
-                "declared_evidence_source": "fulltext",
-                "evidence_excerpt": "harness-benefit is non-monotonic, with mid-tier models benefiting most (+19.3+19.3pp), strong-tier hitting ceiling (+2.6+2.6pp), and weak-tier benefiting least",
-                "excerpt_verified": true,
-                "grounded": true
-              }
-            },
-            "lane_contract_verified": true,
-            "lane_contract_reason": "The lane contract is verified: Source A and Source B provide empirical facts establishing an anomalous boundary (zero gain at near-zero defect mass) and adjacent expected regimes (mid-tier vs weak-tier gains) for the same measured phenomenon (harness-induced task-performance gain), targeting the unexplained transition.",
-            "matched_patterns": [
-              "harness-update-scope-heterogeneity"
-            ],
-            "strongest_reduction": "harness-update-scope-heterogeneity (conditional average treatment effects / effect heterogeneity, invariant causal prediction / invariant risk minimization, domain generalization, software configuration scoping)",
-            "reason": "The candidate attempts to escape the 'harness-update-scope-heterogeneity' veto by framing the interaction as a novel 'joint activation-defect boundary.' However, task-, pathology-, executor-, or trace-conditioned harness validity is explicitly not a new Agent object when the candidate condition is an effect modifier. The non-monotone two-regime boundary is perfectly expressible under the same information as a Conditional Average Treatment Effect (CATE) with defect mass and skill-load rate as covariates.",
-            "authority": false
-          },
-          "cheapest_problem_falsifier": "Show that a single monotone function of recoverable defect mass or a single monotone function of skill-load rate predicts harness gains across weak, mid, and strong models without requiring their interaction.",
-          "endpoint_headroom_requirement": "The problem survives only if the two zero-gain regimes are quantitatively distinguishable and the positive region requires both factors under matched harness, task, and budget conditions."
-        },
-        "audit": {
-          "schema_version": "2.0",
-          "candidate_id": "AUTO-2",
-          "discovery_lane": "UNEXPLAINED_BOUNDARY",
-          "passed": false,
-          "status": "PROBLEM_GATE_BLOCKED",
-          "blockers": [
-            "saturation-pattern-match:harness-update-scope-heterogeneity",
-            "semantic-reduction-review-block",
-            "source-claim-grounding-failed",
-            "source-claim-grounding-incomplete"
-          ],
-          "checks": [
-            {
-              "key": "field:candidate_id",
-              "pass": true
-            },
-            {
-              "key": "field:title",
-              "pass": true
-            },
-            {
-              "key": "field:discovery_lane",
-              "pass": true
-            },
-            {
-              "key": "field:empirical_evidence",
-              "pass": true
-            },
-            {
-              "key": "field:lane_evidence",
-              "pass": true
-            },
-            {
-              "key": "field:irreducible_object",
-              "pass": true
-            },
-            {
-              "key": "field:mature_theory_baselines",
-              "pass": true
-            },
-            {
-              "key": "field:same_information_nonreducibility",
-              "pass": true
-            },
-            {
-              "key": "field:exact_prediction",
-              "pass": true
-            },
-            {
-              "key": "field:strongest_same_information_baseline",
-              "pass": true
-            },
-            {
-              "key": "field:domain_transfer_audit",
-              "pass": true
-            },
-            {
-              "key": "field:saturation_scan",
-              "pass": true
-            },
-            {
-              "key": "field:cheapest_problem_falsifier",
-              "pass": true
-            },
-            {
-              "key": "field:endpoint_headroom_requirement",
-              "pass": true
-            },
-            {
-              "key": "field:semantic_reduction_review",
-              "pass": true
-            },
-            {
-              "key": "field:authority",
-              "pass": true
-            },
-            {
-              "key": "discovery-lane-contract",
-              "pass": true,
-              "lane": "UNEXPLAINED_BOUNDARY"
-            },
-            {
-              "key": "primary-source-1",
-              "pass": true,
-              "role": "EMPIRICAL_FACT"
-            },
-            {
-              "key": "primary-source-2",
-              "pass": true,
-              "role": "EMPIRICAL_FACT"
-            }
-          ],
-          "policy": {
-            "schema_version": "2.0",
-            "multi_lane_discovery_required": true,
-            "contradiction_first_required": false,
-            "contradiction_lane_retained": true,
-            "allowed_discovery_lanes": [
-              "CONTRADICTION",
-              "CONVERGENT_FAILURE",
-              "ASSUMPTION_BREAK",
-              "UNEXPLAINED_BOUNDARY"
-            ],
-            "forbidden_discovery_lanes": [
-              "MISSING_CELL",
-              "SHARED_LIMITATION",
-              "PURE_TOPIC_BRAINSTORM"
-            ],
-            "lane_specific_machine_evidence_contract_required": true,
-            "two_primary_source_evidence_items_required": true,
-            "shared_limitation_without_empirical_failure_forbidden": true,
-            "pure_topic_brainstorm_forbidden": true,
-            "open_world_missing_cell_claim_forbidden": true,
-            "two_mature_theory_baselines_required": true,
-            "same_information_nonreducibility_required": true,
-            "domain_transfer_veto_required": true,
-            "saturation_map_check_required": true,
-            "problem_falsifier_required_before_method_design": true,
-            "endpoint_headroom_required_before_terminal_interpretation": true,
-            "independent_reviewer_must_verify_lane_contract": true,
-            "no_lane_specific_downstream_relaxation": true,
-            "ai_generation_is_advisory_only": true,
-            "zero_survivors_is_valid": true,
-            "method_design_authorized_by_problem_gate": false,
-            "local_validation_authorized_by_problem_gate": false,
-            "p0_authorized_by_problem_gate": false,
-            "gpu_authorized_by_problem_gate": false
-          },
-          "authority": {
-            "paper_design_eligible_for_human_review": false,
-            "method_design": false,
-            "experiment_blueprint": false,
-            "local_validation": false,
-            "p0": false,
-            "gpu": false,
-            "full_experiment": false
-          }
-        },
-        "paper_design_eligible": false,
-        "authority": {
-          "method_design": false,
-          "experiment_blueprint": false,
-          "local_validation": false,
-          "p0": false,
-          "gpu": false,
-          "full_experiment": false
-        }
-      }
-    ],
+    "blocked": [],
+    "audited": [],
     "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry."
   },
   "paper_first_post_c2": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:16+00:00",
+    "generated_at": "2026-08-13T10:24:29+00:00",
     "paper_id": "trajectory-mediated-memory-effect-transport",
     "decision": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
     "reason": "All ten strict C2 units are execution-valid and the full pre-divergence policy decision context is reproducible, yet only 2/10 controlled action contrasts are nonzero and the preregistered same-memory cross-context sign reversal is absent. The earliest-divergent-action controlled-mediator mechanism is therefore unsupported by its local falsifier.",
@@ -32504,7 +31129,7 @@
   },
   "pilot_registry": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:16+00:00",
+    "generated_at": "2026-08-13T10:24:29+00:00",
     "result_dir": "private-data://runs/pilots/results",
     "approval_dir": "private-data://runs/pilots/approvals",
     "result_schema": {
@@ -32755,7 +31380,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.2",
-          "compiled_at": "2026-08-13T09:17:16+00:00",
+          "compiled_at": "2026-08-13T10:24:29+00:00",
           "idea_id": "update-trust-region",
           "phase": "P0",
           "expected_runtime": {
@@ -33836,7 +32461,7 @@
         "pre_experiment_gate_status": "blocked",
         "pre_experiment_card": {
           "schema_version": "2.2",
-          "compiled_at": "2026-08-13T09:17:16+00:00",
+          "compiled_at": "2026-08-13T10:24:29+00:00",
           "idea_id": "budgeted-evolution-controller",
           "phase": "P0",
           "expected_runtime": {
@@ -37872,10 +36497,10 @@
       "external_system_never_overrides_local_scientific_authority": true
     },
     "summary": {
-      "systems_reviewed": 25,
+      "systems_reviewed": 26,
       "adopted": 21,
       "merged_existing": 4,
-      "next_backlog": 0
+      "next_backlog": 1
     },
     "designs": [
       {
@@ -38049,17 +36674,54 @@
       {
         "system": "EurekAgent",
         "design": "permissions, artifact, budget, and human-in-the-loop environment engineering",
-        "gap": "agent behavior can be shaped more reliably by environment constraints than by another prompt-level workflow",
-        "local_mapping": "existing Runtime & Authority layer: capability permissions + artifact persistence + budget watchdog + human scientific authority",
-        "status": "merged-existing"
+        "gap": "logical authorization is insufficient if a low-level runtime capability can be acquired without the controller-owned authority token",
+        "local_mapping": "Runtime & Authority layer: experiment authority is now verified by the GPU lease capability itself; lease provenance stores authority id/epoch and plan hash",
+        "status": "merged-existing",
+        "local_gap_test": {
+          "before": "unauthorized low-level GPU lease succeeded without experiment authority",
+          "after": "the identical low-level acquisition is rejected with GPU lease requires active experiment authority",
+          "verdict": "gap-confirmed-and-closed",
+          "remaining_boundary": "evaluator/result filesystem isolation still requires its own runtime canary before claiming complete environment-level permission enforcement"
+        }
+      },
+      {
+        "system": "SAGE-MHFA",
+        "design": "retain and rank multiple competing evidence-grounded failure explanations before routing repair to formulation, experiment design, or execution",
+        "gap": "the current experiment node collapses to one diagnosis before the differential AI clinic has accumulated a replayable competing-hypothesis state",
+        "local_mapping": "candidate extension to post-screen differential diagnosis + Failure Asset Library; no scientific or execution authority",
+        "status": "next",
+        "local_gap_test": {
+          "available_individual_failure_assets": 6,
+          "available_unique_signatures": 3,
+          "minimum_replay_cases": 15,
+          "current_differential_cases": 0,
+          "verdict": "support-insufficient",
+          "falsifier": "after 15-20 terminal/failed traces have independently known final failure layers, compare current single diagnosis against top-k competing diagnoses at identical evidence and reviewer budget; require better correct-layer attribution without more unnecessary hypothesis pivots"
+        }
       }
     ],
-    "next_backlog": []
+    "next_backlog": [
+      {
+        "system": "SAGE-MHFA",
+        "design": "retain and rank multiple competing evidence-grounded failure explanations before routing repair to formulation, experiment design, or execution",
+        "gap": "the current experiment node collapses to one diagnosis before the differential AI clinic has accumulated a replayable competing-hypothesis state",
+        "local_mapping": "candidate extension to post-screen differential diagnosis + Failure Asset Library; no scientific or execution authority",
+        "status": "next",
+        "local_gap_test": {
+          "available_individual_failure_assets": 6,
+          "available_unique_signatures": 3,
+          "minimum_replay_cases": 15,
+          "current_differential_cases": 0,
+          "verdict": "support-insufficient",
+          "falsifier": "after 15-20 terminal/failed traces have independently known final failure layers, compare current single diagnosis against top-k competing diagnoses at identical evidence and reviewer budget; require better correct-layer attribution without more unnecessary hypothesis pivots"
+        }
+      }
+    ]
   },
   "human_terminal_ideas": {
     "schema_version": "1.0",
     "decision_date": "2026-08-11",
-    "generated_at": "2026-08-13T09:17:16+00:00",
+    "generated_at": "2026-08-13T10:24:29+00:00",
     "source_of_truth_priority": [
       "explicit-user-update",
       "latest-human-review",
@@ -40003,7 +38665,7 @@
   },
   "research_governance_v2": {
     "schema_version": "2.2",
-    "generated_at": "2026-08-13T09:17:16+00:00",
+    "generated_at": "2026-08-13T10:24:29+00:00",
     "policy": {
       "schema_version": "2.2",
       "paper_novelty_precedes_method_design": true,
@@ -40365,7 +39027,7 @@
   },
   "paper_first_p0_f0": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-13T09:17:17+00:00",
+    "generated_at": "2026-08-13T10:24:29+00:00",
     "run_root": "private-data://runs/paper-first-p0-20260812",
     "authority": {
       "promotion_authorized": false,
@@ -40697,7 +39359,7 @@
   },
   "idea_discovery_v3": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:33+00:00",
+    "generated_at": "2026-08-13T10:24:45+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -43653,7 +42315,7 @@
   },
   "idea_discovery_v31": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:33+00:00",
+    "generated_at": "2026-08-13T10:24:45+00:00",
     "round": "v3.1",
     "status": "external-reviewed",
     "policy": {
@@ -44366,7 +43028,7 @@
   },
   "idea_discovery_v4": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:33+00:00",
+    "generated_at": "2026-08-13T10:24:45+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -54041,7 +52703,7 @@
   },
   "idea_discovery_v5": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:33+00:00",
+    "generated_at": "2026-08-13T10:24:45+00:00",
     "target_venue": "ICLR",
     "status": "external-reviewed",
     "policy": {
@@ -64034,7 +62696,7 @@
   },
   "idea_discovery_v51": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:33+00:00",
+    "generated_at": "2026-08-13T10:24:45+00:00",
     "target_venue": "ICLR",
     "policy": {
       "generated_only_from_review_vectors": true,
@@ -65726,7 +64388,7 @@
   },
   "idea_discovery_v52": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:33+00:00",
+    "generated_at": "2026-08-13T10:24:45+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v51_revise": true,
@@ -66704,7 +65366,7 @@
   },
   "idea_discovery_v53": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-13T09:17:33+00:00",
+    "generated_at": "2026-08-13T10:24:45+00:00",
     "target_venue": "ICLR",
     "policy": {
       "only_from_v52_revise_with_single_surviving_boundary": true,
@@ -67043,7 +65705,7 @@
   },
   "discussion_portfolio": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-13T09:17:33+00:00",
+    "generated_at": "2026-08-13T10:24:45+00:00",
     "target": 20,
     "count": 27,
     "remaining": 0,
@@ -68285,8 +66947,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "25 systems / 21 adopted / 0 next backlog",
-        "zh": "已审 25 个系统 / 21 个已吸收 / 0 个下一批"
+        "en": "26 systems / 21 adopted / 1 next backlog",
+        "zh": "已审 26 个系统 / 21 个已吸收 / 1 个下一批"
       },
       "key": "external-system-learning",
       "primary_layer": "memory-publication"
@@ -69153,18 +67815,18 @@
         "key": "paper-first-problem-gate-queue",
         "pass": true,
         "detail": {
-          "submitted": 2,
-          "audited": 2,
+          "submitted": 0,
+          "audited": 0,
           "passed_problem_gate": 0,
-          "blocked_problem_gate": 2,
+          "blocked_problem_gate": 0,
           "paper_design_eligible": 0,
           "inbox_errors": 0,
-          "primary_evidence_records": 32,
+          "primary_evidence_records": 30,
           "submitted_by_lane": {
             "CONTRADICTION": 0,
             "CONVERGENT_FAILURE": 0,
-            "ASSUMPTION_BREAK": 1,
-            "UNEXPLAINED_BOUNDARY": 1,
+            "ASSUMPTION_BREAK": 0,
+            "UNEXPLAINED_BOUNDARY": 0,
             "OTHER": 0
           },
           "passed_by_lane": {
@@ -69177,8 +67839,8 @@
           "blocked_by_lane": {
             "CONTRADICTION": 0,
             "CONVERGENT_FAILURE": 0,
-            "ASSUMPTION_BREAK": 1,
-            "UNEXPLAINED_BOUNDARY": 1,
+            "ASSUMPTION_BREAK": 0,
+            "UNEXPLAINED_BOUNDARY": 0,
             "OTHER": 0
           },
           "method_authorized": 0,
@@ -69388,10 +68050,10 @@
             "true_falsification_cases": 1
           },
           "external": {
-            "systems_reviewed": 25,
+            "systems_reviewed": 26,
             "adopted": 21,
             "merged_existing": 4,
-            "next_backlog": 0
+            "next_backlog": 1
           }
         }
       },
@@ -69556,7 +68218,7 @@
         "pass": true,
         "detail": {
           "schema_version": "2.2",
-          "generated_at": "2026-08-13T09:17:16+00:00",
+          "generated_at": "2026-08-13T10:24:29+00:00",
           "policy": {
             "schema_version": "2.2",
             "paper_novelty_precedes_method_design": true,

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-13T09:16:31+00:00",
+  "generated_at": "2026-08-13T10:23:43+00:00",
   "idea_id": "local-counterexample-memory-repair",
   "code": "B-5",
   "scientific_role": "CPU applicability-gate P0 with frozen predicate vocabulary, old-positive protection, hidden boundaries, and independent programmatic truth",
