@@ -210,8 +210,14 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertTrue(state["policy"]["every_candidate_design_requires_local_gap_test"])
         self.assertGreaterEqual(state["summary"]["systems_reviewed"], 10)
         self.assertGreaterEqual(state["summary"]["adopted"], 15)
-        self.assertEqual(state["summary"]["next_backlog"], 0)
-        self.assertFalse(state["next_backlog"])
+        self.assertEqual(state["summary"]["next_backlog"], 1)
+        self.assertEqual([row["system"] for row in state["next_backlog"]],["SAGE-MHFA"])
+        mhfa=state["next_backlog"][0]["local_gap_test"]
+        self.assertEqual(mhfa["verdict"],"support-insufficient")
+        self.assertLess(mhfa["available_individual_failure_assets"],mhfa["minimum_replay_cases"])
+        eurek=next(row for row in state["designs"] if row["system"]=="EurekAgent")
+        self.assertEqual(eurek["local_gap_test"]["verdict"],"gap-confirmed-and-closed")
+        self.assertIn("active experiment authority",eurek["local_gap_test"]["after"])
 
 
 if __name__ == "__main__":
