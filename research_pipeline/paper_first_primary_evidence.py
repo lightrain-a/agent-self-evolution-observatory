@@ -426,8 +426,11 @@ def _source_exposure_state(
     counts: dict[str, int] = {}
     run_ids:set[str]=set()
     anonymous_private_runs=0
+    portable_valid=[]
     for row in private_runs:
         run_id=str(row.get("run_id") or "").strip()
+        status=str(row.get("status") or "").strip()
+        refs=sorted({str(ref).strip() for ref in row.get("source_refs") or [] if str(ref).strip().startswith("arXiv:")})
         if run_id:
             run_ids.add(run_id)
         else:
@@ -436,7 +439,20 @@ def _source_exposure_state(
             ref = str(ref or "").strip()
             if ref:
                 counts[ref] = counts.get(ref, 0) + 1
-    portable_added=0;portable_valid=[]
+        if run_id and len(refs)>=4 and status in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"} and row.get("scientific_authority") is False:
+            portable_valid.append({
+                "run_id":run_id,
+                "pool_sha256":row.get("pool_sha256"),
+                "negative_space_sha256":row.get("negative_space_sha256"),
+                "source_refs":refs,
+                "status":status,
+                "requested_model":row.get("requested_model"),
+                "resolved_model":row.get("resolved_model"),
+                "raw_sha256":row.get("raw_sha256"),
+                "scientific_authority":False,
+                "from_private_saturation_ledger":True,
+            })
+    portable_added=0
     for row in _portable_review_receipts(portable_generator_state_path,portable_primary_state_path):
         run_id=str(row.get("run_id") or "").strip()
         if not run_id or row.get("scientific_authority") is not False:
@@ -453,7 +469,12 @@ def _source_exposure_state(
         for ref in refs:
             counts[ref]=counts.get(ref,0)+1
         run_ids.add(run_id);portable_added+=1
-    return counts, len(run_ids)+anonymous_private_runs, portable_added, portable_valid[-64:]
+    by_run:dict[str,dict[str,Any]]={}
+    for row in portable_valid:
+        run_id=str(row.get("run_id") or "").strip()
+        if run_id:
+            by_run[run_id]=row
+    return counts, len(run_ids)+anonymous_private_runs, portable_added, list(by_run.values())[-64:]
 
 
 def select_primary_candidates(
@@ -954,9 +975,12 @@ def build_primary_evidence_pool(
             "source_coverage_scheduler_is_discovery_only": True,
             "source_review_exposure_has_zero_scientific_authority": True,
             "portable_source_review_receipts_have_zero_scientific_authority": True,
+            "private_saturation_ledger_runs_exported_as_zero_authority_portable_receipts": True,
             "source_exposure_cannot_skip_generation_or_problem_gate": True,
             "source_exposure_does_not_relax_relevance_or_freshness": True,
             "source_coverage_exploration_prefers_preregistered_lanes": True,
+            "source_coverage_saturation_is_compute_control_not_scientific_negative": True,
+            "new_lane_grounded_source_reopens_generation": True,
             "source_coverage_anchor_count": int(coverage_anchor_count),
             "candidate_generation_authority": False,
             "method_authority": False,
@@ -994,6 +1018,11 @@ def build_primary_evidence_pool(
             "selected_unreviewed": 0,
             "selected_lane_unreviewed": 0,
             "selected_no_lane_unreviewed": 0,
+            "eligible_lane_linked_sources": 0,
+            "reviewed_lane_linked_sources": 0,
+            "unreviewed_lane_linked_sources": 0,
+            "unreviewed_no_lane_sources": 0,
+            "source_coverage_exhausted": False,
             "coverage_anchor_count": int(coverage_anchor_count),
             "eligible_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
             "selected_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
@@ -1016,7 +1045,7 @@ def build_primary_evidence_pool(
         "errors": [],
         "fulltext_errors": [],
         "discovery_errors": [],
-        "source_coverage": {"scheduler_active": False, "saturation_ledger_runs": 0, "portable_review_receipts_merged": 0, "prior_reviewed_sources": 0, "coverage_anchor_count": int(coverage_anchor_count), "selected": []},
+        "source_coverage": {"scheduler_active": False, "saturation_ledger_runs": 0, "portable_review_receipts_merged": 0, "prior_reviewed_sources": 0, "eligible_unreviewed": 0, "eligible_lane_unreviewed": 0, "eligible_no_lane_unreviewed": 0, "eligible_lane_linked_sources": 0, "reviewed_lane_linked_sources": 0, "unreviewed_lane_linked_sources": 0, "unreviewed_no_lane_sources": 0, "coverage_exhausted": False, "coverage_anchor_count": int(coverage_anchor_count), "selected": [], "scientific_authority": False},
     }
     retrieved_at = str((corpus or {}).get("retrieved_at") or "")
     corpus_age = _age_days(retrieved_at, current) if corpus else None
@@ -1091,6 +1120,11 @@ def build_primary_evidence_pool(
     selected_previously_reviewed = sum(value > 0 for value in selected_exposures.values())
     eligible_unreviewed_rows=[paper for paper in eligible_candidates if int(source_exposure_counts.get(_source_ref(paper),0))==0]
     selected_unreviewed_rows=[paper for paper in candidates if int(selected_exposures.get(_source_ref(paper),0))==0]
+    eligible_lane_linked_refs = {_source_ref(paper) for paper in eligible_candidates if _paper_lane_keys(paper)}
+    reviewed_lane_linked_refs = {ref for ref in eligible_lane_linked_refs if int(source_exposure_counts.get(ref, 0)) > 0}
+    unreviewed_lane_linked_refs = eligible_lane_linked_refs - reviewed_lane_linked_refs
+    unreviewed_no_lane_refs = {_source_ref(paper) for paper in eligible_candidates if not _paper_lane_keys(paper) and int(source_exposure_counts.get(_source_ref(paper), 0)) == 0}
+    source_coverage_exhausted = bool(source_scheduler_active and not unreviewed_lane_linked_refs)
     public_state["summary"].update({
         "selected": len(candidates),
         "lane_floor": int(lane_floor),
@@ -1105,6 +1139,11 @@ def build_primary_evidence_pool(
         "selected_unreviewed": len(selected_unreviewed_rows),
         "selected_lane_unreviewed": sum(bool(_paper_lane_keys(paper)) for paper in selected_unreviewed_rows),
         "selected_no_lane_unreviewed": sum(not bool(_paper_lane_keys(paper)) for paper in selected_unreviewed_rows),
+        "eligible_lane_linked_sources": len(eligible_lane_linked_refs),
+        "reviewed_lane_linked_sources": len(reviewed_lane_linked_refs),
+        "unreviewed_lane_linked_sources": len(unreviewed_lane_linked_refs),
+        "unreviewed_no_lane_sources": len(unreviewed_no_lane_refs),
+        "source_coverage_exhausted": source_coverage_exhausted,
         "coverage_anchor_count": min(max(0, int(coverage_anchor_count)), len(candidates)),
         "eligible_lane_counts": eligible_lane_counts,
         "selected_lane_counts": selected_lane_counts,
@@ -1126,6 +1165,11 @@ def build_primary_evidence_pool(
         "eligible_unreviewed": len(eligible_unreviewed_rows),
         "eligible_lane_unreviewed": sum(bool(_paper_lane_keys(paper)) for paper in eligible_unreviewed_rows),
         "eligible_no_lane_unreviewed": sum(not bool(_paper_lane_keys(paper)) for paper in eligible_unreviewed_rows),
+        "eligible_lane_linked_sources": len(eligible_lane_linked_refs),
+        "reviewed_lane_linked_sources": len(reviewed_lane_linked_refs),
+        "unreviewed_lane_linked_sources": len(unreviewed_lane_linked_refs),
+        "unreviewed_no_lane_sources": len(unreviewed_no_lane_refs),
+        "coverage_exhausted": source_coverage_exhausted,
         "coverage_anchor_count": min(max(0, int(coverage_anchor_count)), len(candidates)),
         "selected": [
             {"ref": _source_ref(paper), "prior_review_exposure": selected_exposures.get(_source_ref(paper), 0), "global_rank": eligible_rank.get(_source_ref(paper))}

@@ -107,8 +107,10 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
     verified = int(ps.get("verified") or 0)
     if primary.get("status") != "READY" or verified < 4:
         errors.append("primary-evidence-not-ready")
-    if generator.get("status") not in {"GENERATED_ZERO_CANDIDATES", "GENERATED_AWAIT_PROBLEM_GATE"}:
-        errors.append("generator-did-not-complete-scientific-run")
+    generator_status = str(generator.get("status") or "")
+    allowed_generator_statuses = {"GENERATED_ZERO_CANDIDATES", "GENERATED_AWAIT_PROBLEM_GATE", "SKIPPED_SOURCE_COVERAGE_SATURATED"}
+    if generator_status not in allowed_generator_statuses:
+        errors.append("generator-did-not-complete-discovery-transaction")
     generated = int(gs.get("generated") or 0)
     if int(gs.get("primary_evidence_records") or 0) != verified:
         errors.append("generator-primary-count-mismatch")
@@ -118,16 +120,32 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
         errors.append("generator-auto-inbox-count-mismatch")
     if int(gs.get("semantic_clear") or 0) + int(gs.get("semantic_blocked") or 0) != generated:
         errors.append("generator-semantic-accounting-mismatch")
-    if generator.get("status") == "GENERATED_ZERO_CANDIDATES" and generated != 0:
+    if generator_status == "GENERATED_ZERO_CANDIDATES" and generated != 0:
         errors.append("zero-status-with-nonzero-candidates")
-    if generator.get("status") == "GENERATED_AWAIT_PROBLEM_GATE" and generated <= 0:
+    if generator_status == "GENERATED_AWAIT_PROBLEM_GATE" and generated <= 0:
         errors.append("await-gate-status-with-zero-candidates")
+    if generator_status == "SKIPPED_SOURCE_COVERAGE_SATURATED":
+        coverage = generator.get("source_coverage") or {}
+        gp = generator.get("policy") or {}
+        if generated != 0 or int(gs.get("written_to_auto_inbox") or 0) != 0 or int(gs.get("semantic_clear") or 0) != 0 or int(gs.get("semantic_blocked") or 0) != 0:
+            errors.append("coverage-skip-generator-accounting-nonzero")
+        if coverage.get("coverage_exhausted") is not True or coverage.get("unreviewed_lane_linked_sources") is None or int(coverage.get("unreviewed_lane_linked_sources")) != 0:
+            errors.append("coverage-skip-not-exhausted")
+        if gp.get("source_coverage_saturation_skips_model_call") is not True or gp.get("source_coverage_saturation_is_compute_control_not_scientific_negative") is not True or gp.get("new_lane_grounded_primary_source_reopens_generation") is not True or gp.get("primary_source_coverage_receipts_are_inherited_transactionally") is not True:
+            errors.append("coverage-skip-policy-missing")
+        receipts=[row for row in ((generator.get("saturation_memory") or {}).get("portable_review_receipts") or []) if isinstance(row,dict)]
+        portable_refs={str(ref) for row in receipts if row.get("scientific_authority") is False for ref in row.get("source_refs") or [] if str(ref).startswith("arXiv:")}
+        prior_reviewed=int(ps.get("prior_reviewed_sources") or 0)
+        if any(row.get("scientific_authority") is not False for row in receipts) or len(portable_refs) < prior_reviewed:
+            errors.append("coverage-skip-portable-receipts-incomplete")
     submitted = int(qs.get("submitted") or 0); audited_count = int(qs.get("audited") or 0)
     passed = int(qs.get("passed_problem_gate") or 0); blocked = int(qs.get("blocked_problem_gate") or 0)
     if int(qs.get("inbox_errors") or 0) != 0:
         errors.append("queue-inbox-errors")
     if submitted != audited_count or passed + blocked != audited_count:
         errors.append("queue-accounting-mismatch")
+    if generator_status == "SKIPPED_SOURCE_COVERAGE_SATURATED" and any(value != 0 for value in (submitted, audited_count, passed, blocked)):
+        errors.append("coverage-skip-queue-must-be-empty")
     if any(int(qs.get(key) or 0) != 0 for key in ("method_authorized", "experiment_authorized", "p0_authorized")):
         errors.append("queue-illegal-downstream-authority")
     gp = generator.get("policy") or {}
@@ -217,6 +235,8 @@ def write_problem_discovery_transaction(
                     "primary_status":primary_public.get("status"),"verified":(primary_public.get("summary") or {}).get("verified",0),
                     "eligible_unreviewed":(primary_public.get("summary") or {}).get("eligible_unreviewed",0),
                     "generator_status":generator_public.get("status"),"generated":(generator_public.get("summary") or {}).get("generated",0),
+                    "source_coverage_exhausted":bool((primary_public.get("summary") or {}).get("source_coverage_exhausted")),
+                    "unreviewed_lane_linked_sources":(primary_public.get("summary") or {}).get("unreviewed_lane_linked_sources",0),
                     "semantic_clear":(generator_public.get("summary") or {}).get("semantic_clear",0),"semantic_blocked":(generator_public.get("summary") or {}).get("semantic_blocked",0),
                     "queue_submitted":(queue_public.get("summary") or {}).get("submitted",0),"queue_passed":(queue_public.get("summary") or {}).get("passed_problem_gate",0),"queue_blocked":(queue_public.get("summary") or {}).get("blocked_problem_gate",0),
                 },

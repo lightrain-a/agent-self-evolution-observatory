@@ -8,7 +8,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from .config import StorageSettings
-from .paper_first_discovery_transaction import write_problem_discovery_transaction
+from .paper_first_discovery_transaction import _validate, write_problem_discovery_transaction
 
 
 class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
@@ -84,7 +84,7 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
             for key,path in targets.items(): path.write_text(f"OLD-{key}\n",encoding="utf-8")
             before={key:path.read_bytes() for key,path in targets.items()}
             def bad_generator(**kwargs): raise RuntimeError("provider-down")
-            with self.assertRaisesRegex(RuntimeError,"generator-did-not-complete-scientific-run"):
+            with self.assertRaisesRegex(RuntimeError,"generator-did-not-complete-discovery-transaction"):
                 write_problem_discovery_transaction(
                     storage=storage,**targets,
                     primary_kwargs={"corpus_path":self.corpus(root,now),"requester":self.requester,"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":0,"now":now,"min_interval_seconds":0},
@@ -93,19 +93,68 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
             after={key:path.read_bytes() for key,path in targets.items()}
         self.assertEqual(after,before)
 
+    def test_source_coverage_saturation_commits_zero_call_transaction_atomically(self) -> None:
+        calls=[]
+        def forbidden_generator(**kwargs):
+            calls.append(1); raise AssertionError("coverage-saturated transaction must make zero model calls")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
+            corpus=self.corpus(root,now)
+            refs=[f"arXiv:2608.40{idx:03d}" for idx in range(1,5)]
+            discovery=storage.data_root/"paper-first-problem-discovery";discovery.mkdir(parents=True,exist_ok=True)
+            (discovery/"discovery-saturation-ledger.json").write_text(json.dumps({"schema_version":"1.0","runs":[{"run_id":"prior-reviewed-pool","pool_sha256":"a"*64,"negative_space_sha256":"b"*64,"source_refs":refs,"status":"GENERATED_ZERO_CANDIDATES","requested_model":"ark-code-latest","resolved_model":"doubao-seed-evolving","raw_sha256":"c"*64,"scientific_authority":False}]}),encoding="utf-8")
+            result=write_problem_discovery_transaction(
+                storage=storage,**targets,
+                primary_kwargs={"corpus_path":corpus,"requester":self.requester,"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":1,"now":now,"min_interval_seconds":0},
+                generator_kwargs={"generator_responder":forbidden_generator,"reviewer_responder":forbidden_generator,"now":now},
+            )
+            primary=json.loads(targets["primary_json"].read_text());generator=json.loads(targets["generator_json"].read_text());queue=json.loads(targets["queue_json"].read_text())
+        self.assertEqual(calls,[])
+        self.assertEqual(result["status"],"COMMITTED")
+        self.assertEqual(generator["status"],"SKIPPED_SOURCE_COVERAGE_SATURATED")
+        self.assertTrue(primary["summary"]["source_coverage_exhausted"])
+        self.assertEqual(primary["summary"]["unreviewed_lane_linked_sources"],0)
+        self.assertEqual(generator["summary"]["generated"],0)
+        self.assertEqual((queue["summary"]["submitted"],queue["summary"]["audited"],queue["summary"]["passed_problem_gate"],queue["summary"]["blocked_problem_gate"]),(0,0,0,0))
+        self.assertEqual({primary["discovery_transaction_id"],generator["discovery_transaction_id"],queue["discovery_transaction_id"]},{result["transaction_id"]})
+        receipts=generator["saturation_memory"]["portable_review_receipts"]
+        self.assertEqual(len(receipts),1);self.assertEqual(receipts[0]["run_id"],"prior-reviewed-pool");self.assertFalse(receipts[0]["scientific_authority"])
+        self.assertEqual(result["summary"]["source_coverage_exhausted"],True)
+        self.assertEqual(result["summary"]["unreviewed_lane_linked_sources"],0)
+        self.assertEqual(result["authority"],{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False})
+
+    def test_validator_rejects_saturation_skip_when_unreviewed_lane_source_remains(self) -> None:
+        primary={"status":"READY","summary":{"verified":4}}
+        generator={"status":"SKIPPED_SOURCE_COVERAGE_SATURATED","summary":{"primary_evidence_records":4,"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0},"source_coverage":{"coverage_exhausted":True,"unreviewed_lane_linked_sources":1},"policy":{"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"candidates":[]}
+        queue={"summary":{"primary_evidence_records":4,"submitted":0,"audited":0,"passed_problem_gate":0,"blocked_problem_gate":0,"inbox_errors":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0},"audited":[]}
+        errors=_validate(primary,generator,queue)
+        self.assertIn("coverage-skip-not-exhausted",errors)
+
+    def test_validator_rejects_exhausted_transaction_with_incomplete_portable_receipts(self) -> None:
+        primary={"status":"READY","summary":{"verified":4,"prior_reviewed_sources":4,"source_coverage_exhausted":True}}
+        generator={"status":"SKIPPED_SOURCE_COVERAGE_SATURATED","summary":{"primary_evidence_records":4,"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0},"source_coverage":{"coverage_exhausted":True,"unreviewed_lane_linked_sources":0},"saturation_memory":{"portable_review_receipts":[{"run_id":"partial","source_refs":["arXiv:1","arXiv:2"],"scientific_authority":False}]},"policy":{"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"primary_source_coverage_receipts_are_inherited_transactionally":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"candidates":[]}
+        queue={"summary":{"primary_evidence_records":4,"submitted":0,"audited":0,"passed_problem_gate":0,"blocked_problem_gate":0,"inbox_errors":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0},"audited":[]}
+        errors=_validate(primary,generator,queue)
+        self.assertIn("coverage-skip-portable-receipts-incomplete",errors)
+
     def test_second_host_inherits_first_transaction_review_exposure(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
             first_storage=self.storage(root/"host-a");first=self.run_txn(root/"host-a",first_storage,targets,now)
+            first_generator=json.loads(targets["generator_json"].read_text());first_run_id=first_generator["run_id"]
             second_storage=self.storage(root/"host-b");second=self.run_txn(root/"host-b",second_storage,targets,now+timedelta(minutes=1))
             primary=json.loads(targets["primary_json"].read_text());generator=json.loads(targets["generator_json"].read_text())
         self.assertNotEqual(first["transaction_id"],second["transaction_id"])
         self.assertEqual(primary["summary"]["portable_review_receipts_merged"],1)
         self.assertEqual(primary["summary"]["prior_reviewed_sources"],4)
         self.assertEqual(primary["summary"]["eligible_unreviewed"],0)
+        self.assertTrue(primary["summary"]["source_coverage_exhausted"])
+        self.assertEqual(generator["status"],"SKIPPED_SOURCE_COVERAGE_SATURATED")
         receipts=generator["saturation_memory"]["portable_review_receipts"]
-        self.assertEqual(len(receipts),2);self.assertEqual(len({row["run_id"] for row in receipts}),2)
+        self.assertEqual(len(receipts),1);self.assertEqual(receipts[0]["run_id"],first_run_id)
         self.assertTrue(all(row["scientific_authority"] is False for row in receipts))
+        self.assertEqual(second["summary"]["generated"],0)
+        self.assertEqual(second["summary"]["queue_submitted"],0)
 
 
 if __name__=="__main__":unittest.main()

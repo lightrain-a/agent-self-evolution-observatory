@@ -1,13 +1,13 @@
 {
   "schema_version": "2.0",
-  "generated_at": "2026-08-13T11:34:14+00:00",
+  "generated_at": "2026-08-13T11:32:21+00:00",
   "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
   "source_inboxes": [
     "private-data://paper-first-problem-discovery/candidate-inbox.json",
     "private-data://paper-first-problem-discovery/auto-candidate-inbox.json"
   ],
   "primary_evidence_pool": "private-data://paper-first-problem-discovery/primary-evidence-pool.json",
-  "primary_evidence_records": 29,
+  "primary_evidence_records": 32,
   "source_exists": true,
   "policy": {
     "candidate_inbox_is_not_authority": true,
@@ -32,7 +32,7 @@
     "blocked_problem_gate": 0,
     "paper_design_eligible": 0,
     "inbox_errors": 0,
-    "primary_evidence_records": 29,
+    "primary_evidence_records": 32,
     "submitted_by_lane": {
       "CONTRADICTION": 0,
       "CONVERGENT_FAILURE": 0,
@@ -63,6 +63,6 @@
   "blocked": [],
   "audited": [],
   "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry.",
-  "discovery_transaction_id": "fd535cf9be40ee601ded6612837958aebcf6b7afbc939fb720b523a491cf811a",
+  "discovery_transaction_id": "ff15f53d18e09c65d8746a3be0f2cb146d78c8b1424bdf90c2c9464472994f20",
   "discovery_transaction_role": "queue"
 }

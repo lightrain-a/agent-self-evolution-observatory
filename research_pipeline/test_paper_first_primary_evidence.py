@@ -165,6 +165,18 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertEqual((runs,portable),(2,1));self.assertEqual({row["run_id"] for row in receipts},{"private-run","remote-run"})
         self.assertEqual({k:counts[k] for k in sorted(counts)},{"arXiv:A":1,"arXiv:B":1,"arXiv:C":2,"arXiv:D":2,"arXiv:E":1,"arXiv:F":1})
 
+    def test_private_saturation_runs_are_exported_as_zero_authority_portable_receipts(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);discovery=root/"paper-first-problem-discovery";discovery.mkdir(parents=True)
+            runs=[]
+            for idx in (1,2):
+                runs.append({"run_id":f"private-{idx}","pool_sha256":str(idx)*64,"negative_space_sha256":"f"*64,"source_refs":[f"arXiv:{idx}-{j}" for j in range(4)],"status":"GENERATED_ZERO_CANDIDATES","requested_model":"ark-code-latest","resolved_model":"doubao-seed-evolving","raw_sha256":"e"*64,"scientific_authority":False})
+            (discovery/"discovery-saturation-ledger.json").write_text(json.dumps({"schema_version":"1.0","runs":runs}),encoding="utf-8")
+            counts,run_count,portable_added,receipts=_source_exposure_state(storage,portable_generator_state_path=root/"missing-generator.json",portable_primary_state_path=root/"missing-primary.json")
+        self.assertEqual(run_count,2);self.assertEqual(portable_added,0);self.assertEqual(len(counts),8)
+        self.assertEqual([row["run_id"] for row in receipts],["private-1","private-2"])
+        self.assertTrue(all(row.get("from_private_saturation_ledger") is True and row.get("scientific_authority") is False for row in receipts))
+
     def test_pre_receipt_public_transaction_bootstraps_cross_host_exposure(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);storage=self.storage(root);generator=root/"generator.json";primary=root/"primary.json"
@@ -267,6 +279,20 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertTrue(public["policy"]["source_exposure_does_not_relax_relevance_or_freshness"])
         self.assertFalse(private["source_coverage"]["scientific_authority"])
         self.assertEqual(len(private["source_coverage"]["selected"]),3)
+
+    def test_source_coverage_exhaustion_is_lane_grounded_compute_state_not_scientific_negative(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);corpus=self.corpus(root);discovery=root/"paper-first-problem-discovery";discovery.mkdir(parents=True)
+            (discovery/"discovery-saturation-ledger.json").write_text(json.dumps({"schema_version":"1.0","runs":[{"source_refs":[f"arXiv:2608.0000{i}" for i in range(1,5)],"scientific_authority":False}]}),encoding="utf-8")
+            public,private=build_primary_evidence_pool(storage=storage,corpus_path=corpus,requester=self.fake_requester,augment_fresh_corpus_with_arxiv=False,coverage_anchor_count=1,now=datetime(2026,8,13,tzinfo=timezone.utc),min_interval_seconds=0,max_papers=3,cache_dir=root/"primary-cache")
+        self.assertTrue(public["summary"]["source_coverage_scheduler_active"])
+        self.assertTrue(public["summary"]["source_coverage_exhausted"])
+        self.assertEqual(public["summary"]["unreviewed_lane_linked_sources"],0)
+        self.assertEqual(public["summary"]["reviewed_lane_linked_sources"],public["summary"]["eligible_lane_linked_sources"])
+        self.assertTrue(public["policy"]["source_coverage_saturation_is_compute_control_not_scientific_negative"])
+        self.assertTrue(public["policy"]["new_lane_grounded_source_reopens_generation"])
+        self.assertTrue(private["source_coverage"]["coverage_exhausted"])
+        self.assertFalse(private["source_coverage"]["scientific_authority"])
 
     def test_fresh_corpus_fetches_primary_pages_and_keeps_full_abstract_private(self) -> None:
         with tempfile.TemporaryDirectory() as td:

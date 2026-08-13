@@ -223,6 +223,43 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertTrue(all(row["scientific_authority"] is False for row in receipts))
         self.assertTrue(public["policy"]["portable_review_receipts_are_scheduler_metadata_only"])
 
+    def test_saturation_skip_inherits_primary_transaction_review_receipts_without_model_calls(self) -> None:
+        calls=[]
+        def responder(**kwargs):
+            calls.append(1); raise AssertionError("coverage-saturated writer must not call a model")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); now=datetime(2026,8,13,tzinfo=timezone.utc); storage=self.storage(root); pool=self.pool(root,now)
+            receipts=[]
+            for idx in (1,2):
+                receipts.append({"run_id":f"private-{idx}","pool_sha256":str(idx)*64,"negative_space_sha256":"f"*64,"source_refs":[f"arXiv:{idx}-{j}" for j in range(4)],"status":"GENERATED_ZERO_CANDIDATES","requested_model":"ark-code-latest","resolved_model":"doubao-seed-evolving","raw_sha256":"e"*64,"scientific_authority":False,"from_private_saturation_ledger":True})
+            payload=json.loads(pool.read_text()); payload["source_coverage"]={"coverage_exhausted":True,"eligible_lane_linked_sources":8,"reviewed_lane_linked_sources":8,"unreviewed_lane_linked_sources":0,"unreviewed_no_lane_sources":0,"portable_review_receipts":receipts,"scientific_authority":False}; pool.write_text(json.dumps(payload),encoding="utf-8")
+            public_json=root/"generator-public.json"; public_js=root/"generator-public.js"
+            state=write_problem_generator_state(json_path=public_json,js_path=public_js,storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto.json",generator_responder=responder,reviewer_responder=responder,now=now)
+            public=json.loads(public_json.read_text())
+        self.assertEqual(state["status"],"SKIPPED_SOURCE_COVERAGE_SATURATED")
+        self.assertEqual(calls,[])
+        inherited=public["saturation_memory"]["portable_review_receipts"]
+        self.assertEqual([row["run_id"] for row in inherited],["private-1","private-2"])
+        self.assertTrue(all(row["scientific_authority"] is False for row in inherited))
+        self.assertTrue(public["policy"]["primary_source_coverage_receipts_are_inherited_transactionally"])
+
+    def test_lane_grounded_source_coverage_saturation_makes_zero_model_calls(self) -> None:
+        calls=[]
+        def responder(**kwargs):
+            calls.append(1); raise AssertionError("coverage-saturated primary pool must not call a model")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);pool=self.pool(root,now);payload=json.loads(pool.read_text());payload["source_coverage"]={"coverage_exhausted":True,"eligible_lane_linked_sources":4,"reviewed_lane_linked_sources":4,"unreviewed_lane_linked_sources":0,"unreviewed_no_lane_sources":1,"scientific_authority":False};pool.write_text(json.dumps(payload),encoding="utf-8")
+            auto=root/"auto.json";state=run_problem_generator(storage=self.storage(root),primary_pool_path=pool,auto_inbox_path=auto,generator_responder=responder,reviewer_responder=responder,now=now);inbox=json.loads(auto.read_text())
+        self.assertEqual(state["status"],"SKIPPED_SOURCE_COVERAGE_SATURATED")
+        self.assertEqual(calls,[])
+        self.assertEqual(inbox["candidates"],[])
+        self.assertTrue(state["policy"]["source_coverage_saturation_skips_model_call"])
+        self.assertTrue(state["policy"]["source_coverage_saturation_is_compute_control_not_scientific_negative"])
+        self.assertTrue(state["policy"]["new_lane_grounded_primary_source_reopens_generation"])
+        self.assertTrue(state["source_coverage"]["coverage_exhausted"])
+        self.assertFalse(state["source_coverage"]["scientific_authority"])
+        self.assertFalse(state["policy"]["automatic_method_authority"]);self.assertFalse(state["policy"]["automatic_p0_authority"])
+
     def test_stale_pool_makes_zero_api_calls(self) -> None:
         calls = []
         def responder(**kwargs):

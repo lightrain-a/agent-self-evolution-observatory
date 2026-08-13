@@ -257,9 +257,13 @@ class ResearchSystemTest(unittest.TestCase):
             self.assertTrue(primary["policy"]["lane_coverage_is_discovery_breadth_not_scientific_authority"])
             self.assertTrue(primary["policy"]["source_coverage_scheduler_is_discovery_only"])
             self.assertTrue(primary["policy"]["source_review_exposure_has_zero_scientific_authority"])
+            self.assertTrue(primary["policy"]["portable_source_review_receipts_have_zero_scientific_authority"])
+            self.assertTrue(primary["policy"]["private_saturation_ledger_runs_exported_as_zero_authority_portable_receipts"])
             self.assertTrue(primary["policy"]["source_exposure_cannot_skip_generation_or_problem_gate"])
             self.assertTrue(primary["policy"]["source_exposure_does_not_relax_relevance_or_freshness"])
             self.assertTrue(primary["policy"]["source_coverage_exploration_prefers_preregistered_lanes"])
+            self.assertTrue(primary["policy"]["source_coverage_saturation_is_compute_control_not_scientific_negative"])
+            self.assertTrue(primary["policy"]["new_lane_grounded_source_reopens_generation"])
             self.assertGreaterEqual(int(primary["policy"]["source_coverage_anchor_count"]),1)
             self.assertEqual(int(primary["summary"]["selected_previously_reviewed"])+int(primary["summary"]["selected_unreviewed"]),int(primary["summary"]["selected"]))
             if int(primary["summary"].get("saturation_ledger_runs") or 0)>0 and int(primary["summary"]["selected"])>int(primary["summary"].get("coverage_anchor_count") or 0):
@@ -267,7 +271,7 @@ class ResearchSystemTest(unittest.TestCase):
             self.assertGreaterEqual(int(primary["policy"]["lane_floor"]),1)
             self.assertEqual(primary["summary"]["undercovered_lanes"],[])
         generator=self.state["paper_first_problem_generator"]
-        self.assertIn(generator["status"],{"NOT_RUN","SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE","SKIPPED_STALE_PRIMARY_EVIDENCE","GENERATOR_ERROR_ZERO_AUTHORITY","GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE","STATE_UNREADABLE"})
+        self.assertIn(generator["status"],{"NOT_RUN","SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE","SKIPPED_STALE_PRIMARY_EVIDENCE","SKIPPED_SOURCE_COVERAGE_SATURATED","GENERATOR_ERROR_ZERO_AUTHORITY","GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE","STATE_UNREADABLE"})
         self.assertTrue(generator["policy"]["zero_candidates_is_valid"])
         self.assertTrue(generator["policy"]["semantic_reviewer_is_block_only"])
         self.assertTrue(generator["policy"]["candidate_inbox_has_zero_scientific_authority"])
@@ -280,6 +284,20 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(generator["policy"]["allowed_discovery_lanes"],["CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"])
         self.assertEqual(generator["policy"]["forbidden_discovery_lanes"],["MISSING_CELL","SHARED_LIMITATION","PURE_TOPIC_BRAINSTORM"])
         self.assertTrue(generator["policy"]["independent_reviewer_must_verify_lane_contract"])
+        self.assertTrue(generator["policy"]["source_coverage_saturation_skips_model_call"])
+        self.assertTrue(generator["policy"]["source_coverage_saturation_is_compute_control_not_scientific_negative"])
+        self.assertTrue(generator["policy"]["new_lane_grounded_primary_source_reopens_generation"])
+        self.assertTrue(generator["policy"]["portable_review_receipts_are_scheduler_metadata_only"])
+        self.assertTrue(generator["policy"]["portable_review_receipts_have_zero_scientific_authority"])
+        self.assertTrue(generator["policy"]["primary_source_coverage_receipts_are_inherited_transactionally"])
+        receipts=(generator.get("saturation_memory") or {}).get("portable_review_receipts") or []
+        self.assertTrue(all(row.get("scientific_authority") is False for row in receipts))
+        if primary.get("summary",{}).get("source_coverage_exhausted"):
+            portable_refs={str(ref) for row in receipts for ref in row.get("source_refs") or [] if str(ref).startswith("arXiv:")}
+            self.assertGreaterEqual(len(portable_refs),int(primary["summary"].get("prior_reviewed_sources") or 0))
+        if generator["status"]=="SKIPPED_SOURCE_COVERAGE_SATURATED":
+            self.assertTrue((generator.get("source_coverage") or {}).get("coverage_exhausted"))
+            self.assertEqual(int((generator.get("source_coverage") or {}).get("unreviewed_lane_linked_sources") or 0),0)
         if generator["status"] in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}:
             self.assertTrue(generator["policy"]["independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts"])
         self.assertEqual((generator["policy"]["automatic_method_authority"],generator["policy"]["automatic_experiment_authority"],generator["policy"]["automatic_p0_authority"]),(False,False,False))
