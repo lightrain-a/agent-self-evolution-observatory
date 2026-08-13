@@ -300,6 +300,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_problem_generator = load_problem_generator_state()
     paper_first_problem_memory = ((paper_first_problem_generator.get("saturation_memory") or {}).get("blocked_problem_memory") or {})
     paper_first_lane_search = paper_first_problem_generator.get("search_diagnostics") or {}
+    paper_first_last_lane_search = paper_first_lane_search.get("last_completed_lane_search") or {}
     paper_first_problem_gate_queue = load_problem_gate_queue_state()
     paper_first_post_c2 = build_post_c2_adjudication()
     formal_cards = {
@@ -452,6 +453,11 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_problem_lane_search_candidate_lanes":sum(str(row.get("status") or "") == "CANDIDATE" for row in paper_first_lane_search.get("lane_search") or [] if isinstance(row,dict)),
             "paper_first_problem_lane_search_reducible_lanes":sum(str(row.get("status") or "") == "REDUCIBLE" for row in paper_first_lane_search.get("lane_search") or [] if isinstance(row,dict)),
             "paper_first_problem_lane_search_no_pair_lanes":sum(str(row.get("status") or "") == "NO_PAIR" for row in paper_first_lane_search.get("lane_search") or [] if isinstance(row,dict)),
+            "paper_first_problem_last_lane_search_available":bool(paper_first_last_lane_search),
+            "paper_first_problem_last_lane_search_run_id":paper_first_last_lane_search.get("run_id",""),
+            "paper_first_problem_last_lane_search_candidate_lanes":sum(str(row.get("status") or "") == "CANDIDATE" for row in paper_first_last_lane_search.get("lane_search") or [] if isinstance(row,dict)),
+            "paper_first_problem_last_lane_search_reducible_lanes":sum(str(row.get("status") or "") == "REDUCIBLE" for row in paper_first_last_lane_search.get("lane_search") or [] if isinstance(row,dict)),
+            "paper_first_problem_last_lane_search_no_pair_lanes":sum(str(row.get("status") or "") == "NO_PAIR" for row in paper_first_last_lane_search.get("lane_search") or [] if isinstance(row,dict)),
             "paper_first_problem_queue_submitted":paper_first_problem_gate_queue["summary"]["submitted"],
             "paper_first_problem_queue_passed":paper_first_problem_gate_queue["summary"]["passed_problem_gate"],
             "paper_first_problem_queue_blocked":paper_first_problem_gate_queue["summary"]["blocked_problem_gate"],
@@ -785,6 +791,13 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         lane_names=[str(row.get("lane") or "") for row in lane_rows]
         lane_statuses=[str(row.get("status") or "") for row in lane_rows]
         if lane_search.get("lane_search_complete") is not True or len(lane_rows)!=len(DISCOVERY_LANES) or set(lane_names)!=set(DISCOVERY_LANES) or any(status not in {"NO_PAIR","REDUCIBLE","CANDIDATE"} for status in lane_statuses): errors.append("generated problem state must preserve one complete machine-audited status for every discovery lane")
+    if generator_schema >= "2.5":
+        last_lane_search=lane_search.get("last_completed_lane_search") or {}
+        if generator_policy.get("last_completed_lane_search_is_portable_zero_authority_receipt") is not True or generator_policy.get("terminal_zero_call_skip_preserves_last_completed_lane_search") is not True: errors.append("problem generator must preserve the last completed lane search only as a portable zero-authority receipt")
+        if last_lane_search:
+            last_rows=[row for row in last_lane_search.get("lane_search") or [] if isinstance(row,dict)];last_priority=[str(x or "") for x in last_lane_search.get("lane_search_priority") or []]
+            if last_lane_search.get("scientific_authority") is not False or not str(last_lane_search.get("run_id") or "") or len(last_rows)!=len(DISCOVERY_LANES) or set(last_priority)!=set(DISCOVERY_LANES) or [str(row.get("lane") or "") for row in last_rows]!=last_priority or any(str(row.get("status") or "") not in {"NO_PAIR","REDUCIBLE","CANDIDATE"} for row in last_rows): errors.append("last completed lane-search receipt is invalid")
+        if generator.get("status") in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"} and (not last_lane_search or str(last_lane_search.get("run_id") or "")!=str(generator.get("run_id") or "")): errors.append("generated problem state must refresh the last completed lane-search receipt")
     saturation_memory = generator.get("saturation_memory") or {}
     if saturation_memory.get("scientific_authority") is not False: errors.append("problem-discovery saturation memory cannot carry scientific authority")
     blocked_memory = saturation_memory.get("blocked_problem_memory") or {}

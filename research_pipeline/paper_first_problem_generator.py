@@ -333,7 +333,7 @@ def _validate_lane_search_candidates(lane_search:list[dict[str,Any]],candidates:
 
 
 def _base_policy():
-    return {"zero_candidates_is_valid":True,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"format_retry_forbidden":True,"thinking_disabled":True,"multi_lane_discovery_enabled":True,"allowed_discovery_lanes":list(DISCOVERY_LANES),"forbidden_discovery_lanes":list(FORBIDDEN_DISCOVERY_LANES),"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"independent_reviewer_must_verify_lane_contract":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"portable_review_receipts_are_scheduler_metadata_only":True,"portable_review_receipts_have_zero_scientific_authority":True,"primary_source_coverage_receipts_are_inherited_transactionally":True,"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False}
+    return {"zero_candidates_is_valid":True,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"format_retry_forbidden":True,"thinking_disabled":True,"multi_lane_discovery_enabled":True,"allowed_discovery_lanes":list(DISCOVERY_LANES),"forbidden_discovery_lanes":list(FORBIDDEN_DISCOVERY_LANES),"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"independent_reviewer_must_verify_lane_contract":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"last_completed_lane_search_is_portable_zero_authority_receipt":True,"terminal_zero_call_skip_preserves_last_completed_lane_search":True,"portable_review_receipts_are_scheduler_metadata_only":True,"portable_review_receipts_have_zero_scientific_authority":True,"primary_source_coverage_receipts_are_inherited_transactionally":True,"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False}
 
 
 def _empty_summary(primary_evidence_records=0):
@@ -348,7 +348,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     inherited_receipts=[dict(row) for row in ((pool.get("source_coverage") or {}).get("portable_review_receipts") or []) if isinstance(row,dict)]
     blocked_problem_memory=blocked_problem_memory or _public_blocked_problem_memory(storage)
     dead_end_prompt_memory=_private_dead_end_prompt_memory(storage,blocked_problem_memory)
-    state={"schema_version":"2.4","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":_base_policy(),"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","search_diagnostics":{"lane_search_priority":list(dead_end_prompt_memory.get("lane_search_priority") or DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"scientific_authority":False},"saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},"candidates":[]}
+    state={"schema_version":"2.5","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":_base_policy(),"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","search_diagnostics":{"lane_search_priority":list(dead_end_prompt_memory.get("lane_search_priority") or DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"last_completed_lane_search":{},"scientific_authority":False},"saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},"candidates":[]}
     def finish(status,cands=[]): state["status"]=status;_write_inbox(auto_inbox_path,run_id,status,cands,psha);_record_saturation_run(storage,state,psha,reg);return state
     if pool.get("status")!="READY" or len(reg)<4:return finish("SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE")
     if age is None or age>pool_max_age_hours:state["primary_pool_age_hours"]=age;return finish("SKIPPED_STALE_PRIMARY_EVIDENCE")
@@ -395,7 +395,7 @@ def public_problem_generator_state(state:dict[str,Any],storage:StorageSettings|N
 
 
 def _empty_state(status):
-    return {"schema_version":"2.4","status":status,"policy":_base_policy(),"summary":_empty_summary(),"generation_notes":"","search_diagnostics":{"lane_search_priority":list(DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"scientific_authority":False},"saturation_memory":{"ledger_entries":0,"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":[],"blocked_problem_memory":{"blocked_candidate_attempts":0,"portable_blocked_problem_memory":[],"scientific_authority":False},"scientific_authority":False},"candidates":[],"raw_artifacts":{}}
+    return {"schema_version":"2.5","status":status,"policy":_base_policy(),"summary":_empty_summary(),"generation_notes":"","search_diagnostics":{"lane_search_priority":list(DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"last_completed_lane_search":{},"scientific_authority":False},"saturation_memory":{"ledger_entries":0,"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":[],"blocked_problem_memory":{"blocked_candidate_attempts":0,"portable_blocked_problem_memory":[],"scientific_authority":False},"scientific_authority":False},"candidates":[],"raw_artifacts":{}}
 
 
 def load_problem_generator_state(path:Path=DEFAULT_JSON):
@@ -430,13 +430,49 @@ def _merge_portable_review_receipts(state:dict[str,Any],previous:dict[str,Any])-
     return state
 
 
-def write_problem_generator_state(json_path=DEFAULT_JSON,js_path=DEFAULT_JS,previous_public_state_path=None,**kwargs):
+def _normalize_last_completed_lane_search_receipt(value:Any)->dict[str,Any]:
+    if not isinstance(value,dict): return {}
+    run_id=str(value.get("run_id") or "").strip();priority=[str(x or "").strip().upper() for x in value.get("lane_search_priority") or []];raw_rows=value.get("lane_search") or []
+    if not run_id or priority!=[str(x) for x in priority] or set(priority)!=set(DISCOVERY_LANES) or len(priority)!=len(DISCOVERY_LANES) or not isinstance(raw_rows,list) or len(raw_rows)!=len(DISCOVERY_LANES): return {}
+    rows=[]
+    for item in raw_rows:
+        if not isinstance(item,dict): return {}
+        lane=str(item.get("lane") or "").strip().upper();status=str(item.get("status") or "").strip().upper();refs=[str(ref or "").strip() for ref in item.get("source_refs") or [] if str(ref or "").strip()];reason=" ".join(str(item.get("reason") or "").split())[:500]
+        if lane not in DISCOVERY_LANES or status not in LANE_SEARCH_STATUSES or not reason: return {}
+        if status=="NO_PAIR" and refs: return {}
+        if status in {"REDUCIBLE","CANDIDATE"} and (len(refs)!=2 or refs[0]==refs[1] or any(not ref.startswith("arXiv:") for ref in refs)): return {}
+        rows.append({"lane":lane,"status":status,"source_refs":refs,"reason":reason})
+    if [row["lane"] for row in rows]!=priority:return {}
+    return {"run_id":run_id,"generator_status":str(value.get("generator_status") or ""),"generated_at":str(value.get("generated_at") or ""),"lane_search_priority":priority,"lane_search":rows,"generation_notes":" ".join(str(value.get("generation_notes") or "").split())[:800],"scientific_authority":False}
+
+
+def _completed_lane_search_receipt_from_state(source:dict[str,Any])->dict[str,Any]:
+    diagnostics=source.get("search_diagnostics") or {}
+    if diagnostics.get("lane_search_complete") is not True:return {}
+    return _normalize_last_completed_lane_search_receipt({"run_id":source.get("run_id"),"generator_status":source.get("status"),"generated_at":source.get("generated_at"),"lane_search_priority":diagnostics.get("lane_search_priority"),"lane_search":diagnostics.get("lane_search"),"generation_notes":source.get("generation_notes"),"scientific_authority":False})
+
+
+def _merge_last_completed_lane_search(state:dict[str,Any],previous:dict[str,Any],seed:dict[str,Any]|None=None)->dict[str,Any]:
+    diagnostics=state.setdefault("search_diagnostics",{});previous_diagnostics=previous.get("search_diagnostics") or {};candidates=[]
+    candidates.append(_normalize_last_completed_lane_search_receipt(previous_diagnostics.get("last_completed_lane_search")))
+    candidates.append(_completed_lane_search_receipt_from_state(previous))
+    candidates.append(_normalize_last_completed_lane_search_receipt(seed))
+    candidates.append(_completed_lane_search_receipt_from_state(state))
+    chosen={}
+    for candidate in candidates:
+        if candidate:chosen=candidate
+    diagnostics["last_completed_lane_search"]=chosen;diagnostics["scientific_authority"]=False
+    return state
+
+
+def write_problem_generator_state(json_path=DEFAULT_JSON,js_path=DEFAULT_JS,previous_public_state_path=None,last_completed_lane_search_seed=None,**kwargs):
     previous_path=Path(previous_public_state_path) if previous_public_state_path is not None else json_path
     previous=load_problem_generator_state(previous_path)
     storage=kwargs.get("storage") or StorageSettings.from_env()
     blocked_problem_memory=_public_blocked_problem_memory(storage,previous_path)
     state=run_problem_generator(**kwargs,blocked_problem_memory=blocked_problem_memory)
     _merge_portable_review_receipts(state,previous)
+    _merge_last_completed_lane_search(state,previous,last_completed_lane_search_seed)
     public=public_problem_generator_state(state,storage=kwargs.get("storage"));json_path.parent.mkdir(parents=True,exist_ok=True);json_path.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");js_path.write_text("window.PAPER_FIRST_PROBLEM_GENERATOR = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8");return state
 
 if __name__=="__main__":print(json.dumps(write_problem_generator_state(),ensure_ascii=False))

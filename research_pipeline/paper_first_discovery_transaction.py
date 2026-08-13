@@ -91,6 +91,7 @@ def _transaction_material(primary: dict[str, Any], generator: dict[str, Any], qu
         "generator_status": generator.get("status"),
         "generator_raw_sha256": (generator_raw.get("generator") or {}).get("sha256"),
         "semantic_review_raw_sha256": (generator_raw.get("semantic_reviewer") or {}).get("sha256"),
+        "last_completed_lane_search": ((generator.get("search_diagnostics") or {}).get("last_completed_lane_search") or {}),
         "queue_audited": audited,
     }
 
@@ -121,12 +122,23 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
         errors.append("generator-auto-inbox-count-mismatch")
     if int(gs.get("semantic_clear") or 0) + int(gs.get("semantic_blocked") or 0) != generated:
         errors.append("generator-semantic-accounting-mismatch")
+    diagnostics=generator.get("search_diagnostics") or {}
     if generator_schema >= "2.4" and generator_status in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}:
-        diagnostics=generator.get("search_diagnostics") or {}
         lane_rows=[row for row in diagnostics.get("lane_search") or [] if isinstance(row,dict)]
         lane_names={str(row.get("lane") or "") for row in lane_rows}
         if diagnostics.get("scientific_authority") is not False or diagnostics.get("lane_search_complete") is not True or len(lane_rows)!=4 or lane_names!={"CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"}:
             errors.append("generator-lane-search-audit-incomplete")
+    if generator_schema >= "2.5":
+        gp=generator.get("policy") or {};last=diagnostics.get("last_completed_lane_search") or {}
+        if gp.get("last_completed_lane_search_is_portable_zero_authority_receipt") is not True or gp.get("terminal_zero_call_skip_preserves_last_completed_lane_search") is not True:
+            errors.append("generator-last-lane-search-receipt-policy-missing")
+        if last:
+            rows=[row for row in last.get("lane_search") or [] if isinstance(row,dict)];priority=[str(x or "") for x in last.get("lane_search_priority") or []]
+            statuses={"NO_PAIR","REDUCIBLE","CANDIDATE"};valid_lanes={"CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"}
+            if last.get("scientific_authority") is not False or not str(last.get("run_id") or "") or len(rows)!=4 or set(priority)!=valid_lanes or [str(row.get("lane") or "") for row in rows]!=priority or any(str(row.get("status") or "") not in statuses for row in rows):
+                errors.append("generator-last-lane-search-receipt-invalid")
+            if generator_status in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"} and (str(last.get("run_id") or "")!=str(generator.get("run_id") or "") or rows!=[row for row in diagnostics.get("lane_search") or [] if isinstance(row,dict)]):
+                errors.append("generator-last-lane-search-receipt-not-current")
     if generator_status == "GENERATED_ZERO_CANDIDATES" and generated != 0:
         errors.append("zero-status-with-nonzero-candidates")
     if generator_status == "GENERATED_AWAIT_PROBLEM_GATE" and generated <= 0:

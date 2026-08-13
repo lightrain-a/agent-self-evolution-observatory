@@ -402,6 +402,19 @@ class ResearchSystemTest(unittest.TestCase):
         broken=copy.deepcopy(state); broken["paper_first_problem_generator"]["search_diagnostics"]["lane_search"].pop()
         self.assertTrue(any("complete machine-audited status" in error for error in validate_state(broken)))
 
+    def test_v25_last_completed_lane_search_is_zero_authority_portable_receipt(self) -> None:
+        state=copy.deepcopy(self.state);generator=state["paper_first_problem_generator"]
+        generator["schema_version"]="2.5";generator["status"]="GENERATED_ZERO_CANDIDATES";generator["generation_notes"]="All four lanes were audited and none survives."
+        generator["policy"].update({"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"last_completed_lane_search_is_portable_zero_authority_receipt":True,"terminal_zero_call_skip_preserves_last_completed_lane_search":True})
+        priority=["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"];rows=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."} for lane in priority]
+        receipt={"run_id":generator.get("run_id") or "v25-run","generator_status":"GENERATED_ZERO_CANDIDATES","generated_at":"2026-08-13T14:12:22+00:00","lane_search_priority":priority,"lane_search":rows,"generation_notes":"All four lanes audited.","scientific_authority":False}
+        generator["run_id"]=receipt["run_id"];generator["search_diagnostics"]={"lane_search_priority":priority,"lane_search_complete":True,"lane_search":rows,"last_completed_lane_search":receipt,"scientific_authority":False}
+        self.assertEqual(validate_state(state),[])
+        broken=copy.deepcopy(state);broken["paper_first_problem_generator"]["search_diagnostics"]["last_completed_lane_search"]["scientific_authority"]=True
+        self.assertTrue(any("last completed lane-search receipt is invalid" in error for error in validate_state(broken)))
+        stale=copy.deepcopy(state);stale["paper_first_problem_generator"]["search_diagnostics"]["last_completed_lane_search"]["run_id"]="older-run"
+        self.assertTrue(any("must refresh the last completed lane-search receipt" in error for error in validate_state(stale)))
+
 
 if __name__ == "__main__":
     unittest.main()
