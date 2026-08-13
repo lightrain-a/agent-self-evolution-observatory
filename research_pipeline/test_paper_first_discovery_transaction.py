@@ -130,6 +130,13 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         errors=_validate(primary,generator,queue)
         self.assertIn("coverage-skip-not-exhausted",errors)
 
+    def test_validator_rejects_saturation_skip_when_retrieval_window_is_incomplete(self) -> None:
+        primary={"status":"READY","summary":{"verified":4,"source_retrieval_complete":False}}
+        generator={"status":"SKIPPED_SOURCE_COVERAGE_SATURATED","summary":{"primary_evidence_records":4,"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0},"source_coverage":{"coverage_exhausted":True,"unreviewed_lane_linked_sources":0},"policy":{"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"candidates":[]}
+        queue={"summary":{"primary_evidence_records":4,"submitted":0,"audited":0,"passed_problem_gate":0,"blocked_problem_gate":0,"inbox_errors":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0},"audited":[]}
+        errors=_validate(primary,generator,queue)
+        self.assertIn("coverage-skip-retrieval-window-incomplete",errors)
+
     def test_validator_rejects_exhausted_transaction_with_incomplete_portable_receipts(self) -> None:
         primary={"status":"READY","summary":{"verified":4,"prior_reviewed_sources":4,"source_coverage_exhausted":True}}
         generator={"status":"SKIPPED_SOURCE_COVERAGE_SATURATED","summary":{"primary_evidence_records":4,"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0},"source_coverage":{"coverage_exhausted":True,"unreviewed_lane_linked_sources":0},"saturation_memory":{"portable_review_receipts":[{"run_id":"partial","source_refs":["arXiv:1","arXiv:2"],"scientific_authority":False}]},"policy":{"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"primary_source_coverage_receipts_are_inherited_transactionally":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"candidates":[]}

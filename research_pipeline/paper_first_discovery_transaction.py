@@ -131,6 +131,8 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
             errors.append("coverage-skip-generator-accounting-nonzero")
         if coverage.get("coverage_exhausted") is not True or coverage.get("unreviewed_lane_linked_sources") is None or int(coverage.get("unreviewed_lane_linked_sources")) != 0:
             errors.append("coverage-skip-not-exhausted")
+        if ps.get("source_retrieval_complete") is False:
+            errors.append("coverage-skip-retrieval-window-incomplete")
         if gp.get("source_coverage_saturation_skips_model_call") is not True or gp.get("source_coverage_saturation_is_compute_control_not_scientific_negative") is not True or gp.get("new_lane_grounded_primary_source_reopens_generation") is not True or gp.get("primary_source_coverage_receipts_are_inherited_transactionally") is not True:
             errors.append("coverage-skip-policy-missing")
         receipts=[row for row in ((generator.get("saturation_memory") or {}).get("portable_review_receipts") or []) if isinstance(row,dict)]
@@ -236,6 +238,7 @@ def write_problem_discovery_transaction(
                     "eligible_unreviewed":(primary_public.get("summary") or {}).get("eligible_unreviewed",0),
                     "generator_status":generator_public.get("status"),"generated":(generator_public.get("summary") or {}).get("generated",0),
                     "source_coverage_exhausted":bool((primary_public.get("summary") or {}).get("source_coverage_exhausted")),
+                    "source_retrieval_complete":bool((primary_public.get("summary") or {}).get("source_retrieval_complete")),
                     "unreviewed_lane_linked_sources":(primary_public.get("summary") or {}).get("unreviewed_lane_linked_sources",0),
                     "semantic_clear":(generator_public.get("summary") or {}).get("semantic_clear",0),"semantic_blocked":(generator_public.get("summary") or {}).get("semantic_blocked",0),
                     "queue_submitted":(queue_public.get("summary") or {}).get("submitted",0),"queue_passed":(queue_public.get("summary") or {}).get("passed_problem_gate",0),"queue_blocked":(queue_public.get("summary") or {}).get("blocked_problem_gate",0),

@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import hashlib
 import html
+import inspect
 import json
 import re
 import time
 import xml.etree.ElementTree as ET
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from difflib import SequenceMatcher
 from html.parser import HTMLParser
 from pathlib import Path
@@ -41,7 +42,8 @@ DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS = 12.0
 DEFAULT_RECENT_FULLTEXT_FAILURE_COOLDOWN_HOURS = 2.0
 DEFAULT_MAX_PRIMARY_RESPONSE_BYTES = 24 * 1024 * 1024
 DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS = 3.1
-DEFAULT_ARXIV_PER_QUERY = 12
+DEFAULT_ARXIV_PER_QUERY = 48
+DEFAULT_ARXIV_MAX_PAGES = 4
 EMPIRICAL_FACT_EXTRACTION_VERSION = "precision-v2"
 TYPED_EVIDENCE_EXTRACTION_VERSION = "typed-v1"
 DEFAULT_ARXIV_QUERIES = (
@@ -663,10 +665,10 @@ def _default_requester(url: str, *, timeout: float, headers: dict[str, str]):
         return SimpleNamespace(status_code=status_code, text=body.decode(encoding, errors="replace"))
 
 
-def _default_arxiv_search_requester(*, query: str, max_results: int, timeout: float, headers: dict[str, str]):
+def _default_arxiv_search_requester(*, query: str, start: int = 0, max_results: int, timeout: float, headers: dict[str, str]):
     return requests.get(
         "https://export.arxiv.org/api/query",
-        params={"search_query": query, "start": 0, "max_results": max_results, "sortBy": "submittedDate", "sortOrder": "descending"},
+        params={"search_query": query, "start": max(0, int(start)), "max_results": max_results, "sortBy": "submittedDate", "sortOrder": "descending"},
         timeout=timeout,
         headers=headers,
     )
@@ -704,30 +706,65 @@ def discover_arxiv_fallback(
     *,
     queries: tuple[str, ...] = DEFAULT_ARXIV_QUERIES,
     per_query: int = DEFAULT_ARXIV_PER_QUERY,
+    max_pages: int = DEFAULT_ARXIV_MAX_PAGES,
     requester: Callable[..., Any] | None = None,
     min_interval_seconds: float = DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS,
+    now: datetime | None = None,
+    max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
 ) -> tuple[list[dict[str, Any]], list[str]]:
     fetch = requester or _default_arxiv_search_requester
     merged: dict[str, dict[str, Any]] = {}
     errors: list[str] = []
     last_started: float | None = None
+    page_size = max(1, int(per_query))
+    page_cap = max(1, int(max_pages))
+    current = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    cutoff = (current - timedelta(days=max(0.0, float(max_publication_age_days)))).date().isoformat()
+    try:
+        signature = inspect.signature(fetch)
+        supports_start = "start" in signature.parameters or any(param.kind == inspect.Parameter.VAR_KEYWORD for param in signature.parameters.values())
+    except (TypeError, ValueError):
+        supports_start = fetch is _default_arxiv_search_requester
+
     for query in queries:
-        if last_started is not None and min_interval_seconds > 0:
-            wait = min_interval_seconds - (time.monotonic() - last_started)
-            if wait > 0:
-                time.sleep(wait)
-        last_started = time.monotonic()
-        try:
-            response = fetch(query=query, max_results=per_query, timeout=30.0, headers={"User-Agent": "Agent-Self-Evolution-Observatory/arxiv-fallback"})
-            status = int(getattr(response, "status_code", 200))
-            if status >= 400:
-                raise RuntimeError(f"HTTP {status}")
-            for row in parse_arxiv_atom(str(getattr(response, "text", "") or "")):
-                arxiv_id = _arxiv_id(row)
-                if arxiv_id and _relevance_score(row) >= 2:
-                    merged.setdefault(arxiv_id, row)
-        except Exception as error:
-            errors.append(f"{query}:{type(error).__name__}:{str(error)[:160]}")
+        query_window_complete = False
+        oldest_seen = ""
+        for page_index in range(page_cap):
+            if page_index > 0 and not supports_start:
+                break
+            if last_started is not None and min_interval_seconds > 0:
+                wait = min_interval_seconds - (time.monotonic() - last_started)
+                if wait > 0:
+                    time.sleep(wait)
+            last_started = time.monotonic()
+            try:
+                kwargs = {"query": query, "max_results": page_size, "timeout": 30.0, "headers": {"User-Agent": "Agent-Self-Evolution-Observatory/arxiv-fallback"}}
+                if supports_start:
+                    kwargs["start"] = page_index * page_size
+                response = fetch(**kwargs)
+                status = int(getattr(response, "status_code", 200))
+                if status >= 400:
+                    raise RuntimeError(f"HTTP {status}")
+                parsed = parse_arxiv_atom(str(getattr(response, "text", "") or ""))
+                if not parsed:
+                    query_window_complete = True
+                    break
+                publication_dates = sorted(str((row.get("metadata") or {}).get("publicationDate") or "") for row in parsed if str((row.get("metadata") or {}).get("publicationDate") or ""))
+                if publication_dates:
+                    oldest_seen = publication_dates[0] if not oldest_seen else min(oldest_seen, publication_dates[0])
+                for row in parsed:
+                    arxiv_id = _arxiv_id(row)
+                    if arxiv_id and _relevance_score(row) >= 2:
+                        merged.setdefault(arxiv_id, row)
+                if len(parsed) < page_size or (oldest_seen and oldest_seen <= cutoff):
+                    query_window_complete = True
+                    break
+            except Exception as error:
+                errors.append(f"{query}:{type(error).__name__}:{str(error)[:160]}")
+                query_window_complete = True
+                break
+        if not query_window_complete:
+            errors.append(f"{query}:FreshnessWindowTruncated:oldest={oldest_seen or 'unknown'}:cutoff={cutoff}:pages={page_cap}:page_size={page_size}")
     rows = list(merged.values())
     rows.sort(key=lambda row: (str((row.get("metadata") or {}).get("publicationDate") or ""), _relevance_score(row), str(row.get("title") or "")), reverse=True)
     return rows, errors
@@ -948,6 +985,9 @@ def build_primary_evidence_pool(
             "stale_s2_triggers_primary_arxiv_fallback": True,
             "fresh_s2_is_augmented_by_preregistered_arxiv_lanes": bool(augment_fresh_corpus_with_arxiv),
             "arxiv_augmentation_failure_does_not_invalidate_fresh_corpus": True,
+            "arxiv_augmentation_pages_until_freshness_boundary": True,
+            "arxiv_augmentation_page_size": int(DEFAULT_ARXIV_PER_QUERY),
+            "arxiv_augmentation_max_pages": int(DEFAULT_ARXIV_MAX_PAGES),
             "arxiv_fallback_is_primary_metadata_not_a_scientific_claim": True,
             "primary_publication_age_is_bounded": True,
             "maximum_publication_age_days": max_publication_age_days,
@@ -980,6 +1020,7 @@ def build_primary_evidence_pool(
             "source_exposure_does_not_relax_relevance_or_freshness": True,
             "source_coverage_exploration_prefers_preregistered_lanes": True,
             "source_coverage_saturation_is_compute_control_not_scientific_negative": True,
+            "source_coverage_exhaustion_requires_complete_retrieval_window": True,
             "new_lane_grounded_source_reopens_generation": True,
             "source_coverage_anchor_count": int(coverage_anchor_count),
             "candidate_generation_authority": False,
@@ -1023,6 +1064,7 @@ def build_primary_evidence_pool(
             "unreviewed_lane_linked_sources": 0,
             "unreviewed_no_lane_sources": 0,
             "source_coverage_exhausted": False,
+            "source_retrieval_complete": False,
             "coverage_anchor_count": int(coverage_anchor_count),
             "eligible_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
             "selected_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
@@ -1062,6 +1104,8 @@ def build_primary_evidence_pool(
                 queries=arxiv_queries,
                 requester=arxiv_search_requester,
                 min_interval_seconds=arxiv_query_interval_seconds,
+                now=current,
+                max_publication_age_days=max_publication_age_days,
             )
             discovery_corpus, augmentation_added = _augment_discovery_corpus(discovery_corpus, augmentation_rows)
             public_state["summary"].update({
@@ -1081,6 +1125,8 @@ def build_primary_evidence_pool(
             queries=arxiv_queries,
             requester=arxiv_search_requester,
             min_interval_seconds=arxiv_query_interval_seconds,
+            now=current,
+            max_publication_age_days=max_publication_age_days,
         )
         discovery_corpus = {"papers": fallback_rows}
         public_state["summary"]["discovery_mode"] = "arxiv-primary-fallback"
@@ -1088,6 +1134,7 @@ def build_primary_evidence_pool(
         public_state["discovery_errors"] = discovery_errors
         private["discovery_errors"] = discovery_errors
 
+    source_retrieval_complete = not discovery_errors
     source_exposure_counts, saturation_ledger_runs, portable_review_receipts_merged, portable_review_receipts = _source_exposure_state(
         storage,
         portable_generator_state_path=portable_generator_state_path,
@@ -1124,7 +1171,7 @@ def build_primary_evidence_pool(
     reviewed_lane_linked_refs = {ref for ref in eligible_lane_linked_refs if int(source_exposure_counts.get(ref, 0)) > 0}
     unreviewed_lane_linked_refs = eligible_lane_linked_refs - reviewed_lane_linked_refs
     unreviewed_no_lane_refs = {_source_ref(paper) for paper in eligible_candidates if not _paper_lane_keys(paper) and int(source_exposure_counts.get(_source_ref(paper), 0)) == 0}
-    source_coverage_exhausted = bool(source_scheduler_active and not unreviewed_lane_linked_refs)
+    source_coverage_exhausted = bool(source_scheduler_active and source_retrieval_complete and not unreviewed_lane_linked_refs)
     public_state["summary"].update({
         "selected": len(candidates),
         "lane_floor": int(lane_floor),
@@ -1144,6 +1191,7 @@ def build_primary_evidence_pool(
         "unreviewed_lane_linked_sources": len(unreviewed_lane_linked_refs),
         "unreviewed_no_lane_sources": len(unreviewed_no_lane_refs),
         "source_coverage_exhausted": source_coverage_exhausted,
+        "source_retrieval_complete": source_retrieval_complete,
         "coverage_anchor_count": min(max(0, int(coverage_anchor_count)), len(candidates)),
         "eligible_lane_counts": eligible_lane_counts,
         "selected_lane_counts": selected_lane_counts,
@@ -1170,6 +1218,7 @@ def build_primary_evidence_pool(
         "unreviewed_lane_linked_sources": len(unreviewed_lane_linked_refs),
         "unreviewed_no_lane_sources": len(unreviewed_no_lane_refs),
         "coverage_exhausted": source_coverage_exhausted,
+        "source_retrieval_complete": source_retrieval_complete,
         "coverage_anchor_count": min(max(0, int(coverage_anchor_count)), len(candidates)),
         "selected": [
             {"ref": _source_ref(paper), "prior_review_exposure": selected_exposures.get(_source_ref(paper), 0), "global_rank": eligible_rank.get(_source_ref(paper))}

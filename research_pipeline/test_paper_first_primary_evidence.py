@@ -11,7 +11,7 @@ from unittest.mock import patch
 import requests
 
 from .config import StorageSettings
-from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, _paper_lane_keys, _source_exposure_state, build_primary_evidence_pool, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
+from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, _paper_lane_keys, _source_exposure_state, build_primary_evidence_pool, discover_arxiv_fallback, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
 
 
 class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
@@ -123,6 +123,36 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
     def test_parse_arxiv_atom_extracts_primary_metadata(self) -> None:
         rows=parse_arxiv_atom('<feed xmlns="http://www.w3.org/2005/Atom"><entry><id>https://arxiv.org/abs/2608.12345v2</id><title> Self-Evolving Agent </title><summary> primary abstract </summary><published>2026-08-12T00:00:00Z</published></entry></feed>')
         self.assertEqual(len(rows),1); self.assertEqual(rows[0]["metadata"]["externalIds"]["ArXiv"],"2608.12345"); self.assertEqual(rows[0]["title"],"Self-Evolving Agent")
+
+    def test_arxiv_fallback_pages_until_freshness_boundary(self) -> None:
+        calls=[]
+        pages={
+            0:[("2608.30001","2026-08-12"),("2608.30002","2026-08-10")],
+            2:[("2607.30003","2026-07-01"),("2606.30004","2026-06-10")],
+        }
+        def paged_search(*,query:str,start:int,max_results:int,timeout:float,headers:dict[str,str]):
+            calls.append(start);entries=[]
+            for aid,date in pages.get(start,[]):
+                entries.append(f'<entry><id>https://arxiv.org/abs/{aid}v1</id><title>Self-Evolving Agent {aid}</title><summary>A self-evolving agent improves persistent adaptation.</summary><published>{date}T00:00:00Z</published></entry>')
+            return SimpleNamespace(status_code=200,text='<feed xmlns="http://www.w3.org/2005/Atom">'+''.join(entries)+'</feed>')
+        rows,errors=discover_arxiv_fallback(queries=('q',),per_query=2,max_pages=4,requester=paged_search,min_interval_seconds=0,now=datetime(2026,8,13,tzinfo=timezone.utc),max_publication_age_days=60)
+        self.assertEqual(calls,[0,2])
+        self.assertEqual(len(rows),4)
+        self.assertEqual(errors,[])
+
+    def test_arxiv_fallback_marks_bounded_truncation_before_freshness_boundary(self) -> None:
+        calls=[]
+        def paged_search(*,query:str,start:int,max_results:int,timeout:float,headers:dict[str,str]):
+            calls.append(start);entries=[]
+            for offset in range(max_results):
+                aid=f"2608.{start+offset+40000:05d}"
+                entries.append(f'<entry><id>https://arxiv.org/abs/{aid}v1</id><title>Self-Evolving Agent {aid}</title><summary>A self-evolving agent improves persistent adaptation.</summary><published>2026-08-01T00:00:00Z</published></entry>')
+            return SimpleNamespace(status_code=200,text='<feed xmlns="http://www.w3.org/2005/Atom">'+''.join(entries)+'</feed>')
+        rows,errors=discover_arxiv_fallback(queries=('q',),per_query=2,max_pages=2,requester=paged_search,min_interval_seconds=0,now=datetime(2026,8,13,tzinfo=timezone.utc),max_publication_age_days=60)
+        self.assertEqual(calls,[0,2])
+        self.assertEqual(len(rows),4)
+        self.assertEqual(len(errors),1)
+        self.assertIn('FreshnessWindowTruncated',errors[0])
 
     def test_lane_floor_adds_only_highest_ranked_sparse_lane_representative(self) -> None:
         papers=[]
@@ -287,12 +317,31 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
             public,private=build_primary_evidence_pool(storage=storage,corpus_path=corpus,requester=self.fake_requester,augment_fresh_corpus_with_arxiv=False,coverage_anchor_count=1,now=datetime(2026,8,13,tzinfo=timezone.utc),min_interval_seconds=0,max_papers=3,cache_dir=root/"primary-cache")
         self.assertTrue(public["summary"]["source_coverage_scheduler_active"])
         self.assertTrue(public["summary"]["source_coverage_exhausted"])
+        self.assertTrue(public["summary"]["source_retrieval_complete"])
         self.assertEqual(public["summary"]["unreviewed_lane_linked_sources"],0)
         self.assertEqual(public["summary"]["reviewed_lane_linked_sources"],public["summary"]["eligible_lane_linked_sources"])
         self.assertTrue(public["policy"]["source_coverage_saturation_is_compute_control_not_scientific_negative"])
         self.assertTrue(public["policy"]["new_lane_grounded_source_reopens_generation"])
         self.assertTrue(private["source_coverage"]["coverage_exhausted"])
         self.assertFalse(private["source_coverage"]["scientific_authority"])
+
+    def test_incomplete_arxiv_freshness_window_cannot_claim_source_coverage_exhausted(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);corpus=self.corpus(root);discovery=root/"paper-first-problem-discovery";discovery.mkdir(parents=True)
+            (discovery/"discovery-saturation-ledger.json").write_text(json.dumps({"schema_version":"1.0","runs":[{"source_refs":[f"arXiv:2608.0000{i}" for i in range(1,5)],"scientific_authority":False}]}),encoding="utf-8")
+            def truncated_search(*,query:str,start:int,max_results:int,timeout:float,headers:dict[str,str]):
+                entries=[]
+                for offset in range(max_results):
+                    idx=(offset%4)+1;aid=f"2608.0000{idx}"
+                    entries.append(f'<entry><id>https://arxiv.org/abs/{aid}v1</id><title>Self-Evolving Agent Skills {idx}</title><summary>A self-evolving agent skill harness improves persistent adaptation.</summary><published>2026-08-0{idx}T00:00:00Z</published></entry>')
+                return SimpleNamespace(status_code=200,text='<feed xmlns="http://www.w3.org/2005/Atom">'+''.join(entries)+'</feed>')
+            public,private=build_primary_evidence_pool(storage=storage,corpus_path=corpus,requester=self.fake_requester,arxiv_search_requester=truncated_search,arxiv_queries=('q',),arxiv_query_interval_seconds=0,coverage_anchor_count=1,now=datetime(2026,8,13,tzinfo=timezone.utc),min_interval_seconds=0,max_papers=3,cache_dir=root/"primary-cache")
+        self.assertTrue(public["summary"]["source_coverage_scheduler_active"])
+        self.assertEqual(public["summary"]["unreviewed_lane_linked_sources"],0)
+        self.assertFalse(public["summary"]["source_retrieval_complete"])
+        self.assertFalse(public["summary"]["source_coverage_exhausted"])
+        self.assertFalse(private["source_coverage"]["source_retrieval_complete"])
+        self.assertTrue(any('FreshnessWindowTruncated' in row for row in public["discovery_errors"]))
 
     def test_fresh_corpus_fetches_primary_pages_and_keeps_full_abstract_private(self) -> None:
         with tempfile.TemporaryDirectory() as td:
