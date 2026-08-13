@@ -113,7 +113,7 @@ def main() -> None:
         require((generator.get("policy") or {}).get("zero_candidate_rationale_required") is True and (generator.get("policy") or {}).get("discovery_saturation_memory_has_zero_scientific_authority") is True and (generator.get("saturation_memory") or {}).get("scientific_authority") is False, f"browser saturation-memory authority state is stale: {generator}")
         if generator.get("status") == "GENERATED_ZERO_CANDIDATES": require(bool(str(generator.get("generation_notes") or "").strip()), "zero-candidate rationale missing from browser state")
         require("SATURATION / DEAD-END MEMORY" in system["text"] and "precision-v2" in system["text"], "problem-discovery precision/saturation controls are not rendered")
-        require("SCIENTIFIC OBJECT AXIS" in system["text"] and "world_model" in system["text"] and "parametric_model_state" in system["text"] and "object-grounded reviewed=" in system["text"] and "v2.7 · MACHINE-ENFORCED" in system["text"], "scientific-object discovery axis is not rendered")
+        require("SCIENTIFIC OBJECT AXIS" in system["text"] and "world_model" in system["text"] and "parametric_model_state" in system["text"] and "object-grounded reviewed=" in system["text"] and ("v2.7 · MACHINE-ENFORCED" in system["text"] or "v2.8 · MACHINE-ENFORCED" in system["text"]), "scientific-object discovery axis is not rendered")
         require((system["preSummary"].get("audited"), system["preSummary"].get("execution_ready"), system["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system['preSummary']}")
         iteration = system["iterationSummary"]
         infra_only = iteration.get("diagnosis_counts") == {"infrastructure-error": 4}
