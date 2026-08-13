@@ -8,7 +8,7 @@ from typing import Any
 
 from .config import PROJECT_ROOT, StorageSettings
 from .paper_first_primary_evidence import load_private_primary_pool, private_primary_pool_path
-from .paper_first_problem_discovery_contract import audit_problem_candidate
+from .paper_first_problem_discovery_contract import DISCOVERY_LANES, audit_problem_candidate
 from .public_state_redaction import redact_private_paths
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-gate-queue.json"
@@ -92,7 +92,9 @@ def _candidate_snapshot(candidate: dict[str, Any]) -> dict[str, Any]:
         for key in (
             "candidate_id",
             "title",
-            "empirical_contradiction",
+            "discovery_lane",
+            "empirical_evidence",
+            "lane_evidence",
             "irreducible_object",
             "mature_theory_baselines",
             "same_information_nonreducibility",
@@ -105,6 +107,15 @@ def _candidate_snapshot(candidate: dict[str, Any]) -> dict[str, Any]:
             "endpoint_headroom_requirement",
         )
     }
+
+
+def _count_by_lane(rows: list[dict[str, Any]]) -> dict[str, int]:
+    counts = {lane: 0 for lane in DISCOVERY_LANES}
+    counts["OTHER"] = 0
+    for row in rows:
+        lane = str(row.get("discovery_lane") or "").strip().upper()
+        counts[lane if lane in counts else "OTHER"] += 1
+    return counts
 
 
 def build_problem_gate_queue(
@@ -150,6 +161,7 @@ def build_problem_gate_queue(
         row = {
             "candidate_id": cid,
             "title": str(candidate.get("title") or ""),
+            "discovery_lane": str(candidate.get("discovery_lane") or "").strip().upper(),
             "source_inbox": str(candidate.get("_source_inbox") or ""),
             "candidate": snapshot,
             "audit": audit,
@@ -168,6 +180,7 @@ def build_problem_gate_queue(
             passed.append({
                 "candidate_id": cid,
                 "title": row["title"],
+                "discovery_lane": row["discovery_lane"],
                 "status": "AWAIT_HUMAN_PAPER_DESIGN_REVIEW",
                 "paper_design_eligible": True,
                 "source_inbox": row["source_inbox"],
@@ -190,6 +203,7 @@ def build_problem_gate_queue(
         {
             "candidate_id": row["candidate_id"],
             "title": row["title"],
+            "discovery_lane": row["discovery_lane"],
             "status": "PROBLEM_GATE_BLOCKED",
             "source_inbox": row["source_inbox"],
             "blockers": list(row["audit"].get("blockers") or []),
@@ -199,7 +213,7 @@ def build_problem_gate_queue(
     ]
 
     return {
-        "schema_version": "1.1",
+        "schema_version": "2.0",
         "generated_at": _now(),
         "source_inbox": str(manual_source),
         "source_inboxes": [str(path) for path in sources],
@@ -210,6 +224,8 @@ def build_problem_gate_queue(
             "candidate_inbox_is_not_authority": True,
             "manual_and_auto_inboxes_are_merged": True,
             "verified_primary_evidence_registry_required_for_submitted_candidates": True,
+            "multi_lane_candidate_schema_required": True,
+            "lane_contract_independent_review_required": True,
             "independent_semantic_reduction_review_required": True,
             "semantic_reviewer_is_block_only": True,
             "all_candidates_require_problem_gate": True,
@@ -228,6 +244,9 @@ def build_problem_gate_queue(
             "paper_design_eligible": len(passed),
             "inbox_errors": len(inbox_errors),
             "primary_evidence_records": len(registry),
+            "submitted_by_lane": _count_by_lane(candidates),
+            "passed_by_lane": _count_by_lane(passed),
+            "blocked_by_lane": _count_by_lane(blocked),
             "method_authorized": 0,
             "experiment_authorized": 0,
             "p0_authorized": 0,

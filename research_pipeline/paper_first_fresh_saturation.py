@@ -44,6 +44,7 @@ REDUCTION_PATTERNS: tuple[dict[str, Any], ...] = (
     {"key":"durable-runtime-improvement-vs-aging","mature_theories":["non-stationary stochastic dynamical systems / Lyapunov stability","continual-memory interference and stability-plasticity","reliability and maintenance engineering","state-space system identification"],"veto":"Fixed-weight durable runtime state producing either compounding improvement or aging is not a new Agent object when the sign is expressible as monotonicity/contraction or interference/drift of a state-transition operator with respect to task value."},
     {"key":"scientific-claim-decomposition-dependence","mature_theories":["claim decomposition and verifier alignment","compositional verification / constraint coverage","specification refinement","proof/decomposition traceability"],"veto":"Scientific verification that changes with a legal subclaim decomposition is not a new self-evolution object when decomposition quality, compositional infeasibility, and verifier alignment already determine downstream claim judgments under the same evidence."},
     {"key":"agent-version-rollback-vs-external-effects","mature_theories":["semantic transactions for agent workflows","irreversible-effect safety / execution fidelity","checkpoint-restore and semantic rollback semantics","compensating transactions and recovery"],"veto":"Rolling back an agent version while external side effects persist is not a new self-evolution object when semantic transactions, irreversible-transition safety, and checkpoint-recovery already formalize commit, rollback, replay, fork, compensation, and audit of external state."},
+    {"key":"procedural-memory-nonmonotonicity","mature_theories":["nonmonotonic / defeasible logic","belief revision / AGM-style belief change","rule-conflict and priority semantics"],"veto":"Adding a relevant memory, skill, or procedural rule that retracts, suppresses, or harms previously correct behavior is not a new self-evolution object when nonmonotonic reasoning or belief revision expresses the same retraction under the same conflict information."},
 )
 
 DRAFTS: tuple[dict[str, Any], ...] = (
@@ -87,6 +88,7 @@ DRAFTS: tuple[dict[str, Any], ...] = (
     {"id":"C4","title":"Compounding Self-Evolution versus Agent Aging in Fixed-Weight Durable Runtimes","decision":"STOP_REDUCTION","reduction":"durable-runtime-improvement-vs-aging"},
     {"id":"C5","title":"Decomposition-Dependent Verification of Autonomous Scientific Claims","decision":"STOP_REDUCTION","reduction":"scientific-claim-decomposition-dependence"},
     {"id":"C6","title":"Why Agent-Version Rollback Cannot Undo Irreversible External Consequences","decision":"STOP_REDUCTION","reduction":"agent-version-rollback-vs-external-effects"},
+    {"id":"C7","title":"Non-Monotone Coverage after Adding Relevant Procedural Memory","decision":"STOP_REDUCTION","reduction":"procedural-memory-nonmonotonicity"},
 )
 
 POLICY: dict[str, Any] = {
@@ -127,11 +129,11 @@ def build_fresh_saturation_state() -> dict[str, Any]:
         "reduction_patterns":[dict(row) for row in REDUCTION_PATTERNS],
         "generator_revision":{
             "old_failure":"Free-form generators produced mathematically named versions of mature problems and malformed long JSON; formatting repair was treated as advisory-only and never as scientific evidence.",
-            "new_rule":"Start from a documented contradiction between recent primary-source results; query the accumulated Generic Reduction / Negative-Space Ledger first; name the strongest mature theories before naming an Agent candidate; generate only if an exact same-information prediction remains outside those theories.",
-            "required_fields":["empirical contradiction","irreducible object","mature-theory non-reducibility","same-information baseline","cheapest problem falsifier","endpoint headroom"],
+            "new_rule":"Use four empirically grounded discovery lanes—CONTRADICTION, CONVERGENT_FAILURE, ASSUMPTION_BREAK, and UNEXPLAINED_BOUNDARY. Every lane must satisfy its machine evidence contract, query the Generic Reduction / Negative-Space Ledger, name the strongest mature theories before naming an Agent candidate, and survive the same downstream non-reduction gates.",
+            "required_fields":["discovery lane","two primary evidence items","lane-specific machine evidence","irreducible object","mature-theory non-reducibility","same-information baseline","cheapest problem falsifier","endpoint headroom"],
         },
         "decision":"NO_FRESH_SURVIVOR_CURRENT_SCAN",
-        "next_action":"Continue contradiction-first literature discovery in less-saturated subdomains; do not create methods, experiments, P0 entries, or GPU work until a problem survives the mature-theory veto.",
+        "next_action":"Continue four-lane empirical problem discovery; do not create methods, experiments, P0 entries, or GPU work until a problem survives its lane contract and the shared mature-theory veto.",
     }
 
 

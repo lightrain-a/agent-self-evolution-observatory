@@ -135,7 +135,7 @@ def run_cycle(
         if sync_literature:
             report["steps"].append(_step("literature-sync", _sync_literature))
         if mode in {"weekly", "manual"}:
-            # Active paper discovery is contradiction-first and consumes only verified primary evidence.
+            # Active paper discovery uses four empirically grounded lanes and consumes only verified primary evidence.
             # Old solution-first banks are rebuilt below as archival inspiration and cannot bypass this queue.
             report["steps"].append(_step("paper-first-primary-evidence-refresh", write_primary_evidence_pool))
             report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))

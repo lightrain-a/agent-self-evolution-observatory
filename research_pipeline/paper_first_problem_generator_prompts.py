@@ -4,81 +4,149 @@ import json
 from typing import Any
 
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS
+from .paper_first_problem_discovery_contract import (
+    DISCOVERY_LANES,
+    FORBIDDEN_DISCOVERY_LANES,
+    LANE_EVIDENCE_REQUIRED,
+    LANE_MACHINE_CONTRACTS,
+    LANE_SOURCE_ROLES,
+)
+
+
+def _lane_contract_payload() -> list[dict[str, Any]]:
+    return [
+        {
+            "lane": lane,
+            "source_roles": list(LANE_SOURCE_ROLES[lane]),
+            "required_lane_evidence": list(LANE_EVIDENCE_REQUIRED[lane]),
+            "machine_contract": LANE_MACHINE_CONTRACTS[lane],
+        }
+        for lane in DISCOVERY_LANES
+    ]
 
 
 def generator_prompt(records: list[dict[str, Any]]) -> str:
-    sources=[{
-        "ref":row["ref"],"title":row["title"],"primary_url":row["primary_url"],
-        "source_sha256":row["source_sha256"],"abstract":str(row.get("abstract") or "")[:2200],
-        "empirical_facts":[
-            {"section":str(fact.get("section") or ""),"evidence_tier":str(fact.get("evidence_tier") or ""),"text":str(fact.get("text") or "")[:520]}
-            for fact in (row.get("empirical_facts") or [])[:4] if isinstance(fact,dict)
+    sources = [
+        {
+            "ref": row["ref"],
+            "title": row["title"],
+            "primary_url": row["primary_url"],
+            "source_sha256": row["source_sha256"],
+            "abstract": str(row.get("abstract") or "")[:2200],
+            "empirical_facts": [
+                {"section": str(fact.get("section") or ""), "evidence_tier": str(fact.get("evidence_tier") or ""), "text": str(fact.get("text") or "")[:520]}
+                for fact in (row.get("empirical_facts") or [])[:4]
+                if isinstance(fact, dict)
+            ],
+            "typed_evidence": {
+                key: [{"section": str(fact.get("section") or ""), "evidence_tier": str(fact.get("evidence_tier") or ""), "text": str(fact.get("text") or "")[:520]} for fact in ((row.get("typed_evidence") or {}).get(key) or [])[:2] if isinstance(fact, dict)]
+                for key in ("operational_assumptions", "measured_failures", "boundary_observations")
+            },
+        }
+        for row in records[:32]
+    ]
+    reductions = [{"key": row["key"], "veto": row["veto"]} for row in REDUCTION_PATTERNS]
+    lane_contracts = _lane_contract_payload()
+    shape = {
+        "candidates": [
+            {
+                "candidate_id": "AUTO-1",
+                "title": "problem title",
+                "discovery_lane": "CONTRADICTION|CONVERGENT_FAILURE|ASSUMPTION_BREAK|UNEXPLAINED_BOUNDARY",
+                "empirical_evidence": {
+                    "source_a": {"ref": "arXiv:...", "claim": "grounded source evidence", "evidence_role": "EMPIRICAL_FACT|OPERATIONAL_ASSUMPTION"},
+                    "source_b": {"ref": "arXiv:...", "claim": "grounded source evidence", "evidence_role": "EMPIRICAL_FACT"},
+                    "relation": "why these two evidence items instantiate the selected lane",
+                },
+                "lane_evidence": {"lane-specific-required-field": "..."},
+                "irreducible_object": "formal/scientific object, not an algorithm",
+                "mature_theory_baselines": [
+                    {"name": "theory 1", "same_information_projection": "...", "reduction_test": "..."},
+                    {"name": "theory 2", "same_information_projection": "...", "reduction_test": "..."},
+                ],
+                "same_information_nonreducibility": {"claim": "...", "why_each_baseline_cannot_express_prediction": "..."},
+                "exact_prediction": "...",
+                "strongest_same_information_baseline": "...",
+                "domain_transfer_audit": {"mature_source_domain": "...", "mature_object": "...", "why_not_domain_transfer": "..."},
+                "saturation_scan": {"checked": True, "matched_patterns": [], "rejected_patterns": [{"key": "known-ledger-key", "reason": "why the exact ledger veto does not apply under the same information"}]},
+                "cheapest_problem_falsifier": "...",
+                "endpoint_headroom_requirement": "...",
+            }
         ],
-    } for row in records[:32]]
-    reductions=[{"key":row["key"],"veto":row["veto"]} for row in REDUCTION_PATTERNS]
-    shape={"candidates":[{
-        "candidate_id":"AUTO-1","title":"problem title",
-        "empirical_contradiction":{
-            "source_a":{"ref":"arXiv:...","claim":"fact reported by source A"},
-            "source_b":{"ref":"arXiv:...","claim":"fact reported by source B"},
-            "tension":"why the two reported facts create a scientific contradiction"},
-        "irreducible_object":"formal/scientific object, not an algorithm",
-        "mature_theory_baselines":[
-            {"name":"theory 1","same_information_projection":"...","reduction_test":"..."},
-            {"name":"theory 2","same_information_projection":"...","reduction_test":"..."}],
-        "same_information_nonreducibility":{"claim":"...","why_each_baseline_cannot_express_prediction":"..."},
-        "exact_prediction":"...","strongest_same_information_baseline":"...",
-        "domain_transfer_audit":{"mature_source_domain":"...","mature_object":"...","why_not_domain_transfer":"..."},
-        "saturation_scan":{"checked":True,"matched_patterns":[]},
-        "cheapest_problem_falsifier":"...","endpoint_headroom_requirement":"..."}],
-        "generation_notes":"may explicitly state that zero candidates survive"}
+        "generation_notes": "may explicitly state that zero candidates survive",
+    }
     return (
-        "Strict contradiction-first ICLR research-problem generator for self-evolving LLM agents. "
-        "Return zero to five research PROBLEMS, never methods. Zero is preferred to a weak candidate.\n\n"
-        "Use ONLY the verified primary-source registry below. A contradiction must cite two distinct refs exactly as provided. "
-        "Claims must be supported by the supplied primary abstract or one of its bounded deterministic full-text empirical-fact candidates; future-work statements are not empirical facts. "
+        "Strict evidence-first multi-lane ICLR research-PROBLEM generator for self-evolving LLM agents. "
+        "Return zero to five research problems, never methods. Zero is preferred to a weak candidate. Do not force lane balance.\n\n"
+        "ALLOWED DISCOVERY LANES are machine contracts, not stylistic labels:\n"
+        + json.dumps(lane_contracts, ensure_ascii=False, separators=(",", ":"))
+        + "\nFORBIDDEN LANES: "
+        + json.dumps(list(FORBIDDEN_DISCOVERY_LANES), ensure_ascii=False)
+        + ". MISSING_CELL is forbidden because open-world literature absence is not machine-provable; SHARED_LIMITATION is forbidden without empirical failure evidence; PURE_TOPIC_BRAINSTORM is forbidden because it has no primary-evidence anchor.\n\n"
+        "Use ONLY the verified primary-source registry below. Every candidate must cite two distinct refs exactly as provided. "
+        "Claims must be supported by the supplied primary abstract or one bounded deterministic full-text empirical-fact candidate. "
+        "For ASSUMPTION_BREAK only, source_a may be an explicit OPERATIONAL_ASSUMPTION grounded in primary text; all other source roles are EMPIRICAL_FACT. "
+        "Future-work statements, author wishes, keyword absence, and a missing literature cell are not admissible evidence. "
         "Empirical-fact candidates are discovery evidence, not automatic ground truth, and will be independently grounded before Problem Gate eligibility.\n\n"
         "Before naming a new object, project identical observable information into at least two mature theories. "
         "If either theory expresses the exact prediction, discard the candidate. Domain transfer, mathematical renaming, another benchmark/metric/taxonomy/test-generator, or combining occupied atoms is not novelty.\n\n"
-        "HARD NEGATIVE-SPACE VETO:\n"+json.dumps(reductions,ensure_ascii=False,separators=(",",":"))+
-        "\n\nVERIFIED PRIMARY SOURCES (private abstracts + bounded full-text fact candidates; output only ref + paraphrased claim):\n"+
-        json.dumps(sources,ensure_ascii=False,separators=(",",":"))+
-        "\n\nReturn syntactically valid JSON only, shape:\n"+json.dumps(shape,ensure_ascii=False,separators=(",",":"))+
-        "\nNo markdown/trailing commas. IDs AUTO-1..AUTO-5. Do not include authority fields; code forces them false."
+        "HARD NEGATIVE-SPACE VETO:\n"
+        + json.dumps(reductions, ensure_ascii=False, separators=(",", ":"))
+        + "\nSATURATION FIELD CONTRACT: matched_patterns may contain ONLY exact known ledger keys that actually apply; any exact match hard-blocks the candidate. If you explicitly considered a known key and argue it does NOT apply, put {key:<exact known key>, reason:<why>} in rejected_patterns instead. Never append explanatory prose to matched_patterns.\n"
+        + "\n\nVERIFIED PRIMARY SOURCES (private abstracts + bounded full-text fact candidates; output only ref + grounded claim + evidence_role):\n"
+        + json.dumps(sources, ensure_ascii=False, separators=(",", ":"))
+        + "\n\nReturn syntactically valid JSON only, shape:\n"
+        + json.dumps(shape, ensure_ascii=False, separators=(",", ":"))
+        + "\nNo markdown/trailing commas. IDs AUTO-1..AUTO-5. Do not include authority fields; code forces them false."
     )
 
 
 def reviewer_prompt(candidates: list[dict[str, Any]], evidence_by_ref: dict[str, dict[str, Any]]) -> str:
-    reductions=[{"key":row["key"],"mature_theories":row["mature_theories"],"veto":row["veto"]} for row in REDUCTION_PATTERNS]
-    stripped=[{k:v for k,v in row.items() if k not in {"semantic_reduction_review","authority"}} for row in candidates]
-    refs=[]
+    reductions = [{"key": row["key"], "mature_theories": row["mature_theories"], "veto": row["veto"]} for row in REDUCTION_PATTERNS]
+    lane_contracts = _lane_contract_payload()
+    stripped = [{k: v for k, v in row.items() if k not in {"semantic_reduction_review", "authority"}} for row in candidates]
+    refs: list[str] = []
     for row in candidates:
-        contradiction=row.get("empirical_contradiction") or {}
-        for source_key in ("source_a","source_b"):
-            ref=str((contradiction.get(source_key) or {}).get("ref") or "").strip()
+        evidence = row.get("empirical_evidence") or {}
+        for source_key in ("source_a", "source_b"):
+            ref = str((evidence.get(source_key) or {}).get("ref") or "").strip()
             if ref and ref not in refs:
                 refs.append(ref)
-    evidence=[]
+    evidence_rows = []
     for ref in refs:
-        record=evidence_by_ref.get(ref) or {}
-        evidence.append({
-            "ref":ref,
-            "title":record.get("title"),
-            "source_sha256":record.get("source_sha256"),
-            "abstract":record.get("abstract"),
-            "empirical_facts":[
-                {"section":str(fact.get("section") or ""),"evidence_tier":str(fact.get("evidence_tier") or ""),"text":str(fact.get("text") or "")[:520]}
-                for fact in (record.get("empirical_facts") or [])[:4] if isinstance(fact,dict)
-            ],
-        })
+        record = evidence_by_ref.get(ref) or {}
+        evidence_rows.append(
+            {
+                "ref": ref,
+                "title": record.get("title"),
+                "source_sha256": record.get("source_sha256"),
+                "abstract": record.get("abstract"),
+                "empirical_facts": [
+                    {"section": str(fact.get("section") or ""), "evidence_tier": str(fact.get("evidence_tier") or ""), "text": str(fact.get("text") or "")[:520]}
+                    for fact in (record.get("empirical_facts") or [])[:4]
+                    if isinstance(fact, dict)
+                ],
+                "typed_evidence": {
+                    key: [{"section": str(fact.get("section") or ""), "evidence_tier": str(fact.get("evidence_tier") or ""), "text": str(fact.get("text") or "")[:520]} for fact in ((record.get("typed_evidence") or {}).get(key) or [])[:2] if isinstance(fact, dict)]
+                    for key in ("operational_assumptions", "measured_failures", "boundary_observations")
+                },
+            }
+        )
     return (
-        "Independent BLOCK-ONLY semantic reduction + source-grounding reviewer. You cannot authorize Paper Design, methods, experiments, P0, or GPU. "
-        "For each candidate: (1) verify each stated source claim is actually supported by its supplied primary abstract or one bounded deterministic full-text empirical-fact candidate; (2) test whether the exact prediction is already expressible by the negative-space ledger or any mature same-information theory. "
-        "For each source claim marked supported, return one SHORT exact contiguous excerpt (4-30 words) copied from the abstract or a supplied empirical-fact candidate, and set evidence_source to abstract or fulltext. If neither source contains such an excerpt, mark supported=false and BLOCK. "
-        "CLEAR means only that both source claims are grounded and no mature reduction was found in this review; it never means scientific approval.\n\nLEDGER:\n"+
-        json.dumps(reductions,ensure_ascii=False,separators=(",",":"))+"\n\nPRIMARY EVIDENCE:\n"+
-        json.dumps(evidence,ensure_ascii=False,separators=(",",":"))+"\n\nCANDIDATES:\n"+
-        json.dumps(stripped,ensure_ascii=False,separators=(",",":"))+
-        '\n\nReturn JSON only: {"reviews":[{"candidate_id":"...","verdict":"CLEAR|BLOCK","source_claim_support":{"source_a":{"supported":true,"evidence_source":"abstract|fulltext","evidence_excerpt":"exact words from supplied primary evidence"},"source_b":{"supported":true,"evidence_source":"abstract|fulltext","evidence_excerpt":"exact words from supplied primary evidence"}},"matched_patterns":["known-key"],"strongest_reduction":"mature theory/object or none","reason":"..."}]}. '
-        "If BLOCK uses a mature reduction not in the ledger, matched_patterns may be [] but strongest_reduction must name it."
+        "Independent BLOCK-ONLY multi-lane semantic reduction + source-grounding reviewer. You cannot authorize Paper Design, methods, experiments, P0, or GPU. "
+        "For each candidate perform THREE independent checks: "
+        "(1) source grounding: each stated source claim must be supported by its supplied primary abstract or one bounded full-text empirical-fact candidate; "
+        "(2) lane contract: the two grounded source claims, evidence roles, relation, and lane_evidence must genuinely satisfy the selected discovery lane; "
+        "(3) mature reduction: test whether the exact prediction is already expressible by the Negative-Space ledger or any mature same-information theory. "
+        "If any check fails, verdict=BLOCK. CLEAR only means both sources are grounded, lane_contract_verified=true, and no mature reduction was found; it never means scientific approval.\n\n"
+        "LANE CONTRACTS:\n"
+        + json.dumps(lane_contracts, ensure_ascii=False, separators=(",", ":"))
+        + "\n\nLEDGER:\n"
+        + json.dumps(reductions, ensure_ascii=False, separators=(",", ":"))
+        + "\n\nPRIMARY EVIDENCE:\n"
+        + json.dumps(evidence_rows, ensure_ascii=False, separators=(",", ":"))
+        + "\n\nCANDIDATES:\n"
+        + json.dumps(stripped, ensure_ascii=False, separators=(",", ":"))
+        + '\n\nReturn JSON only: {"reviews":[{"candidate_id":"...","verdict":"CLEAR|BLOCK","lane_contract_verified":true,"lane_contract_reason":"...","source_claim_support":{"source_a":{"supported":true,"evidence_source":"abstract|fulltext","evidence_excerpt":"exact words from supplied primary evidence"},"source_b":{"supported":true,"evidence_source":"abstract|fulltext","evidence_excerpt":"exact words from supplied primary evidence"}},"matched_patterns":["known-key"],"strongest_reduction":"mature theory/object or none","reason":"..."}]}. '
+        "Each supported source claim requires one SHORT exact contiguous excerpt (4-30 words). If BLOCK uses a mature reduction not in the ledger, matched_patterns may be [] but strongest_reduction must name it."
     )

@@ -41,6 +41,7 @@ DEFAULT_MAX_PRIMARY_RESPONSE_BYTES = 24 * 1024 * 1024
 DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS = 3.1
 DEFAULT_ARXIV_PER_QUERY = 12
 EMPIRICAL_FACT_EXTRACTION_VERSION = "precision-v2"
+TYPED_EVIDENCE_EXTRACTION_VERSION = "typed-v1"
 DEFAULT_ARXIV_QUERIES = (
     'all:"self-evolving" AND all:agent',
     'all:"self-improving" AND all:agent',
@@ -262,6 +263,58 @@ def extract_empirical_fact_candidates(page: str, *, max_facts: int = 4) -> list[
             order += 1
     ranked.sort(key=lambda row: (row[0], row[1]), reverse=True)
     return [row[2] for row in ranked[: max(0, max_facts)]]
+
+
+_ASSUMPTION_SECTION_TERMS = ("assumption", "method", "setup", "system", "problem", "formulation", "framework", "approach", "algorithm", "protocol")
+_MEASURED_SECTION_TERMS = ("result", "experiment", "evaluation", "analysis", "ablation", "discussion", "finding", "failure", "safety", "robust")
+_ASSUMPTION_CUE_RE = re.compile(r"\b(we assume|assume that|assumes that|under the assumption|we require|requires that|we fix|is fixed|we restrict|we consider only|for simplicity,? we (?:assume|consider|restrict)|we hold .{0,40} constant|given a fixed)\b", flags=re.I)
+_FAILURE_CUE_RE = re.compile(r"\b(fail(?:s|ed|ure|ures)?|degrad(?:e|es|ed|ation)|drop(?:s|ped)?|harm(?:s|ed|ful)?|worse than|underperform(?:s|ed)?|error rate|attack success rate|cannot|unable to)\b", flags=re.I)
+_BOUNDARY_CUE_RE = re.compile(r"\b(only when|only if|threshold|regime|above|below|with increasing|with decreasing|gap between|saturat(?:e|es|ed|ion)|plateau|cross-over|crossover)\b", flags=re.I)
+_TYPED_NUMERIC_CUE_RE = re.compile(r"\b\d+(?:\.\d+)?\s*%|\b\d+\.\d+\b|\b\d+\s*/\s*\d+\b")
+
+
+def extract_typed_evidence_candidates(page: str, *, max_per_type: int = 2) -> dict[str, list[dict[str, str]]]:
+    parser = _ArxivFullTextParser()
+    try:
+        parser.feed(page)
+    except Exception:
+        return {"operational_assumptions": [], "measured_failures": [], "boundary_observations": []}
+    buckets: dict[str, list[tuple[int, int, dict[str, str]]]] = {
+        "operational_assumptions": [],
+        "measured_failures": [],
+        "boundary_observations": [],
+    }
+    seen: dict[str, set[str]] = {key: set() for key in buckets}
+    order = 0
+    for section, paragraph in parser.paragraphs:
+        section_low = section.lower()
+        for sentence in re.split(r"(?<=[.!?])\s+", paragraph):
+            sentence = " ".join(sentence.split()).strip()
+            if len(sentence) < 50 or len(sentence) > 600:
+                continue
+            normalized = re.sub(r"\W+", " ", sentence.lower()).strip()
+            if not normalized:
+                continue
+            item = {"section": section or "unnamed", "text": sentence, "text_sha256": hashlib.sha256(sentence.encode("utf-8")).hexdigest(), "extraction_version": TYPED_EVIDENCE_EXTRACTION_VERSION}
+            if any(term in section_low for term in _ASSUMPTION_SECTION_TERMS) and _ASSUMPTION_CUE_RE.search(sentence) and normalized not in seen["operational_assumptions"]:
+                seen["operational_assumptions"].add(normalized)
+                score = 3 + (2 if "assumption" in section_low else 0) + (1 if re.search(r"\bwe assume\b|\bunder the assumption\b", sentence, flags=re.I) else 0)
+                buckets["operational_assumptions"].append((score, -order, item))
+            measured_section = any(term in section_low for term in _MEASURED_SECTION_TERMS)
+            if measured_section and _FAILURE_CUE_RE.search(sentence) and (_STRONG_EMPIRICAL_CUE_RE.search(sentence) or _DIRECTIONAL_RESULT_RE.search(sentence) or _TYPED_NUMERIC_CUE_RE.search(sentence)) and normalized not in seen["measured_failures"]:
+                seen["measured_failures"].add(normalized)
+                score = 3 + (2 if _TYPED_NUMERIC_CUE_RE.search(sentence) else 0) + (1 if _STRONG_EMPIRICAL_CUE_RE.search(sentence) else 0)
+                buckets["measured_failures"].append((score, -order, item))
+            if measured_section and _BOUNDARY_CUE_RE.search(sentence) and (_STRONG_EMPIRICAL_CUE_RE.search(sentence) or _DIRECTIONAL_RESULT_RE.search(sentence) or _TYPED_NUMERIC_CUE_RE.search(sentence)) and normalized not in seen["boundary_observations"]:
+                seen["boundary_observations"].add(normalized)
+                score = 3 + (2 if _TYPED_NUMERIC_CUE_RE.search(sentence) else 0) + (1 if _STRONG_EMPIRICAL_CUE_RE.search(sentence) else 0)
+                buckets["boundary_observations"].append((score, -order, item))
+            order += 1
+    output: dict[str, list[dict[str, str]]] = {}
+    for key, rows in buckets.items():
+        rows.sort(key=lambda row: (row[0], row[1]), reverse=True)
+        output[key] = [row[2] for row in rows[: max(0, max_per_type)]]
+    return output
 
 
 def _arxiv_id(paper: dict[str, Any]) -> str:
@@ -546,6 +599,8 @@ def _reusable_verified_record(
     # current extractor without an unnecessary network fetch.
     if str(record.get("empirical_fact_extraction_version") or "") != EMPIRICAL_FACT_EXTRACTION_VERSION:
         return False
+    if str(record.get("typed_evidence_extraction_version") or "") != TYPED_EVIDENCE_EXTRACTION_VERSION:
+        return False
     age = _age_hours(str(record.get("fetched_at") or ""), now)
     if age is None or age > max_age_hours:
         return False
@@ -642,6 +697,8 @@ def _cached_fulltext_page(
             "fulltext_sha256": source_sha,
             "fulltext_cache_path": str(path),
             "empirical_facts": extract_empirical_fact_candidates(raw_text, max_facts=4),
+            "typed_evidence": extract_typed_evidence_candidates(raw_text, max_per_type=2),
+            "typed_evidence_extraction_version": TYPED_EVIDENCE_EXTRACTION_VERSION,
         }
     return None
 
@@ -703,6 +760,7 @@ def build_primary_evidence_pool(
             "fulltext_failure_cooldown_applies_only_to_optional_enrichment": True,
             "content_addressed_raw_cache_must_reverify_sha_and_parseability": True,
             "derived_empirical_facts_reused_only_when_extractor_version_matches": True,
+            "derived_typed_evidence_reused_only_when_extractor_version_matches": True,
             "full_abstracts_remain_private_data_artifacts": True,
             "fulltext_enrichment_is_optional": True,
             "fulltext_snippets_remain_private_data_artifacts": True,
@@ -710,6 +768,9 @@ def build_primary_evidence_pool(
             "empirical_fact_precision_gate": True,
             "empirical_fact_extraction_version": EMPIRICAL_FACT_EXTRACTION_VERSION,
             "empirical_fact_evidence_tiers": ["strong-observation", "quantitative-directional", "owned-directional", "result-section-directional"],
+            "typed_evidence_candidates_are_not_ground_truth": True,
+            "typed_evidence_is_deterministic_and_bounded": True,
+            "typed_evidence_extraction_version": TYPED_EVIDENCE_EXTRACTION_VERSION,
             "pre_registered_lane_coverage_floor": True,
             "lane_coverage_is_discovery_breadth_not_scientific_authority": True,
             "lane_floor": int(lane_floor),
@@ -732,6 +793,7 @@ def build_primary_evidence_pool(
             "fulltext_fetch_errors": 0,
             "empirical_fact_candidates": 0,
             "empirical_fact_tier_counts": {},
+            "typed_evidence_candidates": {"operational_assumptions": 0, "measured_failures": 0, "boundary_observations": 0},
             "recent_verified_cache_reused": 0,
             "recent_raw_primary_cache_reused": 0,
             "recent_raw_fulltext_cache_reused": 0,
@@ -753,6 +815,7 @@ def build_primary_evidence_pool(
         "generated_at": public_state["generated_at"],
         "corpus_path": str(corpus_path),
         "empirical_fact_extraction_version": EMPIRICAL_FACT_EXTRACTION_VERSION,
+        "typed_evidence_extraction_version": TYPED_EVIDENCE_EXTRACTION_VERSION,
         "records": [],
         "errors": [],
         "fulltext_errors": [],
@@ -842,6 +905,7 @@ def build_primary_evidence_pool(
     title_mismatches = 0
     fulltext_verified = 0
     empirical_fact_count = 0
+    typed_evidence_counts = {"operational_assumptions": 0, "measured_failures": 0, "boundary_observations": 0}
     reused_verified = 0
     raw_primary_cache_reused = 0
     raw_fulltext_cache_reused = 0
@@ -868,6 +932,8 @@ def build_primary_evidence_pool(
             verified.append(record)
             fulltext_verified += 1
             empirical_fact_count += len(record.get("empirical_facts") or [])
+            for key in typed_evidence_counts:
+                typed_evidence_counts[key] += len((record.get("typed_evidence") or {}).get(key) or [])
             reused_verified += 1
             continue
         try:
@@ -916,6 +982,7 @@ def build_primary_evidence_pool(
             fulltext_sha = ""
             fulltext_cache_path = ""
             empirical_facts: list[dict[str, str]] = []
+            typed_evidence: dict[str, list[dict[str, str]]] = {"operational_assumptions": [], "measured_failures": [], "boundary_observations": []}
             cached_fulltext = _cached_fulltext_page(
                 cache_dir,
                 arxiv_id,
@@ -926,8 +993,11 @@ def build_primary_evidence_pool(
                 fulltext_sha = str(cached_fulltext["fulltext_sha256"])
                 fulltext_cache_path = str(cached_fulltext["fulltext_cache_path"])
                 empirical_facts = list(cached_fulltext.get("empirical_facts") or [])
+                typed_evidence = dict(cached_fulltext.get("typed_evidence") or typed_evidence)
                 fulltext_verified += 1
                 empirical_fact_count += len(empirical_facts)
+                for key in typed_evidence_counts:
+                    typed_evidence_counts[key] += len(typed_evidence.get(key) or [])
                 raw_fulltext_cache_reused += 1
             elif ref in prior_fulltext_failure_refs:
                 fulltext_errors.append({"ref": ref, "error": "recent-fulltext-failure-cooldown"})
@@ -956,8 +1026,11 @@ def build_primary_evidence_pool(
                     full_path.write_bytes(full_bytes)
                     fulltext_cache_path = str(full_path)
                     empirical_facts = extract_empirical_fact_candidates(full_text, max_facts=4)
+                    typed_evidence = extract_typed_evidence_candidates(full_text, max_per_type=2)
                     fulltext_verified += 1
                     empirical_fact_count += len(empirical_facts)
+                    for key in typed_evidence_counts:
+                        typed_evidence_counts[key] += len(typed_evidence.get(key) or [])
                 except Exception as full_error:
                     fulltext_errors.append({
                         "ref": ref,
@@ -976,6 +1049,7 @@ def build_primary_evidence_pool(
                 "fulltext_sha256": fulltext_sha,
                 "fulltext_cache_path": fulltext_cache_path,
                 "empirical_facts": empirical_facts,
+                "typed_evidence": typed_evidence,
                 "year": paper.get("year"),
                 "publication_date": (paper.get("metadata") or {}).get("publicationDate"),
                 "s2_paper_id": paper.get("paper_id"),
@@ -985,6 +1059,7 @@ def build_primary_evidence_pool(
                 "title_similarity": round(similarity, 4),
                 "primary_source_verified": True,
                 "empirical_fact_extraction_version": EMPIRICAL_FACT_EXTRACTION_VERSION,
+                "typed_evidence_extraction_version": TYPED_EVIDENCE_EXTRACTION_VERSION,
                 "lane_keys": list(candidate_lane_by_ref.get(f"arXiv:{arxiv_id}", ())),
             }
             verified.append(record)
@@ -1021,6 +1096,7 @@ def build_primary_evidence_pool(
             "fulltext_fetch_errors": len(fulltext_errors),
             "empirical_fact_candidates": empirical_fact_count,
             "empirical_fact_tier_counts": empirical_fact_tier_counts,
+            "typed_evidence_candidates": dict(typed_evidence_counts),
             "recent_verified_cache_reused": reused_verified,
             "recent_raw_primary_cache_reused": raw_primary_cache_reused,
             "recent_raw_fulltext_cache_reused": raw_fulltext_cache_reused,
@@ -1035,6 +1111,7 @@ def build_primary_evidence_pool(
             **{key: row[key] for key in ("evidence_id", "ref", "title", "primary_url", "source_sha256", "abstract_sha256", "year", "publication_date", "fetched_at")},
             "fulltext_sha256": str(row.get("fulltext_sha256") or ""),
             "empirical_fact_count": len(row.get("empirical_facts") or []),
+            "typed_evidence_counts": {key: len((row.get("typed_evidence") or {}).get(key) or []) for key in ("operational_assumptions", "measured_failures", "boundary_observations")},
         }
         for row in verified
     ]
@@ -1048,12 +1125,12 @@ def load_primary_evidence_state(path: Path = DEFAULT_JSON) -> dict[str, Any]:
     if not path.exists():
         return {
             "schema_version":"1.0","status":"NOT_RUN","policy":{"candidate_generation_authority":False,"method_authority":False,"experiment_authority":False,"p0_authority":False},
-            "summary":{"corpus_available":False,"corpus_fresh":False,"selected":0,"verified":0,"fetch_errors":0,"title_mismatches":0,"fulltext_verified":0,"fulltext_fetch_errors":0,"empirical_fact_candidates":0,"empirical_fact_tier_counts":{},"candidate_generation_ready":False},"records":[],"errors":[],
+            "summary":{"corpus_available":False,"corpus_fresh":False,"selected":0,"verified":0,"fetch_errors":0,"title_mismatches":0,"fulltext_verified":0,"fulltext_fetch_errors":0,"empirical_fact_candidates":0,"empirical_fact_tier_counts":{},"typed_evidence_candidates":{"operational_assumptions":0,"measured_failures":0,"boundary_observations":0},"candidate_generation_ready":False},"records":[],"errors":[],
         }
     try:
         payload=json.loads(path.read_text(encoding="utf-8"))
     except (OSError,json.JSONDecodeError):
-        return {"schema_version":"1.0","status":"STATE_UNREADABLE","policy":{"candidate_generation_authority":False,"method_authority":False,"experiment_authority":False,"p0_authority":False},"summary":{"corpus_available":False,"corpus_fresh":False,"selected":0,"verified":0,"fetch_errors":1,"title_mismatches":0,"fulltext_verified":0,"fulltext_fetch_errors":0,"empirical_fact_candidates":0,"empirical_fact_tier_counts":{},"candidate_generation_ready":False},"records":[],"errors":["state-unreadable"]}
+        return {"schema_version":"1.0","status":"STATE_UNREADABLE","policy":{"candidate_generation_authority":False,"method_authority":False,"experiment_authority":False,"p0_authority":False},"summary":{"corpus_available":False,"corpus_fresh":False,"selected":0,"verified":0,"fetch_errors":1,"title_mismatches":0,"fulltext_verified":0,"fulltext_fetch_errors":0,"empirical_fact_candidates":0,"empirical_fact_tier_counts":{},"typed_evidence_candidates":{"operational_assumptions":0,"measured_failures":0,"boundary_observations":0},"candidate_generation_ready":False},"records":[],"errors":["state-unreadable"]}
     return payload if isinstance(payload,dict) else {"schema_version":"1.0","status":"STATE_INVALID","summary":{},"records":[],"errors":["state-invalid"]}
 
 

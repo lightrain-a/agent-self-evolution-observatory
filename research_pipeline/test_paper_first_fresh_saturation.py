@@ -12,7 +12,7 @@ class PaperFirstFreshSaturationTest(unittest.TestCase):
 
     def test_current_scan_keeps_zero_survivors_instead_of_forcing_shortlist(self) -> None:
         s=self.state["summary"]
-        self.assertEqual((s["drafts_reviewed"],s["survivors"],s["stopped"]),(40,0,40))
+        self.assertEqual((s["drafts_reviewed"],s["survivors"],s["stopped"]),(41,0,41))
         self.assertEqual(self.state["decision"],"NO_FRESH_SURVIVOR_CURRENT_SCAN")
         self.assertTrue(self.state["policy"]["zero_survivors_is_valid_and_preferred_to_forced_shortlist"])
         self.assertFalse(self.state["policy"]["local_validation_authorized"])
@@ -23,16 +23,18 @@ class PaperFirstFreshSaturationTest(unittest.TestCase):
         self.assertTrue(all(row["decision"].startswith("STOP_") for row in self.state["drafts"]))
         self.assertTrue(all(row.get("reduction") for row in self.state["drafts"]))
 
-    def test_generator_is_now_contradiction_first_and_theory_first(self) -> None:
+    def test_generator_is_now_four_lane_empirical_and_theory_first(self) -> None:
         revision=self.state["generator_revision"]
-        self.assertIn("documented contradiction",revision["new_rule"])
+        for lane in ("CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"):
+            self.assertIn(lane,revision["new_rule"])
+        self.assertIn("lane-specific machine evidence",revision["required_fields"])
         self.assertIn("mature-theory non-reducibility",revision["required_fields"])
         self.assertIn("same-information baseline",revision["required_fields"])
         self.assertIn("endpoint headroom",revision["required_fields"])
 
     def test_reduction_map_contains_load_bearing_recent_failures(self) -> None:
         keys={row["key"] for row in self.state["reduction_patterns"]}
-        for key in ("verifier-exogeneity","evolution-induced-task-non-equivalence","persistent-update-vs-test-time-compute","typed-epistemic-authority","model-scaffold-enactability","artifact-uptake-after-retrieval","environment-mediated-history","multimodal-procedural-compression","externalization-internalization-portability","horizon-censored-attribution","future-evolvability-debt","persistent-world-gain-decomposition","self-play-evidence-endogeneity","population-lineage-generic-evolution","cross-layer-behavior-persistence","experience-sharing-sign-reversal","feedback-polarity-by-update-surface","harness-update-scope-heterogeneity"):
+        for key in ("verifier-exogeneity","evolution-induced-task-non-equivalence","persistent-update-vs-test-time-compute","typed-epistemic-authority","model-scaffold-enactability","artifact-uptake-after-retrieval","environment-mediated-history","multimodal-procedural-compression","externalization-internalization-portability","horizon-censored-attribution","future-evolvability-debt","persistent-world-gain-decomposition","self-play-evidence-endogeneity","population-lineage-generic-evolution","cross-layer-behavior-persistence","experience-sharing-sign-reversal","feedback-polarity-by-update-surface","harness-update-scope-heterogeneity","procedural-memory-nonmonotonicity"):
             self.assertIn(key,keys)
 
 

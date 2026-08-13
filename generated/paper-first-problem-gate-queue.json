@@ -1,18 +1,20 @@
 {
-  "schema_version": "1.1",
-  "generated_at": "2026-08-13T09:17:15+00:00",
+  "schema_version": "2.0",
+  "generated_at": "2026-08-13T10:03:45+00:00",
   "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
   "source_inboxes": [
     "private-data://paper-first-problem-discovery/candidate-inbox.json",
     "private-data://paper-first-problem-discovery/auto-candidate-inbox.json"
   ],
   "primary_evidence_pool": "private-data://paper-first-problem-discovery/primary-evidence-pool.json",
-  "primary_evidence_records": 30,
+  "primary_evidence_records": 32,
   "source_exists": true,
   "policy": {
     "candidate_inbox_is_not_authority": true,
     "manual_and_auto_inboxes_are_merged": true,
     "verified_primary_evidence_registry_required_for_submitted_candidates": true,
+    "multi_lane_candidate_schema_required": true,
+    "lane_contract_independent_review_required": true,
     "independent_semantic_reduction_review_required": true,
     "semantic_reviewer_is_block_only": true,
     "all_candidates_require_problem_gate": true,
@@ -24,20 +26,604 @@
     "automatic_p0_authority": false
   },
   "summary": {
-    "submitted": 0,
-    "audited": 0,
+    "submitted": 2,
+    "audited": 2,
     "passed_problem_gate": 0,
-    "blocked_problem_gate": 0,
+    "blocked_problem_gate": 2,
     "paper_design_eligible": 0,
     "inbox_errors": 0,
-    "primary_evidence_records": 30,
+    "primary_evidence_records": 32,
+    "submitted_by_lane": {
+      "CONTRADICTION": 0,
+      "CONVERGENT_FAILURE": 0,
+      "ASSUMPTION_BREAK": 1,
+      "UNEXPLAINED_BOUNDARY": 1,
+      "OTHER": 0
+    },
+    "passed_by_lane": {
+      "CONTRADICTION": 0,
+      "CONVERGENT_FAILURE": 0,
+      "ASSUMPTION_BREAK": 0,
+      "UNEXPLAINED_BOUNDARY": 0,
+      "OTHER": 0
+    },
+    "blocked_by_lane": {
+      "CONTRADICTION": 0,
+      "CONVERGENT_FAILURE": 0,
+      "ASSUMPTION_BREAK": 1,
+      "UNEXPLAINED_BOUNDARY": 1,
+      "OTHER": 0
+    },
     "method_authorized": 0,
     "experiment_authorized": 0,
     "p0_authorized": 0
   },
   "inbox_errors": [],
   "passed": [],
-  "blocked": [],
-  "audited": [],
+  "blocked": [
+    {
+      "candidate_id": "AUTO-1",
+      "title": "Non-monotone memory coverage under added stored events",
+      "discovery_lane": "ASSUMPTION_BREAK",
+      "status": "PROBLEM_GATE_BLOCKED",
+      "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
+      "blockers": [
+        "saturation-pattern-match:procedural-memory-nonmonotonicity",
+        "semantic-reduction-review-block"
+      ]
+    },
+    {
+      "candidate_id": "AUTO-2",
+      "title": "Skill-harness gains vanish at near-zero recoverable execution defects",
+      "discovery_lane": "UNEXPLAINED_BOUNDARY",
+      "status": "PROBLEM_GATE_BLOCKED",
+      "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
+      "blockers": [
+        "saturation-pattern-match:harness-update-scope-heterogeneity",
+        "semantic-reduction-review-block",
+        "source-claim-grounding-failed",
+        "source-claim-grounding-incomplete"
+      ]
+    }
+  ],
+  "audited": [
+    {
+      "candidate_id": "AUTO-1",
+      "title": "Non-monotone memory coverage under added stored events",
+      "discovery_lane": "ASSUMPTION_BREAK",
+      "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
+      "candidate": {
+        "candidate_id": "AUTO-1",
+        "title": "Non-monotone memory coverage under added stored events",
+        "discovery_lane": "ASSUMPTION_BREAK",
+        "empirical_evidence": {
+          "source_a": {
+            "ref": "arXiv:2608.11654",
+            "title": "Towards a Formal Definition of Agent Memory: Basis, Span, Optimality, and the Sequential Memory Problem",
+            "claim": "The formal memory framework assumes monotonicity: more memory is never worse, so coverage is non-decreasing in the stored set.",
+            "evidence_role": "OPERATIONAL_ASSUMPTION",
+            "primary_source": true,
+            "primary_url": "https://arxiv.org/abs/2608.11654",
+            "source_sha256": "aa1d1d148bbd18b7a163315b870e74499a27878bdaf3c49fbad3d312827c140a"
+          },
+          "source_b": {
+            "ref": "arXiv:2608.10494",
+            "title": "GeoForge: Non-Parametric Self-Evolving Agents for Earth-Observation Reasoning",
+            "claim": "In GeoForge sensitivity analysis, retrieving a small number of high-quality skills achieves the best performance, while excessive retrieval slightly degrades trajectory quality due to redundant guidance.",
+            "evidence_role": "EMPIRICAL_FACT",
+            "primary_source": true,
+            "primary_url": "https://arxiv.org/abs/2608.10494",
+            "source_sha256": "4deacf27a61f286ea2e3f3b40a44ce9a5bfb51b1f5db568f4f243b104213c595"
+          },
+          "relation": "The operational assumption that adding stored memory cannot reduce coverage is violated in a scope-linked agent-memory setting where additional retrieved skill guidance is part of the stored/retrieved memory used to answer or execute tasks."
+        },
+        "lane_evidence": {
+          "assumption": "Coverage is non-decreasing in the stored event set under the generation-operator model.",
+          "violation": "Adding more retrieved skill memory beyond a small high-quality subset degrades trajectory quality because redundant guidance changes execution.",
+          "scope_link": "Both concern agent memory/retrieval used to guide task execution; the violation occurs in the same operational role of stored procedural guidance, not an unrelated domain."
+        },
+        "irreducible_object": "Coverage response function C(S ∪ {m}) < C(S) for a memory item m that is individually relevant but introduces a conflicting or redundant procedural entailment under the generation operator.",
+        "mature_theory_baselines": [
+          {
+            "name": "Monotone set-cover / answerability basis",
+            "same_information_projection": "Treat each memory item as adding covered queries only, so union cannot remove coverage.",
+            "reduction_test": "It predicts no decrease when m is added; it cannot represent m causing an existing covered query to become uncovered unless the generation operator is allowed to retract."
+          },
+          {
+            "name": "Nonmonotonic reasoning / belief revision",
+            "same_information_projection": "Model added guidance as a defeasible rule that can suppress a prior conclusion when conflict information is present.",
+            "reduction_test": "It can express retraction from explicit conflict, but the observed degradation is attributed to redundant guidance rather than a represented contradiction or priority relation."
+          }
+        ],
+        "same_information_nonreducibility": {
+          "claim": "The object is not merely generic nonmonotonicity because the empirical failure occurs without an explicitly encoded conflict; redundancy itself changes which generated procedure covers the task.",
+          "why_each_baseline_cannot_express_prediction": "Monotone coverage forbids the sign reversal by construction; belief revision requires conflict or defeat information that is absent from the supplied redundant-guidance observation."
+        },
+        "exact_prediction": "For a fixed query/task and fixed base memory S, there exists an added relevant skill/experience m such that answerability or successful trajectory coverage decreases, even though m contains no false claim and no explicit contradiction with S.",
+        "strongest_same_information_baseline": "Nonmonotonic reasoning with priority-ordered rules.",
+        "domain_transfer_audit": {
+          "mature_source_domain": "Knowledge representation and belief revision",
+          "mature_object": "Defeasible inference and contraction/revision operators",
+          "why_not_domain_transfer": "The candidate is specific to memory coverage under a generation operator whose stated assumption is monotonicity; the anomaly is that redundancy, not represented conflict, produces coverage loss."
+        },
+        "saturation_scan": {
+          "checked": true,
+          "matched_patterns": [
+            "procedural-memory-nonmonotonicity"
+          ],
+          "rejected_patterns": [
+            {
+              "key": "procedural-memory-nonmonotonicity",
+              "reason": "considered and rejected because the evidence does not supply same-information conflict that belief revision can use"
+            }
+          ],
+          "invalid_entries": []
+        },
+        "semantic_reduction_review": {
+          "reviewed": true,
+          "block_only": true,
+          "verdict": "BLOCK",
+          "reviewer_model": "glm-5-2-260617",
+          "reviewer_requested_model": "glm-5.2",
+          "generator_resolved_model": "doubao-seed-evolving",
+          "independent_resolved_model": true,
+          "raw_sha256": "2caed5a7eb654058f0f180bf92757290a216f170c995eaa7c60a389faae72240",
+          "source_claims_grounded": true,
+          "source_claim_grounding": {
+            "source_a": {
+              "ref": "arXiv:2608.11654",
+              "supported": true,
+              "evidence_role": "OPERATIONAL_ASSUMPTION",
+              "evidence_kind": "operational_assumption",
+              "evidence_source": "fulltext",
+              "declared_evidence_source": "fulltext",
+              "evidence_excerpt": "We assume \\newtermmonotonicity (Assumption 11): more memory is never worse, so coverage is non-decreasing in the stored set.",
+              "excerpt_verified": true,
+              "grounded": true
+            },
+            "source_b": {
+              "ref": "arXiv:2608.10494",
+              "supported": true,
+              "evidence_role": "EMPIRICAL_FACT",
+              "evidence_kind": "measured_failure",
+              "evidence_source": "fulltext",
+              "declared_evidence_source": "fulltext",
+              "evidence_excerpt": "Retrieving a small number of high-quality skills achieves the best performance, while excessive retrieval slightly degrades trajectory quality due to redundant guidance.",
+              "excerpt_verified": true,
+              "grounded": true
+            }
+          },
+          "lane_contract_verified": true,
+          "lane_contract_reason": "The lane contract is verified: Source A provides an operational assumption (monotonicity of memory coverage) and Source B provides empirical evidence (excessive retrieval degrades trajectory quality) that violates it in a scope-linked agent-memory setting.",
+          "matched_patterns": [
+            "procedural-memory-nonmonotonicity"
+          ],
+          "strongest_reduction": "procedural-memory-nonmonotonicity (nonmonotonic / defeasible logic, belief revision / AGM-style belief change, rule-conflict and priority semantics)",
+          "reason": "The candidate attempts to bypass the 'procedural-memory-nonmonotonicity' ledger veto by claiming redundancy without explicit conflict, but ordinary belief revision / nonmonotonic logic fully captures retraction or suppression of correct behavior when adding a relevant memory, skill, or procedural rule, even under redundancy or noise. The observed degradation from excessive retrieval is a standard utilization/interference bottleneck, easily expressible by generic nonmonotonic reasoning or constraint conflict under the same information.",
+          "authority": false
+        },
+        "cheapest_problem_falsifier": "Construct a controlled memory set S and added item m from GeoForge-like skill retrievals where m is redundant but non-contradictory; show that task success/coverage never decreases when m is added under matched model, task, and retrieval budget.",
+        "endpoint_headroom_requirement": "The problem remains open only if the decrease survives matched token/context controls and cannot be reproduced by adding an explicit conflict marker or priority ordering to the memory."
+      },
+      "audit": {
+        "schema_version": "2.0",
+        "candidate_id": "AUTO-1",
+        "discovery_lane": "ASSUMPTION_BREAK",
+        "passed": false,
+        "status": "PROBLEM_GATE_BLOCKED",
+        "blockers": [
+          "saturation-pattern-match:procedural-memory-nonmonotonicity",
+          "semantic-reduction-review-block"
+        ],
+        "checks": [
+          {
+            "key": "field:candidate_id",
+            "pass": true
+          },
+          {
+            "key": "field:title",
+            "pass": true
+          },
+          {
+            "key": "field:discovery_lane",
+            "pass": true
+          },
+          {
+            "key": "field:empirical_evidence",
+            "pass": true
+          },
+          {
+            "key": "field:lane_evidence",
+            "pass": true
+          },
+          {
+            "key": "field:irreducible_object",
+            "pass": true
+          },
+          {
+            "key": "field:mature_theory_baselines",
+            "pass": true
+          },
+          {
+            "key": "field:same_information_nonreducibility",
+            "pass": true
+          },
+          {
+            "key": "field:exact_prediction",
+            "pass": true
+          },
+          {
+            "key": "field:strongest_same_information_baseline",
+            "pass": true
+          },
+          {
+            "key": "field:domain_transfer_audit",
+            "pass": true
+          },
+          {
+            "key": "field:saturation_scan",
+            "pass": true
+          },
+          {
+            "key": "field:cheapest_problem_falsifier",
+            "pass": true
+          },
+          {
+            "key": "field:endpoint_headroom_requirement",
+            "pass": true
+          },
+          {
+            "key": "field:semantic_reduction_review",
+            "pass": true
+          },
+          {
+            "key": "field:authority",
+            "pass": true
+          },
+          {
+            "key": "discovery-lane-contract",
+            "pass": true,
+            "lane": "ASSUMPTION_BREAK"
+          },
+          {
+            "key": "primary-source-1",
+            "pass": true,
+            "role": "OPERATIONAL_ASSUMPTION"
+          },
+          {
+            "key": "primary-source-2",
+            "pass": true,
+            "role": "EMPIRICAL_FACT"
+          }
+        ],
+        "policy": {
+          "schema_version": "2.0",
+          "multi_lane_discovery_required": true,
+          "contradiction_first_required": false,
+          "contradiction_lane_retained": true,
+          "allowed_discovery_lanes": [
+            "CONTRADICTION",
+            "CONVERGENT_FAILURE",
+            "ASSUMPTION_BREAK",
+            "UNEXPLAINED_BOUNDARY"
+          ],
+          "forbidden_discovery_lanes": [
+            "MISSING_CELL",
+            "SHARED_LIMITATION",
+            "PURE_TOPIC_BRAINSTORM"
+          ],
+          "lane_specific_machine_evidence_contract_required": true,
+          "two_primary_source_evidence_items_required": true,
+          "shared_limitation_without_empirical_failure_forbidden": true,
+          "pure_topic_brainstorm_forbidden": true,
+          "open_world_missing_cell_claim_forbidden": true,
+          "two_mature_theory_baselines_required": true,
+          "same_information_nonreducibility_required": true,
+          "domain_transfer_veto_required": true,
+          "saturation_map_check_required": true,
+          "problem_falsifier_required_before_method_design": true,
+          "endpoint_headroom_required_before_terminal_interpretation": true,
+          "independent_reviewer_must_verify_lane_contract": true,
+          "no_lane_specific_downstream_relaxation": true,
+          "ai_generation_is_advisory_only": true,
+          "zero_survivors_is_valid": true,
+          "method_design_authorized_by_problem_gate": false,
+          "local_validation_authorized_by_problem_gate": false,
+          "p0_authorized_by_problem_gate": false,
+          "gpu_authorized_by_problem_gate": false
+        },
+        "authority": {
+          "paper_design_eligible_for_human_review": false,
+          "method_design": false,
+          "experiment_blueprint": false,
+          "local_validation": false,
+          "p0": false,
+          "gpu": false,
+          "full_experiment": false
+        }
+      },
+      "paper_design_eligible": false,
+      "authority": {
+        "method_design": false,
+        "experiment_blueprint": false,
+        "local_validation": false,
+        "p0": false,
+        "gpu": false,
+        "full_experiment": false
+      }
+    },
+    {
+      "candidate_id": "AUTO-2",
+      "title": "Skill-harness gains vanish at near-zero recoverable execution defects",
+      "discovery_lane": "UNEXPLAINED_BOUNDARY",
+      "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
+      "candidate": {
+        "candidate_id": "AUTO-2",
+        "title": "Skill-harness gains vanish at near-zero recoverable execution defects",
+        "discovery_lane": "UNEXPLAINED_BOUNDARY",
+        "empirical_evidence": {
+          "source_a": {
+            "ref": "arXiv:2608.10178",
+            "title": "One Recipe, Many Harnesses: What Self-Evolution Encodes Across Languages and Models",
+            "claim": "Across languages and models, self-evolved harness gains compensate recoverable execution defects: where defect mass is near zero, gain is near zero; a harness closes the gap between what a policy can do and what it does.",
+            "evidence_role": "EMPIRICAL_FACT",
+            "primary_source": true,
+            "primary_url": "https://arxiv.org/abs/2608.10178",
+            "source_sha256": "2314ffd6b08b20fc687eb99c4e84d82acb0a18763cf6ef0daa3ff085b06180d1"
+          },
+          "source_b": {
+            "ref": "arXiv:2608.08466",
+            "title": "Hierarchical Self-Improvement: A Framework for Task-Specific Evolvable Agent Harnesses",
+            "claim": "HSI reports harness-benefit as non-monotonic across backbone capability: mid-tier models benefit most, strong-tier models hit a ceiling, and weak-tier models benefit least due to low skill-load rates.",
+            "evidence_role": "EMPIRICAL_FACT",
+            "primary_source": true,
+            "primary_url": "https://arxiv.org/abs/2608.08466",
+            "source_sha256": "7a5a4581148c989a7837a8bb139975e8f61f80d03676539d508b0d4c5d281dd4"
+          },
+          "relation": "Both measure harness improvement as a function of the same underlying phenomenon—the gap between a frozen policy's latent capability and its observed execution—but identify adjacent regimes: recoverable-defect compensation and a strong-model ceiling/weak-model non-activation boundary."
+        },
+        "lane_evidence": {
+          "shared_measurement": "Harness-induced task-performance gain for a frozen base policy under evolved external guidance.",
+          "boundary_observation": "When recoverable execution-defect mass is near zero, evolved harness gain is near zero; strong-tier models also show low gain due to a ceiling.",
+          "adjacent_regime": "Mid-tier models show large harness gains, while weak-tier models show low gains because skill-load rates are low.",
+          "unexplained_transition": "The transition from large compensation gains to zero gains is not explained by a single scalar defect mass: weak models have defects but cannot load/use skills, whereas strong models can use skills but have little recoverable defect left."
+        },
+        "irreducible_object": "Capability-gap activation surface G(π, H) = latent-capacity gap × harness-following activation, with a non-monotone boundary separating non-activated defects, compensable defects, and saturated defects.",
+        "mature_theory_baselines": [
+          {
+            "name": "Treatment effect / CATE heterogeneity",
+            "same_information_projection": "View harness benefit as an effect modified by model tier, defect mass, and skill-load rate.",
+            "reduction_test": "It can estimate conditional gains but does not predict the structural three-regime boundary from the interaction of latent capability and activation."
+          },
+          {
+            "name": "Compensation-layer / scaffold theory",
+            "same_information_projection": "Treat the harness as compensating execution defects until the base policy already performs the behavior.",
+            "reduction_test": "It predicts low gains when defects are absent but does not by itself predict low gains for weak models with defects because activation fails."
+          }
+        ],
+        "same_information_nonreducibility": {
+          "claim": "The irreducible object is the joint activation-defect boundary, not a generic effect modifier or generic scaffold limitation.",
+          "why_each_baseline_cannot_express_prediction": "CATE can fit the observed interaction after the fact but does not identify when defect mass is present yet non-compensable; compensation theory explains the strong-model ceiling but not the weak-model non-activation regime under the same defect-gap construct."
+        },
+        "exact_prediction": "For frozen policies ordered by latent capability, harness gain is zero in two separated regimes—low activation despite high defect mass and low residual defect mass despite high activation—and positive only where both activation and recoverable defect mass exceed nonzero thresholds.",
+        "strongest_same_information_baseline": "A two-factor CATE model with defect mass and skill-load rate as covariates.",
+        "domain_transfer_audit": {
+          "mature_source_domain": "Applied causal inference and educational scaffolding",
+          "mature_object": "Heterogeneous treatment effects and zone of proximal development / scaffolding",
+          "why_not_domain_transfer": "The candidate targets a measurable agent-harness boundary where the same evolved artifact is applied across frozen policies; the novel claim is the two-sided zero-gain boundary under a shared defect-activation measurement."
+        },
+        "saturation_scan": {
+          "checked": true,
+          "matched_patterns": [
+            "harness-update-scope-heterogeneity"
+          ],
+          "rejected_patterns": [
+            {
+              "key": "harness-update-scope-heterogeneity",
+              "reason": "considered and rejected because the candidate is not merely a CATE target; it predicts a non-monotone two-zero-regime boundary"
+            },
+            {
+              "key": "model-scaffold-enactability",
+              "reason": "considered and rejected because the weak-model failure is paired with a distinct strong-model saturation boundary under the same measurement"
+            }
+          ],
+          "invalid_entries": []
+        },
+        "semantic_reduction_review": {
+          "reviewed": true,
+          "block_only": true,
+          "verdict": "BLOCK",
+          "reviewer_model": "glm-5-2-260617",
+          "reviewer_requested_model": "glm-5.2",
+          "generator_resolved_model": "doubao-seed-evolving",
+          "independent_resolved_model": true,
+          "raw_sha256": "2caed5a7eb654058f0f180bf92757290a216f170c995eaa7c60a389faae72240",
+          "source_claims_grounded": false,
+          "source_claim_grounding": {
+            "source_a": {
+              "ref": "arXiv:2608.10178",
+              "supported": true,
+              "evidence_role": "EMPIRICAL_FACT",
+              "evidence_kind": "abstract",
+              "evidence_source": "abstract",
+              "declared_evidence_source": "fulltext",
+              "evidence_excerpt": "Gains compensate recoverable execution defects, where defect mass is near zero, and gain is near zero; which defect dominates is cell-specific.",
+              "excerpt_verified": false,
+              "grounded": false
+            },
+            "source_b": {
+              "ref": "arXiv:2608.08466",
+              "supported": true,
+              "evidence_role": "EMPIRICAL_FACT",
+              "evidence_kind": "empirical_fact",
+              "evidence_source": "fulltext",
+              "declared_evidence_source": "fulltext",
+              "evidence_excerpt": "harness-benefit is non-monotonic, with mid-tier models benefiting most (+19.3+19.3pp), strong-tier hitting ceiling (+2.6+2.6pp), and weak-tier benefiting least",
+              "excerpt_verified": true,
+              "grounded": true
+            }
+          },
+          "lane_contract_verified": true,
+          "lane_contract_reason": "The lane contract is verified: Source A and Source B provide empirical facts establishing an anomalous boundary (zero gain at near-zero defect mass) and adjacent expected regimes (mid-tier vs weak-tier gains) for the same measured phenomenon (harness-induced task-performance gain), targeting the unexplained transition.",
+          "matched_patterns": [
+            "harness-update-scope-heterogeneity"
+          ],
+          "strongest_reduction": "harness-update-scope-heterogeneity (conditional average treatment effects / effect heterogeneity, invariant causal prediction / invariant risk minimization, domain generalization, software configuration scoping)",
+          "reason": "The candidate attempts to escape the 'harness-update-scope-heterogeneity' veto by framing the interaction as a novel 'joint activation-defect boundary.' However, task-, pathology-, executor-, or trace-conditioned harness validity is explicitly not a new Agent object when the candidate condition is an effect modifier. The non-monotone two-regime boundary is perfectly expressible under the same information as a Conditional Average Treatment Effect (CATE) with defect mass and skill-load rate as covariates.",
+          "authority": false
+        },
+        "cheapest_problem_falsifier": "Show that a single monotone function of recoverable defect mass or a single monotone function of skill-load rate predicts harness gains across weak, mid, and strong models without requiring their interaction.",
+        "endpoint_headroom_requirement": "The problem survives only if the two zero-gain regimes are quantitatively distinguishable and the positive region requires both factors under matched harness, task, and budget conditions."
+      },
+      "audit": {
+        "schema_version": "2.0",
+        "candidate_id": "AUTO-2",
+        "discovery_lane": "UNEXPLAINED_BOUNDARY",
+        "passed": false,
+        "status": "PROBLEM_GATE_BLOCKED",
+        "blockers": [
+          "saturation-pattern-match:harness-update-scope-heterogeneity",
+          "semantic-reduction-review-block",
+          "source-claim-grounding-failed",
+          "source-claim-grounding-incomplete"
+        ],
+        "checks": [
+          {
+            "key": "field:candidate_id",
+            "pass": true
+          },
+          {
+            "key": "field:title",
+            "pass": true
+          },
+          {
+            "key": "field:discovery_lane",
+            "pass": true
+          },
+          {
+            "key": "field:empirical_evidence",
+            "pass": true
+          },
+          {
+            "key": "field:lane_evidence",
+            "pass": true
+          },
+          {
+            "key": "field:irreducible_object",
+            "pass": true
+          },
+          {
+            "key": "field:mature_theory_baselines",
+            "pass": true
+          },
+          {
+            "key": "field:same_information_nonreducibility",
+            "pass": true
+          },
+          {
+            "key": "field:exact_prediction",
+            "pass": true
+          },
+          {
+            "key": "field:strongest_same_information_baseline",
+            "pass": true
+          },
+          {
+            "key": "field:domain_transfer_audit",
+            "pass": true
+          },
+          {
+            "key": "field:saturation_scan",
+            "pass": true
+          },
+          {
+            "key": "field:cheapest_problem_falsifier",
+            "pass": true
+          },
+          {
+            "key": "field:endpoint_headroom_requirement",
+            "pass": true
+          },
+          {
+            "key": "field:semantic_reduction_review",
+            "pass": true
+          },
+          {
+            "key": "field:authority",
+            "pass": true
+          },
+          {
+            "key": "discovery-lane-contract",
+            "pass": true,
+            "lane": "UNEXPLAINED_BOUNDARY"
+          },
+          {
+            "key": "primary-source-1",
+            "pass": true,
+            "role": "EMPIRICAL_FACT"
+          },
+          {
+            "key": "primary-source-2",
+            "pass": true,
+            "role": "EMPIRICAL_FACT"
+          }
+        ],
+        "policy": {
+          "schema_version": "2.0",
+          "multi_lane_discovery_required": true,
+          "contradiction_first_required": false,
+          "contradiction_lane_retained": true,
+          "allowed_discovery_lanes": [
+            "CONTRADICTION",
+            "CONVERGENT_FAILURE",
+            "ASSUMPTION_BREAK",
+            "UNEXPLAINED_BOUNDARY"
+          ],
+          "forbidden_discovery_lanes": [
+            "MISSING_CELL",
+            "SHARED_LIMITATION",
+            "PURE_TOPIC_BRAINSTORM"
+          ],
+          "lane_specific_machine_evidence_contract_required": true,
+          "two_primary_source_evidence_items_required": true,
+          "shared_limitation_without_empirical_failure_forbidden": true,
+          "pure_topic_brainstorm_forbidden": true,
+          "open_world_missing_cell_claim_forbidden": true,
+          "two_mature_theory_baselines_required": true,
+          "same_information_nonreducibility_required": true,
+          "domain_transfer_veto_required": true,
+          "saturation_map_check_required": true,
+          "problem_falsifier_required_before_method_design": true,
+          "endpoint_headroom_required_before_terminal_interpretation": true,
+          "independent_reviewer_must_verify_lane_contract": true,
+          "no_lane_specific_downstream_relaxation": true,
+          "ai_generation_is_advisory_only": true,
+          "zero_survivors_is_valid": true,
+          "method_design_authorized_by_problem_gate": false,
+          "local_validation_authorized_by_problem_gate": false,
+          "p0_authorized_by_problem_gate": false,
+          "gpu_authorized_by_problem_gate": false
+        },
+        "authority": {
+          "paper_design_eligible_for_human_review": false,
+          "method_design": false,
+          "experiment_blueprint": false,
+          "local_validation": false,
+          "p0": false,
+          "gpu": false,
+          "full_experiment": false
+        }
+      },
+      "paper_design_eligible": false,
+      "authority": {
+        "method_design": false,
+        "experiment_blueprint": false,
+        "local_validation": false,
+        "p0": false,
+        "gpu": false,
+        "full_experiment": false
+      }
+    }
+  ],
   "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry."
 }

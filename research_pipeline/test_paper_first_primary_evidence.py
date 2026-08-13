@@ -11,7 +11,7 @@ from unittest.mock import patch
 import requests
 
 from .config import StorageSettings
-from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, _default_requester, build_primary_evidence_pool, extract_empirical_fact_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
+from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, build_primary_evidence_pool, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
 
 
 class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
@@ -68,7 +68,7 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
             "4": "Continual Agent Workflow Evolution",
         }
         if "/html/" in url:
-            page = f'''<html><body><section><h2>Experimental Results</h2><p>We find that verified persistent adaptation improves held-out success by 12.5% for primary source {arxiv_id}, while an ablation without verification fails more often.</p></section></body></html>'''
+            page = f'''<html><body><section><h2>Method Assumptions</h2><p>We assume that tool availability remains stationary throughout bounded deployment for primary source {arxiv_id}.</p></section><section><h2>Experimental Results</h2><p>We find that verified persistent adaptation improves held-out success by 12.5% for primary source {arxiv_id}, while an ablation without verification fails more often.</p><p>Results show a threshold regime: performance drops below 40.0% only when the retained evidence budget falls below 2.0 units.</p></section></body></html>'''
         else:
             page = f'''<html><head><meta name="citation_title" content="{titles.get(suffix,'Unknown')}"></head>
             <body><blockquote class="abstract mathjax">Abstract: Primary abstract for {arxiv_id} about self-evolving agents and persistent adaptation.</blockquote></body></html>'''
@@ -100,6 +100,18 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertIn("17.5%",facts[0]["text"])
         self.assertEqual(facts[0]["evidence_tier"],"strong-observation")
         self.assertEqual(len(facts[0]["text_sha256"]),64)
+
+    def test_typed_evidence_extraction_separates_assumption_failure_and_boundary(self) -> None:
+        page='''<html><body><section><h2>Method Assumptions</h2><p>We assume that tool availability remains stationary throughout bounded deployment.</p></section><section><h2>Experimental Results</h2><p>We find that the unverified agent fails on 4/10 held-out tasks under the bounded condition.</p><p>Results show a threshold regime: success drops below 40.0% only when the evidence budget falls below 2.0 units.</p></section><section><h2>Related Work</h2><p>We assume many prior systems are interesting, but this sentence is not an operational assumption.</p></section></body></html>'''
+        typed=extract_typed_evidence_candidates(page,max_per_type=2)
+        self.assertEqual(len(typed["operational_assumptions"]),1)
+        self.assertGreaterEqual(len(typed["measured_failures"]),1)
+        self.assertEqual(len(typed["boundary_observations"]),1)
+        self.assertIn("stationary",typed["operational_assumptions"][0]["text"])
+        self.assertTrue(any("4/10" in row["text"] for row in typed["measured_failures"]))
+        self.assertIn("threshold regime",typed["boundary_observations"][0]["text"])
+        self.assertTrue(all(row["extraction_version"]==TYPED_EVIDENCE_EXTRACTION_VERSION for rows in typed.values() for row in rows))
+        self.assertTrue(all(len(row["text_sha256"])==64 for rows in typed.values() for row in rows))
 
     def test_empirical_fact_extraction_rejects_metric_protocol_and_related_work_sentences(self) -> None:
         page='''<html><body><section><h2>Evaluation</h2><p>We report three metrics: attack success rate, clean utility, and false positive rate for every run.</p><p>Three gates: validity gate, activation gate, and significance gate are applied before scoring failures.</p><p>Recent work has highlighted the difficulty of evaluating self-improving agents and attribution failures.</p><p>Our method improves held-out success from 41.0% to 58.5% across 120 tasks under the same budget.</p></section></body></html>'''
@@ -187,7 +199,14 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertEqual(public["policy"]["empirical_fact_extraction_version"],"precision-v2")
         self.assertGreaterEqual(public["summary"]["empirical_fact_candidates"],4)
         self.assertEqual(sum(public["summary"]["empirical_fact_tier_counts"].values()),public["summary"]["empirical_fact_candidates"])
-        self.assertTrue(all("abstract" not in row and "empirical_facts" not in row for row in public["records"]))
+        self.assertGreaterEqual(public["summary"]["typed_evidence_candidates"]["operational_assumptions"],4)
+        self.assertGreaterEqual(public["summary"]["typed_evidence_candidates"]["measured_failures"],4)
+        self.assertGreaterEqual(public["summary"]["typed_evidence_candidates"]["boundary_observations"],4)
+        self.assertEqual(public["policy"]["typed_evidence_extraction_version"],TYPED_EVIDENCE_EXTRACTION_VERSION)
+        self.assertTrue(public["policy"]["typed_evidence_candidates_are_not_ground_truth"])
+        self.assertTrue(public["policy"]["typed_evidence_is_deterministic_and_bounded"])
+        self.assertTrue(all("abstract" not in row and "empirical_facts" not in row and "typed_evidence" not in row for row in public["records"]))
+        self.assertTrue(all(set(row["typed_evidence_counts"])=={"operational_assumptions","measured_failures","boundary_observations"} for row in public["records"]))
         self.assertTrue(all(row["empirical_fact_count"] >= 1 for row in public["records"]))
         self.assertTrue(all(len(row["fulltext_sha256"]) == 64 for row in public["records"]))
         self.assertNotIn("corpus_path",public); self.assertNotIn("private_pool_path",public)
@@ -341,8 +360,10 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
                     "abstract":f"Primary abstract fact {idx} about self-evolving agents.","fulltext_url":f"https://arxiv.org/html/2608.0000{idx}",
                     "fulltext_sha256":"c"*64,"cache_path":str(source_cache),"fulltext_cache_path":str(full_cache),
                     "empirical_facts":[{"section":"Results","text":f"Cached empirical fact {idx} improves held-out success by 12.0 percent.","text_sha256":"d"*64}],
+                    "typed_evidence":{"operational_assumptions":[{"section":"Method Assumptions","text":"We assume tool availability remains stationary during deployment.","text_sha256":"e"*64,"extraction_version":TYPED_EVIDENCE_EXTRACTION_VERSION}],"measured_failures":[{"section":"Results","text":f"We find method {idx} fails on 4/10 held-out tasks.","text_sha256":"f"*64,"extraction_version":TYPED_EVIDENCE_EXTRACTION_VERSION}],"boundary_observations":[{"section":"Analysis","text":"Results show a threshold regime below 40.0 percent success.","text_sha256":"9"*64,"extraction_version":TYPED_EVIDENCE_EXTRACTION_VERSION}]},
                     "fetched_at":"2026-08-13T05:00:00+00:00","primary_source_verified":True,
                     "empirical_fact_extraction_version":EMPIRICAL_FACT_EXTRACTION_VERSION,
+                    "typed_evidence_extraction_version":TYPED_EVIDENCE_EXTRACTION_VERSION,
                 })
             (private_dir/"primary-evidence-pool.json").write_text(json.dumps({"status":"READY","generated_at":"2026-08-13T05:00:00+00:00","records":records}),encoding="utf-8")
             public,private=build_primary_evidence_pool(
@@ -386,8 +407,10 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
                     "abstract":f"Cached primary abstract {idx} about self-evolving agents.","fulltext_url":f"https://arxiv.org/html/{arxiv_id}",
                     "fulltext_sha256":full_sha,"cache_path":str(source_cache),"fulltext_cache_path":str(full_cache),
                     "empirical_facts":[{"section":"Evaluation","text":"We report three metrics: success, failure, and latency.","text_sha256":"d"*64}],
+                    "typed_evidence":{"operational_assumptions":[],"measured_failures":[],"boundary_observations":[]},
                     "fetched_at":"2026-08-13T05:00:00+00:00","primary_source_verified":True,
                     "empirical_fact_extraction_version":"legacy-v0",
+                    "typed_evidence_extraction_version":TYPED_EVIDENCE_EXTRACTION_VERSION,
                 })
             (private_dir/"primary-evidence-pool.json").write_text(json.dumps({"status":"READY","generated_at":"2026-08-13T05:00:00+00:00","records":records}),encoding="utf-8")
             public,private=build_primary_evidence_pool(
