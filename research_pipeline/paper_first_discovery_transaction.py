@@ -111,6 +111,7 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
     allowed_generator_statuses = {"GENERATED_ZERO_CANDIDATES", "GENERATED_AWAIT_PROBLEM_GATE", "SKIPPED_SOURCE_COVERAGE_SATURATED"}
     if generator_status not in allowed_generator_statuses:
         errors.append("generator-did-not-complete-discovery-transaction")
+    generator_schema=str(generator.get("schema_version") or "0")
     generated = int(gs.get("generated") or 0)
     if int(gs.get("primary_evidence_records") or 0) != verified:
         errors.append("generator-primary-count-mismatch")
@@ -120,6 +121,12 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
         errors.append("generator-auto-inbox-count-mismatch")
     if int(gs.get("semantic_clear") or 0) + int(gs.get("semantic_blocked") or 0) != generated:
         errors.append("generator-semantic-accounting-mismatch")
+    if generator_schema >= "2.4" and generator_status in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}:
+        diagnostics=generator.get("search_diagnostics") or {}
+        lane_rows=[row for row in diagnostics.get("lane_search") or [] if isinstance(row,dict)]
+        lane_names={str(row.get("lane") or "") for row in lane_rows}
+        if diagnostics.get("scientific_authority") is not False or diagnostics.get("lane_search_complete") is not True or len(lane_rows)!=4 or lane_names!={"CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"}:
+            errors.append("generator-lane-search-audit-incomplete")
     if generator_status == "GENERATED_ZERO_CANDIDATES" and generated != 0:
         errors.append("zero-status-with-nonzero-candidates")
     if generator_status == "GENERATED_AWAIT_PROBLEM_GATE" and generated <= 0:

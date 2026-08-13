@@ -49,6 +49,14 @@ def generator_prompt(records: list[dict[str, Any]], dead_end_memory: dict[str, A
     lane_contracts = _lane_contract_payload()
     dead_end_memory = dead_end_memory or {"summary": {}, "recent_blocked_examples": [], "scientific_authority": False}
     shape = {
+        "lane_search": [
+            {
+                "lane": "CONTRADICTION|CONVERGENT_FAILURE|ASSUMPTION_BREAK|UNEXPLAINED_BOUNDARY",
+                "status": "NO_PAIR|REDUCIBLE|CANDIDATE",
+                "source_refs": ["arXiv:...", "arXiv:..."],
+                "reason": "bounded search audit reason",
+            }
+        ],
         "candidates": [
             {
                 "candidate_id": "AUTO-1",
@@ -97,6 +105,7 @@ def generator_prompt(records: list[dict[str, Any]], dead_end_memory: dict[str, A
         + "\n\nREVIEWER-PROVEN DEAD-END MEMORY (search-control only; zero scientific authority):\n"
         + json.dumps(dead_end_memory, ensure_ascii=False, separators=(",", ":"))
         + "\nThese are prior candidates already BLOCKED by independent review. Do not regenerate a semantically equivalent object by swapping sources, renaming the object, or rephrasing the same reduction escape. In particular, if repeated_reduction_basin=true, actively search outside the top basin. A prior dead end may be reconsidered only when the CURRENT evidence contains a concrete new observable that directly defeats the recorded strongest reduction; mere new wording or a new domain is insufficient.\n"
+        + "LANE SEARCH AUDIT: in the SAME single generator call, audit all four allowed discovery lanes exactly once, in lane_search_priority order when provided. For each lane return status=NO_PAIR when no two current primary sources already satisfy its evidence contract; REDUCIBLE when the strongest grounded pair is already explained by the mature/negative-space stack; CANDIDATE only when at least one emitted candidate in that exact lane uses the same two refs. source_refs must be empty for NO_PAIR, exactly two distinct provided refs for REDUCIBLE or CANDIDATE. A lane audit never requires a candidate and carries zero scientific authority. Historically underexplored lanes are searched first, but their scientific gate is unchanged.\n"
         + "\n\nVERIFIED PRIMARY SOURCES (private abstracts + bounded full-text fact candidates; output only ref + grounded claim + evidence_role):\n"
         + json.dumps(sources, ensure_ascii=False, separators=(",", ":"))
         + "\n\nReturn syntactically valid JSON only, shape:\n"

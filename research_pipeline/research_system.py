@@ -299,6 +299,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_problem_discovery_contract = build_problem_discovery_contract_state()
     paper_first_problem_generator = load_problem_generator_state()
     paper_first_problem_memory = ((paper_first_problem_generator.get("saturation_memory") or {}).get("blocked_problem_memory") or {})
+    paper_first_lane_search = paper_first_problem_generator.get("search_diagnostics") or {}
     paper_first_problem_gate_queue = load_problem_gate_queue_state()
     paper_first_post_c2 = build_post_c2_adjudication()
     formal_cards = {
@@ -447,6 +448,10 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_problem_top_reduction_count":(paper_first_problem_memory.get("top_reduction_basin") or {}).get("count",0),
             "paper_first_problem_repeated_reduction_basin":bool(paper_first_problem_memory.get("repeated_reduction_basin")),
             "paper_first_problem_search_escape_required":bool(paper_first_problem_memory.get("search_escape_required")),
+            "paper_first_problem_lane_search_complete":bool(paper_first_lane_search.get("lane_search_complete")),
+            "paper_first_problem_lane_search_candidate_lanes":sum(str(row.get("status") or "") == "CANDIDATE" for row in paper_first_lane_search.get("lane_search") or [] if isinstance(row,dict)),
+            "paper_first_problem_lane_search_reducible_lanes":sum(str(row.get("status") or "") == "REDUCIBLE" for row in paper_first_lane_search.get("lane_search") or [] if isinstance(row,dict)),
+            "paper_first_problem_lane_search_no_pair_lanes":sum(str(row.get("status") or "") == "NO_PAIR" for row in paper_first_lane_search.get("lane_search") or [] if isinstance(row,dict)),
             "paper_first_problem_queue_submitted":paper_first_problem_gate_queue["summary"]["submitted"],
             "paper_first_problem_queue_passed":paper_first_problem_gate_queue["summary"]["passed_problem_gate"],
             "paper_first_problem_queue_blocked":paper_first_problem_gate_queue["summary"]["blocked_problem_gate"],
@@ -771,6 +776,15 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if generator_policy.get("generation_notes_are_advisory_not_scientific_authority") is not True or generator_policy.get("zero_candidate_rationale_required") is not True or generator_policy.get("discovery_saturation_memory_has_zero_scientific_authority") is not True: errors.append("problem generator must preserve generation rationale and saturation memory without scientific authority")
     if generator_schema >= "2.3" and (generator_policy.get("reviewer_blocked_problem_memory_has_zero_scientific_authority") is not True or generator_policy.get("repeated_reduction_basin_requires_search_escape") is not True or generator_policy.get("portable_blocked_problem_memory_is_search_control_only") is not True): errors.append("problem generator must treat reviewer-blocked problem memory as zero-authority search control")
     if generator_schema >= "2.3" and (generator_policy.get("reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority") is not True or generator_policy.get("exact_excerpt_location_is_machine_inferred") is not True): errors.append("problem generator must infer exact excerpt location rather than trust reviewer source labels")
+    if generator_schema >= "2.4" and (generator_policy.get("one_generator_call_must_audit_all_discovery_lanes") is not True or generator_policy.get("lane_search_diagnostics_have_zero_scientific_authority") is not True or generator_policy.get("historically_underexplored_lanes_are_searched_first") is not True or generator_policy.get("lane_search_never_requires_candidate") is not True): errors.append("problem generator must audit all four discovery lanes in one zero-authority search pass without forcing candidates")
+    lane_search = generator.get("search_diagnostics") or {}
+    if generator_schema >= "2.4" and lane_search.get("scientific_authority") is not False: errors.append("lane-search diagnostics cannot carry scientific authority")
+    if generator_schema >= "2.4" and set(lane_search.get("lane_search_priority") or []) != set(DISCOVERY_LANES): errors.append("lane-search priority must cover all discovery lanes")
+    if generator_schema >= "2.4" and generator.get("status") in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}:
+        lane_rows=[row for row in lane_search.get("lane_search") or [] if isinstance(row,dict)]
+        lane_names=[str(row.get("lane") or "") for row in lane_rows]
+        lane_statuses=[str(row.get("status") or "") for row in lane_rows]
+        if lane_search.get("lane_search_complete") is not True or len(lane_rows)!=len(DISCOVERY_LANES) or set(lane_names)!=set(DISCOVERY_LANES) or any(status not in {"NO_PAIR","REDUCIBLE","CANDIDATE"} for status in lane_statuses): errors.append("generated problem state must preserve one complete machine-audited status for every discovery lane")
     saturation_memory = generator.get("saturation_memory") or {}
     if saturation_memory.get("scientific_authority") is not False: errors.append("problem-discovery saturation memory cannot carry scientific authority")
     blocked_memory = saturation_memory.get("blocked_problem_memory") or {}

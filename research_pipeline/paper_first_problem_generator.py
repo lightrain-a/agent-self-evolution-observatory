@@ -163,8 +163,11 @@ def _private_dead_end_prompt_memory(storage:StorageSettings,public_memory:dict[s
     examples=[]
     for row in local[-12:]:
         examples.append({key:row.get(key) for key in ("title","discovery_lane","source_refs","matched_patterns","strongest_reduction","reason","lane_contract_verified","source_claims_grounded")})
+    blocked_by_lane={str(key):int(value or 0) for key,value in (public_memory.get("blocked_by_lane") or {}).items()}
+    lane_search_priority=sorted(DISCOVERY_LANES,key=lambda lane:(blocked_by_lane.get(lane,0),DISCOVERY_LANES.index(lane)))
     return {
         "summary":{key:public_memory.get(key) for key in ("blocked_candidate_attempts","blocked_by_lane","reduction_pattern_counts","top_reduction_basin","repeated_reduction_basin")},
+        "lane_search_priority":lane_search_priority,
         "recent_blocked_examples":examples,
         "scientific_authority":False,
     }
@@ -291,8 +294,46 @@ def _count_by_lane(cands):
     return counts
 
 
+LANE_SEARCH_STATUSES={"NO_PAIR","REDUCIBLE","CANDIDATE"}
+
+
+def _normalize_lane_search(raw:Any,registry:dict[str,dict[str,Any]],expected_priority:list[str]|tuple[str,...]|None=None)->list[dict[str,Any]]:
+    if not isinstance(raw,list): raise ValueError("generator-lane-search-array-required")
+    rows=[];seen=set()
+    for item in raw:
+        if not isinstance(item,dict): raise ValueError("generator-lane-search-entry-invalid")
+        lane=str(item.get("lane") or "").strip().upper();status=str(item.get("status") or "").strip().upper();reason=" ".join(str(item.get("reason") or "").split())[:500]
+        refs=[str(ref or "").strip() for ref in (item.get("source_refs") or []) if str(ref or "").strip()]
+        if lane not in DISCOVERY_LANES or lane in seen: raise ValueError("generator-lane-search-lane-invalid-or-duplicate")
+        if status not in LANE_SEARCH_STATUSES: raise ValueError("generator-lane-search-status-invalid")
+        if not reason: raise ValueError("generator-lane-search-reason-required")
+        if status=="NO_PAIR" and refs: raise ValueError("generator-lane-search-no-pair-must-have-no-refs")
+        if status in {"REDUCIBLE","CANDIDATE"} and (len(refs)!=2 or refs[0]==refs[1] or any(ref not in registry for ref in refs)): raise ValueError("generator-lane-search-pair-invalid")
+        rows.append({"lane":lane,"status":status,"source_refs":refs,"reason":reason});seen.add(lane)
+    if set(seen)!=set(DISCOVERY_LANES) or len(rows)!=len(DISCOVERY_LANES): raise ValueError("generator-lane-search-must-cover-all-lanes")
+    priority=list(expected_priority or DISCOVERY_LANES)
+    if priority!=[row["lane"] for row in rows]: raise ValueError("generator-lane-search-priority-order-mismatch")
+    return rows
+
+
+def _candidate_ref_pair(candidate:dict[str,Any])->set[str]:
+    evidence=candidate.get("empirical_evidence") or {}
+    return {str((evidence.get(key) or {}).get("ref") or "").strip() for key in ("source_a","source_b") if str((evidence.get(key) or {}).get("ref") or "").strip()}
+
+
+def _validate_lane_search_candidates(lane_search:list[dict[str,Any]],candidates:list[dict[str,Any]])->None:
+    by_lane={row["lane"]:row for row in lane_search}
+    for lane in DISCOVERY_LANES:
+        row=by_lane[lane];lane_candidates=[candidate for candidate in candidates if str(candidate.get("discovery_lane") or "").strip().upper()==lane]
+        if lane_candidates and row["status"]!="CANDIDATE": raise ValueError("generator-lane-search-candidate-status-mismatch")
+        if row["status"]=="CANDIDATE":
+            if not lane_candidates: raise ValueError("generator-lane-search-candidate-missing")
+            pair=set(row.get("source_refs") or [])
+            if not any(_candidate_ref_pair(candidate)==pair for candidate in lane_candidates): raise ValueError("generator-lane-search-candidate-pair-mismatch")
+
+
 def _base_policy():
-    return {"zero_candidates_is_valid":True,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"format_retry_forbidden":True,"thinking_disabled":True,"multi_lane_discovery_enabled":True,"allowed_discovery_lanes":list(DISCOVERY_LANES),"forbidden_discovery_lanes":list(FORBIDDEN_DISCOVERY_LANES),"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"independent_reviewer_must_verify_lane_contract":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"portable_review_receipts_are_scheduler_metadata_only":True,"portable_review_receipts_have_zero_scientific_authority":True,"primary_source_coverage_receipts_are_inherited_transactionally":True,"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False}
+    return {"zero_candidates_is_valid":True,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"format_retry_forbidden":True,"thinking_disabled":True,"multi_lane_discovery_enabled":True,"allowed_discovery_lanes":list(DISCOVERY_LANES),"forbidden_discovery_lanes":list(FORBIDDEN_DISCOVERY_LANES),"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"independent_reviewer_must_verify_lane_contract":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"portable_review_receipts_are_scheduler_metadata_only":True,"portable_review_receipts_have_zero_scientific_authority":True,"primary_source_coverage_receipts_are_inherited_transactionally":True,"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False}
 
 
 def _empty_summary(primary_evidence_records=0):
@@ -307,7 +348,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     inherited_receipts=[dict(row) for row in ((pool.get("source_coverage") or {}).get("portable_review_receipts") or []) if isinstance(row,dict)]
     blocked_problem_memory=blocked_problem_memory or _public_blocked_problem_memory(storage)
     dead_end_prompt_memory=_private_dead_end_prompt_memory(storage,blocked_problem_memory)
-    state={"schema_version":"2.3","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":_base_policy(),"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},"candidates":[]}
+    state={"schema_version":"2.4","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":_base_policy(),"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","search_diagnostics":{"lane_search_priority":list(dead_end_prompt_memory.get("lane_search_priority") or DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"scientific_authority":False},"saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},"candidates":[]}
     def finish(status,cands=[]): state["status"]=status;_write_inbox(auto_inbox_path,run_id,status,cands,psha);_record_saturation_run(storage,state,psha,reg);return state
     if pool.get("status")!="READY" or len(reg)<4:return finish("SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE")
     if age is None or age>pool_max_age_hours:state["primary_pool_age_hours"]=age;return finish("SKIPPED_STALE_PRIMARY_EVIDENCE")
@@ -319,11 +360,18 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
         return finish("SKIPPED_SOURCE_COVERAGE_SATURATED")
     call=generator_responder or _ark
     try:
-        res=call(prompt=generator_prompt(list(reg.values()),dead_end_memory=dead_end_prompt_memory),model=generator_model,max_output_tokens=6500);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved};payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();rows=payload.get("candidates") or []
+        res=call(prompt=generator_prompt(list(reg.values()),dead_end_memory=dead_end_prompt_memory),model=generator_model,max_output_tokens=6500);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved};payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"]);rows=payload.get("candidates") or []
         if not isinstance(rows,list) or len(rows)>max_candidates or any(not isinstance(r,dict) for r in rows):raise ValueError("generator-candidate-array-invalid")
         if not rows and not state["generation_notes"]:raise ValueError("zero-candidate-generation-notes-required")
     except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
-    cands=[_normalize(r,reg) for r in rows];reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
+    cands=[_normalize(r,reg) for r in rows]
+    try:
+        _validate_lane_search_candidates(lane_search,cands)
+    except Exception as e:
+        state["error"]=f"{type(e).__name__}:{str(e)[:300]}";return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
+    state["search_diagnostics"].update({"lane_search_complete":True,"lane_search":lane_search})
+    reviewable=[c for c in cands if _reviewable(c,reg)]
+    state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
     if reviewable:
         call2=reviewer_responder or _ark
         try:
@@ -347,7 +395,7 @@ def public_problem_generator_state(state:dict[str,Any],storage:StorageSettings|N
 
 
 def _empty_state(status):
-    return {"schema_version":"2.3","status":status,"policy":_base_policy(),"summary":_empty_summary(),"generation_notes":"","saturation_memory":{"ledger_entries":0,"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":[],"blocked_problem_memory":{"blocked_candidate_attempts":0,"portable_blocked_problem_memory":[],"scientific_authority":False},"scientific_authority":False},"candidates":[],"raw_artifacts":{}}
+    return {"schema_version":"2.4","status":status,"policy":_base_policy(),"summary":_empty_summary(),"generation_notes":"","search_diagnostics":{"lane_search_priority":list(DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"scientific_authority":False},"saturation_memory":{"ledger_entries":0,"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":[],"blocked_problem_memory":{"blocked_candidate_attempts":0,"portable_blocked_problem_memory":[],"scientific_authority":False},"scientific_authority":False},"candidates":[],"raw_artifacts":{}}
 
 
 def load_problem_generator_state(path:Path=DEFAULT_JSON):

@@ -83,8 +83,16 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         }
 
     def gen(self, candidates: list[dict], resolved: str = "doubao-seed-evolving", notes: str = ""):
+        lane_search=[]
+        for lane in DISCOVERY_LANES:
+            matching=[candidate for candidate in candidates if candidate.get("discovery_lane")==lane]
+            if matching:
+                evidence=matching[0]["empirical_evidence"]
+                lane_search.append({"lane":lane,"status":"CANDIDATE","source_refs":[evidence["source_a"]["ref"],evidence["source_b"]["ref"]],"reason":"A candidate survives the lane-level search audit."})
+            else:
+                lane_search.append({"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No current pair survives this lane search."})
         def responder(**kwargs):
-            return {"text": json.dumps({"candidates": candidates, "generation_notes": notes}), "resolved_model": resolved}
+            return {"text": json.dumps({"lane_search":lane_search,"candidates": candidates, "generation_notes": notes}), "resolved_model": resolved}
         return responder
 
     def review(
@@ -264,7 +272,9 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         captured = {}
         def generator(**kwargs):
             captured["prompt"] = kwargs["prompt"]
-            return {"text": json.dumps({"candidates": [], "generation_notes": "No new problem survives prior reviewer reductions."}), "resolved_model": "doubao-seed-evolving"}
+            priority=["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"]
+            lane_search=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair survives this lane after prior reductions."} for lane in priority]
+            return {"text": json.dumps({"lane_search":lane_search,"candidates": [], "generation_notes": "No new problem survives prior reviewer reductions."}), "resolved_model": "doubao-seed-evolving"}
         with tempfile.TemporaryDirectory() as td:
             root=Path(td); storage=self.storage(root); now=datetime(2026,8,13,tzinfo=timezone.utc)
             archive=root/"paper-first-problem-discovery"/"archive"; archive.mkdir(parents=True)
@@ -285,7 +295,11 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             root=Path(td); storage=self.storage(root); now=datetime(2026,8,13,tzinfo=timezone.utc); j=root/"generator.json"; js=root/"generator.js"
             row={"signature_id":"deadbeef","title":"Prior blocked object","discovery_lane":"CONVERGENT_FAILURE","matched_patterns":["artifact-uptake-after-retrieval"],"strongest_reduction":"artifact-uptake-after-retrieval","lane_contract_verified":True,"source_claims_grounded":True,"scientific_authority":False}
             j.write_text(json.dumps({"status":"GENERATED_ZERO_CANDIDATES","summary":{"primary_evidence_records":4},"saturation_memory":{"blocked_problem_memory":{"portable_blocked_problem_memory":[row],"scientific_authority":False}}}),encoding="utf-8")
-            write_problem_generator_state(json_path=j,js_path=js,storage=storage,primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=self.gen([],notes="No new problem survives."),now=now)
+            def generator(**kwargs):
+                priority=["CONTRADICTION","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY","CONVERGENT_FAILURE"]
+                lane_search=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."} for lane in priority]
+                return {"text":json.dumps({"lane_search":lane_search,"candidates":[],"generation_notes":"No new problem survives."}),"resolved_model":"doubao-seed-evolving"}
+            write_problem_generator_state(json_path=j,js_path=js,storage=storage,primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=generator,now=now)
             public=json.loads(j.read_text())
         memory=public["saturation_memory"]["blocked_problem_memory"]
         self.assertEqual(memory["blocked_candidate_attempts"],1); self.assertEqual(memory["portable_blocked_problem_memory"][0]["signature_id"],"deadbeef")
@@ -304,6 +318,61 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertTrue(review["source_claims_grounded"]); self.assertEqual(review["verdict"],"CLEAR")
         self.assertEqual(grounding["evidence_source"],"abstract"); self.assertEqual(grounding["declared_evidence_source"],"fulltext"); self.assertFalse(grounding["declared_source_matches"])
         self.assertTrue(state["policy"]["exact_excerpt_location_is_machine_inferred"])
+
+    def test_zero_candidates_with_complete_lane_audit_is_valid(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); now=datetime(2026,8,13,tzinfo=timezone.utc)
+            state=run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=self.gen([],notes="All four lanes were audited; none survives."),now=now)
+        self.assertEqual(state["status"],"GENERATED_ZERO_CANDIDATES")
+        self.assertTrue(state["search_diagnostics"]["lane_search_complete"])
+        self.assertEqual({row["lane"] for row in state["search_diagnostics"]["lane_search"]},set(DISCOVERY_LANES))
+        self.assertTrue(all(row["status"]=="NO_PAIR" for row in state["search_diagnostics"]["lane_search"]))
+        self.assertFalse(state["search_diagnostics"]["scientific_authority"])
+
+    def test_missing_lane_audit_is_generator_error_without_retry(self) -> None:
+        calls=[]
+        def responder(**kwargs):
+            calls.append(1)
+            lane_search=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."} for lane in DISCOVERY_LANES[:-1]]
+            return {"text":json.dumps({"lane_search":lane_search,"candidates":[],"generation_notes":"Incomplete audit."}),"resolved_model":"doubao-seed-evolving"}
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); now=datetime(2026,8,13,tzinfo=timezone.utc)
+            state=run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=responder,now=now)
+        self.assertEqual(state["status"],"GENERATOR_ERROR_ZERO_AUTHORITY")
+        self.assertIn("generator-lane-search-must-cover-all-lanes",state["error"])
+        self.assertEqual(calls,[1])
+        self.assertFalse(state["search_diagnostics"]["lane_search_complete"])
+
+    def test_lane_audit_candidate_pair_must_match_candidate(self) -> None:
+        candidate=self.raw_candidate("CONTRADICTION")
+        def responder(**kwargs):
+            lane_search=[]
+            for lane in DISCOVERY_LANES:
+                if lane=="CONTRADICTION": lane_search.append({"lane":lane,"status":"CANDIDATE","source_refs":["arXiv:2608.00003","arXiv:2608.00004"],"reason":"Wrong pair."})
+                else: lane_search.append({"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."})
+            return {"text":json.dumps({"lane_search":lane_search,"candidates":[candidate],"generation_notes":"candidate"}),"resolved_model":"doubao-seed-evolving"}
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); now=datetime(2026,8,13,tzinfo=timezone.utc)
+            state=run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=responder,now=now)
+        self.assertEqual(state["status"],"GENERATOR_ERROR_ZERO_AUTHORITY")
+        self.assertIn("generator-lane-search-candidate-pair-mismatch",state["error"])
+
+    def test_blocked_lane_history_prioritizes_underexplored_lanes(self) -> None:
+        captured={}
+        def generator(**kwargs):
+            captured["prompt"]=kwargs["prompt"]
+            priority=["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"]
+            lane_search=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."} for lane in priority]
+            return {"text":json.dumps({"lane_search":lane_search,"candidates":[],"generation_notes":"No lane survives."}),"resolved_model":"doubao-seed-evolving"}
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); storage=self.storage(root); now=datetime(2026,8,13,tzinfo=timezone.utc)
+            archive=root/"paper-first-problem-discovery"/"archive"; archive.mkdir(parents=True)
+            for idx in range(4):
+                c={"candidate_id":f"A{idx}","title":"Old assumption","discovery_lane":"ASSUMPTION_BREAK","empirical_evidence":{"source_a":{"ref":"arXiv:2608.00001"},"source_b":{"ref":"arXiv:2608.00002"}},"semantic_reduction_review":{"verdict":"BLOCK","lane_contract_verified":True,"source_claims_grounded":True,"matched_patterns":["procedural-memory-nonmonotonicity"],"strongest_reduction":"procedural-memory-nonmonotonicity"}}
+                (archive/f"auto-inbox-{idx}.json").write_text(json.dumps({"generator_run_id":f"old-{idx}","candidates":[c]}),encoding="utf-8")
+            state=run_problem_generator(storage=storage,primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=generator,now=now)
+        self.assertEqual(state["search_diagnostics"]["lane_search_priority"],["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"])
+        self.assertIn('"lane_search_priority":["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"]',captured["prompt"])
 
     def test_stale_pool_makes_zero_api_calls(self) -> None:
         calls = []

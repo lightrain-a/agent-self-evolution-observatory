@@ -48,7 +48,8 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         return SimpleNamespace(status_code=200,text=f'<meta name="citation_title" content="{titles[idx-1]}"><blockquote class="abstract mathjax">Abstract: Verified primary evidence for self-evolving agents and persistent adaptation {idx}.</blockquote>')
 
     def generator(self, *, prompt: str, model: str, max_output_tokens: int):
-        return {"text":json.dumps({"candidates":[],"generation_notes":"No evidence-first discovery lane survives the current same-information and mature-theory vetoes."}),"resolved_model":"doubao-seed-evolving"}
+        lane_search=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No current pair survives this lane search."} for lane in ("CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY")]
+        return {"text":json.dumps({"lane_search":lane_search,"candidates":[],"generation_notes":"No evidence-first discovery lane survives the current same-information and mature-theory vetoes."}),"resolved_model":"doubao-seed-evolving"}
 
     def targets(self, root: Path):
         public=root/"public";public.mkdir(parents=True,exist_ok=True)
@@ -143,6 +144,12 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         queue={"summary":{"primary_evidence_records":4,"submitted":0,"audited":0,"passed_problem_gate":0,"blocked_problem_gate":0,"inbox_errors":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0},"audited":[]}
         errors=_validate(primary,generator,queue)
         self.assertIn("coverage-skip-portable-receipts-incomplete",errors)
+
+    def test_validator_rejects_v24_generated_state_without_complete_lane_search(self) -> None:
+        primary={"status":"READY","summary":{"verified":4}}
+        generator={"schema_version":"2.4","status":"GENERATED_ZERO_CANDIDATES","summary":{"primary_evidence_records":4,"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0},"search_diagnostics":{"lane_search_complete":False,"lane_search":[],"scientific_authority":False},"policy":{"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"candidates":[]}
+        queue={"summary":{"primary_evidence_records":4,"submitted":0,"audited":0,"passed_problem_gate":0,"blocked_problem_gate":0,"inbox_errors":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0},"audited":[]}
+        self.assertIn("generator-lane-search-audit-incomplete",_validate(primary,generator,queue))
 
     def test_second_host_inherits_first_transaction_review_exposure(self) -> None:
         with tempfile.TemporaryDirectory() as td:
