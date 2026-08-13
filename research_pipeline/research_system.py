@@ -423,6 +423,7 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_fresh_stopped":paper_first_fresh_saturation["summary"]["stopped"],
             "paper_first_primary_evidence_status":paper_first_primary_evidence.get("status"),
             "paper_first_primary_evidence_verified":(paper_first_primary_evidence.get("summary") or {}).get("verified",0),
+            "paper_first_primary_fact_extraction_version":(paper_first_primary_evidence.get("policy") or {}).get("empirical_fact_extraction_version"),
             "paper_first_primary_generation_ready":bool((paper_first_primary_evidence.get("summary") or {}).get("candidate_generation_ready")),
             "paper_first_problem_gate_fields":paper_first_problem_discovery_contract["summary"]["required_top_level_fields"],
             "paper_first_problem_gate_saturation_patterns":paper_first_problem_discovery_contract["summary"]["saturation_patterns"],
@@ -430,6 +431,8 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_problem_generator_generated":(paper_first_problem_generator.get("summary") or {}).get("generated",0),
             "paper_first_problem_generator_semantic_clear":(paper_first_problem_generator.get("summary") or {}).get("semantic_clear",0),
             "paper_first_problem_generator_semantic_blocked":(paper_first_problem_generator.get("summary") or {}).get("semantic_blocked",0),
+            "paper_first_problem_generator_saturation_entries":(paper_first_problem_generator.get("saturation_memory") or {}).get("ledger_entries",0),
+            "paper_first_problem_generator_prior_identical_zero":(paper_first_problem_generator.get("saturation_memory") or {}).get("prior_identical_zero_runs",0),
             "paper_first_problem_queue_submitted":paper_first_problem_gate_queue["summary"]["submitted"],
             "paper_first_problem_queue_passed":paper_first_problem_gate_queue["summary"]["passed_problem_gate"],
             "paper_first_problem_queue_blocked":paper_first_problem_gate_queue["summary"]["blocked_problem_gate"],
@@ -727,6 +730,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if primary_evidence.get("status") == "READY" and (primary_summary.get("verified") or 0) < 4: errors.append("READY primary evidence pool must contain at least four verified records")
     if primary_evidence.get("status") == "READY" and (primary_policy.get("primary_publication_age_is_bounded") is not True or float(primary_policy.get("maximum_publication_age_days") or 9999) > 60.0): errors.append("READY primary evidence pool must hard-bound publication age to <=60 days")
     if primary_evidence.get("status") == "READY" and (primary_policy.get("fulltext_enrichment_is_optional") is not True or primary_policy.get("fulltext_snippets_remain_private_data_artifacts") is not True or primary_policy.get("empirical_fact_candidates_are_not_ground_truth") is not True): errors.append("READY primary evidence must keep fulltext enrichment optional/private and empirical fact candidates non-authoritative")
+    if primary_evidence.get("status") == "READY" and (primary_policy.get("empirical_fact_precision_gate") is not True or primary_policy.get("empirical_fact_extraction_version") != "precision-v2" or primary_policy.get("derived_empirical_facts_reused_only_when_extractor_version_matches") is not True): errors.append("READY primary evidence must use the versioned empirical-fact precision gate and forbid cross-version derived-fact reuse")
+    fact_tiers = primary_summary.get("empirical_fact_tier_counts") or {}
+    if primary_evidence.get("status") == "READY" and sum(int(value or 0) for value in fact_tiers.values()) != int(primary_summary.get("empirical_fact_candidates") or 0): errors.append("empirical fact tier accounting must equal the published fact-candidate count")
     if primary_evidence.get("status") == "READY" and (primary_policy.get("pre_registered_lane_coverage_floor") is not True or primary_policy.get("lane_coverage_is_discovery_breadth_not_scientific_authority") is not True or int(primary_policy.get("lane_floor") or 0) < 1): errors.append("READY primary evidence must enforce the preregistered lane coverage floor without granting scientific authority")
     if primary_evidence.get("status") == "READY" and (primary_policy.get("fresh_s2_is_augmented_by_preregistered_arxiv_lanes") is not True or primary_policy.get("arxiv_augmentation_failure_does_not_invalidate_fresh_corpus") is not True): errors.append("READY primary evidence must augment fresh corpus discovery with preregistered arXiv lanes while treating augmentation failure as metadata-only")
     if primary_evidence.get("status") == "READY" and list(primary_summary.get("undercovered_lanes") or []): errors.append("READY primary evidence selection must satisfy every eligible preregistered lane floor")
@@ -735,6 +741,10 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if discovery_summary.get("saturation_patterns") != fresh_summary.get("reduction_patterns") or discovery_summary.get("automatic_method_authority") != 0 or discovery_summary.get("automatic_experiment_authority") != 0: errors.append("paper-first problem discovery contract must consume the current saturation map and grant no automatic downstream authority")
     generator = state.get("paper_first_problem_generator") or {}; generator_policy = generator.get("policy") or {}; generator_summary = generator.get("summary") or {}
     if generator_policy.get("zero_candidates_is_valid") is not True or generator_policy.get("semantic_reviewer_is_block_only") is not True or generator_policy.get("candidate_inbox_has_zero_scientific_authority") is not True: errors.append("problem generator must allow zero candidates and keep semantic review/inbox non-authoritative")
+    if generator_policy.get("generation_notes_are_advisory_not_scientific_authority") is not True or generator_policy.get("zero_candidate_rationale_required") is not True or generator_policy.get("discovery_saturation_memory_has_zero_scientific_authority") is not True: errors.append("problem generator must preserve zero-candidate rationale and saturation memory without scientific authority")
+    saturation_memory = generator.get("saturation_memory") or {}
+    if saturation_memory.get("scientific_authority") is not False: errors.append("problem-discovery saturation memory cannot carry scientific authority")
+    if generator.get("status") == "GENERATED_ZERO_CANDIDATES" and not str(generator.get("generation_notes") or "").strip(): errors.append("zero-candidate generator state must preserve an auditable rationale")
     if generator.get("status") in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"} and generator_policy.get("independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts") is not True: errors.append("generated problem candidates require independent exact-primary-evidence source-claim grounding")
     if generator_policy.get("automatic_method_authority") is not False or generator_policy.get("automatic_experiment_authority") is not False or generator_policy.get("automatic_p0_authority") is not False: errors.append("problem generator cannot authorize method, experiment, or P0")
     if generator.get("status") == "GENERATED_AWAIT_PROBLEM_GATE" and int(generator_summary.get("written_to_auto_inbox") or 0) != int(generator_summary.get("generated") or 0): errors.append("generated candidates must be written completely to the auto inbox before gate audit")

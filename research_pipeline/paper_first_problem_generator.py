@@ -59,6 +59,44 @@ def _write_inbox(path,run_id,status,candidates,pool_sha):
     path.parent.mkdir(parents=True,exist_ok=True)
     path.write_text(json.dumps({"schema_version":"1.0","generated_at":_now(),"generator_run_id":run_id,"status":status,"evidence_pool_sha256":pool_sha,"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False},"candidates":candidates},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 
+
+def _saturation_ledger_path(storage:StorageSettings)->Path:
+    return _root(storage)/"discovery-saturation-ledger.json"
+
+
+def _negative_space_sha()->str:
+    payload=[{"key":row.get("key"),"veto":row.get("veto"),"mature_theories":row.get("mature_theories")} for row in REDUCTION_PATTERNS]
+    return hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()).hexdigest()
+
+
+def _load_saturation_ledger(storage:StorageSettings)->list[dict[str,Any]]:
+    path=_saturation_ledger_path(storage)
+    try: payload=json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError): return []
+    rows=payload.get("runs") if isinstance(payload,dict) else None
+    return [row for row in (rows or []) if isinstance(row,dict)]
+
+
+def _record_saturation_run(storage:StorageSettings,state:dict[str,Any],pool_sha:str,registry:dict[str,dict[str,Any]])->None:
+    if state.get("status") not in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}: return
+    ledger=_load_saturation_ledger(storage)
+    raw=(state.get("raw_artifacts") or {}).get("generator") or {}
+    key={"pool_sha256":pool_sha,"negative_space_sha256":_negative_space_sha(),"requested_model":state.get("generator_model"),"resolved_model":raw.get("resolved_model")}
+    prior_identical=sum(
+        row.get("status")=="GENERATED_ZERO_CANDIDATES" and all(row.get(k)==v for k,v in key.items())
+        for row in ledger
+    )
+    entry={
+        "run_id":state.get("run_id"),"generated_at":state.get("generated_at"),**key,
+        "primary_evidence_records":len(registry),"source_refs":sorted(registry),"status":state.get("status"),
+        "generated":(state.get("summary") or {}).get("generated",0),"semantic_clear":(state.get("summary") or {}).get("semantic_clear",0),
+        "raw_sha256":raw.get("sha256"),"generation_notes":str(state.get("generation_notes") or "")[:2400],
+        "scientific_authority":False,
+    }
+    ledger.append(entry); ledger=ledger[-200:]
+    path=_saturation_ledger_path(storage); path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps({"schema_version":"1.0","runs":ledger},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    state["saturation_memory"]={"ledger_entries":len(ledger),"prior_identical_zero_runs":prior_identical,"current_run_recorded":True,"scientific_authority":False}
+
 def _ark(*,prompt,model,max_output_tokens):
     s=ArkSettings.from_env(required=False)
     if not s.api_key: raise RuntimeError("ARK_API_KEY_NOT_CONFIGURED")
@@ -117,14 +155,15 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     storage=storage or StorageSettings.from_env();primary_pool_path=primary_pool_path or private_primary_pool_path(storage);auto_inbox_path=auto_inbox_path or default_auto_inbox_path(storage)
     generator_model=generator_model or os.getenv("PAPER_FIRST_PROBLEM_GENERATOR_MODEL",GENERATOR_MODEL);reviewer_model=reviewer_model or os.getenv("PAPER_FIRST_PROBLEM_REVIEW_MODEL",REVIEWER_MODEL);current=(now or _now_dt()).astimezone(timezone.utc);run_id=current.strftime("%Y%m%dT%H%M%SZ")
     archived=_archive_previous(storage,auto_inbox_path);pool=load_private_primary_pool(primary_pool_path) or {};reg=_registry(pool);psha=_pool_sha(pool) if pool else "";d=_parse_iso(pool.get("generated_at"));age=None if d is None else max(0.0,(current-d).total_seconds()/3600)
-    state={"schema_version":"1.1","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":{"zero_candidates_is_valid":True,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"format_retry_forbidden":True,"thinking_disabled":True,"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"summary":{"primary_evidence_records":len(reg),"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0},"raw_artifacts":{},"candidates":[]}
-    def finish(status,cands=[]): state["status"]=status;_write_inbox(auto_inbox_path,run_id,status,cands,psha);return state
+    state={"schema_version":"1.2","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":{"zero_candidates_is_valid":True,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"format_retry_forbidden":True,"thinking_disabled":True,"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"summary":{"primary_evidence_records":len(reg),"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0},"raw_artifacts":{},"generation_notes":"","saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage)),"prior_identical_zero_runs":0,"current_run_recorded":False,"scientific_authority":False},"candidates":[]}
+    def finish(status,cands=[]): state["status"]=status;_write_inbox(auto_inbox_path,run_id,status,cands,psha);_record_saturation_run(storage,state,psha,reg);return state
     if pool.get("status")!="READY" or len(reg)<4:return finish("SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE")
     if age is None or age>pool_max_age_hours:state["primary_pool_age_hours"]=age;return finish("SKIPPED_STALE_PRIMARY_EVIDENCE")
     state["primary_pool_age_hours"]=round(age,4);call=generator_responder or _ark
     try:
-        res=call(prompt=generator_prompt(list(reg.values())),model=generator_model,max_output_tokens=6500);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved};payload=extract_json_object(raw);rows=payload.get("candidates") or []
+        res=call(prompt=generator_prompt(list(reg.values())),model=generator_model,max_output_tokens=6500);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved};payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();rows=payload.get("candidates") or []
         if not isinstance(rows,list) or len(rows)>max_candidates or any(not isinstance(r,dict) for r in rows):raise ValueError("generator-candidate-array-invalid")
+        if not rows and not state["generation_notes"]:raise ValueError("zero-candidate-generation-notes-required")
     except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
     cands=[_normalize(r,reg) for r in rows];reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable)})
     if reviewable:
@@ -149,9 +188,9 @@ def public_problem_generator_state(state:dict[str,Any],storage:StorageSettings|N
 
 def load_problem_generator_state(path:Path=DEFAULT_JSON):
     if not path.exists():
-        return {"schema_version":"1.0","status":"NOT_RUN","policy":{"zero_candidates_is_valid":True,"semantic_reviewer_is_block_only":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"summary":{"primary_evidence_records":0,"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0},"candidates":[],"raw_artifacts":{}}
+        return {"schema_version":"1.2","status":"NOT_RUN","policy":{"zero_candidates_is_valid":True,"semantic_reviewer_is_block_only":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"summary":{"primary_evidence_records":0,"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0},"generation_notes":"","saturation_memory":{"ledger_entries":0,"prior_identical_zero_runs":0,"current_run_recorded":False,"scientific_authority":False},"candidates":[],"raw_artifacts":{}}
     try:p=json.loads(path.read_text(encoding="utf-8"))
-    except (OSError,json.JSONDecodeError):return {"schema_version":"1.0","status":"STATE_UNREADABLE","policy":{"zero_candidates_is_valid":True,"semantic_reviewer_is_block_only":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"summary":{"primary_evidence_records":0,"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0},"candidates":[],"raw_artifacts":{}}
+    except (OSError,json.JSONDecodeError):return {"schema_version":"1.2","status":"STATE_UNREADABLE","policy":{"zero_candidates_is_valid":True,"semantic_reviewer_is_block_only":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"summary":{"primary_evidence_records":0,"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0},"generation_notes":"","saturation_memory":{"ledger_entries":0,"prior_identical_zero_runs":0,"current_run_recorded":False,"scientific_authority":False},"candidates":[],"raw_artifacts":{}}
     return p if isinstance(p,dict) else {"schema_version":"1.0","status":"STATE_INVALID","policy":{},"summary":{},"candidates":[],"raw_artifacts":{}}
 
 

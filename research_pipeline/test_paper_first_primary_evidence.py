@@ -11,7 +11,7 @@ from unittest.mock import patch
 import requests
 
 from .config import StorageSettings
-from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, _default_requester, build_primary_evidence_pool, extract_empirical_fact_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
+from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, _default_requester, build_primary_evidence_pool, extract_empirical_fact_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
 
 
 class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
@@ -98,7 +98,15 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertEqual(len(facts),1)
         self.assertEqual(facts[0]["section"],"Experimental Results")
         self.assertIn("17.5%",facts[0]["text"])
+        self.assertEqual(facts[0]["evidence_tier"],"strong-observation")
         self.assertEqual(len(facts[0]["text_sha256"]),64)
+
+    def test_empirical_fact_extraction_rejects_metric_protocol_and_related_work_sentences(self) -> None:
+        page='''<html><body><section><h2>Evaluation</h2><p>We report three metrics: attack success rate, clean utility, and false positive rate for every run.</p><p>Three gates: validity gate, activation gate, and significance gate are applied before scoring failures.</p><p>Recent work has highlighted the difficulty of evaluating self-improving agents and attribution failures.</p><p>Our method improves held-out success from 41.0% to 58.5% across 120 tasks under the same budget.</p></section></body></html>'''
+        facts=extract_empirical_fact_candidates(page,max_facts=8)
+        self.assertEqual(len(facts),1)
+        self.assertIn("58.5%",facts[0]["text"])
+        self.assertIn(facts[0]["evidence_tier"],{"quantitative-directional","owned-directional"})
 
     def test_parse_arxiv_atom_extracts_primary_metadata(self) -> None:
         rows=parse_arxiv_atom('<feed xmlns="http://www.w3.org/2005/Atom"><entry><id>https://arxiv.org/abs/2608.12345v2</id><title> Self-Evolving Agent </title><summary> primary abstract </summary><published>2026-08-12T00:00:00Z</published></entry></feed>')
@@ -175,7 +183,10 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertEqual(public["summary"]["verified_undercovered_lanes"],[])
         self.assertTrue(public["policy"]["pre_registered_lane_coverage_floor"])
         self.assertTrue(public["policy"]["lane_coverage_is_discovery_breadth_not_scientific_authority"])
+        self.assertTrue(public["policy"]["empirical_fact_precision_gate"])
+        self.assertEqual(public["policy"]["empirical_fact_extraction_version"],"precision-v2")
         self.assertGreaterEqual(public["summary"]["empirical_fact_candidates"],4)
+        self.assertEqual(sum(public["summary"]["empirical_fact_tier_counts"].values()),public["summary"]["empirical_fact_candidates"])
         self.assertTrue(all("abstract" not in row and "empirical_facts" not in row for row in public["records"]))
         self.assertTrue(all(row["empirical_fact_count"] >= 1 for row in public["records"]))
         self.assertTrue(all(len(row["fulltext_sha256"]) == 64 for row in public["records"]))
@@ -289,6 +300,7 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
                     "fulltext_sha256":"c"*64,"cache_path":str(source_cache),"fulltext_cache_path":str(full_cache),
                     "empirical_facts":[{"section":"Results","text":f"Cached empirical fact {idx} improves held-out success by 12.0 percent.","text_sha256":"d"*64}],
                     "fetched_at":"2026-08-13T05:00:00+00:00","primary_source_verified":True,
+                    "empirical_fact_extraction_version":EMPIRICAL_FACT_EXTRACTION_VERSION,
                 })
             (private_dir/"primary-evidence-pool.json").write_text(json.dumps({"status":"READY","generated_at":"2026-08-13T05:00:00+00:00","records":records}),encoding="utf-8")
             public,private=build_primary_evidence_pool(
@@ -303,6 +315,53 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertEqual(public["summary"]["recent_verified_cache_reused"],4)
         self.assertEqual(len(private["records"]),4)
         self.assertTrue(public["policy"]["recent_cache_reuse_is_retry_optimization_not_weekly_freshness_relaxation"])
+
+    def test_extractor_version_mismatch_reuses_raw_cache_but_rederives_empirical_facts(self) -> None:
+        calls=[]
+        def fail_requester(*args,**kwargs):
+            calls.append((args,kwargs)); raise AssertionError("content-addressed raw cache should avoid network during extractor upgrade")
+        with tempfile.TemporaryDirectory() as td:
+            import hashlib
+            root=Path(td); storage=self.storage(root); corpus=self.corpus(root)
+            private_dir=root/"paper-first-problem-discovery"; private_dir.mkdir(parents=True)
+            cache_dir=private_dir/"primary-sources"; cache_dir.mkdir(parents=True)
+            records=[]
+            titles=(
+                "Self-Evolving Agent Skills Under Feedback",
+                "Harness Evolution for Autonomous Agents",
+                "Persistent Memory for Self-Improving Agents",
+                "Continual Agent Workflow Evolution",
+            )
+            for idx,title in enumerate(titles,start=1):
+                arxiv_id=f"2608.0000{idx}"
+                primary=f'''<html><head><meta name="citation_title" content="{title}"></head><body><blockquote class="abstract mathjax">Abstract: Cached primary abstract {idx} about self-evolving agents.</blockquote></body></html>'''.encode()
+                source_sha=hashlib.sha256(primary).hexdigest(); source_cache=cache_dir/f"arxiv-{arxiv_id}-{source_sha[:12]}.html"; source_cache.write_bytes(primary)
+                full=f'''<html><body><section><h2>Experimental Results</h2><p>We report three metrics: success, failure, and latency.</p><p>Our method improves held-out success from 41.0% to 58.5% across 120 tasks under the same budget.</p></section></body></html>'''.encode()
+                full_sha=hashlib.sha256(full).hexdigest(); full_cache=cache_dir/f"arxiv-full-{arxiv_id}-{full_sha[:12]}.html"; full_cache.write_bytes(full)
+                records.append({
+                    "evidence_id":str(idx)*64,"ref":f"arXiv:{arxiv_id}","title":title,
+                    "primary_url":f"https://arxiv.org/abs/{arxiv_id}","source_sha256":source_sha,"abstract_sha256":"b"*64,
+                    "abstract":f"Cached primary abstract {idx} about self-evolving agents.","fulltext_url":f"https://arxiv.org/html/{arxiv_id}",
+                    "fulltext_sha256":full_sha,"cache_path":str(source_cache),"fulltext_cache_path":str(full_cache),
+                    "empirical_facts":[{"section":"Evaluation","text":"We report three metrics: success, failure, and latency.","text_sha256":"d"*64}],
+                    "fetched_at":"2026-08-13T05:00:00+00:00","primary_source_verified":True,
+                    "empirical_fact_extraction_version":"legacy-v0",
+                })
+            (private_dir/"primary-evidence-pool.json").write_text(json.dumps({"status":"READY","generated_at":"2026-08-13T05:00:00+00:00","records":records}),encoding="utf-8")
+            public,private=build_primary_evidence_pool(
+                storage=storage,corpus_path=corpus,requester=fail_requester,
+                augment_fresh_corpus_with_arxiv=False,
+                now=datetime(2026,8,13,6,0,tzinfo=timezone.utc),min_interval_seconds=0,max_papers=8,
+            )
+        self.assertEqual(calls,[])
+        self.assertEqual(public["summary"]["recent_verified_cache_reused"],0)
+        self.assertEqual(public["summary"]["recent_raw_primary_cache_reused"],4)
+        self.assertEqual(public["summary"]["recent_raw_fulltext_cache_reused"],4)
+        self.assertEqual(public["policy"]["empirical_fact_extraction_version"],EMPIRICAL_FACT_EXTRACTION_VERSION)
+        self.assertTrue(public["policy"]["derived_empirical_facts_reused_only_when_extractor_version_matches"])
+        self.assertTrue(all(row["empirical_fact_extraction_version"]==EMPIRICAL_FACT_EXTRACTION_VERSION for row in private["records"]))
+        self.assertTrue(all(row["empirical_facts"] and "58.5%" in row["empirical_facts"][0]["text"] for row in private["records"]))
+        self.assertFalse(any("We report three metrics" in fact["text"] for row in private["records"] for fact in row["empirical_facts"]))
 
     def test_stale_corpus_uses_arxiv_primary_fallback(self) -> None:
         with tempfile.TemporaryDirectory() as td:

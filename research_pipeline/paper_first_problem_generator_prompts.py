@@ -11,7 +11,7 @@ def generator_prompt(records: list[dict[str, Any]]) -> str:
         "ref":row["ref"],"title":row["title"],"primary_url":row["primary_url"],
         "source_sha256":row["source_sha256"],"abstract":str(row.get("abstract") or "")[:2200],
         "empirical_facts":[
-            {"section":str(fact.get("section") or ""),"text":str(fact.get("text") or "")[:520]}
+            {"section":str(fact.get("section") or ""),"evidence_tier":str(fact.get("evidence_tier") or ""),"text":str(fact.get("text") or "")[:520]}
             for fact in (row.get("empirical_facts") or [])[:4] if isinstance(fact,dict)
         ],
     } for row in records[:32]]
@@ -67,7 +67,7 @@ def reviewer_prompt(candidates: list[dict[str, Any]], evidence_by_ref: dict[str,
             "source_sha256":record.get("source_sha256"),
             "abstract":record.get("abstract"),
             "empirical_facts":[
-                {"section":str(fact.get("section") or ""),"text":str(fact.get("text") or "")[:520]}
+                {"section":str(fact.get("section") or ""),"evidence_tier":str(fact.get("evidence_tier") or ""),"text":str(fact.get("text") or "")[:520]}
                 for fact in (record.get("empirical_facts") or [])[:4] if isinstance(fact,dict)
             ],
         })

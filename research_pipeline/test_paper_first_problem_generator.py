@@ -20,8 +20,8 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         p=root/"primary.json";p.write_text(json.dumps({"status":"READY","generated_at":now.isoformat(),"records":records}),encoding="utf-8");return p
     def raw_candidate(self)->dict:
         return {"candidate_id":"AUTO-1","title":"Contradiction candidate","empirical_contradiction":{"source_a":{"ref":"arXiv:2608.10001","claim":"Primary abstract fact 1 about self-evolving agents."},"source_b":{"ref":"arXiv:2608.10002","claim":"Primary abstract fact 2 about self-evolving agents."},"tension":"A and B contradict the current explanation."},"irreducible_object":"Object Q","mature_theory_baselines":[{"name":"Theory A","same_information_projection":"same variables","reduction_test":"cannot predict Q"},{"name":"Theory B","same_information_projection":"same variables","reduction_test":"cannot predict Q"}],"same_information_nonreducibility":{"claim":"Q remains","why_each_baseline_cannot_express_prediction":"A lacks X and B lacks Y"},"exact_prediction":"Prediction Q changes sign.","strongest_same_information_baseline":"Theory A+B","domain_transfer_audit":{"mature_source_domain":"generic","mature_object":"Z","why_not_domain_transfer":"Q is not Z"},"saturation_scan":{"checked":True,"matched_patterns":[]},"cheapest_problem_falsifier":"Check Q before method design.","endpoint_headroom_requirement":"Two non-censored outcomes."}
-    def gen(self,candidates,resolved="doubao-seed-evolving"):
-        def responder(**kwargs):return {"text":json.dumps({"candidates":candidates}),"resolved_model":resolved}
+    def gen(self,candidates,resolved="doubao-seed-evolving",notes=""):
+        def responder(**kwargs):return {"text":json.dumps({"candidates":candidates,"generation_notes":notes}),"resolved_model":resolved}
         return responder
     def review(self,verdict="CLEAR",resolved="glm-5-2-260617",matched=None,grounded=True,use_fulltext=False):
         support={
@@ -45,14 +45,39 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         def reviewer(**kwargs):calls.append(1);raise AssertionError
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);auto=root/"auto.json"
-            state=run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=auto,generator_responder=self.gen([]),reviewer_responder=reviewer,now=now)
+            state=run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=auto,generator_responder=self.gen([],notes="No matched contradiction survives."),reviewer_responder=reviewer,now=now)
             inbox=json.loads(auto.read_text())
+            ledger=json.loads((root/"paper-first-problem-discovery"/"discovery-saturation-ledger.json").read_text())
         self.assertEqual(state["status"],"GENERATED_ZERO_CANDIDATES");self.assertEqual(calls,[]);self.assertEqual(inbox["candidates"],[])
+        self.assertEqual(state["generation_notes"],"No matched contradiction survives.")
+        self.assertTrue(state["policy"]["generation_notes_are_advisory_not_scientific_authority"])
+        self.assertTrue(state["saturation_memory"]["current_run_recorded"]);self.assertFalse(state["saturation_memory"]["scientific_authority"])
+        self.assertEqual(len(ledger["runs"]),1);self.assertFalse(ledger["runs"][0]["scientific_authority"])
+
+    def test_identical_zero_candidate_pool_is_remembered_but_not_auto_authorized(self)->None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now)
+            first=run_problem_generator(storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto1.json",generator_responder=self.gen([],notes="zero-1"),now=now)
+            second=run_problem_generator(storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto2.json",generator_responder=self.gen([],notes="zero-2"),now=now)
+        self.assertEqual(first["saturation_memory"]["prior_identical_zero_runs"],0)
+        self.assertEqual(second["saturation_memory"]["prior_identical_zero_runs"],1)
+        self.assertFalse(second["saturation_memory"]["scientific_authority"])
+        self.assertFalse(second["policy"]["automatic_method_authority"]);self.assertFalse(second["policy"]["automatic_p0_authority"])
+
+    def test_zero_candidates_without_rationale_is_generator_error_not_scientific_saturation(self)->None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc)
+            state=run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=self.gen([]),now=now)
+            ledger_path=root/"paper-first-problem-discovery"/"discovery-saturation-ledger.json"
+        self.assertEqual(state["status"],"GENERATOR_ERROR_ZERO_AUTHORITY")
+        self.assertIn("zero-candidate-generation-notes-required",state["error"])
+        self.assertFalse(state["saturation_memory"]["current_run_recorded"])
+        self.assertFalse(ledger_path.exists())
 
     def test_public_writer_redacts_private_paths_but_keeps_raw_provenance(self)->None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);json_path=root/"public.json";js_path=root/"public.js"
-            internal=write_problem_generator_state(json_path=json_path,js_path=js_path,storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=self.gen([]),now=now)
+            internal=write_problem_generator_state(json_path=json_path,js_path=js_path,storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=self.gen([],notes="No matched contradiction survives."),now=now)
             public=json.loads(json_path.read_text())
         self.assertIn("primary_pool_path",internal);self.assertNotIn("primary_pool_path",public);self.assertNotIn("auto_inbox_path",public);self.assertNotIn("archived_previous_auto_inbox",public)
         self.assertNotIn("path",public["raw_artifacts"]["generator"]);self.assertEqual(public["raw_artifacts"]["generator"]["sha256"],internal["raw_artifacts"]["generator"]["sha256"])

@@ -39,6 +39,7 @@ DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS = 12.0
 DEFAULT_MAX_PRIMARY_RESPONSE_BYTES = 24 * 1024 * 1024
 DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS = 3.1
 DEFAULT_ARXIV_PER_QUERY = 12
+EMPIRICAL_FACT_EXTRACTION_VERSION = "precision-v2"
 DEFAULT_ARXIV_QUERIES = (
     'all:"self-evolving" AND all:agent',
     'all:"self-improving" AND all:agent',
@@ -147,12 +148,30 @@ _FULLTEXT_SECTION_TERMS = (
     "result", "experiment", "evaluation", "analysis", "ablation", "discussion",
     "limitation", "conclusion", "finding", "failure", "safety", "robust",
 )
-_EMPIRICAL_CUE_RE = re.compile(
-    r"\b(we\s+(?:find|found|observe|observed|show|demonstrate|report)|"
-    r"results?\s+(?:show|shows|indicate|indicates|demonstrate|demonstrates)|"
-    r"outperform(?:s|ed)?|improv(?:e|es|ed|ement)|decreas(?:e|es|ed)|"
-    r"increas(?:e|es|ed)|drop(?:s|ped)?|fail(?:s|ed|ure|ures)?|"
-    r"harm(?:s|ed|ful)?|attack(?:s|ed)?|ablation|success\s+rate|pass@|accuracy)\b",
+_STRONG_EMPIRICAL_CUE_RE = re.compile(
+    r"\b(we\s+(?:find|found|observe|observed|show|demonstrate)|"
+    r"results?\s+(?:show|shows|indicate|indicates|demonstrate|demonstrates|reveal|reveals)|"
+    r"(?:table|figure)\s+\d+[a-z]?\s+(?:shows|demonstrates|summarizes|establishes))\b",
+    flags=re.I,
+)
+_DIRECTIONAL_RESULT_RE = re.compile(
+    r"\b(outperform(?:s|ed|ing)?|improv(?:e|es|ed|ing|ement)|decreas(?:e|es|ed|ing)|"
+    r"increas(?:e|es|ed|ing)|drop(?:s|ped|ping)?|gain(?:s|ed|ing)?|boost(?:s|ed|ing)?|"
+    r"reduc(?:e|es|ed|ing|tion)|surpass(?:es|ed|ing)?|better|worse|higher|lower|"
+    r"harm(?:s|ed|ful)?|degrad(?:e|es|ed|ing|ation)|fail(?:s|ed|ure|ures)?)\b",
+    flags=re.I,
+)
+_NUMERIC_RESULT_RE = re.compile(r"(?:\b\d+(?:\.\d+)?\s*%|\b\d+\.\d+\b|\b\d+\s*/\s*\d+\b|\b\d+\s+(?:points?|tasks?|cases?|runs?|trials?)\b)", flags=re.I)
+_NUMERIC_COMPARISON_RE = re.compile(r"\b(reach(?:es|ed)?|achiev(?:e|es|ed)?|rise(?:s|rose)?|yield(?:s|ed)?|attain(?:s|ed)?|score(?:s|d)?|versus|vs\.?|from)\b", flags=re.I)
+_OWN_RESULT_SUBJECT_RE = re.compile(r"\b(our\s+(?:method|approach|system|agent|model|framework)|the\s+(?:proposed|evolved|learned)\s+(?:method|approach|system|agent|model|harness|policy))\b", flags=re.I)
+_NAMED_RESULT_SUBJECT_RE = re.compile(r"\b[A-Z][A-Z0-9_.-]{2,}\b[^.!?]{0,90}\b(outperform(?:s|ed|ing)?|improv(?:e|es|ed|ing)?|reduc(?:e|es|ed|ing)?|achiev(?:e|es|ed)?|reach(?:es|ed)?)\b")
+_NON_RESULT_SENTENCE_RE = re.compile(
+    r"\b(we\s+report\s+(?:the\s+)?(?:following\s+)?(?:\w+\s+){0,4}metrics?|"
+    r"metrics?\s+(?:are|include|consist|measure)|we\s+(?:log|define|use|introduce|propose|present|describe)\b|"
+    r"(?:is|are)\s+defined\s+as|selection\s+criterion|evaluation\s+protocol|"
+    r"(?:is|are)\s+considered\s+(?:successful|failed)|used\s+to\s+evaluate\s+whether|"
+    r"\bin\s+each\s+trial\b|\bevaluate\s+whether\b|\bdesigned\s+to\s+test\b|\bwe\s+adopt\s+the\s+official\s+evaluation\b|"
+    r"(?:three|four|five|six|seven|eight)\s+gates?|recent\s+work|prior\s+work|previous\s+work)\b",
     flags=re.I,
 )
 
@@ -204,23 +223,40 @@ def extract_empirical_fact_candidates(page: str, *, max_facts: int = 4) -> list[
             continue
         for sentence in re.split(r"(?<=[.!?])\s+", paragraph):
             sentence = " ".join(sentence.split()).strip()
-            if len(sentence) < 60 or len(sentence) > 520 or not _EMPIRICAL_CUE_RE.search(sentence):
+            if len(sentence) < 60 or len(sentence) > 520 or _NON_RESULT_SENTENCE_RE.search(sentence):
+                continue
+            strong_observation = bool(_STRONG_EMPIRICAL_CUE_RE.search(sentence))
+            directional = bool(_DIRECTIONAL_RESULT_RE.search(sentence))
+            numeric = bool(_NUMERIC_RESULT_RE.search(sentence))
+            quantitative_directional = directional and numeric
+            quantitative_comparison = numeric and bool(_NUMERIC_COMPARISON_RE.search(sentence))
+            owned_directional = directional and bool(_OWN_RESULT_SUBJECT_RE.search(sentence))
+            named_directional = directional and bool(_NAMED_RESULT_SUBJECT_RE.search(sentence))
+            result_section_directional = directional and any(term in section_low for term in ("result", "experiment", "evaluation", "ablation", "analysis"))
+            if not (strong_observation or quantitative_directional or quantitative_comparison or owned_directional or named_directional or result_section_directional):
                 continue
             normalized = re.sub(r"\W+", " ", sentence.lower()).strip()
             if not normalized or normalized in seen:
                 continue
             seen.add(normalized)
-            score = 2
-            if re.search(r"\b\d+(?:\.\d+)?\s*%|\b\d+\.\d+\b|\b\d+/\d+\b", sentence):
-                score += 2
-            if re.search(r"\bwe\s+(?:find|found|observe|observed|show|demonstrate|report)\b", sentence, flags=re.I):
-                score += 2
+            if strong_observation:
+                evidence_tier = "strong-observation"
+            elif quantitative_directional or quantitative_comparison:
+                evidence_tier = "quantitative-directional"
+            elif owned_directional or named_directional:
+                evidence_tier = "owned-directional"
+            else:
+                evidence_tier = "result-section-directional"
+            score = 5 if strong_observation else (4 if quantitative_directional or quantitative_comparison else 3)
+            if owned_directional or named_directional:
+                score += 1
             if any(term in section_low for term in ("result", "experiment", "evaluation", "ablation")):
                 score += 1
             ranked.append((score, -order, {
                 "section": section or "unnamed",
                 "text": sentence,
                 "text_sha256": hashlib.sha256(sentence.encode("utf-8")).hexdigest(),
+                "evidence_tier": evidence_tier,
             }))
             order += 1
     ranked.sort(key=lambda row: (row[0], row[1]), reverse=True)
@@ -503,6 +539,12 @@ def _reusable_verified_record(
 ) -> bool:
     if record.get("primary_source_verified") is not True or max_age_hours <= 0:
         return False
+    # Raw primary/fulltext bytes may be reused across extractor upgrades, but
+    # derived empirical facts may not. A version mismatch deliberately falls
+    # through to the content-addressed caches so facts are re-derived by the
+    # current extractor without an unnecessary network fetch.
+    if str(record.get("empirical_fact_extraction_version") or "") != EMPIRICAL_FACT_EXTRACTION_VERSION:
+        return False
     age = _age_hours(str(record.get("fetched_at") or ""), now)
     if age is None or age > max_age_hours:
         return False
@@ -650,10 +692,14 @@ def build_primary_evidence_pool(
             "recent_verified_cache_reuse_hours": float(recent_verified_cache_reuse_hours),
             "recent_cache_reuse_is_retry_optimization_not_weekly_freshness_relaxation": True,
             "content_addressed_raw_cache_must_reverify_sha_and_parseability": True,
+            "derived_empirical_facts_reused_only_when_extractor_version_matches": True,
             "full_abstracts_remain_private_data_artifacts": True,
             "fulltext_enrichment_is_optional": True,
             "fulltext_snippets_remain_private_data_artifacts": True,
             "empirical_fact_candidates_are_not_ground_truth": True,
+            "empirical_fact_precision_gate": True,
+            "empirical_fact_extraction_version": EMPIRICAL_FACT_EXTRACTION_VERSION,
+            "empirical_fact_evidence_tiers": ["strong-observation", "quantitative-directional", "owned-directional", "result-section-directional"],
             "pre_registered_lane_coverage_floor": True,
             "lane_coverage_is_discovery_breadth_not_scientific_authority": True,
             "lane_floor": int(lane_floor),
@@ -675,6 +721,7 @@ def build_primary_evidence_pool(
             "fulltext_verified": 0,
             "fulltext_fetch_errors": 0,
             "empirical_fact_candidates": 0,
+            "empirical_fact_tier_counts": {},
             "recent_verified_cache_reused": 0,
             "recent_raw_primary_cache_reused": 0,
             "recent_raw_fulltext_cache_reused": 0,
@@ -694,6 +741,7 @@ def build_primary_evidence_pool(
         "schema_version": "1.0",
         "generated_at": public_state["generated_at"],
         "corpus_path": str(corpus_path),
+        "empirical_fact_extraction_version": EMPIRICAL_FACT_EXTRACTION_VERSION,
         "records": [],
         "errors": [],
         "fulltext_errors": [],
@@ -921,6 +969,7 @@ def build_primary_evidence_pool(
                 "cache_path": str(cache_path),
                 "title_similarity": round(similarity, 4),
                 "primary_source_verified": True,
+                "empirical_fact_extraction_version": EMPIRICAL_FACT_EXTRACTION_VERSION,
                 "lane_keys": list(candidate_lane_by_ref.get(f"arXiv:{arxiv_id}", ())),
             }
             verified.append(record)
@@ -928,10 +977,16 @@ def build_primary_evidence_pool(
             errors.append({"ref": f"arXiv:{arxiv_id}", "error": f"{type(error).__name__}:{str(error)[:240]}"})
 
     verified_lane_counts = {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES}
+    empirical_fact_tier_counts: dict[str, int] = {}
     for record in verified:
         for key in record.get("lane_keys") or []:
             if key in verified_lane_counts:
                 verified_lane_counts[key] += 1
+        for fact in record.get("empirical_facts") or []:
+            if not isinstance(fact, dict):
+                continue
+            tier = str(fact.get("evidence_tier") or "untyped")
+            empirical_fact_tier_counts[tier] = empirical_fact_tier_counts.get(tier, 0) + 1
     verified_undercovered_lanes = [
         key for key, eligible_count in eligible_lane_counts.items()
         if eligible_count > 0 and verified_lane_counts.get(key, 0) < min(int(lane_floor), eligible_count)
@@ -950,6 +1005,7 @@ def build_primary_evidence_pool(
             "fulltext_verified": fulltext_verified,
             "fulltext_fetch_errors": len(fulltext_errors),
             "empirical_fact_candidates": empirical_fact_count,
+            "empirical_fact_tier_counts": empirical_fact_tier_counts,
             "recent_verified_cache_reused": reused_verified,
             "recent_raw_primary_cache_reused": raw_primary_cache_reused,
             "recent_raw_fulltext_cache_reused": raw_fulltext_cache_reused,
@@ -976,12 +1032,12 @@ def load_primary_evidence_state(path: Path = DEFAULT_JSON) -> dict[str, Any]:
     if not path.exists():
         return {
             "schema_version":"1.0","status":"NOT_RUN","policy":{"candidate_generation_authority":False,"method_authority":False,"experiment_authority":False,"p0_authority":False},
-            "summary":{"corpus_available":False,"corpus_fresh":False,"selected":0,"verified":0,"fetch_errors":0,"title_mismatches":0,"fulltext_verified":0,"fulltext_fetch_errors":0,"empirical_fact_candidates":0,"candidate_generation_ready":False},"records":[],"errors":[],
+            "summary":{"corpus_available":False,"corpus_fresh":False,"selected":0,"verified":0,"fetch_errors":0,"title_mismatches":0,"fulltext_verified":0,"fulltext_fetch_errors":0,"empirical_fact_candidates":0,"empirical_fact_tier_counts":{},"candidate_generation_ready":False},"records":[],"errors":[],
         }
     try:
         payload=json.loads(path.read_text(encoding="utf-8"))
     except (OSError,json.JSONDecodeError):
-        return {"schema_version":"1.0","status":"STATE_UNREADABLE","policy":{"candidate_generation_authority":False,"method_authority":False,"experiment_authority":False,"p0_authority":False},"summary":{"corpus_available":False,"corpus_fresh":False,"selected":0,"verified":0,"fetch_errors":1,"title_mismatches":0,"fulltext_verified":0,"fulltext_fetch_errors":0,"empirical_fact_candidates":0,"candidate_generation_ready":False},"records":[],"errors":["state-unreadable"]}
+        return {"schema_version":"1.0","status":"STATE_UNREADABLE","policy":{"candidate_generation_authority":False,"method_authority":False,"experiment_authority":False,"p0_authority":False},"summary":{"corpus_available":False,"corpus_fresh":False,"selected":0,"verified":0,"fetch_errors":1,"title_mismatches":0,"fulltext_verified":0,"fulltext_fetch_errors":0,"empirical_fact_candidates":0,"empirical_fact_tier_counts":{},"candidate_generation_ready":False},"records":[],"errors":["state-unreadable"]}
     return payload if isinstance(payload,dict) else {"schema_version":"1.0","status":"STATE_INVALID","summary":{},"records":[],"errors":["state-invalid"]}
 
 

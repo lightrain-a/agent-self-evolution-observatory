@@ -80,6 +80,8 @@ def main() -> None:
           ideaCards: document.querySelectorAll('.system-idea-card,.system-decision-summary,.system-v5-summary,.system-v4-summary,.system-inspired-summary').length,
           preSummary: window.RESEARCH_SYSTEM_STATE?.pre_p0_identifiability?.summary || {},
           iterationSummary: window.RESEARCH_SYSTEM_STATE?.experiment_iteration?.summary || {},
+          primaryEvidence: window.RESEARCH_SYSTEM_STATE?.paper_first_primary_evidence || {},
+          problemGenerator: window.RESEARCH_SYSTEM_STATE?.paper_first_problem_generator || {},
           text: document.body.textContent || ''
         };""")
         require(system["chapters"] == 6, f"research-system overview must have six chapters, got {system['chapters']}")
@@ -90,6 +92,13 @@ def main() -> None:
         require(system["lessons"] == 6 and system["failureLayers"] == 6 and system["repairLoops"] == 1, f"learning/diagnosis visualization is incomplete: {system['lessons']}/{system['failureLayers']}/{system['repairLoops']}")
         require(system["components"] >= 27, f"expected the current backend responsibility set including Paper-first contract, capability registry, literature audit, Principle, Protocol Validity, Meta-Trace, failure memory, scheduler, replay, Economy, and AI consultation, got {system['components']}")
         require(system["ideaCards"] == 0, f"system-overview must not render current idea/status panels, got {system['ideaCards']}")
+        primary = system["primaryEvidence"]
+        generator = system["problemGenerator"]
+        require(primary.get("status") == "READY" and (primary.get("policy") or {}).get("empirical_fact_extraction_version") == "precision-v2" and (primary.get("policy") or {}).get("empirical_fact_precision_gate") is True, f"browser primary-evidence precision state is stale: {primary}")
+        require(sum(int(v or 0) for v in ((primary.get("summary") or {}).get("empirical_fact_tier_counts") or {}).values()) == int((primary.get("summary") or {}).get("empirical_fact_candidates") or 0), f"browser fact-tier accounting is stale: {primary.get('summary')}")
+        require((generator.get("policy") or {}).get("zero_candidate_rationale_required") is True and (generator.get("policy") or {}).get("discovery_saturation_memory_has_zero_scientific_authority") is True and (generator.get("saturation_memory") or {}).get("scientific_authority") is False, f"browser saturation-memory authority state is stale: {generator}")
+        if generator.get("status") == "GENERATED_ZERO_CANDIDATES": require(bool(str(generator.get("generation_notes") or "").strip()), "zero-candidate rationale missing from browser state")
+        require("SATURATION MEMORY" in system["text"] and "precision-v2" in system["text"], "problem-discovery precision/saturation controls are not rendered")
         require((system["preSummary"].get("audited"), system["preSummary"].get("execution_ready"), system["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system['preSummary']}")
         iteration = system["iterationSummary"]
         infra_only = iteration.get("diagnosis_counts") == {"infrastructure-error": 4}

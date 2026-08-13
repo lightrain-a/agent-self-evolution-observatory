@@ -290,6 +290,20 @@ def main() -> None:
         fail("premature Paper-first Method diagnostics must never retroactively create P0 authority")
     if summary.get("papers", 0) < 200 or summary.get("evidence_nodes", 0) <= summary.get("papers", 0):
         fail("continuous research evidence graph is incomplete")
+    primary = research_state.get("paper_first_primary_evidence") or {}
+    primary_summary = primary.get("summary") or {}
+    primary_policy = primary.get("policy") or {}
+    if primary.get("status") != "READY" or primary_summary.get("verified") != 32 or primary_policy.get("empirical_fact_precision_gate") is not True or primary_policy.get("empirical_fact_extraction_version") != "precision-v2" or primary_policy.get("derived_empirical_facts_reused_only_when_extractor_version_matches") is not True:
+        fail(f"primary-evidence precision state is stale: status={primary.get('status')} summary={primary_summary} policy_version={primary_policy.get('empirical_fact_extraction_version')}")
+    if sum(int(value or 0) for value in (primary_summary.get("empirical_fact_tier_counts") or {}).values()) != int(primary_summary.get("empirical_fact_candidates") or 0):
+        fail("primary-evidence fact-tier accounting does not match fact-candidate count")
+    generator = research_state.get("paper_first_problem_generator") or {}
+    generator_policy = generator.get("policy") or {}
+    saturation = generator.get("saturation_memory") or {}
+    if generator.get("status") == "GENERATED_ZERO_CANDIDATES" and not str(generator.get("generation_notes") or "").strip():
+        fail("zero-candidate problem discovery must expose an auditable rationale")
+    if generator_policy.get("zero_candidate_rationale_required") is not True or generator_policy.get("generation_notes_are_advisory_not_scientific_authority") is not True or generator_policy.get("discovery_saturation_memory_has_zero_scientific_authority") is not True or saturation.get("scientific_authority") is not False:
+        fail("problem-discovery rationale/saturation memory authority policy is stale")
     if research_state.get("collision_engine", {}).get("summary", {}).get("pairwise_comparisons") != 406:
         fail("collision engine did not compare all 29 structured ICLR candidates")
     if research_state.get("pilot_registry", {}).get("summary", {}).get("phases") != 78:
