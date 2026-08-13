@@ -64,6 +64,7 @@ def audit_candidate_object(records: list[dict[str, Any]], candidate_key: str, *,
     spec = config["candidates"][candidate_key]
     gate = config["support_gate"]
     purity_gate = config["purity_gate"]
+    ownership_gate = config["ownership_gate"]
     active_objects = {str(key) for key in ((config.get("current_axes") or {}).get("object") or [])}
     is_active_object = candidate_key in active_objects
     matched = [row for row in records if row.get("primary_source_verified") is True and _matches_candidate(row, spec)]
@@ -93,9 +94,18 @@ def audit_candidate_object(records: list[dict[str, Any]], candidate_key: str, *,
         and direct_fraction >= float(purity_gate["minimum_direct_object_fraction"])
     )
     purity = str(spec.get("object_purity") or "review-required")
+    ownership = str(spec.get("object_ownership") or "review-required")
+    ownership_gate_pass = ownership == "clear"
     status = "WATCH_INSUFFICIENT_PRIMARY_SUPPORT"
     if gate_pass and not purity_gate_pass:
         status = "HOLD_OBJECT_PURITY_INSUFFICIENT"
+    elif gate_pass and purity_gate_pass and not ownership_gate_pass:
+        if ownership == "mixed":
+            status = "HOLD_OBJECT_OWNERSHIP_MIXED"
+        elif ownership == "out-of-scope":
+            status = "HOLD_OBJECT_OWNERSHIP_OUT_OF_SCOPE"
+        else:
+            status = "HOLD_OBJECT_OWNERSHIP_REVIEW"
     elif gate_pass and purity_gate_pass and is_active_object:
         status = "ACTIVE_OBJECT_LANE_VALIDATED"
     elif gate_pass and purity_gate_pass:
@@ -107,9 +117,12 @@ def audit_candidate_object(records: list[dict[str, Any]], candidate_key: str, *,
         "scientific_object": spec["scientific_object"],
         "status": status,
         "object_purity": purity,
+        "object_ownership": ownership,
+        "ownership_reason": str(spec.get("ownership_reason") or ""),
         "active_object_lane": is_active_object,
         "support_gate": dict(gate),
         "purity_gate": dict(purity_gate),
+        "ownership_gate": dict(ownership_gate),
         "observed": {
             "reviewed_primary_refs": reviewed,
             "empirical_fact_supported_refs": empirical,
@@ -129,6 +142,7 @@ def audit_candidate_object(records: list[dict[str, Any]], candidate_key: str, *,
         "direct_object_support_ref_digest": hashlib.sha256("\n".join(direct_refs).encode()).hexdigest(),
         "evidence_gate_pass": gate_pass,
         "purity_gate_pass": purity_gate_pass,
+        "ownership_gate_pass": ownership_gate_pass,
         "activation_authorized": False,
         "scientific_authority": False,
     }
@@ -150,6 +164,10 @@ def audit_scientific_object_ontology(records: list[dict[str, Any]], *, config: d
             "automatic_lane_activation": False,
             "lane_preregistration_required_before_activation": True,
             "support_and_object_purity_are_independent_gates": True,
+            "support_purity_and_ownership_are_independent_gates": True,
+            "ownership_requires_same_agent_persistent_state": True,
+            "external_target_artifacts_do_not_establish_agent_self_evolution": True,
+            "mixed_object_carriers_cannot_activate_a_lane": True,
             "object_purity_uses_verified_primary_title_and_abstract_only": True,
             "object_purity_never_uses_generator_or_reviewer_judgment": True,
             "active_object_lanes_must_continue_to_pass_purity_regression": True,
@@ -163,6 +181,7 @@ def audit_scientific_object_ontology(records: list[dict[str, Any]], *, config: d
         },
         "support_gate": dict(config["support_gate"]),
         "purity_gate": dict(config["purity_gate"]),
+        "ownership_gate": dict(config["ownership_gate"]),
         "summary": {
             "reviewed_primary_records": len(records),
             "candidate_objects": len(candidates),
@@ -170,6 +189,8 @@ def audit_scientific_object_ontology(records: list[dict[str, Any]], *, config: d
             "shadow_ready_for_preregistration": sorted(key for key, row in candidates.items() if row["status"] == "SHADOW_READY_FOR_PREREGISTRATION"),
             "hold_object_purity_insufficient": sorted(key for key, row in candidates.items() if row["status"] == "HOLD_OBJECT_PURITY_INSUFFICIENT"),
             "hold_object_purity_review": sorted(key for key, row in candidates.items() if row["status"] == "HOLD_OBJECT_PURITY_REVIEW"),
+            "hold_object_ownership_mixed": sorted(key for key, row in candidates.items() if row["status"] == "HOLD_OBJECT_OWNERSHIP_MIXED"),
+            "hold_object_ownership_review": sorted(key for key, row in candidates.items() if row["status"] == "HOLD_OBJECT_OWNERSHIP_REVIEW"),
             "activation_authorized": 0,
         },
         "candidates": candidates,

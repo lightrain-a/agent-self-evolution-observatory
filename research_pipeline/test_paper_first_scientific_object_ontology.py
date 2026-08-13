@@ -39,6 +39,7 @@ class ScientificObjectOntologyTest(unittest.TestCase):
         audit = audit_candidate_object(rows, "world_model")
         self.assertTrue(audit["evidence_gate_pass"])
         self.assertTrue(audit["purity_gate_pass"])
+        self.assertTrue(audit["ownership_gate_pass"])
         self.assertTrue(audit["active_object_lane"])
         self.assertEqual(audit["status"], "ACTIVE_OBJECT_LANE_VALIDATED")
         self.assertFalse(audit["activation_authorized"])
@@ -77,12 +78,15 @@ class ScientificObjectOntologyTest(unittest.TestCase):
         self.assertEqual(audit["status"], "HOLD_OBJECT_PURITY_INSUFFICIENT")
         self.assertFalse(audit["activation_authorized"])
 
-    def test_review_required_candidate_stays_hold_after_numeric_purity_gate(self) -> None:
+    def test_mixed_ownership_blocks_candidate_after_support_and_purity_pass(self) -> None:
         rows = [self.row(i, "Autonomous policy evolution under bounded feedback", ["skill_harness"] if i < 4 else ["runtime_deployment"]) for i in range(1, 7)]
         audit = audit_candidate_object(rows, "policy_strategy_control")
         self.assertTrue(audit["evidence_gate_pass"])
         self.assertTrue(audit["purity_gate_pass"])
-        self.assertEqual(audit["status"], "HOLD_OBJECT_PURITY_REVIEW")
+        self.assertFalse(audit["ownership_gate_pass"])
+        self.assertEqual(audit["object_ownership"], "mixed")
+        self.assertEqual(audit["status"], "HOLD_OBJECT_OWNERSHIP_MIXED")
+        self.assertFalse(audit["activation_authorized"])
 
     def test_full_shadow_audit_has_zero_scientific_authority(self) -> None:
         state = audit_scientific_object_ontology([])
@@ -90,6 +94,9 @@ class ScientificObjectOntologyTest(unittest.TestCase):
         self.assertFalse(state["policy"]["scientific_authority"])
         self.assertFalse(state["policy"]["automatic_lane_activation"])
         self.assertTrue(state["policy"]["support_and_object_purity_are_independent_gates"])
+        self.assertTrue(state["policy"]["support_purity_and_ownership_are_independent_gates"])
+        self.assertTrue(state["policy"]["ownership_requires_same_agent_persistent_state"])
+        self.assertTrue(state["policy"]["external_target_artifacts_do_not_establish_agent_self_evolution"])
         self.assertTrue(state["policy"]["active_object_lanes_must_continue_to_pass_purity_regression"])
         self.assertEqual(state["summary"]["activation_authorized"], 0)
 
