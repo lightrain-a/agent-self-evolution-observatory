@@ -44,7 +44,7 @@ from .paper_first_problem_discovery_contract import build_problem_discovery_cont
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import build_problem_gate_queue, write_problem_gate_queue
 from .paper_first_post_c2_adjudication import build_post_c2_adjudication, write_post_c2_adjudication
-from .paper_first_premature_method_diagnostics import build_premature_method_diagnostics, write_premature_method_diagnostics
+from .paper_first_premature_method_diagnostics import resolve_premature_method_diagnostics, write_premature_method_diagnostics
 from .p0_admission import build_p0_admission_state, write_p0_admission_state
 from .p0_b10_cpu import write_b10_cpu_p0
 from .p0_a6_cpu import write_a6_cpu_p0
@@ -306,7 +306,7 @@ def build_research_system_state() -> dict[str, Any]:
         if card.get("phase") == "P0" and card.get("idea_id")
     }
     experiment_data_root = resolve_experiment_data_root(storage)
-    paper_first_premature_method_diagnostics = build_premature_method_diagnostics(experiment_data_root)
+    paper_first_premature_method_diagnostics = resolve_premature_method_diagnostics(experiment_data_root)
     research_governance_v2 = build_governance_state()
     research_governance_v2["runtime"] = {
         "active_gpu_leases": len(list_gpu_leases(experiment_data_root, True)),

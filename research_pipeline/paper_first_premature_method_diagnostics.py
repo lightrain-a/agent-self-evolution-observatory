@@ -210,19 +210,40 @@ def _is_complete_frozen_snapshot(state: dict[str, Any]) -> bool:
     )
 
 
+def resolve_premature_method_diagnostics(
+    data_root: Path | None = None,
+    *,
+    snapshot_path: Path = DEFAULT_JSON,
+) -> dict[str, Any]:
+    """Resolve host-local evidence without degrading a validated frozen artifact.
+
+    Historical PF-1/PF-4 diagnostics may live on a different execution host. A
+    host that cannot see those raw runs must consume the last complete,
+    non-authoritative generated snapshot rather than reinterpret missing files as
+    new scientific evidence. If neither source is complete, fail closed.
+    """
+    local = build_premature_method_diagnostics(data_root)
+    if _is_complete_frozen_snapshot(local):
+        return local
+    frozen = _load(snapshot_path)
+    if _is_complete_frozen_snapshot(frozen):
+        return frozen
+    raise RuntimeError("premature method diagnostic source is incomplete and no valid frozen snapshot is available")
+
+
 def write_premature_method_diagnostics(json_path: Path = DEFAULT_JSON, js_path: Path = DEFAULT_JS) -> dict[str, Any]:
-    state = build_premature_method_diagnostics()
-    if not _is_complete_frozen_snapshot(state):
-        previous = _load(json_path)
-        if _is_complete_frozen_snapshot(previous):
-            if not js_path.exists():
-                js_path.parent.mkdir(parents=True, exist_ok=True)
-                js_path.write_text(
-                    "window.PAPER_FIRST_PREMATURE_METHOD_DIAGNOSTICS = " + json.dumps(previous, ensure_ascii=False, separators=(",", ":")) + ";\n",
-                    encoding="utf-8",
-                )
-            return previous
-        raise RuntimeError("premature method diagnostic source is incomplete and no valid frozen snapshot is available")
+    state = resolve_premature_method_diagnostics(snapshot_path=json_path)
+    # If the resolver returned the existing frozen snapshot, avoid rewriting it
+    # solely because this host lacks the historical raw run tree.
+    existing = _load(json_path)
+    if existing == state and json_path.exists():
+        if not js_path.exists():
+            js_path.parent.mkdir(parents=True, exist_ok=True)
+            js_path.write_text(
+                "window.PAPER_FIRST_PREMATURE_METHOD_DIAGNOSTICS = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n",
+                encoding="utf-8",
+            )
+        return state
     json_path.parent.mkdir(parents=True, exist_ok=True)
     json_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     js_path.write_text(
