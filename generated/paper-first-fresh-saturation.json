@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-13T14:27:02+00:00",
+  "generated_at": "2026-08-13T14:57:48+00:00",
   "review_id": "fresh-problem-saturation-20260813-r2",
   "policy": {
     "schema_version": "1.1",
@@ -593,7 +593,8 @@
   ],
   "generator_revision": {
     "old_failure": "Free-form generators produced mathematically named versions of mature problems and malformed long JSON; formatting repair was treated as advisory-only and never as scientific evidence.",
-    "new_rule": "Use four empirically grounded discovery lanes—CONTRADICTION, CONVERGENT_FAILURE, ASSUMPTION_BREAK, and UNEXPLAINED_BOUNDARY. Every lane must satisfy its machine evidence contract, query the Generic Reduction / Negative-Space Ledger, name the strongest mature theories before naming an Agent candidate, and survive the same downstream non-reduction gates.",
+    "historical_rule": "The historical scan used four empirically grounded lanes and immediate mature-theory reduction; its zero-survivor outcome remains diagnostic rather than a mandatory search policy.",
+    "new_rule": "Use a multi-lane Search Portfolio: expand grounded seeds first, preserve structural diversity and lineage, evolve promising branches, formulate paper-shaped problems, and only then run closest-work plus the Reduction Falsifiability Contract. The final novelty bar remains unchanged.",
     "required_fields": [
       "discovery lane",
       "two primary evidence items",
@@ -606,5 +607,5 @@
     ]
   },
   "decision": "NO_FRESH_SURVIVOR_CURRENT_SCAN",
-  "next_action": "Continue four-lane empirical problem discovery; do not create methods, experiments, P0 entries, or GPU work until a problem survives its lane contract and the shared mature-theory veto."
+  "next_action": "Continue multi-lane portfolio discovery with delayed exact reduction; do not create methods, experiments, P0 entries, or GPU work until a formulated problem survives the Problem Gate."
 }
