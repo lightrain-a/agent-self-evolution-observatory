@@ -23,6 +23,7 @@ DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.js"
 DEFAULT_MAX_PAPERS = 32
 DEFAULT_LANE_FLOOR = 1
+DEFAULT_SOURCE_COVERAGE_ANCHOR_COUNT = 16
 PRIMARY_EVIDENCE_LANES: tuple[dict[str, Any], ...] = (
     {"key":"skill_harness","terms":("skill","harness","workflow evolution","agent workflow")},
     {"key":"memory_continual","terms":("agent memory","memory","continual agent","lifelong agent","experience management")},
@@ -355,6 +356,32 @@ def _lane_counts(papers: list[dict[str, Any]]) -> dict[str, int]:
     return counts
 
 
+def _source_ref(paper: dict[str, Any]) -> str:
+    arxiv_id = _arxiv_id(paper)
+    return f"arXiv:{arxiv_id}" if arxiv_id else ""
+
+
+def _source_exposure_state(storage: StorageSettings) -> tuple[dict[str, int], int]:
+    """Return deterministic prior review exposure from the private saturation ledger.
+
+    Exposure is retrieval metadata only. It cannot authorize, skip, pass, block,
+    or scientifically interpret a paper/problem candidate.
+    """
+    path = storage.data_root / "paper-first-problem-discovery" / "discovery-saturation-ledger.json"
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}, 0
+    runs = [row for row in (payload.get("runs") or []) if isinstance(row, dict)] if isinstance(payload, dict) else []
+    counts: dict[str, int] = {}
+    for row in runs:
+        for ref in row.get("source_refs") or []:
+            ref = str(ref or "").strip()
+            if ref:
+                counts[ref] = counts.get(ref, 0) + 1
+    return counts, len(runs)
+
+
 def select_primary_candidates(
     corpus: dict[str, Any],
     *,
@@ -362,6 +389,8 @@ def select_primary_candidates(
     now: datetime | None = None,
     max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
     lane_floor: int = DEFAULT_LANE_FLOOR,
+    source_exposure_counts: dict[str, int] | None = None,
+    coverage_anchor_count: int = DEFAULT_SOURCE_COVERAGE_ANCHOR_COUNT,
 ) -> list[dict[str, Any]]:
     ranked: list[tuple[tuple[Any, ...], dict[str, Any]]] = []
     seen: set[str] = set()
@@ -387,45 +416,116 @@ def select_primary_candidates(
         ranked.append((rank_key, paper))
     ranked.sort(key=lambda item: item[0], reverse=True)
     limit = max(0, int(max_papers))
-    if limit == 0:
+    if limit == 0 or not ranked:
         return []
-    if lane_floor <= 0 or not ranked:
-        return [paper for _, paper in ranked[:limit]]
 
-    # Coverage is a deterministic membership floor only. Each lane receives the
-    # highest globally-ranked eligible paper when one exists; the remaining
-    # budget is filled in the original global order. One paper may satisfy more
-    # than one lane, and lanes with no eligible papers are never synthesized.
-    selected_ids: set[str] = set()
-    selected: list[dict[str, Any]] = []
-    lane_counts = {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES}
-    for lane in PRIMARY_EVIDENCE_LANES:
-        key = str(lane["key"])
-        while lane_counts[key] < int(lane_floor) and len(selected) < limit:
-            candidate = next(
-                (
-                    paper
-                    for _, paper in ranked
-                    if key in _paper_lane_keys(paper) and _arxiv_id(paper) not in selected_ids
-                ),
-                None,
-            )
-            if candidate is None:
+    # No saturation ledger means exactly the legacy global-rank + lane-floor
+    # selector. This keeps first-run behavior unchanged.
+    scheduler_active = bool(source_exposure_counts)
+    if not scheduler_active:
+        if lane_floor <= 0:
+            return [paper for _, paper in ranked[:limit]]
+        selected_ids: set[str] = set()
+        selected: list[dict[str, Any]] = []
+        lane_counts = {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES}
+        for lane in PRIMARY_EVIDENCE_LANES:
+            key = str(lane["key"])
+            while lane_counts[key] < int(lane_floor) and len(selected) < limit:
+                candidate = next(
+                    (paper for _, paper in ranked if key in _paper_lane_keys(paper) and _arxiv_id(paper) not in selected_ids),
+                    None,
+                )
+                if candidate is None:
+                    break
+                selected.append(candidate)
+                selected_ids.add(_arxiv_id(candidate))
+                for covered in _paper_lane_keys(candidate):
+                    lane_counts[covered] += 1
+        for _, paper in ranked:
+            if len(selected) >= limit:
                 break
-            selected.append(candidate)
-            selected_ids.add(_arxiv_id(candidate))
-            for covered in _paper_lane_keys(candidate):
-                lane_counts[covered] += 1
-    for _, paper in ranked:
+            arxiv_id = _arxiv_id(paper)
+            if arxiv_id in selected_ids:
+                continue
+            selected.append(paper)
+            selected_ids.add(arxiv_id)
+        selected_rank = {_arxiv_id(paper): index for index, (_, paper) in enumerate(ranked)}
+        selected.sort(key=lambda paper: selected_rank.get(_arxiv_id(paper), 10**9))
+        return selected
+
+    exposure = {str(key): max(0, int(value or 0)) for key, value in (source_exposure_counts or {}).items()}
+    ranked_papers = [paper for _, paper in ranked]
+    rank_index = {_arxiv_id(paper): index for index, paper in enumerate(ranked_papers)}
+    anchor_count = min(max(0, int(coverage_anchor_count)), limit, len(ranked_papers))
+    selected = list(ranked_papers[:anchor_count])
+    selected_ids = {_arxiv_id(paper) for paper in selected}
+
+    # The exploration tranche is deterministic: least prior review exposure
+    # first, with original global rank as the only tie-break. Exposure does not
+    # alter paper relevance/freshness eligibility or scientific authority.
+    tail = sorted(
+        ranked_papers[anchor_count:],
+        key=lambda paper: (0 if _paper_lane_keys(paper) else 1, exposure.get(_source_ref(paper), 0), rank_index[_arxiv_id(paper)]),
+    )
+    for paper in tail:
         if len(selected) >= limit:
             break
-        arxiv_id = _arxiv_id(paper)
-        if arxiv_id in selected_ids:
+        if _arxiv_id(paper) in selected_ids:
             continue
         selected.append(paper)
-        selected_ids.add(arxiv_id)
-    selected_rank = {_arxiv_id(paper): index for index, (_, paper) in enumerate(ranked)}
-    selected.sort(key=lambda paper: selected_rank.get(_arxiv_id(paper), 10**9))
+        selected_ids.add(_arxiv_id(paper))
+
+    if lane_floor > 0:
+        eligible_counts = _lane_counts(ranked_papers)
+        lane_counts = _lane_counts(selected)
+        for lane in PRIMARY_EVIDENCE_LANES:
+            key = str(lane["key"])
+            needed = min(int(lane_floor), int(eligible_counts.get(key, 0)))
+            while lane_counts.get(key, 0) < needed:
+                candidate = next(
+                    (paper for paper in ranked_papers if key in _paper_lane_keys(paper) and _arxiv_id(paper) not in selected_ids),
+                    None,
+                )
+                if candidate is None:
+                    break
+                if len(selected) < limit:
+                    selected.append(candidate)
+                    selected_ids.add(_arxiv_id(candidate))
+                    lane_counts = _lane_counts(selected)
+                    continue
+                candidate_lanes = set(_paper_lane_keys(candidate))
+                replaceable: list[tuple[int, dict[str, Any]]] = []
+                for index, current_paper in enumerate(selected):
+                    if index < anchor_count:
+                        continue
+                    current_lanes = set(_paper_lane_keys(current_paper))
+                    trial = dict(lane_counts)
+                    for covered in current_lanes:
+                        trial[covered] = max(0, trial.get(covered, 0) - 1)
+                    for covered in candidate_lanes:
+                        trial[covered] = trial.get(covered, 0) + 1
+                    if trial.get(key, 0) < needed:
+                        continue
+                    preserves_existing = True
+                    for other_key, current_count in lane_counts.items():
+                        other_needed = min(int(lane_floor), int(eligible_counts.get(other_key, 0)))
+                        if current_count >= other_needed and trial.get(other_key, 0) < other_needed:
+                            preserves_existing = False
+                            break
+                    if preserves_existing:
+                        replaceable.append((index, current_paper))
+                if not replaceable:
+                    break
+                replace_index, removed = max(
+                    replaceable,
+                    key=lambda item: (exposure.get(_source_ref(item[1]), 0), rank_index[_arxiv_id(item[1])]),
+                )
+                selected_ids.remove(_arxiv_id(removed))
+                selected[replace_index] = candidate
+                selected_ids.add(_arxiv_id(candidate))
+                lane_counts = _lane_counts(selected)
+
+    selected.sort(key=lambda paper: rank_index.get(_arxiv_id(paper), 10**9))
     return selected
 
 
@@ -709,6 +809,7 @@ def build_primary_evidence_pool(
     corpus_path: Path | None = None,
     max_papers: int = DEFAULT_MAX_PAPERS,
     lane_floor: int = DEFAULT_LANE_FLOOR,
+    coverage_anchor_count: int = DEFAULT_SOURCE_COVERAGE_ANCHOR_COUNT,
     max_corpus_age_days: float = DEFAULT_MAX_CORPUS_AGE_DAYS,
     max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
     requester: Callable[..., Any] | None = None,
@@ -774,6 +875,12 @@ def build_primary_evidence_pool(
             "pre_registered_lane_coverage_floor": True,
             "lane_coverage_is_discovery_breadth_not_scientific_authority": True,
             "lane_floor": int(lane_floor),
+            "source_coverage_scheduler_is_discovery_only": True,
+            "source_review_exposure_has_zero_scientific_authority": True,
+            "source_exposure_cannot_skip_generation_or_problem_gate": True,
+            "source_exposure_does_not_relax_relevance_or_freshness": True,
+            "source_coverage_exploration_prefers_preregistered_lanes": True,
+            "source_coverage_anchor_count": int(coverage_anchor_count),
             "candidate_generation_authority": False,
             "method_authority": False,
             "experiment_authority": False,
@@ -799,6 +906,12 @@ def build_primary_evidence_pool(
             "recent_raw_fulltext_cache_reused": 0,
             "recent_fulltext_failure_cooldown_skips": 0,
             "lane_floor": int(lane_floor),
+            "source_coverage_scheduler_active": False,
+            "saturation_ledger_runs": 0,
+            "prior_reviewed_sources": 0,
+            "selected_previously_reviewed": 0,
+            "selected_unreviewed": 0,
+            "coverage_anchor_count": int(coverage_anchor_count),
             "eligible_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
             "selected_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
             "verified_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
@@ -820,6 +933,7 @@ def build_primary_evidence_pool(
         "errors": [],
         "fulltext_errors": [],
         "discovery_errors": [],
+        "source_coverage": {"scheduler_active": False, "saturation_ledger_runs": 0, "prior_reviewed_sources": 0, "coverage_anchor_count": int(coverage_anchor_count), "selected": []},
     }
     retrieved_at = str((corpus or {}).get("retrieved_at") or "")
     corpus_age = _age_days(retrieved_at, current) if corpus else None
@@ -862,6 +976,8 @@ def build_primary_evidence_pool(
         public_state["discovery_errors"] = discovery_errors
         private["discovery_errors"] = discovery_errors
 
+    source_exposure_counts, saturation_ledger_runs = _source_exposure_state(storage)
+    source_scheduler_active = bool(source_exposure_counts) and int(max_papers) > max(0, int(coverage_anchor_count))
     eligible_candidates = select_primary_candidates(
         discovery_corpus,
         max_papers=len(discovery_corpus.get("papers") or []),
@@ -875,6 +991,8 @@ def build_primary_evidence_pool(
         now=current,
         max_publication_age_days=max_publication_age_days,
         lane_floor=lane_floor,
+        source_exposure_counts=source_exposure_counts if source_scheduler_active else None,
+        coverage_anchor_count=coverage_anchor_count,
     )
     eligible_lane_counts = _lane_counts(eligible_candidates)
     selected_lane_counts = _lane_counts(candidates)
@@ -882,9 +1000,17 @@ def build_primary_evidence_pool(
         key for key, eligible_count in eligible_lane_counts.items()
         if eligible_count > 0 and selected_lane_counts.get(key, 0) < min(int(lane_floor), eligible_count)
     ]
+    selected_exposures = {_source_ref(paper): int(source_exposure_counts.get(_source_ref(paper), 0)) for paper in candidates}
+    selected_previously_reviewed = sum(value > 0 for value in selected_exposures.values())
     public_state["summary"].update({
         "selected": len(candidates),
         "lane_floor": int(lane_floor),
+        "source_coverage_scheduler_active": source_scheduler_active,
+        "saturation_ledger_runs": int(saturation_ledger_runs),
+        "prior_reviewed_sources": len(source_exposure_counts),
+        "selected_previously_reviewed": selected_previously_reviewed,
+        "selected_unreviewed": len(candidates) - selected_previously_reviewed,
+        "coverage_anchor_count": min(max(0, int(coverage_anchor_count)), len(candidates)),
         "eligible_lane_counts": eligible_lane_counts,
         "selected_lane_counts": selected_lane_counts,
         "undercovered_lanes": undercovered_lanes,
@@ -894,6 +1020,18 @@ def build_primary_evidence_pool(
         "eligible_lane_counts": eligible_lane_counts,
         "selected_lane_counts": selected_lane_counts,
         "undercovered_lanes": undercovered_lanes,
+    }
+    eligible_rank = {_source_ref(paper): index + 1 for index, paper in enumerate(eligible_candidates)}
+    private["source_coverage"] = {
+        "scheduler_active": source_scheduler_active,
+        "saturation_ledger_runs": int(saturation_ledger_runs),
+        "prior_reviewed_sources": len(source_exposure_counts),
+        "coverage_anchor_count": min(max(0, int(coverage_anchor_count)), len(candidates)),
+        "selected": [
+            {"ref": _source_ref(paper), "prior_review_exposure": selected_exposures.get(_source_ref(paper), 0), "global_rank": eligible_rank.get(_source_ref(paper))}
+            for paper in candidates
+        ],
+        "scientific_authority": False,
     }
     candidate_lane_by_ref = {f"arXiv:{_arxiv_id(paper)}": _paper_lane_keys(paper) for paper in candidates}
     fetch = requester or _default_requester
@@ -1142,6 +1280,7 @@ def write_primary_evidence_pool(
     corpus_path: Path | None = None,
     max_papers: int = DEFAULT_MAX_PAPERS,
     lane_floor: int = DEFAULT_LANE_FLOOR,
+    coverage_anchor_count: int = DEFAULT_SOURCE_COVERAGE_ANCHOR_COUNT,
     max_corpus_age_days: float = DEFAULT_MAX_CORPUS_AGE_DAYS,
     max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
     requester: Callable[..., Any] | None = None,
@@ -1160,6 +1299,7 @@ def write_primary_evidence_pool(
         corpus_path=corpus_path,
         max_papers=max_papers,
         lane_floor=lane_floor,
+        coverage_anchor_count=coverage_anchor_count,
         max_corpus_age_days=max_corpus_age_days,
         max_publication_age_days=max_publication_age_days,
         requester=requester,

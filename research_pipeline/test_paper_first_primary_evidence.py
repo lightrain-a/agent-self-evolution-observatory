@@ -11,7 +11,7 @@ from unittest.mock import patch
 import requests
 
 from .config import StorageSettings
-from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, build_primary_evidence_pool, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
+from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, _paper_lane_keys, build_primary_evidence_pool, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
 
 
 class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
@@ -153,6 +153,56 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertEqual(len(selected),4)
         self.assertFalse(any("Ads Recommendation" in row["title"] for row in selected))
 
+    def test_source_coverage_scheduler_preserves_anchors_and_adds_unreviewed_tail(self) -> None:
+        papers=[]
+        for idx in range(1,7):
+            papers.append({
+                "paper_id":f"p{idx}","title":f"Self-Evolving Agent Skill Harness Study {idx}","year":2026,"venue":"arXiv",
+                "abstract":"A self-evolving agent skill harness improves persistent workflow adaptation.",
+                "metadata":{"externalIds":{"ArXiv":f"2608.30{idx:03d}"},"publicationDate":f"2026-08-{14-idx:02d}","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"topic"}]},
+            })
+        exposure={f"arXiv:2608.30{idx:03d}":1 for idx in range(1,6)}
+        selected=select_primary_candidates({"papers":papers},max_papers=4,lane_floor=0,source_exposure_counts=exposure,coverage_anchor_count=2,now=datetime(2026,8,13,tzinfo=timezone.utc))
+        ids=[row["paper_id"] for row in selected]
+        self.assertEqual(ids[:2],["p1","p2"])
+        self.assertIn("p6",ids)
+        self.assertEqual(len(ids),4)
+
+    def test_source_coverage_scheduler_preserves_lane_floor_after_exposure_reranking(self) -> None:
+        papers=[]
+        specs=[
+            ("skill-1","Self-Evolving Agent Skill Harness One","A self-evolving agent skill harness improves persistent workflow adaptation."),
+            ("skill-2","Self-Evolving Agent Skill Harness Two","A self-evolving agent skill harness improves persistent workflow adaptation."),
+            ("collective","Collaborative Multi-Agent Evolution","A self-evolving multi-agent collaborative system studies agent evolution."),
+            ("skill-4","Self-Evolving Agent Skill Harness Four","A self-evolving agent skill harness improves persistent workflow adaptation."),
+            ("skill-5","Self-Evolving Agent Skill Harness Five","A self-evolving agent skill harness improves persistent workflow adaptation."),
+        ]
+        for idx,(pid,title,abstract) in enumerate(specs,1):
+            papers.append({"paper_id":pid,"title":title,"year":2026,"venue":"arXiv","abstract":abstract,"metadata":{"externalIds":{"ArXiv":f"2608.31{idx:03d}"},"publicationDate":f"2026-08-{14-idx:02d}","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"topic"}]}})
+        exposure={"arXiv:2608.31001":1,"arXiv:2608.31002":1,"arXiv:2608.31003":9}
+        selected=select_primary_candidates({"papers":papers},max_papers=4,lane_floor=1,source_exposure_counts=exposure,coverage_anchor_count=2,now=datetime(2026,8,13,tzinfo=timezone.utc))
+        self.assertIn("collective",[row["paper_id"] for row in selected])
+        self.assertGreaterEqual(sum("collective" in _paper_lane_keys(row) for row in selected),1)
+
+    def test_source_coverage_exploration_prefers_preregistered_lane_sources_before_no_lane_fillers(self) -> None:
+        papers=[
+            {"paper_id":"anchor","title":"Self-Evolving Agent Skill Harness Anchor","year":2026,"venue":"arXiv","abstract":"A self-evolving agent skill harness study.","metadata":{"externalIds":{"ArXiv":"2608.32001"},"publicationDate":"2026-08-13","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"topic"}]}},
+            {"paper_id":"broad","title":"Autonomous Agent Governance Study","year":2026,"venue":"arXiv","abstract":"We study an autonomous agent governance framework without a self-evolution mechanism.","metadata":{"externalIds":{"ArXiv":"2608.32002"},"publicationDate":"2026-08-12","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"topic"}]}},
+            {"paper_id":"lane","title":"HarnessSafe for Persistent Agent Harnesses","year":2026,"venue":"arXiv","abstract":"A self-evolving agent harness safety and reliability study.","metadata":{"externalIds":{"ArXiv":"2608.32003"},"publicationDate":"2026-08-11","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"topic"}]}},
+        ]
+        selected=select_primary_candidates({"papers":papers},max_papers=2,lane_floor=0,source_exposure_counts={"arXiv:2608.32001":1,"arXiv:2608.32002":0,"arXiv:2608.32003":0},coverage_anchor_count=1,now=datetime(2026,8,13,tzinfo=timezone.utc))
+        self.assertEqual([row["paper_id"] for row in selected],["anchor","lane"])
+
+    def test_source_coverage_scheduler_never_relaxes_relevance_or_publication_age(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            corpus=json.loads(self.corpus(Path(td)).read_text())
+            corpus["papers"][0]["metadata"]["publicationDate"]="2026-05-01"
+            exposure={f"arXiv:2608.0000{i}":5 for i in range(1,5)}
+            exposure["arXiv:2608.00005"]=0
+            selected=select_primary_candidates(corpus,max_papers=10,lane_floor=1,source_exposure_counts=exposure,coverage_anchor_count=1,now=datetime(2026,8,13,tzinfo=timezone.utc))
+        self.assertFalse(any(row["metadata"]["externalIds"]["ArXiv"]=="2608.00001" for row in selected))
+        self.assertFalse(any("Ads Recommendation" in row["title"] for row in selected))
+
     def test_selection_requires_relevance_abstract_arxiv_id_and_recent_publication(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             corpus = json.loads(self.corpus(Path(td)).read_text())
@@ -168,6 +218,30 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
             selected = select_primary_candidates(corpus, max_papers=10, now=datetime(2026,8,13,tzinfo=timezone.utc))
         self.assertEqual(len(selected), 3)
         self.assertFalse(any(row["metadata"]["externalIds"]["ArXiv"] == "2608.00001" for row in selected))
+
+    def test_build_uses_private_saturation_ledger_only_for_zero_authority_source_coverage(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); storage=self.storage(root); corpus=self.corpus(root)
+            discovery=root/"paper-first-problem-discovery"; discovery.mkdir(parents=True)
+            (discovery/"discovery-saturation-ledger.json").write_text(json.dumps({"schema_version":"1.0","runs":[{"source_refs":["arXiv:2608.00004","arXiv:2608.00003","arXiv:2608.00002"],"scientific_authority":False}]}),encoding="utf-8")
+            public,private=build_primary_evidence_pool(
+                storage=storage,corpus_path=corpus,requester=self.fake_requester,
+                augment_fresh_corpus_with_arxiv=False,coverage_anchor_count=1,
+                now=datetime(2026,8,13,tzinfo=timezone.utc),min_interval_seconds=0,max_papers=3,
+                cache_dir=root/"primary-cache",
+            )
+        self.assertTrue(public["summary"]["source_coverage_scheduler_active"])
+        self.assertEqual(public["summary"]["saturation_ledger_runs"],1)
+        self.assertEqual(public["summary"]["prior_reviewed_sources"],3)
+        self.assertEqual(public["summary"]["selected_previously_reviewed"]+public["summary"]["selected_unreviewed"],public["summary"]["selected"])
+        self.assertGreaterEqual(public["summary"]["selected_unreviewed"],1)
+        self.assertEqual(public["summary"]["coverage_anchor_count"],1)
+        self.assertTrue(public["policy"]["source_coverage_scheduler_is_discovery_only"])
+        self.assertTrue(public["policy"]["source_review_exposure_has_zero_scientific_authority"])
+        self.assertTrue(public["policy"]["source_exposure_cannot_skip_generation_or_problem_gate"])
+        self.assertTrue(public["policy"]["source_exposure_does_not_relax_relevance_or_freshness"])
+        self.assertFalse(private["source_coverage"]["scientific_authority"])
+        self.assertEqual(len(private["source_coverage"]["selected"]),3)
 
     def test_fresh_corpus_fetches_primary_pages_and_keeps_full_abstract_private(self) -> None:
         with tempfile.TemporaryDirectory() as td:
