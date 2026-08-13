@@ -67,11 +67,32 @@ def _now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
+def _pid_is_alive(pid: int) -> bool:
+    if pid <= 0:
+        return False
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
 @contextmanager
 def cycle_lock(path: Path, *, stale_after_seconds: float = 21600) -> Iterator[None]:
     path.parent.mkdir(parents=True, exist_ok=True)
-    if path.exists() and time.time() - path.stat().st_mtime > stale_after_seconds:
-        path.unlink(missing_ok=True)
+    if path.exists():
+        lock_pid = 0
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            lock_pid = int(payload.get("pid") or 0) if isinstance(payload, dict) else 0
+        except (OSError, ValueError, TypeError, json.JSONDecodeError):
+            lock_pid = 0
+        if lock_pid and not _pid_is_alive(lock_pid):
+            path.unlink(missing_ok=True)
+        elif not lock_pid and time.time() - path.stat().st_mtime > stale_after_seconds:
+            path.unlink(missing_ok=True)
     try:
         descriptor = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
     except FileExistsError as error:

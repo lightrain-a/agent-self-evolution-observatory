@@ -1,15 +1,32 @@
 from __future__ import annotations
 
+import json
 import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from .automation_cycle import _sync_literature, run_cycle
+from .automation_cycle import _sync_literature, cycle_lock, run_cycle
 
 
 class AutomationCycleAIConsultationTest(unittest.TestCase):
+    def test_orphan_pid_cycle_lock_is_reclaimed_immediately(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            lock=Path(td)/"cycle.lock"; lock.write_text(json.dumps({"pid":12345,"started_at":"old"}),encoding="utf-8")
+            with patch("research_pipeline.automation_cycle.os.kill",side_effect=ProcessLookupError):
+                with cycle_lock(lock):
+                    self.assertTrue(lock.exists())
+            self.assertFalse(lock.exists())
+
+    def test_live_pid_cycle_lock_still_blocks_concurrent_cycle(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            lock=Path(td)/"cycle.lock"; lock.write_text(json.dumps({"pid":12345,"started_at":"active"}),encoding="utf-8")
+            with patch("research_pipeline.automation_cycle.os.kill",return_value=None):
+                with self.assertRaises(RuntimeError):
+                    with cycle_lock(lock):
+                        pass
+
     def test_missing_s2_key_degrades_to_arxiv_primary_fallback_without_calling_s2(self) -> None:
         settings=SimpleNamespace(api_key="")
         with patch("research_pipeline.automation_cycle.SemanticScholarSettings.from_env", return_value=settings), patch("research_pipeline.automation_cycle.sync_semantic_scholar") as sync:
