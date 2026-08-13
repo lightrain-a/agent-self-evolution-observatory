@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 from difflib import SequenceMatcher
 from html.parser import HTMLParser
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, Callable
 
 import requests
@@ -34,6 +35,8 @@ PRIMARY_EVIDENCE_LANES: tuple[dict[str, Any], ...] = (
 DEFAULT_MAX_CORPUS_AGE_DAYS = 10.0
 DEFAULT_MAX_PUBLICATION_AGE_DAYS = 60.0
 DEFAULT_MIN_INTERVAL_SECONDS = 0.75
+DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS = 12.0
+DEFAULT_MAX_PRIMARY_RESPONSE_BYTES = 24 * 1024 * 1024
 DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS = 3.1
 DEFAULT_ARXIV_PER_QUERY = 12
 DEFAULT_ARXIV_QUERIES = (
@@ -89,6 +92,13 @@ def _age_days(value: str, now: datetime) -> float | None:
     if parsed is None:
         return None
     return max(0.0, (now - parsed).total_seconds() / 86400.0)
+
+
+def _age_hours(value: str, now: datetime) -> float | None:
+    parsed = _parse_iso(value)
+    if parsed is None:
+        return None
+    return max(0.0, (now - parsed).total_seconds() / 3600.0)
 
 
 def _normalize_title(value: str) -> str:
@@ -330,7 +340,42 @@ def select_primary_candidates(
 
 
 def _default_requester(url: str, *, timeout: float, headers: dict[str, str]):
-    return requests.get(url, timeout=timeout, headers=headers)
+    """Fetch a primary page with both socket and whole-response bounds.
+
+    `requests` scalar timeouts are inactivity bounds, not wall-clock bounds: a
+    server that trickles bytes can keep a response alive indefinitely. Primary
+    evidence refresh is a scheduled control path, so bound total wall time and
+    response size while still returning the small response interface used by
+    the pipeline and test fakes.
+    """
+    total_timeout = max(float(timeout), 1.0)
+    connect_timeout = min(5.0, total_timeout)
+    read_timeout = min(8.0, total_timeout)
+    deadline = time.monotonic() + total_timeout
+    response = requests.get(
+        url,
+        timeout=(connect_timeout, read_timeout),
+        headers=headers,
+        stream=True,
+    )
+    with response:
+        status_code = int(response.status_code)
+        if status_code >= 400:
+            return SimpleNamespace(status_code=status_code, text="")
+        chunks: list[bytes] = []
+        total_bytes = 0
+        for chunk in response.iter_content(chunk_size=64 * 1024):
+            if not chunk:
+                continue
+            total_bytes += len(chunk)
+            if total_bytes > DEFAULT_MAX_PRIMARY_RESPONSE_BYTES:
+                raise RuntimeError(f"primary-response-too-large:{total_bytes}")
+            chunks.append(chunk)
+            if time.monotonic() > deadline:
+                raise requests.Timeout(f"primary-response-wall-clock-timeout:{total_timeout:.1f}s")
+        body = b"".join(chunks)
+        encoding = response.encoding or "utf-8"
+        return SimpleNamespace(status_code=status_code, text=body.decode(encoding, errors="replace"))
 
 
 def _default_arxiv_search_requester(*, query: str, max_results: int, timeout: float, headers: dict[str, str]):
@@ -449,6 +494,115 @@ def load_private_primary_pool(path: Path | None = None, *, storage: StorageSetti
     return payload
 
 
+def _reusable_verified_record(
+    record: dict[str, Any],
+    paper: dict[str, Any],
+    *,
+    now: datetime,
+    max_age_hours: float,
+) -> bool:
+    if record.get("primary_source_verified") is not True or max_age_hours <= 0:
+        return False
+    age = _age_hours(str(record.get("fetched_at") or ""), now)
+    if age is None or age > max_age_hours:
+        return False
+    if _title_similarity(str(record.get("title") or ""), str(paper.get("title") or "")) < 0.72:
+        return False
+    if not str(record.get("abstract") or "").strip() or len(str(record.get("source_sha256") or "")) != 64:
+        return False
+    source_cache = Path(str(record.get("cache_path") or ""))
+    fulltext_cache = Path(str(record.get("fulltext_cache_path") or ""))
+    if not source_cache.exists():
+        return False
+    # Reuse only complete primary+fulltext evidence. A record whose optional
+    # fulltext failed is retried so a transient provider error can still heal.
+    if len(str(record.get("fulltext_sha256") or "")) != 64 or not fulltext_cache.exists():
+        return False
+    return True
+
+
+def _recent_cache_file(path: Path, *, now: datetime, max_age_hours: float) -> bool:
+    if max_age_hours <= 0 or not path.is_file():
+        return False
+    try:
+        modified = datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc)
+    except OSError:
+        return False
+    return max(0.0, (now - modified).total_seconds() / 3600.0) <= max_age_hours
+
+
+def _cached_primary_page(
+    cache_dir: Path,
+    arxiv_id: str,
+    paper: dict[str, Any],
+    *,
+    now: datetime,
+    max_age_hours: float,
+) -> dict[str, Any] | None:
+    safe_id = re.sub(r"[^0-9A-Za-z._-]+", "_", arxiv_id)
+    candidates = sorted(cache_dir.glob(f"arxiv-{safe_id}-*.html"), key=lambda path: path.stat().st_mtime, reverse=True)
+    for path in candidates:
+        if not _recent_cache_file(path, now=now, max_age_hours=max_age_hours):
+            continue
+        try:
+            raw_bytes = path.read_bytes()
+        except OSError:
+            continue
+        if not raw_bytes or len(raw_bytes) > DEFAULT_MAX_PRIMARY_RESPONSE_BYTES:
+            continue
+        source_sha = hashlib.sha256(raw_bytes).hexdigest()
+        if not path.stem.endswith(source_sha[:12]):
+            continue
+        raw_text = raw_bytes.decode("utf-8", errors="replace")
+        parsed = parse_arxiv_page(raw_text)
+        if not parsed["title"] or not parsed["abstract"]:
+            continue
+        similarity = _title_similarity(str(paper.get("title") or ""), parsed["title"])
+        if similarity < 0.72:
+            continue
+        return {
+            "raw_text": raw_text,
+            "parsed": parsed,
+            "source_sha256": source_sha,
+            "abstract_sha256": hashlib.sha256(parsed["abstract"].encode("utf-8")).hexdigest(),
+            "cache_path": str(path),
+            "title_similarity": round(similarity, 4),
+        }
+    return None
+
+
+def _cached_fulltext_page(
+    cache_dir: Path,
+    arxiv_id: str,
+    *,
+    now: datetime,
+    max_age_hours: float,
+) -> dict[str, Any] | None:
+    safe_id = re.sub(r"[^0-9A-Za-z._-]+", "_", arxiv_id)
+    candidates = sorted(cache_dir.glob(f"arxiv-full-{safe_id}-*.html"), key=lambda path: path.stat().st_mtime, reverse=True)
+    for path in candidates:
+        if not _recent_cache_file(path, now=now, max_age_hours=max_age_hours):
+            continue
+        try:
+            raw_bytes = path.read_bytes()
+        except OSError:
+            continue
+        if not raw_bytes or len(raw_bytes) > DEFAULT_MAX_PRIMARY_RESPONSE_BYTES:
+            continue
+        source_sha = hashlib.sha256(raw_bytes).hexdigest()
+        if not path.stem.endswith(source_sha[:12]):
+            continue
+        raw_text = raw_bytes.decode("utf-8", errors="replace")
+        if "<section" not in raw_text.lower():
+            continue
+        return {
+            "fulltext_sha256": source_sha,
+            "fulltext_cache_path": str(path),
+            "empirical_facts": extract_empirical_fact_candidates(raw_text, max_facts=4),
+        }
+    return None
+
+
 def build_primary_evidence_pool(
     *,
     storage: StorageSettings | None = None,
@@ -464,6 +618,7 @@ def build_primary_evidence_pool(
     augment_fresh_corpus_with_arxiv: bool = True,
     now: datetime | None = None,
     min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
+    recent_verified_cache_reuse_hours: float = DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS,
     cache_dir: Path | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     storage = storage or StorageSettings.from_env()
@@ -472,6 +627,12 @@ def build_primary_evidence_pool(
     current = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
     private_pool_path, default_cache = _private_paths(storage)
     cache_dir = cache_dir or default_cache
+    prior_pool = load_private_primary_pool(private_pool_path) or {}
+    prior_records_by_ref = {
+        str(row.get("ref")): row
+        for row in prior_pool.get("records") or []
+        if isinstance(row, dict) and row.get("ref")
+    }
     public_state: dict[str, Any] = {
         "schema_version": "1.0",
         "generated_at": _now(),
@@ -486,6 +647,9 @@ def build_primary_evidence_pool(
             "primary_publication_age_is_bounded": True,
             "maximum_publication_age_days": max_publication_age_days,
             "no_parallel_primary_fetch": True,
+            "recent_verified_cache_reuse_hours": float(recent_verified_cache_reuse_hours),
+            "recent_cache_reuse_is_retry_optimization_not_weekly_freshness_relaxation": True,
+            "content_addressed_raw_cache_must_reverify_sha_and_parseability": True,
             "full_abstracts_remain_private_data_artifacts": True,
             "fulltext_enrichment_is_optional": True,
             "fulltext_snippets_remain_private_data_artifacts": True,
@@ -511,6 +675,9 @@ def build_primary_evidence_pool(
             "fulltext_verified": 0,
             "fulltext_fetch_errors": 0,
             "empirical_fact_candidates": 0,
+            "recent_verified_cache_reused": 0,
+            "recent_raw_primary_cache_reused": 0,
+            "recent_raw_fulltext_cache_reused": 0,
             "lane_floor": int(lane_floor),
             "eligible_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
             "selected_lane_counts": {str(lane["key"]): 0 for lane in PRIMARY_EVIDENCE_LANES},
@@ -616,70 +783,123 @@ def build_primary_evidence_pool(
     title_mismatches = 0
     fulltext_verified = 0
     empirical_fact_count = 0
+    reused_verified = 0
+    raw_primary_cache_reused = 0
+    raw_fulltext_cache_reused = 0
     for paper in candidates:
         arxiv_id = _arxiv_id(paper)
+        ref = f"arXiv:{arxiv_id}"
         url = f"https://arxiv.org/abs/{arxiv_id}"
-        if last_fetch_started is not None and min_interval_seconds > 0:
-            wait = min_interval_seconds - (time.monotonic() - last_fetch_started)
-            if wait > 0:
-                time.sleep(wait)
-        last_fetch_started = time.monotonic()
+        cached = prior_records_by_ref.get(ref) or {}
+        if _reusable_verified_record(
+            cached,
+            paper,
+            now=current,
+            max_age_hours=recent_verified_cache_reuse_hours,
+        ):
+            record = dict(cached)
+            record.update({
+                "year": paper.get("year"),
+                "publication_date": (paper.get("metadata") or {}).get("publicationDate"),
+                "s2_paper_id": paper.get("paper_id"),
+                "s2_retrieved_at": (paper.get("metadata") or {}).get("retrievedAt"),
+                "lane_keys": list(candidate_lane_by_ref.get(ref, ())),
+            })
+            verified.append(record)
+            fulltext_verified += 1
+            empirical_fact_count += len(record.get("empirical_facts") or [])
+            reused_verified += 1
+            continue
         try:
-            response = fetch(url, timeout=25.0, headers={"User-Agent": "Agent-Self-Evolution-Observatory/primary-evidence"})
-            status = int(getattr(response, "status_code", 200))
-            if status >= 400:
-                raise RuntimeError(f"HTTP {status}")
-            raw_text = str(getattr(response, "text", "") or "")
-            if not raw_text:
-                raise RuntimeError("empty-primary-page")
-            parsed = parse_arxiv_page(raw_text)
-            if not parsed["title"] or not parsed["abstract"]:
-                raise RuntimeError("primary-page-missing-title-or-abstract")
-            similarity = _title_similarity(str(paper.get("title") or ""), parsed["title"])
-            if similarity < 0.72:
-                title_mismatches += 1
-                errors.append({"ref": f"arXiv:{arxiv_id}", "error": "title-mismatch", "similarity": round(similarity, 4)})
-                continue
-            raw_bytes = raw_text.encode("utf-8")
-            source_sha = hashlib.sha256(raw_bytes).hexdigest()
-            abstract_sha = hashlib.sha256(parsed["abstract"].encode("utf-8")).hexdigest()
-            cache_path = cache_dir / f"arxiv-{re.sub(r'[^0-9A-Za-z._-]+','_',arxiv_id)}-{source_sha[:12]}.html"
-            cache_path.write_bytes(raw_bytes)
-
-            fulltext_url = f"https://arxiv.org/html/{arxiv_id}"
-            fulltext_sha = ""
-            fulltext_cache_path = ""
-            empirical_facts: list[dict[str, str]] = []
-            try:
+            cached_primary = _cached_primary_page(
+                cache_dir,
+                arxiv_id,
+                paper,
+                now=current,
+                max_age_hours=recent_verified_cache_reuse_hours,
+            )
+            if cached_primary:
+                parsed = cached_primary["parsed"]
+                source_sha = str(cached_primary["source_sha256"])
+                abstract_sha = str(cached_primary["abstract_sha256"])
+                cache_path = Path(str(cached_primary["cache_path"]))
+                similarity = float(cached_primary["title_similarity"])
+                raw_primary_cache_reused += 1
+            else:
                 if last_fetch_started is not None and min_interval_seconds > 0:
                     wait = min_interval_seconds - (time.monotonic() - last_fetch_started)
                     if wait > 0:
                         time.sleep(wait)
                 last_fetch_started = time.monotonic()
-                full_response = fetch(
-                    fulltext_url,
-                    timeout=25.0,
-                    headers={"User-Agent": "Agent-Self-Evolution-Observatory/fulltext-evidence"},
-                )
-                full_status = int(getattr(full_response, "status_code", 200))
-                if full_status >= 400:
-                    raise RuntimeError(f"HTTP {full_status}")
-                full_text = str(getattr(full_response, "text", "") or "")
-                if not full_text or "<section" not in full_text.lower():
-                    raise RuntimeError("fulltext-page-missing-sections")
-                full_bytes = full_text.encode("utf-8")
-                fulltext_sha = hashlib.sha256(full_bytes).hexdigest()
-                full_path = cache_dir / f"arxiv-full-{re.sub(r'[^0-9A-Za-z._-]+','_',arxiv_id)}-{fulltext_sha[:12]}.html"
-                full_path.write_bytes(full_bytes)
-                fulltext_cache_path = str(full_path)
-                empirical_facts = extract_empirical_fact_candidates(full_text, max_facts=4)
+                response = fetch(url, timeout=25.0, headers={"User-Agent": "Agent-Self-Evolution-Observatory/primary-evidence"})
+                status = int(getattr(response, "status_code", 200))
+                if status >= 400:
+                    raise RuntimeError(f"HTTP {status}")
+                raw_text = str(getattr(response, "text", "") or "")
+                if not raw_text:
+                    raise RuntimeError("empty-primary-page")
+                parsed = parse_arxiv_page(raw_text)
+                if not parsed["title"] or not parsed["abstract"]:
+                    raise RuntimeError("primary-page-missing-title-or-abstract")
+                similarity = _title_similarity(str(paper.get("title") or ""), parsed["title"])
+                if similarity < 0.72:
+                    title_mismatches += 1
+                    errors.append({"ref": ref, "error": "title-mismatch", "similarity": round(similarity, 4)})
+                    continue
+                raw_bytes = raw_text.encode("utf-8")
+                source_sha = hashlib.sha256(raw_bytes).hexdigest()
+                abstract_sha = hashlib.sha256(parsed["abstract"].encode("utf-8")).hexdigest()
+                cache_path = cache_dir / f"arxiv-{re.sub(r'[^0-9A-Za-z._-]+','_',arxiv_id)}-{source_sha[:12]}.html"
+                cache_path.write_bytes(raw_bytes)
+
+            fulltext_url = f"https://arxiv.org/html/{arxiv_id}"
+            fulltext_sha = ""
+            fulltext_cache_path = ""
+            empirical_facts: list[dict[str, str]] = []
+            cached_fulltext = _cached_fulltext_page(
+                cache_dir,
+                arxiv_id,
+                now=current,
+                max_age_hours=recent_verified_cache_reuse_hours,
+            )
+            if cached_fulltext:
+                fulltext_sha = str(cached_fulltext["fulltext_sha256"])
+                fulltext_cache_path = str(cached_fulltext["fulltext_cache_path"])
+                empirical_facts = list(cached_fulltext.get("empirical_facts") or [])
                 fulltext_verified += 1
                 empirical_fact_count += len(empirical_facts)
-            except Exception as full_error:
-                fulltext_errors.append({
-                    "ref": f"arXiv:{arxiv_id}",
-                    "error": f"{type(full_error).__name__}:{str(full_error)[:240]}",
-                })
+                raw_fulltext_cache_reused += 1
+            else:
+                try:
+                    if last_fetch_started is not None and min_interval_seconds > 0:
+                        wait = min_interval_seconds - (time.monotonic() - last_fetch_started)
+                        if wait > 0:
+                            time.sleep(wait)
+                    last_fetch_started = time.monotonic()
+                    full_response = fetch(
+                        fulltext_url,
+                        timeout=25.0,
+                        headers={"User-Agent": "Agent-Self-Evolution-Observatory/fulltext-evidence"},
+                    )
+                    full_status = int(getattr(full_response, "status_code", 200))
+                    if full_status >= 400:
+                        raise RuntimeError(f"HTTP {full_status}")
+                    full_text = str(getattr(full_response, "text", "") or "")
+                    if not full_text or "<section" not in full_text.lower():
+                        raise RuntimeError("fulltext-page-missing-sections")
+                    full_bytes = full_text.encode("utf-8")
+                    fulltext_sha = hashlib.sha256(full_bytes).hexdigest()
+                    full_path = cache_dir / f"arxiv-full-{re.sub(r'[^0-9A-Za-z._-]+','_',arxiv_id)}-{fulltext_sha[:12]}.html"
+                    full_path.write_bytes(full_bytes)
+                    fulltext_cache_path = str(full_path)
+                    empirical_facts = extract_empirical_fact_candidates(full_text, max_facts=4)
+                    fulltext_verified += 1
+                    empirical_fact_count += len(empirical_facts)
+                except Exception as full_error:
+                    fulltext_errors.append({
+                        "ref": ref,
+                        "error": f"{type(full_error).__name__}:{str(full_error)[:240]}",
+                    })
 
             record = {
                 "evidence_id": hashlib.sha256(f"arXiv:{arxiv_id}:{source_sha}".encode("utf-8")).hexdigest(),
@@ -730,6 +950,9 @@ def build_primary_evidence_pool(
             "fulltext_verified": fulltext_verified,
             "fulltext_fetch_errors": len(fulltext_errors),
             "empirical_fact_candidates": empirical_fact_count,
+            "recent_verified_cache_reused": reused_verified,
+            "recent_raw_primary_cache_reused": raw_primary_cache_reused,
+            "recent_raw_fulltext_cache_reused": raw_fulltext_cache_reused,
             "verified_lane_counts": verified_lane_counts,
             "verified_undercovered_lanes": verified_undercovered_lanes,
             "candidate_generation_ready": len(verified) >= 4,
@@ -779,6 +1002,7 @@ def write_primary_evidence_pool(
     augment_fresh_corpus_with_arxiv: bool = True,
     now: datetime | None = None,
     min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
+    recent_verified_cache_reuse_hours: float = DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS,
 ) -> dict[str, Any]:
     storage = storage or StorageSettings.from_env()
     state, private = build_primary_evidence_pool(
@@ -795,6 +1019,7 @@ def write_primary_evidence_pool(
         augment_fresh_corpus_with_arxiv=augment_fresh_corpus_with_arxiv,
         now=now,
         min_interval_seconds=min_interval_seconds,
+        recent_verified_cache_reuse_hours=recent_verified_cache_reuse_hours,
     )
     private_pool_path, _ = _private_paths(storage)
     private_pool_path.parent.mkdir(parents=True, exist_ok=True)

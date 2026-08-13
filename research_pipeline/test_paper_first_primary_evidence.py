@@ -6,9 +6,12 @@ import unittest
 from datetime import datetime, timezone
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
+
+import requests
 
 from .config import StorageSettings
-from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, build_primary_evidence_pool, extract_empirical_fact_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
+from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, _default_requester, build_primary_evidence_pool, extract_empirical_fact_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
 
 
 class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
@@ -217,6 +220,89 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertEqual(public['summary']['augmentation_added'],0)
         self.assertTrue(public['discovery_errors'])
         self.assertTrue(public['policy']['arxiv_augmentation_failure_does_not_invalidate_fresh_corpus'])
+    def test_default_requester_has_whole_response_wall_clock_timeout(self) -> None:
+        class SlowResponse:
+            status_code=200
+            encoding="utf-8"
+            def __enter__(self): return self
+            def __exit__(self,*args): return False
+            def iter_content(self,chunk_size=65536):
+                yield b"partial"
+                yield b"still-trickling"
+        with patch("research_pipeline.paper_first_primary_evidence.requests.get",return_value=SlowResponse()), patch("research_pipeline.paper_first_primary_evidence.time.monotonic",side_effect=[0.0,30.0]):
+            with self.assertRaises(requests.Timeout):
+                _default_requester("https://arxiv.org/html/test",timeout=25.0,headers={})
+
+    def test_interrupted_raw_content_addressed_cache_resumes_without_network(self) -> None:
+        calls=[]
+        def fail_requester(*args,**kwargs):
+            calls.append((args,kwargs)); raise AssertionError("fresh raw cache should avoid repeat network")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); storage=self.storage(root); corpus=self.corpus(root)
+            cache_dir=root/"paper-first-problem-discovery"/"primary-sources"; cache_dir.mkdir(parents=True)
+            import hashlib
+            for idx,title in enumerate((
+                "Self-Evolving Agent Skills Under Feedback",
+                "Harness Evolution for Autonomous Agents",
+                "Persistent Memory for Self-Improving Agents",
+                "Continual Agent Workflow Evolution",
+            ),start=1):
+                arxiv_id=f"2608.0000{idx}"
+                primary=f'''<html><head><meta name="citation_title" content="{title}"></head><body><blockquote class="abstract mathjax">Abstract: Cached primary abstract {idx} about self-evolving agents.</blockquote></body></html>'''.encode()
+                primary_sha=hashlib.sha256(primary).hexdigest(); (cache_dir/f"arxiv-{arxiv_id}-{primary_sha[:12]}.html").write_bytes(primary)
+                full=f'''<html><body><section><h2>Experimental Results</h2><p>We find cached result {idx} improves held-out success by 12.0 percent across tasks.</p></section></body></html>'''.encode()
+                full_sha=hashlib.sha256(full).hexdigest(); (cache_dir/f"arxiv-full-{arxiv_id}-{full_sha[:12]}.html").write_bytes(full)
+            public,private=build_primary_evidence_pool(
+                storage=storage,corpus_path=corpus,requester=fail_requester,
+                augment_fresh_corpus_with_arxiv=False,
+                now=datetime(2026,8,13,8,0,tzinfo=timezone.utc),min_interval_seconds=0,max_papers=8,
+            )
+        self.assertEqual(calls,[])
+        self.assertEqual(public["summary"]["verified"],4)
+        self.assertEqual(public["summary"]["recent_verified_cache_reused"],0)
+        self.assertEqual(public["summary"]["recent_raw_primary_cache_reused"],4)
+        self.assertEqual(public["summary"]["recent_raw_fulltext_cache_reused"],4)
+        self.assertEqual(public["summary"]["fulltext_verified"],4)
+        self.assertGreaterEqual(public["summary"]["empirical_fact_candidates"],4)
+        self.assertEqual(len(private["records"]),4)
+
+    def test_recent_complete_private_pool_is_reused_without_repeat_network_fetch(self) -> None:
+        calls=[]
+        def fail_requester(*args,**kwargs):
+            calls.append((args,kwargs)); raise AssertionError("recent verified cache should avoid network")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); storage=self.storage(root); corpus=self.corpus(root)
+            private_dir=root/"paper-first-problem-discovery"; private_dir.mkdir(parents=True)
+            records=[]
+            for idx,title in enumerate((
+                "Self-Evolving Agent Skills Under Feedback",
+                "Harness Evolution for Autonomous Agents",
+                "Persistent Memory for Self-Improving Agents",
+                "Continual Agent Workflow Evolution",
+            ),start=1):
+                source_cache=private_dir/f"source-{idx}.html"; source_cache.write_text("cached primary",encoding="utf-8")
+                full_cache=private_dir/f"full-{idx}.html"; full_cache.write_text("<section>cached fulltext</section>",encoding="utf-8")
+                records.append({
+                    "evidence_id":str(idx)*64,"ref":f"arXiv:2608.0000{idx}","title":title,
+                    "primary_url":f"https://arxiv.org/abs/2608.0000{idx}","source_sha256":"a"*64,"abstract_sha256":"b"*64,
+                    "abstract":f"Primary abstract fact {idx} about self-evolving agents.","fulltext_url":f"https://arxiv.org/html/2608.0000{idx}",
+                    "fulltext_sha256":"c"*64,"cache_path":str(source_cache),"fulltext_cache_path":str(full_cache),
+                    "empirical_facts":[{"section":"Results","text":f"Cached empirical fact {idx} improves held-out success by 12.0 percent.","text_sha256":"d"*64}],
+                    "fetched_at":"2026-08-13T05:00:00+00:00","primary_source_verified":True,
+                })
+            (private_dir/"primary-evidence-pool.json").write_text(json.dumps({"status":"READY","generated_at":"2026-08-13T05:00:00+00:00","records":records}),encoding="utf-8")
+            public,private=build_primary_evidence_pool(
+                storage=storage,corpus_path=corpus,requester=fail_requester,
+                augment_fresh_corpus_with_arxiv=False,
+                now=datetime(2026,8,13,6,0,tzinfo=timezone.utc),min_interval_seconds=0,max_papers=8,
+            )
+        self.assertEqual(calls,[])
+        self.assertEqual(public["status"],"READY")
+        self.assertEqual(public["summary"]["verified"],4)
+        self.assertEqual(public["summary"]["fulltext_verified"],4)
+        self.assertEqual(public["summary"]["recent_verified_cache_reused"],4)
+        self.assertEqual(len(private["records"]),4)
+        self.assertTrue(public["policy"]["recent_cache_reuse_is_retry_optimization_not_weekly_freshness_relaxation"])
 
     def test_stale_corpus_uses_arxiv_primary_fallback(self) -> None:
         with tempfile.TemporaryDirectory() as td:
