@@ -5,7 +5,7 @@ from datetime import datetime,timezone
 from pathlib import Path
 
 from .ark_provider import extract_json_object
-from .paper_first_problem_discovery_contract import DISCOVERY_LANES
+from .paper_first_problem_discovery_contract import SEARCH_PORTFOLIO_PRIMITIVES
 from .paper_first_problem_generator import _ark,_apply_reviews
 from .paper_first_problem_generator_prompts import reviewer_prompt
 from .paper_first_primary_evidence import parse_arxiv_page,extract_empirical_fact_candidates,extract_typed_evidence_candidates
@@ -18,7 +18,7 @@ from .paper_first_problem_search_portfolio import (
 def expand(*,pool:Path,run_root:Path,lane:str,count:int=6,model:str="ark-code-latest",part:int=1) -> dict:
     payload=json.loads(pool.read_text(encoding="utf-8"));records=payload.get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")}
     lane=lane.strip().upper()
-    if lane not in DISCOVERY_LANES:raise ValueError(f"unknown lane {lane}")
+    if lane not in SEARCH_PORTFOLIO_PRIMITIVES:raise ValueError(f"unknown search primitive {lane}")
     prompt=_expansion_prompt(lane,records,count);res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=.85);raw=str(res.get("text") or "");parsed=extract_json_object(raw)
     seeds=[]
     for i,item in enumerate(parsed.get("seeds") or [],1):
@@ -36,7 +36,7 @@ def assemble(*,run_root:Path,archive_capacity:int=48,evolution_parents:int=24)->
     for path in sorted(run_root.glob("expand-*.json")):
         payload=json.loads(path.read_text(encoding="utf-8"));rows=[row for row in (payload.get("seeds") or []) if isinstance(row,dict)];raw.extend(rows);shards.append({"path":path.name,"lane":payload.get("lane"),"part":payload.get("part","legacy"),"requested":payload.get("requested"),"valid_seeds":len(rows),"raw_sha256":payload.get("raw_sha256"),"resolved_model":payload.get("resolved_model")})
     unique,dups=_semantic_dedup(raw);unique,clusters=_assign_structural_clusters(unique);archives=_archives(unique,archive_capacity);by_id={row["seed_id"]:row for row in unique};breadth=[by_id[sid] for sid in archives["breadth"] if sid in by_id];parents=_maxmin_select(breadth,min(evolution_parents,len(breadth)))
-    lane_counts={lane:sum(row.get("discovery_lane")==lane for row in raw) for lane in DISCOVERY_LANES};archive_lanes={lane:sum(by_id[sid].get("discovery_lane")==lane for sid in archives["breadth"] if sid in by_id) for lane in DISCOVERY_LANES}
+    lane_counts={lane:sum(row.get("discovery_lane")==lane for row in raw) for lane in SEARCH_PORTFOLIO_PRIMITIVES};archive_lanes={lane:sum(by_id[sid].get("discovery_lane")==lane for sid in archives["breadth"] if sid in by_id) for lane in SEARCH_PORTFOLIO_PRIMITIVES}
     out={"schema_version":"1.0","shards":shards,"summary":{"raw_seeds":len(raw),"semantic_unique":len(unique),"semantic_duplicates":len(dups),"structural_clusters":clusters,"breadth_archive":len(archives["breadth"]),"evolution_parents":len(parents),"lane_coverage":sum(value>0 for value in lane_counts.values()),"archive_lane_coverage":sum(value>0 for value in archive_lanes.values())},"lane_counts":lane_counts,"archive_lane_counts":archive_lanes,"archives":archives,"duplicates":dups,"unique_seeds":unique,"parents":parents,"scientific_authority":False}
     (run_root/"base.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return out["summary"]

@@ -4,7 +4,6 @@ import copy
 import unittest
 
 from .research_system import build_research_system_state, validate_state
-from .paper_first_problem_discovery_contract import DISCOVERY_LANES
 
 
 class ResearchSystemTest(unittest.TestCase):
@@ -283,8 +282,11 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertFalse((generator.get("saturation_memory") or {}).get("scientific_authority"))
         if generator["status"]=="GENERATED_ZERO_CANDIDATES": self.assertTrue(str(generator.get("generation_notes") or "").strip())
         self.assertTrue(generator["policy"]["multi_lane_discovery_enabled"])
-        self.assertEqual(tuple(generator["policy"]["allowed_discovery_lanes"]),DISCOVERY_LANES); self.assertTrue(generator["policy"]["search_portfolio_enabled"]); self.assertTrue(generator["policy"]["expansion_precedes_reduction"]); self.assertTrue(generator["policy"]["diversity_archives_required"])
+        self.assertEqual(generator["policy"]["allowed_discovery_lanes"],["CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"])
         self.assertEqual(generator["policy"]["forbidden_discovery_lanes"],["MISSING_CELL","SHARED_LIMITATION","PURE_TOPIC_BRAINSTORM"])
+        self.assertIsNot(generator["policy"].get("search_portfolio_enabled"),True)
+        self.assertTrue(generator["policy"].get("one_generator_call_max",True))
+        self.assertTrue(generator["policy"].get("one_semantic_reviewer_call_max",True))
         self.assertTrue(generator["policy"]["independent_reviewer_must_verify_lane_contract"])
         self.assertTrue(generator["policy"]["source_coverage_saturation_skips_model_call"])
         self.assertTrue(generator["policy"]["source_coverage_saturation_is_compute_control_not_scientific_negative"])
@@ -307,7 +309,11 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(discovery["policy"]["multi_lane_discovery_required"])
         self.assertFalse(discovery["policy"]["contradiction_first_required"])
         self.assertTrue(discovery["policy"]["contradiction_lane_retained"])
-        self.assertEqual(tuple(discovery["policy"]["allowed_discovery_lanes"]),DISCOVERY_LANES); self.assertEqual(discovery["summary"]["allowed_discovery_lanes"],10); self.assertTrue(discovery["policy"]["expansion_reduction_separated"]); self.assertTrue(discovery["policy"]["reduction_falsifiability_contract_required"])
+        self.assertEqual(discovery["policy"]["allowed_discovery_lanes"],["CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"])
+        self.assertEqual(discovery["policy"]["search_portfolio_primitives"],["CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY","IDENTIFIABILITY_GAP","MISSING_DECISION_OBJECT","COMPOSITION_INTERACTION","CROSS_DOMAIN_STRUCTURAL_ANALOGY","NEW_CAPABILITY_QUESTION","LONGITUDINAL_EMERGENCE"])
+        self.assertTrue(discovery["policy"]["search_portfolio_is_shadow_only"])
+        self.assertTrue(discovery["policy"]["search_portfolio_cannot_publish_canonical_generator_or_queue"])
+        self.assertTrue(discovery["policy"]["one_content_addressed_pool_allows_at_most_one_live_generator_call"])
         self.assertEqual(discovery["policy"]["forbidden_discovery_lanes"],["MISSING_CELL","SHARED_LIMITATION","PURE_TOPIC_BRAINSTORM"])
         self.assertTrue(discovery["policy"]["lane_specific_machine_evidence_contract_required"])
         self.assertTrue(discovery["policy"]["no_lane_specific_downstream_relaxation"])
@@ -385,6 +391,17 @@ class ResearchSystemTest(unittest.TestCase):
         disabled = [item for item in self.state["components"] if item["status"] == "intentionally-disabled"]
         self.assertEqual(len(disabled), 1)
 
+    def test_live_problem_discovery_rejects_shadow_portfolio_authority_leak(self) -> None:
+        broken=copy.deepcopy(self.state)
+        broken["paper_first_problem_discovery_contract"]["policy"]["search_portfolio_is_shadow_only"]=False
+        self.assertTrue(any("shadow layer" in error for error in validate_state(broken)))
+        leaked=copy.deepcopy(self.state)
+        leaked["paper_first_problem_generator"]["policy"]["search_portfolio_enabled"]=True
+        self.assertTrue(any("canonical problem generator" in error for error in validate_state(leaked)))
+        multi=copy.deepcopy(self.state)
+        multi["paper_first_problem_generator"]["policy"]["one_generator_call_max"]=False
+        self.assertTrue(any("at most one generator call" in error for error in validate_state(multi)))
+
     def test_v23_problem_deadend_memory_is_zero_authority_and_requires_basin_escape(self) -> None:
         state=copy.deepcopy(self.state); generator=state["paper_first_problem_generator"]
         generator["schema_version"]="2.3"
@@ -397,7 +414,7 @@ class ResearchSystemTest(unittest.TestCase):
     def test_v24_generated_problem_state_requires_complete_zero_authority_lane_search(self) -> None:
         state=copy.deepcopy(self.state); generator=state["paper_first_problem_generator"]
         generator["schema_version"]="2.4"; generator["status"]="GENERATED_ZERO_CANDIDATES"; generator["generation_notes"]="All four lanes were audited and none survives."
-        generator["policy"].update({"search_portfolio_enabled":False,"allowed_discovery_lanes":["CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"],"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True})
+        generator["policy"].update({"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True})
         generator["search_diagnostics"]={"lane_search_priority":["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"],"lane_search_complete":True,"lane_search":[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."} for lane in ("CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY")],"scientific_authority":False}
         self.assertEqual(validate_state(state),[])
         broken=copy.deepcopy(state); broken["paper_first_problem_generator"]["search_diagnostics"]["lane_search"].pop()
@@ -406,9 +423,9 @@ class ResearchSystemTest(unittest.TestCase):
     def test_v25_last_completed_lane_search_is_zero_authority_portable_receipt(self) -> None:
         state=copy.deepcopy(self.state);generator=state["paper_first_problem_generator"]
         generator["schema_version"]="2.5";generator["status"]="GENERATED_ZERO_CANDIDATES";generator["generation_notes"]="All four lanes were audited and none survives."
-        generator["policy"].update({"search_portfolio_enabled":False,"allowed_discovery_lanes":list(DISCOVERY_LANES),"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"last_completed_lane_search_is_portable_zero_authority_receipt":True,"terminal_zero_call_skip_preserves_last_completed_lane_search":True})
-        priority=list(DISCOVERY_LANES);rows=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."} for lane in priority]
-        receipt={"run_id":generator.get("run_id") or "v25-run","generator_status":"GENERATED_ZERO_CANDIDATES","generated_at":"2026-08-13T14:12:22+00:00","lane_search_priority":priority,"lane_search":rows,"generation_notes":"All legacy lanes audited.","scientific_authority":False}
+        generator["policy"].update({"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"last_completed_lane_search_is_portable_zero_authority_receipt":True,"terminal_zero_call_skip_preserves_last_completed_lane_search":True})
+        priority=["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"];rows=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."} for lane in priority]
+        receipt={"run_id":generator.get("run_id") or "v25-run","generator_status":"GENERATED_ZERO_CANDIDATES","generated_at":"2026-08-13T14:12:22+00:00","lane_search_priority":priority,"lane_search":rows,"generation_notes":"All four lanes audited.","scientific_authority":False}
         generator["run_id"]=receipt["run_id"];generator["search_diagnostics"]={"lane_search_priority":priority,"lane_search_complete":True,"lane_search":rows,"last_completed_lane_search":receipt,"scientific_authority":False}
         self.assertEqual(validate_state(state),[])
         broken=copy.deepcopy(state);broken["paper_first_problem_generator"]["search_diagnostics"]["last_completed_lane_search"]["scientific_authority"]=True

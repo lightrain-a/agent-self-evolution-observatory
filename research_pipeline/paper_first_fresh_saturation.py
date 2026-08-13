@@ -194,11 +194,11 @@ def build_fresh_saturation_state() -> dict[str, Any]:
         "generator_revision":{
             "old_failure":"Free-form generators produced mathematically named versions of mature problems and malformed long JSON; formatting repair was treated as advisory-only and never as scientific evidence.",
             "historical_rule":"The historical scan used four empirically grounded lanes and immediate mature-theory reduction; its zero-survivor outcome remains diagnostic rather than a mandatory search policy.",
-            "new_rule":"Use a multi-lane Search Portfolio: expand grounded seeds first, preserve structural diversity and lineage, evolve promising branches, formulate paper-shaped problems, and only then run closest-work plus the Reduction Falsifiability Contract. The final novelty bar remains unchanged.",
+            "new_rule":"Keep the four empirical discovery lanes as the only live Problem-Gate types and allow at most one live generator call for each new content-addressed evidence pool. A ten-primitive Search Portfolio may expand and evolve branches only as a zero-authority shadow search lab and may apply the Reduction Falsifiability Contract after formulation; it cannot publish canonical Generator/Queue state, change source exposure, or grant Paper Design eligibility.",
             "required_fields":["discovery lane","two primary evidence items","lane-specific machine evidence","irreducible object","mature-theory non-reducibility","same-information baseline","cheapest problem falsifier","endpoint headroom"],
         },
         "decision":"NO_FRESH_SURVIVOR_CURRENT_SCAN",
-        "next_action":"Continue multi-lane portfolio discovery with delayed exact reduction; do not create methods, experiments, P0 entries, or GPU work until a formulated problem survives the Problem Gate.",
+        "next_action":"When source coverage is exhausted, keep the live weekly transaction at zero calls until new freshness/relevance-qualified lane-grounded evidence changes the content-addressed pool. Use Search Portfolio only for shadow breadth exploration; no shadow result can create a live candidate, Paper Design eligibility, Method, Experiment, P0, or GPU authority.",
     }
 
 

@@ -8,7 +8,7 @@ from typing import Any, Callable
 from .ark_provider import extract_json_object
 from .paper_first_fresh_saturation import reduction_pattern_audit
 from .paper_first_problem_discovery_contract import (
-    DISCOVERY_LANES, LANE_DISTINCT_SOURCE_MINIMUM, LANE_EVIDENCE_REQUIRED, LANE_MACHINE_CONTRACTS, LANE_SOURCE_ROLES,
+    DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES, LANE_DISTINCT_SOURCE_MINIMUM, LANE_EVIDENCE_REQUIRED, LANE_MACHINE_CONTRACTS, LANE_SOURCE_ROLES,
 )
 
 PortfolioCaller = Callable[..., dict[str, Any]]
@@ -61,7 +61,7 @@ def _valid_seed(r,reg):
     lane=str(r.get("discovery_lane") or "");refs=_source_refs(r);e=r.get("empirical_evidence") or {};roles=tuple(str((e.get(k) or {}).get("evidence_role") or "") for k in ("source_a","source_b"))
     lane_evidence=r.get("lane_evidence") or {}
     return bool(
-        lane in DISCOVERY_LANES and r.get("title") and r.get("problem_seed") and r.get("structural_signature")
+        lane in SEARCH_PORTFOLIO_PRIMITIVES and r.get("title") and r.get("problem_seed") and r.get("structural_signature")
         and len(set(refs))>=LANE_DISTINCT_SOURCE_MINIMUM[lane] and all(ref in reg for ref in refs) and roles==LANE_SOURCE_ROLES[lane]
         and all(str(lane_evidence.get(k) or "").strip() for k in LANE_EVIDENCE_REQUIRED[lane])
     )
@@ -88,7 +88,7 @@ def _maxmin_select(rows,capacity):
     if len(rows)<=capacity:return list(rows)
     selected=[];by_lane=defaultdict(list)
     for r in rows:by_lane[r["discovery_lane"]].append(r)
-    for lane in DISCOVERY_LANES:
+    for lane in SEARCH_PORTFOLIO_PRIMITIVES:
         if by_lane[lane] and len(selected)<capacity:selected.append(max(by_lane[lane],key=_score))
     remain=[r for r in rows if r not in selected]
     while remain and len(selected)<capacity:
@@ -200,7 +200,7 @@ def _formulation_prompt(branches,registry,dead_end_memory=None):
     )
 
 def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,model:str,target_raw_seeds:int=DEFAULT_RAW_SEEDS,archive_capacity:int=DEFAULT_ARCHIVE_CAPACITY,evolution_parents:int=DEFAULT_EVOLUTION_PARENTS,second_generation:int=DEFAULT_SECOND_GENERATION,formulation_budget:int=DEFAULT_FORMULATION_BUDGET,max_parallel_calls:int=5,dead_end_memory:dict[str,Any]|None=None)->dict[str,Any]:
-    reg={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")};per_lane=max(1,int(math.ceil(target_raw_seeds/max(1,len(DISCOVERY_LANES)))))
+    reg={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")};per_lane=max(1,int(math.ceil(target_raw_seeds/max(1,len(SEARCH_PORTFOLIO_PRIMITIVES)))))
     raw=[];errors=[];calls=0
     def expand_one(lane,part,count):
         res=call(role=f"expand-{lane.lower()}-p{part}",prompt=_expansion_prompt(lane,records,count,dead_end_memory),model=model,max_output_tokens=5200);payload=extract_json_object(str(res.get("text") or ""));seeds=payload.get("seeds") or []
@@ -212,7 +212,7 @@ def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,mode
             if _valid_seed(row,reg):out.append(row)
         return out
     expansion_jobs=[]
-    for lane in DISCOVERY_LANES:
+    for lane in SEARCH_PORTFOLIO_PRIMITIVES:
         remaining=per_lane;part=1
         while remaining>0:
             count=min(DEFAULT_EXPANSION_SHARD_SIZE,remaining);expansion_jobs.append((lane,part,count));remaining-=count;part+=1

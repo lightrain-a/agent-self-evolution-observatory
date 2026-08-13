@@ -125,6 +125,14 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual(result["summary"]["unreviewed_lane_linked_sources"],0)
         self.assertEqual(result["authority"],{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False})
 
+    def test_validator_rejects_portfolio_as_canonical_transaction_generator(self) -> None:
+        primary={"status":"READY","summary":{"verified":4}}
+        generator={"schema_version":"3.2","status":"GENERATED_ZERO_CANDIDATES","summary":{"primary_evidence_records":4,"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0},"policy":{"search_portfolio_enabled":True,"one_generator_call_max":False,"one_semantic_reviewer_call_max":False,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"candidates":[]}
+        queue={"summary":{"primary_evidence_records":4,"submitted":0,"audited":0,"passed_problem_gate":0,"blocked_problem_gate":0,"inbox_errors":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0},"audited":[]}
+        errors=_validate(primary,generator,queue)
+        self.assertIn("canonical-transaction-forbids-search-portfolio",errors)
+        self.assertIn("canonical-transaction-requires-single-call-budget",errors)
+
     def test_validator_rejects_saturation_skip_when_unreviewed_lane_source_remains(self) -> None:
         primary={"status":"READY","summary":{"verified":4}}
         generator={"status":"SKIPPED_SOURCE_COVERAGE_SATURATED","summary":{"primary_evidence_records":4,"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0},"source_coverage":{"coverage_exhausted":True,"unreviewed_lane_linked_sources":1},"policy":{"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"candidates":[]}

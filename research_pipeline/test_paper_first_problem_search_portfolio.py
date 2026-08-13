@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json,re,unittest
 
-from .paper_first_problem_discovery_contract import DISCOVERY_LANES,LANE_EVIDENCE_REQUIRED,LANE_SOURCE_ROLES
+from .paper_first_problem_discovery_contract import DISCOVERY_LANES,SEARCH_PORTFOLIO_PRIMITIVES,LANE_EVIDENCE_REQUIRED,LANE_SOURCE_ROLES
 from .paper_first_problem_search_portfolio import run_search_portfolio
 from .paper_first_fresh_saturation import reduction_pattern_audit
 
@@ -14,7 +14,7 @@ class SearchPortfolioTest(unittest.TestCase):
     def caller(self,**kwargs):
         role=kwargs["role"];prompt=kwargs["prompt"]
         if role.startswith("expand-"):
-            lane=next(x for x in DISCOVERY_LANES if x.lower() in role)
+            lane=next(x for x in SEARCH_PORTFOLIO_PRIMITIVES if x.lower() in role)
             count=int(re.search(r"Generate exactly (\d+)",prompt).group(1));seeds=[]
             for i in range(count):
                 roles=LANE_SOURCE_ROLES[lane];refs=[f"arXiv:2608.30{(i%3)+1:03d}",f"arXiv:2608.30{((i+1)%3)+4:03d}"]
@@ -33,10 +33,10 @@ class SearchPortfolioTest(unittest.TestCase):
         state=run_search_portfolio(records=self.records(),call=self.caller,model="ark-code-latest",target_raw_seeds=20,archive_capacity=16,evolution_parents=8,second_generation=4,formulation_budget=8,max_parallel_calls=3)
         self.assertTrue(state["policy"]["expansion_precedes_reduction"])
         self.assertTrue(state["policy"]["mature_theory_veto_delayed_until_formulation"])
-        self.assertEqual(len(state["lane_counts"]),len(DISCOVERY_LANES))
+        self.assertEqual(len(state["lane_counts"]),len(SEARCH_PORTFOLIO_PRIMITIVES))
         self.assertGreaterEqual(state["summary"]["raw_seeds"],20)
-        self.assertGreaterEqual(state["summary"]["semantic_unique"],len(DISCOVERY_LANES))
-        self.assertEqual(state["summary"]["archive_lane_coverage"],len(DISCOVERY_LANES))
+        self.assertGreaterEqual(state["summary"]["semantic_unique"],len(SEARCH_PORTFOLIO_PRIMITIVES))
+        self.assertEqual(state["summary"]["archive_lane_coverage"],len(SEARCH_PORTFOLIO_PRIMITIVES))
         self.assertGreater(state["summary"]["evolved_branches"],0)
         self.assertGreaterEqual(state["summary"]["max_branch_depth"],1)
         self.assertGreater(state["summary"]["formulated_candidates"],0)

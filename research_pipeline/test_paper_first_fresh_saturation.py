@@ -26,7 +26,10 @@ class PaperFirstFreshSaturationTest(unittest.TestCase):
     def test_historical_scan_is_diagnostic_and_current_search_delays_reduction(self) -> None:
         revision=self.state["generator_revision"]
         self.assertIn("remains diagnostic",revision["historical_rule"])
-        self.assertIn("multi-lane Search Portfolio",revision["new_rule"])
+        self.assertIn("four empirical discovery lanes",revision["new_rule"])
+        self.assertIn("zero-authority shadow search lab",revision["new_rule"])
+        self.assertIn("at most one live generator call",revision["new_rule"])
+        self.assertIn("zero calls",self.state["next_action"])
         self.assertIn("Reduction Falsifiability Contract",revision["new_rule"])
         self.assertIn("discovery lane",revision["required_fields"])
         self.assertIn("mature-theory non-reducibility",revision["required_fields"])

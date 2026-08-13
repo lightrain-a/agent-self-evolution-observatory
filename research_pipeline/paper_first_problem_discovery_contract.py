@@ -10,6 +10,13 @@ DISCOVERY_LANES: tuple[str, ...] = (
     "CONVERGENT_FAILURE",
     "ASSUMPTION_BREAK",
     "UNEXPLAINED_BOUNDARY",
+)
+
+# Search Portfolio may explore a broader structural vocabulary, but these are
+# shadow search primitives rather than live Problem-Gate lane types. Any branch
+# that cannot be formulated under one of DISCOVERY_LANES remains shadow-only.
+SEARCH_PORTFOLIO_PRIMITIVES: tuple[str, ...] = (
+    *DISCOVERY_LANES,
     "IDENTIFIABILITY_GAP",
     "MISSING_DECISION_OBJECT",
     "COMPOSITION_INTERACTION",
@@ -133,14 +140,18 @@ LANE_MACHINE_CONTRACTS: dict[str, str] = {
 }
 
 POLICY: dict[str, Any] = {
-    "schema_version": "2.0",
+    "schema_version": "2.1",
     "multi_lane_discovery_required": True,
     "contradiction_first_required": False,
     "contradiction_lane_retained": True,
     "allowed_discovery_lanes": list(DISCOVERY_LANES),
+    "search_portfolio_primitives": list(SEARCH_PORTFOLIO_PRIMITIVES),
     "forbidden_discovery_lanes": list(FORBIDDEN_DISCOVERY_LANES),
     "lane_specific_machine_evidence_contract_required": True,
-    "search_portfolio_required": True,
+    "search_portfolio_required": False,
+    "search_portfolio_is_shadow_only": True,
+    "search_portfolio_cannot_publish_canonical_generator_or_queue": True,
+    "one_content_addressed_pool_allows_at_most_one_live_generator_call": True,
     "expansion_reduction_separated": True,
     "mature_theory_veto_delayed_until_formulated_branch": True,
     "diversity_archives_required": True,

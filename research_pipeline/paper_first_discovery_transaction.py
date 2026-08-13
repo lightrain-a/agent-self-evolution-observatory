@@ -110,6 +110,11 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
     if primary.get("status") != "READY" or verified < 4:
         errors.append("primary-evidence-not-ready")
     generator_status = str(generator.get("status") or "")
+    generator_policy = generator.get("policy") or {}
+    if generator_policy.get("search_portfolio_enabled") is True:
+        errors.append("canonical-transaction-forbids-search-portfolio")
+    if generator_policy.get("one_generator_call_max") is not True or generator_policy.get("one_semantic_reviewer_call_max") is not True:
+        errors.append("canonical-transaction-requires-single-call-budget")
     allowed_generator_statuses = {"GENERATED_ZERO_CANDIDATES", "GENERATED_AWAIT_PROBLEM_GATE", "SKIPPED_SOURCE_COVERAGE_SATURATED"}
     if generator_status not in allowed_generator_statuses:
         errors.append("generator-did-not-complete-discovery-transaction")

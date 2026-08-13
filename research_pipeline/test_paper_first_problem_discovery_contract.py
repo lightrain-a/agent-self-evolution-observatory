@@ -5,6 +5,7 @@ import unittest
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS
 from .paper_first_problem_discovery_contract import (
     DISCOVERY_LANES,
+    SEARCH_PORTFOLIO_PRIMITIVES,
     LANE_DISTINCT_SOURCE_MINIMUM,
     FORBIDDEN_DISCOVERY_LANES,
     audit_problem_candidate,
@@ -132,7 +133,7 @@ def valid_candidate(lane: str = "CONTRADICTION") -> dict:
 
 
 class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
-    def test_contract_is_multilane_portfolio_and_reduction_is_delayed(self) -> None:
+    def test_contract_keeps_four_live_lanes_and_shadow_portfolio_primitives(self) -> None:
         state = build_problem_discovery_contract_state()
         policy = state["policy"]
         self.assertTrue(policy["multi_lane_discovery_required"])
@@ -141,7 +142,9 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertEqual(tuple(policy["allowed_discovery_lanes"]), DISCOVERY_LANES)
         self.assertEqual(tuple(policy["forbidden_discovery_lanes"]), FORBIDDEN_DISCOVERY_LANES)
         self.assertTrue(policy["lane_specific_machine_evidence_contract_required"])
-        self.assertTrue(policy["search_portfolio_required"]); self.assertTrue(policy["expansion_reduction_separated"]); self.assertTrue(policy["mature_theory_veto_delayed_until_formulated_branch"]); self.assertTrue(policy["reduction_falsifiability_contract_required"]); self.assertTrue(policy["generic_theory_label_cannot_veto"])
+        self.assertFalse(policy["search_portfolio_required"]); self.assertTrue(policy["search_portfolio_is_shadow_only"]); self.assertTrue(policy["search_portfolio_cannot_publish_canonical_generator_or_queue"]); self.assertTrue(policy["one_content_addressed_pool_allows_at_most_one_live_generator_call"])
+        self.assertEqual(tuple(policy["search_portfolio_primitives"]), SEARCH_PORTFOLIO_PRIMITIVES)
+        self.assertTrue(policy["expansion_reduction_separated"]); self.assertTrue(policy["mature_theory_veto_delayed_until_formulated_branch"]); self.assertTrue(policy["reduction_falsifiability_contract_required"]); self.assertTrue(policy["generic_theory_label_cannot_veto"])
         self.assertTrue(policy["no_lane_specific_downstream_relaxation"])
         self.assertTrue(policy["two_mature_theory_baselines_required"])
         self.assertTrue(policy["same_information_nonreducibility_required"])
@@ -149,12 +152,12 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertTrue(policy["saturation_map_check_required"])
         self.assertTrue(state["candidate_schema"]["semantic_reduction_review"]["both_source_claims_require_exact_primary_evidence_grounding"])
         self.assertTrue(state["candidate_schema"]["semantic_reduction_review"]["lane_contract_must_be_independently_verified"])
-        self.assertEqual(state["summary"]["allowed_discovery_lanes"], 10)
+        self.assertEqual(state["summary"]["allowed_discovery_lanes"], 4)
         self.assertEqual(state["summary"]["forbidden_discovery_lanes"], 3)
         self.assertEqual(state["summary"]["saturation_patterns"], len(REDUCTION_PATTERNS))
         self.assertEqual((state["summary"]["automatic_method_authority"], state["summary"]["automatic_experiment_authority"]), (0, 0))
 
-    def test_all_ten_allowed_lanes_can_reach_only_human_paper_design(self) -> None:
+    def test_all_four_live_lanes_can_reach_only_human_paper_design(self) -> None:
         for lane in DISCOVERY_LANES:
             with self.subTest(lane=lane):
                 audit = audit_problem_candidate(valid_candidate(lane))
@@ -164,6 +167,18 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
                 self.assertTrue(audit["authority"]["paper_design_eligible_for_human_review"])
                 for key in ("method_design", "experiment_blueprint", "local_validation", "p0", "gpu", "full_experiment"):
                     self.assertFalse(audit["authority"][key])
+
+    def test_shadow_search_primitives_cannot_enter_live_problem_gate(self) -> None:
+        for primitive in SEARCH_PORTFOLIO_PRIMITIVES:
+            if primitive in DISCOVERY_LANES:
+                continue
+            with self.subTest(primitive=primitive):
+                candidate = valid_candidate()
+                candidate["discovery_lane"] = primitive
+                candidate["lane_evidence"] = _lane_evidence(primitive)
+                audit = audit_problem_candidate(candidate)
+                self.assertFalse(audit["passed"])
+                self.assertTrue(any(value.startswith("unknown-discovery-lane:") for value in audit["blockers"]), audit["blockers"])
 
     def test_three_speculative_lanes_are_forbidden(self) -> None:
         for lane in FORBIDDEN_DISCOVERY_LANES:
@@ -213,7 +228,7 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
 
 
     def test_generic_pattern_similarity_does_not_hard_veto(self) -> None:
-        candidate=valid_candidate("LONGITUDINAL_EMERGENCE")
+        candidate=valid_candidate("UNEXPLAINED_BOUNDARY")
         candidate["saturation_scan"]={"checked":True,"matched_patterns":[],"pending_patterns":[],"rejected_patterns":[{"key":"stream-instability","reason":"Generic dynamics does not give the candidate-level intervention prediction."}]}
         audit=audit_problem_candidate(candidate)
         self.assertTrue(audit["passed"],audit["blockers"])

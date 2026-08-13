@@ -1,21 +1,13 @@
 {
-  "schema_version": "3.2",
-  "generated_at": "2026-08-13T15:37:57+00:00",
-  "run_id": "search-portfolio-20260813-r1",
-  "status": "GENERATED_AWAIT_PROBLEM_GATE",
+  "schema_version": "2.5",
+  "generated_at": "2026-08-13T15:11:15+00:00",
+  "run_id": "20260813T151115Z",
   "generator_model": "ark-code-latest",
   "reviewer_model": "glm-5.2",
   "policy": {
     "zero_candidates_is_valid": true,
-    "search_portfolio_enabled": true,
-    "one_generator_call_max": false,
-    "one_semantic_reviewer_call_max": false,
-    "expansion_precedes_reduction": true,
-    "mature_theory_veto_delayed_until_formulation": true,
-    "diversity_archives_required": true,
-    "branch_lineage_required": true,
-    "reduction_falsifiability_contract_required": true,
-    "generic_theory_label_cannot_veto": true,
+    "one_generator_call_max": true,
+    "one_semantic_reviewer_call_max": true,
     "format_retry_forbidden": true,
     "thinking_disabled": true,
     "multi_lane_discovery_enabled": true,
@@ -23,13 +15,7 @@
       "CONTRADICTION",
       "CONVERGENT_FAILURE",
       "ASSUMPTION_BREAK",
-      "UNEXPLAINED_BOUNDARY",
-      "IDENTIFIABILITY_GAP",
-      "MISSING_DECISION_OBJECT",
-      "COMPOSITION_INTERACTION",
-      "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
-      "NEW_CAPABILITY_QUESTION",
-      "LONGITUDINAL_EMERGENCE"
+      "UNEXPLAINED_BOUNDARY"
     ],
     "forbidden_discovery_lanes": [
       "MISSING_CELL",
@@ -50,8 +36,7 @@
     "reviewer_blocked_problem_memory_has_zero_scientific_authority": true,
     "repeated_reduction_basin_requires_search_escape": true,
     "portable_blocked_problem_memory_is_search_control_only": true,
-    "one_generator_call_must_audit_all_discovery_lanes": false,
-    "portfolio_expansion_must_audit_all_discovery_lanes": true,
+    "one_generator_call_must_audit_all_discovery_lanes": true,
     "lane_search_diagnostics_have_zero_scientific_authority": true,
     "historically_underexplored_lanes_are_searched_first": true,
     "lane_search_never_requires_candidate": true,
@@ -69,57 +54,31 @@
     "automatic_p0_authority": false
   },
   "summary": {
-    "primary_evidence_records": 24,
-    "raw_seeds": 108,
-    "semantic_unique_seeds": 46,
-    "unique_problem_families": 46,
-    "breadth_archive": 46,
-    "archive_pairwise_distance": 0.8851,
-    "evolved_branches": 35,
-    "max_branch_depth": 2,
-    "portfolio_calls": 35,
-    "generated": 4,
-    "structurally_reviewable": 4,
-    "semantic_clear": 2,
-    "semantic_blocked": 2,
-    "written_to_auto_inbox": 4,
+    "primary_evidence_records": 32,
+    "generated": 0,
+    "structurally_reviewable": 0,
+    "semantic_clear": 0,
+    "semantic_blocked": 0,
+    "written_to_auto_inbox": 0,
     "generated_by_lane": {
       "CONTRADICTION": 0,
       "CONVERGENT_FAILURE": 0,
       "ASSUMPTION_BREAK": 0,
-      "UNEXPLAINED_BOUNDARY": 1,
-      "IDENTIFIABILITY_GAP": 1,
-      "MISSING_DECISION_OBJECT": 1,
-      "COMPOSITION_INTERACTION": 1,
-      "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 0,
-      "NEW_CAPABILITY_QUESTION": 0,
-      "LONGITUDINAL_EMERGENCE": 0,
+      "UNEXPLAINED_BOUNDARY": 0,
       "OTHER": 0
     },
     "structurally_reviewable_by_lane": {
       "CONTRADICTION": 0,
       "CONVERGENT_FAILURE": 0,
       "ASSUMPTION_BREAK": 0,
-      "UNEXPLAINED_BOUNDARY": 1,
-      "IDENTIFIABILITY_GAP": 1,
-      "MISSING_DECISION_OBJECT": 1,
-      "COMPOSITION_INTERACTION": 1,
-      "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 0,
-      "NEW_CAPABILITY_QUESTION": 0,
-      "LONGITUDINAL_EMERGENCE": 0,
+      "UNEXPLAINED_BOUNDARY": 0,
       "OTHER": 0
     },
     "semantic_clear_by_lane": {
       "CONTRADICTION": 0,
       "CONVERGENT_FAILURE": 0,
       "ASSUMPTION_BREAK": 0,
-      "UNEXPLAINED_BOUNDARY": 1,
-      "IDENTIFIABILITY_GAP": 0,
-      "MISSING_DECISION_OBJECT": 1,
-      "COMPOSITION_INTERACTION": 0,
-      "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 0,
-      "NEW_CAPABILITY_QUESTION": 0,
-      "LONGITUDINAL_EMERGENCE": 0,
+      "UNEXPLAINED_BOUNDARY": 0,
       "OTHER": 0
     },
     "semantic_blocked_by_lane": {
@@ -127,311 +86,68 @@
       "CONVERGENT_FAILURE": 0,
       "ASSUMPTION_BREAK": 0,
       "UNEXPLAINED_BOUNDARY": 0,
-      "IDENTIFIABILITY_GAP": 1,
-      "MISSING_DECISION_OBJECT": 0,
-      "COMPOSITION_INTERACTION": 1,
-      "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 0,
-      "NEW_CAPABILITY_QUESTION": 0,
-      "LONGITUDINAL_EMERGENCE": 0,
       "OTHER": 0
     }
   },
+  "raw_artifacts": {},
+  "generation_notes": "",
   "search_diagnostics": {
     "lane_search_priority": [
       "CONTRADICTION",
       "CONVERGENT_FAILURE",
-      "ASSUMPTION_BREAK",
       "UNEXPLAINED_BOUNDARY",
-      "IDENTIFIABILITY_GAP",
-      "MISSING_DECISION_OBJECT",
-      "COMPOSITION_INTERACTION",
-      "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
-      "NEW_CAPABILITY_QUESTION",
-      "LONGITUDINAL_EMERGENCE"
+      "ASSUMPTION_BREAK"
     ],
-    "lane_search_complete": true,
-    "lane_search": [
-      {
-        "lane": "CONTRADICTION",
-        "status": "EXPANDED",
-        "raw_seed_count": 12,
-        "reason": "Staged Search Portfolio expansion produced grounded seeds."
-      },
-      {
-        "lane": "CONVERGENT_FAILURE",
-        "status": "EXPANDED",
-        "raw_seed_count": 6,
-        "reason": "Staged Search Portfolio expansion produced grounded seeds."
-      },
-      {
-        "lane": "ASSUMPTION_BREAK",
-        "status": "EXPANDED",
-        "raw_seed_count": 7,
-        "reason": "Staged Search Portfolio expansion produced grounded seeds."
-      },
-      {
-        "lane": "UNEXPLAINED_BOUNDARY",
-        "status": "EXPANDED",
-        "raw_seed_count": 12,
-        "reason": "Staged Search Portfolio expansion produced grounded seeds."
-      },
-      {
-        "lane": "IDENTIFIABILITY_GAP",
-        "status": "EXPANDED",
-        "raw_seed_count": 12,
-        "reason": "Staged Search Portfolio expansion produced grounded seeds."
-      },
-      {
-        "lane": "MISSING_DECISION_OBJECT",
-        "status": "EXPANDED",
-        "raw_seed_count": 11,
-        "reason": "Staged Search Portfolio expansion produced grounded seeds."
-      },
-      {
-        "lane": "COMPOSITION_INTERACTION",
-        "status": "EXPANDED",
-        "raw_seed_count": 12,
-        "reason": "Staged Search Portfolio expansion produced grounded seeds."
-      },
-      {
-        "lane": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
-        "status": "EXPANDED",
-        "raw_seed_count": 12,
-        "reason": "Staged Search Portfolio expansion produced grounded seeds."
-      },
-      {
-        "lane": "NEW_CAPABILITY_QUESTION",
-        "status": "EXPANDED",
-        "raw_seed_count": 12,
-        "reason": "Staged Search Portfolio expansion produced grounded seeds."
-      },
-      {
-        "lane": "LONGITUDINAL_EMERGENCE",
-        "status": "EXPANDED",
-        "raw_seed_count": 12,
-        "reason": "Staged Search Portfolio expansion produced grounded seeds."
-      }
-    ],
+    "lane_search_complete": false,
+    "lane_search": [],
     "last_completed_lane_search": {
-      "run_id": "search-portfolio-20260813-r1",
-      "generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
-      "generated_at": "2026-08-13T15:37:57+00:00",
-      "mode": "portfolio_expansion",
+      "run_id": "20260813T141222Z",
+      "generator_status": "GENERATED_ZERO_CANDIDATES",
+      "generated_at": "2026-08-13T14:12:22+00:00",
       "lane_search_priority": [
         "CONTRADICTION",
         "CONVERGENT_FAILURE",
-        "ASSUMPTION_BREAK",
         "UNEXPLAINED_BOUNDARY",
-        "IDENTIFIABILITY_GAP",
-        "MISSING_DECISION_OBJECT",
-        "COMPOSITION_INTERACTION",
-        "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
-        "NEW_CAPABILITY_QUESTION",
-        "LONGITUDINAL_EMERGENCE"
+        "ASSUMPTION_BREAK"
       ],
       "lane_search": [
         {
           "lane": "CONTRADICTION",
-          "status": "EXPANDED",
-          "raw_seed_count": 12,
-          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+          "status": "NO_PAIR",
+          "source_refs": [],
+          "reason": "No two current empirical sources share an operationalization while reporting incompatible facts. The closest pairs concern skill/memory monotonicity, but they do not use the same measured setting or directly contradict each other."
         },
         {
           "lane": "CONVERGENT_FAILURE",
-          "status": "EXPANDED",
-          "raw_seed_count": 6,
-          "reason": "Staged Search Portfolio expansion produced grounded seeds."
-        },
-        {
-          "lane": "ASSUMPTION_BREAK",
-          "status": "EXPANDED",
-          "raw_seed_count": 7,
-          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+          "status": "NO_PAIR",
+          "source_refs": [],
+          "reason": "No pair of independent method families reports quantitative failure under the same bounded operational condition with a common failure object. Existing failures are domain- or system-specific and lack a shared condition plus independent method-family basis."
         },
         {
           "lane": "UNEXPLAINED_BOUNDARY",
-          "status": "EXPANDED",
-          "raw_seed_count": 12,
-          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+          "status": "NO_PAIR",
+          "source_refs": [],
+          "reason": "No pair quantitatively establishes an anomalous boundary and an adjacent expected regime for the same measured phenomenon. Reported thresholds or phase changes come from single studies without a second source supplying the adjacent regime under shared measurement."
         },
         {
-          "lane": "IDENTIFIABILITY_GAP",
-          "status": "EXPANDED",
-          "raw_seed_count": 12,
-          "reason": "Staged Search Portfolio expansion produced grounded seeds."
-        },
-        {
-          "lane": "MISSING_DECISION_OBJECT",
-          "status": "EXPANDED",
-          "raw_seed_count": 11,
-          "reason": "Staged Search Portfolio expansion produced grounded seeds."
-        },
-        {
-          "lane": "COMPOSITION_INTERACTION",
-          "status": "EXPANDED",
-          "raw_seed_count": 12,
-          "reason": "Staged Search Portfolio expansion produced grounded seeds."
-        },
-        {
-          "lane": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
-          "status": "EXPANDED",
-          "raw_seed_count": 12,
-          "reason": "Staged Search Portfolio expansion produced grounded seeds."
-        },
-        {
-          "lane": "NEW_CAPABILITY_QUESTION",
-          "status": "EXPANDED",
-          "raw_seed_count": 12,
-          "reason": "Staged Search Portfolio expansion produced grounded seeds."
-        },
-        {
-          "lane": "LONGITUDINAL_EMERGENCE",
-          "status": "EXPANDED",
-          "raw_seed_count": 12,
-          "reason": "Staged Search Portfolio expansion produced grounded seeds."
+          "lane": "ASSUMPTION_BREAK",
+          "status": "REDUCIBLE",
+          "source_refs": [
+            "arXiv:2608.11654",
+            "arXiv:2608.11888"
+          ],
+          "reason": "The strongest grounded pair is the explicit monotonicity assumption in the formal memory framework and empirical skill-induced omissions from loaded relevant skills. It satisfies the lane contract but is already reducible to procedural-memory nonmonotonicity / belief revision and prior blocked candidates."
         }
       ],
-      "generation_notes": "Staged Search Portfolio completed all discovery-lane expansion audits.",
+      "generation_notes": "Zero candidates survive. The only lane with a contract-satisfying pair is ASSUMPTION_BREAK, but it falls in the repeatedly blocked procedural-memory-nonmonotonicity basin and is hard-vetoed by the saturation ledger.",
       "scientific_authority": false
     },
     "scientific_authority": false
   },
-  "search_portfolio": {
-    "schema_version": "1.0",
-    "frozen_pool_sha256": "b88ed5de60745f62c00239aa47c9c3c88cf1d68841d060cedee210aae1b1a398",
-    "stage_manifest_sha256": "b81a5b583a84cbce4b8dbfe3ec3b6f450f4c9b0420e71869eba666aa2ea671ac",
-    "scientific_authority": false,
-    "policy": {
-      "expansion_precedes_reduction": true,
-      "diversity_archive_precedes_quality_selection": true,
-      "qd_parent_selection": true,
-      "lane_specific_source_minimum": true,
-      "mature_theory_veto_delayed_until_formulation": true,
-      "reduction_falsifiability_contract_required": true,
-      "scheduler_rollover_cannot_change_frozen_transaction": true,
-      "automatic_method_authority": false,
-      "automatic_experiment_authority": false,
-      "automatic_p0_authority": false
-    },
-    "summary": {
-      "requested_raw_seeds": 120,
-      "raw_seeds": 108,
-      "semantic_unique": 46,
-      "duplicate_or_near_duplicate": 62,
-      "unique_problem_families": 46,
-      "breadth_archive": 46,
-      "archive_lane_coverage": 10,
-      "mean_archive_pairwise_distance": 0.8851,
-      "evolved_branches": 35,
-      "max_branch_depth": 2,
-      "formulated_candidates": 17,
-      "formulation_rejected": 7,
-      "machine_reviewable": 4,
-      "machine_reduction_blocked": 13,
-      "semantic_reviewed": 4,
-      "semantic_clear": 2,
-      "semantic_blocked": 2,
-      "problem_gate_passed": 2,
-      "paper_design_eligible": 2,
-      "generator_model_calls": 35,
-      "reviewer_model_calls": 2
-    },
-    "lane_counts": {
-      "CONTRADICTION": 12,
-      "CONVERGENT_FAILURE": 6,
-      "ASSUMPTION_BREAK": 7,
-      "UNEXPLAINED_BOUNDARY": 12,
-      "IDENTIFIABILITY_GAP": 12,
-      "MISSING_DECISION_OBJECT": 11,
-      "COMPOSITION_INTERACTION": 12,
-      "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 12,
-      "NEW_CAPABILITY_QUESTION": 12,
-      "LONGITUDINAL_EMERGENCE": 12
-    },
-    "archive_lane_counts": {
-      "CONTRADICTION": 4,
-      "CONVERGENT_FAILURE": 6,
-      "ASSUMPTION_BREAK": 7,
-      "UNEXPLAINED_BOUNDARY": 5,
-      "IDENTIFIABILITY_GAP": 4,
-      "MISSING_DECISION_OBJECT": 5,
-      "COMPOSITION_INTERACTION": 3,
-      "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 4,
-      "NEW_CAPABILITY_QUESTION": 4,
-      "LONGITUDINAL_EMERGENCE": 4
-    },
-    "archive_counts": {
-      "breadth": 46,
-      "novelty": 16,
-      "contradiction": 4,
-      "anomaly": 16,
-      "cross_domain": 4
-    },
-    "machine_blocker_counts": {
-      "reduction-falsifiability-contract-incomplete": 12,
-      "saturation-exact-reduction-pending": 21,
-      "unresolved-exact-reduction-test": 20,
-      "mature-theory-valid-hard-veto": 2
-    },
-    "passed_candidate_ids": [
-      "SP-09",
-      "SP-15"
-    ]
-  },
-  "generation_notes": "Search Portfolio: raw=108, unique=46, evolved=35, formulated=17, machine-reviewable=4, semantic-clear=2, Problem-Gate PASS=2. No Method/Experiment/P0 authority.",
-  "raw_artifacts": {
-    "generator": {
-      "sha256": "b81a5b583a84cbce4b8dbfe3ec3b6f450f4c9b0420e71869eba666aa2ea671ac",
-      "requested_model": "ark-code-latest",
-      "resolved_model": "doubao-seed-evolving",
-      "portfolio": true,
-      "calls": 35
-    },
-    "semantic_reviewer": {
-      "requested_model": "glm-5.2",
-      "resolved_model": "glm-5-2-260617",
-      "calls": 2
-    }
-  },
   "saturation_memory": {
-    "ledger_entries": 17,
+    "ledger_entries": 15,
     "prior_identical_zero_runs": 0,
-    "current_run_recorded": true,
-    "current_review_receipt": {
-      "run_id": "search-portfolio-20260813-r1",
-      "pool_sha256": "b88ed5de60745f62c00239aa47c9c3c88cf1d68841d060cedee210aae1b1a398",
-      "source_refs": [
-        "arXiv:2608.07449",
-        "arXiv:2608.08303",
-        "arXiv:2608.08466",
-        "arXiv:2608.08468",
-        "arXiv:2608.08471",
-        "arXiv:2608.08523",
-        "arXiv:2608.08640",
-        "arXiv:2608.08814",
-        "arXiv:2608.09537",
-        "arXiv:2608.09577",
-        "arXiv:2608.09629",
-        "arXiv:2608.09732",
-        "arXiv:2608.09857",
-        "arXiv:2608.10224",
-        "arXiv:2608.10494",
-        "arXiv:2608.10538",
-        "arXiv:2608.10618",
-        "arXiv:2608.10906",
-        "arXiv:2608.10915",
-        "arXiv:2608.11079",
-        "arXiv:2608.11191",
-        "arXiv:2608.11350",
-        "arXiv:2608.11654",
-        "arXiv:2608.11888"
-      ],
-      "status": "GENERATED_AWAIT_PROBLEM_GATE",
-      "requested_model": "ark-code-latest",
-      "resolved_model": "doubao-seed-evolving",
-      "raw_sha256": "b81a5b583a84cbce4b8dbfe3ec3b6f450f4c9b0420e71869eba666aa2ea671ac",
-      "scientific_authority": false
-    },
+    "current_run_recorded": false,
     "portable_review_receipts": [
       {
         "run_id": "20260813T091902Z",
@@ -1093,44 +809,8 @@
         "resolved_model": "doubao-seed-evolving",
         "raw_sha256": "da4626d8c8f34e57d21a66f5facf963d30b7069fbd640ae52352d99db4089110",
         "scientific_authority": false
-      },
-      {
-        "run_id": "search-portfolio-20260813-r1",
-        "pool_sha256": "b88ed5de60745f62c00239aa47c9c3c88cf1d68841d060cedee210aae1b1a398",
-        "source_refs": [
-          "arXiv:2608.07449",
-          "arXiv:2608.08303",
-          "arXiv:2608.08466",
-          "arXiv:2608.08468",
-          "arXiv:2608.08471",
-          "arXiv:2608.08523",
-          "arXiv:2608.08640",
-          "arXiv:2608.08814",
-          "arXiv:2608.09537",
-          "arXiv:2608.09577",
-          "arXiv:2608.09629",
-          "arXiv:2608.09732",
-          "arXiv:2608.09857",
-          "arXiv:2608.10224",
-          "arXiv:2608.10494",
-          "arXiv:2608.10538",
-          "arXiv:2608.10618",
-          "arXiv:2608.10906",
-          "arXiv:2608.10915",
-          "arXiv:2608.11079",
-          "arXiv:2608.11191",
-          "arXiv:2608.11350",
-          "arXiv:2608.11654",
-          "arXiv:2608.11888"
-        ],
-        "status": "GENERATED_AWAIT_PROBLEM_GATE",
-        "requested_model": "ark-code-latest",
-        "resolved_model": "doubao-seed-evolving",
-        "raw_sha256": "b81a5b583a84cbce4b8dbfe3ec3b6f450f4c9b0420e71869eba666aa2ea671ac",
-        "scientific_authority": false
       }
     ],
-    "portable_review_receipt_count": 16,
     "blocked_problem_memory": {
       "blocked_candidate_attempts": 11,
       "lane_contract_verified_blocks": 9,
@@ -1302,60 +982,21 @@
       ],
       "scientific_authority": false
     },
+    "scientific_authority": false,
+    "portable_review_receipt_count": 15
+  },
+  "candidates": [],
+  "primary_pool_age_hours": 0.0141,
+  "source_coverage": {
+    "coverage_exhausted": true,
+    "eligible_lane_linked_sources": 213,
+    "reviewed_lane_linked_sources": 213,
+    "unreviewed_lane_linked_sources": 0,
+    "unreviewed_no_lane_sources": 12,
     "scientific_authority": false
   },
-  "candidates": [
-    {
-      "candidate_id": "SP-08",
-      "title": "Observational equivalence of statically safe skills under exact-schema composition-dependent harm",
-      "discovery_lane": "IDENTIFIABILITY_GAP",
-      "semantic_verdict": "BLOCK",
-      "paper_design_eligible": false,
-      "authority": {
-        "method": false,
-        "experiment": false,
-        "p0": false,
-        "gpu": false
-      }
-    },
-    {
-      "candidate_id": "SP-09",
-      "title": "Model-trigger-skill-context acceptance object with a compositional-risk veto for evolved skill deployment",
-      "discovery_lane": "MISSING_DECISION_OBJECT",
-      "semantic_verdict": "CLEAR",
-      "paper_design_eligible": true,
-      "authority": {
-        "method": false,
-        "experiment": false,
-        "p0": false,
-        "gpu": false
-      }
-    },
-    {
-      "candidate_id": "SP-10",
-      "title": "Schema-compatible handoffs as the measurable boundary of scanner-invisible cross-skill malicious workflows",
-      "discovery_lane": "COMPOSITION_INTERACTION",
-      "semantic_verdict": "BLOCK",
-      "paper_design_eligible": false,
-      "authority": {
-        "method": false,
-        "experiment": false,
-        "p0": false,
-        "gpu": false
-      }
-    },
-    {
-      "candidate_id": "SP-15",
-      "title": "The explicit-procedure boundary of query-only skill retrieval",
-      "discovery_lane": "UNEXPLAINED_BOUNDARY",
-      "semantic_verdict": "CLEAR",
-      "paper_design_eligible": true,
-      "authority": {
-        "method": false,
-        "experiment": false,
-        "p0": false,
-        "gpu": false
-      }
-    }
-  ]
+  "coverage_skip_reason": "No unreviewed freshness/relevance-qualified source remains inside preregistered scientific-object lanes; generation resumes automatically when a new lane-grounded primary source appears.",
+  "status": "SKIPPED_SOURCE_COVERAGE_SATURATED",
+  "discovery_transaction_id": "e0b0e247dea1f1376cdaffbbb04f54724dc225d6776ef4058c5382c6f5b37183",
+  "discovery_transaction_role": "generator"
 }

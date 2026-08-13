@@ -143,7 +143,7 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             }
         return responder
 
-    def test_generator_prompt_exposes_ten_allowed_and_three_forbidden_lanes(self) -> None:
+    def test_generator_prompt_exposes_four_live_and_three_forbidden_lanes(self) -> None:
         records = []
         for i in range(32):
             records.append(
@@ -163,6 +163,12 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             self.assertIn(lane, prompt)
         self.assertIn("lane_evidence", prompt)
         self.assertIn("OPERATIONAL_ASSUMPTION", prompt)
+
+    def test_explicit_portfolio_mode_is_not_a_live_generator_path(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc)
+            with self.assertRaises(ValueError):
+                run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",portfolio_mode=True,now=now)
 
     def test_zero_candidates_is_valid_and_skips_reviewer(self) -> None:
         calls = []
@@ -185,6 +191,12 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertFalse(ledger["runs"][0]["scientific_authority"])
         self.assertTrue(state["policy"]["multi_lane_discovery_enabled"])
         self.assertEqual(tuple(state["policy"]["allowed_discovery_lanes"]), DISCOVERY_LANES)
+        self.assertFalse(state["policy"]["search_portfolio_enabled"])
+        self.assertTrue(state["policy"]["search_portfolio_is_shadow_only"])
+        self.assertTrue(state["policy"]["canonical_transaction_forbids_search_portfolio"])
+        self.assertTrue(state["policy"]["one_content_addressed_pool_allows_at_most_one_live_generator_call"])
+        self.assertTrue(state["policy"]["one_generator_call_max"])
+        self.assertTrue(state["policy"]["one_semantic_reviewer_call_max"])
 
     def test_identical_zero_candidate_pool_is_remembered_but_not_auto_authorized(self) -> None:
         with tempfile.TemporaryDirectory() as td:
