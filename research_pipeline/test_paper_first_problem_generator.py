@@ -364,7 +364,7 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         captured={}
         def generator(**kwargs):
             captured["prompt"]=kwargs["prompt"]
-            priority=["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"]
+            priority=[lane for lane in DISCOVERY_LANES if lane!="ASSUMPTION_BREAK"]+["ASSUMPTION_BREAK"]
             lane_search=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."} for lane in priority]
             return {"text":json.dumps({"lane_search":lane_search,"candidates":[],"generation_notes":"No lane survives."}),"resolved_model":"doubao-seed-evolving"}
         with tempfile.TemporaryDirectory() as td:
@@ -374,8 +374,9 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
                 c={"candidate_id":f"A{idx}","title":"Old assumption","discovery_lane":"ASSUMPTION_BREAK","empirical_evidence":{"source_a":{"ref":"arXiv:2608.00001"},"source_b":{"ref":"arXiv:2608.00002"}},"semantic_reduction_review":{"verdict":"BLOCK","lane_contract_verified":True,"source_claims_grounded":True,"matched_patterns":["procedural-memory-nonmonotonicity"],"strongest_reduction":"procedural-memory-nonmonotonicity"}}
                 (archive/f"auto-inbox-{idx}.json").write_text(json.dumps({"generator_run_id":f"old-{idx}","candidates":[c]}),encoding="utf-8")
             state=run_problem_generator(storage=storage,primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=generator,now=now)
-        self.assertEqual(state["search_diagnostics"]["lane_search_priority"],["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"])
-        self.assertIn('"lane_search_priority":["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"]',captured["prompt"])
+        expected=[lane for lane in DISCOVERY_LANES if lane!="ASSUMPTION_BREAK"]+["ASSUMPTION_BREAK"]
+        self.assertEqual(state["search_diagnostics"]["lane_search_priority"],expected)
+        self.assertIn('"lane_search_priority":'+json.dumps(expected,separators=(",",":")),captured["prompt"])
 
     def test_stale_pool_makes_zero_api_calls(self) -> None:
         calls = []

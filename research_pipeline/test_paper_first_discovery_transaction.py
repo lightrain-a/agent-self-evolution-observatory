@@ -9,6 +9,7 @@ from types import SimpleNamespace
 
 from .config import StorageSettings
 from .paper_first_discovery_transaction import _validate, write_problem_discovery_transaction
+from .paper_first_problem_discovery_contract import DISCOVERY_LANES
 
 
 class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
@@ -48,7 +49,7 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         return SimpleNamespace(status_code=200,text=f'<meta name="citation_title" content="{titles[idx-1]}"><blockquote class="abstract mathjax">Abstract: Verified primary evidence for self-evolving agents and persistent adaptation {idx}.</blockquote>')
 
     def generator(self, *, prompt: str, model: str, max_output_tokens: int):
-        lane_search=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No current pair survives this lane search."} for lane in ("CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY")]
+        lane_search=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No current pair survives this lane search."} for lane in DISCOVERY_LANES]
         return {"text":json.dumps({"lane_search":lane_search,"candidates":[],"generation_notes":"No evidence-first discovery lane survives the current same-information and mature-theory vetoes."}),"resolved_model":"doubao-seed-evolving"}
 
     def targets(self, root: Path):
