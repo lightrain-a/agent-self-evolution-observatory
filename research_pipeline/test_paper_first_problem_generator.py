@@ -6,7 +6,7 @@ from pathlib import Path
 
 from .config import StorageSettings
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import run_problem_generator
+from .paper_first_problem_generator import run_problem_generator, write_problem_generator_state
 
 
 class PaperFirstProblemGeneratorTest(unittest.TestCase):
@@ -38,6 +38,14 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             state=run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=auto,generator_responder=self.gen([]),reviewer_responder=reviewer,now=now)
             inbox=json.loads(auto.read_text())
         self.assertEqual(state["status"],"GENERATED_ZERO_CANDIDATES");self.assertEqual(calls,[]);self.assertEqual(inbox["candidates"],[])
+
+    def test_public_writer_redacts_private_paths_but_keeps_raw_provenance(self)->None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);json_path=root/"public.json";js_path=root/"public.js"
+            internal=write_problem_generator_state(json_path=json_path,js_path=js_path,storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=self.gen([]),now=now)
+            public=json.loads(json_path.read_text())
+        self.assertIn("primary_pool_path",internal);self.assertNotIn("primary_pool_path",public);self.assertNotIn("auto_inbox_path",public);self.assertNotIn("archived_previous_auto_inbox",public)
+        self.assertNotIn("path",public["raw_artifacts"]["generator"]);self.assertEqual(public["raw_artifacts"]["generator"]["sha256"],internal["raw_artifacts"]["generator"]["sha256"])
 
     def test_stale_pool_makes_zero_api_calls(self)->None:
         calls=[]

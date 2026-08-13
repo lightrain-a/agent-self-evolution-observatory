@@ -21231,8 +21231,6 @@
   "paper_first_primary_evidence": {
     "schema_version": "1.0",
     "generated_at": "2026-08-13T07:02:29+00:00",
-    "corpus_path": "/home/wyt/code/agent-self-evolution-observatory-problem-generator-20260813/generated/research-data/corpora/semantic-scholar-corpus.json",
-    "private_pool_path": "/home/wyt/code/agent-self-evolution-observatory-problem-generator-20260813/generated/research-data/paper-first-problem-discovery/primary-evidence-pool.json",
     "policy": {
       "semantic_scholar_is_discovery_metadata_not_primary_evidence": true,
       "verified_primary_page_required": true,
@@ -21610,9 +21608,6 @@
     "schema_version": "1.1",
     "generated_at": "2026-08-13T07:05:35+00:00",
     "run_id": "20260813T070535Z",
-    "primary_pool_path": "/home/wyt/code/agent-self-evolution-observatory-problem-generator-20260813/generated/research-data/paper-first-problem-discovery/primary-evidence-pool.json",
-    "auto_inbox_path": "/home/wyt/code/agent-self-evolution-observatory-problem-generator-20260813/generated/research-data/paper-first-problem-discovery/auto-candidate-inbox.json",
-    "archived_previous_auto_inbox": "/home/wyt/code/agent-self-evolution-observatory-problem-generator-20260813/generated/research-data/paper-first-problem-discovery/archive/auto-inbox-49fbf413a80d87a6.json",
     "generator_model": "ark-code-latest",
     "reviewer_model": "glm-5.2",
     "policy": {
@@ -21641,7 +21636,6 @@
     },
     "raw_artifacts": {
       "generator": {
-        "path": "/home/wyt/code/agent-self-evolution-observatory-problem-generator-20260813/generated/research-data/paper-first-problem-discovery/raw-generations/20260813T070535Z-generator-ark-code-latest-13fd2aa117f2.txt",
         "sha256": "13fd2aa117f24d20b42ec53cfc9772309a1e60962c14966c8e74b5e7cb834d76",
         "requested_model": "ark-code-latest",
         "resolved_model": "doubao-seed-evolving"
