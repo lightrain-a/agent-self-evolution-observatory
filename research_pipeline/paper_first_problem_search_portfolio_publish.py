@@ -25,7 +25,7 @@ def rows(root,pattern,key):
 
 def manifest_sha(root):
     pairs=[]
-    for pattern in ('expand-*.json','error-expand-*.json','evolve-*.json','error-evolve-*.json','formulate-p*.json','error-formulate-*.json','review-p*.json','error-review-*.json','machine-audit.json','shadow-final-audit.json','shadow-terminal-current-source-gate.json','post-review-current-source-audit.json','frozen-primary-evidence-pool.json'):
+    for pattern in ('expand-*.json','error-expand-*.json','evolve-*.json','error-evolve-*.json','formulate-p*.json','error-formulate-*.json','review-p*.json','error-review-*.json','machine-audit.json','shadow-final-audit.json','shadow-terminal-current-source-gate.json','post-review-current-source-audit.json','current-source-receipt-*.json','problem-falsifier-preflight.json','frozen-primary-evidence-pool.json'):
         for path in sorted(root.glob(pattern)): pairs.append((path.name,hashlib.sha256(path.read_bytes()).hexdigest()))
     return hashlib.sha256(json.dumps(pairs,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
@@ -33,9 +33,19 @@ def _latest_shadow_run(root:Path)->dict:
     base=load(root/'base.json'); frozen=load(root/'frozen-primary-evidence-pool.json'); machine=load(root/'machine-audit.json')
     final=load(root/'shadow-final-audit.json'); terminal=load(root/'shadow-terminal-current-source-gate.json')
     reviewed=rows(root,'review-p*.json','candidates'); evolved=rows(root,'evolve-*.json','children')
-    formulated=rejected=0
-    for path in root.glob('formulate-p*.json'):
-        payload=load(path);formulated+=len(payload.get('candidates') or []);rejected+=len(payload.get('rejected') or [])
+    formulated=rejected=successful_formulation_branches=0
+    formulation_paths=list(root.glob('formulate-p*.json'))
+    formulation_error_paths=list(root.glob('error-formulate-*.json'))
+    for path in formulation_paths:
+        payload=load(path);formulated+=len(payload.get('candidates') or []);rejected+=len(payload.get('rejected') or []);successful_formulation_branches+=len(payload.get('branch_ids') or [])
+    formulation_errors=[load(path) for path in formulation_error_paths]
+    formulation_provider_failures=sum(str(row.get('status') or '').startswith('PROVIDER_') for row in formulation_errors)
+    formulation_parse_failures=sum(str(row.get('status') or '')=='PARSE_ERROR_ZERO_AUTHORITY' for row in formulation_errors)
+    formulation_censored_branches=sum(len(row.get('branch_ids') or []) for row in formulation_errors)
+    formulation_requested_shards=12
+    formulation_requested_branches=24
+    falsifier_preflight=load(root/'problem-falsifier-preflight.json') if (root/'problem-falsifier-preflight.json').exists() else {}
+    falsifier_summary=falsifier_preflight.get('summary') or {}
     bs=base.get('summary') or {};archives=base.get('archives') or {};by_id={r.get('seed_id'):r for r in base.get('unique_seeds') or [] if r.get('seed_id')}
     breadth=[by_id[s] for s in archives.get('breadth') or [] if s in by_id];distances=[1-_jaccard(breadth[i],breadth[j]) for i in range(len(breadth)) for j in range(i+1,len(breadth))]
     semantic_clear=[c for c in reviewed if (c.get('semantic_reduction_review') or {}).get('verdict')=='CLEAR']
@@ -48,9 +58,60 @@ def _latest_shadow_run(root:Path)->dict:
         evidence_refs=sorted({str((candidate.get('empirical_evidence') or {}).get(key,{}).get('ref') or '') for key in ('source_a','source_b') if str((candidate.get('empirical_evidence') or {}).get(key,{}).get('ref') or '').startswith('arXiv:')})
         candidate_rows.append({'candidate_id':cid,'title':str(row.get('title') or ''),'search_primitive':str(row.get('search_primitive') or ''),'semantic_shadow_clear':row.get('shadow_clear') is True,'semantic_verdict':str(semantic.get('verdict') or ''),'semantic_reduction_class':str(semantic.get('reduction_class') or ''),'semantic_matched_patterns':sorted({str(value) for value in semantic.get('matched_patterns') or [] if str(value)}),'semantic_strongest_reduction':' '.join(str(semantic.get('strongest_reduction') or '').split())[:800],'semantic_exact_reduction_test':' '.join(str(semantic.get('exact_reduction_test') or '').split())[:1200],'semantic_reason':' '.join(str(semantic.get('reason') or '').split())[:1200],'semantic_lane_contract_verified':semantic.get('lane_contract_verified') is True,'semantic_lane_contract_reason':' '.join(str(semantic.get('lane_contract_reason') or '').split())[:1000],'semantic_source_refs':evidence_refs,'semantic_source_claims':[str(((candidate.get('empirical_evidence') or {}).get(key) or {}).get('claim') or '')[:1200] for key in ('source_a','source_b')],'semantic_problem_text':' '.join(str(candidate.get(key) or '') for key in ('title','irreducible_object','exact_prediction'))[:2400],'current_source_status':str(current.get('status') or ''),'current_source_verdict':str(current.get('verdict') or ''),'current_source_reduction_class':str(current.get('reduction_class') or ''),'current_source_strongest_reduction':' '.join(str(current.get('strongest_reduction') or '').split())[:800],'current_source_reason':' '.join(str(current.get('reason') or '').split())[:1200],'current_source_source_refs':current_sources,'terminal_shadow_clear':term.get('terminal_shadow_clear') is True,'live_problem_gate_compatible':term.get('live_problem_gate_compatible') is True,'paper_design_eligible':False,'scientific_authority':False,'authority':{'method':False,'experiment':False,'p0':False,'gpu':False}})
     t=terminal.get('summary') or {};m=machine.get('summary') or {};run_id=root.name
-    expansion_successful=len(list(root.glob('expand-*-p*.json')));expansion_parse_failures=len(list(root.glob('error-expand-*.json')));expansion_requested_shards=20
-    generator_calls=expansion_successful+expansion_parse_failures+len(list(root.glob('evolve-*.json')))+len(list(root.glob('formulate-p*.json')))
-    return {'schema_version':'1.0-shadow-run','run_id':run_id,'status':str(terminal.get('status') or 'SHADOW_TERMINAL_INCOMPLETE_CURRENT_SOURCE_REVIEW'),'generated_at':now(),'frozen_pool_sha256':frozen.get('frozen_pool_sha256'),'stage_manifest_sha256':manifest_sha(root),'scientific_authority':False,'policy':{'shadow_only':True,'canonical_primary_generator_queue_untouched':True,'live_source_coverage_effect':False,'fresh_primary_evidence_is_candidate_source_only':True,'current_source_web_receipt_required_after_semantic_clear':True,'missing_or_failed_current_source_reviewer_is_not_pass':True,'terminal_shadow_survivor_is_not_live_problem_gate_pass':True,'cannot_grant_live_paper_design_eligibility':True,'automatic_method_authority':False,'automatic_experiment_authority':False,'automatic_p0_authority':False,'automatic_gpu_authority':False},'summary':{'requested_raw_seeds':120,'expansion_requested_shards':expansion_requested_shards,'expansion_successful_shards':expansion_successful,'expansion_parse_failures':expansion_parse_failures,'raw_seeds':int(bs.get('raw_seeds') or 0),'semantic_dead_end_blocks':int(bs.get('semantic_dead_end_blocks') or 0),'semantic_unique':int(bs.get('semantic_unique') or 0),'duplicate_or_near_duplicate':int(bs.get('semantic_duplicates') or 0),'unique_problem_families':int(bs.get('structural_clusters') or 0),'breadth_archive':int(bs.get('breadth_archive') or 0),'archive_lane_coverage':int(bs.get('archive_lane_coverage') or 0),'mean_archive_pairwise_distance':round(sum(distances)/len(distances),4) if distances else 0.0,'evolved_branches':len(evolved),'max_branch_depth':max([int(x.get('branch_depth') or 0) for x in evolved] or [0]),'formulated_candidates':formulated,'formulation_rejected':rejected,'machine_reviewable':int(m.get('reviewable') or 0),'machine_reduction_blocked':int(m.get('blocked') or 0),'semantic_reviewed':len(reviewed),'semantic_clear':len(semantic_clear),'semantic_blocked':len(reviewed)-len(semantic_clear),'current_source_reviewed':int(t.get('current_source_clear') or 0)+int(t.get('current_source_blocked') or 0),'current_source_clear':int(t.get('current_source_clear') or 0),'current_source_blocked':int(t.get('current_source_blocked') or 0),'current_source_missing':int(t.get('current_source_missing') or 0),'terminal_shadow_survivors':int(t.get('terminal_shadow_survivors') or 0),'live_problem_gate_compatible_survivors':int(t.get('live_problem_gate_compatible_survivors') or 0),'live_paper_design_eligible':0,'generator_model_calls':generator_calls,'reviewer_model_calls':len(list(root.glob('review-p*.json'))),'current_source_review_receipts':int(t.get('current_source_clear') or 0)+int(t.get('current_source_blocked') or 0)},'lane_counts':dict(base.get('lane_counts') or {}),'archive_lane_counts':dict(base.get('archive_lane_counts') or {}),'machine_blocker_counts':dict(Counter(v.split(':',1)[0] for row in machine.get('blocked') or [] for v in row.get('blockers') or [])),'candidates':candidate_rows,'authority':{'live_problem_gate':False,'paper_design':False,'method':False,'experiment':False,'p0':False,'gpu':False}}
+    expansion_successful=len(list(root.glob('expand-*-p*.json')));expansion_error_rows=[load(path) for path in root.glob('error-expand-*.json')];expansion_errors=len(expansion_error_rows);expansion_requested_shards=20
+    expansion_parse_failures=sum(str(row.get('status') or '')=='PARSE_ERROR_ZERO_AUTHORITY' for row in expansion_error_rows)
+    expansion_provider_failures=sum(str(row.get('status') or '').startswith('PROVIDER_') for row in expansion_error_rows)
+    evolution_calls=len(list(root.glob('evolve-*.json')))+len(list(root.glob('error-evolve-*.json')))
+    formulation_calls=len(formulation_paths)+len(formulation_error_paths)
+    generator_calls=expansion_successful+expansion_errors+evolution_calls+formulation_calls
+    reviewer_calls=len(list(root.glob('review-p*.json')))+len(list(root.glob('error-review-*.json')))
+    summary={
+        'requested_raw_seeds':120,
+        'expansion_requested_shards':expansion_requested_shards,
+        'expansion_successful_shards':expansion_successful,
+        'expansion_execution_failures':expansion_errors,
+        'expansion_parse_failures':expansion_parse_failures,
+        'expansion_provider_failures':expansion_provider_failures,
+        'raw_seeds':int(bs.get('raw_seeds') or 0),
+        'semantic_dead_end_blocks':int(bs.get('semantic_dead_end_blocks') or 0),
+        'semantic_unique':int(bs.get('semantic_unique') or 0),
+        'duplicate_or_near_duplicate':int(bs.get('semantic_duplicates') or 0),
+        'unique_problem_families':int(bs.get('structural_clusters') or 0),
+        'breadth_archive':int(bs.get('breadth_archive') or 0),
+        'archive_lane_coverage':int(bs.get('archive_lane_coverage') or 0),
+        'mean_archive_pairwise_distance':round(sum(distances)/len(distances),4) if distances else 0.0,
+        'evolved_branches':len(evolved),
+        'max_branch_depth':max([int(x.get('branch_depth') or 0) for x in evolved] or [0]),
+        'formulation_requested_shards':formulation_requested_shards,
+        'formulation_successful_shards':len(formulation_paths),
+        'formulation_provider_failures':formulation_provider_failures,
+        'formulation_parse_failures':formulation_parse_failures,
+        'formulation_requested_branches':formulation_requested_branches,
+        'formulation_successful_branches':successful_formulation_branches,
+        'formulation_execution_censored_branches':formulation_censored_branches,
+        'formulated_candidates':formulated,
+        'formulation_rejected':rejected,
+        'machine_reviewable':int(m.get('reviewable') or 0),
+        'machine_reduction_blocked':int(m.get('blocked') or 0),
+        'problem_falsifier_eligible':int(m.get('problem_falsifier_eligible') or 0),
+        'problem_falsifier_support_qualified':int(falsifier_summary.get('support_qualified') or 0),
+        'problem_falsifier_hold_support_unavailable':int(falsifier_summary.get('hold_support_unavailable') or 0),
+        'problem_falsifier_executed':int(falsifier_summary.get('falsifier_executed') or 0),
+        'semantic_reviewed':len(reviewed),
+        'semantic_clear':len(semantic_clear),
+        'semantic_blocked':len(reviewed)-len(semantic_clear),
+        'current_source_reviewed':int(t.get('current_source_clear') or 0)+int(t.get('current_source_blocked') or 0),
+        'current_source_clear':int(t.get('current_source_clear') or 0),
+        'current_source_blocked':int(t.get('current_source_blocked') or 0),
+        'current_source_missing':int(t.get('current_source_missing') or 0),
+        'terminal_shadow_survivors':int(t.get('terminal_shadow_survivors') or 0),
+        'live_problem_gate_compatible_survivors':int(t.get('live_problem_gate_compatible_survivors') or 0),
+        'live_paper_design_eligible':0,
+        'generator_model_calls':generator_calls,
+        'reviewer_model_calls':reviewer_calls,
+        'current_source_review_receipts':int(t.get('current_source_clear') or 0)+int(t.get('current_source_blocked') or 0),
+    }
+    return {'schema_version':'1.1-shadow-run','run_id':run_id,'status':str(terminal.get('status') or 'SHADOW_TERMINAL_INCOMPLETE_CURRENT_SOURCE_REVIEW'),'generated_at':now(),'frozen_pool_sha256':frozen.get('frozen_pool_sha256'),'stage_manifest_sha256':manifest_sha(root),'scientific_authority':False,'policy':{'shadow_only':True,'canonical_primary_generator_queue_untouched':True,'live_source_coverage_effect':False,'fresh_primary_evidence_is_candidate_source_only':True,'execution_loss_is_not_scientific_negative':True,'problem_falsifier_hold_is_not_scientific_fail':True,'current_source_web_receipt_required_after_semantic_clear':True,'missing_or_failed_current_source_reviewer_is_not_pass':True,'terminal_shadow_survivor_is_not_live_problem_gate_pass':True,'cannot_grant_live_paper_design_eligibility':True,'automatic_method_authority':False,'automatic_experiment_authority':False,'automatic_p0_authority':False,'automatic_gpu_authority':False},'summary':summary,'lane_counts':dict(base.get('lane_counts') or {}),'archive_lane_counts':dict(base.get('archive_lane_counts') or {}),'machine_blocker_counts':dict(Counter(v.split(':',1)[0] for row in machine.get('blocked') or [] for v in row.get('blockers') or [])),'candidates':candidate_rows,'authority':{'live_problem_gate':False,'paper_design':False,'method':False,'experiment':False,'p0':False,'gpu':False}}
 
 def publish_latest_run(root:Path):
     latest=_latest_shadow_run(root)
