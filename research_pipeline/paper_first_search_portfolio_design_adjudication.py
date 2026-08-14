@@ -139,9 +139,24 @@ BASE_SHADOW_DEAD_END_MEMORY = {
 }
 
 
-def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None) -> dict[str, Any]:
+def _prior_current_source_hard_veto_rows(path: Path = DEFAULT_JSON) -> list[dict[str, Any]]:
+    prior = _load_json(path)
+    memory = prior.get("shadow_dead_end_memory") or {}
+    rows = []
+    for row in memory.get("blocked_objects") or []:
+        if not isinstance(row, dict) or not str(row.get("basin") or "").startswith("current-source-hard-veto-"):
+            continue
+        if row.get("scientific_authority") is not False or not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip():
+            continue
+        rows.append(dict(row))
+    return rows
+
+
+def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None, prior_hard_veto_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     memory = json.loads(json.dumps(BASE_SHADOW_DEAD_END_MEMORY, ensure_ascii=False))
     latest = portfolio.get("latest_run") or {}
+    inherited = _prior_current_source_hard_veto_rows() if prior_hard_veto_rows is None else [dict(row) for row in prior_hard_veto_rows if isinstance(row, dict)]
+    hard_by_basin = {str(row.get("basin")): row for row in inherited if str(row.get("basin") or "").startswith("current-source-hard-veto-") and row.get("scientific_authority") is False}
     added = 0
     for row in latest.get("candidates") or []:
         if not isinstance(row, dict):
@@ -157,7 +172,7 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
         primitive = str(row.get("search_primitive") or "").strip()
         title = " ".join(str(row.get("title") or "").split())[:300]
         signature = hashlib.sha256(json.dumps({"strongest_reduction": strongest, "source_refs": refs}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
-        memory["blocked_objects"].append({
+        hard_by_basin[f"current-source-hard-veto-{signature}"] = {
             "source_candidate_id": candidate_id,
             "basin": f"current-source-hard-veto-{signature}",
             "search_primitive": primitive,
@@ -171,13 +186,17 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
             "reason": reason,
             "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that remains non-reducible after explicitly instrumenting the omitted retrieval/compilation/execution variable identified by the current-source review; renaming the pipeline stages or dropping that variable from the log does not reopen the basin.",
             "scientific_authority": False,
-        })
+        }
         added += 1
+    hard_rows = [hard_by_basin[key] for key in sorted(hard_by_basin)]
+    memory["blocked_objects"].extend(hard_rows)
     near_miss_state = near_miss_state or build_shadow_near_miss_preflight()
     near_miss_rows = compile_shadow_dead_end_rows(near_miss_state)
     memory["blocked_objects"].extend(near_miss_rows)
-    memory["memory_id"] = "shadow-paper-design-dead-ends-20260814-r2-current-source-near-miss"
-    memory["current_source_hard_veto_count"] = added
+    memory["memory_id"] = "shadow-paper-design-dead-ends-persistent-current-source-near-miss"
+    memory["current_source_hard_veto_count"] = len(hard_rows)
+    memory["current_source_hard_veto_added_from_latest_run"] = added
+    memory["current_source_hard_veto_inherited"] = max(0, len(hard_rows) - added)
     memory["near_miss_preflight_count"] = len(near_miss_rows)
     memory["scientific_authority"] = False
     return memory
@@ -325,6 +344,7 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "shadow_queue_has_zero_paper_design_authority": True,
             "cannot_grant_or_revoke_live_paper_design_authority": True,
             "counterfactual_problem_gate_pass_only_triggers_retrospective_collision_audit": True,
+            "current_source_hard_veto_memory_persists_across_shadow_runs": True,
             "current_primary_source_collision_review_required": True,
             "same_information_reduction_required_before_method_design": True,
             "failed_or_missing_ai_reviewer_is_not_pass": True,
@@ -355,6 +375,8 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "support_inventory_required": counts.get("REVISE_PAPER_PROBLEM_SUPPORT_INVENTORY_REQUIRED", 0),
             "shadow_dead_end_objects": len(dead_end_memory.get("blocked_objects") or []),
             "current_source_hard_veto_dead_ends": int(dead_end_memory.get("current_source_hard_veto_count") or 0),
+            "current_source_hard_veto_added_from_latest_run": int(dead_end_memory.get("current_source_hard_veto_added_from_latest_run") or 0),
+            "current_source_hard_veto_inherited": int(dead_end_memory.get("current_source_hard_veto_inherited") or 0),
             "near_miss_preflight_dead_ends": int(dead_end_memory.get("near_miss_preflight_count") or 0),
             "near_miss_support_holds": int((near_miss_preflight.get("summary") or {}).get("support_holds") or 0),
             "near_miss_current_primary_stops": int((near_miss_preflight.get("summary") or {}).get("current_primary_stops") or 0),
@@ -385,7 +407,7 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
         errors.append("SP design adjudication cannot authorize downstream work")
     if policy.get("this_is_a_substate_not_a_new_backend_component") is not True or policy.get("paper_problem_support_inventory_precedes_method_design_when_identifiability_is_claimed") is not True:
         errors.append("SP design must remain a Paper Design substate and gate identifiability on support inventory")
-    if policy.get("source_is_shadow_search_portfolio") is not True or policy.get("shadow_queue_has_zero_paper_design_authority") is not True or policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True:
+    if policy.get("source_is_shadow_search_portfolio") is not True or policy.get("shadow_queue_has_zero_paper_design_authority") is not True or policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True or policy.get("current_source_hard_veto_memory_persists_across_shadow_runs") is not True:
         errors.append("SP design audit must remain retrospective shadow feedback with zero live Paper Design authority")
     if (state.get("advisory_consultation") or {}).get("scientific_authority") is not False or (state.get("advisory_consultation") or {}).get("failed_or_missing_review_is_not_pass") is not True:
         errors.append("unavailable AI premortem reviewers must remain zero-authority and cannot count as PASS")
@@ -393,8 +415,8 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
     if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True or not {"SP-09","SP-15"}.issubset(blocked_ids):
         errors.append("Paper Design dead-end memory must remain shadow-only and retain both SP-09/SP-15 basins")
     dynamic=[row for row in blocked_objects if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
-    if int(memory.get("current_source_hard_veto_count") or 0)!=len(dynamic) or any(not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip() or row.get("scientific_authority") is not False for row in dynamic):
-        errors.append("current-source hard vetoes must compile into bounded zero-authority shadow dead-end fingerprints")
+    if int(memory.get("current_source_hard_veto_count") or 0)!=len(dynamic) or int(memory.get("current_source_hard_veto_added_from_latest_run") or 0)+int(memory.get("current_source_hard_veto_inherited") or 0)!=len(dynamic) or any(not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip() or row.get("scientific_authority") is not False for row in dynamic):
+        errors.append("current-source hard vetoes must persist as bounded zero-authority shadow dead-end fingerprints")
     near_miss=state.get("shadow_near_miss_preflight") or {}; near_rows=[row for row in blocked_objects if str(row.get("basin") or "").startswith("near-miss-")]
     if int(memory.get("near_miss_preflight_count") or 0)!=len(near_rows) or int((near_miss.get("summary") or {}).get("receipts") or 0)!=len(near_rows) or any(row.get("scientific_authority") is not False or not str(row.get("reopen_only_if") or "").strip() for row in near_rows):
         errors.append("near-miss preflight receipts must compile into bounded zero-authority shadow dead-end fingerprints")

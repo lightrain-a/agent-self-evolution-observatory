@@ -61,7 +61,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
             self.assertFalse(rows[cid]["scientific_authority"])
 
     def test_current_source_hard_veto_compiles_into_future_shadow_search_memory(self) -> None:
-        memory=_shadow_dead_end_memory({"latest_run":{"candidates":[{"candidate_id":"SHADOW-X","title":"Retrieval attribution gap","search_primitive":"IDENTIFIABILITY_GAP","current_source_status":"complete","current_source_verdict":"BLOCK","current_source_reduction_class":"VALID_HARD_VETO","current_source_strongest_reduction":"generic identifiability over an omitted compiled-context variable","current_source_reason":"Current primary work already exposes retrieval and compilation as separate pipeline objects.","current_source_source_refs":["arXiv:2605.10114","arXiv:2608.05604"]}]}})
+        memory=_shadow_dead_end_memory({"latest_run":{"candidates":[{"candidate_id":"SHADOW-X","title":"Retrieval attribution gap","search_primitive":"IDENTIFIABILITY_GAP","current_source_status":"complete","current_source_verdict":"BLOCK","current_source_reduction_class":"VALID_HARD_VETO","current_source_strongest_reduction":"generic identifiability over an omitted compiled-context variable","current_source_reason":"Current primary work already exposes retrieval and compilation as separate pipeline objects.","current_source_source_refs":["arXiv:2605.10114","arXiv:2608.05604"]}]}},prior_hard_veto_rows=[])
         dynamic=[row for row in memory["blocked_objects"] if row["source_candidate_id"]=="SHADOW-X"]
         self.assertEqual(len(dynamic),1)
         self.assertEqual(memory["current_source_hard_veto_count"],1)
@@ -70,6 +70,16 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(dynamic[0]["current_source_refs"],["arXiv:2605.10114","arXiv:2608.05604"])
         self.assertFalse(dynamic[0]["scientific_authority"])
         self.assertIn("instrumenting",dynamic[0]["reopen_only_if"])
+
+    def test_current_source_hard_veto_persists_when_latest_run_has_no_clear_candidate(self) -> None:
+        prior={"source_candidate_id":"SHADOW-OLD","basin":"current-source-hard-veto-deadbeefdeadbeef","search_primitive":"IDENTIFIABILITY_GAP","avoid":["old basin"],"strongest_reduction":"generic identifiability over explicit compiled context","current_source_refs":["arXiv:2605.10114"],"reason":"older current-source review blocked it","reopen_only_if":"new same-information residual survives explicit instrumentation","scientific_authority":False}
+        memory=_shadow_dead_end_memory({"latest_run":{"candidates":[]}},prior_hard_veto_rows=[prior])
+        rows=[row for row in memory["blocked_objects"] if row.get("basin")==prior["basin"]]
+        self.assertEqual(len(rows),1)
+        self.assertEqual(memory["current_source_hard_veto_count"],1)
+        self.assertEqual(memory["current_source_hard_veto_added_from_latest_run"],0)
+        self.assertEqual(memory["current_source_hard_veto_inherited"],1)
+        self.assertFalse(rows[0]["scientific_authority"])
 
     def test_missing_domestic_reviewers_are_recorded_as_missing_not_pass(self) -> None:
         consultation = self.state["advisory_consultation"]
