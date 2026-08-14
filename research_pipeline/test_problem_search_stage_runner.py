@@ -129,6 +129,20 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         self.assertEqual(artifact["semantic_dead_end_block_count"],1)
         self.assertEqual(artifact["semantic_dead_end_blocks"][0]["source_candidate_id"],"R3-LANE")
 
+    def test_problem_falsifier_route_accepts_only_exact_reduction_uncertainty(self) -> None:
+        candidate={"exact_prediction":"matched prediction","strongest_same_information_baseline":"procedural-memory nonmonotonicity","cheapest_problem_falsifier":"run one matched retrieval-set intervention"}
+        eligible={"passed":False,"blockers":["reduction-falsifiability-contract-incomplete","saturation-exact-reduction-pending:procedural-memory-nonmonotonicity","unresolved-exact-reduction-test:1"]}
+        self.assertTrue(runner._problem_falsifier_eligible(candidate,eligible))
+        closest={"passed":False,"blockers":["closest-work-collision","unresolved-exact-reduction-test:1"]}
+        self.assertFalse(runner._problem_falsifier_eligible(candidate,closest))
+        invalid={"passed":False,"blockers":["invalid-saturation-scan-entry:x","unresolved-exact-reduction-test:1"]}
+        self.assertFalse(runner._problem_falsifier_eligible(candidate,invalid))
+
+    def test_problem_falsifier_route_requires_concrete_prediction_baseline_and_falsifier(self) -> None:
+        audit={"passed":False,"blockers":["reduction-falsifiability-contract-incomplete","unresolved-exact-reduction-test:1"]}
+        self.assertFalse(runner._problem_falsifier_eligible({"exact_prediction":"x","strongest_same_information_baseline":"y","cheapest_problem_falsifier":""},audit))
+        self.assertFalse(runner._problem_falsifier_eligible({"exact_prediction":"x","strongest_same_information_baseline":"","cheapest_problem_falsifier":"z"},audit))
+
     def test_malformed_model_output_is_archived_before_parse_failure(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

@@ -155,20 +155,34 @@ def formulate(*,pool:Path,run_root:Path,part:int,batch_size:int=2,budget:int=24,
     return {"part":part,"branches":len(batch),"candidates":len(normalized),"rejected":len(dead),"resolved_model":out["resolved_model"],"raw_sha256":out["raw_sha256"]}
 
 
+_PROBLEM_FALSIFIER_ONLY_BLOCKERS=("reduction-falsifiability-contract-incomplete","saturation-exact-reduction-pending:","unresolved-exact-reduction-test:")
+
+
+def _problem_falsifier_eligible(candidate:dict,audit:dict)->bool:
+    blockers=[str(value) for value in audit.get("blockers") or []]
+    if not blockers or audit.get("passed") is True:return False
+    if not all(any(blocker.startswith(prefix) for prefix in _PROBLEM_FALSIFIER_ONLY_BLOCKERS) for blocker in blockers):return False
+    if not any(blocker.startswith(("saturation-exact-reduction-pending:","unresolved-exact-reduction-test:")) for blocker in blockers):return False
+    return all(str(candidate.get(key) or "").strip() for key in ("exact_prediction","strongest_same_information_baseline","cheapest_problem_falsifier"))
+
+
 def machine_audit(*,pool:Path,run_root:Path)->dict:
     records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")}
-    reviewable=[];blocked=[];formulated=0
+    reviewable=[];blocked=[];problem_falsifier_queue=[];formulated=0
     for path in sorted(run_root.glob("formulate-p*.json"),key=lambda value:int(value.stem.split("p")[-1])):
         payload=json.loads(path.read_text(encoding="utf-8"));part=int(payload.get("part") or path.stem.split("p")[-1])
         for idx,item in enumerate(payload.get("candidates") or [],1):
             if not isinstance(item,dict):continue
             formulated+=1;raw_candidate=dict(item);model_id=str(raw_candidate.get("model_candidate_id") or raw_candidate.get("candidate_id") or "").strip();raw_candidate["model_candidate_id"]=model_id;raw_candidate["candidate_id"]=f"SHADOW-P{part:02d}-C{idx:02d}"
             candidate=_normalize(raw_candidate,registry);audit=audit_shadow_problem_candidate(candidate,primary_evidence_by_ref=registry,require_primary_registry=True,require_semantic_review=False)
-            row={"candidate_id":candidate["candidate_id"],"model_candidate_id":model_id,"source_artifact":path.name,"candidate":candidate,"audit":audit}
+            falsifier_eligible=_problem_falsifier_eligible(candidate,audit)
+            row={"candidate_id":candidate["candidate_id"],"model_candidate_id":model_id,"source_artifact":path.name,"candidate":candidate,"audit":audit,"problem_falsifier_eligible":falsifier_eligible}
             (reviewable if audit.get("passed") else blocked).append(row)
+            if falsifier_eligible:
+                problem_falsifier_queue.append({"candidate_id":candidate["candidate_id"],"title":candidate.get("title"),"discovery_lane":candidate.get("discovery_lane"),"blockers":list(audit.get("blockers") or []),"exact_prediction":candidate.get("exact_prediction"),"strongest_same_information_baseline":candidate.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":candidate.get("cheapest_problem_falsifier"),"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}})
     ids=[row["candidate_id"] for row in reviewable+blocked]
     if len(ids)!=len(set(ids)):raise ValueError("shadow machine audit candidate ids must be unique")
-    out={"schema_version":"1.0-shadow","summary":{"formulated":formulated,"reviewable":len(reviewable),"blocked":len(blocked),"live_problem_gate_eligible":0},"reviewable":reviewable,"blocked":blocked,"scientific_authority":False,"authority":{"live_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+    out={"schema_version":"1.1-shadow","summary":{"formulated":formulated,"reviewable":len(reviewable),"blocked":len(blocked),"problem_falsifier_eligible":len(problem_falsifier_queue),"live_problem_gate_eligible":0},"policy":{"problem_falsifier_route_is_zero_authority":True,"only_exact_reduction_uncertainty_can_enter_problem_falsifier_route":True,"closest_work_lane_provenance_or_schema_failures_cannot_enter_problem_falsifier_route":True,"problem_falsifier_route_cannot_authorize_paper_design_method_experiment_p0_or_gpu":True},"reviewable":reviewable,"blocked":blocked,"problem_falsifier_queue":problem_falsifier_queue,"scientific_authority":False,"authority":{"live_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
     (run_root/"machine-audit.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return out["summary"]
 
