@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T08:51:50+00:00",
+  "generated_at": "2026-08-14T10:31:29+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -72705,27 +72705,31 @@
       "no_endpoint_primary_refresh_is_primary_source_only": true,
       "primary_declaration_refresh_has_zero_source_exposure_effect": true,
       "primary_declaration_refresh_cannot_qualify_support": true,
+      "portable_release_targets_are_endpoint_handoff_only": true,
+      "portable_release_targets_cannot_qualify_support_or_reopen": true,
       "public_summary_excludes_urls_refs_required_units_and_private_paths": true
     },
     "summary": {
       "support_holds": 4,
       "explicit_release_targets": 2,
       "no_explicit_endpoint": 2,
-      "checked": 0,
-      "skipped_cooldown": 2,
+      "checked": 2,
+      "skipped_cooldown": 0,
       "provider_errors": 0,
       "recheck_required": 0,
       "support_qualified": 0,
       "generator_reopen_authorized": 0,
       "problem_gate_authorized": 0,
-      "primary_declaration_refresh_checked": 2,
+      "primary_declaration_refresh_checked": 0,
       "primary_declaration_refresh_changed": 0,
-      "primary_declaration_refresh_skipped_cooldown": 0,
+      "primary_declaration_refresh_skipped_cooldown": 2,
       "primary_declaration_refresh_rate_limited": 0,
-      "primary_declaration_refresh_errors": 0
+      "primary_declaration_refresh_errors": 0,
+      "portable_release_targets_used": 1
     },
     "status_counts": {
-      "SKIPPED_COOLDOWN": 2,
+      "WAITING_RELEASE_ARTIFACTS": 1,
+      "BASELINE_CAPTURED": 1,
       "NO_EXPLICIT_AUTHOR_RELEASE_ENDPOINT": 2
     },
     "scientific_authority": false
