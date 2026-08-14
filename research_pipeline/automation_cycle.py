@@ -56,17 +56,20 @@ from .published_experiment_audit import write_audit as write_published_audit
 from .paper_first_idea_incubation import write_paper_first_idea_incubation
 from .paper_first_fresh_saturation import write_fresh_saturation_state
 from .paper_first_discovery_transaction import write_problem_discovery_transaction
+from .paper_first_discovery_frontier import build_paper_first_discovery_frontier
 from .paper_first_global_relation_recall import load_global_relation_recall_state, write_global_relation_recall_state
-from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission
+from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission, public_global_relation_scan_admission_summary
 from .paper_first_primary_evidence import load_primary_evidence_state
 from .paper_first_problem_generator import load_problem_generator_state
+from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_shadow_search_admission import build_shadow_search_admission, public_shadow_search_admission_summary
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier
 from .paper_first_relation_coverage import relation_recall_freshness
-from .paper_first_relation_delta_preflight import public_relation_delta_preflight_summary, write_private_relation_delta_preflight
+from .paper_first_relation_delta_preflight import load_private_relation_delta_preflight, public_relation_delta_preflight_summary, write_private_relation_delta_preflight
 from .paper_first_relation_cache_backfill import backfill_relation_cache
 from .paper_first_paper_design_backlog import write_paper_design_backlog
 from .paper_first_p0_f0 import write_paper_first_p0_f0_state
+from .paper_first_scientific_object_candidate_evidence import load_scientific_object_candidate_evidence_ledger, public_scientific_object_candidate_evidence_summary
 from .paper_first_scientific_object_maintenance import run_shadow_scientific_object_maintenance
 from .paper_first_support_release_watch import load_private_support_release_watch, public_support_release_watch_summary, run_support_release_watch
 from .paper_first_support_asset_recheck import load_private_support_asset_recheck_queue, public_support_asset_recheck_summary, write_private_support_asset_recheck_queue
@@ -200,6 +203,48 @@ def _run_shadow_continuation_frontier_control(storage: StorageSettings) -> dict[
     return frontier
 
 
+def _run_discovery_frontier_control(storage: StorageSettings) -> dict[str, Any]:
+    """Project the final paper-first discovery frontier for the cycle report only."""
+    primary = load_primary_evidence_state()
+    generator = load_problem_generator_state()
+    queue = load_problem_gate_queue_state()
+    relation = load_global_relation_recall_state()
+    freshness = relation_recall_freshness(generator, relation)
+    delta_private = load_private_relation_delta_preflight(storage=storage)
+    relation_admission = public_global_relation_scan_admission_summary(
+        build_global_relation_scan_admission(
+            primary_state=primary,
+            generator_state=generator,
+            relation_state=relation,
+            delta_state=delta_private,
+        )
+    )
+    shadow_admission = public_shadow_search_admission_summary(build_shadow_search_admission())
+    object_candidate = public_scientific_object_candidate_evidence_summary(
+        load_scientific_object_candidate_evidence_ledger(storage=storage)
+    )
+    support_watch = public_support_release_watch_summary(load_private_support_release_watch(storage=storage))
+    asset_queue = public_support_asset_recheck_summary(load_private_support_asset_recheck_queue(storage=storage))
+    frontier = build_paper_first_discovery_frontier(
+        primary_state=primary,
+        generator_state=generator,
+        queue_state=queue,
+        relation_freshness_state=freshness,
+        relation_admission_state=relation_admission,
+        shadow_admission_state=shadow_admission,
+        object_candidate_state=object_candidate,
+        support_release_watch_state=support_watch,
+        support_asset_recheck_state=asset_queue,
+    )
+    frontier.setdefault("summary", {}).update({
+        "frontier_status": frontier.get("status", "WAIT_EXTERNAL_EVIDENCE_TRIGGERS"),
+        "frontier_blockers": list(frontier.get("blockers") or []),
+        "trigger_names": [str(row.get("trigger") or "") for row in frontier.get("triggers") or []],
+    })
+    frontier["scientific_authority"] = False
+    return frontier
+
+
 def run_cycle(
     *,
     mode: str = "daily",
@@ -250,6 +295,7 @@ def run_cycle(
             report["steps"].append(_step("paper-first-shadow-continuation-frontier", lambda: _run_shadow_continuation_frontier_control(storage)))
             report["steps"].append(_step("paper-first-relation-cache-backfill", backfill_relation_cache))
             report["steps"].append(_step("paper-first-global-relation-recall", lambda: _run_global_relation_control(storage=storage,mode=mode,allow_model_scan=global_relation_model_scan)))
+            report["steps"].append(_step("paper-first-discovery-frontier", lambda: _run_discovery_frontier_control(storage)))
             report["steps"].append(_step("iclr-bank", write_iclr_idea_bank))
             report["steps"].append(_step("machine-school-inspired-bank", write_machine_school_bank))
             report["steps"].append(_step("archival-solution-first-idea-discovery-v3", write_idea_discovery_v3))

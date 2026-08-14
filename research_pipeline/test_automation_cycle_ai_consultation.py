@@ -7,7 +7,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
-from .automation_cycle import _advisory_step, _run_external_system_learning_review, _run_global_relation_control, _run_shadow_continuation_frontier_control, _run_shadow_search_admission_control, _step, _sync_literature, cycle_lock, run_cycle
+from .automation_cycle import _advisory_step, _run_discovery_frontier_control, _run_external_system_learning_review, _run_global_relation_control, _run_shadow_continuation_frontier_control, _run_shadow_search_admission_control, _step, _sync_literature, cycle_lock, run_cycle
 
 
 class AutomationCycleAIConsultationTest(unittest.TestCase):
@@ -58,6 +58,7 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertNotIn("paper-first-support-asset-recheck-queue", names)
             self.assertNotIn("paper-first-support-asset-recheck-handoff", names)
             self.assertNotIn("paper-first-shadow-continuation-frontier", names)
+            self.assertNotIn("paper-first-discovery-frontier", names)
             self.assertLess(names.index("paper-first-fresh-saturation"), names.index("paper-first-relation-cache-maintenance"))
             self.assertLess(names.index("paper-first-relation-cache-maintenance"), names.index("human-terminal-idea-state"))
             self.assertLess(names.index("research-system-pre-ai"), names.index("ai-consultation-automation"))
@@ -86,6 +87,7 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertIn("paper-first-shadow-continuation-frontier", names)
             self.assertIn("paper-first-relation-cache-backfill", names)
             self.assertIn("paper-first-global-relation-recall", names)
+            self.assertIn("paper-first-discovery-frontier", names)
             self.assertNotIn("paper-first-primary-evidence-refresh", names)
             self.assertNotIn("paper-first-problem-generator", names)
             self.assertNotIn("paper-first-problem-gate-queue", names)
@@ -101,7 +103,8 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertLess(names.index("paper-first-support-asset-recheck-handoff"), names.index("paper-first-shadow-continuation-frontier"))
             self.assertLess(names.index("paper-first-shadow-continuation-frontier"), names.index("paper-first-relation-cache-backfill"))
             self.assertLess(names.index("paper-first-relation-cache-backfill"), names.index("paper-first-global-relation-recall"))
-            self.assertLess(names.index("paper-first-global-relation-recall"), names.index("archival-solution-first-idea-discovery-v3"))
+            self.assertLess(names.index("paper-first-global-relation-recall"), names.index("paper-first-discovery-frontier"))
+            self.assertLess(names.index("paper-first-discovery-frontier"), names.index("archival-solution-first-idea-discovery-v3"))
             self.assertLess(names.index("paper-first-discovery-transaction"), names.index("historical-paper-first-idea-incubation"))
             self.assertLess(names.index("external-research-system-learning-review"), names.index("project-web-gpt-repair-review"))
 
@@ -142,6 +145,32 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
         self.assertEqual(step["summary"]["frontier_status"],"WAIT_EXTERNAL_PRIMARY_OR_SUPPORT_RELEASE_CHANGE")
         self.assertEqual(step["summary"]["next_control_action"],"wait-external-change")
         self.assertEqual(step["summary"]["automatic_provider_calls_authorized"],0)
+        self.assertFalse(result["scientific_authority"])
+
+    def test_discovery_frontier_step_reports_wait_external_without_authority(self) -> None:
+        storage=SimpleNamespace()
+        primary={"status":"READY","summary":{"source_retrieval_complete":True,"source_coverage_exhausted":True,"unreviewed_lane_linked_sources":0,"carrier_probe_pending":0,"carrier_probe_complete":True}}
+        generator={"status":"SKIPPED_SOURCE_COVERAGE_SATURATED","summary":{"generated":0,"written_to_auto_inbox":0}}
+        queue={"summary":{"submitted":0,"passed_problem_gate":0,"paper_design_eligible":0}}
+        freshness={"status":"CURRENT_RELATION_UNIVERSE","summary":{"universe_stale":False,"current_not_reduced_unknown":False,"focused_problem_generator_reopen_allowed":False}}
+        relation_admission={"status":"HOLD_MANUAL_RELATION_SCAN","summary":{"manual_scan_eligible":False,"automatic_model_scan_authorized":False}}
+        shadow={"status":"SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL","summary":{"same_source_transaction":True,"qualification_allowed":False,"automatic_provider_calls_authorized":0}}
+        object_candidate={"summary":{"activation_authorized":0,"pending_cache":0}}
+        watch={"summary":{"recheck_required":0,"support_qualified":0,"generator_reopen_authorized":0,"problem_gate_authorized":0}}
+        asset={"summary":{"queued":0,"support_qualified":0,"generator_reopen_authorized":0,"problem_gate_authorized":0}}
+        with patch("research_pipeline.automation_cycle.load_primary_evidence_state",return_value=primary), patch("research_pipeline.automation_cycle.load_problem_generator_state",return_value=generator), patch("research_pipeline.automation_cycle.load_problem_gate_queue_state",return_value=queue), patch("research_pipeline.automation_cycle.load_global_relation_recall_state",return_value={}), patch("research_pipeline.automation_cycle.relation_recall_freshness",return_value=freshness), patch("research_pipeline.automation_cycle.load_private_relation_delta_preflight",return_value={}), patch("research_pipeline.automation_cycle.build_global_relation_scan_admission",return_value=relation_admission), patch("research_pipeline.automation_cycle.public_global_relation_scan_admission_summary",return_value=relation_admission), patch("research_pipeline.automation_cycle.build_shadow_search_admission",return_value={}), patch("research_pipeline.automation_cycle.public_shadow_search_admission_summary",return_value=shadow), patch("research_pipeline.automation_cycle.load_scientific_object_candidate_evidence_ledger",return_value={}), patch("research_pipeline.automation_cycle.public_scientific_object_candidate_evidence_summary",return_value=object_candidate), patch("research_pipeline.automation_cycle.load_private_support_release_watch",return_value={}), patch("research_pipeline.automation_cycle.public_support_release_watch_summary",return_value=watch), patch("research_pipeline.automation_cycle.load_private_support_asset_recheck_queue",return_value={}), patch("research_pipeline.automation_cycle.public_support_asset_recheck_summary",return_value=asset):
+            result=_run_discovery_frontier_control(storage)
+            step=_step("paper-first-discovery-frontier",lambda:result)
+        self.assertEqual(result["status"],"WAIT_EXTERNAL_EVIDENCE_TRIGGERS")
+        self.assertEqual(result["summary"]["frontier_status"],"WAIT_EXTERNAL_EVIDENCE_TRIGGERS")
+        self.assertEqual(result["summary"]["open_internal_frontiers"],0)
+        self.assertEqual(result["summary"]["external_triggers"],5)
+        self.assertEqual(result["summary"]["frontier_blockers"],[])
+        self.assertEqual(len(result["summary"]["trigger_names"]),5)
+        self.assertEqual(result["summary"]["automatic_model_calls_authorized"],0)
+        self.assertEqual(step["summary"]["frontier_status"],"WAIT_EXTERNAL_EVIDENCE_TRIGGERS")
+        self.assertEqual(step["summary"]["automatic_problem_gate_authorized"],0)
+        self.assertEqual(step["summary"]["automatic_method_authorized"],0)
         self.assertFalse(result["scientific_authority"])
 
     def test_shadow_search_skip_emits_no_cross_host_handoff(self) -> None:
