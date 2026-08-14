@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T10:31:29+00:00",
+  "generated_at": "2026-08-14T10:36:24+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -5993,7 +5993,7 @@
     "paper_first_shadow_latest_terminal_survivors": 0,
     "paper_first_shadow_latest_live_paper_design_eligible": 0,
     "paper_first_primary_carrier_probe_required": true,
-    "paper_first_primary_carrier_probe_attempted": 1,
+    "paper_first_primary_carrier_probe_attempted": 0,
     "paper_first_primary_carrier_probe_rescued": 0,
     "paper_first_primary_carrier_probe_pending": 0,
     "paper_first_primary_carrier_probe_complete": true,
@@ -29842,7 +29842,7 @@
   },
   "paper_first_primary_evidence": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-14T03:47:25+00:00",
+    "generated_at": "2026-08-14T10:21:53+00:00",
     "policy": {
       "semantic_scholar_is_discovery_metadata_not_primary_evidence": true,
       "verified_primary_page_required": true,
@@ -29951,7 +29951,7 @@
       "recent_verified_cache_reused": 31,
       "recent_raw_primary_cache_reused": 1,
       "recent_raw_fulltext_cache_reused": 0,
-      "recent_fulltext_failure_cooldown_skips": 1,
+      "recent_fulltext_failure_cooldown_skips": 0,
       "lane_floor": 1,
       "source_coverage_scheduler_active": true,
       "saturation_ledger_runs": 18,
@@ -29966,8 +29966,8 @@
       "selected_lane_unreviewed": 0,
       "selected_no_lane_unreviewed": 0,
       "carrier_probe_required": true,
-      "carrier_probe_attempted": 1,
-      "carrier_probe_reused": 5,
+      "carrier_probe_attempted": 0,
+      "carrier_probe_reused": 6,
       "carrier_probe_rescued": 0,
       "carrier_probe_pending": 0,
       "carrier_probe_errors": 0,
@@ -30293,7 +30293,7 @@
         "abstract_sha256": "c8a69484dcd81327d0d4d403524e625473d01ebb99b3de3bea2dcbaac0c6245f",
         "year": 2026,
         "publication_date": "2026-08-11",
-        "fetched_at": "2026-08-14T03:48:16+00:00",
+        "fetched_at": "2026-08-14T10:22:45+00:00",
         "fulltext_sha256": "",
         "empirical_fact_count": 0,
         "typed_evidence_counts": {
@@ -30612,14 +30612,14 @@
     "errors": [],
     "discovery_errors": [],
     "corpus_retrieved_at": "2026-08-13T07:06:23+00:00",
-    "corpus_age_days": 0.8618289459837963,
+    "corpus_age_days": 1.1357643062962963,
     "carrier_probe": {
       "enabled": true,
       "required": true,
       "classifier_version": "existing-object-carrier-v1",
       "probe_limit": 3,
-      "attempted": 1,
-      "reused": 5,
+      "attempted": 0,
+      "reused": 6,
       "rescued": 0,
       "pending": 0,
       "complete": true,
@@ -30753,11 +30753,11 @@
     "fulltext_errors": [
       {
         "ref": "arXiv:2608.10504",
-        "error": "recent-fulltext-failure-cooldown"
+        "error": "RuntimeError:HTTP 404"
       }
     ],
     "status": "READY",
-    "discovery_transaction_id": "e0ab91a9d16351a3530a7e2ab97e56ac99f04694a7c1e343fa11bae09f82f16a",
+    "discovery_transaction_id": "efa46a586f1e86ffd1c8e151771dcbd3c5ed2d9921c82905ae059e332be56a47",
     "discovery_transaction_role": "primary"
   },
   "paper_first_problem_discovery_contract": {
@@ -31557,8 +31557,8 @@
   },
   "paper_first_problem_generator": {
     "schema_version": "2.5",
-    "generated_at": "2026-08-14T03:48:16+00:00",
-    "run_id": "20260814T034816Z",
+    "generated_at": "2026-08-14T10:22:45+00:00",
+    "run_id": "20260814T102245Z",
     "generator_model": "ark-code-latest",
     "reviewer_model": "glm-5.2",
     "policy": {
@@ -32711,7 +32711,7 @@
       "portable_review_receipt_count": 18
     },
     "candidates": [],
-    "primary_pool_age_hours": 0.0143,
+    "primary_pool_age_hours": 0.0146,
     "source_coverage": {
       "coverage_exhausted": true,
       "source_retrieval_complete": true,
@@ -32726,12 +32726,12 @@
     },
     "coverage_skip_reason": "No unreviewed freshness/relevance-qualified source remains inside preregistered scientific-object lanes; generation resumes automatically when a new lane-grounded primary source appears.",
     "status": "SKIPPED_SOURCE_COVERAGE_SATURATED",
-    "discovery_transaction_id": "e0ab91a9d16351a3530a7e2ab97e56ac99f04694a7c1e343fa11bae09f82f16a",
+    "discovery_transaction_id": "efa46a586f1e86ffd1c8e151771dcbd3c5ed2d9921c82905ae059e332be56a47",
     "discovery_transaction_role": "generator"
   },
   "paper_first_problem_gate_queue": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-14T03:48:16+00:00",
+    "generated_at": "2026-08-14T10:22:45+00:00",
     "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
     "source_inboxes": [
       "private-data://paper-first-problem-discovery/candidate-inbox.json",
@@ -32794,7 +32794,7 @@
     "blocked": [],
     "audited": [],
     "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry.",
-    "discovery_transaction_id": "e0ab91a9d16351a3530a7e2ab97e56ac99f04694a7c1e343fa11bae09f82f16a",
+    "discovery_transaction_id": "efa46a586f1e86ffd1c8e151771dcbd3c5ed2d9921c82905ae059e332be56a47",
     "discovery_transaction_role": "queue"
   },
   "paper_first_search_portfolio_design_adjudication": {
@@ -71055,7 +71055,7 @@
         "detail": {
           "schema_version": "1.1",
           "required": true,
-          "attempted": 1,
+          "attempted": 0,
           "rescued": 0,
           "pending": 0,
           "complete": true
@@ -71093,7 +71093,7 @@
             "recent_verified_cache_reused": 31,
             "recent_raw_primary_cache_reused": 1,
             "recent_raw_fulltext_cache_reused": 0,
-            "recent_fulltext_failure_cooldown_skips": 1,
+            "recent_fulltext_failure_cooldown_skips": 0,
             "lane_floor": 1,
             "source_coverage_scheduler_active": true,
             "saturation_ledger_runs": 18,
@@ -71108,8 +71108,8 @@
             "selected_lane_unreviewed": 0,
             "selected_no_lane_unreviewed": 0,
             "carrier_probe_required": true,
-            "carrier_probe_attempted": 1,
-            "carrier_probe_reused": 5,
+            "carrier_probe_attempted": 0,
+            "carrier_probe_reused": 6,
             "carrier_probe_rescued": 0,
             "carrier_probe_pending": 0,
             "carrier_probe_errors": 0,
@@ -71511,10 +71511,13 @@
             "formulation_successful_branches": 22,
             "formulation_execution_censored_branches": 2,
             "formulated_candidates": 14,
+            "formulation_reduction_pending": 0,
             "formulation_rejected": 8,
             "machine_reviewable": 0,
+            "machine_reduction_pending": 0,
             "machine_reduction_blocked": 14,
             "problem_falsifier_eligible": 0,
+            "problem_falsifier_inventory_requested": 0,
             "problem_falsifier_support_qualified": 0,
             "problem_falsifier_hold_support_unavailable": 0,
             "problem_falsifier_executed": 0,
@@ -72678,7 +72681,7 @@
       "failed_checks": 0
     },
     "source_identity": {
-      "current_source_generated_at": "2026-08-14T03:47:25+00:00",
+      "current_source_generated_at": "2026-08-14T10:21:53+00:00",
       "current_source_set_sha256": "21ff57e9a0be9d9af83bcc194f20f7e2a3b2878f509b212c12efa43aa0025ad5",
       "current_primary_content_sha256": "8be6e04ba50970b8fc19585130604ad26c32497cbed64255d351015ca3e7143e",
       "latest_run_id": "shadow-20260814-r5",
