@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import json
 import unittest
 
 from .research_system import build_research_system_state, validate_state
@@ -441,6 +442,19 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(validate_state(scope),[])
         bad_generator=copy.deepcopy(state);bad_generator["paper_first_problem_generator"]["source_coverage"]["coverage_exhausted"]=True
         self.assertTrue(any("pending generator state" in error for error in validate_state(bad_generator)))
+
+    def test_scientific_object_retrieval_audit_is_public_safe_shadow_only(self) -> None:
+        audit=self.state["paper_first_scientific_object_retrieval_audit"]
+        self.assertFalse(audit["scientific_authority"])
+        self.assertTrue(audit["policy"]["shadow_only"])
+        self.assertFalse(audit["policy"]["live_query_set_changed"])
+        self.assertTrue(audit["policy"]["candidate_metadata_does_not_count_as_verified_primary_support"])
+        self.assertEqual(audit["summary"]["activation_authorized"],0)
+        self.assertNotIn('"query"',json.dumps(audit))
+        broken=copy.deepcopy(self.state);broken["paper_first_scientific_object_retrieval_audit"]["policy"]["live_query_set_changed"]=True
+        self.assertTrue(any("scientific-object retrieval audit" in error for error in validate_state(broken)))
+        leaked=copy.deepcopy(self.state);leaked["paper_first_scientific_object_retrieval_audit"]["results"]={"x":{"status":"NO_NEW_SUPPORT_FOUND","ref":"arXiv:secret","scientific_authority":False}}
+        self.assertTrue(any("cannot expose private" in error for error in validate_state(leaked)))
 
     def test_canonical_paper_design_backlog_is_durable_but_cannot_escalate_authority(self) -> None:
         state=copy.deepcopy(self.state)

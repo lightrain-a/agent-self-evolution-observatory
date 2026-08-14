@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+import json
 import unittest
 from datetime import datetime, timezone
 
 from .paper_first_scientific_object_ontology import load_scientific_object_config
-from .paper_first_scientific_object_retrieval_audit import audit_candidate_retrieval
+from .paper_first_scientific_object_retrieval_audit import audit_candidate_retrieval, public_shadow_scientific_object_retrieval_summary
 
 
 class ScientificObjectRetrievalAuditTest(unittest.TestCase):
@@ -97,6 +98,18 @@ class ScientificObjectRetrievalAuditTest(unittest.TestCase):
         self.assertEqual(audit["new_candidate_support_refs"], 1)
         self.assertTrue(audit["errors"])
         self.assertFalse(audit["live_query_set_change_authorized"])
+
+    def test_public_summary_exposes_only_counts_and_zero_authority(self) -> None:
+        private={"status":"SHADOW_OBJECT_RETRIEVAL_AUDIT_COMPLETE","results":{"knowledge_retrieval_state":{"status":"RECALL_GAP_FOUND_SUPPORT_STILL_INSUFFICIENT","current_verified_support":1,"minimum_verified_support":5,"potential_support_after_primary_verification":3,"new_candidate_support_refs":2,"new_direct_object_refs":2,"errors":[],"rows":[{"ref":"arXiv:secret","title":"private title"}],"queries":[{"query":"private query"}]}}}
+        public=public_shadow_scientific_object_retrieval_summary(private)
+        self.assertEqual(public["summary"]["recall_gap_support_insufficient"],1)
+        self.assertEqual(public["summary"]["activation_authorized"],0)
+        self.assertFalse(public["scientific_authority"])
+        self.assertNotIn("rows",public["results"]["knowledge_retrieval_state"])
+        self.assertNotIn("queries",public["results"]["knowledge_retrieval_state"])
+        self.assertNotIn('"ref":',json.dumps(public))
+        self.assertNotIn("private title",json.dumps(public))
+        self.assertFalse(public["policy"]["live_query_set_changed"])
 
     def test_frozen_pairwise_validator_is_not_direct_evaluator_recall(self) -> None:
         pairwise = self.paper("2607.14408", "Reward-Free Evolving Agents via Pairwise Validator", "2026-07-15")

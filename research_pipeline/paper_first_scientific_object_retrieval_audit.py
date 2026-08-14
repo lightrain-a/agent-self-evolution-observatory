@@ -21,6 +21,8 @@ from .paper_first_scientific_object_ontology import (
     reviewed_primary_cache_records,
 )
 
+DEFAULT_PRIVATE_AUDIT_NAME = "scientific-object-retrieval-blindspot-audit-v2.json"
+
 SHADOW_OBJECT_QUERIES: dict[str, tuple[str, ...]] = {
     "knowledge_retrieval_state": (
         '(all:"self-evolving" OR all:"self-improving") AND all:agent AND (all:retrieval OR all:"knowledge graph" OR all:GraphRAG)',
@@ -218,6 +220,59 @@ def build_shadow_scientific_object_retrieval_audit(
     }
 
 
+def load_private_shadow_scientific_object_retrieval_audit(*, storage: StorageSettings | None = None, path: Path | None = None) -> dict[str, Any]:
+    storage = storage or StorageSettings.from_env()
+    source = path or storage.data_root / "paper-first-problem-discovery" / DEFAULT_PRIVATE_AUDIT_NAME
+    if not source.exists():
+        return {"schema_version":"1.0","status":"NOT_RUN","policy":{"scientific_authority":False},"results":{},"scientific_authority":False}
+    try:
+        payload=json.loads(source.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):
+        return {"schema_version":"1.0","status":"STATE_UNREADABLE","policy":{"scientific_authority":False},"results":{},"scientific_authority":False}
+    return payload if isinstance(payload,dict) else {"schema_version":"1.0","status":"STATE_INVALID","policy":{"scientific_authority":False},"results":{},"scientific_authority":False}
+
+
+def public_shadow_scientific_object_retrieval_summary(state: dict[str, Any]) -> dict[str, Any]:
+    results={}
+    for key,row in (state.get("results") or {}).items():
+        if not isinstance(row,dict):
+            continue
+        results[str(key)]={
+            "status":str(row.get("status") or "NOT_RUN"),
+            "current_verified_support":int(row.get("current_verified_support") or 0),
+            "minimum_verified_support":int(row.get("minimum_verified_support") or 0),
+            "potential_support_after_primary_verification":int(row.get("potential_support_after_primary_verification") or 0),
+            "new_candidate_support_refs":int(row.get("new_candidate_support_refs") or 0),
+            "new_direct_object_refs":int(row.get("new_direct_object_refs") or 0),
+            "error_count":len(row.get("errors") or []),
+            "scientific_authority":False,
+        }
+    statuses={row["status"] for row in results.values()}
+    return {
+        "schema_version":"1.0",
+        "status":str(state.get("status") or "NOT_RUN"),
+        "policy":{
+            "scientific_authority":False,
+            "shadow_only":True,
+            "live_query_set_changed":False,
+            "candidate_metadata_does_not_count_as_verified_primary_support":True,
+            "incomplete_query_is_not_negative_evidence":True,
+            "primary_verification_required_before_lane_preregistration":True,
+            "automatic_lane_activation":False,
+        },
+        "summary":{
+            "candidates_audited":len(results),
+            "recall_gap_support_insufficient":sum(row["status"]=="RECALL_GAP_FOUND_SUPPORT_STILL_INSUFFICIENT" for row in results.values()),
+            "primary_verification_threshold_candidates":sum(row["status"]=="PRIMARY_VERIFICATION_THRESHOLD_CANDIDATE" for row in results.values()),
+            "no_new_support_found":sum(row["status"]=="NO_NEW_SUPPORT_FOUND" for row in results.values()),
+            "incomplete_candidates":sum(row["status"]=="SHADOW_RETRIEVAL_INCOMPLETE" for row in results.values()),
+            "activation_authorized":0,
+        },
+        "results":results,
+        "scientific_authority":False,
+    }
+
+
 def write_private_shadow_scientific_object_retrieval_audit(
     *,
     storage: StorageSettings | None = None,
@@ -227,7 +282,7 @@ def write_private_shadow_scientific_object_retrieval_audit(
 ) -> dict[str, Any]:
     storage = storage or StorageSettings.from_env()
     state = build_shadow_scientific_object_retrieval_audit(storage=storage, searcher=searcher, now=now)
-    target = output_path or storage.data_root / "paper-first-problem-discovery" / "scientific-object-retrieval-blindspot-audit-v2.json"
+    target = output_path or storage.data_root / "paper-first-problem-discovery" / DEFAULT_PRIVATE_AUDIT_NAME
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return state
