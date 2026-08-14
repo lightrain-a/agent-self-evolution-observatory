@@ -6,10 +6,10 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT
-from .paper_first_evidence_acquisition import build_provisional_evidence_plan
+from .paper_first_evidence_acquisition import build_provisional_evidence_plan,compile_evidence_designs,compile_evidence_reviews,evidence_design_prompt,evidence_review_prompt
 from .paper_first_problem_discovery_contract import audit_shadow_problem_candidate
 from .problem_search_control_snapshot import compute_control_snapshot
-from .problem_search_stage_runner import _normalize,_problem_falsifier_eligible
+from .problem_search_stage_runner import _ark_with_provider_receipt,_normalize,_parse_archived_evidence_design_json,_problem_falsifier_eligible
 
 DEFAULT_JSON=PROJECT_ROOT/"generated"/"paper-first-evidence-migration-state.json"
 DEFAULT_JS=PROJECT_ROOT/"generated"/"paper-first-evidence-migration-state.js"
@@ -21,6 +21,12 @@ POLICY={
  "migration_is_new_zero_authority_control_transaction":True,
  "migration_reuses_only_frozen_parent_formulations_and_primary_registry":True,
  "no_generator_or_search_model_calls":True,
+ "bounded_evidence_design_model_calls_are_allowed":True,
+ "bounded_evidence_design_model_call_has_zero_scientific_authority":True,
+ "independent_evidence_contract_review_required_before_execution":True,
+ "evidence_designer_cannot_self_review":True,
+ "frozen_scientific_fields_are_compiler_owned":True,
+ "outcome_labels_are_compiler_owned":True,
  "current_machine_contract_reaudits_parent_formulations":True,
  "only_current_exact_reduction_uncertainty_can_migrate":True,
  "migration_cannot_rewrite_parent_terminal_artifacts":True,
@@ -70,15 +76,50 @@ def compile_legacy_reduction_migration(*,source_run:Path,project_root:Path=PROJE
  evidence=build_provisional_evidence_plan(machine,run_id=f"evidence-migration-{source_run.name}")
  source_manifest=_manifest(source_run)
  migration_id="legacy-reduction-"+hashlib.sha256((source_run.name+source_manifest+control["control_snapshot_sha256"]).encode()).hexdigest()[:16]
- return {"schema_version":SCHEMA_VERSION,"generated_at":_now(),"migration_id":migration_id,"source_run_id":source_run.name,"source_manifest_sha256":source_manifest,"current_control_snapshot_sha256":control["control_snapshot_sha256"],"status":"LEGACY_REDUCTION_EVIDENCE_MIGRATION_READY" if pending else "LEGACY_REDUCTION_EVIDENCE_MIGRATION_EMPTY","policy":dict(POLICY),"summary":{"source_formulated":formulated,"current_machine_ready":len(ready),"current_reduction_pending":len(pending),"current_blocked":len(blocked),"provisional_problem_candidates":int((evidence.get("summary") or {}).get("provisional_problem_candidates") or 0),"evidence_design_selected":int((evidence.get("summary") or {}).get("design_selected") or 0),"evidence_design_pending":int((evidence.get("summary") or {}).get("design_pending") or 0),"evidence_deferred_by_portfolio_budget":int((evidence.get("summary") or {}).get("deferred_by_portfolio_budget") or 0),"evidence_execution_ready":0,"evidence_execution_completed":0,"evidence_reduction_supported":0,"evidence_residual_survives":0,"evidence_branch_repair_ready":0,"scientific_authority":0,"problem_gate_authorized":0,"paper_design_authorized":0,"method_authorized":0,"p0_authorized":0,"gpu_authorized":0},"machine_projection":{"ready":ready,"reduction_pending":pending,"blocked":blocked},"evidence_plan":evidence,"scientific_authority":False,"authority":dict(AUTHORITY)}
+ return {"schema_version":SCHEMA_VERSION,"generated_at":_now(),"migration_id":migration_id,"source_run_id":source_run.name,"source_manifest_sha256":source_manifest,"current_control_snapshot_sha256":control["control_snapshot_sha256"],"status":"LEGACY_REDUCTION_EVIDENCE_MIGRATION_READY" if pending else "LEGACY_REDUCTION_EVIDENCE_MIGRATION_EMPTY","policy":dict(POLICY),"summary":{"source_formulated":formulated,"current_machine_ready":len(ready),"current_reduction_pending":len(pending),"current_blocked":len(blocked),"provisional_problem_candidates":int((evidence.get("summary") or {}).get("provisional_problem_candidates") or 0),"evidence_design_selected":int((evidence.get("summary") or {}).get("design_selected") or 0),"evidence_design_pending":int((evidence.get("summary") or {}).get("design_pending") or 0),"evidence_deferred_by_portfolio_budget":int((evidence.get("summary") or {}).get("deferred_by_portfolio_budget") or 0),"evidence_review_pending":0,"evidence_review_clear":0,"evidence_review_revise":0,"evidence_review_blocked":0,"evidence_execution_ready":0,"evidence_execution_completed":0,"evidence_reduction_supported":0,"evidence_residual_survives":0,"evidence_branch_repair_ready":0,"scientific_authority":0,"problem_gate_authorized":0,"paper_design_authorized":0,"method_authorized":0,"p0_authorized":0,"gpu_authorized":0},"machine_projection":{"ready":ready,"reduction_pending":pending,"blocked":blocked},"evidence_plan":evidence,"scientific_authority":False,"authority":dict(AUTHORITY)}
 
 def public_migration_summary(state:dict[str,Any])->dict[str,Any]:
  s=state.get("summary") or {}
- return {"schema_version":SCHEMA_VERSION,"generated_at":state.get("generated_at"),"migration_id":str(state.get("migration_id") or ""),"source_run_id":str(state.get("source_run_id") or ""),"source_manifest_sha256":str(state.get("source_manifest_sha256") or ""),"current_control_snapshot_sha256":str(state.get("current_control_snapshot_sha256") or ""),"status":str(state.get("status") or "NOT_RUN"),"policy":dict(POLICY),"summary":{k:int(s.get(k) or 0) for k in ("source_formulated","current_machine_ready","current_reduction_pending","current_blocked","provisional_problem_candidates","evidence_design_selected","evidence_design_pending","evidence_deferred_by_portfolio_budget","evidence_execution_ready","evidence_execution_completed","evidence_reduction_supported","evidence_residual_survives","evidence_branch_repair_ready","scientific_authority","problem_gate_authorized","paper_design_authorized","method_authorized","p0_authorized","gpu_authorized")},"scientific_authority":False,"authority":dict(AUTHORITY)}
+ return {"schema_version":SCHEMA_VERSION,"generated_at":state.get("generated_at"),"migration_id":str(state.get("migration_id") or ""),"source_run_id":str(state.get("source_run_id") or ""),"source_manifest_sha256":str(state.get("source_manifest_sha256") or ""),"current_control_snapshot_sha256":str(state.get("current_control_snapshot_sha256") or ""),"status":str(state.get("status") or "NOT_RUN"),"policy":dict(POLICY),"summary":{k:int(s.get(k) or 0) for k in ("source_formulated","current_machine_ready","current_reduction_pending","current_blocked","provisional_problem_candidates","evidence_design_selected","evidence_design_pending","evidence_deferred_by_portfolio_budget","evidence_review_pending","evidence_review_clear","evidence_review_revise","evidence_review_blocked","evidence_execution_ready","evidence_execution_completed","evidence_reduction_supported","evidence_residual_survives","evidence_branch_repair_ready","scientific_authority","problem_gate_authorized","paper_design_authorized","method_authorized","p0_authorized","gpu_authorized")},"scientific_authority":False,"authority":dict(AUTHORITY)}
 
 def write_legacy_reduction_migration(*,source_run:Path,private_out:Path,public_json:Path=DEFAULT_JSON,public_js:Path=DEFAULT_JS)->dict[str,Any]:
  state=compile_legacy_reduction_migration(source_run=source_run);private_out.parent.mkdir(parents=True,exist_ok=True);private_out.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  public=public_migration_summary(state);public_json.parent.mkdir(parents=True,exist_ok=True);public_json.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");public_js.write_text("window.PAPER_FIRST_EVIDENCE_MIGRATION = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8");return public
+
+def _sync_evidence_summary(state:dict[str,Any])->dict[str,Any]:
+ evidence_summary=(state.get("evidence_plan") or {}).get("summary") or {};summary=state.get("summary") or {}
+ mapping={"provisional_problem_candidates":"provisional_problem_candidates","design_selected":"evidence_design_selected","design_pending":"evidence_design_pending","deferred_by_portfolio_budget":"evidence_deferred_by_portfolio_budget","review_pending":"evidence_review_pending","review_clear":"evidence_review_clear","review_revise":"evidence_review_revise","review_blocked":"evidence_review_blocked","execution_ready":"evidence_execution_ready","execution_completed":"evidence_execution_completed","reduction_supported":"evidence_reduction_supported","residual_survives":"evidence_residual_survives","branch_repair_ready":"evidence_branch_repair_ready"}
+ for source,target in mapping.items():summary[target]=int(evidence_summary.get(source) or 0)
+ state["summary"]=summary;state["generated_at"]=_now();return state
+
+def design_legacy_reduction_migration(*,private_state_path:Path,part:int=1,model:str="ark-code-latest",public_json:Path=DEFAULT_JSON,public_js:Path=DEFAULT_JS)->dict[str,Any]:
+ state=_load(private_state_path)
+ if state.get("scientific_authority") is not False or (state.get("policy") or {}).get("migrated_candidates_enter_bounded_evidence_design_only") is not True:raise ValueError("invalid zero-authority evidence migration state")
+ current_control=compute_control_snapshot(project_root=PROJECT_ROOT)["control_snapshot_sha256"]
+ if str(state.get("current_control_snapshot_sha256") or "")!=current_control:raise ValueError("evidence migration control snapshot drift; re-prepare continuation before model design")
+ plan=state.get("evidence_plan") or {};prompt,candidate_ids=evidence_design_prompt(plan,part=part,batch_size=2);root=private_state_path.parent;stem=f"evidence-design-p{part}"
+ res=_ark_with_provider_receipt(run_root=root,stem=stem,requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":current_control},prompt=prompt,max_output_tokens=5200,temperature=0.0)
+ raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_evidence_design_json(root,stem,raw,resolved);compiled=compile_evidence_designs(plan,payload,part=part,design_model=resolved);state["evidence_plan"]=compiled;state=_sync_evidence_summary(state)
+ private_state_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ artifact={"schema_version":"1.0","generated_at":_now(),"migration_id":state.get("migration_id"),"source_run_id":state.get("source_run_id"),"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":raw_sha,"plan_summary":compiled.get("summary") or {},"scientific_authority":False,"authority":dict(AUTHORITY)}
+ (root/f"{stem}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ public=public_migration_summary(state);public_json.parent.mkdir(parents=True,exist_ok=True);public_json.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");public_js.write_text("window.PAPER_FIRST_EVIDENCE_MIGRATION = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
+ return {"status":public.get("status"),"migration_id":public.get("migration_id"),"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":raw_sha,"summary":public.get("summary") or {},"scientific_authority":False}
+
+def review_legacy_reduction_design(*,private_state_path:Path,part:int=1,model:str="glm-5.2",public_json:Path=DEFAULT_JSON,public_js:Path=DEFAULT_JS)->dict[str,Any]:
+ state=_load(private_state_path);current_control=compute_control_snapshot(project_root=PROJECT_ROOT)["control_snapshot_sha256"]
+ if str(state.get("current_control_snapshot_sha256") or "")!=current_control:raise ValueError("evidence migration control snapshot drift; re-prepare continuation before independent review")
+ plan=state.get("evidence_plan") or {};root=private_state_path.parent;stem=f"evidence-review-p{part}";prompt,candidate_ids=evidence_review_prompt(plan,part=part,batch_size=2);res=_ark_with_provider_receipt(run_root=root,stem=stem,requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":current_control},prompt=prompt,max_output_tokens=4200,temperature=0.0)
+ raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_evidence_design_json(root,stem,raw,resolved);compiled=compile_evidence_reviews(plan,payload,part=part,reviewer_model=resolved);state["evidence_plan"]=compiled;state=_sync_evidence_summary(state);private_state_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ artifact={"schema_version":"1.0","generated_at":_now(),"migration_id":state.get("migration_id"),"source_run_id":state.get("source_run_id"),"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":raw_sha,"plan_summary":compiled.get("summary") or {},"scientific_authority":False,"authority":dict(AUTHORITY)};(root/f"{stem}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ public=public_migration_summary(state);public_json.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");public_js.write_text("window.PAPER_FIRST_EVIDENCE_MIGRATION = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8");return {"status":public.get("status"),"migration_id":public.get("migration_id"),"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":raw_sha,"summary":public.get("summary") or {},"scientific_authority":False}
+
+def replay_legacy_reduction_design(*,private_state_path:Path,raw_path:Path,part:int=1,resolved_model:str="archived-provider-response",public_json:Path=DEFAULT_JSON,public_js:Path=DEFAULT_JS)->dict[str,Any]:
+ state=_load(private_state_path);current_control=compute_control_snapshot(project_root=PROJECT_ROOT)["control_snapshot_sha256"]
+ if str(state.get("current_control_snapshot_sha256") or "")!=current_control:raise ValueError("evidence migration control snapshot drift; re-prepare continuation before replay")
+ plan=state.get("evidence_plan") or {};root=private_state_path.parent;stem=f"evidence-design-p{part}";raw=raw_path.read_text(encoding="utf-8");payload,raw_sha=_parse_archived_evidence_design_json(root,stem,raw,resolved_model);compiled=compile_evidence_designs(plan,payload,part=part,design_model=resolved_model);state["evidence_plan"]=compiled;state=_sync_evidence_summary(state);private_state_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ candidate_ids=[str(row.get("candidate_id") or "") for row in payload.get("designs") or [] if isinstance(row,dict)];artifact={"schema_version":"1.0","generated_at":_now(),"migration_id":state.get("migration_id"),"source_run_id":state.get("source_run_id"),"part":part,"candidate_ids":candidate_ids,"response_origin":"ARCHIVED_PROVIDER_RESPONSE_REPLAY","resolved_model":resolved_model,"raw_sha256":raw_sha,"plan_summary":compiled.get("summary") or {},"provider_called":False,"scientific_authority":False,"authority":dict(AUTHORITY)};(root/f"{stem}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ public=public_migration_summary(state);public_json.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");public_js.write_text("window.PAPER_FIRST_EVIDENCE_MIGRATION = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8");return {"status":public.get("status"),"migration_id":public.get("migration_id"),"part":part,"candidate_ids":candidate_ids,"response_origin":"ARCHIVED_PROVIDER_RESPONSE_REPLAY","raw_sha256":raw_sha,"summary":public.get("summary") or {},"provider_called":False,"scientific_authority":False}
 
 def load_public_migration(path:Path=DEFAULT_JSON)->dict[str,Any]:
  try:return _load(path)
@@ -86,7 +127,7 @@ def load_public_migration(path:Path=DEFAULT_JSON)->dict[str,Any]:
 
 def validate_public_migration(state:dict[str,Any])->list[str]:
  errors=[];s=state.get("summary") or {};p=state.get("policy") or {}
- if state.get("scientific_authority") is not False or p.get("legacy_terminal_run_is_immutable") is not True or p.get("migration_cannot_rewrite_parent_terminal_artifacts") is not True or p.get("migrated_candidates_enter_bounded_evidence_design_only") is not True:errors.append("legacy evidence migration must remain immutable-parent zero-authority control")
+ if state.get("scientific_authority") is not False or p.get("legacy_terminal_run_is_immutable") is not True or p.get("migration_cannot_rewrite_parent_terminal_artifacts") is not True or p.get("migrated_candidates_enter_bounded_evidence_design_only") is not True or p.get("independent_evidence_contract_review_required_before_execution") is not True or p.get("evidence_designer_cannot_self_review") is not True or p.get("frozen_scientific_fields_are_compiler_owned") is not True or p.get("outcome_labels_are_compiler_owned") is not True:errors.append("legacy evidence migration must remain immutable-parent zero-authority reviewed control")
  if any(int(s.get(k) or 0)!=0 for k in ("scientific_authority","problem_gate_authorized","paper_design_authorized","method_authorized","p0_authorized","gpu_authorized")):errors.append("legacy evidence migration cannot authorize downstream science")
  if int(s.get("current_machine_ready") or 0)+int(s.get("current_reduction_pending") or 0)+int(s.get("current_blocked") or 0)!=int(s.get("source_formulated") or 0):errors.append("legacy evidence migration routing accounting mismatch")
  if int(s.get("provisional_problem_candidates") or 0)!=int(s.get("current_reduction_pending") or 0):errors.append("legacy evidence migration must cover every current reduction-pending candidate")
@@ -96,5 +137,15 @@ def validate_public_migration(state:dict[str,Any])->list[str]:
  return sorted(set(errors))
 
 def main()->None:
- ap=argparse.ArgumentParser();ap.add_argument("--source-run",type=Path,required=True);ap.add_argument("--private-out",type=Path,required=True);a=ap.parse_args();print(json.dumps(write_legacy_reduction_migration(source_run=a.source_run,private_out=a.private_out),ensure_ascii=False,indent=2))
+ ap=argparse.ArgumentParser();sub=ap.add_subparsers(dest="command",required=True)
+ prepare=sub.add_parser("prepare");prepare.add_argument("--source-run",type=Path,required=True);prepare.add_argument("--private-out",type=Path,required=True)
+ design=sub.add_parser("design");design.add_argument("--private-state",type=Path,required=True);design.add_argument("--part",type=int,default=1);design.add_argument("--model",default="ark-code-latest")
+ review=sub.add_parser("review");review.add_argument("--private-state",type=Path,required=True);review.add_argument("--part",type=int,default=1);review.add_argument("--model",default="glm-5.2")
+ replay=sub.add_parser("design-replay");replay.add_argument("--private-state",type=Path,required=True);replay.add_argument("--raw",type=Path,required=True);replay.add_argument("--part",type=int,default=1);replay.add_argument("--resolved-model",default="archived-provider-response")
+ a=ap.parse_args()
+ if a.command=="prepare":result=write_legacy_reduction_migration(source_run=a.source_run,private_out=a.private_out)
+ elif a.command=="design":result=design_legacy_reduction_migration(private_state_path=a.private_state,part=a.part,model=a.model)
+ elif a.command=="review":result=review_legacy_reduction_design(private_state_path=a.private_state,part=a.part,model=a.model)
+ else:result=replay_legacy_reduction_design(private_state_path=a.private_state,raw_path=a.raw,part=a.part,resolved_model=a.resolved_model)
+ print(json.dumps(result,ensure_ascii=False,indent=2))
 if __name__=="__main__":main()

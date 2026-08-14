@@ -15,7 +15,9 @@ from .paper_first_evidence_acquisition import (
     adjudicate_evidence_receipts,
     build_provisional_evidence_plan,
     compile_evidence_designs,
+    compile_evidence_reviews,
     evidence_design_prompt,
+    evidence_review_prompt,
 )
 from .problem_search_control_snapshot import STAGE_RUNNER_ARTIFACT_SCHEMA,validate_shadow_run_control
 from .paper_first_primary_evidence import parse_arxiv_page,extract_empirical_fact_candidates,extract_typed_evidence_candidates
@@ -71,6 +73,45 @@ def _parse_archived_json(run_root:Path,stem:str,raw:str,resolved_model:str)->tup
     except Exception as error:
         err={"schema_version":"1.0","stage":stem,"status":"PARSE_ERROR_ZERO_AUTHORITY","resolved_model":resolved_model,"raw_sha256":sha,"error":f"{type(error).__name__}:{str(error)[:1200]}","scientific_authority":False}
         (run_root/f"error-{stem}-{sha[:12]}.json").write_text(json.dumps(err,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise
+
+
+def _repair_array_delimiter_colons(raw:str)->tuple[str,int]:
+    """Repair only impossible top-level ':' delimiters inside JSON arrays.
+
+    String bytes are never changed. A colon is replaced only when the current
+    JSON container is an array; valid JSON cannot use ':' there as a delimiter.
+    """
+    chars=list(raw);stack=[];in_string=False;escaped=False;repairs=0
+    for i,ch in enumerate(chars):
+        if in_string:
+            if escaped:escaped=False
+            elif ch=='\\':escaped=True
+            elif ch=='"':in_string=False
+            continue
+        if ch=='"':in_string=True;continue
+        if ch in '[{':stack.append(ch);continue
+        if ch in ']}':
+            if stack:stack.pop()
+            continue
+        if ch==':' and stack and stack[-1]=='[':
+            chars[i]=',';repairs+=1
+    return ''.join(chars),repairs
+
+
+def _parse_archived_evidence_design_json(run_root:Path,stem:str,raw:str,resolved_model:str)->tuple[dict,str]:
+    sha,_=_archive_raw_before_parse(run_root,stem,raw,resolved_model)
+    try:return extract_json_object(raw),sha
+    except Exception as first_error:
+        repaired,count=_repair_array_delimiter_colons(raw)
+        if not (1<=count<=2):
+            err={"schema_version":"1.0","stage":stem,"status":"PARSE_ERROR_ZERO_AUTHORITY","resolved_model":resolved_model,"raw_sha256":sha,"parse_repair_attempted":False,"array_colon_candidates":count,"error":f"{type(first_error).__name__}:{str(first_error)[:1200]}","scientific_authority":False}
+            (run_root/f"error-{stem}-{sha[:12]}.json").write_text(json.dumps(err,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise
+        try:payload=extract_json_object(repaired)
+        except Exception as repair_error:
+            err={"schema_version":"1.0","stage":stem,"status":"PARSE_REPAIR_FAILED_ZERO_AUTHORITY","resolved_model":resolved_model,"raw_sha256":sha,"repair_type":"ARRAY_CONTAINER_COLON_TO_COMMA","repair_count":count,"error":f"{type(repair_error).__name__}:{str(repair_error)[:1200]}","scientific_authority":False}
+            (run_root/f"error-{stem}-{sha[:12]}.json").write_text(json.dumps(err,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise
+        repaired_sha=hashlib.sha256(repaired.encode()).hexdigest();receipt={"schema_version":"1.0","stage":stem,"status":"PARSE_REPAIRED_PUNCTUATION_ONLY_ZERO_AUTHORITY","resolved_model":resolved_model,"raw_sha256":sha,"repaired_sha256":repaired_sha,"repair_type":"ARRAY_CONTAINER_COLON_TO_COMMA","repair_count":count,"string_content_mutation_allowed":False,"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+        (run_root/f"repair-{stem}-{sha[:12]}.json").write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return payload,sha
 
 
 def _ark_with_provider_receipt(*,run_root:Path,stem:str,requested_model:str,context:dict|None=None,**kwargs)->dict:
@@ -289,11 +330,20 @@ def evidence_design(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,mod
     if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
     prompt,candidate_ids=evidence_design_prompt(plan,part=part,batch_size=batch_size)
     res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-design-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=0.0)
-    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_json(run_root,f"evidence-design-p{part}",raw,resolved)
-    state=compile_evidence_designs(plan,payload,part=part);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-design-p{part}",raw,resolved)
+    state=compile_evidence_designs(plan,payload,part=part,design_model=resolved);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"designs":payload.get("designs") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
     (run_root/f"evidence-design-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
+
+
+def evidence_contract_review(*,run_root:Path,part:int,batch_size:int=2,model:str="glm-5.2")->dict:
+    control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
+    if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
+    prompt,candidate_ids=evidence_review_prompt(plan,part=part,batch_size=batch_size);res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-review-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=4200,temperature=0.0)
+    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-review-p{part}",raw,resolved);state=compile_evidence_reviews(plan,payload,part=part,reviewer_model=resolved);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"reviews":payload.get("reviews") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+    (run_root/f"evidence-review-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
 
 
 def evidence_adjudicate(*,run_root:Path,receipt_path:Path)->dict:
@@ -336,7 +386,7 @@ def finalize(*,pool:Path|None,run_root:Path)->dict:
 
 
 def main()->None:
-    ap=argparse.ArgumentParser();ap.add_argument("command",choices=("expand","assemble","evolve","formulate","audit","evidence-design","evidence-adjudicate","falsifier-request","falsifier-preflight","review","finalize"));ap.add_argument("--pool",type=Path);ap.add_argument("--run-root",type=Path,required=True);ap.add_argument("--lane");ap.add_argument("--count",type=int,default=6);ap.add_argument("--part",type=int,default=1);ap.add_argument("--generation",type=int,default=1);ap.add_argument("--model",default="ark-code-latest");ap.add_argument("--memory",type=Path);ap.add_argument("--support-inventory",type=Path);ap.add_argument("--evidence-receipts",type=Path);a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument("command",choices=("expand","assemble","evolve","formulate","audit","evidence-design","evidence-review","evidence-adjudicate","falsifier-request","falsifier-preflight","review","finalize"));ap.add_argument("--pool",type=Path);ap.add_argument("--run-root",type=Path,required=True);ap.add_argument("--lane");ap.add_argument("--count",type=int,default=6);ap.add_argument("--part",type=int,default=1);ap.add_argument("--generation",type=int,default=1);ap.add_argument("--model",default="ark-code-latest");ap.add_argument("--memory",type=Path);ap.add_argument("--support-inventory",type=Path);ap.add_argument("--evidence-receipts",type=Path);a=ap.parse_args()
     stop_marker=a.run_root/"shadow-run-qualification-stop.json"
     if stop_marker.exists():
         state=json.loads(stop_marker.read_text(encoding="utf-8"));raise SystemExit(f"shadow run stopped by qualification gate: {state.get('status','STOPPED')}")
@@ -347,6 +397,7 @@ def main()->None:
     elif a.command=="formulate":result=formulate(pool=a.pool,run_root=a.run_root,part=a.part,model=a.model,memory_path=a.memory)
     elif a.command=="audit":result=machine_audit(pool=a.pool,run_root=a.run_root)
     elif a.command=="evidence-design":result=evidence_design(pool=a.pool,run_root=a.run_root,part=a.part,model=a.model)
+    elif a.command=="evidence-review":result=evidence_contract_review(run_root=a.run_root,part=a.part,model="glm-5.2" if a.model=="ark-code-latest" else a.model)
     elif a.command=="evidence-adjudicate":
         if a.evidence_receipts is None:raise SystemExit("--evidence-receipts is required for evidence-adjudicate")
         result=evidence_adjudicate(run_root=a.run_root,receipt_path=a.evidence_receipts)

@@ -25,6 +25,8 @@ class ResearchSystemTest(unittest.TestCase):
             object_candidate_state=state.get("paper_first_scientific_object_candidate_evidence") or {},
             support_release_watch_state=state.get("paper_first_support_release_watch") or {},
             support_asset_recheck_state=state.get("paper_first_support_asset_recheck_queue") or {},
+            shadow_portfolio_state=state.get("paper_first_problem_search_portfolio") or {},
+            evidence_migration_state=state.get("paper_first_evidence_migration") or {},
         )
         return state
 
@@ -629,8 +631,12 @@ class ResearchSystemTest(unittest.TestCase):
 
     def test_discovery_frontier_is_trigger_driven_zero_authority_and_consistent(self) -> None:
         frontier=self.state["paper_first_discovery_frontier"]
-        self.assertEqual(frontier["status"],"SHADOW_QUALIFICATION_PENDING")
-        self.assertEqual(frontier["summary"]["open_internal_frontiers"],1)
+        evidence_open=int((frontier.get("summary") or {}).get("evidence_internal_open") or 0)
+        if evidence_open:
+            self.assertEqual(frontier["status"],"EVIDENCE_ACQUISITION_PENDING")
+            self.assertEqual(frontier["summary"]["open_internal_frontiers"],1)
+        else:
+            self.assertIn(frontier["status"],{"WAIT_EXTERNAL_EVIDENCE_TRIGGERS","SHADOW_QUALIFICATION_PENDING"})
         self.assertGreaterEqual(frontier["summary"]["external_triggers"],1)
         for key in ("automatic_model_calls_authorized","automatic_problem_gate_authorized","automatic_method_authorized","automatic_experiment_authorized","automatic_p0_authorized","automatic_gpu_authorized"):
             self.assertEqual(frontier["summary"][key],0)

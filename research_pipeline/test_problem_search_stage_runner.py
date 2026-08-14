@@ -311,6 +311,17 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
                 with self.assertRaisesRegex(SystemExit,"STOP_BEFORE_ASSEMBLE_CONTROL_SNAPSHOT_SUPERSEDED"):
                     runner.main()
 
+    def test_evidence_design_parser_repairs_only_impossible_array_colon_delimiter(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);raw='{"designs":[{"anti_bake_in_controls":["first":"second"],"decision_rule":{"INCONCLUSIVE":"hold"}}]}'
+            payload,sha=runner._parse_archived_evidence_design_json(root,"evidence-design-p1",raw,"test-model")
+            self.assertEqual(payload["designs"][0]["anti_bake_in_controls"],["first","second"])
+            receipt=json.loads(next(root.glob("repair-evidence-design-p1-*.json")).read_text(encoding="utf-8"))
+            self.assertEqual(receipt["repair_type"],"ARRAY_CONTAINER_COLON_TO_COMMA")
+            self.assertEqual(receipt["repair_count"],1)
+            self.assertFalse(receipt["string_content_mutation_allowed"])
+            self.assertEqual(receipt["raw_sha256"],sha)
+
     def test_malformed_model_output_is_archived_before_parse_failure(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

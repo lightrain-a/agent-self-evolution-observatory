@@ -622,6 +622,8 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_evidence_migration_status":paper_first_evidence_migration.get("status","NOT_RUN"),
             "paper_first_evidence_migration_pending":int((paper_first_evidence_migration.get("summary") or {}).get("current_reduction_pending") or 0),
             "paper_first_evidence_migration_design_pending":int((paper_first_evidence_migration.get("summary") or {}).get("evidence_design_pending") or 0),
+            "paper_first_evidence_migration_review_pending":int((paper_first_evidence_migration.get("summary") or {}).get("evidence_review_pending") or 0),
+            "paper_first_evidence_migration_execution_ready":int((paper_first_evidence_migration.get("summary") or {}).get("evidence_execution_ready") or 0),
             "paper_first_shadow_latest_run_id":paper_first_problem_search_portfolio.get("latest_run_id",""),
             "paper_first_shadow_latest_stage_runner_schema":paper_first_shadow_latest.get("stage_runner_required_schema",""),
             "paper_first_shadow_latest_control_snapshot_sha256":paper_first_shadow_latest.get("control_snapshot_sha256",""),
@@ -654,6 +656,10 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_shadow_latest_evidence_design_selected":paper_first_shadow_latest_summary.get("evidence_design_selected",0),
             "paper_first_shadow_latest_evidence_design_pending":paper_first_shadow_latest_summary.get("evidence_design_pending",0),
             "paper_first_shadow_latest_evidence_wait_primary_asset":paper_first_shadow_latest_summary.get("evidence_wait_primary_asset",0),
+            "paper_first_shadow_latest_evidence_review_pending":paper_first_shadow_latest_summary.get("evidence_review_pending",0),
+            "paper_first_shadow_latest_evidence_review_clear":paper_first_shadow_latest_summary.get("evidence_review_clear",0),
+            "paper_first_shadow_latest_evidence_review_revise":paper_first_shadow_latest_summary.get("evidence_review_revise",0),
+            "paper_first_shadow_latest_evidence_review_blocked":paper_first_shadow_latest_summary.get("evidence_review_blocked",0),
             "paper_first_shadow_latest_evidence_execution_ready":paper_first_shadow_latest_summary.get("evidence_execution_ready",0),
             "paper_first_shadow_latest_evidence_execution_completed":paper_first_shadow_latest_summary.get("evidence_execution_completed",0),
             "paper_first_shadow_latest_evidence_reduction_supported":paper_first_shadow_latest_summary.get("evidence_reduction_supported",0),
@@ -1436,7 +1442,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
                 if shadow_latest.get("status")=="SHADOW_TERMINAL_INCOMPLETE_PROBLEM_FALSIFIER_PREFLIGHT" and not (0<=falsifier_resolved<falsifier_eligible): errors.append("problem-falsifier-incomplete terminal status requires unresolved eligible queue")
             elif latest_policy.get("support_inventory_is_one_evidence_route_not_global_prerequisite") is not True and falsifier_resolved!=falsifier_eligible: errors.append("shadow problem-falsifier preflight accounting mismatch")
             if "provisional_problem_candidates" in latest_summary:
-                evidence_open=sum(int(latest_summary.get(key) or 0) for key in ("evidence_design_pending","evidence_execution_ready","evidence_residual_survives","evidence_branch_repair_ready"))
+                evidence_open=sum(int(latest_summary.get(key) or 0) for key in ("evidence_design_pending","evidence_review_pending","evidence_execution_ready","evidence_residual_survives","evidence_branch_repair_ready"))
                 if latest_policy.get("reduction_pending_enters_bounded_evidence_acquisition_on_future_control_snapshots") is not True or latest_policy.get("evidence_acquisition_authority_is_not_scientific_claim_authority") is not True or latest_policy.get("evidence_residual_survival_requires_semantic_and_current_source_review") is not True: errors.append("future shadow reduction-pending route must separate bounded evidence acquisition from scientific certification")
                 if int(latest_summary.get("provisional_problem_candidates") or 0)!=int(latest_summary.get("problem_falsifier_eligible") or 0): errors.append("provisional evidence portfolio must cover every exact-reduction-pending candidate")
                 if int(latest_summary.get("evidence_execution_completed") or 0)<int(latest_summary.get("evidence_reduction_supported") or 0)+int(latest_summary.get("evidence_residual_survives") or 0): errors.append("evidence outcome accounting exceeds completed bounded executions")
