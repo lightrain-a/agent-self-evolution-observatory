@@ -66,6 +66,31 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "zero-authority"):
                     runner._shadow_dead_end_memory(None)
 
+    def test_qualified_expand_defaults_to_run_local_pool_and_memory_for_validation_and_prompt(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);run=root/"shadow-qualified";run.mkdir();local_pool=run/"frozen-primary-evidence-pool.json";local_memory=run/"shadow-dead-end-memory.json";global_memory=root/"global-memory.json"
+            local_pool.write_text(json.dumps({"frozen_pool_sha256":"a"*64,"records":[]}),encoding="utf-8")
+            local_memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[],"memory_id":"RUN_LOCAL"}),encoding="utf-8")
+            global_memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[],"memory_id":"GLOBAL"}),encoding="utf-8")
+            response={"text":json.dumps({"seeds":[]}),"resolved_model":"test-model"}
+            def prompt(lane,records,count,memory):
+                self.assertEqual(memory.get("memory_id"),"RUN_LOCAL")
+                return "prompt"
+            with patch.object(runner,"DEFAULT_SHADOW_DEAD_END_MEMORY_PATH",global_memory),patch("research_pipeline.problem_search_stage_runner.validate_shadow_run_control",return_value={"control_snapshot_sha256":"f"*64}) as validate,patch("research_pipeline.problem_search_stage_runner._expansion_prompt",side_effect=prompt),patch("research_pipeline.problem_search_stage_runner._ark",return_value=response):
+                result=runner.expand(pool=None,run_root=run,lane="CONTRADICTION",count=1,model="test",part=1,memory_path=None)
+            validate.assert_called_once_with(run_root=run,pool_path=local_pool,memory_path=local_memory)
+            artifact=json.loads((run/"expand-CONTRADICTION-p1.json").read_text(encoding="utf-8"))
+        self.assertEqual(result["valid_seeds"],0)
+        self.assertEqual(artifact["control_snapshot_sha256"],"f"*64)
+
+    def test_missing_pool_without_run_local_frozen_pool_fails_before_provider(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            run=Path(td)/"shadow-missing-pool";run.mkdir()
+            with patch("research_pipeline.problem_search_stage_runner._ark") as provider:
+                with self.assertRaisesRegex(ValueError,"run-local frozen-primary-evidence-pool"):
+                    runner.expand(pool=None,run_root=run,lane="CONTRADICTION",count=1,model="test",part=1,memory_path=None)
+            provider.assert_not_called()
+
     def test_same_pool_semantic_dead_end_is_machine_filtered_after_model_output(self) -> None:
         pool_sha="a"*64
         dead_claim_a="A weak optimizer cannot operate through the unchanged open-ended optimization interface."
