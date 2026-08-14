@@ -554,6 +554,10 @@ class ResearchSystemTest(unittest.TestCase):
             "summary":{"support_holds":4,"release_recheck_signals":1,"queued":1,"new_triggers":1,"carried_forward":0,"support_qualified":0,"generator_reopen_authorized":0,"problem_gate_authorized":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0,"gpu_authorized":0},
         }
         self.assertEqual(validate_state(state),[])
+        resolved=copy.deepcopy(state);resolved_queue=resolved["paper_first_support_asset_recheck_queue"];resolved_queue["policy"].update({"asset_resolution_must_bind_latest_trigger_digest":True,"asset_resolution_cannot_mark_support_qualified_or_reopen":True,"support_inventory_recheck_remains_queue_handoff_not_resolution":True});resolved_queue["summary"].update({"queued":0,"resolved":1,"resolution_still_unavailable":1,"resolution_irrelevant_release":0})
+        self.assertEqual(validate_state(resolved),[])
+        bad_resolution=copy.deepcopy(resolved);bad_resolution["paper_first_support_asset_recheck_queue"]["policy"]["asset_resolution_must_bind_latest_trigger_digest"]=False
+        self.assertTrue(any("durable private-task accounting" in error for error in validate_state(bad_resolution)))
         escalated=copy.deepcopy(state);escalated["paper_first_support_asset_recheck_queue"]["summary"]["generator_reopen_authorized"]=1
         self.assertTrue(any("support asset recheck queue cannot authorize" in error for error in validate_state(escalated)))
         leaked=copy.deepcopy(state);leaked["paper_first_support_asset_recheck_queue"]["entries"]=[{"candidate_id":"secret","required_unit":"secret"}]

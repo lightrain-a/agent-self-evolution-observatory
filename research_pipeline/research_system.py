@@ -542,6 +542,9 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_support_asset_recheck_queued":int((paper_first_support_asset_recheck.get("summary") or {}).get("queued") or 0),
             "paper_first_support_asset_recheck_new_triggers":int((paper_first_support_asset_recheck.get("summary") or {}).get("new_triggers") or 0),
             "paper_first_support_asset_recheck_carried_forward":int((paper_first_support_asset_recheck.get("summary") or {}).get("carried_forward") or 0),
+            "paper_first_support_asset_recheck_resolved":int((paper_first_support_asset_recheck.get("summary") or {}).get("resolved") or 0),
+            "paper_first_support_asset_recheck_resolution_still_unavailable":int((paper_first_support_asset_recheck.get("summary") or {}).get("resolution_still_unavailable") or 0),
+            "paper_first_support_asset_recheck_resolution_irrelevant_release":int((paper_first_support_asset_recheck.get("summary") or {}).get("resolution_irrelevant_release") or 0),
             "paper_first_sp15_identifiability_support_status":paper_first_sp15_support["summary"]["support_status"],
             "paper_first_sp15_identifiability_units":paper_first_sp15_support["summary"]["query_level_identifiability_units"],
             "paper_first_search_portfolio_method_design_authorized":paper_first_search_portfolio_design["summary"]["method_design_authorized"],
@@ -954,6 +957,12 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and support_release_status in {"NOT_RUN","SUPPORT_RELEASE_WATCH_COMPLETE","SUPPORT_RELEASE_WATCH_PARTIAL","STATE_UNREADABLE","STATE_INVALID"}
     )
     support_asset_recheck=state.get("paper_first_support_asset_recheck_queue") or {};support_asset_policy=support_asset_recheck.get("policy") or {};support_asset_summary=support_asset_recheck.get("summary") or {};support_asset_status=str(support_asset_recheck.get("status") or "NOT_RUN")
+    support_asset_resolution_present=("resolved" in support_asset_summary) or support_asset_policy.get("asset_resolution_must_bind_latest_trigger_digest") is True
+    support_asset_resolution_boundary_ok=(not support_asset_resolution_present) or (
+        support_asset_policy.get("asset_resolution_must_bind_latest_trigger_digest") is True
+        and support_asset_policy.get("asset_resolution_cannot_mark_support_qualified_or_reopen") is True
+        and support_asset_policy.get("support_inventory_recheck_remains_queue_handoff_not_resolution") is True
+    )
     support_asset_recheck_boundary_ok=bool(
         support_asset_recheck.get("scientific_authority") is False
         and support_asset_policy.get("release_change_only_creates_asset_recheck_task") is True
@@ -963,6 +972,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and support_asset_policy.get("queue_cannot_reopen_generator_or_problem_gate") is True
         and support_asset_policy.get("queue_cannot_authorize_method_experiment_p0_gpu") is True
         and support_asset_policy.get("explicit_asset_resolution_required_to_clear_entry") is True
+        and support_asset_resolution_boundary_ok
         and support_asset_policy.get("automatic_provider_calls_authorized") is False
         and support_asset_policy.get("public_summary_excludes_entries_refs_urls_required_units_and_private_paths") is True
         and support_asset_status in {"NOT_RUN","SUPPORT_ASSET_RECHECK_QUEUE_EMPTY","SUPPORT_ASSET_RECHECK_QUEUE_READY","STATE_UNREADABLE","STATE_INVALID"}
@@ -1242,7 +1252,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             errors.append("support release watch public state cannot expose URLs, refs, required units, or private rows")
     support_asset_recheck=state.get("paper_first_support_asset_recheck_queue") or {};support_asset_policy=support_asset_recheck.get("policy") or {};support_asset_summary=support_asset_recheck.get("summary") or {};support_asset_status=str(support_asset_recheck.get("status") or "NOT_RUN")
     if support_asset_recheck:
-        if support_asset_recheck.get("scientific_authority") is not False or support_asset_policy.get("release_change_only_creates_asset_recheck_task") is not True or support_asset_policy.get("queue_is_durable_across_release_watch_cooldown") is not True or support_asset_policy.get("queue_only_tracks_current_support_holds") is not True or support_asset_policy.get("queue_cannot_mark_support_qualified") is not True or support_asset_policy.get("queue_cannot_reopen_generator_or_problem_gate") is not True or support_asset_policy.get("queue_cannot_authorize_method_experiment_p0_gpu") is not True or support_asset_policy.get("explicit_asset_resolution_required_to_clear_entry") is not True or support_asset_policy.get("automatic_provider_calls_authorized") is not False or support_asset_policy.get("public_summary_excludes_entries_refs_urls_required_units_and_private_paths") is not True:
+        resolution_present=("resolved" in support_asset_summary) or support_asset_policy.get("asset_resolution_must_bind_latest_trigger_digest") is True
+        resolution_policy_ok=(not resolution_present) or (support_asset_policy.get("asset_resolution_must_bind_latest_trigger_digest") is True and support_asset_policy.get("asset_resolution_cannot_mark_support_qualified_or_reopen") is True and support_asset_policy.get("support_inventory_recheck_remains_queue_handoff_not_resolution") is True)
+        if support_asset_recheck.get("scientific_authority") is not False or support_asset_policy.get("release_change_only_creates_asset_recheck_task") is not True or support_asset_policy.get("queue_is_durable_across_release_watch_cooldown") is not True or support_asset_policy.get("queue_only_tracks_current_support_holds") is not True or support_asset_policy.get("queue_cannot_mark_support_qualified") is not True or support_asset_policy.get("queue_cannot_reopen_generator_or_problem_gate") is not True or support_asset_policy.get("queue_cannot_authorize_method_experiment_p0_gpu") is not True or support_asset_policy.get("explicit_asset_resolution_required_to_clear_entry") is not True or resolution_policy_ok is not True or support_asset_policy.get("automatic_provider_calls_authorized") is not False or support_asset_policy.get("public_summary_excludes_entries_refs_urls_required_units_and_private_paths") is not True:
             errors.append("support asset recheck queue must remain durable private-task accounting with zero scientific authority")
         if support_asset_status not in {"NOT_RUN","SUPPORT_ASSET_RECHECK_QUEUE_EMPTY","SUPPORT_ASSET_RECHECK_QUEUE_READY","STATE_UNREADABLE","STATE_INVALID"}:
             errors.append("support asset recheck queue status invalid")

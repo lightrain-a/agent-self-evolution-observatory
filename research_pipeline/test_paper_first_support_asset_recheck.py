@@ -6,7 +6,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .config import StorageSettings
-from .paper_first_support_asset_recheck import build_support_asset_recheck_queue, public_support_asset_recheck_summary, write_private_support_asset_recheck_queue
+from .paper_first_support_asset_recheck import (
+    build_support_asset_recheck_queue,
+    public_support_asset_recheck_summary,
+    validate_support_asset_resolution_state,
+    write_private_support_asset_recheck_queue,
+    write_private_support_asset_resolutions,
+)
 
 
 class SupportAssetRecheckQueueTest(unittest.TestCase):
@@ -86,6 +92,40 @@ class SupportAssetRecheckQueueTest(unittest.TestCase):
         self.assertEqual(second["summary"]["carried_forward"], 1)
         self.assertEqual(second["entries"][0]["queue_id"], first["entries"][0]["queue_id"])
         self.assertEqual(second["entries"][0]["latest_trigger_digest"], first["entries"][0]["latest_trigger_digest"])
+
+    def test_matching_explicit_resolution_clears_only_the_resolved_trigger(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            storage=self.storage(Path(td));now=datetime(2026,8,14,tzinfo=timezone.utc)
+            first=build_support_asset_recheck_queue(storage=storage,watch_state=self.watch(),design_state=self.design(),previous_state={},now=now)
+            digest=first["entries"][0]["latest_trigger_digest"]
+            resolution={"schema_version":"1.0","status":"SUPPORT_ASSET_RESOLUTIONS_RECORDED","scientific_authority":False,"resolutions":[{"candidate_id":"C1","resolved_trigger_digest":digest,"disposition":"RECHECKED_SUPPORT_STILL_UNAVAILABLE","resolution_reason":"The changed release still does not expose the frozen matched trajectory unit.","support_inventory_reaudit_required":False,"support_qualified":False,"generator_reopen_authorized":False,"problem_gate_authorized":False,"scientific_authority":False}]}
+            self.assertEqual(validate_support_asset_resolution_state(resolution),[])
+            cleared=build_support_asset_recheck_queue(storage=storage,watch_state={"rows":[],"scientific_authority":False},design_state=self.design(),previous_state=first,resolution_state=resolution,now=now)
+            changed=self.watch();changed["rows"][0]["fingerprint"]="c"*64
+            reopened=build_support_asset_recheck_queue(storage=storage,watch_state=changed,design_state=self.design(),previous_state=first,resolution_state=resolution,now=now)
+        self.assertEqual(cleared["status"],"SUPPORT_ASSET_RECHECK_QUEUE_EMPTY")
+        self.assertEqual((cleared["summary"]["queued"],cleared["summary"]["resolved"],cleared["summary"]["resolution_still_unavailable"]),(0,1,1))
+        self.assertEqual(reopened["status"],"SUPPORT_ASSET_RECHECK_QUEUE_READY")
+        self.assertEqual((reopened["summary"]["queued"],reopened["summary"]["new_triggers"],reopened["summary"]["resolved"]),(1,1,0))
+        self.assertNotEqual(reopened["entries"][0]["latest_trigger_digest"],digest)
+
+    def test_support_inventory_recheck_is_not_a_resolution_disposition(self) -> None:
+        resolution={"schema_version":"1.0","status":"SUPPORT_ASSET_RESOLUTIONS_RECORDED","scientific_authority":False,"resolutions":[{"candidate_id":"C1","resolved_trigger_digest":"d"*64,"disposition":"SUPPORT_INVENTORY_REAUDIT_READY","resolution_reason":"This must stay in the queue-to-handoff path rather than clearing the durable task.","support_inventory_reaudit_required":True,"support_qualified":False,"generator_reopen_authorized":False,"problem_gate_authorized":False,"scientific_authority":False}]}
+        self.assertTrue(any("disposition invalid" in error for error in validate_support_asset_resolution_state(resolution)))
+        private=build_support_asset_recheck_queue(storage=self.storage(Path('/tmp/unused-support-handoff-policy')),watch_state=self.watch(),design_state=self.design(),previous_state={},now=datetime(2026,8,14,tzinfo=timezone.utc))
+        self.assertTrue(private["policy"]["support_inventory_recheck_remains_queue_handoff_not_resolution"])
+        self.assertEqual(private["summary"]["support_qualified"],0)
+
+    def test_resolution_writer_requires_bound_trigger_and_zero_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            storage=self.storage(Path(td));path=storage.data_root/"paper-first-problem-discovery"/"support-release-watch"/"asset-recheck-resolutions.json"
+            row={"candidate_id":"C1","resolved_trigger_digest":"d"*64,"disposition":"RECHECKED_RELEASE_IRRELEVANT","resolution_reason":"The release changed documentation/tooling only and does not contain the frozen required unit.","support_inventory_reaudit_required":False,"support_qualified":False,"generator_reopen_authorized":False,"problem_gate_authorized":False,"scientific_authority":False}
+            state=write_private_support_asset_resolutions([row],storage=storage,path=path)
+            self.assertTrue(path.exists())
+            self.assertEqual(validate_support_asset_resolution_state(state),[])
+            broken=dict(row);broken["support_qualified"]=True
+            with self.assertRaisesRegex(ValueError,"cannot qualify support"):
+                write_private_support_asset_resolutions([broken],storage=storage,path=path)
 
     def test_non_recheck_watch_state_does_not_create_task(self) -> None:
         with tempfile.TemporaryDirectory() as td:
