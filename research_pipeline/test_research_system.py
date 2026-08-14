@@ -548,6 +548,7 @@ class ResearchSystemTest(unittest.TestCase):
             self.assertEqual(int((queue.get("summary") or {}).get(key) or 0),0)
         self.assertNotIn("entries",queue)
         state=copy.deepcopy(self.state)
+        state.pop("paper_first_support_asset_recheck_handoff",None)
         state["paper_first_support_asset_recheck_queue"]={
             "schema_version":"1.0","status":"SUPPORT_ASSET_RECHECK_QUEUE_READY","scientific_authority":False,
             "policy":{"scientific_authority":False,"release_change_only_creates_asset_recheck_task":True,"queue_is_durable_across_release_watch_cooldown":True,"queue_only_tracks_current_support_holds":True,"queue_cannot_mark_support_qualified":True,"queue_cannot_reopen_generator_or_problem_gate":True,"queue_cannot_authorize_method_experiment_p0_gpu":True,"explicit_asset_resolution_required_to_clear_entry":True,"automatic_provider_calls_authorized":False,"public_summary_excludes_entries_refs_urls_required_units_and_private_paths":True},
@@ -562,6 +563,26 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(any("support asset recheck queue cannot authorize" in error for error in validate_state(escalated)))
         leaked=copy.deepcopy(state);leaked["paper_first_support_asset_recheck_queue"]["entries"]=[{"candidate_id":"secret","required_unit":"secret"}]
         self.assertTrue(any("support asset recheck public state cannot expose" in error for error in validate_state(leaked)))
+
+    def test_support_asset_handoff_is_bounded_to_existing_preflight_and_matches_queue(self) -> None:
+        state=copy.deepcopy(self.state)
+        state["paper_first_support_asset_recheck_queue"]={
+            "schema_version":"1.0","status":"SUPPORT_ASSET_RECHECK_QUEUE_READY","scientific_authority":False,
+            "policy":{"scientific_authority":False,"release_change_only_creates_asset_recheck_task":True,"queue_is_durable_across_release_watch_cooldown":True,"queue_only_tracks_current_support_holds":True,"queue_cannot_mark_support_qualified":True,"queue_cannot_reopen_generator_or_problem_gate":True,"queue_cannot_authorize_method_experiment_p0_gpu":True,"explicit_asset_resolution_required_to_clear_entry":True,"automatic_provider_calls_authorized":False,"public_summary_excludes_entries_refs_urls_required_units_and_private_paths":True},
+            "summary":{"support_holds":4,"release_recheck_signals":1,"queued":1,"new_triggers":1,"carried_forward":0,"support_qualified":0,"generator_reopen_authorized":0,"problem_gate_authorized":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0,"gpu_authorized":0},
+        }
+        state["paper_first_support_asset_recheck_handoff"]={
+            "schema_version":"1.0","status":"SUPPORT_ASSET_RECHECK_HANDOFF_READY","scientific_authority":False,
+            "policy":{"scientific_authority":False,"handoff_reuses_existing_problem_falsifier_support_inventory":True,"asset_recheck_cannot_define_a_parallel_support_gate":True,"release_change_is_not_support_qualification":True,"support_inventory_receipt_required_before_any_support_decision":True,"problem_falsifier_preflight_remains_support_authority_boundary":True,"handoff_cannot_execute_falsifier_automatically":True,"handoff_cannot_reopen_generator_or_problem_gate":True,"handoff_cannot_authorize_method_experiment_p0_gpu":True,"automatic_provider_calls_authorized":False,"public_summary_excludes_entries_refs_urls_required_units_and_private_paths":True},
+            "summary":{"queued_asset_rechecks":1,"support_inventory_recheck_ready":1,"provenance_incomplete":0,"automatic_execution_authorized":0,"provider_calls_authorized":0,"support_qualified":0,"falsifier_execution_authorized":0,"generator_reopen_authorized":0,"problem_gate_authorized":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0,"gpu_authorized":0},
+        }
+        self.assertEqual(validate_state(state),[])
+        mismatch=copy.deepcopy(state);mismatch["paper_first_support_asset_recheck_handoff"]["summary"]["support_inventory_recheck_ready"]=0
+        self.assertTrue(any("partition ready/provenance-hold" in error for error in validate_state(mismatch)))
+        leak=copy.deepcopy(state);leak["paper_first_support_asset_recheck_handoff"]["entries"]=[{"candidate_id":"secret"}]
+        self.assertTrue(any("cannot expose private queue" in error for error in validate_state(leak)))
+        escalated=copy.deepcopy(state);escalated["paper_first_support_asset_recheck_handoff"]["summary"]["provider_calls_authorized"]=1
+        self.assertTrue(any("cannot authorize provider" in error for error in validate_state(escalated)))
 
     def test_canonical_paper_design_backlog_is_durable_but_cannot_escalate_authority(self) -> None:
         state=copy.deepcopy(self.state)

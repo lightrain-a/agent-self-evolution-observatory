@@ -44,6 +44,7 @@ from .paper_first_scientific_object_candidate_evidence import load_scientific_ob
 from .paper_first_scientific_object_retrieval_audit import load_private_shadow_scientific_object_retrieval_audit, public_shadow_scientific_object_retrieval_summary
 from .paper_first_support_release_watch import load_private_support_release_watch, public_support_release_watch_summary
 from .paper_first_support_asset_recheck import load_private_support_asset_recheck_queue, public_support_asset_recheck_summary
+from .paper_first_support_asset_recheck_handoff import load_private_support_asset_recheck_handoff, public_support_asset_recheck_handoff_summary
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
@@ -328,6 +329,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_search_portfolio_design = build_search_portfolio_design_adjudication()
     paper_first_support_release_watch = public_support_release_watch_summary(load_private_support_release_watch(storage=storage))
     paper_first_support_asset_recheck = public_support_asset_recheck_summary(load_private_support_asset_recheck_queue(storage=storage))
+    paper_first_support_asset_recheck_handoff = public_support_asset_recheck_handoff_summary(load_private_support_asset_recheck_handoff(storage=storage))
     paper_first_sp15_support = build_sp15_identifiability_support()
     paper_first_paper_design_backlog = load_paper_design_backlog()
     paper_first_global_relation_recall = load_global_relation_recall_state()
@@ -545,6 +547,9 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_support_asset_recheck_resolved":int((paper_first_support_asset_recheck.get("summary") or {}).get("resolved") or 0),
             "paper_first_support_asset_recheck_resolution_still_unavailable":int((paper_first_support_asset_recheck.get("summary") or {}).get("resolution_still_unavailable") or 0),
             "paper_first_support_asset_recheck_resolution_irrelevant_release":int((paper_first_support_asset_recheck.get("summary") or {}).get("resolution_irrelevant_release") or 0),
+            "paper_first_support_asset_handoff_status":paper_first_support_asset_recheck_handoff.get("status","NOT_RUN"),
+            "paper_first_support_asset_handoff_ready":int((paper_first_support_asset_recheck_handoff.get("summary") or {}).get("support_inventory_recheck_ready") or 0),
+            "paper_first_support_asset_handoff_provenance_incomplete":int((paper_first_support_asset_recheck_handoff.get("summary") or {}).get("provenance_incomplete") or 0),
             "paper_first_sp15_identifiability_support_status":paper_first_sp15_support["summary"]["support_status"],
             "paper_first_sp15_identifiability_units":paper_first_sp15_support["summary"]["query_level_identifiability_units"],
             "paper_first_search_portfolio_method_design_authorized":paper_first_search_portfolio_design["summary"]["method_design_authorized"],
@@ -757,6 +762,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_search_portfolio_design_adjudication":paper_first_search_portfolio_design,
         "paper_first_support_release_watch":paper_first_support_release_watch,
         "paper_first_support_asset_recheck_queue":paper_first_support_asset_recheck,
+        "paper_first_support_asset_recheck_handoff":paper_first_support_asset_recheck_handoff,
         "paper_first_sp15_identifiability_support":paper_first_sp15_support,
         "paper_first_paper_design_backlog":paper_first_paper_design_backlog,
         "paper_first_global_relation_recall":paper_first_global_relation_recall,
@@ -978,6 +984,24 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and support_asset_status in {"NOT_RUN","SUPPORT_ASSET_RECHECK_QUEUE_EMPTY","SUPPORT_ASSET_RECHECK_QUEUE_READY","STATE_UNREADABLE","STATE_INVALID"}
         and all(int(support_asset_summary.get(key) or 0)==0 for key in ("support_qualified","generator_reopen_authorized","problem_gate_authorized","method_authorized","experiment_authorized","p0_authorized","gpu_authorized"))
     )
+    support_asset_handoff=state.get("paper_first_support_asset_recheck_handoff") or {};support_handoff_policy=support_asset_handoff.get("policy") or {};support_handoff_summary=support_asset_handoff.get("summary") or {};support_handoff_status=str(support_asset_handoff.get("status") or "NOT_RUN")
+    support_asset_handoff_boundary_ok=bool(
+        support_asset_handoff.get("scientific_authority") is False
+        and support_handoff_policy.get("handoff_reuses_existing_problem_falsifier_support_inventory") is True
+        and support_handoff_policy.get("asset_recheck_cannot_define_a_parallel_support_gate") is True
+        and support_handoff_policy.get("release_change_is_not_support_qualification") is True
+        and support_handoff_policy.get("support_inventory_receipt_required_before_any_support_decision") is True
+        and support_handoff_policy.get("problem_falsifier_preflight_remains_support_authority_boundary") is True
+        and support_handoff_policy.get("handoff_cannot_execute_falsifier_automatically") is True
+        and support_handoff_policy.get("handoff_cannot_reopen_generator_or_problem_gate") is True
+        and support_handoff_policy.get("handoff_cannot_authorize_method_experiment_p0_gpu") is True
+        and support_handoff_policy.get("automatic_provider_calls_authorized") is False
+        and support_handoff_policy.get("public_summary_excludes_entries_refs_urls_required_units_and_private_paths") is True
+        and support_handoff_status in {"NOT_RUN","SUPPORT_ASSET_RECHECK_HANDOFF_EMPTY","SUPPORT_ASSET_RECHECK_HANDOFF_READY","SUPPORT_ASSET_RECHECK_HANDOFF_HOLD_PROVENANCE","STATE_UNREADABLE","STATE_INVALID"}
+        and int(support_handoff_summary.get("queued_asset_rechecks") or 0)==int(support_asset_summary.get("queued") or 0)
+        and int(support_handoff_summary.get("support_inventory_recheck_ready") or 0)+int(support_handoff_summary.get("provenance_incomplete") or 0)==int(support_handoff_summary.get("queued_asset_rechecks") or 0)
+        and all(int(support_handoff_summary.get(key) or 0)==0 for key in ("automatic_execution_authorized","provider_calls_authorized","support_qualified","falsifier_execution_authorized","generator_reopen_authorized","problem_gate_authorized","method_authorized","experiment_authorized","p0_authorized","gpu_authorized"))
+    )
     relation_freshness=state.get("paper_first_global_relation_freshness") or {};relation_freshness_policy=relation_freshness.get("policy") or {};relation_freshness_summary=relation_freshness.get("summary") or {}
     relation_freshness_boundary_ok=bool(
         relation_freshness.get("scientific_authority") is False
@@ -1036,6 +1060,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-object-candidate-evidence-shadow", "pass":candidate_evidence_boundary_ok, "detail":{"status":candidate_evidence.get("status"),"summary":candidate_evidence_summary}},
         {"key":"paper-first-support-release-watch", "pass":support_release_boundary_ok, "detail":{"status":support_release_watch.get("status"),"summary":support_release_summary,"status_counts":support_release_watch.get("status_counts") or {}}},
         {"key":"paper-first-support-asset-recheck-queue", "pass":support_asset_recheck_boundary_ok, "detail":{"status":support_asset_recheck.get("status"),"summary":support_asset_summary}},
+        {"key":"paper-first-support-asset-recheck-handoff", "pass":support_asset_handoff_boundary_ok, "detail":{"status":support_asset_handoff.get("status"),"summary":support_handoff_summary}},
         {"key":"paper-first-global-relation-freshness", "pass":relation_freshness_boundary_ok, "detail":{"status":relation_freshness.get("status"),"summary":relation_freshness_summary}},
         {"key":"paper-first-global-relation-delta-preflight", "pass":relation_delta_boundary_ok, "detail":{"status":relation_delta.get("status"),"summary":relation_delta_summary,"pair_slots":relation_delta.get("pair_slots") or {},"interpretation":relation_delta.get("interpretation") or {}}},
         {"key":"paper-first-global-relation-scan-admission", "pass":relation_admission_boundary_ok, "detail":{"status":relation_admission.get("status"),"summary":relation_admission_summary}},
@@ -1262,6 +1287,19 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             errors.append("support asset recheck queue cannot authorize support, Generator, Problem Gate, or downstream execution")
         if any(key in support_asset_recheck for key in ("entries","candidate_id","source_refs","url","required_unit","reopen_only_if")):
             errors.append("support asset recheck public state cannot expose private queue entries, refs, URLs, or required units")
+    support_asset_handoff=state.get("paper_first_support_asset_recheck_handoff") or {};support_handoff_policy=support_asset_handoff.get("policy") or {};support_handoff_summary=support_asset_handoff.get("summary") or {};support_handoff_status=str(support_asset_handoff.get("status") or "NOT_RUN")
+    if support_asset_handoff:
+        if support_asset_handoff.get("scientific_authority") is not False or support_handoff_policy.get("handoff_reuses_existing_problem_falsifier_support_inventory") is not True or support_handoff_policy.get("asset_recheck_cannot_define_a_parallel_support_gate") is not True or support_handoff_policy.get("release_change_is_not_support_qualification") is not True or support_handoff_policy.get("support_inventory_receipt_required_before_any_support_decision") is not True or support_handoff_policy.get("problem_falsifier_preflight_remains_support_authority_boundary") is not True or support_handoff_policy.get("handoff_cannot_execute_falsifier_automatically") is not True or support_handoff_policy.get("handoff_cannot_reopen_generator_or_problem_gate") is not True or support_handoff_policy.get("handoff_cannot_authorize_method_experiment_p0_gpu") is not True or support_handoff_policy.get("automatic_provider_calls_authorized") is not False or support_handoff_policy.get("public_summary_excludes_entries_refs_urls_required_units_and_private_paths") is not True:
+            errors.append("support asset handoff must reuse existing support-inventory/preflight with zero execution authority")
+        if support_handoff_status not in {"NOT_RUN","SUPPORT_ASSET_RECHECK_HANDOFF_EMPTY","SUPPORT_ASSET_RECHECK_HANDOFF_READY","SUPPORT_ASSET_RECHECK_HANDOFF_HOLD_PROVENANCE","STATE_UNREADABLE","STATE_INVALID"}:
+            errors.append("support asset handoff status invalid")
+        queued=int(support_handoff_summary.get("queued_asset_rechecks") or 0);ready=int(support_handoff_summary.get("support_inventory_recheck_ready") or 0);incomplete=int(support_handoff_summary.get("provenance_incomplete") or 0)
+        if queued!=int(support_asset_summary.get("queued") or 0) or ready+incomplete!=queued:
+            errors.append("support asset handoff accounting must match durable queue and partition ready/provenance-hold entries")
+        if any(int(support_handoff_summary.get(key) or 0)!=0 for key in ("automatic_execution_authorized","provider_calls_authorized","support_qualified","falsifier_execution_authorized","generator_reopen_authorized","problem_gate_authorized","method_authorized","experiment_authorized","p0_authorized","gpu_authorized")):
+            errors.append("support asset handoff cannot authorize provider, support, falsifier, reopen, or downstream execution")
+        if any(key in support_asset_handoff for key in ("entries","candidate_id","queue_id","source_refs","required_unit","reopen_only_if","source_run_id")):
+            errors.append("support asset handoff public state cannot expose private queue/provenance/support-contract material")
     shadow_search_admission=state.get("paper_first_shadow_search_admission") or {}
     errors.extend(f"Shadow Search admission: {error}" for error in validate_shadow_search_admission(shadow_search_admission))
     shadow_portfolio=state.get("paper_first_problem_search_portfolio") or {};shadow_latest=shadow_portfolio.get("latest_run") or {}

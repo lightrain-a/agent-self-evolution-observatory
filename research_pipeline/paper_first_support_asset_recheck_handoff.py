@@ -124,6 +124,51 @@ def build_support_asset_recheck_handoff(
     }
 
 
+def load_private_support_asset_recheck_handoff(
+    *,
+    storage: StorageSettings | None = None,
+    path: Path | None = None,
+) -> dict[str, Any]:
+    storage = storage or StorageSettings.from_env()
+    path = path or _path(storage)
+    if not path.exists():
+        return {"schema_version": SCHEMA_VERSION, "status": "NOT_RUN", "policy": {"scientific_authority": False}, "summary": {}, "entries": [], "scientific_authority": False}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {"schema_version": SCHEMA_VERSION, "status": "STATE_UNREADABLE", "policy": {"scientific_authority": False}, "summary": {}, "entries": [], "scientific_authority": False}
+    return payload if isinstance(payload, dict) else {"schema_version": SCHEMA_VERSION, "status": "STATE_INVALID", "policy": {"scientific_authority": False}, "summary": {}, "entries": [], "scientific_authority": False}
+
+
+def public_support_asset_recheck_handoff_summary(state: dict[str, Any]) -> dict[str, Any]:
+    summary = state.get("summary") or {}
+    safe_keys = (
+        "queued_asset_rechecks", "support_inventory_recheck_ready", "provenance_incomplete",
+        "automatic_execution_authorized", "provider_calls_authorized", "support_qualified",
+        "falsifier_execution_authorized", "generator_reopen_authorized", "problem_gate_authorized",
+        "method_authorized", "experiment_authorized", "p0_authorized", "gpu_authorized",
+    )
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "status": str(state.get("status") or "NOT_RUN"),
+        "policy": {
+            "scientific_authority": False,
+            "handoff_reuses_existing_problem_falsifier_support_inventory": True,
+            "asset_recheck_cannot_define_a_parallel_support_gate": True,
+            "release_change_is_not_support_qualification": True,
+            "support_inventory_receipt_required_before_any_support_decision": True,
+            "problem_falsifier_preflight_remains_support_authority_boundary": True,
+            "handoff_cannot_execute_falsifier_automatically": True,
+            "handoff_cannot_reopen_generator_or_problem_gate": True,
+            "handoff_cannot_authorize_method_experiment_p0_gpu": True,
+            "automatic_provider_calls_authorized": False,
+            "public_summary_excludes_entries_refs_urls_required_units_and_private_paths": True,
+        },
+        "summary": {key: int(summary.get(key) or 0) for key in safe_keys},
+        "scientific_authority": False,
+    }
+
+
 def write_private_support_asset_recheck_handoff(
     *,
     storage: StorageSettings | None = None,

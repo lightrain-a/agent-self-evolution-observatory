@@ -6,7 +6,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .config import StorageSettings
-from .paper_first_support_asset_recheck_handoff import build_support_asset_recheck_handoff, write_private_support_asset_recheck_handoff
+from .paper_first_support_asset_recheck_handoff import (
+    build_support_asset_recheck_handoff,
+    load_private_support_asset_recheck_handoff,
+    public_support_asset_recheck_handoff_summary,
+    write_private_support_asset_recheck_handoff,
+)
 
 
 class SupportAssetRecheckHandoffTest(unittest.TestCase):
@@ -78,6 +83,16 @@ class SupportAssetRecheckHandoffTest(unittest.TestCase):
         self.assertEqual(state["summary"]["provenance_incomplete"], 1)
         self.assertEqual(state["entries"][0]["handoff_status"], "HOLD_RECHECK_HANDOFF_PROVENANCE_INCOMPLETE")
 
+    def test_public_summary_exposes_health_counts_not_private_handoff_rows(self) -> None:
+        private=build_support_asset_recheck_handoff(storage=self.storage(Path('/tmp/unused-handoff-public')),queue_state=self.queue(),now=datetime(2026,8,14,tzinfo=timezone.utc))
+        public=public_support_asset_recheck_handoff_summary(private);text=str(public)
+        self.assertEqual((public["summary"]["queued_asset_rechecks"],public["summary"]["support_inventory_recheck_ready"],public["summary"]["provenance_incomplete"]),(1,1,0))
+        self.assertFalse(public["scientific_authority"])
+        self.assertNotIn("entries",public)
+        for marker in ("C1","arXiv:2608.00001","matched released trajectory units","shadow-r1"):
+            self.assertNotIn(marker,text)
+        self.assertTrue(public["policy"]["problem_falsifier_preflight_remains_support_authority_boundary"])
+
     def test_private_writer_persists_handoff_only_in_private_data_root(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             storage = self.storage(Path(td))
@@ -85,6 +100,8 @@ class SupportAssetRecheckHandoffTest(unittest.TestCase):
             path = storage.data_root / "paper-first-problem-discovery" / "support-release-watch" / "asset-recheck-handoff.json"
             self.assertTrue(path.exists())
             self.assertEqual(state["status"], "SUPPORT_ASSET_RECHECK_HANDOFF_READY")
+            loaded=load_private_support_asset_recheck_handoff(storage=storage)
+            self.assertEqual(loaded["summary"]["support_inventory_recheck_ready"],1)
             self.assertFalse(state["scientific_authority"])
 
 
