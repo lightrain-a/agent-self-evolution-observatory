@@ -60,6 +60,7 @@ from .paper_first_global_relation_recall import write_global_relation_recall_sta
 from .paper_first_relation_cache_backfill import backfill_relation_cache
 from .paper_first_paper_design_backlog import write_paper_design_backlog
 from .paper_first_p0_f0 import write_paper_first_p0_f0_state
+from .paper_first_scientific_object_maintenance import run_shadow_scientific_object_maintenance
 from .research_system import write_research_system_state
 from .publication import PUBLICATION_OK_STATES, publish_generated_state
 
@@ -142,6 +143,9 @@ def run_cycle(
             report["steps"].append(_step("paper-design-backlog-pre-discovery", write_paper_design_backlog))
             report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
             report["steps"].append(_step("paper-first-discovery-transaction", write_problem_discovery_transaction))
+            # Shadow scientific-object recall is strictly downstream of the live atomic transaction.
+            # It only runs when live source coverage is fully closed and cannot mutate canonical Primary/Generator/Queue.
+            report["steps"].append(_step("paper-first-scientific-object-shadow-maintenance", run_shadow_scientific_object_maintenance))
             report["steps"].append(_step("paper-first-relation-cache-backfill", backfill_relation_cache))
             report["steps"].append(_step("paper-first-global-relation-recall", write_global_relation_recall_state))
             report["steps"].append(_step("iclr-bank", write_iclr_idea_bank))
