@@ -45,6 +45,7 @@ from .paper_first_scientific_object_retrieval_audit import load_private_shadow_s
 from .paper_first_support_release_watch import load_private_support_release_watch, public_support_release_watch_summary
 from .paper_first_support_asset_recheck import load_private_support_asset_recheck_queue, public_support_asset_recheck_summary
 from .paper_first_support_asset_recheck_handoff import load_private_support_asset_recheck_handoff, public_support_asset_recheck_handoff_summary
+from .paper_first_discovery_frontier import build_paper_first_discovery_frontier, validate_paper_first_discovery_frontier
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
@@ -341,6 +342,17 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_problem_search_portfolio = _load_shadow_search_portfolio_public()
     paper_first_shadow_search_admission = public_shadow_search_admission_summary(build_shadow_search_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,queue_state=paper_first_problem_gate_queue,shadow_state=paper_first_problem_search_portfolio))
     paper_first_shadow_continuation_frontier = build_shadow_continuation_frontier(admission=paper_first_shadow_search_admission,support_watch=paper_first_support_release_watch,asset_queue=paper_first_support_asset_recheck,support_handoff=paper_first_support_asset_recheck_handoff)
+    paper_first_discovery_frontier = build_paper_first_discovery_frontier(
+        primary_state=paper_first_primary_evidence,
+        generator_state=paper_first_problem_generator,
+        queue_state=paper_first_problem_gate_queue,
+        relation_freshness_state=paper_first_global_relation_freshness,
+        relation_admission_state=paper_first_global_relation_scan_admission,
+        shadow_admission_state=paper_first_shadow_search_admission,
+        object_candidate_state=paper_first_scientific_object_candidate_evidence,
+        support_release_watch_state=paper_first_support_release_watch,
+        support_asset_recheck_state=paper_first_support_asset_recheck,
+    )
     paper_first_shadow_latest = paper_first_problem_search_portfolio.get("latest_run") or {}
     paper_first_shadow_latest_summary = paper_first_shadow_latest.get("summary") or {}
     paper_first_post_c2 = build_post_c2_adjudication()
@@ -598,6 +610,10 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_shadow_continuation_next_action":paper_first_shadow_continuation_frontier.get("next_control_action","repair-shadow-continuation-state"),
             "paper_first_shadow_continuation_active_actions":int((paper_first_shadow_continuation_frontier.get("summary") or {}).get("active_control_actions") or 0),
             "paper_first_shadow_continuation_external_wait":int((paper_first_shadow_continuation_frontier.get("summary") or {}).get("external_wait") or 0),
+            "paper_first_discovery_frontier_status":paper_first_discovery_frontier.get("status","WAIT_EXTERNAL_EVIDENCE_TRIGGERS"),
+            "paper_first_discovery_frontier_open_internal":int((paper_first_discovery_frontier.get("summary") or {}).get("open_internal_frontiers") or 0),
+            "paper_first_discovery_frontier_external_triggers":int((paper_first_discovery_frontier.get("summary") or {}).get("external_triggers") or 0),
+            "paper_first_discovery_frontier_model_calls":int((paper_first_discovery_frontier.get("summary") or {}).get("automatic_model_calls_authorized") or 0),
             "paper_first_shadow_latest_run_id":paper_first_problem_search_portfolio.get("latest_run_id",""),
             "paper_first_shadow_latest_stage_runner_schema":paper_first_shadow_latest.get("stage_runner_required_schema",""),
             "paper_first_shadow_latest_control_snapshot_sha256":paper_first_shadow_latest.get("control_snapshot_sha256",""),
@@ -769,6 +785,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_support_release_watch":paper_first_support_release_watch,
         "paper_first_support_asset_recheck_queue":paper_first_support_asset_recheck,
         "paper_first_support_asset_recheck_handoff":paper_first_support_asset_recheck_handoff,
+        "paper_first_discovery_frontier":paper_first_discovery_frontier,
         "paper_first_sp15_identifiability_support":paper_first_sp15_support,
         "paper_first_paper_design_backlog":paper_first_paper_design_backlog,
         "paper_first_global_relation_recall":paper_first_global_relation_recall,
@@ -1071,6 +1088,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-support-asset-recheck-queue", "pass":support_asset_recheck_boundary_ok, "detail":{"status":support_asset_recheck.get("status"),"summary":support_asset_summary}},
         {"key":"paper-first-support-asset-recheck-handoff", "pass":support_asset_handoff_boundary_ok, "detail":{"status":support_asset_handoff.get("status"),"summary":support_handoff_summary}},
         {"key":"paper-first-shadow-continuation-frontier", "pass":shadow_continuation_boundary_ok, "detail":{"status":shadow_continuation.get("status"),"summary":shadow_continuation.get("summary") or {}}},
+        {"key":"paper-first-discovery-frontier", "pass":not validate_paper_first_discovery_frontier(state.get("paper_first_discovery_frontier") or {}), "detail":{"status":(state.get("paper_first_discovery_frontier") or {}).get("status"),"summary":(state.get("paper_first_discovery_frontier") or {}).get("summary"),"blockers":(state.get("paper_first_discovery_frontier") or {}).get("blockers") or []}},
         {"key":"paper-first-global-relation-freshness", "pass":relation_freshness_boundary_ok, "detail":{"status":relation_freshness.get("status"),"summary":relation_freshness_summary}},
         {"key":"paper-first-global-relation-delta-preflight", "pass":relation_delta_boundary_ok, "detail":{"status":relation_delta.get("status"),"summary":relation_delta_summary,"pair_slots":relation_delta.get("pair_slots") or {},"interpretation":relation_delta.get("interpretation") or {}}},
         {"key":"paper-first-global-relation-scan-admission", "pass":relation_admission_boundary_ok, "detail":{"status":relation_admission.get("status"),"summary":relation_admission_summary}},
@@ -1318,6 +1336,22 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         expected_frontier=build_shadow_continuation_frontier(admission=shadow_search_admission,support_watch=support_release_watch,asset_queue=support_asset_recheck,support_handoff=support_asset_handoff)
         if shadow_continuation.get("status")!=expected_frontier.get("status") or shadow_continuation.get("next_control_action")!=expected_frontier.get("next_control_action") or (shadow_continuation.get("summary") or {})!=(expected_frontier.get("summary") or {}) or (shadow_continuation.get("source_status") or {})!=(expected_frontier.get("source_status") or {}):
             errors.append("shadow continuation frontier must equal the deterministic projection of current admission/watch/queue/handoff state")
+    discovery_frontier=state.get("paper_first_discovery_frontier") or {}
+    if discovery_frontier:
+        errors.extend(f"Paper-first discovery frontier: {error}" for error in validate_paper_first_discovery_frontier(discovery_frontier))
+        expected_discovery_frontier=build_paper_first_discovery_frontier(
+            primary_state=state.get("paper_first_primary_evidence") or {},
+            generator_state=state.get("paper_first_problem_generator") or {},
+            queue_state=state.get("paper_first_problem_gate_queue") or {},
+            relation_freshness_state=state.get("paper_first_global_relation_freshness") or {},
+            relation_admission_state=state.get("paper_first_global_relation_scan_admission") or {},
+            shadow_admission_state=state.get("paper_first_shadow_search_admission") or {},
+            object_candidate_state=state.get("paper_first_scientific_object_candidate_evidence") or {},
+            support_release_watch_state=state.get("paper_first_support_release_watch") or {},
+            support_asset_recheck_state=state.get("paper_first_support_asset_recheck_queue") or {},
+        )
+        if any(discovery_frontier.get(key)!=expected_discovery_frontier.get(key) for key in ("status","policy","summary","blockers","triggers")):
+            errors.append("paper-first discovery frontier must equal the deterministic projection of embedded control states")
     shadow_portfolio=state.get("paper_first_problem_search_portfolio") or {};shadow_latest=shadow_portfolio.get("latest_run") or {}
     if shadow_latest:
         latest_policy=shadow_latest.get("policy") or {};latest_summary=shadow_latest.get("summary") or {};latest_authority=shadow_latest.get("authority") or {}

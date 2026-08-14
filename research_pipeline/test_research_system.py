@@ -5,6 +5,7 @@ import json
 import unittest
 
 from .paper_first_relation_coverage import relation_recall_freshness
+from .paper_first_discovery_frontier import build_paper_first_discovery_frontier
 from .research_system import build_research_system_state, validate_state
 
 
@@ -13,12 +14,26 @@ class ResearchSystemTest(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.state = build_research_system_state()
 
+    def sync_discovery_frontier(self, state: dict) -> dict:
+        state["paper_first_discovery_frontier"] = build_paper_first_discovery_frontier(
+            primary_state=state.get("paper_first_primary_evidence") or {},
+            generator_state=state.get("paper_first_problem_generator") or {},
+            queue_state=state.get("paper_first_problem_gate_queue") or {},
+            relation_freshness_state=state.get("paper_first_global_relation_freshness") or {},
+            relation_admission_state=state.get("paper_first_global_relation_scan_admission") or {},
+            shadow_admission_state=state.get("paper_first_shadow_search_admission") or {},
+            object_candidate_state=state.get("paper_first_scientific_object_candidate_evidence") or {},
+            support_release_watch_state=state.get("paper_first_support_release_watch") or {},
+            support_asset_recheck_state=state.get("paper_first_support_asset_recheck_queue") or {},
+        )
+        return state
+
     def sync_relation_freshness(self, state: dict) -> dict:
         state["paper_first_global_relation_freshness"] = relation_recall_freshness(
             state.get("paper_first_problem_generator") or {},
             state.get("paper_first_global_relation_recall") or {},
         )
-        return state
+        return self.sync_discovery_frontier(state)
 
     def test_state_is_valid_and_iclr_first(self) -> None:
         self.assertEqual(self.state["target_venue"], "ICLR")
@@ -473,6 +488,7 @@ class ResearchSystemTest(unittest.TestCase):
         state=copy.deepcopy(self.state);primary=state["paper_first_primary_evidence"];generator=state["paper_first_problem_generator"]
         primary["summary"].update({"source_retrieval_complete":False,"source_coverage_exhausted":False,"unreviewed_lane_linked_sources":0})
         generator["status"]="SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE";generator["summary"].update({"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0});generator["policy"].update({"incomplete_retrieval_without_new_lane_source_skips_model_call":True,"retrieval_incomplete_is_compute_control_not_scientific_negative":True});generator["source_coverage"]={"coverage_exhausted":False,"source_retrieval_complete":False,"unreviewed_lane_linked_sources":0,"carrier_probe_required":False,"carrier_probe_pending":0,"carrier_probe_complete":True,"scientific_authority":False}
+        self.sync_discovery_frontier(state)
         self.assertEqual(validate_state(state),[])
         bad=copy.deepcopy(state);bad["paper_first_problem_generator"]["source_coverage"]["source_retrieval_complete"]=True
         self.assertTrue(any("retrieval-incomplete generator state" in error for error in validate_state(bad)))
@@ -485,6 +501,7 @@ class ResearchSystemTest(unittest.TestCase):
         primary["summary"].update({"source_coverage_exhausted":False,"carrier_probe_required":True,"carrier_probe_pending":2,"carrier_probe_complete":False,"candidate_generation_ready":False})
         primary["carrier_probe"]={"required":True,"attempted":3,"rescued":0,"pending":2,"complete":False,"portable_receipts":[],"scientific_authority":False}
         generator["status"]="SKIPPED_SOURCE_CARRIER_PROBE_PENDING";generator["summary"].update({"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0});generator["policy"].update({"carrier_probe_pending_skips_model_call":True,"carrier_probe_pending_is_compute_control_not_scientific_negative":True});generator["source_coverage"]={"coverage_exhausted":False,"unreviewed_lane_linked_sources":0,"carrier_probe_required":True,"carrier_probe_pending":2,"carrier_probe_complete":False,"scientific_authority":False}
+        self.sync_discovery_frontier(state)
         self.assertEqual(validate_state(state),[])
         exhausted=copy.deepcopy(state);exhausted["paper_first_primary_evidence"]["summary"]["source_coverage_exhausted"]=True
         self.assertTrue(any("carrier-probe backlog" in error for error in validate_state(exhausted)))
@@ -546,6 +563,7 @@ class ResearchSystemTest(unittest.TestCase):
             "summary":{"support_holds":4,"explicit_release_targets":2,"no_explicit_endpoint":2,"recheck_required":1,"support_qualified":0,"generator_reopen_authorized":0,"problem_gate_authorized":0,"primary_declaration_refresh_checked":2,"primary_declaration_refresh_changed":0},
             "status_counts":{"RECHECK_REQUIRED_RELEASE_CHANGED":1},
         }
+        self.sync_discovery_frontier(state)
         self.assertEqual(validate_state(state),[])
         escalated=copy.deepcopy(state);escalated["paper_first_support_release_watch"]["summary"]["support_qualified"]=1
         self.assertTrue(any("support release watch cannot authorize" in error for error in validate_state(escalated)))
@@ -569,8 +587,10 @@ class ResearchSystemTest(unittest.TestCase):
             "policy":{"scientific_authority":False,"release_change_only_creates_asset_recheck_task":True,"queue_is_durable_across_release_watch_cooldown":True,"queue_only_tracks_current_support_holds":True,"queue_cannot_mark_support_qualified":True,"queue_cannot_reopen_generator_or_problem_gate":True,"queue_cannot_authorize_method_experiment_p0_gpu":True,"explicit_asset_resolution_required_to_clear_entry":True,"automatic_provider_calls_authorized":False,"public_summary_excludes_entries_refs_urls_required_units_and_private_paths":True},
             "summary":{"support_holds":4,"release_recheck_signals":1,"queued":1,"new_triggers":1,"carried_forward":0,"support_qualified":0,"generator_reopen_authorized":0,"problem_gate_authorized":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0,"gpu_authorized":0},
         }
+        self.sync_discovery_frontier(state)
         self.assertEqual(validate_state(state),[])
         resolved=copy.deepcopy(state);resolved_queue=resolved["paper_first_support_asset_recheck_queue"];resolved_queue["policy"].update({"asset_resolution_must_bind_latest_trigger_digest":True,"asset_resolution_cannot_mark_support_qualified_or_reopen":True,"support_inventory_recheck_remains_queue_handoff_not_resolution":True});resolved_queue["summary"].update({"queued":0,"resolved":1,"resolution_still_unavailable":1,"resolution_irrelevant_release":0})
+        self.sync_discovery_frontier(resolved)
         self.assertEqual(validate_state(resolved),[])
         bad_resolution=copy.deepcopy(resolved);bad_resolution["paper_first_support_asset_recheck_queue"]["policy"]["asset_resolution_must_bind_latest_trigger_digest"]=False
         self.assertTrue(any("durable private-task accounting" in error for error in validate_state(bad_resolution)))
@@ -592,6 +612,7 @@ class ResearchSystemTest(unittest.TestCase):
             "policy":{"scientific_authority":False,"handoff_reuses_existing_problem_falsifier_support_inventory":True,"asset_recheck_cannot_define_a_parallel_support_gate":True,"release_change_is_not_support_qualification":True,"support_inventory_receipt_required_before_any_support_decision":True,"problem_falsifier_preflight_remains_support_authority_boundary":True,"handoff_cannot_execute_falsifier_automatically":True,"handoff_cannot_reopen_generator_or_problem_gate":True,"handoff_cannot_authorize_method_experiment_p0_gpu":True,"automatic_provider_calls_authorized":False,"public_summary_excludes_entries_refs_urls_required_units_and_private_paths":True},
             "summary":{"queued_asset_rechecks":1,"support_inventory_recheck_ready":1,"provenance_incomplete":0,"automatic_execution_authorized":0,"provider_calls_authorized":0,"support_qualified":0,"falsifier_execution_authorized":0,"generator_reopen_authorized":0,"problem_gate_authorized":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0,"gpu_authorized":0},
         }
+        self.sync_discovery_frontier(state)
         self.assertEqual(validate_state(state),[])
         mismatch=copy.deepcopy(state);mismatch["paper_first_support_asset_recheck_handoff"]["summary"]["support_inventory_recheck_ready"]=0
         self.assertTrue(any("partition ready/provenance-hold" in error for error in validate_state(mismatch)))
@@ -599,6 +620,19 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(any("cannot expose private queue" in error for error in validate_state(leak)))
         escalated=copy.deepcopy(state);escalated["paper_first_support_asset_recheck_handoff"]["summary"]["provider_calls_authorized"]=1
         self.assertTrue(any("cannot authorize provider" in error for error in validate_state(escalated)))
+
+    def test_discovery_frontier_is_trigger_driven_zero_authority_and_consistent(self) -> None:
+        frontier=self.state["paper_first_discovery_frontier"]
+        self.assertEqual(frontier["status"],"WAIT_EXTERNAL_EVIDENCE_TRIGGERS")
+        self.assertEqual(frontier["summary"]["open_internal_frontiers"],0)
+        self.assertGreaterEqual(frontier["summary"]["external_triggers"],1)
+        for key in ("automatic_model_calls_authorized","automatic_problem_gate_authorized","automatic_method_authorized","automatic_experiment_authorized","automatic_p0_authorized","automatic_gpu_authorized"):
+            self.assertEqual(frontier["summary"][key],0)
+        self.assertFalse(frontier["scientific_authority"])
+        stale=copy.deepcopy(self.state);stale["paper_first_discovery_frontier"]["status"]="LIVE_SOURCE_DISCOVERY_PENDING"
+        self.assertTrue(any("frontier must equal the deterministic projection" in error for error in validate_state(stale)))
+        escalated=copy.deepcopy(self.state);escalated["paper_first_discovery_frontier"]["summary"]["automatic_model_calls_authorized"]=1
+        self.assertTrue(any("discovery frontier cannot authorize" in error for error in validate_state(escalated)))
 
     def test_canonical_paper_design_backlog_is_durable_but_cannot_escalate_authority(self) -> None:
         state=copy.deepcopy(self.state)
@@ -694,6 +728,7 @@ class ResearchSystemTest(unittest.TestCase):
             "summary":{"checks":15,"passed":15,"failed":0,"manual_scan_eligible":True,"automatic_model_scan_authorized":False,"new_reviewed_sources":12,"new_empirical_sources":11,"new_assumption_sources":0,"new_failure_sources":11,"new_boundary_sources":8,"current_reviewed_sources":226,"last_scanned_sources":214},
             "failed_check_count":0,"freshness_status":"STALE_RELATION_UNIVERSE","delta_status":"RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE","scientific_authority":False,
         }
+        self.sync_discovery_frontier(state)
         self.assertEqual(validate_state(state),[])
         auto=copy.deepcopy(state);auto["paper_first_global_relation_scan_admission"]["summary"]["automatic_model_scan_authorized"]=True
         self.assertTrue(any("manual relation-scan admission" in error for error in validate_state(auto)))
@@ -714,6 +749,7 @@ class ResearchSystemTest(unittest.TestCase):
         generator["schema_version"]="2.4"; generator["status"]="GENERATED_ZERO_CANDIDATES"; generator["generation_notes"]="All four lanes were audited and none survives."
         generator["policy"].update({"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"one_generator_call_must_audit_all_discovery_lanes":True,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True})
         generator["search_diagnostics"]={"lane_search_priority":["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"],"lane_search_complete":True,"lane_search":[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."} for lane in ("CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY")],"scientific_authority":False}
+        self.sync_discovery_frontier(state)
         self.assertEqual(validate_state(state),[])
         broken=copy.deepcopy(state); broken["paper_first_problem_generator"]["search_diagnostics"]["lane_search"].pop()
         self.assertTrue(any("complete machine-audited status" in error for error in validate_state(broken)))
@@ -725,6 +761,7 @@ class ResearchSystemTest(unittest.TestCase):
         priority=["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"];rows=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No pair."} for lane in priority]
         receipt={"run_id":generator.get("run_id") or "v25-run","generator_status":"GENERATED_ZERO_CANDIDATES","generated_at":"2026-08-13T14:12:22+00:00","lane_search_priority":priority,"lane_search":rows,"generation_notes":"All four lanes audited.","scientific_authority":False}
         generator["run_id"]=receipt["run_id"];generator["search_diagnostics"]={"lane_search_priority":priority,"lane_search_complete":True,"lane_search":rows,"last_completed_lane_search":receipt,"scientific_authority":False}
+        self.sync_discovery_frontier(state)
         self.assertEqual(validate_state(state),[])
         broken=copy.deepcopy(state);broken["paper_first_problem_generator"]["search_diagnostics"]["last_completed_lane_search"]["scientific_authority"]=True
         self.assertTrue(any("last completed lane-search receipt is invalid" in error for error in validate_state(broken)))
