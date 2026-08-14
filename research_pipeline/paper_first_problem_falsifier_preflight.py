@@ -35,6 +35,9 @@ REQUEST_POLICY = {
     "reconstruction_must_freeze_operationalization_before_outcome_readout": True,
     "reconstruction_cannot_use_synthetic_substitution_or_candidate_mechanism_injection": True,
     "reconstruction_cannot_retune_on_hidden_outcomes_or_change_candidate_pool": True,
+    "support_inventory_is_one_acquisition_route_not_a_global_prerequisite": True,
+    "support_unavailable_may_route_to_bounded_first_party_evidence_design": True,
+    "first_party_evidence_requires_independent_truth_and_same_information_baseline": True,
     "canonical_generator_and_queue_untouched": True,
     "automatic_problem_gate_authority": False,
     "automatic_paper_design_authority": False,
@@ -185,6 +188,8 @@ def _validate_receipt_row(request: dict[str, Any], receipt: dict[str, Any]) -> d
         if not reopen:
             raise ValueError(f"support HOLD requires reopen condition: {candidate_id}")
         out["reopen_only_if"] = reopen
+        out["bounded_first_party_evidence_design_allowed"] = True
+        out["next_route"] = "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET"
         return out
     qualified_units = receipt.get("qualified_units")
     manifest_sha = str(receipt.get("unit_manifest_sha256") or "").strip().lower()

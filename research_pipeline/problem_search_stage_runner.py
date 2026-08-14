@@ -10,6 +10,13 @@ from .paper_first_problem_discovery_contract import SEARCH_PORTFOLIO_PRIMITIVES,
 from .paper_first_problem_generator import _ark,_apply_reviews,_normalize
 from .paper_first_problem_generator_prompts import reviewer_prompt
 from .paper_first_problem_falsifier_preflight import write_problem_falsifier_preflight,write_support_inventory_request
+from .paper_first_evidence_acquisition import (
+    PLAN_FILENAME as EVIDENCE_PLAN_FILENAME,
+    adjudicate_evidence_receipts,
+    build_provisional_evidence_plan,
+    compile_evidence_designs,
+    evidence_design_prompt,
+)
 from .problem_search_control_snapshot import STAGE_RUNNER_ARTIFACT_SCHEMA,validate_shadow_run_control
 from .paper_first_primary_evidence import parse_arxiv_page,extract_empirical_fact_candidates,extract_typed_evidence_candidates
 from .paper_first_problem_search_portfolio import (
@@ -264,9 +271,38 @@ def machine_audit(*,pool:Path|None,run_root:Path)->dict:
             if isinstance(item,dict):process(item,path,part,idx,"formulation-reduction-pending")
     ids=[row["candidate_id"] for row in reviewable+reduction_pending+blocked]
     if len(ids)!=len(set(ids)):raise ValueError("shadow machine audit candidate ids must be unique across ready, reduction-pending, and blocked routes")
-    out={"schema_version":"1.3-shadow","control_snapshot_sha256":control_sha,"summary":{"formulated":formulated,"machine_ready_input":machine_ready_input,"formulation_reduction_pending_input":pending_input,"reviewable":len(reviewable),"reduction_pending":len(reduction_pending),"blocked":len(blocked),"problem_falsifier_eligible":len(problem_falsifier_queue),"live_problem_gate_eligible":0},"policy":{"formulation_precheck_separates_machine_ready_from_reduction_pending":True,"machine_audit_rechecks_both_routes":True,"reduction_pending_is_not_scientific_block_or_pass":True,"problem_falsifier_route_is_zero_authority":True,"only_exact_reduction_uncertainty_can_enter_problem_falsifier_route":True,"closest_work_lane_provenance_or_schema_failures_cannot_enter_problem_falsifier_route":True,"problem_falsifier_route_cannot_authorize_paper_design_method_experiment_p0_or_gpu":True},"reviewable":reviewable,"reduction_pending":reduction_pending,"blocked":blocked,"problem_falsifier_queue":problem_falsifier_queue,"scientific_authority":False,"authority":{"live_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+    out={"schema_version":"1.3-shadow","control_snapshot_sha256":control_sha,"summary":{"formulated":formulated,"machine_ready_input":machine_ready_input,"formulation_reduction_pending_input":pending_input,"reviewable":len(reviewable),"reduction_pending":len(reduction_pending),"blocked":len(blocked),"problem_falsifier_eligible":len(problem_falsifier_queue),"live_problem_gate_eligible":0},"policy":{"formulation_precheck_separates_machine_ready_from_reduction_pending":True,"machine_audit_rechecks_both_routes":True,"reduction_pending_is_not_scientific_block_or_pass":True,"problem_falsifier_route_is_zero_authority":True,"only_exact_reduction_uncertainty_can_enter_problem_falsifier_route":True,"closest_work_lane_provenance_or_schema_failures_cannot_enter_problem_falsifier_route":True,"problem_falsifier_route_cannot_authorize_paper_design_method_experiment_p0_or_gpu":True,"reduction_pending_enters_bounded_evidence_design_portfolio":True,"evidence_acquisition_authority_is_not_scientific_claim_authority":True},"reviewable":reviewable,"reduction_pending":reduction_pending,"blocked":blocked,"problem_falsifier_queue":problem_falsifier_queue,"scientific_authority":False,"authority":{"live_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+    evidence=build_provisional_evidence_plan(out,run_id=run_root.name);evidence["control_snapshot_sha256"]=control_sha
+    out["summary"]["provisional_problem_candidates"]=int((evidence.get("summary") or {}).get("provisional_problem_candidates") or 0);out["summary"]["evidence_design_selected"]=int((evidence.get("summary") or {}).get("design_selected") or 0)
     (run_root/"machine-audit.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    (run_root/EVIDENCE_PLAN_FILENAME).write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return out["summary"]
+
+
+def evidence_design(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,model:str="ark-code-latest")->dict:
+    pool=_require_resolved_pool(run_root,pool);control_sha=_assert_run_control(run_root,pool)
+    machine_path=run_root/"machine-audit.json";machine=json.loads(machine_path.read_text(encoding="utf-8"));_require_artifact_control(machine,control_sha,machine_path,"1.3-shadow")
+    plan_path=run_root/EVIDENCE_PLAN_FILENAME
+    if not plan_path.exists():
+        plan=build_provisional_evidence_plan(machine,run_id=run_root.name);plan["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(plan,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    plan=json.loads(plan_path.read_text(encoding="utf-8"))
+    if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
+    prompt,candidate_ids=evidence_design_prompt(plan,part=part,batch_size=batch_size)
+    res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-design-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=0.0)
+    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_json(run_root,f"evidence-design-p{part}",raw,resolved)
+    state=compile_evidence_designs(plan,payload,part=part);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"designs":payload.get("designs") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+    (run_root/f"evidence-design-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
+
+
+def evidence_adjudicate(*,run_root:Path,receipt_path:Path)->dict:
+    control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
+    if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
+    receipts=json.loads(receipt_path.read_text(encoding="utf-8"));state=adjudicate_evidence_receipts(plan,receipts);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"receipt_sha256":hashlib.sha256(receipt_path.read_bytes()).hexdigest(),"summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+    (run_root/"evidence-acquisition-adjudication.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    return {"status":state.get("status"),"summary":state.get("summary") or {},"scientific_authority":False}
 
 
 def review(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,model:str="glm-5.2")->dict:
@@ -300,7 +336,7 @@ def finalize(*,pool:Path|None,run_root:Path)->dict:
 
 
 def main()->None:
-    ap=argparse.ArgumentParser();ap.add_argument("command",choices=("expand","assemble","evolve","formulate","audit","falsifier-request","falsifier-preflight","review","finalize"));ap.add_argument("--pool",type=Path);ap.add_argument("--run-root",type=Path,required=True);ap.add_argument("--lane");ap.add_argument("--count",type=int,default=6);ap.add_argument("--part",type=int,default=1);ap.add_argument("--generation",type=int,default=1);ap.add_argument("--model",default="ark-code-latest");ap.add_argument("--memory",type=Path);ap.add_argument("--support-inventory",type=Path);a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument("command",choices=("expand","assemble","evolve","formulate","audit","evidence-design","evidence-adjudicate","falsifier-request","falsifier-preflight","review","finalize"));ap.add_argument("--pool",type=Path);ap.add_argument("--run-root",type=Path,required=True);ap.add_argument("--lane");ap.add_argument("--count",type=int,default=6);ap.add_argument("--part",type=int,default=1);ap.add_argument("--generation",type=int,default=1);ap.add_argument("--model",default="ark-code-latest");ap.add_argument("--memory",type=Path);ap.add_argument("--support-inventory",type=Path);ap.add_argument("--evidence-receipts",type=Path);a=ap.parse_args()
     stop_marker=a.run_root/"shadow-run-qualification-stop.json"
     if stop_marker.exists():
         state=json.loads(stop_marker.read_text(encoding="utf-8"));raise SystemExit(f"shadow run stopped by qualification gate: {state.get('status','STOPPED')}")
@@ -310,6 +346,10 @@ def main()->None:
     elif a.command=="evolve":result=evolve(pool=a.pool,run_root=a.run_root,generation=a.generation,part=a.part,model=a.model,memory_path=a.memory)
     elif a.command=="formulate":result=formulate(pool=a.pool,run_root=a.run_root,part=a.part,model=a.model,memory_path=a.memory)
     elif a.command=="audit":result=machine_audit(pool=a.pool,run_root=a.run_root)
+    elif a.command=="evidence-design":result=evidence_design(pool=a.pool,run_root=a.run_root,part=a.part,model=a.model)
+    elif a.command=="evidence-adjudicate":
+        if a.evidence_receipts is None:raise SystemExit("--evidence-receipts is required for evidence-adjudicate")
+        result=evidence_adjudicate(run_root=a.run_root,receipt_path=a.evidence_receipts)
     elif a.command=="falsifier-request":
         machine_path=a.run_root/"machine-audit.json";machine=json.loads(machine_path.read_text(encoding="utf-8"));_require_artifact_control(machine,control_sha,machine_path,"1.3-shadow");state=write_support_inventory_request(run_root=a.run_root);result={"status":state.get("status"),"summary":state.get("summary"),"scientific_authority":False}
     elif a.command=="falsifier-preflight":

@@ -28,6 +28,8 @@ def build_paper_first_discovery_frontier(
     object_candidate_state: dict[str, Any],
     support_release_watch_state: dict[str, Any],
     support_asset_recheck_state: dict[str, Any],
+    shadow_portfolio_state: dict[str, Any] | None = None,
+    evidence_migration_state: dict[str, Any] | None = None,
     now: datetime | None = None,
 ) -> dict[str, Any]:
     """Compile zero-authority discovery-control states into one trigger-driven frontier.
@@ -44,6 +46,9 @@ def build_paper_first_discovery_frontier(
     oc = object_candidate_state.get("summary") or {}
     rw = support_release_watch_state.get("summary") or {}
     aq = support_asset_recheck_state.get("summary") or {}
+    shadow_latest = ((shadow_portfolio_state or {}).get("latest_run") or {}) if isinstance(shadow_portfolio_state, dict) else {}
+    es = shadow_latest.get("summary") or {}
+    ms = (evidence_migration_state or {}).get("summary") or {}
 
     live_source_closed = bool(
         primary_state.get("status") == "READY"
@@ -82,6 +87,14 @@ def build_paper_first_discovery_frontier(
         _int(oc, "activation_authorized") == 0
         and _int(oc, "pending_cache") == 0
     )
+    shadow_evidence_open = sum(_int(es, key) for key in (
+        "evidence_design_pending", "evidence_execution_ready", "evidence_residual_survives", "evidence_branch_repair_ready"
+    ))
+    migration_evidence_open = sum(_int(ms, key) for key in (
+        "evidence_design_pending", "evidence_execution_ready", "evidence_residual_survives", "evidence_branch_repair_ready"
+    )) if str((evidence_migration_state or {}).get("status") or "") == "LEGACY_REDUCTION_EVIDENCE_MIGRATION_READY" else 0
+    evidence_internal_open = shadow_evidence_open + migration_evidence_open
+    evidence_loop_closed = evidence_internal_open == 0
     support_closed = bool(
         _int(rw, "recheck_required") == 0
         and _int(rw, "support_qualified") == 0
@@ -146,11 +159,15 @@ def build_paper_first_discovery_frontier(
         blockers.append("scientific-object-candidate-work-open")
     if not support_closed:
         blockers.append("support-release-or-asset-recheck-open")
+    if not evidence_loop_closed:
+        blockers.append("bounded-evidence-acquisition-open")
 
     if not live_queue_closed:
         status = "LIVE_PROBLEM_REVIEW_PENDING"
     elif not live_source_closed or not live_generator_closed:
         status = "LIVE_SOURCE_DISCOVERY_PENDING"
+    elif not evidence_loop_closed:
+        status = "EVIDENCE_ACQUISITION_PENDING"
     elif not support_closed:
         status = "SUPPORT_ASSET_RECHECK_PENDING"
     elif not shadow_closed:
@@ -170,6 +187,14 @@ def build_paper_first_discovery_frontier(
         "shadow_closed": shadow_closed,
         "scientific_object_closed": object_closed,
         "support_release_closed": support_closed,
+        "evidence_acquisition_closed": evidence_loop_closed,
+        "evidence_internal_open": evidence_internal_open,
+        "shadow_evidence_internal_open": shadow_evidence_open,
+        "migration_evidence_internal_open": migration_evidence_open,
+        "evidence_design_pending": _int(es, "evidence_design_pending") + (_int(ms, "evidence_design_pending") if migration_evidence_open else 0),
+        "evidence_execution_ready": _int(es, "evidence_execution_ready") + (_int(ms, "evidence_execution_ready") if migration_evidence_open else 0),
+        "evidence_residual_survives": _int(es, "evidence_residual_survives") + (_int(ms, "evidence_residual_survives") if migration_evidence_open else 0),
+        "evidence_branch_repair_ready": _int(es, "evidence_branch_repair_ready") + (_int(ms, "evidence_branch_repair_ready") if migration_evidence_open else 0),
         "open_internal_frontiers": len(blockers),
         "external_triggers": len(triggers),
         "automatic_model_calls_authorized": 0,
@@ -210,6 +235,7 @@ def validate_paper_first_discovery_frontier(state: dict[str, Any]) -> list[str]:
         "LIVE_PROBLEM_REVIEW_PENDING",
         "LIVE_SOURCE_DISCOVERY_PENDING",
         "SUPPORT_ASSET_RECHECK_PENDING",
+        "EVIDENCE_ACQUISITION_PENDING",
         "SHADOW_QUALIFICATION_PENDING",
         "RELATION_CONTROL_PENDING",
         "SCIENTIFIC_OBJECT_REVIEW_PENDING",
@@ -245,7 +271,7 @@ def validate_paper_first_discovery_frontier(state: dict[str, Any]) -> list[str]:
         errors.append("discovery frontier external triggers must be bounded zero-authority detectors")
     if state.get("status") == "WAIT_EXTERNAL_EVIDENCE_TRIGGERS":
         if _int(summary, "open_internal_frontiers") != 0 or not all(summary.get(key) is True for key in (
-            "live_source_closed", "live_generator_closed", "live_queue_closed", "relation_current_closed", "shadow_closed", "scientific_object_closed", "support_release_closed"
+            "live_source_closed", "live_generator_closed", "live_queue_closed", "relation_current_closed", "shadow_closed", "scientific_object_closed", "support_release_closed", "evidence_acquisition_closed"
         )):
             errors.append("wait-external frontier requires every internal discovery frontier to be closed")
     return sorted(set(errors))

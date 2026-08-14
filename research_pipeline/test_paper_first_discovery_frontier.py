@@ -19,6 +19,8 @@ class PaperFirstDiscoveryFrontierTest(unittest.TestCase):
             "object_candidate_state": {"summary":{"activation_authorized":0,"pending_cache":0}},
             "support_release_watch_state": {"summary":{"recheck_required":0,"support_qualified":0,"generator_reopen_authorized":0,"problem_gate_authorized":0}},
             "support_asset_recheck_state": {"summary":{"queued":0,"support_qualified":0,"generator_reopen_authorized":0,"problem_gate_authorized":0}},
+            "shadow_portfolio_state": {"latest_run":{"status":"SHADOW_TERMINAL_COMPLETE","summary":{"evidence_design_pending":0,"evidence_execution_ready":0,"evidence_residual_survives":0,"evidence_branch_repair_ready":0}}},
+            "evidence_migration_state": {"status":"NOT_RUN","summary":{}},
         }
 
     def build(self, states: dict | None = None):
@@ -40,6 +42,25 @@ class PaperFirstDiscoveryFrontierTest(unittest.TestCase):
         self.assertEqual(state["status"],"LIVE_SOURCE_DISCOVERY_PENDING")
         self.assertIn("live-source-frontier-open",state["blockers"])
         self.assertEqual(state["summary"]["automatic_model_calls_authorized"],0)
+        self.assertEqual(validate_paper_first_discovery_frontier(state),[])
+
+    def test_internal_bounded_evidence_work_prevents_false_external_wait(self) -> None:
+        states=self.states();states["shadow_portfolio_state"]["latest_run"].update({"status":"SHADOW_EVIDENCE_ACQUISITION_PENDING","summary":{"evidence_design_pending":2,"evidence_execution_ready":1,"evidence_residual_survives":0,"evidence_branch_repair_ready":0}})
+        state=self.build(states)
+        self.assertEqual(state["status"],"EVIDENCE_ACQUISITION_PENDING")
+        self.assertFalse(state["summary"]["evidence_acquisition_closed"])
+        self.assertEqual(state["summary"]["evidence_internal_open"],3)
+        self.assertIn("bounded-evidence-acquisition-open",state["blockers"])
+        self.assertEqual(state["summary"]["automatic_model_calls_authorized"],0)
+        self.assertEqual(validate_paper_first_discovery_frontier(state),[])
+
+    def test_legacy_migration_opens_internal_evidence_without_reopening_shadow_search(self) -> None:
+        states=self.states();states["evidence_migration_state"]={"status":"LEGACY_REDUCTION_EVIDENCE_MIGRATION_READY","summary":{"evidence_design_pending":4,"evidence_execution_ready":0,"evidence_residual_survives":0,"evidence_branch_repair_ready":0}}
+        state=self.build(states)
+        self.assertEqual(state["status"],"EVIDENCE_ACQUISITION_PENDING")
+        self.assertEqual(state["summary"]["migration_evidence_internal_open"],4)
+        self.assertEqual(state["summary"]["shadow_evidence_internal_open"],0)
+        self.assertEqual(state["summary"]["evidence_internal_open"],4)
         self.assertEqual(validate_paper_first_discovery_frontier(state),[])
 
     def test_asset_recheck_queue_has_priority_over_shadow_and_relation_waits(self) -> None:

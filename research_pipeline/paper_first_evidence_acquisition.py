@@ -1,0 +1,204 @@
+from __future__ import annotations
+
+import hashlib,json,re
+from datetime import datetime,timezone
+from pathlib import Path
+from typing import Any
+
+PLAN_FILENAME="evidence-acquisition-plan.json"
+SCHEMA_VERSION="1.0"
+MAX_ACTIVE=4; MAX_DEPTH=2; MAX_UNITS=128; MAX_WALL_MIN=90; MAX_GPU_HOURS=1.0; MAX_MODEL_CALLS=256
+MODES={"PRIMARY_ASSET_REUSE","FIRST_PARTY_REPLAY","FIRST_PARTY_SANDBOX","FIRST_PARTY_ROLLOUT","FIRST_PARTY_SIMULATION"}
+SOURCE_MODES={"SOURCE_SPECIFIC_REQUIRED","REPRODUCIBLE_FIRST_PARTY"}
+ADAPTERS={"PRIMARY_ASSET_ONLY","EXISTING_REPLAY_HARNESS","EXISTING_SANDBOX_HARNESS","EXISTING_ROLLOUT_HARNESS","EXISTING_SIMULATION_HARNESS","IMPLEMENT_MINIMAL_TEST_HARNESS"}
+OUTCOMES={"REDUCTION_SUPPORTED","RESIDUAL_SURVIVES","INCONCLUSIVE"}
+AUTHORITY={"scientific_claim":False,"live_problem_gate":False,"paper_design":False,"method":False,"p0":False,"full_experiment":False}
+POLICY={
+ "reduction_pending_is_provisional_not_failed":True,
+ "exploration_authority_is_separate_from_scientific_claim_authority":True,
+ "first_party_evidence_may_be_acquired_before_problem_gate_pass":True,
+ "first_party_evidence_must_use_independent_truth":True,
+ "candidate_mechanism_cannot_define_labels_or_ground_truth":True,
+ "same_information_baseline_is_mandatory":True,
+ "support_inventory_is_one_acquisition_route_not_a_global_prerequisite":True,
+ "source_specific_claims_still_require_source_specific_assets":True,
+ "new_evidence_never_auto_certifies_novelty":True,
+ "residual_survival_returns_to_semantic_and_current_source_review":True,
+ "bounded_evidence_execution_is_not_p0":True,
+ "experiment_tree_branch_depth_is_bounded":True,
+ "single_variable_repair_only_after_inconclusive":True,
+ "automatic_method_training_forbidden":True,
+ "second_backbone_forbidden":True,
+ "hidden_outcome_retuning_forbidden":True,
+ "scientific_authority":False,
+}
+
+def _now(): return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+def _b(v,n=2200): return " ".join(str(v or "").split())[:n]
+def _sha(v): return hashlib.sha256(json.dumps(v,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest()
+
+def _queue(machine:dict)->list[dict]:
+ if machine.get("scientific_authority") is not False: raise ValueError("machine audit must be zero-authority")
+ auth=machine.get("authority") or {}
+ if any(auth.get(k) is not False for k in ("paper_design","method","experiment","p0","gpu")): raise ValueError("machine audit leaked downstream authority")
+ rows=[r for r in machine.get("problem_falsifier_queue") or [] if isinstance(r,dict)];seen=set()
+ for r in rows:
+  cid=str(r.get("candidate_id") or "").strip()
+  if not cid or cid in seen: raise ValueError("problem-falsifier ids must be unique")
+  seen.add(cid)
+  if not all(_b(r.get(k)) for k in ("exact_prediction","strongest_same_information_baseline","cheapest_problem_falsifier")): raise ValueError(f"falsifier fields incomplete:{cid}")
+ return rows
+
+def build_provisional_evidence_plan(machine:dict,*,run_id:str="",max_active:int=MAX_ACTIVE)->dict:
+ ranked=sorted(_queue(machine),key=lambda r:(len(r.get("blockers") or []),str(r.get("candidate_id") or "")))
+ cap=max(0,min(int(max_active),MAX_ACTIVE));entries=[]
+ for rank,r in enumerate(ranked,1):
+  selected=rank<=cap
+  entries.append({
+   "candidate_id":str(r.get("candidate_id") or ""),"title":_b(r.get("title"),500),"discovery_lane":str(r.get("discovery_lane") or ""),"source_branch_id":str(r.get("source_branch_id") or ""),
+   "priority_rank":rank,"selection_basis":"fewest-unresolved-reduction-blockers-then-stable-id","design_selected":selected,
+   "status":"NEEDS_BOUNDED_EVIDENCE_DESIGN" if selected else "DEFERRED_BY_ACTIVE_PORTFOLIO_BUDGET",
+   "frozen_exact_prediction":_b(r.get("exact_prediction")),"frozen_same_information_baseline":_b(r.get("strongest_same_information_baseline"),1600),"frozen_falsifier_expression":_b(r.get("cheapest_problem_falsifier"),2400),
+   "blockers":sorted({str(x) for x in r.get("blockers") or [] if str(x)}),"tree":{"depth":0,"parent_contract_sha256":"","repair_count":0},"design":{},"contract_sha256":"","execution_authorized":False,"scientific_authority":False,"authority":dict(AUTHORITY)})
+ selected=sum(r["design_selected"] for r in entries)
+ return {"schema_version":SCHEMA_VERSION,"generated_at":_now(),"run_id":run_id,"status":"EVIDENCE_DESIGN_PENDING" if selected else "NO_REDUCTION_PENDING_EVIDENCE_WORK","policy":dict(POLICY),"portfolio":{"selection":"bounded-top-k","max_active_candidates":MAX_ACTIVE,"active_candidates":selected,"experiment_tree_max_depth":MAX_DEPTH},"summary":_summary(entries),"entries":entries,"scientific_authority":False,"authority":dict(AUTHORITY)}
+
+def _summary(entries:list[dict])->dict:
+ return {
+  "provisional_problem_candidates":len(entries),"design_selected":sum(r.get("design_selected") is True for r in entries),"design_pending":sum(r.get("status")=="NEEDS_BOUNDED_EVIDENCE_DESIGN" for r in entries),"design_invalid":sum(r.get("status")=="HOLD_EVIDENCE_DESIGN_INVALID" for r in entries),
+  "wait_primary_asset":sum(r.get("status")=="WAIT_PRIMARY_ASSET_RELEASE" for r in entries),"execution_ready":sum(r.get("status")=="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" for r in entries),"execution_completed":sum(bool(r.get("evidence_receipt")) for r in entries),
+  "reduction_supported":sum(r.get("status")=="STOP_EXACT_REDUCTION_SUPPORTED" for r in entries),"residual_survives":sum(r.get("status")=="RETURN_TO_SEMANTIC_CURRENT_SOURCE_REVIEW" for r in entries),"inconclusive":sum(r.get("status") in {"BRANCH_REPAIR_READY","HOLD_INCONCLUSIVE_TREE_BUDGET_EXHAUSTED"} for r in entries),"branch_repair_ready":sum(r.get("status")=="BRANCH_REPAIR_READY" for r in entries),
+  "deferred_by_portfolio_budget":sum(r.get("status")=="DEFERRED_BY_ACTIVE_PORTFOLIO_BUDGET" for r in entries),"paper_design_authorized":0,"method_authorized":0,"p0_authorized":0,"full_experiment_authorized":0}
+
+def write_provisional_evidence_plan(*,run_root:Path,machine_audit:dict|None=None)->dict:
+ machine_audit=machine_audit or json.loads((run_root/"machine-audit.json").read_text(encoding="utf-8"));state=build_provisional_evidence_plan(machine_audit,run_id=run_root.name)
+ (run_root/PLAN_FILENAME).write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return state
+
+def evidence_design_prompt(plan:dict,*,part:int=1,batch_size:int=2)->tuple[str,list[str]]:
+ selected=[r for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("design_selected") is True and r.get("status") in {"NEEDS_BOUNDED_EVIDENCE_DESIGN","BRANCH_REPAIR_READY"}]
+ batch=selected[:batch_size]
+ if not batch: raise ValueError(f"empty bounded-evidence design batch part={part}")
+ compact=[{"candidate_id":r["candidate_id"],"title":r.get("title"),"exact_prediction":r.get("frozen_exact_prediction"),"strongest_same_information_baseline":r.get("frozen_same_information_baseline"),"falsifier_expression":r.get("frozen_falsifier_expression"),"blockers":r.get("blockers") or [],"tree_depth":int((r.get("tree") or {}).get("depth") or 0),"required_single_variable_repair":_b((r.get("branch_repair") or {}).get("changed_variable"),1800)} for r in batch]
+ prompt=f'''You design bounded scientific evidence acquisition for REDUCTION-PENDING paper problems. This is exploration only, not novelty certification and not method design.
+
+For each candidate produce exactly one cheapest discriminating contract. New FIRST-PARTY evidence is allowed when the phenomenon can be independently reproduced. Do not require an author release merely because the original paper did not expose the needed unit. If the claim is inherently about unreleased source-specific hidden state/trace and cannot be independently reproduced without changing the claim, use SOURCE_SPECIFIC_REQUIRED + PRIMARY_ASSET_REUSE.
+
+Hard rules:
+- Copy candidate_id and the three frozen fields verbatim.
+- Candidate mechanism cannot define labels, truth, or the data-generating process. State independent truth.
+- Candidate prediction and strongest baseline must use the same observable information and matched budget.
+- No proposed-method training, second backbone, hidden-outcome retuning, paper-scale experiment, or unbounded search.
+- First-party acquisition needs >=3 anti-bake-in controls and an independently grounded reproduction target.
+- Freeze REDUCTION_SUPPORTED / RESIDUAL_SURVIVES / INCONCLUSIVE. RESIDUAL_SURVIVES only returns to semantic + current-source review.
+- Name only one changed variable for an INCONCLUSIVE repair. If required_single_variable_repair is nonempty, the new branch must change exactly that variable and preserve every other frozen element.
+- Caps: max_units<={MAX_UNITS}, max_wall_minutes<={MAX_WALL_MIN}, max_gpu_hours<={MAX_GPU_HOURS}, max_model_calls<={MAX_MODEL_CALLS}.
+Allowed acquisition_mode={sorted(MODES)}; source_specificity={sorted(SOURCE_MODES)}; execution_adapter={sorted(ADAPTERS)}.
+
+Return JSON only: {{"designs":[{{"candidate_id":"...","frozen_exact_prediction":"...","frozen_same_information_baseline":"...","frozen_falsifier_expression":"...","changed_variable":"","source_specificity":"...","acquisition_mode":"...","reproduction_target":"...","independent_truth":"...","causal_unit":"...","observable":"...","intervention":"...","same_information_lock":"...","matched_baseline_execution":"...","anti_bake_in_controls":["...","...","..."],"decision_rule":{{"REDUCTION_SUPPORTED":"...","RESIDUAL_SURVIVES":"...","INCONCLUSIVE":"..."}},"single_variable_repair_if_inconclusive":"...","execution_adapter":"...","budget":{{"max_units":1,"max_wall_minutes":1,"max_gpu_hours":0.0,"max_model_calls":0}}}}]}}
+CANDIDATES={json.dumps(compact,ensure_ascii=False,separators=(",",":"))}'''
+ return prompt,[r["candidate_id"] for r in batch]
+
+def _audit_design(d:dict,e:dict)->list[str]:
+ err=[]
+ if str(d.get("candidate_id") or "")!=str(e.get("candidate_id") or ""): err.append("candidate-id-mismatch")
+ for k,ek,n in (("frozen_exact_prediction","frozen_exact_prediction",2200),("frozen_same_information_baseline","frozen_same_information_baseline",1600),("frozen_falsifier_expression","frozen_falsifier_expression",2400)):
+  if _b(d.get(k),n)!=_b(e.get(ek),n): err.append("frozen-field-drift:"+k)
+ required_repair=_b((e.get("branch_repair") or {}).get("changed_variable"),1800);changed=_b(d.get("changed_variable"),1800)
+ if required_repair and changed!=required_repair: err.append("branch-repair-changed-variable-mismatch")
+ if not required_repair and changed: err.append("initial-design-must-not-declare-repair-variable")
+ source=str(d.get("source_specificity") or "").upper();mode=str(d.get("acquisition_mode") or "").upper();adapter=str(d.get("execution_adapter") or "").upper()
+ if source not in SOURCE_MODES: err.append("invalid-source-specificity")
+ if mode not in MODES: err.append("invalid-acquisition-mode")
+ if adapter not in ADAPTERS: err.append("invalid-execution-adapter")
+ if source=="SOURCE_SPECIFIC_REQUIRED" and mode!="PRIMARY_ASSET_REUSE": err.append("source-specific-must-use-primary-asset")
+ if mode=="PRIMARY_ASSET_REUSE" and adapter!="PRIMARY_ASSET_ONLY": err.append("primary-asset-requires-primary-adapter")
+ for k in ("reproduction_target","independent_truth","causal_unit","observable","intervention","same_information_lock","matched_baseline_execution"):
+  if not _b(d.get(k)): err.append("missing:"+k)
+ controls=[str(x).strip() for x in d.get("anti_bake_in_controls") or [] if str(x).strip()]
+ if mode!="PRIMARY_ASSET_REUSE" and len(controls)<3: err.append("first-party-needs-three-anti-bake-in-controls")
+ decision=d.get("decision_rule") or {}
+ if not isinstance(decision,dict) or any(not _b(decision.get(k)) for k in OUTCOMES): err.append("three-way-decision-rule-incomplete")
+ if not _b(d.get("single_variable_repair_if_inconclusive")): err.append("single-variable-repair-missing")
+ budget=d.get("budget") or {}
+ try: units=int(budget.get("max_units"));wall=int(budget.get("max_wall_minutes"));gpu=float(budget.get("max_gpu_hours"));calls=int(budget.get("max_model_calls"))
+ except (TypeError,ValueError): err.append("invalid-budget-types")
+ else:
+  if not 1<=units<=MAX_UNITS: err.append("budget-max-units-out-of-range")
+  if not 1<=wall<=MAX_WALL_MIN: err.append("budget-wall-out-of-range")
+  if not 0<=gpu<=MAX_GPU_HOURS: err.append("budget-gpu-out-of-range")
+  if not 0<=calls<=MAX_MODEL_CALLS: err.append("budget-model-calls-out-of-range")
+ text=" ".join(_b(d.get(k),4000).lower() for k in ("reproduction_target","intervention","matched_baseline_execution"))
+ if any(t in text for t in ("train the proposed method","fine-tune the proposed method","second backbone","tune on hidden","retune on hidden")): err.append("forbidden-method-or-hidden-tuning")
+ return sorted(set(err))
+
+def _promote_deferred(entries:list[dict])->None:
+ active_statuses={"NEEDS_BOUNDED_EVIDENCE_DESIGN","READY_FOR_BOUNDED_EVIDENCE_ACQUISITION","BRANCH_REPAIR_READY","RETURN_TO_SEMANTIC_CURRENT_SOURCE_REVIEW"}
+ active=sum(r.get("design_selected") is True and r.get("status") in active_statuses for r in entries)
+ for row in sorted(entries,key=lambda r:int(r.get("priority_rank") or 10**9)):
+  if active>=MAX_ACTIVE:break
+  if row.get("status")=="DEFERRED_BY_ACTIVE_PORTFOLIO_BUDGET":
+   row["design_selected"]=True;row["status"]="NEEDS_BOUNDED_EVIDENCE_DESIGN";active+=1
+
+def compile_evidence_designs(plan:dict,payload:dict,*,part:int=1)->dict:
+ if plan.get("scientific_authority") is not False or (plan.get("policy") or {}).get("reduction_pending_is_provisional_not_failed") is not True: raise ValueError("invalid provisional evidence plan")
+ entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set()
+ for d in [x for x in payload.get("designs") or [] if isinstance(x,dict)]:
+  cid=str(d.get("candidate_id") or "").strip()
+  if not cid or cid in seen: raise ValueError("evidence design ids must be unique")
+  seen.add(cid);e=by.get(cid)
+  prior_status=str(e.get("status") or "") if e else ""
+  if not e or e.get("design_selected") is not True or prior_status not in {"NEEDS_BOUNDED_EVIDENCE_DESIGN","BRANCH_REPAIR_READY"}: raise ValueError(f"design not selected/pending:{cid}")
+  errors=_audit_design(d,e);e["design"]=json.loads(json.dumps(d,ensure_ascii=False));e["design_audit"]={"passed":not errors,"errors":errors}
+  if errors: e["status"]="HOLD_EVIDENCE_DESIGN_INVALID";e["execution_authorized"]=False;continue
+  if prior_status=="BRANCH_REPAIR_READY":
+   tree=dict(e.get("tree") or {});tree["parent_contract_sha256"]=str(e.get("contract_sha256") or "");tree["depth"]=int((e.get("branch_repair") or {}).get("next_depth") or int(tree.get("depth") or 0)+1);tree["repair_count"]=int(tree.get("repair_count") or 0)+1;e["tree"]=tree
+  e["contract_sha256"]=_sha({"candidate_id":cid,"tree":e.get("tree") or {},"design":e["design"],"policy_version":SCHEMA_VERSION})
+  if str(d.get("source_specificity") or "").upper()=="SOURCE_SPECIFIC_REQUIRED": e["status"]="WAIT_PRIMARY_ASSET_RELEASE";e["execution_authorized"]=False
+  else: e["status"]="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION";e["execution_authorized"]=True;e["authority"]={**dict(AUTHORITY),"bounded_evidence_acquisition":True}
+ _promote_deferred(entries)
+ out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"last_design_part":part,"scientific_authority":False,"authority":dict(AUTHORITY)})
+ s=out["summary"];out["status"]="EVIDENCE_EXECUTION_READY" if s["execution_ready"] else ("EVIDENCE_DESIGN_PENDING" if s["design_pending"] else "EVIDENCE_WAIT_OR_HOLD")
+ return out
+
+def write_compiled_evidence_designs(*,run_root:Path,payload:dict,part:int=1)->dict:
+ path=run_root/PLAN_FILENAME;state=compile_evidence_designs(json.loads(path.read_text(encoding="utf-8")),payload,part=part);path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return state
+
+def adjudicate_evidence_receipts(plan:dict,receipt_payload:dict)->dict:
+ entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set()
+ for rec in [x for x in receipt_payload.get("receipts") or [] if isinstance(x,dict)]:
+  cid=str(rec.get("candidate_id") or "").strip()
+  if not cid or cid in seen: raise ValueError("evidence receipt ids must be unique")
+  seen.add(cid);e=by.get(cid)
+  if not e or e.get("status")!="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION": raise ValueError(f"no execution-ready contract:{cid}")
+  if str(rec.get("contract_sha256") or "")!=str(e.get("contract_sha256") or ""): raise ValueError(f"contract digest mismatch:{cid}")
+  outcome=str(rec.get("outcome") or "").upper();manifest=str(rec.get("evidence_manifest_sha256") or "").lower();units=rec.get("qualified_units")
+  if outcome not in OUTCOMES: raise ValueError(f"invalid evidence outcome:{cid}")
+  if not re.fullmatch(r"[0-9a-f]{64}",manifest): raise ValueError(f"manifest digest required:{cid}")
+  if rec.get("protocol_valid") is not True: raise ValueError(f"invalid protocol cannot update belief:{cid}")
+  if not isinstance(units,int) or units<=0 or not _b(rec.get("metric_summary")): raise ValueError(f"qualified evidence summary required:{cid}")
+  e["execution_authorized"]=False;e["evidence_receipt"]={"outcome":outcome,"qualified_units":units,"evidence_manifest_sha256":manifest,"metric_summary":_b(rec.get("metric_summary"),1800),"protocol_valid":True}
+  if outcome=="REDUCTION_SUPPORTED": e["status"]="STOP_EXACT_REDUCTION_SUPPORTED";e["next_action"]="persist-semantic-dead-end"
+  elif outcome=="RESIDUAL_SURVIVES": e["status"]="RETURN_TO_SEMANTIC_CURRENT_SOURCE_REVIEW";e["next_action"]="semantic-and-current-source-review"
+  else:
+   depth=int((e.get("tree") or {}).get("depth") or 0);repair=_b((e.get("design") or {}).get("single_variable_repair_if_inconclusive"),1800)
+   if depth<MAX_DEPTH and repair: e["status"]="BRANCH_REPAIR_READY";e["next_action"]="single-variable-repair";e["branch_repair"]={"changed_variable":repair,"next_depth":depth+1}
+   else: e["status"]="HOLD_INCONCLUSIVE_TREE_BUDGET_EXHAUSTED";e["next_action"]="stop-or-human-reformulation"
+ _promote_deferred(entries)
+ out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"scientific_authority":False,"authority":dict(AUTHORITY)});s=out["summary"]
+ out["status"]="EVIDENCE_RESULTS_REQUIRE_REVIEW" if s["residual_survives"] else ("EVIDENCE_BRANCH_REPAIR_READY" if s["branch_repair_ready"] else ("EVIDENCE_EXECUTION_READY" if s["execution_ready"] else "EVIDENCE_LOOP_BOUNDED"))
+ return out
+
+def validate_evidence_plan(state:dict)->list[str]:
+ errors=[];policy=state.get("policy") or {};summary=state.get("summary") or {}
+ if state.get("scientific_authority") is not False: errors.append("plan cannot carry scientific authority")
+ for k,v in POLICY.items():
+  if policy.get(k)!=v: errors.append("policy-mismatch:"+k)
+ if any(int(summary.get(k) or 0)!=0 for k in ("paper_design_authorized","method_authorized","p0_authorized","full_experiment_authorized")): errors.append("downstream-authority-leak")
+ entries=[r for r in state.get("entries") or [] if isinstance(r,dict)]
+ if len(entries)!=int(summary.get("provisional_problem_candidates") or 0): errors.append("candidate-accounting-mismatch")
+ for r in entries:
+  if r.get("scientific_authority") is not False: errors.append("entry-scientific-authority-leak")
+  if r.get("execution_authorized") is True and (r.get("status")!="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" or not re.fullmatch(r"[0-9a-f]{64}",str(r.get("contract_sha256") or ""))): errors.append("execution-without-valid-contract")
+  auth=r.get("authority") or {}
+  if any(auth.get(k) is not False for k in ("scientific_claim","live_problem_gate","paper_design","method","p0","full_experiment")): errors.append("entry-downstream-authority-leak")
+ return sorted(set(errors))

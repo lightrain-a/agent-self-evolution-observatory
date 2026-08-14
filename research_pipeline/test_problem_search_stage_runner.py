@@ -202,7 +202,12 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
             with patch("research_pipeline.problem_search_stage_runner._normalize",side_effect=lambda raw,registry:raw),patch("research_pipeline.problem_search_stage_runner.audit_shadow_problem_candidate",return_value=audit):
                 summary=runner.machine_audit(pool=pool,run_root=run)
             artifact=json.loads((run/"machine-audit.json").read_text(encoding="utf-8"))
+            evidence=json.loads((run/"evidence-acquisition-plan.json").read_text(encoding="utf-8"))
         self.assertEqual((summary["reviewable"],summary["reduction_pending"],summary["blocked"],summary["problem_falsifier_eligible"]),(0,1,0,1))
+        self.assertEqual((summary["provisional_problem_candidates"],summary["evidence_design_selected"]),(1,1))
+        self.assertEqual((evidence["summary"]["provisional_problem_candidates"],evidence["summary"]["design_pending"]),(1,1))
+        self.assertFalse(evidence["scientific_authority"])
+        self.assertFalse(evidence["authority"]["paper_design"])
         self.assertEqual(artifact["problem_falsifier_queue"][0]["candidate_id"],"SHADOW-P01-C01")
         self.assertEqual(artifact["reduction_pending"][0]["route_origin"],"formulation-reduction-pending")
         self.assertTrue(artifact["policy"]["reduction_pending_is_not_scientific_block_or_pass"])

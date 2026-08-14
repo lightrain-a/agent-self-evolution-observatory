@@ -28,6 +28,8 @@ CONTROL_FILES = (
     "research_pipeline/paper_first_problem_generator_prompts.py",
     "research_pipeline/paper_first_fresh_saturation.py",
     "research_pipeline/paper_first_problem_falsifier_preflight.py",
+    "research_pipeline/paper_first_evidence_acquisition.py",
+    "research_pipeline/paper_first_legacy_reduction_migration.py",
     "research_pipeline/paper_first_shadow_current_source_gate.py",
     "research_pipeline/ark_provider.py",
 )

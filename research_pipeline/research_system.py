@@ -46,6 +46,7 @@ from .paper_first_support_release_watch import load_private_support_release_watc
 from .paper_first_support_asset_recheck import load_private_support_asset_recheck_queue, public_support_asset_recheck_summary
 from .paper_first_support_asset_recheck_handoff import load_private_support_asset_recheck_handoff, public_support_asset_recheck_handoff_summary
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier, validate_paper_first_discovery_frontier
+from .paper_first_legacy_reduction_migration import load_public_migration, validate_public_migration
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
@@ -340,6 +341,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_global_relation_delta_preflight = public_relation_delta_preflight_summary(paper_first_global_relation_delta_private)
     paper_first_global_relation_scan_admission = public_global_relation_scan_admission_summary(build_global_relation_scan_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,relation_state=paper_first_global_relation_recall,delta_state=paper_first_global_relation_delta_private))
     paper_first_problem_search_portfolio = _load_shadow_search_portfolio_public()
+    paper_first_evidence_migration = load_public_migration()
     paper_first_shadow_search_admission = public_shadow_search_admission_summary(build_shadow_search_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,queue_state=paper_first_problem_gate_queue,shadow_state=paper_first_problem_search_portfolio))
     paper_first_shadow_continuation_frontier = build_shadow_continuation_frontier(admission=paper_first_shadow_search_admission,support_watch=paper_first_support_release_watch,asset_queue=paper_first_support_asset_recheck,support_handoff=paper_first_support_asset_recheck_handoff)
     paper_first_discovery_frontier = build_paper_first_discovery_frontier(
@@ -352,6 +354,8 @@ def build_research_system_state() -> dict[str, Any]:
         object_candidate_state=paper_first_scientific_object_candidate_evidence,
         support_release_watch_state=paper_first_support_release_watch,
         support_asset_recheck_state=paper_first_support_asset_recheck,
+        shadow_portfolio_state=paper_first_problem_search_portfolio,
+        evidence_migration_state=paper_first_evidence_migration,
     )
     paper_first_shadow_latest = paper_first_problem_search_portfolio.get("latest_run") or {}
     paper_first_shadow_latest_summary = paper_first_shadow_latest.get("summary") or {}
@@ -614,6 +618,10 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_discovery_frontier_open_internal":int((paper_first_discovery_frontier.get("summary") or {}).get("open_internal_frontiers") or 0),
             "paper_first_discovery_frontier_external_triggers":int((paper_first_discovery_frontier.get("summary") or {}).get("external_triggers") or 0),
             "paper_first_discovery_frontier_model_calls":int((paper_first_discovery_frontier.get("summary") or {}).get("automatic_model_calls_authorized") or 0),
+            "paper_first_discovery_frontier_evidence_open":int((paper_first_discovery_frontier.get("summary") or {}).get("evidence_internal_open") or 0),
+            "paper_first_evidence_migration_status":paper_first_evidence_migration.get("status","NOT_RUN"),
+            "paper_first_evidence_migration_pending":int((paper_first_evidence_migration.get("summary") or {}).get("current_reduction_pending") or 0),
+            "paper_first_evidence_migration_design_pending":int((paper_first_evidence_migration.get("summary") or {}).get("evidence_design_pending") or 0),
             "paper_first_shadow_latest_run_id":paper_first_problem_search_portfolio.get("latest_run_id",""),
             "paper_first_shadow_latest_stage_runner_schema":paper_first_shadow_latest.get("stage_runner_required_schema",""),
             "paper_first_shadow_latest_control_snapshot_sha256":paper_first_shadow_latest.get("control_snapshot_sha256",""),
@@ -642,6 +650,16 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_shadow_latest_problem_falsifier_eligible":paper_first_shadow_latest_summary.get("problem_falsifier_eligible",0),
             "paper_first_shadow_latest_problem_falsifier_inventory_requested":paper_first_shadow_latest_summary.get("problem_falsifier_inventory_requested",0),
             "paper_first_shadow_latest_problem_falsifier_support_qualified":paper_first_shadow_latest_summary.get("problem_falsifier_support_qualified",0),
+            "paper_first_shadow_latest_provisional_problem_candidates":paper_first_shadow_latest_summary.get("provisional_problem_candidates",0),
+            "paper_first_shadow_latest_evidence_design_selected":paper_first_shadow_latest_summary.get("evidence_design_selected",0),
+            "paper_first_shadow_latest_evidence_design_pending":paper_first_shadow_latest_summary.get("evidence_design_pending",0),
+            "paper_first_shadow_latest_evidence_wait_primary_asset":paper_first_shadow_latest_summary.get("evidence_wait_primary_asset",0),
+            "paper_first_shadow_latest_evidence_execution_ready":paper_first_shadow_latest_summary.get("evidence_execution_ready",0),
+            "paper_first_shadow_latest_evidence_execution_completed":paper_first_shadow_latest_summary.get("evidence_execution_completed",0),
+            "paper_first_shadow_latest_evidence_reduction_supported":paper_first_shadow_latest_summary.get("evidence_reduction_supported",0),
+            "paper_first_shadow_latest_evidence_residual_survives":paper_first_shadow_latest_summary.get("evidence_residual_survives",0),
+            "paper_first_shadow_latest_evidence_inconclusive":paper_first_shadow_latest_summary.get("evidence_inconclusive",0),
+            "paper_first_shadow_latest_evidence_branch_repair_ready":paper_first_shadow_latest_summary.get("evidence_branch_repair_ready",0),
             "paper_first_shadow_latest_problem_falsifier_hold":paper_first_shadow_latest_summary.get("problem_falsifier_hold_support_unavailable",0),
             "paper_first_shadow_latest_problem_falsifier_executed":paper_first_shadow_latest_summary.get("problem_falsifier_executed",0),
             "paper_first_shadow_latest_semantic_clear":paper_first_shadow_latest_summary.get("semantic_clear",0),
@@ -790,6 +808,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_support_asset_recheck_queue":paper_first_support_asset_recheck,
         "paper_first_support_asset_recheck_handoff":paper_first_support_asset_recheck_handoff,
         "paper_first_discovery_frontier":paper_first_discovery_frontier,
+        "paper_first_evidence_migration":paper_first_evidence_migration,
         "paper_first_sp15_identifiability_support":paper_first_sp15_support,
         "paper_first_paper_design_backlog":paper_first_paper_design_backlog,
         "paper_first_global_relation_recall":paper_first_global_relation_recall,
@@ -1368,6 +1387,10 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         expected_frontier=build_shadow_continuation_frontier(admission=shadow_search_admission,support_watch=support_release_watch,asset_queue=support_asset_recheck,support_handoff=support_asset_handoff)
         if shadow_continuation.get("status")!=expected_frontier.get("status") or shadow_continuation.get("next_control_action")!=expected_frontier.get("next_control_action") or (shadow_continuation.get("summary") or {})!=(expected_frontier.get("summary") or {}) or (shadow_continuation.get("source_status") or {})!=(expected_frontier.get("source_status") or {}):
             errors.append("shadow continuation frontier must equal the deterministic projection of current admission/watch/queue/handoff state")
+    evidence_migration=state.get("paper_first_evidence_migration") or {}
+    if evidence_migration:
+        errors.extend(f"Legacy evidence migration: {error}" for error in validate_public_migration(evidence_migration))
+        if any(key in evidence_migration for key in ("machine_projection","evidence_plan","source_run_path","private_out")): errors.append("legacy evidence migration public state cannot expose private candidate or path material")
     discovery_frontier=state.get("paper_first_discovery_frontier") or {}
     if discovery_frontier:
         errors.extend(f"Paper-first discovery frontier: {error}" for error in validate_paper_first_discovery_frontier(discovery_frontier))
@@ -1381,6 +1404,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             object_candidate_state=state.get("paper_first_scientific_object_candidate_evidence") or {},
             support_release_watch_state=state.get("paper_first_support_release_watch") or {},
             support_asset_recheck_state=state.get("paper_first_support_asset_recheck_queue") or {},
+            shadow_portfolio_state=state.get("paper_first_problem_search_portfolio") or {},
+            evidence_migration_state=state.get("paper_first_evidence_migration") or {},
         )
         if any(discovery_frontier.get(key)!=expected_discovery_frontier.get(key) for key in ("status","policy","summary","blockers","triggers")):
             errors.append("paper-first discovery frontier must equal the deterministic projection of embedded control states")
@@ -1409,7 +1434,15 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             if latest_policy.get("problem_falsifier_preflight_must_cover_all_eligible_before_terminal_complete") is True:
                 if shadow_latest.get("status")=="SHADOW_TERMINAL_COMPLETE" and falsifier_resolved!=falsifier_eligible: errors.append("completed shadow terminal requires complete problem-falsifier preflight coverage")
                 if shadow_latest.get("status")=="SHADOW_TERMINAL_INCOMPLETE_PROBLEM_FALSIFIER_PREFLIGHT" and not (0<=falsifier_resolved<falsifier_eligible): errors.append("problem-falsifier-incomplete terminal status requires unresolved eligible queue")
-            elif falsifier_resolved!=falsifier_eligible: errors.append("shadow problem-falsifier preflight accounting mismatch")
+            elif latest_policy.get("support_inventory_is_one_evidence_route_not_global_prerequisite") is not True and falsifier_resolved!=falsifier_eligible: errors.append("shadow problem-falsifier preflight accounting mismatch")
+            if "provisional_problem_candidates" in latest_summary:
+                evidence_open=sum(int(latest_summary.get(key) or 0) for key in ("evidence_design_pending","evidence_execution_ready","evidence_residual_survives","evidence_branch_repair_ready"))
+                if latest_policy.get("reduction_pending_enters_bounded_evidence_acquisition_on_future_control_snapshots") is not True or latest_policy.get("evidence_acquisition_authority_is_not_scientific_claim_authority") is not True or latest_policy.get("evidence_residual_survival_requires_semantic_and_current_source_review") is not True: errors.append("future shadow reduction-pending route must separate bounded evidence acquisition from scientific certification")
+                if int(latest_summary.get("provisional_problem_candidates") or 0)!=int(latest_summary.get("problem_falsifier_eligible") or 0): errors.append("provisional evidence portfolio must cover every exact-reduction-pending candidate")
+                if int(latest_summary.get("evidence_execution_completed") or 0)<int(latest_summary.get("evidence_reduction_supported") or 0)+int(latest_summary.get("evidence_residual_survives") or 0): errors.append("evidence outcome accounting exceeds completed bounded executions")
+                if shadow_latest.get("status")=="SHADOW_EVIDENCE_ACQUISITION_PENDING" and evidence_open<=0: errors.append("evidence-acquisition-pending status requires open bounded evidence work")
+                if shadow_latest.get("status")=="SHADOW_TERMINAL_COMPLETE" and evidence_open>0: errors.append("completed shadow terminal cannot retain open bounded evidence work")
+                if int(latest_summary.get("evidence_residual_survives") or 0)>0 and shadow_latest.get("status")=="SHADOW_TERMINAL_COMPLETE": errors.append("bounded residual survival must return to semantic/current-source review before terminal completion")
         if int(latest_summary.get("terminal_shadow_survivors") or 0)!=int(latest_summary.get("current_source_clear") or 0) or int(latest_summary.get("live_paper_design_eligible") or 0)!=0: errors.append("shadow terminal survivors must equal current-source CLEAR and never grant live Paper Design eligibility")
         if shadow_latest.get("status")=="SHADOW_TERMINAL_COMPLETE" and int(latest_summary.get("current_source_missing") or 0)!=0: errors.append("completed shadow terminal cannot have missing current-source reviews")
         if any(latest_authority.get(key) is not False for key in ("live_problem_gate","paper_design","method","experiment","p0","gpu")): errors.append("latest shadow run cannot authorize live Problem Gate or downstream execution")

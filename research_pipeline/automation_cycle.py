@@ -57,12 +57,13 @@ from .paper_first_idea_incubation import write_paper_first_idea_incubation
 from .paper_first_fresh_saturation import write_fresh_saturation_state
 from .paper_first_discovery_transaction import write_problem_discovery_transaction
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier
+from .paper_first_legacy_reduction_migration import load_public_migration
 from .paper_first_global_relation_recall import load_global_relation_recall_state, write_global_relation_recall_state
 from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission, public_global_relation_scan_admission_summary
 from .paper_first_primary_evidence import load_primary_evidence_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
-from .paper_first_shadow_search_admission import build_shadow_search_admission, public_shadow_search_admission_summary
+from .paper_first_shadow_search_admission import SHADOW_PORTFOLIO_JSON, build_shadow_search_admission, public_shadow_search_admission_summary
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier
 from .paper_first_relation_coverage import relation_recall_freshness
 from .paper_first_relation_delta_preflight import load_private_relation_delta_preflight, public_relation_delta_preflight_summary, write_private_relation_delta_preflight
@@ -220,6 +221,11 @@ def _run_discovery_frontier_control(storage: StorageSettings) -> dict[str, Any]:
         )
     )
     shadow_admission = public_shadow_search_admission_summary(build_shadow_search_admission())
+    evidence_migration = load_public_migration()
+    try:
+        shadow_portfolio = json.loads(SHADOW_PORTFOLIO_JSON.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        shadow_portfolio = {}
     object_candidate = public_scientific_object_candidate_evidence_summary(
         load_scientific_object_candidate_evidence_ledger(storage=storage)
     )
@@ -235,6 +241,8 @@ def _run_discovery_frontier_control(storage: StorageSettings) -> dict[str, Any]:
         object_candidate_state=object_candidate,
         support_release_watch_state=support_watch,
         support_asset_recheck_state=asset_queue,
+        shadow_portfolio_state=shadow_portfolio,
+        evidence_migration_state=evidence_migration,
     )
     frontier.setdefault("summary", {}).update({
         "frontier_status": frontier.get("status", "WAIT_EXTERNAL_EVIDENCE_TRIGGERS"),
