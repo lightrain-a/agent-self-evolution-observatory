@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T11:11:19+00:00",
+  "generated_at": "2026-08-14T11:26:28+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6083,7 +6083,11 @@
     "paper_first_support_asset_recheck_resolution_irrelevant_release": 0,
     "paper_first_support_asset_handoff_status": "SUPPORT_ASSET_RECHECK_HANDOFF_EMPTY",
     "paper_first_support_asset_handoff_ready": 0,
-    "paper_first_support_asset_handoff_provenance_incomplete": 0
+    "paper_first_support_asset_handoff_provenance_incomplete": 0,
+    "paper_first_shadow_continuation_status": "WAIT_EXTERNAL_PRIMARY_OR_SUPPORT_RELEASE_CHANGE",
+    "paper_first_shadow_continuation_next_action": "wait-external-change",
+    "paper_first_shadow_continuation_active_actions": 0,
+    "paper_first_shadow_continuation_external_wait": 1
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -72837,5 +72841,45 @@
       "p0_authorized": 0,
       "gpu_authorized": 0
     }
+  },
+  "paper_first_shadow_continuation_frontier": {
+    "schema_version": "1.0",
+    "status": "WAIT_EXTERNAL_PRIMARY_OR_SUPPORT_RELEASE_CHANGE",
+    "next_control_action": "wait-external-change",
+    "policy": {
+      "scientific_authority": false,
+      "frontier_is_deterministic_control_projection_only": true,
+      "frontier_cannot_create_shadow_run": true,
+      "frontier_cannot_call_model_provider": true,
+      "frontier_cannot_qualify_support": true,
+      "frontier_cannot_reopen_generator_or_problem_gate": true,
+      "frontier_cannot_authorize_method_experiment_p0_gpu": true,
+      "zero_active_action_is_valid_external_wait": true
+    },
+    "summary": {
+      "shadow_qualification_ready": 0,
+      "release_recheck_required": 0,
+      "asset_recheck_queued": 0,
+      "support_inventory_handoff_ready": 0,
+      "support_handoff_provenance_hold": 0,
+      "support_holds": 4,
+      "active_control_actions": 0,
+      "external_wait": 1,
+      "automatic_provider_calls_authorized": 0,
+      "scientific_authority": 0,
+      "generator_reopen_authorized": 0,
+      "problem_gate_authorized": 0,
+      "method_authorized": 0,
+      "experiment_authorized": 0,
+      "p0_authorized": 0,
+      "gpu_authorized": 0
+    },
+    "source_status": {
+      "shadow_admission": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
+      "support_release_watch": "SUPPORT_RELEASE_WATCH_COMPLETE",
+      "support_asset_queue": "SUPPORT_ASSET_RECHECK_QUEUE_EMPTY",
+      "support_inventory_handoff": "SUPPORT_ASSET_RECHECK_HANDOFF_EMPTY"
+    },
+    "scientific_authority": false
   }
 }
