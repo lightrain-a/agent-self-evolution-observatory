@@ -162,6 +162,50 @@ def build_scientific_object_candidate_evidence_ledger(
     }
 
 
+def public_scientific_object_candidate_evidence_summary(ledger: dict[str, Any]) -> dict[str, Any]:
+    results={}
+    for key,row in (ledger.get("results") or {}).items():
+        if not isinstance(row,dict):
+            continue
+        results[str(key)]={
+            "discovered_new_support_refs":int(row.get("discovered_new_support_refs") or 0),
+            "primary_verified":int(row.get("primary_verified") or 0),
+            "fulltext_verified":int(row.get("fulltext_verified") or 0),
+            "empirical_supported":int(row.get("empirical_supported") or 0),
+            "measured_failure_supported":int(row.get("measured_failure_supported") or 0),
+            "direct_object_verified":int(row.get("direct_object_verified") or 0),
+            "pending_cache":int(row.get("pending_cache") or 0),
+            "error_count":len(row.get("errors") or []),
+            "scientific_authority":False,
+        }
+    summary=ledger.get("summary") or {}
+    return {
+        "schema_version":"1.0",
+        "status":str(ledger.get("status") or "NOT_RUN"),
+        "policy":{
+            "scientific_authority":False,
+            "shadow_only":True,
+            "network_fetch_forbidden":True,
+            "source_exposure_effect":False,
+            "live_query_effect":False,
+            "candidate_primary_verification_does_not_activate_lane":True,
+            "support_purity_and_ownership_gates_still_required":True,
+        },
+        "summary":{
+            "candidate_objects":len(results),
+            "primary_verified":int(summary.get("primary_verified") or 0),
+            "fulltext_verified":int(summary.get("fulltext_verified") or 0),
+            "empirical_supported":int(summary.get("empirical_supported") or 0),
+            "measured_failure_supported":int(summary.get("measured_failure_supported") or 0),
+            "direct_object_verified":int(summary.get("direct_object_verified") or 0),
+            "pending_cache":int(summary.get("pending_cache") or 0),
+            "activation_authorized":0,
+        },
+        "results":results,
+        "scientific_authority":False,
+    }
+
+
 def candidate_extra_records_from_ledger(ledger: dict[str, Any]) -> dict[str,list[dict[str,Any]]]:
     out:dict[str,list[dict[str,Any]]]={}
     for row in ledger.get("records") or []:

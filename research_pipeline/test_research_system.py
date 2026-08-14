@@ -456,6 +456,20 @@ class ResearchSystemTest(unittest.TestCase):
         leaked=copy.deepcopy(self.state);leaked["paper_first_scientific_object_retrieval_audit"]["results"]={"x":{"status":"NO_NEW_SUPPORT_FOUND","ref":"arXiv:secret","scientific_authority":False}}
         self.assertTrue(any("cannot expose private" in error for error in validate_state(leaked)))
 
+    def test_scientific_object_candidate_evidence_is_public_safe_and_zero_exposure(self) -> None:
+        evidence=self.state["paper_first_scientific_object_candidate_evidence"]
+        self.assertFalse(evidence["scientific_authority"])
+        self.assertTrue(evidence["policy"]["shadow_only"])
+        self.assertTrue(evidence["policy"]["network_fetch_forbidden"])
+        self.assertFalse(evidence["policy"]["source_exposure_effect"])
+        self.assertFalse(evidence["policy"]["live_query_effect"])
+        self.assertEqual(evidence["summary"]["activation_authorized"],0)
+        self.assertNotIn('"ref":',json.dumps(evidence))
+        broken=copy.deepcopy(self.state);broken["paper_first_scientific_object_candidate_evidence"]["policy"]["source_exposure_effect"]=True
+        self.assertTrue(any("candidate evidence" in error for error in validate_state(broken)))
+        leaked=copy.deepcopy(self.state);leaked["paper_first_scientific_object_candidate_evidence"]["results"]={"x":{"ref":"arXiv:secret","scientific_authority":False}}
+        self.assertTrue(any("cannot expose private primary" in error for error in validate_state(leaked)))
+
     def test_canonical_paper_design_backlog_is_durable_but_cannot_escalate_authority(self) -> None:
         state=copy.deepcopy(self.state)
         state["paper_first_paper_design_backlog"]={

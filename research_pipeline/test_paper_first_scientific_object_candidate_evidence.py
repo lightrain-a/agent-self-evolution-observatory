@@ -11,6 +11,7 @@ from .config import StorageSettings
 from .paper_first_scientific_object_candidate_evidence import (
     build_scientific_object_candidate_evidence_ledger,
     candidate_extra_records_from_ledger,
+    public_scientific_object_candidate_evidence_summary,
 )
 from .paper_first_scientific_object_ontology import audit_scientific_object_ontology
 
@@ -65,6 +66,19 @@ class ScientificObjectCandidateEvidenceTest(unittest.TestCase):
             ledger=build_scientific_object_candidate_evidence_ledger(storage=self.storage(root),retrieval_state=self.retrieval(status='SHADOW_OBJECT_RETRIEVAL_AUDIT_INCOMPLETE'),now=self.NOW)
         self.assertEqual(ledger['status'],'SHADOW_CANDIDATE_EVIDENCE_BLOCKED_RETRIEVAL_INCOMPLETE')
         self.assertEqual(ledger['summary']['primary_verified'],0)
+
+    def test_public_summary_exposes_counts_without_private_records(self)->None:
+        ledger={'status':'SHADOW_CANDIDATE_EVIDENCE_COMPLETE','summary':{'primary_verified':2,'fulltext_verified':2,'empirical_supported':2,'measured_failure_supported':2,'direct_object_verified':2,'pending_cache':0},'results':{'knowledge_retrieval_state':{'discovered_new_support_refs':2,'primary_verified':2,'fulltext_verified':2,'empirical_supported':2,'measured_failure_supported':2,'direct_object_verified':2,'pending_cache':0,'errors':[]}},'records':[{'ref':'arXiv:secret','abstract':'secret'}]}
+        public=public_scientific_object_candidate_evidence_summary(ledger)
+        self.assertEqual(public['summary']['primary_verified'],2)
+        self.assertEqual(public['summary']['activation_authorized'],0)
+        self.assertFalse(public['scientific_authority'])
+        encoded=json.dumps(public)
+        self.assertNotIn('arXiv:secret',encoded)
+        self.assertNotIn('secret',encoded)
+        self.assertNotIn('records',public)
+        self.assertFalse(public['policy']['source_exposure_effect'])
+        self.assertFalse(public['policy']['live_query_effect'])
 
     def test_candidate_extra_records_supplement_only_target_object(self)->None:
         base=[{'ref':'arXiv:base','title':'Co-evolving knowledge graph','abstract':'A co-evolving knowledge graph is updated by a self-evolving agent.','primary_source_verified':True,'lane_keys':['memory_continual'],'empirical_facts':[{'text':'result'}],'typed_evidence':{'operational_assumptions':[],'measured_failures':[{'text':'failure'}],'boundary_observations':[]}}]
