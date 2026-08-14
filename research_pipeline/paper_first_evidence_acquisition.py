@@ -10,7 +10,7 @@ SCHEMA_VERSION="1.0"
 MAX_ACTIVE=4; MAX_DEPTH=2; MAX_UNITS=128; MAX_WALL_MIN=90; MAX_GPU_HOURS=1.0; MAX_MODEL_CALLS=256
 MODES={"PRIMARY_ASSET_REUSE","FIRST_PARTY_REPLAY","FIRST_PARTY_SANDBOX","FIRST_PARTY_ROLLOUT","FIRST_PARTY_SIMULATION"}
 SOURCE_MODES={"SOURCE_SPECIFIC_REQUIRED","REPRODUCIBLE_FIRST_PARTY"}
-ADAPTERS={"PRIMARY_ASSET_ONLY","EXISTING_REPLAY_HARNESS","EXISTING_SANDBOX_HARNESS","EXISTING_ROLLOUT_HARNESS","EXISTING_SIMULATION_HARNESS","IMPLEMENT_MINIMAL_TEST_HARNESS"}
+ADAPTERS={"PRIMARY_ASSET_ONLY","SUBSTRATE_PREFLIGHT_REQUIRED"}
 OUTCOMES={"REDUCTION_SUPPORTED","RESIDUAL_SURVIVES","INCONCLUSIVE"}
 SUBSTRATE_DISPOSITIONS={"EXISTING_HARNESS_READY","MINIMAL_HARNESS_IMPLEMENTATION_READY","SOURCE_SPECIFIC_REQUIRED","SUBSTRATE_UNAVAILABLE","BUDGET_INFEASIBLE"}
 AUTHORITY={"scientific_claim":False,"live_problem_gate":False,"paper_design":False,"method":False,"p0":False,"full_experiment":False}
@@ -23,6 +23,7 @@ POLICY={
  "same_information_baseline_is_mandatory":True,
  "frozen_scientific_fields_are_compiler_owned":True,
  "outcome_labels_are_compiler_owned":True,
+ "execution_adapter_is_compiler_owned":True,
  "independent_evidence_contract_review_required_before_execution":True,
  "evidence_designer_cannot_self_review":True,
  "bounded_substrate_preflight_required_after_contract_review":True,
@@ -117,9 +118,9 @@ Hard rules:
 - An INCONCLUSIVE repair is optional. If you provide one, name exactly one changed variable; leaving it empty means stop/hold on INCONCLUSIVE. If required_single_variable_repair is nonempty, the new branch must change exactly that variable and preserve every other frozen element.
 - If required_design_revision is nonempty, revise only the evidence contract defect named there; do not change the frozen scientific question, prediction, baseline, or falsifier.
 - Caps: max_units<={MAX_UNITS}, max_wall_minutes<={MAX_WALL_MIN}, max_gpu_hours<={MAX_GPU_HOURS}, max_model_calls<={MAX_MODEL_CALLS}.
-Allowed acquisition_mode={sorted(MODES)}; source_specificity={sorted(SOURCE_MODES)}; execution_adapter={sorted(ADAPTERS)}.
+Allowed acquisition_mode={sorted(MODES)}; source_specificity={sorted(SOURCE_MODES)}. Do not choose a concrete execution adapter: the compiler maps PRIMARY_ASSET_REUSE to PRIMARY_ASSET_ONLY and every first-party mode to SUBSTRATE_PREFLIGHT_REQUIRED.
 
-Return JSON only: {{"designs":[{{"candidate_id":"...","changed_variable":"","source_specificity":"...","acquisition_mode":"...","reproduction_target":"...","independent_truth":"...","causal_unit":"...","observable":"...","intervention":"...","same_information_lock":"...","matched_baseline_execution":"...","anti_bake_in_controls":["...","...","..."],"decision_criteria":{{"baseline_reduction_supported":"criterion under which the strongest same-information baseline explains the frozen prediction and the candidate should STOP","candidate_residual_survives":"criterion under which a distinguishing residual remains after the strongest baseline and the candidate returns to semantic/current-source review","inconclusive":"criterion for no valid separation"}},"single_variable_repair_if_inconclusive":"","execution_adapter":"...","budget":{{"max_units":1,"max_wall_minutes":1,"max_gpu_hours":0.0,"max_model_calls":0}}}}]}}
+Return JSON only: {{"designs":[{{"candidate_id":"...","changed_variable":"","source_specificity":"...","acquisition_mode":"...","reproduction_target":"...","independent_truth":"...","causal_unit":"...","observable":"...","intervention":"...","same_information_lock":"...","matched_baseline_execution":"...","anti_bake_in_controls":["...","...","..."],"decision_criteria":{{"baseline_reduction_supported":"criterion under which the strongest same-information baseline explains the frozen prediction and the candidate should STOP","candidate_residual_survives":"criterion under which a distinguishing residual remains after the strongest baseline and the candidate returns to semantic/current-source review","inconclusive":"criterion for no valid separation"}},"single_variable_repair_if_inconclusive":"","adapter_intent":"brief description of the runtime you expect","budget":{{"max_units":1,"max_wall_minutes":1,"max_gpu_hours":0.0,"max_model_calls":0}}}}]}}
 CANDIDATES={json.dumps(compact,ensure_ascii=False,separators=(",",":"))}'''
  return prompt,[r["candidate_id"] for r in batch]
 
@@ -135,6 +136,7 @@ def _audit_design(d:dict,e:dict)->list[str]:
  if adapter not in ADAPTERS: err.append("invalid-execution-adapter")
  if source=="SOURCE_SPECIFIC_REQUIRED" and mode!="PRIMARY_ASSET_REUSE": err.append("source-specific-must-use-primary-asset")
  if mode=="PRIMARY_ASSET_REUSE" and adapter!="PRIMARY_ASSET_ONLY": err.append("primary-asset-requires-primary-adapter")
+ if mode!="PRIMARY_ASSET_REUSE" and adapter!="SUBSTRATE_PREFLIGHT_REQUIRED": err.append("first-party-must-use-compiler-substrate-preflight-adapter")
  for k in ("reproduction_target","independent_truth","causal_unit","observable","intervention","same_information_lock","matched_baseline_execution"):
   if not _b(d.get(k)): err.append("missing:"+k)
  controls=[str(x).strip() for x in d.get("anti_bake_in_controls") or [] if str(x).strip()]
@@ -171,7 +173,7 @@ def compile_evidence_designs(plan:dict,payload:dict,*,part:int=1,design_model:st
   prior_status=str(e.get("status") or "") if e else ""
   if not e or e.get("design_selected") is not True or prior_status not in {"NEEDS_BOUNDED_EVIDENCE_DESIGN","BRANCH_REPAIR_READY"}: raise ValueError(f"design not selected/pending:{cid}")
   # Frozen scientific fields are compiler-owned, never model-owned. Any model text in these keys is discarded.
-  d=dict(d);d["frozen_exact_prediction"]=e.get("frozen_exact_prediction");d["frozen_same_information_baseline"]=e.get("frozen_same_information_baseline");d["frozen_falsifier_expression"]=e.get("frozen_falsifier_expression")
+  d=dict(d);d["adapter_intent"]=_b(d.get("adapter_intent") or d.get("execution_adapter"),1800);d["execution_adapter"]="PRIMARY_ASSET_ONLY" if str(d.get("acquisition_mode") or "").upper()=="PRIMARY_ASSET_REUSE" else "SUBSTRATE_PREFLIGHT_REQUIRED";d["frozen_exact_prediction"]=e.get("frozen_exact_prediction");d["frozen_same_information_baseline"]=e.get("frozen_same_information_baseline");d["frozen_falsifier_expression"]=e.get("frozen_falsifier_expression")
   criteria=d.get("decision_criteria") or {};d["decision_rule"]={"REDUCTION_SUPPORTED":criteria.get("baseline_reduction_supported",""),"RESIDUAL_SURVIVES":criteria.get("candidate_residual_survives",""),"INCONCLUSIVE":criteria.get("inconclusive","")}
   errors=_audit_design(d,e);e["design"]=json.loads(json.dumps(d,ensure_ascii=False));e["design_audit"]={"passed":not errors,"errors":errors};e["design_provenance"]={"resolved_model":str(design_model or ""),"part":part,"scientific_authority":False};e.pop("evidence_review",None)
   if errors: e["status"]="HOLD_EVIDENCE_DESIGN_INVALID";e["execution_authorized"]=False;continue
@@ -210,7 +212,7 @@ RECOMPILED_FIRST_PARTY requirements:
 8. No proposed-method training, second backbone, hidden-outcome tuning, or paper-scale search.
 9. The output design must use source_specificity=REPRODUCIBLE_FIRST_PARTY and a non-PRIMARY_ASSET_REUSE acquisition mode.
 
-Return JSON only: {{"recompiles":[{{"candidate_id":"...","verdict":"RECOMPILED_FIRST_PARTY|INTRINSIC_SOURCE_SPECIFIC|BLOCK_NO_EQUIVALENT_OPERATIONALIZATION","reason":"...","scientific_object_invariants":["...","...","...","..."],"source_specific_dependencies_removed":["..."],"why_dependencies_are_not_scientific_object":"...","transport_scope":"...","equivalence_probe":"...","equivalence_failure_action":"return to source-specific wait","design":{{"candidate_id":"...","changed_variable":"operationalization only","source_specificity":"REPRODUCIBLE_FIRST_PARTY","acquisition_mode":"FIRST_PARTY_REPLAY|FIRST_PARTY_SANDBOX|FIRST_PARTY_ROLLOUT|FIRST_PARTY_SIMULATION","reproduction_target":"...","independent_truth":"...","causal_unit":"...","observable":"...","intervention":"...","same_information_lock":"...","matched_baseline_execution":"...","anti_bake_in_controls":["...","...","..."],"decision_criteria":{{"baseline_reduction_supported":"...","candidate_residual_survives":"...","inconclusive":"..."}},"single_variable_repair_if_inconclusive":"","execution_adapter":"...","budget":{{"max_units":1,"max_wall_minutes":1,"max_gpu_hours":0.0,"max_model_calls":0}}}}}}]}}
+Return JSON only: {{"recompiles":[{{"candidate_id":"...","verdict":"RECOMPILED_FIRST_PARTY|INTRINSIC_SOURCE_SPECIFIC|BLOCK_NO_EQUIVALENT_OPERATIONALIZATION","reason":"...","scientific_object_invariants":["...","...","...","..."],"source_specific_dependencies_removed":["..."],"why_dependencies_are_not_scientific_object":"...","transport_scope":"...","equivalence_probe":"...","equivalence_failure_action":"return to source-specific wait","design":{{"candidate_id":"...","changed_variable":"operationalization only","source_specificity":"REPRODUCIBLE_FIRST_PARTY","acquisition_mode":"FIRST_PARTY_REPLAY|FIRST_PARTY_SANDBOX|FIRST_PARTY_ROLLOUT|FIRST_PARTY_SIMULATION","reproduction_target":"...","independent_truth":"...","causal_unit":"...","observable":"...","intervention":"...","same_information_lock":"...","matched_baseline_execution":"...","anti_bake_in_controls":["...","...","..."],"decision_criteria":{{"baseline_reduction_supported":"...","candidate_residual_survives":"...","inconclusive":"..."}},"single_variable_repair_if_inconclusive":"","adapter_intent":"brief description of expected runtime","budget":{{"max_units":1,"max_wall_minutes":1,"max_gpu_hours":0.0,"max_model_calls":0}}}}}}]}}
 CANDIDATES={json.dumps(compact,ensure_ascii=False,separators=(",",":"))}'''
  return prompt,[str(r.get("candidate_id") or "") for r in rows]
 
@@ -229,7 +231,7 @@ def compile_operationalization_recompiles(plan:dict,payload:dict,*,part:int=1,re
   if verdict=="BLOCK_NO_EQUIVALENT_OPERATIONALIZATION":e["status"]="HOLD_NO_EQUIVALENT_OPERATIONALIZATION";e["review_feedback"]=reason;continue
   invariants=[_b(x,900) for x in item.get("scientific_object_invariants") or [] if _b(x,900)];removed=[_b(x,900) for x in item.get("source_specific_dependencies_removed") or [] if _b(x,900)];why=_b(item.get("why_dependencies_are_not_scientific_object"),2200);scope=_b(item.get("transport_scope"),1600);probe=_b(item.get("equivalence_probe"),2200);fail_action=_b(item.get("equivalence_failure_action"),1200);design=dict(item.get("design") or {})
   if len(invariants)<4 or not removed or not all((why,scope,probe,fail_action)):e["status"]="HOLD_EVIDENCE_DESIGN_INVALID";e["operationalization_recompile_audit"]={"passed":False,"errors":["operationalization-equivalence-contract-incomplete"]};continue
-  design["candidate_id"]=cid;design["changed_variable"]="";design["frozen_exact_prediction"]=e.get("frozen_exact_prediction");design["frozen_same_information_baseline"]=e.get("frozen_same_information_baseline");design["frozen_falsifier_expression"]=e.get("frozen_falsifier_expression");criteria=design.get("decision_criteria") or {};design["decision_rule"]={"REDUCTION_SUPPORTED":criteria.get("baseline_reduction_supported",""),"RESIDUAL_SURVIVES":criteria.get("candidate_residual_survives",""),"INCONCLUSIVE":criteria.get("inconclusive","")}
+  design["candidate_id"]=cid;design["changed_variable"]="";design["adapter_intent"]=_b(design.get("adapter_intent") or design.get("execution_adapter"),1800);design["execution_adapter"]="PRIMARY_ASSET_ONLY" if str(design.get("acquisition_mode") or "").upper()=="PRIMARY_ASSET_REUSE" else "SUBSTRATE_PREFLIGHT_REQUIRED";design["frozen_exact_prediction"]=e.get("frozen_exact_prediction");design["frozen_same_information_baseline"]=e.get("frozen_same_information_baseline");design["frozen_falsifier_expression"]=e.get("frozen_falsifier_expression");criteria=design.get("decision_criteria") or {};design["decision_rule"]={"REDUCTION_SUPPORTED":criteria.get("baseline_reduction_supported",""),"RESIDUAL_SURVIVES":criteria.get("candidate_residual_survives",""),"INCONCLUSIVE":criteria.get("inconclusive","")}
   errors=_audit_design(design,e)
   if str(design.get("source_specificity") or "").upper()!="REPRODUCIBLE_FIRST_PARTY" or str(design.get("acquisition_mode") or "").upper()=="PRIMARY_ASSET_REUSE":errors.append("recompile-must-be-first-party")
   errors=sorted(set(errors));e["operationalization_recompile_audit"]={"passed":not errors,"errors":errors}
