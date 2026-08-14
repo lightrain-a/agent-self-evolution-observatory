@@ -148,9 +148,22 @@ def audit_candidate_object(records: list[dict[str, Any]], candidate_key: str, *,
     }
 
 
-def audit_scientific_object_ontology(records: list[dict[str, Any]], *, config: dict[str, Any] | None = None) -> dict[str, Any]:
+def audit_scientific_object_ontology(records: list[dict[str, Any]], *, config: dict[str, Any] | None = None, candidate_extra_records: dict[str, list[dict[str, Any]]] | None = None) -> dict[str, Any]:
     config = config or load_scientific_object_config()
-    candidates = {key: audit_candidate_object(records, key, config=config) for key in config["candidates"]}
+    candidate_extra_records = candidate_extra_records or {}
+    candidates = {}
+    candidate_extra_counts = {}
+    for key in config["candidates"]:
+        merged={str(row.get("ref") or f"base:{index}"):row for index,row in enumerate(records)}
+        extras=[]
+        for row in candidate_extra_records.get(key) or []:
+            if not isinstance(row,dict) or row.get("primary_source_verified") is not True or row.get("scientific_authority") is not False:
+                continue
+            ref=str(row.get("ref") or "")
+            if ref and ref not in merged:
+                merged[ref]=row;extras.append(ref)
+        candidates[key]=audit_candidate_object(list(merged.values()), key, config=config)
+        candidate_extra_counts[key]=len(extras)
     return {
         "schema_version": "1.0",
         "generated_at": _now(),
@@ -173,6 +186,8 @@ def audit_scientific_object_ontology(records: list[dict[str, Any]], *, config: d
             "active_object_lanes_must_continue_to_pass_purity_regression": True,
             "candidate_own_lane_is_excluded_from_collision_reduction": True,
             "freshness_and_relevance_must_remain_unchanged": True,
+            "candidate_specific_primary_verification_can_supplement_live_review_exposure": True,
+            "candidate_evidence_receipts_do_not_change_live_source_exposure": True,
         },
         "current_taxonomy": {
             "axes": config.get("current_axes") or {},
@@ -184,6 +199,7 @@ def audit_scientific_object_ontology(records: list[dict[str, Any]], *, config: d
         "ownership_gate": dict(config["ownership_gate"]),
         "summary": {
             "reviewed_primary_records": len(records),
+            "shadow_candidate_primary_records": sum(candidate_extra_counts.values()),
             "candidate_objects": len(candidates),
             "active_object_lanes_validated": sorted(key for key, row in candidates.items() if row["status"] == "ACTIVE_OBJECT_LANE_VALIDATED"),
             "shadow_ready_for_preregistration": sorted(key for key, row in candidates.items() if row["status"] == "SHADOW_READY_FOR_PREREGISTRATION"),
@@ -193,6 +209,7 @@ def audit_scientific_object_ontology(records: list[dict[str, Any]], *, config: d
             "hold_object_ownership_review": sorted(key for key, row in candidates.items() if row["status"] == "HOLD_OBJECT_OWNERSHIP_REVIEW"),
             "activation_authorized": 0,
         },
+        "candidate_extra_primary_counts": candidate_extra_counts,
         "candidates": candidates,
     }
 
@@ -227,7 +244,9 @@ def reviewed_primary_cache_records(storage: StorageSettings | None = None, *, re
 
 def write_private_scientific_object_audit(*, storage: StorageSettings | None = None, output_path: Path | None = None) -> dict[str, Any]:
     storage = storage or StorageSettings.from_env()
-    state = audit_scientific_object_ontology(reviewed_primary_cache_records(storage))
+    from .paper_first_scientific_object_candidate_evidence import candidate_extra_records_from_ledger, load_scientific_object_candidate_evidence_ledger
+    ledger=load_scientific_object_candidate_evidence_ledger(storage=storage)
+    state = audit_scientific_object_ontology(reviewed_primary_cache_records(storage),candidate_extra_records=candidate_extra_records_from_ledger(ledger))
     target = output_path or storage.data_root / "paper-first-problem-discovery" / "scientific-object-shadow-audit-v2.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
