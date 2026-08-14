@@ -1,7 +1,7 @@
 {
   "schema_version": "2.5",
-  "generated_at": "2026-08-14T02:49:56+00:00",
-  "run_id": "20260814T024956Z",
+  "generated_at": "2026-08-14T03:48:16+00:00",
+  "run_id": "20260814T034816Z",
   "generator_model": "ark-code-latest",
   "reviewer_model": "glm-5.2",
   "policy": {
@@ -124,14 +124,8 @@
       "OTHER": 0
     }
   },
-  "raw_artifacts": {
-    "generator": {
-      "sha256": "be5d6071edc8f6b5ee6a8a3f0374c2e6f3093bc59b89bf8bf479afb831c8dacc",
-      "requested_model": "ark-code-latest",
-      "resolved_model": "doubao-seed-evolving"
-    }
-  },
-  "generation_notes": "Zero candidates survive. The only contract-satisfying ASSUMPTION_BREAK pair is reducible to the known procedural-memory-nonmonotonicity veto; no CONTRADICTION, CONVERGENT_FAILURE, or UNEXPLAINED_BOUNDARY pair meets the current evidence contract.",
+  "raw_artifacts": {},
+  "generation_notes": "",
   "search_diagnostics": {
     "lane_search_priority": [
       "CONTRADICTION",
@@ -139,40 +133,12 @@
       "UNEXPLAINED_BOUNDARY",
       "ASSUMPTION_BREAK"
     ],
-    "lane_search_complete": true,
-    "lane_search": [
-      {
-        "lane": "CONTRADICTION",
-        "status": "NO_PAIR",
-        "source_refs": [],
-        "reason": "No two current sources provide independently grounded empirical facts that are incompatible under one explicitly shared operationalization. Safety/security findings are complementary rather than contradictory, and memory/skill monotonicity violations are already covered by the negative-space stack."
-      },
-      {
-        "lane": "CONVERGENT_FAILURE",
-        "status": "NO_PAIR",
-        "source_refs": [],
-        "reason": "No pair of independent method families exhibits quantitative failure under the same bounded operational condition while naming a common failure object rather than a better method. Existing failures occur under different tasks, metrics, and harnesses."
-      },
-      {
-        "lane": "UNEXPLAINED_BOUNDARY",
-        "status": "NO_PAIR",
-        "source_refs": [],
-        "reason": "No pair quantitatively establishes both an anomalous boundary and an adjacent expected regime for the same measured phenomenon. Reported plateaus and thresholds are isolated sensitivity observations without a shared adjacent-regime measurement."
-      },
-      {
-        "lane": "ASSUMPTION_BREAK",
-        "status": "REDUCIBLE",
-        "source_refs": [
-          "arXiv:2608.11654",
-          "arXiv:2608.11888"
-        ],
-        "reason": "The strongest grounded pair is the formal monotonicity assumption in arXiv:2608.11654 and empirical skill-induced omissions in arXiv:2608.11888, but this is the repeatedly blocked procedural-memory-nonmonotonicity basin and is fully expressible by nonmonotonic reasoning/belief revision under the same conflict information."
-      }
-    ],
+    "lane_search_complete": false,
+    "lane_search": [],
     "last_completed_lane_search": {
-      "run_id": "20260814T024956Z",
+      "run_id": "20260814T033010Z",
       "generator_status": "GENERATED_ZERO_CANDIDATES",
-      "generated_at": "2026-08-14T02:49:56+00:00",
+      "generated_at": "2026-08-14T03:30:10+00:00",
       "mode": "legacy_pair_audit",
       "lane_search_priority": [
         "CONTRADICTION",
@@ -185,19 +151,19 @@
           "lane": "CONTRADICTION",
           "status": "NO_PAIR",
           "source_refs": [],
-          "reason": "No two current sources provide independently grounded empirical facts that are incompatible under one explicitly shared operationalization. Safety/security findings are complementary rather than contradictory, and memory/skill monotonicity violations are already covered by the negative-space stack."
+          "reason": "No two current sources provide independently grounded empirical facts that are incompatible under one explicitly shared operationalization. Apparent conflicts (e.g., more retrieval helping versus hurting) occur across different tasks, retrieval objects, and outcome measures, so they do not satisfy shared_operationalization plus incompatibility."
         },
         {
           "lane": "CONVERGENT_FAILURE",
           "status": "NO_PAIR",
           "source_refs": [],
-          "reason": "No pair of independent method families exhibits quantitative failure under the same bounded operational condition while naming a common failure object rather than a better method. Existing failures occur under different tasks, metrics, and harnesses."
+          "reason": "No pair of independent method families exhibits quantitative failure under the same bounded operational condition with a common failure object. Existing failures are tied to distinct settings (skill loading, memory retrieval, defense evolution, embodied execution) and do not establish a shared condition plus two independent method-family failures."
         },
         {
           "lane": "UNEXPLAINED_BOUNDARY",
           "status": "NO_PAIR",
           "source_refs": [],
-          "reason": "No pair quantitatively establishes both an anomalous boundary and an adjacent expected regime for the same measured phenomenon. Reported plateaus and thresholds are isolated sensitivity observations without a shared adjacent-regime measurement."
+          "reason": "No pair jointly establishes a quantitatively anomalous boundary and an adjacent expected regime for the same measured phenomenon. Sensitivity plateaus or threshold effects in individual papers lack a second source measuring the same phenomenon across the boundary and an unexplained transition."
         },
         {
           "lane": "ASSUMPTION_BREAK",
@@ -206,62 +172,18 @@
             "arXiv:2608.11654",
             "arXiv:2608.11888"
           ],
-          "reason": "The strongest grounded pair is the formal monotonicity assumption in arXiv:2608.11654 and empirical skill-induced omissions in arXiv:2608.11888, but this is the repeatedly blocked procedural-memory-nonmonotonicity basin and is fully expressible by nonmonotonic reasoning/belief revision under the same conflict information."
+          "reason": "The strongest grounded pair is the explicit monotonicity/self-containment assumption in the formal memory framework and empirical skill-induced failures where relevant stored guidance causes required-element omissions. This satisfies the lane contract but is already covered by the procedural-memory-nonmonotonicity veto and prior blocked candidates; no new structural object survives."
         }
       ],
-      "generation_notes": "Zero candidates survive. The only contract-satisfying ASSUMPTION_BREAK pair is reducible to the known procedural-memory-nonmonotonicity veto; no CONTRADICTION, CONVERGENT_FAILURE, or UNEXPLAINED_BOUNDARY pair meets the current evidence contract.",
+      "generation_notes": "Zero candidates survive. The only lane with a grounded two-source contract is ASSUMPTION_BREAK using arXiv:2608.11654 and arXiv:2608.11888, but it is reducible to nonmonotonic reasoning/belief revision and matches the repeatedly blocked procedural-memory-nonmonotonicity basin. CONTRADICTION, CONVERGENT_FAILURE, and UNEXPLAINED_BOUNDARY have no eligible current source pairs.",
       "scientific_authority": false
     },
     "scientific_authority": false
   },
   "saturation_memory": {
-    "ledger_entries": 17,
+    "ledger_entries": 18,
     "prior_identical_zero_runs": 0,
-    "current_run_recorded": true,
-    "current_review_receipt": {
-      "run_id": "20260814T024956Z",
-      "pool_sha256": "deddf974202ffb8e0995118976d66bd594b2b7b75b53d0cc9503453715e1ae8a",
-      "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
-      "source_refs": [
-        "arXiv:2607.23802",
-        "arXiv:2608.01561",
-        "arXiv:2608.01759",
-        "arXiv:2608.01904",
-        "arXiv:2608.02276",
-        "arXiv:2608.02287",
-        "arXiv:2608.02508",
-        "arXiv:2608.03244",
-        "arXiv:2608.03392",
-        "arXiv:2608.03413",
-        "arXiv:2608.03509",
-        "arXiv:2608.03764",
-        "arXiv:2608.04003",
-        "arXiv:2608.04625",
-        "arXiv:2608.05013",
-        "arXiv:2608.10494",
-        "arXiv:2608.10504",
-        "arXiv:2608.11079",
-        "arXiv:2608.11246",
-        "arXiv:2608.11350",
-        "arXiv:2608.11596",
-        "arXiv:2608.11654",
-        "arXiv:2608.11888",
-        "arXiv:2608.12428",
-        "arXiv:2608.12629",
-        "arXiv:2608.12720",
-        "arXiv:2608.12743",
-        "arXiv:2608.12841",
-        "arXiv:2608.12851",
-        "arXiv:2608.12977",
-        "arXiv:2608.13040",
-        "arXiv:2608.13560"
-      ],
-      "status": "GENERATED_ZERO_CANDIDATES",
-      "requested_model": "ark-code-latest",
-      "resolved_model": "doubao-seed-evolving",
-      "raw_sha256": "be5d6071edc8f6b5ee6a8a3f0374c2e6f3093bc59b89bf8bf479afb831c8dacc",
-      "scientific_authority": false
-    },
+    "current_run_recorded": false,
     "portable_review_receipts": [
       {
         "run_id": "20260813T091902Z",
@@ -1011,6 +933,50 @@
         "resolved_model": "doubao-seed-evolving",
         "raw_sha256": "be5d6071edc8f6b5ee6a8a3f0374c2e6f3093bc59b89bf8bf479afb831c8dacc",
         "scientific_authority": false
+      },
+      {
+        "run_id": "20260814T033010Z",
+        "pool_sha256": "51f486015f290317adefaac5f9fffc5448a83c3e985a9e1151a239ae4990dc5b",
+        "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
+        "source_refs": [
+          "arXiv:2607.16352",
+          "arXiv:2607.27557",
+          "arXiv:2607.28692",
+          "arXiv:2607.29010",
+          "arXiv:2607.29241",
+          "arXiv:2607.29468",
+          "arXiv:2607.29600",
+          "arXiv:2608.00303",
+          "arXiv:2608.01234",
+          "arXiv:2608.01711",
+          "arXiv:2608.01918",
+          "arXiv:2608.01964",
+          "arXiv:2608.02636",
+          "arXiv:2608.02843",
+          "arXiv:2608.07545",
+          "arXiv:2608.10494",
+          "arXiv:2608.10504",
+          "arXiv:2608.10915",
+          "arXiv:2608.11079",
+          "arXiv:2608.11350",
+          "arXiv:2608.11596",
+          "arXiv:2608.11654",
+          "arXiv:2608.11888",
+          "arXiv:2608.12428",
+          "arXiv:2608.12629",
+          "arXiv:2608.12720",
+          "arXiv:2608.12743",
+          "arXiv:2608.12841",
+          "arXiv:2608.12851",
+          "arXiv:2608.12977",
+          "arXiv:2608.13040",
+          "arXiv:2608.13560"
+        ],
+        "status": "GENERATED_ZERO_CANDIDATES",
+        "requested_model": "ark-code-latest",
+        "resolved_model": "doubao-seed-evolving",
+        "raw_sha256": "a2f69adb18dfac57dd73d598ba29147dc3edbefda3de156133fa64c9b2057660",
+        "scientific_authority": false
       }
     ],
     "blocked_problem_memory": {
@@ -1185,23 +1151,24 @@
       "scientific_authority": false
     },
     "scientific_authority": false,
-    "portable_review_receipt_count": 17
+    "portable_review_receipt_count": 18
   },
   "candidates": [],
-  "primary_pool_age_hours": 0.015,
+  "primary_pool_age_hours": 0.0143,
   "source_coverage": {
-    "coverage_exhausted": false,
+    "coverage_exhausted": true,
     "source_retrieval_complete": true,
-    "eligible_lane_linked_sources": 220,
+    "eligible_lane_linked_sources": 218,
     "reviewed_lane_linked_sources": 218,
-    "unreviewed_lane_linked_sources": 2,
-    "unreviewed_no_lane_sources": 7,
+    "unreviewed_lane_linked_sources": 0,
+    "unreviewed_no_lane_sources": 6,
     "carrier_probe_required": true,
-    "carrier_probe_pending": 6,
-    "carrier_probe_complete": false,
+    "carrier_probe_pending": 0,
+    "carrier_probe_complete": true,
     "scientific_authority": false
   },
-  "status": "GENERATED_ZERO_CANDIDATES",
-  "discovery_transaction_id": "bb31420af0d6987afb0bccccd7aa5f2cbedb5450bb7cc5f4c55369f5fec60837",
+  "coverage_skip_reason": "No unreviewed freshness/relevance-qualified source remains inside preregistered scientific-object lanes; generation resumes automatically when a new lane-grounded primary source appears.",
+  "status": "SKIPPED_SOURCE_COVERAGE_SATURATED",
+  "discovery_transaction_id": "e0ab91a9d16351a3530a7e2ab97e56ac99f04694a7c1e343fa11bae09f82f16a",
   "discovery_transaction_role": "generator"
 }
