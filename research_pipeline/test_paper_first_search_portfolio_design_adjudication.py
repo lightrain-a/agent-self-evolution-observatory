@@ -97,6 +97,15 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(memory["semantic_blocker_added_from_latest_run"],1)
         self.assertFalse(rows[0]["scientific_authority"])
 
+    def test_lane_contract_failure_precedes_exact_reduction_classification(self) -> None:
+        candidate={"candidate_id":"R2-LANE","title":"planner executor granularity mismatch","search_primitive":"COMPOSITION_INTERACTION","semantic_verdict":"BLOCK","semantic_reduction_class":"NEEDS_EXACT_REDUCTION_TEST","semantic_lane_contract_verified":False,"semantic_matched_patterns":[],"semantic_strongest_reduction":"generic subgoal distribution shift","semantic_exact_reduction_test":"none","semantic_reason":"lane contract fails before reduction is identified","semantic_lane_contract_reason":"fixed granularity contract is not grounded by the supplied evidence","semantic_source_refs":["arXiv:2608.05999"]}
+        memory=_shadow_dead_end_memory({"latest_run":{"frozen_pool_sha256":"a"*64,"candidates":[candidate]}},prior_hard_veto_rows=[],prior_semantic_rows=[])
+        rows=[row for row in memory["blocked_objects"] if str(row.get("basin") or "").startswith("semantic-")]
+        self.assertEqual(len(rows),1)
+        self.assertTrue(rows[0]["basin"].startswith("semantic-lane-contract-"))
+        self.assertFalse(rows[0]["basin"].startswith("semantic-exact-reduction-"))
+        self.assertIn("fixed granularity contract",rows[0]["lane_contract_reason"])
+
     def test_semantic_lane_contract_block_persists_across_shadow_runs(self) -> None:
         candidate={"candidate_id":"R3-LANE","title":"optimizer threshold","search_primitive":"CONVERGENT_FAILURE","semantic_verdict":"BLOCK","semantic_reduction_class":"SOFT_COLLISION","semantic_lane_contract_verified":False,"semantic_matched_patterns":["model-scaffold-enactability"],"semantic_strongest_reduction":"cross-model instruction compatibility","semantic_exact_reduction_test":"hold budget fixed","semantic_reason":"lane contract fails","semantic_lane_contract_reason":"no shared bounded operational condition","semantic_source_refs":["arXiv:2608.09629","arXiv:2608.11340"]}
         first=_shadow_dead_end_memory({"latest_run":{"candidates":[candidate]}},prior_hard_veto_rows=[],prior_semantic_rows=[])

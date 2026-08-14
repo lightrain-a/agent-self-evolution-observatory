@@ -225,29 +225,7 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
         candidate_id = str(row.get("candidate_id") or "").strip()
         primitive = str(row.get("search_primitive") or "").strip()
         title = " ".join(str(row.get("title") or "").split())[:300]
-        if reduction_class == "NEEDS_EXACT_REDUCTION_TEST" and strongest and exact_test and reason:
-            signature = hashlib.sha256(json.dumps({"strongest_reduction": strongest, "matched_patterns": patterns, "exact_reduction_test": exact_test}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
-            basin = f"semantic-exact-reduction-{signature}"
-            if basin not in semantic_by_basin:
-                semantic_added += 1
-            semantic_by_basin[basin] = {
-                "source_candidate_id": candidate_id,
-                "basin": basin,
-                "search_primitive": primitive,
-                "avoid": [f"paraphrase-only variants of: {title}", f"domain-swapped variants still explained by: {strongest}", "claiming a new structural boundary without resolving the recorded same-information exact reduction test"],
-                "strongest_reduction": strongest,
-                "matched_patterns": patterns,
-                "reduction_class": reduction_class,
-                "exact_reduction_test": exact_test,
-                "current_source_refs": refs,
-                "evidence_claims": claims,
-                "problem_text": problem_text,
-                "frozen_pool_sha256": latest_pool_sha,
-                "reason": reason,
-                "reopen_only_if": "New primary evidence directly instantiates the recorded exact reduction test under matched information and leaves a residual prediction the named mature reduction cannot express; new wording, a new application domain, or an unexecuted proposed falsifier does not reopen this basin.",
-                "scientific_authority": False,
-            }
-        elif not lane_verified and strongest and reason and lane_reason:
+        if not lane_verified and strongest and reason and lane_reason:
             signature = hashlib.sha256(json.dumps({"strongest_reduction": strongest, "lane_contract_reason": lane_reason, "search_primitive": primitive}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
             basin = f"semantic-lane-contract-{signature}"
             if basin not in semantic_by_basin:
@@ -268,6 +246,28 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
                 "frozen_pool_sha256": latest_pool_sha,
                 "reason": reason,
                 "reopen_only_if": "New primary evidence supplies the missing lane-contract elements explicitly (shared bounded condition, common failure object, and correctly typed evidence roles) and the resulting formulation still leaves a same-information residual beyond the recorded strongest reduction.",
+                "scientific_authority": False,
+            }
+        elif reduction_class == "NEEDS_EXACT_REDUCTION_TEST" and strongest and exact_test and exact_test.lower() != "none" and reason:
+            signature = hashlib.sha256(json.dumps({"strongest_reduction": strongest, "matched_patterns": patterns, "exact_reduction_test": exact_test}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
+            basin = f"semantic-exact-reduction-{signature}"
+            if basin not in semantic_by_basin:
+                semantic_added += 1
+            semantic_by_basin[basin] = {
+                "source_candidate_id": candidate_id,
+                "basin": basin,
+                "search_primitive": primitive,
+                "avoid": [f"paraphrase-only variants of: {title}", f"domain-swapped variants still explained by: {strongest}", "claiming a new structural boundary without resolving the recorded same-information exact reduction test"],
+                "strongest_reduction": strongest,
+                "matched_patterns": patterns,
+                "reduction_class": reduction_class,
+                "exact_reduction_test": exact_test,
+                "current_source_refs": refs,
+                "evidence_claims": claims,
+                "problem_text": problem_text,
+                "frozen_pool_sha256": latest_pool_sha,
+                "reason": reason,
+                "reopen_only_if": "New primary evidence directly instantiates the recorded exact reduction test under matched information and leaves a residual prediction the named mature reduction cannot express; new wording, a new application domain, or an unexecuted proposed falsifier does not reopen this basin.",
                 "scientific_authority": False,
             }
     semantic_rows = [semantic_by_basin[key] for key in sorted(semantic_by_basin)]
