@@ -5,6 +5,7 @@ from datetime import datetime,timezone
 from pathlib import Path
 
 from .ark_provider import extract_json_object
+from .config import PROJECT_ROOT
 from .paper_first_problem_discovery_contract import SEARCH_PORTFOLIO_PRIMITIVES, audit_problem_candidate, audit_shadow_problem_candidate
 from .paper_first_problem_generator import _ark,_apply_reviews,_normalize
 from .paper_first_problem_generator_prompts import reviewer_prompt
@@ -15,9 +16,13 @@ from .paper_first_problem_search_portfolio import (
 )
 
 
+DEFAULT_SHADOW_DEAD_END_MEMORY_PATH=PROJECT_ROOT/"generated"/"paper-first-search-portfolio-design-adjudication.json"
+
+
 def _shadow_dead_end_memory(path:Path|None)->dict:
-    if path is None:return {}
-    payload=json.loads(path.read_text(encoding="utf-8"))
+    resolved=path or DEFAULT_SHADOW_DEAD_END_MEMORY_PATH
+    if not resolved.exists():return {}
+    payload=json.loads(resolved.read_text(encoding="utf-8"))
     memory=payload.get("shadow_dead_end_memory") if isinstance(payload,dict) else None
     if not isinstance(memory,dict):memory=payload if isinstance(payload,dict) else {}
     if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True:
