@@ -60,6 +60,7 @@ from .paper_first_global_relation_recall import load_global_relation_recall_stat
 from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission
 from .paper_first_primary_evidence import load_primary_evidence_state
 from .paper_first_problem_generator import load_problem_generator_state
+from .paper_first_shadow_search_admission import build_shadow_search_admission, public_shadow_search_admission_summary
 from .paper_first_relation_coverage import relation_recall_freshness
 from .paper_first_relation_delta_preflight import public_relation_delta_preflight_summary, write_private_relation_delta_preflight
 from .paper_first_relation_cache_backfill import backfill_relation_cache
@@ -148,6 +149,16 @@ def _run_global_relation_control(
     return result
 
 
+def _run_shadow_search_admission_control() -> dict[str, Any]:
+    """Evaluate next shadow-run admission without creating a run or calling a provider."""
+    state = build_shadow_search_admission()
+    public = public_shadow_search_admission_summary(state)
+    public["model_calls_authorized"] = False
+    public["qualification_created"] = False
+    public["scientific_authority"] = False
+    return public
+
+
 def run_cycle(
     *,
     mode: str = "daily",
@@ -188,6 +199,7 @@ def run_cycle(
             report["steps"].append(_step("paper-design-backlog-pre-discovery", write_paper_design_backlog))
             report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
             report["steps"].append(_step("paper-first-discovery-transaction", write_problem_discovery_transaction))
+            report["steps"].append(_step("paper-first-shadow-search-admission", _run_shadow_search_admission_control))
             # Shadow scientific-object recall is strictly downstream of the live atomic transaction.
             # It only runs when live source coverage is fully closed and cannot mutate canonical Primary/Generator/Queue.
             report["steps"].append(_step("paper-first-scientific-object-shadow-maintenance", run_shadow_scientific_object_maintenance))

@@ -7,7 +7,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
-from .automation_cycle import _advisory_step, _run_external_system_learning_review, _run_global_relation_control, _sync_literature, cycle_lock, run_cycle
+from .automation_cycle import _advisory_step, _run_external_system_learning_review, _run_global_relation_control, _run_shadow_search_admission_control, _sync_literature, cycle_lock, run_cycle
 
 
 class AutomationCycleAIConsultationTest(unittest.TestCase):
@@ -74,6 +74,7 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertIn("project-web-gpt-repair-review", names)
             self.assertIn("paper-first-fresh-saturation", names)
             self.assertIn("paper-first-discovery-transaction", names)
+            self.assertIn("paper-first-shadow-search-admission", names)
             self.assertIn("paper-first-scientific-object-shadow-maintenance", names)
             self.assertIn("paper-first-relation-cache-backfill", names)
             self.assertIn("paper-first-global-relation-recall", names)
@@ -84,12 +85,22 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertIn("archival-solution-first-idea-discovery-v3", names)
             self.assertNotIn("solution-first-idea-discovery-v3", names)
             self.assertLess(names.index("paper-first-fresh-saturation"), names.index("paper-first-discovery-transaction"))
-            self.assertLess(names.index("paper-first-discovery-transaction"), names.index("paper-first-scientific-object-shadow-maintenance"))
+            self.assertLess(names.index("paper-first-discovery-transaction"), names.index("paper-first-shadow-search-admission"))
+            self.assertLess(names.index("paper-first-shadow-search-admission"), names.index("paper-first-scientific-object-shadow-maintenance"))
             self.assertLess(names.index("paper-first-scientific-object-shadow-maintenance"), names.index("paper-first-relation-cache-backfill"))
             self.assertLess(names.index("paper-first-relation-cache-backfill"), names.index("paper-first-global-relation-recall"))
             self.assertLess(names.index("paper-first-global-relation-recall"), names.index("archival-solution-first-idea-discovery-v3"))
             self.assertLess(names.index("paper-first-discovery-transaction"), names.index("historical-paper-first-idea-incubation"))
             self.assertLess(names.index("external-research-system-learning-review"), names.index("project-web-gpt-repair-review"))
+
+    def test_shadow_search_admission_step_never_creates_qualification_or_model_authority(self) -> None:
+        admission={"schema_version":"1.0","status":"READY_FOR_SHADOW_QUALIFICATION","reason":"new source","policy":{"scientific_authority":False},"summary":{"qualification_allowed":True,"automatic_provider_calls_authorized":0},"source_identity":{},"scientific_authority":False}
+        with patch("research_pipeline.automation_cycle.build_shadow_search_admission",return_value=admission), patch("research_pipeline.automation_cycle.public_shadow_search_admission_summary",return_value=dict(admission)):
+            result=_run_shadow_search_admission_control()
+        self.assertEqual(result["status"],"READY_FOR_SHADOW_QUALIFICATION")
+        self.assertFalse(result["model_calls_authorized"])
+        self.assertFalse(result["qualification_created"])
+        self.assertFalse(result["scientific_authority"])
 
     def test_global_relation_scan_is_deferred_by_default_without_model_writer(self) -> None:
         storage=SimpleNamespace()
