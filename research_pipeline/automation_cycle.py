@@ -57,6 +57,8 @@ from .paper_first_idea_incubation import write_paper_first_idea_incubation
 from .paper_first_fresh_saturation import write_fresh_saturation_state
 from .paper_first_discovery_transaction import write_problem_discovery_transaction
 from .paper_first_global_relation_recall import load_global_relation_recall_state, write_global_relation_recall_state
+from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission
+from .paper_first_primary_evidence import load_primary_evidence_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_relation_coverage import relation_recall_freshness
 from .paper_first_relation_delta_preflight import public_relation_delta_preflight_summary, write_private_relation_delta_preflight
@@ -117,22 +119,32 @@ def _run_global_relation_control(
     allow_model_scan: bool,
     relation_writer: Any = write_global_relation_recall_state,
     delta_writer: Any = write_private_relation_delta_preflight,
+    admission_builder: Any = build_global_relation_scan_admission,
 ) -> dict[str, Any]:
-    freshness = relation_recall_freshness(load_problem_generator_state(), load_global_relation_recall_state())
-    delta = public_relation_delta_preflight_summary(delta_writer(storage=storage))
+    primary_state = load_primary_evidence_state()
+    generator_state = load_problem_generator_state()
+    relation_state = load_global_relation_recall_state()
+    freshness = relation_recall_freshness(generator_state, relation_state)
+    delta_private = delta_writer(storage=storage)
+    delta = public_relation_delta_preflight_summary(delta_private)
+    admission = admission_builder(primary_state=primary_state,generator_state=generator_state,relation_state=relation_state,delta_state=delta_private)
     if not allow_model_scan:
         return {
             "schema_version": "1.0",
             "status": "DEFERRED_RELATION_MODEL_SCAN",
             "freshness": freshness,
             "delta_preflight": delta,
+            "manual_scan_admission": admission,
             "model_calls_authorized": False,
             "scientific_authority": False,
         }
     if mode != "manual":
         raise RuntimeError("global relation model scan is manual-only")
+    if (admission.get("summary") or {}).get("manual_scan_eligible") is not True:
+        raise RuntimeError("global relation manual-scan admission blocked: "+",".join(str(x) for x in admission.get("failed_checks") or []))
     result=dict(relation_writer(storage=storage))
     result["delta_preflight"]=delta
+    result["manual_scan_admission"]=admission
     return result
 
 

@@ -97,15 +97,18 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
         delta={"status":"RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE","summary":{"new_reviewed_sources":12,"new_failure_sources":11,"model_scan_authorized":False},"pair_slots":{},"interpretation":{},"scientific_authority":False}
         writer=Mock()
         delta_writer=Mock(return_value=delta)
-        with patch("research_pipeline.automation_cycle.load_problem_generator_state",return_value={}), patch("research_pipeline.automation_cycle.load_global_relation_recall_state",return_value={}), patch("research_pipeline.automation_cycle.relation_recall_freshness",return_value=freshness):
-            result=_run_global_relation_control(storage=storage,mode="weekly",allow_model_scan=False,relation_writer=writer,delta_writer=delta_writer)
+        admission={"status":"ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN","summary":{"manual_scan_eligible":True},"failed_checks":[],"scientific_authority":False}
+        admission_builder=Mock(return_value=admission)
+        with patch("research_pipeline.automation_cycle.load_primary_evidence_state",return_value={}), patch("research_pipeline.automation_cycle.load_problem_generator_state",return_value={}), patch("research_pipeline.automation_cycle.load_global_relation_recall_state",return_value={}), patch("research_pipeline.automation_cycle.relation_recall_freshness",return_value=freshness):
+            result=_run_global_relation_control(storage=storage,mode="weekly",allow_model_scan=False,relation_writer=writer,delta_writer=delta_writer,admission_builder=admission_builder)
         self.assertEqual(result["status"],"DEFERRED_RELATION_MODEL_SCAN")
         self.assertEqual(result["freshness"],freshness)
         self.assertFalse(result["model_calls_authorized"])
         self.assertFalse(result["scientific_authority"])
+        self.assertEqual(result["manual_scan_admission"],admission)
         self.assertEqual(result["delta_preflight"]["summary"]["new_reviewed_sources"],12)
         self.assertFalse(result["delta_preflight"]["policy"]["pair_slots_are_not_lane_valid_pairs"] is False)
-        writer.assert_not_called(); delta_writer.assert_called_once_with(storage=storage)
+        writer.assert_not_called(); delta_writer.assert_called_once_with(storage=storage); admission_builder.assert_called_once()
 
     def test_global_relation_model_scan_requires_explicit_manual_mode(self) -> None:
         with self.assertRaises(ValueError):
@@ -114,11 +117,22 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
         freshness={"status":"STALE_RELATION_UNIVERSE","scientific_authority":False}
         writer=Mock(return_value={"status":"GLOBAL_RELATION_RECALL_COMPLETE","scientific_authority":False})
         delta_writer=Mock(return_value={"status":"RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE","summary":{"new_reviewed_sources":12},"pair_slots":{},"interpretation":{},"scientific_authority":False})
-        with patch("research_pipeline.automation_cycle.load_problem_generator_state",return_value={}), patch("research_pipeline.automation_cycle.load_global_relation_recall_state",return_value={}), patch("research_pipeline.automation_cycle.relation_recall_freshness",return_value=freshness):
-            result=_run_global_relation_control(storage=storage,mode="manual",allow_model_scan=True,relation_writer=writer,delta_writer=delta_writer)
+        admission={"status":"ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN","summary":{"manual_scan_eligible":True},"failed_checks":[],"scientific_authority":False}
+        admission_builder=Mock(return_value=admission)
+        with patch("research_pipeline.automation_cycle.load_primary_evidence_state",return_value={}), patch("research_pipeline.automation_cycle.load_problem_generator_state",return_value={}), patch("research_pipeline.automation_cycle.load_global_relation_recall_state",return_value={}), patch("research_pipeline.automation_cycle.relation_recall_freshness",return_value=freshness):
+            result=_run_global_relation_control(storage=storage,mode="manual",allow_model_scan=True,relation_writer=writer,delta_writer=delta_writer,admission_builder=admission_builder)
         self.assertEqual(result["status"],"GLOBAL_RELATION_RECALL_COMPLETE")
         self.assertEqual(result["delta_preflight"]["summary"]["new_reviewed_sources"],12)
-        writer.assert_called_once_with(storage=storage); delta_writer.assert_called_once_with(storage=storage)
+        self.assertEqual(result["manual_scan_admission"],admission)
+        writer.assert_called_once_with(storage=storage); delta_writer.assert_called_once_with(storage=storage); admission_builder.assert_called_once()
+
+    def test_manual_relation_scan_is_blocked_before_writer_when_admission_fails(self) -> None:
+        storage=SimpleNamespace(); writer=Mock(); delta_writer=Mock(return_value={"status":"RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE","summary":{},"pair_slots":{},"interpretation":{},"scientific_authority":False})
+        admission_builder=Mock(return_value={"status":"HOLD_MANUAL_RELATION_SCAN","summary":{"manual_scan_eligible":False},"failed_checks":["new-typed-evidence-delta-nonzero"],"scientific_authority":False})
+        with patch("research_pipeline.automation_cycle.load_primary_evidence_state",return_value={}), patch("research_pipeline.automation_cycle.load_problem_generator_state",return_value={}), patch("research_pipeline.automation_cycle.load_global_relation_recall_state",return_value={}), patch("research_pipeline.automation_cycle.relation_recall_freshness",return_value={}):
+            with self.assertRaisesRegex(RuntimeError,"admission blocked"):
+                _run_global_relation_control(storage=storage,mode="manual",allow_model_scan=True,relation_writer=writer,delta_writer=delta_writer,admission_builder=admission_builder)
+        writer.assert_not_called()
 
     def test_external_system_learning_is_bounded_delta_scan_with_dedicated_timeout(self) -> None:
         with tempfile.TemporaryDirectory() as td:
