@@ -538,6 +538,27 @@ class ResearchSystemTest(unittest.TestCase):
         leaked=copy.deepcopy(state);leaked["paper_first_support_release_watch"]["rows"]=[{"url":"https://secret.example","required_unit":"secret"}]
         self.assertTrue(any("cannot expose URLs" in error for error in validate_state(leaked)))
 
+    def test_support_asset_recheck_queue_is_public_safe_durable_and_zero_authority(self) -> None:
+        queue=copy.deepcopy(self.state["paper_first_support_asset_recheck_queue"])
+        self.assertFalse(queue["scientific_authority"])
+        self.assertTrue(queue["policy"]["release_change_only_creates_asset_recheck_task"])
+        self.assertTrue(queue["policy"]["queue_is_durable_across_release_watch_cooldown"])
+        self.assertTrue(queue["policy"]["explicit_asset_resolution_required_to_clear_entry"])
+        for key in ("support_qualified","generator_reopen_authorized","problem_gate_authorized","method_authorized","experiment_authorized","p0_authorized","gpu_authorized"):
+            self.assertEqual(int((queue.get("summary") or {}).get(key) or 0),0)
+        self.assertNotIn("entries",queue)
+        state=copy.deepcopy(self.state)
+        state["paper_first_support_asset_recheck_queue"]={
+            "schema_version":"1.0","status":"SUPPORT_ASSET_RECHECK_QUEUE_READY","scientific_authority":False,
+            "policy":{"scientific_authority":False,"release_change_only_creates_asset_recheck_task":True,"queue_is_durable_across_release_watch_cooldown":True,"queue_only_tracks_current_support_holds":True,"queue_cannot_mark_support_qualified":True,"queue_cannot_reopen_generator_or_problem_gate":True,"queue_cannot_authorize_method_experiment_p0_gpu":True,"explicit_asset_resolution_required_to_clear_entry":True,"automatic_provider_calls_authorized":False,"public_summary_excludes_entries_refs_urls_required_units_and_private_paths":True},
+            "summary":{"support_holds":4,"release_recheck_signals":1,"queued":1,"new_triggers":1,"carried_forward":0,"support_qualified":0,"generator_reopen_authorized":0,"problem_gate_authorized":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0,"gpu_authorized":0},
+        }
+        self.assertEqual(validate_state(state),[])
+        escalated=copy.deepcopy(state);escalated["paper_first_support_asset_recheck_queue"]["summary"]["generator_reopen_authorized"]=1
+        self.assertTrue(any("support asset recheck queue cannot authorize" in error for error in validate_state(escalated)))
+        leaked=copy.deepcopy(state);leaked["paper_first_support_asset_recheck_queue"]["entries"]=[{"candidate_id":"secret","required_unit":"secret"}]
+        self.assertTrue(any("support asset recheck public state cannot expose" in error for error in validate_state(leaked)))
+
     def test_canonical_paper_design_backlog_is_durable_but_cannot_escalate_authority(self) -> None:
         state=copy.deepcopy(self.state)
         state["paper_first_paper_design_backlog"]={

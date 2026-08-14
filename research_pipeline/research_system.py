@@ -43,6 +43,7 @@ from .paper_first_primary_evidence import load_primary_evidence_state
 from .paper_first_scientific_object_candidate_evidence import load_scientific_object_candidate_evidence_ledger, public_scientific_object_candidate_evidence_summary
 from .paper_first_scientific_object_retrieval_audit import load_private_shadow_scientific_object_retrieval_audit, public_shadow_scientific_object_retrieval_summary
 from .paper_first_support_release_watch import load_private_support_release_watch, public_support_release_watch_summary
+from .paper_first_support_asset_recheck import load_private_support_asset_recheck_queue, public_support_asset_recheck_summary
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
@@ -326,6 +327,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_problem_gate_queue = load_problem_gate_queue_state()
     paper_first_search_portfolio_design = build_search_portfolio_design_adjudication()
     paper_first_support_release_watch = public_support_release_watch_summary(load_private_support_release_watch(storage=storage))
+    paper_first_support_asset_recheck = public_support_asset_recheck_summary(load_private_support_asset_recheck_queue(storage=storage))
     paper_first_sp15_support = build_sp15_identifiability_support()
     paper_first_paper_design_backlog = load_paper_design_backlog()
     paper_first_global_relation_recall = load_global_relation_recall_state()
@@ -536,6 +538,10 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_support_release_support_qualified":int((paper_first_support_release_watch.get("summary") or {}).get("support_qualified") or 0),
             "paper_first_support_release_generator_reopen":int((paper_first_support_release_watch.get("summary") or {}).get("generator_reopen_authorized") or 0),
             "paper_first_support_release_problem_gate":int((paper_first_support_release_watch.get("summary") or {}).get("problem_gate_authorized") or 0),
+            "paper_first_support_asset_recheck_status":paper_first_support_asset_recheck.get("status","NOT_RUN"),
+            "paper_first_support_asset_recheck_queued":int((paper_first_support_asset_recheck.get("summary") or {}).get("queued") or 0),
+            "paper_first_support_asset_recheck_new_triggers":int((paper_first_support_asset_recheck.get("summary") or {}).get("new_triggers") or 0),
+            "paper_first_support_asset_recheck_carried_forward":int((paper_first_support_asset_recheck.get("summary") or {}).get("carried_forward") or 0),
             "paper_first_sp15_identifiability_support_status":paper_first_sp15_support["summary"]["support_status"],
             "paper_first_sp15_identifiability_units":paper_first_sp15_support["summary"]["query_level_identifiability_units"],
             "paper_first_search_portfolio_method_design_authorized":paper_first_search_portfolio_design["summary"]["method_design_authorized"],
@@ -747,6 +753,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_problem_gate_queue":paper_first_problem_gate_queue,
         "paper_first_search_portfolio_design_adjudication":paper_first_search_portfolio_design,
         "paper_first_support_release_watch":paper_first_support_release_watch,
+        "paper_first_support_asset_recheck_queue":paper_first_support_asset_recheck,
         "paper_first_sp15_identifiability_support":paper_first_sp15_support,
         "paper_first_paper_design_backlog":paper_first_paper_design_backlog,
         "paper_first_global_relation_recall":paper_first_global_relation_recall,
@@ -946,6 +953,21 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and int(support_release_summary.get("problem_gate_authorized") or 0)==0
         and support_release_status in {"NOT_RUN","SUPPORT_RELEASE_WATCH_COMPLETE","SUPPORT_RELEASE_WATCH_PARTIAL","STATE_UNREADABLE","STATE_INVALID"}
     )
+    support_asset_recheck=state.get("paper_first_support_asset_recheck_queue") or {};support_asset_policy=support_asset_recheck.get("policy") or {};support_asset_summary=support_asset_recheck.get("summary") or {};support_asset_status=str(support_asset_recheck.get("status") or "NOT_RUN")
+    support_asset_recheck_boundary_ok=bool(
+        support_asset_recheck.get("scientific_authority") is False
+        and support_asset_policy.get("release_change_only_creates_asset_recheck_task") is True
+        and support_asset_policy.get("queue_is_durable_across_release_watch_cooldown") is True
+        and support_asset_policy.get("queue_only_tracks_current_support_holds") is True
+        and support_asset_policy.get("queue_cannot_mark_support_qualified") is True
+        and support_asset_policy.get("queue_cannot_reopen_generator_or_problem_gate") is True
+        and support_asset_policy.get("queue_cannot_authorize_method_experiment_p0_gpu") is True
+        and support_asset_policy.get("explicit_asset_resolution_required_to_clear_entry") is True
+        and support_asset_policy.get("automatic_provider_calls_authorized") is False
+        and support_asset_policy.get("public_summary_excludes_entries_refs_urls_required_units_and_private_paths") is True
+        and support_asset_status in {"NOT_RUN","SUPPORT_ASSET_RECHECK_QUEUE_EMPTY","SUPPORT_ASSET_RECHECK_QUEUE_READY","STATE_UNREADABLE","STATE_INVALID"}
+        and all(int(support_asset_summary.get(key) or 0)==0 for key in ("support_qualified","generator_reopen_authorized","problem_gate_authorized","method_authorized","experiment_authorized","p0_authorized","gpu_authorized"))
+    )
     relation_freshness=state.get("paper_first_global_relation_freshness") or {};relation_freshness_policy=relation_freshness.get("policy") or {};relation_freshness_summary=relation_freshness.get("summary") or {}
     relation_freshness_boundary_ok=bool(
         relation_freshness.get("scientific_authority") is False
@@ -1003,6 +1025,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-object-retrieval-shadow", "pass":object_retrieval_boundary_ok, "detail":{"status":object_retrieval.get("status"),"summary":object_retrieval_summary}},
         {"key":"paper-first-object-candidate-evidence-shadow", "pass":candidate_evidence_boundary_ok, "detail":{"status":candidate_evidence.get("status"),"summary":candidate_evidence_summary}},
         {"key":"paper-first-support-release-watch", "pass":support_release_boundary_ok, "detail":{"status":support_release_watch.get("status"),"summary":support_release_summary,"status_counts":support_release_watch.get("status_counts") or {}}},
+        {"key":"paper-first-support-asset-recheck-queue", "pass":support_asset_recheck_boundary_ok, "detail":{"status":support_asset_recheck.get("status"),"summary":support_asset_summary}},
         {"key":"paper-first-global-relation-freshness", "pass":relation_freshness_boundary_ok, "detail":{"status":relation_freshness.get("status"),"summary":relation_freshness_summary}},
         {"key":"paper-first-global-relation-delta-preflight", "pass":relation_delta_boundary_ok, "detail":{"status":relation_delta.get("status"),"summary":relation_delta_summary,"pair_slots":relation_delta.get("pair_slots") or {},"interpretation":relation_delta.get("interpretation") or {}}},
         {"key":"paper-first-global-relation-scan-admission", "pass":relation_admission_boundary_ok, "detail":{"status":relation_admission.get("status"),"summary":relation_admission_summary}},
@@ -1217,6 +1240,16 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             errors.append("support release watch cannot authorize support, Generator reopen, or Problem Gate")
         if any(key in support_release_watch for key in ("rows","url","source_refs","required_unit","reopen_only_if")):
             errors.append("support release watch public state cannot expose URLs, refs, required units, or private rows")
+    support_asset_recheck=state.get("paper_first_support_asset_recheck_queue") or {};support_asset_policy=support_asset_recheck.get("policy") or {};support_asset_summary=support_asset_recheck.get("summary") or {};support_asset_status=str(support_asset_recheck.get("status") or "NOT_RUN")
+    if support_asset_recheck:
+        if support_asset_recheck.get("scientific_authority") is not False or support_asset_policy.get("release_change_only_creates_asset_recheck_task") is not True or support_asset_policy.get("queue_is_durable_across_release_watch_cooldown") is not True or support_asset_policy.get("queue_only_tracks_current_support_holds") is not True or support_asset_policy.get("queue_cannot_mark_support_qualified") is not True or support_asset_policy.get("queue_cannot_reopen_generator_or_problem_gate") is not True or support_asset_policy.get("queue_cannot_authorize_method_experiment_p0_gpu") is not True or support_asset_policy.get("explicit_asset_resolution_required_to_clear_entry") is not True or support_asset_policy.get("automatic_provider_calls_authorized") is not False or support_asset_policy.get("public_summary_excludes_entries_refs_urls_required_units_and_private_paths") is not True:
+            errors.append("support asset recheck queue must remain durable private-task accounting with zero scientific authority")
+        if support_asset_status not in {"NOT_RUN","SUPPORT_ASSET_RECHECK_QUEUE_EMPTY","SUPPORT_ASSET_RECHECK_QUEUE_READY","STATE_UNREADABLE","STATE_INVALID"}:
+            errors.append("support asset recheck queue status invalid")
+        if any(int(support_asset_summary.get(key) or 0)!=0 for key in ("support_qualified","generator_reopen_authorized","problem_gate_authorized","method_authorized","experiment_authorized","p0_authorized","gpu_authorized")):
+            errors.append("support asset recheck queue cannot authorize support, Generator, Problem Gate, or downstream execution")
+        if any(key in support_asset_recheck for key in ("entries","candidate_id","source_refs","url","required_unit","reopen_only_if")):
+            errors.append("support asset recheck public state cannot expose private queue entries, refs, URLs, or required units")
     shadow_search_admission=state.get("paper_first_shadow_search_admission") or {}
     errors.extend(f"Shadow Search admission: {error}" for error in validate_shadow_search_admission(shadow_search_admission))
     shadow_portfolio=state.get("paper_first_problem_search_portfolio") or {};shadow_latest=shadow_portfolio.get("latest_run") or {}
