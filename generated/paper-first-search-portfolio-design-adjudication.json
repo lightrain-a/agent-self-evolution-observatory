@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T03:36:07+00:00",
+  "generated_at": "2026-08-14T05:28:19+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -44,7 +44,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-14T03:36:07+00:00",
+    "generated_at": "2026-08-14T05:28:19+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -203,6 +203,26 @@
           "generic abstention, uncertainty, or clarification policy"
         ],
         "reopen_only_if": "A new provenance-audited query-level unit shows that the same observable or information-equivalent query is compatible with multiple task semantics requiring incompatible sufficient skill sets, and a generic partial-identification/clarification baseline using the same information cannot absorb the claim."
+      },
+      {
+        "source_candidate_id": "SHADOW-P09-C01",
+        "basin": "current-source-hard-veto-d683b9e610a2a218",
+        "search_primitive": "COMPOSITION_INTERACTION",
+        "avoid": [
+          "paraphrase-only variants of: Attribution-conditioned revision routing as the nonadditive core of verification-skill evolution",
+          "problem formulations exactly reducible to: Attribution/diagnosis-guided target-specific revision followed by executable validation or rerun is already an explicit current agent-repair and skill-evolution mechanism; VeriSkill already contains the candidate's attribution-to-target-to-transfer-validation loop, making the proposed object a within-method mediator/ablation rather than a distinct paper problem.",
+          "standard-log attribution or identifiability claims whose omitted pipeline variable is already explicit in current primary-source instrumentation"
+        ],
+        "strongest_reduction": "Attribution/diagnosis-guided target-specific revision followed by executable validation or rerun is already an explicit current agent-repair and skill-evolution mechanism; VeriSkill already contains the candidate's attribution-to-target-to-transfer-validation loop, making the proposed object a within-method mediator/ablation rather than a distinct paper problem.",
+        "current_source_refs": [
+          "arXiv:2606.06324",
+          "arXiv:2606.09071",
+          "arXiv:2607.18754",
+          "arXiv:2607.27733"
+        ],
+        "reason": "VeriSkill already attributes skill-responsible failures, abstracts the missing responsibility, integrates the resulting lesson into the appropriate skill region, and iteratively validates the revision on attribution and disjoint transfer cases before admission. HarnessFix and AgentDebugX independently map attribution/diagnosis to scoped recovery followed by validation or rerun, while REFLECT couples diagnosis-specific intervention with verified replay. The candidate's yoked target-preserving ablation may be useful mechanism analysis but does not clear standalone problem novelty.",
+        "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that remains non-reducible after explicitly instrumenting the omitted retrieval/compilation/execution variable identified by the current-source review; renaming the pipeline stages or dropping that variable from the log does not reopen the basin.",
+        "scientific_authority": false
       },
       {
         "source_candidate_id": "SHADOW-P12-C01",
@@ -418,12 +438,12 @@
         "scientific_authority": false
       }
     ],
-    "current_source_hard_veto_count": 1,
+    "current_source_hard_veto_count": 2,
     "current_source_hard_veto_added_from_latest_run": 0,
-    "current_source_hard_veto_inherited": 1,
+    "current_source_hard_veto_inherited": 2,
     "semantic_blocker_count": 4,
-    "semantic_blocker_added_from_latest_run": 2,
-    "semantic_blocker_inherited": 2,
+    "semantic_blocker_added_from_latest_run": 0,
+    "semantic_blocker_inherited": 4,
     "near_miss_preflight_count": 4
   },
   "shadow_source": {
@@ -475,13 +495,13 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 11,
-    "current_source_hard_veto_dead_ends": 1,
+    "shadow_dead_end_objects": 12,
+    "current_source_hard_veto_dead_ends": 2,
     "current_source_hard_veto_added_from_latest_run": 0,
-    "current_source_hard_veto_inherited": 1,
+    "current_source_hard_veto_inherited": 2,
     "semantic_blocker_dead_ends": 4,
-    "semantic_blocker_added_from_latest_run": 2,
-    "semantic_blocker_inherited": 2,
+    "semantic_blocker_added_from_latest_run": 0,
+    "semantic_blocker_inherited": 4,
     "near_miss_preflight_dead_ends": 4,
     "near_miss_support_holds": 1,
     "near_miss_current_primary_stops": 2,

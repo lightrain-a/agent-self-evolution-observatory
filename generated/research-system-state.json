@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T04:40:32+00:00",
+  "generated_at": "2026-08-14T05:29:36+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -5982,12 +5982,12 @@
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 11,
     "architecture_functional_layers": 6,
-    "paper_first_shadow_latest_run_id": "shadow-20260814-r3",
-    "paper_first_shadow_latest_raw": 88,
+    "paper_first_shadow_latest_run_id": "shadow-20260814-r5",
+    "paper_first_shadow_latest_raw": 84,
     "paper_first_shadow_latest_unique": 47,
     "paper_first_shadow_latest_evolved": 36,
-    "paper_first_shadow_latest_formulated": 15,
-    "paper_first_shadow_latest_machine_reviewable": 2,
+    "paper_first_shadow_latest_formulated": 14,
+    "paper_first_shadow_latest_machine_reviewable": 0,
     "paper_first_shadow_latest_semantic_clear": 0,
     "paper_first_shadow_latest_current_source_blocked": 0,
     "paper_first_shadow_latest_terminal_survivors": 0,
@@ -6002,13 +6002,13 @@
     "paper_first_search_portfolio_near_miss_current_primary_stops": 2,
     "paper_first_shadow_latest_expansion_successful_shards": 18,
     "paper_first_shadow_latest_expansion_parse_failures": 2,
-    "paper_first_search_portfolio_current_source_hard_veto_dead_ends": 1,
+    "paper_first_search_portfolio_current_source_hard_veto_dead_ends": 2,
     "paper_first_search_portfolio_current_source_hard_veto_added_latest": 0,
-    "paper_first_search_portfolio_current_source_hard_veto_inherited": 1,
+    "paper_first_search_portfolio_current_source_hard_veto_inherited": 2,
     "paper_first_search_portfolio_near_miss_mature_theory_stops": 1,
     "paper_first_search_portfolio_semantic_blocker_dead_ends": 4,
-    "paper_first_search_portfolio_semantic_blocker_added_latest": 2,
-    "paper_first_search_portfolio_semantic_blocker_inherited": 2,
+    "paper_first_search_portfolio_semantic_blocker_added_latest": 0,
+    "paper_first_search_portfolio_semantic_blocker_inherited": 4,
     "paper_first_shadow_latest_semantic_dead_end_blocks": 0,
     "paper_first_object_retrieval_candidates_audited": 3,
     "paper_first_object_retrieval_recall_gaps": 1,
@@ -6019,7 +6019,19 @@
     "paper_first_object_candidate_empirical_supported": 2,
     "paper_first_object_candidate_failure_supported": 2,
     "paper_first_object_candidate_pending_cache": 0,
-    "paper_first_object_candidate_activation_authorized": 0
+    "paper_first_object_candidate_activation_authorized": 0,
+    "paper_first_shadow_latest_expansion_execution_failures": 2,
+    "paper_first_shadow_latest_expansion_provider_failures": 0,
+    "paper_first_shadow_latest_formulation_requested_shards": 12,
+    "paper_first_shadow_latest_formulation_successful_shards": 11,
+    "paper_first_shadow_latest_formulation_provider_failures": 0,
+    "paper_first_shadow_latest_formulation_requested_branches": 24,
+    "paper_first_shadow_latest_formulation_successful_branches": 22,
+    "paper_first_shadow_latest_formulation_execution_censored_branches": 2,
+    "paper_first_shadow_latest_problem_falsifier_eligible": 0,
+    "paper_first_shadow_latest_problem_falsifier_support_qualified": 0,
+    "paper_first_shadow_latest_problem_falsifier_hold": 0,
+    "paper_first_shadow_latest_problem_falsifier_executed": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -32745,7 +32757,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-14T03:36:07+00:00",
+    "generated_at": "2026-08-14T05:29:33+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -32789,7 +32801,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-14T03:36:07+00:00",
+      "generated_at": "2026-08-14T05:29:33+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -32948,6 +32960,26 @@
             "generic abstention, uncertainty, or clarification policy"
           ],
           "reopen_only_if": "A new provenance-audited query-level unit shows that the same observable or information-equivalent query is compatible with multiple task semantics requiring incompatible sufficient skill sets, and a generic partial-identification/clarification baseline using the same information cannot absorb the claim."
+        },
+        {
+          "source_candidate_id": "SHADOW-P09-C01",
+          "basin": "current-source-hard-veto-d683b9e610a2a218",
+          "search_primitive": "COMPOSITION_INTERACTION",
+          "avoid": [
+            "paraphrase-only variants of: Attribution-conditioned revision routing as the nonadditive core of verification-skill evolution",
+            "problem formulations exactly reducible to: Attribution/diagnosis-guided target-specific revision followed by executable validation or rerun is already an explicit current agent-repair and skill-evolution mechanism; VeriSkill already contains the candidate's attribution-to-target-to-transfer-validation loop, making the proposed object a within-method mediator/ablation rather than a distinct paper problem.",
+            "standard-log attribution or identifiability claims whose omitted pipeline variable is already explicit in current primary-source instrumentation"
+          ],
+          "strongest_reduction": "Attribution/diagnosis-guided target-specific revision followed by executable validation or rerun is already an explicit current agent-repair and skill-evolution mechanism; VeriSkill already contains the candidate's attribution-to-target-to-transfer-validation loop, making the proposed object a within-method mediator/ablation rather than a distinct paper problem.",
+          "current_source_refs": [
+            "arXiv:2606.06324",
+            "arXiv:2606.09071",
+            "arXiv:2607.18754",
+            "arXiv:2607.27733"
+          ],
+          "reason": "VeriSkill already attributes skill-responsible failures, abstracts the missing responsibility, integrates the resulting lesson into the appropriate skill region, and iteratively validates the revision on attribution and disjoint transfer cases before admission. HarnessFix and AgentDebugX independently map attribution/diagnosis to scoped recovery followed by validation or rerun, while REFLECT couples diagnosis-specific intervention with verified replay. The candidate's yoked target-preserving ablation may be useful mechanism analysis but does not clear standalone problem novelty.",
+          "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that remains non-reducible after explicitly instrumenting the omitted retrieval/compilation/execution variable identified by the current-source review; renaming the pipeline stages or dropping that variable from the log does not reopen the basin.",
+          "scientific_authority": false
         },
         {
           "source_candidate_id": "SHADOW-P12-C01",
@@ -33163,12 +33195,12 @@
           "scientific_authority": false
         }
       ],
-      "current_source_hard_veto_count": 1,
+      "current_source_hard_veto_count": 2,
       "current_source_hard_veto_added_from_latest_run": 0,
-      "current_source_hard_veto_inherited": 1,
+      "current_source_hard_veto_inherited": 2,
       "semantic_blocker_count": 4,
-      "semantic_blocker_added_from_latest_run": 2,
-      "semantic_blocker_inherited": 2,
+      "semantic_blocker_added_from_latest_run": 0,
+      "semantic_blocker_inherited": 4,
       "near_miss_preflight_count": 4
     },
     "shadow_source": {
@@ -33220,13 +33252,13 @@
       "revise_paper_problem": 1,
       "stop_standalone": 1,
       "support_inventory_required": 1,
-      "shadow_dead_end_objects": 11,
-      "current_source_hard_veto_dead_ends": 1,
+      "shadow_dead_end_objects": 12,
+      "current_source_hard_veto_dead_ends": 2,
       "current_source_hard_veto_added_from_latest_run": 0,
-      "current_source_hard_veto_inherited": 1,
+      "current_source_hard_veto_inherited": 2,
       "semantic_blocker_dead_ends": 4,
-      "semantic_blocker_added_from_latest_run": 2,
-      "semantic_blocker_inherited": 2,
+      "semantic_blocker_added_from_latest_run": 0,
+      "semantic_blocker_inherited": 4,
       "near_miss_preflight_dead_ends": 4,
       "near_miss_support_holds": 1,
       "near_miss_current_primary_stops": 2,
@@ -70840,8 +70872,8 @@
         "pass": true,
         "detail": {
           "schema_version": "1.1",
-          "required": false,
-          "attempted": 0,
+          "required": true,
+          "attempted": 1,
           "rescued": 0,
           "pending": 0,
           "complete": true
@@ -70962,6 +70994,38 @@
         }
       },
       {
+        "key": "paper-first-object-retrieval-shadow",
+        "pass": true,
+        "detail": {
+          "status": "NOT_RUN",
+          "summary": {
+            "candidates_audited": 0,
+            "recall_gap_support_insufficient": 0,
+            "primary_verification_threshold_candidates": 0,
+            "no_new_support_found": 0,
+            "incomplete_candidates": 0,
+            "activation_authorized": 0
+          }
+        }
+      },
+      {
+        "key": "paper-first-object-candidate-evidence-shadow",
+        "pass": true,
+        "detail": {
+          "status": "NOT_RUN",
+          "summary": {
+            "candidate_objects": 0,
+            "primary_verified": 0,
+            "fulltext_verified": 0,
+            "empirical_supported": 0,
+            "measured_failure_supported": 0,
+            "direct_object_verified": 0,
+            "pending_cache": 0,
+            "activation_authorized": 0
+          }
+        }
+      },
+      {
         "key": "paper-first-problem-discovery-contract",
         "pass": true,
         "detail": {
@@ -70985,15 +71049,15 @@
         "key": "paper-first-retrieval-incomplete-generator-boundary",
         "pass": true,
         "detail": {
-          "status": "GENERATED_ZERO_CANDIDATES",
+          "status": "SKIPPED_SOURCE_COVERAGE_SATURATED",
           "source_coverage": {
-            "coverage_exhausted": false,
+            "coverage_exhausted": true,
             "source_retrieval_complete": true,
             "eligible_lane_linked_sources": 218,
-            "reviewed_lane_linked_sources": 209,
-            "unreviewed_lane_linked_sources": 9,
-            "unreviewed_no_lane_sources": 9,
-            "carrier_probe_required": false,
+            "reviewed_lane_linked_sources": 218,
+            "unreviewed_lane_linked_sources": 0,
+            "unreviewed_no_lane_sources": 6,
+            "carrier_probe_required": true,
             "carrier_probe_pending": 0,
             "carrier_probe_complete": true,
             "scientific_authority": false
@@ -71004,15 +71068,15 @@
         "key": "paper-first-carrier-pending-generator-boundary",
         "pass": true,
         "detail": {
-          "status": "GENERATED_ZERO_CANDIDATES",
+          "status": "SKIPPED_SOURCE_COVERAGE_SATURATED",
           "source_coverage": {
-            "coverage_exhausted": false,
+            "coverage_exhausted": true,
             "source_retrieval_complete": true,
             "eligible_lane_linked_sources": 218,
-            "reviewed_lane_linked_sources": 209,
-            "unreviewed_lane_linked_sources": 9,
-            "unreviewed_no_lane_sources": 9,
-            "carrier_probe_required": false,
+            "reviewed_lane_linked_sources": 218,
+            "unreviewed_lane_linked_sources": 0,
+            "unreviewed_no_lane_sources": 6,
+            "carrier_probe_required": true,
             "carrier_probe_pending": 0,
             "carrier_probe_complete": true,
             "scientific_authority": false
@@ -71116,10 +71180,13 @@
           "revise_paper_problem": 1,
           "stop_standalone": 1,
           "support_inventory_required": 1,
-          "shadow_dead_end_objects": 7,
-          "current_source_hard_veto_dead_ends": 1,
+          "shadow_dead_end_objects": 12,
+          "current_source_hard_veto_dead_ends": 2,
           "current_source_hard_veto_added_from_latest_run": 0,
-          "current_source_hard_veto_inherited": 1,
+          "current_source_hard_veto_inherited": 2,
+          "semantic_blocker_dead_ends": 4,
+          "semantic_blocker_added_from_latest_run": 0,
+          "semantic_blocker_inherited": 4,
           "near_miss_preflight_dead_ends": 4,
           "near_miss_support_holds": 1,
           "near_miss_current_primary_stops": 2,
@@ -71154,29 +71221,43 @@
         "key": "shadow-search-latest-terminal",
         "pass": true,
         "detail": {
-          "run_id": "shadow-20260814-r3",
+          "run_id": "shadow-20260814-r5",
           "status": "SHADOW_TERMINAL_COMPLETE",
           "summary": {
             "requested_raw_seeds": 120,
             "expansion_requested_shards": 20,
             "expansion_successful_shards": 18,
+            "expansion_execution_failures": 2,
             "expansion_parse_failures": 2,
-            "raw_seeds": 88,
+            "expansion_provider_failures": 0,
+            "raw_seeds": 84,
+            "semantic_dead_end_blocks": 0,
             "semantic_unique": 47,
-            "duplicate_or_near_duplicate": 41,
+            "duplicate_or_near_duplicate": 37,
             "unique_problem_families": 47,
             "breadth_archive": 47,
-            "archive_lane_coverage": 10,
-            "mean_archive_pairwise_distance": 0.8749,
+            "archive_lane_coverage": 9,
+            "mean_archive_pairwise_distance": 0.889,
             "evolved_branches": 36,
             "max_branch_depth": 2,
-            "formulated_candidates": 15,
-            "formulation_rejected": 9,
-            "machine_reviewable": 2,
-            "machine_reduction_blocked": 13,
-            "semantic_reviewed": 2,
+            "formulation_requested_shards": 12,
+            "formulation_successful_shards": 11,
+            "formulation_provider_failures": 0,
+            "formulation_parse_failures": 1,
+            "formulation_requested_branches": 24,
+            "formulation_successful_branches": 22,
+            "formulation_execution_censored_branches": 2,
+            "formulated_candidates": 14,
+            "formulation_rejected": 8,
+            "machine_reviewable": 0,
+            "machine_reduction_blocked": 14,
+            "problem_falsifier_eligible": 0,
+            "problem_falsifier_support_qualified": 0,
+            "problem_falsifier_hold_support_unavailable": 0,
+            "problem_falsifier_executed": 0,
+            "semantic_reviewed": 0,
             "semantic_clear": 0,
-            "semantic_blocked": 2,
+            "semantic_blocked": 0,
             "current_source_reviewed": 0,
             "current_source_clear": 0,
             "current_source_blocked": 0,
@@ -71185,7 +71266,7 @@
             "live_problem_gate_compatible_survivors": 0,
             "live_paper_design_eligible": 0,
             "generator_model_calls": 38,
-            "reviewer_model_calls": 1,
+            "reviewer_model_calls": 0,
             "current_source_review_receipts": 0
           }
         }
@@ -71563,7 +71644,7 @@
         "pass": true,
         "detail": {
           "schema_version": "2.2",
-          "generated_at": "2026-08-14T02:51:40+00:00",
+          "generated_at": "2026-08-14T05:29:33+00:00",
           "policy": {
             "schema_version": "2.2",
             "paper_novelty_precedes_method_design": true,
@@ -71681,8 +71762,8 @@
           "stage_scope_note": "The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; they do not replace the paper lifecycle.",
           "runtime": {
             "active_gpu_leases": 0,
-            "lease_root": "private-data://external/resource-leases",
-            "repair_budget_root": "private-data://external/repair-budget"
+            "lease_root": "/data/wyt/agent-self-evolution-observatory/resource-leases",
+            "repair_budget_root": "/data/wyt/agent-self-evolution-observatory/governance/repair-budget"
           }
         }
       },
@@ -71730,44 +71811,12 @@
           "revise": 0,
           "block": 0
         }
-      },
-      {
-        "key": "paper-first-object-retrieval-shadow",
-        "pass": true,
-        "detail": {
-          "status": "SHADOW_OBJECT_RETRIEVAL_AUDIT_COMPLETE",
-          "summary": {
-            "candidates_audited": 3,
-            "recall_gap_support_insufficient": 1,
-            "primary_verification_threshold_candidates": 0,
-            "no_new_support_found": 2,
-            "incomplete_candidates": 0,
-            "activation_authorized": 0
-          }
-        }
-      },
-      {
-        "key": "paper-first-object-candidate-evidence-shadow",
-        "pass": true,
-        "detail": {
-          "status": "SHADOW_CANDIDATE_EVIDENCE_COMPLETE",
-          "summary": {
-            "candidate_objects": 3,
-            "primary_verified": 2,
-            "fulltext_verified": 2,
-            "empirical_supported": 2,
-            "measured_failure_supported": 2,
-            "direct_object_verified": 2,
-            "pending_cache": 0,
-            "activation_authorized": 0
-          }
-        }
       }
     ]
   },
   "paper_first_problem_search_portfolio": {
     "schema_version": "3.2-shadow-import",
-    "generated_at": "2026-08-14T03:36:07+00:00",
+    "generated_at": "2026-08-14T05:27:56+00:00",
     "imported_at": "2026-08-13T16:28:11+00:00",
     "status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
     "historical_source_commit": "7b2a7260df3bae5d140cdc7f4d09a56dd898a72b",
@@ -71973,20 +72022,22 @@
       }
     ],
     "scientific_authority": false,
-    "latest_run_id": "shadow-20260814-r3",
+    "latest_run_id": "shadow-20260814-r5",
     "latest_run": {
-      "schema_version": "1.0-shadow-run",
-      "run_id": "shadow-20260814-r3",
+      "schema_version": "1.1-shadow-run",
+      "run_id": "shadow-20260814-r5",
       "status": "SHADOW_TERMINAL_COMPLETE",
-      "generated_at": "2026-08-14T03:36:07+00:00",
-      "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
-      "stage_manifest_sha256": "d936c5d31f59ee98b80bfb60ddde9bb1b8a521221b9c9c565f9c60576c3d5d33",
+      "generated_at": "2026-08-14T05:27:56+00:00",
+      "frozen_pool_sha256": "72499d9cfaad9993f961094ce70e8608fd2f93862e92222a5003c5fdab7de5f4",
+      "stage_manifest_sha256": "5d9db23396d8876787036cbba451596f64fd3e27ce4fdced9f7bcc89a19d1899",
       "scientific_authority": false,
       "policy": {
         "shadow_only": true,
         "canonical_primary_generator_queue_untouched": true,
         "live_source_coverage_effect": false,
         "fresh_primary_evidence_is_candidate_source_only": true,
+        "execution_loss_is_not_scientific_negative": true,
+        "problem_falsifier_hold_is_not_scientific_fail": true,
         "current_source_web_receipt_required_after_semantic_clear": true,
         "missing_or_failed_current_source_reviewer_is_not_pass": true,
         "terminal_shadow_survivor_is_not_live_problem_gate_pass": true,
@@ -72000,24 +72051,37 @@
         "requested_raw_seeds": 120,
         "expansion_requested_shards": 20,
         "expansion_successful_shards": 18,
+        "expansion_execution_failures": 2,
         "expansion_parse_failures": 2,
-        "raw_seeds": 88,
+        "expansion_provider_failures": 0,
+        "raw_seeds": 84,
         "semantic_dead_end_blocks": 0,
         "semantic_unique": 47,
-        "duplicate_or_near_duplicate": 41,
+        "duplicate_or_near_duplicate": 37,
         "unique_problem_families": 47,
         "breadth_archive": 47,
-        "archive_lane_coverage": 10,
-        "mean_archive_pairwise_distance": 0.8749,
+        "archive_lane_coverage": 9,
+        "mean_archive_pairwise_distance": 0.889,
         "evolved_branches": 36,
         "max_branch_depth": 2,
-        "formulated_candidates": 15,
-        "formulation_rejected": 9,
-        "machine_reviewable": 2,
-        "machine_reduction_blocked": 13,
-        "semantic_reviewed": 2,
+        "formulation_requested_shards": 12,
+        "formulation_successful_shards": 11,
+        "formulation_provider_failures": 0,
+        "formulation_parse_failures": 1,
+        "formulation_requested_branches": 24,
+        "formulation_successful_branches": 22,
+        "formulation_execution_censored_branches": 2,
+        "formulated_candidates": 14,
+        "formulation_rejected": 8,
+        "machine_reviewable": 0,
+        "machine_reduction_blocked": 14,
+        "problem_falsifier_eligible": 0,
+        "problem_falsifier_support_qualified": 0,
+        "problem_falsifier_hold_support_unavailable": 0,
+        "problem_falsifier_executed": 0,
+        "semantic_reviewed": 0,
         "semantic_clear": 0,
-        "semantic_blocked": 2,
+        "semantic_blocked": 0,
         "current_source_reviewed": 0,
         "current_source_clear": 0,
         "current_source_blocked": 0,
@@ -72026,118 +72090,35 @@
         "live_problem_gate_compatible_survivors": 0,
         "live_paper_design_eligible": 0,
         "generator_model_calls": 38,
-        "reviewer_model_calls": 1,
+        "reviewer_model_calls": 0,
         "current_source_review_receipts": 0
       },
       "lane_counts": {
-        "CONTRADICTION": 6,
+        "CONTRADICTION": 0,
         "CONVERGENT_FAILURE": 11,
         "ASSUMPTION_BREAK": 2,
         "UNEXPLAINED_BOUNDARY": 12,
         "IDENTIFIABILITY_GAP": 12,
-        "MISSING_DECISION_OBJECT": 3,
-        "COMPOSITION_INTERACTION": 12,
-        "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 6,
+        "MISSING_DECISION_OBJECT": 5,
+        "COMPOSITION_INTERACTION": 6,
+        "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 12,
         "NEW_CAPABILITY_QUESTION": 12,
         "LONGITUDINAL_EMERGENCE": 12
       },
       "archive_lane_counts": {
-        "CONTRADICTION": 4,
+        "CONTRADICTION": 0,
         "CONVERGENT_FAILURE": 11,
         "ASSUMPTION_BREAK": 2,
-        "UNEXPLAINED_BOUNDARY": 5,
+        "UNEXPLAINED_BOUNDARY": 4,
         "IDENTIFIABILITY_GAP": 4,
         "MISSING_DECISION_OBJECT": 3,
         "COMPOSITION_INTERACTION": 4,
-        "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 6,
-        "NEW_CAPABILITY_QUESTION": 4,
+        "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 10,
+        "NEW_CAPABILITY_QUESTION": 5,
         "LONGITUDINAL_EMERGENCE": 4
       },
       "machine_blocker_counts": {},
-      "candidates": [
-        {
-          "candidate_id": "SHADOW-P06-C02",
-          "title": "A tied-budget inversion: test-time selection helps skill-harness execution but harms direct VLA execution",
-          "search_primitive": "UNEXPLAINED_BOUNDARY",
-          "semantic_shadow_clear": false,
-          "semantic_verdict": "BLOCK",
-          "semantic_reduction_class": "NEEDS_EXACT_REDUCTION_TEST",
-          "semantic_matched_patterns": [
-            "persistent-update-vs-test-time-compute"
-          ],
-          "semantic_strongest_reduction": "amortized inference / test-time scaling / search-vs-learning evaluation",
-          "semantic_exact_reduction_test": "Match raw VLA and skill-harness candidate sets on diversity, mean success, and verifier availability; if raw-VLA selection/voting no longer underperforms direct execution or skill-harness selection no longer outperforms after this matching, the layer-boundary claim is falsified.",
-          "semantic_reason": "The source grounding and lane contract are fully satisfied. However, under the Reduction Falsifiability Contract, the candidate collides with the mature theory of persistent-update-vs-test-time-compute (test-time scaling). The candidate proposes that test-time selection/voting systematically inverts its sign of improvement depending on the representation layer (raw VLA vs. skill-harness). While the candidate provides a falsifier matching candidate sets on diversity, mean success, and verifier availability, whether generic test-time scaling variables with structural constraints (like candidate quality, redundancy, and verifier availability) fail to predict this sign reversal remains unresolved. Because the exact reduction against generic test-time-scaling models is not definitively resolved as non-expressible, the review mandates a BLOCK under the NEEDS_EXACT_REDUCTION_TEST protocol.",
-          "semantic_lane_contract_verified": true,
-          "semantic_lane_contract_reason": "The candidate successfully satisfies the UNEXPLAINED_BOUNDARY lane contract. It identifies a shared measurement (frozen-model embodied benchmark accuracy under test-time-scaling vs. harness evolution), a boundary observation (MG-Select and VOTE underperform direct execution), an adjacent expected regime (full SHAPER improves success), and targets the unexplained transition (why aggregation harms raw VLA outputs but helps externalized skill-harness units).",
-          "semantic_source_refs": [
-            "arXiv:2608.11350"
-          ],
-          "semantic_source_claims": [
-            "Full SHAPER reaches 49.8% micro and 42.9% macro accuracy versus 32.5%/31.2% for the Seed Agent and 41.1%/38.6% for Skill Evolution.",
-            "VLA-level MG-Select and VOTE reach 21.38% and 22.00%, below direct VLA execution, while their seed-agent counterparts reach 24.38% and 23.50%, below the unscaled Seed Agent."
-          ],
-          "semantic_problem_text": "A tied-budget inversion: test-time selection helps skill-harness execution but harms direct VLA execution A layer-dependent method-boundary phenomenon for frozen-model embodied agents: under a tied candidate budget, selection and voting over raw VLA trajectories degrade success relative to direct execution, whereas selection/evolution over externalized skill-harness units improves success; the boundary is determined by whether candidates are composable, verifiable, contract-bearing units rather than raw motor trajectories. For a frozen VLM/VLA model and fixed embodied benchmark, if k candidates are sampled under the same compute budget, majority vote or verifier-free selection over raw VLA action trajectories will underperform direct execution, while the same selection/voting budget over skill-harness-mediated candidates will outperform direct/seed execution; the sign will remain after matching candidate diversity and mean single-candidate success, and will disappear if skill-harness candidates are flattened into unstructured text or raw trajectories.",
-          "current_source_status": "",
-          "current_source_verdict": "",
-          "current_source_reduction_class": "",
-          "current_source_strongest_reduction": "",
-          "current_source_reason": "",
-          "current_source_source_refs": [],
-          "terminal_shadow_clear": false,
-          "live_problem_gate_compatible": false,
-          "paper_design_eligible": false,
-          "scientific_authority": false,
-          "authority": {
-            "method": false,
-            "experiment": false,
-            "p0": false,
-            "gpu": false
-          }
-        },
-        {
-          "candidate_id": "SHADOW-P12-C01",
-          "title": "Capability-dependent collapse of open-ended self-evolving optimizers",
-          "search_primitive": "CONVERGENT_FAILURE",
-          "semantic_shadow_clear": false,
-          "semantic_verdict": "BLOCK",
-          "semantic_reduction_class": "SOFT_COLLISION",
-          "semantic_matched_patterns": [
-            "model-scaffold-enactability",
-            "persistent-update-vs-test-time-compute"
-          ],
-          "semantic_strongest_reduction": "cross-model prompt transfer / instruction following / model-artifact compatibility",
-          "semantic_exact_reduction_test": "Hold target-interaction budget and evaluation fixed while varying only whether the route is prescribed or optimizer-composed. If performance is fully explained by total compute/search quality without an interface-specific discontinuity, the baseline absorbs the claim.",
-          "semantic_reason": "The source claims are accurately grounded in the supplied primary evidence. However, the candidate fails the CONVERGENT_FAILURE lane contract because the two empirical facts do not share an explicitly bounded operational condition; they represent isolated failures of weaker LLMs on distinct agent tasks (skill optimization vs. SMT encoding extension) rather than a convergent quantitative failure under a common operational condition with a named common failure object. Furthermore, the candidate's identified irreducible object (optimizer-capability threshold for enacting self-evolution interfaces) is a SOFT_COLLISION with known patterns of model-scaffold-enactability and persistent-update-vs-test-time-compute, as weaker models failing to operate interfaces is highly reducible to standard instruction-following and test-time compute limitations. Because the lane contract fails, the verdict is BLOCK.",
-          "semantic_lane_contract_verified": false,
-          "semantic_lane_contract_reason": "The CONVERGENT_FAILURE lane contract requires two grounded empirical facts to demonstrate quantitative failure under the same bounded operational condition, naming a common failure object. The candidate extracts failures from two different artifact families and optimizers: OEO failing with medium/weak optimizers on skill improvement (arXiv:2608.09629) and a Haiku 4.5 coding agent failing to converge on network verifier extension tasks (arXiv:2608.11340). These are independent domains and interfaces; they do not share a method family nor a common failure object beyond the generic observation that weaker models perform worse on complex tasks, which violates the 'same bounded operational condition' and 'names a common failure object rather than a better-method claim' requirements.",
-          "semantic_source_refs": [
-            "arXiv:2608.09629",
-            "arXiv:2608.11340"
-          ],
-          "semantic_source_claims": [
-            "GPT-5.5-driven Open-Ended Optimization wins most comparisons, but delegation has a capability boundary: SkillOpt outperforms OEO with a medium optimizer, and a weak optimizer cannot operate through the unchanged OEO interface.",
-            "In self-evolving network verifiers, not every coding-agent model sufficed: runs with Haiku 4.5 as the coding agent failed to converge on any of the three model-extension tasks."
-          ],
-          "semantic_problem_text": "Capability-dependent collapse of open-ended self-evolving optimizers An optimizer-enactability boundary for open-ended self-improvement: under fixed objective, interactions, budget, data boundary, and evaluation, the same self-evolution interface can be enacted by a sufficiently capable optimizer but collapses for weaker optimizers, with the transition observable as non-convergence or inability to compose the improvement route rather than as a downstream task-model deficit. For a fixed self-evolution interface with unchanged objective, permissions, feedback, data boundary, and budget, there exists a capability threshold below which the optimizer cannot enact open-ended route composition: weak optimizers show non-operation or non-convergence across tasks, medium optimizers improve only under a prescribed pipeline, and frontier optimizers improve through OEO. This ordering will replicate across at least two independent artifact families (skill procedures and symbolic verifier extensions).",
-          "current_source_status": "",
-          "current_source_verdict": "",
-          "current_source_reduction_class": "",
-          "current_source_strongest_reduction": "",
-          "current_source_reason": "",
-          "current_source_source_refs": [],
-          "terminal_shadow_clear": false,
-          "live_problem_gate_compatible": false,
-          "paper_design_eligible": false,
-          "scientific_authority": false,
-          "authority": {
-            "method": false,
-            "experiment": false,
-            "p0": false,
-            "gpu": false
-          }
-        }
-      ],
+      "candidates": [],
       "authority": {
         "live_problem_gate": false,
         "paper_design": false,
