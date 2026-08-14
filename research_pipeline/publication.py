@@ -106,6 +106,10 @@ DAILY_ARTIFACTS = (
     "generated/paper-first-premature-method-diagnostics.js",
 )
 WEEKLY_ARTIFACTS = DAILY_ARTIFACTS + (
+    "generated/paper-first-problem-search-portfolio-state.json",
+    "generated/paper-first-problem-search-portfolio-state.js",
+    "generated/paper-first-problem-search-portfolio-queue-shadow.json",
+    "generated/paper-first-problem-search-portfolio-queue-shadow.js",
     "generated/paper-first-global-relation-recall.json",
     "generated/paper-first-global-relation-recall.js",
     "generated/iclr-low-resource-ideas.json",

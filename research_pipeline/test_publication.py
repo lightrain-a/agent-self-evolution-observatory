@@ -160,6 +160,14 @@ class PublicationTest(unittest.TestCase):
         self.assertIn("generated/s2-literature.js", WEEKLY_ARTIFACTS)
         self.assertIn("generated/iclr-low-resource-ideas.json", WEEKLY_ARTIFACTS)
         self.assertIn("generated/paper-first-paper-design-backlog.json", DAILY_ARTIFACTS)
+        for artifact in (
+            "generated/paper-first-problem-search-portfolio-state.json",
+            "generated/paper-first-problem-search-portfolio-state.js",
+            "generated/paper-first-problem-search-portfolio-queue-shadow.json",
+            "generated/paper-first-problem-search-portfolio-queue-shadow.js",
+        ):
+            self.assertIn(artifact, WEEKLY_ARTIFACTS)
+            self.assertNotIn(artifact, DAILY_ARTIFACTS)
         self.assertIn("generated/paper-first-global-relation-recall.json", WEEKLY_ARTIFACTS)
         self.assertNotIn("generated/paper-first-global-relation-recall.json", DAILY_ARTIFACTS)
         self.assertIn("generated/machine-school-inspired-ideas.json", WEEKLY_ARTIFACTS)
