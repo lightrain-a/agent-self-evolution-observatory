@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import hashlib,json
+import hashlib,json,re
 from collections import Counter
 from datetime import datetime,timezone
 from pathlib import Path
@@ -41,9 +41,13 @@ def _latest_shadow_run(root:Path)->dict:
     formulation_errors=[load(path) for path in formulation_error_paths]
     formulation_provider_failures=sum(str(row.get('status') or '').startswith('PROVIDER_') for row in formulation_errors)
     formulation_parse_failures=sum(str(row.get('status') or '')=='PARSE_ERROR_ZERO_AUTHORITY' for row in formulation_errors)
-    formulation_censored_branches=sum(len(row.get('branch_ids') or []) for row in formulation_errors)
-    formulation_requested_shards=12
-    formulation_requested_branches=24
+    formulation_parts=[]
+    for path in formulation_paths+formulation_error_paths:
+        match=re.search(r'formulate-p(\d+)',path.name)
+        if match:formulation_parts.append(int(match.group(1)))
+    formulation_requested_shards=max(formulation_parts or [0])
+    formulation_requested_branches=formulation_requested_shards*2
+    formulation_censored_branches=max(sum(len(row.get('branch_ids') or []) for row in formulation_errors),formulation_requested_branches-successful_formulation_branches)
     falsifier_preflight=load(root/'problem-falsifier-preflight.json') if (root/'problem-falsifier-preflight.json').exists() else {}
     falsifier_summary=falsifier_preflight.get('summary') or {}
     bs=base.get('summary') or {};archives=base.get('archives') or {};by_id={r.get('seed_id'):r for r in base.get('unique_seeds') or [] if r.get('seed_id')}

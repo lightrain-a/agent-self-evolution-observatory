@@ -64,7 +64,7 @@ class SearchPortfolioPublishTest(unittest.TestCase):
         latest=state["latest_run"]
         self.assertEqual((latest["summary"]["raw_seeds"],latest["summary"]["semantic_unique"],latest["summary"]["semantic_clear"],latest["summary"]["current_source_blocked"],latest["summary"]["terminal_shadow_survivors"]),(101,54,1,1,0))
         self.assertEqual(latest["summary"]["live_paper_design_eligible"],0)
-        self.assertEqual((latest["summary"]["formulation_requested_shards"],latest["summary"]["formulation_successful_shards"],latest["summary"]["formulation_provider_failures"],latest["summary"]["formulation_requested_branches"],latest["summary"]["formulation_successful_branches"],latest["summary"]["formulation_execution_censored_branches"]),(12,1,1,24,2,2))
+        self.assertEqual((latest["summary"]["formulation_requested_shards"],latest["summary"]["formulation_successful_shards"],latest["summary"]["formulation_provider_failures"],latest["summary"]["formulation_requested_branches"],latest["summary"]["formulation_successful_branches"],latest["summary"]["formulation_execution_censored_branches"]),(2,1,1,4,2,2))
         self.assertEqual((latest["summary"]["problem_falsifier_eligible"],latest["summary"]["problem_falsifier_support_qualified"],latest["summary"]["problem_falsifier_hold_support_unavailable"],latest["summary"]["problem_falsifier_executed"]),(0,0,4,0))
         self.assertTrue(latest["policy"]["execution_loss_is_not_scientific_negative"])
         self.assertTrue(latest["policy"]["problem_falsifier_hold_is_not_scientific_fail"])
