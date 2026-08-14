@@ -402,6 +402,20 @@ class ResearchSystemTest(unittest.TestCase):
         multi["paper_first_problem_generator"]["policy"]["one_generator_call_max"]=False
         self.assertTrue(any("at most one generator call" in error for error in validate_state(multi)))
 
+    def test_latest_shadow_terminal_is_fail_closed_and_zero_authority(self) -> None:
+        state=copy.deepcopy(self.state)
+        state["paper_first_problem_search_portfolio"]={
+            "schema_version":"3.2-shadow-import","scientific_authority":False,"policy":{"shadow_only":True},"latest_run_id":"shadow-r2",
+            "latest_run":{"status":"SHADOW_TERMINAL_COMPLETE","scientific_authority":False,"policy":{"shadow_only":True,"canonical_primary_generator_queue_untouched":True,"live_source_coverage_effect":False,"current_source_web_receipt_required_after_semantic_clear":True,"missing_or_failed_current_source_reviewer_is_not_pass":True},"summary":{"semantic_clear":1,"current_source_clear":0,"current_source_blocked":1,"current_source_missing":0,"terminal_shadow_survivors":0,"live_paper_design_eligible":0},"authority":{"live_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+        }
+        self.assertEqual(validate_state(state),[])
+        missing=copy.deepcopy(state);missing["paper_first_problem_search_portfolio"]["latest_run"]["summary"]["current_source_missing"]=1
+        self.assertTrue(any("completed shadow terminal" in error for error in validate_state(missing)))
+        leak=copy.deepcopy(state);leak["paper_first_problem_search_portfolio"]["latest_run"]["authority"]["paper_design"]=True
+        self.assertTrue(any("latest shadow run cannot authorize" in error for error in validate_state(leak)))
+        inconsistent=copy.deepcopy(state);inconsistent["paper_first_problem_search_portfolio"]["latest_run"]["summary"]["terminal_shadow_survivors"]=1
+        self.assertTrue(any("terminal survivors" in error for error in validate_state(inconsistent)))
+
     def test_canonical_paper_design_backlog_is_durable_but_cannot_escalate_authority(self) -> None:
         state=copy.deepcopy(self.state)
         state["paper_first_paper_design_backlog"]={

@@ -1,6 +1,6 @@
 {
   "schema_version": "3.2-shadow-import",
-  "generated_at": "2026-08-13T15:37:57+00:00",
+  "generated_at": "2026-08-14T01:23:58+00:00",
   "imported_at": "2026-08-13T16:28:11+00:00",
   "status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
   "historical_source_commit": "7b2a7260df3bae5d140cdc7f4d09a56dd898a72b",
@@ -205,5 +205,150 @@
       }
     }
   ],
-  "scientific_authority": false
+  "scientific_authority": false,
+  "latest_run_id": "shadow-20260814-r2",
+  "latest_run": {
+    "schema_version": "1.0-shadow-run",
+    "run_id": "shadow-20260814-r2",
+    "status": "SHADOW_TERMINAL_COMPLETE",
+    "generated_at": "2026-08-14T01:23:58+00:00",
+    "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
+    "stage_manifest_sha256": "d06dd9375ab88dea172fe98adaf7360e0a396f90f33eff7c2a4864495b15dbaa",
+    "scientific_authority": false,
+    "policy": {
+      "shadow_only": true,
+      "canonical_primary_generator_queue_untouched": true,
+      "live_source_coverage_effect": false,
+      "fresh_primary_evidence_is_candidate_source_only": true,
+      "current_source_web_receipt_required_after_semantic_clear": true,
+      "missing_or_failed_current_source_reviewer_is_not_pass": true,
+      "terminal_shadow_survivor_is_not_live_problem_gate_pass": true,
+      "cannot_grant_live_paper_design_eligibility": true,
+      "automatic_method_authority": false,
+      "automatic_experiment_authority": false,
+      "automatic_p0_authority": false,
+      "automatic_gpu_authority": false
+    },
+    "summary": {
+      "requested_raw_seeds": 120,
+      "raw_seeds": 101,
+      "semantic_unique": 54,
+      "duplicate_or_near_duplicate": 47,
+      "unique_problem_families": 54,
+      "breadth_archive": 48,
+      "archive_lane_coverage": 10,
+      "mean_archive_pairwise_distance": 0.8798,
+      "evolved_branches": 36,
+      "max_branch_depth": 2,
+      "formulated_candidates": 15,
+      "formulation_rejected": 9,
+      "machine_reviewable": 3,
+      "machine_reduction_blocked": 12,
+      "semantic_reviewed": 3,
+      "semantic_clear": 1,
+      "semantic_blocked": 2,
+      "current_source_reviewed": 1,
+      "current_source_clear": 0,
+      "current_source_blocked": 1,
+      "current_source_missing": 0,
+      "terminal_shadow_survivors": 0,
+      "live_problem_gate_compatible_survivors": 0,
+      "live_paper_design_eligible": 0,
+      "generator_model_calls": 38,
+      "reviewer_model_calls": 2,
+      "current_source_review_receipts": 1
+    },
+    "lane_counts": {
+      "CONTRADICTION": 5,
+      "CONVERGENT_FAILURE": 12,
+      "ASSUMPTION_BREAK": 5,
+      "UNEXPLAINED_BOUNDARY": 12,
+      "IDENTIFIABILITY_GAP": 12,
+      "MISSING_DECISION_OBJECT": 7,
+      "COMPOSITION_INTERACTION": 12,
+      "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 12,
+      "NEW_CAPABILITY_QUESTION": 12,
+      "LONGITUDINAL_EMERGENCE": 12
+    },
+    "archive_lane_counts": {
+      "CONTRADICTION": 2,
+      "CONVERGENT_FAILURE": 11,
+      "ASSUMPTION_BREAK": 4,
+      "UNEXPLAINED_BOUNDARY": 3,
+      "IDENTIFIABILITY_GAP": 4,
+      "MISSING_DECISION_OBJECT": 4,
+      "COMPOSITION_INTERACTION": 4,
+      "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 10,
+      "NEW_CAPABILITY_QUESTION": 4,
+      "LONGITUDINAL_EMERGENCE": 2
+    },
+    "machine_blocker_counts": {},
+    "candidates": [
+      {
+        "candidate_id": "SHADOW-P04-C01",
+        "title": "Fixed-contract planner-executor granularity mismatch as a structural failure regime in hierarchical VLA manipulation",
+        "search_primitive": "COMPOSITION_INTERACTION",
+        "semantic_shadow_clear": false,
+        "current_source_status": "",
+        "current_source_verdict": "",
+        "current_source_reduction_class": "",
+        "terminal_shadow_clear": false,
+        "live_problem_gate_compatible": false,
+        "paper_design_eligible": false,
+        "scientific_authority": false,
+        "authority": {
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false
+        }
+      },
+      {
+        "candidate_id": "SHADOW-P06-C01",
+        "title": "Noncompensatory Scalar Collapse in Self-Evolving Agent Evaluation Loops",
+        "search_primitive": "CONVERGENT_FAILURE",
+        "semantic_shadow_clear": false,
+        "current_source_status": "",
+        "current_source_verdict": "",
+        "current_source_reduction_class": "",
+        "terminal_shadow_clear": false,
+        "live_problem_gate_compatible": false,
+        "paper_design_eligible": false,
+        "scientific_authority": false,
+        "authority": {
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false
+        }
+      },
+      {
+        "candidate_id": "SHADOW-P12-C01",
+        "title": "Retrieval quality is not identifiable from executable-unit quality under matched retrieved skill sets",
+        "search_primitive": "IDENTIFIABILITY_GAP",
+        "semantic_shadow_clear": true,
+        "current_source_status": "complete",
+        "current_source_verdict": "BLOCK",
+        "current_source_reduction_class": "VALID_HARD_VETO",
+        "terminal_shadow_clear": false,
+        "live_problem_gate_compatible": false,
+        "paper_design_eligible": false,
+        "scientific_authority": false,
+        "authority": {
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false
+        }
+      }
+    ],
+    "authority": {
+      "live_problem_gate": false,
+      "paper_design": false,
+      "method": false,
+      "experiment": false,
+      "p0": false,
+      "gpu": false
+    }
+  }
 }

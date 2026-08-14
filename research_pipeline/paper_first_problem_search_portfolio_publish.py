@@ -25,11 +25,44 @@ def rows(root,pattern,key):
 
 def manifest_sha(root):
     pairs=[]
-    for pattern in ('expand-*.json','evolve-*.json','formulate-*.json','review-p*.json','machine-audit.json','problem-gate.json','frozen-primary-evidence-pool.json'):
+    for pattern in ('expand-*.json','evolve-*.json','formulate-p*.json','review-p*.json','machine-audit.json','shadow-final-audit.json','shadow-terminal-current-source-gate.json','post-review-current-source-audit.json','frozen-primary-evidence-pool.json'):
         for path in sorted(root.glob(pattern)): pairs.append((path.name,hashlib.sha256(path.read_bytes()).hexdigest()))
     return hashlib.sha256(json.dumps(pairs,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
+def _latest_shadow_run(root:Path)->dict:
+    base=load(root/'base.json'); frozen=load(root/'frozen-primary-evidence-pool.json'); machine=load(root/'machine-audit.json')
+    final=load(root/'shadow-final-audit.json'); terminal=load(root/'shadow-terminal-current-source-gate.json')
+    reviewed=rows(root,'review-p*.json','candidates'); evolved=rows(root,'evolve-*.json','children')
+    formulated=rejected=0
+    for path in root.glob('formulate-p*.json'):
+        payload=load(path);formulated+=len(payload.get('candidates') or []);rejected+=len(payload.get('rejected') or [])
+    bs=base.get('summary') or {};archives=base.get('archives') or {};by_id={r.get('seed_id'):r for r in base.get('unique_seeds') or [] if r.get('seed_id')}
+    breadth=[by_id[s] for s in archives.get('breadth') or [] if s in by_id];distances=[1-_jaccard(breadth[i],breadth[j]) for i in range(len(breadth)) for j in range(i+1,len(breadth))]
+    semantic_clear=[c for c in reviewed if (c.get('semantic_reduction_review') or {}).get('verdict')=='CLEAR']
+    term_rows={str(r.get('candidate_id') or ''):r for r in terminal.get('rows') or [] if isinstance(r,dict)}
+    candidate_rows=[]
+    for row in final.get('rows') or []:
+        if not isinstance(row,dict):continue
+        cid=str(row.get('candidate_id') or '');term=term_rows.get(cid) or {};current=term.get('current_source_review') or {}
+        candidate_rows.append({'candidate_id':cid,'title':str(row.get('title') or ''),'search_primitive':str(row.get('search_primitive') or ''),'semantic_shadow_clear':row.get('shadow_clear') is True,'current_source_status':str(current.get('status') or ''),'current_source_verdict':str(current.get('verdict') or ''),'current_source_reduction_class':str(current.get('reduction_class') or ''),'terminal_shadow_clear':term.get('terminal_shadow_clear') is True,'live_problem_gate_compatible':term.get('live_problem_gate_compatible') is True,'paper_design_eligible':False,'scientific_authority':False,'authority':{'method':False,'experiment':False,'p0':False,'gpu':False}})
+    t=terminal.get('summary') or {};m=machine.get('summary') or {};run_id=root.name
+    generator_calls=len(list(root.glob('expand-*.json')))+len(list(root.glob('evolve-*.json')))+len(list(root.glob('formulate-p*.json')))
+    return {'schema_version':'1.0-shadow-run','run_id':run_id,'status':str(terminal.get('status') or 'SHADOW_TERMINAL_INCOMPLETE_CURRENT_SOURCE_REVIEW'),'generated_at':now(),'frozen_pool_sha256':frozen.get('frozen_pool_sha256'),'stage_manifest_sha256':manifest_sha(root),'scientific_authority':False,'policy':{'shadow_only':True,'canonical_primary_generator_queue_untouched':True,'live_source_coverage_effect':False,'fresh_primary_evidence_is_candidate_source_only':True,'current_source_web_receipt_required_after_semantic_clear':True,'missing_or_failed_current_source_reviewer_is_not_pass':True,'terminal_shadow_survivor_is_not_live_problem_gate_pass':True,'cannot_grant_live_paper_design_eligibility':True,'automatic_method_authority':False,'automatic_experiment_authority':False,'automatic_p0_authority':False,'automatic_gpu_authority':False},'summary':{'requested_raw_seeds':120,'raw_seeds':int(bs.get('raw_seeds') or 0),'semantic_unique':int(bs.get('semantic_unique') or 0),'duplicate_or_near_duplicate':int(bs.get('semantic_duplicates') or 0),'unique_problem_families':int(bs.get('structural_clusters') or 0),'breadth_archive':int(bs.get('breadth_archive') or 0),'archive_lane_coverage':int(bs.get('archive_lane_coverage') or 0),'mean_archive_pairwise_distance':round(sum(distances)/len(distances),4) if distances else 0.0,'evolved_branches':len(evolved),'max_branch_depth':max([int(x.get('branch_depth') or 0) for x in evolved] or [0]),'formulated_candidates':formulated,'formulation_rejected':rejected,'machine_reviewable':int(m.get('reviewable') or 0),'machine_reduction_blocked':int(m.get('blocked') or 0),'semantic_reviewed':len(reviewed),'semantic_clear':len(semantic_clear),'semantic_blocked':len(reviewed)-len(semantic_clear),'current_source_reviewed':int(t.get('current_source_clear') or 0)+int(t.get('current_source_blocked') or 0),'current_source_clear':int(t.get('current_source_clear') or 0),'current_source_blocked':int(t.get('current_source_blocked') or 0),'current_source_missing':int(t.get('current_source_missing') or 0),'terminal_shadow_survivors':int(t.get('terminal_shadow_survivors') or 0),'live_problem_gate_compatible_survivors':int(t.get('live_problem_gate_compatible_survivors') or 0),'live_paper_design_eligible':0,'generator_model_calls':generator_calls,'reviewer_model_calls':len(list(root.glob('review-p*.json'))),'current_source_review_receipts':int(t.get('current_source_clear') or 0)+int(t.get('current_source_blocked') or 0)},'lane_counts':dict(base.get('lane_counts') or {}),'archive_lane_counts':dict(base.get('archive_lane_counts') or {}),'machine_blocker_counts':dict(Counter(v.split(':',1)[0] for row in machine.get('blocked') or [] for v in row.get('blockers') or [])),'candidates':candidate_rows,'authority':{'live_problem_gate':False,'paper_design':False,'method':False,'experiment':False,'p0':False,'gpu':False}}
+
+def publish_latest_run(root:Path):
+    latest=_latest_shadow_run(root)
+    if not GEN_JSON.exists() or not QUEUE_JSON.exists():raise ValueError('shadow-history-state-required-before-latest-run-publication')
+    state=load(GEN_JSON);queue=load(QUEUE_JSON)
+    if state.get('scientific_authority') is not False or (state.get('policy') or {}).get('shadow_only') is not True:raise ValueError('existing-shadow-portfolio-history-invalid')
+    if queue.get('scientific_authority') is not False or (queue.get('policy') or {}).get('shadow_only') is not True:raise ValueError('existing-shadow-queue-history-invalid')
+    state['generated_at']=now();state['latest_run_id']=latest['run_id'];state['latest_run']=latest;state['scientific_authority']=False
+    queue['generated_at']=now();queue['latest_run_id']=latest['run_id'];queue['latest_run']={'run_id':latest['run_id'],'status':latest['status'],'summary':{'semantic_clear_before_current_source':latest['summary']['semantic_clear'],'current_source_clear':latest['summary']['current_source_clear'],'current_source_blocked':latest['summary']['current_source_blocked'],'current_source_missing':latest['summary']['current_source_missing'],'terminal_shadow_survivors':latest['summary']['terminal_shadow_survivors'],'live_problem_gate_compatible_survivors':latest['summary']['live_problem_gate_compatible_survivors'],'live_paper_design_eligible':0},'scientific_authority':False,'authority':{'canonical_queue':False,'paper_design':False,'method':False,'experiment':False,'p0':False,'gpu':False}};queue['scientific_authority']=False
+    GEN_JSON.write_text(json.dumps(state,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');GEN_JS.write_text('window.PAPER_FIRST_PROBLEM_SEARCH_PORTFOLIO = '+json.dumps(state,ensure_ascii=False,separators=(',',':'))+';\n',encoding='utf-8')
+    QUEUE_JSON.write_text(json.dumps(queue,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');QUEUE_JS.write_text('window.PAPER_FIRST_PROBLEM_SEARCH_PORTFOLIO_QUEUE = '+json.dumps(queue,ensure_ascii=False,separators=(',',':'))+';\n',encoding='utf-8')
+    return {'latest_run_id':latest['run_id'],'summary':latest['summary'],'scientific_authority':False}
+
 def publish(root:Path):
+    if (root/'shadow-terminal-current-source-gate.json').exists():return publish_latest_run(root)
     base=load(root/'base.json'); frozen=load(root/'frozen-primary-evidence-pool.json'); machine=load(root/'machine-audit.json')
     reviewed=rows(root,'review-p*.json','candidates'); evolved=rows(root,'evolve-*.json','children')
     live=dead=0

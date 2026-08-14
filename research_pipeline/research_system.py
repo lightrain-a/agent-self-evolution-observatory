@@ -244,6 +244,15 @@ def _load_corpus_with_site_fallback() -> dict[str, Any]:
     }
 
 
+def _load_shadow_search_portfolio_public() -> dict[str, Any]:
+    path = PROJECT_ROOT / "generated" / "paper-first-problem-search-portfolio-state.json"
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {"schema_version":"1.0-shadow","status":"NOT_RUN","policy":{"shadow_only":True,"scientific_authority":False},"latest_run":{},"scientific_authority":False}
+    return payload if isinstance(payload,dict) else {"schema_version":"1.0-shadow","status":"STATE_INVALID","policy":{"shadow_only":True,"scientific_authority":False},"latest_run":{},"scientific_authority":False}
+
+
 def _load_ai_consultation_automation_public() -> dict[str, Any]:
     try:
         payload = json.loads(AI_CONSULTATION_AUTOMATION_JSON.read_text(encoding="utf-8"))
@@ -310,6 +319,9 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_sp15_support = build_sp15_identifiability_support()
     paper_first_paper_design_backlog = load_paper_design_backlog()
     paper_first_global_relation_recall = load_global_relation_recall_state()
+    paper_first_problem_search_portfolio = _load_shadow_search_portfolio_public()
+    paper_first_shadow_latest = paper_first_problem_search_portfolio.get("latest_run") or {}
+    paper_first_shadow_latest_summary = paper_first_shadow_latest.get("summary") or {}
     paper_first_post_c2 = build_post_c2_adjudication()
     formal_cards = {
         str(card.get("idea_id")): card
@@ -489,6 +501,16 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_global_relation_reducible":(paper_first_global_relation_recall.get("summary") or {}).get("reducible",0),
             "paper_first_global_relation_not_reduced":(paper_first_global_relation_recall.get("summary") or {}).get("not_reduced",0),
             "paper_first_global_relation_focused_reopen":bool((paper_first_global_relation_recall.get("summary") or {}).get("focused_problem_generator_reopen_required")),
+            "paper_first_shadow_latest_run_id":paper_first_problem_search_portfolio.get("latest_run_id",""),
+            "paper_first_shadow_latest_raw":paper_first_shadow_latest_summary.get("raw_seeds",0),
+            "paper_first_shadow_latest_unique":paper_first_shadow_latest_summary.get("semantic_unique",0),
+            "paper_first_shadow_latest_evolved":paper_first_shadow_latest_summary.get("evolved_branches",0),
+            "paper_first_shadow_latest_formulated":paper_first_shadow_latest_summary.get("formulated_candidates",0),
+            "paper_first_shadow_latest_machine_reviewable":paper_first_shadow_latest_summary.get("machine_reviewable",0),
+            "paper_first_shadow_latest_semantic_clear":paper_first_shadow_latest_summary.get("semantic_clear",0),
+            "paper_first_shadow_latest_current_source_blocked":paper_first_shadow_latest_summary.get("current_source_blocked",0),
+            "paper_first_shadow_latest_terminal_survivors":paper_first_shadow_latest_summary.get("terminal_shadow_survivors",0),
+            "paper_first_shadow_latest_live_paper_design_eligible":paper_first_shadow_latest_summary.get("live_paper_design_eligible",0),
             "paper_first_post_c2_decision":paper_first_post_c2["decision"],
             "paper_first_post_c2_current_formulation":paper_first_post_c2["current_paper_formulation_status"],
             "paper_first_post_c2_c3_locked":paper_first_post_c2["authority"]["C3_locked"],
@@ -628,6 +650,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_sp15_identifiability_support":paper_first_sp15_support,
         "paper_first_paper_design_backlog":paper_first_paper_design_backlog,
         "paper_first_global_relation_recall":paper_first_global_relation_recall,
+        "paper_first_problem_search_portfolio":paper_first_problem_search_portfolio,
         "paper_first_post_c2":paper_first_post_c2,
         "paper_first_premature_method_diagnostics":paper_first_premature_method_diagnostics,
         "pilot_registry":pilot_registry,
@@ -711,6 +734,23 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and generator_policy.get("canonical_transaction_forbids_search_portfolio", True) is True
         and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call", True) is True
     )
+    shadow_portfolio = state.get("paper_first_problem_search_portfolio") or {}
+    shadow_latest = shadow_portfolio.get("latest_run") or {}
+    shadow_latest_policy = shadow_latest.get("policy") or {}
+    shadow_latest_summary = shadow_latest.get("summary") or {}
+    shadow_latest_authority = shadow_latest.get("authority") or {}
+    shadow_latest_ok = not shadow_latest or bool(
+        shadow_latest.get("scientific_authority") is False
+        and shadow_latest_policy.get("shadow_only") is True
+        and shadow_latest_policy.get("canonical_primary_generator_queue_untouched") is True
+        and shadow_latest_policy.get("live_source_coverage_effect") is False
+        and shadow_latest_policy.get("current_source_web_receipt_required_after_semantic_clear") is True
+        and shadow_latest_policy.get("missing_or_failed_current_source_reviewer_is_not_pass") is True
+        and int(shadow_latest_summary.get("live_paper_design_eligible") or 0) == 0
+        and int(shadow_latest_summary.get("terminal_shadow_survivors") or 0) == int(shadow_latest_summary.get("current_source_clear") or 0)
+        and (shadow_latest.get("status") != "SHADOW_TERMINAL_COMPLETE" or int(shadow_latest_summary.get("current_source_missing") or 0) == 0)
+        and all(shadow_latest_authority.get(key) is False for key in ("live_problem_gate","paper_design","method","experiment","p0","gpu"))
+    )
     checks = [
         {"key":"corpus", "pass":bool(corpus.get("papers")), "detail":f"{len(corpus.get('papers') or [])} papers"},
         {"key":"evidence-coverage", "pass":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"] >= 20, "detail":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"]},
@@ -732,6 +772,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-problem-gate-queue", "pass":state["paper_first_problem_gate_queue"]["summary"]["audited"] == state["paper_first_problem_gate_queue"]["summary"]["submitted"] and state["paper_first_problem_gate_queue"]["summary"]["passed_problem_gate"] + state["paper_first_problem_gate_queue"]["summary"]["blocked_problem_gate"] == state["paper_first_problem_gate_queue"]["summary"]["audited"] and state["paper_first_problem_gate_queue"]["summary"]["inbox_errors"] == 0 and state["paper_first_problem_gate_queue"]["summary"]["method_authorized"] == 0 and state["paper_first_problem_gate_queue"]["summary"]["experiment_authorized"] == 0 and state["paper_first_problem_gate_queue"]["summary"]["p0_authorized"] == 0 and state["paper_first_problem_gate_queue"]["policy"]["verified_primary_evidence_registry_required_for_submitted_candidates"] is True and state["paper_first_problem_gate_queue"]["policy"]["multi_lane_candidate_schema_required"] is True and state["paper_first_problem_gate_queue"]["policy"]["lane_contract_independent_review_required"] is True and state["paper_first_problem_gate_queue"]["policy"]["independent_semantic_reduction_review_required"] is True, "detail":state["paper_first_problem_gate_queue"]["summary"]},
         {"key":"search-portfolio-paper-design", "pass":state["paper_first_search_portfolio_design_adjudication"]["summary"]["reviewed"] == 2 and state["paper_first_search_portfolio_design_adjudication"]["summary"]["advance_to_method_design"] == 0 and state["paper_first_search_portfolio_design_adjudication"]["summary"]["revise_paper_problem"] == 1 and state["paper_first_search_portfolio_design_adjudication"]["summary"]["stop_standalone"] == 1 and state["paper_first_search_portfolio_design_adjudication"]["summary"]["method_design_authorized"] == 0 and state["paper_first_search_portfolio_design_adjudication"]["policy"]["source_is_shadow_search_portfolio"] is True and state["paper_first_search_portfolio_design_adjudication"]["policy"]["shadow_queue_has_zero_paper_design_authority"] is True and state["paper_first_search_portfolio_design_adjudication"]["policy"]["cannot_grant_or_revoke_live_paper_design_authority"] is True, "detail":state["paper_first_search_portfolio_design_adjudication"]["summary"]},
         {"key":"sp15-identifiability-support", "pass":state["paper_first_sp15_identifiability_support"]["summary"]["query_level_identifiability_units"] == 0 and state["paper_first_sp15_identifiability_support"]["summary"]["support_status"] == "INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM" and state["paper_first_sp15_identifiability_support"]["summary"]["method_design_authorized"] == 0 and state["paper_first_sp15_identifiability_support"]["policy"]["phenomenon_support_is_not_identifiability_support"] is True, "detail":state["paper_first_sp15_identifiability_support"]["summary"]},
+        {"key":"shadow-search-latest-terminal", "pass":shadow_latest_ok, "detail":{"run_id":shadow_portfolio.get("latest_run_id",""),"status":shadow_latest.get("status","NOT_RUN"),"summary":shadow_latest_summary}},
         {"key":"paper-first-post-c2-terminal", "pass":state["paper_first_post_c2"]["decision"] == "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" and state["paper_first_post_c2"]["authority"]["clean_mechanism_stop"] is True and state["paper_first_post_c2"]["authority"]["C3_locked"] is True and state["paper_first_post_c2"]["authority"]["full_experiment_authorized"] is False and state["paper_first_post_c2"]["authority"]["new_method_auto_authorized"] is False and state["paper_first_post_c2"]["authority"]["new_paper_problem_auto_authorized"] is False, "detail":{"decision":state["paper_first_post_c2"]["decision"],"c2":state["paper_first_post_c2"]["c2_result"],"gate_provenance":state["paper_first_post_c2"]["gate_provenance"]}},
         {"key":"backend-architecture-manifest", "pass":state["system_architecture"]["summary"]["temporal_stages"] == 11 and state["system_architecture"]["summary"]["functional_layers"] == 6 and state["system_architecture"]["summary"]["assigned_components"] == len(state["components"]) and state["system_architecture"]["summary"]["unassigned_components"] == 0 and state["system_architecture"]["summary"]["duplicate_component_keys"] == 0 and state["system_architecture"]["summary"]["cross_cutting_controls"] == 3 and state["system_architecture"]["summary"]["orphan_cross_cutting_controls"] == 0, "detail":state["system_architecture"]["summary"]},
         {"key":"principle-layer", "pass":state["principle_layer"]["policy"]["experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea"] and state["principle_layer"]["policy"]["true_negative_does_not_automatically_falsify_principle"] and state["principle_layer"]["summary"]["certificates_passed"] == expected_pre_experiment_cards, "detail":state["principle_layer"]["summary"]},
@@ -875,6 +916,15 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if (sp_design_summary.get("reviewed"),sp_design_summary.get("advance_to_method_design"),sp_design_summary.get("revise_paper_problem"),sp_design_summary.get("stop_standalone")) != (2,0,1,1) or any(int(sp_design_summary.get(key) or 0) != 0 for key in ("method_design_authorized","experiment_blueprint_authorized","local_validation_authorized","p0_authorized","gpu_authorized")) or sp_design_policy.get("source_is_shadow_search_portfolio") is not True or sp_design_policy.get("shadow_queue_has_zero_paper_design_authority") is not True or sp_design_policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True: errors.append("Search Portfolio retrospective design audit must route SP-09/SP-15 as 0 method advance / 1 revise / 1 stop while remaining shadow-only and zero-authority")
     sp15_support = state.get("paper_first_sp15_identifiability_support") or {}; sp15_summary = sp15_support.get("summary") or {}; sp15_policy = sp15_support.get("policy") or {}
     if sp15_summary.get("query_level_identifiability_units") != 0 or sp15_summary.get("support_status") != "INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM" or sp15_support.get("decision") != "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT" or sp15_policy.get("phenomenon_support_is_not_identifiability_support") is not True or any(int(sp15_summary.get(key) or 0) != 0 for key in ("method_design_authorized","experiment_blueprint_authorized","local_validation_authorized","p0_authorized","gpu_authorized")): errors.append("SP-15 revised identifiability problem must remain HOLD until nonzero matched query-level support exists")
+    shadow_portfolio=state.get("paper_first_problem_search_portfolio") or {};shadow_latest=shadow_portfolio.get("latest_run") or {}
+    if shadow_latest:
+        latest_policy=shadow_latest.get("policy") or {};latest_summary=shadow_latest.get("summary") or {};latest_authority=shadow_latest.get("authority") or {}
+        if shadow_portfolio.get("scientific_authority") is not False or (shadow_portfolio.get("policy") or {}).get("shadow_only") is not True: errors.append("Search Portfolio public state must remain shadow-only and zero-authority")
+        if shadow_latest.get("scientific_authority") is not False or latest_policy.get("shadow_only") is not True or latest_policy.get("canonical_primary_generator_queue_untouched") is not True or latest_policy.get("live_source_coverage_effect") is not False: errors.append("latest Search Portfolio run must remain shadow-only without canonical source/queue effects")
+        if latest_policy.get("current_source_web_receipt_required_after_semantic_clear") is not True or latest_policy.get("missing_or_failed_current_source_reviewer_is_not_pass") is not True: errors.append("semantic CLEAR in shadow search must require fail-closed current-source review")
+        if int(latest_summary.get("terminal_shadow_survivors") or 0)!=int(latest_summary.get("current_source_clear") or 0) or int(latest_summary.get("live_paper_design_eligible") or 0)!=0: errors.append("shadow terminal survivors must equal current-source CLEAR and never grant live Paper Design eligibility")
+        if shadow_latest.get("status")=="SHADOW_TERMINAL_COMPLETE" and int(latest_summary.get("current_source_missing") or 0)!=0: errors.append("completed shadow terminal cannot have missing current-source reviews")
+        if any(latest_authority.get(key) is not False for key in ("live_problem_gate","paper_design","method","experiment","p0","gpu")): errors.append("latest shadow run cannot authorize live Problem Gate or downstream execution")
     paper_backlog=state.get("paper_first_paper_design_backlog") or {};backlog_policy=paper_backlog.get("policy") or {};backlog_summary=paper_backlog.get("summary") or {};backlog_entries=[row for row in paper_backlog.get("entries") or [] if isinstance(row,dict)]
     if paper_backlog.get("status")!="NOT_RUN":
         if backlog_policy.get("problem_gate_pass_is_durable_until_human_paper_design_resolution") is not True or backlog_policy.get("volatile_discovery_queue_cannot_erase_backlog") is not True or backlog_policy.get("paper_design_eligibility_is_not_method_authority") is not True: errors.append("Problem-Gate PASS must persist in a durable Paper-Design backlog without downstream authority")
