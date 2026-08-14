@@ -493,6 +493,7 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_search_portfolio_near_miss_dead_ends":paper_first_search_portfolio_design["summary"].get("near_miss_preflight_dead_ends",0),
             "paper_first_search_portfolio_near_miss_support_holds":paper_first_search_portfolio_design["summary"].get("near_miss_support_holds",0),
             "paper_first_search_portfolio_near_miss_current_primary_stops":paper_first_search_portfolio_design["summary"].get("near_miss_current_primary_stops",0),
+            "paper_first_search_portfolio_near_miss_mature_theory_stops":paper_first_search_portfolio_design["summary"].get("near_miss_mature_theory_stops",0),
             "paper_first_sp15_identifiability_support_status":paper_first_sp15_support["summary"]["support_status"],
             "paper_first_sp15_identifiability_units":paper_first_sp15_support["summary"]["query_level_identifiability_units"],
             "paper_first_search_portfolio_method_design_authorized":paper_first_search_portfolio_design["summary"]["method_design_authorized"],

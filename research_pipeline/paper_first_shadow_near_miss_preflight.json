@@ -46,6 +46,50 @@
       "automatic_p0_authority": false,
       "automatic_gpu_authority": false,
       "scientific_authority": false
+    },
+    {
+      "source_candidate_id": "SHADOW-P05-C01",
+      "title": "Endogenous Trace Observability: Separating Execution-Process Correction from Skill-Package Effects in Fixed-Weight Self-Improving Agents",
+      "search_primitive": "NEW_CAPABILITY_QUESTION",
+      "disposition": "STOP_MATURE_THEORY_REDUCTION",
+      "evidence_basis": ["arXiv:2607.02901", "arXiv:1806.11153"],
+      "support_status": "MATURE_CAUSAL_OBJECT_ALREADY_EXPRESSES_PREDICTION",
+      "strongest_reduction": "treatment-induced confounding plus joint treatment-monitoring interventions / informative monitoring processes",
+      "reason": "The candidate's residual claim is that a skill edit changes not only execution but the future diagnostic observation map used to evaluate that edit. Mature longitudinal causal inference already treats treatment-induced confounding and non-systematic monitoring as identification problems, and explicitly formulates joint treatment/monitoring interventions. Replacing treatment with a textual skill and monitoring with future trace exposure instantiates that mature object but does not yet add an ex-ante prediction that the same-information causal model cannot express.",
+      "avoid": [
+        "renaming treatment-induced monitoring or measurement endogeneity as endogenous trace observability",
+        "claiming novelty from a textual skill changing which future logs are observed without a residual beyond joint treatment-monitoring causal inference",
+        "using matched outcome or trace-coverage summaries as evidence of a new causal object when monitoring itself is treatment-dependent"
+      ],
+      "reopen_only_if": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin.",
+      "automatic_problem_gate_authority": false,
+      "automatic_method_authority": false,
+      "automatic_experiment_authority": false,
+      "automatic_p0_authority": false,
+      "automatic_gpu_authority": false,
+      "scientific_authority": false
+    },
+    {
+      "source_candidate_id": "SHADOW-P12-C02",
+      "title": "Contaminated self-tests make skill-failure causes non-identifiable in test-time skill refinement",
+      "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+      "disposition": "STOP_CURRENT_PRIMARY_COLLISION",
+      "evidence_basis": ["arXiv:2607.22883", "arXiv:2607.25152", "arXiv:2602.07900"],
+      "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
+      "strongest_reduction": "self-generated verification inherits the defect or in-band information channel under test, so externally grounded or specification-independent verification is required",
+      "reason": "Current primary work directly shows that buggy code can misguide LLM-generated tests into asserting the same erroneous behavior while suppressing bug-finding tests, and that long-running agents' in-band self-evaluation can accept stagnation or regression until an externally grounded signal is introduced. Agent-generated tests are also empirically observed to function mainly as in-band observational feedback channels. This already instantiates the candidate's structural contamination claim that a self-test generated through the suspect artifact or workflow may fail to supply independent evidence.",
+      "avoid": [
+        "renaming buggy-code-induced test misguidance or in-band self-evaluation bias as a new intervention-contamination object",
+        "claiming that more self-tests solve causal ambiguity without specifying an independent information source",
+        "using skill/workflow vocabulary to restate the need for specification-based or externally grounded verification"
+      ],
+      "reopen_only_if": "New primary evidence demonstrates a contamination-induced non-identifiability residual that persists after matching test budget, using a specification-independent or externally grounded test generator, and controlling evaluator ancestry; the residual must not reduce to buggy-artifact test misguidance, in-band self-evaluation bias, verifier exogeneity, or generic active-testing partial identification.",
+      "automatic_problem_gate_authority": false,
+      "automatic_method_authority": false,
+      "automatic_experiment_authority": false,
+      "automatic_p0_authority": false,
+      "automatic_gpu_authority": false,
+      "scientific_authority": false
     }
   ]
 }

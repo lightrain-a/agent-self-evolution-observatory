@@ -20,8 +20,12 @@ class ShadowNearMissPreflightTest(unittest.TestCase):
         rows={row["source_candidate_id"]:row for row in self.state["receipts"]}
         self.assertEqual(rows["SHADOW-P03-C01"]["disposition"],"HOLD_SUPPORT_UNAVAILABLE")
         self.assertEqual(rows["SHADOW-P09-C01"]["disposition"],"STOP_CURRENT_PRIMARY_COLLISION")
+        self.assertEqual(self.state["summary"]["receipts"],4)
         self.assertEqual(self.state["summary"]["support_holds"],1)
-        self.assertEqual(self.state["summary"]["current_primary_stops"],1)
+        self.assertEqual(self.state["summary"]["current_primary_stops"],2)
+        self.assertEqual(self.state["summary"]["mature_theory_stops"],1)
+        self.assertEqual(rows["SHADOW-P05-C01"]["disposition"],"STOP_MATURE_THEORY_REDUCTION")
+        self.assertEqual(rows["SHADOW-P12-C02"]["disposition"],"STOP_CURRENT_PRIMARY_COLLISION")
 
     def test_preflight_never_authorizes_live_or_experiment_state(self) -> None:
         self.assertFalse(self.state["scientific_authority"])
@@ -36,10 +40,16 @@ class ShadowNearMissPreflightTest(unittest.TestCase):
         rows={row["source_candidate_id"]:row for row in compile_shadow_dead_end_rows(self.state)}
         self.assertEqual(rows["SHADOW-P03-C01"]["basin"],"near-miss-support-hold")
         self.assertEqual(rows["SHADOW-P09-C01"]["basin"],"near-miss-current-primary-collision")
+        self.assertEqual(rows["SHADOW-P05-C01"]["basin"],"near-miss-mature-theory-reduction")
+        self.assertEqual(rows["SHADOW-P12-C02"]["basin"],"near-miss-current-primary-collision")
         self.assertEqual(rows["SHADOW-P03-C01"]["current_source_refs"],["arXiv:2608.11888"])
         self.assertEqual(rows["SHADOW-P09-C01"]["current_source_refs"],["arXiv:2605.13716"])
+        self.assertIn("arXiv:2607.02901",rows["SHADOW-P05-C01"]["current_source_refs"])
+        self.assertIn("arXiv:2607.22883",rows["SHADOW-P12-C02"]["current_source_refs"])
         self.assertIn("released",rows["SHADOW-P03-C01"]["reopen_only_if"].lower())
         self.assertIn("same-information",rows["SHADOW-P09-C01"]["reopen_only_if"].lower())
+        self.assertIn("joint treatment-monitoring",rows["SHADOW-P05-C01"]["reopen_only_if"].lower())
+        self.assertIn("externally grounded",rows["SHADOW-P12-C02"]["reopen_only_if"].lower())
 
     def test_missing_reopen_condition_fails_closed(self) -> None:
         broken=copy.deepcopy(self.state)

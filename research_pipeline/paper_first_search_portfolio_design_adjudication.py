@@ -358,6 +358,7 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "near_miss_preflight_dead_ends": int(dead_end_memory.get("near_miss_preflight_count") or 0),
             "near_miss_support_holds": int((near_miss_preflight.get("summary") or {}).get("support_holds") or 0),
             "near_miss_current_primary_stops": int((near_miss_preflight.get("summary") or {}).get("current_primary_stops") or 0),
+            "near_miss_mature_theory_stops": int((near_miss_preflight.get("summary") or {}).get("mature_theory_stops") or 0),
             "method_design_authorized": 0,
             "experiment_blueprint_authorized": 0,
             "local_validation_authorized": 0,

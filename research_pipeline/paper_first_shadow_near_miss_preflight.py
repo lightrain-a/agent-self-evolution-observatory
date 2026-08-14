@@ -10,7 +10,7 @@ from .config import PROJECT_ROOT
 SPEC_PATH = PROJECT_ROOT / "research_pipeline" / "paper_first_shadow_near_miss_preflight.json"
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-shadow-near-miss-preflight.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-shadow-near-miss-preflight.js"
-ALLOWED_DISPOSITIONS = {"HOLD_SUPPORT_UNAVAILABLE", "STOP_CURRENT_PRIMARY_COLLISION"}
+ALLOWED_DISPOSITIONS = {"HOLD_SUPPORT_UNAVAILABLE", "STOP_CURRENT_PRIMARY_COLLISION", "STOP_MATURE_THEORY_REDUCTION"}
 
 
 def _now() -> str:
@@ -50,6 +50,7 @@ def build_shadow_near_miss_preflight(spec_path: Path = SPEC_PATH) -> dict[str, A
             "receipts": len(receipts),
             "support_holds": sum(str(row.get("disposition") or "") == "HOLD_SUPPORT_UNAVAILABLE" for row in receipts),
             "current_primary_stops": sum(str(row.get("disposition") or "") == "STOP_CURRENT_PRIMARY_COLLISION" for row in receipts),
+            "mature_theory_stops": sum(str(row.get("disposition") or "") == "STOP_MATURE_THEORY_REDUCTION" for row in receipts),
             "problem_gate_authorized": 0,
             "method_authorized": 0,
             "experiment_authorized": 0,
@@ -92,7 +93,7 @@ def validate_shadow_near_miss_preflight(state: dict[str, Any]) -> list[str]:
             errors.append(f"near-miss receipt requires primary refs:{cid}")
         if row.get("scientific_authority") is not False or any(row.get(key) is not False for key in ("automatic_problem_gate_authority", "automatic_method_authority", "automatic_experiment_authority", "automatic_p0_authority", "automatic_gpu_authority")):
             errors.append(f"near-miss receipt illegally authoritative:{cid}")
-    if int(summary.get("receipts") or 0) != len(receipts) or int(summary.get("support_holds") or 0) + int(summary.get("current_primary_stops") or 0) != len(receipts):
+    if int(summary.get("receipts") or 0) != len(receipts) or int(summary.get("support_holds") or 0) + int(summary.get("current_primary_stops") or 0) + int(summary.get("mature_theory_stops") or 0) != len(receipts):
         errors.append("near-miss preflight summary accounting mismatch")
     if any(int(summary.get(key) or 0) != 0 for key in ("problem_gate_authorized", "method_authorized", "experiment_authorized", "p0_authorized", "gpu_authorized")):
         errors.append("near-miss preflight summary cannot authorize downstream work")
@@ -106,9 +107,10 @@ def compile_shadow_dead_end_rows(state: dict[str, Any]) -> list[dict[str, Any]]:
     rows = []
     for receipt in state.get("receipts") or []:
         disposition = str(receipt.get("disposition") or "")
+        basin = "near-miss-support-hold" if disposition == "HOLD_SUPPORT_UNAVAILABLE" else ("near-miss-current-primary-collision" if disposition == "STOP_CURRENT_PRIMARY_COLLISION" else "near-miss-mature-theory-reduction")
         rows.append({
             "source_candidate_id": str(receipt.get("source_candidate_id") or ""),
-            "basin": "near-miss-support-hold" if disposition == "HOLD_SUPPORT_UNAVAILABLE" else "near-miss-current-primary-collision",
+            "basin": basin,
             "search_primitive": str(receipt.get("search_primitive") or ""),
             "disposition": disposition,
             "avoid": [str(value) for value in receipt.get("avoid") or [] if str(value)],
