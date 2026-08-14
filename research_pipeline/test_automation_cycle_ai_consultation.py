@@ -7,7 +7,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
-from .automation_cycle import _advisory_step, _run_external_system_learning_review, _run_global_relation_control, _run_shadow_search_admission_control, _sync_literature, cycle_lock, run_cycle
+from .automation_cycle import _advisory_step, _run_external_system_learning_review, _run_global_relation_control, _run_shadow_search_admission_control, _step, _sync_literature, cycle_lock, run_cycle
 
 
 class AutomationCycleAIConsultationTest(unittest.TestCase):
@@ -103,6 +103,11 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
         self.assertTrue(result["handoff"]["required"])
         self.assertEqual(result["handoff"]["role"],"canonical-private-pool-shadow-qualifier")
         self.assertEqual(result["handoff"]["launcher_entrypoint"],"research_pipeline.problem_search_shadow_launcher")
+        self.assertTrue(result["summary"]["handoff_required"])
+        self.assertEqual(result["summary"]["handoff_role"],"canonical-private-pool-shadow-qualifier")
+        self.assertEqual(result["summary"]["handoff_launcher_entrypoint"],"research_pipeline.problem_search_shadow_launcher")
+        self.assertEqual(result["summary"]["handoff_provider_calls_authorized"],0)
+        self.assertFalse(result["summary"]["handoff_automatic_remote_execution_authorized"])
         self.assertFalse(result["handoff"]["provider_calls_authorized"])
         self.assertFalse(result["handoff"]["automatic_remote_execution_authorized"])
         self.assertFalse(result["handoff"]["scientific_authority"])
@@ -115,8 +120,22 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
         self.assertFalse(result["handoff"]["required"])
         self.assertEqual(result["handoff"]["role"],"none")
         self.assertEqual(result["handoff"]["launcher_entrypoint"],"")
+        self.assertFalse(result["summary"]["handoff_required"])
+        self.assertEqual(result["summary"]["handoff_role"],"none")
+        self.assertEqual(result["summary"]["handoff_launcher_entrypoint"],"")
         self.assertFalse(result["model_calls_authorized"])
         self.assertFalse(result["qualification_created"])
+
+    def test_shadow_handoff_survives_cycle_step_summary_compaction(self) -> None:
+        admission={"schema_version":"1.0","status":"READY_FOR_SHADOW_QUALIFICATION","reason":"new source","policy":{"scientific_authority":False},"summary":{"qualification_allowed":True,"automatic_provider_calls_authorized":0},"source_identity":{},"scientific_authority":False}
+        with patch("research_pipeline.automation_cycle.build_shadow_search_admission",return_value=admission), patch("research_pipeline.automation_cycle.public_shadow_search_admission_summary",return_value=dict(admission)):
+            step=_step("paper-first-shadow-search-admission",_run_shadow_search_admission_control)
+        self.assertEqual(step["status"],"pass")
+        self.assertTrue(step["summary"]["handoff_required"])
+        self.assertEqual(step["summary"]["handoff_role"],"canonical-private-pool-shadow-qualifier")
+        self.assertEqual(step["summary"]["handoff_launcher_entrypoint"],"research_pipeline.problem_search_shadow_launcher")
+        self.assertEqual(step["summary"]["handoff_provider_calls_authorized"],0)
+        self.assertFalse(step["summary"]["handoff_automatic_remote_execution_authorized"])
 
     def test_global_relation_scan_is_deferred_by_default_without_model_writer(self) -> None:
         storage=SimpleNamespace()

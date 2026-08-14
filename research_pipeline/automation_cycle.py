@@ -154,7 +154,7 @@ def _run_shadow_search_admission_control() -> dict[str, Any]:
     state = build_shadow_search_admission()
     public = public_shadow_search_admission_summary(state)
     ready = public.get("status") == "READY_FOR_SHADOW_QUALIFICATION" and (public.get("summary") or {}).get("qualification_allowed") is True
-    public["handoff"] = {
+    handoff = {
         "required": bool(ready),
         "role": "canonical-private-pool-shadow-qualifier" if ready else "none",
         "launcher_entrypoint": "research_pipeline.problem_search_shadow_launcher" if ready else "",
@@ -162,6 +162,14 @@ def _run_shadow_search_admission_control() -> dict[str, Any]:
         "automatic_remote_execution_authorized": False,
         "scientific_authority": False,
     }
+    public["handoff"] = handoff
+    public.setdefault("summary", {}).update({
+        "handoff_required": handoff["required"],
+        "handoff_role": handoff["role"],
+        "handoff_launcher_entrypoint": handoff["launcher_entrypoint"],
+        "handoff_provider_calls_authorized": 0,
+        "handoff_automatic_remote_execution_authorized": False,
+    })
     public["model_calls_authorized"] = False
     public["qualification_created"] = False
     public["scientific_authority"] = False
