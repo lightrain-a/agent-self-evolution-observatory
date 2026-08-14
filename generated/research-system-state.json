@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T03:48:53+00:00",
+  "generated_at": "2026-08-14T04:24:41+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6009,7 +6009,12 @@
     "paper_first_search_portfolio_semantic_blocker_dead_ends": 4,
     "paper_first_search_portfolio_semantic_blocker_added_latest": 2,
     "paper_first_search_portfolio_semantic_blocker_inherited": 2,
-    "paper_first_shadow_latest_semantic_dead_end_blocks": 0
+    "paper_first_shadow_latest_semantic_dead_end_blocks": 0,
+    "paper_first_object_retrieval_candidates_audited": 3,
+    "paper_first_object_retrieval_recall_gaps": 1,
+    "paper_first_object_retrieval_threshold_candidates": 0,
+    "paper_first_object_retrieval_no_new_support": 2,
+    "paper_first_object_retrieval_activation_authorized": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -71720,6 +71725,21 @@
           "revise": 0,
           "block": 0
         }
+      },
+      {
+        "key": "paper-first-object-retrieval-shadow",
+        "pass": true,
+        "detail": {
+          "status": "SHADOW_OBJECT_RETRIEVAL_AUDIT_COMPLETE",
+          "summary": {
+            "candidates_audited": 3,
+            "recall_gap_support_insufficient": 1,
+            "primary_verification_threshold_candidates": 0,
+            "no_new_support_found": 2,
+            "incomplete_candidates": 0,
+            "activation_authorized": 0
+          }
+        }
       }
     ]
   },
@@ -72105,5 +72125,59 @@
         "gpu": false
       }
     }
+  },
+  "paper_first_scientific_object_retrieval_audit": {
+    "schema_version": "1.0",
+    "status": "SHADOW_OBJECT_RETRIEVAL_AUDIT_COMPLETE",
+    "policy": {
+      "scientific_authority": false,
+      "shadow_only": true,
+      "live_query_set_changed": false,
+      "candidate_metadata_does_not_count_as_verified_primary_support": true,
+      "incomplete_query_is_not_negative_evidence": true,
+      "primary_verification_required_before_lane_preregistration": true,
+      "automatic_lane_activation": false
+    },
+    "summary": {
+      "candidates_audited": 3,
+      "recall_gap_support_insufficient": 1,
+      "primary_verification_threshold_candidates": 0,
+      "no_new_support_found": 2,
+      "incomplete_candidates": 0,
+      "activation_authorized": 0
+    },
+    "results": {
+      "knowledge_retrieval_state": {
+        "status": "RECALL_GAP_FOUND_SUPPORT_STILL_INSUFFICIENT",
+        "current_verified_support": 1,
+        "minimum_verified_support": 5,
+        "potential_support_after_primary_verification": 3,
+        "new_candidate_support_refs": 2,
+        "new_direct_object_refs": 2,
+        "error_count": 0,
+        "scientific_authority": false
+      },
+      "evaluator_reward_verifier": {
+        "status": "NO_NEW_SUPPORT_FOUND",
+        "current_verified_support": 2,
+        "minimum_verified_support": 5,
+        "potential_support_after_primary_verification": 2,
+        "new_candidate_support_refs": 0,
+        "new_direct_object_refs": 0,
+        "error_count": 0,
+        "scientific_authority": false
+      },
+      "tool_action_interface": {
+        "status": "NO_NEW_SUPPORT_FOUND",
+        "current_verified_support": 2,
+        "minimum_verified_support": 5,
+        "potential_support_after_primary_verification": 2,
+        "new_candidate_support_refs": 0,
+        "new_direct_object_refs": 0,
+        "error_count": 0,
+        "scientific_authority": false
+      }
+    },
+    "scientific_authority": false
   }
 }
