@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T05:29:36+00:00",
+  "generated_at": "2026-08-14T05:52:08+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6034,7 +6034,15 @@
     "paper_first_shadow_latest_problem_falsifier_executed": 0,
     "paper_first_search_portfolio_current_source_hard_veto_added_terminal": 0,
     "paper_first_search_portfolio_near_miss_terminal_support_holds": 4,
-    "paper_first_search_portfolio_memory_last_ingested_run_id": "shadow-20260814-r4b"
+    "paper_first_search_portfolio_memory_last_ingested_run_id": "shadow-20260814-r4b",
+    "paper_first_global_relation_freshness_status": "STALE_RELATION_UNIVERSE",
+    "paper_first_global_relation_current_sources": 226,
+    "paper_first_global_relation_last_scanned_sources": 214,
+    "paper_first_global_relation_current_pair_coverage": 0.2254,
+    "paper_first_global_relation_universe_stale": true,
+    "paper_first_global_relation_current_not_reduced_unknown": true,
+    "paper_first_global_relation_model_scan_deferred": true,
+    "paper_first_global_relation_focused_reopen_allowed": false
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -71954,8 +71962,29 @@
           "revise": 0,
           "block": 0
         }
+      },
+      {
+        "key": "paper-first-global-relation-freshness",
+        "pass": true,
+        "detail": {
+          "status": "STALE_RELATION_UNIVERSE",
+          "summary": {
+            "current_reviewed_sources": 226,
+            "last_scanned_sources": 214,
+            "current_possible_pairs": 25425,
+            "current_coobserved_pairs": 5730,
+            "current_pair_coverage_fraction": 0.2254,
+            "last_pair_coverage_fraction": 0.2186,
+            "current_relation_blind_spot": true,
+            "universe_stale": true,
+            "current_not_reduced_unknown": true,
+            "model_scan_deferred": true,
+            "focused_problem_generator_reopen_allowed": false
+          }
+        }
       }
-    ]
+    ],
+    "failed_checks": 0
   },
   "paper_first_problem_search_portfolio": {
     "schema_version": "3.2-shadow-import",
@@ -72383,6 +72412,33 @@
         "scientific_authority": false
       }
     },
+    "scientific_authority": false
+  },
+  "paper_first_global_relation_freshness": {
+    "schema_version": "1.0",
+    "status": "STALE_RELATION_UNIVERSE",
+    "policy": {
+      "scientific_authority": false,
+      "deterministic_digest_comparison_only": true,
+      "stale_scan_is_historical_not_current_negative_evidence": true,
+      "stale_scan_cannot_reopen_focused_generator": true,
+      "model_scan_deferred_is_not_relation_exhaustion": true
+    },
+    "summary": {
+      "current_reviewed_sources": 226,
+      "last_scanned_sources": 214,
+      "current_possible_pairs": 25425,
+      "current_coobserved_pairs": 5730,
+      "current_pair_coverage_fraction": 0.2254,
+      "last_pair_coverage_fraction": 0.2186,
+      "current_relation_blind_spot": true,
+      "universe_stale": true,
+      "current_not_reduced_unknown": true,
+      "model_scan_deferred": true,
+      "focused_problem_generator_reopen_allowed": false
+    },
+    "current_relation_universe_digest": "fff32b96a52efc3a4c109b97e1163772f3e7a717c65fab8feae78831c4a6af9c",
+    "last_scanned_relation_universe_digest": "e2f2725901ba9f15cf11ded5b753badb6f123ec763921ece1e04c2b1249c32ae",
     "scientific_authority": false
   }
 }
