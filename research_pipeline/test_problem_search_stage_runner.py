@@ -129,6 +129,66 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         self.assertEqual(artifact["semantic_dead_end_block_count"],1)
         self.assertEqual(artifact["semantic_dead_end_blocks"][0]["source_candidate_id"],"R3-LANE")
 
+    def test_formulation_precheck_has_three_fail_closed_routes(self) -> None:
+        candidate={"candidate_id":"SHADOW-P01-C01","exact_prediction":"matched prediction","strongest_same_information_baseline":"mature baseline","cheapest_problem_falsifier":"run matched falsifier"}
+        exact_only={"passed":False,"blockers":["reduction-falsifiability-contract-incomplete","saturation-exact-reduction-pending:procedural-memory-nonmonotonicity","unresolved-exact-reduction-test:1"]}
+        with patch("research_pipeline.problem_search_stage_runner._normalize",return_value=candidate),patch("research_pipeline.problem_search_stage_runner.audit_shadow_problem_candidate",return_value=exact_only):
+            route,normalized,audit=runner._formulation_precheck(candidate,{})
+        self.assertEqual(route,"reduction-pending");self.assertIs(normalized,candidate);self.assertEqual(audit,exact_only)
+        underformed={"passed":False,"blockers":["domain-transfer-audit-incomplete","unresolved-exact-reduction-test:1"]}
+        with patch("research_pipeline.problem_search_stage_runner._normalize",return_value=candidate),patch("research_pipeline.problem_search_stage_runner.audit_shadow_problem_candidate",return_value=underformed):
+            route,_,_=runner._formulation_precheck(candidate,{})
+        self.assertEqual(route,"rejected")
+        clear={"passed":True,"blockers":[]}
+        with patch("research_pipeline.problem_search_stage_runner._normalize",return_value=candidate),patch("research_pipeline.problem_search_stage_runner.audit_shadow_problem_candidate",return_value=clear):
+            route,_,_=runner._formulation_precheck(candidate,{})
+        self.assertEqual(route,"machine-ready")
+
+    def test_formulate_separates_machine_ready_reduction_pending_and_rejected(self) -> None:
+        parent={"seed_id":"PARENT","discovery_lane":"UNEXPLAINED_BOUNDARY","title":"parent","problem_seed":"question","scientific_tension":"tension","problem_family":"family","structural_signature":"sig","agent_specific_constraint":"constraint","empirical_evidence":{"source_a":{"ref":"arXiv:1","claim":"A","evidence_role":"EMPIRICAL_FACT"},"source_b":{"ref":"arXiv:1","claim":"B","evidence_role":"EMPIRICAL_FACT"},"relation":"relation"},"lane_evidence":{"shared_measurement":"m","boundary_observation":"b","adjacent_regime":"a","unexplained_transition":"u"},"scores":{"importance":80,"specificity":80,"seed_distance":80,"evidence_grounding":80}}
+        model_rows=[{"candidate_id":"MODEL-PENDING","source_branch_id":"PARENT","title":"pending","exact_prediction":"p","strongest_same_information_baseline":"b","cheapest_problem_falsifier":"f"},{"candidate_id":"MODEL-READY","source_branch_id":"PARENT","title":"ready"},{"candidate_id":"MODEL-BAD","source_branch_id":"PARENT","title":"bad"}]
+        exact_audit={"passed":False,"blockers":["reduction-falsifiability-contract-incomplete","unresolved-exact-reduction-test:1"]};clear_audit={"passed":True,"blockers":[]};bad_audit={"passed":False,"blockers":["domain-transfer-audit-incomplete"]}
+        def precheck(row,registry):
+            if row["title"]=="pending":return "reduction-pending",{**row,"exact_prediction":"p","strongest_same_information_baseline":"b","cheapest_problem_falsifier":"f"},exact_audit
+            if row["title"]=="ready":return "machine-ready",row,clear_audit
+            return "rejected",row,bad_audit
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);pool=root/"pool.json";mem=root/"memory.json";run=root/"run";run.mkdir()
+            pool.write_text(json.dumps({"frozen_pool_sha256":"a"*64,"records":[{"ref":"arXiv:1"}]}),encoding="utf-8");mem.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[]}),encoding="utf-8");(run/"base.json").write_text(json.dumps({"parents":[parent]}),encoding="utf-8")
+            response={"text":json.dumps({"candidates":model_rows,"rejected":[]}),"resolved_model":"test-model"}
+            with patch("research_pipeline.problem_search_stage_runner._ark",return_value=response),patch("research_pipeline.problem_search_stage_runner._formulation_precheck",side_effect=precheck):
+                result=runner.formulate(pool=pool,run_root=run,part=1,batch_size=1,budget=1,model="test",memory_path=mem)
+            artifact=json.loads((run/"formulate-p1.json").read_text(encoding="utf-8"))
+        self.assertEqual((result["candidates"],result["reduction_pending"],result["rejected"]),(1,1,1))
+        self.assertEqual(artifact["candidates"][0]["candidate_id"],"SHADOW-P01-C02")
+        self.assertEqual(artifact["reduction_pending"][0]["candidate_id"],"SHADOW-P01-C01")
+        self.assertEqual(artifact["rejected"][0]["candidate_id"],"SHADOW-P01-C03")
+        self.assertEqual(artifact["rejected"][0]["rejection_origin"],"deterministic-formulation-precheck")
+        self.assertFalse(artifact["reduction_pending"][0]["scientific_authority"])
+
+    def test_machine_audit_keeps_exact_reduction_uncertainty_out_of_blocked_count(self) -> None:
+        candidate={"candidate_id":"SHADOW-P01-C01","model_candidate_id":"MODEL-1","title":"pending","discovery_lane":"UNEXPLAINED_BOUNDARY","source_branch_id":"B1","exact_prediction":"p","strongest_same_information_baseline":"b","cheapest_problem_falsifier":"f"}
+        audit={"passed":False,"blockers":["reduction-falsifiability-contract-incomplete","saturation-exact-reduction-pending:procedural-memory-nonmonotonicity","unresolved-exact-reduction-test:1"]}
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);pool=root/"pool.json";run=root/"run";run.mkdir();pool.write_text(json.dumps({"records":[]}),encoding="utf-8")
+            (run/"formulate-p1.json").write_text(json.dumps({"part":1,"candidates":[],"reduction_pending":[{"candidate_id":"SHADOW-P01-C01","model_candidate_id":"MODEL-1","candidate":candidate}]}),encoding="utf-8")
+            with patch("research_pipeline.problem_search_stage_runner._normalize",side_effect=lambda raw,registry:raw),patch("research_pipeline.problem_search_stage_runner.audit_shadow_problem_candidate",return_value=audit):
+                summary=runner.machine_audit(pool=pool,run_root=run)
+            artifact=json.loads((run/"machine-audit.json").read_text(encoding="utf-8"))
+        self.assertEqual((summary["reviewable"],summary["reduction_pending"],summary["blocked"],summary["problem_falsifier_eligible"]),(0,1,0,1))
+        self.assertEqual(artifact["problem_falsifier_queue"][0]["candidate_id"],"SHADOW-P01-C01")
+        self.assertEqual(artifact["reduction_pending"][0]["route_origin"],"formulation-reduction-pending")
+        self.assertTrue(artifact["policy"]["reduction_pending_is_not_scientific_block_or_pass"])
+
+    def test_machine_audit_routes_legacy_exact_reduction_candidate_without_false_block(self) -> None:
+        candidate={"candidate_id":"SHADOW-P01-C01","model_candidate_id":"MODEL-1","title":"legacy pending","discovery_lane":"UNEXPLAINED_BOUNDARY","exact_prediction":"p","strongest_same_information_baseline":"b","cheapest_problem_falsifier":"f"}
+        audit={"passed":False,"blockers":["reduction-falsifiability-contract-incomplete","unresolved-exact-reduction-test:1"]}
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);pool=root/"pool.json";run=root/"run";run.mkdir();pool.write_text(json.dumps({"records":[]}),encoding="utf-8");(run/"formulate-p1.json").write_text(json.dumps({"part":1,"candidates":[candidate]}),encoding="utf-8")
+            with patch("research_pipeline.problem_search_stage_runner._normalize",side_effect=lambda raw,registry:raw),patch("research_pipeline.problem_search_stage_runner.audit_shadow_problem_candidate",return_value=audit):
+                summary=runner.machine_audit(pool=pool,run_root=run)
+        self.assertEqual((summary["reduction_pending"],summary["blocked"]),(1,0))
+
     def test_problem_falsifier_route_accepts_only_exact_reduction_uncertainty(self) -> None:
         candidate={"exact_prediction":"matched prediction","strongest_same_information_baseline":"procedural-memory nonmonotonicity","cheapest_problem_falsifier":"run one matched retrieval-set intervention"}
         eligible={"passed":False,"blockers":["reduction-falsifiability-contract-incomplete","saturation-exact-reduction-pending:procedural-memory-nonmonotonicity","unresolved-exact-reduction-test:1"]}

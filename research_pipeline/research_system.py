@@ -559,7 +559,9 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_shadow_latest_formulation_successful_branches":paper_first_shadow_latest_summary.get("formulation_successful_branches",0),
             "paper_first_shadow_latest_formulation_execution_censored_branches":paper_first_shadow_latest_summary.get("formulation_execution_censored_branches",0),
             "paper_first_shadow_latest_formulated":paper_first_shadow_latest_summary.get("formulated_candidates",0),
+            "paper_first_shadow_latest_formulation_reduction_pending":paper_first_shadow_latest_summary.get("formulation_reduction_pending",0),
             "paper_first_shadow_latest_machine_reviewable":paper_first_shadow_latest_summary.get("machine_reviewable",0),
+            "paper_first_shadow_latest_machine_reduction_pending":paper_first_shadow_latest_summary.get("machine_reduction_pending",0),
             "paper_first_shadow_latest_problem_falsifier_eligible":paper_first_shadow_latest_summary.get("problem_falsifier_eligible",0),
             "paper_first_shadow_latest_problem_falsifier_support_qualified":paper_first_shadow_latest_summary.get("problem_falsifier_support_qualified",0),
             "paper_first_shadow_latest_problem_falsifier_hold":paper_first_shadow_latest_summary.get("problem_falsifier_hold_support_unavailable",0),
@@ -1115,6 +1117,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             if int(latest_summary.get("expansion_successful_shards") or 0)+int(latest_summary.get("expansion_execution_failures") or 0)!=int(latest_summary.get("expansion_requested_shards") or 0): errors.append("shadow expansion execution accounting mismatch")
             if int(latest_summary.get("formulation_successful_shards") or 0)+int(latest_summary.get("formulation_provider_failures") or 0)+int(latest_summary.get("formulation_parse_failures") or 0)!=int(latest_summary.get("formulation_requested_shards") or 0): errors.append("shadow formulation shard accounting mismatch")
             if int(latest_summary.get("formulation_successful_branches") or 0)+int(latest_summary.get("formulation_execution_censored_branches") or 0)>int(latest_summary.get("formulation_requested_branches") or 0): errors.append("shadow formulation branch accounting exceeds requested budget")
+            if "formulation_reduction_pending" in latest_summary or "machine_reduction_pending" in latest_summary:
+                if latest_policy.get("formulation_reduction_pending_is_not_scientific_block_or_pass") is not True or latest_policy.get("machine_rechecks_reduction_pending_before_problem_falsifier") is not True: errors.append("shadow reduction-pending route must remain zero-authority and independently rechecked")
+                if int(latest_summary.get("machine_reduction_pending") or 0)!=int(latest_summary.get("problem_falsifier_eligible") or 0): errors.append("machine reduction-pending and problem-falsifier eligibility must match")
             if int(latest_summary.get("problem_falsifier_support_qualified") or 0)+int(latest_summary.get("problem_falsifier_hold_support_unavailable") or 0)!=int(latest_summary.get("problem_falsifier_eligible") or 0) or int(latest_summary.get("problem_falsifier_executed") or 0)>int(latest_summary.get("problem_falsifier_support_qualified") or 0): errors.append("shadow problem-falsifier preflight accounting mismatch")
         if int(latest_summary.get("terminal_shadow_survivors") or 0)!=int(latest_summary.get("current_source_clear") or 0) or int(latest_summary.get("live_paper_design_eligible") or 0)!=0: errors.append("shadow terminal survivors must equal current-source CLEAR and never grant live Paper Design eligibility")
         if shadow_latest.get("status")=="SHADOW_TERMINAL_COMPLETE" and int(latest_summary.get("current_source_missing") or 0)!=0: errors.append("completed shadow terminal cannot have missing current-source reviews")

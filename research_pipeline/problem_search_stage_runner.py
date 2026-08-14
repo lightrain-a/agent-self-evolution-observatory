@@ -147,26 +147,6 @@ def formulation_pool(run_root:Path,budget:int=24)->list[dict]:
     return _maxmin_select(rows,min(budget,len(rows)))
 
 
-def formulate(*,pool:Path,run_root:Path,part:int,batch_size:int=2,budget:int=24,model:str="ark-code-latest",memory_path:Path|None=None)->dict:
-    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
-    if not batch:raise ValueError(f"empty formulation batch part={part}")
-    memory=_shadow_dead_end_memory(memory_path);prompt=_formulation_prompt(batch,registry,memory);res=_ark_with_provider_receipt(run_root=run_root,stem=f"formulate-p{part}",requested_model=model,context={"part":part,"branch_ids":[b["seed_id"] for b in batch]},prompt=prompt,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
-    # Preserve branch provenance and typed evidence deterministically. The model
-    # may sharpen claims but cannot silently change the source refs or lane.
-    by={b["seed_id"]:b for b in batch};normalized=[];dead_end_blocks=[]
-    for i,item in enumerate(live,1):
-        parent=by.get(str(item.get("source_branch_id") or ""))
-        if not parent:continue
-        row=dict(item);row["model_candidate_id"]=str(row.get("candidate_id") or "").strip();row["candidate_id"]=f"SHADOW-P{part:02d}-C{i:02d}";row["source_branch_id"]=parent["seed_id"];row["branch_depth"]=parent.get("branch_depth",0);row["discovery_lane"]=parent["discovery_lane"];row["empirical_evidence"]=parent["empirical_evidence"];row["lane_evidence"]=parent["lane_evidence"]
-        blocker=_semantic_dead_end_seed_blocker(row,memory,pool_sha)
-        if blocker:
-            dead_end_blocks.append({"candidate_id":row["candidate_id"],"source_branch_id":parent["seed_id"],**blocker});continue
-        normalized.append(row)
-    out={"schema_version":"1.3","part":part,"branch_ids":[b["seed_id"] for b in batch],"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"candidates":normalized,"rejected":dead,"scientific_authority":False}
-    (run_root/f"formulate-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    return {"part":part,"branches":len(batch),"candidates":len(normalized),"rejected":len(dead),"resolved_model":out["resolved_model"],"raw_sha256":out["raw_sha256"]}
-
-
 _PROBLEM_FALSIFIER_ONLY_BLOCKERS=("reduction-falsifiability-contract-incomplete","saturation-exact-reduction-pending:","unresolved-exact-reduction-test:")
 
 
@@ -178,23 +158,70 @@ def _problem_falsifier_eligible(candidate:dict,audit:dict)->bool:
     return all(str(candidate.get(key) or "").strip() for key in ("exact_prediction","strongest_same_information_baseline","cheapest_problem_falsifier"))
 
 
+def _formulation_precheck(candidate:dict,registry:dict)->tuple[str,dict,dict]:
+    normalized=_normalize(candidate,registry)
+    audit=audit_shadow_problem_candidate(normalized,primary_evidence_by_ref=registry,require_primary_registry=True,require_semantic_review=False)
+    if audit.get("passed") is True:return "machine-ready",normalized,audit
+    if _problem_falsifier_eligible(normalized,audit):return "reduction-pending",normalized,audit
+    return "rejected",normalized,audit
+
+
+def formulate(*,pool:Path,run_root:Path,part:int,batch_size:int=2,budget:int=24,model:str="ark-code-latest",memory_path:Path|None=None)->dict:
+    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
+    if not batch:raise ValueError(f"empty formulation batch part={part}")
+    memory=_shadow_dead_end_memory(memory_path);prompt=_formulation_prompt(batch,registry,memory);res=_ark_with_provider_receipt(run_root=run_root,stem=f"formulate-p{part}",requested_model=model,context={"part":part,"branch_ids":[b["seed_id"] for b in batch]},prompt=prompt,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
+    # Preserve branch provenance and typed evidence deterministically. The model
+    # may sharpen claims but cannot silently change the source refs or lane. A
+    # deterministic precheck then separates machine-ready problems from exact-
+    # reduction uncertainty and all other formulation failures. Reduction-pending
+    # objects remain zero-authority and may only enter the problem-falsifier path.
+    by={b["seed_id"]:b for b in batch};normalized=[];reduction_pending=[];dead_end_blocks=[]
+    for i,item in enumerate(live,1):
+        parent=by.get(str(item.get("source_branch_id") or ""))
+        if not parent:continue
+        row=dict(item);row["model_candidate_id"]=str(row.get("candidate_id") or "").strip();row["candidate_id"]=f"SHADOW-P{part:02d}-C{i:02d}";row["source_branch_id"]=parent["seed_id"];row["branch_depth"]=parent.get("branch_depth",0);row["discovery_lane"]=parent["discovery_lane"];row["empirical_evidence"]=parent["empirical_evidence"];row["lane_evidence"]=parent["lane_evidence"]
+        blocker=_semantic_dead_end_seed_blocker(row,memory,pool_sha)
+        if blocker:
+            dead_end_blocks.append({"candidate_id":row["candidate_id"],"source_branch_id":parent["seed_id"],**blocker});continue
+        route,audited,audit=_formulation_precheck(row,registry)
+        if route=="machine-ready":
+            normalized.append(row);continue
+        if route=="reduction-pending":
+            reduction_pending.append({"candidate_id":row["candidate_id"],"model_candidate_id":row["model_candidate_id"],"source_branch_id":row["source_branch_id"],"title":row.get("title"),"discovery_lane":row.get("discovery_lane"),"blockers":list(audit.get("blockers") or []),"exact_prediction":audited.get("exact_prediction"),"strongest_same_information_baseline":audited.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":audited.get("cheapest_problem_falsifier"),"candidate":row,"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}});continue
+        dead.append({"source_branch_id":row["source_branch_id"],"candidate_id":row["candidate_id"],"title":row.get("title"),"reason":"deterministic formulation precheck found blockers beyond exact-reduction uncertainty","matched_mature_theory":audited.get("strongest_same_information_baseline"),"reduction_class":"FORMULATION_MACHINE_CONTRACT_INCOMPLETE","exact_reduction_test":audited.get("cheapest_problem_falsifier"),"blockers":list(audit.get("blockers") or []),"rejection_origin":"deterministic-formulation-precheck","candidate":row,"scientific_authority":False})
+    out={"schema_version":"1.3","part":part,"branch_ids":[b["seed_id"] for b in batch],"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"candidates":normalized,"reduction_pending":reduction_pending,"reduction_pending_count":len(reduction_pending),"rejected":dead,"scientific_authority":False}
+    (run_root/f"formulate-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    return {"part":part,"branches":len(batch),"candidates":len(normalized),"reduction_pending":len(reduction_pending),"rejected":len(dead),"resolved_model":out["resolved_model"],"raw_sha256":out["raw_sha256"]}
+
+
 def machine_audit(*,pool:Path,run_root:Path)->dict:
     records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")}
-    reviewable=[];blocked=[];problem_falsifier_queue=[];formulated=0
+    reviewable=[];reduction_pending=[];blocked=[];problem_falsifier_queue=[];formulated=0;machine_ready_input=0;pending_input=0
+    def process(item:dict,path:Path,part:int,idx:int,route_origin:str)->None:
+        nonlocal formulated,machine_ready_input,pending_input
+        outer=dict(item);raw_candidate=dict(outer.get("candidate") or outer) if route_origin=="formulation-reduction-pending" else dict(outer)
+        stored_id=str(outer.get("candidate_id") or raw_candidate.get("candidate_id") or "").strip();canonical_id=stored_id if stored_id.startswith(f"SHADOW-P{part:02d}-C") else f"SHADOW-P{part:02d}-C{idx:02d}"
+        model_id=str(outer.get("model_candidate_id") or raw_candidate.get("model_candidate_id") or raw_candidate.get("candidate_id") or "").strip();raw_candidate["model_candidate_id"]=model_id;raw_candidate["candidate_id"]=canonical_id
+        candidate=_normalize(raw_candidate,registry);audit=audit_shadow_problem_candidate(candidate,primary_evidence_by_ref=registry,require_primary_registry=True,require_semantic_review=False);falsifier_eligible=_problem_falsifier_eligible(candidate,audit)
+        row={"candidate_id":candidate["candidate_id"],"model_candidate_id":model_id,"source_artifact":path.name,"route_origin":route_origin,"candidate":candidate,"audit":audit,"problem_falsifier_eligible":falsifier_eligible}
+        formulated+=1;machine_ready_input+=int(route_origin=="formulation-machine-ready");pending_input+=int(route_origin=="formulation-reduction-pending")
+        if audit.get("passed") is True:
+            if route_origin=="formulation-reduction-pending":
+                row["routing_error"]="reduction-pending artifact unexpectedly became machine-ready without reformulation";blocked.append(row)
+            else:reviewable.append(row)
+            return
+        if falsifier_eligible:
+            reduction_pending.append(row);problem_falsifier_queue.append({"candidate_id":candidate["candidate_id"],"title":candidate.get("title"),"discovery_lane":candidate.get("discovery_lane"),"source_branch_id":candidate.get("source_branch_id"),"source_artifact":path.name,"blockers":list(audit.get("blockers") or []),"exact_prediction":candidate.get("exact_prediction"),"strongest_same_information_baseline":candidate.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":candidate.get("cheapest_problem_falsifier"),"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}});return
+        blocked.append(row)
     for path in sorted(run_root.glob("formulate-p*.json"),key=lambda value:int(value.stem.split("p")[-1])):
         payload=json.loads(path.read_text(encoding="utf-8"));part=int(payload.get("part") or path.stem.split("p")[-1])
         for idx,item in enumerate(payload.get("candidates") or [],1):
-            if not isinstance(item,dict):continue
-            formulated+=1;raw_candidate=dict(item);model_id=str(raw_candidate.get("model_candidate_id") or raw_candidate.get("candidate_id") or "").strip();raw_candidate["model_candidate_id"]=model_id;raw_candidate["candidate_id"]=f"SHADOW-P{part:02d}-C{idx:02d}"
-            candidate=_normalize(raw_candidate,registry);audit=audit_shadow_problem_candidate(candidate,primary_evidence_by_ref=registry,require_primary_registry=True,require_semantic_review=False)
-            falsifier_eligible=_problem_falsifier_eligible(candidate,audit)
-            row={"candidate_id":candidate["candidate_id"],"model_candidate_id":model_id,"source_artifact":path.name,"candidate":candidate,"audit":audit,"problem_falsifier_eligible":falsifier_eligible}
-            (reviewable if audit.get("passed") else blocked).append(row)
-            if falsifier_eligible:
-                problem_falsifier_queue.append({"candidate_id":candidate["candidate_id"],"title":candidate.get("title"),"discovery_lane":candidate.get("discovery_lane"),"blockers":list(audit.get("blockers") or []),"exact_prediction":candidate.get("exact_prediction"),"strongest_same_information_baseline":candidate.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":candidate.get("cheapest_problem_falsifier"),"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}})
-    ids=[row["candidate_id"] for row in reviewable+blocked]
-    if len(ids)!=len(set(ids)):raise ValueError("shadow machine audit candidate ids must be unique")
-    out={"schema_version":"1.1-shadow","summary":{"formulated":formulated,"reviewable":len(reviewable),"blocked":len(blocked),"problem_falsifier_eligible":len(problem_falsifier_queue),"live_problem_gate_eligible":0},"policy":{"problem_falsifier_route_is_zero_authority":True,"only_exact_reduction_uncertainty_can_enter_problem_falsifier_route":True,"closest_work_lane_provenance_or_schema_failures_cannot_enter_problem_falsifier_route":True,"problem_falsifier_route_cannot_authorize_paper_design_method_experiment_p0_or_gpu":True},"reviewable":reviewable,"blocked":blocked,"problem_falsifier_queue":problem_falsifier_queue,"scientific_authority":False,"authority":{"live_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+            if isinstance(item,dict):process(item,path,part,idx,"formulation-machine-ready")
+        for idx,item in enumerate(payload.get("reduction_pending") or [],1):
+            if isinstance(item,dict):process(item,path,part,idx,"formulation-reduction-pending")
+    ids=[row["candidate_id"] for row in reviewable+reduction_pending+blocked]
+    if len(ids)!=len(set(ids)):raise ValueError("shadow machine audit candidate ids must be unique across ready, reduction-pending, and blocked routes")
+    out={"schema_version":"1.2-shadow","summary":{"formulated":formulated,"machine_ready_input":machine_ready_input,"formulation_reduction_pending_input":pending_input,"reviewable":len(reviewable),"reduction_pending":len(reduction_pending),"blocked":len(blocked),"problem_falsifier_eligible":len(problem_falsifier_queue),"live_problem_gate_eligible":0},"policy":{"formulation_precheck_separates_machine_ready_from_reduction_pending":True,"machine_audit_rechecks_both_routes":True,"reduction_pending_is_not_scientific_block_or_pass":True,"problem_falsifier_route_is_zero_authority":True,"only_exact_reduction_uncertainty_can_enter_problem_falsifier_route":True,"closest_work_lane_provenance_or_schema_failures_cannot_enter_problem_falsifier_route":True,"problem_falsifier_route_cannot_authorize_paper_design_method_experiment_p0_or_gpu":True},"reviewable":reviewable,"reduction_pending":reduction_pending,"blocked":blocked,"problem_falsifier_queue":problem_falsifier_queue,"scientific_authority":False,"authority":{"live_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
     (run_root/"machine-audit.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return out["summary"]
 

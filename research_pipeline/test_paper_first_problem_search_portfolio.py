@@ -3,7 +3,7 @@ from __future__ import annotations
 import json,re,unittest
 
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES,SEARCH_PORTFOLIO_PRIMITIVES,LANE_EVIDENCE_REQUIRED,LANE_SOURCE_ROLES
-from .paper_first_problem_search_portfolio import run_search_portfolio
+from .paper_first_problem_search_portfolio import _formulation_prompt,run_search_portfolio
 from .paper_first_fresh_saturation import reduction_pattern_audit
 
 
@@ -41,6 +41,13 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertGreaterEqual(state["summary"]["max_branch_depth"],1)
         self.assertGreater(state["summary"]["formulated_candidates"],0)
         self.assertFalse(state["scientific_authority"])
+
+    def test_formulation_prompt_never_turns_unresolved_reduction_into_a_fake_clear(self):
+        records=self.records();registry={row["ref"]:row for row in records};branch={"seed_id":"B1","parent_id":"","branch_depth":0,"discovery_lane":"UNEXPLAINED_BOUNDARY","title":"Boundary","problem_seed":"Question","scientific_tension":"Tension","problem_family":"boundary","structural_signature":"boundary|signal","agent_specific_constraint":"agent-specific","empirical_evidence":{"source_a":{"ref":records[0]["ref"],"claim":"A","evidence_role":"EMPIRICAL_FACT"},"source_b":{"ref":records[0]["ref"],"claim":"B","evidence_role":"EMPIRICAL_FACT"}},"lane_evidence":{},"cross_domain_origin":""}
+        prompt=_formulation_prompt([branch],registry,{})
+        self.assertIn("never set all_exact_reduction_tests_resolved=true while any pending pattern",prompt)
+        self.assertIn("Do not manufacture a reduction resolution from absence of evidence",prompt)
+        self.assertIn("zero-authority reduction-pending hold",prompt)
 
     def test_every_current_reduction_pattern_has_nonautomatic_audit_class(self):
         rows=reduction_pattern_audit();self.assertEqual(len(rows),34);self.assertTrue(all(row["automatic_veto"] is False for row in rows));self.assertEqual({row["audit_class"] for row in rows},{"VALID_HARD_VETO","SOFT_COLLISION","NEEDS_EXACT_REDUCTION_TEST","TOO_GENERIC_TO_VETO"})
