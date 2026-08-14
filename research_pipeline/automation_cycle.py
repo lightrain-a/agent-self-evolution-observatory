@@ -56,7 +56,9 @@ from .published_experiment_audit import write_audit as write_published_audit
 from .paper_first_idea_incubation import write_paper_first_idea_incubation
 from .paper_first_fresh_saturation import write_fresh_saturation_state
 from .paper_first_discovery_transaction import write_problem_discovery_transaction
-from .paper_first_global_relation_recall import write_global_relation_recall_state
+from .paper_first_global_relation_recall import load_global_relation_recall_state, write_global_relation_recall_state
+from .paper_first_problem_generator import load_problem_generator_state
+from .paper_first_relation_coverage import relation_recall_freshness
 from .paper_first_relation_cache_backfill import backfill_relation_cache
 from .paper_first_paper_design_backlog import write_paper_design_backlog
 from .paper_first_p0_f0 import write_paper_first_p0_f0_state
@@ -107,6 +109,27 @@ def cycle_lock(path: Path, *, stale_after_seconds: float = 21600) -> Iterator[No
         path.unlink(missing_ok=True)
 
 
+def _run_global_relation_control(
+    *,
+    storage: StorageSettings,
+    mode: str,
+    allow_model_scan: bool,
+    relation_writer: Any = write_global_relation_recall_state,
+) -> dict[str, Any]:
+    freshness = relation_recall_freshness(load_problem_generator_state(), load_global_relation_recall_state())
+    if not allow_model_scan:
+        return {
+            "schema_version": "1.0",
+            "status": "DEFERRED_RELATION_MODEL_SCAN",
+            "freshness": freshness,
+            "model_calls_authorized": False,
+            "scientific_authority": False,
+        }
+    if mode != "manual":
+        raise RuntimeError("global relation model scan is manual-only")
+    return relation_writer(storage=storage)
+
+
 def run_cycle(
     *,
     mode: str = "daily",
@@ -114,8 +137,11 @@ def run_cycle(
     web_review_limit: int = 0,
     ai_consultation_limit: int = 1,
     ai_consultations: bool = True,
+    global_relation_model_scan: bool = False,
     publish: bool = False,
 ) -> dict[str, Any]:
+    if global_relation_model_scan and mode != "manual":
+        raise ValueError("global_relation_model_scan is allowed only in manual mode")
     storage = StorageSettings.from_env()
     storage.ensure()
     run_dir = storage.run_dir / "automation"
@@ -129,6 +155,7 @@ def run_cycle(
         "web_review_limit": web_review_limit,
         "ai_consultation_limit": ai_consultation_limit,
         "ai_consultations": ai_consultations,
+        "global_relation_model_scan": bool(global_relation_model_scan),
         "publish": publish,
         "steps": [],
         "status": "running",
@@ -147,7 +174,7 @@ def run_cycle(
             # It only runs when live source coverage is fully closed and cannot mutate canonical Primary/Generator/Queue.
             report["steps"].append(_step("paper-first-scientific-object-shadow-maintenance", run_shadow_scientific_object_maintenance))
             report["steps"].append(_step("paper-first-relation-cache-backfill", backfill_relation_cache))
-            report["steps"].append(_step("paper-first-global-relation-recall", write_global_relation_recall_state))
+            report["steps"].append(_step("paper-first-global-relation-recall", lambda: _run_global_relation_control(storage=storage,mode=mode,allow_model_scan=global_relation_model_scan)))
             report["steps"].append(_step("iclr-bank", write_iclr_idea_bank))
             report["steps"].append(_step("machine-school-inspired-bank", write_machine_school_bank))
             report["steps"].append(_step("archival-solution-first-idea-discovery-v3", write_idea_discovery_v3))
@@ -444,6 +471,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--web-review-limit", type=int, default=0)
     parser.add_argument("--ai-consultation-limit", type=int, default=1, help="Maximum new AI-clinic cases executed per cycle.")
     parser.add_argument("--no-ai-consultations", action="store_true", help="Keep AI-clinic trigger/hash sync active but skip external reviewer calls for this cycle.")
+    parser.add_argument("--global-relation-model-scan", action="store_true", help="Manual mode only: explicitly authorize the zero-authority relation/lane/reduction model scan. Weekly cycles defer it by default.")
     parser.add_argument("--publish", action="store_true", help="Publish substantive generated-artifact changes to origin/main.")
     return parser.parse_args()
 
@@ -456,6 +484,7 @@ def main() -> int:
         web_review_limit=max(args.web_review_limit, 0),
         ai_consultation_limit=max(args.ai_consultation_limit, 0),
         ai_consultations=not args.no_ai_consultations,
+        global_relation_model_scan=args.global_relation_model_scan,
         publish=args.publish,
     )
     print(json.dumps(report, ensure_ascii=False, indent=2))

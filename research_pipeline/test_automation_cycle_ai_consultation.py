@@ -5,9 +5,9 @@ import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
-from .automation_cycle import _advisory_step, _run_external_system_learning_review, _sync_literature, cycle_lock, run_cycle
+from .automation_cycle import _advisory_step, _run_external_system_learning_review, _run_global_relation_control, _sync_literature, cycle_lock, run_cycle
 
 
 class AutomationCycleAIConsultationTest(unittest.TestCase):
@@ -90,6 +90,28 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertLess(names.index("paper-first-global-relation-recall"), names.index("archival-solution-first-idea-discovery-v3"))
             self.assertLess(names.index("paper-first-discovery-transaction"), names.index("historical-paper-first-idea-incubation"))
             self.assertLess(names.index("external-research-system-learning-review"), names.index("project-web-gpt-repair-review"))
+
+    def test_global_relation_scan_is_deferred_by_default_without_model_writer(self) -> None:
+        storage=SimpleNamespace()
+        freshness={"status":"STALE_RELATION_UNIVERSE","summary":{"model_scan_deferred":True},"scientific_authority":False}
+        with patch("research_pipeline.automation_cycle.load_problem_generator_state",return_value={}), patch("research_pipeline.automation_cycle.load_global_relation_recall_state",return_value={}), patch("research_pipeline.automation_cycle.relation_recall_freshness",return_value=freshness), patch("research_pipeline.automation_cycle.write_global_relation_recall_state") as writer:
+            result=_run_global_relation_control(storage=storage,mode="weekly",allow_model_scan=False,relation_writer=writer)
+        self.assertEqual(result["status"],"DEFERRED_RELATION_MODEL_SCAN")
+        self.assertEqual(result["freshness"],freshness)
+        self.assertFalse(result["model_calls_authorized"])
+        self.assertFalse(result["scientific_authority"])
+        writer.assert_not_called()
+
+    def test_global_relation_model_scan_requires_explicit_manual_mode(self) -> None:
+        with self.assertRaises(ValueError):
+            run_cycle(mode="weekly",global_relation_model_scan=True,publish=False)
+        storage=SimpleNamespace()
+        freshness={"status":"STALE_RELATION_UNIVERSE","scientific_authority":False}
+        writer=Mock(return_value={"status":"GLOBAL_RELATION_RECALL_COMPLETE","scientific_authority":False})
+        with patch("research_pipeline.automation_cycle.load_problem_generator_state",return_value={}), patch("research_pipeline.automation_cycle.load_global_relation_recall_state",return_value={}), patch("research_pipeline.automation_cycle.relation_recall_freshness",return_value=freshness):
+            result=_run_global_relation_control(storage=storage,mode="manual",allow_model_scan=True,relation_writer=writer)
+        self.assertEqual(result["status"],"GLOBAL_RELATION_RECALL_COMPLETE")
+        writer.assert_called_once_with(storage=storage)
 
     def test_external_system_learning_is_bounded_delta_scan_with_dedicated_timeout(self) -> None:
         with tempfile.TemporaryDirectory() as td:
