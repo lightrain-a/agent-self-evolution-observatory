@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T11:26:28+00:00",
+  "generated_at": "2026-08-14T11:54:37+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6087,7 +6087,11 @@
     "paper_first_shadow_continuation_status": "WAIT_EXTERNAL_PRIMARY_OR_SUPPORT_RELEASE_CHANGE",
     "paper_first_shadow_continuation_next_action": "wait-external-change",
     "paper_first_shadow_continuation_active_actions": 0,
-    "paper_first_shadow_continuation_external_wait": 1
+    "paper_first_shadow_continuation_external_wait": 1,
+    "paper_first_discovery_frontier_status": "WAIT_EXTERNAL_EVIDENCE_TRIGGERS",
+    "paper_first_discovery_frontier_open_internal": 0,
+    "paper_first_discovery_frontier_external_triggers": 5,
+    "paper_first_discovery_frontier_model_calls": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -72140,6 +72144,31 @@
             "gpu_authorized": 0
           }
         }
+      },
+      {
+        "key": "paper-first-discovery-frontier",
+        "pass": true,
+        "detail": {
+          "status": "WAIT_EXTERNAL_EVIDENCE_TRIGGERS",
+          "summary": {
+            "live_source_closed": true,
+            "live_generator_closed": true,
+            "live_queue_closed": true,
+            "relation_current_closed": true,
+            "shadow_closed": true,
+            "scientific_object_closed": true,
+            "support_release_closed": true,
+            "open_internal_frontiers": 0,
+            "external_triggers": 5,
+            "automatic_model_calls_authorized": 0,
+            "automatic_problem_gate_authorized": 0,
+            "automatic_method_authorized": 0,
+            "automatic_experiment_authorized": 0,
+            "automatic_p0_authorized": 0,
+            "automatic_gpu_authorized": 0
+          },
+          "blockers": []
+        }
       }
     ],
     "errors": []
@@ -72880,6 +72909,78 @@
       "support_asset_queue": "SUPPORT_ASSET_RECHECK_QUEUE_EMPTY",
       "support_inventory_handoff": "SUPPORT_ASSET_RECHECK_HANDOFF_EMPTY"
     },
+    "scientific_authority": false
+  },
+  "paper_first_discovery_frontier": {
+    "schema_version": "1.0",
+    "generated_at": "2026-08-14T11:54:33+00:00",
+    "status": "WAIT_EXTERNAL_EVIDENCE_TRIGGERS",
+    "policy": {
+      "scientific_authority": false,
+      "frontier_is_deterministic_compute_control_only": true,
+      "frontier_does_not_replace_primary_generator_problem_gate_or_relation_controls": true,
+      "frontier_cannot_authorize_model_calls": true,
+      "frontier_cannot_authorize_problem_gate_method_experiment_p0_gpu": true,
+      "wait_external_status_is_not_scientific_exhaustion": true,
+      "external_trigger_detection_may_use_existing_bounded_source_release_checks": true,
+      "trigger_detection_never_counts_as_trigger_satisfaction": true,
+      "trigger_satisfaction_must_reenter_original_control_plane": true
+    },
+    "summary": {
+      "live_source_closed": true,
+      "live_generator_closed": true,
+      "live_queue_closed": true,
+      "relation_current_closed": true,
+      "shadow_closed": true,
+      "scientific_object_closed": true,
+      "support_release_closed": true,
+      "open_internal_frontiers": 0,
+      "external_triggers": 5,
+      "automatic_model_calls_authorized": 0,
+      "automatic_problem_gate_authorized": 0,
+      "automatic_method_authorized": 0,
+      "automatic_experiment_authorized": 0,
+      "automatic_p0_authorized": 0,
+      "automatic_gpu_authorized": 0
+    },
+    "blockers": [],
+    "triggers": [
+      {
+        "trigger": "NEW_FRESHNESS_RELEVANCE_QUALIFIED_LANE_GROUNDED_PRIMARY_SOURCE",
+        "detector": "canonical-live-primary-retrieval",
+        "effect": "may-open-a-new-content-addressed-primary-transaction",
+        "automatic_model_call_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "trigger": "NEW_CANONICAL_SOURCE_TRANSACTION_AFTER_LIVE_CLOSURE",
+        "detector": "shadow-search-admission",
+        "effect": "may-permit-zero-provider-qualification-freeze-before-shadow-execution",
+        "automatic_model_call_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "trigger": "AUTHOR_RELEASE_SURFACE_CHANGE_FOR_CURRENT_SUPPORT_HOLD",
+        "detector": "support-release-watch",
+        "effect": "creates-or-refreshes-asset-recheck-task-only",
+        "automatic_model_call_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "trigger": "NEW_AUTHOR_RELEASE_DECLARATION_ON_NO_ENDPOINT_PRIMARY",
+        "detector": "bounded-primary-declaration-refresh",
+        "effect": "adds-author-declared-release-watch-target-only",
+        "automatic_model_call_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "trigger": "NEW_PRIMARY_VERIFIED_SUPPORT_FOR_SHADOW_SCIENTIFIC_OBJECT",
+        "detector": "shadow-scientific-object-maintenance",
+        "effect": "may-request-human-lane-preregistration-review-only-after-existing-support-purity-ownership-gates",
+        "automatic_model_call_authorized": false,
+        "scientific_authority": false
+      }
+    ],
     "scientific_authority": false
   }
 }
