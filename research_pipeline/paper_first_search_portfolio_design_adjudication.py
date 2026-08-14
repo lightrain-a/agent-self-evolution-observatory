@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -103,7 +104,7 @@ PRIMARY_SOURCES: dict[str, list[dict[str, str]]] = {
     ],
 }
 
-SHADOW_DEAD_END_MEMORY = {
+BASE_SHADOW_DEAD_END_MEMORY = {
     "memory_id": "shadow-paper-design-dead-ends-20260814-r1",
     "scientific_authority": False,
     "live_source_coverage_effect": False,
@@ -135,6 +136,47 @@ SHADOW_DEAD_END_MEMORY = {
         },
     ],
 }
+
+
+def _shadow_dead_end_memory(portfolio: dict[str, Any]) -> dict[str, Any]:
+    memory = json.loads(json.dumps(BASE_SHADOW_DEAD_END_MEMORY, ensure_ascii=False))
+    latest = portfolio.get("latest_run") or {}
+    added = 0
+    for row in latest.get("candidates") or []:
+        if not isinstance(row, dict):
+            continue
+        if str(row.get("current_source_status") or "") != "complete" or str(row.get("current_source_verdict") or "") != "BLOCK" or str(row.get("current_source_reduction_class") or "") != "VALID_HARD_VETO":
+            continue
+        strongest = " ".join(str(row.get("current_source_strongest_reduction") or "").split())[:800]
+        reason = " ".join(str(row.get("current_source_reason") or "").split())[:1200]
+        refs = sorted({str(ref) for ref in row.get("current_source_source_refs") or [] if str(ref).startswith("arXiv:")})
+        if not strongest or not reason or not refs:
+            continue
+        candidate_id = str(row.get("candidate_id") or "").strip()
+        primitive = str(row.get("search_primitive") or "").strip()
+        title = " ".join(str(row.get("title") or "").split())[:300]
+        signature = hashlib.sha256(json.dumps({"strongest_reduction": strongest, "source_refs": refs}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
+        memory["blocked_objects"].append({
+            "source_candidate_id": candidate_id,
+            "basin": f"current-source-hard-veto-{signature}",
+            "search_primitive": primitive,
+            "avoid": [
+                f"paraphrase-only variants of: {title}",
+                f"problem formulations exactly reducible to: {strongest}",
+                "standard-log attribution or identifiability claims whose omitted pipeline variable is already explicit in current primary-source instrumentation",
+            ],
+            "strongest_reduction": strongest,
+            "current_source_refs": refs,
+            "reason": reason,
+            "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that remains non-reducible after explicitly instrumenting the omitted retrieval/compilation/execution variable identified by the current-source review; renaming the pipeline stages or dropping that variable from the log does not reopen the basin.",
+            "scientific_authority": False,
+        })
+        added += 1
+    memory["memory_id"] = "shadow-paper-design-dead-ends-20260814-r2-current-source"
+    memory["current_source_hard_veto_count"] = added
+    memory["scientific_authority"] = False
+    return memory
+
 
 ADVISORY_CONSULTATION = {
     "run_root": "generated/research-data/runs/ai-consultation/cases/sp-paper-design-20260814",
@@ -263,6 +305,7 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
     counts: dict[str, int] = {}
     for row in rows:
         counts[row["verdict"]] = counts.get(row["verdict"], 0) + 1
+    dead_end_memory = _shadow_dead_end_memory(portfolio)
     return {
         "schema_version": "1.0",
         "generated_at": _now(),
@@ -287,7 +330,7 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "gpu_authorized": False,
         },
         "advisory_consultation": ADVISORY_CONSULTATION,
-        "shadow_dead_end_memory": SHADOW_DEAD_END_MEMORY,
+        "shadow_dead_end_memory": dead_end_memory,
         "shadow_source": {
             "portfolio_status": portfolio.get("status"),
             "portfolio_schema_version": portfolio.get("schema_version"),
@@ -303,6 +346,8 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "revise_paper_problem": counts.get("REVISE_PAPER_PROBLEM_SUPPORT_INVENTORY_REQUIRED", 0),
             "stop_standalone": counts.get("STOP_STANDALONE_COLLISION_KEEP_CONTEXT_RISK_AXIS", 0),
             "support_inventory_required": counts.get("REVISE_PAPER_PROBLEM_SUPPORT_INVENTORY_REQUIRED", 0),
+            "shadow_dead_end_objects": len(dead_end_memory.get("blocked_objects") or []),
+            "current_source_hard_veto_dead_ends": int(dead_end_memory.get("current_source_hard_veto_count") or 0),
             "method_design_authorized": 0,
             "experiment_blueprint_authorized": 0,
             "local_validation_authorized": 0,
@@ -333,9 +378,12 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
         errors.append("SP design audit must remain retrospective shadow feedback with zero live Paper Design authority")
     if (state.get("advisory_consultation") or {}).get("scientific_authority") is not False or (state.get("advisory_consultation") or {}).get("failed_or_missing_review_is_not_pass") is not True:
         errors.append("unavailable AI premortem reviewers must remain zero-authority and cannot count as PASS")
-    memory = state.get("shadow_dead_end_memory") or {}
-    if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True or len(memory.get("blocked_objects") or []) != 2:
-        errors.append("Paper Design dead-end memory must remain shadow-only and contain both SP-09/SP-15 basins")
+    memory = state.get("shadow_dead_end_memory") or {}; blocked_objects=[row for row in memory.get("blocked_objects") or [] if isinstance(row,dict)]; blocked_ids={str(row.get("source_candidate_id") or "") for row in blocked_objects}
+    if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True or not {"SP-09","SP-15"}.issubset(blocked_ids):
+        errors.append("Paper Design dead-end memory must remain shadow-only and retain both SP-09/SP-15 basins")
+    dynamic=[row for row in blocked_objects if str(row.get("source_candidate_id") or "").startswith("SHADOW-")]
+    if int(memory.get("current_source_hard_veto_count") or 0)!=len(dynamic) or any(not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip() or row.get("scientific_authority") is not False for row in dynamic):
+        errors.append("current-source hard vetoes must compile into bounded zero-authority shadow dead-end fingerprints")
     for row in rows:
         if not row.get("primary_sources") or not row.get("cheapest_problem_falsifier") or row.get("method_design_authorized") is not False or row.get("gpu_authorized") is not False or row.get("live_paper_design_eligible") is not False or row.get("counterfactual_problem_gate_pass_does_not_grant_live_paper_design") is not True:
             errors.append(f"SP design row incomplete or illegally authoritative:{row.get('id')}")

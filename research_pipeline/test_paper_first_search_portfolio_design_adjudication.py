@@ -3,6 +3,7 @@ from __future__ import annotations
 import unittest
 
 from .paper_first_search_portfolio_design_adjudication import (
+    _shadow_dead_end_memory,
     build_search_portfolio_design_adjudication,
     validate_search_portfolio_design_adjudication,
 )
@@ -43,7 +44,18 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertFalse(memory["scientific_authority"])
         self.assertFalse(memory["live_source_coverage_effect"])
         self.assertTrue(memory["cannot_mutate_canonical_generator_or_queue"])
-        self.assertEqual({row["source_candidate_id"] for row in memory["blocked_objects"]}, {"SP-09", "SP-15"})
+        self.assertTrue({"SP-09", "SP-15"}.issubset({row["source_candidate_id"] for row in memory["blocked_objects"]}))
+
+    def test_current_source_hard_veto_compiles_into_future_shadow_search_memory(self) -> None:
+        memory=_shadow_dead_end_memory({"latest_run":{"candidates":[{"candidate_id":"SHADOW-X","title":"Retrieval attribution gap","search_primitive":"IDENTIFIABILITY_GAP","current_source_status":"complete","current_source_verdict":"BLOCK","current_source_reduction_class":"VALID_HARD_VETO","current_source_strongest_reduction":"generic identifiability over an omitted compiled-context variable","current_source_reason":"Current primary work already exposes retrieval and compilation as separate pipeline objects.","current_source_source_refs":["arXiv:2605.10114","arXiv:2608.05604"]}]}})
+        dynamic=[row for row in memory["blocked_objects"] if row["source_candidate_id"]=="SHADOW-X"]
+        self.assertEqual(len(dynamic),1)
+        self.assertEqual(memory["current_source_hard_veto_count"],1)
+        self.assertEqual(dynamic[0]["search_primitive"],"IDENTIFIABILITY_GAP")
+        self.assertIn("omitted compiled-context variable",dynamic[0]["strongest_reduction"])
+        self.assertEqual(dynamic[0]["current_source_refs"],["arXiv:2605.10114","arXiv:2608.05604"])
+        self.assertFalse(dynamic[0]["scientific_authority"])
+        self.assertIn("instrumenting",dynamic[0]["reopen_only_if"])
 
     def test_missing_domestic_reviewers_are_recorded_as_missing_not_pass(self) -> None:
         consultation = self.state["advisory_consultation"]
