@@ -46,6 +46,7 @@ class RelationCacheBackfillTest(unittest.TestCase):
         self.assertEqual((state['summary']['primary_attempted'],state['summary']['primary_succeeded'],state['summary']['primary_cached_after']),(2,2,2))
         self.assertEqual((state['summary']['fulltext_attempted'],state['summary']['fulltext_succeeded']),(1,1))
         self.assertEqual(state['summary']['primary_missing_after'],2)
+        self.assertEqual(state['summary']['usable_reviewed_cache_records_after'],2)
         self.assertFalse(state['scientific_authority'])
         self.assertFalse(state['policy']['automatic_problem_gate_authority'])
 
@@ -55,6 +56,7 @@ class RelationCacheBackfillTest(unittest.TestCase):
             state=backfill_relation_cache(storage=self.storage(Path(td)),generator_state=self.generator(2),requester=self.requester(calls,fulltext_fails=True),max_primary_per_run=2,max_fulltext_per_run=2,min_interval_seconds=0,now=datetime(2026,8,13,tzinfo=timezone.utc))
         self.assertEqual(state['summary']['primary_cached_after'],2)
         self.assertEqual(state['summary']['primary_missing_after'],0)
+        self.assertEqual(state['summary']['usable_reviewed_cache_records_after'],2)
         self.assertEqual(state['summary']['fulltext_failed'],2)
         self.assertEqual(state['status'],'COMPLETE')
 

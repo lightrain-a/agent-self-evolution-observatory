@@ -197,7 +197,7 @@ def backfill_relation_cache(
 
     primary_after = _refs_from_files(cache_dir, fulltext=False)
     fulltext_after = _refs_from_files(cache_dir, fulltext=True)
-    usable_records = reviewed_primary_cache_records(storage)
+    usable_records = reviewed_primary_cache_records(storage, reviewed_refs=target)
     usable_refs = {str(row.get("ref") or "") for row in usable_records}
     # Preserve still-recent failures that were not retried this cycle, then add
     # this cycle's failures. Success removes a prior failure from the ledger.

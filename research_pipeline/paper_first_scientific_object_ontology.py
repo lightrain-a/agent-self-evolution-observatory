@@ -197,16 +197,17 @@ def audit_scientific_object_ontology(records: list[dict[str, Any]], *, config: d
     }
 
 
-def reviewed_primary_cache_records(storage: StorageSettings | None = None) -> list[dict[str, Any]]:
+def reviewed_primary_cache_records(storage: StorageSettings | None = None, *, reviewed_refs: set[str] | None = None) -> list[dict[str, Any]]:
     storage = storage or StorageSettings.from_env()
     exposure, _, _, _ = _source_exposure_state(storage)
+    allowed_refs = set(reviewed_refs) if reviewed_refs is not None else set(exposure)
     source_root = storage.data_root / "paper-first-problem-discovery" / "primary-sources"
     rows: list[dict[str, Any]] = []
     for primary_path in sorted(source_root.glob("arxiv-*.html")):
         if primary_path.name.startswith("arxiv-full-"):
             continue
         match = re.match(r"arxiv-(\d{4}\.\d+)-", primary_path.name)
-        if not match or f"arXiv:{match.group(1)}" not in exposure:
+        if not match or f"arXiv:{match.group(1)}" not in allowed_refs:
             continue
         parsed = parse_arxiv_page(primary_path.read_text(encoding="utf-8", errors="replace"))
         probe = {"title": parsed["title"], "abstract": parsed["abstract"]}
