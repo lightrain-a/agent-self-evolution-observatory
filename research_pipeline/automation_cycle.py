@@ -150,9 +150,18 @@ def _run_global_relation_control(
 
 
 def _run_shadow_search_admission_control() -> dict[str, Any]:
-    """Evaluate next shadow-run admission without creating a run or calling a provider."""
+    """Evaluate next shadow-run admission and emit a zero-provider cross-host handoff contract."""
     state = build_shadow_search_admission()
     public = public_shadow_search_admission_summary(state)
+    ready = public.get("status") == "READY_FOR_SHADOW_QUALIFICATION" and (public.get("summary") or {}).get("qualification_allowed") is True
+    public["handoff"] = {
+        "required": bool(ready),
+        "role": "canonical-private-pool-shadow-qualifier" if ready else "none",
+        "launcher_entrypoint": "research_pipeline.problem_search_shadow_launcher" if ready else "",
+        "provider_calls_authorized": False,
+        "automatic_remote_execution_authorized": False,
+        "scientific_authority": False,
+    }
     public["model_calls_authorized"] = False
     public["qualification_created"] = False
     public["scientific_authority"] = False

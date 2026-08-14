@@ -100,7 +100,23 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
         self.assertEqual(result["status"],"READY_FOR_SHADOW_QUALIFICATION")
         self.assertFalse(result["model_calls_authorized"])
         self.assertFalse(result["qualification_created"])
+        self.assertTrue(result["handoff"]["required"])
+        self.assertEqual(result["handoff"]["role"],"canonical-private-pool-shadow-qualifier")
+        self.assertEqual(result["handoff"]["launcher_entrypoint"],"research_pipeline.problem_search_shadow_launcher")
+        self.assertFalse(result["handoff"]["provider_calls_authorized"])
+        self.assertFalse(result["handoff"]["automatic_remote_execution_authorized"])
+        self.assertFalse(result["handoff"]["scientific_authority"])
         self.assertFalse(result["scientific_authority"])
+
+    def test_shadow_search_skip_emits_no_cross_host_handoff(self) -> None:
+        admission={"schema_version":"1.0","status":"SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL","reason":"same source","policy":{"scientific_authority":False},"summary":{"qualification_allowed":False,"automatic_provider_calls_authorized":0},"source_identity":{},"scientific_authority":False}
+        with patch("research_pipeline.automation_cycle.build_shadow_search_admission",return_value=admission), patch("research_pipeline.automation_cycle.public_shadow_search_admission_summary",return_value=dict(admission)):
+            result=_run_shadow_search_admission_control()
+        self.assertFalse(result["handoff"]["required"])
+        self.assertEqual(result["handoff"]["role"],"none")
+        self.assertEqual(result["handoff"]["launcher_entrypoint"],"")
+        self.assertFalse(result["model_calls_authorized"])
+        self.assertFalse(result["qualification_created"])
 
     def test_global_relation_scan_is_deferred_by_default_without_model_writer(self) -> None:
         storage=SimpleNamespace()
