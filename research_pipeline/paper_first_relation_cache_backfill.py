@@ -17,13 +17,14 @@ from .paper_first_primary_evidence import (
     parse_arxiv_page,
 )
 from .paper_first_problem_generator import load_problem_generator_state
-from .paper_first_relation_coverage import portable_review_receipts
+from .paper_first_relation_coverage import portable_review_receipts, relation_universe_digest
 from .paper_first_scientific_object_ontology import reviewed_primary_cache_records
 
 DEFAULT_MAX_PRIMARY_PER_RUN = 32
 DEFAULT_MAX_FULLTEXT_PER_RUN = 4
 DEFAULT_FAILURE_COOLDOWN_HOURS = 24.0
 DEFAULT_MIN_INTERVAL_SECONDS = 0.5
+DEFAULT_REPLAY_GUARD_MINUTES = 15.0
 Requester = Callable[..., Any]
 
 
@@ -58,6 +59,21 @@ def _load_state(storage: StorageSettings) -> dict[str, Any]:
     except (OSError, json.JSONDecodeError):
         return {}
     return payload if isinstance(payload, dict) else {}
+
+
+def _write_state(storage: StorageSettings, state: dict[str, Any]) -> None:
+    path = _state_path(storage)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def _recent_same_universe_attempt(previous: dict[str, Any], *, digest: str, now: datetime, guard_minutes: float) -> bool:
+    if guard_minutes <= 0 or str(previous.get("relation_universe_digest") or "") != digest:
+        return False
+    started = _parse_time(previous.get("run_started_at"))
+    if started is None:
+        return False
+    return 0 <= (now - started).total_seconds() <= guard_minutes * 60
 
 
 def _refs_from_files(cache_dir: Path, *, fulltext: bool) -> set[str]:
@@ -106,6 +122,25 @@ def _arxiv_id(ref: str) -> str:
     return value
 
 
+def _policy(*, max_primary_per_run: int, max_fulltext_per_run: int, failure_cooldown_hours: float, replay_guard_minutes: float) -> dict[str, Any]:
+    return {
+        "private_cache_only": True,
+        "public_primary_sources_are_refetched_locally": True,
+        "fulltext_enrichment_is_optional": True,
+        "primary_success_survives_fulltext_failure": True,
+        "bounded_primary_attempts_per_run": int(max_primary_per_run),
+        "bounded_fulltext_attempts_per_run": int(max_fulltext_per_run),
+        "failure_cooldown_hours": float(failure_cooldown_hours),
+        "same_universe_replay_guard_minutes": float(replay_guard_minutes),
+        "transport_replay_cannot_multiply_network_budget": True,
+        "relation_cache_backfill_has_zero_scientific_authority": True,
+        "automatic_problem_gate_authority": False,
+        "automatic_method_authority": False,
+        "automatic_experiment_authority": False,
+        "automatic_p0_authority": False,
+    }
+
+
 def backfill_relation_cache(
     *,
     storage: StorageSettings | None = None,
@@ -115,6 +150,7 @@ def backfill_relation_cache(
     max_fulltext_per_run: int = DEFAULT_MAX_FULLTEXT_PER_RUN,
     failure_cooldown_hours: float = DEFAULT_FAILURE_COOLDOWN_HOURS,
     min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
+    replay_guard_minutes: float = DEFAULT_REPLAY_GUARD_MINUTES,
     now: datetime | None = None,
 ) -> dict[str, Any]:
     storage = storage or StorageSettings.from_env()
@@ -124,12 +160,29 @@ def backfill_relation_cache(
     cache_dir = _cache_dir(storage)
     cache_dir.mkdir(parents=True, exist_ok=True)
     previous = _load_state(storage)
+    receipts = portable_review_receipts(generator_state)
+    universe_digest = relation_universe_digest(receipts)
     target = _target_refs(generator_state)
     primary_before = _refs_from_files(cache_dir, fulltext=False)
     fulltext_before = _refs_from_files(cache_dir, fulltext=True)
+    if _recent_same_universe_attempt(previous, digest=universe_digest, now=current, guard_minutes=replay_guard_minutes):
+        usable_refs = {str(row.get("ref") or "") for row in reviewed_primary_cache_records(storage, reviewed_refs=target)}
+        return {
+            "schema_version": "1.1",
+            "generated_at": current.replace(microsecond=0).isoformat(),
+            "run_started_at": previous.get("run_started_at"),
+            "status": "SKIPPED_RECENT_BACKFILL_ATTEMPT",
+            "previous_status": previous.get("status"),
+            "relation_universe_digest": universe_digest,
+            "policy": _policy(max_primary_per_run=max_primary_per_run,max_fulltext_per_run=max_fulltext_per_run,failure_cooldown_hours=failure_cooldown_hours,replay_guard_minutes=replay_guard_minutes),
+            "summary": {"target_refs":len(target),"primary_cached_before":len(target & primary_before),"primary_attempted":0,"primary_succeeded":0,"primary_failed":0,"primary_cached_after":len(target & primary_before),"primary_missing_after":len(target-primary_before),"fulltext_cached_before":len(target & fulltext_before),"fulltext_attempted":0,"fulltext_succeeded":0,"fulltext_failed":0,"fulltext_cached_after":len(target & fulltext_before),"usable_reviewed_cache_records_after":len(target & usable_refs),"cooldown_skipped":0,"scientifically_authorized":0},
+            "scientific_authority": False,
+        }
     recent_failed = _recent_failures(previous, now=current, cooldown_hours=failure_cooldown_hours)
     missing = sorted(target - primary_before)
     selected = [ref for ref in missing if ref not in recent_failed][: max(0, int(max_primary_per_run))]
+    started_at = current.replace(microsecond=0).isoformat()
+    _write_state(storage,{"schema_version":"1.1","generated_at":started_at,"run_started_at":started_at,"status":"BACKFILL_RUNNING","relation_universe_digest":universe_digest,"policy":_policy(max_primary_per_run=max_primary_per_run,max_fulltext_per_run=max_fulltext_per_run,failure_cooldown_hours=failure_cooldown_hours,replay_guard_minutes=replay_guard_minutes),"summary":{"target_refs":len(target),"primary_cached_before":len(target & primary_before),"planned_primary_attempts":len(selected),"fulltext_cached_before":len(target & fulltext_before),"scientifically_authorized":0},"primary_failures":[row for row in previous.get("primary_failures") or [] if isinstance(row,dict)][-256:],"scientific_authority":False})
 
     primary_successes: list[str] = []
     primary_failures: list[dict[str, Any]] = []
@@ -209,23 +262,12 @@ def backfill_relation_cache(
         and str(row.get("ref") or "") in recent_failed
     ]
     state = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "generated_at": current.replace(microsecond=0).isoformat(),
+        "run_started_at": started_at,
         "status": "COMPLETE" if target.issubset(primary_after) else "BACKFILL_IN_PROGRESS",
-        "policy": {
-            "private_cache_only": True,
-            "public_primary_sources_are_refetched_locally": True,
-            "fulltext_enrichment_is_optional": True,
-            "primary_success_survives_fulltext_failure": True,
-            "bounded_primary_attempts_per_run": int(max_primary_per_run),
-            "bounded_fulltext_attempts_per_run": int(max_fulltext_per_run),
-            "failure_cooldown_hours": float(failure_cooldown_hours),
-            "relation_cache_backfill_has_zero_scientific_authority": True,
-            "automatic_problem_gate_authority": False,
-            "automatic_method_authority": False,
-            "automatic_experiment_authority": False,
-            "automatic_p0_authority": False,
-        },
+        "relation_universe_digest": universe_digest,
+        "policy": _policy(max_primary_per_run=max_primary_per_run,max_fulltext_per_run=max_fulltext_per_run,failure_cooldown_hours=failure_cooldown_hours,replay_guard_minutes=replay_guard_minutes),
         "summary": {
             "target_refs": len(target),
             "primary_cached_before": len(target & primary_before),
@@ -247,9 +289,7 @@ def backfill_relation_cache(
         "fulltext_failures": fulltext_failures[-128:],
         "scientific_authority": False,
     }
-    path = _state_path(storage)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    _write_state(storage,state)
     return state
 
 

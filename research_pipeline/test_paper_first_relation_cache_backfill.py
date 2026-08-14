@@ -49,6 +49,7 @@ class RelationCacheBackfillTest(unittest.TestCase):
         self.assertEqual(state['summary']['usable_reviewed_cache_records_after'],2)
         self.assertFalse(state['scientific_authority'])
         self.assertFalse(state['policy']['automatic_problem_gate_authority'])
+        self.assertTrue(state['policy']['transport_replay_cannot_multiply_network_budget'])
 
     def test_fulltext_failure_does_not_invalidate_primary_cache(self) -> None:
         calls=[]
@@ -69,6 +70,20 @@ class RelationCacheBackfillTest(unittest.TestCase):
                 calls.append('called');raise AssertionError
             second=backfill_relation_cache(storage=storage,generator_state=self.generator(2),requester=forbidden,max_primary_per_run=2,max_fulltext_per_run=0,min_interval_seconds=0,now=now+timedelta(hours=1))
         self.assertEqual(first['summary']['primary_cached_after'],2)
+        self.assertEqual(second['summary']['primary_attempted'],0)
+        self.assertEqual(calls,[])
+
+    def test_recent_running_receipt_blocks_transport_replay(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            storage=self.storage(Path(td));calls=[];now=datetime(2026,8,13,tzinfo=timezone.utc)
+            def interrupted(url: str, **kwargs): calls.append(url);raise KeyboardInterrupt()
+            with self.assertRaises(KeyboardInterrupt):
+                backfill_relation_cache(storage=storage,generator_state=self.generator(2),requester=interrupted,max_primary_per_run=1,max_fulltext_per_run=0,min_interval_seconds=0,now=now)
+            calls.clear()
+            def forbidden(*args,**kwargs): calls.append('called');raise AssertionError
+            second=backfill_relation_cache(storage=storage,generator_state=self.generator(2),requester=forbidden,max_primary_per_run=1,max_fulltext_per_run=0,min_interval_seconds=0,now=now+timedelta(minutes=1))
+        self.assertEqual(second['status'],'SKIPPED_RECENT_BACKFILL_ATTEMPT')
+        self.assertEqual(second['previous_status'],'BACKFILL_RUNNING')
         self.assertEqual(second['summary']['primary_attempted'],0)
         self.assertEqual(calls,[])
 
