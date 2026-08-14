@@ -161,6 +161,8 @@ def run_cycle(
         report["steps"].append(_step("emerging-niche-policy", write_emerging_niche_policy))
         if mode not in {"weekly", "manual"}:
             report["steps"].append(_step("paper-first-fresh-saturation", write_fresh_saturation_state))
+            # Daily maintenance may refill verified public primary abstracts, but it never runs Global Relation Recall.
+            report["steps"].append(_step("paper-first-relation-cache-maintenance", lambda: backfill_relation_cache(max_primary_per_run=16,max_fulltext_per_run=0)))
             # Queue provenance is transaction-bound to Primary -> Generator -> Queue.
             # A daily cycle does not run Primary/Generator, so it preserves the versioned queue snapshot.
         report["steps"].append(_step("paper-design-backlog", write_paper_design_backlog))
