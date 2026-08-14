@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T07:29:08+00:00",
+  "generated_at": "2026-08-14T07:43:38+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -72072,7 +72072,7 @@
   },
   "paper_first_problem_search_portfolio": {
     "schema_version": "3.2-shadow-import",
-    "generated_at": "2026-08-14T07:20:09+00:00",
+    "generated_at": "2026-08-14T07:43:33+00:00",
     "imported_at": "2026-08-13T16:28:11+00:00",
     "status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
     "historical_source_commit": "7b2a7260df3bae5d140cdc7f4d09a56dd898a72b",
@@ -72283,9 +72283,10 @@
       "schema_version": "1.2-shadow-run",
       "run_id": "shadow-20260814-r5",
       "status": "SHADOW_TERMINAL_COMPLETE",
-      "generated_at": "2026-08-14T07:20:09+00:00",
+      "generated_at": "2026-08-14T07:43:33+00:00",
       "source_generated_at": "2026-08-14T03:47:25+00:00",
       "source_set_sha256": "21ff57e9a0be9d9af83bcc194f20f7e2a3b2878f509b212c12efa43aa0025ad5",
+      "source_primary_content_sha256": "8be6e04ba50970b8fc19585130604ad26c32497cbed64255d351015ca3e7143e",
       "source_pool_sha256": "398bb671f2c79c8d050d9e9fdd0b648e286148a2a8afd5e25f263b761f05422d",
       "frozen_pool_sha256": "72499d9cfaad9993f961094ce70e8608fd2f93862e92222a5003c5fdab7de5f4",
       "stage_manifest_sha256": "6c31180bd33351c8e9f16c51d7f516cc6ae238d70d763bd36ce01fe9abebc76d",
@@ -72636,17 +72637,19 @@
       "source_identity_conflict": false,
       "qualification_allowed": false,
       "automatic_provider_calls_authorized": 0,
-      "checks": 12,
-      "passed_checks": 12,
+      "checks": 13,
+      "passed_checks": 13,
       "failed_checks": 0
     },
     "source_identity": {
       "current_source_generated_at": "2026-08-14T03:47:25+00:00",
       "current_source_set_sha256": "21ff57e9a0be9d9af83bcc194f20f7e2a3b2878f509b212c12efa43aa0025ad5",
+      "current_primary_content_sha256": "8be6e04ba50970b8fc19585130604ad26c32497cbed64255d351015ca3e7143e",
       "latest_run_id": "shadow-20260814-r5",
       "latest_status": "SHADOW_TERMINAL_COMPLETE",
       "latest_source_generated_at": "2026-08-14T03:47:25+00:00",
       "latest_source_set_sha256": "21ff57e9a0be9d9af83bcc194f20f7e2a3b2878f509b212c12efa43aa0025ad5",
+      "latest_primary_content_sha256": "8be6e04ba50970b8fc19585130604ad26c32497cbed64255d351015ca3e7143e",
       "latest_source_pool_sha256": "398bb671f2c79c8d050d9e9fdd0b648e286148a2a8afd5e25f263b761f05422d"
     },
     "scientific_authority": false

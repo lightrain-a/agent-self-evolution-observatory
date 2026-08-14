@@ -37,6 +37,21 @@ def source_set_sha256(records: list[dict[str, Any]]) -> str:
     return hashlib.sha256("\n".join(refs).encode()).hexdigest()
 
 
+def primary_content_sha256(records: list[dict[str, Any]]) -> str:
+    rows=[]
+    for row in records:
+        if not isinstance(row,dict):
+            continue
+        ref=str(row.get("ref") or "").strip();source_sha=str(row.get("source_sha256") or "").strip().lower();fulltext_sha=str(row.get("fulltext_sha256") or "").strip().lower()
+        if not ref.startswith("arXiv:") or not re.fullmatch(r"[0-9a-f]{64}",source_sha) or (fulltext_sha and not re.fullmatch(r"[0-9a-f]{64}",fulltext_sha)):
+            return ""
+        rows.append({"ref":ref,"source_sha256":source_sha,"fulltext_sha256":fulltext_sha})
+    if not rows or len({row["ref"] for row in rows})!=len(rows):
+        return ""
+    rows.sort(key=lambda row:row["ref"])
+    return hashlib.sha256(json.dumps(rows,sort_keys=True,separators=(",",":")).encode()).hexdigest()
+
+
 def build_shadow_search_admission(
     *,
     primary_state: dict[str, Any] | None = None,
@@ -56,14 +71,17 @@ def build_shadow_search_admission(
     generator_tx = str(generator.get("discovery_transaction_id") or "").strip()
     queue_tx = str(queue.get("discovery_transaction_id") or "").strip()
     current_generated_at = str(primary.get("generated_at") or "").strip()
-    current_set_sha = source_set_sha256([row for row in primary.get("records") or [] if isinstance(row, dict)])
-    current_records = len(primary.get("records") or [])
+    primary_records = [row for row in primary.get("records") or [] if isinstance(row, dict)]
+    current_set_sha = source_set_sha256(primary_records)
+    current_content_sha = primary_content_sha256(primary_records)
+    current_records = len(primary_records)
 
     latest = shadow.get("latest_run") or {}
     latest_run_id = str(latest.get("run_id") or shadow.get("latest_run_id") or "").strip()
     latest_status = str(latest.get("status") or "").strip()
     latest_generated_at = str(latest.get("source_generated_at") or "").strip()
     latest_set_sha = str(latest.get("source_set_sha256") or "").strip().lower()
+    latest_content_sha = str(latest.get("source_primary_content_sha256") or "").strip().lower()
     latest_pool_sha = str(latest.get("source_pool_sha256") or "").strip().lower()
     latest_terminal = bool(latest_run_id and latest_status == "SHADOW_TERMINAL_COMPLETE")
 
@@ -84,14 +102,16 @@ def build_shadow_search_admission(
         and queue_closed
         and bool(current_generated_at)
         and bool(re.fullmatch(r"[0-9a-f]{64}", current_set_sha))
+        and bool(re.fullmatch(r"[0-9a-f]{64}", current_content_sha))
         and current_records > 0
     )
 
     same_timestamp = bool(latest_generated_at and latest_generated_at == current_generated_at)
     same_set = bool(latest_set_sha and latest_set_sha == current_set_sha)
-    source_identity_complete = bool(latest_generated_at and re.fullmatch(r"[0-9a-f]{64}", latest_set_sha))
-    same_source_transaction = bool(source_identity_complete and same_timestamp and same_set)
-    identity_conflict = bool(source_identity_complete and same_timestamp != same_set)
+    same_content = bool(latest_content_sha and latest_content_sha == current_content_sha)
+    source_identity_complete = bool(re.fullmatch(r"[0-9a-f]{64}", latest_set_sha) and re.fullmatch(r"[0-9a-f]{64}", latest_content_sha))
+    same_source_transaction = bool(source_identity_complete and same_set and same_content)
+    identity_conflict = bool(source_identity_complete and same_timestamp and not (same_set and same_content))
 
     if not canonical_closed:
         status = "HOLD_CANONICAL_DISCOVERY_TRANSACTION_OPEN"
@@ -101,7 +121,7 @@ def build_shadow_search_admission(
         reason = "A prior shadow run is not terminal-complete; finish or stop it before freezing another shadow transaction."
     elif latest_run_id and not source_identity_complete:
         status = "HOLD_PREVIOUS_SHADOW_SOURCE_IDENTITY_UNAVAILABLE"
-        reason = "The latest terminal shadow run lacks bounded source timestamp/source-set provenance required for deterministic duplicate suppression."
+        reason = "The latest terminal shadow run lacks bounded source-set/content provenance required for deterministic duplicate suppression."
     elif identity_conflict:
         status = "HOLD_SHADOW_SOURCE_IDENTITY_CONFLICT"
         reason = "Latest and current source provenance partially match; treat this as provenance inconsistency rather than evidence for a new run."
@@ -123,6 +143,7 @@ def build_shadow_search_admission(
         {"key": "canonical-generator-closed", "pass": generator.get("status") in GENERATOR_CLOSED_STATUSES},
         {"key": "canonical-queue-closed", "pass": queue_closed},
         {"key": "current-source-set-digest-valid", "pass": bool(re.fullmatch(r"[0-9a-f]{64}", current_set_sha))},
+        {"key": "current-primary-content-digest-valid", "pass": bool(re.fullmatch(r"[0-9a-f]{64}", current_content_sha))},
         {"key": "prior-shadow-terminal-or-absent", "pass": not latest_run_id or latest_terminal},
         {"key": "prior-shadow-source-identity-available-or-absent", "pass": not latest_run_id or source_identity_complete},
         {"key": "source-identity-not-conflicted", "pass": not identity_conflict},
@@ -158,10 +179,12 @@ def build_shadow_search_admission(
         "source_identity": {
             "current_source_generated_at": current_generated_at,
             "current_source_set_sha256": current_set_sha,
+            "current_primary_content_sha256": current_content_sha,
             "latest_run_id": latest_run_id,
             "latest_status": latest_status,
             "latest_source_generated_at": latest_generated_at,
             "latest_source_set_sha256": latest_set_sha,
+            "latest_primary_content_sha256": latest_content_sha,
             "latest_source_pool_sha256": latest_pool_sha,
         },
         "checks": checks,
@@ -206,7 +229,7 @@ def validate_shadow_search_admission(state: dict[str, Any]) -> list[str]:
         errors.append("same-source skip requires one terminal matching shadow source transaction")
     if state.get("status") == "READY_FOR_SHADOW_QUALIFICATION" and summary.get("canonical_transaction_closed") is not True:
         errors.append("shadow qualification cannot open before canonical discovery closes")
-    for key in ("current_source_set_sha256", "latest_source_set_sha256", "latest_source_pool_sha256"):
+    for key in ("current_source_set_sha256", "current_primary_content_sha256", "latest_source_set_sha256", "latest_primary_content_sha256", "latest_source_pool_sha256"):
         value = str(source.get(key) or "")
         if value and not re.fullmatch(r"[0-9a-f]{64}", value):
             errors.append(f"shadow source identity digest invalid:{key}")
@@ -249,10 +272,12 @@ def public_shadow_search_admission_summary(state: dict[str, Any]) -> dict[str, A
             for key in (
                 "current_source_generated_at",
                 "current_source_set_sha256",
+                "current_primary_content_sha256",
                 "latest_run_id",
                 "latest_status",
                 "latest_source_generated_at",
                 "latest_source_set_sha256",
+                "latest_primary_content_sha256",
                 "latest_source_pool_sha256",
             )
         },
