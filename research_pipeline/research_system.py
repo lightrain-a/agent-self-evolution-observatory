@@ -921,6 +921,15 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and all(row.get("scientific_authority") is False for row in (candidate_evidence.get("results") or {}).values() if isinstance(row,dict))
     )
     support_release_watch=state.get("paper_first_support_release_watch") or {};support_release_policy=support_release_watch.get("policy") or {};support_release_summary=support_release_watch.get("summary") or {};support_release_status=str(support_release_watch.get("status") or "NOT_RUN")
+    support_primary_refresh_present="primary_declaration_refresh_checked" in support_release_summary
+    support_primary_refresh_boundary_ok=bool(
+        not support_primary_refresh_present
+        or (
+            support_release_policy.get("no_endpoint_primary_refresh_is_primary_source_only") is True
+            and support_release_policy.get("primary_declaration_refresh_has_zero_source_exposure_effect") is True
+            and support_release_policy.get("primary_declaration_refresh_cannot_qualify_support") is True
+        )
+    )
     support_release_boundary_ok=bool(
         support_release_watch.get("scientific_authority") is False
         and support_release_policy.get("primary_declared_release_endpoints_only") is True
@@ -930,6 +939,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and support_release_policy.get("release_watch_cannot_reopen_generator_or_problem_gate") is True
         and support_release_policy.get("release_watch_has_zero_source_exposure_effect") is True
         and support_release_policy.get("network_checks_are_cooldown_bounded") is True
+        and support_primary_refresh_boundary_ok
         and support_release_policy.get("public_summary_excludes_urls_refs_required_units_and_private_paths") is True
         and int(support_release_summary.get("support_qualified") or 0)==0
         and int(support_release_summary.get("generator_reopen_authorized") or 0)==0
@@ -1197,7 +1207,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if sp15_summary.get("query_level_identifiability_units") != 0 or sp15_summary.get("support_status") != "INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM" or sp15_support.get("decision") != "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT" or sp15_policy.get("phenomenon_support_is_not_identifiability_support") is not True or any(int(sp15_summary.get(key) or 0) != 0 for key in ("method_design_authorized","experiment_blueprint_authorized","local_validation_authorized","p0_authorized","gpu_authorized")): errors.append("SP-15 revised identifiability problem must remain HOLD until nonzero matched query-level support exists")
     support_release_watch=state.get("paper_first_support_release_watch") or {};support_release_policy=support_release_watch.get("policy") or {};support_release_summary=support_release_watch.get("summary") or {};support_release_status=str(support_release_watch.get("status") or "NOT_RUN")
     if support_release_watch:
-        if support_release_watch.get("scientific_authority") is not False or support_release_policy.get("primary_declared_release_endpoints_only") is not True or support_release_policy.get("related_work_repository_links_are_not_watch_targets") is not True or support_release_policy.get("release_surface_change_only_requests_recheck") is not True or support_release_policy.get("release_watch_cannot_mark_support_qualified") is not True or support_release_policy.get("release_watch_cannot_reopen_generator_or_problem_gate") is not True or support_release_policy.get("release_watch_has_zero_source_exposure_effect") is not True or support_release_policy.get("network_checks_are_cooldown_bounded") is not True or support_release_policy.get("public_summary_excludes_urls_refs_required_units_and_private_paths") is not True:
+        support_primary_refresh_present="primary_declaration_refresh_checked" in support_release_summary
+        support_primary_refresh_boundary_ok=(not support_primary_refresh_present) or (support_release_policy.get("no_endpoint_primary_refresh_is_primary_source_only") is True and support_release_policy.get("primary_declaration_refresh_has_zero_source_exposure_effect") is True and support_release_policy.get("primary_declaration_refresh_cannot_qualify_support") is True)
+        if support_release_watch.get("scientific_authority") is not False or support_release_policy.get("primary_declared_release_endpoints_only") is not True or support_release_policy.get("related_work_repository_links_are_not_watch_targets") is not True or support_release_policy.get("release_surface_change_only_requests_recheck") is not True or support_release_policy.get("release_watch_cannot_mark_support_qualified") is not True or support_release_policy.get("release_watch_cannot_reopen_generator_or_problem_gate") is not True or support_release_policy.get("release_watch_has_zero_source_exposure_effect") is not True or support_release_policy.get("network_checks_are_cooldown_bounded") is not True or support_primary_refresh_boundary_ok is not True or support_release_policy.get("public_summary_excludes_urls_refs_required_units_and_private_paths") is not True:
             errors.append("support release watch public state must remain primary-declared, bounded, redacted, and zero-authority")
         if support_release_status not in {"NOT_RUN","SUPPORT_RELEASE_WATCH_COMPLETE","SUPPORT_RELEASE_WATCH_PARTIAL","STATE_UNREADABLE","STATE_INVALID"}:
             errors.append("support release watch status invalid")

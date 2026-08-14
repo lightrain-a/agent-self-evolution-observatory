@@ -12,11 +12,20 @@ from urllib.parse import urlparse
 import requests
 
 from .config import StorageSettings
+from .paper_first_primary_evidence import (
+    DEFAULT_ARXIV_RATE_LIMIT_COOLDOWN_SECONDS,
+    _arxiv_retry_after_seconds,
+    _load_arxiv_rate_limit_state,
+    _write_arxiv_rate_limit_state,
+    parse_arxiv_page,
+)
 from .paper_first_search_portfolio_design_adjudication import build_search_portfolio_design_adjudication
 
 WATCH_SCHEMA = "1.0"
 FINGERPRINT_VERSION = "release-surface-v2"
 DEFAULT_COOLDOWN_DAYS = 7.0
+PRIMARY_DECLARATION_REFRESH_COOLDOWN_DAYS = 7.0
+MAX_PRIMARY_DECLARATION_REFRESHES = 2
 MAX_PAGE_BYTES = 1_000_000
 
 
@@ -226,6 +235,115 @@ def _default_fetcher(target: dict[str, Any]) -> dict[str, Any]:
     return {"status_code": status, "fingerprint": _sha(body), "surface_nonempty": bool(body.strip()), "artifact_file_count": None, "fingerprint_version": FINGERPRINT_VERSION, "resolved_endpoint": url}
 
 
+def _refresh_no_endpoint_primary_declarations(
+    no_endpoint: list[dict[str, Any]],
+    *,
+    storage: StorageSettings,
+    ledger: dict[str, Any],
+    requester: Callable[..., Any] | None,
+    now: datetime,
+    cooldown_days: float = PRIMARY_DECLARATION_REFRESH_COOLDOWN_DAYS,
+    max_refreshes: int = MAX_PRIMARY_DECLARATION_REFRESHES,
+    rate_limit_state_path: Path | None = None,
+) -> dict[str, Any]:
+    fetch = requester or requests.get
+    refreshes = dict(ledger.get("primary_declaration_refreshes") or {})
+    cache_root = _primary_root(storage)
+    cache_root.mkdir(parents=True, exist_ok=True)
+    rate_limit_state_path = rate_limit_state_path or (storage.data_root / "paper-first-problem-discovery" / "arxiv-rate-limit-state.json")
+    active_rate_limit = _load_arxiv_rate_limit_state(rate_limit_state_path, now=now)
+    if active_rate_limit:
+        return {
+            "checked": 0,
+            "changed": 0,
+            "skipped_cooldown": 0,
+            "rate_limited": len(no_endpoint),
+            "errors": 0,
+            "refreshed_refs": [],
+            "refreshes": refreshes,
+            "rate_limit_blocked_until": active_rate_limit.get("blocked_until"),
+        }
+    checked = changed = skipped = errors = 0
+    refreshed_refs: list[str] = []
+    budget = max(0, int(max_refreshes))
+    for item in no_endpoint:
+        if checked >= budget:
+            break
+        refs = [str(x) for x in item.get("source_refs") or [] if str(x).startswith("arXiv:")]
+        if not refs:
+            continue
+        ref = refs[0]
+        arxiv_id = ref.split(":", 1)[1]
+        previous = refreshes.get(ref) or {}
+        previous_checked = str(previous.get("checked_at") or "")
+        if previous_checked:
+            try:
+                if now - datetime.fromisoformat(previous_checked.replace("Z", "+00:00")) < timedelta(days=max(0.0, cooldown_days)):
+                    skipped += 1
+                    continue
+            except ValueError:
+                pass
+        response = fetch(
+            f"https://arxiv.org/abs/{arxiv_id}",
+            timeout=25.0,
+            headers={"User-Agent": "Agent-Self-Evolution-Observatory/support-release-primary-refresh"},
+        )
+        status = int(getattr(response, "status_code", 200))
+        checked += 1
+        if status == 429:
+            rate_state = _write_arxiv_rate_limit_state(
+                rate_limit_state_path,
+                now=now,
+                retry_after_seconds=_arxiv_retry_after_seconds(response, DEFAULT_ARXIV_RATE_LIMIT_COOLDOWN_SECONDS),
+            )
+            return {
+                "checked": checked,
+                "changed": changed,
+                "skipped_cooldown": skipped,
+                "rate_limited": max(1, len(no_endpoint) - checked + 1),
+                "errors": errors,
+                "refreshed_refs": refreshed_refs,
+                "refreshes": refreshes,
+                "rate_limit_blocked_until": rate_state.get("blocked_until"),
+            }
+        if status >= 400:
+            errors += 1
+            refreshes[ref] = {"checked_at": now.isoformat(), "http_status": status, "scientific_authority": False}
+            continue
+        raw_text = str(getattr(response, "text", "") or "")
+        parsed = parse_arxiv_page(raw_text)
+        if not parsed.get("title") or not parsed.get("abstract"):
+            errors += 1
+            refreshes[ref] = {"checked_at": now.isoformat(), "http_status": status, "error": "primary-page-missing-title-or-abstract", "scientific_authority": False}
+            continue
+        raw_bytes = raw_text.encode("utf-8")
+        source_sha = _sha(raw_bytes)
+        safe_id = re.sub(r"[^0-9A-Za-z._-]+", "_", arxiv_id)
+        path = cache_root / f"arxiv-{safe_id}-{source_sha[:12]}.html"
+        existed = path.exists()
+        if not existed:
+            path.write_bytes(raw_bytes)
+            changed += 1
+        refreshed_refs.append(ref)
+        refreshes[ref] = {
+            "checked_at": now.isoformat(),
+            "http_status": status,
+            "primary_sha256": source_sha,
+            "content_changed": not existed,
+            "scientific_authority": False,
+        }
+    return {
+        "checked": checked,
+        "changed": changed,
+        "skipped_cooldown": skipped,
+        "rate_limited": 0,
+        "errors": errors,
+        "refreshed_refs": refreshed_refs,
+        "refreshes": refreshes,
+        "rate_limit_blocked_until": None,
+    }
+
+
 def _load_ledger(path: Path) -> dict[str, Any]:
     if not path.exists():
         return {"schema_version": WATCH_SCHEMA, "observations": {}, "scientific_authority": False}
@@ -262,6 +380,8 @@ def public_support_release_watch_summary(state: dict[str, Any]) -> dict[str, Any
     safe_summary_keys = (
         "support_holds", "explicit_release_targets", "no_explicit_endpoint", "checked", "skipped_cooldown",
         "provider_errors", "recheck_required", "support_qualified", "generator_reopen_authorized", "problem_gate_authorized",
+        "primary_declaration_refresh_checked", "primary_declaration_refresh_changed", "primary_declaration_refresh_skipped_cooldown",
+        "primary_declaration_refresh_rate_limited", "primary_declaration_refresh_errors",
     )
     return {
         "schema_version": WATCH_SCHEMA,
@@ -275,6 +395,9 @@ def public_support_release_watch_summary(state: dict[str, Any]) -> dict[str, Any
             "release_watch_cannot_reopen_generator_or_problem_gate": True,
             "release_watch_has_zero_source_exposure_effect": True,
             "network_checks_are_cooldown_bounded": True,
+            "no_endpoint_primary_refresh_is_primary_source_only": True,
+            "primary_declaration_refresh_has_zero_source_exposure_effect": True,
+            "primary_declaration_refresh_cannot_qualify_support": True,
             "public_summary_excludes_urls_refs_required_units_and_private_paths": True,
         },
         "summary": {key: summary[key] for key in safe_summary_keys if key in summary},
@@ -288,8 +411,12 @@ def run_support_release_watch(
     storage: StorageSettings | None = None,
     design_state: dict[str, Any] | None = None,
     fetcher: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
+    primary_requester: Callable[..., Any] | None = None,
     now: datetime | None = None,
     cooldown_days: float = DEFAULT_COOLDOWN_DAYS,
+    primary_refresh_cooldown_days: float = PRIMARY_DECLARATION_REFRESH_COOLDOWN_DAYS,
+    max_primary_refreshes: int = MAX_PRIMARY_DECLARATION_REFRESHES,
+    arxiv_rate_limit_state_path: Path | None = None,
     ledger_path: Path | None = None,
     write_ledger: bool = True,
 ) -> dict[str, Any]:
@@ -300,6 +427,19 @@ def run_support_release_watch(
     ledger = _load_ledger(ledger_path)
     observations = dict(ledger.get("observations") or {})
     targets, no_endpoint = explicit_release_targets(design_state, storage=storage)
+    primary_refresh = _refresh_no_endpoint_primary_declarations(
+        no_endpoint,
+        storage=storage,
+        ledger=ledger,
+        requester=primary_requester,
+        now=current,
+        cooldown_days=primary_refresh_cooldown_days,
+        max_refreshes=max_primary_refreshes,
+        rate_limit_state_path=arxiv_rate_limit_state_path,
+    )
+    ledger["primary_declaration_refreshes"] = primary_refresh["refreshes"]
+    if primary_refresh["checked"] or primary_refresh["changed"]:
+        targets, no_endpoint = explicit_release_targets(design_state, storage=storage)
     fetch = fetcher or _default_fetcher
     rows: list[dict[str, Any]] = []
     checked = skipped = provider_errors = recheck = 0
@@ -373,6 +513,11 @@ def run_support_release_watch(
             "release_watch_cannot_reopen_generator_or_problem_gate": True,
             "release_watch_has_zero_source_exposure_effect": True,
             "network_checks_are_cooldown_bounded": True,
+            "no_endpoint_primary_refresh_is_primary_source_only": True,
+            "primary_declaration_refresh_has_zero_source_exposure_effect": True,
+            "primary_declaration_refresh_cannot_qualify_support": True,
+            "primary_declaration_refresh_max_per_run": int(max_primary_refreshes),
+            "primary_declaration_refresh_cooldown_days": float(primary_refresh_cooldown_days),
             "github_release_fingerprint_ignores_doc_only_churn": True,
             "release_surface_fingerprint_version": FINGERPRINT_VERSION,
             "cooldown_days": float(cooldown_days),
@@ -388,6 +533,11 @@ def run_support_release_watch(
             "support_qualified": 0,
             "generator_reopen_authorized": 0,
             "problem_gate_authorized": 0,
+            "primary_declaration_refresh_checked": int(primary_refresh["checked"]),
+            "primary_declaration_refresh_changed": int(primary_refresh["changed"]),
+            "primary_declaration_refresh_skipped_cooldown": int(primary_refresh["skipped_cooldown"]),
+            "primary_declaration_refresh_rate_limited": int(primary_refresh["rate_limited"]),
+            "primary_declaration_refresh_errors": int(primary_refresh["errors"]),
         },
         "rows": rows,
         "scientific_authority": False,
@@ -396,7 +546,7 @@ def run_support_release_watch(
         ledger_path.parent.mkdir(parents=True, exist_ok=True)
         watch_root = _watch_root(storage)
         watch_root.mkdir(parents=True, exist_ok=True)
-        ledger_payload = {"schema_version": WATCH_SCHEMA, "updated_at": current.isoformat(), "observations": observations, "scientific_authority": False}
+        ledger_payload = {"schema_version": WATCH_SCHEMA, "updated_at": current.isoformat(), "observations": observations, "primary_declaration_refreshes": primary_refresh["refreshes"], "scientific_authority": False}
         ledger_path.write_text(json.dumps(ledger_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         (watch_root / "last-run.json").write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return state

@@ -4,6 +4,7 @@ import tempfile
 import unittest
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from types import SimpleNamespace
 
 from .config import StorageSettings
 from .paper_first_support_release_watch import explicit_release_targets, public_support_release_watch_summary, run_support_release_watch
@@ -61,19 +62,59 @@ class SupportReleaseWatchTest(unittest.TestCase):
         self.assertNotIn("C", by_id)
         self.assertEqual([row["candidate_id"] for row in missing], ["C"])
 
-    def test_no_explicit_endpoint_never_calls_network(self) -> None:
+    def test_no_explicit_endpoint_does_not_query_release_surfaces_when_primary_refresh_disabled(self) -> None:
         calls = []
         def forbidden(target):
             calls.append(target)
-            raise AssertionError("network forbidden")
+            raise AssertionError("release-surface network forbidden")
         with tempfile.TemporaryDirectory() as td:
             storage = self.storage(Path(td))
             self.cache(storage, "2608.00003", 'The code may be released after acceptance.')
-            state = run_support_release_watch(storage=storage, design_state=self.design([self.hold("C", "arXiv:2608.00003")]), fetcher=forbidden, write_ledger=False)
+            state = run_support_release_watch(storage=storage, design_state=self.design([self.hold("C", "arXiv:2608.00003")]), fetcher=forbidden, max_primary_refreshes=0, write_ledger=False)
         self.assertEqual(calls, [])
         self.assertEqual(state["summary"]["no_explicit_endpoint"], 1)
         self.assertEqual(state["summary"]["checked"], 0)
         self.assertEqual(state["summary"]["support_qualified"], 0)
+
+    def test_primary_refresh_can_discover_new_author_release_declaration(self) -> None:
+        primary_calls=[];release_calls=[]
+        refreshed='<meta name="citation_title" content="Paper C"><blockquote class="abstract">Abstract: Agent evidence.</blockquote> Our code will be released at https://github.com/example/NewRelease .'
+        def primary(url, **kwargs):
+            primary_calls.append(url)
+            return SimpleNamespace(status_code=200,text=refreshed,headers={})
+        def release(target):
+            release_calls.append(target["url"])
+            return {"status_code":200,"fingerprint":"a"*64,"surface_nonempty":True,"artifact_file_count":2,"fingerprint_version":"release-surface-v2"}
+        with tempfile.TemporaryDirectory() as td:
+            storage=self.storage(Path(td));self.cache(storage,"2608.00003",'<meta name="citation_title" content="Paper C"><blockquote class="abstract">Abstract: Agent evidence.</blockquote> No release link yet.')
+            state=run_support_release_watch(storage=storage,design_state=self.design([self.hold("C","arXiv:2608.00003")]),primary_requester=primary,fetcher=release,now=datetime(2026,8,14,tzinfo=timezone.utc),write_ledger=False)
+        self.assertEqual(len(primary_calls),1);self.assertEqual(release_calls,["https://github.com/example/NewRelease"])
+        self.assertEqual(state["summary"]["primary_declaration_refresh_checked"],1)
+        self.assertEqual(state["summary"]["primary_declaration_refresh_changed"],1)
+        self.assertEqual(state["summary"]["explicit_release_targets"],1)
+        self.assertEqual(state["summary"]["no_explicit_endpoint"],0)
+        self.assertEqual(state["rows"][0]["status"],"RECHECK_REQUIRED_NEW_RELEASE_SURFACE")
+
+    def test_primary_refresh_cooldown_prevents_repeat_arxiv_request(self) -> None:
+        calls=[]
+        refreshed='<meta name="citation_title" content="Paper C"><blockquote class="abstract">Abstract: Agent evidence.</blockquote> No endpoint.'
+        def primary(url, **kwargs):
+            calls.append(url);return SimpleNamespace(status_code=200,text=refreshed,headers={})
+        with tempfile.TemporaryDirectory() as td:
+            storage=self.storage(Path(td));self.cache(storage,"2608.00003",refreshed);design=self.design([self.hold("C","arXiv:2608.00003")]);ledger=storage.data_root/"watch.json"
+            run_support_release_watch(storage=storage,design_state=design,primary_requester=primary,max_primary_refreshes=1,now=datetime(2026,8,1,tzinfo=timezone.utc),ledger_path=ledger,fetcher=lambda target:(_ for _ in ()).throw(AssertionError("no release target")))
+            second=run_support_release_watch(storage=storage,design_state=design,primary_requester=primary,max_primary_refreshes=1,now=datetime(2026,8,2,tzinfo=timezone.utc),ledger_path=ledger,fetcher=lambda target:(_ for _ in ()).throw(AssertionError("no release target")))
+        self.assertEqual(len(calls),1);self.assertEqual(second["summary"]["primary_declaration_refresh_skipped_cooldown"],1)
+
+    def test_primary_refresh_429_opens_shared_arxiv_circuit(self) -> None:
+        calls=[]
+        def limited(url, **kwargs):
+            calls.append(url);return SimpleNamespace(status_code=429,text="",headers={"Retry-After":"600"})
+        with tempfile.TemporaryDirectory() as td:
+            storage=self.storage(Path(td));self.cache(storage,"2608.00003",'<meta name="citation_title" content="Paper C"><blockquote class="abstract">Abstract: Agent evidence.</blockquote> No endpoint.');rate=storage.data_root/"rate.json"
+            state=run_support_release_watch(storage=storage,design_state=self.design([self.hold("C","arXiv:2608.00003")]),primary_requester=limited,max_primary_refreshes=1,arxiv_rate_limit_state_path=rate,now=datetime(2026,8,14,tzinfo=timezone.utc),write_ledger=False)
+            self.assertTrue(rate.exists())
+        self.assertEqual(len(calls),1);self.assertGreaterEqual(state["summary"]["primary_declaration_refresh_rate_limited"],1);self.assertEqual(state["summary"]["checked"],0)
 
     def test_future_code_readme_only_surface_stays_waiting_for_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as td:
