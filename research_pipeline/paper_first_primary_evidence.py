@@ -780,6 +780,11 @@ def discover_arxiv_fallback(
                     kwargs["start"] = page_index * page_size
                 response = fetch(**kwargs)
                 status = int(getattr(response, "status_code", 200))
+                if status == 429:
+                    errors.append(f"{query}:RateLimited:HTTP 429:augmentation-circuit-open")
+                    rows = list(merged.values())
+                    rows.sort(key=lambda row: (str((row.get("metadata") or {}).get("publicationDate") or ""), _relevance_score(row), str(row.get("title") or "")), reverse=True)
+                    return rows, errors
                 if status >= 400:
                     raise RuntimeError(f"HTTP {status}")
                 parsed = parse_arxiv_atom(str(getattr(response, "text", "") or ""))

@@ -416,6 +416,16 @@ class ResearchSystemTest(unittest.TestCase):
         inconsistent=copy.deepcopy(state);inconsistent["paper_first_problem_search_portfolio"]["latest_run"]["summary"]["terminal_shadow_survivors"]=1
         self.assertTrue(any("terminal survivors" in error for error in validate_state(inconsistent)))
 
+    def test_retrieval_incomplete_without_new_lane_source_is_zero_call_compute_control(self) -> None:
+        state=copy.deepcopy(self.state);primary=state["paper_first_primary_evidence"];generator=state["paper_first_problem_generator"]
+        primary["summary"].update({"source_retrieval_complete":False,"source_coverage_exhausted":False,"unreviewed_lane_linked_sources":0})
+        generator["status"]="SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE";generator["summary"].update({"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0});generator["policy"].update({"incomplete_retrieval_without_new_lane_source_skips_model_call":True,"retrieval_incomplete_is_compute_control_not_scientific_negative":True});generator["source_coverage"]={"coverage_exhausted":False,"source_retrieval_complete":False,"unreviewed_lane_linked_sources":0,"carrier_probe_required":False,"carrier_probe_pending":0,"carrier_probe_complete":True,"scientific_authority":False}
+        self.assertEqual(validate_state(state),[])
+        bad=copy.deepcopy(state);bad["paper_first_problem_generator"]["source_coverage"]["source_retrieval_complete"]=True
+        self.assertTrue(any("retrieval-incomplete generator state" in error for error in validate_state(bad)))
+        nonzero=copy.deepcopy(state);nonzero["paper_first_problem_generator"]["summary"]["generated"]=1
+        self.assertTrue(any("retrieval-incomplete skip cannot contain" in error for error in validate_state(nonzero)))
+
     def test_primary_v11_carrier_probe_pending_is_zero_call_compute_control(self) -> None:
         state=copy.deepcopy(self.state);primary=state["paper_first_primary_evidence"];generator=state["paper_first_problem_generator"]
         primary["schema_version"]="1.1";primary["policy"].update({"no_lane_carrier_probe_enabled":True,"no_lane_carrier_probe_is_existing_object_rescue_only":True,"no_lane_carrier_probe_cannot_create_new_object":True,"no_lane_carrier_probe_has_zero_scientific_authority":True,"no_lane_carrier_probe_failure_prevents_coverage_exhaustion":True,"carrier_probe_pending_skips_live_generator_call":True})

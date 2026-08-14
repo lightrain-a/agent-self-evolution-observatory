@@ -266,6 +266,26 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertTrue(all(row["scientific_authority"] is False for row in inherited))
         self.assertTrue(public["policy"]["primary_source_coverage_receipts_are_inherited_transactionally"])
 
+    def test_incomplete_retrieval_without_new_lane_source_makes_zero_model_calls(self) -> None:
+        calls=[]
+        def responder(**kwargs):
+            calls.append(1);raise AssertionError("incomplete retrieval without source delta must not call a model")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,14,tzinfo=timezone.utc);pool=self.pool(root,now);payload=json.loads(pool.read_text())
+            payload["source_coverage"]={"coverage_exhausted":False,"source_retrieval_complete":False,"eligible_lane_linked_sources":4,"reviewed_lane_linked_sources":4,"unreviewed_lane_linked_sources":0,"unreviewed_no_lane_sources":2,"carrier_probe_required":False,"carrier_probe_pending":0,"carrier_probe_complete":True,"scientific_authority":False}
+            pool.write_text(json.dumps(payload),encoding="utf-8")
+            auto=root/"auto.json";state=run_problem_generator(storage=self.storage(root),primary_pool_path=pool,auto_inbox_path=auto,generator_responder=responder,reviewer_responder=responder,now=now);inbox=json.loads(auto.read_text())
+            ledger=root/"paper-first-problem-discovery"/"discovery-saturation-ledger.json"
+        self.assertEqual(state["status"],"SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE")
+        self.assertEqual(calls,[])
+        self.assertEqual(inbox["candidates"],[])
+        self.assertFalse(state["source_coverage"]["source_retrieval_complete"])
+        self.assertFalse(state["source_coverage"]["coverage_exhausted"])
+        self.assertTrue(state["policy"]["incomplete_retrieval_without_new_lane_source_skips_model_call"])
+        self.assertTrue(state["policy"]["retrieval_incomplete_is_compute_control_not_scientific_negative"])
+        self.assertFalse(state["saturation_memory"]["current_run_recorded"])
+        self.assertFalse(ledger.exists())
+
     def test_carrier_probe_pending_makes_zero_model_calls_without_saturation_receipt(self) -> None:
         calls=[]
         def responder(**kwargs):

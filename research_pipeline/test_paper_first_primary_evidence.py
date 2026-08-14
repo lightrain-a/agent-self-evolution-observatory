@@ -172,6 +172,16 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertEqual(len(errors),1)
         self.assertIn('FreshnessWindowTruncated',errors[0])
 
+    def test_arxiv_rate_limit_opens_one_request_circuit_breaker(self) -> None:
+        calls=[]
+        def limited(*,query:str,start:int,max_results:int,timeout:float,headers:dict[str,str]):
+            calls.append((query,start));return SimpleNamespace(status_code=429,text='')
+        rows,errors=discover_arxiv_fallback(queries=('q1','q2','q3'),per_query=2,max_pages=4,requester=limited,min_interval_seconds=0,now=datetime(2026,8,14,tzinfo=timezone.utc),max_publication_age_days=60)
+        self.assertEqual(rows,[])
+        self.assertEqual(calls,[('q1',0)])
+        self.assertEqual(len(errors),1)
+        self.assertIn('RateLimited:HTTP 429:augmentation-circuit-open',errors[0])
+
     def test_lane_floor_adds_only_highest_ranked_sparse_lane_representative(self) -> None:
         papers=[]
         for idx in range(1,6):

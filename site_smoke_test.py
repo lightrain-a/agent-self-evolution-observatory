@@ -316,6 +316,12 @@ def main() -> None:
         fail("zero-candidate problem discovery must expose an auditable rationale")
     if generator_policy.get("zero_candidate_rationale_required") is not True or generator_policy.get("generation_notes_are_advisory_not_scientific_authority") is not True or generator_policy.get("discovery_saturation_memory_has_zero_scientific_authority") is not True or saturation.get("scientific_authority") is not False:
         fail("problem-discovery rationale/saturation memory authority policy is stale")
+    if generator.get("status") == "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE":
+        coverage = generator.get("source_coverage") or {}
+        if generator_policy.get("incomplete_retrieval_without_new_lane_source_skips_model_call") is not True or generator_policy.get("retrieval_incomplete_is_compute_control_not_scientific_negative") is not True or coverage.get("source_retrieval_complete") is not False or coverage.get("coverage_exhausted") is True or int(coverage.get("unreviewed_lane_linked_sources") or 0) != 0:
+            fail("retrieval-incomplete Generator state is not a valid zero-call compute-control terminal")
+        if any(int((generator.get("summary") or {}).get(key) or 0) != 0 for key in ("generated","written_to_auto_inbox","semantic_clear","semantic_blocked")):
+            fail("retrieval-incomplete Generator cannot expose generated/reviewed candidates")
     if generator.get("status") == "SKIPPED_SOURCE_CARRIER_PROBE_PENDING":
         coverage = generator.get("source_coverage") or {}
         if generator_policy.get("carrier_probe_pending_skips_model_call") is not True or generator_policy.get("carrier_probe_pending_is_compute_control_not_scientific_negative") is not True or coverage.get("coverage_exhausted") is True or coverage.get("carrier_probe_required") is not True or int(coverage.get("carrier_probe_pending") or 0) <= 0 or coverage.get("carrier_probe_complete") is True or int(coverage.get("unreviewed_lane_linked_sources") or 0) != 0:

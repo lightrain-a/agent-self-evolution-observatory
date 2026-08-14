@@ -140,7 +140,7 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
         errors.append("canonical-transaction-forbids-search-portfolio")
     if generator_policy.get("one_generator_call_max") is not True or generator_policy.get("one_semantic_reviewer_call_max") is not True:
         errors.append("canonical-transaction-requires-single-call-budget")
-    allowed_generator_statuses = {"GENERATED_ZERO_CANDIDATES", "GENERATED_AWAIT_PROBLEM_GATE", "SKIPPED_SOURCE_COVERAGE_SATURATED", "SKIPPED_SOURCE_CARRIER_PROBE_PENDING"}
+    allowed_generator_statuses = {"GENERATED_ZERO_CANDIDATES", "GENERATED_AWAIT_PROBLEM_GATE", "SKIPPED_SOURCE_COVERAGE_SATURATED", "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE", "SKIPPED_SOURCE_CARRIER_PROBE_PENDING"}
     if generator_status not in allowed_generator_statuses:
         errors.append("generator-did-not-complete-discovery-transaction")
     generator_schema=str(generator.get("schema_version") or "0")
@@ -189,6 +189,20 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
         prior_reviewed=int(ps.get("prior_reviewed_sources") or 0)
         if any(row.get("scientific_authority") is not False for row in receipts) or len(portable_refs) < prior_reviewed:
             errors.append("coverage-skip-portable-receipts-incomplete")
+    if generator_status == "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE":
+        coverage=generator.get("source_coverage") or {};gp=generator.get("policy") or {}
+        if generated != 0 or int(gs.get("written_to_auto_inbox") or 0) != 0 or int(gs.get("semantic_clear") or 0) != 0 or int(gs.get("semantic_blocked") or 0) != 0:
+            errors.append("retrieval-incomplete-skip-generator-accounting-nonzero")
+        if coverage.get("source_retrieval_complete") is not False or coverage.get("coverage_exhausted") is True or int(coverage.get("unreviewed_lane_linked_sources") or 0)!=0:
+            errors.append("retrieval-incomplete-skip-state-invalid")
+        if ps.get("source_retrieval_complete") is not False or int(ps.get("unreviewed_lane_linked_sources") or 0)!=0:
+            errors.append("retrieval-incomplete-skip-primary-state-invalid")
+        if gp.get("incomplete_retrieval_without_new_lane_source_skips_model_call") is not True or gp.get("retrieval_incomplete_is_compute_control_not_scientific_negative") is not True or gp.get("one_content_addressed_pool_allows_at_most_one_live_generator_call") is not True:
+            errors.append("retrieval-incomplete-skip-policy-missing")
+        receipts=[row for row in ((generator.get("saturation_memory") or {}).get("portable_review_receipts") or []) if isinstance(row,dict)]
+        portable_refs={str(ref) for row in receipts if row.get("scientific_authority") is False for ref in row.get("source_refs") or [] if str(ref).startswith("arXiv:")}
+        if any(row.get("scientific_authority") is not False for row in receipts) or len(portable_refs)<int(ps.get("prior_reviewed_sources") or 0):
+            errors.append("retrieval-incomplete-skip-portable-review-receipts-incomplete")
     if generator_status == "SKIPPED_SOURCE_CARRIER_PROBE_PENDING":
         coverage=generator.get("source_coverage") or {};gp=generator.get("policy") or {}
         if generated != 0 or int(gs.get("written_to_auto_inbox") or 0) != 0 or int(gs.get("semantic_clear") or 0) != 0 or int(gs.get("semantic_blocked") or 0) != 0:
@@ -209,7 +223,7 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
         errors.append("queue-inbox-errors")
     if submitted != audited_count or passed + blocked != audited_count:
         errors.append("queue-accounting-mismatch")
-    if generator_status in {"SKIPPED_SOURCE_COVERAGE_SATURATED","SKIPPED_SOURCE_CARRIER_PROBE_PENDING"} and any(value != 0 for value in (submitted, audited_count, passed, blocked)):
+    if generator_status in {"SKIPPED_SOURCE_COVERAGE_SATURATED","SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE","SKIPPED_SOURCE_CARRIER_PROBE_PENDING"} and any(value != 0 for value in (submitted, audited_count, passed, blocked)):
         errors.append("coverage-skip-queue-must-be-empty")
     if any(int(qs.get(key) or 0) != 0 for key in ("method_authorized", "experiment_authorized", "p0_authorized")):
         errors.append("queue-illegal-downstream-authority")
