@@ -509,6 +509,32 @@ class ResearchSystemTest(unittest.TestCase):
         leaked=copy.deepcopy(self.state);leaked["paper_first_scientific_object_candidate_evidence"]["results"]={"x":{"ref":"arXiv:secret","scientific_authority":False}}
         self.assertTrue(any("cannot expose private primary" in error for error in validate_state(leaked)))
 
+    def test_support_release_watch_is_public_safe_and_zero_authority(self) -> None:
+        watch=copy.deepcopy(self.state["paper_first_support_release_watch"])
+        self.assertFalse(watch["scientific_authority"])
+        self.assertTrue(watch["policy"]["primary_declared_release_endpoints_only"])
+        self.assertTrue(watch["policy"]["related_work_repository_links_are_not_watch_targets"])
+        self.assertTrue(watch["policy"]["release_surface_change_only_requests_recheck"])
+        self.assertTrue(watch["policy"]["release_watch_cannot_mark_support_qualified"])
+        self.assertEqual(int((watch.get("summary") or {}).get("support_qualified") or 0),0)
+        self.assertEqual(int((watch.get("summary") or {}).get("generator_reopen_authorized") or 0),0)
+        self.assertEqual(int((watch.get("summary") or {}).get("problem_gate_authorized") or 0),0)
+        text=json.dumps(watch)
+        for marker in ('"rows"','"url"','"source_refs"','"required_unit"','"reopen_only_if"'):
+            self.assertNotIn(marker,text)
+        state=copy.deepcopy(self.state)
+        state["paper_first_support_release_watch"]={
+            "schema_version":"1.0","status":"SUPPORT_RELEASE_WATCH_COMPLETE","scientific_authority":False,
+            "policy":{"scientific_authority":False,"primary_declared_release_endpoints_only":True,"related_work_repository_links_are_not_watch_targets":True,"release_surface_change_only_requests_recheck":True,"release_watch_cannot_mark_support_qualified":True,"release_watch_cannot_reopen_generator_or_problem_gate":True,"release_watch_has_zero_source_exposure_effect":True,"network_checks_are_cooldown_bounded":True,"public_summary_excludes_urls_refs_required_units_and_private_paths":True},
+            "summary":{"support_holds":4,"explicit_release_targets":2,"no_explicit_endpoint":2,"recheck_required":1,"support_qualified":0,"generator_reopen_authorized":0,"problem_gate_authorized":0},
+            "status_counts":{"RECHECK_REQUIRED_RELEASE_CHANGED":1},
+        }
+        self.assertEqual(validate_state(state),[])
+        escalated=copy.deepcopy(state);escalated["paper_first_support_release_watch"]["summary"]["support_qualified"]=1
+        self.assertTrue(any("support release watch cannot authorize" in error for error in validate_state(escalated)))
+        leaked=copy.deepcopy(state);leaked["paper_first_support_release_watch"]["rows"]=[{"url":"https://secret.example","required_unit":"secret"}]
+        self.assertTrue(any("cannot expose URLs" in error for error in validate_state(leaked)))
+
     def test_canonical_paper_design_backlog_is_durable_but_cannot_escalate_authority(self) -> None:
         state=copy.deepcopy(self.state)
         state["paper_first_paper_design_backlog"]={

@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from .config import StorageSettings
-from .paper_first_support_release_watch import explicit_release_targets, run_support_release_watch
+from .paper_first_support_release_watch import explicit_release_targets, public_support_release_watch_summary, run_support_release_watch
 
 
 class SupportReleaseWatchTest(unittest.TestCase):
@@ -119,6 +119,19 @@ class SupportReleaseWatchTest(unittest.TestCase):
         self.assertEqual(same["rows"][0]["status"], "NO_RELEASE_CHANGE")
         self.assertEqual(changed["rows"][0]["status"], "RECHECK_REQUIRED_RELEASE_CHANGED")
         self.assertEqual(changed["summary"]["support_qualified"], 0)
+
+    def test_public_summary_exposes_counts_not_release_urls_or_required_units(self) -> None:
+        private={
+            "schema_version":"1.0","status":"SUPPORT_RELEASE_WATCH_COMPLETE","scientific_authority":False,
+            "summary":{"support_holds":4,"explicit_release_targets":2,"no_explicit_endpoint":2,"checked":2,"skipped_cooldown":0,"provider_errors":0,"recheck_required":0,"support_qualified":0,"generator_reopen_authorized":0,"problem_gate_authorized":0},
+            "rows":[{"candidate_id":"SECRET","url":"https://github.com/private/repo","source_refs":["arXiv:secret"],"required_unit":"secret matched units","status":"WAITING_RELEASE_ARTIFACTS","scientific_authority":False}],
+        }
+        public=public_support_release_watch_summary(private)
+        text=str(public)
+        self.assertEqual(public["summary"]["support_holds"],4)
+        self.assertEqual(public["status_counts"]["WAITING_RELEASE_ARTIFACTS"],1)
+        self.assertNotIn("github.com",text);self.assertNotIn("arXiv:secret",text);self.assertNotIn("secret matched units",text);self.assertNotIn("SECRET",text)
+        self.assertFalse(public["scientific_authority"])
 
     def test_cooldown_reuses_observation_without_network(self) -> None:
         calls = []

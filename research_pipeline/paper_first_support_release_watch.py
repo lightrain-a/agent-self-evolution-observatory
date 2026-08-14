@@ -236,6 +236,53 @@ def _load_ledger(path: Path) -> dict[str, Any]:
         return {"schema_version": WATCH_SCHEMA, "observations": {}, "scientific_authority": False}
 
 
+def load_private_support_release_watch(
+    *,
+    storage: StorageSettings | None = None,
+    path: Path | None = None,
+) -> dict[str, Any]:
+    storage = storage or StorageSettings.from_env()
+    path = path or (_watch_root(storage) / "last-run.json")
+    if not path.exists():
+        return {"schema_version": WATCH_SCHEMA, "status": "NOT_RUN", "policy": {"scientific_authority": False}, "summary": {}, "rows": [], "scientific_authority": False}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        return payload if isinstance(payload, dict) else {"schema_version": WATCH_SCHEMA, "status": "STATE_INVALID", "policy": {"scientific_authority": False}, "summary": {}, "rows": [], "scientific_authority": False}
+    except Exception:
+        return {"schema_version": WATCH_SCHEMA, "status": "STATE_UNREADABLE", "policy": {"scientific_authority": False}, "summary": {}, "rows": [], "scientific_authority": False}
+
+
+def public_support_release_watch_summary(state: dict[str, Any]) -> dict[str, Any]:
+    rows = [row for row in state.get("rows") or [] if isinstance(row, dict)]
+    status_counts: dict[str, int] = {}
+    for row in rows:
+        status = str(row.get("status") or "UNKNOWN")
+        status_counts[status] = status_counts.get(status, 0) + 1
+    summary = state.get("summary") or {}
+    safe_summary_keys = (
+        "support_holds", "explicit_release_targets", "no_explicit_endpoint", "checked", "skipped_cooldown",
+        "provider_errors", "recheck_required", "support_qualified", "generator_reopen_authorized", "problem_gate_authorized",
+    )
+    return {
+        "schema_version": WATCH_SCHEMA,
+        "status": str(state.get("status") or "NOT_RUN"),
+        "policy": {
+            "scientific_authority": False,
+            "primary_declared_release_endpoints_only": True,
+            "related_work_repository_links_are_not_watch_targets": True,
+            "release_surface_change_only_requests_recheck": True,
+            "release_watch_cannot_mark_support_qualified": True,
+            "release_watch_cannot_reopen_generator_or_problem_gate": True,
+            "release_watch_has_zero_source_exposure_effect": True,
+            "network_checks_are_cooldown_bounded": True,
+            "public_summary_excludes_urls_refs_required_units_and_private_paths": True,
+        },
+        "summary": {key: summary[key] for key in safe_summary_keys if key in summary},
+        "status_counts": status_counts,
+        "scientific_authority": False,
+    }
+
+
 def run_support_release_watch(
     *,
     storage: StorageSettings | None = None,

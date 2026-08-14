@@ -42,6 +42,7 @@ from .paper_first_fresh_saturation import build_fresh_saturation_state, write_fr
 from .paper_first_primary_evidence import load_primary_evidence_state
 from .paper_first_scientific_object_candidate_evidence import load_scientific_object_candidate_evidence_ledger, public_scientific_object_candidate_evidence_summary
 from .paper_first_scientific_object_retrieval_audit import load_private_shadow_scientific_object_retrieval_audit, public_shadow_scientific_object_retrieval_summary
+from .paper_first_support_release_watch import load_private_support_release_watch, public_support_release_watch_summary
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
@@ -324,6 +325,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_last_lane_search = paper_first_lane_search.get("last_completed_lane_search") or {}
     paper_first_problem_gate_queue = load_problem_gate_queue_state()
     paper_first_search_portfolio_design = build_search_portfolio_design_adjudication()
+    paper_first_support_release_watch = public_support_release_watch_summary(load_private_support_release_watch(storage=storage))
     paper_first_sp15_support = build_sp15_identifiability_support()
     paper_first_paper_design_backlog = load_paper_design_backlog()
     paper_first_global_relation_recall = load_global_relation_recall_state()
@@ -526,6 +528,14 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_search_portfolio_near_miss_current_primary_stops":paper_first_search_portfolio_design["summary"].get("near_miss_current_primary_stops",0),
             "paper_first_search_portfolio_near_miss_mature_theory_stops":paper_first_search_portfolio_design["summary"].get("near_miss_mature_theory_stops",0),
             "paper_first_search_portfolio_memory_last_ingested_run_id":(paper_first_search_portfolio_design.get("shadow_memory_maintenance") or {}).get("last_ingested_run_id",""),
+            "paper_first_support_release_watch_status":paper_first_support_release_watch.get("status","NOT_RUN"),
+            "paper_first_support_release_holds":int((paper_first_support_release_watch.get("summary") or {}).get("support_holds") or 0),
+            "paper_first_support_release_targets":int((paper_first_support_release_watch.get("summary") or {}).get("explicit_release_targets") or 0),
+            "paper_first_support_release_no_endpoint":int((paper_first_support_release_watch.get("summary") or {}).get("no_explicit_endpoint") or 0),
+            "paper_first_support_release_recheck_required":int((paper_first_support_release_watch.get("summary") or {}).get("recheck_required") or 0),
+            "paper_first_support_release_support_qualified":int((paper_first_support_release_watch.get("summary") or {}).get("support_qualified") or 0),
+            "paper_first_support_release_generator_reopen":int((paper_first_support_release_watch.get("summary") or {}).get("generator_reopen_authorized") or 0),
+            "paper_first_support_release_problem_gate":int((paper_first_support_release_watch.get("summary") or {}).get("problem_gate_authorized") or 0),
             "paper_first_sp15_identifiability_support_status":paper_first_sp15_support["summary"]["support_status"],
             "paper_first_sp15_identifiability_units":paper_first_sp15_support["summary"]["query_level_identifiability_units"],
             "paper_first_search_portfolio_method_design_authorized":paper_first_search_portfolio_design["summary"]["method_design_authorized"],
@@ -736,6 +746,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_problem_generator":paper_first_problem_generator,
         "paper_first_problem_gate_queue":paper_first_problem_gate_queue,
         "paper_first_search_portfolio_design_adjudication":paper_first_search_portfolio_design,
+        "paper_first_support_release_watch":paper_first_support_release_watch,
         "paper_first_sp15_identifiability_support":paper_first_sp15_support,
         "paper_first_paper_design_backlog":paper_first_paper_design_backlog,
         "paper_first_global_relation_recall":paper_first_global_relation_recall,
@@ -909,6 +920,22 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and int(candidate_evidence_summary.get("activation_authorized") or 0)==0
         and all(row.get("scientific_authority") is False for row in (candidate_evidence.get("results") or {}).values() if isinstance(row,dict))
     )
+    support_release_watch=state.get("paper_first_support_release_watch") or {};support_release_policy=support_release_watch.get("policy") or {};support_release_summary=support_release_watch.get("summary") or {};support_release_status=str(support_release_watch.get("status") or "NOT_RUN")
+    support_release_boundary_ok=bool(
+        support_release_watch.get("scientific_authority") is False
+        and support_release_policy.get("primary_declared_release_endpoints_only") is True
+        and support_release_policy.get("related_work_repository_links_are_not_watch_targets") is True
+        and support_release_policy.get("release_surface_change_only_requests_recheck") is True
+        and support_release_policy.get("release_watch_cannot_mark_support_qualified") is True
+        and support_release_policy.get("release_watch_cannot_reopen_generator_or_problem_gate") is True
+        and support_release_policy.get("release_watch_has_zero_source_exposure_effect") is True
+        and support_release_policy.get("network_checks_are_cooldown_bounded") is True
+        and support_release_policy.get("public_summary_excludes_urls_refs_required_units_and_private_paths") is True
+        and int(support_release_summary.get("support_qualified") or 0)==0
+        and int(support_release_summary.get("generator_reopen_authorized") or 0)==0
+        and int(support_release_summary.get("problem_gate_authorized") or 0)==0
+        and support_release_status in {"NOT_RUN","SUPPORT_RELEASE_WATCH_COMPLETE","SUPPORT_RELEASE_WATCH_PARTIAL","STATE_UNREADABLE","STATE_INVALID"}
+    )
     relation_freshness=state.get("paper_first_global_relation_freshness") or {};relation_freshness_policy=relation_freshness.get("policy") or {};relation_freshness_summary=relation_freshness.get("summary") or {}
     relation_freshness_boundary_ok=bool(
         relation_freshness.get("scientific_authority") is False
@@ -965,6 +992,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-primary-evidence", "pass":state["paper_first_primary_evidence"].get("status") in {"NOT_RUN","READY","INSUFFICIENT_PRIMARY_EVIDENCE","STALE_CORPUS_BLOCKED","NO_CORPUS","STATE_UNREADABLE"} and (state["paper_first_primary_evidence"].get("policy") or {}).get("candidate_generation_authority") is False and (state["paper_first_primary_evidence"].get("policy") or {}).get("method_authority") is False and (state["paper_first_primary_evidence"].get("policy") or {}).get("experiment_authority") is False and (state["paper_first_primary_evidence"].get("status") != "READY" or ((state["paper_first_primary_evidence"].get("policy") or {}).get("primary_publication_age_is_bounded") is True and float((state["paper_first_primary_evidence"].get("policy") or {}).get("maximum_publication_age_days") or 9999) <= 60.0 and (state["paper_first_primary_evidence"].get("policy") or {}).get("fresh_s2_is_augmented_by_preregistered_arxiv_lanes") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("arxiv_augmentation_failure_does_not_invalidate_fresh_corpus") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("typed_evidence_candidates_are_not_ground_truth") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("typed_evidence_is_deterministic_and_bounded") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("source_coverage_scheduler_is_discovery_only") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("source_review_exposure_has_zero_scientific_authority") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("portable_source_review_receipts_have_zero_scientific_authority") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("private_saturation_ledger_runs_exported_as_zero_authority_portable_receipts") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("source_exposure_cannot_skip_generation_or_problem_gate") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("source_exposure_does_not_relax_relevance_or_freshness") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("source_coverage_exploration_prefers_preregistered_lanes") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("source_coverage_saturation_is_compute_control_not_scientific_negative") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("new_lane_grounded_source_reopens_generation") is True and (not bool((state["paper_first_primary_evidence"].get("summary") or {}).get("source_coverage_exhausted")) or len(portable_review_refs) >= int((state["paper_first_primary_evidence"].get("summary") or {}).get("prior_reviewed_sources") or 0)) and int((state["paper_first_primary_evidence"].get("summary") or {}).get("selected_previously_reviewed") or 0) + int((state["paper_first_primary_evidence"].get("summary") or {}).get("selected_unreviewed") or 0) == int((state["paper_first_primary_evidence"].get("summary") or {}).get("selected") or 0) and (state["paper_first_primary_evidence"].get("policy") or {}).get("pre_registered_lane_coverage_floor") is True and int((state["paper_first_primary_evidence"].get("policy") or {}).get("lane_floor") or 0) >= 1 and not list((state["paper_first_primary_evidence"].get("summary") or {}).get("undercovered_lanes") or []))), "detail":{"status":state["paper_first_primary_evidence"].get("status"),"summary":state["paper_first_primary_evidence"].get("summary")}},
         {"key":"paper-first-object-retrieval-shadow", "pass":object_retrieval_boundary_ok, "detail":{"status":object_retrieval.get("status"),"summary":object_retrieval_summary}},
         {"key":"paper-first-object-candidate-evidence-shadow", "pass":candidate_evidence_boundary_ok, "detail":{"status":candidate_evidence.get("status"),"summary":candidate_evidence_summary}},
+        {"key":"paper-first-support-release-watch", "pass":support_release_boundary_ok, "detail":{"status":support_release_watch.get("status"),"summary":support_release_summary,"status_counts":support_release_watch.get("status_counts") or {}}},
         {"key":"paper-first-global-relation-freshness", "pass":relation_freshness_boundary_ok, "detail":{"status":relation_freshness.get("status"),"summary":relation_freshness_summary}},
         {"key":"paper-first-global-relation-delta-preflight", "pass":relation_delta_boundary_ok, "detail":{"status":relation_delta.get("status"),"summary":relation_delta_summary,"pair_slots":relation_delta.get("pair_slots") or {},"interpretation":relation_delta.get("interpretation") or {}}},
         {"key":"paper-first-global-relation-scan-admission", "pass":relation_admission_boundary_ok, "detail":{"status":relation_admission.get("status"),"summary":relation_admission_summary}},
@@ -1167,6 +1195,16 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     errors.extend(f"Search Portfolio design adjudication: {error}" for error in validate_search_portfolio_design_adjudication(sp_design))
     sp15_support = state.get("paper_first_sp15_identifiability_support") or {}; sp15_summary = sp15_support.get("summary") or {}; sp15_policy = sp15_support.get("policy") or {}
     if sp15_summary.get("query_level_identifiability_units") != 0 or sp15_summary.get("support_status") != "INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM" or sp15_support.get("decision") != "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT" or sp15_policy.get("phenomenon_support_is_not_identifiability_support") is not True or any(int(sp15_summary.get(key) or 0) != 0 for key in ("method_design_authorized","experiment_blueprint_authorized","local_validation_authorized","p0_authorized","gpu_authorized")): errors.append("SP-15 revised identifiability problem must remain HOLD until nonzero matched query-level support exists")
+    support_release_watch=state.get("paper_first_support_release_watch") or {};support_release_policy=support_release_watch.get("policy") or {};support_release_summary=support_release_watch.get("summary") or {};support_release_status=str(support_release_watch.get("status") or "NOT_RUN")
+    if support_release_watch:
+        if support_release_watch.get("scientific_authority") is not False or support_release_policy.get("primary_declared_release_endpoints_only") is not True or support_release_policy.get("related_work_repository_links_are_not_watch_targets") is not True or support_release_policy.get("release_surface_change_only_requests_recheck") is not True or support_release_policy.get("release_watch_cannot_mark_support_qualified") is not True or support_release_policy.get("release_watch_cannot_reopen_generator_or_problem_gate") is not True or support_release_policy.get("release_watch_has_zero_source_exposure_effect") is not True or support_release_policy.get("network_checks_are_cooldown_bounded") is not True or support_release_policy.get("public_summary_excludes_urls_refs_required_units_and_private_paths") is not True:
+            errors.append("support release watch public state must remain primary-declared, bounded, redacted, and zero-authority")
+        if support_release_status not in {"NOT_RUN","SUPPORT_RELEASE_WATCH_COMPLETE","SUPPORT_RELEASE_WATCH_PARTIAL","STATE_UNREADABLE","STATE_INVALID"}:
+            errors.append("support release watch status invalid")
+        if int(support_release_summary.get("support_qualified") or 0)!=0 or int(support_release_summary.get("generator_reopen_authorized") or 0)!=0 or int(support_release_summary.get("problem_gate_authorized") or 0)!=0:
+            errors.append("support release watch cannot authorize support, Generator reopen, or Problem Gate")
+        if any(key in support_release_watch for key in ("rows","url","source_refs","required_unit","reopen_only_if")):
+            errors.append("support release watch public state cannot expose URLs, refs, required units, or private rows")
     shadow_search_admission=state.get("paper_first_shadow_search_admission") or {}
     errors.extend(f"Shadow Search admission: {error}" for error in validate_shadow_search_admission(shadow_search_admission))
     shadow_portfolio=state.get("paper_first_problem_search_portfolio") or {};shadow_latest=shadow_portfolio.get("latest_run") or {}
