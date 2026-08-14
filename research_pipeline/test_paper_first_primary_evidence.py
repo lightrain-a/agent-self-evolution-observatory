@@ -411,6 +411,31 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         rescued=next(row for row in private["records"] if row["ref"]=="arXiv:2608.51005")
         self.assertIn("parametric_model_state",rescued["lane_keys"])
 
+    def test_primary_scope_exclusion_completes_carrier_probe_without_fulltext(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);now=datetime(2026,8,13,tzinfo=timezone.utc)
+            titles={1:"Self-Evolving Agent Skill One",2:"Harness Evolution Agent Two",3:"Persistent Agent Memory Three",4:"Self-Evolving World Model Four",5:"Towards Self-Evolving Agents: Human-Inspired Genetic Network Programming"}
+            abstracts={1:"A self-evolving agent skill harness improves adaptation.",2:"A self-evolving agent harness improves workflows.",3:"Persistent agent memory improves a continual agent.",4:"A self-evolving world model improves planning.",5:"We propose Human-Inspired Genetic Network Programming (GNP), with adaptive crossover and mutation operators that evolve graph-based decision structures for agents."}
+            papers=[{"paper_id":f"s2-{idx}","title":titles[idx],"year":2026,"abstract":abstracts[idx],"metadata":{"externalIds":{"ArXiv":f"2608.53{idx:03d}"},"publicationDate":f"2026-08-{14-idx:02d}","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"topic"}]}} for idx in range(1,6)]
+            corpus=root/"carrier-scope-corpus.json";corpus.write_text(json.dumps({"schema_version":"1.0","retrieved_at":"2026-08-13T00:00:00+00:00","papers":papers}),encoding="utf-8")
+            discovery=root/"paper-first-problem-discovery";discovery.mkdir(parents=True)
+            (discovery/"discovery-saturation-ledger.json").write_text(json.dumps({"schema_version":"1.0","runs":[{"run_id":"reviewed","source_refs":[f"arXiv:2608.53{i:03d}" for i in range(1,5)],"scientific_authority":False}]}),encoding="utf-8")
+            calls=[]
+            def requester(url:str,*,timeout:float,headers:dict[str,str]):
+                calls.append(url);aid=url.rsplit('/',1)[-1];idx=int(aid[-1])
+                if '/html/' in url:
+                    return SimpleNamespace(status_code=200,text='<html><body><section><h2>Results</h2><p>We find verified performance improves by 10.0 percent on held-out tasks.</p></section></body></html>')
+                return SimpleNamespace(status_code=200,text=f'<meta name="citation_title" content="{titles[idx]}"><blockquote class="abstract mathjax">Abstract: {abstracts[idx]}</blockquote>')
+            public,_=build_primary_evidence_pool(storage=storage,corpus_path=corpus,requester=requester,augment_fresh_corpus_with_arxiv=False,coverage_anchor_count=2,carrier_probe_limit=1,now=now,min_interval_seconds=0,max_papers=4,cache_dir=root/"primary-cache")
+        self.assertTrue(public["summary"]["carrier_probe_required"])
+        self.assertEqual((public["summary"]["carrier_probe_attempted"],public["summary"]["carrier_probe_rescued"],public["summary"]["carrier_probe_pending"]),(1,0,0))
+        self.assertTrue(public["summary"]["carrier_probe_complete"])
+        self.assertTrue(public["summary"]["source_coverage_exhausted"])
+        receipt=next(row for row in public["carrier_probe"]["portable_receipts"] if row["ref"]=="arXiv:2608.53005")
+        self.assertEqual(receipt["probe_outcome"],"SCOPE_EXCLUDED_BY_PRIMARY")
+        self.assertEqual(receipt["fulltext_sha256"],"")
+        self.assertFalse(any('/html/2608.53005' in url for url in calls))
+
     def test_no_lane_carrier_probe_pending_blocks_exhaustion_without_rescue(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);storage=self.storage(root);now=datetime(2026,8,13,tzinfo=timezone.utc)

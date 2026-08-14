@@ -1056,7 +1056,9 @@ def _portable_carrier_probe_receipts(
         if age is None or age > max(0.0,float(max_age_days)):
             continue
         ref=str(row.get("ref") or "").strip()
-        if not ref.startswith("arXiv:") or len(str(row.get("primary_sha256") or ""))!=64 or len(str(row.get("fulltext_sha256") or ""))!=64:
+        scope_excluded=str(row.get("probe_outcome") or "")=="SCOPE_EXCLUDED_BY_PRIMARY"
+        fulltext_ok=scope_excluded or len(str(row.get("fulltext_sha256") or ""))==64
+        if not ref.startswith("arXiv:") or len(str(row.get("primary_sha256") or ""))!=64 or not fulltext_ok:
             continue
         valid.append(dict(row))
     return valid[-CARRIER_PROBE_RECEIPT_LIMIT:]
@@ -1073,12 +1075,12 @@ def _carrier_probe_recent_content_matches(row: dict[str, Any], paper: dict[str, 
         return False
     arxiv_id=_arxiv_id(paper)
     primary=_cached_primary_page(cache_dir,arxiv_id,paper,now=now,max_age_hours=DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS)
+    if not primary or str(primary.get("source_sha256") or "")!=str(row.get("primary_sha256") or ""):
+        return False
+    if str(row.get("probe_outcome") or "")=="SCOPE_EXCLUDED_BY_PRIMARY":
+        return True
     fulltext=_cached_fulltext_page(cache_dir,arxiv_id,now=now,max_age_hours=DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS)
-    return bool(
-        primary and fulltext
-        and str(primary.get("source_sha256") or "")==str(row.get("primary_sha256") or "")
-        and str(fulltext.get("fulltext_sha256") or "")==str(row.get("fulltext_sha256") or "")
-    )
+    return bool(fulltext and str(fulltext.get("fulltext_sha256") or "")==str(row.get("fulltext_sha256") or ""))
 
 
 def _apply_carrier_rescue(paper: dict[str, Any], lanes: list[str] | tuple[str, ...]) -> None:
@@ -1101,7 +1103,7 @@ def _probe_no_lane_carriers(
     min_interval_seconds: float,
 ) -> dict[str, Any]:
     try:
-        from .paper_first_no_lane_carrier_probe import CARRIER_CLASSIFIER_VERSION, build_carrier_probe_receipt
+        from .paper_first_no_lane_carrier_probe import CARRIER_CLASSIFIER_VERSION, build_carrier_probe_receipt, build_primary_scope_exclusion_receipt
     except Exception as error:
         return {"enabled":False,"error":f"classifier-unavailable:{type(error).__name__}","portable_receipts":[],"private_receipts":[],"pending_refs":[],"rescued_refs":[],"attempted":0,"reused":0,"errors":[],"scientific_authority":False}
     no_lane=[paper for paper in eligible_candidates if not _paper_lane_keys(paper) and int(source_exposure_counts.get(_source_ref(paper),0))==0]
@@ -1121,7 +1123,7 @@ def _probe_no_lane_carriers(
         try:
             primary=_cached_primary_page(cache_dir,arxiv_id,paper,now=now,max_age_hours=DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS)
             if primary:
-                primary_text=str(primary["raw_text"]);primary_sha=str(primary["source_sha256"]);primary_path=str(primary["cache_path"])
+                primary_text=str(primary["raw_text"]);primary_sha=str(primary["source_sha256"]);primary_path=str(primary["cache_path"]);parsed=dict(primary["parsed"])
             else:
                 if last_fetch_started is not None and min_interval_seconds>0:
                     wait=min_interval_seconds-(time.monotonic()-last_fetch_started)
@@ -1136,6 +1138,23 @@ def _probe_no_lane_carriers(
                 if _title_similarity(str(paper.get("title") or ""),parsed["title"])<0.72: raise RuntimeError("carrier-probe-title-mismatch")
                 primary_bytes=primary_text.encode("utf-8");primary_sha=hashlib.sha256(primary_bytes).hexdigest()
                 primary_file=cache_dir/f"arxiv-{re.sub(r'[^0-9A-Za-z._-]+','_',arxiv_id)}-{primary_sha[:12]}.html";primary_file.write_bytes(primary_bytes);primary_path=str(primary_file)
+            scope_receipt=build_primary_scope_exclusion_receipt(ref=ref,title=parsed["title"],abstract=parsed["abstract"],primary_sha256=primary_sha)
+            if scope_receipt:
+                scope_receipt.update({"probed_at":now.replace(microsecond=0).isoformat(),"primary_cache_path":primary_path,"fulltext_cache_path":""})
+                private_receipts.append(scope_receipt)
+                portable={
+                    "ref":ref,"probed_at":scope_receipt["probed_at"],
+                    "title_fingerprint":hashlib.sha256(_normalize_title(str(paper.get("title") or "")).encode("utf-8")).hexdigest(),
+                    "publication_date":str((paper.get("metadata") or {}).get("publicationDate") or ""),
+                    "primary_sha256":primary_sha,"fulltext_sha256":"",
+                    "classifier_version":CARRIER_CLASSIFIER_VERSION,
+                    "probe_outcome":"SCOPE_EXCLUDED_BY_PRIMARY",
+                    "scope_exclusion_rule":scope_receipt.get("scope_exclusion_rule"),
+                    "matched_existing_object_lanes":[],"live_rescue_eligible_lanes":[],
+                    "scientific_authority":False,
+                }
+                new_portable.append(portable);reusable[ref]=portable
+                continue
             cached_full=_cached_fulltext_page(cache_dir,arxiv_id,now=now,max_age_hours=DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS)
             if cached_full:
                 fulltext_sha=str(cached_full["fulltext_sha256"]);fulltext_path=str(cached_full["fulltext_cache_path"]);fulltext_text=Path(fulltext_path).read_text(encoding="utf-8",errors="replace")

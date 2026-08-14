@@ -437,6 +437,8 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(any("carrier-probe backlog" in error for error in validate_state(exhausted)))
         unknown=copy.deepcopy(state);unknown["paper_first_primary_evidence"]["carrier_probe"]["portable_receipts"]=[{"ref":"arXiv:x","primary_sha256":"a"*64,"fulltext_sha256":"b"*64,"classifier_version":"existing-object-carrier-v1","live_rescue_eligible_lanes":["new_object"],"scientific_authority":False}]
         self.assertTrue(any("existing-object receipts" in error for error in validate_state(unknown)))
+        scope=copy.deepcopy(state);scope["paper_first_primary_evidence"]["carrier_probe"]["portable_receipts"]=[{"ref":"arXiv:scope","primary_sha256":"a"*64,"fulltext_sha256":"","classifier_version":"existing-object-carrier-v1","probe_outcome":"SCOPE_EXCLUDED_BY_PRIMARY","scope_exclusion_rule":"genetic-network-programming-non-llm-v1","live_rescue_eligible_lanes":[],"scientific_authority":False}]
+        self.assertEqual(validate_state(scope),[])
         bad_generator=copy.deepcopy(state);bad_generator["paper_first_problem_generator"]["source_coverage"]["coverage_exhausted"]=True
         self.assertTrue(any("pending generator state" in error for error in validate_state(bad_generator)))
 

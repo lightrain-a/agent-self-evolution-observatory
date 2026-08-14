@@ -785,7 +785,13 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
             and int(carrier_probe.get("pending") or 0)==int(primary_summary.get("carrier_probe_pending") or 0)
             and bool(carrier_probe.get("complete"))==bool(primary_summary.get("carrier_probe_complete"))
             and not (primary_summary.get("source_coverage_exhausted") is True and int(primary_summary.get("carrier_probe_pending") or 0)>0)
-            and all(row.get("scientific_authority") is False and len(str(row.get("primary_sha256") or ""))==64 and len(str(row.get("fulltext_sha256") or ""))==64 and all(str(value) in allowed_objects for value in row.get("live_rescue_eligible_lanes") or []) for row in carrier_receipts)
+            and all(
+                row.get("scientific_authority") is False
+                and len(str(row.get("primary_sha256") or ""))==64
+                and (((str(row.get("probe_outcome") or "")=="SCOPE_EXCLUDED_BY_PRIMARY") and not str(row.get("fulltext_sha256") or "") and not (row.get("live_rescue_eligible_lanes") or [])) or len(str(row.get("fulltext_sha256") or ""))==64)
+                and all(str(value) in allowed_objects for value in row.get("live_rescue_eligible_lanes") or [])
+                for row in carrier_receipts
+            )
         )
     generator_status=str((state.get("paper_first_problem_generator") or {}).get("status") or "");generator_coverage=(state.get("paper_first_problem_generator") or {}).get("source_coverage") or {}
     retrieval_incomplete_boundary_ok=generator_status!="SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE" or bool(
@@ -908,8 +914,13 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             errors.append("Primary carrier-probe accounting mismatch")
         if primary_summary.get("source_coverage_exhausted") is True and int(primary_summary.get("carrier_probe_pending") or 0)>0:
             errors.append("source coverage cannot be exhausted while carrier-probe backlog remains")
-        if any(not isinstance(row,dict) or row.get("scientific_authority") is not False or len(str(row.get("primary_sha256") or ""))!=64 or len(str(row.get("fulltext_sha256") or ""))!=64 or any(str(value) not in allowed_objects for value in row.get("live_rescue_eligible_lanes") or []) for row in carrier.get("portable_receipts") or []):
-            errors.append("Primary carrier-probe receipts must be content-addressed zero-authority existing-object receipts")
+        for row in carrier.get("portable_receipts") or []:
+            if not isinstance(row,dict):
+                errors.append("Primary carrier-probe receipts must be content-addressed zero-authority existing-object receipts"); break
+            scope_excluded=str(row.get("probe_outcome") or "")=="SCOPE_EXCLUDED_BY_PRIMARY"
+            fulltext_ok=(scope_excluded and not str(row.get("fulltext_sha256") or "") and not (row.get("live_rescue_eligible_lanes") or [])) or len(str(row.get("fulltext_sha256") or ""))==64
+            if row.get("scientific_authority") is not False or len(str(row.get("primary_sha256") or ""))!=64 or not fulltext_ok or any(str(value) not in allowed_objects for value in row.get("live_rescue_eligible_lanes") or []):
+                errors.append("Primary carrier-probe receipts must be content-addressed zero-authority existing-object receipts"); break
     if primary_evidence.get("status") == "READY" and (primary_summary.get("verified") or 0) < 4: errors.append("READY primary evidence pool must contain at least four verified records")
     if primary_evidence.get("status") == "READY" and (primary_policy.get("primary_publication_age_is_bounded") is not True or float(primary_policy.get("maximum_publication_age_days") or 9999) > 60.0): errors.append("READY primary evidence pool must hard-bound publication age to <=60 days")
     if primary_evidence.get("status") == "READY" and (primary_policy.get("fulltext_enrichment_is_optional") is not True or primary_policy.get("fulltext_snippets_remain_private_data_artifacts") is not True or primary_policy.get("empirical_fact_candidates_are_not_ground_truth") is not True or primary_policy.get("typed_evidence_candidates_are_not_ground_truth") is not True or primary_policy.get("typed_evidence_is_deterministic_and_bounded") is not True): errors.append("READY primary evidence must keep fulltext/typed enrichment optional-private, deterministic-bounded, and non-authoritative")

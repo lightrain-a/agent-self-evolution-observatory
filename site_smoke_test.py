@@ -307,7 +307,9 @@ def main() -> None:
         if primary_summary.get("source_coverage_exhausted") is True and int(primary_summary.get("carrier_probe_pending") or 0) > 0:
             fail("Primary 1.1 cannot claim exhausted source coverage with carrier backlog")
         for receipt in carrier.get("portable_receipts") or []:
-            if receipt.get("scientific_authority") is not False or len(str(receipt.get("primary_sha256") or "")) != 64 or len(str(receipt.get("fulltext_sha256") or "")) != 64 or not str(receipt.get("classifier_version") or "") or any(str(value) not in allowed_objects for value in receipt.get("live_rescue_eligible_lanes") or []):
+            scope_excluded = str(receipt.get("probe_outcome") or "") == "SCOPE_EXCLUDED_BY_PRIMARY"
+            fulltext_ok = (scope_excluded and not str(receipt.get("fulltext_sha256") or "") and not (receipt.get("live_rescue_eligible_lanes") or [])) or len(str(receipt.get("fulltext_sha256") or "")) == 64
+            if receipt.get("scientific_authority") is not False or len(str(receipt.get("primary_sha256") or "")) != 64 or not fulltext_ok or not str(receipt.get("classifier_version") or "") or any(str(value) not in allowed_objects for value in receipt.get("live_rescue_eligible_lanes") or []):
                 fail("Primary 1.1 carrier receipt is not zero-authority/content-addressed/existing-object-only")
     generator = research_state.get("paper_first_problem_generator") or {}
     generator_policy = generator.get("policy") or {}

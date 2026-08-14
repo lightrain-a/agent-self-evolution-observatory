@@ -159,6 +159,16 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         queue={"summary":{"primary_evidence_records":4,"submitted":0,"audited":0,"passed_problem_gate":0,"blocked_problem_gate":0,"inbox_errors":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0},"audited":[]}
         self.assertEqual(_validate(primary,generator,queue),[])
 
+    def test_validator_accepts_primary_scope_exclusion_receipt_without_fulltext(self) -> None:
+        refs=[f"arXiv:{idx}" for idx in range(1,5)]
+        scope={"ref":"arXiv:scope","primary_sha256":"a"*64,"fulltext_sha256":"","classifier_version":"existing-object-carrier-v1","probe_outcome":"SCOPE_EXCLUDED_BY_PRIMARY","scope_exclusion_rule":"genetic-network-programming-non-llm-v1","live_rescue_eligible_lanes":[],"scientific_authority":False}
+        primary={"schema_version":"1.1","status":"READY","policy":{"scientific_object_lanes":["skill_harness","memory_continual","world_model","parametric_model_state"]},"summary":{"verified":4,"prior_reviewed_sources":4,"source_retrieval_complete":False,"unreviewed_lane_linked_sources":0,"carrier_probe_pending":0,"carrier_probe_complete":True},"carrier_probe":{"pending":0,"complete":True,"portable_receipts":[scope],"scientific_authority":False}}
+        generator={"status":"SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE","summary":{"primary_evidence_records":4,"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0},"source_coverage":{"coverage_exhausted":False,"source_retrieval_complete":False,"unreviewed_lane_linked_sources":0,"carrier_probe_required":False,"carrier_probe_pending":0,"carrier_probe_complete":True},"saturation_memory":{"portable_review_receipts":[{"run_id":"prior","source_refs":refs,"scientific_authority":False}]},"policy":{"search_portfolio_enabled":False,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"one_content_addressed_pool_allows_at_most_one_live_generator_call":True,"incomplete_retrieval_without_new_lane_source_skips_model_call":True,"retrieval_incomplete_is_compute_control_not_scientific_negative":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"candidates":[]}
+        queue={"summary":{"primary_evidence_records":4,"submitted":0,"audited":0,"passed_problem_gate":0,"blocked_problem_gate":0,"inbox_errors":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0},"audited":[]}
+        self.assertEqual(_validate(primary,generator,queue),[])
+        bad=json.loads(json.dumps(primary));bad["carrier_probe"]["portable_receipts"][0]["live_rescue_eligible_lanes"]=["memory_continual"]
+        self.assertIn("primary-carrier-scope-exclusion-cannot-rescue",_validate(bad,generator,queue))
+
     def test_validator_accepts_zero_call_carrier_probe_pending_transaction(self) -> None:
         refs=[f"arXiv:{idx}" for idx in range(1,5)]
         primary={"schema_version":"1.1","status":"READY","policy":{"scientific_object_lanes":["skill_harness","memory_continual","world_model","parametric_model_state"]},"summary":{"verified":4,"prior_reviewed_sources":4,"source_retrieval_complete":True,"carrier_probe_pending":2,"carrier_probe_complete":False},"carrier_probe":{"pending":2,"complete":False,"portable_receipts":[],"scientific_authority":False}}

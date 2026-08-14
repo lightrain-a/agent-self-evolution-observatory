@@ -59,6 +59,58 @@ _PARAMETRIC_NEGATIVE = tuple(re.compile(pattern, re.I) for pattern in (
     r"\bmodel weights remain fixed\b",
     r"\bwithout changing a single model weight\b",
 ))
+PRIMARY_SCOPE_EXCLUSION_RULE_VERSION = "genetic-network-programming-non-llm-v1"
+_LLM_SCOPE_TERMS = ("llm", "large language model", "language model", "foundation model")
+
+
+def primary_scope_exclusion(*, title: str, abstract: str) -> dict[str, Any] | None:
+    """Return a narrow zero-authority carrier-probe scope exclusion.
+
+    This does not alter global relevance or make a scientific negative claim. It
+    only prevents a paper that explicitly studies Genetic Network Programming,
+    without any language-model scope, from permanently blocking the LLM-agent
+    existing-object carrier probe when arXiv HTML is unavailable.
+    """
+    text = f"{title} {abstract}".lower()
+    if "genetic network programming" not in text:
+        return None
+    if any(term in text for term in _LLM_SCOPE_TERMS):
+        return None
+    return {
+        "probe_outcome": "SCOPE_EXCLUDED_BY_PRIMARY",
+        "scope_exclusion_rule": PRIMARY_SCOPE_EXCLUSION_RULE_VERSION,
+        "reason": "Primary title/abstract explicitly studies Genetic Network Programming without language-model scope; this paper is outside the existing LLM-agent carrier-rescue probe only.",
+        "scientific_authority": False,
+        "global_relevance_changed": False,
+        "can_create_new_object": False,
+    }
+
+
+def build_primary_scope_exclusion_receipt(*, ref: str, title: str, abstract: str, primary_sha256: str) -> dict[str, Any] | None:
+    exclusion = primary_scope_exclusion(title=title, abstract=abstract)
+    if not exclusion:
+        return None
+    return {
+        "schema_version": "1.0",
+        "ref": str(ref),
+        "title": str(title)[:300],
+        "primary_sha256": str(primary_sha256),
+        "fulltext_sha256": "",
+        "classifier_version": CARRIER_CLASSIFIER_VERSION,
+        "probe_outcome": exclusion["probe_outcome"],
+        "scope_exclusion_rule": exclusion["scope_exclusion_rule"],
+        "matched_existing_object_lanes": [],
+        "live_rescue_eligible_lanes": [],
+        "carrier_evidence": [],
+        "policy": {
+            "scientific_authority": False,
+            "existing_object_lanes_only": True,
+            "new_object_creation_forbidden": True,
+            "global_relevance_changed": False,
+            "fulltext_not_required_for_narrow_primary_scope_exclusion": True,
+        },
+        "scientific_authority": False,
+    }
 
 
 def _eligible_section(section: str) -> bool:

@@ -130,8 +130,14 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
             errors.append("primary-carrier-probe-accounting-invalid")
         allowed_objects=set(str(value) for value in ((primary.get("policy") or {}).get("scientific_object_lanes") or []))
         for row in carrier_probe.get("portable_receipts") or []:
-            if not isinstance(row,dict) or row.get("scientific_authority") is not False or len(str(row.get("primary_sha256") or ""))!=64 or len(str(row.get("fulltext_sha256") or ""))!=64 or not str(row.get("classifier_version") or ""):
+            if not isinstance(row,dict):
                 errors.append("primary-carrier-probe-receipt-invalid"); break
+            scope_excluded=str(row.get("probe_outcome") or "")=="SCOPE_EXCLUDED_BY_PRIMARY"
+            fulltext_ok=(scope_excluded and not str(row.get("fulltext_sha256") or "")) or len(str(row.get("fulltext_sha256") or ""))==64
+            if row.get("scientific_authority") is not False or len(str(row.get("primary_sha256") or ""))!=64 or not fulltext_ok or not str(row.get("classifier_version") or ""):
+                errors.append("primary-carrier-probe-receipt-invalid"); break
+            if scope_excluded and (row.get("live_rescue_eligible_lanes") or []):
+                errors.append("primary-carrier-scope-exclusion-cannot-rescue"); break
             if any(str(value) not in allowed_objects for value in row.get("live_rescue_eligible_lanes") or []):
                 errors.append("primary-carrier-probe-created-unknown-object"); break
     generator_status = str(generator.get("status") or "")
