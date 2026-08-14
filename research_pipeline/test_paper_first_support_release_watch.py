@@ -7,7 +7,14 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from .config import StorageSettings
-from .paper_first_support_release_watch import explicit_release_targets, public_support_release_watch_summary, run_support_release_watch
+from .paper_first_support_release_watch import (
+    build_portable_release_target_manifest,
+    explicit_release_targets,
+    public_support_release_watch_summary,
+    run_support_release_watch,
+    validate_portable_release_target_manifest,
+    write_portable_release_target_manifest,
+)
 
 
 class SupportReleaseWatchTest(unittest.TestCase):
@@ -61,6 +68,36 @@ class SupportReleaseWatchTest(unittest.TestCase):
         self.assertEqual(by_id["B"]["declaration_kind"], "PROJECT_PAGE")
         self.assertNotIn("C", by_id)
         self.assertEqual([row["candidate_id"] for row in missing], ["C"])
+
+    def test_portable_manifest_recovers_fulltext_only_endpoint_on_stale_receiver(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);canonical=self.storage(root/"canonical");receiver=self.storage(root/"receiver")
+            design=self.design([self.hold("B","arXiv:2608.00002")])
+            self.cache(canonical,"2608.00002",'<span>Project page: </span><a href="https://lab.github.io/ProjectX/">Project</a>',full=True)
+            manifest_path=root/"portable.json";manifest_js=root/"portable.js"
+            manifest=write_portable_release_target_manifest(design_state=design,storage=canonical,json_path=manifest_path,js_path=manifest_js)
+            self.assertEqual(validate_portable_release_target_manifest(manifest),[])
+            self.assertEqual(set(manifest["targets"][0]),{"candidate_id","source_ref","url","declaration_kind","primary_cache_sha256","scientific_authority"})
+            state=run_support_release_watch(storage=receiver,design_state=design,portable_targets_path=manifest_path,max_primary_refreshes=0,fetcher=lambda target:{"status_code":200,"fingerprint":"a"*64,"surface_nonempty":True,"fingerprint_version":"release-surface-v2"},write_ledger=False)
+        self.assertEqual(state["summary"]["explicit_release_targets"],1)
+        self.assertEqual(state["summary"]["portable_release_targets_used"],1)
+        self.assertEqual(state["summary"]["no_explicit_endpoint"],0)
+        self.assertEqual(state["rows"][0]["status"],"BASELINE_CAPTURED")
+        self.assertTrue(state["rows"][0]["portable_target"])
+        self.assertIn("matched released",state["rows"][0]["required_unit"])
+        self.assertEqual(state["summary"]["support_qualified"],0)
+        self.assertEqual(state["summary"]["generator_reopen_authorized"],0)
+
+    def test_invalid_portable_manifest_is_ignored_fail_closed(self) -> None:
+        calls=[]
+        def forbidden(target): calls.append(target); raise AssertionError("invalid manifest must not create target")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);receiver=self.storage(root/"receiver");manifest=root/"bad.json"
+            manifest.write_text('{"schema_version":"1.0","manifest_sha256":"bad","scientific_authority":false,"targets":[{"candidate_id":"C","source_ref":"arXiv:2608.00003","url":"https://github.com/example/repo","declaration_kind":"PROJECT_PAGE","primary_cache_sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","scientific_authority":false}]}',encoding="utf-8")
+            state=run_support_release_watch(storage=receiver,design_state=self.design([self.hold("C","arXiv:2608.00003")]),portable_targets_path=manifest,max_primary_refreshes=0,fetcher=forbidden,write_ledger=False)
+        self.assertEqual(calls,[])
+        self.assertEqual(state["summary"]["portable_release_targets_used"],0)
+        self.assertEqual(state["summary"]["no_explicit_endpoint"],1)
 
     def test_no_explicit_endpoint_does_not_query_release_surfaces_when_primary_refresh_disabled(self) -> None:
         calls = []

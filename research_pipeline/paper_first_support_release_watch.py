@@ -11,7 +11,7 @@ from urllib.parse import urlparse
 
 import requests
 
-from .config import StorageSettings
+from .config import PROJECT_ROOT, StorageSettings
 from .paper_first_primary_evidence import (
     DEFAULT_ARXIV_RATE_LIMIT_COOLDOWN_SECONDS,
     _arxiv_retry_after_seconds,
@@ -27,6 +27,9 @@ DEFAULT_COOLDOWN_DAYS = 7.0
 PRIMARY_DECLARATION_REFRESH_COOLDOWN_DAYS = 7.0
 MAX_PRIMARY_DECLARATION_REFRESHES = 2
 MAX_PAGE_BYTES = 1_000_000
+PORTABLE_TARGETS_SCHEMA = "1.0"
+DEFAULT_PORTABLE_TARGETS_JSON = PROJECT_ROOT / "generated" / "paper-first-support-release-targets.json"
+DEFAULT_PORTABLE_TARGETS_JS = PROJECT_ROOT / "generated" / "paper-first-support-release-targets.js"
 
 
 def _now(value: datetime | None = None) -> datetime:
@@ -169,6 +172,154 @@ def explicit_release_targets(
                 "scientific_authority": False,
             })
     return targets, no_endpoint
+
+
+def build_portable_release_target_manifest(
+    design_state: dict[str, Any],
+    *,
+    storage: StorageSettings | None = None,
+) -> dict[str, Any]:
+    """Export only public release endpoints discovered from the canonical primary cache.
+
+    Required-unit text, reopen conditions, declaration context, and any cached primary
+    content stay private. The receiving host must join these endpoint rows back to its
+    own zero-authority terminal HOLD memory before using them.
+    """
+    targets, _ = explicit_release_targets(design_state, storage=storage)
+    safe = []
+    for row in targets:
+        safe.append({
+            "candidate_id": str(row.get("candidate_id") or ""),
+            "source_ref": str(row.get("source_ref") or ""),
+            "url": str(row.get("url") or ""),
+            "declaration_kind": str(row.get("declaration_kind") or ""),
+            "primary_cache_sha256": str(row.get("primary_cache_sha256") or ""),
+            "scientific_authority": False,
+        })
+    safe.sort(key=lambda row: (row["candidate_id"], row["url"]))
+    material = json.dumps(safe, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return {
+        "schema_version": PORTABLE_TARGETS_SCHEMA,
+        "status": "PORTABLE_SUPPORT_RELEASE_TARGETS_READY",
+        "manifest_sha256": _sha(material),
+        "policy": {
+            "scientific_authority": False,
+            "public_release_endpoints_only": True,
+            "support_contract_fields_not_exported": True,
+            "primary_text_context_not_exported": True,
+            "receiver_must_join_against_current_terminal_support_holds": True,
+            "manifest_cannot_qualify_support_or_reopen_scientific_state": True,
+        },
+        "summary": {
+            "support_holds": len(_terminal_support_holds(design_state)),
+            "explicit_release_targets": len(safe),
+            "candidates_with_targets": len({row["candidate_id"] for row in safe}),
+        },
+        "targets": safe,
+        "scientific_authority": False,
+    }
+
+
+def validate_portable_release_target_manifest(state: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    if state.get("scientific_authority") is not False or (state.get("policy") or {}).get("scientific_authority") is not False:
+        errors.append("portable release-target manifest cannot carry scientific authority")
+    rows = [row for row in state.get("targets") or [] if isinstance(row, dict)]
+    material = json.dumps(rows, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    if str(state.get("manifest_sha256") or "") != _sha(material):
+        errors.append("portable release-target manifest digest mismatch")
+    seen: set[tuple[str, str]] = set()
+    for row in rows:
+        candidate = str(row.get("candidate_id") or "")
+        ref = str(row.get("source_ref") or "")
+        url = str(row.get("url") or "")
+        kind = str(row.get("declaration_kind") or "")
+        cache_sha = str(row.get("primary_cache_sha256") or "")
+        key = (candidate, url)
+        if not candidate or not re.fullmatch(r"arXiv:\d{4}\.\d+", ref, flags=re.I) or not _acceptable_release_url(url) or kind not in {"FUTURE_CODE_RELEASE", "PROJECT_PAGE"} or not re.fullmatch(r"[0-9a-f]{64}", cache_sha) or row.get("scientific_authority") is not False:
+            errors.append("portable release-target row invalid")
+        if key in seen:
+            errors.append("portable release-target row duplicated")
+        seen.add(key)
+        if any(key_name in row for key_name in ("required_unit", "reopen_only_if", "declaration_context", "asset_audit", "evidence_excerpt")):
+            errors.append("portable release-target row leaks private/support-contract content")
+    return sorted(set(errors))
+
+
+def write_portable_release_target_manifest(
+    *,
+    design_state: dict[str, Any] | None = None,
+    storage: StorageSettings | None = None,
+    json_path: Path = DEFAULT_PORTABLE_TARGETS_JSON,
+    js_path: Path = DEFAULT_PORTABLE_TARGETS_JS,
+) -> dict[str, Any]:
+    design_state = design_state if design_state is not None else build_search_portfolio_design_adjudication()
+    state = build_portable_release_target_manifest(design_state, storage=storage)
+    errors = validate_portable_release_target_manifest(state)
+    if errors:
+        raise ValueError("Invalid portable support release targets: " + ";".join(errors))
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+    json_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    js_path.write_text("window.PAPER_FIRST_SUPPORT_RELEASE_TARGETS = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
+    return state
+
+
+def load_portable_release_target_manifest(path: Path = DEFAULT_PORTABLE_TARGETS_JSON) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    try:
+        state = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    if not isinstance(state, dict) or validate_portable_release_target_manifest(state):
+        return {}
+    return state
+
+
+def _portable_targets_for_holds(
+    design_state: dict[str, Any],
+    manifest: dict[str, Any],
+) -> list[dict[str, Any]]:
+    holds = {str(row.get("source_candidate_id") or ""): row for row in _terminal_support_holds(design_state)}
+    out: list[dict[str, Any]] = []
+    for row in manifest.get("targets") or []:
+        if not isinstance(row, dict):
+            continue
+        candidate = str(row.get("candidate_id") or "")
+        hold = holds.get(candidate)
+        if not hold:
+            continue
+        allowed_refs = {f"arXiv:{value}" for value in _arxiv_ids(hold)}
+        if str(row.get("source_ref") or "") not in allowed_refs:
+            continue
+        out.append({
+            "candidate_id": candidate,
+            "source_ref": str(row.get("source_ref") or ""),
+            "url": str(row.get("url") or ""),
+            "declaration_kind": str(row.get("declaration_kind") or ""),
+            "declaration_context": "portable-canonical-primary-cache-endpoint",
+            "primary_cache_sha256": str(row.get("primary_cache_sha256") or ""),
+            "required_unit": _bounded(hold.get("required_unit")),
+            "reopen_only_if": _bounded(hold.get("reopen_only_if")),
+            "portable_target": True,
+            "scientific_authority": False,
+        })
+    return out
+
+
+def _merge_portable_release_targets(
+    design_state: dict[str, Any],
+    local_targets: list[dict[str, Any]],
+    no_endpoint: list[dict[str, Any]],
+    manifest: dict[str, Any],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], int]:
+    portable = _portable_targets_for_holds(design_state, manifest)
+    merged: dict[tuple[str, str], dict[str, Any]] = {}
+    for row in portable + local_targets:
+        merged[(str(row.get("candidate_id") or ""), str(row.get("url") or ""))] = row
+    targeted = {candidate for candidate, _ in merged}
+    remaining = [row for row in no_endpoint if str(row.get("candidate_id") or "") not in targeted]
+    return list(merged.values()), remaining, sum(row.get("portable_target") is True for row in merged.values())
 
 
 def _github_repo_api(url: str) -> str | None:
@@ -381,7 +532,7 @@ def public_support_release_watch_summary(state: dict[str, Any]) -> dict[str, Any
         "support_holds", "explicit_release_targets", "no_explicit_endpoint", "checked", "skipped_cooldown",
         "provider_errors", "recheck_required", "support_qualified", "generator_reopen_authorized", "problem_gate_authorized",
         "primary_declaration_refresh_checked", "primary_declaration_refresh_changed", "primary_declaration_refresh_skipped_cooldown",
-        "primary_declaration_refresh_rate_limited", "primary_declaration_refresh_errors",
+        "primary_declaration_refresh_rate_limited", "primary_declaration_refresh_errors", "portable_release_targets_used",
     )
     return {
         "schema_version": WATCH_SCHEMA,
@@ -398,6 +549,8 @@ def public_support_release_watch_summary(state: dict[str, Any]) -> dict[str, Any
             "no_endpoint_primary_refresh_is_primary_source_only": True,
             "primary_declaration_refresh_has_zero_source_exposure_effect": True,
             "primary_declaration_refresh_cannot_qualify_support": True,
+            "portable_release_targets_are_endpoint_handoff_only": True,
+            "portable_release_targets_cannot_qualify_support_or_reopen": True,
             "public_summary_excludes_urls_refs_required_units_and_private_paths": True,
         },
         "summary": {key: summary[key] for key in safe_summary_keys if key in summary},
@@ -418,6 +571,7 @@ def run_support_release_watch(
     max_primary_refreshes: int = MAX_PRIMARY_DECLARATION_REFRESHES,
     arxiv_rate_limit_state_path: Path | None = None,
     ledger_path: Path | None = None,
+    portable_targets_path: Path = DEFAULT_PORTABLE_TARGETS_JSON,
     write_ledger: bool = True,
 ) -> dict[str, Any]:
     storage = storage or StorageSettings.from_env()
@@ -427,6 +581,8 @@ def run_support_release_watch(
     ledger = _load_ledger(ledger_path)
     observations = dict(ledger.get("observations") or {})
     targets, no_endpoint = explicit_release_targets(design_state, storage=storage)
+    portable_manifest = load_portable_release_target_manifest(portable_targets_path)
+    targets, no_endpoint, portable_used = _merge_portable_release_targets(design_state, targets, no_endpoint, portable_manifest)
     primary_refresh = _refresh_no_endpoint_primary_declarations(
         no_endpoint,
         storage=storage,
@@ -440,6 +596,7 @@ def run_support_release_watch(
     ledger["primary_declaration_refreshes"] = primary_refresh["refreshes"]
     if primary_refresh["checked"] or primary_refresh["changed"]:
         targets, no_endpoint = explicit_release_targets(design_state, storage=storage)
+        targets, no_endpoint, portable_used = _merge_portable_release_targets(design_state, targets, no_endpoint, portable_manifest)
     fetch = fetcher or _default_fetcher
     rows: list[dict[str, Any]] = []
     checked = skipped = provider_errors = recheck = 0
@@ -516,6 +673,8 @@ def run_support_release_watch(
             "no_endpoint_primary_refresh_is_primary_source_only": True,
             "primary_declaration_refresh_has_zero_source_exposure_effect": True,
             "primary_declaration_refresh_cannot_qualify_support": True,
+            "portable_release_targets_are_endpoint_handoff_only": True,
+            "portable_release_targets_cannot_qualify_support_or_reopen": True,
             "primary_declaration_refresh_max_per_run": int(max_primary_refreshes),
             "primary_declaration_refresh_cooldown_days": float(primary_refresh_cooldown_days),
             "github_release_fingerprint_ignores_doc_only_churn": True,
@@ -538,6 +697,7 @@ def run_support_release_watch(
             "primary_declaration_refresh_skipped_cooldown": int(primary_refresh["skipped_cooldown"]),
             "primary_declaration_refresh_rate_limited": int(primary_refresh["rate_limited"]),
             "primary_declaration_refresh_errors": int(primary_refresh["errors"]),
+            "portable_release_targets_used": int(portable_used),
         },
         "rows": rows,
         "scientific_authority": False,
