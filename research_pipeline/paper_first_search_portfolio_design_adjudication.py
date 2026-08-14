@@ -152,7 +152,21 @@ def _prior_current_source_hard_veto_rows(path: Path = DEFAULT_JSON) -> list[dict
     return rows
 
 
-def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None, prior_hard_veto_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+def _prior_semantic_block_rows(path: Path = DEFAULT_JSON) -> list[dict[str, Any]]:
+    prior = _load_json(path)
+    memory = prior.get("shadow_dead_end_memory") or {}
+    rows = []
+    for row in memory.get("blocked_objects") or []:
+        basin = str(row.get("basin") or "") if isinstance(row, dict) else ""
+        if not basin.startswith(("semantic-exact-reduction-", "semantic-lane-contract-")):
+            continue
+        if row.get("scientific_authority") is not False or not str(row.get("strongest_reduction") or "").strip() or not str(row.get("reason") or "").strip() or not str(row.get("reopen_only_if") or "").strip():
+            continue
+        rows.append(dict(row))
+    return rows
+
+
+def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None, prior_hard_veto_rows: list[dict[str, Any]] | None = None, prior_semantic_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     memory = json.loads(json.dumps(BASE_SHADOW_DEAD_END_MEMORY, ensure_ascii=False))
     latest = portfolio.get("latest_run") or {}
     inherited = _prior_current_source_hard_veto_rows() if prior_hard_veto_rows is None else [dict(row) for row in prior_hard_veto_rows if isinstance(row, dict)]
@@ -190,13 +204,75 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
         added += 1
     hard_rows = [hard_by_basin[key] for key in sorted(hard_by_basin)]
     memory["blocked_objects"].extend(hard_rows)
+
+    semantic_inherited = _prior_semantic_block_rows() if prior_semantic_rows is None else [dict(row) for row in prior_semantic_rows if isinstance(row, dict)]
+    semantic_by_basin = {str(row.get("basin")): row for row in semantic_inherited if str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-")) and row.get("scientific_authority") is False}
+    semantic_added = 0
+    for row in latest.get("candidates") or []:
+        if not isinstance(row, dict) or str(row.get("semantic_verdict") or "") != "BLOCK":
+            continue
+        reduction_class = str(row.get("semantic_reduction_class") or "").strip()
+        lane_verified = row.get("semantic_lane_contract_verified") is True
+        strongest = " ".join(str(row.get("semantic_strongest_reduction") or "").split())[:800]
+        reason = " ".join(str(row.get("semantic_reason") or "").split())[:1200]
+        exact_test = " ".join(str(row.get("semantic_exact_reduction_test") or "").split())[:1200]
+        lane_reason = " ".join(str(row.get("semantic_lane_contract_reason") or "").split())[:1000]
+        refs = sorted({str(ref) for ref in row.get("semantic_source_refs") or [] if str(ref).startswith("arXiv:")})
+        patterns = sorted({str(value) for value in row.get("semantic_matched_patterns") or [] if str(value)})
+        candidate_id = str(row.get("candidate_id") or "").strip()
+        primitive = str(row.get("search_primitive") or "").strip()
+        title = " ".join(str(row.get("title") or "").split())[:300]
+        if reduction_class == "NEEDS_EXACT_REDUCTION_TEST" and strongest and exact_test and reason:
+            signature = hashlib.sha256(json.dumps({"strongest_reduction": strongest, "matched_patterns": patterns, "exact_reduction_test": exact_test}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
+            basin = f"semantic-exact-reduction-{signature}"
+            if basin not in semantic_by_basin:
+                semantic_added += 1
+            semantic_by_basin[basin] = {
+                "source_candidate_id": candidate_id,
+                "basin": basin,
+                "search_primitive": primitive,
+                "avoid": [f"paraphrase-only variants of: {title}", f"domain-swapped variants still explained by: {strongest}", "claiming a new structural boundary without resolving the recorded same-information exact reduction test"],
+                "strongest_reduction": strongest,
+                "matched_patterns": patterns,
+                "reduction_class": reduction_class,
+                "exact_reduction_test": exact_test,
+                "current_source_refs": refs,
+                "reason": reason,
+                "reopen_only_if": "New primary evidence directly instantiates the recorded exact reduction test under matched information and leaves a residual prediction the named mature reduction cannot express; new wording, a new application domain, or an unexecuted proposed falsifier does not reopen this basin.",
+                "scientific_authority": False,
+            }
+        elif not lane_verified and strongest and reason and lane_reason:
+            signature = hashlib.sha256(json.dumps({"strongest_reduction": strongest, "lane_contract_reason": lane_reason, "search_primitive": primitive}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
+            basin = f"semantic-lane-contract-{signature}"
+            if basin not in semantic_by_basin:
+                semantic_added += 1
+            semantic_by_basin[basin] = {
+                "source_candidate_id": candidate_id,
+                "basin": basin,
+                "search_primitive": primitive,
+                "avoid": [f"paraphrase-only variants of: {title}", "combining heterogeneous failures without one explicitly shared bounded operational condition", "using a generic optimizer/model-capability story as a convergent-failure object without a common measured failure variable"],
+                "strongest_reduction": strongest,
+                "matched_patterns": patterns,
+                "reduction_class": reduction_class,
+                "lane_contract_reason": lane_reason,
+                "exact_reduction_test": exact_test,
+                "current_source_refs": refs,
+                "reason": reason,
+                "reopen_only_if": "New primary evidence supplies the missing lane-contract elements explicitly (shared bounded condition, common failure object, and correctly typed evidence roles) and the resulting formulation still leaves a same-information residual beyond the recorded strongest reduction.",
+                "scientific_authority": False,
+            }
+    semantic_rows = [semantic_by_basin[key] for key in sorted(semantic_by_basin)]
+    memory["blocked_objects"].extend(semantic_rows)
     near_miss_state = near_miss_state or build_shadow_near_miss_preflight()
     near_miss_rows = compile_shadow_dead_end_rows(near_miss_state)
     memory["blocked_objects"].extend(near_miss_rows)
-    memory["memory_id"] = "shadow-paper-design-dead-ends-persistent-current-source-near-miss"
+    memory["memory_id"] = "shadow-paper-design-dead-ends-persistent-current-source-semantic-near-miss"
     memory["current_source_hard_veto_count"] = len(hard_rows)
     memory["current_source_hard_veto_added_from_latest_run"] = added
     memory["current_source_hard_veto_inherited"] = max(0, len(hard_rows) - added)
+    memory["semantic_blocker_count"] = len(semantic_rows)
+    memory["semantic_blocker_added_from_latest_run"] = semantic_added
+    memory["semantic_blocker_inherited"] = max(0, len(semantic_rows) - semantic_added)
     memory["near_miss_preflight_count"] = len(near_miss_rows)
     memory["scientific_authority"] = False
     return memory
@@ -345,6 +421,8 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "cannot_grant_or_revoke_live_paper_design_authority": True,
             "counterfactual_problem_gate_pass_only_triggers_retrospective_collision_audit": True,
             "current_source_hard_veto_memory_persists_across_shadow_runs": True,
+            "semantic_blocker_memory_persists_across_shadow_runs": True,
+            "semantic_soft_collision_alone_is_not_a_dead_end": True,
             "current_primary_source_collision_review_required": True,
             "same_information_reduction_required_before_method_design": True,
             "failed_or_missing_ai_reviewer_is_not_pass": True,
@@ -377,6 +455,9 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "current_source_hard_veto_dead_ends": int(dead_end_memory.get("current_source_hard_veto_count") or 0),
             "current_source_hard_veto_added_from_latest_run": int(dead_end_memory.get("current_source_hard_veto_added_from_latest_run") or 0),
             "current_source_hard_veto_inherited": int(dead_end_memory.get("current_source_hard_veto_inherited") or 0),
+            "semantic_blocker_dead_ends": int(dead_end_memory.get("semantic_blocker_count") or 0),
+            "semantic_blocker_added_from_latest_run": int(dead_end_memory.get("semantic_blocker_added_from_latest_run") or 0),
+            "semantic_blocker_inherited": int(dead_end_memory.get("semantic_blocker_inherited") or 0),
             "near_miss_preflight_dead_ends": int(dead_end_memory.get("near_miss_preflight_count") or 0),
             "near_miss_support_holds": int((near_miss_preflight.get("summary") or {}).get("support_holds") or 0),
             "near_miss_current_primary_stops": int((near_miss_preflight.get("summary") or {}).get("current_primary_stops") or 0),
@@ -407,7 +488,7 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
         errors.append("SP design adjudication cannot authorize downstream work")
     if policy.get("this_is_a_substate_not_a_new_backend_component") is not True or policy.get("paper_problem_support_inventory_precedes_method_design_when_identifiability_is_claimed") is not True:
         errors.append("SP design must remain a Paper Design substate and gate identifiability on support inventory")
-    if policy.get("source_is_shadow_search_portfolio") is not True or policy.get("shadow_queue_has_zero_paper_design_authority") is not True or policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True or policy.get("current_source_hard_veto_memory_persists_across_shadow_runs") is not True:
+    if policy.get("source_is_shadow_search_portfolio") is not True or policy.get("shadow_queue_has_zero_paper_design_authority") is not True or policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True or policy.get("current_source_hard_veto_memory_persists_across_shadow_runs") is not True or policy.get("semantic_blocker_memory_persists_across_shadow_runs") is not True or policy.get("semantic_soft_collision_alone_is_not_a_dead_end") is not True:
         errors.append("SP design audit must remain retrospective shadow feedback with zero live Paper Design authority")
     if (state.get("advisory_consultation") or {}).get("scientific_authority") is not False or (state.get("advisory_consultation") or {}).get("failed_or_missing_review_is_not_pass") is not True:
         errors.append("unavailable AI premortem reviewers must remain zero-authority and cannot count as PASS")
@@ -417,6 +498,9 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
     dynamic=[row for row in blocked_objects if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
     if int(memory.get("current_source_hard_veto_count") or 0)!=len(dynamic) or int(memory.get("current_source_hard_veto_added_from_latest_run") or 0)+int(memory.get("current_source_hard_veto_inherited") or 0)!=len(dynamic) or any(not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip() or row.get("scientific_authority") is not False for row in dynamic):
         errors.append("current-source hard vetoes must persist as bounded zero-authority shadow dead-end fingerprints")
+    semantic_rows=[row for row in blocked_objects if str(row.get("basin") or "").startswith(("semantic-exact-reduction-","semantic-lane-contract-"))]
+    if int(memory.get("semantic_blocker_count") or 0)!=len(semantic_rows) or int(memory.get("semantic_blocker_added_from_latest_run") or 0)+int(memory.get("semantic_blocker_inherited") or 0)!=len(semantic_rows) or any(row.get("scientific_authority") is not False or not str(row.get("strongest_reduction") or "").strip() or not str(row.get("reason") or "").strip() or not str(row.get("reopen_only_if") or "").strip() for row in semantic_rows):
+        errors.append("semantic reduction/lane blockers must persist as bounded zero-authority shadow dead-end fingerprints")
     near_miss=state.get("shadow_near_miss_preflight") or {}; near_rows=[row for row in blocked_objects if str(row.get("basin") or "").startswith("near-miss-")]
     if int(memory.get("near_miss_preflight_count") or 0)!=len(near_rows) or int((near_miss.get("summary") or {}).get("receipts") or 0)!=len(near_rows) or any(row.get("scientific_authority") is not False or not str(row.get("reopen_only_if") or "").strip() for row in near_rows):
         errors.append("near-miss preflight receipts must compile into bounded zero-authority shadow dead-end fingerprints")
