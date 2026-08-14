@@ -54,6 +54,8 @@ DEFAULT_MAX_PRIMARY_RESPONSE_BYTES = 24 * 1024 * 1024
 DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS = 3.1
 DEFAULT_ARXIV_PER_QUERY = 48
 DEFAULT_ARXIV_MAX_PAGES = 4
+DEFAULT_ARXIV_RATE_LIMIT_COOLDOWN_SECONDS = 1800
+DEFAULT_ARXIV_RATE_LIMIT_MAX_COOLDOWN_SECONDS = 21600
 EMPIRICAL_FACT_EXTRACTION_VERSION = "precision-v2"
 TYPED_EVIDENCE_EXTRACTION_VERSION = "typed-v1"
 DEFAULT_ARXIV_QUERIES = (
@@ -739,6 +741,52 @@ def parse_arxiv_atom(text: str) -> list[dict[str, Any]]:
     return rows
 
 
+def _load_arxiv_rate_limit_state(path: Path | None, *, now: datetime) -> dict[str, Any]:
+    if path is None or not path.exists():
+        return {}
+    try:
+        payload=json.loads(path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError):
+        return {}
+    if not isinstance(payload,dict) or payload.get("scientific_authority") is not False:
+        return {}
+    until=_parse_iso(str(payload.get("blocked_until") or ""))
+    if until is None or until <= now:
+        return {}
+    return payload
+
+
+def _write_arxiv_rate_limit_state(path: Path | None, *, now: datetime, retry_after_seconds: int) -> dict[str, Any]:
+    seconds=max(60,min(int(retry_after_seconds),DEFAULT_ARXIV_RATE_LIMIT_MAX_COOLDOWN_SECONDS))
+    payload={
+        "schema_version":"1.0",
+        "observed_at":now.replace(microsecond=0).isoformat(),
+        "blocked_until":(now+timedelta(seconds=seconds)).replace(microsecond=0).isoformat(),
+        "retry_after_seconds":seconds,
+        "source":"arxiv-export-api",
+        "reason":"HTTP 429",
+        "scientific_authority":False,
+    }
+    if path is not None:
+        path.parent.mkdir(parents=True,exist_ok=True)
+        temp=path.with_name(path.name+".tmp")
+        temp.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        temp.replace(path)
+    return payload
+
+
+def _arxiv_retry_after_seconds(response: Any, default_seconds: int) -> int:
+    headers=getattr(response,"headers",{}) or {}
+    try:
+        raw=headers.get("Retry-After")
+    except AttributeError:
+        raw=None
+    try:
+        return int(str(raw).strip()) if raw is not None and str(raw).strip() else int(default_seconds)
+    except ValueError:
+        return int(default_seconds)
+
+
 def discover_arxiv_fallback(
     *,
     queries: tuple[str, ...] = DEFAULT_ARXIV_QUERIES,
@@ -748,6 +796,8 @@ def discover_arxiv_fallback(
     min_interval_seconds: float = DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS,
     now: datetime | None = None,
     max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
+    rate_limit_state_path: Path | None = None,
+    rate_limit_cooldown_seconds: int = DEFAULT_ARXIV_RATE_LIMIT_COOLDOWN_SECONDS,
 ) -> tuple[list[dict[str, Any]], list[str]]:
     fetch = requester or _default_arxiv_search_requester
     merged: dict[str, dict[str, Any]] = {}
@@ -756,6 +806,9 @@ def discover_arxiv_fallback(
     page_size = max(1, int(per_query))
     page_cap = max(1, int(max_pages))
     current = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    active_rate_limit=_load_arxiv_rate_limit_state(rate_limit_state_path,now=current)
+    if active_rate_limit:
+        return [], [f"ArxivRateLimitCooldown:until={active_rate_limit.get('blocked_until')}:compute-control-only"]
     cutoff = (current - timedelta(days=max(0.0, float(max_publication_age_days)))).date().isoformat()
     try:
         signature = inspect.signature(fetch)
@@ -781,12 +834,15 @@ def discover_arxiv_fallback(
                 response = fetch(**kwargs)
                 status = int(getattr(response, "status_code", 200))
                 if status == 429:
-                    errors.append(f"{query}:RateLimited:HTTP 429:augmentation-circuit-open")
+                    rate_state=_write_arxiv_rate_limit_state(rate_limit_state_path,now=current,retry_after_seconds=_arxiv_retry_after_seconds(response,rate_limit_cooldown_seconds))
+                    errors.append(f"{query}:RateLimited:HTTP 429:augmentation-circuit-open:until={rate_state.get('blocked_until')}")
                     rows = list(merged.values())
                     rows.sort(key=lambda row: (str((row.get("metadata") or {}).get("publicationDate") or ""), _relevance_score(row), str(row.get("title") or "")), reverse=True)
                     return rows, errors
                 if status >= 400:
                     raise RuntimeError(f"HTTP {status}")
+                if rate_limit_state_path is not None and rate_limit_state_path.exists():
+                    rate_limit_state_path.unlink(missing_ok=True)
                 parsed = parse_arxiv_atom(str(getattr(response, "text", "") or ""))
                 if not parsed:
                     query_window_complete = True
@@ -1146,6 +1202,8 @@ def build_primary_evidence_pool(
     arxiv_search_requester: Callable[..., Any] | None = None,
     arxiv_queries: tuple[str, ...] = DEFAULT_ARXIV_QUERIES,
     arxiv_query_interval_seconds: float = DEFAULT_ARXIV_QUERY_INTERVAL_SECONDS,
+    arxiv_rate_limit_state_path: Path | None = None,
+    arxiv_rate_limit_cooldown_seconds: int = DEFAULT_ARXIV_RATE_LIMIT_COOLDOWN_SECONDS,
     augment_fresh_corpus_with_arxiv: bool = True,
     now: datetime | None = None,
     min_interval_seconds: float = DEFAULT_MIN_INTERVAL_SECONDS,
@@ -1161,6 +1219,7 @@ def build_primary_evidence_pool(
     current = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
     private_pool_path, default_cache = _private_paths(storage)
     cache_dir = cache_dir or default_cache
+    arxiv_rate_limit_state_path = arxiv_rate_limit_state_path or (storage.data_root / "paper-first-problem-discovery" / "arxiv-rate-limit-state.json")
     prior_pool = load_private_primary_pool(private_pool_path) or {}
     prior_records_by_ref = {
         str(row.get("ref")): row
@@ -1332,6 +1391,8 @@ def build_primary_evidence_pool(
                 min_interval_seconds=arxiv_query_interval_seconds,
                 now=current,
                 max_publication_age_days=max_publication_age_days,
+                rate_limit_state_path=arxiv_rate_limit_state_path,
+                rate_limit_cooldown_seconds=arxiv_rate_limit_cooldown_seconds,
             )
             discovery_corpus, augmentation_added = _augment_discovery_corpus(discovery_corpus, augmentation_rows)
             public_state["summary"].update({
@@ -1353,6 +1414,8 @@ def build_primary_evidence_pool(
             min_interval_seconds=arxiv_query_interval_seconds,
             now=current,
             max_publication_age_days=max_publication_age_days,
+            rate_limit_state_path=arxiv_rate_limit_state_path,
+            rate_limit_cooldown_seconds=arxiv_rate_limit_cooldown_seconds,
         )
         discovery_corpus = {"papers": fallback_rows}
         public_state["summary"]["discovery_mode"] = "arxiv-primary-fallback"

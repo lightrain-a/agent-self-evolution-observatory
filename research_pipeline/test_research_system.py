@@ -272,7 +272,7 @@ class ResearchSystemTest(unittest.TestCase):
             self.assertGreaterEqual(int(primary["policy"]["lane_floor"]),1)
             self.assertEqual(primary["summary"]["undercovered_lanes"],[])
         generator=self.state["paper_first_problem_generator"]
-        self.assertIn(generator["status"],{"NOT_RUN","SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE","SKIPPED_STALE_PRIMARY_EVIDENCE","SKIPPED_SOURCE_COVERAGE_SATURATED","GENERATOR_ERROR_ZERO_AUTHORITY","GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE","STATE_UNREADABLE"})
+        self.assertIn(generator["status"],{"NOT_RUN","SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE","SKIPPED_STALE_PRIMARY_EVIDENCE","SKIPPED_SOURCE_COVERAGE_SATURATED","SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE","SKIPPED_SOURCE_CARRIER_PROBE_PENDING","GENERATOR_ERROR_ZERO_AUTHORITY","GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE","STATE_UNREADABLE"})
         self.assertTrue(generator["policy"]["zero_candidates_is_valid"])
         self.assertTrue(generator["policy"]["semantic_reviewer_is_block_only"])
         self.assertTrue(generator["policy"]["candidate_inbox_has_zero_scientific_authority"])

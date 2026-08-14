@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import tempfile
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -181,6 +181,23 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertEqual(calls,[('q1',0)])
         self.assertEqual(len(errors),1)
         self.assertIn('RateLimited:HTTP 429:augmentation-circuit-open',errors[0])
+
+    def test_arxiv_rate_limit_private_cooldown_skips_followup_network_until_expiry(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            state_path=Path(td)/"arxiv-rate-limit.json";calls=[];start=datetime(2026,8,14,1,0,tzinfo=timezone.utc)
+            def limited(*,query:str,start:int,max_results:int,timeout:float,headers:dict[str,str]):
+                calls.append((query,start));return SimpleNamespace(status_code=429,text='',headers={"Retry-After":"120"})
+            rows,errors=discover_arxiv_fallback(queries=('q1','q2'),per_query=2,max_pages=4,requester=limited,min_interval_seconds=0,now=start,max_publication_age_days=60,rate_limit_state_path=state_path,rate_limit_cooldown_seconds=1800)
+            self.assertEqual(rows,[]);self.assertEqual(calls,[('q1',0)]);self.assertTrue(state_path.exists());self.assertIn('RateLimited:HTTP 429:augmentation-circuit-open',errors[0])
+            def must_not_call(**kwargs):
+                raise AssertionError("active private cooldown must skip arXiv network")
+            rows2,errors2=discover_arxiv_fallback(queries=('q1','q2'),per_query=2,max_pages=4,requester=must_not_call,min_interval_seconds=0,now=start+timedelta(seconds=30),max_publication_age_days=60,rate_limit_state_path=state_path)
+            self.assertEqual(rows2,[]);self.assertEqual(len(errors2),1);self.assertIn('ArxivRateLimitCooldown',errors2[0])
+            entries='<entry><id>https://arxiv.org/abs/2608.90001v1</id><title>Self-Evolving Agent Recovery</title><summary>A self-evolving agent improves persistent adaptation.</summary><published>2026-08-13T00:00:00Z</published></entry>'
+            def recovered(*,query:str,start:int,max_results:int,timeout:float,headers:dict[str,str]):
+                calls.append(('recovered',start));return SimpleNamespace(status_code=200,text='<feed xmlns="http://www.w3.org/2005/Atom">'+entries+'</feed>',headers={})
+            rows3,errors3=discover_arxiv_fallback(queries=('q1',),per_query=2,max_pages=1,requester=recovered,min_interval_seconds=0,now=start+timedelta(seconds=121),max_publication_age_days=60,rate_limit_state_path=state_path)
+            self.assertEqual(len(rows3),1);self.assertEqual(errors3,[]);self.assertFalse(state_path.exists());self.assertIn(('recovered',0),calls)
 
     def test_lane_floor_adds_only_highest_ranked_sparse_lane_representative(self) -> None:
         papers=[]
