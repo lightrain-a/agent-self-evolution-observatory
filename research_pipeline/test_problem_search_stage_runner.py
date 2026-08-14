@@ -77,10 +77,12 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
             pool.write_text(json.dumps({"frozen_pool_sha256":pool_sha,"records":[{"ref":"arXiv:2608.09629"},{"ref":"arXiv:2608.11340"}]}),encoding="utf-8")
             mem.write_text(json.dumps(memory),encoding="utf-8")
             response={"text":json.dumps({"seeds":[seed],"notes":"test"}),"resolved_model":"test-model"}
-            with patch("research_pipeline.problem_search_stage_runner._ark",return_value=response):
+            with patch("research_pipeline.problem_search_stage_runner._ark",return_value=response),patch("research_pipeline.problem_search_stage_runner.validate_shadow_run_control",return_value={"control_snapshot_sha256":"f"*64}):
                 result=runner.expand(pool=pool,run_root=run,lane="CONVERGENT_FAILURE",count=1,model="test",part=1,memory_path=mem)
             artifact=json.loads((run/"expand-CONVERGENT_FAILURE-p1.json").read_text(encoding="utf-8"))
         self.assertEqual(result["valid_seeds"],0)
+        self.assertEqual(artifact["schema_version"],runner.STAGE_RUNNER_ARTIFACT_SCHEMA)
+        self.assertEqual(artifact["control_snapshot_sha256"],"f"*64)
         self.assertEqual(artifact["semantic_dead_end_block_count"],1)
         self.assertEqual(artifact["semantic_dead_end_blocks"][0]["source_candidate_id"],"R3-LANE")
         self.assertFalse(artifact["semantic_dead_end_blocks"][0]["scientific_authority"])
@@ -233,6 +235,43 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
             self.assertEqual(receipt["status"],"PROVIDER_ERROR_ZERO_AUTHORITY")
             self.assertEqual(receipt["branch_ids"],["B1","B2"])
             self.assertEqual(receipt["raw_sha256"],"")
+
+    def test_mixed_control_snapshot_artifact_is_rejected_before_downstream_stage(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            run=Path(td)/"run";run.mkdir()
+            (run/"expand-CONTRADICTION-p1.json").write_text(json.dumps({"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":"e"*64,"lane":"CONTRADICTION","part":1,"seeds":[],"semantic_dead_end_block_count":0}),encoding="utf-8")
+            with patch("research_pipeline.problem_search_stage_runner._assert_run_control",return_value="f"*64):
+                with self.assertRaisesRegex(ValueError,"mixed shadow control snapshot artifact"):
+                    runner.assemble(run_root=run)
+
+    def test_artifact_schema_drift_is_rejected_before_downstream_stage(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            run=Path(td)/"run";run.mkdir()
+            (run/"expand-CONTRADICTION-p1.json").write_text(json.dumps({"schema_version":"1.3","control_snapshot_sha256":"f"*64,"lane":"CONTRADICTION","part":1,"seeds":[],"semantic_dead_end_block_count":0}),encoding="utf-8")
+            with patch("research_pipeline.problem_search_stage_runner._assert_run_control",return_value="f"*64):
+                with self.assertRaisesRegex(ValueError,"artifact schema drift"):
+                    runner.assemble(run_root=run)
+
+    def test_old_shadow_qualification_schema_stops_before_provider_call(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);run=root/"shadow-old";run.mkdir();pool=run/"frozen-primary-evidence-pool.json";memory=run/"shadow-dead-end-memory.json"
+            pool.write_text(json.dumps({"frozen_pool_sha256":"a"*64,"records":[{"ref":"arXiv:2608.00001"}]}),encoding="utf-8")
+            memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[]}),encoding="utf-8")
+            (run/"shadow-run-qualification.json").write_text(json.dumps({"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"stage_runner_required_schema":"1.3","authority":{"canonical_generator":False,"canonical_queue":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}),encoding="utf-8")
+            with patch("research_pipeline.problem_search_stage_runner._ark") as provider,patch("sys.argv",["problem_search_stage_runner","expand","--run-root",str(run),"--pool",str(pool),"--memory",str(memory),"--lane","CONTRADICTION","--part","1","--count","1"]):
+                with self.assertRaisesRegex(ValueError,"stage-runner schema drift"):
+                    runner.main()
+            provider.assert_not_called()
+
+    def test_unqualified_shadow_run_stops_before_provider_call(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);run=root/"shadow-new";run.mkdir();pool=run/"frozen-primary-evidence-pool.json";memory=run/"shadow-dead-end-memory.json"
+            pool.write_text(json.dumps({"frozen_pool_sha256":"a"*64,"records":[{"ref":"arXiv:2608.00001"}]}),encoding="utf-8")
+            memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[]}),encoding="utf-8")
+            with patch("research_pipeline.problem_search_stage_runner._ark") as provider,patch("sys.argv",["problem_search_stage_runner","expand","--run-root",str(run),"--pool",str(pool),"--memory",str(memory),"--lane","CONTRADICTION","--part","1","--count","1"]):
+                with self.assertRaisesRegex(ValueError,"qualified shadow run receipt"):
+                    runner.main()
+            provider.assert_not_called()
 
     def test_qualification_stop_marker_blocks_future_stage_calls(self) -> None:
         with tempfile.TemporaryDirectory() as td:

@@ -544,6 +544,8 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_global_relation_model_scan_deferred":bool((paper_first_global_relation_freshness.get("summary") or {}).get("model_scan_deferred")),
             "paper_first_global_relation_focused_reopen_allowed":bool((paper_first_global_relation_freshness.get("summary") or {}).get("focused_problem_generator_reopen_allowed")),
             "paper_first_shadow_latest_run_id":paper_first_problem_search_portfolio.get("latest_run_id",""),
+            "paper_first_shadow_latest_stage_runner_schema":paper_first_shadow_latest.get("stage_runner_required_schema",""),
+            "paper_first_shadow_latest_control_snapshot_sha256":paper_first_shadow_latest.get("control_snapshot_sha256",""),
             "paper_first_shadow_latest_expansion_successful_shards":paper_first_shadow_latest_summary.get("expansion_successful_shards",0),
             "paper_first_shadow_latest_expansion_execution_failures":paper_first_shadow_latest_summary.get("expansion_execution_failures",0),
             "paper_first_shadow_latest_expansion_parse_failures":paper_first_shadow_latest_summary.get("expansion_parse_failures",0),
@@ -1113,6 +1115,9 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         if shadow_portfolio.get("scientific_authority") is not False or (shadow_portfolio.get("policy") or {}).get("shadow_only") is not True: errors.append("Search Portfolio public state must remain shadow-only and zero-authority")
         if shadow_latest.get("scientific_authority") is not False or latest_policy.get("shadow_only") is not True or latest_policy.get("canonical_primary_generator_queue_untouched") is not True or latest_policy.get("live_source_coverage_effect") is not False: errors.append("latest Search Portfolio run must remain shadow-only without canonical source/queue effects")
         if latest_policy.get("current_source_web_receipt_required_after_semantic_clear") is not True or latest_policy.get("missing_or_failed_current_source_reviewer_is_not_pass") is not True: errors.append("semantic CLEAR in shadow search must require fail-closed current-source review")
+        if latest_policy.get("control_snapshot_bound_run") is True:
+            control_sha=str(shadow_latest.get("control_snapshot_sha256") or "");qualification_commit=str(shadow_latest.get("qualification_main_commit") or "")
+            if str(shadow_latest.get("stage_runner_required_schema") or "")!="1.4" or len(control_sha)!=64 or any(ch not in "0123456789abcdef" for ch in control_sha) or len(qualification_commit)!=40 or any(ch not in "0123456789abcdef" for ch in qualification_commit) or latest_policy.get("control_snapshot_provenance_is_bounded_sha_only") is not True: errors.append("qualified shadow run must expose bounded schema-1.4 control snapshot provenance")
         if str(shadow_latest.get("schema_version") or "") >= "1.1-shadow-run":
             if latest_policy.get("execution_loss_is_not_scientific_negative") is not True or latest_policy.get("problem_falsifier_hold_is_not_scientific_fail") is not True: errors.append("latest shadow run must distinguish execution loss and falsifier HOLD from scientific negatives")
             if int(latest_summary.get("expansion_successful_shards") or 0)+int(latest_summary.get("expansion_execution_failures") or 0)!=int(latest_summary.get("expansion_requested_shards") or 0): errors.append("shadow expansion execution accounting mismatch")
