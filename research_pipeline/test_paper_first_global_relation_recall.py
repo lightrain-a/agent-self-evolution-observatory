@@ -117,6 +117,16 @@ class GlobalRelationRecallTest(unittest.TestCase):
         self.assertEqual(second["last_completed_scan"]["run_id"],first["run_id"])
         self.assertEqual(second["summary"]["lane_pass"],1)
 
+    def test_provider_error_preserves_last_completed_scan_boundary(self) -> None:
+        previous={"last_completed_scan":{"run_id":"r0","relation_universe_digest":"b"*64,"scientific_authority":False}}
+        def limited(**kwargs):
+            raise RuntimeError("Ark HTTP 429: RequestBurstTooFast")
+        with tempfile.TemporaryDirectory() as td:
+            state=run_global_relation_recall(storage=self.storage(Path(td)),primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state=previous,relation_responder=limited,lane_responder=self.lane(),reduction_responder=self.reduction(),now=datetime(2026,8,13,tzinfo=timezone.utc))
+        self.assertEqual(state["status"],"RELATION_PROVIDER_ERROR_ZERO_AUTHORITY")
+        self.assertEqual(state["last_completed_scan"],previous["last_completed_scan"])
+        self.assertEqual(state["summary"]["scientifically_authorized"],0)
+
     def test_lane_reviewer_must_resolve_independently(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             state=run_global_relation_recall(storage=self.storage(Path(td)),primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state={},relation_responder=self.relation(resolved="same-model"),lane_responder=self.lane(resolved="same-model"),reduction_responder=self.reduction(),now=datetime(2026,8,13,tzinfo=timezone.utc))
