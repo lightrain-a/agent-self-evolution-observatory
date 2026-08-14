@@ -78,6 +78,18 @@ class ScientificObjectOntologyTest(unittest.TestCase):
         self.assertEqual(audit["status"], "HOLD_OBJECT_PURITY_INSUFFICIENT")
         self.assertFalse(audit["activation_authorized"])
 
+    def test_frozen_pairwise_validator_is_support_but_not_direct_evaluator_evolution(self) -> None:
+        rows = [self.row(1, "Pairwise validator uses a frozen LLM and requires no training of its own", ["runtime_deployment"])]
+        config = load_scientific_object_config()
+        config["support_gate"] = {**config["support_gate"], "minimum_reviewed_primary_refs": 1, "minimum_empirical_fact_supported_refs": 1, "minimum_measured_failure_supported_refs": 1, "maximum_single_existing_lane_collision": 1.0}
+        config["purity_gate"] = {**config["purity_gate"], "minimum_direct_object_primary_refs": 1, "minimum_direct_empirical_fact_supported_refs": 1, "minimum_direct_measured_failure_supported_refs": 1, "minimum_direct_object_fraction": 0.5}
+        audit = audit_candidate_object(rows, "evaluator_reward_verifier", config=config)
+        self.assertEqual(audit["observed"]["reviewed_primary_refs"], 1)
+        self.assertEqual(audit["observed"]["direct_object_primary_refs"], 0)
+        self.assertTrue(audit["evidence_gate_pass"])
+        self.assertFalse(audit["purity_gate_pass"])
+        self.assertEqual(audit["status"], "HOLD_OBJECT_PURITY_INSUFFICIENT")
+
     def test_mixed_ownership_blocks_candidate_after_support_and_purity_pass(self) -> None:
         rows = [self.row(i, "Autonomous policy evolution under bounded feedback", ["skill_harness"] if i < 4 else ["runtime_deployment"]) for i in range(1, 7)]
         audit = audit_candidate_object(rows, "policy_strategy_control")

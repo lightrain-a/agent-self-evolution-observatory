@@ -64,7 +64,9 @@
       "object_purity": "review-required",
       "object_ownership": "review-required",
       "positive_phrases": ["co-evolving agents and their evaluators", "evolving evaluator", "evaluator evolution", "evaluator preference", "evaluator adaptation", "evaluator update", "reward evolution", "reward model update", "pairwise validator", "self-verifiable reward", "verifier evolution"],
-      "negative_phrases": []
+      "negative_phrases": [],
+      "purity_positive_phrases": ["co-evolving agents and their evaluators", "evolving evaluator", "evaluator evolution", "evaluator adaptation", "evaluator update", "reward evolution", "reward model update", "verifier evolution"],
+      "purity_negative_phrases": ["frozen llm", "frozen validator", "validator requires no training", "requires no training of its own"]
     },
     "tool_action_interface": {
       "scientific_object": "persistent tool or action-interface repertoire or routing state acquired, synthesized, or revised by the agent",
