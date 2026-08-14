@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import tempfile
 import unittest
@@ -21,7 +22,8 @@ class ProblemSearchControlSnapshotTest(unittest.TestCase):
         (project/"b.py").write_text("B=2\n",encoding="utf-8")
         run=root/"shadow-test";run.mkdir()
         pool=run/"frozen-primary-evidence-pool.json"
-        pool.write_text(json.dumps({"generated_at":"2026-08-14T00:00:00+00:00","source_pool_sha256":"1"*64,"source_set_sha256":"2"*64,"frozen_pool_sha256":"3"*64,"records":[{"ref":"arXiv:2608.00001"}]}),encoding="utf-8")
+        set_sha=hashlib.sha256("arXiv:2608.00001".encode()).hexdigest()
+        pool.write_text(json.dumps({"generated_at":"2026-08-14T00:00:00+00:00","source_pool_sha256":"1"*64,"source_set_sha256":set_sha,"frozen_pool_sha256":"3"*64,"records":[{"ref":"arXiv:2608.00001"}]}),encoding="utf-8")
         memory=run/"shadow-dead-end-memory.json"
         memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[{"basin":"semantic-lane-contract-x","scientific_authority":False}]}),encoding="utf-8")
         return project,run,pool,memory,("a.py","b.py")
@@ -70,6 +72,13 @@ class ProblemSearchControlSnapshotTest(unittest.TestCase):
             receipt=json.loads((run/"shadow-run-qualification.json").read_text());receipt["stage_runner_required_schema"]="1.3";(run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
             with self.assertRaisesRegex(ValueError,"stage-runner schema drift"):
                 validate_shadow_run_control(run_root=run,pool_path=pool,memory_path=memory,project_root=project,control_files=files)
+
+    def test_qualification_rejects_source_set_digest_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            project,run,pool,memory,files=self.fixture(Path(td))
+            payload=json.loads(pool.read_text());payload["source_set_sha256"]="2"*64;pool.write_text(json.dumps(payload),encoding="utf-8")
+            with self.assertRaisesRegex(ValueError,"source-set digest mismatch"):
+                build_shadow_run_qualification(run_root=run,pool_path=pool,memory_path=memory,project_root=project,require_clean_control=False,control_files=files)
 
     def test_shadow_run_requires_receipt_but_legacy_nonshadow_test_root_can_be_unqualified(self) -> None:
         with tempfile.TemporaryDirectory() as td:

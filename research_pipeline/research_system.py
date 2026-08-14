@@ -45,6 +45,7 @@ from .paper_first_scientific_object_retrieval_audit import load_private_shadow_s
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
+from .paper_first_shadow_search_admission import build_shadow_search_admission, public_shadow_search_admission_summary, validate_shadow_search_admission
 from .paper_first_search_portfolio_design_adjudication import build_search_portfolio_design_adjudication, validate_search_portfolio_design_adjudication, write_search_portfolio_design_adjudication
 from .paper_first_sp15_identifiability_support import build_sp15_identifiability_support, write_sp15_identifiability_support
 from .paper_first_global_relation_recall import load_global_relation_recall_state
@@ -331,6 +332,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_global_relation_delta_preflight = public_relation_delta_preflight_summary(paper_first_global_relation_delta_private)
     paper_first_global_relation_scan_admission = public_global_relation_scan_admission_summary(build_global_relation_scan_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,relation_state=paper_first_global_relation_recall,delta_state=paper_first_global_relation_delta_private))
     paper_first_problem_search_portfolio = _load_shadow_search_portfolio_public()
+    paper_first_shadow_search_admission = public_shadow_search_admission_summary(build_shadow_search_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,queue_state=paper_first_problem_gate_queue,shadow_state=paper_first_problem_search_portfolio))
     paper_first_shadow_latest = paper_first_problem_search_portfolio.get("latest_run") or {}
     paper_first_shadow_latest_summary = paper_first_shadow_latest.get("summary") or {}
     paper_first_post_c2 = build_post_c2_adjudication()
@@ -562,6 +564,10 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_relation_scan_admission_failed":(paper_first_global_relation_scan_admission.get("summary") or {}).get("failed",0),
             "paper_first_relation_scan_manual_eligible":bool((paper_first_global_relation_scan_admission.get("summary") or {}).get("manual_scan_eligible")),
             "paper_first_relation_scan_automatic_authorized":bool((paper_first_global_relation_scan_admission.get("summary") or {}).get("automatic_model_scan_authorized")),
+            "paper_first_shadow_search_admission_status":paper_first_shadow_search_admission.get("status","HOLD_CANONICAL_DISCOVERY_TRANSACTION_OPEN"),
+            "paper_first_shadow_search_same_source_transaction":bool((paper_first_shadow_search_admission.get("summary") or {}).get("same_source_transaction")),
+            "paper_first_shadow_search_qualification_allowed":bool((paper_first_shadow_search_admission.get("summary") or {}).get("qualification_allowed")),
+            "paper_first_shadow_search_automatic_provider_calls":int((paper_first_shadow_search_admission.get("summary") or {}).get("automatic_provider_calls_authorized") or 0),
             "paper_first_shadow_latest_run_id":paper_first_problem_search_portfolio.get("latest_run_id",""),
             "paper_first_shadow_latest_stage_runner_schema":paper_first_shadow_latest.get("stage_runner_required_schema",""),
             "paper_first_shadow_latest_control_snapshot_sha256":paper_first_shadow_latest.get("control_snapshot_sha256",""),
@@ -736,6 +742,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_global_relation_freshness":paper_first_global_relation_freshness,
         "paper_first_global_relation_delta_preflight":paper_first_global_relation_delta_preflight,
         "paper_first_global_relation_scan_admission":paper_first_global_relation_scan_admission,
+        "paper_first_shadow_search_admission":paper_first_shadow_search_admission,
         "paper_first_problem_search_portfolio":paper_first_problem_search_portfolio,
         "paper_first_post_c2":paper_first_post_c2,
         "paper_first_premature_method_diagnostics":paper_first_premature_method_diagnostics,
@@ -1160,12 +1167,17 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     errors.extend(f"Search Portfolio design adjudication: {error}" for error in validate_search_portfolio_design_adjudication(sp_design))
     sp15_support = state.get("paper_first_sp15_identifiability_support") or {}; sp15_summary = sp15_support.get("summary") or {}; sp15_policy = sp15_support.get("policy") or {}
     if sp15_summary.get("query_level_identifiability_units") != 0 or sp15_summary.get("support_status") != "INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM" or sp15_support.get("decision") != "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT" or sp15_policy.get("phenomenon_support_is_not_identifiability_support") is not True or any(int(sp15_summary.get(key) or 0) != 0 for key in ("method_design_authorized","experiment_blueprint_authorized","local_validation_authorized","p0_authorized","gpu_authorized")): errors.append("SP-15 revised identifiability problem must remain HOLD until nonzero matched query-level support exists")
+    shadow_search_admission=state.get("paper_first_shadow_search_admission") or {}
+    errors.extend(f"Shadow Search admission: {error}" for error in validate_shadow_search_admission(shadow_search_admission))
     shadow_portfolio=state.get("paper_first_problem_search_portfolio") or {};shadow_latest=shadow_portfolio.get("latest_run") or {}
     if shadow_latest:
         latest_policy=shadow_latest.get("policy") or {};latest_summary=shadow_latest.get("summary") or {};latest_authority=shadow_latest.get("authority") or {}
         if shadow_portfolio.get("scientific_authority") is not False or (shadow_portfolio.get("policy") or {}).get("shadow_only") is not True: errors.append("Search Portfolio public state must remain shadow-only and zero-authority")
         if shadow_latest.get("scientific_authority") is not False or latest_policy.get("shadow_only") is not True or latest_policy.get("canonical_primary_generator_queue_untouched") is not True or latest_policy.get("live_source_coverage_effect") is not False: errors.append("latest Search Portfolio run must remain shadow-only without canonical source/queue effects")
         if latest_policy.get("current_source_web_receipt_required_after_semantic_clear") is not True or latest_policy.get("missing_or_failed_current_source_reviewer_is_not_pass") is not True: errors.append("semantic CLEAR in shadow search must require fail-closed current-source review")
+        if latest_policy.get("source_identity_is_bounded_timestamp_and_sha_provenance") is True:
+            source_set_sha=str(shadow_latest.get("source_set_sha256") or "");source_pool_sha=str(shadow_latest.get("source_pool_sha256") or "")
+            if not str(shadow_latest.get("source_generated_at") or "") or len(source_set_sha)!=64 or any(ch not in "0123456789abcdef" for ch in source_set_sha) or (source_pool_sha and (len(source_pool_sha)!=64 or any(ch not in "0123456789abcdef" for ch in source_pool_sha))): errors.append("latest shadow source identity provenance invalid")
         if latest_policy.get("control_snapshot_bound_run") is True:
             control_sha=str(shadow_latest.get("control_snapshot_sha256") or "");qualification_commit=str(shadow_latest.get("qualification_main_commit") or "")
             if str(shadow_latest.get("stage_runner_required_schema") or "")!="1.4" or len(control_sha)!=64 or any(ch not in "0123456789abcdef" for ch in control_sha) or len(qualification_commit)!=40 or any(ch not in "0123456789abcdef" for ch in qualification_commit) or latest_policy.get("control_snapshot_provenance_is_bounded_sha_only") is not True or latest_policy.get("control_snapshot_terminal_provenance_verified") is not True: errors.append("qualified shadow run must expose bounded schema-1.4 control snapshot provenance through terminal gate")

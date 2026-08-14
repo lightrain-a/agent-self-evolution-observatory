@@ -403,6 +403,15 @@ class ResearchSystemTest(unittest.TestCase):
         multi["paper_first_problem_generator"]["policy"]["one_generator_call_max"]=False
         self.assertTrue(any("at most one generator call" in error for error in validate_state(multi)))
 
+    def test_shadow_search_admission_is_zero_provider_search_control(self) -> None:
+        admission=self.state["paper_first_shadow_search_admission"]
+        self.assertFalse(admission["scientific_authority"])
+        self.assertEqual((admission.get("summary") or {}).get("automatic_provider_calls_authorized"),0)
+        self.assertFalse((admission.get("summary") or {}).get("qualification_allowed"))
+        self.assertTrue((admission.get("policy") or {}).get("admission_never_authorizes_provider_calls"))
+        broken=copy.deepcopy(self.state);broken["paper_first_shadow_search_admission"]["summary"]["automatic_provider_calls_authorized"]=1
+        self.assertTrue(any("Shadow Search admission" in error for error in validate_state(broken)))
+
     def test_latest_shadow_terminal_is_fail_closed_and_zero_authority(self) -> None:
         state=copy.deepcopy(self.state)
         state["paper_first_problem_search_portfolio"]={

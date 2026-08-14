@@ -125,6 +125,13 @@ def _validate_pool(pool_path: Path) -> dict[str, Any]:
     refs = [str(row.get("ref") or "") for row in records]
     if len(refs) != len(set(refs)) or any(not ref.startswith("arXiv:") for ref in refs):
         raise ValueError("frozen primary evidence pool refs must be unique arXiv refs")
+    expected_set_sha = hashlib.sha256("\n".join(sorted(refs)).encode()).hexdigest()
+    source_set_sha = str(pool.get("source_set_sha256") or "").strip().lower()
+    source_pool_sha = str(pool.get("source_pool_sha256") or "").strip().lower()
+    if source_set_sha != expected_set_sha:
+        raise ValueError("frozen primary evidence source-set digest mismatch")
+    if not re.fullmatch(r"[0-9a-f]{64}", source_pool_sha):
+        raise ValueError("frozen primary evidence source-pool digest invalid")
     return pool
 
 
