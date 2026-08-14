@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T07:21:04+00:00",
+  "generated_at": "2026-08-14T07:29:08+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -71225,34 +71225,34 @@
         "detail": {
           "status": "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE",
           "summary": {
-            "convergent_failure_has_new_failure_evidence": false,
-            "new_reviewed_sources": 0,
             "new_boundary_sources": 0,
-            "focused_generator_reopen_authorized": false,
-            "current_reviewed_sources": 226,
             "new_failure_sources": 0,
             "cache_missing_sources": 0,
-            "unexplained_boundary_has_new_boundary_evidence": false,
-            "assumption_break_has_new_assumption_endpoint": false,
-            "contradiction_has_new_empirical_evidence": false,
-            "new_receipt_runs": 0,
             "new_assumption_sources": 0,
-            "model_scan_authorized": false,
             "old_receipt_runs": 18,
+            "convergent_failure_has_new_failure_evidence": false,
+            "contradiction_has_new_empirical_evidence": false,
+            "new_empirical_sources": 0,
+            "model_scan_authorized": false,
+            "new_receipt_runs": 0,
+            "unexplained_boundary_has_new_boundary_evidence": false,
+            "new_reviewed_sources": 0,
             "old_reviewed_sources": 226,
-            "new_empirical_sources": 0
+            "current_reviewed_sources": 226,
+            "assumption_break_has_new_assumption_endpoint": false,
+            "focused_generator_reopen_authorized": false
           },
           "pair_slots": {
-            "empirical_empirical_slots_touching_new": 0,
+            "assumption_failure_slots_touching_new": 0,
             "failure_failure_slots_touching_new": 0,
             "boundary_empirical_slots_touching_new": 0,
-            "assumption_failure_slots_touching_new": 0
+            "empirical_empirical_slots_touching_new": 0
           },
           "interpretation": {
-            "assumption_break": "NO_NEW_ASSUMPTION_ENDPOINT",
+            "convergent_failure": "NO_NEW_FAILURE_EVIDENCE",
             "unexplained_boundary": "NO_NEW_BOUNDARY_EVIDENCE",
-            "contradiction": "NO_NEW_EMPIRICAL_EVIDENCE",
-            "convergent_failure": "NO_NEW_FAILURE_EVIDENCE"
+            "assumption_break": "NO_NEW_ASSUMPTION_ENDPOINT",
+            "contradiction": "NO_NEW_EMPIRICAL_EVIDENCE"
           }
         }
       },
@@ -71262,18 +71262,18 @@
         "detail": {
           "status": "HOLD_MANUAL_RELATION_SCAN",
           "summary": {
-            "checks": 15,
-            "automatic_model_scan_authorized": false,
-            "manual_scan_eligible": false,
-            "new_assumption_sources": 0,
-            "new_reviewed_sources": 0,
-            "new_boundary_sources": 0,
+            "last_scanned_sources": 226,
             "passed": 11,
-            "current_reviewed_sources": 226,
+            "new_boundary_sources": 0,
             "new_empirical_sources": 0,
             "new_failure_sources": 0,
-            "failed": 4,
-            "last_scanned_sources": 226
+            "new_assumption_sources": 0,
+            "new_reviewed_sources": 0,
+            "current_reviewed_sources": 226,
+            "automatic_model_scan_authorized": false,
+            "manual_scan_eligible": false,
+            "checks": 15,
+            "failed": 4
           }
         }
       },
@@ -72067,7 +72067,8 @@
           "block": 0
         }
       }
-    ]
+    ],
+    "errors": []
   },
   "paper_first_problem_search_portfolio": {
     "schema_version": "3.2-shadow-import",
@@ -72515,7 +72516,7 @@
   },
   "paper_first_global_relation_freshness": {
     "schema_version": "1.0",
-    "status": "STALE_RELATION_UNIVERSE",
+    "status": "CURRENT_RELATION_UNIVERSE",
     "policy": {
       "scientific_authority": false,
       "deterministic_digest_comparison_only": true,
@@ -72525,19 +72526,19 @@
     },
     "summary": {
       "current_reviewed_sources": 226,
-      "last_scanned_sources": 214,
+      "last_scanned_sources": 226,
       "current_possible_pairs": 25425,
       "current_coobserved_pairs": 5730,
       "current_pair_coverage_fraction": 0.2254,
-      "last_pair_coverage_fraction": 0.2186,
+      "last_pair_coverage_fraction": 0.2254,
       "current_relation_blind_spot": true,
-      "universe_stale": true,
-      "current_not_reduced_unknown": true,
-      "model_scan_deferred": true,
+      "universe_stale": false,
+      "current_not_reduced_unknown": false,
+      "model_scan_deferred": false,
       "focused_problem_generator_reopen_allowed": false
     },
     "current_relation_universe_digest": "fff32b96a52efc3a4c109b97e1163772f3e7a717c65fab8feae78831c4a6af9c",
-    "last_scanned_relation_universe_digest": "e2f2725901ba9f15cf11ded5b753badb6f123ec763921ece1e04c2b1249c32ae",
+    "last_scanned_relation_universe_digest": "fff32b96a52efc3a4c109b97e1163772f3e7a717c65fab8feae78831c4a6af9c",
     "scientific_authority": false
   },
   "paper_first_global_relation_delta_preflight": {
@@ -72552,34 +72553,34 @@
       "cannot_authorize_problem_gate": true
     },
     "summary": {
-      "convergent_failure_has_new_failure_evidence": false,
-      "new_reviewed_sources": 0,
       "new_boundary_sources": 0,
-      "focused_generator_reopen_authorized": false,
-      "current_reviewed_sources": 226,
       "new_failure_sources": 0,
       "cache_missing_sources": 0,
-      "unexplained_boundary_has_new_boundary_evidence": false,
-      "assumption_break_has_new_assumption_endpoint": false,
-      "contradiction_has_new_empirical_evidence": false,
-      "new_receipt_runs": 0,
       "new_assumption_sources": 0,
-      "model_scan_authorized": false,
       "old_receipt_runs": 18,
+      "convergent_failure_has_new_failure_evidence": false,
+      "contradiction_has_new_empirical_evidence": false,
+      "new_empirical_sources": 0,
+      "model_scan_authorized": false,
+      "new_receipt_runs": 0,
+      "unexplained_boundary_has_new_boundary_evidence": false,
+      "new_reviewed_sources": 0,
       "old_reviewed_sources": 226,
-      "new_empirical_sources": 0
+      "current_reviewed_sources": 226,
+      "assumption_break_has_new_assumption_endpoint": false,
+      "focused_generator_reopen_authorized": false
     },
     "pair_slots": {
-      "empirical_empirical_slots_touching_new": 0,
+      "assumption_failure_slots_touching_new": 0,
       "failure_failure_slots_touching_new": 0,
       "boundary_empirical_slots_touching_new": 0,
-      "assumption_failure_slots_touching_new": 0
+      "empirical_empirical_slots_touching_new": 0
     },
     "interpretation": {
-      "assumption_break": "NO_NEW_ASSUMPTION_ENDPOINT",
+      "convergent_failure": "NO_NEW_FAILURE_EVIDENCE",
       "unexplained_boundary": "NO_NEW_BOUNDARY_EVIDENCE",
-      "contradiction": "NO_NEW_EMPIRICAL_EVIDENCE",
-      "convergent_failure": "NO_NEW_FAILURE_EVIDENCE"
+      "assumption_break": "NO_NEW_ASSUMPTION_ENDPOINT",
+      "contradiction": "NO_NEW_EMPIRICAL_EVIDENCE"
     },
     "scientific_authority": false
   },
@@ -72596,18 +72597,18 @@
       "preconditions_are_deterministic_search_control_only": true
     },
     "summary": {
-      "checks": 15,
-      "automatic_model_scan_authorized": false,
-      "manual_scan_eligible": false,
-      "new_assumption_sources": 0,
-      "new_reviewed_sources": 0,
-      "new_boundary_sources": 0,
+      "last_scanned_sources": 226,
       "passed": 11,
-      "current_reviewed_sources": 226,
+      "new_boundary_sources": 0,
       "new_empirical_sources": 0,
       "new_failure_sources": 0,
-      "failed": 4,
-      "last_scanned_sources": 226
+      "new_assumption_sources": 0,
+      "new_reviewed_sources": 0,
+      "current_reviewed_sources": 226,
+      "automatic_model_scan_authorized": false,
+      "manual_scan_eligible": false,
+      "checks": 15,
+      "failed": 4
     },
     "failed_check_count": 4,
     "freshness_status": "CURRENT_RELATION_UNIVERSE",
