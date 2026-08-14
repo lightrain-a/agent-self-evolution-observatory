@@ -520,6 +520,7 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_shadow_latest_expansion_successful_shards":paper_first_shadow_latest_summary.get("expansion_successful_shards",0),
             "paper_first_shadow_latest_expansion_parse_failures":paper_first_shadow_latest_summary.get("expansion_parse_failures",0),
             "paper_first_shadow_latest_raw":paper_first_shadow_latest_summary.get("raw_seeds",0),
+            "paper_first_shadow_latest_semantic_dead_end_blocks":paper_first_shadow_latest_summary.get("semantic_dead_end_blocks",0),
             "paper_first_shadow_latest_unique":paper_first_shadow_latest_summary.get("semantic_unique",0),
             "paper_first_shadow_latest_evolved":paper_first_shadow_latest_summary.get("evolved_branches",0),
             "paper_first_shadow_latest_formulated":paper_first_shadow_latest_summary.get("formulated_candidates",0),

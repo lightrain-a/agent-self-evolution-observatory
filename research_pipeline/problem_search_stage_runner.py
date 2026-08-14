@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import argparse,hashlib,json,os
+import argparse,hashlib,json,os,re
 from datetime import datetime,timezone
 from pathlib import Path
 
@@ -41,17 +41,51 @@ def _shadow_dead_end_memory(path:Path|None)->dict:
     return memory
 
 
+def _text_tokens(value:str)->set[str]:
+    return {token for token in re.findall(r"[a-z0-9]+",str(value or "").lower()) if len(token)>=3}
+
+
+def _text_jaccard(left:str,right:str)->float:
+    a,b=_text_tokens(left),_text_tokens(right)
+    return len(a&b)/len(a|b) if a and b else 0.0
+
+
+def _semantic_dead_end_seed_blocker(seed:dict,memory:dict,pool_sha:str)->dict|None:
+    lane=str(seed.get("discovery_lane") or "").strip().upper()
+    evidence=seed.get("empirical_evidence") or {}
+    refs=sorted({str((evidence.get(key) or {}).get("ref") or "").strip() for key in ("source_a","source_b") if str((evidence.get(key) or {}).get("ref") or "").strip()})
+    claims=" ".join(str((evidence.get(key) or {}).get("claim") or "") for key in ("source_a","source_b"))
+    problem=" ".join(str(seed.get(key) or "") for key in ("title","problem_seed","scientific_tension","structural_signature","irreducible_object","exact_prediction"))
+    for row in memory.get("blocked_objects") or []:
+        if not isinstance(row,dict):continue
+        basin=str(row.get("basin") or "")
+        if not basin.startswith(("semantic-exact-reduction-","semantic-lane-contract-")):continue
+        if str(row.get("frozen_pool_sha256") or "")!=str(pool_sha or ""):continue
+        if str(row.get("search_primitive") or "").strip().upper()!=lane:continue
+        memory_refs=sorted({str(ref) for ref in row.get("current_source_refs") or [] if str(ref)})
+        if refs!=memory_refs:continue
+        claim_sim=_text_jaccard(claims," ".join(str(value) for value in row.get("evidence_claims") or []))
+        problem_sim=_text_jaccard(problem,str(row.get("problem_text") or ""))
+        if claim_sim<0.55 and problem_sim<0.35:continue
+        return {"basin":basin,"source_candidate_id":str(row.get("source_candidate_id") or ""),"search_primitive":lane,"source_refs":refs,"claim_similarity":round(claim_sim,4),"problem_similarity":round(problem_sim,4),"reason":"same frozen evidence pool re-entered a persisted semantic dead-end without new evidence","scientific_authority":False}
+    return None
+
+
 def expand(*,pool:Path,run_root:Path,lane:str,count:int=6,model:str="ark-code-latest",part:int=1,memory_path:Path|None=None) -> dict:
     payload=json.loads(pool.read_text(encoding="utf-8"));records=payload.get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")}
     lane=lane.strip().upper()
     if lane not in SEARCH_PORTFOLIO_PRIMITIVES:raise ValueError(f"unknown search primitive {lane}")
     memory=_shadow_dead_end_memory(memory_path);prompt=_expansion_prompt(lane,records,count,memory);res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=.85);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);parsed,raw_sha=_parse_archived_json(run_root,f"expand-{lane}-p{part}",raw,resolved)
-    seeds=[]
+    pool_sha=str(payload.get("frozen_pool_sha256") or "").strip();seeds=[];dead_end_blocks=[]
     for i,item in enumerate(parsed.get("seeds") or [],1):
         if not isinstance(item,dict):continue
         row=_normalize_seed(item,lane,i);row["seed_id"]=f"{lane}-P{part}-{i:03d}"
-        if _valid_seed(row,registry):seeds.append(row)
-    out={"schema_version":"1.2","lane":lane,"part":part,"requested":count,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","valid_seeds":len(seeds),"seeds":seeds,"scientific_authority":False}
+        if not _valid_seed(row,registry):continue
+        blocker=_semantic_dead_end_seed_blocker(row,memory,pool_sha)
+        if blocker:
+            dead_end_blocks.append({"seed_id":row["seed_id"],**blocker});continue
+        seeds.append(row)
+    out={"schema_version":"1.3","lane":lane,"part":part,"requested":count,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"valid_seeds":len(seeds),"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"seeds":seeds,"scientific_authority":False}
     run_root.mkdir(parents=True,exist_ok=True);(run_root/f"expand-{lane}-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {k:out[k] for k in ("lane","part","requested","resolved_model","raw_sha256","valid_seeds")}
 
@@ -59,16 +93,16 @@ def expand(*,pool:Path,run_root:Path,lane:str,count:int=6,model:str="ark-code-la
 def assemble(*,run_root:Path,archive_capacity:int=48,evolution_parents:int=24)->dict:
     raw=[];shards=[]
     for path in sorted(run_root.glob("expand-*.json")):
-        payload=json.loads(path.read_text(encoding="utf-8"));rows=[row for row in (payload.get("seeds") or []) if isinstance(row,dict)];raw.extend(rows);shards.append({"path":path.name,"lane":payload.get("lane"),"part":payload.get("part","legacy"),"requested":payload.get("requested"),"valid_seeds":len(rows),"raw_sha256":payload.get("raw_sha256"),"resolved_model":payload.get("resolved_model")})
+        payload=json.loads(path.read_text(encoding="utf-8"));rows=[row for row in (payload.get("seeds") or []) if isinstance(row,dict)];raw.extend(rows);shards.append({"path":path.name,"lane":payload.get("lane"),"part":payload.get("part","legacy"),"requested":payload.get("requested"),"valid_seeds":len(rows),"semantic_dead_end_blocks":int(payload.get("semantic_dead_end_block_count") or 0),"raw_sha256":payload.get("raw_sha256"),"resolved_model":payload.get("resolved_model")})
     unique,dups=_semantic_dedup(raw);unique,clusters=_assign_structural_clusters(unique);archives=_archives(unique,archive_capacity);by_id={row["seed_id"]:row for row in unique};breadth=[by_id[sid] for sid in archives["breadth"] if sid in by_id];parents=_maxmin_select(breadth,min(evolution_parents,len(breadth)))
     lane_counts={lane:sum(row.get("discovery_lane")==lane for row in raw) for lane in SEARCH_PORTFOLIO_PRIMITIVES};archive_lanes={lane:sum(by_id[sid].get("discovery_lane")==lane for sid in archives["breadth"] if sid in by_id) for lane in SEARCH_PORTFOLIO_PRIMITIVES}
-    out={"schema_version":"1.0","shards":shards,"summary":{"raw_seeds":len(raw),"semantic_unique":len(unique),"semantic_duplicates":len(dups),"structural_clusters":clusters,"breadth_archive":len(archives["breadth"]),"evolution_parents":len(parents),"lane_coverage":sum(value>0 for value in lane_counts.values()),"archive_lane_coverage":sum(value>0 for value in archive_lanes.values())},"lane_counts":lane_counts,"archive_lane_counts":archive_lanes,"archives":archives,"duplicates":dups,"unique_seeds":unique,"parents":parents,"scientific_authority":False}
+    out={"schema_version":"1.1","shards":shards,"summary":{"raw_seeds":len(raw),"semantic_dead_end_blocks":sum(int(shard.get("semantic_dead_end_blocks") or 0) for shard in shards),"semantic_unique":len(unique),"semantic_duplicates":len(dups),"structural_clusters":clusters,"breadth_archive":len(archives["breadth"]),"evolution_parents":len(parents),"lane_coverage":sum(value>0 for value in lane_counts.values()),"archive_lane_coverage":sum(value>0 for value in archive_lanes.values())},"lane_counts":lane_counts,"archive_lane_counts":archive_lanes,"archives":archives,"duplicates":dups,"unique_seeds":unique,"parents":parents,"scientific_authority":False}
     (run_root/"base.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return out["summary"]
 
 
 def evolve(*,pool:Path,run_root:Path,generation:int,part:int,batch_size:int=6,model:str="ark-code-latest",memory_path:Path|None=None)->dict:
-    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")};base=json.loads((run_root/"base.json").read_text(encoding="utf-8"))
+    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();base=json.loads((run_root/"base.json").read_text(encoding="utf-8"))
     if generation==1:parents=base.get("parents") or []
     elif generation==2:
         g1=[]
@@ -77,14 +111,18 @@ def evolve(*,pool:Path,run_root:Path,generation:int,part:int,batch_size:int=6,mo
     else:raise ValueError("generation must be 1 or 2")
     start=(part-1)*batch_size;batch=parents[start:start+batch_size]
     if not batch:raise ValueError(f"empty evolution batch generation={generation} part={part}")
-    memory=_shadow_dead_end_memory(memory_path);temperature=.60 if generation==1 else .35;prompt=_evolution_prompt(batch,generation)+" SHADOW DEAD-END MEMORY (search control only; never scientific authority)="+json.dumps(memory,ensure_ascii=False,separators=(",",":"));res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=temperature);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"evolve-g{generation}-p{part}",raw,resolved);pmap={p["seed_id"]:p for p in batch};children=[]
+    memory=_shadow_dead_end_memory(memory_path);temperature=.60 if generation==1 else .35;prompt=_evolution_prompt(batch,generation)+" SHADOW DEAD-END MEMORY (search control only; never scientific authority)="+json.dumps(memory,ensure_ascii=False,separators=(",",":"));res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=temperature);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"evolve-g{generation}-p{part}",raw,resolved);pmap={p["seed_id"]:p for p in batch};children=[];dead_end_blocks=[]
     for i,item in enumerate(payload.get("children") or [],1):
         if not isinstance(item,dict):continue
         parent=pmap.get(str(item.get("parent_id") or ""))
         if not parent:continue
         merged={**parent,**item,"discovery_lane":parent["discovery_lane"],"empirical_evidence":parent["empirical_evidence"],"lane_evidence":parent["lane_evidence"],"cross_domain_origin":parent.get("cross_domain_origin","")};row=_normalize_seed(merged,parent["discovery_lane"],i);row["seed_id"]=f"{parent['seed_id']}-G{generation}";row["parent_id"]=parent["seed_id"];row["branch_depth"]=generation
-        if _valid_seed(row,registry):children.append(row)
-    out={"schema_version":"1.2","generation":generation,"part":part,"parent_ids":[p["seed_id"] for p in batch],"requested_children":len(batch),"valid_children":len(children),"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","temperature":temperature,"children":children,"scientific_authority":False}
+        if not _valid_seed(row,registry):continue
+        blocker=_semantic_dead_end_seed_blocker(row,memory,pool_sha)
+        if blocker:
+            dead_end_blocks.append({"seed_id":row["seed_id"],**blocker});continue
+        children.append(row)
+    out={"schema_version":"1.3","generation":generation,"part":part,"parent_ids":[p["seed_id"] for p in batch],"requested_children":len(batch),"valid_children":len(children),"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"temperature":temperature,"children":children,"scientific_authority":False}
     (run_root/f"evolve-g{generation}-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {k:out[k] for k in ("generation","part","requested_children","valid_children","resolved_model","raw_sha256")}
 
@@ -98,17 +136,21 @@ def formulation_pool(run_root:Path,budget:int=24)->list[dict]:
 
 
 def formulate(*,pool:Path,run_root:Path,part:int,batch_size:int=2,budget:int=24,model:str="ark-code-latest",memory_path:Path|None=None)->dict:
-    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")};branches=formulation_pool(run_root,budget);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
+    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
     if not batch:raise ValueError(f"empty formulation batch part={part}")
     memory=_shadow_dead_end_memory(memory_path);prompt=_formulation_prompt(batch,registry,memory);res=_ark(prompt=prompt,model=model,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
     # Preserve branch provenance and typed evidence deterministically. The model
     # may sharpen claims but cannot silently change the source refs or lane.
-    by={b["seed_id"]:b for b in batch};normalized=[]
+    by={b["seed_id"]:b for b in batch};normalized=[];dead_end_blocks=[]
     for i,item in enumerate(live,1):
         parent=by.get(str(item.get("source_branch_id") or ""))
         if not parent:continue
-        row=dict(item);row["model_candidate_id"]=str(row.get("candidate_id") or "").strip();row["candidate_id"]=f"SHADOW-P{part:02d}-C{i:02d}";row["source_branch_id"]=parent["seed_id"];row["branch_depth"]=parent.get("branch_depth",0);row["discovery_lane"]=parent["discovery_lane"];row["empirical_evidence"]=parent["empirical_evidence"];row["lane_evidence"]=parent["lane_evidence"];normalized.append(row)
-    out={"schema_version":"1.2","part":part,"branch_ids":[b["seed_id"] for b in batch],"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","candidates":normalized,"rejected":dead,"scientific_authority":False}
+        row=dict(item);row["model_candidate_id"]=str(row.get("candidate_id") or "").strip();row["candidate_id"]=f"SHADOW-P{part:02d}-C{i:02d}";row["source_branch_id"]=parent["seed_id"];row["branch_depth"]=parent.get("branch_depth",0);row["discovery_lane"]=parent["discovery_lane"];row["empirical_evidence"]=parent["empirical_evidence"];row["lane_evidence"]=parent["lane_evidence"]
+        blocker=_semantic_dead_end_seed_blocker(row,memory,pool_sha)
+        if blocker:
+            dead_end_blocks.append({"candidate_id":row["candidate_id"],"source_branch_id":parent["seed_id"],**blocker});continue
+        normalized.append(row)
+    out={"schema_version":"1.3","part":part,"branch_ids":[b["seed_id"] for b in batch],"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"candidates":normalized,"rejected":dead,"scientific_authority":False}
     (run_root/f"formulate-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {"part":part,"branches":len(batch),"candidates":len(normalized),"rejected":len(dead),"resolved_model":out["resolved_model"],"raw_sha256":out["raw_sha256"]}
 

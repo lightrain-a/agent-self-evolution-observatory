@@ -208,6 +208,7 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     semantic_inherited = _prior_semantic_block_rows() if prior_semantic_rows is None else [dict(row) for row in prior_semantic_rows if isinstance(row, dict)]
     semantic_by_basin = {str(row.get("basin")): row for row in semantic_inherited if str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-")) and row.get("scientific_authority") is False}
     semantic_added = 0
+    latest_pool_sha = str(latest.get("frozen_pool_sha256") or "").strip()
     for row in latest.get("candidates") or []:
         if not isinstance(row, dict) or str(row.get("semantic_verdict") or "") != "BLOCK":
             continue
@@ -218,6 +219,8 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
         exact_test = " ".join(str(row.get("semantic_exact_reduction_test") or "").split())[:1200]
         lane_reason = " ".join(str(row.get("semantic_lane_contract_reason") or "").split())[:1000]
         refs = sorted({str(ref) for ref in row.get("semantic_source_refs") or [] if str(ref).startswith("arXiv:")})
+        claims = [" ".join(str(value or "").split())[:1200] for value in row.get("semantic_source_claims") or [] if str(value or "").strip()]
+        problem_text = " ".join(str(row.get("semantic_problem_text") or row.get("title") or "").split())[:2400]
         patterns = sorted({str(value) for value in row.get("semantic_matched_patterns") or [] if str(value)})
         candidate_id = str(row.get("candidate_id") or "").strip()
         primitive = str(row.get("search_primitive") or "").strip()
@@ -237,6 +240,9 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
                 "reduction_class": reduction_class,
                 "exact_reduction_test": exact_test,
                 "current_source_refs": refs,
+                "evidence_claims": claims,
+                "problem_text": problem_text,
+                "frozen_pool_sha256": latest_pool_sha,
                 "reason": reason,
                 "reopen_only_if": "New primary evidence directly instantiates the recorded exact reduction test under matched information and leaves a residual prediction the named mature reduction cannot express; new wording, a new application domain, or an unexecuted proposed falsifier does not reopen this basin.",
                 "scientific_authority": False,
@@ -257,6 +263,9 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
                 "lane_contract_reason": lane_reason,
                 "exact_reduction_test": exact_test,
                 "current_source_refs": refs,
+                "evidence_claims": claims,
+                "problem_text": problem_text,
+                "frozen_pool_sha256": latest_pool_sha,
                 "reason": reason,
                 "reopen_only_if": "New primary evidence supplies the missing lane-contract elements explicitly (shared bounded condition, common failure object, and correctly typed evidence roles) and the resulting formulation still leaves a same-information residual beyond the recorded strongest reduction.",
                 "scientific_authority": False,
