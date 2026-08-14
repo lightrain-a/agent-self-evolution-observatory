@@ -532,6 +532,22 @@ class ResearchSystemTest(unittest.TestCase):
         illegal_reopen=copy.deepcopy(state);illegal_reopen["paper_first_global_relation_freshness"]["summary"]["focused_problem_generator_reopen_allowed"]=True
         self.assertTrue(any("stale Global Relation Recall" in error for error in validate_state(illegal_reopen)))
 
+    def test_relation_delta_preflight_is_typed_opportunity_only_and_cannot_reopen(self) -> None:
+        state=copy.deepcopy(self.state)
+        state["paper_first_global_relation_delta_preflight"]={
+            "schema_version":"1.0","status":"RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE",
+            "policy":{"scientific_authority":False,"deterministic_typed_evidence_delta_only":True,"pair_slots_are_not_lane_valid_pairs":True,"cannot_reopen_generator":True,"cannot_authorize_relation_model_scan":True,"cannot_authorize_problem_gate":True},
+            "summary":{"old_reviewed_sources":214,"current_reviewed_sources":226,"new_reviewed_sources":12,"new_empirical_sources":11,"new_assumption_sources":0,"new_failure_sources":11,"new_boundary_sources":8,"model_scan_authorized":False,"focused_generator_reopen_authorized":False},
+            "pair_slots":{"failure_failure_slots_touching_new":1782},
+            "interpretation":{"assumption_break":"NO_NEW_ASSUMPTION_ENDPOINT","convergent_failure":"NEW_FAILURE_EVIDENCE_PRESENT_LANE_VALIDITY_UNKNOWN"},
+            "scientific_authority":False,
+        }
+        self.assertEqual(validate_state(state),[])
+        model=copy.deepcopy(state);model["paper_first_global_relation_delta_preflight"]["summary"]["model_scan_authorized"]=True
+        self.assertTrue(any("relation delta preflight" in error for error in validate_state(model)))
+        pair=copy.deepcopy(state);pair["paper_first_global_relation_delta_preflight"]["policy"]["pair_slots_are_not_lane_valid_pairs"]=False
+        self.assertTrue(any("relation delta preflight" in error for error in validate_state(pair)))
+
     def test_v23_problem_deadend_memory_is_zero_authority_and_requires_basin_escape(self) -> None:
         state=copy.deepcopy(self.state); generator=state["paper_first_problem_generator"]
         generator["schema_version"]="2.3"

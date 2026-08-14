@@ -95,6 +95,7 @@ def main() -> None:
           primaryEvidence: window.RESEARCH_SYSTEM_STATE?.paper_first_primary_evidence || {},
           problemGenerator: window.RESEARCH_SYSTEM_STATE?.paper_first_problem_generator || {},
           globalRelationFreshness: window.RESEARCH_SYSTEM_STATE?.paper_first_global_relation_freshness || {},
+          globalRelationDelta: window.RESEARCH_SYSTEM_STATE?.paper_first_global_relation_delta_preflight || {},
           text: document.body.textContent || ''
         };""")
         require(system["chapters"] == 6, f"research-system overview must have six chapters, got {system['chapters']}")
@@ -135,7 +136,11 @@ def main() -> None:
         if relation_freshness.get("status") == "STALE_RELATION_UNIVERSE":
             require(relation_freshness.get("scientific_authority") is False and relation_summary.get("universe_stale") is True and relation_summary.get("current_not_reduced_unknown") is True and relation_summary.get("model_scan_deferred") is True and relation_summary.get("focused_problem_generator_reopen_allowed") is False and int(relation_summary.get("current_reviewed_sources") or 0) > int(relation_summary.get("last_scanned_sources") or 0), f"stale relation-universe boundary is invalid: {relation_freshness}")
             require("STALE_RELATION_UNIVERSE" in system["text"] and "current UNKNOWN" in system["text"] and "model-scan=DEFERRED" in system["text"], "stale relation-universe interpretation is not rendered")
-        require("NO-LANE CARRIER PROBE" in system["text"] and "SHADOW SEARCH LAB" in system["text"] and "live-lanes=4" in system["text"] and "shadow-primitives=10" in system["text"] and "GLOBAL RELATION RECALL" in system["text"] and "canonical durable backlog" in system["text"].lower() and any(marker in system["text"] for marker in ("v2.9 · MACHINE-ENFORCED","v3.0 · MACHINE-ENFORCED","v3.1 · MACHINE-ENFORCED","v3.2 · MACHINE-ENFORCED","v3.3 · MACHINE-ENFORCED","v3.4 · MACHINE-ENFORCED")), "problem-discovery carrier/live/shadow/relation authority boundary is not rendered")
+        relation_delta=system["globalRelationDelta"] or {};delta_summary=relation_delta.get("summary") or {};delta_policy=relation_delta.get("policy") or {}
+        if relation_delta.get("status") == "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE":
+            require(relation_delta.get("scientific_authority") is False and delta_policy.get("deterministic_typed_evidence_delta_only") is True and delta_policy.get("pair_slots_are_not_lane_valid_pairs") is True and delta_policy.get("cannot_reopen_generator") is True and delta_policy.get("cannot_authorize_relation_model_scan") is True and delta_summary.get("model_scan_authorized") is False and delta_summary.get("focused_generator_reopen_authorized") is False, f"relation delta preflight authority boundary is invalid: {relation_delta}")
+            require("RELATION DELTA PREFLIGHT" in system["text"] and "combinatorial search upper bounds" in system["text"], "relation delta preflight is not rendered as non-authoritative opportunity accounting")
+        require("NO-LANE CARRIER PROBE" in system["text"] and "SHADOW SEARCH LAB" in system["text"] and "live-lanes=4" in system["text"] and "shadow-primitives=10" in system["text"] and "GLOBAL RELATION RECALL" in system["text"] and "canonical durable backlog" in system["text"].lower() and any(marker in system["text"] for marker in ("v2.9 · MACHINE-ENFORCED","v3.0 · MACHINE-ENFORCED","v3.1 · MACHINE-ENFORCED","v3.2 · MACHINE-ENFORCED","v3.3 · MACHINE-ENFORCED","v3.4 · MACHINE-ENFORCED","v3.5 · MACHINE-ENFORCED")), "problem-discovery carrier/live/shadow/relation authority boundary is not rendered")
         require((system["preSummary"].get("audited"), system["preSummary"].get("execution_ready"), system["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system['preSummary']}")
         iteration = system["iterationSummary"]
         infra_only = iteration.get("diagnosis_counts") == {"infrastructure-error": 4}

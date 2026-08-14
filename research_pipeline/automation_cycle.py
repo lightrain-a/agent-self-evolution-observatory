@@ -59,6 +59,7 @@ from .paper_first_discovery_transaction import write_problem_discovery_transacti
 from .paper_first_global_relation_recall import load_global_relation_recall_state, write_global_relation_recall_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_relation_coverage import relation_recall_freshness
+from .paper_first_relation_delta_preflight import public_relation_delta_preflight_summary, write_private_relation_delta_preflight
 from .paper_first_relation_cache_backfill import backfill_relation_cache
 from .paper_first_paper_design_backlog import write_paper_design_backlog
 from .paper_first_p0_f0 import write_paper_first_p0_f0_state
@@ -115,19 +116,24 @@ def _run_global_relation_control(
     mode: str,
     allow_model_scan: bool,
     relation_writer: Any = write_global_relation_recall_state,
+    delta_writer: Any = write_private_relation_delta_preflight,
 ) -> dict[str, Any]:
     freshness = relation_recall_freshness(load_problem_generator_state(), load_global_relation_recall_state())
+    delta = public_relation_delta_preflight_summary(delta_writer(storage=storage))
     if not allow_model_scan:
         return {
             "schema_version": "1.0",
             "status": "DEFERRED_RELATION_MODEL_SCAN",
             "freshness": freshness,
+            "delta_preflight": delta,
             "model_calls_authorized": False,
             "scientific_authority": False,
         }
     if mode != "manual":
         raise RuntimeError("global relation model scan is manual-only")
-    return relation_writer(storage=storage)
+    result=dict(relation_writer(storage=storage))
+    result["delta_preflight"]=delta
+    return result
 
 
 def run_cycle(
