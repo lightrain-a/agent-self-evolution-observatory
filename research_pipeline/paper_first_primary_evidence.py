@@ -26,6 +26,9 @@ DEFAULT_PORTABLE_REVIEW_STATE = PROJECT_ROOT / "generated" / "paper-first-proble
 DEFAULT_MAX_PAPERS = 32
 DEFAULT_LANE_FLOOR = 1
 DEFAULT_SOURCE_COVERAGE_ANCHOR_COUNT = 16
+DEFAULT_NO_LANE_CARRIER_PROBE_LIMIT = 3
+DEFAULT_CARRIER_PROBE_RECEIPT_MAX_AGE_DAYS = 7.0
+CARRIER_PROBE_RECEIPT_LIMIT = 64
 PRIMARY_EVIDENCE_OBJECT_LANES: tuple[dict[str, Any], ...] = (
     {"key":"skill_harness","terms":("skill","harness","workflow evolution","agent workflow")},
     {"key":"memory_continual","terms":("agent memory","memory","continual agent","lifelong agent","experience management")},
@@ -360,12 +363,17 @@ def _paper_keys_for_registry(paper: dict[str, Any], registry: tuple[dict[str, An
     return tuple(keys)
 
 
+def _paper_carrier_rescue_keys(paper: dict[str, Any]) -> tuple[str, ...]:
+    allowed={str(lane["key"]) for lane in PRIMARY_EVIDENCE_OBJECT_LANES}
+    return tuple(sorted({str(key) for key in paper.get("_paper_first_carrier_rescue_object_lanes") or [] if str(key) in allowed}))
+
+
 def _paper_object_lane_keys(paper: dict[str, Any]) -> tuple[str, ...]:
-    return _paper_keys_for_registry(paper,PRIMARY_EVIDENCE_OBJECT_LANES)
+    return tuple(dict.fromkeys((*_paper_keys_for_registry(paper,PRIMARY_EVIDENCE_OBJECT_LANES),*_paper_carrier_rescue_keys(paper))))
 
 
 def _paper_lane_keys(paper: dict[str, Any]) -> tuple[str, ...]:
-    return _paper_keys_for_registry(paper,PRIMARY_EVIDENCE_LANES)
+    return tuple(dict.fromkeys((*_paper_keys_for_registry(paper,PRIMARY_EVIDENCE_LANES),*_paper_carrier_rescue_keys(paper))))
 
 
 def _lane_counts(papers: list[dict[str, Any]]) -> dict[str, int]:
@@ -964,6 +972,159 @@ def _cached_fulltext_page(
     return None
 
 
+def _portable_carrier_probe_receipts(
+    primary_state_path: Path | None,
+    *,
+    now: datetime,
+    max_age_days: float,
+) -> list[dict[str, Any]]:
+    if primary_state_path is None:
+        return []
+    payload=_load_json_object(primary_state_path)
+    try:
+        from .paper_first_no_lane_carrier_probe import CARRIER_CLASSIFIER_VERSION
+    except Exception:
+        return []
+    valid=[]
+    for row in (payload.get("carrier_probe") or {}).get("portable_receipts") or []:
+        if not isinstance(row,dict) or row.get("scientific_authority") is not False:
+            continue
+        if str(row.get("classifier_version") or "") != CARRIER_CLASSIFIER_VERSION:
+            continue
+        age=_age_days(str(row.get("probed_at") or ""),now)
+        if age is None or age > max(0.0,float(max_age_days)):
+            continue
+        ref=str(row.get("ref") or "").strip()
+        if not ref.startswith("arXiv:") or len(str(row.get("primary_sha256") or ""))!=64 or len(str(row.get("fulltext_sha256") or ""))!=64:
+            continue
+        valid.append(dict(row))
+    return valid[-CARRIER_PROBE_RECEIPT_LIMIT:]
+
+
+def _carrier_probe_identity_matches(row: dict[str, Any], paper: dict[str, Any]) -> bool:
+    title_fingerprint=hashlib.sha256(_normalize_title(str(paper.get("title") or "")).encode("utf-8")).hexdigest()
+    publication_date=str((paper.get("metadata") or {}).get("publicationDate") or "")
+    return row.get("title_fingerprint")==title_fingerprint and str(row.get("publication_date") or "")==publication_date
+
+
+def _carrier_probe_recent_content_matches(row: dict[str, Any], paper: dict[str, Any], cache_dir: Path, *, now: datetime) -> bool:
+    if not _carrier_probe_identity_matches(row,paper):
+        return False
+    arxiv_id=_arxiv_id(paper)
+    primary=_cached_primary_page(cache_dir,arxiv_id,paper,now=now,max_age_hours=DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS)
+    fulltext=_cached_fulltext_page(cache_dir,arxiv_id,now=now,max_age_hours=DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS)
+    return bool(
+        primary and fulltext
+        and str(primary.get("source_sha256") or "")==str(row.get("primary_sha256") or "")
+        and str(fulltext.get("fulltext_sha256") or "")==str(row.get("fulltext_sha256") or "")
+    )
+
+
+def _apply_carrier_rescue(paper: dict[str, Any], lanes: list[str] | tuple[str, ...]) -> None:
+    allowed={str(row["key"]) for row in PRIMARY_EVIDENCE_OBJECT_LANES}
+    rescued=sorted({str(lane) for lane in lanes if str(lane) in allowed})
+    if rescued:
+        paper["_paper_first_carrier_rescue_object_lanes"]=rescued
+
+
+def _probe_no_lane_carriers(
+    eligible_candidates: list[dict[str, Any]],
+    *,
+    source_exposure_counts: dict[str, int],
+    primary_state_path: Path | None,
+    cache_dir: Path,
+    requester: Callable[..., Any],
+    now: datetime,
+    max_probes: int,
+    receipt_max_age_days: float,
+    min_interval_seconds: float,
+) -> dict[str, Any]:
+    try:
+        from .paper_first_no_lane_carrier_probe import CARRIER_CLASSIFIER_VERSION, build_carrier_probe_receipt
+    except Exception as error:
+        return {"enabled":False,"error":f"classifier-unavailable:{type(error).__name__}","portable_receipts":[],"private_receipts":[],"pending_refs":[],"rescued_refs":[],"attempted":0,"reused":0,"errors":[],"scientific_authority":False}
+    no_lane=[paper for paper in eligible_candidates if not _paper_lane_keys(paper) and int(source_exposure_counts.get(_source_ref(paper),0))==0]
+    prior=_portable_carrier_probe_receipts(primary_state_path,now=now,max_age_days=receipt_max_age_days)
+    by_ref={str(row.get("ref")):row for row in prior if isinstance(row,dict)}
+    reusable:dict[str,dict[str,Any]]={}
+    for paper in no_lane:
+        ref=_source_ref(paper);row=by_ref.get(ref)
+        if row and _carrier_probe_recent_content_matches(row,paper,cache_dir,now=now):
+            reusable[ref]=row
+            _apply_carrier_rescue(paper,row.get("live_rescue_eligible_lanes") or [])
+    to_probe=[paper for paper in no_lane if _source_ref(paper) not in reusable][:max(0,int(max_probes))]
+    private_receipts=[];new_portable=[];errors=[];last_fetch_started:float|None=None
+    cache_dir.mkdir(parents=True,exist_ok=True)
+    for paper in to_probe:
+        arxiv_id=_arxiv_id(paper);ref=_source_ref(paper)
+        try:
+            primary=_cached_primary_page(cache_dir,arxiv_id,paper,now=now,max_age_hours=DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS)
+            if primary:
+                primary_text=str(primary["raw_text"]);primary_sha=str(primary["source_sha256"]);primary_path=str(primary["cache_path"])
+            else:
+                if last_fetch_started is not None and min_interval_seconds>0:
+                    wait=min_interval_seconds-(time.monotonic()-last_fetch_started)
+                    if wait>0: time.sleep(wait)
+                last_fetch_started=time.monotonic()
+                response=requester(f"https://arxiv.org/abs/{arxiv_id}",timeout=25.0,headers={"User-Agent":"Agent-Self-Evolution-Observatory/carrier-probe-primary"})
+                status=int(getattr(response,"status_code",200))
+                if status>=400: raise RuntimeError(f"primary-http-{status}")
+                primary_text=str(getattr(response,"text","") or "")
+                parsed=parse_arxiv_page(primary_text)
+                if not parsed["title"] or not parsed["abstract"]: raise RuntimeError("carrier-probe-primary-parse-failed")
+                if _title_similarity(str(paper.get("title") or ""),parsed["title"])<0.72: raise RuntimeError("carrier-probe-title-mismatch")
+                primary_bytes=primary_text.encode("utf-8");primary_sha=hashlib.sha256(primary_bytes).hexdigest()
+                primary_file=cache_dir/f"arxiv-{re.sub(r'[^0-9A-Za-z._-]+','_',arxiv_id)}-{primary_sha[:12]}.html";primary_file.write_bytes(primary_bytes);primary_path=str(primary_file)
+            cached_full=_cached_fulltext_page(cache_dir,arxiv_id,now=now,max_age_hours=DEFAULT_RECENT_VERIFIED_CACHE_REUSE_HOURS)
+            if cached_full:
+                fulltext_sha=str(cached_full["fulltext_sha256"]);fulltext_path=str(cached_full["fulltext_cache_path"]);fulltext_text=Path(fulltext_path).read_text(encoding="utf-8",errors="replace")
+            else:
+                if last_fetch_started is not None and min_interval_seconds>0:
+                    wait=min_interval_seconds-(time.monotonic()-last_fetch_started)
+                    if wait>0: time.sleep(wait)
+                last_fetch_started=time.monotonic()
+                response=requester(f"https://arxiv.org/html/{arxiv_id}",timeout=25.0,headers={"User-Agent":"Agent-Self-Evolution-Observatory/carrier-probe-fulltext"})
+                status=int(getattr(response,"status_code",200))
+                if status>=400: raise RuntimeError(f"fulltext-http-{status}")
+                fulltext_text=str(getattr(response,"text","") or "")
+                if not fulltext_text or "<section" not in fulltext_text.lower(): raise RuntimeError("carrier-probe-fulltext-parse-failed")
+                fulltext_bytes=fulltext_text.encode("utf-8");fulltext_sha=hashlib.sha256(fulltext_bytes).hexdigest()
+                fulltext_file=cache_dir/f"arxiv-full-{re.sub(r'[^0-9A-Za-z._-]+','_',arxiv_id)}-{fulltext_sha[:12]}.html";fulltext_file.write_bytes(fulltext_bytes);fulltext_path=str(fulltext_file)
+            prior_row=by_ref.get(ref) or {}
+            if _carrier_probe_identity_matches(prior_row,paper) and str(prior_row.get("primary_sha256") or "")==primary_sha and str(prior_row.get("fulltext_sha256") or "")==fulltext_sha:
+                private_receipt={"ref":ref,"matched_existing_object_lanes":list(prior_row.get("matched_existing_object_lanes") or []),"live_rescue_eligible_lanes":list(prior_row.get("live_rescue_eligible_lanes") or []),"classifier_version":CARRIER_CLASSIFIER_VERSION,"classifier_reused_after_content_reverification":True,"scientific_authority":False}
+            else:
+                private_receipt=build_carrier_probe_receipt(ref=ref,title=str(paper.get("title") or ""),primary_sha256=primary_sha,fulltext_sha256=fulltext_sha,fulltext_html=fulltext_text)
+            private_receipt.update({"probed_at":now.replace(microsecond=0).isoformat(),"primary_cache_path":primary_path,"fulltext_cache_path":fulltext_path})
+            private_receipts.append(private_receipt)
+            portable={
+                "ref":ref,"probed_at":private_receipt["probed_at"],
+                "title_fingerprint":hashlib.sha256(_normalize_title(str(paper.get("title") or "")).encode("utf-8")).hexdigest(),
+                "publication_date":str((paper.get("metadata") or {}).get("publicationDate") or ""),
+                "primary_sha256":primary_sha,"fulltext_sha256":fulltext_sha,
+                "classifier_version":CARRIER_CLASSIFIER_VERSION,
+                "matched_existing_object_lanes":list(private_receipt.get("matched_existing_object_lanes") or []),
+                "live_rescue_eligible_lanes":list(private_receipt.get("live_rescue_eligible_lanes") or []),
+                "scientific_authority":False,
+            }
+            new_portable.append(portable);reusable[ref]=portable
+            _apply_carrier_rescue(paper,portable["live_rescue_eligible_lanes"])
+        except Exception as error:
+            errors.append({"ref":ref,"error":f"{type(error).__name__}:{str(error)[:200]}"})
+    all_by_ref={str(row.get("ref")):row for row in prior if isinstance(row,dict)}
+    for row in new_portable: all_by_ref[str(row.get("ref"))]=row
+    portable=list(all_by_ref.values())[-CARRIER_PROBE_RECEIPT_LIMIT:]
+    probed_refs=set(reusable)
+    pending=[_source_ref(paper) for paper in no_lane if _source_ref(paper) not in probed_refs]
+    rescued=sorted(ref for ref,row in reusable.items() if row.get("live_rescue_eligible_lanes"))
+    return {
+        "enabled":True,"classifier_version":CARRIER_CLASSIFIER_VERSION,"probe_limit":max(0,int(max_probes)),
+        "eligible_no_lane_unreviewed_before_probe":len(no_lane),"attempted":len(to_probe),"reused":len(reusable)-len(new_portable),
+        "rescued_refs":rescued,"rescued":len(rescued),"pending_refs":pending,"pending":len(pending),"errors":errors,
+        "portable_receipts":portable,"private_receipts":private_receipts,"scientific_authority":False,
+    }
+
+
 def build_primary_evidence_pool(
     *,
     storage: StorageSettings | None = None,
@@ -971,6 +1132,9 @@ def build_primary_evidence_pool(
     max_papers: int = DEFAULT_MAX_PAPERS,
     lane_floor: int = DEFAULT_LANE_FLOOR,
     coverage_anchor_count: int = DEFAULT_SOURCE_COVERAGE_ANCHOR_COUNT,
+    carrier_probe_limit: int = DEFAULT_NO_LANE_CARRIER_PROBE_LIMIT,
+    carrier_probe_receipt_max_age_days: float = DEFAULT_CARRIER_PROBE_RECEIPT_MAX_AGE_DAYS,
+    enable_no_lane_carrier_probe: bool = True,
     max_corpus_age_days: float = DEFAULT_MAX_CORPUS_AGE_DAYS,
     max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
     requester: Callable[..., Any] | None = None,
@@ -1005,7 +1169,7 @@ def build_primary_evidence_pool(
         if isinstance(row, dict) and row.get("ref")
     } if prior_pool_age_hours is not None and prior_pool_age_hours <= recent_fulltext_failure_cooldown_hours else set()
     public_state: dict[str, Any] = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "generated_at": _now(),
         "policy": {
             "semantic_scholar_is_discovery_metadata_not_primary_evidence": True,
@@ -1048,6 +1212,14 @@ def build_primary_evidence_pool(
             "lane_floor": int(lane_floor),
             "source_coverage_scheduler_is_discovery_only": True,
             "source_coverage_exploration_prefers_scientific_objects": True,
+            "no_lane_carrier_probe_enabled": bool(enable_no_lane_carrier_probe),
+            "no_lane_carrier_probe_limit": int(carrier_probe_limit),
+            "no_lane_carrier_probe_receipt_max_age_days": float(carrier_probe_receipt_max_age_days),
+            "no_lane_carrier_probe_is_existing_object_rescue_only": True,
+            "no_lane_carrier_probe_cannot_create_new_object": True,
+            "no_lane_carrier_probe_has_zero_scientific_authority": True,
+            "no_lane_carrier_probe_failure_prevents_coverage_exhaustion": True,
+            "carrier_probe_pending_skips_live_generator_call": True,
             "source_review_exposure_has_zero_scientific_authority": True,
             "portable_source_review_receipts_have_zero_scientific_authority": True,
             "private_saturation_ledger_runs_exported_as_zero_authority_portable_receipts": True,
@@ -1095,6 +1267,13 @@ def build_primary_evidence_pool(
             "selected_object_unreviewed": 0,
             "selected_lane_unreviewed": 0,
             "selected_no_lane_unreviewed": 0,
+            "carrier_probe_required": False,
+            "carrier_probe_attempted": 0,
+            "carrier_probe_reused": 0,
+            "carrier_probe_rescued": 0,
+            "carrier_probe_pending": 0,
+            "carrier_probe_errors": 0,
+            "carrier_probe_complete": True,
             "eligible_object_linked_sources": 0,
             "reviewed_object_linked_sources": 0,
             "unreviewed_object_linked_sources": 0,
@@ -1119,7 +1298,7 @@ def build_primary_evidence_pool(
         "discovery_errors": [],
     }
     private: dict[str, Any] = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "generated_at": public_state["generated_at"],
         "corpus_path": str(corpus_path),
         "empirical_fact_extraction_version": EMPIRICAL_FACT_EXTRACTION_VERSION,
@@ -1128,7 +1307,8 @@ def build_primary_evidence_pool(
         "errors": [],
         "fulltext_errors": [],
         "discovery_errors": [],
-        "source_coverage": {"scheduler_active": False, "saturation_ledger_runs": 0, "portable_review_receipts_merged": 0, "prior_reviewed_sources": 0, "eligible_unreviewed": 0, "eligible_lane_unreviewed": 0, "eligible_no_lane_unreviewed": 0, "eligible_lane_linked_sources": 0, "reviewed_lane_linked_sources": 0, "unreviewed_lane_linked_sources": 0, "unreviewed_no_lane_sources": 0, "coverage_exhausted": False, "coverage_anchor_count": int(coverage_anchor_count), "selected": [], "scientific_authority": False},
+        "carrier_probe": {"enabled":False,"required":False,"attempted":0,"reused":0,"rescued":0,"pending":0,"errors":[],"portable_receipts":[],"private_receipts":[],"scientific_authority":False},
+        "source_coverage": {"scheduler_active": False, "saturation_ledger_runs": 0, "portable_review_receipts_merged": 0, "prior_reviewed_sources": 0, "eligible_unreviewed": 0, "eligible_lane_unreviewed": 0, "eligible_no_lane_unreviewed": 0, "carrier_probe_required":False, "carrier_probe_pending":0, "carrier_probe_complete":True, "eligible_lane_linked_sources": 0, "reviewed_lane_linked_sources": 0, "unreviewed_lane_linked_sources": 0, "unreviewed_no_lane_sources": 0, "coverage_exhausted": False, "coverage_anchor_count": int(coverage_anchor_count), "selected": [], "scientific_authority": False},
     }
     retrieved_at = str((corpus or {}).get("retrieved_at") or "")
     corpus_age = _age_days(retrieved_at, current) if corpus else None
@@ -1189,6 +1369,26 @@ def build_primary_evidence_pool(
         max_publication_age_days=max_publication_age_days,
         lane_floor=0,
     )
+    fetch = requester or _default_requester
+    preprobe_unreviewed_lane_refs={_source_ref(paper) for paper in eligible_candidates if _paper_lane_keys(paper) and int(source_exposure_counts.get(_source_ref(paper),0))==0}
+    preprobe_unreviewed_no_lane_refs={_source_ref(paper) for paper in eligible_candidates if not _paper_lane_keys(paper) and int(source_exposure_counts.get(_source_ref(paper),0))==0}
+    carrier_probe_required=bool(enable_no_lane_carrier_probe and source_scheduler_active and source_retrieval_complete and not preprobe_unreviewed_lane_refs and preprobe_unreviewed_no_lane_refs)
+    prior_carrier_receipts=_portable_carrier_probe_receipts(portable_primary_state_path,now=current,max_age_days=carrier_probe_receipt_max_age_days)
+    carrier_probe={"enabled":bool(enable_no_lane_carrier_probe),"required":carrier_probe_required,"attempted":0,"reused":0,"rescued":0,"rescued_refs":[],"pending":0,"pending_refs":[],"errors":[],"portable_receipts":prior_carrier_receipts,"private_receipts":[],"scientific_authority":False}
+    if carrier_probe_required:
+        carrier_probe=_probe_no_lane_carriers(
+            eligible_candidates,
+            source_exposure_counts=source_exposure_counts,
+            primary_state_path=portable_primary_state_path,
+            cache_dir=cache_dir,
+            requester=fetch,
+            now=current,
+            max_probes=carrier_probe_limit,
+            receipt_max_age_days=carrier_probe_receipt_max_age_days,
+            min_interval_seconds=min_interval_seconds,
+        )
+        carrier_probe["required"]=True
+    carrier_probe_complete=not carrier_probe_required or int(carrier_probe.get("pending") or 0)==0
     candidates = select_primary_candidates(
         discovery_corpus,
         max_papers=max_papers,
@@ -1217,7 +1417,7 @@ def build_primary_evidence_pool(
     reviewed_lane_linked_refs = {ref for ref in eligible_lane_linked_refs if int(source_exposure_counts.get(ref, 0)) > 0}
     unreviewed_lane_linked_refs = eligible_lane_linked_refs - reviewed_lane_linked_refs
     unreviewed_no_lane_refs = {_source_ref(paper) for paper in eligible_candidates if not _paper_lane_keys(paper) and int(source_exposure_counts.get(_source_ref(paper), 0)) == 0}
-    source_coverage_exhausted = bool(source_scheduler_active and source_retrieval_complete and not unreviewed_lane_linked_refs)
+    source_coverage_exhausted = bool(source_scheduler_active and source_retrieval_complete and not unreviewed_lane_linked_refs and carrier_probe_complete)
     public_state["summary"].update({
         "selected": len(candidates),
         "lane_floor": int(lane_floor),
@@ -1233,6 +1433,13 @@ def build_primary_evidence_pool(
         "selected_object_unreviewed": sum(bool(_paper_object_lane_keys(paper)) for paper in selected_unreviewed_rows),
         "selected_lane_unreviewed": sum(bool(_paper_lane_keys(paper)) for paper in selected_unreviewed_rows),
         "selected_no_lane_unreviewed": sum(not bool(_paper_lane_keys(paper)) for paper in selected_unreviewed_rows),
+        "carrier_probe_required": carrier_probe_required,
+        "carrier_probe_attempted": int(carrier_probe.get("attempted") or 0),
+        "carrier_probe_reused": int(carrier_probe.get("reused") or 0),
+        "carrier_probe_rescued": int(carrier_probe.get("rescued") or 0),
+        "carrier_probe_pending": int(carrier_probe.get("pending") or 0),
+        "carrier_probe_errors": len(carrier_probe.get("errors") or []),
+        "carrier_probe_complete": carrier_probe_complete,
         "eligible_object_linked_sources": len(eligible_object_linked_refs),
         "reviewed_object_linked_sources": len(reviewed_object_linked_refs),
         "unreviewed_object_linked_sources": len(unreviewed_object_linked_refs),
@@ -1249,6 +1456,21 @@ def build_primary_evidence_pool(
         "selected_lane_counts": selected_lane_counts,
         "undercovered_lanes": undercovered_lanes,
     })
+    public_state["carrier_probe"]={
+        "enabled":bool(carrier_probe.get("enabled")),
+        "required":carrier_probe_required,
+        "classifier_version":str(carrier_probe.get("classifier_version") or ""),
+        "probe_limit":int(carrier_probe.get("probe_limit") or carrier_probe_limit),
+        "attempted":int(carrier_probe.get("attempted") or 0),
+        "reused":int(carrier_probe.get("reused") or 0),
+        "rescued":int(carrier_probe.get("rescued") or 0),
+        "pending":int(carrier_probe.get("pending") or 0),
+        "complete":carrier_probe_complete,
+        "errors":[dict(row) for row in carrier_probe.get("errors") or [] if isinstance(row,dict)],
+        "portable_receipts":[dict(row) for row in carrier_probe.get("portable_receipts") or [] if isinstance(row,dict)],
+        "scientific_authority":False,
+    }
+    private["carrier_probe"]=carrier_probe
     private["lane_coverage"] = {
         "lane_floor": int(lane_floor),
         "eligible_object_lane_counts": eligible_object_lane_counts,
@@ -1267,6 +1489,9 @@ def build_primary_evidence_pool(
         "eligible_unreviewed": len(eligible_unreviewed_rows),
         "eligible_lane_unreviewed": sum(bool(_paper_lane_keys(paper)) for paper in eligible_unreviewed_rows),
         "eligible_no_lane_unreviewed": sum(not bool(_paper_lane_keys(paper)) for paper in eligible_unreviewed_rows),
+        "carrier_probe_required": carrier_probe_required,
+        "carrier_probe_pending": int(carrier_probe.get("pending") or 0),
+        "carrier_probe_complete": carrier_probe_complete,
         "eligible_object_linked_sources": len(eligible_object_linked_refs),
         "reviewed_object_linked_sources": len(reviewed_object_linked_refs),
         "unreviewed_object_linked_sources": len(unreviewed_object_linked_refs),
@@ -1491,7 +1716,7 @@ def build_primary_evidence_pool(
             "recent_fulltext_failure_cooldown_skips": fulltext_failure_cooldown_skips,
             "verified_lane_counts": verified_lane_counts,
             "verified_undercovered_lanes": verified_undercovered_lanes,
-            "candidate_generation_ready": len(verified) >= 4,
+            "candidate_generation_ready": len(verified) >= 4 and (not carrier_probe_required or bool(unreviewed_lane_linked_refs) or carrier_probe_complete),
         }
     )
     public_state["records"] = [
@@ -1531,6 +1756,9 @@ def write_primary_evidence_pool(
     max_papers: int = DEFAULT_MAX_PAPERS,
     lane_floor: int = DEFAULT_LANE_FLOOR,
     coverage_anchor_count: int = DEFAULT_SOURCE_COVERAGE_ANCHOR_COUNT,
+    carrier_probe_limit: int = DEFAULT_NO_LANE_CARRIER_PROBE_LIMIT,
+    carrier_probe_receipt_max_age_days: float = DEFAULT_CARRIER_PROBE_RECEIPT_MAX_AGE_DAYS,
+    enable_no_lane_carrier_probe: bool = True,
     max_corpus_age_days: float = DEFAULT_MAX_CORPUS_AGE_DAYS,
     max_publication_age_days: float = DEFAULT_MAX_PUBLICATION_AGE_DAYS,
     requester: Callable[..., Any] | None = None,
@@ -1552,6 +1780,9 @@ def write_primary_evidence_pool(
         max_papers=max_papers,
         lane_floor=lane_floor,
         coverage_anchor_count=coverage_anchor_count,
+        carrier_probe_limit=carrier_probe_limit,
+        carrier_probe_receipt_max_age_days=carrier_probe_receipt_max_age_days,
+        enable_no_lane_carrier_probe=enable_no_lane_carrier_probe,
         max_corpus_age_days=max_corpus_age_days,
         max_publication_age_days=max_publication_age_days,
         requester=requester,

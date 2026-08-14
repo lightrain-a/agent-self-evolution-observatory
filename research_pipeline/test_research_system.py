@@ -416,6 +416,20 @@ class ResearchSystemTest(unittest.TestCase):
         inconsistent=copy.deepcopy(state);inconsistent["paper_first_problem_search_portfolio"]["latest_run"]["summary"]["terminal_shadow_survivors"]=1
         self.assertTrue(any("terminal survivors" in error for error in validate_state(inconsistent)))
 
+    def test_primary_v11_carrier_probe_pending_is_zero_call_compute_control(self) -> None:
+        state=copy.deepcopy(self.state);primary=state["paper_first_primary_evidence"];generator=state["paper_first_problem_generator"]
+        primary["schema_version"]="1.1";primary["policy"].update({"no_lane_carrier_probe_enabled":True,"no_lane_carrier_probe_is_existing_object_rescue_only":True,"no_lane_carrier_probe_cannot_create_new_object":True,"no_lane_carrier_probe_has_zero_scientific_authority":True,"no_lane_carrier_probe_failure_prevents_coverage_exhaustion":True,"carrier_probe_pending_skips_live_generator_call":True})
+        primary["summary"].update({"source_coverage_exhausted":False,"carrier_probe_required":True,"carrier_probe_pending":2,"carrier_probe_complete":False,"candidate_generation_ready":False})
+        primary["carrier_probe"]={"required":True,"attempted":3,"rescued":0,"pending":2,"complete":False,"portable_receipts":[],"scientific_authority":False}
+        generator["status"]="SKIPPED_SOURCE_CARRIER_PROBE_PENDING";generator["summary"].update({"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0});generator["policy"].update({"carrier_probe_pending_skips_model_call":True,"carrier_probe_pending_is_compute_control_not_scientific_negative":True});generator["source_coverage"]={"coverage_exhausted":False,"unreviewed_lane_linked_sources":0,"carrier_probe_required":True,"carrier_probe_pending":2,"carrier_probe_complete":False,"scientific_authority":False}
+        self.assertEqual(validate_state(state),[])
+        exhausted=copy.deepcopy(state);exhausted["paper_first_primary_evidence"]["summary"]["source_coverage_exhausted"]=True
+        self.assertTrue(any("carrier-probe backlog" in error for error in validate_state(exhausted)))
+        unknown=copy.deepcopy(state);unknown["paper_first_primary_evidence"]["carrier_probe"]["portable_receipts"]=[{"ref":"arXiv:x","primary_sha256":"a"*64,"fulltext_sha256":"b"*64,"classifier_version":"existing-object-carrier-v1","live_rescue_eligible_lanes":["new_object"],"scientific_authority":False}]
+        self.assertTrue(any("existing-object receipts" in error for error in validate_state(unknown)))
+        bad_generator=copy.deepcopy(state);bad_generator["paper_first_problem_generator"]["source_coverage"]["coverage_exhausted"]=True
+        self.assertTrue(any("pending generator state" in error for error in validate_state(bad_generator)))
+
     def test_canonical_paper_design_backlog_is_durable_but_cannot_escalate_authority(self) -> None:
         state=copy.deepcopy(self.state)
         state["paper_first_paper_design_backlog"]={

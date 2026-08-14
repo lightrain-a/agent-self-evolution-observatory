@@ -343,6 +343,70 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertTrue(private["source_coverage"]["coverage_exhausted"])
         self.assertFalse(private["source_coverage"]["scientific_authority"])
 
+    def test_no_lane_carrier_probe_rescues_existing_parametric_object_before_selection(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);now=datetime(2026,8,13,tzinfo=timezone.utc)
+            titles={
+                1:"Self-Evolving Agent Skill Harness One",2:"Harness Evolution for Autonomous Agents Two",
+                3:"Persistent Agent Memory Evolution Three",4:"Adaptive World Model for Self-Evolving Agents Four",
+                5:"Self-Evolving Autonomous Agent Strategy Alpha",6:"Self-Evolving Autonomous Agent Strategy Beta",
+            }
+            abstracts={
+                1:"A self-evolving agent skill improves persistent adaptation.",2:"A harness evolves for autonomous agents.",
+                3:"Agent memory supports a self-improving continual agent.",4:"A world model evolves for self-evolving agents.",
+                5:"A self-evolving autonomous agent iterates decision strategy from feedback.",6:"A self-evolving autonomous agent iterates decision strategy from feedback.",
+            }
+            papers=[]
+            for idx in range(1,7):
+                papers.append({"paper_id":f"s2-{idx}","title":titles[idx],"year":2026,"abstract":abstracts[idx],"metadata":{"externalIds":{"ArXiv":f"2608.51{idx:03d}"},"publicationDate":f"2026-08-{14-idx:02d}","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"topic"}]}})
+            corpus=root/"carrier-corpus.json";corpus.write_text(json.dumps({"schema_version":"1.0","retrieved_at":"2026-08-13T00:00:00+00:00","papers":papers}),encoding="utf-8")
+            discovery=root/"paper-first-problem-discovery";discovery.mkdir(parents=True)
+            (discovery/"discovery-saturation-ledger.json").write_text(json.dumps({"schema_version":"1.0","runs":[{"run_id":"reviewed","source_refs":[f"arXiv:2608.51{i:03d}" for i in range(1,5)],"scientific_authority":False}]}),encoding="utf-8")
+            def requester(url:str,*,timeout:float,headers:dict[str,str]):
+                aid=url.rsplit('/',1)[-1];idx=int(aid[-1])
+                if '/html/' in url:
+                    if idx==5:
+                        text='<html><body><section><h2>Experiment Setup</h2><p>For self-evolution, we perform LoRA-based fine-tuning on the proactive agent model using interaction trajectories and measured rewards.</p></section></body></html>'
+                    else:
+                        text='<html><body><section><h2>Experimental Results</h2><p>We find verified agent performance improves by 12.0 percent on held-out tasks.</p></section></body></html>'
+                    return SimpleNamespace(status_code=200,text=text)
+                return SimpleNamespace(status_code=200,text=f'<meta name="citation_title" content="{titles[idx]}"><blockquote class="abstract mathjax">Abstract: {abstracts[idx]}</blockquote>')
+            public,private=build_primary_evidence_pool(storage=storage,corpus_path=corpus,requester=requester,augment_fresh_corpus_with_arxiv=False,coverage_anchor_count=2,carrier_probe_limit=1,now=now,min_interval_seconds=0,max_papers=5,cache_dir=root/"primary-cache")
+        self.assertEqual(public["schema_version"],"1.1")
+        self.assertTrue(public["summary"]["carrier_probe_required"])
+        self.assertEqual((public["summary"]["carrier_probe_attempted"],public["summary"]["carrier_probe_rescued"],public["summary"]["carrier_probe_pending"]),(1,1,1))
+        self.assertFalse(public["summary"]["source_coverage_exhausted"])
+        self.assertEqual(public["summary"]["unreviewed_lane_linked_sources"],1)
+        self.assertTrue(public["summary"]["candidate_generation_ready"])
+        receipt=public["carrier_probe"]["portable_receipts"][0]
+        self.assertEqual(receipt["live_rescue_eligible_lanes"],["parametric_model_state"])
+        self.assertFalse(receipt["scientific_authority"])
+        rescued=next(row for row in private["records"] if row["ref"]=="arXiv:2608.51005")
+        self.assertIn("parametric_model_state",rescued["lane_keys"])
+
+    def test_no_lane_carrier_probe_pending_blocks_exhaustion_without_rescue(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);now=datetime(2026,8,13,tzinfo=timezone.utc)
+            titles={1:"Self-Evolving Agent Skill One",2:"Harness Evolution Agent Two",3:"Persistent Agent Memory Three",4:"Self-Evolving World Model Four",5:"Self-Evolving Autonomous Agent Strategy Alpha",6:"Self-Evolving Autonomous Agent Strategy Beta"}
+            abstracts={idx:("A self-evolving agent skill harness improves adaptation." if idx<3 else ("Persistent agent memory improves a continual agent." if idx==3 else ("A self-evolving world model improves planning." if idx==4 else "A self-evolving autonomous agent iterates strategy from feedback."))) for idx in titles}
+            papers=[{"paper_id":f"s2-{idx}","title":titles[idx],"year":2026,"abstract":abstracts[idx],"metadata":{"externalIds":{"ArXiv":f"2608.52{idx:03d}"},"publicationDate":f"2026-08-{14-idx:02d}","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"topic"}]}} for idx in range(1,7)]
+            corpus=root/"carrier-pending-corpus.json";corpus.write_text(json.dumps({"schema_version":"1.0","retrieved_at":"2026-08-13T00:00:00+00:00","papers":papers}),encoding="utf-8")
+            discovery=root/"paper-first-problem-discovery";discovery.mkdir(parents=True)
+            (discovery/"discovery-saturation-ledger.json").write_text(json.dumps({"schema_version":"1.0","runs":[{"run_id":"reviewed","source_refs":[f"arXiv:2608.52{i:03d}" for i in range(1,5)],"scientific_authority":False}]}),encoding="utf-8")
+            def requester(url:str,*,timeout:float,headers:dict[str,str]):
+                aid=url.rsplit('/',1)[-1];idx=int(aid[-1])
+                if '/html/' in url:
+                    return SimpleNamespace(status_code=200,text='<html><body><section><h2>Experimental Results</h2><p>We find verified performance improves by 11.0 percent on held-out tasks.</p></section></body></html>')
+                return SimpleNamespace(status_code=200,text=f'<meta name="citation_title" content="{titles[idx]}"><blockquote class="abstract mathjax">Abstract: {abstracts[idx]}</blockquote>')
+            public,_=build_primary_evidence_pool(storage=storage,corpus_path=corpus,requester=requester,augment_fresh_corpus_with_arxiv=False,coverage_anchor_count=2,carrier_probe_limit=1,now=now,min_interval_seconds=0,max_papers=5,cache_dir=root/"primary-cache")
+        self.assertTrue(public["summary"]["carrier_probe_required"])
+        self.assertEqual((public["summary"]["carrier_probe_rescued"],public["summary"]["carrier_probe_pending"]),(0,1))
+        self.assertEqual(public["summary"]["unreviewed_lane_linked_sources"],0)
+        self.assertFalse(public["summary"]["carrier_probe_complete"])
+        self.assertFalse(public["summary"]["source_coverage_exhausted"])
+        self.assertFalse(public["summary"]["candidate_generation_ready"])
+        self.assertFalse(public["carrier_probe"]["scientific_authority"])
+
     def test_incomplete_arxiv_freshness_window_cannot_claim_source_coverage_exhausted(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);storage=self.storage(root);corpus=self.corpus(root);discovery=root/"paper-first-problem-discovery";discovery.mkdir(parents=True)

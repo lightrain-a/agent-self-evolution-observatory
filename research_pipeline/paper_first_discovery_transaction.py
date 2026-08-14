@@ -76,6 +76,17 @@ def _transaction_material(primary: dict[str, Any], generator: dict[str, Any], qu
         for row in primary.get("records") or []
         if isinstance(row, dict)
     ]
+    carrier_receipts = sorted([
+        {
+            "ref": row.get("ref"),
+            "primary_sha256": row.get("primary_sha256"),
+            "fulltext_sha256": row.get("fulltext_sha256"),
+            "classifier_version": row.get("classifier_version"),
+            "live_rescue_eligible_lanes": sorted(str(value) for value in row.get("live_rescue_eligible_lanes") or []),
+        }
+        for row in (primary.get("carrier_probe") or {}).get("portable_receipts") or []
+        if isinstance(row, dict)
+    ], key=lambda row: str(row.get("ref") or ""))
     generator_raw = generator.get("raw_artifacts") or {}
     audited = [
         {
@@ -89,6 +100,8 @@ def _transaction_material(primary: dict[str, Any], generator: dict[str, Any], qu
     ]
     return {
         "primary_records": primary_records,
+        "carrier_probe_receipts": carrier_receipts,
+        "carrier_probe_pending": int(((primary.get("carrier_probe") or {}).get("pending") or 0)),
         "generator_run_id": generator.get("run_id"),
         "generator_status": generator.get("status"),
         "generator_raw_sha256": (generator_raw.get("generator") or {}).get("sha256"),
@@ -109,13 +122,25 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
     verified = int(ps.get("verified") or 0)
     if primary.get("status") != "READY" or verified < 4:
         errors.append("primary-evidence-not-ready")
+    carrier_probe=primary.get("carrier_probe") or {}
+    if carrier_probe:
+        carrier_pending=int(carrier_probe.get("pending") or 0)
+        carrier_complete=carrier_probe.get("complete") is True
+        if carrier_probe.get("scientific_authority") is not False or int(ps.get("carrier_probe_pending") or 0)!=carrier_pending or bool(ps.get("carrier_probe_complete"))!=carrier_complete:
+            errors.append("primary-carrier-probe-accounting-invalid")
+        allowed_objects=set(str(value) for value in ((primary.get("policy") or {}).get("scientific_object_lanes") or []))
+        for row in carrier_probe.get("portable_receipts") or []:
+            if not isinstance(row,dict) or row.get("scientific_authority") is not False or len(str(row.get("primary_sha256") or ""))!=64 or len(str(row.get("fulltext_sha256") or ""))!=64 or not str(row.get("classifier_version") or ""):
+                errors.append("primary-carrier-probe-receipt-invalid"); break
+            if any(str(value) not in allowed_objects for value in row.get("live_rescue_eligible_lanes") or []):
+                errors.append("primary-carrier-probe-created-unknown-object"); break
     generator_status = str(generator.get("status") or "")
     generator_policy = generator.get("policy") or {}
     if generator_policy.get("search_portfolio_enabled") is True:
         errors.append("canonical-transaction-forbids-search-portfolio")
     if generator_policy.get("one_generator_call_max") is not True or generator_policy.get("one_semantic_reviewer_call_max") is not True:
         errors.append("canonical-transaction-requires-single-call-budget")
-    allowed_generator_statuses = {"GENERATED_ZERO_CANDIDATES", "GENERATED_AWAIT_PROBLEM_GATE", "SKIPPED_SOURCE_COVERAGE_SATURATED"}
+    allowed_generator_statuses = {"GENERATED_ZERO_CANDIDATES", "GENERATED_AWAIT_PROBLEM_GATE", "SKIPPED_SOURCE_COVERAGE_SATURATED", "SKIPPED_SOURCE_CARRIER_PROBE_PENDING"}
     if generator_status not in allowed_generator_statuses:
         errors.append("generator-did-not-complete-discovery-transaction")
     generator_schema=str(generator.get("schema_version") or "0")
@@ -153,6 +178,8 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
             errors.append("coverage-skip-generator-accounting-nonzero")
         if coverage.get("coverage_exhausted") is not True or coverage.get("unreviewed_lane_linked_sources") is None or int(coverage.get("unreviewed_lane_linked_sources")) != 0:
             errors.append("coverage-skip-not-exhausted")
+        if coverage.get("carrier_probe_required") is True and (int(coverage.get("carrier_probe_pending") or 0)>0 or coverage.get("carrier_probe_complete") is not True):
+            errors.append("coverage-skip-carrier-probe-incomplete")
         if ps.get("source_retrieval_complete") is False:
             errors.append("coverage-skip-retrieval-window-incomplete")
         if gp.get("source_coverage_saturation_skips_model_call") is not True or gp.get("source_coverage_saturation_is_compute_control_not_scientific_negative") is not True or gp.get("new_lane_grounded_primary_source_reopens_generation") is not True or gp.get("primary_source_coverage_receipts_are_inherited_transactionally") is not True:
@@ -162,13 +189,27 @@ def _validate(primary: dict[str, Any], generator: dict[str, Any], queue: dict[st
         prior_reviewed=int(ps.get("prior_reviewed_sources") or 0)
         if any(row.get("scientific_authority") is not False for row in receipts) or len(portable_refs) < prior_reviewed:
             errors.append("coverage-skip-portable-receipts-incomplete")
+    if generator_status == "SKIPPED_SOURCE_CARRIER_PROBE_PENDING":
+        coverage=generator.get("source_coverage") or {};gp=generator.get("policy") or {}
+        if generated != 0 or int(gs.get("written_to_auto_inbox") or 0) != 0 or int(gs.get("semantic_clear") or 0) != 0 or int(gs.get("semantic_blocked") or 0) != 0:
+            errors.append("carrier-probe-skip-generator-accounting-nonzero")
+        if coverage.get("coverage_exhausted") is True or coverage.get("carrier_probe_required") is not True or int(coverage.get("carrier_probe_pending") or 0)<=0 or coverage.get("carrier_probe_complete") is True or int(coverage.get("unreviewed_lane_linked_sources") or 0)!=0:
+            errors.append("carrier-probe-skip-state-invalid")
+        if ps.get("source_retrieval_complete") is False or int(ps.get("carrier_probe_pending") or 0)<=0 or ps.get("carrier_probe_complete") is True:
+            errors.append("carrier-probe-skip-primary-state-invalid")
+        if gp.get("carrier_probe_pending_skips_model_call") is not True or gp.get("carrier_probe_pending_is_compute_control_not_scientific_negative") is not True or gp.get("one_content_addressed_pool_allows_at_most_one_live_generator_call") is not True:
+            errors.append("carrier-probe-skip-policy-missing")
+        receipts=[row for row in ((generator.get("saturation_memory") or {}).get("portable_review_receipts") or []) if isinstance(row,dict)]
+        portable_refs={str(ref) for row in receipts if row.get("scientific_authority") is False for ref in row.get("source_refs") or [] if str(ref).startswith("arXiv:")}
+        if any(row.get("scientific_authority") is not False for row in receipts) or len(portable_refs)<int(ps.get("prior_reviewed_sources") or 0):
+            errors.append("carrier-probe-skip-portable-review-receipts-incomplete")
     submitted = int(qs.get("submitted") or 0); audited_count = int(qs.get("audited") or 0)
     passed = int(qs.get("passed_problem_gate") or 0); blocked = int(qs.get("blocked_problem_gate") or 0)
     if int(qs.get("inbox_errors") or 0) != 0:
         errors.append("queue-inbox-errors")
     if submitted != audited_count or passed + blocked != audited_count:
         errors.append("queue-accounting-mismatch")
-    if generator_status == "SKIPPED_SOURCE_COVERAGE_SATURATED" and any(value != 0 for value in (submitted, audited_count, passed, blocked)):
+    if generator_status in {"SKIPPED_SOURCE_COVERAGE_SATURATED","SKIPPED_SOURCE_CARRIER_PROBE_PENDING"} and any(value != 0 for value in (submitted, audited_count, passed, blocked)):
         errors.append("coverage-skip-queue-must-be-empty")
     if any(int(qs.get(key) or 0) != 0 for key in ("method_authorized", "experiment_authorized", "p0_authorized")):
         errors.append("queue-illegal-downstream-authority")
@@ -262,6 +303,11 @@ def write_problem_discovery_transaction(
                     "source_coverage_exhausted":bool((primary_public.get("summary") or {}).get("source_coverage_exhausted")),
                     "source_retrieval_complete":bool((primary_public.get("summary") or {}).get("source_retrieval_complete")),
                     "unreviewed_lane_linked_sources":(primary_public.get("summary") or {}).get("unreviewed_lane_linked_sources",0),
+                    "carrier_probe_required":bool((primary_public.get("summary") or {}).get("carrier_probe_required")),
+                    "carrier_probe_attempted":int((primary_public.get("summary") or {}).get("carrier_probe_attempted") or 0),
+                    "carrier_probe_rescued":int((primary_public.get("summary") or {}).get("carrier_probe_rescued") or 0),
+                    "carrier_probe_pending":int((primary_public.get("summary") or {}).get("carrier_probe_pending") or 0),
+                    "carrier_probe_complete":bool((primary_public.get("summary") or {}).get("carrier_probe_complete",True)),
                     "semantic_clear":(generator_public.get("summary") or {}).get("semantic_clear",0),"semantic_blocked":(generator_public.get("summary") or {}).get("semantic_blocked",0),
                     "queue_submitted":(queue_public.get("summary") or {}).get("submitted",0),"queue_passed":(queue_public.get("summary") or {}).get("passed_problem_gate",0),"queue_blocked":(queue_public.get("summary") or {}).get("blocked_problem_gate",0),
                 },

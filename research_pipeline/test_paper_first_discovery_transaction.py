@@ -8,7 +8,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from .config import StorageSettings
-from .paper_first_discovery_transaction import _validate, write_problem_discovery_transaction
+from .paper_first_discovery_transaction import _transaction_id, _validate, write_problem_discovery_transaction
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES
 
 
@@ -124,6 +124,47 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual(result["summary"]["source_coverage_exhausted"],True)
         self.assertEqual(result["summary"]["unreviewed_lane_linked_sources"],0)
         self.assertEqual(result["authority"],{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False})
+
+    def test_carrier_probe_pending_commits_atomic_zero_model_transaction(self) -> None:
+        model_calls=[]
+        def forbidden(**kwargs):model_calls.append(1);raise AssertionError("carrier pending transaction must not call generator/reviewer")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
+            titles={1:"Self-Evolving Agent Skill One",2:"Harness Evolution Agent Two",3:"Persistent Agent Memory Three",4:"Self-Evolving World Model Four",5:"Self-Evolving Autonomous Agent Strategy Alpha",6:"Self-Evolving Autonomous Agent Strategy Beta"}
+            abstracts={idx:("A self-evolving agent skill harness improves adaptation." if idx<3 else ("Persistent agent memory improves a continual agent." if idx==3 else ("A self-evolving world model improves planning." if idx==4 else "A self-evolving autonomous agent iterates strategy from feedback."))) for idx in titles}
+            papers=[{"paper_id":f"s2-{idx}","title":titles[idx],"year":2026,"abstract":abstracts[idx],"metadata":{"externalIds":{"ArXiv":f"2608.62{idx:03d}"},"publicationDate":f"2026-08-{14-idx:02d}","citationCount":0,"retrievalScore":0.0,"matches":[{"route":"topic"}]}} for idx in range(1,7)]
+            corpus=root/"carrier-transaction-corpus.json";corpus.write_text(json.dumps({"schema_version":"1.0","retrieved_at":now.isoformat(),"papers":papers}),encoding="utf-8")
+            discovery=storage.data_root/"paper-first-problem-discovery";discovery.mkdir(parents=True,exist_ok=True)
+            refs=[f"arXiv:2608.62{i:03d}" for i in range(1,5)]
+            (discovery/"discovery-saturation-ledger.json").write_text(json.dumps({"schema_version":"1.0","runs":[{"run_id":"prior-reviewed","pool_sha256":"a"*64,"negative_space_sha256":"b"*64,"source_refs":refs,"status":"GENERATED_ZERO_CANDIDATES","requested_model":"ark-code-latest","resolved_model":"doubao-seed-evolving","raw_sha256":"c"*64,"scientific_authority":False}]}),encoding="utf-8")
+            def requester(url:str,*,timeout:float,headers:dict[str,str]):
+                aid=url.rsplit('/',1)[-1];idx=int(aid[-1])
+                if '/html/' in url:return SimpleNamespace(status_code=200,text='<html><body><section><h2>Experimental Results</h2><p>We find verified performance improves by 10.0 percent on held-out tasks.</p></section></body></html>')
+                return SimpleNamespace(status_code=200,text=f'<meta name="citation_title" content="{titles[idx]}"><blockquote class="abstract mathjax">Abstract: {abstracts[idx]}</blockquote>')
+            result=write_problem_discovery_transaction(storage=storage,**targets,primary_kwargs={"corpus_path":corpus,"requester":requester,"augment_fresh_corpus_with_arxiv":False,"max_papers":5,"lane_floor":0,"coverage_anchor_count":2,"carrier_probe_limit":1,"now":now,"min_interval_seconds":0},generator_kwargs={"generator_responder":forbidden,"reviewer_responder":forbidden,"now":now})
+            primary=json.loads(targets["primary_json"].read_text());generator=json.loads(targets["generator_json"].read_text());queue=json.loads(targets["queue_json"].read_text())
+        self.assertEqual(model_calls,[])
+        self.assertEqual(result["status"],"COMMITTED")
+        self.assertEqual(primary["schema_version"],"1.1")
+        self.assertEqual((primary["summary"]["carrier_probe_rescued"],primary["summary"]["carrier_probe_pending"]),(0,1))
+        self.assertFalse(primary["summary"]["source_coverage_exhausted"])
+        self.assertEqual(generator["status"],"SKIPPED_SOURCE_CARRIER_PROBE_PENDING")
+        self.assertEqual((queue["summary"]["submitted"],queue["summary"]["passed_problem_gate"]),(0,0))
+        self.assertEqual({primary["discovery_transaction_id"],generator["discovery_transaction_id"],queue["discovery_transaction_id"]},{result["transaction_id"]})
+
+    def test_validator_accepts_zero_call_carrier_probe_pending_transaction(self) -> None:
+        refs=[f"arXiv:{idx}" for idx in range(1,5)]
+        primary={"schema_version":"1.1","status":"READY","policy":{"scientific_object_lanes":["skill_harness","memory_continual","world_model","parametric_model_state"]},"summary":{"verified":4,"prior_reviewed_sources":4,"source_retrieval_complete":True,"carrier_probe_pending":2,"carrier_probe_complete":False},"carrier_probe":{"pending":2,"complete":False,"portable_receipts":[],"scientific_authority":False}}
+        generator={"status":"SKIPPED_SOURCE_CARRIER_PROBE_PENDING","summary":{"primary_evidence_records":4,"generated":0,"written_to_auto_inbox":0,"semantic_clear":0,"semantic_blocked":0},"source_coverage":{"coverage_exhausted":False,"unreviewed_lane_linked_sources":0,"carrier_probe_required":True,"carrier_probe_pending":2,"carrier_probe_complete":False},"saturation_memory":{"portable_review_receipts":[{"run_id":"prior","source_refs":refs,"scientific_authority":False}]},"policy":{"search_portfolio_enabled":False,"one_generator_call_max":True,"one_semantic_reviewer_call_max":True,"one_content_addressed_pool_allows_at_most_one_live_generator_call":True,"carrier_probe_pending_skips_model_call":True,"carrier_probe_pending_is_compute_control_not_scientific_negative":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},"candidates":[]}
+        queue={"summary":{"primary_evidence_records":4,"submitted":0,"audited":0,"passed_problem_gate":0,"blocked_problem_gate":0,"inbox_errors":0,"method_authorized":0,"experiment_authorized":0,"p0_authorized":0},"audited":[]}
+        self.assertEqual(_validate(primary,generator,queue),[])
+
+    def test_carrier_probe_receipt_changes_atomic_transaction_id_without_record_churn(self) -> None:
+        base={"status":"READY","records":[{"ref":"arXiv:1","source_sha256":"a"*64,"fulltext_sha256":"b"*64}],"carrier_probe":{"pending":1,"portable_receipts":[]}}
+        advanced=json.loads(json.dumps(base));advanced["carrier_probe"]={"pending":0,"portable_receipts":[{"ref":"arXiv:9","primary_sha256":"c"*64,"fulltext_sha256":"d"*64,"classifier_version":"existing-object-carrier-v1","live_rescue_eligible_lanes":[]}]}
+        generator={"run_id":"same","status":"SKIPPED_SOURCE_CARRIER_PROBE_PENDING","raw_artifacts":{}}
+        queue={"audited":[]}
+        self.assertNotEqual(_transaction_id(base,generator,queue),_transaction_id(advanced,generator,queue))
 
     def test_validator_rejects_portfolio_as_canonical_transaction_generator(self) -> None:
         primary={"status":"READY","summary":{"verified":4}}

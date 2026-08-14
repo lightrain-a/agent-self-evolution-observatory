@@ -297,6 +297,18 @@ def main() -> None:
         fail(f"primary-evidence precision state is stale: status={primary.get('status')} summary={primary_summary} policy_version={primary_policy.get('empirical_fact_extraction_version')}")
     if sum(int(value or 0) for value in (primary_summary.get("empirical_fact_tier_counts") or {}).values()) != int(primary_summary.get("empirical_fact_candidates") or 0):
         fail("primary-evidence fact-tier accounting does not match fact-candidate count")
+    if str(primary.get("schema_version") or "0") >= "1.1":
+        carrier = primary.get("carrier_probe") or {}
+        allowed_objects = set(primary_policy.get("scientific_object_lanes") or [])
+        if primary_policy.get("no_lane_carrier_probe_enabled") is not True or primary_policy.get("no_lane_carrier_probe_is_existing_object_rescue_only") is not True or primary_policy.get("no_lane_carrier_probe_cannot_create_new_object") is not True or primary_policy.get("no_lane_carrier_probe_has_zero_scientific_authority") is not True or primary_policy.get("no_lane_carrier_probe_failure_prevents_coverage_exhaustion") is not True or primary_policy.get("carrier_probe_pending_skips_live_generator_call") is not True:
+            fail("Primary 1.1 no-lane carrier probe policy is incomplete")
+        if carrier.get("scientific_authority") is not False or int(carrier.get("pending") or 0) != int(primary_summary.get("carrier_probe_pending") or 0) or bool(carrier.get("complete")) != bool(primary_summary.get("carrier_probe_complete")):
+            fail("Primary 1.1 carrier-probe accounting is inconsistent")
+        if primary_summary.get("source_coverage_exhausted") is True and int(primary_summary.get("carrier_probe_pending") or 0) > 0:
+            fail("Primary 1.1 cannot claim exhausted source coverage with carrier backlog")
+        for receipt in carrier.get("portable_receipts") or []:
+            if receipt.get("scientific_authority") is not False or len(str(receipt.get("primary_sha256") or "")) != 64 or len(str(receipt.get("fulltext_sha256") or "")) != 64 or not str(receipt.get("classifier_version") or "") or any(str(value) not in allowed_objects for value in receipt.get("live_rescue_eligible_lanes") or []):
+                fail("Primary 1.1 carrier receipt is not zero-authority/content-addressed/existing-object-only")
     generator = research_state.get("paper_first_problem_generator") or {}
     generator_policy = generator.get("policy") or {}
     saturation = generator.get("saturation_memory") or {}
@@ -304,6 +316,12 @@ def main() -> None:
         fail("zero-candidate problem discovery must expose an auditable rationale")
     if generator_policy.get("zero_candidate_rationale_required") is not True or generator_policy.get("generation_notes_are_advisory_not_scientific_authority") is not True or generator_policy.get("discovery_saturation_memory_has_zero_scientific_authority") is not True or saturation.get("scientific_authority") is not False:
         fail("problem-discovery rationale/saturation memory authority policy is stale")
+    if generator.get("status") == "SKIPPED_SOURCE_CARRIER_PROBE_PENDING":
+        coverage = generator.get("source_coverage") or {}
+        if generator_policy.get("carrier_probe_pending_skips_model_call") is not True or generator_policy.get("carrier_probe_pending_is_compute_control_not_scientific_negative") is not True or coverage.get("coverage_exhausted") is True or coverage.get("carrier_probe_required") is not True or int(coverage.get("carrier_probe_pending") or 0) <= 0 or coverage.get("carrier_probe_complete") is True or int(coverage.get("unreviewed_lane_linked_sources") or 0) != 0:
+            fail("carrier-pending Generator state is not a valid zero-call compute-control terminal")
+        if any(int((generator.get("summary") or {}).get(key) or 0) != 0 for key in ("generated","written_to_auto_inbox","semantic_clear","semantic_blocked")):
+            fail("carrier-pending Generator cannot expose generated/reviewed candidates")
     if research_state.get("collision_engine", {}).get("summary", {}).get("pairwise_comparisons") != 406:
         fail("collision engine did not compare all 29 structured ICLR candidates")
     if research_state.get("pilot_registry", {}).get("summary", {}).get("phases") != 78:
