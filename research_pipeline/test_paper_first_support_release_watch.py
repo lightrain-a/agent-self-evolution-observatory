@@ -75,6 +75,21 @@ class SupportReleaseWatchTest(unittest.TestCase):
         self.assertEqual(state["summary"]["checked"], 0)
         self.assertEqual(state["summary"]["support_qualified"], 0)
 
+    def test_future_code_readme_only_surface_stays_waiting_for_artifacts(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            storage = self.storage(Path(td))
+            self.cache(storage, "2607.00001", 'Our code will be made publicly available soon at https://github.com/example/FutureRepo .')
+            state = run_support_release_watch(
+                storage=storage,
+                design_state=self.design([self.hold("A", "arXiv:2607.00001")]),
+                fetcher=lambda target: {"status_code": 200, "fingerprint": "a" * 64, "surface_nonempty": False, "artifact_file_count": 0},
+                now=datetime(2026, 8, 14, tzinfo=timezone.utc),
+                write_ledger=False,
+            )
+        self.assertEqual(state["rows"][0]["status"], "WAITING_RELEASE_ARTIFACTS")
+        self.assertEqual(state["summary"]["recheck_required"], 0)
+        self.assertEqual(state["summary"]["support_qualified"], 0)
+
     def test_future_code_first_success_only_requests_recheck(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             storage = self.storage(Path(td))

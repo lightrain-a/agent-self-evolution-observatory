@@ -15,6 +15,7 @@ from .config import StorageSettings
 from .paper_first_search_portfolio_design_adjudication import build_search_portfolio_design_adjudication
 
 WATCH_SCHEMA = "1.0"
+FINGERPRINT_VERSION = "release-surface-v2"
 DEFAULT_COOLDOWN_DAYS = 7.0
 MAX_PAGE_BYTES = 1_000_000
 
@@ -171,6 +172,18 @@ def _github_repo_api(url: str) -> str | None:
     return f"https://api.github.com/repos/{parts[0]}/{parts[1]}"
 
 
+def _is_release_artifact_path(path: str) -> bool:
+    value = str(path or "").strip("/")
+    name = value.rsplit("/", 1)[-1].lower()
+    if not value or name in {".gitignore", ".gitattributes", ".github"}:
+        return False
+    if name.startswith(("readme", "license", "licence", "citation", "code_of_conduct", "contributing")):
+        return False
+    if name.endswith((".md", ".rst", ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp")):
+        return False
+    return True
+
+
 def _default_fetcher(target: dict[str, Any]) -> dict[str, Any]:
     url = str(target.get("url") or "")
     api = _github_repo_api(url)
@@ -178,13 +191,25 @@ def _default_fetcher(target: dict[str, Any]) -> dict[str, Any]:
     if api:
         response = requests.get(api, timeout=20.0, headers=headers)
         status = int(response.status_code)
-        material: dict[str, Any] = {"status_code": status, "endpoint": url}
-        if status == 200:
-            payload = response.json()
-            for key in ("full_name", "default_branch", "size", "pushed_at", "updated_at", "archived", "disabled", "fork"):
-                material[key] = payload.get(key)
+        if status != 200:
+            material = {"status_code": status, "endpoint": url, "fingerprint_version": FINGERPRINT_VERSION}
+            return {"status_code": status, "fingerprint": _sha(json.dumps(material, sort_keys=True, separators=(",", ":"))), "surface_nonempty": False, "artifact_file_count": 0, "fingerprint_version": FINGERPRINT_VERSION, "resolved_endpoint": api}
+        payload = response.json()
+        default_branch = str(payload.get("default_branch") or "main")
+        tree_url = f"{api}/git/trees/{default_branch}?recursive=1"
+        tree_response = requests.get(tree_url, timeout=20.0, headers=headers)
+        if int(tree_response.status_code) != 200:
+            raise RuntimeError(f"github-tree-http-{int(tree_response.status_code)}")
+        tree_payload = tree_response.json()
+        artifacts = sorted(
+            (str(row.get("path") or ""), str(row.get("sha") or ""))
+            for row in tree_payload.get("tree") or []
+            if row.get("type") == "blob" and _is_release_artifact_path(str(row.get("path") or ""))
+        )
+        artifact_digest = _sha("\n".join(f"{path}:{blob_sha}" for path, blob_sha in artifacts))
+        material = {"status_code": status, "endpoint": url, "default_branch": default_branch, "artifact_file_count": len(artifacts), "artifact_blob_digest": artifact_digest, "fingerprint_version": FINGERPRINT_VERSION}
         fingerprint = _sha(json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
-        return {"status_code": status, "fingerprint": fingerprint, "surface_nonempty": bool(material.get("size", 0)), "resolved_endpoint": api}
+        return {"status_code": status, "fingerprint": fingerprint, "surface_nonempty": bool(artifacts), "artifact_file_count": len(artifacts), "artifact_path_digest": _sha("\n".join(path for path, _ in artifacts)), "fingerprint_version": FINGERPRINT_VERSION, "resolved_endpoint": api}
     response = requests.get(url, timeout=20.0, headers=headers, stream=True)
     status = int(response.status_code)
     chunks: list[bytes] = []
@@ -198,7 +223,7 @@ def _default_fetcher(target: dict[str, Any]) -> dict[str, Any]:
         if total >= MAX_PAGE_BYTES:
             break
     body = b"".join(chunks)
-    return {"status_code": status, "fingerprint": _sha(body), "surface_nonempty": bool(body.strip()), "resolved_endpoint": url}
+    return {"status_code": status, "fingerprint": _sha(body), "surface_nonempty": bool(body.strip()), "artifact_file_count": None, "fingerprint_version": FINGERPRINT_VERSION, "resolved_endpoint": url}
 
 
 def _load_ledger(path: Path) -> dict[str, Any]:
@@ -236,7 +261,7 @@ def run_support_release_watch(
         previous = observations.get(key) or {}
         previous_checked = str(previous.get("checked_at") or "")
         cooldown = False
-        if previous_checked:
+        if previous_checked and str(previous.get("fingerprint_version") or "") == FINGERPRINT_VERSION:
             try:
                 cooldown = current - datetime.fromisoformat(previous_checked.replace("Z", "+00:00")) < timedelta(days=max(0.0, cooldown_days))
             except ValueError:
@@ -252,8 +277,15 @@ def run_support_release_watch(
             fingerprint = str(result.get("fingerprint") or "")
             if len(fingerprint) != 64:
                 raise ValueError("release-surface-fingerprint-invalid")
-            prior_fingerprint = str(previous.get("fingerprint") or "")
-            if target["declaration_kind"] == "FUTURE_CODE_RELEASE" and not prior_fingerprint and 200 <= status_code < 300:
+            previous_version = str(previous.get("fingerprint_version") or "")
+            result_version = str(result.get("fingerprint_version") or FINGERPRINT_VERSION)
+            prior_fingerprint = str(previous.get("fingerprint") or "") if previous_version == result_version else ""
+            surface_nonempty = bool(result.get("surface_nonempty"))
+            artifact_count_raw = result.get("artifact_file_count")
+            artifact_file_count = int(artifact_count_raw) if artifact_count_raw is not None else (1 if surface_nonempty else 0)
+            if target["declaration_kind"] == "FUTURE_CODE_RELEASE" and 200 <= status_code < 300 and artifact_file_count <= 0:
+                status = "WAITING_RELEASE_ARTIFACTS"
+            elif target["declaration_kind"] == "FUTURE_CODE_RELEASE" and not prior_fingerprint and 200 <= status_code < 300:
                 status = "RECHECK_REQUIRED_NEW_RELEASE_SURFACE"
             elif prior_fingerprint and fingerprint != prior_fingerprint:
                 status = "RECHECK_REQUIRED_RELEASE_CHANGED"
@@ -269,11 +301,13 @@ def run_support_release_watch(
                 "http_status": status_code,
                 "fingerprint": fingerprint,
                 "previous_fingerprint": prior_fingerprint,
-                "surface_nonempty": bool(result.get("surface_nonempty")),
+                "surface_nonempty": surface_nonempty,
+                "artifact_file_count": artifact_file_count,
+                "fingerprint_version": result_version,
                 "checked_at": current.isoformat(),
                 "scientific_authority": False,
             }
-            observations[key] = {k: row[k] for k in ("candidate_id", "url", "declaration_kind", "status", "http_status", "fingerprint", "checked_at", "scientific_authority")}
+            observations[key] = {k: row[k] for k in ("candidate_id", "url", "declaration_kind", "status", "http_status", "fingerprint", "fingerprint_version", "checked_at", "scientific_authority")}
             rows.append(row)
         except Exception as error:
             provider_errors += 1
@@ -292,6 +326,8 @@ def run_support_release_watch(
             "release_watch_cannot_reopen_generator_or_problem_gate": True,
             "release_watch_has_zero_source_exposure_effect": True,
             "network_checks_are_cooldown_bounded": True,
+            "github_release_fingerprint_ignores_doc_only_churn": True,
+            "release_surface_fingerprint_version": FINGERPRINT_VERSION,
             "cooldown_days": float(cooldown_days),
         },
         "summary": {
