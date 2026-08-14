@@ -7,6 +7,7 @@ from .paper_first_evidence_acquisition import (
     build_provisional_evidence_plan,
     compile_evidence_designs,
     compile_evidence_reviews,
+    compile_substrate_preflight,
     validate_evidence_plan,
 )
 
@@ -46,9 +47,15 @@ def design_for(entry, *, source="REPRODUCIBLE_FIRST_PARTY", mode="FIRST_PARTY_RE
 
 def clear_review(plan):
     rows=[r for r in plan.get("entries") or [] if r.get("status")=="NEEDS_INDEPENDENT_EVIDENCE_REVIEW"]
-    checks={"independent_truth_valid":True,"scientific_object_preserved":True,"no_mechanism_bake_in":True,"same_information_baseline_valid":True,"falsifier_not_method_evaluation":True,"outcome_semantics_valid":True,"bounded_budget_valid":True}
-    payload={"reviews":[{"candidate_id":r["candidate_id"],"verdict":"CLEAR_FOR_BOUNDED_ACQUISITION","checks":checks,"reason":"all bounded evidence-contract checks pass","required_revision":""} for r in rows]}
+    checks={"independent_truth_valid":True,"scientific_object_preserved":True,"no_mechanism_bake_in":True,"same_information_baseline_valid":True,"falsifier_not_method_evaluation":True,"outcome_semantics_valid":True,"bounded_budget_valid":True,"prior_support_constraint_respected":True}
+    payload={"reviews":[{"candidate_id":r["candidate_id"],"verdict":"CLEAR_FOR_SUBSTRATE_PREFLIGHT","checks":checks,"reason":"all bounded evidence-contract checks pass","required_revision":""} for r in rows]}
     return compile_evidence_reviews(plan,payload,reviewer_model="independent-reviewer")
+
+
+def preflight_ready(plan):
+    rows=[r for r in plan.get("entries") or [] if r.get("status")=="READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT"]
+    receipts={"receipts":[{"candidate_id":r["candidate_id"],"contract_sha256":r["contract_sha256"],"disposition":"EXISTING_HARNESS_READY","reason":"existing local harness is available","inventory_summary":"frozen harness and matched units passed local inventory probe","asset_manifest_sha256":"d"*64,"probe_passed":True,"budget_feasible":True} for r in rows]}
+    return compile_substrate_preflight(plan,receipts)
 
 
 class EvidenceAcquisitionTest(unittest.TestCase):
@@ -66,6 +73,9 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         self.assertEqual(state["entries"][0]["status"],"NEEDS_INDEPENDENT_EVIDENCE_REVIEW")
         self.assertFalse(state["entries"][0]["execution_authorized"])
         state=clear_review(state);row=state["entries"][0]
+        self.assertEqual(row["status"],"READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT")
+        self.assertFalse(row["execution_authorized"])
+        state=preflight_ready(state);row=state["entries"][0]
         self.assertEqual(row["status"],"READY_FOR_BOUNDED_EVIDENCE_ACQUISITION")
         self.assertTrue(row["execution_authorized"])
         self.assertTrue(row["authority"]["bounded_evidence_acquisition"])
@@ -85,7 +95,7 @@ class EvidenceAcquisitionTest(unittest.TestCase):
 
     def test_independent_review_blocks_bake_in_and_same_model_self_review(self):
         plan=build_provisional_evidence_plan(machine(1));state=compile_evidence_designs(plan,{"designs":[design_for(plan["entries"][0])]},design_model="designer")
-        checks={"independent_truth_valid":True,"scientific_object_preserved":True,"no_mechanism_bake_in":False,"same_information_baseline_valid":True,"falsifier_not_method_evaluation":True,"outcome_semantics_valid":True,"bounded_budget_valid":True}
+        checks={"independent_truth_valid":True,"scientific_object_preserved":True,"no_mechanism_bake_in":False,"same_information_baseline_valid":True,"falsifier_not_method_evaluation":True,"outcome_semantics_valid":True,"bounded_budget_valid":True,"prior_support_constraint_respected":True}
         payload={"reviews":[{"candidate_id":"C1","verdict":"BLOCK_BAKE_IN","checks":checks,"reason":"synthetic truth encodes the target mechanism","required_revision":""}]}
         with self.assertRaisesRegex(ValueError,"reviewer must be independent"):
             compile_evidence_reviews(state,payload,reviewer_model="designer")
@@ -107,7 +117,7 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         self.assertIn("first-party-needs-three-anti-bake-in-controls",state["entries"][0]["design_audit"]["errors"])
 
     def test_inconclusive_opens_only_frozen_single_variable_branch_repair(self):
-        plan=build_provisional_evidence_plan(machine(1));state=clear_review(compile_evidence_designs(plan,{"designs":[design_for(plan["entries"][0])]}))
+        plan=build_provisional_evidence_plan(machine(1));state=preflight_ready(clear_review(compile_evidence_designs(plan,{"designs":[design_for(plan["entries"][0])]})))
         row=state["entries"][0]
         receipt={"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"outcome":"INCONCLUSIVE","evidence_manifest_sha256":"b"*64,"protocol_valid":True,"qualified_units":24,"metric_summary":"interval overlaps both frozen predictions"}]}
         branched=adjudicate_evidence_receipts(state,receipt);entry=branched["entries"][0]
@@ -117,14 +127,16 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         self.assertEqual(repaired["entries"][0]["tree"]["depth"],1)
         self.assertEqual(repaired["entries"][0]["tree"]["repair_count"],1)
         self.assertEqual(repaired["entries"][0]["status"],"NEEDS_INDEPENDENT_EVIDENCE_REVIEW")
-        self.assertEqual(clear_review(repaired)["entries"][0]["status"],"READY_FOR_BOUNDED_EVIDENCE_ACQUISITION")
+        reviewed_repair=clear_review(repaired)
+        self.assertEqual(reviewed_repair["entries"][0]["status"],"READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT")
+        self.assertEqual(preflight_ready(reviewed_repair)["entries"][0]["status"],"READY_FOR_BOUNDED_EVIDENCE_ACQUISITION")
         bad=adjudicate_evidence_receipts(state,receipt);bad_design=design_for(bad["entries"][0]);bad_design["changed_variable"]="change a different variable"
         held=compile_evidence_designs(bad,{"designs":[bad_design]},part=2)
         self.assertIn("branch-repair-changed-variable-mismatch",held["entries"][0]["design_audit"]["errors"])
 
     def test_completed_slot_promotes_deferred_candidate(self):
         plan=build_provisional_evidence_plan(machine(5));first=plan["entries"][0]
-        state=clear_review(compile_evidence_designs(plan,{"designs":[design_for(first)]}))
+        state=preflight_ready(clear_review(compile_evidence_designs(plan,{"designs":[design_for(first)]})))
         row=state["entries"][0]
         receipt={"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"outcome":"REDUCTION_SUPPORTED","evidence_manifest_sha256":"c"*64,"protocol_valid":True,"qualified_units":16,"metric_summary":"matched baseline explains the frozen prediction"}]}
         out=adjudicate_evidence_receipts(state,receipt)
@@ -133,7 +145,7 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         self.assertEqual(promoted["status"],"NEEDS_BOUNDED_EVIDENCE_DESIGN")
 
     def test_residual_survival_returns_to_review_not_paper_pass(self):
-        plan=build_provisional_evidence_plan(machine(1));state=clear_review(compile_evidence_designs(plan,{"designs":[design_for(plan["entries"][0])]}))
+        plan=build_provisional_evidence_plan(machine(1));state=preflight_ready(clear_review(compile_evidence_designs(plan,{"designs":[design_for(plan["entries"][0])]})))
         row=state["entries"][0]
         receipt={"receipts":[{"candidate_id":row["candidate_id"],"contract_sha256":row["contract_sha256"],"outcome":"RESIDUAL_SURVIVES","evidence_manifest_sha256":"a"*64,"protocol_valid":True,"qualified_units":24,"metric_summary":"matched baseline fails while residual prediction holds"}]}
         out=adjudicate_evidence_receipts(state,receipt)

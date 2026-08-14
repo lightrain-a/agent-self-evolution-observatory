@@ -12,6 +12,7 @@ MODES={"PRIMARY_ASSET_REUSE","FIRST_PARTY_REPLAY","FIRST_PARTY_SANDBOX","FIRST_P
 SOURCE_MODES={"SOURCE_SPECIFIC_REQUIRED","REPRODUCIBLE_FIRST_PARTY"}
 ADAPTERS={"PRIMARY_ASSET_ONLY","EXISTING_REPLAY_HARNESS","EXISTING_SANDBOX_HARNESS","EXISTING_ROLLOUT_HARNESS","EXISTING_SIMULATION_HARNESS","IMPLEMENT_MINIMAL_TEST_HARNESS"}
 OUTCOMES={"REDUCTION_SUPPORTED","RESIDUAL_SURVIVES","INCONCLUSIVE"}
+SUBSTRATE_DISPOSITIONS={"EXISTING_HARNESS_READY","MINIMAL_HARNESS_IMPLEMENTATION_READY","SOURCE_SPECIFIC_REQUIRED","SUBSTRATE_UNAVAILABLE","BUDGET_INFEASIBLE"}
 AUTHORITY={"scientific_claim":False,"live_problem_gate":False,"paper_design":False,"method":False,"p0":False,"full_experiment":False}
 POLICY={
  "reduction_pending_is_provisional_not_failed":True,
@@ -24,6 +25,9 @@ POLICY={
  "outcome_labels_are_compiler_owned":True,
  "independent_evidence_contract_review_required_before_execution":True,
  "evidence_designer_cannot_self_review":True,
+ "bounded_substrate_preflight_required_after_contract_review":True,
+ "contract_review_clear_does_not_authorize_execution":True,
+ "prior_support_receipt_is_review_context_not_automatic_veto":True,
  "support_inventory_is_one_acquisition_route_not_a_global_prerequisite":True,
  "source_specific_claims_still_require_source_specific_assets":True,
  "new_evidence_never_auto_certifies_novelty":True,
@@ -70,9 +74,20 @@ def build_provisional_evidence_plan(machine:dict,*,run_id:str="",max_active:int=
 def _summary(entries:list[dict])->dict:
  return {
   "provisional_problem_candidates":len(entries),"design_selected":sum(r.get("design_selected") is True for r in entries),"design_pending":sum(r.get("status")=="NEEDS_BOUNDED_EVIDENCE_DESIGN" for r in entries),"design_invalid":sum(r.get("status")=="HOLD_EVIDENCE_DESIGN_INVALID" for r in entries),
-  "wait_primary_asset":sum(r.get("status")=="WAIT_PRIMARY_ASSET_RELEASE" for r in entries),"review_pending":sum(r.get("status")=="NEEDS_INDEPENDENT_EVIDENCE_REVIEW" for r in entries),"review_clear":sum((r.get("evidence_review") or {}).get("verdict")=="CLEAR_FOR_BOUNDED_ACQUISITION" for r in entries),"review_revise":sum((r.get("evidence_review") or {}).get("verdict")=="REVISE" for r in entries),"review_blocked":sum(r.get("status")=="HOLD_EVIDENCE_REVIEW_BLOCKED" for r in entries),"execution_ready":sum(r.get("status")=="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" for r in entries),"execution_completed":sum(bool(r.get("evidence_receipt")) for r in entries),
+  "wait_primary_asset":sum(r.get("status")=="WAIT_PRIMARY_ASSET_RELEASE" for r in entries),"review_pending":sum(r.get("status")=="NEEDS_INDEPENDENT_EVIDENCE_REVIEW" for r in entries),"review_clear":sum((r.get("evidence_review") or {}).get("verdict")=="CLEAR_FOR_SUBSTRATE_PREFLIGHT" for r in entries),"review_revise":sum((r.get("evidence_review") or {}).get("verdict")=="REVISE" for r in entries),"review_blocked":sum(r.get("status")=="HOLD_EVIDENCE_REVIEW_BLOCKED" for r in entries),"substrate_preflight_pending":sum(r.get("status")=="READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT" for r in entries),"substrate_ready":sum((r.get("substrate_preflight") or {}).get("disposition")=="EXISTING_HARNESS_READY" for r in entries),"substrate_implementation_pending":sum(r.get("status")=="NEEDS_MINIMAL_HARNESS_IMPLEMENTATION" for r in entries),"substrate_hold":sum(r.get("status") in {"HOLD_SUBSTRATE_UNAVAILABLE","HOLD_SUBSTRATE_BUDGET_INFEASIBLE"} for r in entries),"execution_ready":sum(r.get("status")=="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" for r in entries),"execution_completed":sum(bool(r.get("evidence_receipt")) for r in entries),
   "reduction_supported":sum(r.get("status")=="STOP_EXACT_REDUCTION_SUPPORTED" for r in entries),"residual_survives":sum(r.get("status")=="RETURN_TO_SEMANTIC_CURRENT_SOURCE_REVIEW" for r in entries),"inconclusive":sum(r.get("status") in {"BRANCH_REPAIR_READY","HOLD_INCONCLUSIVE_TREE_BUDGET_EXHAUSTED"} for r in entries),"branch_repair_ready":sum(r.get("status")=="BRANCH_REPAIR_READY" for r in entries),
   "deferred_by_portfolio_budget":sum(r.get("status")=="DEFERRED_BY_ACTIVE_PORTFOLIO_BUDGET" for r in entries),"paper_design_authorized":0,"method_authorized":0,"p0_authorized":0,"full_experiment_authorized":0}
+
+def _plan_status(entries:list[dict])->str:
+ s=_summary(entries)
+ if s["residual_survives"]:return "EVIDENCE_RESULTS_REQUIRE_REVIEW"
+ if s["branch_repair_ready"]:return "EVIDENCE_BRANCH_REPAIR_READY"
+ if s["execution_ready"]:return "EVIDENCE_EXECUTION_READY"
+ if s["substrate_implementation_pending"]:return "EVIDENCE_HARNESS_IMPLEMENTATION_PENDING"
+ if s["substrate_preflight_pending"]:return "EVIDENCE_SUBSTRATE_PREFLIGHT_PENDING"
+ if s["review_pending"]:return "EVIDENCE_REVIEW_PENDING"
+ if s["design_pending"]:return "EVIDENCE_DESIGN_PENDING"
+ return "EVIDENCE_WAIT_OR_HOLD"
 
 def write_provisional_evidence_plan(*,run_root:Path,machine_audit:dict|None=None)->dict:
  machine_audit=machine_audit or json.loads((run_root/"machine-audit.json").read_text(encoding="utf-8"));state=build_provisional_evidence_plan(machine_audit,run_id=run_root.name)
@@ -82,10 +97,10 @@ def evidence_design_prompt(plan:dict,*,part:int=1,batch_size:int=2)->tuple[str,l
  selected=[r for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("design_selected") is True and r.get("status") in {"NEEDS_BOUNDED_EVIDENCE_DESIGN","BRANCH_REPAIR_READY"}]
  batch=selected[:batch_size]
  if not batch: raise ValueError(f"empty bounded-evidence design batch part={part}")
- compact=[{"candidate_id":r["candidate_id"],"title":r.get("title"),"exact_prediction":r.get("frozen_exact_prediction"),"strongest_same_information_baseline":r.get("frozen_same_information_baseline"),"falsifier_expression":r.get("frozen_falsifier_expression"),"blockers":r.get("blockers") or [],"tree_depth":int((r.get("tree") or {}).get("depth") or 0),"required_single_variable_repair":_b((r.get("branch_repair") or {}).get("changed_variable"),1800),"required_design_revision":_b(r.get("review_feedback"),1800)} for r in batch]
+ compact=[{"candidate_id":r["candidate_id"],"title":r.get("title"),"exact_prediction":r.get("frozen_exact_prediction"),"strongest_same_information_baseline":r.get("frozen_same_information_baseline"),"falsifier_expression":r.get("frozen_falsifier_expression"),"prior_support":r.get("prior_support") or {},"blockers":r.get("blockers") or [],"tree_depth":int((r.get("tree") or {}).get("depth") or 0),"required_single_variable_repair":_b((r.get("branch_repair") or {}).get("changed_variable"),1800),"required_design_revision":_b(r.get("review_feedback"),1800)} for r in batch]
  prompt=f'''You design bounded scientific evidence acquisition for REDUCTION-PENDING paper problems. This is exploration only, not novelty certification and not method design.
 
-For each candidate produce exactly one cheapest discriminating contract. New FIRST-PARTY evidence is allowed when the phenomenon can be independently reproduced. Do not require an author release merely because the original paper did not expose the needed unit. If the claim is inherently about unreleased source-specific hidden state/trace and cannot be independently reproduced without changing the claim, use SOURCE_SPECIFIC_REQUIRED + PRIMARY_ASSET_REUSE.
+For each candidate produce exactly one cheapest discriminating contract. New FIRST-PARTY evidence is allowed when the phenomenon can be independently reproduced. prior_support records the old source-asset audit: it is context, not an automatic veto. You must explicitly avoid substituting a synthetic proxy when prior_support says the frozen unit depends on source-specific provenance, latent state, lineage, hidden trace, or unreleased exact arms. Do not require an author release merely because the original paper did not expose the needed unit. If the claim is inherently about an unreleased source-specific unit and first-party reproduction would change the scientific object, use SOURCE_SPECIFIC_REQUIRED + PRIMARY_ASSET_REUSE.
 
 Hard rules:
 - Copy candidate_id exactly. The compiler, not the model, binds the frozen prediction/baseline/falsifier fields after parsing; never try to reinterpret them.
@@ -134,7 +149,7 @@ def _audit_design(d:dict,e:dict)->list[str]:
  return sorted(set(err))
 
 def _promote_deferred(entries:list[dict])->None:
- active_statuses={"NEEDS_BOUNDED_EVIDENCE_DESIGN","NEEDS_INDEPENDENT_EVIDENCE_REVIEW","READY_FOR_BOUNDED_EVIDENCE_ACQUISITION","BRANCH_REPAIR_READY","RETURN_TO_SEMANTIC_CURRENT_SOURCE_REVIEW"}
+ active_statuses={"NEEDS_BOUNDED_EVIDENCE_DESIGN","NEEDS_INDEPENDENT_EVIDENCE_REVIEW","READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT","NEEDS_MINIMAL_HARNESS_IMPLEMENTATION","READY_FOR_BOUNDED_EVIDENCE_ACQUISITION","BRANCH_REPAIR_READY","RETURN_TO_SEMANTIC_CURRENT_SOURCE_REVIEW"}
  active=sum(r.get("design_selected") is True and r.get("status") in active_statuses for r in entries)
  for row in sorted(entries,key=lambda r:int(r.get("priority_rank") or 10**9)):
   if active>=MAX_ACTIVE:break
@@ -162,13 +177,13 @@ def compile_evidence_designs(plan:dict,payload:dict,*,part:int=1,design_model:st
   else: e["status"]="NEEDS_INDEPENDENT_EVIDENCE_REVIEW";e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY)
  _promote_deferred(entries)
  out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"last_design_part":part,"scientific_authority":False,"authority":dict(AUTHORITY)})
- s=out["summary"];out["status"]="EVIDENCE_EXECUTION_READY" if s["execution_ready"] else ("EVIDENCE_REVIEW_PENDING" if s["review_pending"] else ("EVIDENCE_DESIGN_PENDING" if s["design_pending"] else "EVIDENCE_WAIT_OR_HOLD"))
+ out["status"]=_plan_status(entries)
  return out
 
 def evidence_review_prompt(plan:dict,*,part:int=1,batch_size:int=2)->tuple[str,list[str]]:
  rows=[r for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("status")=="NEEDS_INDEPENDENT_EVIDENCE_REVIEW"][:batch_size]
  if not rows:raise ValueError(f"empty independent evidence-review batch part={part}")
- compact=[{"candidate_id":r.get("candidate_id"),"frozen_exact_prediction":r.get("frozen_exact_prediction"),"frozen_same_information_baseline":r.get("frozen_same_information_baseline"),"frozen_falsifier_expression":r.get("frozen_falsifier_expression"),"design":r.get("design") or {},"design_model":(r.get("design_provenance") or {}).get("resolved_model","")} for r in rows]
+ compact=[{"candidate_id":r.get("candidate_id"),"frozen_exact_prediction":r.get("frozen_exact_prediction"),"frozen_same_information_baseline":r.get("frozen_same_information_baseline"),"frozen_falsifier_expression":r.get("frozen_falsifier_expression"),"prior_support":r.get("prior_support") or {},"design":r.get("design") or {},"design_model":(r.get("design_provenance") or {}).get("resolved_model","")} for r in rows]
  prompt=f'''You are an independent scientific contract reviewer. Review bounded evidence-acquisition designs only; do not judge paper novelty and do not authorize Method/P0/GPU.
 
 A CLEAR design must satisfy ALL checks:
@@ -179,19 +194,20 @@ A CLEAR design must satisfy ALL checks:
 5. falsifier_not_method_evaluation: the run discriminates the frozen paper problem/reduction, not a newly invented proposed method.
 6. outcome_semantics_valid: baseline_reduction_supported means the strongest same-information baseline EXPLAINS the frozen prediction and therefore the candidate should stop; candidate_residual_survives means the baseline FAILS to explain a replicated distinguishing residual and therefore the candidate returns to semantic/current-source review.
 7. bounded_budget_valid: the contract stays within the frozen bounded-evidence caps and does not hide paper-scale training/search.
+8. prior_support_constraint_respected: if prior_support identified an unavailable source-specific unit, first-party reproduction is CLEAR only when the design preserves the frozen scientific object without manufacturing the missing provenance/latent/lineage/arm by construction.
 
-Verdicts: CLEAR_FOR_BOUNDED_ACQUISITION, REVISE, SOURCE_SPECIFIC_REQUIRED, BLOCK_BAKE_IN.
-- CLEAR only if all seven checks are true.
+Verdicts: CLEAR_FOR_SUBSTRATE_PREFLIGHT, REVISE, SOURCE_SPECIFIC_REQUIRED, BLOCK_BAKE_IN.
+- CLEAR only if all eight checks are true. CLEAR means only that local substrate feasibility may now be checked; it never authorizes execution by itself.
 - REVISE only for one repairable contract defect; name one concrete revision without changing frozen prediction/baseline/falsifier.
 - SOURCE_SPECIFIC_REQUIRED if first-party reproduction would change the scientific object and the unreleased author/source asset is genuinely required.
 - BLOCK_BAKE_IN if independent evidence cannot be obtained without defining the result into the test.
 
-Return JSON only: {{"reviews":[{{"candidate_id":"...","verdict":"...","checks":{{"independent_truth_valid":true,"scientific_object_preserved":true,"no_mechanism_bake_in":true,"same_information_baseline_valid":true,"falsifier_not_method_evaluation":true,"outcome_semantics_valid":true,"bounded_budget_valid":true}},"reason":"...","required_revision":""}}]}}
+Return JSON only: {{"reviews":[{{"candidate_id":"...","verdict":"...","checks":{{"independent_truth_valid":true,"scientific_object_preserved":true,"no_mechanism_bake_in":true,"same_information_baseline_valid":true,"falsifier_not_method_evaluation":true,"outcome_semantics_valid":true,"bounded_budget_valid":true,"prior_support_constraint_respected":true}},"reason":"...","required_revision":""}}]}}
 DESIGNS={json.dumps(compact,ensure_ascii=False,separators=(",",":"))}'''
  return prompt,[str(r.get("candidate_id") or "") for r in rows]
 
 def compile_evidence_reviews(plan:dict,payload:dict,*,part:int=1,reviewer_model:str="")->dict:
- entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set();required_checks=("independent_truth_valid","scientific_object_preserved","no_mechanism_bake_in","same_information_baseline_valid","falsifier_not_method_evaluation","outcome_semantics_valid","bounded_budget_valid")
+ entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set();required_checks=("independent_truth_valid","scientific_object_preserved","no_mechanism_bake_in","same_information_baseline_valid","falsifier_not_method_evaluation","outcome_semantics_valid","bounded_budget_valid","prior_support_constraint_respected")
  for review in [x for x in payload.get("reviews") or [] if isinstance(x,dict)]:
   cid=str(review.get("candidate_id") or "").strip()
   if not cid or cid in seen:raise ValueError("evidence review ids must be nonempty and unique")
@@ -201,8 +217,8 @@ def compile_evidence_reviews(plan:dict,payload:dict,*,part:int=1,reviewer_model:
   if reviewer_model and design_model and reviewer_model==design_model:raise ValueError(f"evidence reviewer must be independent from designer:{cid}")
   verdict=str(review.get("verdict") or "").strip().upper();checks=review.get("checks") or {};all_checks=isinstance(checks,dict) and all(checks.get(k) is True for k in required_checks);reason=_b(review.get("reason"),1800);revision=_b(review.get("required_revision"),1800)
   normalized={"verdict":verdict,"checks":{k:checks.get(k) is True for k in required_checks},"reason":reason,"required_revision":revision,"reviewer_model":str(reviewer_model or ""),"part":part,"scientific_authority":False};e["evidence_review"]=normalized;e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY)
-  if verdict=="CLEAR_FOR_BOUNDED_ACQUISITION" and all_checks:
-   e["status"]="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION";e["execution_authorized"]=True;e["authority"]={**dict(AUTHORITY),"bounded_evidence_acquisition":True}
+  if verdict=="CLEAR_FOR_SUBSTRATE_PREFLIGHT" and all_checks:
+   e["status"]="READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT";e["execution_authorized"]=False;e["authority"]={**dict(AUTHORITY),"bounded_substrate_preflight":True}
   elif verdict=="SOURCE_SPECIFIC_REQUIRED":
    e["status"]="WAIT_PRIMARY_ASSET_RELEASE";e["review_feedback"]=reason or revision
   elif verdict=="REVISE" and revision:
@@ -211,8 +227,57 @@ def compile_evidence_reviews(plan:dict,payload:dict,*,part:int=1,reviewer_model:
    else:e["status"]="HOLD_EVIDENCE_REVIEW_BLOCKED"
   else:
    e["status"]="HOLD_EVIDENCE_REVIEW_BLOCKED";e["review_feedback"]=reason or revision or "independent evidence review did not clear all mandatory checks"
- _promote_deferred(entries);out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"last_review_part":part,"scientific_authority":False,"authority":dict(AUTHORITY)});s=out["summary"]
- out["status"]="EVIDENCE_EXECUTION_READY" if s["execution_ready"] else ("EVIDENCE_REVIEW_PENDING" if s["review_pending"] else ("EVIDENCE_DESIGN_PENDING" if s["design_pending"] else "EVIDENCE_WAIT_OR_HOLD"));return out
+ _promote_deferred(entries);out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"last_review_part":part,"scientific_authority":False,"authority":dict(AUTHORITY)});out["status"]=_plan_status(entries);return out
+
+def build_substrate_preflight_request(plan:dict)->dict:
+ rows=[]
+ for e in plan.get("entries") or []:
+  if not isinstance(e,dict) or e.get("status")!="READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT":continue
+  d=e.get("design") or {};rows.append({"candidate_id":e.get("candidate_id"),"title":e.get("title"),"contract_sha256":e.get("contract_sha256"),"prior_support":e.get("prior_support") or {},"acquisition_mode":d.get("acquisition_mode"),"execution_adapter":d.get("execution_adapter"),"budget":d.get("budget") or {},"reproduction_target":d.get("reproduction_target"),"independent_truth":d.get("independent_truth"),"review":e.get("evidence_review") or {},"allowed_dispositions":sorted(SUBSTRATE_DISPOSITIONS),"scientific_authority":False})
+ return {"schema_version":"1.0","generated_at":_now(),"status":"SUBSTRATE_PREFLIGHT_REQUEST_READY" if rows else "NO_SUBSTRATE_PREFLIGHT_PENDING","summary":{"pending":len(rows),"execution_authorized":0,"scientific_authority":0},"rows":rows,"scientific_authority":False,"authority":dict(AUTHORITY)}
+
+def compile_substrate_preflight(plan:dict,receipt_payload:dict)->dict:
+ entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set()
+ for rec in [x for x in receipt_payload.get("receipts") or [] if isinstance(x,dict)]:
+  cid=str(rec.get("candidate_id") or "").strip()
+  if not cid or cid in seen:raise ValueError("substrate preflight ids must be nonempty and unique")
+  seen.add(cid);e=by.get(cid)
+  if not e or e.get("status")!="READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT":raise ValueError(f"substrate preflight has no review-cleared contract:{cid}")
+  if str(rec.get("contract_sha256") or "")!=str(e.get("contract_sha256") or ""):raise ValueError(f"substrate preflight contract digest mismatch:{cid}")
+  disposition=str(rec.get("disposition") or "").strip().upper();reason=_b(rec.get("reason"),2200);inventory=_b(rec.get("inventory_summary"),2600)
+  if disposition not in SUBSTRATE_DISPOSITIONS:raise ValueError(f"invalid substrate disposition:{cid}:{disposition}")
+  if not reason or not inventory:raise ValueError(f"substrate preflight requires reason and inventory summary:{cid}")
+  out={"disposition":disposition,"reason":reason,"inventory_summary":inventory,"checked_at":_now(),"scientific_authority":False}
+  e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY)
+  if disposition=="EXISTING_HARNESS_READY":
+   sha=str(rec.get("asset_manifest_sha256") or "").strip().lower()
+   if not re.fullmatch(r"[0-9a-f]{64}",sha) or rec.get("probe_passed") is not True or rec.get("budget_feasible") is not True:raise ValueError(f"existing harness readiness requires manifest, probe, and budget PASS:{cid}")
+   out.update({"asset_manifest_sha256":sha,"probe_passed":True,"budget_feasible":True});e["status"]="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION";e["execution_authorized"]=True;e["authority"]={**dict(AUTHORITY),"bounded_evidence_acquisition":True}
+  elif disposition=="MINIMAL_HARNESS_IMPLEMENTATION_READY":
+   sha=str(rec.get("harness_plan_sha256") or "").strip().lower();scope=_b(rec.get("implementation_scope"),2200)
+   if not re.fullmatch(r"[0-9a-f]{64}",sha) or not scope or rec.get("budget_feasible") is not True:raise ValueError(f"minimal harness implementation requires bounded plan digest/scope/budget:{cid}")
+   out.update({"harness_plan_sha256":sha,"implementation_scope":scope,"budget_feasible":True});e["status"]="NEEDS_MINIMAL_HARNESS_IMPLEMENTATION";e["authority"]={**dict(AUTHORITY),"bounded_harness_implementation":True}
+  elif disposition=="SOURCE_SPECIFIC_REQUIRED":
+   e["status"]="WAIT_PRIMARY_ASSET_RELEASE";e["review_feedback"]=reason
+  elif disposition=="BUDGET_INFEASIBLE":
+   e["status"]="HOLD_SUBSTRATE_BUDGET_INFEASIBLE";e["review_feedback"]=reason
+  else:
+   e["status"]="HOLD_SUBSTRATE_UNAVAILABLE";e["review_feedback"]=reason
+  e["substrate_preflight"]=out
+ _promote_deferred(entries);result=dict(plan);result.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"scientific_authority":False,"authority":dict(AUTHORITY)});result["status"]=_plan_status(entries);return result
+
+def compile_harness_implementation_receipts(plan:dict,receipt_payload:dict)->dict:
+ entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set()
+ for rec in [x for x in receipt_payload.get("receipts") or [] if isinstance(x,dict)]:
+  cid=str(rec.get("candidate_id") or "").strip()
+  if not cid or cid in seen:raise ValueError("harness implementation receipt ids must be nonempty and unique")
+  seen.add(cid);e=by.get(cid)
+  if not e or e.get("status")!="NEEDS_MINIMAL_HARNESS_IMPLEMENTATION":raise ValueError(f"no bounded harness implementation pending:{cid}")
+  if str(rec.get("contract_sha256") or "")!=str(e.get("contract_sha256") or ""):raise ValueError(f"harness implementation contract digest mismatch:{cid}")
+  sha=str(rec.get("harness_manifest_sha256") or "").strip().lower();summary=_b(rec.get("implementation_summary"),2400)
+  if not re.fullmatch(r"[0-9a-f]{64}",sha) or not summary or rec.get("sandboxed") is not True or rec.get("probe_passed") is not True or rec.get("budget_feasible") is not True:raise ValueError(f"bounded harness implementation receipt incomplete:{cid}")
+  e["harness_implementation"]={"harness_manifest_sha256":sha,"implementation_summary":summary,"sandboxed":True,"probe_passed":True,"budget_feasible":True,"scientific_authority":False};e["status"]="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION";e["execution_authorized"]=True;e["authority"]={**dict(AUTHORITY),"bounded_evidence_acquisition":True}
+ result=dict(plan);result.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"scientific_authority":False,"authority":dict(AUTHORITY)});result["status"]=_plan_status(entries);return result
 
 def write_compiled_evidence_designs(*,run_root:Path,payload:dict,part:int=1,design_model:str="")->dict:
  path=run_root/PLAN_FILENAME;state=compile_evidence_designs(json.loads(path.read_text(encoding="utf-8")),payload,part=part,design_model=design_model);path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return state
@@ -238,8 +303,7 @@ def adjudicate_evidence_receipts(plan:dict,receipt_payload:dict)->dict:
    if depth<MAX_DEPTH and repair: e["status"]="BRANCH_REPAIR_READY";e["next_action"]="single-variable-repair";e["branch_repair"]={"changed_variable":repair,"next_depth":depth+1}
    else: e["status"]="HOLD_INCONCLUSIVE_TREE_BUDGET_EXHAUSTED";e["next_action"]="stop-or-human-reformulation"
  _promote_deferred(entries)
- out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"scientific_authority":False,"authority":dict(AUTHORITY)});s=out["summary"]
- out["status"]="EVIDENCE_RESULTS_REQUIRE_REVIEW" if s["residual_survives"] else ("EVIDENCE_BRANCH_REPAIR_READY" if s["branch_repair_ready"] else ("EVIDENCE_EXECUTION_READY" if s["execution_ready"] else "EVIDENCE_LOOP_BOUNDED"))
+ out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"scientific_authority":False,"authority":dict(AUTHORITY)});out["status"]=_plan_status(entries)
  return out
 
 def validate_evidence_plan(state:dict)->list[str]:
@@ -252,7 +316,13 @@ def validate_evidence_plan(state:dict)->list[str]:
  if len(entries)!=int(summary.get("provisional_problem_candidates") or 0): errors.append("candidate-accounting-mismatch")
  for r in entries:
   if r.get("scientific_authority") is not False: errors.append("entry-scientific-authority-leak")
-  if r.get("execution_authorized") is True and (r.get("status")!="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" or not re.fullmatch(r"[0-9a-f]{64}",str(r.get("contract_sha256") or ""))): errors.append("execution-without-valid-contract")
+  if r.get("execution_authorized") is True:
+   if r.get("status")!="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" or not re.fullmatch(r"[0-9a-f]{64}",str(r.get("contract_sha256") or "")):errors.append("execution-without-valid-contract")
+   if (r.get("evidence_review") or {}).get("verdict")!="CLEAR_FOR_SUBSTRATE_PREFLIGHT":errors.append("execution-without-independent-review-clear")
+   substrate=(r.get("substrate_preflight") or {}).get("disposition")
+   implemented=bool(r.get("harness_implementation"))
+   if substrate!="EXISTING_HARNESS_READY" and not (substrate=="MINIMAL_HARNESS_IMPLEMENTATION_READY" and implemented):errors.append("execution-without-substrate-or-verified-harness")
+  if r.get("status")=="READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT" and r.get("execution_authorized") is not False:errors.append("contract-review-clear-cannot-authorize-execution")
   auth=r.get("authority") or {}
   if any(auth.get(k) is not False for k in ("scientific_claim","live_problem_gate","paper_design","method","p0","full_experiment")): errors.append("entry-downstream-authority-leak")
  return sorted(set(errors))

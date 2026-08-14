@@ -138,6 +138,10 @@ def _latest_shadow_run(root:Path)->dict:
         'evidence_review_clear':int(evidence_summary.get('review_clear') or 0),
         'evidence_review_revise':int(evidence_summary.get('review_revise') or 0),
         'evidence_review_blocked':int(evidence_summary.get('review_blocked') or 0),
+        'evidence_substrate_preflight_pending':int(evidence_summary.get('substrate_preflight_pending') or 0),
+        'evidence_substrate_ready':int(evidence_summary.get('substrate_ready') or 0),
+        'evidence_harness_implementation_pending':int(evidence_summary.get('substrate_implementation_pending') or 0),
+        'evidence_substrate_hold':int(evidence_summary.get('substrate_hold') or 0),
         'evidence_execution_ready':int(evidence_summary.get('execution_ready') or 0),
         'evidence_execution_completed':int(evidence_summary.get('execution_completed') or 0),
         'evidence_reduction_supported':int(evidence_summary.get('reduction_supported') or 0),
@@ -162,7 +166,7 @@ def _latest_shadow_run(root:Path)->dict:
     falsifier_resolved=int(summary['problem_falsifier_support_qualified'])+int(summary['problem_falsifier_hold_support_unavailable']);falsifier_eligible=int(summary['problem_falsifier_eligible'])
     terminal_status=str(terminal.get('status') or 'SHADOW_TERMINAL_INCOMPLETE_CURRENT_SOURCE_REVIEW')
     evidence_present=bool(evidence_plan)
-    evidence_internal_open=sum(int(summary.get(key) or 0) for key in ('evidence_design_pending','evidence_review_pending','evidence_execution_ready','evidence_residual_survives','evidence_branch_repair_ready'))
+    evidence_internal_open=sum(int(summary.get(key) or 0) for key in ('evidence_design_pending','evidence_review_pending','evidence_substrate_preflight_pending','evidence_harness_implementation_pending','evidence_execution_ready','evidence_residual_survives','evidence_branch_repair_ready'))
     evidence_unresolved=max(0,int(summary.get('provisional_problem_candidates') or 0)-int(summary.get('evidence_reduction_supported') or 0)-int(summary.get('evidence_wait_primary_asset') or 0)-int(summary.get('evidence_design_invalid') or 0)-int(summary.get('evidence_inconclusive') or 0))
     if evidence_present and (evidence_internal_open or evidence_unresolved):terminal_status='SHADOW_EVIDENCE_ACQUISITION_PENDING'
     elif not evidence_present and falsifier_resolved!=falsifier_eligible:terminal_status='SHADOW_TERMINAL_INCOMPLETE_PROBLEM_FALSIFIER_PREFLIGHT'

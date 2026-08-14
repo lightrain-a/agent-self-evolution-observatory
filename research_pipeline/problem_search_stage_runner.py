@@ -14,8 +14,11 @@ from .paper_first_evidence_acquisition import (
     PLAN_FILENAME as EVIDENCE_PLAN_FILENAME,
     adjudicate_evidence_receipts,
     build_provisional_evidence_plan,
+    build_substrate_preflight_request,
     compile_evidence_designs,
     compile_evidence_reviews,
+    compile_substrate_preflight,
+    compile_harness_implementation_receipts,
     evidence_design_prompt,
     evidence_review_prompt,
 )
@@ -346,6 +349,28 @@ def evidence_contract_review(*,run_root:Path,part:int,batch_size:int=2,model:str
     (run_root/f"evidence-review-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
 
 
+def evidence_substrate_request(*,run_root:Path)->dict:
+    control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
+    if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
+    state=build_substrate_preflight_request(plan);state["control_snapshot_sha256"]=control_sha;(run_root/"evidence-substrate-preflight-request.json").write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return {"status":state.get("status"),"summary":state.get("summary") or {},"scientific_authority":False}
+
+
+def evidence_substrate_compile(*,run_root:Path,receipt_path:Path)->dict:
+    control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
+    if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
+    receipts=json.loads(receipt_path.read_text(encoding="utf-8"));state=compile_substrate_preflight(plan,receipts);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"receipt_sha256":hashlib.sha256(receipt_path.read_bytes()).hexdigest(),"summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+    (run_root/"evidence-substrate-preflight.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return {"status":state.get("status"),"summary":state.get("summary") or {},"scientific_authority":False}
+
+
+def evidence_harness_compile(*,run_root:Path,receipt_path:Path)->dict:
+    control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
+    if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
+    receipts=json.loads(receipt_path.read_text(encoding="utf-8"));state=compile_harness_implementation_receipts(plan,receipts);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"receipt_sha256":hashlib.sha256(receipt_path.read_bytes()).hexdigest(),"summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+    (run_root/"evidence-harness-implementation.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return {"status":state.get("status"),"summary":state.get("summary") or {},"scientific_authority":False}
+
+
 def evidence_adjudicate(*,run_root:Path,receipt_path:Path)->dict:
     control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
     if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
@@ -386,7 +411,7 @@ def finalize(*,pool:Path|None,run_root:Path)->dict:
 
 
 def main()->None:
-    ap=argparse.ArgumentParser();ap.add_argument("command",choices=("expand","assemble","evolve","formulate","audit","evidence-design","evidence-review","evidence-adjudicate","falsifier-request","falsifier-preflight","review","finalize"));ap.add_argument("--pool",type=Path);ap.add_argument("--run-root",type=Path,required=True);ap.add_argument("--lane");ap.add_argument("--count",type=int,default=6);ap.add_argument("--part",type=int,default=1);ap.add_argument("--generation",type=int,default=1);ap.add_argument("--model",default="ark-code-latest");ap.add_argument("--memory",type=Path);ap.add_argument("--support-inventory",type=Path);ap.add_argument("--evidence-receipts",type=Path);a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument("command",choices=("expand","assemble","evolve","formulate","audit","evidence-design","evidence-review","evidence-substrate-request","evidence-substrate-compile","evidence-harness-compile","evidence-adjudicate","falsifier-request","falsifier-preflight","review","finalize"));ap.add_argument("--pool",type=Path);ap.add_argument("--run-root",type=Path,required=True);ap.add_argument("--lane");ap.add_argument("--count",type=int,default=6);ap.add_argument("--part",type=int,default=1);ap.add_argument("--generation",type=int,default=1);ap.add_argument("--model",default="ark-code-latest");ap.add_argument("--memory",type=Path);ap.add_argument("--support-inventory",type=Path);ap.add_argument("--evidence-receipts",type=Path);ap.add_argument("--substrate-receipts",type=Path);ap.add_argument("--harness-receipts",type=Path);a=ap.parse_args()
     stop_marker=a.run_root/"shadow-run-qualification-stop.json"
     if stop_marker.exists():
         state=json.loads(stop_marker.read_text(encoding="utf-8"));raise SystemExit(f"shadow run stopped by qualification gate: {state.get('status','STOPPED')}")
@@ -398,6 +423,13 @@ def main()->None:
     elif a.command=="audit":result=machine_audit(pool=a.pool,run_root=a.run_root)
     elif a.command=="evidence-design":result=evidence_design(pool=a.pool,run_root=a.run_root,part=a.part,model=a.model)
     elif a.command=="evidence-review":result=evidence_contract_review(run_root=a.run_root,part=a.part,model="glm-5.2" if a.model=="ark-code-latest" else a.model)
+    elif a.command=="evidence-substrate-request":result=evidence_substrate_request(run_root=a.run_root)
+    elif a.command=="evidence-substrate-compile":
+        if a.substrate_receipts is None:raise SystemExit("--substrate-receipts is required for evidence-substrate-compile")
+        result=evidence_substrate_compile(run_root=a.run_root,receipt_path=a.substrate_receipts)
+    elif a.command=="evidence-harness-compile":
+        if a.harness_receipts is None:raise SystemExit("--harness-receipts is required for evidence-harness-compile")
+        result=evidence_harness_compile(run_root=a.run_root,receipt_path=a.harness_receipts)
     elif a.command=="evidence-adjudicate":
         if a.evidence_receipts is None:raise SystemExit("--evidence-receipts is required for evidence-adjudicate")
         result=evidence_adjudicate(run_root=a.run_root,receipt_path=a.evidence_receipts)

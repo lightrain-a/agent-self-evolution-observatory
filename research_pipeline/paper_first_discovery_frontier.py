@@ -88,10 +88,10 @@ def build_paper_first_discovery_frontier(
         and _int(oc, "pending_cache") == 0
     )
     shadow_evidence_open = sum(_int(es, key) for key in (
-        "evidence_design_pending", "evidence_review_pending", "evidence_execution_ready", "evidence_residual_survives", "evidence_branch_repair_ready"
+        "evidence_design_pending", "evidence_review_pending", "evidence_substrate_preflight_pending", "evidence_harness_implementation_pending", "evidence_execution_ready", "evidence_residual_survives", "evidence_branch_repair_ready"
     ))
     migration_evidence_open = sum(_int(ms, key) for key in (
-        "evidence_design_pending", "evidence_review_pending", "evidence_execution_ready", "evidence_residual_survives", "evidence_branch_repair_ready"
+        "evidence_design_pending", "evidence_review_pending", "evidence_substrate_preflight_pending", "evidence_harness_implementation_pending", "evidence_execution_ready", "evidence_residual_survives", "evidence_branch_repair_ready"
     )) if str((evidence_migration_state or {}).get("status") or "") == "LEGACY_REDUCTION_EVIDENCE_MIGRATION_READY" else 0
     evidence_internal_open = shadow_evidence_open + migration_evidence_open
     evidence_loop_closed = evidence_internal_open == 0
@@ -193,6 +193,8 @@ def build_paper_first_discovery_frontier(
         "migration_evidence_internal_open": migration_evidence_open,
         "evidence_design_pending": _int(es, "evidence_design_pending") + (_int(ms, "evidence_design_pending") if migration_evidence_open else 0),
         "evidence_review_pending": _int(es, "evidence_review_pending") + (_int(ms, "evidence_review_pending") if migration_evidence_open else 0),
+        "evidence_substrate_preflight_pending": _int(es, "evidence_substrate_preflight_pending") + (_int(ms, "evidence_substrate_preflight_pending") if migration_evidence_open else 0),
+        "evidence_harness_implementation_pending": _int(es, "evidence_harness_implementation_pending") + (_int(ms, "evidence_harness_implementation_pending") if migration_evidence_open else 0),
         "evidence_execution_ready": _int(es, "evidence_execution_ready") + (_int(ms, "evidence_execution_ready") if migration_evidence_open else 0),
         "evidence_residual_survives": _int(es, "evidence_residual_survives") + (_int(ms, "evidence_residual_survives") if migration_evidence_open else 0),
         "evidence_branch_repair_ready": _int(es, "evidence_branch_repair_ready") + (_int(ms, "evidence_branch_repair_ready") if migration_evidence_open else 0),
