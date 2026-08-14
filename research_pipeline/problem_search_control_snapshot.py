@@ -128,9 +128,12 @@ def _validate_pool(pool_path: Path) -> dict[str, Any]:
         raise ValueError("frozen primary evidence pool refs must be unique arXiv refs")
     expected_set_sha = hashlib.sha256("\n".join(sorted(refs)).encode()).hexdigest()
     source_set_sha = str(pool.get("source_set_sha256") or "").strip().lower()
+    source_content_sha = primary_content_sha256(records)
     source_pool_sha = str(pool.get("source_pool_sha256") or "").strip().lower()
     if source_set_sha != expected_set_sha:
         raise ValueError("frozen primary evidence source-set digest mismatch")
+    if not re.fullmatch(r"[0-9a-f]{64}", source_content_sha):
+        raise ValueError("frozen primary evidence primary-content digest invalid")
     if not re.fullmatch(r"[0-9a-f]{64}", source_pool_sha):
         raise ValueError("frozen primary evidence source-pool digest invalid")
     return pool
@@ -210,6 +213,11 @@ def validate_shadow_run_control(*, run_root: Path, pool_path: Path | None = None
         raise ValueError("shadow control snapshot drift detected before stage execution")
     if pool_path is not None:
         pool = _validate_pool(pool_path)
+        pool_content_sha=primary_content_sha256([row for row in pool.get("records") or [] if isinstance(row,dict)])
+        source_pairs=(("source_set_sha256",str(pool.get("source_set_sha256") or "")),("source_primary_content_sha256",pool_content_sha),("source_pool_sha256",str(pool.get("source_pool_sha256") or "")))
+        for key,value in source_pairs:
+            if str(receipt.get(key) or "")!=value:
+                raise ValueError(f"shadow source identity drift detected:{key}")
         if str(receipt.get("frozen_pool_sha256") or "") != str(pool.get("frozen_pool_sha256") or ""):
             raise ValueError("shadow frozen-pool digest drift detected")
     if memory_path is not None:

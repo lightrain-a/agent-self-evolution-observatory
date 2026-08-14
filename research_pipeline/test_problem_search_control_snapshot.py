@@ -23,7 +23,7 @@ class ProblemSearchControlSnapshotTest(unittest.TestCase):
         run=root/"shadow-test";run.mkdir()
         pool=run/"frozen-primary-evidence-pool.json"
         set_sha=hashlib.sha256("arXiv:2608.00001".encode()).hexdigest()
-        pool.write_text(json.dumps({"generated_at":"2026-08-14T00:00:00+00:00","source_pool_sha256":"1"*64,"source_set_sha256":set_sha,"frozen_pool_sha256":"3"*64,"records":[{"ref":"arXiv:2608.00001"}]}),encoding="utf-8")
+        pool.write_text(json.dumps({"generated_at":"2026-08-14T00:00:00+00:00","source_pool_sha256":"1"*64,"source_set_sha256":set_sha,"frozen_pool_sha256":"3"*64,"records":[{"ref":"arXiv:2608.00001","source_sha256":"4"*64,"fulltext_sha256":"5"*64}]}),encoding="utf-8")
         memory=run/"shadow-dead-end-memory.json"
         memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[{"basin":"semantic-lane-contract-x","scientific_authority":False}]}),encoding="utf-8")
         return project,run,pool,memory,("a.py","b.py")
@@ -45,6 +45,7 @@ class ProblemSearchControlSnapshotTest(unittest.TestCase):
         self.assertEqual(state,second)
         self.assertEqual(state["stage_runner_required_schema"],STAGE_RUNNER_ARTIFACT_SCHEMA)
         self.assertEqual(state["frozen_pool_sha256"],"3"*64)
+        self.assertRegex(state["source_primary_content_sha256"],r"^[0-9a-f]{64}$")
         self.assertEqual(state["records"],1)
         self.assertEqual(state["dead_end_objects"],1)
         self.assertEqual(state["semantic_dead_ends"],1)
@@ -65,6 +66,10 @@ class ProblemSearchControlSnapshotTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"frozen-pool digest drift"):
                 validate_shadow_run_control(run_root=run,pool_path=pool,memory_path=memory,project_root=project,control_files=files)
             p["frozen_pool_sha256"]="3"*64;pool.write_text(json.dumps(p),encoding="utf-8")
+            receipt_path=run/"shadow-run-qualification.json";receipt=json.loads(receipt_path.read_text());original_content=receipt["source_primary_content_sha256"];receipt["source_primary_content_sha256"]="6"*64;receipt_path.write_text(json.dumps(receipt),encoding="utf-8")
+            with self.assertRaisesRegex(ValueError,"source identity drift detected:source_primary_content_sha256"):
+                validate_shadow_run_control(run_root=run,pool_path=pool,memory_path=memory,project_root=project,control_files=files)
+            receipt["source_primary_content_sha256"]=original_content;receipt_path.write_text(json.dumps(receipt),encoding="utf-8")
             m=json.loads(memory.read_text());m["blocked_objects"].append({"basin":"x"});memory.write_text(json.dumps(m),encoding="utf-8")
             with self.assertRaisesRegex(ValueError,"memory digest drift"):
                 validate_shadow_run_control(run_root=run,pool_path=pool,memory_path=memory,project_root=project,control_files=files)
@@ -78,6 +83,13 @@ class ProblemSearchControlSnapshotTest(unittest.TestCase):
             project,run,pool,memory,files=self.fixture(Path(td))
             payload=json.loads(pool.read_text());payload["source_set_sha256"]="2"*64;pool.write_text(json.dumps(payload),encoding="utf-8")
             with self.assertRaisesRegex(ValueError,"source-set digest mismatch"):
+                build_shadow_run_qualification(run_root=run,pool_path=pool,memory_path=memory,project_root=project,require_clean_control=False,control_files=files)
+
+    def test_qualification_rejects_invalid_primary_content_records(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            project,run,pool,memory,files=self.fixture(Path(td))
+            payload=json.loads(pool.read_text());payload["records"][0]["source_sha256"]="bad";pool.write_text(json.dumps(payload),encoding="utf-8")
+            with self.assertRaisesRegex(ValueError,"primary-content digest invalid"):
                 build_shadow_run_qualification(run_root=run,pool_path=pool,memory_path=memory,project_root=project,require_clean_control=False,control_files=files)
 
     def test_shadow_run_requires_receipt_but_legacy_nonshadow_test_root_can_be_unqualified(self) -> None:
