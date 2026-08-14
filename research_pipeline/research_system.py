@@ -563,6 +563,7 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_shadow_latest_machine_reviewable":paper_first_shadow_latest_summary.get("machine_reviewable",0),
             "paper_first_shadow_latest_machine_reduction_pending":paper_first_shadow_latest_summary.get("machine_reduction_pending",0),
             "paper_first_shadow_latest_problem_falsifier_eligible":paper_first_shadow_latest_summary.get("problem_falsifier_eligible",0),
+            "paper_first_shadow_latest_problem_falsifier_inventory_requested":paper_first_shadow_latest_summary.get("problem_falsifier_inventory_requested",0),
             "paper_first_shadow_latest_problem_falsifier_support_qualified":paper_first_shadow_latest_summary.get("problem_falsifier_support_qualified",0),
             "paper_first_shadow_latest_problem_falsifier_hold":paper_first_shadow_latest_summary.get("problem_falsifier_hold_support_unavailable",0),
             "paper_first_shadow_latest_problem_falsifier_executed":paper_first_shadow_latest_summary.get("problem_falsifier_executed",0),
@@ -1120,7 +1121,12 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             if "formulation_reduction_pending" in latest_summary or "machine_reduction_pending" in latest_summary:
                 if latest_policy.get("formulation_reduction_pending_is_not_scientific_block_or_pass") is not True or latest_policy.get("machine_rechecks_reduction_pending_before_problem_falsifier") is not True: errors.append("shadow reduction-pending route must remain zero-authority and independently rechecked")
                 if int(latest_summary.get("machine_reduction_pending") or 0)!=int(latest_summary.get("problem_falsifier_eligible") or 0): errors.append("machine reduction-pending and problem-falsifier eligibility must match")
-            if int(latest_summary.get("problem_falsifier_support_qualified") or 0)+int(latest_summary.get("problem_falsifier_hold_support_unavailable") or 0)!=int(latest_summary.get("problem_falsifier_eligible") or 0) or int(latest_summary.get("problem_falsifier_executed") or 0)>int(latest_summary.get("problem_falsifier_support_qualified") or 0): errors.append("shadow problem-falsifier preflight accounting mismatch")
+            falsifier_eligible=int(latest_summary.get("problem_falsifier_eligible") or 0);falsifier_resolved=int(latest_summary.get("problem_falsifier_support_qualified") or 0)+int(latest_summary.get("problem_falsifier_hold_support_unavailable") or 0)
+            if int(latest_summary.get("problem_falsifier_executed") or 0)>int(latest_summary.get("problem_falsifier_support_qualified") or 0): errors.append("shadow problem-falsifier execution exceeds support-qualified units")
+            if latest_policy.get("problem_falsifier_preflight_must_cover_all_eligible_before_terminal_complete") is True:
+                if shadow_latest.get("status")=="SHADOW_TERMINAL_COMPLETE" and falsifier_resolved!=falsifier_eligible: errors.append("completed shadow terminal requires complete problem-falsifier preflight coverage")
+                if shadow_latest.get("status")=="SHADOW_TERMINAL_INCOMPLETE_PROBLEM_FALSIFIER_PREFLIGHT" and not (0<=falsifier_resolved<falsifier_eligible): errors.append("problem-falsifier-incomplete terminal status requires unresolved eligible queue")
+            elif falsifier_resolved!=falsifier_eligible: errors.append("shadow problem-falsifier preflight accounting mismatch")
         if int(latest_summary.get("terminal_shadow_survivors") or 0)!=int(latest_summary.get("current_source_clear") or 0) or int(latest_summary.get("live_paper_design_eligible") or 0)!=0: errors.append("shadow terminal survivors must equal current-source CLEAR and never grant live Paper Design eligibility")
         if shadow_latest.get("status")=="SHADOW_TERMINAL_COMPLETE" and int(latest_summary.get("current_source_missing") or 0)!=0: errors.append("completed shadow terminal cannot have missing current-source reviews")
         if any(latest_authority.get(key) is not False for key in ("live_problem_gate","paper_design","method","experiment","p0","gpu")): errors.append("latest shadow run cannot authorize live Problem Gate or downstream execution")

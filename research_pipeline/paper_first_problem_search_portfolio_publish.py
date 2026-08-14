@@ -25,7 +25,7 @@ def rows(root,pattern,key):
 
 def manifest_sha(root):
     pairs=[]
-    for pattern in ('expand-*.json','error-expand-*.json','evolve-*.json','error-evolve-*.json','formulate-p*.json','error-formulate-*.json','review-p*.json','error-review-*.json','machine-audit.json','shadow-final-audit.json','shadow-terminal-current-source-gate.json','post-review-current-source-audit.json','current-source-receipt-*.json','problem-falsifier-preflight.json','frozen-primary-evidence-pool.json'):
+    for pattern in ('expand-*.json','error-expand-*.json','evolve-*.json','error-evolve-*.json','formulate-p*.json','error-formulate-*.json','review-p*.json','error-review-*.json','machine-audit.json','shadow-final-audit.json','shadow-terminal-current-source-gate.json','post-review-current-source-audit.json','current-source-receipt-*.json','problem-falsifier-support-inventory-request.json','problem-falsifier-preflight.json','frozen-primary-evidence-pool.json'):
         for path in sorted(root.glob(pattern)): pairs.append((path.name,hashlib.sha256(path.read_bytes()).hexdigest()))
     return hashlib.sha256(json.dumps(pairs,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
@@ -48,6 +48,8 @@ def _latest_shadow_run(root:Path)->dict:
     formulation_requested_shards=max(formulation_parts or [0])
     formulation_requested_branches=formulation_requested_shards*2
     formulation_censored_branches=max(sum(len(row.get('branch_ids') or []) for row in formulation_errors),formulation_requested_branches-successful_formulation_branches)
+    falsifier_request=load(root/'problem-falsifier-support-inventory-request.json') if (root/'problem-falsifier-support-inventory-request.json').exists() else {}
+    falsifier_request_summary=falsifier_request.get('summary') or {}
     falsifier_preflight=load(root/'problem-falsifier-preflight.json') if (root/'problem-falsifier-preflight.json').exists() else {}
     falsifier_summary=falsifier_preflight.get('summary') or {}
     bs=base.get('summary') or {};archives=base.get('archives') or {};by_id={r.get('seed_id'):r for r in base.get('unique_seeds') or [] if r.get('seed_id')}
@@ -100,6 +102,7 @@ def _latest_shadow_run(root:Path)->dict:
         'machine_reduction_pending':int(m.get('reduction_pending') or 0),
         'machine_reduction_blocked':int(m.get('blocked') or 0),
         'problem_falsifier_eligible':int(m.get('problem_falsifier_eligible') or 0),
+        'problem_falsifier_inventory_requested':int(falsifier_request_summary.get('inventory_requests') or 0),
         'problem_falsifier_support_qualified':int(falsifier_summary.get('support_qualified') or 0),
         'problem_falsifier_hold_support_unavailable':int(falsifier_summary.get('hold_support_unavailable') or 0),
         'problem_falsifier_executed':int(falsifier_summary.get('falsifier_executed') or 0),
@@ -117,7 +120,10 @@ def _latest_shadow_run(root:Path)->dict:
         'reviewer_model_calls':reviewer_calls,
         'current_source_review_receipts':int(t.get('current_source_clear') or 0)+int(t.get('current_source_blocked') or 0),
     }
-    return {'schema_version':'1.1-shadow-run','run_id':run_id,'status':str(terminal.get('status') or 'SHADOW_TERMINAL_INCOMPLETE_CURRENT_SOURCE_REVIEW'),'generated_at':now(),'frozen_pool_sha256':frozen.get('frozen_pool_sha256'),'stage_manifest_sha256':manifest_sha(root),'scientific_authority':False,'policy':{'shadow_only':True,'canonical_primary_generator_queue_untouched':True,'live_source_coverage_effect':False,'fresh_primary_evidence_is_candidate_source_only':True,'execution_loss_is_not_scientific_negative':True,'formulation_reduction_pending_is_not_scientific_block_or_pass':True,'machine_rechecks_reduction_pending_before_problem_falsifier':True,'problem_falsifier_hold_is_not_scientific_fail':True,'current_source_web_receipt_required_after_semantic_clear':True,'missing_or_failed_current_source_reviewer_is_not_pass':True,'terminal_shadow_survivor_is_not_live_problem_gate_pass':True,'cannot_grant_live_paper_design_eligibility':True,'automatic_method_authority':False,'automatic_experiment_authority':False,'automatic_p0_authority':False,'automatic_gpu_authority':False},'summary':summary,'lane_counts':dict(base.get('lane_counts') or {}),'archive_lane_counts':dict(base.get('archive_lane_counts') or {}),'machine_blocker_counts':dict(Counter(v.split(':',1)[0] for row in machine.get('blocked') or [] for v in row.get('blockers') or [])),'candidates':candidate_rows,'authority':{'live_problem_gate':False,'paper_design':False,'method':False,'experiment':False,'p0':False,'gpu':False}}
+    falsifier_resolved=int(summary['problem_falsifier_support_qualified'])+int(summary['problem_falsifier_hold_support_unavailable']);falsifier_eligible=int(summary['problem_falsifier_eligible'])
+    terminal_status=str(terminal.get('status') or 'SHADOW_TERMINAL_INCOMPLETE_CURRENT_SOURCE_REVIEW')
+    if falsifier_resolved!=falsifier_eligible:terminal_status='SHADOW_TERMINAL_INCOMPLETE_PROBLEM_FALSIFIER_PREFLIGHT'
+    return {'schema_version':'1.1-shadow-run','run_id':run_id,'status':terminal_status,'generated_at':now(),'frozen_pool_sha256':frozen.get('frozen_pool_sha256'),'stage_manifest_sha256':manifest_sha(root),'scientific_authority':False,'policy':{'shadow_only':True,'canonical_primary_generator_queue_untouched':True,'live_source_coverage_effect':False,'fresh_primary_evidence_is_candidate_source_only':True,'execution_loss_is_not_scientific_negative':True,'formulation_reduction_pending_is_not_scientific_block_or_pass':True,'machine_rechecks_reduction_pending_before_problem_falsifier':True,'problem_falsifier_preflight_must_cover_all_eligible_before_terminal_complete':True,'problem_falsifier_hold_is_not_scientific_fail':True,'current_source_web_receipt_required_after_semantic_clear':True,'missing_or_failed_current_source_reviewer_is_not_pass':True,'terminal_shadow_survivor_is_not_live_problem_gate_pass':True,'cannot_grant_live_paper_design_eligibility':True,'automatic_method_authority':False,'automatic_experiment_authority':False,'automatic_p0_authority':False,'automatic_gpu_authority':False},'summary':summary,'lane_counts':dict(base.get('lane_counts') or {}),'archive_lane_counts':dict(base.get('archive_lane_counts') or {}),'machine_blocker_counts':dict(Counter(v.split(':',1)[0] for row in machine.get('blocked') or [] for v in row.get('blockers') or [])),'candidates':candidate_rows,'authority':{'live_problem_gate':False,'paper_design':False,'method':False,'experiment':False,'p0':False,'gpu':False}}
 
 def publish_latest_run(root:Path):
     latest=_latest_shadow_run(root)
