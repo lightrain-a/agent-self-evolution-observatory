@@ -8,6 +8,7 @@ from pathlib import Path
 
 from .config import StorageSettings
 from .paper_first_global_relation_recall import _card, run_global_relation_recall
+from .paper_first_relation_coverage import relation_universe_digest
 
 
 class GlobalRelationRecallTest(unittest.TestCase):
@@ -118,7 +119,7 @@ class GlobalRelationRecallTest(unittest.TestCase):
         self.assertEqual(second["summary"]["lane_pass"],1)
 
     def test_provider_error_preserves_last_completed_scan_boundary(self) -> None:
-        previous={"last_completed_scan":{"run_id":"r0","relation_universe_digest":"b"*64,"scientific_authority":False}}
+        previous=self.previous_scan_for_first_receipt()
         def limited(**kwargs):
             raise RuntimeError("Ark HTTP 429: RequestBurstTooFast")
         with tempfile.TemporaryDirectory() as td:
@@ -126,6 +127,55 @@ class GlobalRelationRecallTest(unittest.TestCase):
         self.assertEqual(state["status"],"RELATION_PROVIDER_ERROR_ZERO_AUTHORITY")
         self.assertEqual(state["last_completed_scan"],previous["last_completed_scan"])
         self.assertEqual(state["summary"]["scientifically_authorized"],0)
+
+    def previous_scan_for_first_receipt(self) -> dict:
+        first=self.generator()["saturation_memory"]["portable_review_receipts"][0]
+        digest=relation_universe_digest([first])
+        return {
+            "summary":{"not_reduced":0,"focused_problem_generator_reopen_required":False,"relation_universe_digest":digest},
+            "proposals":[],
+            "last_completed_scan":{"run_id":"r1","relation_universe_digest":digest,"relation_coverage":{"reviewed_receipt_sources":2,"possible_source_pairs":1,"coobserved_source_pairs":1,"pair_coverage_fraction":1.0},"summary":{"not_reduced":0},"scientific_authority":False},
+            "scientific_authority":False,
+        }
+
+    def test_stale_relation_universe_scans_only_pairs_touching_new_source(self) -> None:
+        prompts=[]
+        relation=self.relation()
+        def capture(**kwargs): prompts.append(kwargs["prompt"]); return relation(**kwargs)
+        with tempfile.TemporaryDirectory() as td:
+            state=run_global_relation_recall(storage=self.storage(Path(td)),primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state=self.previous_scan_for_first_receipt(),relation_responder=capture,lane_responder=self.lane(),reduction_responder=self.reduction(),now=datetime(2026,8,14,tzinfo=timezone.utc))
+        self.assertEqual(state["status"],"GLOBAL_RELATION_RECALL_COMPLETE")
+        self.assertTrue(state["delta_scan"]["enabled"])
+        self.assertEqual(state["delta_scan"]["required_new_endpoint_count"],2)
+        self.assertEqual(state["last_completed_scan"]["mode"],"delta_only_new_endpoint")
+        self.assertEqual(state["last_completed_scan"]["prior_scan_run_id"],"r1")
+        self.assertEqual(state["proposals"][0]["source_refs"],["arXiv:1","arXiv:3"])
+        self.assertIn("REQUIRED_NEW_ENDPOINTS",prompts[0])
+        self.assertIn("arXiv:3",prompts[0]);self.assertIn("arXiv:4",prompts[0])
+        self.assertTrue(state["policy"]["delta_only_scan_forbids_old_old_pairs"])
+        self.assertFalse(state["scientific_authority"])
+
+    def test_delta_scan_rejects_old_old_pair_before_lane_reviewer(self) -> None:
+        calls=[]
+        def old_old(**kwargs):
+            calls.append("relation")
+            return {"text":json.dumps({"lanes":{"CONTRADICTION":[{"source_a":"arXiv:1","source_b":"arXiv:2","relation":"old-old relation","why_lane":"old-only","missing_piece":""}]},"diagnosis":"bad delta"}),"resolved_model":"doubao-seed-evolving"}
+        def forbidden(**kwargs): calls.append("downstream"); raise AssertionError("downstream reviewer forbidden")
+        with tempfile.TemporaryDirectory() as td:
+            state=run_global_relation_recall(storage=self.storage(Path(td)),primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state=self.previous_scan_for_first_receipt(),relation_responder=old_old,lane_responder=forbidden,reduction_responder=forbidden,now=datetime(2026,8,14,tzinfo=timezone.utc))
+        self.assertEqual(state["status"],"RELATION_PROVIDER_ERROR_ZERO_AUTHORITY")
+        self.assertIn("misses-required-delta-endpoint",state["error"])
+        self.assertEqual(calls,["relation"])
+
+    def test_unreconstructable_prior_scan_boundary_blocks_all_model_calls(self) -> None:
+        previous=self.previous_scan_for_first_receipt();previous["last_completed_scan"]["relation_universe_digest"]="f"*64
+        calls=[]
+        def forbidden(**kwargs): calls.append(1); raise AssertionError("model call forbidden")
+        with tempfile.TemporaryDirectory() as td:
+            state=run_global_relation_recall(storage=self.storage(Path(td)),primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state=previous,relation_responder=forbidden,lane_responder=forbidden,reduction_responder=forbidden,now=datetime(2026,8,14,tzinfo=timezone.utc))
+        self.assertEqual(state["status"],"HOLD_RELATION_DELTA_BOUNDARY_UNRECONSTRUCTABLE")
+        self.assertEqual(calls,[])
+        self.assertFalse(state["scientific_authority"])
 
     def test_lane_reviewer_must_resolve_independently(self) -> None:
         with tempfile.TemporaryDirectory() as td:

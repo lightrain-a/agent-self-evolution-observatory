@@ -1205,8 +1205,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         if int(backlog_summary.get("pending_human_paper_design") or 0)!=sum(row.get("status")=="AWAIT_HUMAN_PAPER_DESIGN_REVIEW" for row in backlog_entries): errors.append("Paper-Design backlog pending accounting mismatch")
         current_pass_ids={str(row.get("candidate_id") or "") for row in problem_queue.get("passed") or [] if isinstance(row,dict)};backlog_candidate_ids={str(row.get("candidate_id") or "") for row in backlog_entries}
         if not current_pass_ids.issubset(backlog_candidate_ids): errors.append("current Problem-Gate PASS candidates must be represented in the durable Paper-Design backlog")
-    relation=state.get("paper_first_global_relation_recall") or {};relation_policy=relation.get("policy") or {};relation_summary=relation.get("summary") or {};relation_coverage=relation.get("relation_coverage") or {};relation_status=str(relation.get("status") or "NOT_RUN")
-    allowed_relation_statuses={"NOT_RUN","SKIPPED_SOURCE_COVERAGE_OPEN","SKIPPED_PAIR_COVERAGE_COMPLETE","HOLD_RELATION_CACHE_INCOMPLETE","RELATION_PROVIDER_ERROR_ZERO_AUTHORITY","LANE_REVIEW_ERROR_ZERO_AUTHORITY","REDUCTION_REVIEW_ERROR_ZERO_AUTHORITY","GLOBAL_RELATION_RECALL_COMPLETE","SKIPPED_RELATION_UNIVERSE_UNCHANGED","STATE_UNREADABLE","STATE_INVALID"}
+    relation=state.get("paper_first_global_relation_recall") or {};relation_policy=relation.get("policy") or {};relation_summary=relation.get("summary") or {};relation_coverage=relation.get("relation_coverage") or {};relation_status=str(relation.get("status") or "NOT_RUN");relation_schema=str(relation.get("schema_version") or "0")
+    allowed_relation_statuses={"NOT_RUN","SKIPPED_SOURCE_COVERAGE_OPEN","SKIPPED_PAIR_COVERAGE_COMPLETE","HOLD_RELATION_CACHE_INCOMPLETE","HOLD_RELATION_DELTA_BOUNDARY_UNRECONSTRUCTABLE","SKIPPED_RELATION_NO_NEW_SOURCE_ENDPOINTS","RELATION_PROVIDER_ERROR_ZERO_AUTHORITY","LANE_REVIEW_ERROR_ZERO_AUTHORITY","REDUCTION_REVIEW_ERROR_ZERO_AUTHORITY","GLOBAL_RELATION_RECALL_COMPLETE","SKIPPED_RELATION_UNIVERSE_UNCHANGED","STATE_UNREADABLE","STATE_INVALID"}
     if relation_status not in allowed_relation_statuses: errors.append("Global Relation Recall status invalid")
     if relation_status not in {"NOT_RUN","STATE_UNREADABLE","STATE_INVALID"}:
         if relation_policy.get("source_coverage_exhaustion_is_not_relation_exhaustion") is not True or relation_policy.get("relation_miner_is_search_control_only") is not True or relation_policy.get("cross_source_recall_supplements_but_does_not_replace_search_portfolio") is not True or relation_policy.get("all_lane_pass_proposals_require_reduction_review") is not True or relation_policy.get("not_reduced_only_reopens_focused_problem_generator") is not True: errors.append("Global Relation Recall must remain a zero-authority cross-source supplement after Search Portfolio")
@@ -1217,6 +1217,18 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         if relation_status in {"GLOBAL_RELATION_RECALL_COMPLETE","SKIPPED_RELATION_UNIVERSE_UNCHANGED"}:
             last_scan=relation.get("last_completed_scan") or {}
             if not str(last_scan.get("run_id") or "") or last_scan.get("scientific_authority") is not False or str(last_scan.get("relation_universe_digest") or "")!=str(relation_summary.get("relation_universe_digest") or ""): errors.append("completed Global Relation Recall must preserve a matching zero-authority portable scan receipt")
+        if relation_schema >= "1.2":
+            if relation_policy.get("stale_completed_scan_uses_delta_only_new_endpoint_pairs") is not True or relation_policy.get("delta_only_scan_forbids_old_old_pairs") is not True:
+                errors.append("Global Relation Recall 1.2 must constrain stale-universe scans to new-endpoint delta pairs")
+            delta_scan=relation.get("delta_scan") or {}
+            if delta_scan.get("enabled") is True:
+                count=int(delta_scan.get("required_new_endpoint_count") or 0);digest=str(delta_scan.get("required_new_endpoint_digest") or "")
+                if delta_scan.get("scientific_authority") is not False or count<=0 or len(digest)!=64 or any(ch not in "0123456789abcdef" for ch in digest):
+                    errors.append("Global Relation Recall delta scan must expose bounded zero-authority new-endpoint provenance")
+                if relation_status=="GLOBAL_RELATION_RECALL_COMPLETE":
+                    last_scan=relation.get("last_completed_scan") or {}
+                    if last_scan.get("mode")!="delta_only_new_endpoint" or int(last_scan.get("required_new_endpoint_count") or 0)!=count or not str(last_scan.get("prior_scan_run_id") or ""):
+                        errors.append("completed delta-only relation scan must preserve prior-scan provenance and endpoint count")
     relation_freshness=state.get("paper_first_global_relation_freshness") or {};fresh_policy=relation_freshness.get("policy") or {};fresh_summary=relation_freshness.get("summary") or {}
     if relation_freshness:
         if relation_freshness.get("scientific_authority") is not False or fresh_policy.get("deterministic_digest_comparison_only") is not True or fresh_policy.get("stale_scan_is_historical_not_current_negative_evidence") is not True or fresh_policy.get("stale_scan_cannot_reopen_focused_generator") is not True or fresh_policy.get("model_scan_deferred_is_not_relation_exhaustion") is not True:
@@ -1227,6 +1239,17 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             errors.append("current relation-universe digest invalid")
         if str(relation_freshness.get("last_scanned_relation_universe_digest") or "") and len(str(relation_freshness.get("last_scanned_relation_universe_digest") or "")) != 64:
             errors.append("last scanned relation-universe digest invalid")
+        expected_freshness=relation_recall_freshness(state.get("paper_first_problem_generator") or {}, relation)
+        expected_summary=expected_freshness.get("summary") or {}
+        freshness_summary_keys=("current_reviewed_sources","last_scanned_sources","current_possible_pairs","current_coobserved_pairs","current_pair_coverage_fraction","last_pair_coverage_fraction","current_relation_blind_spot","universe_stale","current_not_reduced_unknown","model_scan_deferred","focused_problem_generator_reopen_allowed")
+        freshness_matches=(
+            relation_freshness.get("status")==expected_freshness.get("status")
+            and str(relation_freshness.get("current_relation_universe_digest") or "")==str(expected_freshness.get("current_relation_universe_digest") or "")
+            and str(relation_freshness.get("last_scanned_relation_universe_digest") or "")==str(expected_freshness.get("last_scanned_relation_universe_digest") or "")
+            and all(fresh_summary.get(key)==expected_summary.get(key) for key in freshness_summary_keys)
+        )
+        if not freshness_matches:
+            errors.append("Global Relation Recall freshness must match embedded Generator and Relation state")
     relation_delta=state.get("paper_first_global_relation_delta_preflight") or {};delta_policy=relation_delta.get("policy") or {};delta_summary=relation_delta.get("summary") or {};delta_status=str(relation_delta.get("status") or "NOT_RUN")
     if relation_delta and delta_status!="NOT_RUN":
         if relation_delta.get("scientific_authority") is not False or delta_policy.get("deterministic_typed_evidence_delta_only") is not True or delta_policy.get("pair_slots_are_not_lane_valid_pairs") is not True or delta_policy.get("cannot_reopen_generator") is not True or delta_policy.get("cannot_authorize_relation_model_scan") is not True or delta_policy.get("cannot_authorize_problem_gate") is not True:

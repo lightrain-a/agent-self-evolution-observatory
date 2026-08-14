@@ -4,6 +4,7 @@ import copy
 import json
 import unittest
 
+from .paper_first_relation_coverage import relation_recall_freshness
 from .research_system import build_research_system_state, validate_state
 
 
@@ -11,6 +12,13 @@ class ResearchSystemTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.state = build_research_system_state()
+
+    def sync_relation_freshness(self, state: dict) -> dict:
+        state["paper_first_global_relation_freshness"] = relation_recall_freshness(
+            state.get("paper_first_problem_generator") or {},
+            state.get("paper_first_global_relation_recall") or {},
+        )
+        return state
 
     def test_state_is_valid_and_iclr_first(self) -> None:
         self.assertEqual(self.state["target_venue"], "ICLR")
@@ -523,25 +531,52 @@ class ResearchSystemTest(unittest.TestCase):
             "relation_coverage":{"scientific_authority":False},"proposals":[],
             "last_completed_scan":{"run_id":"relation-1","relation_universe_digest":digest,"scientific_authority":False},"scientific_authority":False,
         }
+        self.sync_relation_freshness(state)
         self.assertEqual(validate_state(state),[])
         missing=copy.deepcopy(state);missing["paper_first_global_relation_recall"]["summary"]["reduction_reviewed"]=0
         self.assertTrue(any("lane-PASS global relation proposal" in error for error in validate_state(missing)))
         fake=copy.deepcopy(state);fake["paper_first_global_relation_recall"]["summary"]["focused_problem_generator_reopen_required"]=True
         self.assertTrue(any("focused problem-generator reopen" in error for error in validate_state(fake)))
 
+    def test_relation_v12_delta_scan_requires_bounded_new_endpoint_provenance(self) -> None:
+        state=copy.deepcopy(self.state);digest="d"*64
+        state["paper_first_global_relation_recall"]={
+            "schema_version":"1.2","status":"GLOBAL_RELATION_RECALL_COMPLETE","scientific_authority":False,
+            "policy":{"scientific_authority":False,"source_coverage_exhaustion_is_not_relation_exhaustion":True,"relation_miner_is_search_control_only":True,"cross_source_recall_supplements_but_does_not_replace_search_portfolio":True,"all_lane_pass_proposals_require_reduction_review":True,"not_reduced_only_reopens_focused_problem_generator":True,"stale_completed_scan_uses_delta_only_new_endpoint_pairs":True,"delta_only_scan_forbids_old_old_pairs":True,"automatic_problem_gate_authority":False,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False},
+            "summary":{"lane_pass":0,"reduction_reviewed":0,"not_reduced":0,"focused_problem_generator_reopen_required":False,"relation_universe_digest":digest},
+            "relation_coverage":{"scientific_authority":False},"proposals":[],
+            "delta_scan":{"enabled":True,"required_new_endpoint_count":12,"required_new_endpoint_digest":"a"*64,"prior_scan_run_id":"prior-run","scientific_authority":False},
+            "last_completed_scan":{"run_id":"relation-new","mode":"delta_only_new_endpoint","prior_scan_run_id":"prior-run","required_new_endpoint_count":12,"relation_universe_digest":digest,"scientific_authority":False},
+        }
+        self.sync_relation_freshness(state)
+        self.assertEqual(validate_state(state),[])
+        bad_mode=copy.deepcopy(state);bad_mode["paper_first_global_relation_recall"]["last_completed_scan"]["mode"]="full_relation_universe"
+        self.assertTrue(any("completed delta-only relation scan" in error for error in validate_state(bad_mode)))
+        bad_digest=copy.deepcopy(state);bad_digest["paper_first_global_relation_recall"]["delta_scan"]["required_new_endpoint_digest"]="bad"
+        self.assertTrue(any("new-endpoint provenance" in error for error in validate_state(bad_digest)))
+
     def test_stale_global_relation_scan_cannot_be_current_negative_or_reopen(self) -> None:
         state=copy.deepcopy(self.state)
-        state["paper_first_global_relation_freshness"]={
-            "schema_version":"1.0","status":"STALE_RELATION_UNIVERSE",
-            "policy":{"scientific_authority":False,"deterministic_digest_comparison_only":True,"stale_scan_is_historical_not_current_negative_evidence":True,"stale_scan_cannot_reopen_focused_generator":True,"model_scan_deferred_is_not_relation_exhaustion":True},
-            "summary":{"current_reviewed_sources":226,"last_scanned_sources":214,"current_possible_pairs":25425,"current_coobserved_pairs":5730,"current_pair_coverage_fraction":0.2254,"last_pair_coverage_fraction":0.2186,"current_relation_blind_spot":True,"universe_stale":True,"current_not_reduced_unknown":True,"model_scan_deferred":True,"focused_problem_generator_reopen_allowed":False},
-            "current_relation_universe_digest":"a"*64,"last_scanned_relation_universe_digest":"b"*64,"scientific_authority":False,
-        }
+        stale_digest="b"*64
+        relation=state["paper_first_global_relation_recall"]
+        relation.setdefault("summary",{})["relation_universe_digest"]=stale_digest
+        relation.setdefault("last_completed_scan",{})["relation_universe_digest"]=stale_digest
+        self.sync_relation_freshness(state)
+        self.assertEqual(state["paper_first_global_relation_freshness"]["status"],"STALE_RELATION_UNIVERSE")
         self.assertEqual(validate_state(state),[])
         false_negative=copy.deepcopy(state);false_negative["paper_first_global_relation_freshness"]["summary"]["current_not_reduced_unknown"]=False
         self.assertTrue(any("stale Global Relation Recall" in error for error in validate_state(false_negative)))
         illegal_reopen=copy.deepcopy(state);illegal_reopen["paper_first_global_relation_freshness"]["summary"]["focused_problem_generator_reopen_allowed"]=True
         self.assertTrue(any("stale Global Relation Recall" in error for error in validate_state(illegal_reopen)))
+
+    def test_relation_freshness_must_match_embedded_generator_and_relation_state(self) -> None:
+        state=copy.deepcopy(self.state)
+        expected=relation_recall_freshness(state["paper_first_problem_generator"],state["paper_first_global_relation_recall"])
+        self.assertEqual(state["paper_first_global_relation_freshness"]["status"],expected["status"])
+        stale=copy.deepcopy(state)
+        stale["paper_first_global_relation_freshness"]["status"]="STALE_RELATION_UNIVERSE"
+        stale["paper_first_global_relation_freshness"]["summary"]["universe_stale"]=True
+        self.assertTrue(any("freshness must match embedded Generator and Relation state" in error for error in validate_state(stale)))
 
     def test_relation_delta_preflight_is_typed_opportunity_only_and_cannot_reopen(self) -> None:
         state=copy.deepcopy(self.state)
