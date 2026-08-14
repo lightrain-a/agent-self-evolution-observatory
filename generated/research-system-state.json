@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T05:52:08+00:00",
+  "generated_at": "2026-08-14T06:35:08+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6042,7 +6042,15 @@
     "paper_first_global_relation_universe_stale": true,
     "paper_first_global_relation_current_not_reduced_unknown": true,
     "paper_first_global_relation_model_scan_deferred": true,
-    "paper_first_global_relation_focused_reopen_allowed": false
+    "paper_first_global_relation_focused_reopen_allowed": false,
+    "paper_first_relation_delta_status": "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE",
+    "paper_first_relation_delta_new_sources": 12,
+    "paper_first_relation_delta_new_empirical": 11,
+    "paper_first_relation_delta_new_assumptions": 0,
+    "paper_first_relation_delta_new_failures": 11,
+    "paper_first_relation_delta_new_boundaries": 8,
+    "paper_first_relation_delta_model_scan_authorized": false,
+    "paper_first_relation_delta_focused_reopen_authorized": false
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -71982,6 +71990,43 @@
             "focused_problem_generator_reopen_allowed": false
           }
         }
+      },
+      {
+        "key": "paper-first-global-relation-delta-preflight",
+        "pass": true,
+        "detail": {
+          "status": "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE",
+          "summary": {
+            "contradiction_has_new_empirical_evidence": true,
+            "current_reviewed_sources": 226,
+            "unexplained_boundary_has_new_boundary_evidence": true,
+            "new_receipt_runs": 3,
+            "new_boundary_sources": 8,
+            "convergent_failure_has_new_failure_evidence": true,
+            "cache_missing_sources": 0,
+            "assumption_break_has_new_assumption_endpoint": false,
+            "new_failure_sources": 11,
+            "new_assumption_sources": 0,
+            "focused_generator_reopen_authorized": false,
+            "old_reviewed_sources": 214,
+            "old_receipt_runs": 15,
+            "new_reviewed_sources": 12,
+            "new_empirical_sources": 11,
+            "model_scan_authorized": false
+          },
+          "pair_slots": {
+            "boundary_empirical_slots_touching_new": 1872,
+            "assumption_failure_slots_touching_new": 176,
+            "empirical_empirical_slots_touching_new": 2200,
+            "failure_failure_slots_touching_new": 1782
+          },
+          "interpretation": {
+            "unexplained_boundary": "NEW_BOUNDARY_EVIDENCE_PRESENT_LANE_VALIDITY_UNKNOWN",
+            "convergent_failure": "NEW_FAILURE_EVIDENCE_PRESENT_LANE_VALIDITY_UNKNOWN",
+            "assumption_break": "NO_NEW_ASSUMPTION_ENDPOINT",
+            "contradiction": "NEW_EMPIRICAL_EVIDENCE_PRESENT_LANE_VALIDITY_UNKNOWN"
+          }
+        }
       }
     ],
     "failed_checks": 0
@@ -72439,6 +72484,49 @@
     },
     "current_relation_universe_digest": "fff32b96a52efc3a4c109b97e1163772f3e7a717c65fab8feae78831c4a6af9c",
     "last_scanned_relation_universe_digest": "e2f2725901ba9f15cf11ded5b753badb6f123ec763921ece1e04c2b1249c32ae",
+    "scientific_authority": false
+  },
+  "paper_first_global_relation_delta_preflight": {
+    "schema_version": "1.0",
+    "status": "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE",
+    "policy": {
+      "scientific_authority": false,
+      "deterministic_typed_evidence_delta_only": true,
+      "pair_slots_are_not_lane_valid_pairs": true,
+      "cannot_reopen_generator": true,
+      "cannot_authorize_relation_model_scan": true,
+      "cannot_authorize_problem_gate": true
+    },
+    "summary": {
+      "contradiction_has_new_empirical_evidence": true,
+      "current_reviewed_sources": 226,
+      "unexplained_boundary_has_new_boundary_evidence": true,
+      "new_receipt_runs": 3,
+      "new_boundary_sources": 8,
+      "convergent_failure_has_new_failure_evidence": true,
+      "cache_missing_sources": 0,
+      "assumption_break_has_new_assumption_endpoint": false,
+      "new_failure_sources": 11,
+      "new_assumption_sources": 0,
+      "focused_generator_reopen_authorized": false,
+      "old_reviewed_sources": 214,
+      "old_receipt_runs": 15,
+      "new_reviewed_sources": 12,
+      "new_empirical_sources": 11,
+      "model_scan_authorized": false
+    },
+    "pair_slots": {
+      "boundary_empirical_slots_touching_new": 1872,
+      "assumption_failure_slots_touching_new": 176,
+      "empirical_empirical_slots_touching_new": 2200,
+      "failure_failure_slots_touching_new": 1782
+    },
+    "interpretation": {
+      "unexplained_boundary": "NEW_BOUNDARY_EVIDENCE_PRESENT_LANE_VALIDITY_UNKNOWN",
+      "convergent_failure": "NEW_FAILURE_EVIDENCE_PRESENT_LANE_VALIDITY_UNKNOWN",
+      "assumption_break": "NO_NEW_ASSUMPTION_ENDPOINT",
+      "contradiction": "NEW_EMPIRICAL_EVIDENCE_PRESENT_LANE_VALIDITY_UNKNOWN"
+    },
     "scientific_authority": false
   }
 }
