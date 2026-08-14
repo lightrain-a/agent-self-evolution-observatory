@@ -26,7 +26,7 @@ def rows(root,pattern,key):
 
 def manifest_sha(root):
     pairs=[]
-    for pattern in ('shadow-run-qualification.json','expand-*.json','error-expand-*.json','evolve-*.json','error-evolve-*.json','formulate-p*.json','error-formulate-*.json','review-p*.json','error-review-*.json','machine-audit.json','evidence-acquisition-plan.json','evidence-design-p*.json','evidence-review-p*.json','evidence-acquisition-adjudication.json','shadow-final-audit.json','shadow-terminal-current-source-gate.json','post-review-current-source-audit.json','current-source-receipt-*.json','problem-falsifier-support-inventory-request.json','problem-falsifier-support-inventory.json','problem-falsifier-preflight.json','frozen-primary-evidence-pool.json'):
+    for pattern in ('shadow-run-qualification.json','expand-*.json','error-expand-*.json','evolve-*.json','error-evolve-*.json','formulate-p*.json','error-formulate-*.json','review-p*.json','error-review-*.json','machine-audit.json','evidence-acquisition-plan.json','evidence-design-p*.json','evidence-review-p*.json','evidence-substrate-preflight-request.json','evidence-substrate-preflight.json','evidence-harness-implementation.json','evidence-acquisition-adjudication.json','shadow-final-audit.json','shadow-terminal-current-source-gate.json','post-review-current-source-audit.json','current-source-receipt-*.json','problem-falsifier-support-inventory-request.json','problem-falsifier-support-inventory.json','problem-falsifier-preflight.json','frozen-primary-evidence-pool.json'):
         for path in sorted(root.glob(pattern)): pairs.append((path.name,hashlib.sha256(path.read_bytes()).hexdigest()))
     return hashlib.sha256(json.dumps(pairs,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
