@@ -7,7 +7,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
-from .automation_cycle import _advisory_step, _run_external_system_learning_review, _run_global_relation_control, _run_shadow_search_admission_control, _step, _sync_literature, cycle_lock, run_cycle
+from .automation_cycle import _advisory_step, _run_external_system_learning_review, _run_global_relation_control, _run_shadow_continuation_frontier_control, _run_shadow_search_admission_control, _step, _sync_literature, cycle_lock, run_cycle
 
 
 class AutomationCycleAIConsultationTest(unittest.TestCase):
@@ -57,6 +57,7 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertNotIn("paper-first-support-release-watch", names)
             self.assertNotIn("paper-first-support-asset-recheck-queue", names)
             self.assertNotIn("paper-first-support-asset-recheck-handoff", names)
+            self.assertNotIn("paper-first-shadow-continuation-frontier", names)
             self.assertLess(names.index("paper-first-fresh-saturation"), names.index("paper-first-relation-cache-maintenance"))
             self.assertLess(names.index("paper-first-relation-cache-maintenance"), names.index("human-terminal-idea-state"))
             self.assertLess(names.index("research-system-pre-ai"), names.index("ai-consultation-automation"))
@@ -82,6 +83,7 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertIn("paper-first-support-release-watch", names)
             self.assertIn("paper-first-support-asset-recheck-queue", names)
             self.assertIn("paper-first-support-asset-recheck-handoff", names)
+            self.assertIn("paper-first-shadow-continuation-frontier", names)
             self.assertIn("paper-first-relation-cache-backfill", names)
             self.assertIn("paper-first-global-relation-recall", names)
             self.assertNotIn("paper-first-primary-evidence-refresh", names)
@@ -96,7 +98,8 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
             self.assertLess(names.index("paper-first-scientific-object-shadow-maintenance"), names.index("paper-first-support-release-watch"))
             self.assertLess(names.index("paper-first-support-release-watch"), names.index("paper-first-support-asset-recheck-queue"))
             self.assertLess(names.index("paper-first-support-asset-recheck-queue"), names.index("paper-first-support-asset-recheck-handoff"))
-            self.assertLess(names.index("paper-first-support-asset-recheck-handoff"), names.index("paper-first-relation-cache-backfill"))
+            self.assertLess(names.index("paper-first-support-asset-recheck-handoff"), names.index("paper-first-shadow-continuation-frontier"))
+            self.assertLess(names.index("paper-first-shadow-continuation-frontier"), names.index("paper-first-relation-cache-backfill"))
             self.assertLess(names.index("paper-first-relation-cache-backfill"), names.index("paper-first-global-relation-recall"))
             self.assertLess(names.index("paper-first-global-relation-recall"), names.index("archival-solution-first-idea-discovery-v3"))
             self.assertLess(names.index("paper-first-discovery-transaction"), names.index("historical-paper-first-idea-incubation"))
@@ -120,6 +123,25 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
         self.assertFalse(result["handoff"]["provider_calls_authorized"])
         self.assertFalse(result["handoff"]["automatic_remote_execution_authorized"])
         self.assertFalse(result["handoff"]["scientific_authority"])
+        self.assertFalse(result["scientific_authority"])
+
+    def test_shadow_continuation_frontier_step_persists_unique_zero_authority_next_action(self) -> None:
+        storage=SimpleNamespace()
+        admission={"status":"SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL","summary":{"qualification_allowed":False},"scientific_authority":False}
+        watch={"status":"SUPPORT_RELEASE_WATCH_COMPLETE","summary":{"support_holds":4,"recheck_required":0},"scientific_authority":False}
+        queue={"status":"SUPPORT_ASSET_RECHECK_QUEUE_EMPTY","summary":{"support_holds":4,"queued":0},"scientific_authority":False}
+        handoff={"status":"SUPPORT_ASSET_RECHECK_HANDOFF_EMPTY","summary":{"queued_asset_rechecks":0,"support_inventory_recheck_ready":0,"provenance_incomplete":0},"scientific_authority":False}
+        with patch("research_pipeline.automation_cycle.build_shadow_search_admission",return_value={}), patch("research_pipeline.automation_cycle.public_shadow_search_admission_summary",return_value=admission), patch("research_pipeline.automation_cycle.load_private_support_release_watch",return_value={}), patch("research_pipeline.automation_cycle.public_support_release_watch_summary",return_value=watch), patch("research_pipeline.automation_cycle.load_private_support_asset_recheck_queue",return_value={}), patch("research_pipeline.automation_cycle.public_support_asset_recheck_summary",return_value=queue), patch("research_pipeline.automation_cycle.load_private_support_asset_recheck_handoff",return_value={}), patch("research_pipeline.automation_cycle.public_support_asset_recheck_handoff_summary",return_value=handoff):
+            result=_run_shadow_continuation_frontier_control(storage)
+            step=_step("paper-first-shadow-continuation-frontier",lambda:result)
+        self.assertEqual(result["status"],"WAIT_EXTERNAL_PRIMARY_OR_SUPPORT_RELEASE_CHANGE")
+        self.assertEqual(result["next_control_action"],"wait-external-change")
+        self.assertEqual(result["summary"]["active_control_actions"],0)
+        self.assertEqual(result["summary"]["external_wait"],1)
+        self.assertEqual(result["summary"]["frontier_status"],"WAIT_EXTERNAL_PRIMARY_OR_SUPPORT_RELEASE_CHANGE")
+        self.assertEqual(step["summary"]["frontier_status"],"WAIT_EXTERNAL_PRIMARY_OR_SUPPORT_RELEASE_CHANGE")
+        self.assertEqual(step["summary"]["next_control_action"],"wait-external-change")
+        self.assertEqual(step["summary"]["automatic_provider_calls_authorized"],0)
         self.assertFalse(result["scientific_authority"])
 
     def test_shadow_search_skip_emits_no_cross_host_handoff(self) -> None:

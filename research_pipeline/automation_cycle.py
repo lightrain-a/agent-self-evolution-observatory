@@ -61,15 +61,16 @@ from .paper_first_global_relation_scan_admission import build_global_relation_sc
 from .paper_first_primary_evidence import load_primary_evidence_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_shadow_search_admission import build_shadow_search_admission, public_shadow_search_admission_summary
+from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier
 from .paper_first_relation_coverage import relation_recall_freshness
 from .paper_first_relation_delta_preflight import public_relation_delta_preflight_summary, write_private_relation_delta_preflight
 from .paper_first_relation_cache_backfill import backfill_relation_cache
 from .paper_first_paper_design_backlog import write_paper_design_backlog
 from .paper_first_p0_f0 import write_paper_first_p0_f0_state
 from .paper_first_scientific_object_maintenance import run_shadow_scientific_object_maintenance
-from .paper_first_support_release_watch import run_support_release_watch
-from .paper_first_support_asset_recheck import write_private_support_asset_recheck_queue
-from .paper_first_support_asset_recheck_handoff import write_private_support_asset_recheck_handoff
+from .paper_first_support_release_watch import load_private_support_release_watch, public_support_release_watch_summary, run_support_release_watch
+from .paper_first_support_asset_recheck import load_private_support_asset_recheck_queue, public_support_asset_recheck_summary, write_private_support_asset_recheck_queue
+from .paper_first_support_asset_recheck_handoff import load_private_support_asset_recheck_handoff, public_support_asset_recheck_handoff_summary, write_private_support_asset_recheck_handoff
 from .research_system import write_research_system_state
 from .publication import PUBLICATION_OK_STATES, publish_generated_state
 
@@ -179,6 +180,26 @@ def _run_shadow_search_admission_control() -> dict[str, Any]:
     return public
 
 
+def _run_shadow_continuation_frontier_control(storage: StorageSettings) -> dict[str, Any]:
+    """Project the current shadow continuation frontier without creating or executing work."""
+    admission = public_shadow_search_admission_summary(build_shadow_search_admission())
+    support_watch = public_support_release_watch_summary(load_private_support_release_watch(storage=storage))
+    asset_queue = public_support_asset_recheck_summary(load_private_support_asset_recheck_queue(storage=storage))
+    support_handoff = public_support_asset_recheck_handoff_summary(load_private_support_asset_recheck_handoff(storage=storage))
+    frontier = build_shadow_continuation_frontier(
+        admission=admission,
+        support_watch=support_watch,
+        asset_queue=asset_queue,
+        support_handoff=support_handoff,
+    )
+    frontier.setdefault("summary", {}).update({
+        "frontier_status": frontier.get("status", "HOLD_SHADOW_CONTINUATION_STATE_INCOMPLETE"),
+        "next_control_action": frontier.get("next_control_action", "repair-shadow-continuation-state"),
+    })
+    frontier["scientific_authority"] = False
+    return frontier
+
+
 def run_cycle(
     *,
     mode: str = "daily",
@@ -226,6 +247,7 @@ def run_cycle(
             report["steps"].append(_step("paper-first-support-release-watch", lambda: run_support_release_watch(storage=storage)))
             report["steps"].append(_step("paper-first-support-asset-recheck-queue", lambda: write_private_support_asset_recheck_queue(storage=storage)))
             report["steps"].append(_step("paper-first-support-asset-recheck-handoff", lambda: write_private_support_asset_recheck_handoff(storage=storage)))
+            report["steps"].append(_step("paper-first-shadow-continuation-frontier", lambda: _run_shadow_continuation_frontier_control(storage)))
             report["steps"].append(_step("paper-first-relation-cache-backfill", backfill_relation_cache))
             report["steps"].append(_step("paper-first-global-relation-recall", lambda: _run_global_relation_control(storage=storage,mode=mode,allow_model_scan=global_relation_model_scan)))
             report["steps"].append(_step("iclr-bank", write_iclr_idea_bank))
