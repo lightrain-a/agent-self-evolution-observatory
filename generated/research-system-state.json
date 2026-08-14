@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T06:35:08+00:00",
+  "generated_at": "2026-08-14T06:57:40+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6050,7 +6050,13 @@
     "paper_first_relation_delta_new_failures": 11,
     "paper_first_relation_delta_new_boundaries": 8,
     "paper_first_relation_delta_model_scan_authorized": false,
-    "paper_first_relation_delta_focused_reopen_authorized": false
+    "paper_first_relation_delta_focused_reopen_authorized": false,
+    "paper_first_relation_scan_admission_status": "ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN",
+    "paper_first_relation_scan_admission_checks": 15,
+    "paper_first_relation_scan_admission_passed": 15,
+    "paper_first_relation_scan_admission_failed": 0,
+    "paper_first_relation_scan_manual_eligible": true,
+    "paper_first_relation_scan_automatic_authorized": false
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -72027,6 +72033,27 @@
             "contradiction": "NEW_EMPIRICAL_EVIDENCE_PRESENT_LANE_VALIDITY_UNKNOWN"
           }
         }
+      },
+      {
+        "key": "paper-first-global-relation-scan-admission",
+        "pass": true,
+        "detail": {
+          "status": "ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN",
+          "summary": {
+            "manual_scan_eligible": true,
+            "new_empirical_sources": 11,
+            "current_reviewed_sources": 226,
+            "new_failure_sources": 11,
+            "failed": 0,
+            "last_scanned_sources": 214,
+            "checks": 15,
+            "passed": 15,
+            "automatic_model_scan_authorized": false,
+            "new_boundary_sources": 8,
+            "new_assumption_sources": 0,
+            "new_reviewed_sources": 12
+          }
+        }
       }
     ],
     "failed_checks": 0
@@ -72527,6 +72554,37 @@
       "assumption_break": "NO_NEW_ASSUMPTION_ENDPOINT",
       "contradiction": "NEW_EMPIRICAL_EVIDENCE_PRESENT_LANE_VALIDITY_UNKNOWN"
     },
+    "scientific_authority": false
+  },
+  "paper_first_global_relation_scan_admission": {
+    "schema_version": "1.0",
+    "status": "ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN",
+    "policy": {
+      "scientific_authority": false,
+      "automatic_model_scan_authority": false,
+      "manual_execution_requires_explicit_operator_flag": true,
+      "manual_eligibility_is_not_scientific_authority": true,
+      "relation_scan_cannot_authorize_problem_gate": true,
+      "relation_scan_cannot_authorize_method_experiment_p0_gpu": true,
+      "preconditions_are_deterministic_search_control_only": true
+    },
+    "summary": {
+      "manual_scan_eligible": true,
+      "new_empirical_sources": 11,
+      "current_reviewed_sources": 226,
+      "new_failure_sources": 11,
+      "failed": 0,
+      "last_scanned_sources": 214,
+      "checks": 15,
+      "passed": 15,
+      "automatic_model_scan_authorized": false,
+      "new_boundary_sources": 8,
+      "new_assumption_sources": 0,
+      "new_reviewed_sources": 12
+    },
+    "failed_check_count": 0,
+    "freshness_status": "STALE_RELATION_UNIVERSE",
+    "delta_status": "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE",
     "scientific_authority": false
   }
 }
