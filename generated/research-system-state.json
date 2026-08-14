@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T02:28:00+00:00",
+  "generated_at": "2026-08-14T02:40:54+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -5815,31 +5815,31 @@
     "paper_first_primary_typed_extraction_version": "typed-v1",
     "paper_first_primary_source_scheduler_active": true,
     "paper_first_primary_source_scheduler_prior_runs": 15,
-    "paper_first_primary_selected_reviewed": 32,
-    "paper_first_primary_selected_unreviewed": 0,
-    "paper_first_primary_lane_linked_reviewed": 78,
-    "paper_first_primary_lane_linked_unreviewed": 0,
+    "paper_first_primary_selected_reviewed": 23,
+    "paper_first_primary_selected_unreviewed": 9,
+    "paper_first_primary_lane_linked_reviewed": 209,
+    "paper_first_primary_lane_linked_unreviewed": 9,
     "paper_first_primary_source_coverage_exhausted": false,
     "paper_first_primary_generation_ready": true,
     "paper_first_problem_gate_fields": 17,
     "paper_first_problem_gate_saturation_patterns": 34,
-    "paper_first_problem_generator_status": "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE",
+    "paper_first_problem_generator_status": "GENERATED_ZERO_CANDIDATES",
     "paper_first_problem_generator_generated": 0,
     "paper_first_problem_generator_semantic_clear": 0,
     "paper_first_problem_generator_semantic_blocked": 0,
-    "paper_first_problem_generator_saturation_entries": 15,
+    "paper_first_problem_generator_saturation_entries": 16,
     "paper_first_problem_generator_prior_identical_zero": 0,
     "paper_first_problem_blocked_attempts": 11,
     "paper_first_problem_top_reduction_basin": "procedural-memory-nonmonotonicity",
     "paper_first_problem_top_reduction_count": 6,
     "paper_first_problem_repeated_reduction_basin": true,
     "paper_first_problem_search_escape_required": true,
-    "paper_first_problem_lane_search_complete": false,
+    "paper_first_problem_lane_search_complete": true,
     "paper_first_problem_lane_search_candidate_lanes": 0,
-    "paper_first_problem_lane_search_reducible_lanes": 0,
-    "paper_first_problem_lane_search_no_pair_lanes": 0,
+    "paper_first_problem_lane_search_reducible_lanes": 1,
+    "paper_first_problem_lane_search_no_pair_lanes": 3,
     "paper_first_problem_last_lane_search_available": true,
-    "paper_first_problem_last_lane_search_run_id": "20260813T141222Z",
+    "paper_first_problem_last_lane_search_run_id": "20260814T023940Z",
     "paper_first_problem_last_lane_search_candidate_lanes": 0,
     "paper_first_problem_last_lane_search_reducible_lanes": 1,
     "paper_first_problem_last_lane_search_no_pair_lanes": 3,
@@ -29768,7 +29768,7 @@
   },
   "paper_first_primary_evidence": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-14T02:15:21+00:00",
+    "generated_at": "2026-08-14T02:38:47+00:00",
     "policy": {
       "semantic_scholar_is_discovery_metadata_not_primary_evidence": true,
       "verified_primary_page_required": true,
@@ -29854,42 +29854,42 @@
       "corpus_available": true,
       "corpus_fresh": true,
       "discovery_mode": "semantic-scholar-plus-arxiv-augmentation",
-      "augmentation_discovered": 0,
-      "augmentation_added": 0,
+      "augmentation_discovered": 302,
+      "augmentation_added": 258,
       "selected": 32,
       "verified": 32,
       "fetch_errors": 0,
       "title_mismatches": 0,
       "fulltext_verified": 31,
       "fulltext_fetch_errors": 1,
-      "empirical_fact_candidates": 96,
+      "empirical_fact_candidates": 103,
       "empirical_fact_tier_counts": {
-        "quantitative-directional": 46,
-        "strong-observation": 20,
-        "result-section-directional": 20,
-        "owned-directional": 10
+        "result-section-directional": 13,
+        "strong-observation": 26,
+        "quantitative-directional": 61,
+        "owned-directional": 3
       },
       "typed_evidence_candidates": {
         "operational_assumptions": 4,
-        "measured_failures": 33,
-        "boundary_observations": 11
+        "measured_failures": 37,
+        "boundary_observations": 14
       },
-      "recent_verified_cache_reused": 0,
-      "recent_raw_primary_cache_reused": 20,
-      "recent_raw_fulltext_cache_reused": 19,
-      "recent_fulltext_failure_cooldown_skips": 0,
+      "recent_verified_cache_reused": 18,
+      "recent_raw_primary_cache_reused": 14,
+      "recent_raw_fulltext_cache_reused": 13,
+      "recent_fulltext_failure_cooldown_skips": 1,
       "lane_floor": 1,
       "source_coverage_scheduler_active": true,
       "saturation_ledger_runs": 15,
       "portable_review_receipts_merged": 0,
       "prior_reviewed_sources": 214,
-      "eligible_unreviewed": 2,
-      "eligible_lane_unreviewed": 0,
-      "eligible_no_lane_unreviewed": 2,
-      "selected_previously_reviewed": 32,
-      "selected_unreviewed": 0,
-      "selected_object_unreviewed": 0,
-      "selected_lane_unreviewed": 0,
+      "eligible_unreviewed": 18,
+      "eligible_lane_unreviewed": 9,
+      "eligible_no_lane_unreviewed": 9,
+      "selected_previously_reviewed": 23,
+      "selected_unreviewed": 9,
+      "selected_object_unreviewed": 8,
+      "selected_lane_unreviewed": 9,
       "selected_no_lane_unreviewed": 0,
       "carrier_probe_required": false,
       "carrier_probe_attempted": 0,
@@ -29898,66 +29898,192 @@
       "carrier_probe_pending": 0,
       "carrier_probe_errors": 0,
       "carrier_probe_complete": true,
-      "eligible_object_linked_sources": 68,
-      "reviewed_object_linked_sources": 68,
-      "unreviewed_object_linked_sources": 0,
-      "eligible_lane_linked_sources": 78,
-      "reviewed_lane_linked_sources": 78,
-      "unreviewed_lane_linked_sources": 0,
-      "unreviewed_no_lane_sources": 2,
+      "eligible_object_linked_sources": 182,
+      "reviewed_object_linked_sources": 174,
+      "unreviewed_object_linked_sources": 8,
+      "eligible_lane_linked_sources": 218,
+      "reviewed_lane_linked_sources": 209,
+      "unreviewed_lane_linked_sources": 9,
+      "unreviewed_no_lane_sources": 9,
       "source_coverage_exhausted": false,
-      "source_retrieval_complete": false,
+      "source_retrieval_complete": true,
       "coverage_anchor_count": 16,
       "eligible_object_lane_counts": {
-        "skill_harness": 51,
-        "memory_continual": 25,
-        "world_model": 5,
-        "parametric_model_state": 5
+        "skill_harness": 131,
+        "memory_continual": 72,
+        "world_model": 14,
+        "parametric_model_state": 28
       },
       "selected_object_lane_counts": {
-        "skill_harness": 19,
+        "skill_harness": 22,
         "memory_continual": 12,
-        "world_model": 4,
-        "parametric_model_state": 2
+        "world_model": 1,
+        "parametric_model_state": 4
       },
       "eligible_lane_counts": {
-        "skill_harness": 51,
-        "memory_continual": 25,
-        "world_model": 5,
-        "parametric_model_state": 5,
-        "embodied": 16,
-        "collective": 2,
-        "autonomous_science": 1,
-        "runtime_deployment": 20,
-        "safety_reliability": 34
+        "skill_harness": 131,
+        "memory_continual": 72,
+        "world_model": 14,
+        "parametric_model_state": 28,
+        "embodied": 29,
+        "collective": 17,
+        "autonomous_science": 7,
+        "runtime_deployment": 65,
+        "safety_reliability": 93
       },
       "selected_lane_counts": {
-        "skill_harness": 19,
+        "skill_harness": 22,
         "memory_continual": 12,
-        "world_model": 4,
-        "parametric_model_state": 2,
-        "embodied": 7,
-        "collective": 2,
-        "autonomous_science": 1,
-        "runtime_deployment": 8,
-        "safety_reliability": 12
+        "world_model": 1,
+        "parametric_model_state": 4,
+        "embodied": 5,
+        "collective": 3,
+        "autonomous_science": 2,
+        "runtime_deployment": 9,
+        "safety_reliability": 11
       },
       "verified_lane_counts": {
-        "skill_harness": 19,
+        "skill_harness": 22,
         "memory_continual": 12,
-        "world_model": 4,
-        "parametric_model_state": 2,
-        "embodied": 7,
-        "collective": 2,
-        "autonomous_science": 1,
-        "runtime_deployment": 8,
-        "safety_reliability": 12
+        "world_model": 1,
+        "parametric_model_state": 4,
+        "embodied": 5,
+        "collective": 3,
+        "autonomous_science": 2,
+        "runtime_deployment": 9,
+        "safety_reliability": 11
       },
       "undercovered_lanes": [],
       "verified_undercovered_lanes": [],
       "candidate_generation_ready": true
     },
     "records": [
+      {
+        "evidence_id": "915078e95c611fdd9ee2fe12739422854b8196c481e6d2b0e615bd7a93489cc0",
+        "ref": "arXiv:2608.12851",
+        "title": "Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents",
+        "primary_url": "https://arxiv.org/abs/2608.12851",
+        "source_sha256": "c318845274c55db475c189ad1a3566259c2d53640b5c2a86a41be66400ba386c",
+        "abstract_sha256": "fe19bdcba3556f0d3bda09731512dd1bbdc8a3074acfebe2eaba9dc810096a3b",
+        "year": 2026,
+        "publication_date": "2026-08-13",
+        "fetched_at": "2026-08-14T02:39:38+00:00",
+        "fulltext_sha256": "88f6f8078cb227fda7846d509652891cf2aa397214cb7783bd24db5d264c134d",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 1
+        }
+      },
+      {
+        "evidence_id": "05c414e5dd01a468f162d5ac028d6c60af5060dc1e5ff8f75a7fb213a28184ff",
+        "ref": "arXiv:2608.13040",
+        "title": "Latent On-Policy Self-Distillation",
+        "primary_url": "https://arxiv.org/abs/2608.13040",
+        "source_sha256": "5286649a98dd8633511961d35fecf5a02c652a3a2cb8c786a509e3e2ea71c864",
+        "abstract_sha256": "0f98d4f523d8ddc6ea13b4f806d7f1e4eab8e5eb1436b50fd4d1fc306207a846",
+        "year": 2026,
+        "publication_date": "2026-08-13",
+        "fetched_at": "2026-08-14T02:39:38+00:00",
+        "fulltext_sha256": "149cbbd1fc5ae506dd1189936968a671a347e412689510f4c42c37b33134fcf8",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 0,
+          "boundary_observations": 1
+        }
+      },
+      {
+        "evidence_id": "37ce80aa04ade0460705ec74c4013ff47ee98989183109be1a6d3c9b60af39c7",
+        "ref": "arXiv:2608.12977",
+        "title": "Beyond Handcrafted Security: Towards Self-Evolving Defense for LLM Agents",
+        "primary_url": "https://arxiv.org/abs/2608.12977",
+        "source_sha256": "d2231e74ed69ed24985bad8eba932cd71517f91d24472fa707343e1b2d617f9b",
+        "abstract_sha256": "9f6d925001cc85833b8014ca89bc01a8095465ce2b64e3e158b691e627e2a7b3",
+        "year": 2026,
+        "publication_date": "2026-08-13",
+        "fetched_at": "2026-08-14T02:39:39+00:00",
+        "fulltext_sha256": "d810b39f050dd6d3330e08aade701b1325511e98a47cb009be1ca5d975172957",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 2
+        }
+      },
+      {
+        "evidence_id": "b2d604602be5c548dfe7686f157ac9606ae37a790be8e2214a0d1156a9acd875",
+        "ref": "arXiv:2608.13560",
+        "title": "AutoDesign: Meta-Harness Optimization for Long-Horizon Agentic Design",
+        "primary_url": "https://arxiv.org/abs/2608.13560",
+        "source_sha256": "b5113984559b2c0175e7cc49b66b9a75bc8b37c2664ad21d2d993dd7304cfbd6",
+        "abstract_sha256": "4efb311c73d666c1021ade5276b6bc50a4b004f46050217520ffccffb4bab572",
+        "year": 2026,
+        "publication_date": "2026-08-13",
+        "fetched_at": "2026-08-14T02:39:39+00:00",
+        "fulltext_sha256": "f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 1
+        }
+      },
+      {
+        "evidence_id": "860801d05ae83e5e27da8b9b765ed4ef060131f4958a41394e0124d08da32d09",
+        "ref": "arXiv:2608.12743",
+        "title": "Spatial Memory Agent: Experience-Grounded Procedure Memory for Spatial Intelligence",
+        "primary_url": "https://arxiv.org/abs/2608.12743",
+        "source_sha256": "467a9227d4160169ee74ba174b38b3701e979bd6d331dfc3e75d19fee2d08775",
+        "abstract_sha256": "97e73d63341bbf65af02a1ab466054af20fc6e92f83210321cc1e3f727773127",
+        "year": 2026,
+        "publication_date": "2026-08-13",
+        "fetched_at": "2026-08-14T02:39:39+00:00",
+        "fulltext_sha256": "496c78e91a4649291fb57b46fbb9642f7cc73261ee1dbf91899e3920c6cc886b",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 0
+        }
+      },
+      {
+        "evidence_id": "679a4b3e9a89c19a56cd75d21b2b6cc97028b488a81b62f4524cb4f6548d0abf",
+        "ref": "arXiv:2608.12720",
+        "title": "ERSkill: Evolving for Skill-Guided Adaptive Memory Retrieval",
+        "primary_url": "https://arxiv.org/abs/2608.12720",
+        "source_sha256": "e40a8fca3aff409c8fc0e48a04223cef5016825d5ff3754adc053a47e2cd4544",
+        "abstract_sha256": "ee4303e1a697379201d16ba6e8584e6b156f2a3acebb0617487cb9c611edad71",
+        "year": 2026,
+        "publication_date": "2026-08-13",
+        "fetched_at": "2026-08-14T02:39:39+00:00",
+        "fulltext_sha256": "018906026616cd95dfd028e348e45537d4a3f7a99d87b2ad56bde293ba05efb4",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 1,
+          "boundary_observations": 1
+        }
+      },
+      {
+        "evidence_id": "470ebaab7533e4b794c21d2eb58e7cd59d0a09c4a299a8308e6d7e1bbe72324d",
+        "ref": "arXiv:2608.12841",
+        "title": "AQuA: Recursively Self-Improving Quantitative Trading Research Agents",
+        "primary_url": "https://arxiv.org/abs/2608.12841",
+        "source_sha256": "50bfcdfbba23b28b551183d184fa0843635bc3ada17b2c40df98e6949b593ee9",
+        "abstract_sha256": "7cf39a8c696bb0fa31288661bf427def4f194a018d84c8d11495428871e60f10",
+        "year": 2026,
+        "publication_date": "2026-08-13",
+        "fetched_at": "2026-08-14T02:39:39+00:00",
+        "fulltext_sha256": "79d04f7e8519c8d1fbee6048734d9c3b770238a456972b6da1efbcc3c9a4a72f",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 2
+        }
+      },
       {
         "evidence_id": "edef850a4a049b0712d174b3408b45de7fe6d181d8a15080cd0cd0c8d4b28014",
         "ref": "arXiv:2608.11654",
@@ -30013,6 +30139,42 @@
         }
       },
       {
+        "evidence_id": "adc31f96f68e1373f5c5c52d25b5bafae2863536c5b536e37712c23668f05a29",
+        "ref": "arXiv:2608.12428",
+        "title": "MindMemOS: A Portable and Self-Evolving Memory Operating Layer for AI Agents",
+        "primary_url": "https://arxiv.org/abs/2608.12428",
+        "source_sha256": "e02d870b493e85f91d374eb6ddd8727704c72ed2ac854aaebc80d69c006f81a4",
+        "abstract_sha256": "3b4cd58130025f013050903c6fec7de433726cfafd135d41af047813e58647f1",
+        "year": 2026,
+        "publication_date": "2026-08-12",
+        "fetched_at": "2026-08-14T02:39:39+00:00",
+        "fulltext_sha256": "79a9c92991d928c4d8e4629a4a71ea8c92d2c56f8fe81e3a4a5ba6822f4b3a32",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 0
+        }
+      },
+      {
+        "evidence_id": "f42a70cb00f05d9738f9da7aa2e2e0ac4df5aa4bcca34f09206d6196a21ec47f",
+        "ref": "arXiv:2608.12629",
+        "title": "CAKE: Compiler-Agent Co-Design for Frontier Kernel Evolution",
+        "primary_url": "https://arxiv.org/abs/2608.12629",
+        "source_sha256": "2a03ea6e8e692ce671860ad14bda1687b5bdd0d8a0daee1c6707af6b0e2a4d06",
+        "abstract_sha256": "4e8379a9ec2268d4cf6d766ba49095a0ae7d1af3bfc0d688f0b420027c715b48",
+        "year": 2026,
+        "publication_date": "2026-08-12",
+        "fetched_at": "2026-08-14T02:39:40+00:00",
+        "fulltext_sha256": "f6b6d085f69714f646e5cd96c485b79b88290bbed113bdc787d1021214541257",
+        "empirical_fact_count": 0,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 1,
+          "boundary_observations": 0
+        }
+      },
+      {
         "evidence_id": "d8ded9b8bc61eeb709452c7f3ed9455931f9e7fc19d4bfb050b9d93f111f6ef8",
         "ref": "arXiv:2608.11350",
         "title": "Self-Evolving Embodied Agents via Skill-Harness Evolution",
@@ -30057,7 +30219,7 @@
         "abstract_sha256": "c8a69484dcd81327d0d4d403524e625473d01ebb99b3de3bea2dcbaac0c6245f",
         "year": 2026,
         "publication_date": "2026-08-11",
-        "fetched_at": "2026-08-14T02:15:22+00:00",
+        "fetched_at": "2026-08-14T02:39:40+00:00",
         "fulltext_sha256": "",
         "empirical_fact_count": 0,
         "typed_evidence_counts": {
@@ -30082,168 +30244,6 @@
           "operational_assumptions": 0,
           "measured_failures": 2,
           "boundary_observations": 1
-        }
-      },
-      {
-        "evidence_id": "251d2d182c0062ce962a3cb5490b68f41bebff200db36c565ae942ad5f839d7f",
-        "ref": "arXiv:2608.10538",
-        "title": "SKILLER: Language-Level Reinforcement Learning for Reusable Skill Extraction in Small Language Models",
-        "primary_url": "https://arxiv.org/abs/2608.10538",
-        "source_sha256": "e338f27a8dece95b5cbce9d3115e3de0fc5eea0f74843bd6575aeae3e021ce10",
-        "abstract_sha256": "934edf53976299c498219d7b3eb2424e1f943f03b7f445ed3d8b179f0da5a63e",
-        "year": 2026,
-        "publication_date": "2026-08-11",
-        "fetched_at": "2026-08-14T02:15:23+00:00",
-        "fulltext_sha256": "f2c4201309ef6f9f494d85bdcbc6241a49502ffec479ce03ef67048593ebb3d1",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 2
-        }
-      },
-      {
-        "evidence_id": "609ca45a47a7989323e67f6f632aa417f19eb680763dbf1bdd0addd269b35737",
-        "ref": "arXiv:2608.10906",
-        "title": "GitSkills: A Dataset of Agent Skills on GitHub",
-        "primary_url": "https://arxiv.org/abs/2608.10906",
-        "source_sha256": "bef98a51d4ae63931963615b002fa00c028ffdd78a022f74bbfabb67a972c20b",
-        "abstract_sha256": "2c06f17d26f123a9a61e52af0df973445634638dfb0f414e610a45cc6d9d103d",
-        "year": 2026,
-        "publication_date": "2026-08-11",
-        "fetched_at": "2026-08-14T02:15:23+00:00",
-        "fulltext_sha256": "8bbd7e7ec62cca1202f8a0d8da2bb94fedf0eecdf7115f30569a00eeedd39ab8",
-        "empirical_fact_count": 0,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 0,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "c604fc4a9caf0a3831536add60d135c561e500413ced44395d0bb5dba3394092",
-        "ref": "arXiv:2608.11274",
-        "title": "Agent Safety Should Be a Runtime Contract",
-        "primary_url": "https://arxiv.org/abs/2608.11274",
-        "source_sha256": "521d4d50ce8cd015fdf33151ce848f8c892ffaae55addf28a1827d790279ad88",
-        "abstract_sha256": "8b3819f8acc2510dc86b6522340ea8b4d5305202568484ac2515a3f024e04dea",
-        "year": 2026,
-        "publication_date": "2026-08-11",
-        "fetched_at": "2026-08-14T02:15:23+00:00",
-        "fulltext_sha256": "eb49090a21454f8e457ff02ad47d676e7b9c8c460b403f063354988822b91759",
-        "empirical_fact_count": 0,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 0,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "d3d35710b9a78f9a1b45a1d5695cf93312533cc9b1be513a946412ba71d3a42f",
-        "ref": "arXiv:2608.10915",
-        "title": "ComBodied Agents: a New Paradigm of Human-Centric Agentic AI",
-        "primary_url": "https://arxiv.org/abs/2608.10915",
-        "source_sha256": "cb6e56d9df6273bff0c97d4618fd962345f8edb09a4e98c897c47b0ce2cc9d2e",
-        "abstract_sha256": "7edad8d89295d235e78d7d6286eb754b26fbe2f55dd4c78eee4fa414267258dd",
-        "year": 2026,
-        "publication_date": "2026-08-11",
-        "fetched_at": "2026-08-14T02:15:23+00:00",
-        "fulltext_sha256": "6b1f8a2fcb57e11d8a0d634ab3bf12032c6ecdeb14a3eeb7b6178bdd8881e96b",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "08ce076971b1a92edef849f31305612835ab8beb72f5f98b09e47ac6092e68a1",
-        "ref": "arXiv:2608.10618",
-        "title": "Toward the Cognitive--Physical Limits of Embodied Intelligence through a World-Model-Centric Autonomous Racing Agent",
-        "primary_url": "https://arxiv.org/abs/2608.10618",
-        "source_sha256": "5fb79946b471e97ea7c70f24eb6a3c400f17f5132b652921262b556bbf4dbc67",
-        "abstract_sha256": "d83da3f48ea3a8e93fa07780b41d2eb8e0e22f9c787f8c670481889c7ad7f3e7",
-        "year": 2026,
-        "publication_date": "2026-08-11",
-        "fetched_at": "2026-08-14T02:15:23+00:00",
-        "fulltext_sha256": "f3862a9023c097ce425877ecbd5dad866d79973fe430a0dec6549ab362c563f3",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "86e9634a3349920a35cf16b21040b4919e34c690f7f856bc03f7c36b26f8c60f",
-        "ref": "arXiv:2608.10224",
-        "title": "Self-evolving Agentic Customer Support System at LinkedIn",
-        "primary_url": "https://arxiv.org/abs/2608.10224",
-        "source_sha256": "92e988e5a1e094f83402fe0a9bf2de7fa5827cb6604c1028b07dd05d117005f7",
-        "abstract_sha256": "13e008b5c8a9e9e352cd0593e1d35b291531246d723e6733265ddaa2e2992237",
-        "year": 2026,
-        "publication_date": "2026-08-10",
-        "fetched_at": "2026-08-14T02:15:23+00:00",
-        "fulltext_sha256": "77a94c7990956fa9526da45ff61c810e7e6e58306e02a8beda17d25ab9eb8e94",
-        "empirical_fact_count": 3,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 1,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "68aa2a8c29d35c2f5410692bae931d184f0b8b4d589fe7262a9890113bd6953d",
-        "ref": "arXiv:2608.09629",
-        "title": "Rethinking Self-Evolving Agents: Do We Still Need Prescribed Optimization Pipelines?",
-        "primary_url": "https://arxiv.org/abs/2608.09629",
-        "source_sha256": "84cae85db72722f9c4b09f61e1aca6eca111ce65a3cd04664e93e2c38588b94a",
-        "abstract_sha256": "7421a6864d9f1086e9feddd1fd1361eb98a87f0676eed7089016c34a93574968",
-        "year": 2026,
-        "publication_date": "2026-08-10",
-        "fetched_at": "2026-08-14T02:15:23+00:00",
-        "fulltext_sha256": "21c3d5b317cbfd9f0b500ccf083dbc512edd0ae8bb52b84fafdf88300b53786c",
-        "empirical_fact_count": 3,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 1,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "a51d9e2112794308111cedb05181711902cb08d191964483bc66f60410b0bfd4",
-        "ref": "arXiv:2608.09044",
-        "title": "Tree-of-Experience: Hierarchical Experience Management for Self-Evolving Agents",
-        "primary_url": "https://arxiv.org/abs/2608.09044",
-        "source_sha256": "adc892caf483d9252eff616681f2b67fb05852dca3cfed93ce802b5c501fe351",
-        "abstract_sha256": "459996c08d7a45fc30b36c9a87f7fa6f51498f3fa362474e8f0aaf29c7b3ce1b",
-        "year": 2026,
-        "publication_date": "2026-08-10",
-        "fetched_at": "2026-08-14T02:15:23+00:00",
-        "fulltext_sha256": "59f0c52e311449053686ce7e34b94cef984b0de1ff59d1711fa5536b64c21441",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 1
-        }
-      },
-      {
-        "evidence_id": "5a4513261bcfa3db81f27ba233a6dbe320305cf40580a56a7a207f725eff136c",
-        "ref": "arXiv:2608.10157",
-        "title": "SBCO: Self-Supervised, Verifier-Grounded Harness Optimization For Planning Agents",
-        "primary_url": "https://arxiv.org/abs/2608.10157",
-        "source_sha256": "3e1b16d87defe5949ef291814d544a68619473165ce75654e9dd08ba03669857",
-        "abstract_sha256": "da9adb346966ed532ffc1e39481f522c566861ba3c373a5dd998141f690f38a7",
-        "year": 2026,
-        "publication_date": "2026-08-10",
-        "fetched_at": "2026-08-14T02:15:23+00:00",
-        "fulltext_sha256": "95a5282033b8e10f13085a7e3054f023bd4451894aa9cdf6c5353deef966c23b",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 2
         }
       },
       {
@@ -30337,6 +30337,24 @@
         }
       },
       {
+        "evidence_id": "2ff40f0690851a2f85a1985bc40305559ea9a64227166ae277d89d8a27afb070",
+        "ref": "arXiv:2608.06474",
+        "title": "WebGrader: Training LLMs for Web Development with Self-Evolving Programmatic Grader",
+        "primary_url": "https://arxiv.org/abs/2608.06474",
+        "source_sha256": "14c74e3e23213df95799df2604b095644d9e19a2705f255b2a13b59c1fc44fef",
+        "abstract_sha256": "028ca6e3bcf407885cc590222b551d39935dd15d0f778137372f4bff09794c4c",
+        "year": 2026,
+        "publication_date": "2026-08-06",
+        "fetched_at": "2026-08-14T02:39:40+00:00",
+        "fulltext_sha256": "8500187244ee15d93ec85127d58239953f6ad09110ff6779be0fa6ac632aa31d",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 0,
+          "boundary_observations": 0
+        }
+      },
+      {
         "evidence_id": "d063e2cfeadeba5618f88bdee63f2b1ad2be2af17990aac04b723b0c44a7aced",
         "ref": "arXiv:2608.04968",
         "title": "EvolveNet: Collaborative Harness Evolution for Agent Self-Improvement",
@@ -30365,6 +30383,24 @@
         "publication_date": "2026-08-05",
         "fetched_at": "2026-08-14T02:15:34+00:00",
         "fulltext_sha256": "f99c849538926c870e8df9d73c680590340bc7ac87380932adfc2fa4e6bf1130",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 0
+        }
+      },
+      {
+        "evidence_id": "7a5f79d8b9a04a5785d5616f20b3c0b97f5177f288a63bd4bdbaa6ec2c58335e",
+        "ref": "arXiv:2608.05446",
+        "title": "EvoHarness-RL: Learning Self-Evolving Runtime Harness for Long-Horizon LLM Agents",
+        "primary_url": "https://arxiv.org/abs/2608.05446",
+        "source_sha256": "53ffa3dd491d3b174f7fd850072c42814f6be0f58cd944e92ee8af861e79dbd2",
+        "abstract_sha256": "b241947e6dd2643d264c960138aa11c29ed0a40da73af2c2060cc90e7dfb0aa7",
+        "year": 2026,
+        "publication_date": "2026-08-05",
+        "fetched_at": "2026-08-14T02:39:40+00:00",
+        "fulltext_sha256": "31d6f01c12cf1706a4e90c0e425da0629943ff0a8e38d761d9598eb637e1a99d",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
           "operational_assumptions": 0,
@@ -30463,17 +30499,17 @@
         }
       },
       {
-        "evidence_id": "ec85cf9c6d379b5afc5f44507cdbf47d1c41a3d196ff6cbd0de2657060835dab",
-        "ref": "arXiv:2608.03509",
-        "title": "SkillJack: Persistent Skill Backdoors in Self-Evolving Agents",
-        "primary_url": "https://arxiv.org/abs/2608.03509",
-        "source_sha256": "e4a7f9494a1a3bf46bd13474c5c5189e8cf8de0fec8de3dbaa40e4e3f5bfb812",
-        "abstract_sha256": "66ac5caea1d27de6f89034612588f1855ef580a4336fa032ad517baba80f3f72",
+        "evidence_id": "3cf35581c2e75018220f72fc64f56bd804b882718cffa9a67e566380fa4dff9d",
+        "ref": "arXiv:2608.05030",
+        "title": "From Score Matrices to Football-Aware Match-State Simulation: An Auditable LLM Harness for Exact-Score Reranking",
+        "primary_url": "https://arxiv.org/abs/2608.05030",
+        "source_sha256": "2a1ab545864937422c49946d8ae57855535e02f18bd5d008809b5ee26e4197de",
+        "abstract_sha256": "33bde399069c033467232f5172598838d7e225c1173e5e2c90fb379b861fa353",
         "year": 2026,
-        "publication_date": "2026-08-04",
-        "fetched_at": "2026-08-14T02:15:42+00:00",
-        "fulltext_sha256": "855e3d4689b7ff08d12ff96b0e598c55b32d28031f5b51968b7ae583c25540a6",
-        "empirical_fact_count": 2,
+        "publication_date": "2026-08-05",
+        "fetched_at": "2026-08-14T02:39:40+00:00",
+        "fulltext_sha256": "5c294bc4202263a638c4d491b806c097cad7b6eb0be8f99ffbe62ee728afad3a",
+        "empirical_fact_count": 3,
         "typed_evidence_counts": {
           "operational_assumptions": 0,
           "measured_failures": 0,
@@ -30481,66 +30517,28 @@
         }
       },
       {
-        "evidence_id": "923c33c910121bf38408727237310df9250cf6e38ae39c2820679570f144d4ad",
-        "ref": "arXiv:2608.05013",
-        "title": "OneDayAgent: Towards a Long-Horizon Harness for Autonomous Agents",
-        "primary_url": "https://arxiv.org/abs/2608.05013",
-        "source_sha256": "b57dd484fb03a2541a5b57a5c5fafc868437f78fb945e96b00e2836d116e491d",
-        "abstract_sha256": "a2ff2c8b60ec9a5ed0639bec49e8ef4c4017e7893c6f48121d8eba95283054b9",
+        "evidence_id": "d35cd035f6859cb671e9b14b709f9475c74518085a356389adc76ac886617cbd",
+        "ref": "arXiv:2608.05144",
+        "title": "Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks",
+        "primary_url": "https://arxiv.org/abs/2608.05144",
+        "source_sha256": "efc7c55054d71b4b76b0c7048cf6ca75630355ccd195fce3311f86a3aea3b8db",
+        "abstract_sha256": "c3c38a95afe22064ca8051394d9d0fe00e95e848cd9c863c5b3daad7516f46d5",
         "year": 2026,
-        "publication_date": "2026-08-04",
-        "fetched_at": "2026-08-14T02:15:42+00:00",
-        "fulltext_sha256": "14ca6ff3bd3d36b344f40e27c6b2db2285be4d978bc76c771df85da36ee970b2",
+        "publication_date": "2026-08-05",
+        "fetched_at": "2026-08-14T02:39:40+00:00",
+        "fulltext_sha256": "364fa7cd7c0f7880426703f658ba3756aec79c176b9c663b523036aa00a7e633",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
           "operational_assumptions": 0,
-          "measured_failures": 1,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "a910899db35db92858e432012b74ccb995dfb1a0c931a4055702853b4cc735b9",
-        "ref": "arXiv:2608.03392",
-        "title": "Self-Evolving Coding Agents",
-        "primary_url": "https://arxiv.org/abs/2608.03392",
-        "source_sha256": "fd0b86d766837cffdf219c95c1192fd1092bc248b879ec48cca577e6d253195b",
-        "abstract_sha256": "520e6dfb5dba90c84ca65cc8f79f95ccff5f434ea0e7f52775cf0781c5e520b4",
-        "year": 2026,
-        "publication_date": "2026-08-04",
-        "fetched_at": "2026-08-14T02:15:42+00:00",
-        "fulltext_sha256": "d995b21b9a2b4bef35341f982d6d52a73125fdf896074bc9a7c174181ec1299a",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 1,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "8ba950e5880e002936c85320deb89419bb385b338f2fb69ff9e5e81a938a8d1c",
-        "ref": "arXiv:2608.03244",
-        "title": "UniNav: A Unified World-Action Diffusion Model for Visual Navigation",
-        "primary_url": "https://arxiv.org/abs/2608.03244",
-        "source_sha256": "59696cfabfedf417929f614c604f514009dbb79dd20db12d8485b7d86239b656",
-        "abstract_sha256": "2f52b21abe0027d9b5ab4bbb53a01f209f9fc451fb90e03f5fe983dc10738424",
-        "year": 2026,
-        "publication_date": "2026-08-04",
-        "fetched_at": "2026-08-14T02:15:42+00:00",
-        "fulltext_sha256": "0f35cff3d08569f28cdc5011fc64d4507dbb428ec5e2a73b293411cdfff0496a",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 0,
+          "measured_failures": 2,
           "boundary_observations": 0
         }
       }
     ],
     "errors": [],
-    "discovery_errors": [
-      "all:\"self-evolving\" AND all:agent:RateLimited:HTTP 429:augmentation-circuit-open"
-    ],
+    "discovery_errors": [],
     "corpus_retrieved_at": "2026-08-13T07:06:23+00:00",
-    "corpus_age_days": 0.7978963331134259,
+    "corpus_age_days": 0.8141747424999999,
     "carrier_probe": {
       "enabled": true,
       "required": false,
@@ -30558,11 +30556,11 @@
     "fulltext_errors": [
       {
         "ref": "arXiv:2608.10504",
-        "error": "RuntimeError:HTTP 404"
+        "error": "recent-fulltext-failure-cooldown"
       }
     ],
     "status": "READY",
-    "discovery_transaction_id": "e98fa7f919256816ed6bb6ca866852f9a280e9e0cf9d545fc599e8b997a970b0",
+    "discovery_transaction_id": "bf56c2e1be67130d8183ce1138214dc2ab7592c6c55bed1abf4a1af02ae11241",
     "discovery_transaction_role": "primary"
   },
   "paper_first_problem_discovery_contract": {
@@ -31362,8 +31360,8 @@
   },
   "paper_first_problem_generator": {
     "schema_version": "2.5",
-    "generated_at": "2026-08-14T02:15:42+00:00",
-    "run_id": "20260814T021542Z",
+    "generated_at": "2026-08-14T02:39:40+00:00",
+    "run_id": "20260814T023940Z",
     "generator_model": "ark-code-latest",
     "reviewer_model": "glm-5.2",
     "policy": {
@@ -31486,8 +31484,14 @@
         "OTHER": 0
       }
     },
-    "raw_artifacts": {},
-    "generation_notes": "",
+    "raw_artifacts": {
+      "generator": {
+        "sha256": "62d846305a4c72c49d921bf75cb2491779dd10c65f9c37c2d7fe2340aced25a7",
+        "requested_model": "ark-code-latest",
+        "resolved_model": "doubao-seed-evolving"
+      }
+    },
+    "generation_notes": "Zero candidates survive. The only lane with a contract-satisfying grounded pair is ASSUMPTION_BREAK, but it reduces to nonmonotonic procedural memory/belief revision and is explicitly blocked by the negative-space ledger and repeated dead-end memory.",
     "search_diagnostics": {
       "lane_search_priority": [
         "CONTRADICTION",
@@ -31495,12 +31499,40 @@
         "UNEXPLAINED_BOUNDARY",
         "ASSUMPTION_BREAK"
       ],
-      "lane_search_complete": false,
-      "lane_search": [],
+      "lane_search_complete": true,
+      "lane_search": [
+        {
+          "lane": "CONTRADICTION",
+          "status": "NO_PAIR",
+          "source_refs": [],
+          "reason": "No two current sources provide independently grounded empirical facts that are incompatible under one explicitly shared operationalization. Apparent conflicts (e.g., memory/skill additions helping versus hurting) occur under different retrieval counts, task regimes, or system conditions rather than a shared bounded measurement."
+        },
+        {
+          "lane": "CONVERGENT_FAILURE",
+          "status": "NO_PAIR",
+          "source_refs": [],
+          "reason": "No pair of independent method families exhibits quantitative failure under the same bounded operational condition with a common failure object. Existing failures are domain- or component-specific (skill enactment, retrieval overuse, defense overrestriction, memory grounding) without a shared condition and independence basis."
+        },
+        {
+          "lane": "UNEXPLAINED_BOUNDARY",
+          "status": "NO_PAIR",
+          "source_refs": [],
+          "reason": "No pair quantitatively establishes an anomalous boundary and an adjacent expected regime for the same measured phenomenon with an unexplained transition. Reported plateaus/thresholds are sensitivity results within single systems and lack a second source sharing the measurement and adjacent regime."
+        },
+        {
+          "lane": "ASSUMPTION_BREAK",
+          "status": "REDUCIBLE",
+          "source_refs": [
+            "arXiv:2608.11654",
+            "arXiv:2608.11888"
+          ],
+          "reason": "The strongest grounded pair is the formal monotonicity assumption in agent memory and empirical skill-induced required-element omissions when relevant procedural guidance is loaded. This satisfies the lane contract but is already covered by the procedural-memory-nonmonotonicity veto and prior blocked candidates; no new observable defeats that reduction."
+        }
+      ],
       "last_completed_lane_search": {
-        "run_id": "20260813T141222Z",
+        "run_id": "20260814T023940Z",
         "generator_status": "GENERATED_ZERO_CANDIDATES",
-        "generated_at": "2026-08-13T14:12:22+00:00",
+        "generated_at": "2026-08-14T02:39:40+00:00",
         "mode": "legacy_pair_audit",
         "lane_search_priority": [
           "CONTRADICTION",
@@ -31513,19 +31545,19 @@
             "lane": "CONTRADICTION",
             "status": "NO_PAIR",
             "source_refs": [],
-            "reason": "No two current empirical sources share an operationalization while reporting incompatible facts. The closest pairs concern skill/memory monotonicity, but they do not use the same measured setting or directly contradict each other."
+            "reason": "No two current sources provide independently grounded empirical facts that are incompatible under one explicitly shared operationalization. Apparent conflicts (e.g., memory/skill additions helping versus hurting) occur under different retrieval counts, task regimes, or system conditions rather than a shared bounded measurement."
           },
           {
             "lane": "CONVERGENT_FAILURE",
             "status": "NO_PAIR",
             "source_refs": [],
-            "reason": "No pair of independent method families reports quantitative failure under the same bounded operational condition with a common failure object. Existing failures are domain- or system-specific and lack a shared condition plus independent method-family basis."
+            "reason": "No pair of independent method families exhibits quantitative failure under the same bounded operational condition with a common failure object. Existing failures are domain- or component-specific (skill enactment, retrieval overuse, defense overrestriction, memory grounding) without a shared condition and independence basis."
           },
           {
             "lane": "UNEXPLAINED_BOUNDARY",
             "status": "NO_PAIR",
             "source_refs": [],
-            "reason": "No pair quantitatively establishes an anomalous boundary and an adjacent expected regime for the same measured phenomenon. Reported thresholds or phase changes come from single studies without a second source supplying the adjacent regime under shared measurement."
+            "reason": "No pair quantitatively establishes an anomalous boundary and an adjacent expected regime for the same measured phenomenon with an unexplained transition. Reported plateaus/thresholds are sensitivity results within single systems and lack a second source sharing the measurement and adjacent regime."
           },
           {
             "lane": "ASSUMPTION_BREAK",
@@ -31534,18 +31566,62 @@
               "arXiv:2608.11654",
               "arXiv:2608.11888"
             ],
-            "reason": "The strongest grounded pair is the explicit monotonicity assumption in the formal memory framework and empirical skill-induced omissions from loaded relevant skills. It satisfies the lane contract but is already reducible to procedural-memory nonmonotonicity / belief revision and prior blocked candidates."
+            "reason": "The strongest grounded pair is the formal monotonicity assumption in agent memory and empirical skill-induced required-element omissions when relevant procedural guidance is loaded. This satisfies the lane contract but is already covered by the procedural-memory-nonmonotonicity veto and prior blocked candidates; no new observable defeats that reduction."
           }
         ],
-        "generation_notes": "Zero candidates survive. The only lane with a contract-satisfying pair is ASSUMPTION_BREAK, but it falls in the repeatedly blocked procedural-memory-nonmonotonicity basin and is hard-vetoed by the saturation ledger.",
+        "generation_notes": "Zero candidates survive. The only lane with a contract-satisfying grounded pair is ASSUMPTION_BREAK, but it reduces to nonmonotonic procedural memory/belief revision and is explicitly blocked by the negative-space ledger and repeated dead-end memory.",
         "scientific_authority": false
       },
       "scientific_authority": false
     },
     "saturation_memory": {
-      "ledger_entries": 15,
+      "ledger_entries": 16,
       "prior_identical_zero_runs": 0,
-      "current_run_recorded": false,
+      "current_run_recorded": true,
+      "current_review_receipt": {
+        "run_id": "20260814T023940Z",
+        "pool_sha256": "ddb857e5c7f949ee85c16e0a19050b13d6df8358dfaa4229cc77fbdff331c39d",
+        "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
+        "source_refs": [
+          "arXiv:2608.04562",
+          "arXiv:2608.04746",
+          "arXiv:2608.04828",
+          "arXiv:2608.04843",
+          "arXiv:2608.04872",
+          "arXiv:2608.04933",
+          "arXiv:2608.04968",
+          "arXiv:2608.05030",
+          "arXiv:2608.05144",
+          "arXiv:2608.05446",
+          "arXiv:2608.05604",
+          "arXiv:2608.05628",
+          "arXiv:2608.05784",
+          "arXiv:2608.05999",
+          "arXiv:2608.06020",
+          "arXiv:2608.06474",
+          "arXiv:2608.10494",
+          "arXiv:2608.10504",
+          "arXiv:2608.11079",
+          "arXiv:2608.11350",
+          "arXiv:2608.11596",
+          "arXiv:2608.11654",
+          "arXiv:2608.11888",
+          "arXiv:2608.12428",
+          "arXiv:2608.12629",
+          "arXiv:2608.12720",
+          "arXiv:2608.12743",
+          "arXiv:2608.12841",
+          "arXiv:2608.12851",
+          "arXiv:2608.12977",
+          "arXiv:2608.13040",
+          "arXiv:2608.13560"
+        ],
+        "status": "GENERATED_ZERO_CANDIDATES",
+        "requested_model": "ark-code-latest",
+        "resolved_model": "doubao-seed-evolving",
+        "raw_sha256": "62d846305a4c72c49d921bf75cb2491779dd10c65f9c37c2d7fe2340aced25a7",
+        "scientific_authority": false
+      },
       "portable_review_receipts": [
         {
           "run_id": "20260813T091902Z",
@@ -32207,6 +32283,50 @@
           "resolved_model": "doubao-seed-evolving",
           "raw_sha256": "da4626d8c8f34e57d21a66f5facf963d30b7069fbd640ae52352d99db4089110",
           "scientific_authority": false
+        },
+        {
+          "run_id": "20260814T023940Z",
+          "pool_sha256": "ddb857e5c7f949ee85c16e0a19050b13d6df8358dfaa4229cc77fbdff331c39d",
+          "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
+          "source_refs": [
+            "arXiv:2608.04562",
+            "arXiv:2608.04746",
+            "arXiv:2608.04828",
+            "arXiv:2608.04843",
+            "arXiv:2608.04872",
+            "arXiv:2608.04933",
+            "arXiv:2608.04968",
+            "arXiv:2608.05030",
+            "arXiv:2608.05144",
+            "arXiv:2608.05446",
+            "arXiv:2608.05604",
+            "arXiv:2608.05628",
+            "arXiv:2608.05784",
+            "arXiv:2608.05999",
+            "arXiv:2608.06020",
+            "arXiv:2608.06474",
+            "arXiv:2608.10494",
+            "arXiv:2608.10504",
+            "arXiv:2608.11079",
+            "arXiv:2608.11350",
+            "arXiv:2608.11596",
+            "arXiv:2608.11654",
+            "arXiv:2608.11888",
+            "arXiv:2608.12428",
+            "arXiv:2608.12629",
+            "arXiv:2608.12720",
+            "arXiv:2608.12743",
+            "arXiv:2608.12841",
+            "arXiv:2608.12851",
+            "arXiv:2608.12977",
+            "arXiv:2608.13040",
+            "arXiv:2608.13560"
+          ],
+          "status": "GENERATED_ZERO_CANDIDATES",
+          "requested_model": "ark-code-latest",
+          "resolved_model": "doubao-seed-evolving",
+          "raw_sha256": "62d846305a4c72c49d921bf75cb2491779dd10c65f9c37c2d7fe2340aced25a7",
+          "scientific_authority": false
         }
       ],
       "blocked_problem_memory": {
@@ -32381,30 +32501,29 @@
         "scientific_authority": false
       },
       "scientific_authority": false,
-      "portable_review_receipt_count": 15
+      "portable_review_receipt_count": 16
     },
     "candidates": [],
-    "primary_pool_age_hours": 0.0059,
+    "primary_pool_age_hours": 0.0148,
     "source_coverage": {
       "coverage_exhausted": false,
-      "source_retrieval_complete": false,
-      "eligible_lane_linked_sources": 78,
-      "reviewed_lane_linked_sources": 78,
-      "unreviewed_lane_linked_sources": 0,
-      "unreviewed_no_lane_sources": 2,
+      "source_retrieval_complete": true,
+      "eligible_lane_linked_sources": 218,
+      "reviewed_lane_linked_sources": 209,
+      "unreviewed_lane_linked_sources": 9,
+      "unreviewed_no_lane_sources": 9,
       "carrier_probe_required": false,
       "carrier_probe_pending": 0,
       "carrier_probe_complete": true,
       "scientific_authority": false
     },
-    "coverage_skip_reason": "The retrieval window is incomplete and no unreviewed lane-grounded source was recovered from the available corpus; the existing pool cannot trigger another live generator call.",
-    "status": "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE",
-    "discovery_transaction_id": "e98fa7f919256816ed6bb6ca866852f9a280e9e0cf9d545fc599e8b997a970b0",
+    "status": "GENERATED_ZERO_CANDIDATES",
+    "discovery_transaction_id": "bf56c2e1be67130d8183ce1138214dc2ab7592c6c55bed1abf4a1af02ae11241",
     "discovery_transaction_role": "generator"
   },
   "paper_first_problem_gate_queue": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-14T02:15:42+00:00",
+    "generated_at": "2026-08-14T02:39:52+00:00",
     "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
     "source_inboxes": [
       "private-data://paper-first-problem-discovery/candidate-inbox.json",
@@ -32467,7 +32586,7 @@
     "blocked": [],
     "audited": [],
     "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry.",
-    "discovery_transaction_id": "e98fa7f919256816ed6bb6ca866852f9a280e9e0cf9d545fc599e8b997a970b0",
+    "discovery_transaction_id": "bf56c2e1be67130d8183ce1138214dc2ab7592c6c55bed1abf4a1af02ae11241",
     "discovery_transaction_role": "queue"
   },
   "paper_first_search_portfolio_design_adjudication": {
@@ -70350,42 +70469,42 @@
             "corpus_available": true,
             "corpus_fresh": true,
             "discovery_mode": "semantic-scholar-plus-arxiv-augmentation",
-            "augmentation_discovered": 0,
-            "augmentation_added": 0,
+            "augmentation_discovered": 302,
+            "augmentation_added": 258,
             "selected": 32,
             "verified": 32,
             "fetch_errors": 0,
             "title_mismatches": 0,
             "fulltext_verified": 31,
             "fulltext_fetch_errors": 1,
-            "empirical_fact_candidates": 96,
+            "empirical_fact_candidates": 103,
             "empirical_fact_tier_counts": {
-              "quantitative-directional": 46,
-              "strong-observation": 20,
-              "result-section-directional": 20,
-              "owned-directional": 10
+              "result-section-directional": 13,
+              "strong-observation": 26,
+              "quantitative-directional": 61,
+              "owned-directional": 3
             },
             "typed_evidence_candidates": {
               "operational_assumptions": 4,
-              "measured_failures": 33,
-              "boundary_observations": 11
+              "measured_failures": 37,
+              "boundary_observations": 14
             },
-            "recent_verified_cache_reused": 0,
-            "recent_raw_primary_cache_reused": 20,
-            "recent_raw_fulltext_cache_reused": 19,
-            "recent_fulltext_failure_cooldown_skips": 0,
+            "recent_verified_cache_reused": 18,
+            "recent_raw_primary_cache_reused": 14,
+            "recent_raw_fulltext_cache_reused": 13,
+            "recent_fulltext_failure_cooldown_skips": 1,
             "lane_floor": 1,
             "source_coverage_scheduler_active": true,
             "saturation_ledger_runs": 15,
             "portable_review_receipts_merged": 0,
             "prior_reviewed_sources": 214,
-            "eligible_unreviewed": 2,
-            "eligible_lane_unreviewed": 0,
-            "eligible_no_lane_unreviewed": 2,
-            "selected_previously_reviewed": 32,
-            "selected_unreviewed": 0,
-            "selected_object_unreviewed": 0,
-            "selected_lane_unreviewed": 0,
+            "eligible_unreviewed": 18,
+            "eligible_lane_unreviewed": 9,
+            "eligible_no_lane_unreviewed": 9,
+            "selected_previously_reviewed": 23,
+            "selected_unreviewed": 9,
+            "selected_object_unreviewed": 8,
+            "selected_lane_unreviewed": 9,
             "selected_no_lane_unreviewed": 0,
             "carrier_probe_required": false,
             "carrier_probe_attempted": 0,
@@ -70394,60 +70513,60 @@
             "carrier_probe_pending": 0,
             "carrier_probe_errors": 0,
             "carrier_probe_complete": true,
-            "eligible_object_linked_sources": 68,
-            "reviewed_object_linked_sources": 68,
-            "unreviewed_object_linked_sources": 0,
-            "eligible_lane_linked_sources": 78,
-            "reviewed_lane_linked_sources": 78,
-            "unreviewed_lane_linked_sources": 0,
-            "unreviewed_no_lane_sources": 2,
+            "eligible_object_linked_sources": 182,
+            "reviewed_object_linked_sources": 174,
+            "unreviewed_object_linked_sources": 8,
+            "eligible_lane_linked_sources": 218,
+            "reviewed_lane_linked_sources": 209,
+            "unreviewed_lane_linked_sources": 9,
+            "unreviewed_no_lane_sources": 9,
             "source_coverage_exhausted": false,
-            "source_retrieval_complete": false,
+            "source_retrieval_complete": true,
             "coverage_anchor_count": 16,
             "eligible_object_lane_counts": {
-              "skill_harness": 51,
-              "memory_continual": 25,
-              "world_model": 5,
-              "parametric_model_state": 5
+              "skill_harness": 131,
+              "memory_continual": 72,
+              "world_model": 14,
+              "parametric_model_state": 28
             },
             "selected_object_lane_counts": {
-              "skill_harness": 19,
+              "skill_harness": 22,
               "memory_continual": 12,
-              "world_model": 4,
-              "parametric_model_state": 2
+              "world_model": 1,
+              "parametric_model_state": 4
             },
             "eligible_lane_counts": {
-              "skill_harness": 51,
-              "memory_continual": 25,
-              "world_model": 5,
-              "parametric_model_state": 5,
-              "embodied": 16,
-              "collective": 2,
-              "autonomous_science": 1,
-              "runtime_deployment": 20,
-              "safety_reliability": 34
+              "skill_harness": 131,
+              "memory_continual": 72,
+              "world_model": 14,
+              "parametric_model_state": 28,
+              "embodied": 29,
+              "collective": 17,
+              "autonomous_science": 7,
+              "runtime_deployment": 65,
+              "safety_reliability": 93
             },
             "selected_lane_counts": {
-              "skill_harness": 19,
+              "skill_harness": 22,
               "memory_continual": 12,
-              "world_model": 4,
-              "parametric_model_state": 2,
-              "embodied": 7,
-              "collective": 2,
-              "autonomous_science": 1,
-              "runtime_deployment": 8,
-              "safety_reliability": 12
+              "world_model": 1,
+              "parametric_model_state": 4,
+              "embodied": 5,
+              "collective": 3,
+              "autonomous_science": 2,
+              "runtime_deployment": 9,
+              "safety_reliability": 11
             },
             "verified_lane_counts": {
-              "skill_harness": 19,
+              "skill_harness": 22,
               "memory_continual": 12,
-              "world_model": 4,
-              "parametric_model_state": 2,
-              "embodied": 7,
-              "collective": 2,
-              "autonomous_science": 1,
-              "runtime_deployment": 8,
-              "safety_reliability": 12
+              "world_model": 1,
+              "parametric_model_state": 4,
+              "embodied": 5,
+              "collective": 3,
+              "autonomous_science": 2,
+              "runtime_deployment": 9,
+              "safety_reliability": 11
             },
             "undercovered_lanes": [],
             "verified_undercovered_lanes": [],
@@ -70479,7 +70598,7 @@
         "key": "paper-first-problem-generator",
         "pass": true,
         "detail": {
-          "status": "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE",
+          "status": "GENERATED_ZERO_CANDIDATES",
           "summary": {
             "primary_evidence_records": 32,
             "raw_seeds": 0,
@@ -71180,14 +71299,14 @@
         "key": "paper-first-retrieval-incomplete-generator-boundary",
         "pass": true,
         "detail": {
-          "status": "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE",
+          "status": "GENERATED_ZERO_CANDIDATES",
           "source_coverage": {
             "coverage_exhausted": false,
-            "source_retrieval_complete": false,
-            "eligible_lane_linked_sources": 78,
-            "reviewed_lane_linked_sources": 78,
-            "unreviewed_lane_linked_sources": 0,
-            "unreviewed_no_lane_sources": 2,
+            "source_retrieval_complete": true,
+            "eligible_lane_linked_sources": 218,
+            "reviewed_lane_linked_sources": 209,
+            "unreviewed_lane_linked_sources": 9,
+            "unreviewed_no_lane_sources": 9,
             "carrier_probe_required": false,
             "carrier_probe_pending": 0,
             "carrier_probe_complete": true,
@@ -71199,14 +71318,14 @@
         "key": "paper-first-carrier-pending-generator-boundary",
         "pass": true,
         "detail": {
-          "status": "SKIPPED_SOURCE_RETRIEVAL_INCOMPLETE",
+          "status": "GENERATED_ZERO_CANDIDATES",
           "source_coverage": {
             "coverage_exhausted": false,
-            "source_retrieval_complete": false,
-            "eligible_lane_linked_sources": 78,
-            "reviewed_lane_linked_sources": 78,
-            "unreviewed_lane_linked_sources": 0,
-            "unreviewed_no_lane_sources": 2,
+            "source_retrieval_complete": true,
+            "eligible_lane_linked_sources": 218,
+            "reviewed_lane_linked_sources": 209,
+            "unreviewed_lane_linked_sources": 9,
+            "unreviewed_no_lane_sources": 9,
             "carrier_probe_required": false,
             "carrier_probe_pending": 0,
             "carrier_probe_complete": true,
