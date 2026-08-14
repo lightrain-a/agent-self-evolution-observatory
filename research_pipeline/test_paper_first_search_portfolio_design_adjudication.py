@@ -46,6 +46,17 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertTrue(memory["cannot_mutate_canonical_generator_or_queue"])
         self.assertTrue({"SP-09", "SP-15"}.issubset({row["source_candidate_id"] for row in memory["blocked_objects"]}))
 
+    def test_r2_near_miss_preflight_compiles_into_future_shadow_search_memory(self) -> None:
+        memory=self.state["shadow_dead_end_memory"]
+        rows={row["source_candidate_id"]:row for row in memory["blocked_objects"]}
+        self.assertEqual(memory["near_miss_preflight_count"],2)
+        self.assertEqual(self.state["summary"]["near_miss_support_holds"],1)
+        self.assertEqual(self.state["summary"]["near_miss_current_primary_stops"],1)
+        self.assertEqual(rows["SHADOW-P03-C01"]["disposition"],"HOLD_SUPPORT_UNAVAILABLE")
+        self.assertEqual(rows["SHADOW-P09-C01"]["disposition"],"STOP_CURRENT_PRIMARY_COLLISION")
+        self.assertFalse(rows["SHADOW-P03-C01"]["scientific_authority"])
+        self.assertFalse(rows["SHADOW-P09-C01"]["scientific_authority"])
+
     def test_current_source_hard_veto_compiles_into_future_shadow_search_memory(self) -> None:
         memory=_shadow_dead_end_memory({"latest_run":{"candidates":[{"candidate_id":"SHADOW-X","title":"Retrieval attribution gap","search_primitive":"IDENTIFIABILITY_GAP","current_source_status":"complete","current_source_verdict":"BLOCK","current_source_reduction_class":"VALID_HARD_VETO","current_source_strongest_reduction":"generic identifiability over an omitted compiled-context variable","current_source_reason":"Current primary work already exposes retrieval and compilation as separate pipeline objects.","current_source_source_refs":["arXiv:2605.10114","arXiv:2608.05604"]}]}})
         dynamic=[row for row in memory["blocked_objects"] if row["source_candidate_id"]=="SHADOW-X"]

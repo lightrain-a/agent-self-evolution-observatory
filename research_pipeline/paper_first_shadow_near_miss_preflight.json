@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "shadow-r2-near-miss-preflight-20260814",
+  "scientific_authority": false,
+  "receipts": [
+    {
+      "source_candidate_id": "SHADOW-P03-C01",
+      "title": "Observational equivalence of omitted implicit helper and incorrect neighboring fill in frozen-model skill repair",
+      "search_primitive": "IDENTIFIABILITY_GAP",
+      "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+      "evidence_basis": ["arXiv:2608.11888"],
+      "support_status": "NO_RELEASED_MATCHED_IRF_RRO_UNITS_FOUND",
+      "strongest_reduction": "generic partial identification / fault localization remains a sufficient explanation until released matched units establish same-observable, incompatible repair targets",
+      "reason": "The primary paper already defines IRF and RRO as distinct root causes, uses paired execution trajectories for attribution, and reports high automatic root-cause matching. The audited primary/full-text material does not expose a downloadable released trace/label asset containing matched units with the same observable outcome/trace/differential evidence but incompatible correct repair targets. The existence claim needed by this near-miss is therefore unsupported, not falsified.",
+      "avoid": [
+        "rephrasing IRF-versus-RRO confusion as a new identifiability paper without released matched units",
+        "claiming trajectory ambiguity alone when the source already performs paired trajectory attribution",
+        "launching new expensive agent rollouts only to manufacture support for the problem formulation"
+      ],
+      "reopen_only_if": "A released or provenance-audited dataset supplies at least one non-synthetic matched unit in which observable outcome, execution trace, and differential evidence are information-equivalent while the correct repairs are incompatible (for example add omitted helper versus correct neighboring fill), and a generic partial-identification/fault-localization baseline using the same information does not absorb the residual claim.",
+      "automatic_problem_gate_authority": false,
+      "automatic_method_authority": false,
+      "automatic_experiment_authority": false,
+      "automatic_p0_authority": false,
+      "automatic_gpu_authority": false,
+      "scientific_authority": false
+    },
+    {
+      "source_candidate_id": "SHADOW-P09-C01",
+      "title": "Retrieval-Mediated Technical Debt in Fixed-Weight Self-Evolving Agent Runtimes",
+      "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+      "disposition": "STOP_CURRENT_PRIMARY_COLLISION",
+      "evidence_basis": ["arXiv:2605.13716"],
+      "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
+      "strongest_reduction": "skill technical debt with persistent skill-library defects affecting future retrieval, composition, execution, and maintenance",
+      "reason": "Current primary work already treats skill technical debt as a long-lived skill-library maintenance object whose defects degrade later retrieval, composition, and execution. Splitting the realization mechanism into validity/obsolescence and retrieval exposure changes the accounting of when debt is behaviorally realized, but does not yet define an irreducible paper object beyond the same technical-debt lifecycle under identical information.",
+      "avoid": [
+        "renaming skill technical debt as retrieval-mediated debt",
+        "adding retrieval exposure as a second axis without an ex-ante residual prediction",
+        "claiming stored-but-unretrieved or obsolete-and-over-retrieved artifacts as novelty by itself"
+      ],
+      "reopen_only_if": "New primary evidence supports an ex-ante same-information prediction about access-mediated debt that a SkillOps-style technical-debt/maintenance model with the same artifact validity, retrieval, composition, execution, and maintenance observations cannot express; a two-axis relabeling alone does not reopen the basin.",
+      "automatic_problem_gate_authority": false,
+      "automatic_method_authority": false,
+      "automatic_experiment_authority": false,
+      "automatic_p0_authority": false,
+      "automatic_gpu_authority": false,
+      "scientific_authority": false
+    }
+  ]
+}

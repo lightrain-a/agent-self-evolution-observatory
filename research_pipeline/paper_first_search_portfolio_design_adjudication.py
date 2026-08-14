@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT
+from .paper_first_shadow_near_miss_preflight import build_shadow_near_miss_preflight, compile_shadow_dead_end_rows
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-adjudication.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-adjudication.js"
@@ -138,7 +139,7 @@ BASE_SHADOW_DEAD_END_MEMORY = {
 }
 
 
-def _shadow_dead_end_memory(portfolio: dict[str, Any]) -> dict[str, Any]:
+def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None) -> dict[str, Any]:
     memory = json.loads(json.dumps(BASE_SHADOW_DEAD_END_MEMORY, ensure_ascii=False))
     latest = portfolio.get("latest_run") or {}
     added = 0
@@ -172,8 +173,12 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any]) -> dict[str, Any]:
             "scientific_authority": False,
         })
         added += 1
-    memory["memory_id"] = "shadow-paper-design-dead-ends-20260814-r2-current-source"
+    near_miss_state = near_miss_state or build_shadow_near_miss_preflight()
+    near_miss_rows = compile_shadow_dead_end_rows(near_miss_state)
+    memory["blocked_objects"].extend(near_miss_rows)
+    memory["memory_id"] = "shadow-paper-design-dead-ends-20260814-r2-current-source-near-miss"
     memory["current_source_hard_veto_count"] = added
+    memory["near_miss_preflight_count"] = len(near_miss_rows)
     memory["scientific_authority"] = False
     return memory
 
@@ -305,7 +310,8 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
     counts: dict[str, int] = {}
     for row in rows:
         counts[row["verdict"]] = counts.get(row["verdict"], 0) + 1
-    dead_end_memory = _shadow_dead_end_memory(portfolio)
+    near_miss_preflight = build_shadow_near_miss_preflight()
+    dead_end_memory = _shadow_dead_end_memory(portfolio, near_miss_preflight)
     return {
         "schema_version": "1.0",
         "generated_at": _now(),
@@ -330,6 +336,7 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "gpu_authorized": False,
         },
         "advisory_consultation": ADVISORY_CONSULTATION,
+        "shadow_near_miss_preflight": near_miss_preflight,
         "shadow_dead_end_memory": dead_end_memory,
         "shadow_source": {
             "portfolio_status": portfolio.get("status"),
@@ -348,6 +355,9 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "support_inventory_required": counts.get("REVISE_PAPER_PROBLEM_SUPPORT_INVENTORY_REQUIRED", 0),
             "shadow_dead_end_objects": len(dead_end_memory.get("blocked_objects") or []),
             "current_source_hard_veto_dead_ends": int(dead_end_memory.get("current_source_hard_veto_count") or 0),
+            "near_miss_preflight_dead_ends": int(dead_end_memory.get("near_miss_preflight_count") or 0),
+            "near_miss_support_holds": int((near_miss_preflight.get("summary") or {}).get("support_holds") or 0),
+            "near_miss_current_primary_stops": int((near_miss_preflight.get("summary") or {}).get("current_primary_stops") or 0),
             "method_design_authorized": 0,
             "experiment_blueprint_authorized": 0,
             "local_validation_authorized": 0,
@@ -381,9 +391,12 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
     memory = state.get("shadow_dead_end_memory") or {}; blocked_objects=[row for row in memory.get("blocked_objects") or [] if isinstance(row,dict)]; blocked_ids={str(row.get("source_candidate_id") or "") for row in blocked_objects}
     if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True or not {"SP-09","SP-15"}.issubset(blocked_ids):
         errors.append("Paper Design dead-end memory must remain shadow-only and retain both SP-09/SP-15 basins")
-    dynamic=[row for row in blocked_objects if str(row.get("source_candidate_id") or "").startswith("SHADOW-")]
+    dynamic=[row for row in blocked_objects if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
     if int(memory.get("current_source_hard_veto_count") or 0)!=len(dynamic) or any(not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip() or row.get("scientific_authority") is not False for row in dynamic):
         errors.append("current-source hard vetoes must compile into bounded zero-authority shadow dead-end fingerprints")
+    near_miss=state.get("shadow_near_miss_preflight") or {}; near_rows=[row for row in blocked_objects if str(row.get("basin") or "").startswith("near-miss-")]
+    if int(memory.get("near_miss_preflight_count") or 0)!=len(near_rows) or int((near_miss.get("summary") or {}).get("receipts") or 0)!=len(near_rows) or any(row.get("scientific_authority") is not False or not str(row.get("reopen_only_if") or "").strip() for row in near_rows):
+        errors.append("near-miss preflight receipts must compile into bounded zero-authority shadow dead-end fingerprints")
     for row in rows:
         if not row.get("primary_sources") or not row.get("cheapest_problem_falsifier") or row.get("method_design_authorized") is not False or row.get("gpu_authorized") is not False or row.get("live_paper_design_eligible") is not False or row.get("counterfactual_problem_gate_pass_does_not_grant_live_paper_design") is not True:
             errors.append(f"SP design row incomplete or illegally authoritative:{row.get('id')}")
