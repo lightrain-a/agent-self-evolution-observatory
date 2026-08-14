@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T10:36:24+00:00",
+  "generated_at": "2026-08-14T10:44:32+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6073,7 +6073,11 @@
     "paper_first_support_release_recheck_required": 0,
     "paper_first_support_release_support_qualified": 0,
     "paper_first_support_release_generator_reopen": 0,
-    "paper_first_support_release_problem_gate": 0
+    "paper_first_support_release_problem_gate": 0,
+    "paper_first_support_asset_recheck_status": "SUPPORT_ASSET_RECHECK_QUEUE_EMPTY",
+    "paper_first_support_asset_recheck_queued": 0,
+    "paper_first_support_asset_recheck_new_triggers": 0,
+    "paper_first_support_asset_recheck_carried_forward": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -72734,6 +72738,37 @@
       "WAITING_RELEASE_ARTIFACTS": 1,
       "BASELINE_CAPTURED": 1,
       "NO_EXPLICIT_AUTHOR_RELEASE_ENDPOINT": 2
+    },
+    "scientific_authority": false
+  },
+  "paper_first_support_asset_recheck_queue": {
+    "schema_version": "1.0",
+    "status": "SUPPORT_ASSET_RECHECK_QUEUE_EMPTY",
+    "policy": {
+      "scientific_authority": false,
+      "release_change_only_creates_asset_recheck_task": true,
+      "queue_is_durable_across_release_watch_cooldown": true,
+      "queue_only_tracks_current_support_holds": true,
+      "queue_cannot_mark_support_qualified": true,
+      "queue_cannot_reopen_generator_or_problem_gate": true,
+      "queue_cannot_authorize_method_experiment_p0_gpu": true,
+      "explicit_asset_resolution_required_to_clear_entry": true,
+      "automatic_provider_calls_authorized": false,
+      "public_summary_excludes_entries_refs_urls_required_units_and_private_paths": true
+    },
+    "summary": {
+      "support_holds": 4,
+      "release_recheck_signals": 0,
+      "queued": 0,
+      "new_triggers": 0,
+      "carried_forward": 0,
+      "support_qualified": 0,
+      "generator_reopen_authorized": 0,
+      "problem_gate_authorized": 0,
+      "method_authorized": 0,
+      "experiment_authorized": 0,
+      "p0_authorized": 0,
+      "gpu_authorized": 0
     },
     "scientific_authority": false
   }
