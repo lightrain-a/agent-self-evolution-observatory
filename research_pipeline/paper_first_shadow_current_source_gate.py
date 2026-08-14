@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .problem_search_control_snapshot import validate_shadow_run_control
+
 REVIEWER = "web-gpt-current-source-review"
 
 
@@ -126,13 +128,25 @@ def compile_terminal(shadow_final: dict[str, Any], current_reviews: list[dict[st
     }
 
 
-def write_terminal(*, shadow_final_path: Path, receipt_paths: list[Path], output_path: Path) -> dict[str, Any]:
+def write_terminal(*, shadow_final_path: Path, receipt_paths: list[Path], output_path: Path, run_root: Path | None = None) -> dict[str, Any]:
     shadow_final = json.loads(shadow_final_path.read_text(encoding="utf-8"))
+    resolved_run_root = run_root or (output_path.parent if output_path.parent.name.startswith("shadow-") else None)
+    control_sha = ""
+    if resolved_run_root is not None:
+        receipt = validate_shadow_run_control(run_root=resolved_run_root)
+        control_sha = str(receipt.get("control_snapshot_sha256") or "")
+        if shadow_final_path.resolve().parent != resolved_run_root.resolve():
+            raise ValueError("shadow final audit must belong to the qualified run root")
+        if str(shadow_final.get("control_snapshot_sha256") or "") != control_sha:
+            raise ValueError("shadow final audit control snapshot does not match the qualified run")
     receipts = []
     for path in receipt_paths:
         payload = json.loads(path.read_text(encoding="utf-8"))
         candidate_id = str(payload.get("candidate_id") or "")
         receipts.append(normalize_receipt(payload, candidate_id=candidate_id))
     state = compile_terminal(shadow_final, receipts)
+    if control_sha:
+        state["control_snapshot_sha256"] = control_sha
+        state.setdefault("policy", {})["control_snapshot_bound_terminal_gate"] = True
     output_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return state

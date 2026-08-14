@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
+from pathlib import Path
+from unittest.mock import patch
 
-from .paper_first_shadow_current_source_gate import REVIEWER, compile_terminal, normalize_receipt
+from .paper_first_shadow_current_source_gate import REVIEWER, compile_terminal, normalize_receipt, write_terminal
 
 
 class ShadowCurrentSourceGateTest(unittest.TestCase):
@@ -51,6 +55,43 @@ class ShadowCurrentSourceGateTest(unittest.TestCase):
                 self.assertEqual(review["status"], "invalid-provenance")
                 self.assertEqual(review["verdict"], "BLOCK")
                 self.assertFalse(review["provenance_valid"])
+
+    def test_qualified_terminal_write_binds_same_control_snapshot(self):
+        with tempfile.TemporaryDirectory() as td:
+            run = Path(td) / "shadow-qualified"
+            run.mkdir()
+            control_sha = "e" * 64
+            final_path = run / "shadow-final-audit.json"
+            output_path = run / "shadow-terminal-current-source-gate.json"
+            final_path.write_text(json.dumps({"control_snapshot_sha256": control_sha, "rows": []}), encoding="utf-8")
+            with patch("research_pipeline.paper_first_shadow_current_source_gate.validate_shadow_run_control", return_value={"control_snapshot_sha256": control_sha}):
+                state = write_terminal(shadow_final_path=final_path, receipt_paths=[], output_path=output_path, run_root=run)
+            self.assertEqual(state["control_snapshot_sha256"], control_sha)
+            self.assertTrue(state["policy"]["control_snapshot_bound_terminal_gate"])
+            self.assertFalse(state["scientific_authority"])
+
+    def test_shadow_terminal_write_without_qualification_fails_closed(self):
+        with tempfile.TemporaryDirectory() as td:
+            run = Path(td) / "shadow-unqualified"
+            run.mkdir()
+            final_path = run / "shadow-final-audit.json"
+            output_path = run / "shadow-terminal-current-source-gate.json"
+            final_path.write_text(json.dumps({"rows": []}), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "qualified shadow run receipt"):
+                write_terminal(shadow_final_path=final_path, receipt_paths=[], output_path=output_path)
+            self.assertFalse(output_path.exists())
+
+    def test_qualified_terminal_rejects_final_audit_control_mismatch(self):
+        with tempfile.TemporaryDirectory() as td:
+            run = Path(td) / "shadow-qualified"
+            run.mkdir()
+            final_path = run / "shadow-final-audit.json"
+            output_path = run / "shadow-terminal-current-source-gate.json"
+            final_path.write_text(json.dumps({"control_snapshot_sha256": "a" * 64, "rows": []}), encoding="utf-8")
+            with patch("research_pipeline.paper_first_shadow_current_source_gate.validate_shadow_run_control", return_value={"control_snapshot_sha256": "b" * 64}):
+                with self.assertRaisesRegex(ValueError, "control snapshot"):
+                    write_terminal(shadow_final_path=final_path, receipt_paths=[], output_path=output_path, run_root=run)
+            self.assertFalse(output_path.exists())
 
 
 if __name__ == "__main__":
