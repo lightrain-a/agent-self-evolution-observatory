@@ -5,7 +5,9 @@ import unittest
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
+from . import paper_first_support_release_watch as watch
 from .config import StorageSettings
 from .paper_first_support_release_watch import (
     build_portable_release_target_manifest,
@@ -152,6 +154,16 @@ class SupportReleaseWatchTest(unittest.TestCase):
             state=run_support_release_watch(storage=storage,design_state=self.design([self.hold("C","arXiv:2608.00003")]),primary_requester=limited,max_primary_refreshes=1,arxiv_rate_limit_state_path=rate,now=datetime(2026,8,14,tzinfo=timezone.utc),write_ledger=False)
             self.assertTrue(rate.exists())
         self.assertEqual(len(calls),1);self.assertGreaterEqual(state["summary"]["primary_declaration_refresh_rate_limited"],1);self.assertEqual(state["summary"]["checked"],0)
+
+    def test_github_pages_project_fingerprint_uses_head_metadata_not_streaming_get(self) -> None:
+        response=SimpleNamespace(status_code=200,url="https://lab.github.io/ProjectX/",headers={"ETag":"\"abc\"","Last-Modified":"Fri, 14 Aug 2026 01:49:29 GMT","Content-Length":"22720"})
+        with patch("research_pipeline.paper_first_support_release_watch.requests.head",return_value=response) as head, patch("research_pipeline.paper_first_support_release_watch.requests.get") as get:
+            result=watch._default_fetcher({"url":"https://lab.github.io/ProjectX/","declaration_kind":"PROJECT_PAGE"})
+        self.assertEqual(result["status_code"],200)
+        self.assertTrue(result["surface_nonempty"])
+        self.assertEqual(result["fingerprint_version"],watch.FINGERPRINT_VERSION)
+        self.assertEqual(len(result["fingerprint"]),64)
+        head.assert_called_once();get.assert_not_called()
 
     def test_future_code_readme_only_surface_stays_waiting_for_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as td:

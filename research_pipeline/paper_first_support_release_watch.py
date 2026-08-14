@@ -22,7 +22,7 @@ from .paper_first_primary_evidence import (
 from .paper_first_search_portfolio_design_adjudication import build_search_portfolio_design_adjudication
 
 WATCH_SCHEMA = "1.0"
-FINGERPRINT_VERSION = "release-surface-v2"
+FINGERPRINT_VERSION = "release-surface-v3"
 DEFAULT_COOLDOWN_DAYS = 7.0
 PRIMARY_DECLARATION_REFRESH_COOLDOWN_DAYS = 7.0
 MAX_PRIMARY_DECLARATION_REFRESHES = 2
@@ -370,6 +370,22 @@ def _default_fetcher(target: dict[str, Any]) -> dict[str, Any]:
         material = {"status_code": status, "endpoint": url, "default_branch": default_branch, "artifact_file_count": len(artifacts), "artifact_blob_digest": artifact_digest, "fingerprint_version": FINGERPRINT_VERSION}
         fingerprint = _sha(json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
         return {"status_code": status, "fingerprint": fingerprint, "surface_nonempty": bool(artifacts), "artifact_file_count": len(artifacts), "artifact_path_digest": _sha("\n".join(path for path, _ in artifacts)), "fingerprint_version": FINGERPRINT_VERSION, "resolved_endpoint": api}
+    if urlparse(url).netloc.lower().endswith(".github.io"):
+        response = requests.head(url, timeout=20.0, headers=headers, allow_redirects=True)
+        status = int(response.status_code)
+        response_headers = getattr(response, "headers", {}) or {}
+        material = {
+            "status_code": status,
+            "endpoint": url,
+            "resolved_endpoint": str(getattr(response, "url", url) or url),
+            "etag": str(response_headers.get("ETag") or response_headers.get("etag") or ""),
+            "last_modified": str(response_headers.get("Last-Modified") or response_headers.get("last-modified") or ""),
+            "content_length": str(response_headers.get("Content-Length") or response_headers.get("content-length") or ""),
+            "fingerprint_version": FINGERPRINT_VERSION,
+        }
+        fingerprint = _sha(json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
+        surface_nonempty = 200 <= status < 300 and any(material[key] for key in ("etag", "last_modified", "content_length"))
+        return {"status_code": status, "fingerprint": fingerprint, "surface_nonempty": surface_nonempty, "artifact_file_count": None, "fingerprint_version": FINGERPRINT_VERSION, "resolved_endpoint": material["resolved_endpoint"]}
     response = requests.get(url, timeout=20.0, headers=headers, stream=True)
     status = int(response.status_code)
     chunks: list[bytes] = []
