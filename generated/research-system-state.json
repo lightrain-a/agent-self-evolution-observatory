@@ -72109,6 +72109,27 @@
             "NO_EXPLICIT_AUTHOR_RELEASE_ENDPOINT": 2
           }
         }
+      },
+      {
+        "key": "paper-first-support-asset-recheck-queue",
+        "pass": true,
+        "detail": {
+          "status": "SUPPORT_ASSET_RECHECK_QUEUE_EMPTY",
+          "summary": {
+            "support_holds": 4,
+            "release_recheck_signals": 0,
+            "queued": 0,
+            "new_triggers": 0,
+            "carried_forward": 0,
+            "support_qualified": 0,
+            "generator_reopen_authorized": 0,
+            "problem_gate_authorized": 0,
+            "method_authorized": 0,
+            "experiment_authorized": 0,
+            "p0_authorized": 0,
+            "gpu_authorized": 0
+          }
+        }
       }
     ],
     "errors": []
