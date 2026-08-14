@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from .paper_first_shadow_search_admission import build_shadow_search_admission, primary_content_sha256, source_set_sha256
+from .problem_search_control_snapshot import validate_shadow_run_control
 from .problem_search_shadow_launcher import HANDOFF_STATUS, prepare_shadow_run
 
 
@@ -43,14 +44,20 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
             root=Path(td);admission,private_pool,memory,project,files=self.fixture(root);run=root/"shadow-new"
             self.assertEqual(admission["status"],"READY_FOR_SHADOW_QUALIFICATION")
             state=prepare_shadow_run(run_root=run,private_pool_path=private_pool,memory_path=memory,project_root=project,admission_state=admission,require_clean_control=False,control_files=files)
-            frozen=json.loads((run/"frozen-primary-evidence-pool.json").read_text());receipt=json.loads((run/"shadow-run-qualification.json").read_text())
-        self.assertEqual(state["status"],HANDOFF_STATUS)
-        self.assertTrue(state["summary"]["frozen_pool_created"]);self.assertTrue(state["summary"]["qualification_created"])
-        self.assertEqual(state["summary"]["automatic_provider_calls_authorized"],0);self.assertEqual(state["summary"]["model_calls_executed"],0)
-        self.assertEqual(frozen["source_primary_content_sha256"],admission["source_identity"]["current_primary_content_sha256"])
-        self.assertEqual(receipt["source_primary_content_sha256"],frozen["source_primary_content_sha256"])
-        self.assertEqual(receipt["stage_runner_required_schema"],"1.4")
-        self.assertFalse(state["scientific_authority"]);self.assertTrue(all(value is False for value in state["authority"].values()))
+            frozen=json.loads((run/"frozen-primary-evidence-pool.json").read_text());frozen_memory=json.loads((run/"shadow-dead-end-memory.json").read_text());receipt=json.loads((run/"shadow-run-qualification.json").read_text())
+            self.assertEqual(state["status"],HANDOFF_STATUS)
+            self.assertTrue(state["summary"]["frozen_pool_created"]);self.assertTrue(state["summary"]["frozen_memory_created"]);self.assertTrue(state["summary"]["qualification_created"])
+            self.assertEqual(state["summary"]["automatic_provider_calls_authorized"],0);self.assertEqual(state["summary"]["model_calls_executed"],0)
+            self.assertEqual(frozen["source_primary_content_sha256"],admission["source_identity"]["current_primary_content_sha256"])
+            self.assertEqual(receipt["source_primary_content_sha256"],frozen["source_primary_content_sha256"])
+            self.assertEqual(receipt["stage_runner_required_schema"],"1.4")
+            self.assertFalse(frozen_memory["scientific_authority"]);self.assertFalse(frozen_memory["live_source_coverage_effect"]);self.assertTrue(frozen_memory["cannot_mutate_canonical_generator_or_queue"])
+            source_memory=json.loads(memory.read_text());source_memory["blocked_objects"].append({"basin":"later-update","scientific_authority":False});memory.write_text(json.dumps(source_memory),encoding="utf-8")
+            validated=validate_shadow_run_control(run_root=run,pool_path=run/"frozen-primary-evidence-pool.json",memory_path=run/"shadow-dead-end-memory.json",project_root=project,control_files=files)
+            self.assertEqual(validated["memory_sha256"],receipt["memory_sha256"])
+            with self.assertRaisesRegex(ValueError,"memory digest drift"):
+                validate_shadow_run_control(run_root=run,pool_path=run/"frozen-primary-evidence-pool.json",memory_path=memory,project_root=project,control_files=files)
+            self.assertFalse(state["scientific_authority"]);self.assertTrue(all(value is False for value in state["authority"].values()))
 
     def test_same_source_terminal_skip_creates_no_run_root(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -59,7 +66,7 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
             state=prepare_shadow_run(run_root=run,private_pool_path=private_pool,memory_path=memory,project_root=project,admission_state=admission,require_clean_control=False,control_files=files)
             self.assertFalse(run.exists())
         self.assertEqual(state["status"],"SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL")
-        self.assertFalse(state["summary"]["frozen_pool_created"]);self.assertFalse(state["summary"]["qualification_created"])
+        self.assertFalse(state["summary"]["frozen_pool_created"]);self.assertFalse(state["summary"]["frozen_memory_created"]);self.assertFalse(state["summary"]["qualification_created"])
         self.assertEqual(state["summary"]["model_calls_executed"],0)
 
     def test_private_pool_identity_mismatch_holds_without_creating_run(self) -> None:
@@ -82,6 +89,15 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
         self.assertEqual(state1["status"],"HOLD_CANONICAL_PRIVATE_POOL_UNAVAILABLE")
         self.assertEqual(state2["status"],"HOLD_SHADOW_MEMORY_UNAVAILABLE")
         self.assertEqual(state1["summary"]["model_calls_executed"],0);self.assertEqual(state2["summary"]["model_calls_executed"],0)
+
+    def test_invalid_memory_holds_without_creating_run(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);admission,private_pool,memory,project,files=self.fixture(root);run=root/"shadow-invalid-memory"
+            payload=json.loads(memory.read_text());payload["scientific_authority"]=True;memory.write_text(json.dumps(payload),encoding="utf-8")
+            state=prepare_shadow_run(run_root=run,private_pool_path=private_pool,memory_path=memory,project_root=project,admission_state=admission,require_clean_control=False,control_files=files)
+            self.assertFalse(run.exists())
+        self.assertEqual(state["status"],"HOLD_SHADOW_MEMORY_INVALID")
+        self.assertEqual(state["summary"]["model_calls_executed"],0)
 
     def test_nonshadow_run_name_is_rejected_before_freeze(self) -> None:
         with tempfile.TemporaryDirectory() as td:

@@ -44,6 +44,7 @@ def _bounded_result(status: str, *, admission: dict[str, Any], reason: str, run_
             "same_source_transaction": bool(admission_summary.get("same_source_transaction")),
             "qualification_allowed": bool(admission_summary.get("qualification_allowed")),
             "frozen_pool_created": bool(summary.get("frozen_pool_created", False)),
+            "frozen_memory_created": bool(summary.get("frozen_memory_created", False)),
             "qualification_created": bool(summary.get("qualification_created", False)),
             "automatic_provider_calls_authorized": 0,
             "model_calls_executed": 0,
@@ -66,7 +67,8 @@ def _bounded_result(status: str, *, admission: dict[str, Any], reason: str, run_
             "launcher_runs_only_after_shadow_admission": True,
             "canonical_main_private_pool_is_required": True,
             "private_pool_identity_must_match_current_admitted_primary": True,
-            "launcher_can_only_freeze_pool_and_qualification": True,
+            "launcher_can_only_freeze_pool_memory_and_qualification": True,
+            "run_local_memory_is_frozen_before_qualification": True,
             "launcher_never_calls_model_provider": True,
             "stage_runner_still_requires_qualification_receipt": True,
             "scientific_authority": False,
@@ -74,6 +76,22 @@ def _bounded_result(status: str, *, admission: dict[str, Any], reason: str, run_
         "scientific_authority": False,
         "authority": dict(AUTHORITY),
     }
+
+
+def _frozen_memory_payload(memory_path: Path) -> dict[str, Any]:
+    try:
+        payload=json.loads(memory_path.read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError) as error:
+        raise ValueError(f"shadow dead-end memory unreadable: {error}") from error
+    memory=payload.get("shadow_dead_end_memory") if isinstance(payload,dict) else None
+    if not isinstance(memory,dict):
+        memory=payload if isinstance(payload,dict) else {}
+    if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True:
+        raise ValueError("shadow dead-end memory must be zero-authority and unable to mutate canonical discovery")
+    rows=memory.get("blocked_objects") or []
+    if not isinstance(rows,list) or any(not isinstance(row,dict) for row in rows):
+        raise ValueError("shadow dead-end memory blocked_objects must be a list of objects")
+    return json.loads(json.dumps(memory,ensure_ascii=False))
 
 
 def _frozen_pool_payload(private_pool: dict[str, Any], admission: dict[str, Any]) -> dict[str, Any]:
@@ -155,6 +173,10 @@ def prepare_shadow_run(
         raise ValueError("shadow launcher requires an absent or empty run root before freeze")
     if not memory_path.is_file():
         return _bounded_result("HOLD_SHADOW_MEMORY_UNAVAILABLE", admission=admission, reason=f"Shadow dead-end memory unavailable: {memory_path}", run_root=run_root)
+    try:
+        frozen_memory=_frozen_memory_payload(memory_path)
+    except ValueError as error:
+        return _bounded_result("HOLD_SHADOW_MEMORY_INVALID",admission=admission,reason=str(error),run_root=run_root)
     if private_pool_path is None:
         private_pool_path = private_primary_pool_path(StorageSettings.from_env())
     if not private_pool_path.is_file():
@@ -167,18 +189,21 @@ def prepare_shadow_run(
     if not run_root.exists():
         run_root.mkdir(parents=True, exist_ok=False)
     frozen_path = run_root / "frozen-primary-evidence-pool.json"
+    frozen_memory_path=run_root/"shadow-dead-end-memory.json"
     frozen_path.write_text(json.dumps(frozen, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    frozen_memory_path.write_text(json.dumps(frozen_memory,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     try:
         qualification = write_shadow_run_qualification(
             run_root=run_root,
             pool_path=frozen_path,
-            memory_path=memory_path,
+            memory_path=frozen_memory_path,
             project_root=project_root,
             require_clean_control=require_clean_control,
             control_files=control_files,
         )
     except Exception:
         frozen_path.unlink(missing_ok=True)
+        frozen_memory_path.unlink(missing_ok=True)
         try:
             run_root.rmdir()
         except OSError:
@@ -187,9 +212,10 @@ def prepare_shadow_run(
     return _bounded_result(
         HANDOFF_STATUS,
         admission=admission,
-        reason="Canonical private Primary was frozen and a schema-bound zero-authority qualification receipt was created. Provider execution remains unauthorized by this launcher.",
+        reason="Canonical private Primary and shadow dead-end memory were frozen into the run root and a schema-bound zero-authority qualification receipt was created. Provider execution remains unauthorized by this launcher.",
         run_root=run_root,
         frozen_pool_created=True,
+        frozen_memory_created=True,
         qualification_created=True,
         source_generated_at=qualification.get("source_generated_at"),
         source_set_sha256=qualification.get("source_set_sha256"),
