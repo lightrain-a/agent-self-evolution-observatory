@@ -49,6 +49,7 @@ from .paper_first_problem_discovery_contract import DISCOVERY_LANES, SEARCH_PORT
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_shadow_search_admission import build_shadow_search_admission, public_shadow_search_admission_summary, validate_shadow_search_admission
+from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier, validate_shadow_continuation_frontier
 from .paper_first_search_portfolio_design_adjudication import build_search_portfolio_design_adjudication, validate_search_portfolio_design_adjudication, write_search_portfolio_design_adjudication
 from .paper_first_sp15_identifiability_support import build_sp15_identifiability_support, write_sp15_identifiability_support
 from .paper_first_global_relation_recall import load_global_relation_recall_state
@@ -339,6 +340,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_global_relation_scan_admission = public_global_relation_scan_admission_summary(build_global_relation_scan_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,relation_state=paper_first_global_relation_recall,delta_state=paper_first_global_relation_delta_private))
     paper_first_problem_search_portfolio = _load_shadow_search_portfolio_public()
     paper_first_shadow_search_admission = public_shadow_search_admission_summary(build_shadow_search_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,queue_state=paper_first_problem_gate_queue,shadow_state=paper_first_problem_search_portfolio))
+    paper_first_shadow_continuation_frontier = build_shadow_continuation_frontier(admission=paper_first_shadow_search_admission,support_watch=paper_first_support_release_watch,asset_queue=paper_first_support_asset_recheck,support_handoff=paper_first_support_asset_recheck_handoff)
     paper_first_shadow_latest = paper_first_problem_search_portfolio.get("latest_run") or {}
     paper_first_shadow_latest_summary = paper_first_shadow_latest.get("summary") or {}
     paper_first_post_c2 = build_post_c2_adjudication()
@@ -592,6 +594,10 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_shadow_search_same_source_transaction":bool((paper_first_shadow_search_admission.get("summary") or {}).get("same_source_transaction")),
             "paper_first_shadow_search_qualification_allowed":bool((paper_first_shadow_search_admission.get("summary") or {}).get("qualification_allowed")),
             "paper_first_shadow_search_automatic_provider_calls":int((paper_first_shadow_search_admission.get("summary") or {}).get("automatic_provider_calls_authorized") or 0),
+            "paper_first_shadow_continuation_status":paper_first_shadow_continuation_frontier.get("status","HOLD_SHADOW_CONTINUATION_STATE_INCOMPLETE"),
+            "paper_first_shadow_continuation_next_action":paper_first_shadow_continuation_frontier.get("next_control_action","repair-shadow-continuation-state"),
+            "paper_first_shadow_continuation_active_actions":int((paper_first_shadow_continuation_frontier.get("summary") or {}).get("active_control_actions") or 0),
+            "paper_first_shadow_continuation_external_wait":int((paper_first_shadow_continuation_frontier.get("summary") or {}).get("external_wait") or 0),
             "paper_first_shadow_latest_run_id":paper_first_problem_search_portfolio.get("latest_run_id",""),
             "paper_first_shadow_latest_stage_runner_schema":paper_first_shadow_latest.get("stage_runner_required_schema",""),
             "paper_first_shadow_latest_control_snapshot_sha256":paper_first_shadow_latest.get("control_snapshot_sha256",""),
@@ -770,6 +776,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_global_relation_delta_preflight":paper_first_global_relation_delta_preflight,
         "paper_first_global_relation_scan_admission":paper_first_global_relation_scan_admission,
         "paper_first_shadow_search_admission":paper_first_shadow_search_admission,
+        "paper_first_shadow_continuation_frontier":paper_first_shadow_continuation_frontier,
         "paper_first_problem_search_portfolio":paper_first_problem_search_portfolio,
         "paper_first_post_c2":paper_first_post_c2,
         "paper_first_premature_method_diagnostics":paper_first_premature_method_diagnostics,
@@ -1002,6 +1009,8 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and int(support_handoff_summary.get("support_inventory_recheck_ready") or 0)+int(support_handoff_summary.get("provenance_incomplete") or 0)==int(support_handoff_summary.get("queued_asset_rechecks") or 0)
         and all(int(support_handoff_summary.get(key) or 0)==0 for key in ("automatic_execution_authorized","provider_calls_authorized","support_qualified","falsifier_execution_authorized","generator_reopen_authorized","problem_gate_authorized","method_authorized","experiment_authorized","p0_authorized","gpu_authorized"))
     )
+    shadow_continuation=state.get("paper_first_shadow_continuation_frontier") or {}
+    shadow_continuation_boundary_ok=bool(shadow_continuation and not validate_shadow_continuation_frontier(shadow_continuation))
     relation_freshness=state.get("paper_first_global_relation_freshness") or {};relation_freshness_policy=relation_freshness.get("policy") or {};relation_freshness_summary=relation_freshness.get("summary") or {}
     relation_freshness_boundary_ok=bool(
         relation_freshness.get("scientific_authority") is False
@@ -1061,6 +1070,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-support-release-watch", "pass":support_release_boundary_ok, "detail":{"status":support_release_watch.get("status"),"summary":support_release_summary,"status_counts":support_release_watch.get("status_counts") or {}}},
         {"key":"paper-first-support-asset-recheck-queue", "pass":support_asset_recheck_boundary_ok, "detail":{"status":support_asset_recheck.get("status"),"summary":support_asset_summary}},
         {"key":"paper-first-support-asset-recheck-handoff", "pass":support_asset_handoff_boundary_ok, "detail":{"status":support_asset_handoff.get("status"),"summary":support_handoff_summary}},
+        {"key":"paper-first-shadow-continuation-frontier", "pass":shadow_continuation_boundary_ok, "detail":{"status":shadow_continuation.get("status"),"summary":shadow_continuation.get("summary") or {}}},
         {"key":"paper-first-global-relation-freshness", "pass":relation_freshness_boundary_ok, "detail":{"status":relation_freshness.get("status"),"summary":relation_freshness_summary}},
         {"key":"paper-first-global-relation-delta-preflight", "pass":relation_delta_boundary_ok, "detail":{"status":relation_delta.get("status"),"summary":relation_delta_summary,"pair_slots":relation_delta.get("pair_slots") or {},"interpretation":relation_delta.get("interpretation") or {}}},
         {"key":"paper-first-global-relation-scan-admission", "pass":relation_admission_boundary_ok, "detail":{"status":relation_admission.get("status"),"summary":relation_admission_summary}},
@@ -1302,6 +1312,12 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             errors.append("support asset handoff public state cannot expose private queue/provenance/support-contract material")
     shadow_search_admission=state.get("paper_first_shadow_search_admission") or {}
     errors.extend(f"Shadow Search admission: {error}" for error in validate_shadow_search_admission(shadow_search_admission))
+    shadow_continuation=state.get("paper_first_shadow_continuation_frontier") or {}
+    if shadow_continuation:
+        errors.extend(f"Shadow continuation frontier: {error}" for error in validate_shadow_continuation_frontier(shadow_continuation))
+        expected_frontier=build_shadow_continuation_frontier(admission=shadow_search_admission,support_watch=support_release_watch,asset_queue=support_asset_recheck,support_handoff=support_asset_handoff)
+        if shadow_continuation.get("status")!=expected_frontier.get("status") or shadow_continuation.get("next_control_action")!=expected_frontier.get("next_control_action") or (shadow_continuation.get("summary") or {})!=(expected_frontier.get("summary") or {}) or (shadow_continuation.get("source_status") or {})!=(expected_frontier.get("source_status") or {}):
+            errors.append("shadow continuation frontier must equal the deterministic projection of current admission/watch/queue/handoff state")
     shadow_portfolio=state.get("paper_first_problem_search_portfolio") or {};shadow_latest=shadow_portfolio.get("latest_run") or {}
     if shadow_latest:
         latest_policy=shadow_latest.get("policy") or {};latest_summary=shadow_latest.get("summary") or {};latest_authority=shadow_latest.get("authority") or {}

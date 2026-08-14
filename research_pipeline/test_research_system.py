@@ -420,6 +420,19 @@ class ResearchSystemTest(unittest.TestCase):
         broken=copy.deepcopy(self.state);broken["paper_first_shadow_search_admission"]["summary"]["automatic_provider_calls_authorized"]=1
         self.assertTrue(any("Shadow Search admission" in error for error in validate_state(broken)))
 
+    def test_shadow_continuation_frontier_is_deterministic_zero_authority_wait_or_control(self) -> None:
+        frontier=self.state["paper_first_shadow_continuation_frontier"]
+        self.assertFalse(frontier["scientific_authority"])
+        expected_wait="WAIT_EXTERNAL_PRIMARY_OR_SUPPORT_RELEASE_CHANGE" if int((frontier.get("summary") or {}).get("support_holds") or 0)>0 else "WAIT_EXTERNAL_PRIMARY_CONTENT_CHANGE"
+        self.assertEqual(frontier["status"],expected_wait)
+        self.assertEqual((frontier.get("summary") or {}).get("active_control_actions"),0)
+        self.assertEqual((frontier.get("summary") or {}).get("external_wait"),1)
+        self.assertEqual((frontier.get("summary") or {}).get("automatic_provider_calls_authorized"),0)
+        drift=copy.deepcopy(self.state);drift["paper_first_shadow_continuation_frontier"]["status"]="READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION"
+        self.assertTrue(any("deterministic projection" in error for error in validate_state(drift)))
+        escalated=copy.deepcopy(self.state);escalated["paper_first_shadow_continuation_frontier"]["summary"]["generator_reopen_authorized"]=1
+        self.assertTrue(any("Shadow continuation frontier" in error for error in validate_state(escalated)))
+
     def test_latest_shadow_terminal_is_fail_closed_and_zero_authority(self) -> None:
         state=copy.deepcopy(self.state)
         state["paper_first_problem_search_portfolio"]={
@@ -526,6 +539,7 @@ class ResearchSystemTest(unittest.TestCase):
         for marker in ('"rows"','"url"','"source_refs"','"required_unit"','"reopen_only_if"'):
             self.assertNotIn(marker,text)
         state=copy.deepcopy(self.state)
+        state.pop("paper_first_shadow_continuation_frontier",None)
         state["paper_first_support_release_watch"]={
             "schema_version":"1.0","status":"SUPPORT_RELEASE_WATCH_COMPLETE","scientific_authority":False,
             "policy":{"scientific_authority":False,"primary_declared_release_endpoints_only":True,"related_work_repository_links_are_not_watch_targets":True,"release_surface_change_only_requests_recheck":True,"release_watch_cannot_mark_support_qualified":True,"release_watch_cannot_reopen_generator_or_problem_gate":True,"release_watch_has_zero_source_exposure_effect":True,"network_checks_are_cooldown_bounded":True,"no_endpoint_primary_refresh_is_primary_source_only":True,"primary_declaration_refresh_has_zero_source_exposure_effect":True,"primary_declaration_refresh_cannot_qualify_support":True,"public_summary_excludes_urls_refs_required_units_and_private_paths":True},
@@ -548,6 +562,7 @@ class ResearchSystemTest(unittest.TestCase):
             self.assertEqual(int((queue.get("summary") or {}).get(key) or 0),0)
         self.assertNotIn("entries",queue)
         state=copy.deepcopy(self.state)
+        state.pop("paper_first_shadow_continuation_frontier",None)
         state.pop("paper_first_support_asset_recheck_handoff",None)
         state["paper_first_support_asset_recheck_queue"]={
             "schema_version":"1.0","status":"SUPPORT_ASSET_RECHECK_QUEUE_READY","scientific_authority":False,
@@ -566,6 +581,7 @@ class ResearchSystemTest(unittest.TestCase):
 
     def test_support_asset_handoff_is_bounded_to_existing_preflight_and_matches_queue(self) -> None:
         state=copy.deepcopy(self.state)
+        state.pop("paper_first_shadow_continuation_frontier",None)
         state["paper_first_support_asset_recheck_queue"]={
             "schema_version":"1.0","status":"SUPPORT_ASSET_RECHECK_QUEUE_READY","scientific_authority":False,
             "policy":{"scientific_authority":False,"release_change_only_creates_asset_recheck_task":True,"queue_is_durable_across_release_watch_cooldown":True,"queue_only_tracks_current_support_holds":True,"queue_cannot_mark_support_qualified":True,"queue_cannot_reopen_generator_or_problem_gate":True,"queue_cannot_authorize_method_experiment_p0_gpu":True,"explicit_asset_resolution_required_to_clear_entry":True,"automatic_provider_calls_authorized":False,"public_summary_excludes_entries_refs_urls_required_units_and_private_paths":True},
