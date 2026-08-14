@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T02:23:30+00:00",
+  "generated_at": "2026-08-14T02:51:14+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -11,6 +11,7 @@
     "shadow_queue_has_zero_paper_design_authority": true,
     "cannot_grant_or_revoke_live_paper_design_authority": true,
     "counterfactual_problem_gate_pass_only_triggers_retrospective_collision_audit": true,
+    "current_source_hard_veto_memory_persists_across_shadow_runs": true,
     "current_primary_source_collision_review_required": true,
     "same_information_reduction_required_before_method_design": true,
     "failed_or_missing_ai_reviewer_is_not_pass": true,
@@ -41,7 +42,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-14T02:23:30+00:00",
+    "generated_at": "2026-08-14T02:51:14+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -58,9 +59,10 @@
       "automatic_gpu_authority": false
     },
     "summary": {
-      "receipts": 2,
+      "receipts": 4,
       "support_holds": 1,
-      "current_primary_stops": 1,
+      "current_primary_stops": 2,
+      "mature_theory_stops": 1,
       "problem_gate_authorized": 0,
       "method_authorized": 0,
       "experiment_authorized": 0,
@@ -115,12 +117,63 @@
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
         "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P05-C01",
+        "title": "Endogenous Trace Observability: Separating Execution-Process Correction from Skill-Package Effects in Fixed-Weight Self-Improving Agents",
+        "search_primitive": "NEW_CAPABILITY_QUESTION",
+        "disposition": "STOP_MATURE_THEORY_REDUCTION",
+        "evidence_basis": [
+          "arXiv:2607.02901",
+          "arXiv:1806.11153"
+        ],
+        "support_status": "MATURE_CAUSAL_OBJECT_ALREADY_EXPRESSES_PREDICTION",
+        "strongest_reduction": "treatment-induced confounding plus joint treatment-monitoring interventions / informative monitoring processes",
+        "reason": "The candidate's residual claim is that a skill edit changes not only execution but the future diagnostic observation map used to evaluate that edit. Mature longitudinal causal inference already treats treatment-induced confounding and non-systematic monitoring as identification problems, and explicitly formulates joint treatment/monitoring interventions. Replacing treatment with a textual skill and monitoring with future trace exposure instantiates that mature object but does not yet add an ex-ante prediction that the same-information causal model cannot express.",
+        "avoid": [
+          "renaming treatment-induced monitoring or measurement endogeneity as endogenous trace observability",
+          "claiming novelty from a textual skill changing which future logs are observed without a residual beyond joint treatment-monitoring causal inference",
+          "using matched outcome or trace-coverage summaries as evidence of a new causal object when monitoring itself is treatment-dependent"
+        ],
+        "reopen_only_if": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin.",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P12-C02",
+        "title": "Contaminated self-tests make skill-failure causes non-identifiable in test-time skill refinement",
+        "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+        "disposition": "STOP_CURRENT_PRIMARY_COLLISION",
+        "evidence_basis": [
+          "arXiv:2607.22883",
+          "arXiv:2607.25152",
+          "arXiv:2602.07900"
+        ],
+        "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
+        "strongest_reduction": "self-generated verification inherits the defect or in-band information channel under test, so externally grounded or specification-independent verification is required",
+        "reason": "Current primary work directly shows that buggy code can misguide LLM-generated tests into asserting the same erroneous behavior while suppressing bug-finding tests, and that long-running agents' in-band self-evaluation can accept stagnation or regression until an externally grounded signal is introduced. Agent-generated tests are also empirically observed to function mainly as in-band observational feedback channels. This already instantiates the candidate's structural contamination claim that a self-test generated through the suspect artifact or workflow may fail to supply independent evidence.",
+        "avoid": [
+          "renaming buggy-code-induced test misguidance or in-band self-evaluation bias as a new intervention-contamination object",
+          "claiming that more self-tests solve causal ambiguity without specifying an independent information source",
+          "using skill/workflow vocabulary to restate the need for specification-based or externally grounded verification"
+        ],
+        "reopen_only_if": "New primary evidence demonstrates a contamination-induced non-identifiability residual that persists after matching test budget, using a specification-independent or externally grounded test generator, and controlling evaluator ancestry; the residual must not reduce to buggy-artifact test misguidance, in-band self-evaluation bias, verifier exogeneity, or generic active-testing partial identification.",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
       }
     ],
     "scientific_authority": false
   },
   "shadow_dead_end_memory": {
-    "memory_id": "shadow-paper-design-dead-ends-20260814-r2-current-source-near-miss",
+    "memory_id": "shadow-paper-design-dead-ends-persistent-current-source-near-miss",
     "scientific_authority": false,
     "live_source_coverage_effect": false,
     "cannot_mutate_canonical_generator_or_queue": true,
@@ -206,10 +259,53 @@
         "reason": "Current primary work already treats skill technical debt as a long-lived skill-library maintenance object whose defects degrade later retrieval, composition, and execution. Splitting the realization mechanism into validity/obsolescence and retrieval exposure changes the accounting of when debt is behaviorally realized, but does not yet define an irreducible paper object beyond the same technical-debt lifecycle under identical information.",
         "reopen_only_if": "New primary evidence supports an ex-ante same-information prediction about access-mediated debt that a SkillOps-style technical-debt/maintenance model with the same artifact validity, retrieval, composition, execution, and maintenance observations cannot express; a two-axis relabeling alone does not reopen the basin.",
         "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P05-C01",
+        "basin": "near-miss-mature-theory-reduction",
+        "search_primitive": "NEW_CAPABILITY_QUESTION",
+        "disposition": "STOP_MATURE_THEORY_REDUCTION",
+        "avoid": [
+          "renaming treatment-induced monitoring or measurement endogeneity as endogenous trace observability",
+          "claiming novelty from a textual skill changing which future logs are observed without a residual beyond joint treatment-monitoring causal inference",
+          "using matched outcome or trace-coverage summaries as evidence of a new causal object when monitoring itself is treatment-dependent"
+        ],
+        "strongest_reduction": "treatment-induced confounding plus joint treatment-monitoring interventions / informative monitoring processes",
+        "current_source_refs": [
+          "arXiv:2607.02901",
+          "arXiv:1806.11153"
+        ],
+        "support_status": "MATURE_CAUSAL_OBJECT_ALREADY_EXPRESSES_PREDICTION",
+        "reason": "The candidate's residual claim is that a skill edit changes not only execution but the future diagnostic observation map used to evaluate that edit. Mature longitudinal causal inference already treats treatment-induced confounding and non-systematic monitoring as identification problems, and explicitly formulates joint treatment/monitoring interventions. Replacing treatment with a textual skill and monitoring with future trace exposure instantiates that mature object but does not yet add an ex-ante prediction that the same-information causal model cannot express.",
+        "reopen_only_if": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin.",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P12-C02",
+        "basin": "near-miss-current-primary-collision",
+        "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+        "disposition": "STOP_CURRENT_PRIMARY_COLLISION",
+        "avoid": [
+          "renaming buggy-code-induced test misguidance or in-band self-evaluation bias as a new intervention-contamination object",
+          "claiming that more self-tests solve causal ambiguity without specifying an independent information source",
+          "using skill/workflow vocabulary to restate the need for specification-based or externally grounded verification"
+        ],
+        "strongest_reduction": "self-generated verification inherits the defect or in-band information channel under test, so externally grounded or specification-independent verification is required",
+        "current_source_refs": [
+          "arXiv:2607.22883",
+          "arXiv:2607.25152",
+          "arXiv:2602.07900"
+        ],
+        "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
+        "reason": "Current primary work directly shows that buggy code can misguide LLM-generated tests into asserting the same erroneous behavior while suppressing bug-finding tests, and that long-running agents' in-band self-evaluation can accept stagnation or regression until an externally grounded signal is introduced. Agent-generated tests are also empirically observed to function mainly as in-band observational feedback channels. This already instantiates the candidate's structural contamination claim that a self-test generated through the suspect artifact or workflow may fail to supply independent evidence.",
+        "reopen_only_if": "New primary evidence demonstrates a contamination-induced non-identifiability residual that persists after matching test budget, using a specification-independent or externally grounded test generator, and controlling evaluator ancestry; the residual must not reduce to buggy-artifact test misguidance, in-band self-evaluation bias, verifier exogeneity, or generic active-testing partial identification.",
+        "scientific_authority": false
       }
     ],
     "current_source_hard_veto_count": 1,
-    "near_miss_preflight_count": 2
+    "current_source_hard_veto_added_from_latest_run": 0,
+    "current_source_hard_veto_inherited": 1,
+    "near_miss_preflight_count": 4
   },
   "shadow_source": {
     "portfolio_status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
@@ -260,11 +356,14 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 5,
+    "shadow_dead_end_objects": 7,
     "current_source_hard_veto_dead_ends": 1,
-    "near_miss_preflight_dead_ends": 2,
+    "current_source_hard_veto_added_from_latest_run": 0,
+    "current_source_hard_veto_inherited": 1,
+    "near_miss_preflight_dead_ends": 4,
     "near_miss_support_holds": 1,
-    "near_miss_current_primary_stops": 1,
+    "near_miss_current_primary_stops": 2,
+    "near_miss_mature_theory_stops": 1,
     "method_design_authorized": 0,
     "experiment_blueprint_authorized": 0,
     "local_validation_authorized": 0,

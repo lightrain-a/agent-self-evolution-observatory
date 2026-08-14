@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T02:40:54+00:00",
+  "generated_at": "2026-08-14T02:51:44+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -5982,14 +5982,14 @@
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 11,
     "architecture_functional_layers": 6,
-    "paper_first_shadow_latest_run_id": "shadow-20260814-r2",
-    "paper_first_shadow_latest_raw": 101,
-    "paper_first_shadow_latest_unique": 54,
+    "paper_first_shadow_latest_run_id": "shadow-20260814-r3",
+    "paper_first_shadow_latest_raw": 88,
+    "paper_first_shadow_latest_unique": 47,
     "paper_first_shadow_latest_evolved": 36,
     "paper_first_shadow_latest_formulated": 15,
-    "paper_first_shadow_latest_machine_reviewable": 3,
-    "paper_first_shadow_latest_semantic_clear": 1,
-    "paper_first_shadow_latest_current_source_blocked": 1,
+    "paper_first_shadow_latest_machine_reviewable": 2,
+    "paper_first_shadow_latest_semantic_clear": 0,
+    "paper_first_shadow_latest_current_source_blocked": 0,
     "paper_first_shadow_latest_terminal_survivors": 0,
     "paper_first_shadow_latest_live_paper_design_eligible": 0,
     "paper_first_primary_carrier_probe_required": false,
@@ -5997,9 +5997,15 @@
     "paper_first_primary_carrier_probe_rescued": 0,
     "paper_first_primary_carrier_probe_pending": 0,
     "paper_first_primary_carrier_probe_complete": true,
-    "paper_first_search_portfolio_near_miss_dead_ends": 2,
+    "paper_first_search_portfolio_near_miss_dead_ends": 4,
     "paper_first_search_portfolio_near_miss_support_holds": 1,
-    "paper_first_search_portfolio_near_miss_current_primary_stops": 1
+    "paper_first_search_portfolio_near_miss_current_primary_stops": 2,
+    "paper_first_shadow_latest_expansion_successful_shards": 18,
+    "paper_first_shadow_latest_expansion_parse_failures": 2,
+    "paper_first_search_portfolio_current_source_hard_veto_dead_ends": 1,
+    "paper_first_search_portfolio_current_source_hard_veto_added_latest": 0,
+    "paper_first_search_portfolio_current_source_hard_veto_inherited": 1,
+    "paper_first_search_portfolio_near_miss_mature_theory_stops": 1
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -32591,7 +32597,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-14T02:23:30+00:00",
+    "generated_at": "2026-08-14T02:51:40+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -32602,6 +32608,7 @@
       "shadow_queue_has_zero_paper_design_authority": true,
       "cannot_grant_or_revoke_live_paper_design_authority": true,
       "counterfactual_problem_gate_pass_only_triggers_retrospective_collision_audit": true,
+      "current_source_hard_veto_memory_persists_across_shadow_runs": true,
       "current_primary_source_collision_review_required": true,
       "same_information_reduction_required_before_method_design": true,
       "failed_or_missing_ai_reviewer_is_not_pass": true,
@@ -32632,7 +32639,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-14T02:23:30+00:00",
+      "generated_at": "2026-08-14T02:51:40+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -32649,9 +32656,10 @@
         "automatic_gpu_authority": false
       },
       "summary": {
-        "receipts": 2,
+        "receipts": 4,
         "support_holds": 1,
-        "current_primary_stops": 1,
+        "current_primary_stops": 2,
+        "mature_theory_stops": 1,
         "problem_gate_authorized": 0,
         "method_authorized": 0,
         "experiment_authorized": 0,
@@ -32706,12 +32714,63 @@
           "automatic_p0_authority": false,
           "automatic_gpu_authority": false,
           "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "SHADOW-P05-C01",
+          "title": "Endogenous Trace Observability: Separating Execution-Process Correction from Skill-Package Effects in Fixed-Weight Self-Improving Agents",
+          "search_primitive": "NEW_CAPABILITY_QUESTION",
+          "disposition": "STOP_MATURE_THEORY_REDUCTION",
+          "evidence_basis": [
+            "arXiv:2607.02901",
+            "arXiv:1806.11153"
+          ],
+          "support_status": "MATURE_CAUSAL_OBJECT_ALREADY_EXPRESSES_PREDICTION",
+          "strongest_reduction": "treatment-induced confounding plus joint treatment-monitoring interventions / informative monitoring processes",
+          "reason": "The candidate's residual claim is that a skill edit changes not only execution but the future diagnostic observation map used to evaluate that edit. Mature longitudinal causal inference already treats treatment-induced confounding and non-systematic monitoring as identification problems, and explicitly formulates joint treatment/monitoring interventions. Replacing treatment with a textual skill and monitoring with future trace exposure instantiates that mature object but does not yet add an ex-ante prediction that the same-information causal model cannot express.",
+          "avoid": [
+            "renaming treatment-induced monitoring or measurement endogeneity as endogenous trace observability",
+            "claiming novelty from a textual skill changing which future logs are observed without a residual beyond joint treatment-monitoring causal inference",
+            "using matched outcome or trace-coverage summaries as evidence of a new causal object when monitoring itself is treatment-dependent"
+          ],
+          "reopen_only_if": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin.",
+          "automatic_problem_gate_authority": false,
+          "automatic_method_authority": false,
+          "automatic_experiment_authority": false,
+          "automatic_p0_authority": false,
+          "automatic_gpu_authority": false,
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "SHADOW-P12-C02",
+          "title": "Contaminated self-tests make skill-failure causes non-identifiable in test-time skill refinement",
+          "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+          "disposition": "STOP_CURRENT_PRIMARY_COLLISION",
+          "evidence_basis": [
+            "arXiv:2607.22883",
+            "arXiv:2607.25152",
+            "arXiv:2602.07900"
+          ],
+          "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
+          "strongest_reduction": "self-generated verification inherits the defect or in-band information channel under test, so externally grounded or specification-independent verification is required",
+          "reason": "Current primary work directly shows that buggy code can misguide LLM-generated tests into asserting the same erroneous behavior while suppressing bug-finding tests, and that long-running agents' in-band self-evaluation can accept stagnation or regression until an externally grounded signal is introduced. Agent-generated tests are also empirically observed to function mainly as in-band observational feedback channels. This already instantiates the candidate's structural contamination claim that a self-test generated through the suspect artifact or workflow may fail to supply independent evidence.",
+          "avoid": [
+            "renaming buggy-code-induced test misguidance or in-band self-evaluation bias as a new intervention-contamination object",
+            "claiming that more self-tests solve causal ambiguity without specifying an independent information source",
+            "using skill/workflow vocabulary to restate the need for specification-based or externally grounded verification"
+          ],
+          "reopen_only_if": "New primary evidence demonstrates a contamination-induced non-identifiability residual that persists after matching test budget, using a specification-independent or externally grounded test generator, and controlling evaluator ancestry; the residual must not reduce to buggy-artifact test misguidance, in-band self-evaluation bias, verifier exogeneity, or generic active-testing partial identification.",
+          "automatic_problem_gate_authority": false,
+          "automatic_method_authority": false,
+          "automatic_experiment_authority": false,
+          "automatic_p0_authority": false,
+          "automatic_gpu_authority": false,
+          "scientific_authority": false
         }
       ],
       "scientific_authority": false
     },
     "shadow_dead_end_memory": {
-      "memory_id": "shadow-paper-design-dead-ends-20260814-r2-current-source-near-miss",
+      "memory_id": "shadow-paper-design-dead-ends-persistent-current-source-near-miss",
       "scientific_authority": false,
       "live_source_coverage_effect": false,
       "cannot_mutate_canonical_generator_or_queue": true,
@@ -32797,10 +32856,53 @@
           "reason": "Current primary work already treats skill technical debt as a long-lived skill-library maintenance object whose defects degrade later retrieval, composition, and execution. Splitting the realization mechanism into validity/obsolescence and retrieval exposure changes the accounting of when debt is behaviorally realized, but does not yet define an irreducible paper object beyond the same technical-debt lifecycle under identical information.",
           "reopen_only_if": "New primary evidence supports an ex-ante same-information prediction about access-mediated debt that a SkillOps-style technical-debt/maintenance model with the same artifact validity, retrieval, composition, execution, and maintenance observations cannot express; a two-axis relabeling alone does not reopen the basin.",
           "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "SHADOW-P05-C01",
+          "basin": "near-miss-mature-theory-reduction",
+          "search_primitive": "NEW_CAPABILITY_QUESTION",
+          "disposition": "STOP_MATURE_THEORY_REDUCTION",
+          "avoid": [
+            "renaming treatment-induced monitoring or measurement endogeneity as endogenous trace observability",
+            "claiming novelty from a textual skill changing which future logs are observed without a residual beyond joint treatment-monitoring causal inference",
+            "using matched outcome or trace-coverage summaries as evidence of a new causal object when monitoring itself is treatment-dependent"
+          ],
+          "strongest_reduction": "treatment-induced confounding plus joint treatment-monitoring interventions / informative monitoring processes",
+          "current_source_refs": [
+            "arXiv:2607.02901",
+            "arXiv:1806.11153"
+          ],
+          "support_status": "MATURE_CAUSAL_OBJECT_ALREADY_EXPRESSES_PREDICTION",
+          "reason": "The candidate's residual claim is that a skill edit changes not only execution but the future diagnostic observation map used to evaluate that edit. Mature longitudinal causal inference already treats treatment-induced confounding and non-systematic monitoring as identification problems, and explicitly formulates joint treatment/monitoring interventions. Replacing treatment with a textual skill and monitoring with future trace exposure instantiates that mature object but does not yet add an ex-ante prediction that the same-information causal model cannot express.",
+          "reopen_only_if": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin.",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "SHADOW-P12-C02",
+          "basin": "near-miss-current-primary-collision",
+          "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+          "disposition": "STOP_CURRENT_PRIMARY_COLLISION",
+          "avoid": [
+            "renaming buggy-code-induced test misguidance or in-band self-evaluation bias as a new intervention-contamination object",
+            "claiming that more self-tests solve causal ambiguity without specifying an independent information source",
+            "using skill/workflow vocabulary to restate the need for specification-based or externally grounded verification"
+          ],
+          "strongest_reduction": "self-generated verification inherits the defect or in-band information channel under test, so externally grounded or specification-independent verification is required",
+          "current_source_refs": [
+            "arXiv:2607.22883",
+            "arXiv:2607.25152",
+            "arXiv:2602.07900"
+          ],
+          "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
+          "reason": "Current primary work directly shows that buggy code can misguide LLM-generated tests into asserting the same erroneous behavior while suppressing bug-finding tests, and that long-running agents' in-band self-evaluation can accept stagnation or regression until an externally grounded signal is introduced. Agent-generated tests are also empirically observed to function mainly as in-band observational feedback channels. This already instantiates the candidate's structural contamination claim that a self-test generated through the suspect artifact or workflow may fail to supply independent evidence.",
+          "reopen_only_if": "New primary evidence demonstrates a contamination-induced non-identifiability residual that persists after matching test budget, using a specification-independent or externally grounded test generator, and controlling evaluator ancestry; the residual must not reduce to buggy-artifact test misguidance, in-band self-evaluation bias, verifier exogeneity, or generic active-testing partial identification.",
+          "scientific_authority": false
         }
       ],
       "current_source_hard_veto_count": 1,
-      "near_miss_preflight_count": 2
+      "current_source_hard_veto_added_from_latest_run": 0,
+      "current_source_hard_veto_inherited": 1,
+      "near_miss_preflight_count": 4
     },
     "shadow_source": {
       "portfolio_status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
@@ -32851,11 +32953,14 @@
       "revise_paper_problem": 1,
       "stop_standalone": 1,
       "support_inventory_required": 1,
-      "shadow_dead_end_objects": 5,
+      "shadow_dead_end_objects": 7,
       "current_source_hard_veto_dead_ends": 1,
-      "near_miss_preflight_dead_ends": 2,
+      "current_source_hard_veto_added_from_latest_run": 0,
+      "current_source_hard_veto_inherited": 1,
+      "near_miss_preflight_dead_ends": 4,
       "near_miss_support_holds": 1,
-      "near_miss_current_primary_stops": 1,
+      "near_miss_current_primary_stops": 2,
+      "near_miss_mature_theory_stops": 1,
       "method_design_authorized": 0,
       "experiment_blueprint_authorized": 0,
       "local_validation_authorized": 0,
@@ -70461,6 +70566,18 @@
         }
       },
       {
+        "key": "paper-first-carrier-probe-boundary",
+        "pass": true,
+        "detail": {
+          "schema_version": "1.1",
+          "required": false,
+          "attempted": 0,
+          "rescued": 0,
+          "pending": 0,
+          "complete": true
+        }
+      },
+      {
         "key": "paper-first-primary-evidence",
         "pass": true,
         "detail": {
@@ -70595,6 +70712,44 @@
         }
       },
       {
+        "key": "paper-first-retrieval-incomplete-generator-boundary",
+        "pass": true,
+        "detail": {
+          "status": "GENERATED_ZERO_CANDIDATES",
+          "source_coverage": {
+            "coverage_exhausted": false,
+            "source_retrieval_complete": true,
+            "eligible_lane_linked_sources": 218,
+            "reviewed_lane_linked_sources": 209,
+            "unreviewed_lane_linked_sources": 9,
+            "unreviewed_no_lane_sources": 9,
+            "carrier_probe_required": false,
+            "carrier_probe_pending": 0,
+            "carrier_probe_complete": true,
+            "scientific_authority": false
+          }
+        }
+      },
+      {
+        "key": "paper-first-carrier-pending-generator-boundary",
+        "pass": true,
+        "detail": {
+          "status": "GENERATED_ZERO_CANDIDATES",
+          "source_coverage": {
+            "coverage_exhausted": false,
+            "source_retrieval_complete": true,
+            "eligible_lane_linked_sources": 218,
+            "reviewed_lane_linked_sources": 209,
+            "unreviewed_lane_linked_sources": 9,
+            "unreviewed_no_lane_sources": 9,
+            "carrier_probe_required": false,
+            "carrier_probe_pending": 0,
+            "carrier_probe_complete": true,
+            "scientific_authority": false
+          }
+        }
+      },
+      {
         "key": "paper-first-problem-generator",
         "pass": true,
         "detail": {
@@ -70691,6 +70846,14 @@
           "revise_paper_problem": 1,
           "stop_standalone": 1,
           "support_inventory_required": 1,
+          "shadow_dead_end_objects": 7,
+          "current_source_hard_veto_dead_ends": 1,
+          "current_source_hard_veto_added_from_latest_run": 0,
+          "current_source_hard_veto_inherited": 1,
+          "near_miss_preflight_dead_ends": 4,
+          "near_miss_support_holds": 1,
+          "near_miss_current_primary_stops": 2,
+          "near_miss_mature_theory_stops": 1,
           "method_design_authorized": 0,
           "experiment_blueprint_authorized": 0,
           "local_validation_authorized": 0,
@@ -70721,36 +70884,39 @@
         "key": "shadow-search-latest-terminal",
         "pass": true,
         "detail": {
-          "run_id": "shadow-20260814-r2",
+          "run_id": "shadow-20260814-r3",
           "status": "SHADOW_TERMINAL_COMPLETE",
           "summary": {
             "requested_raw_seeds": 120,
-            "raw_seeds": 101,
-            "semantic_unique": 54,
-            "duplicate_or_near_duplicate": 47,
-            "unique_problem_families": 54,
-            "breadth_archive": 48,
+            "expansion_requested_shards": 20,
+            "expansion_successful_shards": 18,
+            "expansion_parse_failures": 2,
+            "raw_seeds": 88,
+            "semantic_unique": 47,
+            "duplicate_or_near_duplicate": 41,
+            "unique_problem_families": 47,
+            "breadth_archive": 47,
             "archive_lane_coverage": 10,
-            "mean_archive_pairwise_distance": 0.8798,
+            "mean_archive_pairwise_distance": 0.8749,
             "evolved_branches": 36,
             "max_branch_depth": 2,
             "formulated_candidates": 15,
             "formulation_rejected": 9,
-            "machine_reviewable": 3,
-            "machine_reduction_blocked": 12,
-            "semantic_reviewed": 3,
-            "semantic_clear": 1,
+            "machine_reviewable": 2,
+            "machine_reduction_blocked": 13,
+            "semantic_reviewed": 2,
+            "semantic_clear": 0,
             "semantic_blocked": 2,
-            "current_source_reviewed": 1,
+            "current_source_reviewed": 0,
             "current_source_clear": 0,
-            "current_source_blocked": 1,
+            "current_source_blocked": 0,
             "current_source_missing": 0,
             "terminal_shadow_survivors": 0,
             "live_problem_gate_compatible_survivors": 0,
             "live_paper_design_eligible": 0,
             "generator_model_calls": 38,
-            "reviewer_model_calls": 2,
-            "current_source_review_receipts": 1
+            "reviewer_model_calls": 1,
+            "current_source_review_receipts": 0
           }
         }
       },
@@ -71127,7 +71293,7 @@
         "pass": true,
         "detail": {
           "schema_version": "2.2",
-          "generated_at": "2026-08-14T01:24:36+00:00",
+          "generated_at": "2026-08-14T02:51:40+00:00",
           "policy": {
             "schema_version": "2.2",
             "paper_novelty_precedes_method_design": true,
@@ -71294,62 +71460,12 @@
           "revise": 0,
           "block": 0
         }
-      },
-      {
-        "key": "paper-first-retrieval-incomplete-generator-boundary",
-        "pass": true,
-        "detail": {
-          "status": "GENERATED_ZERO_CANDIDATES",
-          "source_coverage": {
-            "coverage_exhausted": false,
-            "source_retrieval_complete": true,
-            "eligible_lane_linked_sources": 218,
-            "reviewed_lane_linked_sources": 209,
-            "unreviewed_lane_linked_sources": 9,
-            "unreviewed_no_lane_sources": 9,
-            "carrier_probe_required": false,
-            "carrier_probe_pending": 0,
-            "carrier_probe_complete": true,
-            "scientific_authority": false
-          }
-        }
-      },
-      {
-        "key": "paper-first-carrier-pending-generator-boundary",
-        "pass": true,
-        "detail": {
-          "status": "GENERATED_ZERO_CANDIDATES",
-          "source_coverage": {
-            "coverage_exhausted": false,
-            "source_retrieval_complete": true,
-            "eligible_lane_linked_sources": 218,
-            "reviewed_lane_linked_sources": 209,
-            "unreviewed_lane_linked_sources": 9,
-            "unreviewed_no_lane_sources": 9,
-            "carrier_probe_required": false,
-            "carrier_probe_pending": 0,
-            "carrier_probe_complete": true,
-            "scientific_authority": false
-          }
-        }
-      },
-      {
-        "key": "paper-first-carrier-probe-boundary",
-        "pass": true,
-        "detail": {
-          "schema_version": "1.1",
-          "required": false,
-          "attempted": 0,
-          "rescued": 0,
-          "pending": 0,
-          "complete": true
-        }
       }
     ]
   },
   "paper_first_problem_search_portfolio": {
     "schema_version": "3.2-shadow-import",
-    "generated_at": "2026-08-14T01:52:42+00:00",
+    "generated_at": "2026-08-14T02:51:14+00:00",
     "imported_at": "2026-08-13T16:28:11+00:00",
     "status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
     "historical_source_commit": "7b2a7260df3bae5d140cdc7f4d09a56dd898a72b",
@@ -71555,14 +71671,14 @@
       }
     ],
     "scientific_authority": false,
-    "latest_run_id": "shadow-20260814-r2",
+    "latest_run_id": "shadow-20260814-r3",
     "latest_run": {
       "schema_version": "1.0-shadow-run",
-      "run_id": "shadow-20260814-r2",
+      "run_id": "shadow-20260814-r3",
       "status": "SHADOW_TERMINAL_COMPLETE",
-      "generated_at": "2026-08-14T01:52:42+00:00",
+      "generated_at": "2026-08-14T02:51:14+00:00",
       "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
-      "stage_manifest_sha256": "d06dd9375ab88dea172fe98adaf7360e0a396f90f33eff7c2a4864495b15dbaa",
+      "stage_manifest_sha256": "d936c5d31f59ee98b80bfb60ddde9bb1b8a521221b9c9c565f9c60576c3d5d33",
       "scientific_authority": false,
       "policy": {
         "shadow_only": true,
@@ -71580,85 +71696,66 @@
       },
       "summary": {
         "requested_raw_seeds": 120,
-        "raw_seeds": 101,
-        "semantic_unique": 54,
-        "duplicate_or_near_duplicate": 47,
-        "unique_problem_families": 54,
-        "breadth_archive": 48,
+        "expansion_requested_shards": 20,
+        "expansion_successful_shards": 18,
+        "expansion_parse_failures": 2,
+        "raw_seeds": 88,
+        "semantic_unique": 47,
+        "duplicate_or_near_duplicate": 41,
+        "unique_problem_families": 47,
+        "breadth_archive": 47,
         "archive_lane_coverage": 10,
-        "mean_archive_pairwise_distance": 0.8798,
+        "mean_archive_pairwise_distance": 0.8749,
         "evolved_branches": 36,
         "max_branch_depth": 2,
         "formulated_candidates": 15,
         "formulation_rejected": 9,
-        "machine_reviewable": 3,
-        "machine_reduction_blocked": 12,
-        "semantic_reviewed": 3,
-        "semantic_clear": 1,
+        "machine_reviewable": 2,
+        "machine_reduction_blocked": 13,
+        "semantic_reviewed": 2,
+        "semantic_clear": 0,
         "semantic_blocked": 2,
-        "current_source_reviewed": 1,
+        "current_source_reviewed": 0,
         "current_source_clear": 0,
-        "current_source_blocked": 1,
+        "current_source_blocked": 0,
         "current_source_missing": 0,
         "terminal_shadow_survivors": 0,
         "live_problem_gate_compatible_survivors": 0,
         "live_paper_design_eligible": 0,
         "generator_model_calls": 38,
-        "reviewer_model_calls": 2,
-        "current_source_review_receipts": 1
+        "reviewer_model_calls": 1,
+        "current_source_review_receipts": 0
       },
       "lane_counts": {
-        "CONTRADICTION": 5,
-        "CONVERGENT_FAILURE": 12,
-        "ASSUMPTION_BREAK": 5,
+        "CONTRADICTION": 6,
+        "CONVERGENT_FAILURE": 11,
+        "ASSUMPTION_BREAK": 2,
         "UNEXPLAINED_BOUNDARY": 12,
         "IDENTIFIABILITY_GAP": 12,
-        "MISSING_DECISION_OBJECT": 7,
+        "MISSING_DECISION_OBJECT": 3,
         "COMPOSITION_INTERACTION": 12,
-        "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 12,
+        "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 6,
         "NEW_CAPABILITY_QUESTION": 12,
         "LONGITUDINAL_EMERGENCE": 12
       },
       "archive_lane_counts": {
-        "CONTRADICTION": 2,
+        "CONTRADICTION": 4,
         "CONVERGENT_FAILURE": 11,
-        "ASSUMPTION_BREAK": 4,
-        "UNEXPLAINED_BOUNDARY": 3,
+        "ASSUMPTION_BREAK": 2,
+        "UNEXPLAINED_BOUNDARY": 5,
         "IDENTIFIABILITY_GAP": 4,
-        "MISSING_DECISION_OBJECT": 4,
+        "MISSING_DECISION_OBJECT": 3,
         "COMPOSITION_INTERACTION": 4,
-        "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 10,
+        "CROSS_DOMAIN_STRUCTURAL_ANALOGY": 6,
         "NEW_CAPABILITY_QUESTION": 4,
-        "LONGITUDINAL_EMERGENCE": 2
+        "LONGITUDINAL_EMERGENCE": 4
       },
       "machine_blocker_counts": {},
       "candidates": [
         {
-          "candidate_id": "SHADOW-P04-C01",
-          "title": "Fixed-contract planner-executor granularity mismatch as a structural failure regime in hierarchical VLA manipulation",
-          "search_primitive": "COMPOSITION_INTERACTION",
-          "semantic_shadow_clear": false,
-          "current_source_status": "",
-          "current_source_verdict": "",
-          "current_source_reduction_class": "",
-          "current_source_strongest_reduction": "",
-          "current_source_reason": "",
-          "current_source_source_refs": [],
-          "terminal_shadow_clear": false,
-          "live_problem_gate_compatible": false,
-          "paper_design_eligible": false,
-          "scientific_authority": false,
-          "authority": {
-            "method": false,
-            "experiment": false,
-            "p0": false,
-            "gpu": false
-          }
-        },
-        {
-          "candidate_id": "SHADOW-P06-C01",
-          "title": "Noncompensatory Scalar Collapse in Self-Evolving Agent Evaluation Loops",
-          "search_primitive": "CONVERGENT_FAILURE",
+          "candidate_id": "SHADOW-P06-C02",
+          "title": "A tied-budget inversion: test-time selection helps skill-harness execution but harms direct VLA execution",
+          "search_primitive": "UNEXPLAINED_BOUNDARY",
           "semantic_shadow_clear": false,
           "current_source_status": "",
           "current_source_verdict": "",
@@ -71679,20 +71776,15 @@
         },
         {
           "candidate_id": "SHADOW-P12-C01",
-          "title": "Retrieval quality is not identifiable from executable-unit quality under matched retrieved skill sets",
-          "search_primitive": "IDENTIFIABILITY_GAP",
-          "semantic_shadow_clear": true,
-          "current_source_status": "complete",
-          "current_source_verdict": "BLOCK",
-          "current_source_reduction_class": "VALID_HARD_VETO",
-          "current_source_strongest_reduction": "generic causal identifiability over an omitted compiled-context variable, instantiated by existing retrieval-versus-compilation pipeline work",
-          "current_source_reason": "The semantic CLEAR does not survive current-source collision review. Existing work already separates retrieval from compiled/incorporated execution context and evaluates downstream execution-aware utility, so the residual standard-log non-identifiability claim is expressible by generic causal identifiability over an omitted compiled-context variable plus existing retrieval-to-compilation instrumentation.",
-          "current_source_source_refs": [
-            "arXiv:2604.24594",
-            "arXiv:2605.10114",
-            "arXiv:2608.05604",
-            "arXiv:2608.09168"
-          ],
+          "title": "Capability-dependent collapse of open-ended self-evolving optimizers",
+          "search_primitive": "CONVERGENT_FAILURE",
+          "semantic_shadow_clear": false,
+          "current_source_status": "",
+          "current_source_verdict": "",
+          "current_source_reduction_class": "",
+          "current_source_strongest_reduction": "",
+          "current_source_reason": "",
+          "current_source_source_refs": [],
           "terminal_shadow_clear": false,
           "live_problem_gate_compatible": false,
           "paper_design_eligible": false,
