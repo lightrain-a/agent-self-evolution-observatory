@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T03:21:52+00:00",
+  "generated_at": "2026-08-14T03:36:07+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6006,9 +6006,10 @@
     "paper_first_search_portfolio_current_source_hard_veto_added_latest": 0,
     "paper_first_search_portfolio_current_source_hard_veto_inherited": 1,
     "paper_first_search_portfolio_near_miss_mature_theory_stops": 1,
-    "paper_first_search_portfolio_semantic_blocker_dead_ends": 2,
+    "paper_first_search_portfolio_semantic_blocker_dead_ends": 4,
     "paper_first_search_portfolio_semantic_blocker_added_latest": 2,
-    "paper_first_search_portfolio_semantic_blocker_inherited": 0
+    "paper_first_search_portfolio_semantic_blocker_inherited": 2,
+    "paper_first_shadow_latest_semantic_dead_end_blocks": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -32693,7 +32694,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-14T03:05:41+00:00",
+    "generated_at": "2026-08-14T03:36:07+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -32737,7 +32738,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-14T03:05:41+00:00",
+      "generated_at": "2026-08-14T03:36:07+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -32935,8 +32936,69 @@
           "current_source_refs": [
             "arXiv:2608.11350"
           ],
+          "evidence_claims": [
+            "Full SHAPER reaches 49.8% micro and 42.9% macro accuracy versus 32.5%/31.2% for the Seed Agent and 41.1%/38.6% for Skill Evolution.",
+            "VLA-level MG-Select and VOTE reach 21.38% and 22.00%, below direct VLA execution, while their seed-agent counterparts reach 24.38% and 23.50%, below the unscaled Seed Agent."
+          ],
+          "problem_text": "A tied-budget inversion: test-time selection helps skill-harness execution but harms direct VLA execution A layer-dependent method-boundary phenomenon for frozen-model embodied agents: under a tied candidate budget, selection and voting over raw VLA trajectories degrade success relative to direct execution, whereas selection/evolution over externalized skill-harness units improves success; the boundary is determined by whether candidates are composable, verifiable, contract-bearing units rather than raw motor trajectories. For a frozen VLM/VLA model and fixed embodied benchmark, if k candidates are sampled under the same compute budget, majority vote or verifier-free selection over raw VLA action trajectories will underperform direct execution, while the same selection/voting budget over skill-harness-mediated candidates will outperform direct/seed execution; the sign will remain after matching candidate diversity and mean single-candidate success, and will disappear if skill-harness candidates are flattened into unstructured text or raw trajectories.",
+          "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
           "reason": "The source grounding and lane contract are fully satisfied. However, under the Reduction Falsifiability Contract, the candidate collides with the mature theory of persistent-update-vs-test-time-compute (test-time scaling). The candidate proposes that test-time selection/voting systematically inverts its sign of improvement depending on the representation layer (raw VLA vs. skill-harness). While the candidate provides a falsifier matching candidate sets on diversity, mean success, and verifier availability, whether generic test-time scaling variables with structural constraints (like candidate quality, redundancy, and verifier availability) fail to predict this sign reversal remains unresolved. Because the exact reduction against generic test-time-scaling models is not definitively resolved as non-expressible, the review mandates a BLOCK under the NEEDS_EXACT_REDUCTION_TEST protocol.",
           "reopen_only_if": "New primary evidence directly instantiates the recorded exact reduction test under matched information and leaves a residual prediction the named mature reduction cannot express; new wording, a new application domain, or an unexecuted proposed falsifier does not reopen this basin.",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "SHADOW-P06-C01",
+          "basin": "semantic-lane-contract-25cab5f1279b6670",
+          "search_primitive": "CONVERGENT_FAILURE",
+          "avoid": [
+            "paraphrase-only variants of: Noncompensatory Scalar Collapse in Self-Evolving Agent Evaluation Loops",
+            "combining heterogeneous failures without one explicitly shared bounded operational condition",
+            "using a generic optimizer/model-capability story as a convergent-failure object without a common measured failure variable"
+          ],
+          "strongest_reduction": "multi-objective optimization / scalarization",
+          "matched_patterns": [],
+          "reduction_class": "NEEDS_EXACT_REDUCTION_TEST",
+          "lane_contract_reason": "The CONVERGENT_FAILURE lane contract requires two independent method families to fail quantitatively under the same bounded operational condition. The candidate provides grounded failures in two different domains (symbolic regression and customer support) but fails to establish a shared operational condition; they operate under different metrics, environments, and task structures. Therefore, the required_lane_evidence 'shared_condition' is not genuinely satisfied.",
+          "exact_reduction_test": "none",
+          "current_source_refs": [
+            "arXiv:2608.04872",
+            "arXiv:2608.10224"
+          ],
+          "evidence_claims": [
+            "Mean NMSE in symbolic regression can be dominated by a few catastrophic extrapolation failures, so the paper emphasizes Acc@0.01 and OOD Acc@0.01; Physics remains volatile due to oscillatory structure and phase-sensitive extrapolation.",
+            "Collapsing all evaluation signals into a single overall score performs worst and obscures critical failure modes; removing response groundedness causes the largest drop in alignment with human labels."
+          ],
+          "problem_text": "Noncompensatory Scalar Collapse in Self-Evolving Agent Evaluation Loops A loop-control scalar score S = aggregate(e_1,...,e_k) that is used to route proposals, distill memory, or update workflows, where one or more evidence dimensions e_j are noncompensatory: a catastrophic value on e_j cannot be repaired by gains on other dimensions, yet S can remain acceptable and therefore causes the self-evolving loop to select, retain, or amplify a catastrophic mode. For a self-evolving loop whose update rule depends only on scalar S, there exists a noncompensatory evidence dimension e_j and candidate family C such that: (1) S(C) is above the selection threshold despite catastrophic e_j(C); (2) C is selected or retained more often than a modular/evidence-view baseline under identical per-dimension evidence; and (3) repeated scalar-controlled updates reduce the probability that e_j-relevant evidence is routed into memory or future evaluation, producing increasing catastrophic-mode share over iterations.",
+          "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
+          "reason": "Although source grounding is verified for both facts, the lane contract fails because the candidate does not establish a genuinely shared operational condition between symbolic regression and customer support evaluation. The failures are independently observed but do not meet the CONVERGENT_FAILURE machine contract.",
+          "reopen_only_if": "New primary evidence supplies the missing lane-contract elements explicitly (shared bounded condition, common failure object, and correctly typed evidence roles) and the resulting formulation still leaves a same-information residual beyond the recorded strongest reduction.",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "SHADOW-P04-C01",
+          "basin": "semantic-lane-contract-71001066c832e76b",
+          "search_primitive": "COMPOSITION_INTERACTION",
+          "avoid": [
+            "paraphrase-only variants of: Fixed-contract planner-executor granularity mismatch as a structural failure regime in hierarchical VLA manipulation",
+            "combining heterogeneous failures without one explicitly shared bounded operational condition",
+            "using a generic optimizer/model-capability story as a convergent-failure object without a common measured failure variable"
+          ],
+          "strongest_reduction": "generic subgoal distribution shift",
+          "matched_patterns": [],
+          "reduction_class": "NEEDS_EXACT_REDUCTION_TEST",
+          "lane_contract_reason": "The CONVERGENT_FAILURE lane contract is not met: source_a is incorrectly assigned the role EMPIRICAL_FACT while its evidence text is an operational assumption, and source_b's claim extrapolates beyond the supplied evidence. Furthermore, the irreducible object attempts to redefine the operationalization into an ungrounded 'fixed contract' rather than measuring a shared observable, failing the required_machine_contract.",
+          "exact_reduction_test": "none",
+          "current_source_refs": [
+            "arXiv:2608.05999"
+          ],
+          "evidence_claims": [
+            "HiRoC reports that its planner consistently achieves near-perfect accuracy across episodes of different lengths, while RoboBrain2 fails to generate accurate plans under the same settings.",
+            "Before RL tuning, the executor cannot effectively execute planner-generated subgoals due to distribution misalignment between planner and executor, and without DM training the initial success rate is significantly lower."
+          ],
+          "problem_text": "Fixed-contract planner-executor granularity mismatch as a structural failure regime in hierarchical VLA manipulation A fixed-interface hierarchical VLA composition object in which planner subgoals are semantically correct but their temporal/action granularity lies outside the executor's trained action support, and the contract forbids renegotiation. The scientific target is the interface-induced executability boundary, not planner error or generic executor weakness. For a frozen semantically accurate planner and an executor RL-tuned on subgoals of granularity g0, held-out manipulation success will remain high for planner-generated subgoals whose temporal/action granularity lies within the executor's trained support and will drop sharply for semantically equivalent subgoals at granularity g1 outside that support, even when task identity, observations, and final goal are unchanged; allowing interface renegotiation or adding a granularity adapter will recover success, while additional RL only at g0 will not.",
+          "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
+          "reason": "Source grounding fails for source_b because the claim and irreducible object depend on a fixed granularity contract that is not supported by the excerpt. Lane contract fails due to incorrect evidence roles and missing shared operationalization for the proposed failure regime.",
+          "reopen_only_if": "New primary evidence supplies the missing lane-contract elements explicitly (shared bounded condition, common failure object, and correctly typed evidence roles) and the resulting formulation still leaves a same-information residual beyond the recorded strongest reduction.",
           "scientific_authority": false
         },
         {
@@ -32960,6 +33022,12 @@
             "arXiv:2608.09629",
             "arXiv:2608.11340"
           ],
+          "evidence_claims": [
+            "GPT-5.5-driven Open-Ended Optimization wins most comparisons, but delegation has a capability boundary: SkillOpt outperforms OEO with a medium optimizer, and a weak optimizer cannot operate through the unchanged OEO interface.",
+            "In self-evolving network verifiers, not every coding-agent model sufficed: runs with Haiku 4.5 as the coding agent failed to converge on any of the three model-extension tasks."
+          ],
+          "problem_text": "Capability-dependent collapse of open-ended self-evolving optimizers An optimizer-enactability boundary for open-ended self-improvement: under fixed objective, interactions, budget, data boundary, and evaluation, the same self-evolution interface can be enacted by a sufficiently capable optimizer but collapses for weaker optimizers, with the transition observable as non-convergence or inability to compose the improvement route rather than as a downstream task-model deficit. For a fixed self-evolution interface with unchanged objective, permissions, feedback, data boundary, and budget, there exists a capability threshold below which the optimizer cannot enact open-ended route composition: weak optimizers show non-operation or non-convergence across tasks, medium optimizers improve only under a prescribed pipeline, and frontier optimizers improve through OEO. This ordering will replicate across at least two independent artifact families (skill procedures and symbolic verifier extensions).",
+          "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
           "reason": "The source claims are accurately grounded in the supplied primary evidence. However, the candidate fails the CONVERGENT_FAILURE lane contract because the two empirical facts do not share an explicitly bounded operational condition; they represent isolated failures of weaker LLMs on distinct agent tasks (skill optimization vs. SMT encoding extension) rather than a convergent quantitative failure under a common operational condition with a named common failure object. Furthermore, the candidate's identified irreducible object (optimizer-capability threshold for enacting self-evolution interfaces) is a SOFT_COLLISION with known patterns of model-scaffold-enactability and persistent-update-vs-test-time-compute, as weaker models failing to operate interfaces is highly reducible to standard instruction-following and test-time compute limitations. Because the lane contract fails, the verdict is BLOCK.",
           "reopen_only_if": "New primary evidence supplies the missing lane-contract elements explicitly (shared bounded condition, common failure object, and correctly typed evidence roles) and the resulting formulation still leaves a same-information residual beyond the recorded strongest reduction.",
           "scientific_authority": false
@@ -33047,9 +33115,9 @@
       "current_source_hard_veto_count": 1,
       "current_source_hard_veto_added_from_latest_run": 0,
       "current_source_hard_veto_inherited": 1,
-      "semantic_blocker_count": 2,
+      "semantic_blocker_count": 4,
       "semantic_blocker_added_from_latest_run": 2,
-      "semantic_blocker_inherited": 0,
+      "semantic_blocker_inherited": 2,
       "near_miss_preflight_count": 4
     },
     "shadow_source": {
@@ -33101,13 +33169,13 @@
       "revise_paper_problem": 1,
       "stop_standalone": 1,
       "support_inventory_required": 1,
-      "shadow_dead_end_objects": 9,
+      "shadow_dead_end_objects": 11,
       "current_source_hard_veto_dead_ends": 1,
       "current_source_hard_veto_added_from_latest_run": 0,
       "current_source_hard_veto_inherited": 1,
-      "semantic_blocker_dead_ends": 2,
+      "semantic_blocker_dead_ends": 4,
       "semantic_blocker_added_from_latest_run": 2,
-      "semantic_blocker_inherited": 0,
+      "semantic_blocker_inherited": 2,
       "near_miss_preflight_dead_ends": 4,
       "near_miss_support_holds": 1,
       "near_miss_current_primary_stops": 2,
@@ -71616,7 +71684,7 @@
   },
   "paper_first_problem_search_portfolio": {
     "schema_version": "3.2-shadow-import",
-    "generated_at": "2026-08-14T03:05:41+00:00",
+    "generated_at": "2026-08-14T03:36:07+00:00",
     "imported_at": "2026-08-13T16:28:11+00:00",
     "status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
     "historical_source_commit": "7b2a7260df3bae5d140cdc7f4d09a56dd898a72b",
@@ -71827,7 +71895,7 @@
       "schema_version": "1.0-shadow-run",
       "run_id": "shadow-20260814-r3",
       "status": "SHADOW_TERMINAL_COMPLETE",
-      "generated_at": "2026-08-14T03:05:41+00:00",
+      "generated_at": "2026-08-14T03:36:07+00:00",
       "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
       "stage_manifest_sha256": "d936c5d31f59ee98b80bfb60ddde9bb1b8a521221b9c9c565f9c60576c3d5d33",
       "scientific_authority": false,
@@ -71851,6 +71919,7 @@
         "expansion_successful_shards": 18,
         "expansion_parse_failures": 2,
         "raw_seeds": 88,
+        "semantic_dead_end_blocks": 0,
         "semantic_unique": 47,
         "duplicate_or_near_duplicate": 41,
         "unique_problem_families": 47,
@@ -71921,6 +71990,11 @@
           "semantic_source_refs": [
             "arXiv:2608.11350"
           ],
+          "semantic_source_claims": [
+            "Full SHAPER reaches 49.8% micro and 42.9% macro accuracy versus 32.5%/31.2% for the Seed Agent and 41.1%/38.6% for Skill Evolution.",
+            "VLA-level MG-Select and VOTE reach 21.38% and 22.00%, below direct VLA execution, while their seed-agent counterparts reach 24.38% and 23.50%, below the unscaled Seed Agent."
+          ],
+          "semantic_problem_text": "A tied-budget inversion: test-time selection helps skill-harness execution but harms direct VLA execution A layer-dependent method-boundary phenomenon for frozen-model embodied agents: under a tied candidate budget, selection and voting over raw VLA trajectories degrade success relative to direct execution, whereas selection/evolution over externalized skill-harness units improves success; the boundary is determined by whether candidates are composable, verifiable, contract-bearing units rather than raw motor trajectories. For a frozen VLM/VLA model and fixed embodied benchmark, if k candidates are sampled under the same compute budget, majority vote or verifier-free selection over raw VLA action trajectories will underperform direct execution, while the same selection/voting budget over skill-harness-mediated candidates will outperform direct/seed execution; the sign will remain after matching candidate diversity and mean single-candidate success, and will disappear if skill-harness candidates are flattened into unstructured text or raw trajectories.",
           "current_source_status": "",
           "current_source_verdict": "",
           "current_source_reduction_class": "",
@@ -71958,6 +72032,11 @@
             "arXiv:2608.09629",
             "arXiv:2608.11340"
           ],
+          "semantic_source_claims": [
+            "GPT-5.5-driven Open-Ended Optimization wins most comparisons, but delegation has a capability boundary: SkillOpt outperforms OEO with a medium optimizer, and a weak optimizer cannot operate through the unchanged OEO interface.",
+            "In self-evolving network verifiers, not every coding-agent model sufficed: runs with Haiku 4.5 as the coding agent failed to converge on any of the three model-extension tasks."
+          ],
+          "semantic_problem_text": "Capability-dependent collapse of open-ended self-evolving optimizers An optimizer-enactability boundary for open-ended self-improvement: under fixed objective, interactions, budget, data boundary, and evaluation, the same self-evolution interface can be enacted by a sufficiently capable optimizer but collapses for weaker optimizers, with the transition observable as non-convergence or inability to compose the improvement route rather than as a downstream task-model deficit. For a fixed self-evolution interface with unchanged objective, permissions, feedback, data boundary, and budget, there exists a capability threshold below which the optimizer cannot enact open-ended route composition: weak optimizers show non-operation or non-convergence across tasks, medium optimizers improve only under a prescribed pipeline, and frontier optimizers improve through OEO. This ordering will replicate across at least two independent artifact families (skill procedures and symbolic verifier extensions).",
           "current_source_status": "",
           "current_source_verdict": "",
           "current_source_reduction_class": "",

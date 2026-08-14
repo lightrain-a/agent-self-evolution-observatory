@@ -1,6 +1,6 @@
 {
   "schema_version": "3.2-shadow-import",
-  "generated_at": "2026-08-14T03:05:41+00:00",
+  "generated_at": "2026-08-14T03:36:07+00:00",
   "imported_at": "2026-08-13T16:28:11+00:00",
   "status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
   "historical_source_commit": "7b2a7260df3bae5d140cdc7f4d09a56dd898a72b",
@@ -211,7 +211,7 @@
     "schema_version": "1.0-shadow-run",
     "run_id": "shadow-20260814-r3",
     "status": "SHADOW_TERMINAL_COMPLETE",
-    "generated_at": "2026-08-14T03:05:41+00:00",
+    "generated_at": "2026-08-14T03:36:07+00:00",
     "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
     "stage_manifest_sha256": "d936c5d31f59ee98b80bfb60ddde9bb1b8a521221b9c9c565f9c60576c3d5d33",
     "scientific_authority": false,
@@ -235,6 +235,7 @@
       "expansion_successful_shards": 18,
       "expansion_parse_failures": 2,
       "raw_seeds": 88,
+      "semantic_dead_end_blocks": 0,
       "semantic_unique": 47,
       "duplicate_or_near_duplicate": 41,
       "unique_problem_families": 47,
@@ -305,6 +306,11 @@
         "semantic_source_refs": [
           "arXiv:2608.11350"
         ],
+        "semantic_source_claims": [
+          "Full SHAPER reaches 49.8% micro and 42.9% macro accuracy versus 32.5%/31.2% for the Seed Agent and 41.1%/38.6% for Skill Evolution.",
+          "VLA-level MG-Select and VOTE reach 21.38% and 22.00%, below direct VLA execution, while their seed-agent counterparts reach 24.38% and 23.50%, below the unscaled Seed Agent."
+        ],
+        "semantic_problem_text": "A tied-budget inversion: test-time selection helps skill-harness execution but harms direct VLA execution A layer-dependent method-boundary phenomenon for frozen-model embodied agents: under a tied candidate budget, selection and voting over raw VLA trajectories degrade success relative to direct execution, whereas selection/evolution over externalized skill-harness units improves success; the boundary is determined by whether candidates are composable, verifiable, contract-bearing units rather than raw motor trajectories. For a frozen VLM/VLA model and fixed embodied benchmark, if k candidates are sampled under the same compute budget, majority vote or verifier-free selection over raw VLA action trajectories will underperform direct execution, while the same selection/voting budget over skill-harness-mediated candidates will outperform direct/seed execution; the sign will remain after matching candidate diversity and mean single-candidate success, and will disappear if skill-harness candidates are flattened into unstructured text or raw trajectories.",
         "current_source_status": "",
         "current_source_verdict": "",
         "current_source_reduction_class": "",
@@ -342,6 +348,11 @@
           "arXiv:2608.09629",
           "arXiv:2608.11340"
         ],
+        "semantic_source_claims": [
+          "GPT-5.5-driven Open-Ended Optimization wins most comparisons, but delegation has a capability boundary: SkillOpt outperforms OEO with a medium optimizer, and a weak optimizer cannot operate through the unchanged OEO interface.",
+          "In self-evolving network verifiers, not every coding-agent model sufficed: runs with Haiku 4.5 as the coding agent failed to converge on any of the three model-extension tasks."
+        ],
+        "semantic_problem_text": "Capability-dependent collapse of open-ended self-evolving optimizers An optimizer-enactability boundary for open-ended self-improvement: under fixed objective, interactions, budget, data boundary, and evaluation, the same self-evolution interface can be enacted by a sufficiently capable optimizer but collapses for weaker optimizers, with the transition observable as non-convergence or inability to compose the improvement route rather than as a downstream task-model deficit. For a fixed self-evolution interface with unchanged objective, permissions, feedback, data boundary, and budget, there exists a capability threshold below which the optimizer cannot enact open-ended route composition: weak optimizers show non-operation or non-convergence across tasks, medium optimizers improve only under a prescribed pipeline, and frontier optimizers improve through OEO. This ordering will replicate across at least two independent artifact families (skill procedures and symbolic verifier extensions).",
         "current_source_status": "",
         "current_source_verdict": "",
         "current_source_reduction_class": "",
