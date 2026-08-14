@@ -416,6 +416,10 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(any("latest shadow run cannot authorize" in error for error in validate_state(leak)))
         inconsistent=copy.deepcopy(state);inconsistent["paper_first_problem_search_portfolio"]["latest_run"]["summary"]["terminal_shadow_survivors"]=1
         self.assertTrue(any("terminal survivors" in error for error in validate_state(inconsistent)))
+        accounted=copy.deepcopy(state);latest=accounted["paper_first_problem_search_portfolio"]["latest_run"];latest["schema_version"]="1.1-shadow-run";latest["policy"].update({"execution_loss_is_not_scientific_negative":True,"problem_falsifier_hold_is_not_scientific_fail":True});latest["summary"].update({"expansion_requested_shards":20,"expansion_successful_shards":19,"expansion_execution_failures":1,"formulation_requested_shards":12,"formulation_successful_shards":10,"formulation_provider_failures":2,"formulation_parse_failures":0,"formulation_requested_branches":24,"formulation_successful_branches":20,"formulation_execution_censored_branches":4,"problem_falsifier_eligible":4,"problem_falsifier_support_qualified":0,"problem_falsifier_hold_support_unavailable":4,"problem_falsifier_executed":0})
+        self.assertEqual(validate_state(accounted),[])
+        bad_account=copy.deepcopy(accounted);bad_account["paper_first_problem_search_portfolio"]["latest_run"]["summary"]["formulation_successful_shards"]=11
+        self.assertTrue(any("formulation shard accounting" in error for error in validate_state(bad_account)))
 
     def test_retrieval_incomplete_without_new_lane_source_is_zero_call_compute_control(self) -> None:
         state=copy.deepcopy(self.state);primary=state["paper_first_primary_evidence"];generator=state["paper_first_problem_generator"]

@@ -532,13 +532,25 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_global_relation_focused_reopen":bool((paper_first_global_relation_recall.get("summary") or {}).get("focused_problem_generator_reopen_required")),
             "paper_first_shadow_latest_run_id":paper_first_problem_search_portfolio.get("latest_run_id",""),
             "paper_first_shadow_latest_expansion_successful_shards":paper_first_shadow_latest_summary.get("expansion_successful_shards",0),
+            "paper_first_shadow_latest_expansion_execution_failures":paper_first_shadow_latest_summary.get("expansion_execution_failures",0),
             "paper_first_shadow_latest_expansion_parse_failures":paper_first_shadow_latest_summary.get("expansion_parse_failures",0),
+            "paper_first_shadow_latest_expansion_provider_failures":paper_first_shadow_latest_summary.get("expansion_provider_failures",0),
             "paper_first_shadow_latest_raw":paper_first_shadow_latest_summary.get("raw_seeds",0),
             "paper_first_shadow_latest_semantic_dead_end_blocks":paper_first_shadow_latest_summary.get("semantic_dead_end_blocks",0),
             "paper_first_shadow_latest_unique":paper_first_shadow_latest_summary.get("semantic_unique",0),
             "paper_first_shadow_latest_evolved":paper_first_shadow_latest_summary.get("evolved_branches",0),
+            "paper_first_shadow_latest_formulation_requested_shards":paper_first_shadow_latest_summary.get("formulation_requested_shards",0),
+            "paper_first_shadow_latest_formulation_successful_shards":paper_first_shadow_latest_summary.get("formulation_successful_shards",0),
+            "paper_first_shadow_latest_formulation_provider_failures":paper_first_shadow_latest_summary.get("formulation_provider_failures",0),
+            "paper_first_shadow_latest_formulation_requested_branches":paper_first_shadow_latest_summary.get("formulation_requested_branches",0),
+            "paper_first_shadow_latest_formulation_successful_branches":paper_first_shadow_latest_summary.get("formulation_successful_branches",0),
+            "paper_first_shadow_latest_formulation_execution_censored_branches":paper_first_shadow_latest_summary.get("formulation_execution_censored_branches",0),
             "paper_first_shadow_latest_formulated":paper_first_shadow_latest_summary.get("formulated_candidates",0),
             "paper_first_shadow_latest_machine_reviewable":paper_first_shadow_latest_summary.get("machine_reviewable",0),
+            "paper_first_shadow_latest_problem_falsifier_eligible":paper_first_shadow_latest_summary.get("problem_falsifier_eligible",0),
+            "paper_first_shadow_latest_problem_falsifier_support_qualified":paper_first_shadow_latest_summary.get("problem_falsifier_support_qualified",0),
+            "paper_first_shadow_latest_problem_falsifier_hold":paper_first_shadow_latest_summary.get("problem_falsifier_hold_support_unavailable",0),
+            "paper_first_shadow_latest_problem_falsifier_executed":paper_first_shadow_latest_summary.get("problem_falsifier_executed",0),
             "paper_first_shadow_latest_semantic_clear":paper_first_shadow_latest_summary.get("semantic_clear",0),
             "paper_first_shadow_latest_current_source_blocked":paper_first_shadow_latest_summary.get("current_source_blocked",0),
             "paper_first_shadow_latest_terminal_survivors":paper_first_shadow_latest_summary.get("terminal_shadow_survivors",0),
@@ -1074,6 +1086,12 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         if shadow_portfolio.get("scientific_authority") is not False or (shadow_portfolio.get("policy") or {}).get("shadow_only") is not True: errors.append("Search Portfolio public state must remain shadow-only and zero-authority")
         if shadow_latest.get("scientific_authority") is not False or latest_policy.get("shadow_only") is not True or latest_policy.get("canonical_primary_generator_queue_untouched") is not True or latest_policy.get("live_source_coverage_effect") is not False: errors.append("latest Search Portfolio run must remain shadow-only without canonical source/queue effects")
         if latest_policy.get("current_source_web_receipt_required_after_semantic_clear") is not True or latest_policy.get("missing_or_failed_current_source_reviewer_is_not_pass") is not True: errors.append("semantic CLEAR in shadow search must require fail-closed current-source review")
+        if str(shadow_latest.get("schema_version") or "") >= "1.1-shadow-run":
+            if latest_policy.get("execution_loss_is_not_scientific_negative") is not True or latest_policy.get("problem_falsifier_hold_is_not_scientific_fail") is not True: errors.append("latest shadow run must distinguish execution loss and falsifier HOLD from scientific negatives")
+            if int(latest_summary.get("expansion_successful_shards") or 0)+int(latest_summary.get("expansion_execution_failures") or 0)!=int(latest_summary.get("expansion_requested_shards") or 0): errors.append("shadow expansion execution accounting mismatch")
+            if int(latest_summary.get("formulation_successful_shards") or 0)+int(latest_summary.get("formulation_provider_failures") or 0)+int(latest_summary.get("formulation_parse_failures") or 0)!=int(latest_summary.get("formulation_requested_shards") or 0): errors.append("shadow formulation shard accounting mismatch")
+            if int(latest_summary.get("formulation_successful_branches") or 0)+int(latest_summary.get("formulation_execution_censored_branches") or 0)>int(latest_summary.get("formulation_requested_branches") or 0): errors.append("shadow formulation branch accounting exceeds requested budget")
+            if int(latest_summary.get("problem_falsifier_support_qualified") or 0)+int(latest_summary.get("problem_falsifier_hold_support_unavailable") or 0)!=int(latest_summary.get("problem_falsifier_eligible") or 0) or int(latest_summary.get("problem_falsifier_executed") or 0)>int(latest_summary.get("problem_falsifier_support_qualified") or 0): errors.append("shadow problem-falsifier preflight accounting mismatch")
         if int(latest_summary.get("terminal_shadow_survivors") or 0)!=int(latest_summary.get("current_source_clear") or 0) or int(latest_summary.get("live_paper_design_eligible") or 0)!=0: errors.append("shadow terminal survivors must equal current-source CLEAR and never grant live Paper Design eligibility")
         if shadow_latest.get("status")=="SHADOW_TERMINAL_COMPLETE" and int(latest_summary.get("current_source_missing") or 0)!=0: errors.append("completed shadow terminal cannot have missing current-source reviews")
         if any(latest_authority.get(key) is not False for key in ("live_problem_gate","paper_design","method","experiment","p0","gpu")): errors.append("latest shadow run cannot authorize live Problem Gate or downstream execution")

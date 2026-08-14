@@ -30,6 +30,18 @@ def _parse_archived_json(run_root:Path,stem:str,raw:str,resolved_model:str)->tup
         err={"schema_version":"1.0","stage":stem,"status":"PARSE_ERROR_ZERO_AUTHORITY","resolved_model":resolved_model,"raw_sha256":sha,"error":f"{type(error).__name__}:{str(error)[:1200]}","scientific_authority":False}
         (run_root/f"error-{stem}-{sha[:12]}.json").write_text(json.dumps(err,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise
 
+
+def _ark_with_provider_receipt(*,run_root:Path,stem:str,requested_model:str,context:dict|None=None,**kwargs)->dict:
+    try:
+        return _ark(model=requested_model,**kwargs)
+    except Exception as error:
+        message=f"{type(error).__name__}:{str(error)[:1600]}";fingerprint=hashlib.sha256(json.dumps({"stage":stem,"requested_model":requested_model,"error":message},sort_keys=True,separators=(",",":")).encode()).hexdigest()
+        timeout=any(token in message.lower() for token in ("timeout","timed out","read timed out"))
+        payload={"schema_version":"1.0","generated_at":datetime.now(timezone.utc).replace(microsecond=0).isoformat(),"stage":stem,"status":"PROVIDER_TIMEOUT_ZERO_AUTHORITY" if timeout else "PROVIDER_ERROR_ZERO_AUTHORITY","requested_model":requested_model,"complete_response_received":False,"raw_sha256":"","error_fingerprint":fingerprint,"error":message,"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+        if isinstance(context,dict):payload.update({k:v for k,v in context.items() if k in {"lane","part","generation","branch_ids","candidate_ids","requested","requested_children"}})
+        run_root.mkdir(parents=True,exist_ok=True);(run_root/f"error-{stem}-provider-{fingerprint[:12]}.json").write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        raise
+
 def _shadow_dead_end_memory(path:Path|None)->dict:
     resolved=path or DEFAULT_SHADOW_DEAD_END_MEMORY_PATH
     if not resolved.exists():return {}
@@ -75,7 +87,7 @@ def expand(*,pool:Path,run_root:Path,lane:str,count:int=6,model:str="ark-code-la
     payload=json.loads(pool.read_text(encoding="utf-8"));records=payload.get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")}
     lane=lane.strip().upper()
     if lane not in SEARCH_PORTFOLIO_PRIMITIVES:raise ValueError(f"unknown search primitive {lane}")
-    memory=_shadow_dead_end_memory(memory_path);prompt=_expansion_prompt(lane,records,count,memory);res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=.85);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);parsed,raw_sha=_parse_archived_json(run_root,f"expand-{lane}-p{part}",raw,resolved)
+    memory=_shadow_dead_end_memory(memory_path);prompt=_expansion_prompt(lane,records,count,memory);res=_ark_with_provider_receipt(run_root=run_root,stem=f"expand-{lane}-p{part}",requested_model=model,context={"lane":lane,"part":part,"requested":count},prompt=prompt,max_output_tokens=5200,temperature=.85);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);parsed,raw_sha=_parse_archived_json(run_root,f"expand-{lane}-p{part}",raw,resolved)
     pool_sha=str(payload.get("frozen_pool_sha256") or "").strip();seeds=[];dead_end_blocks=[]
     for i,item in enumerate(parsed.get("seeds") or [],1):
         if not isinstance(item,dict):continue
@@ -111,7 +123,7 @@ def evolve(*,pool:Path,run_root:Path,generation:int,part:int,batch_size:int=6,mo
     else:raise ValueError("generation must be 1 or 2")
     start=(part-1)*batch_size;batch=parents[start:start+batch_size]
     if not batch:raise ValueError(f"empty evolution batch generation={generation} part={part}")
-    memory=_shadow_dead_end_memory(memory_path);temperature=.60 if generation==1 else .35;prompt=_evolution_prompt(batch,generation)+" SHADOW DEAD-END MEMORY (search control only; never scientific authority)="+json.dumps(memory,ensure_ascii=False,separators=(",",":"));res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=temperature);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"evolve-g{generation}-p{part}",raw,resolved);pmap={p["seed_id"]:p for p in batch};children=[];dead_end_blocks=[]
+    memory=_shadow_dead_end_memory(memory_path);temperature=.60 if generation==1 else .35;prompt=_evolution_prompt(batch,generation)+" SHADOW DEAD-END MEMORY (search control only; never scientific authority)="+json.dumps(memory,ensure_ascii=False,separators=(",",":"));res=_ark_with_provider_receipt(run_root=run_root,stem=f"evolve-g{generation}-p{part}",requested_model=model,context={"generation":generation,"part":part,"requested_children":len(batch)},prompt=prompt,max_output_tokens=5200,temperature=temperature);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"evolve-g{generation}-p{part}",raw,resolved);pmap={p["seed_id"]:p for p in batch};children=[];dead_end_blocks=[]
     for i,item in enumerate(payload.get("children") or [],1):
         if not isinstance(item,dict):continue
         parent=pmap.get(str(item.get("parent_id") or ""))
@@ -138,7 +150,7 @@ def formulation_pool(run_root:Path,budget:int=24)->list[dict]:
 def formulate(*,pool:Path,run_root:Path,part:int,batch_size:int=2,budget:int=24,model:str="ark-code-latest",memory_path:Path|None=None)->dict:
     pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
     if not batch:raise ValueError(f"empty formulation batch part={part}")
-    memory=_shadow_dead_end_memory(memory_path);prompt=_formulation_prompt(batch,registry,memory);res=_ark(prompt=prompt,model=model,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
+    memory=_shadow_dead_end_memory(memory_path);prompt=_formulation_prompt(batch,registry,memory);res=_ark_with_provider_receipt(run_root=run_root,stem=f"formulate-p{part}",requested_model=model,context={"part":part,"branch_ids":[b["seed_id"] for b in batch]},prompt=prompt,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
     # Preserve branch provenance and typed evidence deterministically. The model
     # may sharpen claims but cannot silently change the source refs or lane.
     by={b["seed_id"]:b for b in batch};normalized=[];dead_end_blocks=[]
@@ -191,7 +203,7 @@ def review(*,pool:Path,run_root:Path,part:int,batch_size:int=2,model:str="glm-5.
     records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")}
     audit=json.loads((run_root/"machine-audit.json").read_text(encoding="utf-8"));rows=audit.get("reviewable") or [];start=(part-1)*batch_size;selected=rows[start:start+batch_size]
     if not selected:raise ValueError(f"empty review batch part={part}")
-    candidates=[dict(row["candidate"]) for row in selected];prompt=reviewer_prompt(candidates,registry,shadow_mode=True);res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=0.0);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_json(run_root,f"review-p{part}",raw,resolved)
+    candidates=[dict(row["candidate"]) for row in selected];prompt=reviewer_prompt(candidates,registry,shadow_mode=True);res=_ark_with_provider_receipt(run_root=run_root,stem=f"review-p{part}",requested_model=model,context={"part":part,"candidate_ids":[c["candidate_id"] for c in candidates]},prompt=prompt,max_output_tokens=5200,temperature=0.0);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_json(run_root,f"review-p{part}",raw,resolved)
     _apply_reviews(candidates,payload,model,resolved,"doubao-seed-evolving",sha,registry)
     out={"schema_version":"1.1","part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"candidates":candidates,"scientific_authority":False}
     (run_root/f"review-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")

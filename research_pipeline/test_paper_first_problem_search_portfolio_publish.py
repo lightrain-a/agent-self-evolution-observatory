@@ -48,7 +48,9 @@ class SearchPortfolioPublishTest(unittest.TestCase):
             (run/"review-p1.json").write_text(json.dumps({"candidates":[{"candidate_id":"S1","semantic_reduction_review":{"verdict":"BLOCK"}},{"candidate_id":"S2","semantic_reduction_review":{"verdict":"BLOCK"}}]}),encoding="utf-8")
             (run/"review-p2.json").write_text(json.dumps({"candidates":[{"candidate_id":"S3","semantic_reduction_review":{"verdict":"CLEAR"}}]}),encoding="utf-8")
             (run/"evolve-g1-p1.json").write_text(json.dumps({"children":[{"branch_depth":1},{"branch_depth":1}]}),encoding="utf-8")
-            (run/"formulate-p1.json").write_text(json.dumps({"candidates":[{},{}],"rejected":[{}]}),encoding="utf-8")
+            (run/"formulate-p1.json").write_text(json.dumps({"branch_ids":["B1","B2"],"candidates":[{},{}],"rejected":[{}]}),encoding="utf-8")
+            (run/"error-formulate-p2-provider-deadbeef.json").write_text(json.dumps({"status":"PROVIDER_TIMEOUT_ZERO_AUTHORITY","branch_ids":["B3","B4"],"scientific_authority":False}),encoding="utf-8")
+            (run/"problem-falsifier-preflight.json").write_text(json.dumps({"status":"PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE","summary":{"queued":4,"support_qualified":0,"hold_support_unavailable":4,"falsifier_executed":0},"scientific_authority":False}),encoding="utf-8")
             gen_json=root/"shadow-generator.json";gen_js=root/"shadow-generator.js";queue_json=root/"shadow-queue.json";queue_js=root/"shadow-queue.js"
             gen_json.write_text(json.dumps({"schema_version":"3.2-shadow-import","run_id":"r1","scientific_authority":False,"policy":{"shadow_only":True},"candidates":[{"candidate_id":"SP-09","historical_counterfactual_problem_gate_pass":True}]}),encoding="utf-8")
             queue_json.write_text(json.dumps({"schema_version":"1.0-shadow-import","scientific_authority":False,"policy":{"shadow_only":True,"cannot_mutate_canonical_queue":True},"historical_counterfactual_pass_ids":["SP-09","SP-15"]}),encoding="utf-8")
@@ -62,6 +64,10 @@ class SearchPortfolioPublishTest(unittest.TestCase):
         latest=state["latest_run"]
         self.assertEqual((latest["summary"]["raw_seeds"],latest["summary"]["semantic_unique"],latest["summary"]["semantic_clear"],latest["summary"]["current_source_blocked"],latest["summary"]["terminal_shadow_survivors"]),(101,54,1,1,0))
         self.assertEqual(latest["summary"]["live_paper_design_eligible"],0)
+        self.assertEqual((latest["summary"]["formulation_requested_shards"],latest["summary"]["formulation_successful_shards"],latest["summary"]["formulation_provider_failures"],latest["summary"]["formulation_requested_branches"],latest["summary"]["formulation_successful_branches"],latest["summary"]["formulation_execution_censored_branches"]),(12,1,1,24,2,2))
+        self.assertEqual((latest["summary"]["problem_falsifier_eligible"],latest["summary"]["problem_falsifier_support_qualified"],latest["summary"]["problem_falsifier_hold_support_unavailable"],latest["summary"]["problem_falsifier_executed"]),(0,0,4,0))
+        self.assertTrue(latest["policy"]["execution_loss_is_not_scientific_negative"])
+        self.assertTrue(latest["policy"]["problem_falsifier_hold_is_not_scientific_fail"])
         current_block=next(row for row in latest["candidates"] if row["candidate_id"]=="S3")
         self.assertEqual(current_block["current_source_strongest_reduction"],"generic identifiability over an explicit omitted pipeline variable")
         self.assertEqual(current_block["current_source_source_refs"],["arXiv:2605.10114","arXiv:2608.05604"])

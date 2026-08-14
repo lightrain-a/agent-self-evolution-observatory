@@ -143,6 +143,45 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         self.assertFalse(runner._problem_falsifier_eligible({"exact_prediction":"x","strongest_same_information_baseline":"y","cheapest_problem_falsifier":""},audit))
         self.assertFalse(runner._problem_falsifier_eligible({"exact_prediction":"x","strongest_same_information_baseline":"","cheapest_problem_falsifier":"z"},audit))
 
+    def test_provider_timeout_is_recorded_without_inventing_raw_output(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);pool=root/"pool.json";memory=root/"memory.json";run=root/"run"
+            pool.write_text(json.dumps({"frozen_pool_sha256":"a"*64,"records":[]}),encoding="utf-8")
+            memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[]}),encoding="utf-8")
+            with patch("research_pipeline.problem_search_stage_runner._ark",side_effect=RuntimeError("HTTPS read timed out after 120 seconds")):
+                with self.assertRaisesRegex(RuntimeError,"timed out"):
+                    runner.expand(pool=pool,run_root=run,lane="CONTRADICTION",count=1,model="test-model",part=1,memory_path=memory)
+            receipts=list(run.glob("error-expand-CONTRADICTION-p1-provider-*.json"))
+            self.assertEqual(len(receipts),1)
+            receipt=json.loads(receipts[0].read_text(encoding="utf-8"))
+            self.assertEqual(receipt["status"],"PROVIDER_TIMEOUT_ZERO_AUTHORITY")
+            self.assertEqual(receipt["requested_model"],"test-model")
+            self.assertFalse(receipt["complete_response_received"])
+            self.assertEqual(receipt["raw_sha256"],"")
+            self.assertFalse(receipt["scientific_authority"])
+            self.assertFalse(receipt["authority"]["paper_design"])
+            self.assertFalse((run/"expand-CONTRADICTION-p1.json").exists())
+            self.assertFalse((run/"raw").exists())
+
+    def test_provider_receipt_preserves_formulation_branch_ids(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            run=Path(td)
+            with patch("research_pipeline.problem_search_stage_runner._ark",side_effect=RuntimeError("provider unavailable")):
+                with self.assertRaisesRegex(RuntimeError,"provider unavailable"):
+                    runner._ark_with_provider_receipt(run_root=run,stem="formulate-p2",requested_model="test-model",context={"part":2,"branch_ids":["B1","B2"]},prompt="x",max_output_tokens=10,temperature=0.0)
+            receipt=json.loads(next(run.glob("error-formulate-p2-provider-*.json")).read_text(encoding="utf-8"))
+            self.assertEqual(receipt["status"],"PROVIDER_ERROR_ZERO_AUTHORITY")
+            self.assertEqual(receipt["branch_ids"],["B1","B2"])
+            self.assertEqual(receipt["raw_sha256"],"")
+
+    def test_qualification_stop_marker_blocks_future_stage_calls(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            run=Path(td)
+            (run/"shadow-run-qualification-stop.json").write_text(json.dumps({"status":"STOP_BEFORE_ASSEMBLE_CONTROL_SNAPSHOT_SUPERSEDED"}),encoding="utf-8")
+            with patch("sys.argv",["problem_search_stage_runner","assemble","--run-root",str(run)]):
+                with self.assertRaisesRegex(SystemExit,"STOP_BEFORE_ASSEMBLE_CONTROL_SNAPSHOT_SUPERSEDED"):
+                    runner.main()
+
     def test_malformed_model_output_is_archived_before_parse_failure(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
