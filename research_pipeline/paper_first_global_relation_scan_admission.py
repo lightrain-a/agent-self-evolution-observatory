@@ -90,3 +90,31 @@ def build_global_relation_scan_admission(
         "delta_status":delta.get("status"),
         "scientific_authority":False,
     }
+
+
+def public_global_relation_scan_admission_summary(state: dict[str, Any]) -> dict[str, Any]:
+    summary=dict(state.get("summary") or {})
+    policy=state.get("policy") or {}
+    allowed_summary={
+        "checks","passed","failed","manual_scan_eligible","automatic_model_scan_authorized",
+        "new_reviewed_sources","new_empirical_sources","new_assumption_sources","new_failure_sources","new_boundary_sources",
+        "current_reviewed_sources","last_scanned_sources",
+    }
+    return {
+        "schema_version":"1.0",
+        "status":str(state.get("status") or "HOLD_MANUAL_RELATION_SCAN"),
+        "policy":{
+            "scientific_authority":False,
+            "automatic_model_scan_authority":False,
+            "manual_execution_requires_explicit_operator_flag":policy.get("manual_execution_requires_explicit_operator_flag") is True,
+            "manual_eligibility_is_not_scientific_authority":policy.get("manual_eligibility_is_not_scientific_authority") is True,
+            "relation_scan_cannot_authorize_problem_gate":policy.get("relation_scan_cannot_authorize_problem_gate") is True,
+            "relation_scan_cannot_authorize_method_experiment_p0_gpu":policy.get("relation_scan_cannot_authorize_method_experiment_p0_gpu") is True,
+            "preconditions_are_deterministic_search_control_only":policy.get("preconditions_are_deterministic_search_control_only") is True,
+        },
+        "summary":{key:summary[key] for key in allowed_summary if key in summary},
+        "failed_check_count":len(state.get("failed_checks") or []),
+        "freshness_status":str(state.get("freshness_status") or ""),
+        "delta_status":str(state.get("delta_status") or ""),
+        "scientific_authority":False,
+    }

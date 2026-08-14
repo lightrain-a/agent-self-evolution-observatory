@@ -96,6 +96,7 @@ def main() -> None:
           problemGenerator: window.RESEARCH_SYSTEM_STATE?.paper_first_problem_generator || {},
           globalRelationFreshness: window.RESEARCH_SYSTEM_STATE?.paper_first_global_relation_freshness || {},
           globalRelationDelta: window.RESEARCH_SYSTEM_STATE?.paper_first_global_relation_delta_preflight || {},
+          globalRelationAdmission: window.RESEARCH_SYSTEM_STATE?.paper_first_global_relation_scan_admission || {},
           text: document.body.textContent || ''
         };""")
         require(system["chapters"] == 6, f"research-system overview must have six chapters, got {system['chapters']}")
@@ -140,7 +141,11 @@ def main() -> None:
         if relation_delta.get("status") == "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE":
             require(relation_delta.get("scientific_authority") is False and delta_policy.get("deterministic_typed_evidence_delta_only") is True and delta_policy.get("pair_slots_are_not_lane_valid_pairs") is True and delta_policy.get("cannot_reopen_generator") is True and delta_policy.get("cannot_authorize_relation_model_scan") is True and delta_summary.get("model_scan_authorized") is False and delta_summary.get("focused_generator_reopen_authorized") is False, f"relation delta preflight authority boundary is invalid: {relation_delta}")
             require("RELATION DELTA PREFLIGHT" in system["text"] and "combinatorial search upper bounds" in system["text"], "relation delta preflight is not rendered as non-authoritative opportunity accounting")
-        require("NO-LANE CARRIER PROBE" in system["text"] and "SHADOW SEARCH LAB" in system["text"] and "live-lanes=4" in system["text"] and "shadow-primitives=10" in system["text"] and "GLOBAL RELATION RECALL" in system["text"] and "canonical durable backlog" in system["text"].lower() and any(marker in system["text"] for marker in ("v2.9 · MACHINE-ENFORCED","v3.0 · MACHINE-ENFORCED","v3.1 · MACHINE-ENFORCED","v3.2 · MACHINE-ENFORCED","v3.3 · MACHINE-ENFORCED","v3.4 · MACHINE-ENFORCED","v3.5 · MACHINE-ENFORCED")), "problem-discovery carrier/live/shadow/relation authority boundary is not rendered")
+        relation_admission=system["globalRelationAdmission"] or {};admission_summary=relation_admission.get("summary") or {};admission_policy=relation_admission.get("policy") or {}
+        if relation_admission:
+            require(relation_admission.get("scientific_authority") is False and admission_policy.get("automatic_model_scan_authority") is False and admission_policy.get("manual_execution_requires_explicit_operator_flag") is True and admission_policy.get("manual_eligibility_is_not_scientific_authority") is True and admission_policy.get("relation_scan_cannot_authorize_problem_gate") is True and admission_policy.get("relation_scan_cannot_authorize_method_experiment_p0_gpu") is True and admission_summary.get("automatic_model_scan_authorized") is False, f"manual relation scan admission authority boundary is invalid: {relation_admission}")
+            require("MANUAL RELATION SCAN ADMISSION" in system["text"] and "automatic-model-authority=NO" in system["text"], "manual relation scan admission is not rendered as explicit-manual-only")
+        require("NO-LANE CARRIER PROBE" in system["text"] and "SHADOW SEARCH LAB" in system["text"] and "live-lanes=4" in system["text"] and "shadow-primitives=10" in system["text"] and "GLOBAL RELATION RECALL" in system["text"] and "canonical durable backlog" in system["text"].lower() and any(marker in system["text"] for marker in ("v2.9 · MACHINE-ENFORCED","v3.0 · MACHINE-ENFORCED","v3.1 · MACHINE-ENFORCED","v3.2 · MACHINE-ENFORCED","v3.3 · MACHINE-ENFORCED","v3.4 · MACHINE-ENFORCED","v3.5 · MACHINE-ENFORCED","v3.6 · MACHINE-ENFORCED")), "problem-discovery carrier/live/shadow/relation authority boundary is not rendered")
         require((system["preSummary"].get("audited"), system["preSummary"].get("execution_ready"), system["preSummary"].get("blocked")) == (4,0,4), f"Pre-P0 retrospective state is wrong: {system['preSummary']}")
         iteration = system["iterationSummary"]
         infra_only = iteration.get("diagnosis_counts") == {"infrastructure-error": 4}

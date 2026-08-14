@@ -48,6 +48,7 @@ from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_search_portfolio_design_adjudication import build_search_portfolio_design_adjudication, validate_search_portfolio_design_adjudication, write_search_portfolio_design_adjudication
 from .paper_first_sp15_identifiability_support import build_sp15_identifiability_support, write_sp15_identifiability_support
 from .paper_first_global_relation_recall import load_global_relation_recall_state
+from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission, public_global_relation_scan_admission_summary
 from .paper_first_relation_coverage import relation_recall_freshness
 from .paper_first_relation_delta_preflight import load_private_relation_delta_preflight, public_relation_delta_preflight_summary
 from .paper_first_paper_design_backlog import load_paper_design_backlog
@@ -326,7 +327,9 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_paper_design_backlog = load_paper_design_backlog()
     paper_first_global_relation_recall = load_global_relation_recall_state()
     paper_first_global_relation_freshness = relation_recall_freshness(paper_first_problem_generator, paper_first_global_relation_recall)
-    paper_first_global_relation_delta_preflight = public_relation_delta_preflight_summary(load_private_relation_delta_preflight(storage=storage))
+    paper_first_global_relation_delta_private = load_private_relation_delta_preflight(storage=storage)
+    paper_first_global_relation_delta_preflight = public_relation_delta_preflight_summary(paper_first_global_relation_delta_private)
+    paper_first_global_relation_scan_admission = public_global_relation_scan_admission_summary(build_global_relation_scan_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,relation_state=paper_first_global_relation_recall,delta_state=paper_first_global_relation_delta_private))
     paper_first_problem_search_portfolio = _load_shadow_search_portfolio_public()
     paper_first_shadow_latest = paper_first_problem_search_portfolio.get("latest_run") or {}
     paper_first_shadow_latest_summary = paper_first_shadow_latest.get("summary") or {}
@@ -553,6 +556,12 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_relation_delta_new_boundaries":(paper_first_global_relation_delta_preflight.get("summary") or {}).get("new_boundary_sources",0),
             "paper_first_relation_delta_model_scan_authorized":bool((paper_first_global_relation_delta_preflight.get("summary") or {}).get("model_scan_authorized")),
             "paper_first_relation_delta_focused_reopen_authorized":bool((paper_first_global_relation_delta_preflight.get("summary") or {}).get("focused_generator_reopen_authorized")),
+            "paper_first_relation_scan_admission_status":paper_first_global_relation_scan_admission.get("status","HOLD_MANUAL_RELATION_SCAN"),
+            "paper_first_relation_scan_admission_checks":(paper_first_global_relation_scan_admission.get("summary") or {}).get("checks",0),
+            "paper_first_relation_scan_admission_passed":(paper_first_global_relation_scan_admission.get("summary") or {}).get("passed",0),
+            "paper_first_relation_scan_admission_failed":(paper_first_global_relation_scan_admission.get("summary") or {}).get("failed",0),
+            "paper_first_relation_scan_manual_eligible":bool((paper_first_global_relation_scan_admission.get("summary") or {}).get("manual_scan_eligible")),
+            "paper_first_relation_scan_automatic_authorized":bool((paper_first_global_relation_scan_admission.get("summary") or {}).get("automatic_model_scan_authorized")),
             "paper_first_shadow_latest_run_id":paper_first_problem_search_portfolio.get("latest_run_id",""),
             "paper_first_shadow_latest_stage_runner_schema":paper_first_shadow_latest.get("stage_runner_required_schema",""),
             "paper_first_shadow_latest_control_snapshot_sha256":paper_first_shadow_latest.get("control_snapshot_sha256",""),
@@ -726,6 +735,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_global_relation_recall":paper_first_global_relation_recall,
         "paper_first_global_relation_freshness":paper_first_global_relation_freshness,
         "paper_first_global_relation_delta_preflight":paper_first_global_relation_delta_preflight,
+        "paper_first_global_relation_scan_admission":paper_first_global_relation_scan_admission,
         "paper_first_problem_search_portfolio":paper_first_problem_search_portfolio,
         "paper_first_post_c2":paper_first_post_c2,
         "paper_first_premature_method_diagnostics":paper_first_premature_method_diagnostics,
@@ -917,6 +927,18 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
             )
         )
     )
+    relation_admission=state.get("paper_first_global_relation_scan_admission") or {};relation_admission_policy=relation_admission.get("policy") or {};relation_admission_summary=relation_admission.get("summary") or {}
+    relation_admission_boundary_ok=bool(
+        relation_admission.get("scientific_authority") is False
+        and relation_admission_policy.get("automatic_model_scan_authority") is False
+        and relation_admission_policy.get("manual_execution_requires_explicit_operator_flag") is True
+        and relation_admission_policy.get("manual_eligibility_is_not_scientific_authority") is True
+        and relation_admission_policy.get("relation_scan_cannot_authorize_problem_gate") is True
+        and relation_admission_policy.get("relation_scan_cannot_authorize_method_experiment_p0_gpu") is True
+        and relation_admission_policy.get("preconditions_are_deterministic_search_control_only") is True
+        and relation_admission_summary.get("automatic_model_scan_authorized") is False
+        and ((relation_admission.get("status")=="ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN") == (relation_admission_summary.get("manual_scan_eligible") is True))
+    )
     checks = [
         {"key":"corpus", "pass":bool(corpus.get("papers")), "detail":f"{len(corpus.get('papers') or [])} papers"},
         {"key":"evidence-coverage", "pass":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"] >= 20, "detail":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"]},
@@ -938,6 +960,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-object-candidate-evidence-shadow", "pass":candidate_evidence_boundary_ok, "detail":{"status":candidate_evidence.get("status"),"summary":candidate_evidence_summary}},
         {"key":"paper-first-global-relation-freshness", "pass":relation_freshness_boundary_ok, "detail":{"status":relation_freshness.get("status"),"summary":relation_freshness_summary}},
         {"key":"paper-first-global-relation-delta-preflight", "pass":relation_delta_boundary_ok, "detail":{"status":relation_delta.get("status"),"summary":relation_delta_summary,"pair_slots":relation_delta.get("pair_slots") or {},"interpretation":relation_delta.get("interpretation") or {}}},
+        {"key":"paper-first-global-relation-scan-admission", "pass":relation_admission_boundary_ok, "detail":{"status":relation_admission.get("status"),"summary":relation_admission_summary}},
         {"key":"paper-first-problem-discovery-contract", "pass":state["paper_first_problem_discovery_contract"]["policy"]["multi_lane_discovery_required"] is True and state["paper_first_problem_discovery_contract"]["policy"]["contradiction_first_required"] is False and state["paper_first_problem_discovery_contract"]["policy"]["contradiction_lane_retained"] is True and tuple(state["paper_first_problem_discovery_contract"]["policy"]["allowed_discovery_lanes"]) == DISCOVERY_LANES and tuple(state["paper_first_problem_discovery_contract"]["policy"]["forbidden_discovery_lanes"]) == FORBIDDEN_DISCOVERY_LANES and state["paper_first_problem_discovery_contract"]["policy"]["lane_specific_machine_evidence_contract_required"] is True and live_contract_boundary_ok and state["paper_first_problem_discovery_contract"]["policy"]["no_lane_specific_downstream_relaxation"] is True and state["paper_first_problem_discovery_contract"]["policy"]["two_mature_theory_baselines_required"] is True and state["paper_first_problem_discovery_contract"]["policy"]["same_information_nonreducibility_required"] is True and state["paper_first_problem_discovery_contract"]["policy"]["domain_transfer_veto_required"] is True and state["paper_first_problem_discovery_contract"]["summary"]["automatic_method_authority"] == 0 and state["paper_first_problem_discovery_contract"]["summary"]["automatic_experiment_authority"] == 0, "detail":state["paper_first_problem_discovery_contract"]["summary"]},
         {"key":"paper-first-retrieval-incomplete-generator-boundary", "pass":retrieval_incomplete_boundary_ok, "detail":{"status":generator_status,"source_coverage":generator_coverage}},
         {"key":"paper-first-carrier-pending-generator-boundary", "pass":carrier_pending_boundary_ok, "detail":{"status":generator_status,"source_coverage":generator_coverage}},
@@ -1198,6 +1221,14 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             errors.append("relation delta preflight must remain deterministic zero-authority search control")
         if delta_summary.get("model_scan_authorized") is True or delta_summary.get("focused_generator_reopen_authorized") is True:
             errors.append("relation delta preflight cannot authorize model scan or focused generator reopen")
+    relation_admission=state.get("paper_first_global_relation_scan_admission") or {};admission_policy=relation_admission.get("policy") or {};admission_summary=relation_admission.get("summary") or {};admission_status=str(relation_admission.get("status") or "HOLD_MANUAL_RELATION_SCAN")
+    if relation_admission:
+        if relation_admission.get("scientific_authority") is not False or admission_policy.get("automatic_model_scan_authority") is not False or admission_policy.get("manual_execution_requires_explicit_operator_flag") is not True or admission_policy.get("manual_eligibility_is_not_scientific_authority") is not True or admission_policy.get("relation_scan_cannot_authorize_problem_gate") is not True or admission_policy.get("relation_scan_cannot_authorize_method_experiment_p0_gpu") is not True or admission_policy.get("preconditions_are_deterministic_search_control_only") is not True:
+            errors.append("manual relation-scan admission must remain deterministic zero-authority execution precondition")
+        if admission_summary.get("automatic_model_scan_authorized") is not False:
+            errors.append("manual relation-scan admission cannot authorize model calls automatically")
+        if (admission_status=="ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN") != (admission_summary.get("manual_scan_eligible") is True):
+            errors.append("manual relation-scan eligibility status/accounting mismatch")
     if (pf357_summary.get("reviewed"),pf357_summary.get("stopped_standalone"),pf357_summary.get("paper_design_authorized"),pf357_summary.get("local_validation_authorized")) != (3,3,0,0): errors.append("PF-3/PF-5/PF-7 must all terminate standalone before Paper Design/local validation")
     post_c2 = state.get("paper_first_post_c2") or {}; post_c2_auth = post_c2.get("authority") or {}
     if post_c2.get("decision") != "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" or post_c2_auth.get("clean_mechanism_stop") is not True: errors.append("post-C2 paper mechanism terminal adjudication must preserve the clean local falsifier STOP")

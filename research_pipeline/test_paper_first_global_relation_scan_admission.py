@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 import unittest
 
-from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission
+from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission, public_global_relation_scan_admission_summary
 
 
 class GlobalRelationScanAdmissionTest(unittest.TestCase):
@@ -26,6 +26,19 @@ class GlobalRelationScanAdmissionTest(unittest.TestCase):
         self.assertTrue(state["policy"]["manual_execution_requires_explicit_operator_flag"])
         self.assertFalse(state["scientific_authority"])
         self.assertEqual(state["failed_checks"],[])
+
+    def test_public_summary_exposes_gate_counts_without_check_details(self) -> None:
+        primary,generator,relation,delta=self.states()
+        state=build_global_relation_scan_admission(primary_state=primary,generator_state=generator,relation_state=relation,delta_state=delta)
+        public=public_global_relation_scan_admission_summary(state)
+        encoded=str(public)
+        self.assertEqual(public["status"],"ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN")
+        self.assertEqual((public["summary"]["checks"],public["summary"]["passed"],public["summary"]["failed"]),(15,15,0))
+        self.assertTrue(public["summary"]["manual_scan_eligible"])
+        self.assertFalse(public["summary"]["automatic_model_scan_authorized"])
+        self.assertNotIn("checks",public)
+        self.assertNotIn("live-primary-ready",encoded)
+        self.assertFalse(public["scientific_authority"])
 
     def test_open_live_coverage_blocks_manual_scan(self) -> None:
         primary,generator,relation,delta=self.states();primary=copy.deepcopy(primary);primary["summary"]["source_coverage_exhausted"]=False

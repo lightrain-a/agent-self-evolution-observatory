@@ -548,6 +548,20 @@ class ResearchSystemTest(unittest.TestCase):
         pair=copy.deepcopy(state);pair["paper_first_global_relation_delta_preflight"]["policy"]["pair_slots_are_not_lane_valid_pairs"]=False
         self.assertTrue(any("relation delta preflight" in error for error in validate_state(pair)))
 
+    def test_manual_relation_scan_admission_is_execution_precondition_not_authority(self) -> None:
+        state=copy.deepcopy(self.state)
+        state["paper_first_global_relation_scan_admission"]={
+            "schema_version":"1.0","status":"ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN",
+            "policy":{"scientific_authority":False,"automatic_model_scan_authority":False,"manual_execution_requires_explicit_operator_flag":True,"manual_eligibility_is_not_scientific_authority":True,"relation_scan_cannot_authorize_problem_gate":True,"relation_scan_cannot_authorize_method_experiment_p0_gpu":True,"preconditions_are_deterministic_search_control_only":True},
+            "summary":{"checks":15,"passed":15,"failed":0,"manual_scan_eligible":True,"automatic_model_scan_authorized":False,"new_reviewed_sources":12,"new_empirical_sources":11,"new_assumption_sources":0,"new_failure_sources":11,"new_boundary_sources":8,"current_reviewed_sources":226,"last_scanned_sources":214},
+            "failed_check_count":0,"freshness_status":"STALE_RELATION_UNIVERSE","delta_status":"RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE","scientific_authority":False,
+        }
+        self.assertEqual(validate_state(state),[])
+        auto=copy.deepcopy(state);auto["paper_first_global_relation_scan_admission"]["summary"]["automatic_model_scan_authorized"]=True
+        self.assertTrue(any("manual relation-scan admission" in error for error in validate_state(auto)))
+        flag=copy.deepcopy(state);flag["paper_first_global_relation_scan_admission"]["policy"]["manual_execution_requires_explicit_operator_flag"]=False
+        self.assertTrue(any("manual relation-scan admission" in error for error in validate_state(flag)))
+
     def test_v23_problem_deadend_memory_is_zero_authority_and_requires_basin_escape(self) -> None:
         state=copy.deepcopy(self.state); generator=state["paper_first_problem_generator"]
         generator["schema_version"]="2.3"
