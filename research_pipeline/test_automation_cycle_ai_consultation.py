@@ -135,7 +135,7 @@ class AutomationCycleAIConsultationTest(unittest.TestCase):
         self.assertEqual(result["status"],"GLOBAL_RELATION_RECALL_COMPLETE")
         self.assertEqual(result["delta_preflight"]["summary"]["new_reviewed_sources"],12)
         self.assertEqual(result["manual_scan_admission"],admission)
-        writer.assert_called_once_with(storage=storage); delta_writer.assert_called_once_with(storage=storage); admission_builder.assert_called_once()
+        writer.assert_called_once_with(storage=storage,explicit_manual_scan_intent=True); delta_writer.assert_called_once_with(storage=storage); admission_builder.assert_called_once()
 
     def test_manual_relation_scan_is_blocked_before_writer_when_admission_fails(self) -> None:
         storage=SimpleNamespace(); writer=Mock(); delta_writer=Mock(return_value={"status":"RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE","summary":{},"pair_slots":{},"interpretation":{},"scientific_authority":False})

@@ -277,8 +277,32 @@ def public_relation_recall_state(state:dict[str,Any],storage:StorageSettings|Non
     return redact_private_paths(public,storage=storage or StorageSettings.from_env())
 
 
-def write_global_relation_recall_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS,*,storage:StorageSettings|None=None,**kwargs:Any)->dict[str,Any]:
-    storage=storage or StorageSettings.from_env();state=run_global_relation_recall(storage=storage,**kwargs)
+def write_global_relation_recall_state(
+    json_path:Path=DEFAULT_JSON,
+    js_path:Path=DEFAULT_JS,
+    *,
+    storage:StorageSettings|None=None,
+    explicit_manual_scan_intent:bool=False,
+    admission_builder:Callable[...,dict[str,Any]]|None=None,
+    **kwargs:Any,
+)->dict[str,Any]:
+    storage=storage or StorageSettings.from_env()
+    if explicit_manual_scan_intent is not True:
+        raise RuntimeError("global relation writer requires explicit manual scan intent")
+    if admission_builder is None:
+        from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission
+        admission_builder=build_global_relation_scan_admission
+    admission_kwargs:dict[str,Any]={}
+    if "primary_state" in kwargs: admission_kwargs["primary_state"]=kwargs["primary_state"]
+    if "generator_state" in kwargs: admission_kwargs["generator_state"]=kwargs["generator_state"]
+    if "previous_state" in kwargs: admission_kwargs["relation_state"]=kwargs["previous_state"]
+    admission=admission_builder(**admission_kwargs)
+    if (admission.get("summary") or {}).get("manual_scan_eligible") is not True:
+        raise RuntimeError("global relation writer admission blocked: "+",".join(str(x) for x in admission.get("failed_checks") or []))
+    state=run_global_relation_recall(storage=storage,**kwargs)
+    from .paper_first_global_relation_scan_admission import public_global_relation_scan_admission_summary
+    state["writer_admission"]=public_global_relation_scan_admission_summary(admission)
+    state.setdefault("policy",{})["explicit_manual_writer_admission_required"]=True
     private=_root(storage);private.mkdir(parents=True,exist_ok=True);(private/"latest.json").write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     public=public_relation_recall_state(state,storage);json_path.parent.mkdir(parents=True,exist_ok=True);json_path.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");js_path.write_text("window.PAPER_FIRST_GLOBAL_RELATION_RECALL = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
     return state

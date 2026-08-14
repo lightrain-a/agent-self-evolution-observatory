@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .config import StorageSettings
-from .paper_first_global_relation_recall import _card, run_global_relation_recall
+from .paper_first_global_relation_recall import _card, run_global_relation_recall, write_global_relation_recall_state
 from .paper_first_relation_coverage import relation_universe_digest
 
 
@@ -176,6 +176,45 @@ class GlobalRelationRecallTest(unittest.TestCase):
         self.assertEqual(state["status"],"HOLD_RELATION_DELTA_BOUNDARY_UNRECONSTRUCTABLE")
         self.assertEqual(calls,[])
         self.assertFalse(state["scientific_authority"])
+
+    def eligible_admission(self) -> dict:
+        return {
+            "schema_version":"1.0","status":"ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN",
+            "policy":{"scientific_authority":False,"automatic_model_scan_authority":False,"manual_execution_requires_explicit_operator_flag":True,"manual_eligibility_is_not_scientific_authority":True,"relation_scan_cannot_authorize_problem_gate":True,"relation_scan_cannot_authorize_method_experiment_p0_gpu":True,"preconditions_are_deterministic_search_control_only":True},
+            "summary":{"checks":15,"passed":15,"failed":0,"manual_scan_eligible":True,"automatic_model_scan_authorized":False},
+            "failed_checks":[],"freshness_status":"STALE_RELATION_UNIVERSE","delta_status":"RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE","scientific_authority":False,
+        }
+
+    def test_writer_rejects_missing_explicit_manual_intent_before_models_or_files(self) -> None:
+        calls=[]
+        def forbidden(**kwargs): calls.append(1); raise AssertionError("model call forbidden")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);json_path=root/"public.json";js_path=root/"public.js"
+            with self.assertRaisesRegex(RuntimeError,"explicit manual scan intent"):
+                write_global_relation_recall_state(json_path,js_path,storage=self.storage(root),primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state={},relation_responder=forbidden,lane_responder=forbidden,reduction_responder=forbidden)
+            self.assertEqual(calls,[]);self.assertFalse(json_path.exists());self.assertFalse(js_path.exists())
+
+    def test_writer_rejects_failed_admission_before_models_or_files(self) -> None:
+        calls=[]
+        def forbidden(**kwargs): calls.append(1); raise AssertionError("model call forbidden")
+        def hold(**kwargs): return {"status":"HOLD_MANUAL_RELATION_SCAN","summary":{"manual_scan_eligible":False},"failed_checks":["new-typed-evidence-delta-nonzero"],"scientific_authority":False}
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);json_path=root/"public.json";js_path=root/"public.js"
+            with self.assertRaisesRegex(RuntimeError,"writer admission blocked"):
+                write_global_relation_recall_state(json_path,js_path,storage=self.storage(root),explicit_manual_scan_intent=True,admission_builder=hold,primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state={},relation_responder=forbidden,lane_responder=forbidden,reduction_responder=forbidden)
+            self.assertEqual(calls,[]);self.assertFalse(json_path.exists());self.assertFalse(js_path.exists())
+
+    def test_writer_records_manual_admission_when_explicit_and_eligible(self) -> None:
+        calls=[];relation=self.relation(False)
+        def relation_only(**kwargs): calls.append("relation"); return relation(**kwargs)
+        def forbidden(**kwargs): calls.append("downstream"); raise AssertionError("downstream forbidden")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);json_path=root/"public.json";js_path=root/"public.js"
+            state=write_global_relation_recall_state(json_path,js_path,storage=self.storage(root),explicit_manual_scan_intent=True,admission_builder=lambda **kwargs:self.eligible_admission(),primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state={},relation_responder=relation_only,lane_responder=forbidden,reduction_responder=forbidden,now=datetime(2026,8,14,tzinfo=timezone.utc))
+            self.assertEqual(calls,["relation"]);self.assertTrue(json_path.exists());self.assertTrue(js_path.exists())
+            self.assertTrue(state["policy"]["explicit_manual_writer_admission_required"])
+            self.assertTrue((state.get("writer_admission") or {}).get("summary",{}).get("manual_scan_eligible"))
+            self.assertFalse((state.get("writer_admission") or {}).get("summary",{}).get("automatic_model_scan_authorized"))
 
     def test_lane_reviewer_must_resolve_independently(self) -> None:
         with tempfile.TemporaryDirectory() as td:

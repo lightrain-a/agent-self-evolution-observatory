@@ -1220,6 +1220,10 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         if relation_schema >= "1.2":
             if relation_policy.get("stale_completed_scan_uses_delta_only_new_endpoint_pairs") is not True or relation_policy.get("delta_only_scan_forbids_old_old_pairs") is not True:
                 errors.append("Global Relation Recall 1.2 must constrain stale-universe scans to new-endpoint delta pairs")
+            if relation_status=="GLOBAL_RELATION_RECALL_COMPLETE":
+                writer_admission=relation.get("writer_admission") or {};writer_policy=writer_admission.get("policy") or {};writer_summary=writer_admission.get("summary") or {}
+                if relation_policy.get("explicit_manual_writer_admission_required") is not True or writer_admission.get("scientific_authority") is not False or writer_policy.get("automatic_model_scan_authority") is not False or writer_policy.get("manual_execution_requires_explicit_operator_flag") is not True or writer_summary.get("manual_scan_eligible") is not True or writer_summary.get("automatic_model_scan_authorized") is not False:
+                    errors.append("Global Relation Recall 1.2 completed scan requires explicit zero-authority manual writer admission")
             delta_scan=relation.get("delta_scan") or {}
             if delta_scan.get("enabled") is True:
                 count=int(delta_scan.get("required_new_endpoint_count") or 0);digest=str(delta_scan.get("required_new_endpoint_digest") or "")

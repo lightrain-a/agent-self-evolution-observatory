@@ -143,7 +143,7 @@ def _run_global_relation_control(
         raise RuntimeError("global relation model scan is manual-only")
     if (admission.get("summary") or {}).get("manual_scan_eligible") is not True:
         raise RuntimeError("global relation manual-scan admission blocked: "+",".join(str(x) for x in admission.get("failed_checks") or []))
-    result=dict(relation_writer(storage=storage))
+    result=dict(relation_writer(storage=storage,explicit_manual_scan_intent=True))
     result["delta_preflight"]=delta
     result["manual_scan_admission"]=admission
     return result
