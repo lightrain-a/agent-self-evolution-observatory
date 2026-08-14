@@ -502,6 +502,20 @@ class ResearchSystemTest(unittest.TestCase):
         fake=copy.deepcopy(state);fake["paper_first_global_relation_recall"]["summary"]["focused_problem_generator_reopen_required"]=True
         self.assertTrue(any("focused problem-generator reopen" in error for error in validate_state(fake)))
 
+    def test_stale_global_relation_scan_cannot_be_current_negative_or_reopen(self) -> None:
+        state=copy.deepcopy(self.state)
+        state["paper_first_global_relation_freshness"]={
+            "schema_version":"1.0","status":"STALE_RELATION_UNIVERSE",
+            "policy":{"scientific_authority":False,"deterministic_digest_comparison_only":True,"stale_scan_is_historical_not_current_negative_evidence":True,"stale_scan_cannot_reopen_focused_generator":True,"model_scan_deferred_is_not_relation_exhaustion":True},
+            "summary":{"current_reviewed_sources":226,"last_scanned_sources":214,"current_possible_pairs":25425,"current_coobserved_pairs":5730,"current_pair_coverage_fraction":0.2254,"last_pair_coverage_fraction":0.2186,"current_relation_blind_spot":True,"universe_stale":True,"current_not_reduced_unknown":True,"model_scan_deferred":True,"focused_problem_generator_reopen_allowed":False},
+            "current_relation_universe_digest":"a"*64,"last_scanned_relation_universe_digest":"b"*64,"scientific_authority":False,
+        }
+        self.assertEqual(validate_state(state),[])
+        false_negative=copy.deepcopy(state);false_negative["paper_first_global_relation_freshness"]["summary"]["current_not_reduced_unknown"]=False
+        self.assertTrue(any("stale Global Relation Recall" in error for error in validate_state(false_negative)))
+        illegal_reopen=copy.deepcopy(state);illegal_reopen["paper_first_global_relation_freshness"]["summary"]["focused_problem_generator_reopen_allowed"]=True
+        self.assertTrue(any("stale Global Relation Recall" in error for error in validate_state(illegal_reopen)))
+
     def test_v23_problem_deadend_memory_is_zero_authority_and_requires_basin_escape(self) -> None:
         state=copy.deepcopy(self.state); generator=state["paper_first_problem_generator"]
         generator["schema_version"]="2.3"

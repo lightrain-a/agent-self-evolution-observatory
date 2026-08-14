@@ -48,6 +48,7 @@ from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_search_portfolio_design_adjudication import build_search_portfolio_design_adjudication, validate_search_portfolio_design_adjudication, write_search_portfolio_design_adjudication
 from .paper_first_sp15_identifiability_support import build_sp15_identifiability_support, write_sp15_identifiability_support
 from .paper_first_global_relation_recall import load_global_relation_recall_state
+from .paper_first_relation_coverage import relation_recall_freshness
 from .paper_first_paper_design_backlog import load_paper_design_backlog
 from .paper_first_post_c2_adjudication import build_post_c2_adjudication, write_post_c2_adjudication
 from .paper_first_premature_method_diagnostics import resolve_premature_method_diagnostics, write_premature_method_diagnostics
@@ -323,6 +324,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_sp15_support = build_sp15_identifiability_support()
     paper_first_paper_design_backlog = load_paper_design_backlog()
     paper_first_global_relation_recall = load_global_relation_recall_state()
+    paper_first_global_relation_freshness = relation_recall_freshness(paper_first_problem_generator, paper_first_global_relation_recall)
     paper_first_problem_search_portfolio = _load_shadow_search_portfolio_public()
     paper_first_shadow_latest = paper_first_problem_search_portfolio.get("latest_run") or {}
     paper_first_shadow_latest_summary = paper_first_shadow_latest.get("summary") or {}
@@ -530,6 +532,14 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_global_relation_reducible":(paper_first_global_relation_recall.get("summary") or {}).get("reducible",0),
             "paper_first_global_relation_not_reduced":(paper_first_global_relation_recall.get("summary") or {}).get("not_reduced",0),
             "paper_first_global_relation_focused_reopen":bool((paper_first_global_relation_recall.get("summary") or {}).get("focused_problem_generator_reopen_required")),
+            "paper_first_global_relation_freshness_status":paper_first_global_relation_freshness.get("status","NO_COMPLETED_RELATION_SCAN"),
+            "paper_first_global_relation_current_sources":(paper_first_global_relation_freshness.get("summary") or {}).get("current_reviewed_sources",0),
+            "paper_first_global_relation_last_scanned_sources":(paper_first_global_relation_freshness.get("summary") or {}).get("last_scanned_sources",0),
+            "paper_first_global_relation_current_pair_coverage":(paper_first_global_relation_freshness.get("summary") or {}).get("current_pair_coverage_fraction",0.0),
+            "paper_first_global_relation_universe_stale":bool((paper_first_global_relation_freshness.get("summary") or {}).get("universe_stale")),
+            "paper_first_global_relation_current_not_reduced_unknown":bool((paper_first_global_relation_freshness.get("summary") or {}).get("current_not_reduced_unknown")),
+            "paper_first_global_relation_model_scan_deferred":bool((paper_first_global_relation_freshness.get("summary") or {}).get("model_scan_deferred")),
+            "paper_first_global_relation_focused_reopen_allowed":bool((paper_first_global_relation_freshness.get("summary") or {}).get("focused_problem_generator_reopen_allowed")),
             "paper_first_shadow_latest_run_id":paper_first_problem_search_portfolio.get("latest_run_id",""),
             "paper_first_shadow_latest_expansion_successful_shards":paper_first_shadow_latest_summary.get("expansion_successful_shards",0),
             "paper_first_shadow_latest_expansion_execution_failures":paper_first_shadow_latest_summary.get("expansion_execution_failures",0),
@@ -696,6 +706,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_sp15_identifiability_support":paper_first_sp15_support,
         "paper_first_paper_design_backlog":paper_first_paper_design_backlog,
         "paper_first_global_relation_recall":paper_first_global_relation_recall,
+        "paper_first_global_relation_freshness":paper_first_global_relation_freshness,
         "paper_first_problem_search_portfolio":paper_first_problem_search_portfolio,
         "paper_first_post_c2":paper_first_post_c2,
         "paper_first_premature_method_diagnostics":paper_first_premature_method_diagnostics,
@@ -862,6 +873,15 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and int(candidate_evidence_summary.get("activation_authorized") or 0)==0
         and all(row.get("scientific_authority") is False for row in (candidate_evidence.get("results") or {}).values() if isinstance(row,dict))
     )
+    relation_freshness=state.get("paper_first_global_relation_freshness") or {};relation_freshness_policy=relation_freshness.get("policy") or {};relation_freshness_summary=relation_freshness.get("summary") or {}
+    relation_freshness_boundary_ok=bool(
+        relation_freshness.get("scientific_authority") is False
+        and relation_freshness_policy.get("deterministic_digest_comparison_only") is True
+        and relation_freshness_policy.get("stale_scan_is_historical_not_current_negative_evidence") is True
+        and relation_freshness_policy.get("stale_scan_cannot_reopen_focused_generator") is True
+        and relation_freshness_policy.get("model_scan_deferred_is_not_relation_exhaustion") is True
+        and (not bool(relation_freshness_summary.get("universe_stale")) or (bool(relation_freshness_summary.get("current_not_reduced_unknown")) and not bool(relation_freshness_summary.get("focused_problem_generator_reopen_allowed"))))
+    )
     checks = [
         {"key":"corpus", "pass":bool(corpus.get("papers")), "detail":f"{len(corpus.get('papers') or [])} papers"},
         {"key":"evidence-coverage", "pass":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"] >= 20, "detail":state["evidence_graph"]["summary"]["ideas_with_semantic_evidence"]},
@@ -881,6 +901,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-primary-evidence", "pass":state["paper_first_primary_evidence"].get("status") in {"NOT_RUN","READY","INSUFFICIENT_PRIMARY_EVIDENCE","STALE_CORPUS_BLOCKED","NO_CORPUS","STATE_UNREADABLE"} and (state["paper_first_primary_evidence"].get("policy") or {}).get("candidate_generation_authority") is False and (state["paper_first_primary_evidence"].get("policy") or {}).get("method_authority") is False and (state["paper_first_primary_evidence"].get("policy") or {}).get("experiment_authority") is False and (state["paper_first_primary_evidence"].get("status") != "READY" or ((state["paper_first_primary_evidence"].get("policy") or {}).get("primary_publication_age_is_bounded") is True and float((state["paper_first_primary_evidence"].get("policy") or {}).get("maximum_publication_age_days") or 9999) <= 60.0 and (state["paper_first_primary_evidence"].get("policy") or {}).get("fresh_s2_is_augmented_by_preregistered_arxiv_lanes") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("arxiv_augmentation_failure_does_not_invalidate_fresh_corpus") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("typed_evidence_candidates_are_not_ground_truth") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("typed_evidence_is_deterministic_and_bounded") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("source_coverage_scheduler_is_discovery_only") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("source_review_exposure_has_zero_scientific_authority") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("portable_source_review_receipts_have_zero_scientific_authority") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("private_saturation_ledger_runs_exported_as_zero_authority_portable_receipts") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("source_exposure_cannot_skip_generation_or_problem_gate") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("source_exposure_does_not_relax_relevance_or_freshness") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("source_coverage_exploration_prefers_preregistered_lanes") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("source_coverage_saturation_is_compute_control_not_scientific_negative") is True and (state["paper_first_primary_evidence"].get("policy") or {}).get("new_lane_grounded_source_reopens_generation") is True and (not bool((state["paper_first_primary_evidence"].get("summary") or {}).get("source_coverage_exhausted")) or len(portable_review_refs) >= int((state["paper_first_primary_evidence"].get("summary") or {}).get("prior_reviewed_sources") or 0)) and int((state["paper_first_primary_evidence"].get("summary") or {}).get("selected_previously_reviewed") or 0) + int((state["paper_first_primary_evidence"].get("summary") or {}).get("selected_unreviewed") or 0) == int((state["paper_first_primary_evidence"].get("summary") or {}).get("selected") or 0) and (state["paper_first_primary_evidence"].get("policy") or {}).get("pre_registered_lane_coverage_floor") is True and int((state["paper_first_primary_evidence"].get("policy") or {}).get("lane_floor") or 0) >= 1 and not list((state["paper_first_primary_evidence"].get("summary") or {}).get("undercovered_lanes") or []))), "detail":{"status":state["paper_first_primary_evidence"].get("status"),"summary":state["paper_first_primary_evidence"].get("summary")}},
         {"key":"paper-first-object-retrieval-shadow", "pass":object_retrieval_boundary_ok, "detail":{"status":object_retrieval.get("status"),"summary":object_retrieval_summary}},
         {"key":"paper-first-object-candidate-evidence-shadow", "pass":candidate_evidence_boundary_ok, "detail":{"status":candidate_evidence.get("status"),"summary":candidate_evidence_summary}},
+        {"key":"paper-first-global-relation-freshness", "pass":relation_freshness_boundary_ok, "detail":{"status":relation_freshness.get("status"),"summary":relation_freshness_summary}},
         {"key":"paper-first-problem-discovery-contract", "pass":state["paper_first_problem_discovery_contract"]["policy"]["multi_lane_discovery_required"] is True and state["paper_first_problem_discovery_contract"]["policy"]["contradiction_first_required"] is False and state["paper_first_problem_discovery_contract"]["policy"]["contradiction_lane_retained"] is True and tuple(state["paper_first_problem_discovery_contract"]["policy"]["allowed_discovery_lanes"]) == DISCOVERY_LANES and tuple(state["paper_first_problem_discovery_contract"]["policy"]["forbidden_discovery_lanes"]) == FORBIDDEN_DISCOVERY_LANES and state["paper_first_problem_discovery_contract"]["policy"]["lane_specific_machine_evidence_contract_required"] is True and live_contract_boundary_ok and state["paper_first_problem_discovery_contract"]["policy"]["no_lane_specific_downstream_relaxation"] is True and state["paper_first_problem_discovery_contract"]["policy"]["two_mature_theory_baselines_required"] is True and state["paper_first_problem_discovery_contract"]["policy"]["same_information_nonreducibility_required"] is True and state["paper_first_problem_discovery_contract"]["policy"]["domain_transfer_veto_required"] is True and state["paper_first_problem_discovery_contract"]["summary"]["automatic_method_authority"] == 0 and state["paper_first_problem_discovery_contract"]["summary"]["automatic_experiment_authority"] == 0, "detail":state["paper_first_problem_discovery_contract"]["summary"]},
         {"key":"paper-first-retrieval-incomplete-generator-boundary", "pass":retrieval_incomplete_boundary_ok, "detail":{"status":generator_status,"source_coverage":generator_coverage}},
         {"key":"paper-first-carrier-pending-generator-boundary", "pass":carrier_pending_boundary_ok, "detail":{"status":generator_status,"source_coverage":generator_coverage}},
@@ -1114,6 +1135,16 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         if relation_status in {"GLOBAL_RELATION_RECALL_COMPLETE","SKIPPED_RELATION_UNIVERSE_UNCHANGED"}:
             last_scan=relation.get("last_completed_scan") or {}
             if not str(last_scan.get("run_id") or "") or last_scan.get("scientific_authority") is not False or str(last_scan.get("relation_universe_digest") or "")!=str(relation_summary.get("relation_universe_digest") or ""): errors.append("completed Global Relation Recall must preserve a matching zero-authority portable scan receipt")
+    relation_freshness=state.get("paper_first_global_relation_freshness") or {};fresh_policy=relation_freshness.get("policy") or {};fresh_summary=relation_freshness.get("summary") or {}
+    if relation_freshness:
+        if relation_freshness.get("scientific_authority") is not False or fresh_policy.get("deterministic_digest_comparison_only") is not True or fresh_policy.get("stale_scan_is_historical_not_current_negative_evidence") is not True or fresh_policy.get("stale_scan_cannot_reopen_focused_generator") is not True or fresh_policy.get("model_scan_deferred_is_not_relation_exhaustion") is not True:
+            errors.append("Global Relation Recall freshness must remain deterministic zero-authority compute control")
+        if bool(fresh_summary.get("universe_stale")) and (fresh_summary.get("current_not_reduced_unknown") is not True or fresh_summary.get("focused_problem_generator_reopen_allowed") is not False):
+            errors.append("stale Global Relation Recall cannot support a current negative or focused-generator reopen")
+        if str(relation_freshness.get("current_relation_universe_digest") or "") and len(str(relation_freshness.get("current_relation_universe_digest") or "")) != 64:
+            errors.append("current relation-universe digest invalid")
+        if str(relation_freshness.get("last_scanned_relation_universe_digest") or "") and len(str(relation_freshness.get("last_scanned_relation_universe_digest") or "")) != 64:
+            errors.append("last scanned relation-universe digest invalid")
     if (pf357_summary.get("reviewed"),pf357_summary.get("stopped_standalone"),pf357_summary.get("paper_design_authorized"),pf357_summary.get("local_validation_authorized")) != (3,3,0,0): errors.append("PF-3/PF-5/PF-7 must all terminate standalone before Paper Design/local validation")
     post_c2 = state.get("paper_first_post_c2") or {}; post_c2_auth = post_c2.get("authority") or {}
     if post_c2.get("decision") != "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" or post_c2_auth.get("clean_mechanism_stop") is not True: errors.append("post-C2 paper mechanism terminal adjudication must preserve the clean local falsifier STOP")
