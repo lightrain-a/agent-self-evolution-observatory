@@ -69,6 +69,7 @@ from .paper_first_p0_f0 import write_paper_first_p0_f0_state
 from .paper_first_scientific_object_maintenance import run_shadow_scientific_object_maintenance
 from .paper_first_support_release_watch import run_support_release_watch
 from .paper_first_support_asset_recheck import write_private_support_asset_recheck_queue
+from .paper_first_support_asset_recheck_handoff import write_private_support_asset_recheck_handoff
 from .research_system import write_research_system_state
 from .publication import PUBLICATION_OK_STATES, publish_generated_state
 
@@ -224,6 +225,7 @@ def run_cycle(
             report["steps"].append(_step("paper-first-scientific-object-shadow-maintenance", run_shadow_scientific_object_maintenance))
             report["steps"].append(_step("paper-first-support-release-watch", lambda: run_support_release_watch(storage=storage)))
             report["steps"].append(_step("paper-first-support-asset-recheck-queue", lambda: write_private_support_asset_recheck_queue(storage=storage)))
+            report["steps"].append(_step("paper-first-support-asset-recheck-handoff", lambda: write_private_support_asset_recheck_handoff(storage=storage)))
             report["steps"].append(_step("paper-first-relation-cache-backfill", backfill_relation_cache))
             report["steps"].append(_step("paper-first-global-relation-recall", lambda: _run_global_relation_control(storage=storage,mode=mode,allow_model_scan=global_relation_model_scan)))
             report["steps"].append(_step("iclr-bank", write_iclr_idea_bank))
