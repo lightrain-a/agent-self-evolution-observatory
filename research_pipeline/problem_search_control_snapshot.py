@@ -18,6 +18,8 @@ QUALIFICATION_SCHEMA_VERSION = "1.1"
 STAGE_RUNNER_ARTIFACT_SCHEMA = "1.4"
 CONTROL_FILES = (
     "research_pipeline/problem_search_control_snapshot.py",
+    "research_pipeline/problem_search_shadow_launcher.py",
+    "research_pipeline/paper_first_shadow_search_admission.py",
     "research_pipeline/problem_search_stage_runner.py",
     "research_pipeline/paper_first_problem_search_portfolio.py",
     "research_pipeline/paper_first_problem_discovery_contract.py",
