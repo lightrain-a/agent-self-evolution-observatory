@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T05:28:19+00:00",
+  "generated_at": "2026-08-14T05:41:41+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -44,7 +44,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-14T05:28:19+00:00",
+    "generated_at": "2026-08-14T05:41:41+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -174,6 +174,29 @@
     ],
     "scientific_authority": false
   },
+  "shadow_memory_maintenance": {
+    "policy": {
+      "terminal_run_ingestion_is_zero_authority_search_control": true,
+      "terminal_run_need_not_remain_public_latest": true,
+      "machine_only_blocks_do_not_become_persistent_semantic_dead_ends": true,
+      "support_unavailable_is_a_reopenable_hold_not_scientific_failure": true,
+      "canonical_generator_and_queue_untouched": true
+    },
+    "last_ingested_run_id": "shadow-20260814-r4b",
+    "last_ingested_stage_manifest_sha256": "efd3b54902fd5b514bf7caf90ba14daae055cbabd44121ba8ba2c23fe38eb775",
+    "receipts": [
+      {
+        "run_id": "shadow-20260814-r4b",
+        "stage_manifest_sha256": "efd3b54902fd5b514bf7caf90ba14daae055cbabd44121ba8ba2c23fe38eb775",
+        "terminal_generated_at": "2026-08-14T05:41:40+00:00",
+        "hard_veto_added": 0,
+        "semantic_blocker_added": 0,
+        "support_hold_added": 4,
+        "scientific_authority": false
+      }
+    ],
+    "scientific_authority": false
+  },
   "shadow_dead_end_memory": {
     "memory_id": "shadow-paper-design-dead-ends-persistent-current-source-semantic-near-miss",
     "scientific_authority": false,
@@ -211,7 +234,7 @@
         "avoid": [
           "paraphrase-only variants of: Attribution-conditioned revision routing as the nonadditive core of verification-skill evolution",
           "problem formulations exactly reducible to: Attribution/diagnosis-guided target-specific revision followed by executable validation or rerun is already an explicit current agent-repair and skill-evolution mechanism; VeriSkill already contains the candidate's attribution-to-target-to-transfer-validation loop, making the proposed object a within-method mediator/ablation rather than a distinct paper problem.",
-          "standard-log attribution or identifiability claims whose omitted pipeline variable is already explicit in current primary-source instrumentation"
+          "domain- or terminology-swapped variants that do not add an ex-ante same-information residual beyond the recorded current-source reduction"
         ],
         "strongest_reduction": "Attribution/diagnosis-guided target-specific revision followed by executable validation or rerun is already an explicit current agent-repair and skill-evolution mechanism; VeriSkill already contains the candidate's attribution-to-target-to-transfer-validation loop, making the proposed object a within-method mediator/ablation rather than a distinct paper problem.",
         "current_source_refs": [
@@ -221,7 +244,9 @@
           "arXiv:2607.27733"
         ],
         "reason": "VeriSkill already attributes skill-responsible failures, abstracts the missing responsibility, integrates the resulting lesson into the appropriate skill region, and iteratively validates the revision on attribution and disjoint transfer cases before admission. HarnessFix and AgentDebugX independently map attribution/diagnosis to scoped recovery followed by validation or rerun, while REFLECT couples diagnosis-specific intervention with verified replay. The candidate's yoked target-preserving ablation may be useful mechanism analysis but does not clear standalone problem novelty.",
-        "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that remains non-reducible after explicitly instrumenting the omitted retrieval/compilation/execution variable identified by the current-source review; renaming the pipeline stages or dropping that variable from the log does not reopen the basin.",
+        "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope; renaming components, changing application domain, or proposing an unexecuted ablation does not reopen the basin.",
+        "source_run_id": "shadow-20260814-r4b",
+        "source_stage_manifest_sha256": "efd3b54902fd5b514bf7caf90ba14daae055cbabd44121ba8ba2c23fe38eb775",
         "scientific_authority": false
       },
       {
@@ -359,25 +384,6 @@
         "scientific_authority": false
       },
       {
-        "source_candidate_id": "SHADOW-P03-C01",
-        "basin": "near-miss-support-hold",
-        "search_primitive": "IDENTIFIABILITY_GAP",
-        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
-        "avoid": [
-          "rephrasing IRF-versus-RRO confusion as a new identifiability paper without released matched units",
-          "claiming trajectory ambiguity alone when the source already performs paired trajectory attribution",
-          "launching new expensive agent rollouts only to manufacture support for the problem formulation"
-        ],
-        "strongest_reduction": "generic partial identification / fault localization remains a sufficient explanation until released matched units establish same-observable, incompatible repair targets",
-        "current_source_refs": [
-          "arXiv:2608.11888"
-        ],
-        "support_status": "NO_RELEASED_MATCHED_IRF_RRO_UNITS_FOUND",
-        "reason": "The primary paper already defines IRF and RRO as distinct root causes, uses paired execution trajectories for attribution, and reports high automatic root-cause matching. The audited primary/full-text material does not expose a downloadable released trace/label asset containing matched units with the same observable outcome/trace/differential evidence but incompatible correct repair targets. The existence claim needed by this near-miss is therefore unsupported, not falsified.",
-        "reopen_only_if": "A released or provenance-audited dataset supplies at least one non-synthetic matched unit in which observable outcome, execution trace, and differential evidence are information-equivalent while the correct repairs are incompatible (for example add omitted helper versus correct neighboring fill), and a generic partial-identification/fault-localization baseline using the same information does not absorb the residual claim.",
-        "scientific_authority": false
-      },
-      {
         "source_candidate_id": "SHADOW-P09-C01",
         "basin": "near-miss-current-primary-collision",
         "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
@@ -394,6 +400,27 @@
         "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
         "reason": "Current primary work already treats skill technical debt as a long-lived skill-library maintenance object whose defects degrade later retrieval, composition, and execution. Splitting the realization mechanism into validity/obsolescence and retrieval exposure changes the accounting of when debt is behaviorally realized, but does not yet define an irreducible paper object beyond the same technical-debt lifecycle under identical information.",
         "reopen_only_if": "New primary evidence supports an ex-ante same-information prediction about access-mediated debt that a SkillOps-style technical-debt/maintenance model with the same artifact validity, retrieval, composition, execution, and maintenance observations cannot express; a two-axis relabeling alone does not reopen the basin.",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P12-C02",
+        "basin": "near-miss-current-primary-collision",
+        "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+        "disposition": "STOP_CURRENT_PRIMARY_COLLISION",
+        "avoid": [
+          "renaming buggy-code-induced test misguidance or in-band self-evaluation bias as a new intervention-contamination object",
+          "claiming that more self-tests solve causal ambiguity without specifying an independent information source",
+          "using skill/workflow vocabulary to restate the need for specification-based or externally grounded verification"
+        ],
+        "strongest_reduction": "self-generated verification inherits the defect or in-band information channel under test, so externally grounded or specification-independent verification is required",
+        "current_source_refs": [
+          "arXiv:2607.22883",
+          "arXiv:2607.25152",
+          "arXiv:2602.07900"
+        ],
+        "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
+        "reason": "Current primary work directly shows that buggy code can misguide LLM-generated tests into asserting the same erroneous behavior while suppressing bug-finding tests, and that long-running agents' in-band self-evaluation can accept stagnation or regression until an externally grounded signal is introduced. Agent-generated tests are also empirically observed to function mainly as in-band observational feedback channels. This already instantiates the candidate's structural contamination claim that a self-test generated through the suspect artifact or workflow may fail to supply independent evidence.",
+        "reopen_only_if": "New primary evidence demonstrates a contamination-induced non-identifiability residual that persists after matching test budget, using a specification-independent or externally grounded test generator, and controlling evaluator ancestry; the residual must not reduce to buggy-artifact test misguidance, in-band self-evaluation bias, verifier exogeneity, or generic active-testing partial identification.",
         "scientific_authority": false
       },
       {
@@ -417,34 +444,144 @@
         "scientific_authority": false
       },
       {
-        "source_candidate_id": "SHADOW-P12-C02",
-        "basin": "near-miss-current-primary-collision",
-        "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
-        "disposition": "STOP_CURRENT_PRIMARY_COLLISION",
+        "source_candidate_id": "SHADOW-P03-C01",
+        "basin": "near-miss-support-hold",
+        "search_primitive": "IDENTIFIABILITY_GAP",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
         "avoid": [
-          "renaming buggy-code-induced test misguidance or in-band self-evaluation bias as a new intervention-contamination object",
-          "claiming that more self-tests solve causal ambiguity without specifying an independent information source",
-          "using skill/workflow vocabulary to restate the need for specification-based or externally grounded verification"
+          "rephrasing IRF-versus-RRO confusion as a new identifiability paper without released matched units",
+          "claiming trajectory ambiguity alone when the source already performs paired trajectory attribution",
+          "launching new expensive agent rollouts only to manufacture support for the problem formulation"
         ],
-        "strongest_reduction": "self-generated verification inherits the defect or in-band information channel under test, so externally grounded or specification-independent verification is required",
+        "strongest_reduction": "generic partial identification / fault localization remains a sufficient explanation until released matched units establish same-observable, incompatible repair targets",
         "current_source_refs": [
-          "arXiv:2607.22883",
-          "arXiv:2607.25152",
-          "arXiv:2602.07900"
+          "arXiv:2608.11888"
         ],
-        "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
-        "reason": "Current primary work directly shows that buggy code can misguide LLM-generated tests into asserting the same erroneous behavior while suppressing bug-finding tests, and that long-running agents' in-band self-evaluation can accept stagnation or regression until an externally grounded signal is introduced. Agent-generated tests are also empirically observed to function mainly as in-band observational feedback channels. This already instantiates the candidate's structural contamination claim that a self-test generated through the suspect artifact or workflow may fail to supply independent evidence.",
-        "reopen_only_if": "New primary evidence demonstrates a contamination-induced non-identifiability residual that persists after matching test budget, using a specification-independent or externally grounded test generator, and controlling evaluator ancestry; the residual must not reduce to buggy-artifact test misguidance, in-band self-evaluation bias, verifier exogeneity, or generic active-testing partial identification.",
+        "support_status": "NO_RELEASED_MATCHED_IRF_RRO_UNITS_FOUND",
+        "reason": "The primary paper already defines IRF and RRO as distinct root causes, uses paired execution trajectories for attribution, and reports high automatic root-cause matching. The audited primary/full-text material does not expose a downloadable released trace/label asset containing matched units with the same observable outcome/trace/differential evidence but incompatible correct repair targets. The existence claim needed by this near-miss is therefore unsupported, not falsified.",
+        "reopen_only_if": "A released or provenance-audited dataset supplies at least one non-synthetic matched unit in which observable outcome, execution trace, and differential evidence are information-equivalent while the correct repairs are incompatible (for example add omitted helper versus correct neighboring fill), and a generic partial-identification/fault-localization baseline using the same information does not absorb the residual claim.",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P06-C01",
+        "basin": "near-miss-terminal-support-hold-4cc07103f45102ff",
+        "title": "SOP-mediated nonadditivity of episodic memory and state-graph updates in interactive-agent harness evolution",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "Full matched factorial cells over episodic memory, state graph, and Evolution-SOP plus a generic raw-trajectory writer preserving the same stored information/retrieval interface on the reported tau2-Bench/MultiWOZ settings.",
+        "evidence_basis": [
+          "arXiv:2607.26598"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "The primary paper reports that Living-Harness uses an Evolution-SOP with episodic memory and a state graph and announces that code will be made public soon, but the currently verified release does not provide the complete 2x2/SOP/generic-writer matched cells required to distinguish an SOP-specific nonadditive residual from ordinary component effects.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: SOP-mediated nonadditivity of episodic memory and state-graph updates in interactive-agent harness evolution",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "The announced Living-Harness release provides the frozen reported task splits and enough component switches/raw state to materialize the complete matched factorial and generic-writer control without changing model, tools, base context, or trajectory budget.",
+        "source_run_id": "shadow-20260814-r4b",
+        "source_stage_manifest_sha256": "efd3b54902fd5b514bf7caf90ba14daae055cbabd44121ba8ba2c23fe38eb775",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P07-C01",
+        "basin": "near-miss-terminal-support-hold-6bfe07855641ba1d",
+        "title": "Procedural-composition transfer-calibration boundary for high-TRS spatial lessons",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "Per-query SMA retrieval records containing all retrieved lessons, individual TRS/relevance/success metadata, lesson text or procedure representation, and final outcomes, sufficient to annotate pairwise procedural incompatibility and construct matched conflicting/non-conflicting sets.",
+        "evidence_basis": [
+          "arXiv:2608.12743"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "The primary paper and project-page pointer describe verified experience, transferable lessons, semantic filtering, similarity/TRS ranking, and qualitative failure cases, but the currently verified material does not expose a query-level retrieval table with the pairwise lesson/procedure data required by the frozen conflict falsifier.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: Procedural-composition transfer-calibration boundary for high-TRS spatial lessons",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "The authors release query-level retrieval logs or an evaluation artifact containing retrieved lesson identities/text, TRS/relevance metadata, and outcomes for the reported spatial benchmarks.",
+        "source_run_id": "shadow-20260814-r4b",
+        "source_stage_manifest_sha256": "efd3b54902fd5b514bf7caf90ba14daae055cbabd44121ba8ba2c23fe38eb775",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P04-C01",
+        "basin": "near-miss-terminal-support-hold-a7d9bd58ddeb6aa2",
+        "title": "Confidence-calibrated discrete aggregation as the moderator of diversity’s MCQ sign reversal in SKIMIX math tasks",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "Matched SKIMIX MCQ candidate sets with per-agent answers and confidence scores across agent counts, allowing majority versus confidence-calibrated discrete selection under identical candidates.",
+        "evidence_basis": [
+          "arXiv:2607.27994"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "The primary paper reports majority-vote final selection, per-round accuracy/coverage, and the MCQ coverage-accuracy gap, but states that the full experiment codebase will be open-sourced upon acceptance. The currently verified primary material does not expose the candidate-level confidence/answer traces required by the frozen falsifier.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: Confidence-calibrated discrete aggregation as the moderator of diversity’s MCQ sign reversal in SKIMIX math tasks",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "A primary/author release exposes candidate-level MCQ answers and confidence or reliability signals for the reported SKIMIX runs, or a frozen exact-reproduction package is released that can regenerate those units without changing the candidate pool.",
+        "source_run_id": "shadow-20260814-r4b",
+        "source_stage_manifest_sha256": "efd3b54902fd5b514bf7caf90ba14daae055cbabd44121ba8ba2c23fe38eb775",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P11-C02",
+        "basin": "near-miss-terminal-support-hold-d740e33cf4bc0673",
+        "title": "Accumulated restrictiveness and regret-sensitive switching in self-evolving runtime defenses",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "Matched defense histories that reach the same current ASR/UA and estimated candidate-patch security benefit but differ in accumulated restrictiveness, together with replayable next-trace/patch outcomes.",
+        "evidence_basis": [
+          "arXiv:2608.12977"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "The primary paper reports self-evolving runtime defense outcomes, including cases where ASR improves while UA collapses, but the currently verified material does not expose paired defense-history states with matched current metrics and controlled accumulated restrictiveness. Constructing such histories synthetically would bake the candidate mechanism into the data rather than test the source phenomenon.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: Accumulated restrictiveness and regret-sensitive switching in self-evolving runtime defenses",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "A primary/author artifact releases evolution histories, rule/patch lineage, per-cycle ASR/UA, and replayable candidate-patch outcomes sufficient to match current metrics while varying accumulated restrictiveness.",
+        "source_run_id": "shadow-20260814-r4b",
+        "source_stage_manifest_sha256": "efd3b54902fd5b514bf7caf90ba14daae055cbabd44121ba8ba2c23fe38eb775",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
         "scientific_authority": false
       }
     ],
     "current_source_hard_veto_count": 2,
     "current_source_hard_veto_added_from_latest_run": 0,
+    "current_source_hard_veto_added_from_terminal_run": 0,
     "current_source_hard_veto_inherited": 2,
     "semantic_blocker_count": 4,
     "semantic_blocker_added_from_latest_run": 0,
+    "semantic_blocker_added_from_terminal_run": 0,
     "semantic_blocker_inherited": 4,
-    "near_miss_preflight_count": 4
+    "near_miss_preflight_count": 8,
+    "near_miss_base_preflight_count": 4,
+    "near_miss_terminal_support_hold_count": 4
   },
   "shadow_source": {
     "portfolio_status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
@@ -495,14 +632,17 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 12,
+    "shadow_dead_end_objects": 16,
     "current_source_hard_veto_dead_ends": 2,
     "current_source_hard_veto_added_from_latest_run": 0,
+    "current_source_hard_veto_added_from_terminal_run": 0,
     "current_source_hard_veto_inherited": 2,
     "semantic_blocker_dead_ends": 4,
     "semantic_blocker_added_from_latest_run": 0,
+    "semantic_blocker_added_from_terminal_run": 0,
     "semantic_blocker_inherited": 4,
-    "near_miss_preflight_dead_ends": 4,
+    "near_miss_preflight_dead_ends": 8,
+    "near_miss_terminal_support_holds": 4,
     "near_miss_support_holds": 1,
     "near_miss_current_primary_stops": 2,
     "near_miss_mature_theory_stops": 1,

@@ -4,7 +4,9 @@ import unittest
 
 from .paper_first_search_portfolio_design_adjudication import (
     _shadow_dead_end_memory,
+    _terminal_support_hold_rows,
     build_search_portfolio_design_adjudication,
+    merge_shadow_terminal_run_memory,
     validate_search_portfolio_design_adjudication,
 )
 
@@ -49,7 +51,8 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
     def test_r2_near_miss_preflight_compiles_into_future_shadow_search_memory(self) -> None:
         memory=self.state["shadow_dead_end_memory"]
         rows={row["source_candidate_id"]:row for row in memory["blocked_objects"]}
-        self.assertEqual(memory["near_miss_preflight_count"],4)
+        self.assertEqual(memory["near_miss_base_preflight_count"],4)
+        self.assertGreaterEqual(memory["near_miss_preflight_count"],4)
         self.assertEqual(self.state["summary"]["near_miss_support_holds"],1)
         self.assertEqual(self.state["summary"]["near_miss_current_primary_stops"],2)
         self.assertEqual(self.state["summary"]["near_miss_mature_theory_stops"],1)
@@ -69,7 +72,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertIn("omitted compiled-context variable",dynamic[0]["strongest_reduction"])
         self.assertEqual(dynamic[0]["current_source_refs"],["arXiv:2605.10114","arXiv:2608.05604"])
         self.assertFalse(dynamic[0]["scientific_authority"])
-        self.assertIn("instrumenting",dynamic[0]["reopen_only_if"])
+        self.assertIn("same-information",dynamic[0]["reopen_only_if"])
 
     def test_current_source_hard_veto_persists_when_latest_run_has_no_clear_candidate(self) -> None:
         prior={"source_candidate_id":"SHADOW-OLD","basin":"current-source-hard-veto-deadbeefdeadbeef","search_primitive":"IDENTIFIABILITY_GAP","avoid":["old basin"],"strongest_reduction":"generic identifiability over explicit compiled context","current_source_refs":["arXiv:2605.10114"],"reason":"older current-source review blocked it","reopen_only_if":"new same-information residual survives explicit instrumentation","scientific_authority":False}
@@ -80,6 +83,38 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(memory["current_source_hard_veto_added_from_latest_run"],0)
         self.assertEqual(memory["current_source_hard_veto_inherited"],1)
         self.assertFalse(rows[0]["scientific_authority"])
+
+    def test_terminal_support_hold_compiles_as_reopenable_zero_authority_near_miss(self) -> None:
+        rows=_terminal_support_hold_rows({"rows":[{"candidate_id":"SHADOW-HOLD","title":"Unsupported residual","disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":"matched released trajectory units","asset_audit":"The current author release does not expose the matched units.","primary_refs":["arXiv:2608.00001"],"reopen_only_if":"The authors release matched trajectory units."}]},run_id="shadow-race",stage_manifest_sha256="a"*64)
+        self.assertEqual(len(rows),1)
+        row=rows[0]
+        self.assertTrue(row["basin"].startswith("near-miss-terminal-support-hold-"))
+        self.assertEqual(row["source_run_id"],"shadow-race")
+        self.assertEqual(row["source_stage_manifest_sha256"],"a"*64)
+        self.assertEqual(row["disposition"],"HOLD_SUPPORT_UNAVAILABLE")
+        self.assertFalse(row["scientific_authority"])
+        self.assertIn("release",row["reopen_only_if"].lower())
+
+    def test_non_latest_terminal_run_memory_ingestion_is_idempotent(self) -> None:
+        terminal={"run_id":"shadow-parallel-r4b","status":"SHADOW_TERMINAL_COMPLETE","generated_at":"2026-08-14T04:55:40+00:00","stage_manifest_sha256":"b"*64,"scientific_authority":False,"policy":{"shadow_only":True,"canonical_primary_generator_queue_untouched":True},"candidates":[{"candidate_id":"SHADOW-P09-C01","title":"Attribution-conditioned revision routing","search_primitive":"COMPOSITION_INTERACTION","current_source_status":"complete","current_source_verdict":"BLOCK","current_source_reduction_class":"VALID_HARD_VETO","current_source_strongest_reduction":"target-specific revision plus executable validation is already an explicit repair mechanism","current_source_reason":"Current primary work already maps diagnosis to target-specific revision and validation.","current_source_source_refs":["arXiv:2607.27733","arXiv:2606.09071"]}]}
+        preflight={"rows":[{"candidate_id":"SHADOW-P04-C01","title":"Confidence-calibrated aggregation","disposition":"HOLD_SUPPORT_UNAVAILABLE","required_unit":"matched candidate answer and confidence sets","asset_audit":"The current primary release does not expose candidate-level confidence traces.","primary_refs":["arXiv:2607.27994"],"reopen_only_if":"The author release exposes candidate-level answers and confidence traces."}]}
+        baseline_terminal_holds=int(self.state["summary"].get("near_miss_terminal_support_holds") or 0)
+        first=merge_shadow_terminal_run_memory(self.state,terminal,preflight)
+        self.assertEqual(validate_search_portfolio_design_adjudication(first),[])
+        memory=first["shadow_dead_end_memory"]
+        hard=[row for row in memory["blocked_objects"] if row.get("source_run_id")=="shadow-parallel-r4b" and str(row.get("basin") or "").startswith("current-source-hard-veto-")]
+        holds=[row for row in memory["blocked_objects"] if row.get("source_run_id")=="shadow-parallel-r4b" and str(row.get("basin") or "").startswith("near-miss-terminal-support-hold-")]
+        self.assertEqual((len(hard),len(holds)),(1,1))
+        self.assertEqual(first["summary"]["current_source_hard_veto_added_from_latest_run"],0)
+        self.assertEqual(first["summary"]["current_source_hard_veto_added_from_terminal_run"],1)
+        self.assertEqual(first["summary"]["near_miss_terminal_support_holds"],baseline_terminal_holds+1)
+        self.assertEqual(first["shadow_memory_maintenance"]["last_ingested_run_id"],"shadow-parallel-r4b")
+        second=merge_shadow_terminal_run_memory(first,terminal,preflight)
+        self.assertEqual(validate_search_portfolio_design_adjudication(second),[])
+        self.assertEqual(second["summary"]["shadow_dead_end_objects"],first["summary"]["shadow_dead_end_objects"])
+        self.assertEqual(len(second["shadow_memory_maintenance"]["receipts"]),len(first["shadow_memory_maintenance"]["receipts"]))
+        self.assertEqual(second["shadow_memory_maintenance"]["receipts"][-1]["hard_veto_added"],0)
+        self.assertEqual(second["shadow_memory_maintenance"]["receipts"][-1]["support_hold_added"],0)
 
     def test_semantic_exact_reduction_block_compiles_without_hardening_soft_collision(self) -> None:
         exact={"candidate_id":"R3-X","title":"layer sign inversion","search_primitive":"UNEXPLAINED_BOUNDARY","semantic_verdict":"BLOCK","semantic_reduction_class":"NEEDS_EXACT_REDUCTION_TEST","semantic_lane_contract_verified":True,"semantic_matched_patterns":["persistent-update-vs-test-time-compute"],"semantic_strongest_reduction":"generic test-time scaling","semantic_exact_reduction_test":"match candidate quality and diversity","semantic_reason":"same-information reduction remains unresolved","semantic_lane_contract_reason":"lane valid","semantic_source_refs":["arXiv:2608.11350"],"semantic_source_claims":["harness improves while raw VLA voting hurts"],"semantic_problem_text":"layer sign inversion under tied budget"}

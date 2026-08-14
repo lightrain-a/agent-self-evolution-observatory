@@ -105,6 +105,15 @@ PRIMARY_SOURCES: dict[str, list[dict[str, str]]] = {
     ],
 }
 
+SHADOW_MEMORY_MAINTENANCE_POLICY = {
+    "terminal_run_ingestion_is_zero_authority_search_control": True,
+    "terminal_run_need_not_remain_public_latest": True,
+    "machine_only_blocks_do_not_become_persistent_semantic_dead_ends": True,
+    "support_unavailable_is_a_reopenable_hold_not_scientific_failure": True,
+    "canonical_generator_and_queue_untouched": True,
+}
+
+
 BASE_SHADOW_DEAD_END_MEMORY = {
     "memory_id": "shadow-paper-design-dead-ends-20260814-r1",
     "scientific_authority": False,
@@ -166,7 +175,63 @@ def _prior_semantic_block_rows(path: Path = DEFAULT_JSON) -> list[dict[str, Any]
     return rows
 
 
-def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None, prior_hard_veto_rows: list[dict[str, Any]] | None = None, prior_semantic_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+def _prior_near_miss_rows(path: Path = DEFAULT_JSON) -> list[dict[str, Any]]:
+    prior = _load_json(path)
+    memory = prior.get("shadow_dead_end_memory") or {}
+    rows = []
+    for row in memory.get("blocked_objects") or []:
+        basin = str(row.get("basin") or "") if isinstance(row, dict) else ""
+        if not basin.startswith("near-miss-"):
+            continue
+        if row.get("scientific_authority") is not False or not str(row.get("reopen_only_if") or "").strip():
+            continue
+        rows.append(dict(row))
+    return rows
+
+
+def _terminal_support_hold_rows(preflight: dict[str, Any] | None, *, run_id: str, stage_manifest_sha256: str) -> list[dict[str, Any]]:
+    rows = []
+    for row in (preflight or {}).get("rows") or []:
+        if not isinstance(row, dict) or str(row.get("disposition") or "") != "HOLD_SUPPORT_UNAVAILABLE":
+            continue
+        candidate_id = str(row.get("candidate_id") or "").strip()
+        title = " ".join(str(row.get("title") or "").split())[:300]
+        required_unit = " ".join(str(row.get("required_unit") or "").split())[:1600]
+        asset_audit = " ".join(str(row.get("asset_audit") or "").split())[:1800]
+        reopen_only_if = " ".join(str(row.get("reopen_only_if") or "").split())[:1600]
+        refs = sorted({str(ref) for ref in row.get("primary_refs") or [] if str(ref).startswith("arXiv:")})
+        if not candidate_id or not required_unit or not asset_audit or not reopen_only_if or not refs:
+            continue
+        signature = hashlib.sha256(json.dumps({"required_unit": required_unit, "primary_refs": refs}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
+        rows.append({
+            "source_candidate_id": candidate_id,
+            "basin": f"near-miss-terminal-support-hold-{signature}",
+            "title": title,
+            "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+            "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+            "required_unit": required_unit,
+            "evidence_basis": refs,
+            "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+            "reason": asset_audit,
+            "avoid": [
+                f"re-proposing the unsupported problem object without the required released unit: {title}",
+                "manufacturing synthetic support that bakes the candidate mechanism into the data",
+                "treating absence of released matched units as scientific evidence for or against the candidate",
+            ],
+            "reopen_only_if": reopen_only_if,
+            "source_run_id": run_id,
+            "source_stage_manifest_sha256": stage_manifest_sha256,
+            "automatic_problem_gate_authority": False,
+            "automatic_method_authority": False,
+            "automatic_experiment_authority": False,
+            "automatic_p0_authority": False,
+            "automatic_gpu_authority": False,
+            "scientific_authority": False,
+        })
+    return rows
+
+
+def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None, prior_hard_veto_rows: list[dict[str, Any]] | None = None, prior_semantic_rows: list[dict[str, Any]] | None = None, prior_near_miss_rows: list[dict[str, Any]] | None = None, extra_near_miss_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     memory = json.loads(json.dumps(BASE_SHADOW_DEAD_END_MEMORY, ensure_ascii=False))
     latest = portfolio.get("latest_run") or {}
     inherited = _prior_current_source_hard_veto_rows() if prior_hard_veto_rows is None else [dict(row) for row in prior_hard_veto_rows if isinstance(row, dict)]
@@ -186,22 +251,26 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
         primitive = str(row.get("search_primitive") or "").strip()
         title = " ".join(str(row.get("title") or "").split())[:300]
         signature = hashlib.sha256(json.dumps({"strongest_reduction": strongest, "source_refs": refs}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
-        hard_by_basin[f"current-source-hard-veto-{signature}"] = {
+        basin = f"current-source-hard-veto-{signature}"
+        if basin not in hard_by_basin:
+            added += 1
+        hard_by_basin[basin] = {
             "source_candidate_id": candidate_id,
-            "basin": f"current-source-hard-veto-{signature}",
+            "basin": basin,
             "search_primitive": primitive,
             "avoid": [
                 f"paraphrase-only variants of: {title}",
                 f"problem formulations exactly reducible to: {strongest}",
-                "standard-log attribution or identifiability claims whose omitted pipeline variable is already explicit in current primary-source instrumentation",
+                "domain- or terminology-swapped variants that do not add an ex-ante same-information residual beyond the recorded current-source reduction",
             ],
             "strongest_reduction": strongest,
             "current_source_refs": refs,
             "reason": reason,
-            "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that remains non-reducible after explicitly instrumenting the omitted retrieval/compilation/execution variable identified by the current-source review; renaming the pipeline stages or dropping that variable from the log does not reopen the basin.",
+            "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope; renaming components, changing application domain, or proposing an unexecuted ablation does not reopen the basin.",
+            "source_run_id": str(latest.get("run_id") or ""),
+            "source_stage_manifest_sha256": str(latest.get("stage_manifest_sha256") or ""),
             "scientific_authority": False,
         }
-        added += 1
     hard_rows = [hard_by_basin[key] for key in sorted(hard_by_basin)]
     memory["blocked_objects"].extend(hard_rows)
 
@@ -273,18 +342,129 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     semantic_rows = [semantic_by_basin[key] for key in sorted(semantic_by_basin)]
     memory["blocked_objects"].extend(semantic_rows)
     near_miss_state = near_miss_state or build_shadow_near_miss_preflight()
-    near_miss_rows = compile_shadow_dead_end_rows(near_miss_state)
+    base_near_miss_rows = compile_shadow_dead_end_rows(near_miss_state)
+    near_inherited = _prior_near_miss_rows() if prior_near_miss_rows is None else [dict(row) for row in prior_near_miss_rows if isinstance(row, dict)]
+    def near_key(row: dict[str, Any]) -> tuple[str, str]:
+        return (str(row.get("basin") or ""), str(row.get("source_candidate_id") or ""))
+    near_by_key = {near_key(row): row for row in near_inherited if str(row.get("basin") or "").startswith("near-miss-") and row.get("scientific_authority") is False}
+    for row in base_near_miss_rows:
+        if isinstance(row, dict) and str(row.get("basin") or "").startswith("near-miss-"):
+            near_by_key[near_key(row)] = dict(row)
+    for row in extra_near_miss_rows or []:
+        if isinstance(row, dict) and str(row.get("basin") or "").startswith("near-miss-") and row.get("scientific_authority") is False:
+            near_by_key[near_key(row)] = dict(row)
+    near_miss_rows = [near_by_key[key] for key in sorted(near_by_key)]
     memory["blocked_objects"].extend(near_miss_rows)
     memory["memory_id"] = "shadow-paper-design-dead-ends-persistent-current-source-semantic-near-miss"
     memory["current_source_hard_veto_count"] = len(hard_rows)
     memory["current_source_hard_veto_added_from_latest_run"] = added
+    memory["current_source_hard_veto_added_from_terminal_run"] = added
     memory["current_source_hard_veto_inherited"] = max(0, len(hard_rows) - added)
     memory["semantic_blocker_count"] = len(semantic_rows)
     memory["semantic_blocker_added_from_latest_run"] = semantic_added
+    memory["semantic_blocker_added_from_terminal_run"] = semantic_added
     memory["semantic_blocker_inherited"] = max(0, len(semantic_rows) - semantic_added)
     memory["near_miss_preflight_count"] = len(near_miss_rows)
+    memory["near_miss_base_preflight_count"] = len(base_near_miss_rows)
+    memory["near_miss_terminal_support_hold_count"] = sum(str(row.get("basin") or "").startswith("near-miss-terminal-support-hold-") for row in near_miss_rows)
     memory["scientific_authority"] = False
     return memory
+
+
+def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[str, Any], preflight: dict[str, Any] | None = None) -> dict[str, Any]:
+    run_id = str(terminal_run.get("run_id") or "").strip()
+    stage_manifest_sha256 = str(terminal_run.get("stage_manifest_sha256") or "").strip()
+    policy = terminal_run.get("policy") or {}
+    if not run_id or str(terminal_run.get("status") or "") != "SHADOW_TERMINAL_COMPLETE":
+        raise ValueError("terminal shadow run must be complete before dead-end-memory ingestion")
+    if terminal_run.get("scientific_authority") is not False or policy.get("shadow_only") is not True or policy.get("canonical_primary_generator_queue_untouched") is not True:
+        raise ValueError("terminal shadow run memory ingestion requires zero-authority shadow provenance")
+    if not stage_manifest_sha256:
+        raise ValueError("terminal shadow run memory ingestion requires stage manifest provenance")
+
+    merged = json.loads(json.dumps(state, ensure_ascii=False))
+    prior_memory = merged.get("shadow_dead_end_memory") or {}
+    prior_blocked = [row for row in prior_memory.get("blocked_objects") or [] if isinstance(row, dict)]
+    prior_hard = [dict(row) for row in prior_blocked if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
+    prior_semantic = [dict(row) for row in prior_blocked if str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-"))]
+    prior_near = [dict(row) for row in prior_blocked if str(row.get("basin") or "").startswith("near-miss-")]
+    extra_near = _terminal_support_hold_rows(preflight, run_id=run_id, stage_manifest_sha256=stage_manifest_sha256)
+
+    memory = _shadow_dead_end_memory(
+        {"latest_run": terminal_run},
+        near_miss_state=merged.get("shadow_near_miss_preflight") or build_shadow_near_miss_preflight(),
+        prior_hard_veto_rows=prior_hard,
+        prior_semantic_rows=prior_semantic,
+        prior_near_miss_rows=prior_near,
+        extra_near_miss_rows=extra_near,
+    )
+    merged["shadow_dead_end_memory"] = memory
+    summary = merged.setdefault("summary", {})
+    summary.update({
+        "shadow_dead_end_objects": len(memory.get("blocked_objects") or []),
+        "current_source_hard_veto_dead_ends": int(memory.get("current_source_hard_veto_count") or 0),
+        "current_source_hard_veto_added_from_latest_run": 0,
+        "current_source_hard_veto_added_from_terminal_run": int(memory.get("current_source_hard_veto_added_from_terminal_run") or 0),
+        "current_source_hard_veto_inherited": int(memory.get("current_source_hard_veto_inherited") or 0),
+        "semantic_blocker_dead_ends": int(memory.get("semantic_blocker_count") or 0),
+        "semantic_blocker_added_from_latest_run": 0,
+        "semantic_blocker_added_from_terminal_run": int(memory.get("semantic_blocker_added_from_terminal_run") or 0),
+        "semantic_blocker_inherited": int(memory.get("semantic_blocker_inherited") or 0),
+        "near_miss_preflight_dead_ends": int(memory.get("near_miss_preflight_count") or 0),
+        "near_miss_terminal_support_holds": int(memory.get("near_miss_terminal_support_hold_count") or 0),
+    })
+    memory["current_source_hard_veto_added_from_latest_run"] = 0
+    memory["semantic_blocker_added_from_latest_run"] = 0
+
+    prior_maintenance = merged.get("shadow_memory_maintenance") or {}
+    receipts = [dict(row) for row in prior_maintenance.get("receipts") or [] if isinstance(row, dict)]
+    before_hard = len(prior_hard)
+    before_semantic = len(prior_semantic)
+    before_terminal_holds = sum(str(row.get("basin") or "").startswith("near-miss-terminal-support-hold-") for row in prior_near)
+    receipt = {
+        "run_id": run_id,
+        "stage_manifest_sha256": stage_manifest_sha256,
+        "terminal_generated_at": terminal_run.get("generated_at"),
+        "hard_veto_added": max(0, int(memory.get("current_source_hard_veto_count") or 0) - before_hard),
+        "semantic_blocker_added": max(0, int(memory.get("semantic_blocker_count") or 0) - before_semantic),
+        "support_hold_added": max(0, int(memory.get("near_miss_terminal_support_hold_count") or 0) - before_terminal_holds),
+        "scientific_authority": False,
+    }
+    receipt_key = (run_id, stage_manifest_sha256)
+    by_key = {(str(row.get("run_id") or ""), str(row.get("stage_manifest_sha256") or "")): row for row in receipts}
+    by_key[receipt_key] = receipt
+    receipts = list(by_key.values())[-64:]
+    merged["shadow_memory_maintenance"] = {
+        "policy": dict(SHADOW_MEMORY_MAINTENANCE_POLICY),
+        "last_ingested_run_id": run_id,
+        "last_ingested_stage_manifest_sha256": stage_manifest_sha256,
+        "receipts": receipts,
+        "scientific_authority": False,
+    }
+    merged["generated_at"] = _now()
+    return merged
+
+
+def merge_terminal_shadow_run_memory(*, run_root: Path, json_path: Path = DEFAULT_JSON, js_path: Path = DEFAULT_JS) -> dict[str, Any]:
+    from .paper_first_problem_search_portfolio_publish import _latest_shadow_run
+
+    terminal_run = _latest_shadow_run(run_root)
+    preflight_path = run_root / "problem-falsifier-preflight.json"
+    preflight = _load_json(preflight_path) if preflight_path.exists() else {}
+    state = _load_json(json_path)
+    merged = merge_shadow_terminal_run_memory(state, terminal_run, preflight)
+    errors = validate_search_portfolio_design_adjudication(merged)
+    if errors:
+        raise ValueError("Invalid Search Portfolio dead-end memory maintenance:\n- " + "\n- ".join(errors))
+    json_path.write_text(json.dumps(merged, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    js_path.write_text("window.PAPER_FIRST_SEARCH_PORTFOLIO_DESIGN_ADJUDICATION = " + json.dumps(merged, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
+    return {
+        "run_id": terminal_run.get("run_id"),
+        "stage_manifest_sha256": terminal_run.get("stage_manifest_sha256"),
+        "summary": merged.get("summary") or {},
+        "maintenance": merged.get("shadow_memory_maintenance") or {},
+        "scientific_authority": False,
+    }
 
 
 ADVISORY_CONSULTATION = {
@@ -388,6 +568,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 def build_search_portfolio_design_adjudication() -> dict[str, Any]:
     portfolio = _load_json(SHADOW_PORTFOLIO_JSON)
     queue_shadow = _load_json(SHADOW_QUEUE_JSON)
+    prior_state = _load_json(DEFAULT_JSON)
     portfolio_policy = portfolio.get("policy") or {}
     queue_policy = queue_shadow.get("policy") or {}
     if portfolio.get("scientific_authority") is not False or portfolio_policy.get("shadow_only") is not True or portfolio_policy.get("canonical_primary_generator_queue_untouched") is not True:
@@ -416,6 +597,14 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
         counts[row["verdict"]] = counts.get(row["verdict"], 0) + 1
     near_miss_preflight = build_shadow_near_miss_preflight()
     dead_end_memory = _shadow_dead_end_memory(portfolio, near_miss_preflight)
+    prior_maintenance = prior_state.get("shadow_memory_maintenance") or {}
+    maintenance = json.loads(json.dumps(prior_maintenance, ensure_ascii=False)) if prior_maintenance else {
+        "policy": dict(SHADOW_MEMORY_MAINTENANCE_POLICY),
+        "last_ingested_run_id": "",
+        "last_ingested_stage_manifest_sha256": "",
+        "receipts": [],
+        "scientific_authority": False,
+    }
     return {
         "schema_version": "1.0",
         "generated_at": _now(),
@@ -444,6 +633,7 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
         },
         "advisory_consultation": ADVISORY_CONSULTATION,
         "shadow_near_miss_preflight": near_miss_preflight,
+        "shadow_memory_maintenance": maintenance,
         "shadow_dead_end_memory": dead_end_memory,
         "shadow_source": {
             "portfolio_status": portfolio.get("status"),
@@ -463,11 +653,14 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "shadow_dead_end_objects": len(dead_end_memory.get("blocked_objects") or []),
             "current_source_hard_veto_dead_ends": int(dead_end_memory.get("current_source_hard_veto_count") or 0),
             "current_source_hard_veto_added_from_latest_run": int(dead_end_memory.get("current_source_hard_veto_added_from_latest_run") or 0),
+            "current_source_hard_veto_added_from_terminal_run": int(dead_end_memory.get("current_source_hard_veto_added_from_terminal_run") or 0),
             "current_source_hard_veto_inherited": int(dead_end_memory.get("current_source_hard_veto_inherited") or 0),
             "semantic_blocker_dead_ends": int(dead_end_memory.get("semantic_blocker_count") or 0),
             "semantic_blocker_added_from_latest_run": int(dead_end_memory.get("semantic_blocker_added_from_latest_run") or 0),
+            "semantic_blocker_added_from_terminal_run": int(dead_end_memory.get("semantic_blocker_added_from_terminal_run") or 0),
             "semantic_blocker_inherited": int(dead_end_memory.get("semantic_blocker_inherited") or 0),
             "near_miss_preflight_dead_ends": int(dead_end_memory.get("near_miss_preflight_count") or 0),
+            "near_miss_terminal_support_holds": int(dead_end_memory.get("near_miss_terminal_support_hold_count") or 0),
             "near_miss_support_holds": int((near_miss_preflight.get("summary") or {}).get("support_holds") or 0),
             "near_miss_current_primary_stops": int((near_miss_preflight.get("summary") or {}).get("current_primary_stops") or 0),
             "near_miss_mature_theory_stops": int((near_miss_preflight.get("summary") or {}).get("mature_theory_stops") or 0),
@@ -505,14 +698,20 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
     if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True or not {"SP-09","SP-15"}.issubset(blocked_ids):
         errors.append("Paper Design dead-end memory must remain shadow-only and retain both SP-09/SP-15 basins")
     dynamic=[row for row in blocked_objects if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
-    if int(memory.get("current_source_hard_veto_count") or 0)!=len(dynamic) or int(memory.get("current_source_hard_veto_added_from_latest_run") or 0)+int(memory.get("current_source_hard_veto_inherited") or 0)!=len(dynamic) or any(not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip() or row.get("scientific_authority") is not False for row in dynamic):
+    hard_added=int(memory.get("current_source_hard_veto_added_from_terminal_run",memory.get("current_source_hard_veto_added_from_latest_run",0)) or 0)
+    if int(memory.get("current_source_hard_veto_count") or 0)!=len(dynamic) or hard_added+int(memory.get("current_source_hard_veto_inherited") or 0)!=len(dynamic) or any(not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip() or row.get("scientific_authority") is not False for row in dynamic):
         errors.append("current-source hard vetoes must persist as bounded zero-authority shadow dead-end fingerprints")
     semantic_rows=[row for row in blocked_objects if str(row.get("basin") or "").startswith(("semantic-exact-reduction-","semantic-lane-contract-"))]
-    if int(memory.get("semantic_blocker_count") or 0)!=len(semantic_rows) or int(memory.get("semantic_blocker_added_from_latest_run") or 0)+int(memory.get("semantic_blocker_inherited") or 0)!=len(semantic_rows) or any(row.get("scientific_authority") is not False or not str(row.get("strongest_reduction") or "").strip() or not str(row.get("reason") or "").strip() or not str(row.get("reopen_only_if") or "").strip() for row in semantic_rows):
+    semantic_added=int(memory.get("semantic_blocker_added_from_terminal_run",memory.get("semantic_blocker_added_from_latest_run",0)) or 0)
+    if int(memory.get("semantic_blocker_count") or 0)!=len(semantic_rows) or semantic_added+int(memory.get("semantic_blocker_inherited") or 0)!=len(semantic_rows) or any(row.get("scientific_authority") is not False or not str(row.get("strongest_reduction") or "").strip() or not str(row.get("reason") or "").strip() or not str(row.get("reopen_only_if") or "").strip() for row in semantic_rows):
         errors.append("semantic reduction/lane blockers must persist as bounded zero-authority shadow dead-end fingerprints")
     near_miss=state.get("shadow_near_miss_preflight") or {}; near_rows=[row for row in blocked_objects if str(row.get("basin") or "").startswith("near-miss-")]
-    if int(memory.get("near_miss_preflight_count") or 0)!=len(near_rows) or int((near_miss.get("summary") or {}).get("receipts") or 0)!=len(near_rows) or any(row.get("scientific_authority") is not False or not str(row.get("reopen_only_if") or "").strip() for row in near_rows):
-        errors.append("near-miss preflight receipts must compile into bounded zero-authority shadow dead-end fingerprints")
+    base_near=int(memory.get("near_miss_base_preflight_count",(near_miss.get("summary") or {}).get("receipts",0)) or 0);terminal_holds=int(memory.get("near_miss_terminal_support_hold_count") or 0)
+    if int(memory.get("near_miss_preflight_count") or 0)!=len(near_rows) or base_near+terminal_holds!=len(near_rows) or int((near_miss.get("summary") or {}).get("receipts") or 0)!=base_near or any(row.get("scientific_authority") is not False or not str(row.get("reopen_only_if") or "").strip() for row in near_rows):
+        errors.append("near-miss preflight and terminal support-hold receipts must compile into bounded zero-authority shadow dead-end fingerprints")
+    maintenance=state.get("shadow_memory_maintenance") or {}
+    if maintenance and (maintenance.get("scientific_authority") is not False or (maintenance.get("policy") or {}).get("terminal_run_ingestion_is_zero_authority_search_control") is not True or (maintenance.get("policy") or {}).get("canonical_generator_and_queue_untouched") is not True or any(row.get("scientific_authority") is not False or not row.get("run_id") or not row.get("stage_manifest_sha256") for row in maintenance.get("receipts") or [] if isinstance(row,dict))):
+        errors.append("terminal shadow-run memory maintenance must remain bounded zero-authority search control")
     for row in rows:
         if not row.get("primary_sources") or not row.get("cheapest_problem_falsifier") or row.get("method_design_authorized") is not False or row.get("gpu_authorized") is not False or row.get("live_paper_design_eligible") is not False or row.get("counterfactual_problem_gate_pass_does_not_grant_live_paper_design") is not True:
             errors.append(f"SP design row incomplete or illegally authoritative:{row.get('id')}")
@@ -531,4 +730,10 @@ def write_search_portfolio_design_adjudication(json_path: Path = DEFAULT_JSON, j
 
 
 if __name__ == "__main__":
-    print(json.dumps(write_search_portfolio_design_adjudication(), ensure_ascii=False, indent=2))
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--merge-terminal-run-root", type=Path)
+    args = parser.parse_args()
+    result = merge_terminal_shadow_run_memory(run_root=args.merge_terminal_run_root) if args.merge_terminal_run_root else write_search_portfolio_design_adjudication()
+    print(json.dumps(result, ensure_ascii=False, indent=2))
