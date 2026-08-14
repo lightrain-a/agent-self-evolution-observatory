@@ -55,6 +55,7 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
             def create(repo,target,commit):
                 created.append((repo,target,commit));target.mkdir(parents=True);(target/"generated").mkdir();(target/"generated"/"paper-first-search-portfolio-design-adjudication.json").write_text("{}",encoding="utf-8")
             def qualify(**kwargs):
+                self.assertEqual(kwargs["admission_state"],admission)
                 run=kwargs["run_root"];run.mkdir(parents=True)
                 receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":"c"*40,"stage_runner_required_schema":"1.4","control_snapshot_sha256":"d"*64,"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":"f"*64}
                 (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")

@@ -152,6 +152,7 @@ def consume_shadow_qualification_handoff(
             private_pool_path=canonical_private_pool,
             memory_path=memory_path,
             project_root=worktree,
+            admission_state=admission,
         )
     except Exception as error:
         return _bounded_result("HOLD_SHADOW_QUALIFICATION_PREPARE_ERROR", reason=f"{type(error).__name__}:{str(error)[:900]}", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit)
