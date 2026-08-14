@@ -80,7 +80,7 @@ def _coobserved(receipts: list[dict[str, Any]]) -> set[tuple[str,str]]:
 
 def _card(record: dict[str, Any]) -> dict[str, Any]:
     typed=record.get("typed_evidence") or {};axes=current_lane_axes(record.get("lane_keys") or [])
-    return {"ref":record.get("ref"),"title":record.get("title"),"object":axes.get("object") or [],"context":axes.get("context") or [],"property":axes.get("property") or [],"empirical":[str(x.get("text") or "")[:320] for x in (record.get("empirical_facts") or [])[:2] if isinstance(x,dict)],"assumption":[str(x.get("text") or "")[:320] for x in (typed.get("operational_assumptions") or [])[:1] if isinstance(x,dict)],"failure":[str(x.get("text") or "")[:320] for x in (typed.get("measured_failures") or [])[:1] if isinstance(x,dict)],"boundary":[str(x.get("text") or "")[:320] for x in (typed.get("boundary_observations") or [])[:1] if isinstance(x,dict)]}
+    return {"ref":record.get("ref"),"title":record.get("title"),"abstract":str(record.get("abstract") or "")[:1200],"object":axes.get("object") or [],"context":axes.get("context") or [],"property":axes.get("property") or [],"empirical":[str(x.get("text") or "")[:320] for x in (record.get("empirical_facts") or [])[:2] if isinstance(x,dict)],"assumption":[str(x.get("text") or "")[:320] for x in (typed.get("operational_assumptions") or [])[:1] if isinstance(x,dict)],"failure":[str(x.get("text") or "")[:320] for x in (typed.get("measured_failures") or [])[:1] if isinstance(x,dict)],"boundary":[str(x.get("text") or "")[:320] for x in (typed.get("boundary_observations") or [])[:1] if isinstance(x,dict)]}
 
 
 def _lane_contracts() -> list[dict[str, Any]]:

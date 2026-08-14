@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .config import StorageSettings
-from .paper_first_global_relation_recall import run_global_relation_recall
+from .paper_first_global_relation_recall import _card, run_global_relation_recall
 
 
 class GlobalRelationRecallTest(unittest.TestCase):
@@ -41,6 +41,12 @@ class GlobalRelationRecallTest(unittest.TestCase):
         for i in range(1,5):
             rows.append({"ref":f"arXiv:{i}","title":f"Paper {i}","abstract":f"Agent evidence {i}","primary_source_verified":True,"lane_keys":["skill_harness"],"empirical_facts":[{"text":f"Observed metric {i} changes by {10+i} percent."}],"typed_evidence":{"operational_assumptions":[],"measured_failures":[],"boundary_observations":[]}})
         return rows
+
+    def test_primary_abstract_is_preserved_when_fulltext_evidence_is_absent(self) -> None:
+        record={"ref":"arXiv:1","title":"Paper 1","abstract":"Primary abstract carries the bounded empirical relation evidence.","lane_keys":["skill_harness"],"empirical_facts":[],"typed_evidence":{"operational_assumptions":[],"measured_failures":[],"boundary_observations":[]}}
+        card=_card(record)
+        self.assertEqual(card["abstract"],record["abstract"])
+        self.assertEqual(card["empirical"],[])
 
     def relation(self, proposals: bool = True, resolved: str = "doubao-seed-evolving"):
         def responder(**kwargs):
