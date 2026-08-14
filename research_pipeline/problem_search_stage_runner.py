@@ -19,6 +19,17 @@ from .paper_first_problem_search_portfolio import (
 DEFAULT_SHADOW_DEAD_END_MEMORY_PATH=PROJECT_ROOT/"generated"/"paper-first-search-portfolio-design-adjudication.json"
 
 
+def _archive_raw_before_parse(run_root:Path,stem:str,raw:str,resolved_model:str)->tuple[str,Path]:
+    sha=hashlib.sha256(raw.encode()).hexdigest();raw_root=run_root/"raw";raw_root.mkdir(parents=True,exist_ok=True);path=raw_root/f"{stem}-{sha[:12]}.txt";path.write_text(raw,encoding="utf-8");return sha,path
+
+
+def _parse_archived_json(run_root:Path,stem:str,raw:str,resolved_model:str)->tuple[dict,str]:
+    sha,_=_archive_raw_before_parse(run_root,stem,raw,resolved_model)
+    try:return extract_json_object(raw),sha
+    except Exception as error:
+        err={"schema_version":"1.0","stage":stem,"status":"PARSE_ERROR_ZERO_AUTHORITY","resolved_model":resolved_model,"raw_sha256":sha,"error":f"{type(error).__name__}:{str(error)[:1200]}","scientific_authority":False}
+        (run_root/f"error-{stem}-{sha[:12]}.json").write_text(json.dumps(err,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise
+
 def _shadow_dead_end_memory(path:Path|None)->dict:
     resolved=path or DEFAULT_SHADOW_DEAD_END_MEMORY_PATH
     if not resolved.exists():return {}
@@ -34,15 +45,14 @@ def expand(*,pool:Path,run_root:Path,lane:str,count:int=6,model:str="ark-code-la
     payload=json.loads(pool.read_text(encoding="utf-8"));records=payload.get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")}
     lane=lane.strip().upper()
     if lane not in SEARCH_PORTFOLIO_PRIMITIVES:raise ValueError(f"unknown search primitive {lane}")
-    memory=_shadow_dead_end_memory(memory_path);prompt=_expansion_prompt(lane,records,count,memory);res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=.85);raw=str(res.get("text") or "");parsed=extract_json_object(raw)
+    memory=_shadow_dead_end_memory(memory_path);prompt=_expansion_prompt(lane,records,count,memory);res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=.85);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);parsed,raw_sha=_parse_archived_json(run_root,f"expand-{lane}-p{part}",raw,resolved)
     seeds=[]
     for i,item in enumerate(parsed.get("seeds") or [],1):
         if not isinstance(item,dict):continue
         row=_normalize_seed(item,lane,i);row["seed_id"]=f"{lane}-P{part}-{i:03d}"
         if _valid_seed(row,registry):seeds.append(row)
-    out={"schema_version":"1.1","lane":lane,"part":part,"requested":count,"resolved_model":str(res.get("resolved_model") or model),"raw_sha256":hashlib.sha256(raw.encode()).hexdigest(),"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","valid_seeds":len(seeds),"seeds":seeds,"scientific_authority":False}
+    out={"schema_version":"1.2","lane":lane,"part":part,"requested":count,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","valid_seeds":len(seeds),"seeds":seeds,"scientific_authority":False}
     run_root.mkdir(parents=True,exist_ok=True);(run_root/f"expand-{lane}-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    raw_root=run_root/"raw";raw_root.mkdir(exist_ok=True);(raw_root/f"expand-{lane}-p{part}-{out['raw_sha256'][:12]}.txt").write_text(raw,encoding="utf-8")
     return {k:out[k] for k in ("lane","part","requested","resolved_model","raw_sha256","valid_seeds")}
 
 
@@ -67,15 +77,15 @@ def evolve(*,pool:Path,run_root:Path,generation:int,part:int,batch_size:int=6,mo
     else:raise ValueError("generation must be 1 or 2")
     start=(part-1)*batch_size;batch=parents[start:start+batch_size]
     if not batch:raise ValueError(f"empty evolution batch generation={generation} part={part}")
-    memory=_shadow_dead_end_memory(memory_path);temperature=.60 if generation==1 else .35;prompt=_evolution_prompt(batch,generation)+" SHADOW DEAD-END MEMORY (search control only; never scientific authority)="+json.dumps(memory,ensure_ascii=False,separators=(",",":"));res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=temperature);raw=str(res.get("text") or "");payload=extract_json_object(raw);pmap={p["seed_id"]:p for p in batch};children=[]
+    memory=_shadow_dead_end_memory(memory_path);temperature=.60 if generation==1 else .35;prompt=_evolution_prompt(batch,generation)+" SHADOW DEAD-END MEMORY (search control only; never scientific authority)="+json.dumps(memory,ensure_ascii=False,separators=(",",":"));res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=temperature);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"evolve-g{generation}-p{part}",raw,resolved);pmap={p["seed_id"]:p for p in batch};children=[]
     for i,item in enumerate(payload.get("children") or [],1):
         if not isinstance(item,dict):continue
         parent=pmap.get(str(item.get("parent_id") or ""))
         if not parent:continue
         merged={**parent,**item,"discovery_lane":parent["discovery_lane"],"empirical_evidence":parent["empirical_evidence"],"lane_evidence":parent["lane_evidence"],"cross_domain_origin":parent.get("cross_domain_origin","")};row=_normalize_seed(merged,parent["discovery_lane"],i);row["seed_id"]=f"{parent['seed_id']}-G{generation}";row["parent_id"]=parent["seed_id"];row["branch_depth"]=generation
         if _valid_seed(row,registry):children.append(row)
-    out={"schema_version":"1.1","generation":generation,"part":part,"parent_ids":[p["seed_id"] for p in batch],"requested_children":len(batch),"valid_children":len(children),"resolved_model":str(res.get("resolved_model") or model),"raw_sha256":hashlib.sha256(raw.encode()).hexdigest(),"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","temperature":temperature,"children":children,"scientific_authority":False}
-    (run_root/f"evolve-g{generation}-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raw_root=run_root/"raw";raw_root.mkdir(exist_ok=True);(raw_root/f"evolve-g{generation}-p{part}-{out['raw_sha256'][:12]}.txt").write_text(raw,encoding="utf-8")
+    out={"schema_version":"1.2","generation":generation,"part":part,"parent_ids":[p["seed_id"] for p in batch],"requested_children":len(batch),"valid_children":len(children),"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","temperature":temperature,"children":children,"scientific_authority":False}
+    (run_root/f"evolve-g{generation}-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {k:out[k] for k in ("generation","part","requested_children","valid_children","resolved_model","raw_sha256")}
 
 
@@ -90,7 +100,7 @@ def formulation_pool(run_root:Path,budget:int=24)->list[dict]:
 def formulate(*,pool:Path,run_root:Path,part:int,batch_size:int=2,budget:int=24,model:str="ark-code-latest",memory_path:Path|None=None)->dict:
     records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")};branches=formulation_pool(run_root,budget);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
     if not batch:raise ValueError(f"empty formulation batch part={part}")
-    memory=_shadow_dead_end_memory(memory_path);prompt=_formulation_prompt(batch,registry,memory);res=_ark(prompt=prompt,model=model,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");payload=extract_json_object(raw);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
+    memory=_shadow_dead_end_memory(memory_path);prompt=_formulation_prompt(batch,registry,memory);res=_ark(prompt=prompt,model=model,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
     # Preserve branch provenance and typed evidence deterministically. The model
     # may sharpen claims but cannot silently change the source refs or lane.
     by={b["seed_id"]:b for b in batch};normalized=[]
@@ -98,8 +108,8 @@ def formulate(*,pool:Path,run_root:Path,part:int,batch_size:int=2,budget:int=24,
         parent=by.get(str(item.get("source_branch_id") or ""))
         if not parent:continue
         row=dict(item);row["model_candidate_id"]=str(row.get("candidate_id") or "").strip();row["candidate_id"]=f"SHADOW-P{part:02d}-C{i:02d}";row["source_branch_id"]=parent["seed_id"];row["branch_depth"]=parent.get("branch_depth",0);row["discovery_lane"]=parent["discovery_lane"];row["empirical_evidence"]=parent["empirical_evidence"];row["lane_evidence"]=parent["lane_evidence"];normalized.append(row)
-    out={"schema_version":"1.1","part":part,"branch_ids":[b["seed_id"] for b in batch],"resolved_model":str(res.get("resolved_model") or model),"raw_sha256":hashlib.sha256(raw.encode()).hexdigest(),"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","candidates":normalized,"rejected":dead,"scientific_authority":False}
-    (run_root/f"formulate-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raw_root=run_root/"raw";raw_root.mkdir(exist_ok=True);(raw_root/f"formulate-p{part}-{out['raw_sha256'][:12]}.txt").write_text(raw,encoding="utf-8")
+    out={"schema_version":"1.2","part":part,"branch_ids":[b["seed_id"] for b in batch],"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","candidates":normalized,"rejected":dead,"scientific_authority":False}
+    (run_root/f"formulate-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {"part":part,"branches":len(batch),"candidates":len(normalized),"rejected":len(dead),"resolved_model":out["resolved_model"],"raw_sha256":out["raw_sha256"]}
 
 
@@ -125,10 +135,10 @@ def review(*,pool:Path,run_root:Path,part:int,batch_size:int=2,model:str="glm-5.
     records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];registry={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")}
     audit=json.loads((run_root/"machine-audit.json").read_text(encoding="utf-8"));rows=audit.get("reviewable") or [];start=(part-1)*batch_size;selected=rows[start:start+batch_size]
     if not selected:raise ValueError(f"empty review batch part={part}")
-    candidates=[dict(row["candidate"]) for row in selected];prompt=reviewer_prompt(candidates,registry,shadow_mode=True);res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=0.0);raw=str(res.get("text") or "");sha=hashlib.sha256(raw.encode()).hexdigest();resolved=str(res.get("resolved_model") or model)
-    _apply_reviews(candidates,extract_json_object(raw),model,resolved,"doubao-seed-evolving",sha,registry)
-    out={"schema_version":"1.0","part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"candidates":candidates,"scientific_authority":False}
-    (run_root/f"review-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raw_root=run_root/"raw";raw_root.mkdir(exist_ok=True);(raw_root/f"review-p{part}-{sha[:12]}.txt").write_text(raw,encoding="utf-8")
+    candidates=[dict(row["candidate"]) for row in selected];prompt=reviewer_prompt(candidates,registry,shadow_mode=True);res=_ark(prompt=prompt,model=model,max_output_tokens=5200,temperature=0.0);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_json(run_root,f"review-p{part}",raw,resolved)
+    _apply_reviews(candidates,payload,model,resolved,"doubao-seed-evolving",sha,registry)
+    out={"schema_version":"1.1","part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"candidates":candidates,"scientific_authority":False}
+    (run_root/f"review-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {"part":part,"candidate_ids":out["candidate_ids"],"resolved_model":resolved,"raw_sha256":sha,"semantic_clear":sum((c.get("semantic_reduction_review") or {}).get("verdict")=="CLEAR" for c in candidates)}
 
 

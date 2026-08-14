@@ -511,6 +511,8 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_global_relation_not_reduced":(paper_first_global_relation_recall.get("summary") or {}).get("not_reduced",0),
             "paper_first_global_relation_focused_reopen":bool((paper_first_global_relation_recall.get("summary") or {}).get("focused_problem_generator_reopen_required")),
             "paper_first_shadow_latest_run_id":paper_first_problem_search_portfolio.get("latest_run_id",""),
+            "paper_first_shadow_latest_expansion_successful_shards":paper_first_shadow_latest_summary.get("expansion_successful_shards",0),
+            "paper_first_shadow_latest_expansion_parse_failures":paper_first_shadow_latest_summary.get("expansion_parse_failures",0),
             "paper_first_shadow_latest_raw":paper_first_shadow_latest_summary.get("raw_seeds",0),
             "paper_first_shadow_latest_unique":paper_first_shadow_latest_summary.get("semantic_unique",0),
             "paper_first_shadow_latest_evolved":paper_first_shadow_latest_summary.get("evolved_branches",0),

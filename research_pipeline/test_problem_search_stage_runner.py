@@ -66,6 +66,33 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "zero-authority"):
                     runner._shadow_dead_end_memory(None)
 
+    def test_malformed_model_output_is_archived_before_parse_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            pool = root / "pool.json"
+            memory = root / "memory.json"
+            run = root / "run"
+            pool.write_text(json.dumps({"records": []}), encoding="utf-8")
+            memory.write_text(json.dumps({
+                "scientific_authority": False,
+                "live_source_coverage_effect": False,
+                "cannot_mutate_canonical_generator_or_queue": True,
+                "blocked_objects": [],
+            }), encoding="utf-8")
+            response = {"text": '{"seeds":[{"broken":1}', "resolved_model": "test-model"}
+            with patch("research_pipeline.problem_search_stage_runner._ark", return_value=response):
+                with self.assertRaises(json.JSONDecodeError):
+                    runner.expand(pool=pool, run_root=run, lane="CONTRADICTION", count=1, model="test", part=1, memory_path=memory)
+            raw_files = list((run / "raw").glob("expand-CONTRADICTION-p1-*.txt"))
+            error_files = list(run.glob("error-expand-CONTRADICTION-p1-*.json"))
+            self.assertEqual(len(raw_files), 1)
+            self.assertEqual(len(error_files), 1)
+            error = json.loads(error_files[0].read_text(encoding="utf-8"))
+            self.assertEqual(error["status"], "PARSE_ERROR_ZERO_AUTHORITY")
+            self.assertEqual(error["resolved_model"], "test-model")
+            self.assertTrue(error["raw_sha256"].startswith(raw_files[0].stem.rsplit("-", 1)[-1]))
+            self.assertFalse(error["scientific_authority"])
+
 
 if __name__ == "__main__":
     unittest.main()
