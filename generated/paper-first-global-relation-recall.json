@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-13T17:59:34+00:00",
-  "run_id": "20260813T175913Z",
+  "generated_at": "2026-08-14T07:05:17+00:00",
+  "run_id": "20260814T070455Z",
   "status": "GLOBAL_RELATION_RECALL_COMPLETE",
   "policy": {
     "scientific_authority": false,
@@ -41,77 +41,47 @@
     "reduction": "deepseek-v4-flash"
   },
   "relation_coverage": {
-    "receipt_runs": 15,
-    "reviewed_receipt_sources": 214,
-    "possible_source_pairs": 22791,
-    "coobserved_source_pairs": 4982,
-    "pair_coverage_fraction": 0.2186,
-    "single_exposure_sources": 164,
+    "receipt_runs": 18,
+    "reviewed_receipt_sources": 226,
+    "possible_source_pairs": 25425,
+    "coobserved_source_pairs": 5730,
+    "pair_coverage_fraction": 0.2254,
+    "single_exposure_sources": 123,
     "minimum_coobserved_neighbors": 31,
     "median_coobserved_neighbors": 31,
-    "maximum_coobserved_neighbors": 213,
+    "maximum_coobserved_neighbors": 225,
     "pairwise_coobservation_complete": false,
     "relation_blind_spot_detected": true,
-    "relation_universe_digest": "e2f2725901ba9f15cf11ded5b753badb6f123ec763921ece1e04c2b1249c32ae",
+    "relation_universe_digest": "fff32b96a52efc3a4c109b97e1163772f3e7a717c65fab8feae78831c4a6af9c",
     "search_control_only": true,
     "scientific_authority": false
   },
   "raw_artifacts": {
     "relation": {
-      "sha256": "9ec07cffa9926484ec59694591fb8eff570830947602641531d361d41340a332",
+      "sha256": "64cd87aca917a41b75b9aeabd1500fa1ad67a2ab6955937f38a1b909a2d82053",
       "requested_model": "ark-code-latest",
       "resolved_model": "doubao-seed-evolving"
     },
     "lane_review": {
-      "sha256": "8e97c2cbc1eadf0a9b5e46d1587b774b9a8f4198f496ceaf1b0b9b1353a24edb",
+      "sha256": "3f30a33f51bfb2112a679d5973d0ecfd8d1da240dbe7ce8658b21f9bb8b0d9d0",
       "requested_model": "glm-5.2",
       "resolved_model": "glm-5-2-260617"
     },
     "reduction_review": {
-      "sha256": "c48af4b141d07cd68f41dc7a6b9b2378096d919405deeddc06166c4066aa1d25",
+      "sha256": "808663e95e2dfaf9604e542ddb5a6ebf72f8856084d97cc82c0bd1294165ff9f",
       "requested_model": "deepseek-v4-flash",
       "resolved_model": "deepseek-v4-flash-ga-260731"
     }
   },
   "proposals": [
     {
-      "proposal_id": "REL-CONVERGENT_FAILURE-1",
-      "lane": "CONVERGENT_FAILURE",
-      "source_refs": [
-        "arXiv:2606.17628",
-        "arXiv:2606.28368"
-      ],
-      "previously_coobserved": false,
-      "lane_verdict": "PASS",
-      "reduction_verdict": "REDUCIBLE",
-      "matched_patterns": [
-        "durable-runtime-improvement-vs-aging"
-      ],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    },
-    {
-      "proposal_id": "REL-CONVERGENT_FAILURE-2",
-      "lane": "CONVERGENT_FAILURE",
-      "source_refs": [
-        "arXiv:2606.24151",
-        "arXiv:2607.17621"
-      ],
-      "previously_coobserved": false,
-      "lane_verdict": "FAIL",
-      "reduction_verdict": "",
-      "matched_patterns": [],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    },
-    {
       "proposal_id": "REL-ASSUMPTION_BREAK-1",
       "lane": "ASSUMPTION_BREAK",
       "source_refs": [
-        "arXiv:2606.20318",
-        "arXiv:2606.23075"
+        "arXiv:2607.03691",
+        "arXiv:2607.12227"
       ],
-      "previously_coobserved": true,
+      "previously_coobserved": false,
       "lane_verdict": "FAIL",
       "reduction_verdict": "",
       "matched_patterns": [],
@@ -122,15 +92,13 @@
       "proposal_id": "REL-ASSUMPTION_BREAK-2",
       "lane": "ASSUMPTION_BREAK",
       "source_refs": [
-        "arXiv:2606.24151",
-        "arXiv:2607.12042"
+        "arXiv:2607.05202",
+        "arXiv:2607.12227"
       ],
       "previously_coobserved": false,
-      "lane_verdict": "PASS",
-      "reduction_verdict": "REDUCIBLE",
-      "matched_patterns": [
-        "multimodal-procedural-compression"
-      ],
+      "lane_verdict": "FAIL",
+      "reduction_verdict": "",
+      "matched_patterns": [],
       "focused_problem_generator_reopen_required": false,
       "scientific_authority": false
     },
@@ -138,43 +106,75 @@
       "proposal_id": "REL-ASSUMPTION_BREAK-3",
       "lane": "ASSUMPTION_BREAK",
       "source_refs": [
-        "arXiv:2606.26859",
-        "arXiv:2607.11175"
+        "arXiv:2606.20318",
+        "arXiv:2607.12227"
+      ],
+      "previously_coobserved": false,
+      "lane_verdict": "FAIL",
+      "reduction_verdict": "",
+      "matched_patterns": [],
+      "focused_problem_generator_reopen_required": false,
+      "scientific_authority": false
+    },
+    {
+      "proposal_id": "REL-ASSUMPTION_BREAK-4",
+      "lane": "ASSUMPTION_BREAK",
+      "source_refs": [
+        "arXiv:2607.26598",
+        "arXiv:2607.13083"
       ],
       "previously_coobserved": false,
       "lane_verdict": "PASS",
       "reduction_verdict": "REDUCIBLE",
       "matched_patterns": [
-        "scientific-claim-decomposition-dependence"
+        "feedback-polarity-by-update-surface",
+        "harness-update-scope-heterogeneity"
+      ],
+      "focused_problem_generator_reopen_required": false,
+      "scientific_authority": false
+    },
+    {
+      "proposal_id": "REL-ASSUMPTION_BREAK-5",
+      "lane": "ASSUMPTION_BREAK",
+      "source_refs": [
+        "arXiv:2608.11654",
+        "arXiv:2608.07622"
+      ],
+      "previously_coobserved": true,
+      "lane_verdict": "PASS",
+      "reduction_verdict": "REDUCIBLE",
+      "matched_patterns": [
+        "durable-runtime-improvement-vs-aging",
+        "procedural-memory-nonmonotonicity"
       ],
       "focused_problem_generator_reopen_required": false,
       "scientific_authority": false
     }
   ],
   "last_completed_scan": {
-    "run_id": "20260813T175913Z",
-    "relation_universe_digest": "e2f2725901ba9f15cf11ded5b753badb6f123ec763921ece1e04c2b1249c32ae",
+    "run_id": "20260814T070455Z",
+    "relation_universe_digest": "fff32b96a52efc3a4c109b97e1163772f3e7a717c65fab8feae78831c4a6af9c",
     "relation_coverage": {
-      "reviewed_receipt_sources": 214,
-      "possible_source_pairs": 22791,
-      "coobserved_source_pairs": 4982,
-      "pair_coverage_fraction": 0.2186
+      "reviewed_receipt_sources": 226,
+      "possible_source_pairs": 25425,
+      "coobserved_source_pairs": 5730,
+      "pair_coverage_fraction": 0.2254
     },
     "summary": {
-      "reviewed_receipt_sources": 214,
-      "cached_reviewed_sources": 214,
+      "reviewed_receipt_sources": 226,
+      "cached_reviewed_sources": 226,
       "cache_completeness_fraction": 1.0,
-      "possible_source_pairs": 22791,
-      "coobserved_source_pairs": 4982,
-      "pair_coverage_fraction": 0.2186,
+      "possible_source_pairs": 25425,
+      "coobserved_source_pairs": 5730,
+      "pair_coverage_fraction": 0.2254,
       "relation_blind_spot_detected": true,
-      "relation_universe_digest": "e2f2725901ba9f15cf11ded5b753badb6f123ec763921ece1e04c2b1249c32ae",
+      "relation_universe_digest": "fff32b96a52efc3a4c109b97e1163772f3e7a717c65fab8feae78831c4a6af9c",
       "relation_proposals": 5,
       "unseen_relation_proposals": 4,
-      "lane_pass": 3,
-      "unseen_lane_pass": 3,
-      "reduction_reviewed": 3,
-      "reducible": 3,
+      "lane_pass": 2,
+      "unseen_lane_pass": 1,
+      "reduction_reviewed": 2,
+      "reducible": 2,
       "not_reduced": 0,
       "focused_problem_generator_reopen_required": false,
       "scientifically_authorized": 0
@@ -187,20 +187,20 @@
     "scientific_authority": false
   },
   "summary": {
-    "reviewed_receipt_sources": 214,
-    "cached_reviewed_sources": 214,
+    "reviewed_receipt_sources": 226,
+    "cached_reviewed_sources": 226,
     "cache_completeness_fraction": 1.0,
-    "possible_source_pairs": 22791,
-    "coobserved_source_pairs": 4982,
-    "pair_coverage_fraction": 0.2186,
+    "possible_source_pairs": 25425,
+    "coobserved_source_pairs": 5730,
+    "pair_coverage_fraction": 0.2254,
     "relation_blind_spot_detected": true,
-    "relation_universe_digest": "e2f2725901ba9f15cf11ded5b753badb6f123ec763921ece1e04c2b1249c32ae",
+    "relation_universe_digest": "fff32b96a52efc3a4c109b97e1163772f3e7a717c65fab8feae78831c4a6af9c",
     "relation_proposals": 5,
     "unseen_relation_proposals": 4,
-    "lane_pass": 3,
-    "unseen_lane_pass": 3,
-    "reduction_reviewed": 3,
-    "reducible": 3,
+    "lane_pass": 2,
+    "unseen_lane_pass": 1,
+    "reduction_reviewed": 2,
+    "reducible": 2,
     "not_reduced": 0,
     "focused_problem_generator_reopen_required": false,
     "scientifically_authorized": 0
