@@ -1,6 +1,6 @@
 {
   "schema_version": "3.2-shadow-import",
-  "generated_at": "2026-08-14T02:51:14+00:00",
+  "generated_at": "2026-08-14T03:05:41+00:00",
   "imported_at": "2026-08-13T16:28:11+00:00",
   "status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
   "historical_source_commit": "7b2a7260df3bae5d140cdc7f4d09a56dd898a72b",
@@ -211,7 +211,7 @@
     "schema_version": "1.0-shadow-run",
     "run_id": "shadow-20260814-r3",
     "status": "SHADOW_TERMINAL_COMPLETE",
-    "generated_at": "2026-08-14T02:51:14+00:00",
+    "generated_at": "2026-08-14T03:05:41+00:00",
     "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
     "stage_manifest_sha256": "d936c5d31f59ee98b80bfb60ddde9bb1b8a521221b9c9c565f9c60576c3d5d33",
     "scientific_authority": false,
@@ -292,6 +292,19 @@
         "title": "A tied-budget inversion: test-time selection helps skill-harness execution but harms direct VLA execution",
         "search_primitive": "UNEXPLAINED_BOUNDARY",
         "semantic_shadow_clear": false,
+        "semantic_verdict": "BLOCK",
+        "semantic_reduction_class": "NEEDS_EXACT_REDUCTION_TEST",
+        "semantic_matched_patterns": [
+          "persistent-update-vs-test-time-compute"
+        ],
+        "semantic_strongest_reduction": "amortized inference / test-time scaling / search-vs-learning evaluation",
+        "semantic_exact_reduction_test": "Match raw VLA and skill-harness candidate sets on diversity, mean success, and verifier availability; if raw-VLA selection/voting no longer underperforms direct execution or skill-harness selection no longer outperforms after this matching, the layer-boundary claim is falsified.",
+        "semantic_reason": "The source grounding and lane contract are fully satisfied. However, under the Reduction Falsifiability Contract, the candidate collides with the mature theory of persistent-update-vs-test-time-compute (test-time scaling). The candidate proposes that test-time selection/voting systematically inverts its sign of improvement depending on the representation layer (raw VLA vs. skill-harness). While the candidate provides a falsifier matching candidate sets on diversity, mean success, and verifier availability, whether generic test-time scaling variables with structural constraints (like candidate quality, redundancy, and verifier availability) fail to predict this sign reversal remains unresolved. Because the exact reduction against generic test-time-scaling models is not definitively resolved as non-expressible, the review mandates a BLOCK under the NEEDS_EXACT_REDUCTION_TEST protocol.",
+        "semantic_lane_contract_verified": true,
+        "semantic_lane_contract_reason": "The candidate successfully satisfies the UNEXPLAINED_BOUNDARY lane contract. It identifies a shared measurement (frozen-model embodied benchmark accuracy under test-time-scaling vs. harness evolution), a boundary observation (MG-Select and VOTE underperform direct execution), an adjacent expected regime (full SHAPER improves success), and targets the unexplained transition (why aggregation harms raw VLA outputs but helps externalized skill-harness units).",
+        "semantic_source_refs": [
+          "arXiv:2608.11350"
+        ],
         "current_source_status": "",
         "current_source_verdict": "",
         "current_source_reduction_class": "",
@@ -314,6 +327,21 @@
         "title": "Capability-dependent collapse of open-ended self-evolving optimizers",
         "search_primitive": "CONVERGENT_FAILURE",
         "semantic_shadow_clear": false,
+        "semantic_verdict": "BLOCK",
+        "semantic_reduction_class": "SOFT_COLLISION",
+        "semantic_matched_patterns": [
+          "model-scaffold-enactability",
+          "persistent-update-vs-test-time-compute"
+        ],
+        "semantic_strongest_reduction": "cross-model prompt transfer / instruction following / model-artifact compatibility",
+        "semantic_exact_reduction_test": "Hold target-interaction budget and evaluation fixed while varying only whether the route is prescribed or optimizer-composed. If performance is fully explained by total compute/search quality without an interface-specific discontinuity, the baseline absorbs the claim.",
+        "semantic_reason": "The source claims are accurately grounded in the supplied primary evidence. However, the candidate fails the CONVERGENT_FAILURE lane contract because the two empirical facts do not share an explicitly bounded operational condition; they represent isolated failures of weaker LLMs on distinct agent tasks (skill optimization vs. SMT encoding extension) rather than a convergent quantitative failure under a common operational condition with a named common failure object. Furthermore, the candidate's identified irreducible object (optimizer-capability threshold for enacting self-evolution interfaces) is a SOFT_COLLISION with known patterns of model-scaffold-enactability and persistent-update-vs-test-time-compute, as weaker models failing to operate interfaces is highly reducible to standard instruction-following and test-time compute limitations. Because the lane contract fails, the verdict is BLOCK.",
+        "semantic_lane_contract_verified": false,
+        "semantic_lane_contract_reason": "The CONVERGENT_FAILURE lane contract requires two grounded empirical facts to demonstrate quantitative failure under the same bounded operational condition, naming a common failure object. The candidate extracts failures from two different artifact families and optimizers: OEO failing with medium/weak optimizers on skill improvement (arXiv:2608.09629) and a Haiku 4.5 coding agent failing to converge on network verifier extension tasks (arXiv:2608.11340). These are independent domains and interfaces; they do not share a method family nor a common failure object beyond the generic observation that weaker models perform worse on complex tasks, which violates the 'same bounded operational condition' and 'names a common failure object rather than a better-method claim' requirements.",
+        "semantic_source_refs": [
+          "arXiv:2608.09629",
+          "arXiv:2608.11340"
+        ],
         "current_source_status": "",
         "current_source_verdict": "",
         "current_source_reduction_class": "",

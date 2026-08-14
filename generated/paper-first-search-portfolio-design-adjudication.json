@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T02:51:14+00:00",
+  "generated_at": "2026-08-14T03:05:41+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -12,6 +12,8 @@
     "cannot_grant_or_revoke_live_paper_design_authority": true,
     "counterfactual_problem_gate_pass_only_triggers_retrospective_collision_audit": true,
     "current_source_hard_veto_memory_persists_across_shadow_runs": true,
+    "semantic_blocker_memory_persists_across_shadow_runs": true,
+    "semantic_soft_collision_alone_is_not_a_dead_end": true,
     "current_primary_source_collision_review_required": true,
     "same_information_reduction_required_before_method_design": true,
     "failed_or_missing_ai_reviewer_is_not_pass": true,
@@ -42,7 +44,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-14T02:51:14+00:00",
+    "generated_at": "2026-08-14T03:05:41+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -173,7 +175,7 @@
     "scientific_authority": false
   },
   "shadow_dead_end_memory": {
-    "memory_id": "shadow-paper-design-dead-ends-persistent-current-source-near-miss",
+    "memory_id": "shadow-paper-design-dead-ends-persistent-current-source-semantic-near-miss",
     "scientific_authority": false,
     "live_source_coverage_effect": false,
     "cannot_mutate_canonical_generator_or_queue": true,
@@ -220,6 +222,53 @@
         ],
         "reason": "The semantic CLEAR does not survive current-source collision review. Existing work already separates retrieval from compiled/incorporated execution context and evaluates downstream execution-aware utility, so the residual standard-log non-identifiability claim is expressible by generic causal identifiability over an omitted compiled-context variable plus existing retrieval-to-compilation instrumentation.",
         "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that remains non-reducible after explicitly instrumenting the omitted retrieval/compilation/execution variable identified by the current-source review; renaming the pipeline stages or dropping that variable from the log does not reopen the basin.",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P06-C02",
+        "basin": "semantic-exact-reduction-de18df5490d5d9b9",
+        "search_primitive": "UNEXPLAINED_BOUNDARY",
+        "avoid": [
+          "paraphrase-only variants of: A tied-budget inversion: test-time selection helps skill-harness execution but harms direct VLA execution",
+          "domain-swapped variants still explained by: amortized inference / test-time scaling / search-vs-learning evaluation",
+          "claiming a new structural boundary without resolving the recorded same-information exact reduction test"
+        ],
+        "strongest_reduction": "amortized inference / test-time scaling / search-vs-learning evaluation",
+        "matched_patterns": [
+          "persistent-update-vs-test-time-compute"
+        ],
+        "reduction_class": "NEEDS_EXACT_REDUCTION_TEST",
+        "exact_reduction_test": "Match raw VLA and skill-harness candidate sets on diversity, mean success, and verifier availability; if raw-VLA selection/voting no longer underperforms direct execution or skill-harness selection no longer outperforms after this matching, the layer-boundary claim is falsified.",
+        "current_source_refs": [
+          "arXiv:2608.11350"
+        ],
+        "reason": "The source grounding and lane contract are fully satisfied. However, under the Reduction Falsifiability Contract, the candidate collides with the mature theory of persistent-update-vs-test-time-compute (test-time scaling). The candidate proposes that test-time selection/voting systematically inverts its sign of improvement depending on the representation layer (raw VLA vs. skill-harness). While the candidate provides a falsifier matching candidate sets on diversity, mean success, and verifier availability, whether generic test-time scaling variables with structural constraints (like candidate quality, redundancy, and verifier availability) fail to predict this sign reversal remains unresolved. Because the exact reduction against generic test-time-scaling models is not definitively resolved as non-expressible, the review mandates a BLOCK under the NEEDS_EXACT_REDUCTION_TEST protocol.",
+        "reopen_only_if": "New primary evidence directly instantiates the recorded exact reduction test under matched information and leaves a residual prediction the named mature reduction cannot express; new wording, a new application domain, or an unexecuted proposed falsifier does not reopen this basin.",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P12-C01",
+        "basin": "semantic-lane-contract-85f1730d8a494b3b",
+        "search_primitive": "CONVERGENT_FAILURE",
+        "avoid": [
+          "paraphrase-only variants of: Capability-dependent collapse of open-ended self-evolving optimizers",
+          "combining heterogeneous failures without one explicitly shared bounded operational condition",
+          "using a generic optimizer/model-capability story as a convergent-failure object without a common measured failure variable"
+        ],
+        "strongest_reduction": "cross-model prompt transfer / instruction following / model-artifact compatibility",
+        "matched_patterns": [
+          "model-scaffold-enactability",
+          "persistent-update-vs-test-time-compute"
+        ],
+        "reduction_class": "SOFT_COLLISION",
+        "lane_contract_reason": "The CONVERGENT_FAILURE lane contract requires two grounded empirical facts to demonstrate quantitative failure under the same bounded operational condition, naming a common failure object. The candidate extracts failures from two different artifact families and optimizers: OEO failing with medium/weak optimizers on skill improvement (arXiv:2608.09629) and a Haiku 4.5 coding agent failing to converge on network verifier extension tasks (arXiv:2608.11340). These are independent domains and interfaces; they do not share a method family nor a common failure object beyond the generic observation that weaker models perform worse on complex tasks, which violates the 'same bounded operational condition' and 'names a common failure object rather than a better-method claim' requirements.",
+        "exact_reduction_test": "Hold target-interaction budget and evaluation fixed while varying only whether the route is prescribed or optimizer-composed. If performance is fully explained by total compute/search quality without an interface-specific discontinuity, the baseline absorbs the claim.",
+        "current_source_refs": [
+          "arXiv:2608.09629",
+          "arXiv:2608.11340"
+        ],
+        "reason": "The source claims are accurately grounded in the supplied primary evidence. However, the candidate fails the CONVERGENT_FAILURE lane contract because the two empirical facts do not share an explicitly bounded operational condition; they represent isolated failures of weaker LLMs on distinct agent tasks (skill optimization vs. SMT encoding extension) rather than a convergent quantitative failure under a common operational condition with a named common failure object. Furthermore, the candidate's identified irreducible object (optimizer-capability threshold for enacting self-evolution interfaces) is a SOFT_COLLISION with known patterns of model-scaffold-enactability and persistent-update-vs-test-time-compute, as weaker models failing to operate interfaces is highly reducible to standard instruction-following and test-time compute limitations. Because the lane contract fails, the verdict is BLOCK.",
+        "reopen_only_if": "New primary evidence supplies the missing lane-contract elements explicitly (shared bounded condition, common failure object, and correctly typed evidence roles) and the resulting formulation still leaves a same-information residual beyond the recorded strongest reduction.",
         "scientific_authority": false
       },
       {
@@ -305,6 +354,9 @@
     "current_source_hard_veto_count": 1,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_inherited": 1,
+    "semantic_blocker_count": 2,
+    "semantic_blocker_added_from_latest_run": 2,
+    "semantic_blocker_inherited": 0,
     "near_miss_preflight_count": 4
   },
   "shadow_source": {
@@ -356,10 +408,13 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 7,
+    "shadow_dead_end_objects": 9,
     "current_source_hard_veto_dead_ends": 1,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_inherited": 1,
+    "semantic_blocker_dead_ends": 2,
+    "semantic_blocker_added_from_latest_run": 2,
+    "semantic_blocker_inherited": 0,
     "near_miss_preflight_dead_ends": 4,
     "near_miss_support_holds": 1,
     "near_miss_current_primary_stops": 2,
