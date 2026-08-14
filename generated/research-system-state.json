@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T07:43:38+00:00",
+  "generated_at": "2026-08-14T08:29:51+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6065,7 +6065,15 @@
     "paper_first_shadow_latest_control_snapshot_sha256": "",
     "paper_first_shadow_latest_formulation_reduction_pending": 0,
     "paper_first_shadow_latest_machine_reduction_pending": 0,
-    "paper_first_shadow_latest_problem_falsifier_inventory_requested": 0
+    "paper_first_shadow_latest_problem_falsifier_inventory_requested": 0,
+    "paper_first_support_release_watch_status": "SUPPORT_RELEASE_WATCH_COMPLETE",
+    "paper_first_support_release_holds": 4,
+    "paper_first_support_release_targets": 2,
+    "paper_first_support_release_no_endpoint": 2,
+    "paper_first_support_release_recheck_required": 0,
+    "paper_first_support_release_support_qualified": 0,
+    "paper_first_support_release_generator_reopen": 0,
+    "paper_first_support_release_problem_gate": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -72066,6 +72074,30 @@
           "revise": 0,
           "block": 0
         }
+      },
+      {
+        "key": "paper-first-support-release-watch",
+        "pass": true,
+        "detail": {
+          "status": "SUPPORT_RELEASE_WATCH_COMPLETE",
+          "summary": {
+            "support_holds": 4,
+            "explicit_release_targets": 2,
+            "no_explicit_endpoint": 2,
+            "checked": 2,
+            "skipped_cooldown": 0,
+            "provider_errors": 0,
+            "recheck_required": 0,
+            "support_qualified": 0,
+            "generator_reopen_authorized": 0,
+            "problem_gate_authorized": 0
+          },
+          "status_counts": {
+            "WAITING_RELEASE_ARTIFACTS": 1,
+            "BASELINE_CAPTURED": 1,
+            "NO_EXPLICIT_AUTHOR_RELEASE_ENDPOINT": 2
+          }
+        }
       }
     ],
     "errors": []
@@ -72651,6 +72683,39 @@
       "latest_source_set_sha256": "21ff57e9a0be9d9af83bcc194f20f7e2a3b2878f509b212c12efa43aa0025ad5",
       "latest_primary_content_sha256": "8be6e04ba50970b8fc19585130604ad26c32497cbed64255d351015ca3e7143e",
       "latest_source_pool_sha256": "398bb671f2c79c8d050d9e9fdd0b648e286148a2a8afd5e25f263b761f05422d"
+    },
+    "scientific_authority": false
+  },
+  "paper_first_support_release_watch": {
+    "schema_version": "1.0",
+    "status": "SUPPORT_RELEASE_WATCH_COMPLETE",
+    "policy": {
+      "scientific_authority": false,
+      "primary_declared_release_endpoints_only": true,
+      "related_work_repository_links_are_not_watch_targets": true,
+      "release_surface_change_only_requests_recheck": true,
+      "release_watch_cannot_mark_support_qualified": true,
+      "release_watch_cannot_reopen_generator_or_problem_gate": true,
+      "release_watch_has_zero_source_exposure_effect": true,
+      "network_checks_are_cooldown_bounded": true,
+      "public_summary_excludes_urls_refs_required_units_and_private_paths": true
+    },
+    "summary": {
+      "support_holds": 4,
+      "explicit_release_targets": 2,
+      "no_explicit_endpoint": 2,
+      "checked": 2,
+      "skipped_cooldown": 0,
+      "provider_errors": 0,
+      "recheck_required": 0,
+      "support_qualified": 0,
+      "generator_reopen_authorized": 0,
+      "problem_gate_authorized": 0
+    },
+    "status_counts": {
+      "WAITING_RELEASE_ARTIFACTS": 1,
+      "BASELINE_CAPTURED": 1,
+      "NO_EXPLICIT_AUTHOR_RELEASE_ENDPOINT": 2
     },
     "scientific_authority": false
   }
