@@ -26,7 +26,7 @@ def rows(root,pattern,key):
 
 def manifest_sha(root):
     pairs=[]
-    for pattern in ('shadow-run-qualification.json','expand-*.json','error-expand-*.json','evolve-*.json','error-evolve-*.json','formulate-p*.json','error-formulate-*.json','review-p*.json','error-review-*.json','machine-audit.json','shadow-final-audit.json','shadow-terminal-current-source-gate.json','post-review-current-source-audit.json','current-source-receipt-*.json','problem-falsifier-support-inventory-request.json','problem-falsifier-preflight.json','frozen-primary-evidence-pool.json'):
+    for pattern in ('shadow-run-qualification.json','expand-*.json','error-expand-*.json','evolve-*.json','error-evolve-*.json','formulate-p*.json','error-formulate-*.json','review-p*.json','error-review-*.json','machine-audit.json','shadow-final-audit.json','shadow-terminal-current-source-gate.json','post-review-current-source-audit.json','current-source-receipt-*.json','problem-falsifier-support-inventory-request.json','problem-falsifier-support-inventory.json','problem-falsifier-preflight.json','frozen-primary-evidence-pool.json'):
         for path in sorted(root.glob(pattern)): pairs.append((path.name,hashlib.sha256(path.read_bytes()).hexdigest()))
     return hashlib.sha256(json.dumps(pairs,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
@@ -53,6 +53,12 @@ def _latest_shadow_run(root:Path)->dict:
     falsifier_request_summary=falsifier_request.get('summary') or {}
     falsifier_preflight=load(root/'problem-falsifier-preflight.json') if (root/'problem-falsifier-preflight.json').exists() else {}
     falsifier_summary=falsifier_preflight.get('summary') or {}
+    falsifier_inventory_path=root/'problem-falsifier-support-inventory.json'
+    falsifier_inventory_sha=str(falsifier_preflight.get('support_inventory_sha256') or '').strip().lower()
+    if falsifier_inventory_sha:
+        if not falsifier_inventory_path.exists():raise ValueError('problem falsifier preflight binds a missing support inventory')
+        actual_inventory_sha=hashlib.sha256(falsifier_inventory_path.read_bytes()).hexdigest()
+        if actual_inventory_sha!=falsifier_inventory_sha:raise ValueError('problem falsifier support inventory hash mismatch')
     bs=base.get('summary') or {};archives=base.get('archives') or {};by_id={r.get('seed_id'):r for r in base.get('unique_seeds') or [] if r.get('seed_id')}
     breadth=[by_id[s] for s in archives.get('breadth') or [] if s in by_id];distances=[1-_jaccard(breadth[i],breadth[j]) for i in range(len(breadth)) for j in range(i+1,len(breadth))]
     semantic_clear=[c for c in reviewed if (c.get('semantic_reduction_review') or {}).get('verdict')=='CLEAR']
@@ -68,7 +74,17 @@ def _latest_shadow_run(root:Path)->dict:
     expansion_successful=len(list(root.glob('expand-*-p*.json')));expansion_error_rows=[load(path) for path in root.glob('error-expand-*.json')];expansion_errors=len(expansion_error_rows);expansion_requested_shards=20
     expansion_parse_failures=sum(str(row.get('status') or '')=='PARSE_ERROR_ZERO_AUTHORITY' for row in expansion_error_rows)
     expansion_provider_failures=sum(str(row.get('status') or '').startswith('PROVIDER_') for row in expansion_error_rows)
-    evolution_calls=len(list(root.glob('evolve-*.json')))+len(list(root.glob('error-evolve-*.json')))
+    evolution_paths=list(root.glob('evolve-*.json'));evolution_error_paths=list(root.glob('error-evolve-*.json'))
+    evolution_calls=len(evolution_paths)+len(evolution_error_paths)
+    evolution_by_generation={1:{'requested':0,'valid':0},2:{'requested':0,'valid':0}}
+    for path in evolution_paths:
+        payload=load(path);match=re.search(r'evolve-g(\d+)-p\d+',path.name)
+        if not match:continue
+        generation=int(match.group(1));stats=evolution_by_generation.setdefault(generation,{'requested':0,'valid':0})
+        children=[row for row in payload.get('children') or [] if isinstance(row,dict)]
+        parent_ids=[value for value in payload.get('parent_ids') or [] if value]
+        stats['requested']+=int(payload.get('requested_children') or len(parent_ids) or len(children))
+        stats['valid']+=int(payload.get('valid_children') or len(children))
     formulation_calls=len(formulation_paths)+len(formulation_error_paths)
     generator_calls=expansion_successful+expansion_errors+evolution_calls+formulation_calls
     reviewer_calls=len(list(root.glob('review-p*.json')))+len(list(root.glob('error-review-*.json')))
@@ -88,6 +104,10 @@ def _latest_shadow_run(root:Path)->dict:
         'archive_lane_coverage':int(bs.get('archive_lane_coverage') or 0),
         'mean_archive_pairwise_distance':round(sum(distances)/len(distances),4) if distances else 0.0,
         'evolved_branches':len(evolved),
+        'evolution_g1_requested':int((evolution_by_generation.get(1) or {}).get('requested') or 0),
+        'evolution_g1_valid':int((evolution_by_generation.get(1) or {}).get('valid') or 0),
+        'evolution_g2_requested':int((evolution_by_generation.get(2) or {}).get('requested') or 0),
+        'evolution_g2_valid':int((evolution_by_generation.get(2) or {}).get('valid') or 0),
         'max_branch_depth':max([int(x.get('branch_depth') or 0) for x in evolved] or [0]),
         'formulation_requested_shards':formulation_requested_shards,
         'formulation_successful_shards':len(formulation_paths),
@@ -133,7 +153,7 @@ def _latest_shadow_run(root:Path)->dict:
     if source_set_sha and not re.fullmatch(r'[0-9a-f]{64}',source_set_sha):raise ValueError('shadow source-set provenance invalid')
     if not re.fullmatch(r'[0-9a-f]{64}',source_content_sha):raise ValueError('shadow primary-content provenance invalid')
     if source_pool_sha and not re.fullmatch(r'[0-9a-f]{64}',source_pool_sha):raise ValueError('shadow source-pool provenance invalid')
-    return {'schema_version':'1.2-shadow-run','run_id':run_id,'status':terminal_status,'generated_at':now(),'source_generated_at':source_generated_at,'source_set_sha256':source_set_sha,'source_primary_content_sha256':source_content_sha,'source_pool_sha256':source_pool_sha,'frozen_pool_sha256':frozen.get('frozen_pool_sha256'),'stage_manifest_sha256':manifest_sha(root),'stage_runner_required_schema':stage_runner_schema,'control_snapshot_sha256':control_snapshot_sha,'qualification_main_commit':str(qualification.get('main_commit') or ''),'scientific_authority':False,'policy':{'shadow_only':True,'canonical_primary_generator_queue_untouched':True,'live_source_coverage_effect':False,'fresh_primary_evidence_is_candidate_source_only':True,'source_identity_is_bounded_timestamp_and_sha_provenance':True,'execution_loss_is_not_scientific_negative':True,'control_snapshot_bound_run':control_bound,'control_snapshot_terminal_provenance_verified':control_terminal_verified,'control_snapshot_provenance_is_bounded_sha_only':True,'formulation_reduction_pending_is_not_scientific_block_or_pass':True,'machine_rechecks_reduction_pending_before_problem_falsifier':True,'problem_falsifier_preflight_must_cover_all_eligible_before_terminal_complete':True,'problem_falsifier_hold_is_not_scientific_fail':True,'current_source_web_receipt_required_after_semantic_clear':True,'missing_or_failed_current_source_reviewer_is_not_pass':True,'terminal_shadow_survivor_is_not_live_problem_gate_pass':True,'cannot_grant_live_paper_design_eligibility':True,'automatic_method_authority':False,'automatic_experiment_authority':False,'automatic_p0_authority':False,'automatic_gpu_authority':False},'summary':summary,'lane_counts':dict(base.get('lane_counts') or {}),'archive_lane_counts':dict(base.get('archive_lane_counts') or {}),'machine_blocker_counts':dict(Counter(v.split(':',1)[0] for row in machine.get('blocked') or [] for v in row.get('blockers') or [])),'candidates':candidate_rows,'authority':{'live_problem_gate':False,'paper_design':False,'method':False,'experiment':False,'p0':False,'gpu':False}}
+    return {'schema_version':'1.2-shadow-run','run_id':run_id,'status':terminal_status,'generated_at':now(),'source_generated_at':source_generated_at,'source_set_sha256':source_set_sha,'source_primary_content_sha256':source_content_sha,'source_pool_sha256':source_pool_sha,'frozen_pool_sha256':frozen.get('frozen_pool_sha256'),'stage_manifest_sha256':manifest_sha(root),'problem_falsifier_support_inventory_sha256':falsifier_inventory_sha,'stage_runner_required_schema':stage_runner_schema,'control_snapshot_sha256':control_snapshot_sha,'qualification_main_commit':str(qualification.get('main_commit') or ''),'scientific_authority':False,'policy':{'shadow_only':True,'canonical_primary_generator_queue_untouched':True,'live_source_coverage_effect':False,'fresh_primary_evidence_is_candidate_source_only':True,'source_identity_is_bounded_timestamp_and_sha_provenance':True,'execution_loss_is_not_scientific_negative':True,'control_snapshot_bound_run':control_bound,'control_snapshot_terminal_provenance_verified':control_terminal_verified,'control_snapshot_provenance_is_bounded_sha_only':True,'formulation_reduction_pending_is_not_scientific_block_or_pass':True,'machine_rechecks_reduction_pending_before_problem_falsifier':True,'problem_falsifier_preflight_must_cover_all_eligible_before_terminal_complete':True,'problem_falsifier_hold_is_not_scientific_fail':True,'problem_falsifier_support_inventory_hash_verified':bool(falsifier_inventory_sha),'current_source_web_receipt_required_after_semantic_clear':True,'missing_or_failed_current_source_reviewer_is_not_pass':True,'terminal_shadow_survivor_is_not_live_problem_gate_pass':True,'cannot_grant_live_paper_design_eligibility':True,'automatic_method_authority':False,'automatic_experiment_authority':False,'automatic_p0_authority':False,'automatic_gpu_authority':False},'summary':summary,'lane_counts':dict(base.get('lane_counts') or {}),'archive_lane_counts':dict(base.get('archive_lane_counts') or {}),'machine_blocker_counts':dict(Counter(v.split(':',1)[0] for row in machine.get('blocked') or [] for v in row.get('blockers') or [])),'candidates':candidate_rows,'authority':{'live_problem_gate':False,'paper_design':False,'method':False,'experiment':False,'p0':False,'gpu':False}}
 
 def publish_latest_run(root:Path):
     latest=_latest_shadow_run(root)

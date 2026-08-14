@@ -50,18 +50,25 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
 
     def test_r2_near_miss_preflight_compiles_into_future_shadow_search_memory(self) -> None:
         memory=self.state["shadow_dead_end_memory"]
-        rows={row["source_candidate_id"]:row for row in memory["blocked_objects"]}
+        rows=[row for row in memory["blocked_objects"] if str(row.get("basin") or "").startswith("near-miss-")]
+        by_candidate={}
+        for row in rows:
+            by_candidate.setdefault(row["source_candidate_id"],[]).append(row)
         self.assertEqual(memory["near_miss_base_preflight_count"],4)
         self.assertGreaterEqual(memory["near_miss_preflight_count"],4)
         self.assertEqual(self.state["summary"]["near_miss_support_holds"],1)
         self.assertEqual(self.state["summary"]["near_miss_current_primary_stops"],2)
         self.assertEqual(self.state["summary"]["near_miss_mature_theory_stops"],1)
-        self.assertEqual(rows["SHADOW-P03-C01"]["disposition"],"HOLD_SUPPORT_UNAVAILABLE")
-        self.assertEqual(rows["SHADOW-P09-C01"]["disposition"],"STOP_CURRENT_PRIMARY_COLLISION")
-        self.assertEqual(rows["SHADOW-P05-C01"]["disposition"],"STOP_MATURE_THEORY_REDUCTION")
-        self.assertEqual(rows["SHADOW-P12-C02"]["disposition"],"STOP_CURRENT_PRIMARY_COLLISION")
-        for cid in ("SHADOW-P03-C01","SHADOW-P09-C01","SHADOW-P05-C01","SHADOW-P12-C02"):
-            self.assertFalse(rows[cid]["scientific_authority"])
+        expected={
+            "SHADOW-P03-C01":"HOLD_SUPPORT_UNAVAILABLE",
+            "SHADOW-P09-C01":"STOP_CURRENT_PRIMARY_COLLISION",
+            "SHADOW-P05-C01":"STOP_MATURE_THEORY_REDUCTION",
+            "SHADOW-P12-C02":"STOP_CURRENT_PRIMARY_COLLISION",
+        }
+        for cid,disposition in expected.items():
+            matches=[row for row in by_candidate.get(cid,[]) if row.get("disposition")==disposition]
+            self.assertTrue(matches,f"missing persistent near-miss receipt {cid}:{disposition}")
+            self.assertTrue(all(row["scientific_authority"] is False for row in matches))
 
     def test_current_source_hard_veto_compiles_into_future_shadow_search_memory(self) -> None:
         memory=_shadow_dead_end_memory({"latest_run":{"candidates":[{"candidate_id":"SHADOW-X","title":"Retrieval attribution gap","search_primitive":"IDENTIFIABILITY_GAP","current_source_status":"complete","current_source_verdict":"BLOCK","current_source_reduction_class":"VALID_HARD_VETO","current_source_strongest_reduction":"generic identifiability over an omitted compiled-context variable","current_source_reason":"Current primary work already exposes retrieval and compilation as separate pipeline objects.","current_source_source_refs":["arXiv:2605.10114","arXiv:2608.05604"]}]}},prior_hard_veto_rows=[])

@@ -1,8 +1,9 @@
 {
-  "schema_version": "1.1",
-  "generated_at": "2026-08-14T07:05:17+00:00",
-  "run_id": "20260814T070455Z",
+  "schema_version": "1.2",
+  "generated_at": "2026-08-14T11:48:19+00:00",
+  "run_id": "20260814T114756Z",
   "status": "GLOBAL_RELATION_RECALL_COMPLETE",
+  "scientific_authority": false,
   "policy": {
     "scientific_authority": false,
     "source_coverage_exhaustion_is_not_relation_exhaustion": true,
@@ -15,6 +16,8 @@
     "all_lane_pass_proposals_require_reduction_review": true,
     "relation_universe_digest_prevents_repeat_model_calls": true,
     "same_relation_universe_reuses_portable_completed_scan": true,
+    "stale_completed_scan_uses_delta_only_new_endpoint_pairs": true,
+    "delta_only_scan_forbids_old_old_pairs": true,
     "pair_relation_budgets": {
       "CONTRADICTION": 5,
       "CONVERGENT_FAILURE": 5,
@@ -33,7 +36,8 @@
     "automatic_problem_gate_authority": false,
     "automatic_method_authority": false,
     "automatic_experiment_authority": false,
-    "automatic_p0_authority": false
+    "automatic_p0_authority": false,
+    "explicit_manual_writer_admission_required": true
   },
   "models": {
     "relation": "ark-code-latest",
@@ -41,140 +45,63 @@
     "reduction": "deepseek-v4-flash"
   },
   "relation_coverage": {
-    "receipt_runs": 18,
-    "reviewed_receipt_sources": 226,
-    "possible_source_pairs": 25425,
-    "coobserved_source_pairs": 5730,
-    "pair_coverage_fraction": 0.2254,
-    "single_exposure_sources": 123,
+    "receipt_runs": 19,
+    "reviewed_receipt_sources": 228,
+    "possible_source_pairs": 25878,
+    "coobserved_source_pairs": 5952,
+    "pair_coverage_fraction": 0.23,
+    "single_exposure_sources": 112,
     "minimum_coobserved_neighbors": 31,
-    "median_coobserved_neighbors": 31,
-    "maximum_coobserved_neighbors": 225,
+    "median_coobserved_neighbors": 39,
+    "maximum_coobserved_neighbors": 227,
     "pairwise_coobservation_complete": false,
     "relation_blind_spot_detected": true,
-    "relation_universe_digest": "fff32b96a52efc3a4c109b97e1163772f3e7a717c65fab8feae78831c4a6af9c",
+    "relation_universe_digest": "37385777d0b81d808603c387dc8f30f5b374701ac53fd4a0de2903cf32301914",
     "search_control_only": true,
+    "scientific_authority": false
+  },
+  "delta_scan": {
+    "enabled": true,
+    "required_new_endpoint_count": 2,
+    "required_new_endpoint_digest": "d588c77c59ba846d6b194785e9f51a393ede44c2cc593fe67aa3b733257d4147",
+    "prior_scan_run_id": "20260814T070455Z",
     "scientific_authority": false
   },
   "raw_artifacts": {
     "relation": {
-      "sha256": "64cd87aca917a41b75b9aeabd1500fa1ad67a2ab6955937f38a1b909a2d82053",
+      "sha256": "7dcef7d0077802f7678f0e5d7d82dc07f0cc0762a1cc07454669246c649f0e73",
       "requested_model": "ark-code-latest",
       "resolved_model": "doubao-seed-evolving"
-    },
-    "lane_review": {
-      "sha256": "3f30a33f51bfb2112a679d5973d0ecfd8d1da240dbe7ce8658b21f9bb8b0d9d0",
-      "requested_model": "glm-5.2",
-      "resolved_model": "glm-5-2-260617"
-    },
-    "reduction_review": {
-      "sha256": "808663e95e2dfaf9604e542ddb5a6ebf72f8856084d97cc82c0bd1294165ff9f",
-      "requested_model": "deepseek-v4-flash",
-      "resolved_model": "deepseek-v4-flash-ga-260731"
     }
   },
-  "proposals": [
-    {
-      "proposal_id": "REL-ASSUMPTION_BREAK-1",
-      "lane": "ASSUMPTION_BREAK",
-      "source_refs": [
-        "arXiv:2607.03691",
-        "arXiv:2607.12227"
-      ],
-      "previously_coobserved": false,
-      "lane_verdict": "FAIL",
-      "reduction_verdict": "",
-      "matched_patterns": [],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    },
-    {
-      "proposal_id": "REL-ASSUMPTION_BREAK-2",
-      "lane": "ASSUMPTION_BREAK",
-      "source_refs": [
-        "arXiv:2607.05202",
-        "arXiv:2607.12227"
-      ],
-      "previously_coobserved": false,
-      "lane_verdict": "FAIL",
-      "reduction_verdict": "",
-      "matched_patterns": [],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    },
-    {
-      "proposal_id": "REL-ASSUMPTION_BREAK-3",
-      "lane": "ASSUMPTION_BREAK",
-      "source_refs": [
-        "arXiv:2606.20318",
-        "arXiv:2607.12227"
-      ],
-      "previously_coobserved": false,
-      "lane_verdict": "FAIL",
-      "reduction_verdict": "",
-      "matched_patterns": [],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    },
-    {
-      "proposal_id": "REL-ASSUMPTION_BREAK-4",
-      "lane": "ASSUMPTION_BREAK",
-      "source_refs": [
-        "arXiv:2607.26598",
-        "arXiv:2607.13083"
-      ],
-      "previously_coobserved": false,
-      "lane_verdict": "PASS",
-      "reduction_verdict": "REDUCIBLE",
-      "matched_patterns": [
-        "feedback-polarity-by-update-surface",
-        "harness-update-scope-heterogeneity"
-      ],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    },
-    {
-      "proposal_id": "REL-ASSUMPTION_BREAK-5",
-      "lane": "ASSUMPTION_BREAK",
-      "source_refs": [
-        "arXiv:2608.11654",
-        "arXiv:2608.07622"
-      ],
-      "previously_coobserved": true,
-      "lane_verdict": "PASS",
-      "reduction_verdict": "REDUCIBLE",
-      "matched_patterns": [
-        "durable-runtime-improvement-vs-aging",
-        "procedural-memory-nonmonotonicity"
-      ],
-      "focused_problem_generator_reopen_required": false,
-      "scientific_authority": false
-    }
-  ],
+  "proposals": [],
   "last_completed_scan": {
-    "run_id": "20260814T070455Z",
-    "relation_universe_digest": "fff32b96a52efc3a4c109b97e1163772f3e7a717c65fab8feae78831c4a6af9c",
+    "run_id": "20260814T114756Z",
+    "mode": "delta_only_new_endpoint",
+    "prior_scan_run_id": "20260814T070455Z",
+    "required_new_endpoint_count": 2,
+    "relation_universe_digest": "37385777d0b81d808603c387dc8f30f5b374701ac53fd4a0de2903cf32301914",
     "relation_coverage": {
-      "reviewed_receipt_sources": 226,
-      "possible_source_pairs": 25425,
-      "coobserved_source_pairs": 5730,
-      "pair_coverage_fraction": 0.2254
+      "reviewed_receipt_sources": 228,
+      "possible_source_pairs": 25878,
+      "coobserved_source_pairs": 5952,
+      "pair_coverage_fraction": 0.23
     },
     "summary": {
-      "reviewed_receipt_sources": 226,
-      "cached_reviewed_sources": 226,
+      "reviewed_receipt_sources": 228,
+      "cached_reviewed_sources": 228,
       "cache_completeness_fraction": 1.0,
-      "possible_source_pairs": 25425,
-      "coobserved_source_pairs": 5730,
-      "pair_coverage_fraction": 0.2254,
+      "possible_source_pairs": 25878,
+      "coobserved_source_pairs": 5952,
+      "pair_coverage_fraction": 0.23,
       "relation_blind_spot_detected": true,
-      "relation_universe_digest": "fff32b96a52efc3a4c109b97e1163772f3e7a717c65fab8feae78831c4a6af9c",
-      "relation_proposals": 5,
-      "unseen_relation_proposals": 4,
-      "lane_pass": 2,
-      "unseen_lane_pass": 1,
-      "reduction_reviewed": 2,
-      "reducible": 2,
+      "relation_universe_digest": "37385777d0b81d808603c387dc8f30f5b374701ac53fd4a0de2903cf32301914",
+      "relation_proposals": 0,
+      "unseen_relation_proposals": 0,
+      "lane_pass": 0,
+      "unseen_lane_pass": 0,
+      "reduction_reviewed": 0,
+      "reducible": 0,
       "not_reduced": 0,
       "focused_problem_generator_reopen_required": false,
       "scientifically_authorized": 0
@@ -187,23 +114,53 @@
     "scientific_authority": false
   },
   "summary": {
-    "reviewed_receipt_sources": 226,
-    "cached_reviewed_sources": 226,
+    "reviewed_receipt_sources": 228,
+    "cached_reviewed_sources": 228,
     "cache_completeness_fraction": 1.0,
-    "possible_source_pairs": 25425,
-    "coobserved_source_pairs": 5730,
-    "pair_coverage_fraction": 0.2254,
+    "possible_source_pairs": 25878,
+    "coobserved_source_pairs": 5952,
+    "pair_coverage_fraction": 0.23,
     "relation_blind_spot_detected": true,
-    "relation_universe_digest": "fff32b96a52efc3a4c109b97e1163772f3e7a717c65fab8feae78831c4a6af9c",
-    "relation_proposals": 5,
-    "unseen_relation_proposals": 4,
-    "lane_pass": 2,
-    "unseen_lane_pass": 1,
-    "reduction_reviewed": 2,
-    "reducible": 2,
+    "relation_universe_digest": "37385777d0b81d808603c387dc8f30f5b374701ac53fd4a0de2903cf32301914",
+    "relation_proposals": 0,
+    "unseen_relation_proposals": 0,
+    "lane_pass": 0,
+    "unseen_lane_pass": 0,
+    "reduction_reviewed": 0,
+    "reducible": 0,
     "not_reduced": 0,
     "focused_problem_generator_reopen_required": false,
     "scientifically_authorized": 0
   },
-  "scientific_authority": false
+  "writer_admission": {
+    "schema_version": "1.0",
+    "status": "ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN",
+    "policy": {
+      "scientific_authority": false,
+      "automatic_model_scan_authority": false,
+      "manual_execution_requires_explicit_operator_flag": true,
+      "manual_eligibility_is_not_scientific_authority": true,
+      "relation_scan_cannot_authorize_problem_gate": true,
+      "relation_scan_cannot_authorize_method_experiment_p0_gpu": true,
+      "preconditions_are_deterministic_search_control_only": true
+    },
+    "summary": {
+      "new_assumption_sources": 0,
+      "failed": 0,
+      "current_reviewed_sources": 228,
+      "new_empirical_sources": 2,
+      "passed": 15,
+      "new_boundary_sources": 0,
+      "automatic_model_scan_authorized": false,
+      "new_failure_sources": 2,
+      "manual_scan_eligible": true,
+      "new_reviewed_sources": 2,
+      "last_scanned_sources": 226,
+      "checks": 15
+    },
+    "failed_check_count": 0,
+    "freshness_status": "STALE_RELATION_UNIVERSE",
+    "delta_status": "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE",
+    "scientific_authority": false
+  }
 }

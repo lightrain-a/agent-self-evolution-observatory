@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import tempfile
 import unittest
@@ -52,7 +53,9 @@ class SearchPortfolioPublishTest(unittest.TestCase):
             (run/"formulate-p1.json").write_text(json.dumps({"branch_ids":["B1","B2"],"candidates":[{},{}],"reduction_pending":[{}],"rejected":[{}]}),encoding="utf-8")
             (run/"error-formulate-p2-provider-deadbeef.json").write_text(json.dumps({"status":"PROVIDER_TIMEOUT_ZERO_AUTHORITY","branch_ids":["B3","B4"],"scientific_authority":False}),encoding="utf-8")
             (run/"problem-falsifier-support-inventory-request.json").write_text(json.dumps({"status":"PROBLEM_FALSIFIER_SUPPORT_INVENTORY_REQUEST_READY","summary":{"queued":4,"inventory_requests":4},"scientific_authority":False}),encoding="utf-8")
-            (run/"problem-falsifier-preflight.json").write_text(json.dumps({"status":"PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE","summary":{"queued":4,"support_qualified":0,"hold_support_unavailable":4,"falsifier_executed":0},"scientific_authority":False}),encoding="utf-8")
+            inventory_path=run/"problem-falsifier-support-inventory.json";inventory_path.write_text(json.dumps({"inventory_origin":"test-primary-release-audit","rows":[]}),encoding="utf-8")
+            inventory_text=inventory_path.read_text();inventory_sha=hashlib.sha256(inventory_path.read_bytes()).hexdigest()
+            (run/"problem-falsifier-preflight.json").write_text(json.dumps({"status":"PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE","support_inventory_sha256":inventory_sha,"summary":{"queued":4,"support_qualified":0,"hold_support_unavailable":4,"falsifier_executed":0},"scientific_authority":False}),encoding="utf-8")
             gen_json=root/"shadow-generator.json";gen_js=root/"shadow-generator.js";queue_json=root/"shadow-queue.json";queue_js=root/"shadow-queue.js"
             gen_json.write_text(json.dumps({"schema_version":"3.2-shadow-import","run_id":"r1","scientific_authority":False,"policy":{"shadow_only":True},"candidates":[{"candidate_id":"SP-09","historical_counterfactual_problem_gate_pass":True}]}),encoding="utf-8")
             queue_json.write_text(json.dumps({"schema_version":"1.0-shadow-import","scientific_authority":False,"policy":{"shadow_only":True,"cannot_mutate_canonical_queue":True},"historical_counterfactual_pass_ids":["SP-09","SP-15"]}),encoding="utf-8")
@@ -60,6 +63,10 @@ class SearchPortfolioPublishTest(unittest.TestCase):
                 publisher.publish(run)
                 live_queue.assert_not_called()
             state=json.loads(gen_json.read_text());shadow_queue=json.loads(queue_json.read_text())
+            inventory_path.write_text("{}",encoding="utf-8")
+            with self.assertRaisesRegex(ValueError,"support inventory hash mismatch"):
+                publisher._latest_shadow_run(run)
+            inventory_path.write_text(inventory_text,encoding="utf-8")
             terminal_path=run/"shadow-terminal-current-source-gate.json";terminal_payload=json.loads(terminal_path.read_text());terminal_payload["control_snapshot_sha256"]="e"*64;terminal_path.write_text(json.dumps(terminal_payload),encoding="utf-8")
             with self.assertRaisesRegex(ValueError,"control mismatch:shadow-terminal-current-source-gate"):
                 publisher._latest_shadow_run(run)
@@ -81,6 +88,7 @@ class SearchPortfolioPublishTest(unittest.TestCase):
         self.assertTrue(latest["policy"]["control_snapshot_provenance_is_bounded_sha_only"])
         self.assertEqual((latest["summary"]["raw_seeds"],latest["summary"]["semantic_unique"],latest["summary"]["semantic_clear"],latest["summary"]["current_source_blocked"],latest["summary"]["terminal_shadow_survivors"]),(101,54,1,1,0))
         self.assertEqual(latest["summary"]["live_paper_design_eligible"],0)
+        self.assertEqual((latest["summary"]["evolution_g1_requested"],latest["summary"]["evolution_g1_valid"],latest["summary"]["evolution_g2_requested"],latest["summary"]["evolution_g2_valid"]),(2,2,0,0))
         self.assertEqual((latest["summary"]["formulation_requested_shards"],latest["summary"]["formulation_successful_shards"],latest["summary"]["formulation_provider_failures"],latest["summary"]["formulation_requested_branches"],latest["summary"]["formulation_successful_branches"],latest["summary"]["formulation_execution_censored_branches"]),(2,1,1,4,2,2))
         self.assertEqual((latest["summary"]["formulated_candidates"],latest["summary"]["formulation_reduction_pending"],latest["summary"]["formulation_rejected"],latest["summary"]["machine_reduction_pending"],latest["summary"]["machine_reduction_blocked"]),(2,1,1,4,8))
         self.assertEqual((latest["summary"]["problem_falsifier_eligible"],latest["summary"]["problem_falsifier_inventory_requested"],latest["summary"]["problem_falsifier_support_qualified"],latest["summary"]["problem_falsifier_hold_support_unavailable"],latest["summary"]["problem_falsifier_executed"]),(4,4,0,4,0))
@@ -89,6 +97,8 @@ class SearchPortfolioPublishTest(unittest.TestCase):
         self.assertTrue(latest["policy"]["machine_rechecks_reduction_pending_before_problem_falsifier"])
         self.assertTrue(latest["policy"]["problem_falsifier_preflight_must_cover_all_eligible_before_terminal_complete"])
         self.assertTrue(latest["policy"]["problem_falsifier_hold_is_not_scientific_fail"])
+        self.assertTrue(latest["policy"]["problem_falsifier_support_inventory_hash_verified"])
+        self.assertEqual(latest["problem_falsifier_support_inventory_sha256"],inventory_sha)
         current_block=next(row for row in latest["candidates"] if row["candidate_id"]=="S3")
         self.assertEqual(current_block["current_source_strongest_reduction"],"generic identifiability over an explicit omitted pipeline variable")
         self.assertEqual(current_block["current_source_source_refs"],["arXiv:2605.10114","arXiv:2608.05604"])

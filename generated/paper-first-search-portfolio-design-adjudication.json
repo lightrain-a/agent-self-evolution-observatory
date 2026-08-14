@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T05:41:41+00:00",
+  "generated_at": "2026-08-14T15:17:22+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -44,7 +44,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-14T05:41:41+00:00",
+    "generated_at": "2026-08-14T15:17:22+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -182,8 +182,8 @@
       "support_unavailable_is_a_reopenable_hold_not_scientific_failure": true,
       "canonical_generator_and_queue_untouched": true
     },
-    "last_ingested_run_id": "shadow-20260814-r4b",
-    "last_ingested_stage_manifest_sha256": "efd3b54902fd5b514bf7caf90ba14daae055cbabd44121ba8ba2c23fe38eb775",
+    "last_ingested_run_id": "shadow-auto-a0ea279fac5b4997",
+    "last_ingested_stage_manifest_sha256": "5dd78e11f1c638bf97cfec2d81e779791c020f2cb14f99ed10c904df8373d2fd",
     "receipts": [
       {
         "run_id": "shadow-20260814-r4b",
@@ -192,6 +192,15 @@
         "hard_veto_added": 0,
         "semantic_blocker_added": 0,
         "support_hold_added": 4,
+        "scientific_authority": false
+      },
+      {
+        "run_id": "shadow-auto-a0ea279fac5b4997",
+        "stage_manifest_sha256": "5dd78e11f1c638bf97cfec2d81e779791c020f2cb14f99ed10c904df8373d2fd",
+        "terminal_generated_at": "2026-08-14T15:17:16+00:00",
+        "hard_veto_added": 0,
+        "semantic_blocker_added": 0,
+        "support_hold_added": 9,
         "scientific_authority": false
       }
     ],
@@ -463,6 +472,89 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "SHADOW-P07-C01",
+        "basin": "near-miss-terminal-support-hold-0ed1a365aa5e6fc4",
+        "title": "Small-n verification collapse as a longitudinal emergence threshold in harness gene-bank evolution",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "Released HarnessBank paired deployment outcomes or saved gene-bank histories exposing credited train-cell gain, deployment effect, variance and pairing covariance, candidate count, screening budget, selection pressure/evolutionary provenance, and deployment sample-size information sufficient to compare the gene-bank pipeline with a size-matched non-evolutionary sampler and sweep the verification threshold around n=26.",
+        "evidence_basis": [
+          "arXiv:2607.13683"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "Canonical HarnessBank/gene-bank fulltext SHA256 74082edc56e911da43e9b70b8eeaf4d6552b8fea7e15b7a0ab00d4c20aff2997 states that code will be publicly available upon acceptance. The cached primary source declares no currently usable author repository or released logged outcomes. No canonical private artifact with the frozen paired outcomes was found. Therefore the small-n versus selection-pressure decomposition cannot be executed from existing units; absence of those units is a support HOLD, not evidence for or against the proposed mechanism.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: Small-n verification collapse as a longitudinal emergence threshold in harness gene-bank evolution",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "The authors release HarnessBank code together with the relevant paired run histories/outcomes, or a provenance-audited existing canonical local artifact is found containing the exact train/deployment/selection-pressure units required by the frozen comparison.",
+        "source_run_id": "shadow-auto-a0ea279fac5b4997",
+        "source_stage_manifest_sha256": "5dd78e11f1c638bf97cfec2d81e779791c020f2cb14f99ed10c904df8373d2fd",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P03-C01",
+        "basin": "near-miss-terminal-support-hold-0fed5a9f06d18bc0",
+        "title": "Verification-gated promotion states for embodied persistent units under cross-task outcome inconsistency",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "A provenance-audited matched candidate table from the reported embodied setting containing aggregate accuracy, per-family session-verified success, candidate type, diversity, mean single-candidate success, verifier availability, compute budget, and the corresponding persistent promotion/global-conditional-block decision for the same candidate units.",
+        "evidence_basis": [
+          "arXiv:2607.16636",
+          "arXiv:2608.11350"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "Canonical fulltexts are SHA256 69f1188f7a6d04ab46ea7a55a15ffdc192637210117349014837785b5faf35e9 (PhyAgentOS) and b03c9040d0bcc6148ceb8e89a4a0c5a635e88700179eba8b3a238ce90d7e5011 (train-free skill-harness evolution). The second source declares no author code/data endpoint in the cached primary text. PhyAgentOS declares github.com/PhyAgentOS/PhyAgentOS, but the single unauthenticated clone audit failed with HTTP credential-style access (repository not publicly retrievable in this environment); it was not retried. Neither canonical local artifacts nor a public author release expose the matched candidate/session-log table required by the frozen falsifier.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: Verification-gated promotion states for embodied persistent units under cross-task outcome inconsistency",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "The authors release, or an already completed provenance-audited canonical local artifact contains, the reported candidate-level aggregate and family-verified session outcomes plus candidate metadata needed to reproduce the same-information promotion comparison without new GPU experimentation.",
+        "source_run_id": "shadow-auto-a0ea279fac5b4997",
+        "source_stage_manifest_sha256": "5dd78e11f1c638bf97cfec2d81e779791c020f2cb14f99ed10c904df8373d2fd",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P01-C01",
+        "basin": "near-miss-terminal-support-hold-3da7b74b3db816c3",
+        "title": "Provenance-retention threshold in verified memory consolidation and unsafe success persistence",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "Matched consolidated successful trajectory units with identical procedure text, retrieval accuracy, task-success evidence, model/task conditions, and later-use setting, but different retained source/counterfactual/verification provenance; each unit must expose later unsafe carryover plus rejection/repair outcome so provenance restoration alone can be tested.",
+        "evidence_basis": [
+          "arXiv:2608.12428",
+          "arXiv:2608.12851"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "RECHECKED_RELEASE_IRRELEVANT. Canonical fulltexts are SHA256 79a9c92991d928c4d8e4629a4a71ea8c92d2c56f8fe81e3a4a5ba6822f4b3a32 (MindMemOS) and 88f6f8078cb227fda7846d509652891cf2aa397214cb7783bd24db5d264c134d (SkillMisevo). Author repos were audited once at MindMemOS HEAD 90491828726e1540442b17cd445d0308d0b8093c and misevolve HEAD 766f9c4761933c4bb214811042bc4dcbf895db1d. MindMemOS exposes code/config/eval machinery and aggregate Dreaming results, not matched provenance-stratified trajectory outcomes; its eval docs also state the current CLI cannot reproduce the full Add→Dreaming→Answer/Search→Score main-table path by configuration alone. misevolve releases episode definitions and writers but its results directory contains only .gitkeep, not scored run trajectories. No frozen required unit exists.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: Provenance-retention threshold in verified memory consolidation and unsafe success persistence",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "An author-primary release or provenance-audited canonical local run exposes matched successful trajectory units with retained-provenance variants, fixed procedure/retrieval/task-success evidence, and later unsafe carryover plus rejection/repair outcomes sufficient to run the frozen same-information falsifier without inventing new support.",
+        "source_run_id": "shadow-auto-a0ea279fac5b4997",
+        "source_stage_manifest_sha256": "5dd78e11f1c638bf97cfec2d81e779791c020f2cb14f99ed10c904df8373d2fd",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "SHADOW-P06-C01",
         "basin": "near-miss-terminal-support-hold-4cc07103f45102ff",
         "title": "SOP-mediated nonadditivity of episodic memory and state-graph updates in interactive-agent harness evolution",
@@ -517,6 +609,89 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "SHADOW-P06-C01",
+        "basin": "near-miss-terminal-support-hold-80d4a3d249c42e0e",
+        "title": "Coverage-note starvation under selective evidence access in document agents",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "Query-level DocAtlas records on an answerable/unanswerable document benchmark containing the fixed retrieved/read page set, final note contents, coverage/negative-evidence annotations or reconstructible page coverage, note/context budget, final answer/outcome, and enough matched same-positive-evidence units to compare coverage-preserving versus positive-biased notes without changing retrieval.",
+        "evidence_basis": [
+          "arXiv:2608.07527"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "RECHECKED_RELEASE_IRRELEVANT. Canonical DocAtlas fulltext SHA256 dff07ace568986e957e6eb2d2f995938fd20dedc6d052d0eaa7e1f6813ca09d2 was audited together with its author-declared project page, captured once at SHA256 556610b2fb49423f0e7c53d410ba7a56f01de0b28b50c58e74db909587a158e6. The project page's Code control is disabled and it exposes illustrative trajectory case images/descriptions, not downloadable query-level Search/Read/Note/Review records. No released unit binds retrieved pages, final notes, answerability label, budget, and outcome as required by the frozen same-information test.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: Coverage-note starvation under selective evidence access in document agents",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "The DocAtlas authors release query-level trajectory/evaluation records with retrieved/read pages, final notes, answerable/unanswerable labels, budgets, and outcomes sufficient to construct the frozen matched coverage-note comparison.",
+        "source_run_id": "shadow-auto-a0ea279fac5b4997",
+        "source_stage_manifest_sha256": "5dd78e11f1c638bf97cfec2d81e779791c020f2cb14f99ed10c904df8373d2fd",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P12-C01",
+        "basin": "near-miss-terminal-support-hold-864cfe34e986b160",
+        "title": "Counterfactual state-clamping decomposition of hindsight-skill distillation in mutable document environments",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "Jointly compatible SEED/DocAtlas replay units exposing the same current document state, action candidates, token budget, retrieved content, original versus skill-induced future document states, notes/tree annotations/search results, skill absent/present rescoring, and outcomes needed to materialize the four A/B/C/D state-clamping cells without generating new trajectories.",
+        "evidence_basis": [
+          "arXiv:2607.14777",
+          "arXiv:2608.07527"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "RECHECKED_RELEASE_IRRELEVANT. SEED canonical fulltext SHA256 31bf76e8aa8dbcb587b48ceb3a96fb64e26315ad4e6424459c1604df783c7cda and author repo HEAD 2cf2fadca3c5aba28da68e8e1405182ba8d90e6c were audited: the release contains on-policy trajectory/distillation code and several benchmark environments, but not DocAtlas mutable-document state-clamping records. DocAtlas canonical fulltext SHA256 dff07ace568986e957e6eb2d2f995938fd20dedc6d052d0eaa7e1f6813ca09d2 and project page SHA256 556610b2fb49423f0e7c53d410ba7a56f01de0b28b50c58e74db909587a158e6 expose no downloadable code/log package. SEED trajectories from other environments cannot substitute for the frozen same-information mutable-document unit.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: Counterfactual state-clamping decomposition of hindsight-skill distillation in mutable document environments",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "An author-primary DocAtlas/SEED-compatible release or already completed provenance-audited canonical artifact provides the four-cell mutable-document replay units with original/induced states and skill absent/present rescoring under matched observations and budget.",
+        "source_run_id": "shadow-auto-a0ea279fac5b4997",
+        "source_stage_manifest_sha256": "5dd78e11f1c638bf97cfec2d81e779791c020f2cb14f99ed10c904df8373d2fd",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P09-C01",
+        "basin": "near-miss-terminal-support-hold-9521c92644fee245",
+        "title": "Skill-induced attention lock-in during iterative mechanistic memory refinement",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "AGMR-compatible unit-level refinement records containing labeled flawed-procedure-supporting and correct-procedure-supporting memory segments, a misleading/corrected/no-skill condition, identical execution outcomes across matched refinement arms, per-segment retrieval-head attention share, refinement action, and error-localization signal over repeated rounds.",
+        "evidence_basis": [
+          "arXiv:2607.17621",
+          "arXiv:2608.12428"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "RECHECKED_RELEASE_IRRELEVANT. Canonical AGMR fulltext SHA256 a18b0aa7033f8022f90dd0896e73cf07c9c92a7a067a18478e6088cc3b25475c and MindMemOS fulltext SHA256 79a9c92991d928c4d8e4629a4a71ea8c92d2c56f8fe81e3a4a5ba6822f4b3a32 were audited. AGMR declares an anonymous.4open.science code URL, but the one-shot author-declared endpoint audit returned HTTP 401 and was not retried; the paper itself reports aggregate utilization/refinement behavior, not the frozen three-arm labeled segment units. MindMemOS HEAD 90491828726e1540442b17cd445d0308d0b8093c exposes memory/refinement code but not AGMR attention/utilization trajectories. Raw ETO-style initial trajectories cannot substitute for the required labeled attention/refinement records.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: Skill-induced attention lock-in during iterative mechanistic memory refinement",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "An author-primary AGMR release exposes the unit-level attention/utilization and refinement traces needed to label flawed versus correct procedure segments under matched skill conditions, or an already completed provenance-audited canonical local run contains those exact records.",
+        "source_run_id": "shadow-auto-a0ea279fac5b4997",
+        "source_stage_manifest_sha256": "5dd78e11f1c638bf97cfec2d81e779791c020f2cb14f99ed10c904df8373d2fd",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "SHADOW-P04-C01",
         "basin": "near-miss-terminal-support-hold-a7d9bd58ddeb6aa2",
         "title": "Confidence-calibrated discrete aggregation as the moderator of diversity’s MCQ sign reversal in SKIMIX math tasks",
@@ -536,6 +711,61 @@
         "reopen_only_if": "A primary/author release exposes candidate-level MCQ answers and confidence or reliability signals for the reported SKIMIX runs, or a frozen exact-reproduction package is released that can regenerate those units without changing the candidate pool.",
         "source_run_id": "shadow-20260814-r4b",
         "source_stage_manifest_sha256": "efd3b54902fd5b514bf7caf90ba14daae055cbabd44121ba8ba2c23fe38eb775",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P11-C01",
+        "basin": "near-miss-terminal-support-hold-bbc88daa02a570b7",
+        "title": "Frozen-skill routing collapse under co-evolutionary selection",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "A matched four-cell co-adaptation checkpoint dataset for each required setting with both evolving, both frozen, router frozen/skills evolving, and skills frozen/router evolving; each unit must bind total updates, library size, router capacity/age, evaluation tasks, router selection distribution, selected skill identities, applicability/execution success, mismatch measure, and final task performance.",
+        "evidence_basis": [
+          "arXiv:2607.22529",
+          "arXiv:2608.12720"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "RECHECKED_RELEASE_IRRELEVANT. Skill-SP canonical fulltext SHA256 9f4aa516220cb30d62990d63398ad3c5c28aea3633a6b1b374eb980eedc309ab and author repo HEAD bb693c89fee66e1f824d6a777759a49b7a295a83 were audited. The repo bundles benchmark data and skill packages but not the frozen four-cell partial-freeze result units; released launchers assume eight visible GPUs, so generating the missing arms would be a new GPU experiment and is prohibited by current authority. ERSkill canonical fulltext SHA256 018906026616cd95dfd028e348e45537d4a3f7a99d87b2ad56bde293ba05efb4 declares no author implementation/result endpoint in the cached primary text. Cross-setting exact support is therefore unavailable.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: Frozen-skill routing collapse under co-evolutionary selection",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "Author-primary Skill-SP and ERSkill artifacts expose completed matched four-cell router/skill freeze results with routing/applicability logs, or provenance-audited already-completed canonical local runs with those exact cells become available; no new GPU launch is authorized by this HOLD.",
+        "source_run_id": "shadow-auto-a0ea279fac5b4997",
+        "source_stage_manifest_sha256": "5dd78e11f1c638bf97cfec2d81e779791c020f2cb14f99ed10c904df8373d2fd",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P05-C01",
+        "basin": "near-miss-terminal-support-hold-bda745d7ee214756",
+        "title": "Skill-population turnover as the delayed trigger of metric-validity collapse after an initial gain",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "Saved post-warm-up metric-skill co-evolution histories under matched seeds/budgets that expose per-cycle anchor state, locked-set validity, always-pass rate, task score, skill births/retirements/replacements, lineage overlap, output diversity, and enough completed high-turnover versus low-turnover arms to test collapse timing without launching new evolution runs.",
+        "evidence_basis": [
+          "arXiv:2607.12790"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "RECHECKED_RELEASE_IRRELEVANT. Canonical fulltext SHA256 a10f0a0904a31cd3e4f5810216c0fb398758f5a3c26ac0a86a60dc28492481ff and author repo amazon-science/Self-Evolving-Agents-Double-Ratchet HEAD 0f14e910d361196422d9b938f45280919952d4fd were audited. The release explicitly states that no datasets, model outputs, run logs, or result files are included. It provides code that can generate round-by-round histories, but code-generatability is not an existing unit. The frozen falsifier requires paired completed high/low-turnover histories after anchor removal; those units are absent, and creating them would be a new experiment rather than support qualification.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: Skill-population turnover as the delayed trigger of metric-validity collapse after an initial gain",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "An author-primary release publishes the completed round-by-round co-evolution histories/results needed for matched turnover analysis, or an already completed provenance-audited canonical local run with the frozen arms is discovered; code-only reproducibility is insufficient.",
+        "source_run_id": "shadow-auto-a0ea279fac5b4997",
+        "source_stage_manifest_sha256": "5dd78e11f1c638bf97cfec2d81e779791c020f2cb14f99ed10c904df8373d2fd",
         "automatic_problem_gate_authority": false,
         "automatic_method_authority": false,
         "automatic_experiment_authority": false,
@@ -569,6 +799,34 @@
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
         "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P10-C01",
+        "basin": "near-miss-terminal-support-hold-eaecb2b207d5a0ba",
+        "title": "Small-n lineage promotion under train-test ranking disagreement in harness gene banks",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
+        "required_unit": "A HarnessBank provenance snapshot containing train-screened effects, held-out deployment/GDPval scores, uncertainty or bootstrap intervals, lineage coordinates, allowed recombination parents, and realized next-round outcomes for the same gene units, sufficient to form groups with indistinguishable immediate summaries but different future lineage actions.",
+        "evidence_basis": [
+          "arXiv:2607.13683",
+          "arXiv:2608.13560"
+        ],
+        "strongest_reduction": "the proposed residual remains unsupported until the frozen same-information falsifier can be executed on released or provenance-audited units",
+        "reason": "RECHECKED_RELEASE_IRRELEVANT. HarnessBank canonical fulltext SHA256 74082edc56e911da43e9b70b8eeaf4d6552b8fea7e15b7a0ab00d4c20aff2997 promises future code upon acceptance and exposes no current author run snapshot. AutoDesign canonical fulltext SHA256 f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417 and author repo HEAD de85750ff4c195732a17225322f3c8c57833e5a4 were audited: it releases design-harness code, benchmark manifests, demos, and optimization descriptions, but it is a different system and does not expose the HarnessBank gene lineage/GDPval/bootstrap/recombination-parent table required here. Its release surface cannot substitute for the frozen unit.",
+        "avoid": [
+          "re-proposing the unsupported problem object without the required released unit: Small-n lineage promotion under train-test ranking disagreement in harness gene banks",
+          "manufacturing synthetic support that bakes the candidate mechanism into the data",
+          "treating absence of released matched units as scientific evidence for or against the candidate"
+        ],
+        "reopen_only_if": "The HarnessBank authors release a provenance-bearing gene-bank snapshot with train/held-out/uncertainty/lineage/recombination information and next-round outcomes, or an exact already-completed canonical local equivalent is discovered.",
+        "source_run_id": "shadow-auto-a0ea279fac5b4997",
+        "source_stage_manifest_sha256": "5dd78e11f1c638bf97cfec2d81e779791c020f2cb14f99ed10c904df8373d2fd",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
       }
     ],
     "current_source_hard_veto_count": 2,
@@ -579,9 +837,9 @@
     "semantic_blocker_added_from_latest_run": 0,
     "semantic_blocker_added_from_terminal_run": 0,
     "semantic_blocker_inherited": 4,
-    "near_miss_preflight_count": 8,
+    "near_miss_preflight_count": 17,
     "near_miss_base_preflight_count": 4,
-    "near_miss_terminal_support_hold_count": 4
+    "near_miss_terminal_support_hold_count": 13
   },
   "shadow_source": {
     "portfolio_status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
@@ -632,7 +890,7 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 16,
+    "shadow_dead_end_objects": 25,
     "current_source_hard_veto_dead_ends": 2,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
@@ -641,8 +899,8 @@
     "semantic_blocker_added_from_latest_run": 0,
     "semantic_blocker_added_from_terminal_run": 0,
     "semantic_blocker_inherited": 4,
-    "near_miss_preflight_dead_ends": 8,
-    "near_miss_terminal_support_holds": 4,
+    "near_miss_preflight_dead_ends": 17,
+    "near_miss_terminal_support_holds": 13,
     "near_miss_support_holds": 1,
     "near_miss_current_primary_stops": 2,
     "near_miss_mature_theory_stops": 1,
