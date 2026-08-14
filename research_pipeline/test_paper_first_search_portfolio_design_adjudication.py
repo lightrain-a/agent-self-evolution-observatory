@@ -82,14 +82,17 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertFalse(rows[0]["scientific_authority"])
 
     def test_semantic_exact_reduction_block_compiles_without_hardening_soft_collision(self) -> None:
-        exact={"candidate_id":"R3-X","title":"layer sign inversion","search_primitive":"UNEXPLAINED_BOUNDARY","semantic_verdict":"BLOCK","semantic_reduction_class":"NEEDS_EXACT_REDUCTION_TEST","semantic_lane_contract_verified":True,"semantic_matched_patterns":["persistent-update-vs-test-time-compute"],"semantic_strongest_reduction":"generic test-time scaling","semantic_exact_reduction_test":"match candidate quality and diversity","semantic_reason":"same-information reduction remains unresolved","semantic_lane_contract_reason":"lane valid","semantic_source_refs":["arXiv:2608.11350"]}
+        exact={"candidate_id":"R3-X","title":"layer sign inversion","search_primitive":"UNEXPLAINED_BOUNDARY","semantic_verdict":"BLOCK","semantic_reduction_class":"NEEDS_EXACT_REDUCTION_TEST","semantic_lane_contract_verified":True,"semantic_matched_patterns":["persistent-update-vs-test-time-compute"],"semantic_strongest_reduction":"generic test-time scaling","semantic_exact_reduction_test":"match candidate quality and diversity","semantic_reason":"same-information reduction remains unresolved","semantic_lane_contract_reason":"lane valid","semantic_source_refs":["arXiv:2608.11350"],"semantic_source_claims":["harness improves while raw VLA voting hurts"],"semantic_problem_text":"layer sign inversion under tied budget"}
         soft={"candidate_id":"R3-SOFT","title":"soft only","search_primitive":"UNEXPLAINED_BOUNDARY","semantic_verdict":"BLOCK","semantic_reduction_class":"SOFT_COLLISION","semantic_lane_contract_verified":True,"semantic_strongest_reduction":"generic portfolio diversity","semantic_reason":"soft collision only","semantic_lane_contract_reason":"lane valid","semantic_source_refs":["arXiv:2608.11350"]}
-        memory=_shadow_dead_end_memory({"latest_run":{"candidates":[exact,soft]}},prior_hard_veto_rows=[],prior_semantic_rows=[])
+        memory=_shadow_dead_end_memory({"latest_run":{"frozen_pool_sha256":"a"*64,"candidates":[exact,soft]}},prior_hard_veto_rows=[],prior_semantic_rows=[])
         rows=[row for row in memory["blocked_objects"] if str(row.get("basin") or "").startswith("semantic-")]
         self.assertEqual(len(rows),1)
         self.assertTrue(rows[0]["basin"].startswith("semantic-exact-reduction-"))
         self.assertEqual(rows[0]["matched_patterns"],["persistent-update-vs-test-time-compute"])
         self.assertIn("match candidate quality",rows[0]["exact_reduction_test"])
+        self.assertEqual(rows[0]["evidence_claims"],["harness improves while raw VLA voting hurts"])
+        self.assertEqual(rows[0]["problem_text"],"layer sign inversion under tied budget")
+        self.assertEqual(rows[0]["frozen_pool_sha256"],"a"*64)
         self.assertEqual(memory["semantic_blocker_count"],1)
         self.assertEqual(memory["semantic_blocker_added_from_latest_run"],1)
         self.assertFalse(rows[0]["scientific_authority"])
