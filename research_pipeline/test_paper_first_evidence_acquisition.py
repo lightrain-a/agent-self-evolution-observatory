@@ -7,6 +7,7 @@ from .paper_first_evidence_acquisition import (
     build_provisional_evidence_plan,
     compile_evidence_designs,
     compile_evidence_reviews,
+    compile_operationalization_recompiles,
     compile_substrate_preflight,
     validate_evidence_plan,
 )
@@ -18,6 +19,7 @@ def machine(rows=2):
         q.append({
             "candidate_id":f"C{i+1}","title":f"candidate {i+1}","discovery_lane":"UNEXPLAINED_BOUNDARY",
             "source_branch_id":f"B{i+1}","blockers":["reduction-falsifiability-contract-incomplete","unresolved-exact-reduction-test:1"],
+            "irreducible_object":f"scientific object {i+1}","endpoint_headroom_requirement":"nondegenerate endpoint",
             "exact_prediction":f"prediction {i+1}","strongest_same_information_baseline":f"baseline {i+1}","cheapest_problem_falsifier":f"falsifier {i+1}",
             "scientific_authority":False,
         })
@@ -47,7 +49,7 @@ def design_for(entry, *, source="REPRODUCIBLE_FIRST_PARTY", mode="FIRST_PARTY_RE
 
 def clear_review(plan):
     rows=[r for r in plan.get("entries") or [] if r.get("status")=="NEEDS_INDEPENDENT_EVIDENCE_REVIEW"]
-    checks={"independent_truth_valid":True,"scientific_object_preserved":True,"no_mechanism_bake_in":True,"same_information_baseline_valid":True,"falsifier_not_method_evaluation":True,"outcome_semantics_valid":True,"bounded_budget_valid":True,"prior_support_constraint_respected":True}
+    checks={"independent_truth_valid":True,"scientific_object_preserved":True,"no_mechanism_bake_in":True,"same_information_baseline_valid":True,"falsifier_not_method_evaluation":True,"outcome_semantics_valid":True,"bounded_budget_valid":True,"prior_support_constraint_respected":True,"operationalization_equivalence_valid":True}
     payload={"reviews":[{"candidate_id":r["candidate_id"],"verdict":"CLEAR_FOR_SUBSTRATE_PREFLIGHT","checks":checks,"reason":"all bounded evidence-contract checks pass","required_revision":""} for r in rows]}
     return compile_evidence_reviews(plan,payload,reviewer_model="independent-reviewer")
 
@@ -95,7 +97,7 @@ class EvidenceAcquisitionTest(unittest.TestCase):
 
     def test_independent_review_blocks_bake_in_and_same_model_self_review(self):
         plan=build_provisional_evidence_plan(machine(1));state=compile_evidence_designs(plan,{"designs":[design_for(plan["entries"][0])]},design_model="designer")
-        checks={"independent_truth_valid":True,"scientific_object_preserved":True,"no_mechanism_bake_in":False,"same_information_baseline_valid":True,"falsifier_not_method_evaluation":True,"outcome_semantics_valid":True,"bounded_budget_valid":True,"prior_support_constraint_respected":True}
+        checks={"independent_truth_valid":True,"scientific_object_preserved":True,"no_mechanism_bake_in":False,"same_information_baseline_valid":True,"falsifier_not_method_evaluation":True,"outcome_semantics_valid":True,"bounded_budget_valid":True,"prior_support_constraint_respected":True,"operationalization_equivalence_valid":True}
         payload={"reviews":[{"candidate_id":"C1","verdict":"BLOCK_BAKE_IN","checks":checks,"reason":"synthetic truth encodes the target mechanism","required_revision":""}]}
         with self.assertRaisesRegex(ValueError,"reviewer must be independent"):
             compile_evidence_reviews(state,payload,reviewer_model="designer")
@@ -107,8 +109,33 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         plan=build_provisional_evidence_plan(machine(1))
         d=design_for(plan["entries"][0],source="SOURCE_SPECIFIC_REQUIRED",mode="PRIMARY_ASSET_REUSE",adapter="PRIMARY_ASSET_ONLY")
         state=compile_evidence_designs(plan,{"designs":[d]})
-        self.assertEqual(state["entries"][0]["status"],"WAIT_PRIMARY_ASSET_RELEASE")
+        self.assertEqual(state["entries"][0]["status"],"NEEDS_OPERATIONALIZATION_RECOMPILE")
         self.assertFalse(state["entries"][0]["execution_authorized"])
+
+    def test_source_asset_dependency_gets_one_operationalization_recompile(self):
+        plan=build_provisional_evidence_plan(machine(1));entry=plan["entries"][0]
+        source=design_for(entry,source="SOURCE_SPECIFIC_REQUIRED",mode="PRIMARY_ASSET_REUSE",adapter="PRIMARY_ASSET_ONLY")
+        state=compile_evidence_designs(plan,{"designs":[source]},design_model="designer")
+        self.assertEqual(state["entries"][0]["status"],"NEEDS_OPERATIONALIZATION_RECOMPILE")
+        recompiled=design_for(state["entries"][0]);recompiled["acquisition_mode"]="FIRST_PARTY_SANDBOX";recompiled["execution_adapter"]="EXISTING_SANDBOX_HARNESS"
+        payload={"recompiles":[{"candidate_id":"C1","verdict":"RECOMPILED_FIRST_PARTY","reason":"the unavailable file identity is acquisition provenance rather than the frozen causal contrast","scientific_object_invariants":["same causal unit","same observable","same intervention contrast","same baseline information"],"source_specific_dependencies_removed":["original file identity"],"why_dependencies_are_not_scientific_object":"the frozen prediction concerns the contrast rather than the original file identity","transport_scope":"same-domain controlled first-party instantiation","equivalence_probe":"verify observables, intervention arms, and baseline inputs before the main contrast","equivalence_failure_action":"return to source-specific wait","design":recompiled}]}
+        out=compile_operationalization_recompiles(state,payload,part=1,recompiler_model="recompiler")
+        row=out["entries"][0]
+        self.assertEqual(row["status"],"NEEDS_INDEPENDENT_EVIDENCE_REVIEW")
+        self.assertEqual(row["operationalization_recompile_attempts"],1)
+        self.assertEqual(row["design"]["frozen_exact_prediction"],entry["frozen_exact_prediction"])
+        self.assertEqual(row["design"]["frozen_same_information_baseline"],entry["frozen_same_information_baseline"])
+        reviewed=clear_review(out)
+        self.assertEqual(reviewed["entries"][0]["status"],"READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT")
+
+    def test_intrinsic_source_specific_recompile_stays_waiting(self):
+        plan=build_provisional_evidence_plan(machine(1));entry=plan["entries"][0]
+        state=compile_evidence_designs(plan,{"designs":[design_for(entry,source="SOURCE_SPECIFIC_REQUIRED",mode="PRIMARY_ASSET_REUSE",adapter="PRIMARY_ASSET_ONLY")]})
+        payload={"recompiles":[{"candidate_id":"C1","verdict":"INTRINSIC_SOURCE_SPECIFIC","reason":"the frozen prediction explicitly depends on an original source-only variable"}]}
+        out=compile_operationalization_recompiles(state,payload,recompiler_model="recompiler")
+        self.assertEqual(out["entries"][0]["status"],"WAIT_PRIMARY_ASSET_RELEASE")
+        self.assertEqual(out["entries"][0]["operationalization_recompile_attempts"],1)
+        self.assertEqual(out["summary"]["operationalization_intrinsic_source_specific"],1)
 
     def test_first_party_design_requires_anti_bake_in_controls(self):
         plan=build_provisional_evidence_plan(machine(1));d=design_for(plan["entries"][0]);d["anti_bake_in_controls"]=["one"]

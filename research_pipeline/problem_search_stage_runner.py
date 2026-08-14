@@ -17,10 +17,12 @@ from .paper_first_evidence_acquisition import (
     build_substrate_preflight_request,
     compile_evidence_designs,
     compile_evidence_reviews,
+    compile_operationalization_recompiles,
     compile_substrate_preflight,
     compile_harness_implementation_receipts,
     evidence_design_prompt,
     evidence_review_prompt,
+    operationalization_recompile_prompt,
 )
 from .problem_search_control_snapshot import STAGE_RUNNER_ARTIFACT_SCHEMA,validate_shadow_run_control
 from .paper_first_primary_evidence import parse_arxiv_page,extract_empirical_fact_candidates,extract_typed_evidence_candidates
@@ -305,7 +307,7 @@ def machine_audit(*,pool:Path|None,run_root:Path)->dict:
             else:reviewable.append(row)
             return
         if falsifier_eligible:
-            reduction_pending.append(row);problem_falsifier_queue.append({"candidate_id":candidate["candidate_id"],"title":candidate.get("title"),"discovery_lane":candidate.get("discovery_lane"),"source_branch_id":candidate.get("source_branch_id"),"source_artifact":path.name,"blockers":list(audit.get("blockers") or []),"exact_prediction":candidate.get("exact_prediction"),"strongest_same_information_baseline":candidate.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":candidate.get("cheapest_problem_falsifier"),"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}});return
+            reduction_pending.append(row);problem_falsifier_queue.append({"candidate_id":candidate["candidate_id"],"title":candidate.get("title"),"discovery_lane":candidate.get("discovery_lane"),"source_branch_id":candidate.get("source_branch_id"),"source_artifact":path.name,"blockers":list(audit.get("blockers") or []),"irreducible_object":candidate.get("irreducible_object"),"endpoint_headroom_requirement":candidate.get("endpoint_headroom_requirement"),"exact_prediction":candidate.get("exact_prediction"),"strongest_same_information_baseline":candidate.get("strongest_same_information_baseline"),"cheapest_problem_falsifier":candidate.get("cheapest_problem_falsifier"),"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}});return
         blocked.append(row)
     for path in sorted(run_root.glob("formulate-p*.json"),key=lambda value:int(value.stem.split("p")[-1])):
         payload=json.loads(path.read_text(encoding="utf-8"));_require_artifact_control(payload,control_sha,path,STAGE_RUNNER_ARTIFACT_SCHEMA);part=int(payload.get("part") or path.stem.split("p")[-1])
@@ -338,6 +340,15 @@ def evidence_design(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,mod
     artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"designs":payload.get("designs") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
     (run_root/f"evidence-design-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
+
+
+def evidence_operationalization_recompile(*,run_root:Path,part:int,batch_size:int=2,model:str="ark-code-latest")->dict:
+    control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
+    if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
+    prompt,candidate_ids=operationalization_recompile_prompt(plan,part=part,batch_size=batch_size);res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-recompile-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5600,temperature=0.0)
+    raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_evidence_design_json(run_root,f"evidence-recompile-p{part}",raw,resolved);state=compile_operationalization_recompiles(plan,payload,part=part,recompiler_model=resolved);state["control_snapshot_sha256"]=control_sha;plan_path.write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    artifact={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":candidate_ids,"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"recompiles":payload.get("recompiles") or [],"plan_summary":state.get("summary") or {},"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+    (run_root/f"evidence-recompile-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
 
 
 def evidence_contract_review(*,run_root:Path,part:int,batch_size:int=2,model:str="glm-5.2")->dict:
@@ -411,7 +422,9 @@ def finalize(*,pool:Path|None,run_root:Path)->dict:
 
 
 def main()->None:
-    ap=argparse.ArgumentParser();ap.add_argument("command",choices=("expand","assemble","evolve","formulate","audit","evidence-design","evidence-review","evidence-substrate-request","evidence-substrate-compile","evidence-harness-compile","evidence-adjudicate","falsifier-request","falsifier-preflight","review","finalize"));ap.add_argument("--pool",type=Path);ap.add_argument("--run-root",type=Path,required=True);ap.add_argument("--lane");ap.add_argument("--count",type=int,default=6);ap.add_argument("--part",type=int,default=1);ap.add_argument("--generation",type=int,default=1);ap.add_argument("--model",default="ark-code-latest");ap.add_argument("--memory",type=Path);ap.add_argument("--support-inventory",type=Path);ap.add_argument("--evidence-receipts",type=Path);ap.add_argument("--substrate-receipts",type=Path);ap.add_argument("--harness-receipts",type=Path);a=ap.parse_args()
+    ap=argparse.ArgumentParser()
+    ap.add_argument("command",choices=("expand","assemble","evolve","formulate","audit","evidence-design","evidence-recompile","evidence-review","evidence-substrate-request","evidence-substrate-compile","evidence-harness-compile","evidence-adjudicate","falsifier-request","falsifier-preflight","review","finalize"))
+    ap.add_argument("--pool",type=Path);ap.add_argument("--run-root",type=Path,required=True);ap.add_argument("--lane");ap.add_argument("--count",type=int,default=6);ap.add_argument("--part",type=int,default=1);ap.add_argument("--generation",type=int,default=1);ap.add_argument("--model",default="ark-code-latest");ap.add_argument("--memory",type=Path);ap.add_argument("--support-inventory",type=Path);ap.add_argument("--evidence-receipts",type=Path);ap.add_argument("--substrate-receipts",type=Path);ap.add_argument("--harness-receipts",type=Path);a=ap.parse_args()
     stop_marker=a.run_root/"shadow-run-qualification-stop.json"
     if stop_marker.exists():
         state=json.loads(stop_marker.read_text(encoding="utf-8"));raise SystemExit(f"shadow run stopped by qualification gate: {state.get('status','STOPPED')}")
@@ -422,6 +435,7 @@ def main()->None:
     elif a.command=="formulate":result=formulate(pool=a.pool,run_root=a.run_root,part=a.part,model=a.model,memory_path=a.memory)
     elif a.command=="audit":result=machine_audit(pool=a.pool,run_root=a.run_root)
     elif a.command=="evidence-design":result=evidence_design(pool=a.pool,run_root=a.run_root,part=a.part,model=a.model)
+    elif a.command=="evidence-recompile":result=evidence_operationalization_recompile(run_root=a.run_root,part=a.part,model=a.model)
     elif a.command=="evidence-review":result=evidence_contract_review(run_root=a.run_root,part=a.part,model="glm-5.2" if a.model=="ark-code-latest" else a.model)
     elif a.command=="evidence-substrate-request":result=evidence_substrate_request(run_root=a.run_root)
     elif a.command=="evidence-substrate-compile":

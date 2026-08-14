@@ -30,6 +30,10 @@ POLICY={
  "prior_support_receipt_is_review_context_not_automatic_veto":True,
  "support_inventory_is_one_acquisition_route_not_a_global_prerequisite":True,
  "source_specific_claims_still_require_source_specific_assets":True,
+ "source_asset_dependency_may_receive_one_operationalization_recompile":True,
+ "operationalization_recompile_cannot_change_frozen_prediction_or_baseline":True,
+ "operationalization_recompile_requires_independent_equivalence_review":True,
+ "operationalization_recompile_is_single_attempt":True,
  "new_evidence_never_auto_certifies_novelty":True,
  "residual_survival_returns_to_semantic_and_current_source_review":True,
  "bounded_evidence_execution_is_not_p0":True,
@@ -66,7 +70,7 @@ def build_provisional_evidence_plan(machine:dict,*,run_id:str="",max_active:int=
    "candidate_id":str(r.get("candidate_id") or ""),"title":_b(r.get("title"),500),"discovery_lane":str(r.get("discovery_lane") or ""),"source_branch_id":str(r.get("source_branch_id") or ""),
    "priority_rank":rank,"selection_basis":"fewest-unresolved-reduction-blockers-then-stable-id","design_selected":selected,
    "status":"NEEDS_BOUNDED_EVIDENCE_DESIGN" if selected else "DEFERRED_BY_ACTIVE_PORTFOLIO_BUDGET",
-   "frozen_exact_prediction":_b(r.get("exact_prediction")),"frozen_same_information_baseline":_b(r.get("strongest_same_information_baseline"),1600),"frozen_falsifier_expression":_b(r.get("cheapest_problem_falsifier"),2400),
+   "frozen_irreducible_object":_b(r.get("irreducible_object"),2400),"frozen_endpoint_headroom_requirement":_b(r.get("endpoint_headroom_requirement"),1800),"frozen_exact_prediction":_b(r.get("exact_prediction")),"frozen_same_information_baseline":_b(r.get("strongest_same_information_baseline"),1600),"frozen_falsifier_expression":_b(r.get("cheapest_problem_falsifier"),2400),
    "blockers":sorted({str(x) for x in r.get("blockers") or [] if str(x)}),"tree":{"depth":0,"parent_contract_sha256":"","repair_count":0},"design":{},"contract_sha256":"","execution_authorized":False,"scientific_authority":False,"authority":dict(AUTHORITY)})
  selected=sum(r["design_selected"] for r in entries)
  return {"schema_version":SCHEMA_VERSION,"generated_at":_now(),"run_id":run_id,"status":"EVIDENCE_DESIGN_PENDING" if selected else "NO_REDUCTION_PENDING_EVIDENCE_WORK","policy":dict(POLICY),"portfolio":{"selection":"bounded-top-k","max_active_candidates":MAX_ACTIVE,"active_candidates":selected,"experiment_tree_max_depth":MAX_DEPTH},"summary":_summary(entries),"entries":entries,"scientific_authority":False,"authority":dict(AUTHORITY)}
@@ -74,7 +78,7 @@ def build_provisional_evidence_plan(machine:dict,*,run_id:str="",max_active:int=
 def _summary(entries:list[dict])->dict:
  return {
   "provisional_problem_candidates":len(entries),"design_selected":sum(r.get("design_selected") is True for r in entries),"design_pending":sum(r.get("status")=="NEEDS_BOUNDED_EVIDENCE_DESIGN" for r in entries),"design_invalid":sum(r.get("status")=="HOLD_EVIDENCE_DESIGN_INVALID" for r in entries),
-  "wait_primary_asset":sum(r.get("status")=="WAIT_PRIMARY_ASSET_RELEASE" for r in entries),"review_pending":sum(r.get("status")=="NEEDS_INDEPENDENT_EVIDENCE_REVIEW" for r in entries),"review_clear":sum((r.get("evidence_review") or {}).get("verdict")=="CLEAR_FOR_SUBSTRATE_PREFLIGHT" for r in entries),"review_revise":sum((r.get("evidence_review") or {}).get("verdict")=="REVISE" for r in entries),"review_blocked":sum(r.get("status")=="HOLD_EVIDENCE_REVIEW_BLOCKED" for r in entries),"substrate_preflight_pending":sum(r.get("status")=="READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT" for r in entries),"substrate_ready":sum((r.get("substrate_preflight") or {}).get("disposition")=="EXISTING_HARNESS_READY" for r in entries),"substrate_implementation_pending":sum(r.get("status")=="NEEDS_MINIMAL_HARNESS_IMPLEMENTATION" for r in entries),"substrate_hold":sum(r.get("status") in {"HOLD_SUBSTRATE_UNAVAILABLE","HOLD_SUBSTRATE_BUDGET_INFEASIBLE"} for r in entries),"execution_ready":sum(r.get("status")=="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" for r in entries),"execution_completed":sum(bool(r.get("evidence_receipt")) for r in entries),
+  "wait_primary_asset":sum(r.get("status")=="WAIT_PRIMARY_ASSET_RELEASE" for r in entries),"operationalization_recompile_pending":sum(r.get("status")=="NEEDS_OPERATIONALIZATION_RECOMPILE" for r in entries),"operationalization_recompiled":sum(bool(r.get("operationalization_recompile")) for r in entries),"operationalization_intrinsic_source_specific":sum((r.get("operationalization_recompile_adjudication") or {}).get("verdict")=="INTRINSIC_SOURCE_SPECIFIC" for r in entries),"review_pending":sum(r.get("status")=="NEEDS_INDEPENDENT_EVIDENCE_REVIEW" for r in entries),"review_clear":sum((r.get("evidence_review") or {}).get("verdict")=="CLEAR_FOR_SUBSTRATE_PREFLIGHT" for r in entries),"review_revise":sum((r.get("evidence_review") or {}).get("verdict")=="REVISE" for r in entries),"review_blocked":sum(r.get("status")=="HOLD_EVIDENCE_REVIEW_BLOCKED" for r in entries),"substrate_preflight_pending":sum(r.get("status")=="READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT" for r in entries),"substrate_ready":sum((r.get("substrate_preflight") or {}).get("disposition")=="EXISTING_HARNESS_READY" for r in entries),"substrate_implementation_pending":sum(r.get("status")=="NEEDS_MINIMAL_HARNESS_IMPLEMENTATION" for r in entries),"substrate_hold":sum(r.get("status") in {"HOLD_SUBSTRATE_UNAVAILABLE","HOLD_SUBSTRATE_BUDGET_INFEASIBLE"} for r in entries),"execution_ready":sum(r.get("status")=="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" for r in entries),"execution_completed":sum(bool(r.get("evidence_receipt")) for r in entries),
   "reduction_supported":sum(r.get("status")=="STOP_EXACT_REDUCTION_SUPPORTED" for r in entries),"residual_survives":sum(r.get("status")=="RETURN_TO_SEMANTIC_CURRENT_SOURCE_REVIEW" for r in entries),"inconclusive":sum(r.get("status") in {"BRANCH_REPAIR_READY","HOLD_INCONCLUSIVE_TREE_BUDGET_EXHAUSTED"} for r in entries),"branch_repair_ready":sum(r.get("status")=="BRANCH_REPAIR_READY" for r in entries),
   "deferred_by_portfolio_budget":sum(r.get("status")=="DEFERRED_BY_ACTIVE_PORTFOLIO_BUDGET" for r in entries),"paper_design_authorized":0,"method_authorized":0,"p0_authorized":0,"full_experiment_authorized":0}
 
@@ -86,6 +90,7 @@ def _plan_status(entries:list[dict])->str:
  if s["substrate_implementation_pending"]:return "EVIDENCE_HARNESS_IMPLEMENTATION_PENDING"
  if s["substrate_preflight_pending"]:return "EVIDENCE_SUBSTRATE_PREFLIGHT_PENDING"
  if s["review_pending"]:return "EVIDENCE_REVIEW_PENDING"
+ if s["operationalization_recompile_pending"]:return "EVIDENCE_OPERATIONALIZATION_RECOMPILE_PENDING"
  if s["design_pending"]:return "EVIDENCE_DESIGN_PENDING"
  return "EVIDENCE_WAIT_OR_HOLD"
 
@@ -149,7 +154,7 @@ def _audit_design(d:dict,e:dict)->list[str]:
  return sorted(set(err))
 
 def _promote_deferred(entries:list[dict])->None:
- active_statuses={"NEEDS_BOUNDED_EVIDENCE_DESIGN","NEEDS_INDEPENDENT_EVIDENCE_REVIEW","READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT","NEEDS_MINIMAL_HARNESS_IMPLEMENTATION","READY_FOR_BOUNDED_EVIDENCE_ACQUISITION","BRANCH_REPAIR_READY","RETURN_TO_SEMANTIC_CURRENT_SOURCE_REVIEW"}
+ active_statuses={"NEEDS_BOUNDED_EVIDENCE_DESIGN","NEEDS_OPERATIONALIZATION_RECOMPILE","NEEDS_INDEPENDENT_EVIDENCE_REVIEW","READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT","NEEDS_MINIMAL_HARNESS_IMPLEMENTATION","READY_FOR_BOUNDED_EVIDENCE_ACQUISITION","BRANCH_REPAIR_READY","RETURN_TO_SEMANTIC_CURRENT_SOURCE_REVIEW"}
  active=sum(r.get("design_selected") is True and r.get("status") in active_statuses for r in entries)
  for row in sorted(entries,key=lambda r:int(r.get("priority_rank") or 10**9)):
   if active>=MAX_ACTIVE:break
@@ -173,17 +178,69 @@ def compile_evidence_designs(plan:dict,payload:dict,*,part:int=1,design_model:st
   if prior_status=="BRANCH_REPAIR_READY":
    tree=dict(e.get("tree") or {});tree["parent_contract_sha256"]=str(e.get("contract_sha256") or "");tree["depth"]=int((e.get("branch_repair") or {}).get("next_depth") or int(tree.get("depth") or 0)+1);tree["repair_count"]=int(tree.get("repair_count") or 0)+1;e["tree"]=tree
   e["contract_sha256"]=_sha({"candidate_id":cid,"tree":e.get("tree") or {},"design":e["design"],"policy_version":SCHEMA_VERSION})
-  if str(d.get("source_specificity") or "").upper()=="SOURCE_SPECIFIC_REQUIRED": e["status"]="WAIT_PRIMARY_ASSET_RELEASE";e["execution_authorized"]=False
+  if str(d.get("source_specificity") or "").upper()=="SOURCE_SPECIFIC_REQUIRED":
+   e["source_specific_design"]=json.loads(json.dumps(e["design"],ensure_ascii=False));e["status"]="NEEDS_OPERATIONALIZATION_RECOMPILE" if int(e.get("operationalization_recompile_attempts") or 0)==0 else "WAIT_PRIMARY_ASSET_RELEASE";e["execution_authorized"]=False
   else: e["status"]="NEEDS_INDEPENDENT_EVIDENCE_REVIEW";e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY)
  _promote_deferred(entries)
  out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"last_design_part":part,"scientific_authority":False,"authority":dict(AUTHORITY)})
  out["status"]=_plan_status(entries)
  return out
 
+def operationalization_recompile_prompt(plan:dict,*,part:int=1,batch_size:int=2)->tuple[str,list[str]]:
+ rows=[r for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("status")=="NEEDS_OPERATIONALIZATION_RECOMPILE"][:batch_size]
+ if not rows:raise ValueError(f"empty operationalization-recompile batch part={part}")
+ compact=[{"candidate_id":r.get("candidate_id"),"title":r.get("title"),"frozen_irreducible_object":r.get("frozen_irreducible_object"),"frozen_exact_prediction":r.get("frozen_exact_prediction"),"frozen_same_information_baseline":r.get("frozen_same_information_baseline"),"frozen_falsifier_expression":r.get("frozen_falsifier_expression"),"frozen_endpoint_headroom_requirement":r.get("frozen_endpoint_headroom_requirement"),"prior_support":r.get("prior_support") or {},"source_specific_design":r.get("source_specific_design") or r.get("design") or {}} for r in rows]
+ prompt=f'''You are recompiling only the OPERATIONALIZATION of a reduction falsifier whose first attempt depended on unavailable author/source assets. This is not permission to change the paper problem.
+
+Immutable compiler-owned fields: irreducible scientific object, exact prediction, strongest same-information baseline, and endpoint headroom requirement. You may change only how new evidence is instantiated and measured.
+
+For each candidate choose exactly one verdict:
+- RECOMPILED_FIRST_PARTY: the unavailable source asset is incidental to the scientific object, and a first-party experiment can instantiate the SAME variables/contrast without defining the result into the test.
+- INTRINSIC_SOURCE_SPECIFIC: at least one variable/contrast in the exact prediction intrinsically depends on the original named method, hidden lineage/state, or author-only unit; changing it would change the scientific object.
+- BLOCK_NO_EQUIVALENT_OPERATIONALIZATION: no non-baked-in equivalent experiment can be specified from available public semantics.
+
+RECOMPILED_FIRST_PARTY requirements:
+1. Preserve the exact prediction and same-information baseline semantically without weakening them.
+2. List >=4 scientific_object_invariants that the new experiment preserves.
+3. Explicitly name source_specific_dependencies_removed and explain why each is acquisition provenance/nuisance rather than part of the scientific object.
+4. Give an equivalence_probe that can FAIL before the main falsifier if the new operationalization is not faithful.
+5. No synthetic generator may encode the predicted threshold/sign/order by construction. Independent truth is mandatory.
+6. Same-information baseline must receive exactly the same observables and budget.
+7. Stay within caps: units<={MAX_UNITS}, wall<={MAX_WALL_MIN} min, GPU<={MAX_GPU_HOURS} h, model calls<={MAX_MODEL_CALLS}.
+8. No proposed-method training, second backbone, hidden-outcome tuning, or paper-scale search.
+9. The output design must use source_specificity=REPRODUCIBLE_FIRST_PARTY and a non-PRIMARY_ASSET_REUSE acquisition mode.
+
+Return JSON only: {{"recompiles":[{{"candidate_id":"...","verdict":"RECOMPILED_FIRST_PARTY|INTRINSIC_SOURCE_SPECIFIC|BLOCK_NO_EQUIVALENT_OPERATIONALIZATION","reason":"...","scientific_object_invariants":["...","...","...","..."],"source_specific_dependencies_removed":["..."],"why_dependencies_are_not_scientific_object":"...","transport_scope":"...","equivalence_probe":"...","equivalence_failure_action":"return to source-specific wait","design":{{"candidate_id":"...","changed_variable":"operationalization only","source_specificity":"REPRODUCIBLE_FIRST_PARTY","acquisition_mode":"FIRST_PARTY_REPLAY|FIRST_PARTY_SANDBOX|FIRST_PARTY_ROLLOUT|FIRST_PARTY_SIMULATION","reproduction_target":"...","independent_truth":"...","causal_unit":"...","observable":"...","intervention":"...","same_information_lock":"...","matched_baseline_execution":"...","anti_bake_in_controls":["...","...","..."],"decision_criteria":{{"baseline_reduction_supported":"...","candidate_residual_survives":"...","inconclusive":"..."}},"single_variable_repair_if_inconclusive":"","execution_adapter":"...","budget":{{"max_units":1,"max_wall_minutes":1,"max_gpu_hours":0.0,"max_model_calls":0}}}}}}]}}
+CANDIDATES={json.dumps(compact,ensure_ascii=False,separators=(",",":"))}'''
+ return prompt,[str(r.get("candidate_id") or "") for r in rows]
+
+def compile_operationalization_recompiles(plan:dict,payload:dict,*,part:int=1,recompiler_model:str="")->dict:
+ entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set()
+ for item in [x for x in payload.get("recompiles") or [] if isinstance(x,dict)]:
+  cid=str(item.get("candidate_id") or "").strip()
+  if not cid or cid in seen:raise ValueError("operationalization recompile ids must be nonempty and unique")
+  seen.add(cid);e=by.get(cid)
+  if not e or e.get("status")!="NEEDS_OPERATIONALIZATION_RECOMPILE":raise ValueError(f"no operationalization recompile pending:{cid}")
+  if int(e.get("operationalization_recompile_attempts") or 0)>=1:raise ValueError(f"operationalization recompile is single-attempt:{cid}")
+  e["operationalization_recompile_attempts"]=1;verdict=str(item.get("verdict") or "").strip().upper();reason=_b(item.get("reason"),2200)
+  if verdict not in {"RECOMPILED_FIRST_PARTY","INTRINSIC_SOURCE_SPECIFIC","BLOCK_NO_EQUIVALENT_OPERATIONALIZATION"}:raise ValueError(f"invalid operationalization recompile verdict:{cid}:{verdict}")
+  adjudication={"verdict":verdict,"reason":reason,"recompiler_model":str(recompiler_model or ""),"part":part,"scientific_authority":False};e["operationalization_recompile_adjudication"]=adjudication;e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY)
+  if verdict=="INTRINSIC_SOURCE_SPECIFIC":e["status"]="WAIT_PRIMARY_ASSET_RELEASE";e["review_feedback"]=reason;continue
+  if verdict=="BLOCK_NO_EQUIVALENT_OPERATIONALIZATION":e["status"]="HOLD_NO_EQUIVALENT_OPERATIONALIZATION";e["review_feedback"]=reason;continue
+  invariants=[_b(x,900) for x in item.get("scientific_object_invariants") or [] if _b(x,900)];removed=[_b(x,900) for x in item.get("source_specific_dependencies_removed") or [] if _b(x,900)];why=_b(item.get("why_dependencies_are_not_scientific_object"),2200);scope=_b(item.get("transport_scope"),1600);probe=_b(item.get("equivalence_probe"),2200);fail_action=_b(item.get("equivalence_failure_action"),1200);design=dict(item.get("design") or {})
+  if len(invariants)<4 or not removed or not all((why,scope,probe,fail_action)):e["status"]="HOLD_EVIDENCE_DESIGN_INVALID";e["operationalization_recompile_audit"]={"passed":False,"errors":["operationalization-equivalence-contract-incomplete"]};continue
+  design["candidate_id"]=cid;design["changed_variable"]="";design["frozen_exact_prediction"]=e.get("frozen_exact_prediction");design["frozen_same_information_baseline"]=e.get("frozen_same_information_baseline");design["frozen_falsifier_expression"]=e.get("frozen_falsifier_expression");criteria=design.get("decision_criteria") or {};design["decision_rule"]={"REDUCTION_SUPPORTED":criteria.get("baseline_reduction_supported",""),"RESIDUAL_SURVIVES":criteria.get("candidate_residual_survives",""),"INCONCLUSIVE":criteria.get("inconclusive","")}
+  errors=_audit_design(design,e)
+  if str(design.get("source_specificity") or "").upper()!="REPRODUCIBLE_FIRST_PARTY" or str(design.get("acquisition_mode") or "").upper()=="PRIMARY_ASSET_REUSE":errors.append("recompile-must-be-first-party")
+  errors=sorted(set(errors));e["operationalization_recompile_audit"]={"passed":not errors,"errors":errors}
+  if errors:e["status"]="HOLD_EVIDENCE_DESIGN_INVALID";continue
+  e["original_source_specific_design"]=json.loads(json.dumps(e.get("source_specific_design") or e.get("design") or {},ensure_ascii=False));e["design"]=json.loads(json.dumps(design,ensure_ascii=False));e["design_provenance"]={"resolved_model":str(recompiler_model or ""),"part":part,"stage":"operationalization-recompile","scientific_authority":False};e["operationalization_recompile"]={"scientific_object_invariants":invariants,"source_specific_dependencies_removed":removed,"why_dependencies_are_not_scientific_object":why,"transport_scope":scope,"equivalence_probe":probe,"equivalence_failure_action":fail_action,"scientific_authority":False};e["contract_sha256"]=_sha({"candidate_id":cid,"tree":e.get("tree") or {},"frozen_irreducible_object":e.get("frozen_irreducible_object"),"frozen_exact_prediction":e.get("frozen_exact_prediction"),"frozen_same_information_baseline":e.get("frozen_same_information_baseline"),"operationalization_recompile":e["operationalization_recompile"],"design":e["design"],"policy_version":SCHEMA_VERSION});e["status"]="NEEDS_INDEPENDENT_EVIDENCE_REVIEW"
+ _promote_deferred(entries);out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"last_operationalization_recompile_part":part,"scientific_authority":False,"authority":dict(AUTHORITY)});out["status"]=_plan_status(entries);return out
+
 def evidence_review_prompt(plan:dict,*,part:int=1,batch_size:int=2)->tuple[str,list[str]]:
  rows=[r for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("status")=="NEEDS_INDEPENDENT_EVIDENCE_REVIEW"][:batch_size]
  if not rows:raise ValueError(f"empty independent evidence-review batch part={part}")
- compact=[{"candidate_id":r.get("candidate_id"),"frozen_exact_prediction":r.get("frozen_exact_prediction"),"frozen_same_information_baseline":r.get("frozen_same_information_baseline"),"frozen_falsifier_expression":r.get("frozen_falsifier_expression"),"prior_support":r.get("prior_support") or {},"design":r.get("design") or {},"design_model":(r.get("design_provenance") or {}).get("resolved_model","")} for r in rows]
+ compact=[{"candidate_id":r.get("candidate_id"),"frozen_irreducible_object":r.get("frozen_irreducible_object"),"frozen_exact_prediction":r.get("frozen_exact_prediction"),"frozen_same_information_baseline":r.get("frozen_same_information_baseline"),"frozen_falsifier_expression":r.get("frozen_falsifier_expression"),"frozen_endpoint_headroom_requirement":r.get("frozen_endpoint_headroom_requirement"),"prior_support":r.get("prior_support") or {},"operationalization_recompile":r.get("operationalization_recompile") or {},"design":r.get("design") or {},"design_model":(r.get("design_provenance") or {}).get("resolved_model","")} for r in rows]
  prompt=f'''You are an independent scientific contract reviewer. Review bounded evidence-acquisition designs only; do not judge paper novelty and do not authorize Method/P0/GPU.
 
 A CLEAR design must satisfy ALL checks:
@@ -195,19 +252,20 @@ A CLEAR design must satisfy ALL checks:
 6. outcome_semantics_valid: baseline_reduction_supported means the strongest same-information baseline EXPLAINS the frozen prediction and therefore the candidate should stop; candidate_residual_survives means the baseline FAILS to explain a replicated distinguishing residual and therefore the candidate returns to semantic/current-source review.
 7. bounded_budget_valid: the contract stays within the frozen bounded-evidence caps and does not hide paper-scale training/search.
 8. prior_support_constraint_respected: if prior_support identified an unavailable source-specific unit, first-party reproduction is CLEAR only when the design preserves the frozen scientific object without manufacturing the missing provenance/latent/lineage/arm by construction.
+9. operationalization_equivalence_valid: if operationalization_recompile is nonempty, every frozen scientific-object invariant and exact-prediction variable survives unchanged, removed dependencies are genuinely acquisition provenance/nuisance, and the equivalence_probe can independently fail before the main falsifier. If no recompile is present, mark this true.
 
 Verdicts: CLEAR_FOR_SUBSTRATE_PREFLIGHT, REVISE, SOURCE_SPECIFIC_REQUIRED, BLOCK_BAKE_IN.
-- CLEAR only if all eight checks are true. CLEAR means only that local substrate feasibility may now be checked; it never authorizes execution by itself.
+- CLEAR only if all nine checks are true. CLEAR means only that local substrate feasibility may now be checked; it never authorizes execution by itself.
 - REVISE only for one repairable contract defect; name one concrete revision without changing frozen prediction/baseline/falsifier.
 - SOURCE_SPECIFIC_REQUIRED if first-party reproduction would change the scientific object and the unreleased author/source asset is genuinely required.
 - BLOCK_BAKE_IN if independent evidence cannot be obtained without defining the result into the test.
 
-Return JSON only: {{"reviews":[{{"candidate_id":"...","verdict":"...","checks":{{"independent_truth_valid":true,"scientific_object_preserved":true,"no_mechanism_bake_in":true,"same_information_baseline_valid":true,"falsifier_not_method_evaluation":true,"outcome_semantics_valid":true,"bounded_budget_valid":true,"prior_support_constraint_respected":true}},"reason":"...","required_revision":""}}]}}
+Return JSON only: {{"reviews":[{{"candidate_id":"...","verdict":"...","checks":{{"independent_truth_valid":true,"scientific_object_preserved":true,"no_mechanism_bake_in":true,"same_information_baseline_valid":true,"falsifier_not_method_evaluation":true,"outcome_semantics_valid":true,"bounded_budget_valid":true,"prior_support_constraint_respected":true,"operationalization_equivalence_valid":true}},"reason":"...","required_revision":""}}]}}
 DESIGNS={json.dumps(compact,ensure_ascii=False,separators=(",",":"))}'''
  return prompt,[str(r.get("candidate_id") or "") for r in rows]
 
 def compile_evidence_reviews(plan:dict,payload:dict,*,part:int=1,reviewer_model:str="")->dict:
- entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set();required_checks=("independent_truth_valid","scientific_object_preserved","no_mechanism_bake_in","same_information_baseline_valid","falsifier_not_method_evaluation","outcome_semantics_valid","bounded_budget_valid","prior_support_constraint_respected")
+ entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set();required_checks=("independent_truth_valid","scientific_object_preserved","no_mechanism_bake_in","same_information_baseline_valid","falsifier_not_method_evaluation","outcome_semantics_valid","bounded_budget_valid","prior_support_constraint_respected","operationalization_equivalence_valid")
  for review in [x for x in payload.get("reviews") or [] if isinstance(x,dict)]:
   cid=str(review.get("candidate_id") or "").strip()
   if not cid or cid in seen:raise ValueError("evidence review ids must be nonempty and unique")
@@ -220,7 +278,7 @@ def compile_evidence_reviews(plan:dict,payload:dict,*,part:int=1,reviewer_model:
   if verdict=="CLEAR_FOR_SUBSTRATE_PREFLIGHT" and all_checks:
    e["status"]="READY_FOR_BOUNDED_SUBSTRATE_PREFLIGHT";e["execution_authorized"]=False;e["authority"]={**dict(AUTHORITY),"bounded_substrate_preflight":True}
   elif verdict=="SOURCE_SPECIFIC_REQUIRED":
-   e["status"]="WAIT_PRIMARY_ASSET_RELEASE";e["review_feedback"]=reason or revision
+   e["status"]="NEEDS_OPERATIONALIZATION_RECOMPILE" if int(e.get("operationalization_recompile_attempts") or 0)==0 else "WAIT_PRIMARY_ASSET_RELEASE";e["review_feedback"]=reason or revision
   elif verdict=="REVISE" and revision:
    count=int(e.get("design_revision_count") or 0)+1;e["design_revision_count"]=count;e["review_feedback"]=revision
    if count<=1:e["status"]="NEEDS_BOUNDED_EVIDENCE_DESIGN"
