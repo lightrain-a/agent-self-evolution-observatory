@@ -481,6 +481,7 @@ def _source_exposure_state(
                 "run_id":run_id,
                 "pool_sha256":row.get("pool_sha256"),
                 "negative_space_sha256":row.get("negative_space_sha256"),
+                "discovery_operator_version":row.get("discovery_operator_version"),
                 "source_refs":refs,
                 "status":status,
                 "requested_model":row.get("requested_model"),

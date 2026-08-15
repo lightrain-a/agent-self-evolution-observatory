@@ -9,6 +9,7 @@ from typing import Any, Iterable
 from .config import PROJECT_ROOT, StorageSettings
 from .paper_first_primary_evidence import load_private_primary_pool, private_primary_pool_path
 from .paper_first_problem_generator import _pool_sha
+from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION
 from .paper_first_search_portfolio_design_adjudication import DEFAULT_JSON as DEFAULT_SHADOW_MEMORY_PATH
 from .paper_first_shadow_search_admission import (
     build_shadow_search_admission,
@@ -57,6 +58,7 @@ def _bounded_result(status: str, *, admission: dict[str, Any], reason: str, run_
                 "source_primary_content_sha256",
                 "source_pool_sha256",
                 "frozen_pool_sha256",
+                "discovery_operator_version",
                 "memory_sha256",
                 "control_snapshot_sha256",
                 "stage_runner_required_schema",
@@ -121,6 +123,7 @@ def _frozen_pool_payload(private_pool: dict[str, Any], admission: dict[str, Any]
         "source_set_sha256": source_set_sha,
         "source_primary_content_sha256": source_content_sha,
         "frozen_for_shadow_search_portfolio": True,
+        "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
         "scientific_authority": False,
         "summary": {
             "selected": len(records),

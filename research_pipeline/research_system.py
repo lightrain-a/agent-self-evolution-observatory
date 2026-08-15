@@ -46,7 +46,7 @@ from .paper_first_support_release_watch import load_private_support_release_watc
 from .paper_first_support_asset_recheck import load_private_support_asset_recheck_queue, public_support_asset_recheck_summary
 from .paper_first_support_asset_recheck_handoff import load_private_support_asset_recheck_handoff, public_support_asset_recheck_handoff_summary
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier, validate_paper_first_discovery_frontier
-from .paper_first_problem_discovery_contract import DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
+from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_shadow_search_admission import build_shadow_search_admission, public_shadow_search_admission_summary, validate_shadow_search_admission
@@ -873,7 +873,22 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         discovery_policy.get("search_portfolio_is_shadow_only") is True
         and discovery_policy.get("search_portfolio_cannot_publish_canonical_generator_or_queue") is True
         and discovery_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call") is True
+        and discovery_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator") is True
+        and discovery_policy.get("source_coverage_saturation_reopens_once_on_operator_change") is True
+        and discovery_policy.get("single_source_anomaly_first_search_enabled") is True
+        and discovery_policy.get("discovery_operator_version") == DISCOVERY_OPERATOR_VERSION
         and tuple(discovery_policy.get("search_portfolio_primitives") or ()) == SEARCH_PORTFOLIO_PRIMITIVES
+    )
+    generator_operator_version = str(generator_policy.get("discovery_operator_version") or "").strip()
+    generator_operator_contract_ok = bool(
+        not generator_operator_version
+        or (
+            generator_operator_version == DISCOVERY_OPERATOR_VERSION
+            and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator") is True
+            and generator_policy.get("source_coverage_saturation_reopens_once_on_operator_change") is True
+            and generator_policy.get("source_coverage_saturation_operator_upgrade_recompile_is_explicit_exception") is True
+            and generator_policy.get("single_source_anomaly_first_enabled") is True
+        )
     )
     live_generator_boundary_ok = bool(
         generator_policy.get("search_portfolio_enabled") is not True
@@ -881,6 +896,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         and generator_policy.get("one_semantic_reviewer_call_max", True) is True
         and generator_policy.get("canonical_transaction_forbids_search_portfolio", True) is True
         and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call", True) is True
+        and generator_operator_contract_ok
     )
     shadow_portfolio = state.get("paper_first_problem_search_portfolio") or {}
     shadow_latest = shadow_portfolio.get("latest_run") or {}
@@ -1220,8 +1236,8 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         if any(not isinstance(row,dict) or row.get("scientific_authority") is not False or "ref" in row or "title" in row or "abstract" in row or "records" in row for row in evidence_results.values()):
             errors.append("scientific-object candidate evidence public summary cannot expose private primary records")
     discovery_contract = state.get("paper_first_problem_discovery_contract") or {}; discovery_policy = discovery_contract.get("policy") or {}; discovery_summary = discovery_contract.get("summary") or {}
-    if discovery_policy.get("multi_lane_discovery_required") is not True or discovery_policy.get("contradiction_first_required") is not False or discovery_policy.get("contradiction_lane_retained") is not True or tuple(discovery_policy.get("allowed_discovery_lanes") or []) != DISCOVERY_LANES or tuple(discovery_policy.get("forbidden_discovery_lanes") or []) != FORBIDDEN_DISCOVERY_LANES or discovery_policy.get("lane_specific_machine_evidence_contract_required") is not True or discovery_policy.get("no_lane_specific_downstream_relaxation") is not True or discovery_policy.get("two_mature_theory_baselines_required") is not True or discovery_policy.get("same_information_nonreducibility_required") is not True or discovery_policy.get("domain_transfer_veto_required") is not True: errors.append("paper-first problem discovery contract must require four empirical lanes plus shared theory/domain-transfer gates")
-    if discovery_policy.get("search_portfolio_is_shadow_only") is not True or discovery_policy.get("search_portfolio_cannot_publish_canonical_generator_or_queue") is not True or discovery_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call") is not True or tuple(discovery_policy.get("search_portfolio_primitives") or []) != SEARCH_PORTFOLIO_PRIMITIVES: errors.append("Search Portfolio must remain a ten-primitive shadow layer outside the four live Problem-Gate lanes")
+    if discovery_policy.get("multi_lane_discovery_required") is not True or discovery_policy.get("contradiction_first_required") is not False or discovery_policy.get("contradiction_lane_retained") is not True or tuple(discovery_policy.get("allowed_discovery_lanes") or []) != DISCOVERY_LANES or tuple(discovery_policy.get("forbidden_discovery_lanes") or []) != FORBIDDEN_DISCOVERY_LANES or discovery_policy.get("lane_specific_machine_evidence_contract_required") is not True or discovery_policy.get("no_lane_specific_downstream_relaxation") is not True or discovery_policy.get("two_mature_theory_baselines_required") is not True or discovery_policy.get("same_information_nonreducibility_required") is not True or discovery_policy.get("domain_transfer_veto_required") is not True or discovery_policy.get("single_source_anomaly_first_search_enabled") is not True or discovery_policy.get("primary_anomaly_can_trigger_controlled_residual_search_without_cross_paper_metric_match") is not True or discovery_policy.get("source_coverage_saturation_reopens_once_on_operator_change") is not True or discovery_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator") is not True or discovery_policy.get("discovery_operator_version") != DISCOVERY_OPERATOR_VERSION: errors.append("paper-first problem discovery contract must require anomaly-first evidence tuples plus shared theory/domain-transfer gates")
+    if discovery_policy.get("search_portfolio_is_shadow_only") is not True or discovery_policy.get("search_portfolio_cannot_publish_canonical_generator_or_queue") is not True or discovery_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call") is not True or discovery_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator") is not True or tuple(discovery_policy.get("search_portfolio_primitives") or []) != SEARCH_PORTFOLIO_PRIMITIVES: errors.append("Search Portfolio must remain a ten-primitive shadow layer outside the four live Problem-Gate lanes")
     if discovery_summary.get("saturation_patterns") != fresh_summary.get("reduction_patterns") or discovery_summary.get("automatic_method_authority") != 0 or discovery_summary.get("automatic_experiment_authority") != 0: errors.append("paper-first problem discovery contract must consume the current saturation map and grant no automatic downstream authority")
     generator = state.get("paper_first_problem_generator") or {}; generator_policy = generator.get("policy") or {}; generator_summary = generator.get("summary") or {}; generator_schema = str(generator.get("schema_version") or "0")
     if generator_policy.get("search_portfolio_enabled") is True: errors.append("canonical problem generator cannot run Search Portfolio")
@@ -1229,7 +1245,19 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if "one_semantic_reviewer_call_max" in generator_policy and generator_policy.get("one_semantic_reviewer_call_max") is not True: errors.append("canonical problem generator must allow at most one semantic reviewer call per content-addressed pool")
     if "canonical_transaction_forbids_search_portfolio" in generator_policy and generator_policy.get("canonical_transaction_forbids_search_portfolio") is not True: errors.append("canonical generator policy must keep Search Portfolio out of the live transaction")
     if "one_content_addressed_pool_allows_at_most_one_live_generator_call" in generator_policy and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call") is not True: errors.append("canonical generator policy must preserve one-live-call-per-new-pool semantics")
-    if generator_policy.get("zero_candidates_is_valid") is not True or generator_policy.get("multi_lane_discovery_enabled") is not True or tuple(generator_policy.get("allowed_discovery_lanes") or []) != DISCOVERY_LANES or tuple(generator_policy.get("forbidden_discovery_lanes") or []) != FORBIDDEN_DISCOVERY_LANES or generator_policy.get("semantic_reviewer_is_block_only") is not True or generator_policy.get("independent_reviewer_must_verify_lane_contract") is not True or generator_policy.get("source_coverage_saturation_skips_model_call") is not True or generator_policy.get("source_coverage_saturation_is_compute_control_not_scientific_negative") is not True or generator_policy.get("new_lane_grounded_primary_source_reopens_generation") is not True or generator_policy.get("portable_review_receipts_are_scheduler_metadata_only") is not True or generator_policy.get("portable_review_receipts_have_zero_scientific_authority") is not True or generator_policy.get("primary_source_coverage_receipts_are_inherited_transactionally") is not True or generator_policy.get("candidate_inbox_has_zero_scientific_authority") is not True: errors.append("problem generator must enforce four-lane review plus portable zero-authority source-coverage saturation control")
+    generator_operator_version = str(generator_policy.get("discovery_operator_version") or "").strip()
+    generator_operator_contract_ok = bool(
+        not generator_operator_version
+        or (
+            generator_operator_version == DISCOVERY_OPERATOR_VERSION
+            and generator_policy.get("source_coverage_saturation_skips_model_call_after_current_operator_receipt") is True
+            and generator_policy.get("source_coverage_saturation_operator_upgrade_recompile_is_explicit_exception") is True
+            and generator_policy.get("source_coverage_saturation_reopens_once_on_operator_change") is True
+            and generator_policy.get("one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator") is True
+            and generator_policy.get("single_source_anomaly_first_enabled") is True
+        )
+    )
+    if generator_policy.get("zero_candidates_is_valid") is not True or generator_policy.get("multi_lane_discovery_enabled") is not True or tuple(generator_policy.get("allowed_discovery_lanes") or []) != DISCOVERY_LANES or tuple(generator_policy.get("forbidden_discovery_lanes") or []) != FORBIDDEN_DISCOVERY_LANES or generator_policy.get("semantic_reviewer_is_block_only") is not True or generator_policy.get("independent_reviewer_must_verify_lane_contract") is not True or generator_policy.get("source_coverage_saturation_skips_model_call") is not True or not generator_operator_contract_ok or generator_policy.get("source_coverage_saturation_is_compute_control_not_scientific_negative") is not True or generator_policy.get("new_lane_grounded_primary_source_reopens_generation") is not True or generator_policy.get("portable_review_receipts_are_scheduler_metadata_only") is not True or generator_policy.get("portable_review_receipts_have_zero_scientific_authority") is not True or generator_policy.get("primary_source_coverage_receipts_are_inherited_transactionally") is not True or generator_policy.get("candidate_inbox_has_zero_scientific_authority") is not True: errors.append("problem generator must enforce four-lane review plus versioned zero-authority saturation control")
     if generator.get("status") == "SKIPPED_SOURCE_COVERAGE_SATURATED":
         coverage = generator.get("source_coverage") or {}
         unreviewed = coverage.get("unreviewed_lane_linked_sources")

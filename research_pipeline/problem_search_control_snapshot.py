@@ -11,6 +11,7 @@ from typing import Any, Iterable
 
 from .config import PROJECT_ROOT
 from .paper_first_shadow_search_admission import primary_content_sha256
+from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION
 
 
 QUALIFICATION_FILENAME = "shadow-run-qualification.json"
@@ -163,6 +164,7 @@ def build_shadow_run_qualification(*, run_root: Path, pool_path: Path, memory_pa
         "status": "READY_FOR_SHADOW_EXPANSION",
         "run_id": run_root.name,
         "main_commit": _git_head(project_root),
+        "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
         "source_generated_at": pool.get("source_generated_at") or pool.get("generated_at"),
         "source_pool_sha256": pool.get("source_pool_sha256"),
         "source_set_sha256": pool.get("source_set_sha256"),
@@ -188,7 +190,7 @@ def write_shadow_run_qualification(*, run_root: Path, pool_path: Path, memory_pa
     if target.exists():
         existing = _load(target)
         current = build_shadow_run_qualification(run_root=run_root, pool_path=pool_path, memory_path=memory_path, project_root=project_root, require_clean_control=require_clean_control, control_files=control_files)
-        immutable = ("run_id", "source_set_sha256", "source_primary_content_sha256", "frozen_pool_sha256", "memory_sha256", "stage_runner_required_schema", "control_snapshot_sha256")
+        immutable = ("run_id", "discovery_operator_version", "source_set_sha256", "source_primary_content_sha256", "frozen_pool_sha256", "memory_sha256", "stage_runner_required_schema", "control_snapshot_sha256")
         if all(existing.get(key) == current.get(key) for key in immutable) and existing.get("status") == "READY_FOR_SHADOW_EXPANSION":
             return existing
         raise ValueError("existing shadow qualification receipt does not match the current frozen transaction")

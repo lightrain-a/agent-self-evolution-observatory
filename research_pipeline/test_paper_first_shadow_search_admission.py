@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import unittest
 
+from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION
 from .paper_first_shadow_search_admission import (
     build_shadow_search_admission,
     primary_content_sha256,
@@ -22,7 +23,7 @@ class ShadowSearchAdmissionTest(unittest.TestCase):
         primary={"status":"READY","generated_at":generated_at,"discovery_transaction_id":tx,"records":records,"summary":{"source_retrieval_complete":True,"source_coverage_exhausted":True,"carrier_probe_complete":True}}
         generator={"status":"SKIPPED_SOURCE_COVERAGE_SATURATED","discovery_transaction_id":tx,"summary":{"generated":0,"written_to_auto_inbox":0}}
         queue={"discovery_transaction_id":tx,"summary":{"submitted":0,"audited":0,"inbox_errors":0}}
-        shadow={"scientific_authority":False,"policy":{"shadow_only":True},"latest_run_id":"shadow-r5","latest_run":{"run_id":"shadow-r5","status":"SHADOW_TERMINAL_COMPLETE","source_generated_at":generated_at,"source_set_sha256":set_sha,"source_primary_content_sha256":content_sha,"source_pool_sha256":"b"*64,"scientific_authority":False}}
+        shadow={"scientific_authority":False,"policy":{"shadow_only":True},"latest_run_id":"shadow-r5","latest_run":{"run_id":"shadow-r5","status":"SHADOW_TERMINAL_COMPLETE","source_generated_at":generated_at,"source_set_sha256":set_sha,"source_primary_content_sha256":content_sha,"source_pool_sha256":"b"*64,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"scientific_authority":False}}
         return primary,generator,queue,shadow
 
     def test_source_set_digest_matches_frozen_pool_convention(self):
@@ -41,6 +42,17 @@ class ShadowSearchAdmissionTest(unittest.TestCase):
         self.assertFalse(state["summary"]["qualification_allowed"])
         self.assertEqual(state["summary"]["automatic_provider_calls_authorized"],0)
         self.assertFalse(state["scientific_authority"])
+
+    def test_same_terminal_source_under_legacy_operator_reopens_qualification_once(self):
+        primary,generator,queue,shadow=self.states();shadow=copy.deepcopy(shadow);shadow["latest_run"].pop("discovery_operator_version")
+        state=build_shadow_search_admission(primary_state=primary,generator_state=generator,queue_state=queue,shadow_state=shadow)
+        self.assertEqual(validate_shadow_search_admission(state),[])
+        self.assertEqual(state["status"],"READY_FOR_SHADOW_QUALIFICATION")
+        self.assertTrue(state["summary"]["same_source_transaction"])
+        self.assertFalse(state["summary"]["same_discovery_operator_version"])
+        self.assertTrue(state["summary"]["operator_upgrade_recompile"])
+        self.assertTrue(state["summary"]["qualification_allowed"])
+        self.assertEqual(state["summary"]["automatic_provider_calls_authorized"],0)
 
     def test_new_closed_source_transaction_opens_qualification_only(self):
         primary,generator,queue,shadow=self.states()

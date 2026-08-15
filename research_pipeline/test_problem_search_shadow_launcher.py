@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION
 from .paper_first_shadow_search_admission import build_shadow_search_admission, primary_content_sha256, source_set_sha256
 from .problem_search_control_snapshot import validate_shadow_run_control
 from .problem_search_shadow_launcher import HANDOFF_STATUS, prepare_shadow_run
@@ -26,7 +27,7 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
             latest_records=json.loads(json.dumps(records))
             if changed:
                 latest_records[0]["fulltext_sha256"]="9"*64
-            shadow.update({"latest_run_id":"shadow-old","latest_run":{"run_id":"shadow-old","status":"SHADOW_TERMINAL_COMPLETE","source_generated_at":"2026-08-13T00:00:00+00:00","source_set_sha256":source_set_sha256(latest_records),"source_primary_content_sha256":primary_content_sha256(latest_records),"source_pool_sha256":"b"*64,"scientific_authority":False}})
+            shadow.update({"latest_run_id":"shadow-old","latest_run":{"run_id":"shadow-old","status":"SHADOW_TERMINAL_COMPLETE","source_generated_at":"2026-08-13T00:00:00+00:00","source_set_sha256":source_set_sha256(latest_records),"source_primary_content_sha256":primary_content_sha256(latest_records),"source_pool_sha256":"b"*64,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"scientific_authority":False}})
         admission=build_shadow_search_admission(primary_state=primary,generator_state=generator,queue_state=queue,shadow_state=shadow)
         return records,generated_at,admission
 

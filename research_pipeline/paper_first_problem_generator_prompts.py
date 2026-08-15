@@ -8,6 +8,7 @@ from .paper_first_problem_discovery_contract import (
     DISCOVERY_LANES,
     SEARCH_PORTFOLIO_PRIMITIVES,
     FORBIDDEN_DISCOVERY_LANES,
+    LANE_DISTINCT_SOURCE_MINIMUM,
     LANE_EVIDENCE_REQUIRED,
     LANE_MACHINE_CONTRACTS,
     LANE_SOURCE_ROLES,
@@ -54,7 +55,7 @@ def generator_prompt(records: list[dict[str, Any]], dead_end_memory: dict[str, A
             {
                 "lane": "CONTRADICTION|CONVERGENT_FAILURE|ASSUMPTION_BREAK|UNEXPLAINED_BOUNDARY",
                 "status": "NO_PAIR|REDUCIBLE|CANDIDATE",
-                "source_refs": ["arXiv:...", "arXiv:..."],
+                "source_refs": ["one or two unique arXiv refs according to the lane minimum"],
                 "reason": "bounded search audit reason",
             }
         ],
@@ -93,20 +94,22 @@ def generator_prompt(records: list[dict[str, Any]], dead_end_memory: dict[str, A
         + "\nFORBIDDEN LANES: "
         + json.dumps(list(FORBIDDEN_DISCOVERY_LANES), ensure_ascii=False)
         + ". MISSING_CELL is forbidden because open-world literature absence is not machine-provable; SHARED_LIMITATION is forbidden without empirical failure evidence; PURE_TOPIC_BRAINSTORM is forbidden because it has no primary-evidence anchor.\n\n"
-        "Use ONLY the verified primary-source registry below. Every candidate must cite two distinct refs exactly as provided. "
+        "Use ONLY the verified primary-source registry below. Every candidate must contain two independently groundable evidence ITEMS as source_a/source_b. Distinct-primary-source requirements are lane-specific: "
+        + json.dumps({lane: LANE_DISTINCT_SOURCE_MINIMUM[lane] for lane in DISCOVERY_LANES}, ensure_ascii=False, separators=(",", ":"))
+        + ". For UNEXPLAINED_BOUNDARY, source_a and source_b MAY cite the same primary paper when that single paper itself quantitatively establishes both the anomalous boundary/regime and the adjacent expected/control regime; the two claims/excerpts must still be distinct evidence items. "
         "Claims must be supported by the supplied primary abstract or one bounded deterministic full-text empirical-fact candidate. "
         "For ASSUMPTION_BREAK only, source_a may be an explicit OPERATIONAL_ASSUMPTION grounded in primary text; all other source roles are EMPIRICAL_FACT. "
         "Future-work statements, author wishes, keyword absence, and a missing literature cell are not admissible evidence. "
         "Empirical-fact candidates are discovery evidence, not automatic ground truth, and will be independently grounded before Problem Gate eligibility.\n\n"
-        "Before naming a new object, project identical observable information into at least two mature theories. "
-        "If either theory expresses the exact prediction, discard the candidate. Domain transfer, mathematical renaming, another benchmark/metric/taxonomy/test-generator, or combining occupied atoms is not novelty.\n\n"
+        "ANOMALY-FIRST DISCOVERY OPERATOR: do NOT require the literature to have already assembled a cross-paper tension for us. First scan each primary paper for a quantitative sign reversal, nonmonotonicity, threshold, plateau, history dependence, composition effect, or surprising failure boundary. Then identify the smallest operational core and an adjacent/control regime. Ask what decisive comparison we can materialize ourselves from released units, first-party code, or an existing provenance-audited substrate. Only after that project identical observable information into at least two mature theories. "
+        "If either mature theory expresses the exact ex-ante prediction under the same information, discard the candidate. If the anomaly is real but the reduction is unresolved, freeze the cheapest distinguishing falsifier instead of inventing novelty. Domain transfer, mathematical renaming, another benchmark/metric/taxonomy/test-generator, or combining occupied atoms is not novelty.\n\n"
         "HARD NEGATIVE-SPACE VETO:\n"
         + json.dumps(reductions, ensure_ascii=False, separators=(",", ":"))
         + "\nSATURATION FIELD CONTRACT: matched_patterns may contain ONLY exact known ledger keys that actually apply; any exact match hard-blocks the candidate. If you explicitly considered a known key and argue it does NOT apply, put {key:<exact known key>, reason:<why>} in rejected_patterns instead. Never append explanatory prose to matched_patterns.\n"
         + "\n\nREVIEWER-PROVEN DEAD-END MEMORY (search-control only; zero scientific authority):\n"
         + json.dumps(dead_end_memory, ensure_ascii=False, separators=(",", ":"))
         + "\nThese are prior candidates already BLOCKED by independent review. Do not regenerate a semantically equivalent object by swapping sources, renaming the object, or rephrasing the same reduction escape. In particular, if repeated_reduction_basin=true, actively search outside the top basin. A prior dead end may be reconsidered only when the CURRENT evidence contains a concrete new observable that directly defeats the recorded strongest reduction; mere new wording or a new domain is insufficient.\n"
-        + "LANE SEARCH AUDIT: in the SAME single generator call, audit all four allowed discovery lanes exactly once, in lane_search_priority order when provided. For each lane return status=NO_PAIR when no two current primary sources already satisfy its evidence contract; REDUCIBLE when the strongest grounded pair is already explained by the mature/negative-space stack; CANDIDATE only when at least one emitted candidate in that exact lane uses the same two refs. source_refs must be empty for NO_PAIR, exactly two distinct provided refs for REDUCIBLE or CANDIDATE. A lane audit never requires a candidate and carries zero scientific authority. Historically underexplored lanes are searched first, but their scientific gate is unchanged.\n"
+        + "LANE SEARCH AUDIT: in the SAME single generator call, audit all four allowed discovery lanes exactly once, in lane_search_priority order when provided. Treat each lane as an evidence-tuple search, not a mandatory paper-pair search. Return status=NO_PAIR when no grounded evidence tuple satisfies the lane contract; REDUCIBLE when the strongest grounded tuple is already explained by the mature/negative-space stack; CANDIDATE only when at least one emitted candidate in that exact lane uses the same unique ref set. source_refs must be empty for NO_PAIR; for REDUCIBLE/CANDIDATE list the UNIQUE provided refs used by the tuple, with count meeting the lane-specific minimum and never exceeding two. In UNEXPLAINED_BOUNDARY this may therefore be a one-ref list. A lane audit never requires a candidate and carries zero scientific authority. Historically underexplored lanes are searched first, but their scientific gate is unchanged.\n"
         + "\n\nVERIFIED PRIMARY SOURCES (private abstracts + bounded full-text fact candidates; output only ref + grounded claim + evidence_role):\n"
         + json.dumps(sources, ensure_ascii=False, separators=(",", ":"))
         + "\n\nReturn syntactically valid JSON only, shape:\n"
@@ -149,12 +152,12 @@ def reviewer_prompt(candidates: list[dict[str, Any]], evidence_by_ref: dict[str,
     return (
         "Independent BLOCK-ONLY multi-lane semantic reduction + source-grounding reviewer. You cannot authorize Paper Design, methods, experiments, P0, or GPU. "
         "For each candidate perform THREE independent checks: "
-        "(1) source grounding: each stated source claim must be supported by its supplied primary abstract or one bounded full-text empirical-fact candidate; the reviewer evidence_source label is audit metadata because code deterministically locates the exact excerpt; "
-        "(2) lane contract: the two grounded source claims, evidence roles, relation, and lane_evidence must genuinely satisfy the selected discovery lane; "
+        "(1) source grounding: each of the two stated evidence-item claims must be independently supported by its supplied primary abstract or one bounded full-text empirical-fact candidate; source_a/source_b may share a ref only when the lane's distinct-source minimum allows it, and the reviewer evidence_source label is audit metadata because code deterministically locates the exact excerpt; "
+        "(2) lane contract: the two grounded evidence-item claims, evidence roles, relation, and lane_evidence must genuinely satisfy the selected discovery lane; "
         "(3) mature reduction: audit the candidate under the Reduction Falsifiability Contract. A theory/pattern name alone is NOT a veto. "
         "A VALID_HARD_VETO requires the same observable information, an ex-ante exact candidate-level prediction, a testable distinguishing/reduction test, and explicit scope boundary. "
         "If an exact reduction remains unresolved, use NEEDS_EXACT_REDUCTION_TEST and BLOCK. If similarity is real but not an exact reduction, use SOFT_COLLISION or TOO_GENERIC_TO_VETO; those classes do not by themselves force BLOCK. "
-        "If source grounding or the lane contract fails, verdict=BLOCK. CLEAR only means both sources are grounded, lane_contract_verified=true, and no proven/pending exact mature reduction remains; it never means scientific approval.\n\n"
+        "If source grounding or the lane contract fails, verdict=BLOCK. CLEAR only means both evidence items are grounded, the lane-specific distinct-source minimum is satisfied, lane_contract_verified=true, and no proven/pending exact mature reduction remains; it never means scientific approval.\n\n"
         "LANE CONTRACTS:\n"
         + json.dumps(lane_contracts, ensure_ascii=False, separators=(",", ":"))
         + "\n\nLEDGER:\n"

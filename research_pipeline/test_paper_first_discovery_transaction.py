@@ -98,19 +98,23 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
     def test_source_coverage_saturation_commits_zero_call_transaction_atomically(self) -> None:
         calls=[]
         def forbidden_generator(**kwargs):
-            calls.append(1); raise AssertionError("coverage-saturated transaction must make zero model calls")
+            calls.append(1); raise AssertionError("coverage-saturated transaction with a current-operator receipt must make zero model calls")
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
             corpus=self.corpus(root,now)
-            refs=[f"arXiv:2608.40{idx:03d}" for idx in range(1,5)]
-            discovery=storage.data_root/"paper-first-problem-discovery";discovery.mkdir(parents=True,exist_ok=True)
-            (discovery/"discovery-saturation-ledger.json").write_text(json.dumps({"schema_version":"1.0","runs":[{"run_id":"prior-reviewed-pool","pool_sha256":"a"*64,"negative_space_sha256":"b"*64,"source_refs":refs,"status":"GENERATED_ZERO_CANDIDATES","requested_model":"ark-code-latest","resolved_model":"doubao-seed-evolving","raw_sha256":"c"*64,"scientific_authority":False}]}),encoding="utf-8")
-            result=write_problem_discovery_transaction(
+            first=write_problem_discovery_transaction(
                 storage=storage,**targets,
                 primary_kwargs={"corpus_path":corpus,"requester":self.requester,"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":1,"now":now,"min_interval_seconds":0},
-                generator_kwargs={"generator_responder":forbidden_generator,"reviewer_responder":forbidden_generator,"now":now},
+                generator_kwargs={"generator_responder":self.generator,"now":now},
+            )
+            first_generator=json.loads(targets["generator_json"].read_text());first_run_id=first_generator["run_id"]
+            result=write_problem_discovery_transaction(
+                storage=storage,**targets,
+                primary_kwargs={"corpus_path":corpus,"requester":self.requester,"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":1,"now":now+timedelta(minutes=1),"min_interval_seconds":0},
+                generator_kwargs={"generator_responder":forbidden_generator,"reviewer_responder":forbidden_generator,"now":now+timedelta(minutes=1)},
             )
             primary=json.loads(targets["primary_json"].read_text());generator=json.loads(targets["generator_json"].read_text());queue=json.loads(targets["queue_json"].read_text())
+        self.assertEqual(first["status"],"COMMITTED")
         self.assertEqual(calls,[])
         self.assertEqual(result["status"],"COMMITTED")
         self.assertEqual(generator["status"],"SKIPPED_SOURCE_COVERAGE_SATURATED")
@@ -120,7 +124,7 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual((queue["summary"]["submitted"],queue["summary"]["audited"],queue["summary"]["passed_problem_gate"],queue["summary"]["blocked_problem_gate"]),(0,0,0,0))
         self.assertEqual({primary["discovery_transaction_id"],generator["discovery_transaction_id"],queue["discovery_transaction_id"]},{result["transaction_id"]})
         receipts=generator["saturation_memory"]["portable_review_receipts"]
-        self.assertEqual(len(receipts),1);self.assertEqual(receipts[0]["run_id"],"prior-reviewed-pool");self.assertFalse(receipts[0]["scientific_authority"])
+        self.assertEqual(len(receipts),1);self.assertEqual(receipts[0]["run_id"],first_run_id);self.assertFalse(receipts[0]["scientific_authority"])
         self.assertEqual(result["summary"]["source_coverage_exhausted"],True)
         self.assertEqual(result["summary"]["unreviewed_lane_linked_sources"],0)
         self.assertEqual(result["authority"],{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False})

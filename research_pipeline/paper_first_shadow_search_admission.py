@@ -10,6 +10,7 @@ from .config import PROJECT_ROOT
 from .paper_first_primary_evidence import load_primary_evidence_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
+from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-shadow-search-admission.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-shadow-search-admission.js"
@@ -83,6 +84,9 @@ def build_shadow_search_admission(
     latest_set_sha = str(latest.get("source_set_sha256") or "").strip().lower()
     latest_content_sha = str(latest.get("source_primary_content_sha256") or "").strip().lower()
     latest_pool_sha = str(latest.get("source_pool_sha256") or "").strip().lower()
+    latest_operator_version = str(latest.get("discovery_operator_version") or "").strip()
+    current_operator_version = DISCOVERY_OPERATOR_VERSION
+    same_operator_version = bool(latest_operator_version and latest_operator_version == current_operator_version)
     latest_terminal = bool(latest_run_id and latest_status == "SHADOW_TERMINAL_COMPLETE")
 
     queue_closed = (
@@ -125,12 +129,12 @@ def build_shadow_search_admission(
     elif identity_conflict:
         status = "HOLD_SHADOW_SOURCE_IDENTITY_CONFLICT"
         reason = "Latest and current source provenance partially match; treat this as provenance inconsistency rather than evidence for a new run."
-    elif same_source_transaction:
+    elif same_source_transaction and same_operator_version:
         status = "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL"
-        reason = "The current canonical source transaction already has a terminal shadow search result; repeating model calls would be redundant."
+        reason = "The current canonical source transaction already has a terminal shadow search result under the current discovery operator; repeating model calls would be redundant."
     else:
         status = "READY_FOR_SHADOW_QUALIFICATION"
-        reason = "Canonical discovery is closed and the current source transaction differs from the latest terminal shadow source identity."
+        reason = ("Canonical discovery is closed and the discovery operator changed since the latest terminal shadow run, so one new qualified shadow transaction is allowed on the same frozen evidence." if same_source_transaction else "Canonical discovery is closed and the current source transaction differs from the latest terminal shadow source identity.")
 
     qualification_allowed = status == "READY_FOR_SHADOW_QUALIFICATION"
     checks = [
@@ -147,6 +151,7 @@ def build_shadow_search_admission(
         {"key": "prior-shadow-terminal-or-absent", "pass": not latest_run_id or latest_terminal},
         {"key": "prior-shadow-source-identity-available-or-absent", "pass": not latest_run_id or source_identity_complete},
         {"key": "source-identity-not-conflicted", "pass": not identity_conflict},
+        {"key": "same-source-repeat-requires-operator-change", "pass": not same_source_transaction or not same_operator_version or status == "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL"},
     ]
     return {
         "schema_version": "1.0",
@@ -156,7 +161,8 @@ def build_shadow_search_admission(
             "scientific_authority": False,
             "admission_is_deterministic_search_control_only": True,
             "canonical_generator_and_queue_untouched": True,
-            "same_source_transaction_terminal_skips_model_calls": True,
+            "same_source_same_operator_terminal_skips_model_calls": True,
+            "operator_change_reopens_same_source_once": True,
             "prior_shadow_run_must_be_terminal_before_new_qualification": True,
             "admission_can_only_allow_zero_model_qualification_freeze": True,
             "admission_never_authorizes_provider_calls": True,
@@ -169,6 +175,10 @@ def build_shadow_search_admission(
             "latest_shadow_present": bool(latest_run_id),
             "latest_shadow_terminal": latest_terminal,
             "same_source_transaction": same_source_transaction,
+            "current_discovery_operator_version": current_operator_version,
+            "latest_discovery_operator_version": latest_operator_version,
+            "same_discovery_operator_version": same_operator_version,
+            "operator_upgrade_recompile": bool(same_source_transaction and latest_terminal and not same_operator_version),
             "source_identity_conflict": identity_conflict,
             "qualification_allowed": qualification_allowed,
             "automatic_provider_calls_authorized": 0,
@@ -186,6 +196,8 @@ def build_shadow_search_admission(
             "latest_source_set_sha256": latest_set_sha,
             "latest_primary_content_sha256": latest_content_sha,
             "latest_source_pool_sha256": latest_pool_sha,
+            "current_discovery_operator_version": current_operator_version,
+            "latest_discovery_operator_version": latest_operator_version,
         },
         "checks": checks,
         "scientific_authority": False,
@@ -225,8 +237,10 @@ def validate_shadow_search_admission(state: dict[str, Any]) -> list[str]:
         errors.append("shadow search admission cannot authorize provider or downstream work")
     if bool(summary.get("qualification_allowed")) != (state.get("status") == "READY_FOR_SHADOW_QUALIFICATION"):
         errors.append("shadow search qualification allowance does not match admission status")
-    if state.get("status") == "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL" and (summary.get("same_source_transaction") is not True or summary.get("latest_shadow_terminal") is not True):
-        errors.append("same-source skip requires one terminal matching shadow source transaction")
+    if state.get("status") == "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL" and (summary.get("same_source_transaction") is not True or summary.get("latest_shadow_terminal") is not True or summary.get("same_discovery_operator_version") is not True):
+        errors.append("same-source skip requires one terminal matching shadow source transaction under the current discovery operator")
+    if summary.get("operator_upgrade_recompile") is True and (summary.get("same_source_transaction") is not True or summary.get("latest_shadow_terminal") is not True or summary.get("same_discovery_operator_version") is not False or state.get("status") != "READY_FOR_SHADOW_QUALIFICATION"):
+        errors.append("operator-upgrade recompile must be a same-source terminal operator change that only reopens qualification")
     if state.get("status") == "READY_FOR_SHADOW_QUALIFICATION" and summary.get("canonical_transaction_closed") is not True:
         errors.append("shadow qualification cannot open before canonical discovery closes")
     for key in ("current_source_set_sha256", "current_primary_content_sha256", "latest_source_set_sha256", "latest_primary_content_sha256", "latest_source_pool_sha256"):
@@ -246,7 +260,8 @@ def public_shadow_search_admission_summary(state: dict[str, Any]) -> dict[str, A
         "policy": {
             "scientific_authority": False,
             "admission_is_deterministic_search_control_only": True,
-            "same_source_transaction_terminal_skips_model_calls": True,
+            "same_source_same_operator_terminal_skips_model_calls": True,
+            "operator_change_reopens_same_source_once": True,
             "admission_can_only_allow_zero_model_qualification_freeze": True,
             "admission_never_authorizes_provider_calls": True,
             "qualification_receipt_is_still_required_before_stage_execution": True,
@@ -259,6 +274,10 @@ def public_shadow_search_admission_summary(state: dict[str, Any]) -> dict[str, A
                 "latest_shadow_present",
                 "latest_shadow_terminal",
                 "same_source_transaction",
+                "current_discovery_operator_version",
+                "latest_discovery_operator_version",
+                "same_discovery_operator_version",
+                "operator_upgrade_recompile",
                 "source_identity_conflict",
                 "qualification_allowed",
                 "automatic_provider_calls_authorized",
@@ -279,6 +298,8 @@ def public_shadow_search_admission_summary(state: dict[str, Any]) -> dict[str, A
                 "latest_source_set_sha256",
                 "latest_primary_content_sha256",
                 "latest_source_pool_sha256",
+                "current_discovery_operator_version",
+                "latest_discovery_operator_version",
             )
         },
         "scientific_authority": False,

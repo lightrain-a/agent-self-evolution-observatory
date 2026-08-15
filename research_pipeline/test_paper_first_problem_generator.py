@@ -7,9 +7,9 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from .config import StorageSettings
-from .paper_first_problem_discovery_contract import DISCOVERY_LANES, FORBIDDEN_DISCOVERY_LANES
+from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _normalize_lane_search, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -89,7 +89,8 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             matching=[candidate for candidate in candidates if candidate.get("discovery_lane")==lane]
             if matching:
                 evidence=matching[0]["empirical_evidence"]
-                lane_search.append({"lane":lane,"status":"CANDIDATE","source_refs":[evidence["source_a"]["ref"],evidence["source_b"]["ref"]],"reason":"A candidate survives the lane-level search audit."})
+                refs=list(dict.fromkeys([evidence["source_a"]["ref"],evidence["source_b"]["ref"]]))
+                lane_search.append({"lane":lane,"status":"CANDIDATE","source_refs":refs,"reason":"A candidate survives the lane-level search audit."})
             else:
                 lane_search.append({"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No current pair survives this lane search."})
         def responder(**kwargs):
@@ -169,6 +170,40 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc)
             with self.assertRaises(ValueError):
                 run_problem_generator(storage=self.storage(root),primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",portfolio_mode=True,now=now)
+
+    def test_unexplained_boundary_lane_search_accepts_one_primary_ref_but_other_lanes_do_not(self) -> None:
+        registry={f"arXiv:2608.0000{i}":{} for i in range(1,5)}
+        rows=[]
+        for lane in DISCOVERY_LANES:
+            if lane=="UNEXPLAINED_BOUNDARY":
+                rows.append({"lane":lane,"status":"REDUCIBLE","source_refs":["arXiv:2608.00001"],"reason":"One primary paper contains both the anomalous regime and its adjacent control regime."})
+            else:
+                rows.append({"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No evidence tuple survives."})
+        normalized=_normalize_lane_search(rows,registry,list(DISCOVERY_LANES))
+        boundary=next(row for row in normalized if row["lane"]=="UNEXPLAINED_BOUNDARY")
+        self.assertEqual(boundary["source_refs"],["arXiv:2608.00001"])
+        bad=[dict(row) for row in rows]
+        bad[0]={"lane":"CONTRADICTION","status":"REDUCIBLE","source_refs":["arXiv:2608.00001"],"reason":"One ref is insufficient for contradiction."}
+        with self.assertRaisesRegex(ValueError,"evidence-tuple-invalid"):
+            _normalize_lane_search(bad,registry,list(DISCOVERY_LANES))
+
+    def test_saturated_pool_without_current_operator_receipt_recompiles_once(self) -> None:
+        calls=[]
+        generator=self.gen([],notes="Anomaly-first recompilation found no surviving residual.")
+        def counted(**kwargs):
+            calls.append(1); return generator(**kwargs)
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now)
+            payload=json.loads(pool.read_text());payload["source_coverage"]={"coverage_exhausted":True,"source_retrieval_complete":True,"eligible_lane_linked_sources":4,"reviewed_lane_linked_sources":4,"unreviewed_lane_linked_sources":0,"unreviewed_no_lane_sources":0,"carrier_probe_required":False,"carrier_probe_pending":0,"carrier_probe_complete":True,"scientific_authority":False};pool.write_text(json.dumps(payload),encoding="utf-8")
+            first=run_problem_generator(storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto1.json",generator_responder=counted,now=now)
+            second=run_problem_generator(storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto2.json",generator_responder=counted,now=now+timedelta(minutes=1))
+            ledger=json.loads((root/"paper-first-problem-discovery"/"discovery-saturation-ledger.json").read_text())
+        self.assertEqual(first["status"],"GENERATED_ZERO_CANDIDATES")
+        self.assertIn("operator_recompile_reason",first)
+        self.assertEqual(second["status"],"SKIPPED_SOURCE_COVERAGE_SATURATED")
+        self.assertEqual(calls,[1])
+        self.assertEqual(ledger["runs"][-1]["discovery_operator_version"],DISCOVERY_OPERATOR_VERSION)
+        self.assertTrue(second["policy"]["source_coverage_saturation_reopens_once_on_operator_change"])
 
     def test_zero_candidates_is_valid_and_skips_reviewer(self) -> None:
         calls = []
@@ -252,6 +287,7 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             calls.append(1); raise AssertionError("coverage-saturated writer must not call a model")
         with tempfile.TemporaryDirectory() as td:
             root=Path(td); now=datetime(2026,8,13,tzinfo=timezone.utc); storage=self.storage(root); pool=self.pool(root,now)
+            run_problem_generator(storage=storage,primary_pool_path=pool,auto_inbox_path=root/"seed-auto.json",generator_responder=self.gen([],notes="Seed current anomaly-first operator receipt."),now=now)
             receipts=[]
             for idx in (1,2):
                 receipts.append({"run_id":f"private-{idx}","pool_sha256":str(idx)*64,"negative_space_sha256":"f"*64,"source_refs":[f"arXiv:{idx}-{j}" for j in range(4)],"status":"GENERATED_ZERO_CANDIDATES","requested_model":"ark-code-latest","resolved_model":"doubao-seed-evolving","raw_sha256":"e"*64,"scientific_authority":False,"from_private_saturation_ledger":True})
@@ -311,8 +347,10 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         def responder(**kwargs):
             calls.append(1); raise AssertionError("coverage-saturated primary pool must not call a model")
         with tempfile.TemporaryDirectory() as td:
-            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);pool=self.pool(root,now);payload=json.loads(pool.read_text());payload["source_coverage"]={"coverage_exhausted":True,"eligible_lane_linked_sources":4,"reviewed_lane_linked_sources":4,"unreviewed_lane_linked_sources":0,"unreviewed_no_lane_sources":1,"scientific_authority":False};pool.write_text(json.dumps(payload),encoding="utf-8")
-            auto=root/"auto.json";state=run_problem_generator(storage=self.storage(root),primary_pool_path=pool,auto_inbox_path=auto,generator_responder=responder,reviewer_responder=responder,now=now);inbox=json.loads(auto.read_text())
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now)
+            run_problem_generator(storage=storage,primary_pool_path=pool,auto_inbox_path=root/"seed-auto.json",generator_responder=self.gen([],notes="Seed current anomaly-first operator receipt."),now=now)
+            payload=json.loads(pool.read_text());payload["source_coverage"]={"coverage_exhausted":True,"eligible_lane_linked_sources":4,"reviewed_lane_linked_sources":4,"unreviewed_lane_linked_sources":0,"unreviewed_no_lane_sources":1,"scientific_authority":False};pool.write_text(json.dumps(payload),encoding="utf-8")
+            auto=root/"auto.json";state=run_problem_generator(storage=storage,primary_pool_path=pool,auto_inbox_path=auto,generator_responder=responder,reviewer_responder=responder,now=now);inbox=json.loads(auto.read_text())
         self.assertEqual(state["status"],"SKIPPED_SOURCE_COVERAGE_SATURATED")
         self.assertEqual(calls,[])
         self.assertEqual(inbox["candidates"],[])
@@ -430,6 +468,14 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertEqual(state["search_diagnostics"]["lane_search_priority"],expected)
         self.assertIn('"lane_search_priority":'+json.dumps(expected,separators=(",",":")),captured["prompt"])
 
+    def test_legacy_pair_audit_receipt_keeps_legacy_provenance_after_operator_upgrade(self) -> None:
+        priority=list(DISCOVERY_LANES)
+        legacy={"run_id":"legacy-run","generator_status":"GENERATED_ZERO_CANDIDATES","generated_at":"2026-08-14T11:43:57+00:00","mode":"legacy_pair_audit","lane_search_priority":priority,"lane_search":[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"Historical pair audit found no pair."} for lane in priority],"generation_notes":"Historical receipt.","scientific_authority":False}
+        from .paper_first_problem_generator import _normalize_last_completed_lane_search_receipt
+        normalized=_normalize_last_completed_lane_search_receipt(legacy)
+        self.assertEqual(normalized["mode"],"legacy_pair_audit")
+        self.assertEqual(normalized["discovery_operator_version"],"")
+
     def test_completed_lane_search_becomes_portable_zero_authority_receipt(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);j=root/"generator.json";js=root/"generator.js"
@@ -460,7 +506,9 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         calls=[]
         def forbidden(**kwargs):calls.append(1);raise AssertionError
         with tempfile.TemporaryDirectory() as td:
-            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now);payload=json.loads(pool.read_text());payload["source_coverage"]={"coverage_exhausted":True,"eligible_lane_linked_sources":4,"reviewed_lane_linked_sources":4,"unreviewed_lane_linked_sources":0,"unreviewed_no_lane_sources":0,"scientific_authority":False};pool.write_text(json.dumps(payload),encoding="utf-8")
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now)
+            run_problem_generator(storage=storage,primary_pool_path=pool,auto_inbox_path=root/"seed-auto.json",generator_responder=self.gen([],notes="Seed current anomaly-first operator receipt."),now=now)
+            payload=json.loads(pool.read_text());payload["source_coverage"]={"coverage_exhausted":True,"eligible_lane_linked_sources":4,"reviewed_lane_linked_sources":4,"unreviewed_lane_linked_sources":0,"unreviewed_no_lane_sources":0,"scientific_authority":False};pool.write_text(json.dumps(payload),encoding="utf-8")
             j=root/"generator.json";js=root/"generator.js";write_problem_generator_state(json_path=j,js_path=js,storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto.json",generator_responder=forbidden,reviewer_responder=forbidden,last_completed_lane_search_seed=seed,now=now)
             public=json.loads(j.read_text())
         self.assertEqual(calls,[]);self.assertFalse(public["search_diagnostics"]["lane_search_complete"]);self.assertEqual(public["search_diagnostics"]["last_completed_lane_search"]["run_id"],"historic-real-call")

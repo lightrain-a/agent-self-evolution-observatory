@@ -10,7 +10,7 @@ from .ark_provider import ArkResponsesClient,ArkSettings,extract_json_object
 from .config import PROJECT_ROOT,StorageSettings
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, reduction_pattern_audit
 from .paper_first_primary_evidence import load_private_primary_pool,private_primary_pool_path
-from .paper_first_problem_discovery_contract import DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, audit_problem_candidate
+from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, LANE_DISTINCT_SOURCE_MINIMUM, audit_problem_candidate
 from .paper_first_problem_gate_queue import default_auto_inbox_path
 from .paper_first_problem_generator_prompts import generator_prompt,reviewer_prompt
 from .paper_first_problem_search_portfolio import DEFAULT_RAW_SEEDS, run_search_portfolio
@@ -174,11 +174,27 @@ def _private_dead_end_prompt_memory(storage:StorageSettings,public_memory:dict[s
     }
 
 
+def _is_current_operator_receipt(row:dict[str,Any],pool_sha:str,negative_space_sha:str)->bool:
+    return bool(
+        row.get("status") in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}
+        and row.get("pool_sha256")==pool_sha
+        and row.get("negative_space_sha256")==negative_space_sha
+        and row.get("discovery_operator_version")==DISCOVERY_OPERATOR_VERSION
+        and row.get("scientific_authority") is False
+    )
+
+
+def _has_current_operator_receipt(storage:StorageSettings,pool_sha:str,portable_receipts:list[dict[str,Any]]|None=None)->bool:
+    negative_space_sha=_negative_space_sha()
+    rows=[*_load_saturation_ledger(storage),*[row for row in (portable_receipts or []) if isinstance(row,dict)]]
+    return any(_is_current_operator_receipt(row,pool_sha,negative_space_sha) for row in rows)
+
+
 def _record_saturation_run(storage:StorageSettings,state:dict[str,Any],pool_sha:str,registry:dict[str,dict[str,Any]])->None:
     if state.get("status") not in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}: return
     ledger=_load_saturation_ledger(storage)
     raw=(state.get("raw_artifacts") or {}).get("generator") or {}
-    key={"pool_sha256":pool_sha,"negative_space_sha256":_negative_space_sha(),"requested_model":state.get("generator_model"),"resolved_model":raw.get("resolved_model")}
+    key={"pool_sha256":pool_sha,"negative_space_sha256":_negative_space_sha(),"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"requested_model":state.get("generator_model"),"resolved_model":raw.get("resolved_model")}
     prior_identical=sum(row.get("status")=="GENERATED_ZERO_CANDIDATES" and all(row.get(k)==v for k,v in key.items()) for row in ledger)
     entry={"run_id":state.get("run_id"),"generated_at":state.get("generated_at"),**key,"primary_evidence_records":len(registry),"source_refs":sorted(registry),"status":state.get("status"),"generated":(state.get("summary") or {}).get("generated",0),"semantic_clear":(state.get("summary") or {}).get("semantic_clear",0),"raw_sha256":raw.get("sha256"),"generation_notes":str(state.get("generation_notes") or "")[:2400],"scientific_authority":False}
     ledger.append(entry);ledger=ledger[-200:]
@@ -187,6 +203,7 @@ def _record_saturation_run(storage:StorageSettings,state:dict[str,Any],pool_sha:
         "run_id":str(state.get("run_id") or ""),
         "pool_sha256":pool_sha,
         "negative_space_sha256":key["negative_space_sha256"],
+        "discovery_operator_version":DISCOVERY_OPERATOR_VERSION,
         "source_refs":sorted(registry),
         "status":str(state.get("status") or ""),
         "requested_model":state.get("generator_model"),
@@ -323,7 +340,9 @@ def _normalize_lane_search(raw:Any,registry:dict[str,dict[str,Any]],expected_pri
         if status not in LANE_SEARCH_STATUSES: raise ValueError("generator-lane-search-status-invalid")
         if not reason: raise ValueError("generator-lane-search-reason-required")
         if status=="NO_PAIR" and refs: raise ValueError("generator-lane-search-no-pair-must-have-no-refs")
-        if status in {"REDUCIBLE","CANDIDATE"} and (len(refs)!=2 or refs[0]==refs[1] or any(ref not in registry for ref in refs)): raise ValueError("generator-lane-search-pair-invalid")
+        if status in {"REDUCIBLE","CANDIDATE"}:
+            minimum=LANE_DISTINCT_SOURCE_MINIMUM[lane]
+            if len(refs)!=len(set(refs)) or not (minimum<=len(refs)<=2) or any(ref not in registry for ref in refs): raise ValueError("generator-lane-search-evidence-tuple-invalid")
         rows.append({"lane":lane,"status":status,"source_refs":refs,"reason":reason});seen.add(lane)
     if set(seen)!=set(DISCOVERY_LANES) or len(rows)!=len(DISCOVERY_LANES): raise ValueError("generator-lane-search-must-cover-all-lanes")
     priority=list(expected_priority or DISCOVERY_LANES)
@@ -348,7 +367,7 @@ def _validate_lane_search_candidates(lane_search:list[dict[str,Any]],candidates:
 
 
 def _base_policy(*,portfolio:bool=False):
-    return {"zero_candidates_is_valid":True,"search_portfolio_enabled":portfolio,"search_portfolio_is_shadow_only":True,"search_portfolio_primitives":list(SEARCH_PORTFOLIO_PRIMITIVES),"canonical_transaction_forbids_search_portfolio":True,"one_content_addressed_pool_allows_at_most_one_live_generator_call":True,"one_generator_call_max":not portfolio,"one_semantic_reviewer_call_max":not portfolio,"expansion_precedes_reduction":portfolio,"mature_theory_veto_delayed_until_formulation":portfolio,"diversity_archives_required":portfolio,"branch_lineage_required":portfolio,"reduction_falsifiability_contract_required":portfolio,"generic_theory_label_cannot_veto":portfolio,"format_retry_forbidden":True,"thinking_disabled":True,"multi_lane_discovery_enabled":True,"allowed_discovery_lanes":list(DISCOVERY_LANES),"forbidden_discovery_lanes":list(FORBIDDEN_DISCOVERY_LANES),"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"independent_reviewer_must_verify_lane_contract":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"one_generator_call_must_audit_all_discovery_lanes":not portfolio,"portfolio_expansion_must_audit_all_discovery_lanes":portfolio,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"last_completed_lane_search_is_portable_zero_authority_receipt":True,"terminal_zero_call_skip_preserves_last_completed_lane_search":True,"portable_review_receipts_are_scheduler_metadata_only":True,"portable_review_receipts_have_zero_scientific_authority":True,"primary_source_coverage_receipts_are_inherited_transactionally":True,"source_coverage_saturation_skips_model_call":True,"incomplete_retrieval_without_new_lane_source_skips_model_call":True,"retrieval_incomplete_is_compute_control_not_scientific_negative":True,"carrier_probe_pending_skips_model_call":True,"carrier_probe_pending_is_compute_control_not_scientific_negative":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False}
+    return {"zero_candidates_is_valid":True,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"single_source_anomaly_first_enabled":True,"source_coverage_saturation_reopens_once_on_operator_change":True,"search_portfolio_enabled":portfolio,"search_portfolio_is_shadow_only":True,"search_portfolio_primitives":list(SEARCH_PORTFOLIO_PRIMITIVES),"canonical_transaction_forbids_search_portfolio":True,"one_content_addressed_pool_allows_at_most_one_live_generator_call":True,"one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator":True,"one_generator_call_max":not portfolio,"one_semantic_reviewer_call_max":not portfolio,"expansion_precedes_reduction":portfolio,"mature_theory_veto_delayed_until_formulation":portfolio,"diversity_archives_required":portfolio,"branch_lineage_required":portfolio,"reduction_falsifiability_contract_required":portfolio,"generic_theory_label_cannot_veto":portfolio,"format_retry_forbidden":True,"thinking_disabled":True,"multi_lane_discovery_enabled":True,"allowed_discovery_lanes":list(DISCOVERY_LANES),"forbidden_discovery_lanes":list(FORBIDDEN_DISCOVERY_LANES),"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"independent_reviewer_must_verify_lane_contract":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"one_generator_call_must_audit_all_discovery_lanes":not portfolio,"portfolio_expansion_must_audit_all_discovery_lanes":portfolio,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"last_completed_lane_search_is_portable_zero_authority_receipt":True,"terminal_zero_call_skip_preserves_last_completed_lane_search":True,"portable_review_receipts_are_scheduler_metadata_only":True,"portable_review_receipts_have_zero_scientific_authority":True,"primary_source_coverage_receipts_are_inherited_transactionally":True,"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_skips_model_call_after_current_operator_receipt":True,"source_coverage_saturation_operator_upgrade_recompile_is_explicit_exception":True,"incomplete_retrieval_without_new_lane_source_skips_model_call":True,"retrieval_incomplete_is_compute_control_not_scientific_negative":True,"carrier_probe_pending_skips_model_call":True,"carrier_probe_pending_is_compute_control_not_scientific_negative":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False}
 
 
 def _empty_summary(primary_evidence_records=0):
@@ -379,8 +398,10 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
         state["coverage_skip_reason"]="No newly rescued lane-grounded source is ready yet; bounded no-lane carrier probing still has pending sources, so the existing content-addressed pool cannot trigger another live generator call."
         return finish("SKIPPED_SOURCE_CARRIER_PROBE_PENDING")
     if state["source_coverage"]["coverage_exhausted"] and state["source_coverage"]["unreviewed_lane_linked_sources"]==0:
-        state["coverage_skip_reason"]="No unreviewed freshness/relevance-qualified source remains inside preregistered scientific-object lanes; generation resumes automatically when a new lane-grounded primary source appears."
-        return finish("SKIPPED_SOURCE_COVERAGE_SATURATED")
+        if _has_current_operator_receipt(storage,psha,inherited_receipts):
+            state["coverage_skip_reason"]="No unreviewed freshness/relevance-qualified source remains and this exact evidence pool has already completed the current discovery operator; generation resumes when evidence, the mature-reduction ledger, or the discovery operator changes."
+            return finish("SKIPPED_SOURCE_COVERAGE_SATURATED")
+        state["operator_recompile_reason"]="Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged."
     call=generator_responder or _ark;rows=[];generator_resolved_models=[]
     if portfolio_mode:
         provenance=[]
@@ -497,19 +518,27 @@ def _normalize_last_completed_lane_search_receipt(value:Any)->dict[str,Any]:
         refs=[str(ref or "").strip() for ref in item.get("source_refs") or [] if str(ref or "").strip()]
         if status not in LANE_SEARCH_STATUSES: return {}
         if status=="NO_PAIR" and refs: return {}
-        if status in {"REDUCIBLE","CANDIDATE"} and (len(refs)!=2 or refs[0]==refs[1] or any(not ref.startswith("arXiv:") for ref in refs)): return {}
+        if status in {"REDUCIBLE","CANDIDATE"}:
+            minimum=LANE_DISTINCT_SOURCE_MINIMUM[lane]
+            if len(refs)!=len(set(refs)) or not (minimum<=len(refs)<=2) or any(not ref.startswith("arXiv:") for ref in refs): return {}
         rows.append({"lane":lane,"status":status,"source_refs":refs,"reason":reason})
     if [row["lane"] for row in rows]!=priority: return {}
-    if statuses.issubset({"EXPANDED","EMPTY"}): mode="portfolio_expansion"
-    elif statuses.issubset(set(LANE_SEARCH_STATUSES)): mode="legacy_pair_audit"
+    declared_mode=str(value.get("mode") or "").strip()
+    declared_operator=str(value.get("discovery_operator_version") or "").strip()
+    if statuses.issubset({"EXPANDED","EMPTY"}):
+        mode="portfolio_expansion"
+    elif statuses.issubset(set(LANE_SEARCH_STATUSES)):
+        # Preserve historical pair-audit provenance. Only receipts explicitly
+        # produced under the current operator are labeled anomaly-first.
+        mode="anomaly_first_evidence_tuple_audit" if declared_operator==DISCOVERY_OPERATOR_VERSION else (declared_mode or "legacy_pair_audit")
     else: return {}
-    return {"run_id":run_id,"generator_status":str(value.get("generator_status") or ""),"generated_at":str(value.get("generated_at") or ""),"mode":mode,"lane_search_priority":priority,"lane_search":rows,"generation_notes":" ".join(str(value.get("generation_notes") or "").split())[:800],"scientific_authority":False}
+    return {"run_id":run_id,"generator_status":str(value.get("generator_status") or ""),"generated_at":str(value.get("generated_at") or ""),"mode":mode,"discovery_operator_version":declared_operator,"lane_search_priority":priority,"lane_search":rows,"generation_notes":" ".join(str(value.get("generation_notes") or "").split())[:800],"scientific_authority":False}
 
 
 def _completed_lane_search_receipt_from_state(source:dict[str,Any])->dict[str,Any]:
     diagnostics=source.get("search_diagnostics") or {}
     if diagnostics.get("lane_search_complete") is not True: return {}
-    return _normalize_last_completed_lane_search_receipt({"run_id":source.get("run_id"),"generator_status":source.get("status"),"generated_at":source.get("generated_at"),"lane_search_priority":diagnostics.get("lane_search_priority"),"lane_search":diagnostics.get("lane_search"),"generation_notes":source.get("generation_notes"),"scientific_authority":False})
+    return _normalize_last_completed_lane_search_receipt({"run_id":source.get("run_id"),"generator_status":source.get("status"),"generated_at":source.get("generated_at"),"mode":"anomaly_first_evidence_tuple_audit","discovery_operator_version":str((source.get("policy") or {}).get("discovery_operator_version") or ""),"lane_search_priority":diagnostics.get("lane_search_priority"),"lane_search":diagnostics.get("lane_search"),"generation_notes":source.get("generation_notes"),"scientific_authority":False})
 
 
 def _merge_last_completed_lane_search(state:dict[str,Any],previous:dict[str,Any],seed:dict[str,Any]|None=None)->dict[str,Any]:

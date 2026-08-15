@@ -338,6 +338,10 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(discovery["policy"]["search_portfolio_is_shadow_only"])
         self.assertTrue(discovery["policy"]["search_portfolio_cannot_publish_canonical_generator_or_queue"])
         self.assertTrue(discovery["policy"]["one_content_addressed_pool_allows_at_most_one_live_generator_call"])
+        self.assertTrue(discovery["policy"]["one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator"])
+        self.assertTrue(discovery["policy"]["source_coverage_saturation_reopens_once_on_operator_change"])
+        self.assertTrue(discovery["policy"]["single_source_anomaly_first_search_enabled"])
+        self.assertEqual(discovery["policy"]["discovery_operator_version"],"anomaly-first-v1")
         self.assertEqual(discovery["policy"]["forbidden_discovery_lanes"],["MISSING_CELL","SHARED_LIMITATION","PURE_TOPIC_BRAINSTORM"])
         self.assertTrue(discovery["policy"]["lane_specific_machine_evidence_contract_required"])
         self.assertTrue(discovery["policy"]["no_lane_specific_downstream_relaxation"])
@@ -430,7 +434,9 @@ class ResearchSystemTest(unittest.TestCase):
         admission=self.state["paper_first_shadow_search_admission"]
         self.assertFalse(admission["scientific_authority"])
         self.assertEqual((admission.get("summary") or {}).get("automatic_provider_calls_authorized"),0)
-        self.assertFalse((admission.get("summary") or {}).get("qualification_allowed"))
+        self.assertTrue((admission.get("summary") or {}).get("qualification_allowed"))
+        self.assertTrue((admission.get("summary") or {}).get("operator_upgrade_recompile"))
+        self.assertFalse((admission.get("summary") or {}).get("same_discovery_operator_version"))
         self.assertTrue((admission.get("policy") or {}).get("admission_never_authorizes_provider_calls"))
         broken=copy.deepcopy(self.state);broken["paper_first_shadow_search_admission"]["summary"]["automatic_provider_calls_authorized"]=1
         self.assertTrue(any("Shadow Search admission" in error for error in validate_state(broken)))
@@ -438,12 +444,12 @@ class ResearchSystemTest(unittest.TestCase):
     def test_shadow_continuation_frontier_is_deterministic_zero_authority_wait_or_control(self) -> None:
         frontier=self.state["paper_first_shadow_continuation_frontier"]
         self.assertFalse(frontier["scientific_authority"])
-        expected_wait="WAIT_EXTERNAL_PRIMARY_OR_SUPPORT_RELEASE_CHANGE" if int((frontier.get("summary") or {}).get("support_holds") or 0)>0 else "WAIT_EXTERNAL_PRIMARY_CONTENT_CHANGE"
-        self.assertEqual(frontier["status"],expected_wait)
-        self.assertEqual((frontier.get("summary") or {}).get("active_control_actions"),0)
-        self.assertEqual((frontier.get("summary") or {}).get("external_wait"),1)
+        self.assertEqual(frontier["status"],"READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION")
+        self.assertEqual((frontier.get("summary") or {}).get("active_control_actions"),1)
+        self.assertEqual((frontier.get("summary") or {}).get("external_wait"),0)
+        self.assertEqual(frontier.get("next_control_action"),"canonical-private-pool-shadow-qualification")
         self.assertEqual((frontier.get("summary") or {}).get("automatic_provider_calls_authorized"),0)
-        drift=copy.deepcopy(self.state);drift["paper_first_shadow_continuation_frontier"]["status"]="READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION"
+        drift=copy.deepcopy(self.state);drift["paper_first_shadow_continuation_frontier"]["status"]="WAIT_EXTERNAL_PRIMARY_CONTENT_CHANGE"
         self.assertTrue(any("deterministic projection" in error for error in validate_state(drift)))
         escalated=copy.deepcopy(self.state);escalated["paper_first_shadow_continuation_frontier"]["summary"]["generator_reopen_authorized"]=1
         self.assertTrue(any("Shadow continuation frontier" in error for error in validate_state(escalated)))
@@ -623,8 +629,8 @@ class ResearchSystemTest(unittest.TestCase):
 
     def test_discovery_frontier_is_trigger_driven_zero_authority_and_consistent(self) -> None:
         frontier=self.state["paper_first_discovery_frontier"]
-        self.assertEqual(frontier["status"],"WAIT_EXTERNAL_EVIDENCE_TRIGGERS")
-        self.assertEqual(frontier["summary"]["open_internal_frontiers"],0)
+        self.assertEqual(frontier["status"],"SHADOW_QUALIFICATION_PENDING")
+        self.assertEqual(frontier["summary"]["open_internal_frontiers"],1)
         self.assertGreaterEqual(frontier["summary"]["external_triggers"],1)
         for key in ("automatic_model_calls_authorized","automatic_problem_gate_authorized","automatic_method_authorized","automatic_experiment_authorized","automatic_p0_authorized","automatic_gpu_authorized"):
             self.assertEqual(frontier["summary"][key],0)
