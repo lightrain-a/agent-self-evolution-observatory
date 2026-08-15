@@ -18,6 +18,7 @@ DEFAULT_EVOLUTION_PARENTS=24
 DEFAULT_SECOND_GENERATION=12
 DEFAULT_FORMULATION_BUDGET=24
 DEFAULT_EXPANSION_SHARD_SIZE=6
+DEFAULT_MAX_PARALLEL_CALLS=2
 CROSS_DOMAIN_STRUCTURES=(
     "continual learning / stability-plasticity", "online algorithms / regret and switching cost",
     "distributed systems / consistency and partial failure", "fault-tolerant systems / rollback and irreversible effects",
@@ -202,7 +203,7 @@ def _formulation_prompt(branches,registry,dead_end_memory=None):
         f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 
-def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,model:str,target_raw_seeds:int=DEFAULT_RAW_SEEDS,archive_capacity:int=DEFAULT_ARCHIVE_CAPACITY,evolution_parents:int=DEFAULT_EVOLUTION_PARENTS,second_generation:int=DEFAULT_SECOND_GENERATION,formulation_budget:int=DEFAULT_FORMULATION_BUDGET,max_parallel_calls:int=5,dead_end_memory:dict[str,Any]|None=None)->dict[str,Any]:
+def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,model:str,target_raw_seeds:int=DEFAULT_RAW_SEEDS,archive_capacity:int=DEFAULT_ARCHIVE_CAPACITY,evolution_parents:int=DEFAULT_EVOLUTION_PARENTS,second_generation:int=DEFAULT_SECOND_GENERATION,formulation_budget:int=DEFAULT_FORMULATION_BUDGET,max_parallel_calls:int=DEFAULT_MAX_PARALLEL_CALLS,dead_end_memory:dict[str,Any]|None=None)->dict[str,Any]:
     reg={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")};per_lane=max(1,int(math.ceil(target_raw_seeds/max(1,len(SEARCH_PORTFOLIO_PRIMITIVES)))))
     raw=[];errors=[];calls=0
     def expand_one(lane,part,count):

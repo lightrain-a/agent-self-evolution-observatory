@@ -3,7 +3,7 @@ from __future__ import annotations
 import json,re,unittest
 
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES,SEARCH_PORTFOLIO_PRIMITIVES,LANE_EVIDENCE_REQUIRED,LANE_SOURCE_ROLES
-from .paper_first_problem_search_portfolio import _formulation_prompt,run_search_portfolio
+from .paper_first_problem_search_portfolio import DEFAULT_MAX_PARALLEL_CALLS,_formulation_prompt,run_search_portfolio
 from .paper_first_fresh_saturation import reduction_pattern_audit
 
 
@@ -28,6 +28,9 @@ class SearchPortfolioTest(unittest.TestCase):
             branches=json.loads(prompt.split("BRANCHES=",1)[1].split(". DEAD_END_MEMORY=",1)[0]);rows=[{"candidate_id":f"PORT-{i}","source_branch_id":b["seed_id"],"title":b["title"],"discovery_lane":b["discovery_lane"]} for i,b in enumerate(branches)]
             return {"text":json.dumps({"candidates":rows,"rejected":[]}),"resolved_model":"doubao-seed-evolving"}
         raise AssertionError(role)
+
+    def test_default_parallelism_is_provider_burst_safe(self):
+        self.assertEqual(DEFAULT_MAX_PARALLEL_CALLS,2)
 
     def test_search_portfolio_expands_diversifies_and_evolves_before_reduction(self):
         state=run_search_portfolio(records=self.records(),call=self.caller,model="ark-code-latest",target_raw_seeds=20,archive_capacity=16,evolution_parents=8,second_generation=4,formulation_budget=8,max_parallel_calls=3)
