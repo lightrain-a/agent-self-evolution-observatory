@@ -77,6 +77,9 @@ class SupportAssetRecheckQueueTest(unittest.TestCase):
         self.assertEqual(row["queue_status"], "AWAIT_ASSET_RECHECK")
         self.assertEqual(row["source_refs"], ["arXiv:2608.00001"])
         self.assertEqual(row["required_unit"], "matched released trajectory units")
+        self.assertIn("first-party reconstruction", row["recheck_instruction"])
+        self.assertTrue(state["policy"]["support_inventory_recheck_considers_direct_or_reconstructed_truth"])
+        self.assertTrue(state["policy"]["reconstruction_requires_materialized_units_and_provenance"])
         for key in ("support_qualified", "generator_reopen_authorized", "problem_gate_authorized", "method_authorized", "experiment_authorized", "p0_authorized", "gpu_authorized", "scientific_authority"):
             self.assertFalse(row[key])
 

@@ -64,6 +64,9 @@ class ProblemFalsifierPreflightTest(unittest.TestCase):
         row=request["rows"][0]
         self.assertEqual(row["primary_refs"],["arXiv:2608.00001"])
         self.assertIn("Determine whether",row["support_inventory_question"])
+        self.assertIn("materialize", row["support_inventory_question"])
+        self.assertTrue(request["policy"]["direct_released_unit_table_not_required_for_reconstructible_truth"])
+        self.assertTrue(request["policy"]["first_party_code_may_materialize_independent_support_truth"])
         self.assertFalse(request["scientific_authority"])
         self.assertFalse(request["authority"]["paper_design"])
         self.assertTrue(request["policy"]["support_inventory_request_cannot_claim_asset_availability"])
@@ -92,6 +95,64 @@ class ProblemFalsifierPreflightTest(unittest.TestCase):
         bad=json.loads(json.dumps(inventory));bad["rows"][0]["qualified_units"]=0
         with self.assertRaisesRegex(ValueError,"positive qualified_units"):
             compile_problem_falsifier_preflight(self.machine(),bad,run_id="shadow-rx")
+
+    def test_reconstructed_support_requires_executed_materialization_provenance_and_anti_leakage_flags(self) -> None:
+        inventory={"inventory_origin":"first-party-reconstruction-audit","rows":[{
+            "candidate_id":"SHADOW-P01-C01","disposition":"SUPPORT_QUALIFIED",
+            "required_unit":"Matched unit-level records.","asset_audit":"Materialized from frozen first-party code after the operationalization was frozen.",
+            "primary_refs":["arXiv:2608.00001"],"support_mode":"FIRST_PARTY_CODE_RECONSTRUCTION",
+            "qualified_units":8,"unit_manifest_sha256":"b"*64,
+            "support_scope":"Eight materialized units expose the frozen moderator and outcome without changing the candidate pool.",
+            "reconstruction_receipt":{
+                "substrate_id":"author/repo",
+                "source_or_substrate_revision":"deadbeef",
+                "materialization_command":"python reproduce.py --frozen-contract contract.json",
+                "provenance_sha256":"d"*64,
+                "operationalization_frozen_before_outcomes":True,
+                "independent_truth":True,
+                "synthetic_substitution":False,
+                "candidate_mechanism_injected":False,
+                "candidate_pool_changed":False,
+                "hidden_outcome_retuning":False,
+            },
+        }],"scientific_authority":False}
+        state=compile_problem_falsifier_preflight(self.machine(),inventory,run_id="shadow-rx",inventory_sha256="c"*64)
+        row=state["rows"][0]
+        self.assertEqual(row["support_mode"],"FIRST_PARTY_CODE_RECONSTRUCTION")
+        self.assertEqual(row["qualified_units"],8)
+        self.assertEqual(row["reconstruction_receipt"]["provenance_sha256"],"d"*64)
+        self.assertFalse(row["falsifier_execution_authorized"])
+
+        missing=json.loads(json.dumps(inventory));missing["rows"][0].pop("reconstruction_receipt")
+        with self.assertRaisesRegex(ValueError,"reconstruction_receipt"):
+            compile_problem_falsifier_preflight(self.machine(),missing,run_id="shadow-rx")
+        leaked=json.loads(json.dumps(inventory));leaked["rows"][0]["reconstruction_receipt"]["candidate_mechanism_injected"]=True
+        with self.assertRaisesRegex(ValueError,"anti-leakage"):
+            compile_problem_falsifier_preflight(self.machine(),leaked,run_id="shadow-rx")
+
+    def test_existing_provenance_substrate_uses_the_same_reconstruction_contract(self) -> None:
+        inventory={"inventory_origin":"existing-substrate-reconstruction-audit","rows":[{
+            "candidate_id":"SHADOW-P01-C01","disposition":"SUPPORT_QUALIFIED",
+            "required_unit":"Matched unit-level records.","asset_audit":"Materialized from an existing provenance-audited local substrate.",
+            "primary_refs":["arXiv:2608.00001"],"support_mode":"EXISTING_PROVENANCE_SUBSTRATE",
+            "qualified_units":6,"unit_manifest_sha256":"e"*64,
+            "support_scope":"Six independent units under the frozen source-grounded operationalization.",
+            "reconstruction_receipt":{
+                "substrate_id":"local/replay-v3",
+                "source_or_substrate_revision":"manifest-20260815",
+                "materialization_command":"python replay.py --contract frozen.json",
+                "provenance_sha256":"f"*64,
+                "operationalization_frozen_before_outcomes":True,
+                "independent_truth":True,
+                "synthetic_substitution":False,
+                "candidate_mechanism_injected":False,
+                "candidate_pool_changed":False,
+                "hidden_outcome_retuning":False,
+            },
+        }],"scientific_authority":False}
+        row=compile_problem_falsifier_preflight(self.machine(),inventory,run_id="shadow-rx")["rows"][0]
+        self.assertEqual(row["support_mode"],"EXISTING_PROVENANCE_SUBSTRATE")
+        self.assertEqual(row["qualified_units"],6)
 
     def test_inventory_must_cover_queue_exactly_and_stay_grounded_to_candidate_refs(self) -> None:
         missing={"inventory_origin":"x","rows":[],"scientific_authority":False}

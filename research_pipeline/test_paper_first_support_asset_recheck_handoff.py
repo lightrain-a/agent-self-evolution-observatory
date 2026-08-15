@@ -68,7 +68,10 @@ class SupportAssetRecheckHandoffTest(unittest.TestCase):
         self.assertEqual((state["summary"]["queued_asset_rechecks"], state["summary"]["support_inventory_recheck_ready"]), (1, 1))
         row = state["entries"][0]
         self.assertEqual(row["next_entrypoint"], "research_pipeline.paper_first_problem_falsifier_preflight")
+        self.assertIn("materialized independent truth", row["support_inventory_scope"])
         self.assertTrue(row["support_inventory_request_required"])
+        self.assertTrue(state["policy"]["support_inventory_must_consider_direct_or_reconstructed_truth"])
+        self.assertTrue(state["policy"]["reconstructed_truth_requires_materialized_units_and_provenance_before_qualification"])
         for key in ("automatic_execution_authorized","provider_calls_authorized","support_qualified","falsifier_execution_authorized","generator_reopen_authorized","problem_gate_authorized","method_authorized","experiment_authorized","p0_authorized","gpu_authorized","scientific_authority"):
             self.assertFalse(row[key])
 

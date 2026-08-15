@@ -12,6 +12,8 @@ from typing import Any
 REQUEST_FILENAME = "problem-falsifier-support-inventory-request.json"
 PREFLIGHT_FILENAME = "problem-falsifier-preflight.json"
 ALLOWED_DISPOSITIONS = {"SUPPORT_QUALIFIED", "HOLD_SUPPORT_UNAVAILABLE"}
+SUPPORT_MODES = {"RELEASED_UNITS", "FIRST_PARTY_CODE_RECONSTRUCTION", "EXISTING_PROVENANCE_SUBSTRATE"}
+RECONSTRUCTED_SUPPORT_MODES = {"FIRST_PARTY_CODE_RECONSTRUCTION", "EXISTING_PROVENANCE_SUBSTRATE"}
 AUTHORITY = {
     "canonical_generator": False,
     "canonical_problem_gate": False,
@@ -27,6 +29,12 @@ REQUEST_POLICY = {
     "support_inventory_request_cannot_claim_asset_availability": True,
     "synthetic_or_invented_units_cannot_substitute_for_required_source_units": True,
     "support_unavailable_is_not_scientific_falsification": True,
+    "direct_released_unit_table_not_required_for_reconstructible_truth": True,
+    "first_party_code_may_materialize_independent_support_truth": True,
+    "existing_provenance_substrate_may_materialize_independent_support_truth": True,
+    "reconstruction_must_freeze_operationalization_before_outcome_readout": True,
+    "reconstruction_cannot_use_synthetic_substitution_or_candidate_mechanism_injection": True,
+    "reconstruction_cannot_retune_on_hidden_outcomes_or_change_candidate_pool": True,
     "canonical_generator_and_queue_untouched": True,
     "automatic_problem_gate_authority": False,
     "automatic_paper_design_authority": False,
@@ -120,8 +128,11 @@ def build_support_inventory_request(machine_audit: dict[str, Any], *, run_id: st
             "strongest_same_information_baseline": strongest,
             "falsifier_expression": falsifier,
             "support_inventory_question": (
-                "Determine whether primary or author-released artifacts expose the observational/interventional units and fields "
-                "needed to execute this frozen falsifier without synthetic substitution, candidate-pool changes, or hidden-outcome retuning."
+                "Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields "
+                "needed for this frozen falsifier, or whether author-released first-party code / an existing provenance-audited substrate "
+                "can materialize those units as independent truth under the frozen operationalization. A reconstructed unit is admissible only "
+                "after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool "
+                "changes, or hidden-outcome retuning."
             ),
             "required_receipt_dispositions": sorted(ALLOWED_DISPOSITIONS),
             "scientific_authority": False,
@@ -178,6 +189,9 @@ def _validate_receipt_row(request: dict[str, Any], receipt: dict[str, Any]) -> d
     qualified_units = receipt.get("qualified_units")
     manifest_sha = str(receipt.get("unit_manifest_sha256") or "").strip().lower()
     support_scope = _bounded(receipt.get("support_scope"), 1600)
+    support_mode = str(receipt.get("support_mode") or "RELEASED_UNITS").strip().upper()
+    if support_mode not in SUPPORT_MODES:
+        raise ValueError(f"support-qualified receipt has invalid support_mode: {candidate_id}")
     if not isinstance(qualified_units, int) or qualified_units <= 0:
         raise ValueError(f"support-qualified receipt requires positive qualified_units: {candidate_id}")
     if not re.fullmatch(r"[0-9a-f]{64}", manifest_sha):
@@ -185,11 +199,40 @@ def _validate_receipt_row(request: dict[str, Any], receipt: dict[str, Any]) -> d
     if not support_scope:
         raise ValueError(f"support-qualified receipt requires support_scope: {candidate_id}")
     out.update({
+        "support_mode": support_mode,
         "qualified_units": qualified_units,
         "unit_manifest_sha256": manifest_sha,
         "support_scope": support_scope,
         "falsifier_execution_authorized": False,
     })
+    if support_mode in RECONSTRUCTED_SUPPORT_MODES:
+        reconstruction = receipt.get("reconstruction_receipt")
+        if not isinstance(reconstruction, dict):
+            raise ValueError(f"reconstructed support requires reconstruction_receipt: {candidate_id}")
+        substrate_id = _bounded(reconstruction.get("substrate_id"), 800)
+        revision = _bounded(reconstruction.get("source_or_substrate_revision"), 800)
+        command = _bounded(reconstruction.get("materialization_command"), 1800)
+        provenance_sha = str(reconstruction.get("provenance_sha256") or "").strip().lower()
+        if not substrate_id or not revision or not command or not re.fullmatch(r"[0-9a-f]{64}", provenance_sha):
+            raise ValueError(f"reconstructed support requires substrate/revision/command/provenance_sha256: {candidate_id}")
+        required_true = ("operationalization_frozen_before_outcomes", "independent_truth")
+        required_false = ("synthetic_substitution", "candidate_mechanism_injected", "candidate_pool_changed", "hidden_outcome_retuning")
+        if any(reconstruction.get(key) is not True for key in required_true):
+            raise ValueError(f"reconstructed support requires frozen operationalization and independent truth: {candidate_id}")
+        if any(reconstruction.get(key) is not False for key in required_false):
+            raise ValueError(f"reconstructed support violates anti-leakage reconstruction contract: {candidate_id}")
+        out["reconstruction_receipt"] = {
+            "substrate_id": substrate_id,
+            "source_or_substrate_revision": revision,
+            "materialization_command": command,
+            "provenance_sha256": provenance_sha,
+            "operationalization_frozen_before_outcomes": True,
+            "independent_truth": True,
+            "synthetic_substitution": False,
+            "candidate_mechanism_injected": False,
+            "candidate_pool_changed": False,
+            "hidden_outcome_retuning": False,
+        }
     return out
 
 
