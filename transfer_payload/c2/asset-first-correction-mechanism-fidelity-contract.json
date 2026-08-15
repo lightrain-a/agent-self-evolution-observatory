@@ -1,0 +1,1317 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-CORRECTION-MECHANISM-FIDELITY-F0",
+  "stage": "evidence-design",
+  "status": "FROZEN_PENDING_PREFLIGHT",
+  "scientific_object": "mechanism fidelity of a persistent corrective parameter update: endpoint/downstream effects remaining after the intended verified correction program is equalized",
+  "exact_prediction": "If a persistent correction update is mechanism-faithful, once base and updated policies are placed in the same exact correction state and forced through the same verified teacher correction suffix, the subsequent updated-policy continuation should not exhibit a systematic residual outcome effect relative to base continuation. Repeated nonzero residuals show off-support parameter effects not explained by the intended correction behavior.",
+  "intervention": "For each outcome-blind selected learned correction context, exact-replay the frozen ScienceWorld state and run four continuations: base-natural, base+forced verified teacher suffix, frozen-updated-natural, frozen-updated+the same forced teacher suffix. No training and no teacher/gold access during model continuation.",
+  "independent_truth": "ScienceWorld first-party environment score/reward plus exact action realization; no LLM judge.",
+  "prediction_unit": "one frozen (updated adapter, learned correction decision context) selected without source-eval outcome using exact training-eval learnedness plus a hash",
+  "strongest_same_information_baselines": [
+    "intended correction program alone: base+teacher-suffix explains updated outcome once correction is equalized",
+    "generic parameter-update drift measured by base-vs-updated natural continuation",
+    "training exactness / task-family / update-source metadata",
+    "C-5 style endpoint necessity/sufficiency without mechanism decomposition"
+  ],
+  "arms": [
+    "base_natural",
+    "base_forced_teacher_suffix",
+    "updated_natural",
+    "updated_forced_teacher_suffix"
+  ],
+  "primary_estimand": "mechanism_fidelity_residual = updated_forced_teacher_suffix_final_score - base_forced_teacher_suffix_final_score",
+  "diagnostic_estimands": {
+    "intended_correction_value": "base_forced_teacher_suffix_final_score - base_natural_final_score",
+    "updated_natural_effect": "updated_natural_final_score - base_natural_final_score",
+    "natural_vs_equalized_updated_gap": "updated_natural_final_score - updated_forced_teacher_suffix_final_score"
+  },
+  "frozen_gate": {
+    "provenance_hold": "any exact replay context mismatch, adapter SHA mismatch, base rollback fingerprint mismatch, forced teacher suffix local-score mismatch, or updated-natural first action != frozen repair_action",
+    "go": "nonzero mechanism_fidelity_residual in >=3/12 contexts AND across >=2 task families",
+    "stop": "nonzero mechanism_fidelity_residual in <=1/12 contexts OR residual contexts confined to one task family",
+    "inconclusive": "exactly 2/12 residual contexts across >=2 families",
+    "strong_risk_flag": "at least one negative mechanism_fidelity_residual",
+    "paper_design_authority": false,
+    "method_authority": false,
+    "p0_authority": false
+  },
+  "selection_rule": "For each ON/OFF updated arm with >=1 original training_eval exact=True, choose the learned pair with minimum SHA256(unit_id|arm|pair_index|mechanism-fidelity-v1); no source_eval gain/sign is read by selection.",
+  "selected_contexts": [
+    {
+      "context_id": "headroom-find-animal-q1-1::ON::p1",
+      "unit_id": "headroom-find-animal-q1-1",
+      "task_family": "find-animal",
+      "variation": 107,
+      "initial_state_key": "ac156fd9c62182f96f0435d069d15d54af88e7135f6b6e369423887f8732abc4",
+      "update_arm": "ON",
+      "pair_index": 1,
+      "selection_hash": "a0a009543da010b15d89ec045df6e626893564c10d8f5dd3f4a712c58a7ed418",
+      "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+      "observation": "The door is now open.",
+      "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+      "inventory": "In your inventory, you see:\n\ta giant tortoise egg\n\tan orange\n",
+      "history": [
+        [
+          "focus on egg giant tortoise Action: focus on egg giant tortoise",
+          "No known action matches that input."
+        ],
+        [
+          "move egg giant tortoise to purple box",
+          "No known action matches that input."
+        ],
+        [
+          "focus on egg giant tortoise",
+          "You focus on the giant tortoise egg."
+        ],
+        [
+          "pick up egg giant tortoise",
+          "You move the giant tortoise to the inventory."
+        ],
+        [
+          "open door to kitchen",
+          "The door is now open."
+        ]
+      ],
+      "templates": [
+        "activate OBJ",
+        "close OBJ",
+        "connect OBJ to OBJ",
+        "deactivate OBJ",
+        "disconnect OBJ",
+        "dunk OBJ in OBJ",
+        "eat OBJ",
+        "flush OBJ",
+        "focus on OBJ",
+        "go OBJ",
+        "inventory",
+        "look around",
+        "look at OBJ",
+        "look in OBJ",
+        "mix OBJ",
+        "move OBJ to OBJ",
+        "open OBJ",
+        "pick up OBJ",
+        "pour OBJ in OBJ",
+        "put down OBJ",
+        "read OBJ",
+        "reset task",
+        "task",
+        "use OBJ on OBJ",
+        "wait",
+        "wait1"
+      ],
+      "objects": [
+        "agent",
+        "air",
+        "axe",
+        "blue jay",
+        "door to foundry",
+        "door to greenhouse",
+        "door to kitchen",
+        "egg parrot",
+        "fire pit",
+        "foundry",
+        "fountain",
+        "greenhouse",
+        "ground",
+        "kitchen",
+        "outside",
+        "substance in fountain",
+        "wood"
+      ],
+      "repair_action": "go to kitchen",
+      "teacher_state_id": "u0-s0",
+      "source_start_score": 58,
+      "teacher_branch_full_sequence": [
+        "open door to kitchen",
+        "go to kitchen",
+        "look around"
+      ],
+      "teacher_branch_full_final_score": 75,
+      "teacher_branch_step": 1,
+      "teacher_suffix": [
+        "go to kitchen",
+        "look around"
+      ],
+      "teacher_suffix_expected_final_score": 75,
+      "replay_prefix_actions": [
+        "focus on egg giant tortoise Action: focus on egg giant tortoise",
+        "move egg giant tortoise to purple box",
+        "focus on egg giant tortoise",
+        "pick up egg giant tortoise"
+      ],
+      "adapter_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-0/adapters/headroom-find-animal-q1-1/onpolicy_shared_teacher",
+      "adapter_model_sha256": "a87d790f5ec0e70ad58bc114ef01539be5985e75fe500c47140a512d6f1b1805",
+      "original_training_eval": {
+        "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+        "repair_action": "go to kitchen",
+        "pred_action": "go to kitchen",
+        "exact": true,
+        "raw": "Action: go to kitchen"
+      }
+    },
+    {
+      "context_id": "headroom-find-animal-q1-1::OFF::p1",
+      "unit_id": "headroom-find-animal-q1-1",
+      "task_family": "find-animal",
+      "variation": 107,
+      "initial_state_key": "ac156fd9c62182f96f0435d069d15d54af88e7135f6b6e369423887f8732abc4",
+      "update_arm": "OFF",
+      "pair_index": 1,
+      "selection_hash": "6790a884fe2df7ad97ce8193082b0377b933ec6a9700cabe4501aa2d99386bdc",
+      "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+      "observation": "You focus on the blue jay egg.",
+      "observation_sha256": "12d3404367d12e37b3899478bc9ce1471d845a05cf98955ea99bdaac6e01c43c",
+      "inventory": "In your inventory, you see:\n\tan orange\n",
+      "history": [
+        [
+          "look around",
+          "This outside location is called the outside. Here you see: \n\tthe agent\n\ta substance called air\n\tan axe\n\ta blue jay egg\n\ta fire pit (containing nothing)\n\ta fountain (containing nothing)\n\ta giant tortoise egg\n\tthe ground\n\ta parrot egg\n\ta substance called wood\nYou also see:\n\tA door to the foundry (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)"
+        ],
+        [
+          "focus on blue jay egg",
+          "You focus on the blue jay egg."
+        ]
+      ],
+      "templates": [
+        "activate OBJ",
+        "close OBJ",
+        "connect OBJ to OBJ",
+        "deactivate OBJ",
+        "disconnect OBJ",
+        "dunk OBJ in OBJ",
+        "eat OBJ",
+        "flush OBJ",
+        "focus on OBJ",
+        "go OBJ",
+        "inventory",
+        "look around",
+        "look at OBJ",
+        "look in OBJ",
+        "mix OBJ",
+        "move OBJ to OBJ",
+        "open OBJ",
+        "pick up OBJ",
+        "pour OBJ in OBJ",
+        "put down OBJ",
+        "read OBJ",
+        "reset task",
+        "task",
+        "use OBJ on OBJ",
+        "wait",
+        "wait1"
+      ],
+      "objects": [
+        "agent",
+        "air",
+        "axe",
+        "blue jay",
+        "door to foundry",
+        "door to greenhouse",
+        "door to kitchen",
+        "egg giant tortoise",
+        "egg parrot",
+        "fire pit",
+        "foundry",
+        "fountain",
+        "greenhouse",
+        "ground",
+        "kitchen",
+        "outside",
+        "substance in fountain",
+        "wood"
+      ],
+      "repair_action": "pick up blue jay egg",
+      "teacher_state_id": "off-headroom-find-animal-q1-1-e0",
+      "source_start_score": 0,
+      "teacher_branch_full_sequence": [
+        "focus on blue jay egg",
+        "pick up blue jay egg"
+      ],
+      "teacher_branch_full_final_score": 58,
+      "teacher_branch_step": 1,
+      "teacher_suffix": [
+        "pick up blue jay egg"
+      ],
+      "teacher_suffix_expected_final_score": 58,
+      "replay_prefix_actions": [
+        "look around"
+      ],
+      "adapter_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-0/adapters/headroom-find-animal-q1-1/offpolicy_shared_teacher",
+      "adapter_model_sha256": "f47dffecd0b29b8a37e4965f107d0809f2d61efd9ac9f0b8b92f05562ddd8886",
+      "original_training_eval": {
+        "observation_sha256": "12d3404367d12e37b3899478bc9ce1471d845a05cf98955ea99bdaac6e01c43c",
+        "repair_action": "pick up blue jay egg",
+        "pred_action": "pick up blue jay egg",
+        "exact": true,
+        "raw": "Action: pick up blue jay egg"
+      }
+    },
+    {
+      "context_id": "headroom-find-animal-q2-3::ON::p3",
+      "unit_id": "headroom-find-animal-q2-3",
+      "task_family": "find-animal",
+      "variation": 139,
+      "initial_state_key": "f56dbfc79e13255e71101212ff0bc71c2d7c7d38e23f2998cac432971e8c1a9b",
+      "update_arm": "ON",
+      "pair_index": 3,
+      "selection_hash": "27dafc1b2879ba338344ab9005f6297fa3bd630d3db5a3397fbeb0b61d4de5f7",
+      "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+      "observation": "The door is not open.",
+      "observation_sha256": "87d9ce29b566a667631b329be1a530d20621a2ff6fe7f52284edc26ad97a9bd4",
+      "inventory": "In your inventory, you see:\n\tan orange\n",
+      "history": [
+        [
+          "go to bedroom door",
+          "The door is not open."
+        ]
+      ],
+      "templates": [
+        "activate OBJ",
+        "close OBJ",
+        "connect OBJ to OBJ",
+        "deactivate OBJ",
+        "disconnect OBJ",
+        "dunk OBJ in OBJ",
+        "eat OBJ",
+        "flush OBJ",
+        "focus on OBJ",
+        "go OBJ",
+        "inventory",
+        "look around",
+        "look at OBJ",
+        "look in OBJ",
+        "mix OBJ",
+        "move OBJ to OBJ",
+        "open OBJ",
+        "pick up OBJ",
+        "pour OBJ in OBJ",
+        "put down OBJ",
+        "read OBJ",
+        "reset task",
+        "task",
+        "use OBJ on OBJ",
+        "wait",
+        "wait1"
+      ],
+      "objects": [
+        "agent",
+        "air",
+        "art studio",
+        "art studio door",
+        "bedroom",
+        "bedroom door",
+        "door to greenhouse",
+        "door to kitchen",
+        "door to living room",
+        "door to workshop",
+        "greenhouse",
+        "hallway",
+        "kitchen",
+        "living room",
+        "painting",
+        "workshop"
+      ],
+      "repair_action": "open bedroom door",
+      "teacher_state_id": "u1-s1",
+      "source_start_score": 0,
+      "teacher_branch_full_sequence": [
+        "open bedroom door",
+        "go to bedroom",
+        "look around"
+      ],
+      "teacher_branch_full_final_score": 25,
+      "teacher_branch_step": 0,
+      "teacher_suffix": [
+        "open bedroom door",
+        "go to bedroom",
+        "look around"
+      ],
+      "teacher_suffix_expected_final_score": 25,
+      "replay_prefix_actions": [
+        "go to bedroom door"
+      ],
+      "adapter_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-1/adapters/headroom-find-animal-q2-3/onpolicy_shared_teacher",
+      "adapter_model_sha256": "880522733365f06beb057d18fa3dd46e73e49ea427f3e09643adf033c1a3fba5",
+      "original_training_eval": {
+        "observation_sha256": "87d9ce29b566a667631b329be1a530d20621a2ff6fe7f52284edc26ad97a9bd4",
+        "repair_action": "open bedroom door",
+        "pred_action": "open bedroom door",
+        "exact": true,
+        "raw": "Action: open bedroom door"
+      }
+    },
+    {
+      "context_id": "headroom-find-animal-q2-3::OFF::p1",
+      "unit_id": "headroom-find-animal-q2-3",
+      "task_family": "find-animal",
+      "variation": 139,
+      "initial_state_key": "f56dbfc79e13255e71101212ff0bc71c2d7c7d38e23f2998cac432971e8c1a9b",
+      "update_arm": "OFF",
+      "pair_index": 1,
+      "selection_hash": "2d7b55246f6874b5275b2a96963a1ea2c48ab7679ca7bca935b256b423011c87",
+      "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+      "observation": "The door is now open.",
+      "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+      "inventory": "In your inventory, you see:\n\tan orange\n",
+      "history": [
+        [
+          "open door to living room",
+          "The door is now open."
+        ]
+      ],
+      "templates": [
+        "activate OBJ",
+        "close OBJ",
+        "connect OBJ to OBJ",
+        "deactivate OBJ",
+        "disconnect OBJ",
+        "dunk OBJ in OBJ",
+        "eat OBJ",
+        "flush OBJ",
+        "focus on OBJ",
+        "go OBJ",
+        "inventory",
+        "look around",
+        "look at OBJ",
+        "look in OBJ",
+        "mix OBJ",
+        "move OBJ to OBJ",
+        "open OBJ",
+        "pick up OBJ",
+        "pour OBJ in OBJ",
+        "put down OBJ",
+        "read OBJ",
+        "reset task",
+        "task",
+        "use OBJ on OBJ",
+        "wait",
+        "wait1"
+      ],
+      "objects": [
+        "agent",
+        "air",
+        "art studio",
+        "art studio door",
+        "bedroom",
+        "bedroom door",
+        "door to greenhouse",
+        "door to kitchen",
+        "door to living room",
+        "door to workshop",
+        "greenhouse",
+        "hallway",
+        "kitchen",
+        "living room",
+        "painting",
+        "workshop"
+      ],
+      "repair_action": "go to living room",
+      "teacher_state_id": "off-headroom-find-animal-q2-3-e0",
+      "source_start_score": 0,
+      "teacher_branch_full_sequence": [
+        "open door to living room",
+        "go to living room",
+        "look around"
+      ],
+      "teacher_branch_full_final_score": 17,
+      "teacher_branch_step": 1,
+      "teacher_suffix": [
+        "go to living room",
+        "look around"
+      ],
+      "teacher_suffix_expected_final_score": 17,
+      "replay_prefix_actions": [],
+      "adapter_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-1/adapters/headroom-find-animal-q2-3/offpolicy_shared_teacher",
+      "adapter_model_sha256": "dc50e4f3ec366e5abf464dbd38028243e10ad2015f415124d058408304f6d41a",
+      "original_training_eval": {
+        "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+        "repair_action": "go to living room",
+        "pred_action": "go to living room",
+        "exact": true,
+        "raw": "Action: go to living room"
+      }
+    },
+    {
+      "context_id": "headroom-find-non-living-thing-q1-1::ON::p2",
+      "unit_id": "headroom-find-non-living-thing-q1-1",
+      "task_family": "find-non-living-thing",
+      "variation": 39,
+      "initial_state_key": "e561ef488254e13aac25181d20fafa80dc38629cad491a805ebbab35bf4c08a4",
+      "update_arm": "ON",
+      "pair_index": 2,
+      "selection_hash": "0e694b38f15dcc4d348cd75639cce68618590e098e79605a06d517c6ad4b3bc2",
+      "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+      "observation": "The door is now open.",
+      "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+      "inventory": "In your inventory, you see:\n\ta drawing of the moon.  The artist is listed as Lily. \n\tan orange\n",
+      "history": [
+        [
+          "focus on drawing",
+          "You focus on the drawing."
+        ],
+        [
+          "pick up drawing",
+          "You move the drawing to the inventory."
+        ],
+        [
+          "open door to living room",
+          "The door is now open."
+        ]
+      ],
+      "templates": [
+        "activate OBJ",
+        "close OBJ",
+        "connect OBJ to OBJ",
+        "deactivate OBJ",
+        "disconnect OBJ",
+        "dunk OBJ in OBJ",
+        "eat OBJ",
+        "flush OBJ",
+        "focus on OBJ",
+        "go OBJ",
+        "inventory",
+        "look around",
+        "look at OBJ",
+        "look in OBJ",
+        "mix OBJ",
+        "move OBJ to OBJ",
+        "open OBJ",
+        "pick up OBJ",
+        "pour OBJ in OBJ",
+        "put down OBJ",
+        "read OBJ",
+        "reset task",
+        "task",
+        "use OBJ on OBJ",
+        "wait",
+        "wait1"
+      ],
+      "objects": [
+        "agent",
+        "air",
+        "art studio",
+        "art studio door",
+        "bedroom",
+        "bedroom door",
+        "door to greenhouse",
+        "door to kitchen",
+        "door to living room",
+        "door to workshop",
+        "greenhouse",
+        "hallway",
+        "kitchen",
+        "living room",
+        "workshop"
+      ],
+      "repair_action": "go to living room",
+      "teacher_state_id": "u3-s0",
+      "source_start_score": 50,
+      "teacher_branch_full_sequence": [
+        "pick up drawing",
+        "open door to living room",
+        "go to living room"
+      ],
+      "teacher_branch_full_final_score": 75,
+      "teacher_branch_step": 2,
+      "teacher_suffix": [
+        "go to living room"
+      ],
+      "teacher_suffix_expected_final_score": 75,
+      "replay_prefix_actions": [
+        "focus on drawing"
+      ],
+      "adapter_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-0/adapters/headroom-find-non-living-thing-q1-1/onpolicy_shared_teacher",
+      "adapter_model_sha256": "73ea0dd031581dcd5084b307f1b354a47c4388b6c7b8795ad95c740b83466f8e",
+      "original_training_eval": {
+        "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+        "repair_action": "go to living room",
+        "pred_action": "go to living room",
+        "exact": true,
+        "raw": "Action: go to living room"
+      }
+    },
+    {
+      "context_id": "headroom-find-non-living-thing-q1-1::OFF::p3",
+      "unit_id": "headroom-find-non-living-thing-q1-1",
+      "task_family": "find-non-living-thing",
+      "variation": 39,
+      "initial_state_key": "e561ef488254e13aac25181d20fafa80dc38629cad491a805ebbab35bf4c08a4",
+      "update_arm": "OFF",
+      "pair_index": 3,
+      "selection_hash": "de5cfec51a31a33da2fd82bccc34b1b633da7dbdf53c612279a154e72a1b506d",
+      "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+      "observation": "The door is now open.",
+      "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+      "inventory": "In your inventory, you see:\n\tan orange\n",
+      "history": [
+        [
+          "open door to kitchen",
+          "The door is now open."
+        ]
+      ],
+      "templates": [
+        "activate OBJ",
+        "close OBJ",
+        "connect OBJ to OBJ",
+        "deactivate OBJ",
+        "disconnect OBJ",
+        "dunk OBJ in OBJ",
+        "eat OBJ",
+        "flush OBJ",
+        "focus on OBJ",
+        "go OBJ",
+        "inventory",
+        "look around",
+        "look at OBJ",
+        "look in OBJ",
+        "mix OBJ",
+        "move OBJ to OBJ",
+        "open OBJ",
+        "pick up OBJ",
+        "pour OBJ in OBJ",
+        "put down OBJ",
+        "read OBJ",
+        "reset task",
+        "task",
+        "use OBJ on OBJ",
+        "wait",
+        "wait1"
+      ],
+      "objects": [
+        "agent",
+        "air",
+        "art studio",
+        "art studio door",
+        "bedroom",
+        "bedroom door",
+        "door to greenhouse",
+        "door to kitchen",
+        "door to living room",
+        "door to workshop",
+        "drawing",
+        "greenhouse",
+        "hallway",
+        "kitchen",
+        "living room",
+        "workshop"
+      ],
+      "repair_action": "focus on orange",
+      "teacher_state_id": "off-headroom-find-non-living-thing-q1-1-e1",
+      "source_start_score": 8,
+      "teacher_branch_full_sequence": [
+        "focus on orange",
+        "open door to living room",
+        "go living room"
+      ],
+      "teacher_branch_full_final_score": 75,
+      "teacher_branch_step": 0,
+      "teacher_suffix": [
+        "focus on orange",
+        "open door to living room",
+        "go living room"
+      ],
+      "teacher_suffix_expected_final_score": 75,
+      "replay_prefix_actions": [
+        "open door to kitchen"
+      ],
+      "adapter_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-0/adapters/headroom-find-non-living-thing-q1-1/offpolicy_shared_teacher",
+      "adapter_model_sha256": "24881653efd4cf479a62175fa420638687bd835a127946a20ec1b2cc80593661",
+      "original_training_eval": {
+        "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+        "repair_action": "focus on orange",
+        "pred_action": "focus on orange",
+        "exact": true,
+        "raw": "Action: focus on orange"
+      }
+    },
+    {
+      "context_id": "headroom-find-non-living-thing-q2-1::ON::p2",
+      "unit_id": "headroom-find-non-living-thing-q2-1",
+      "task_family": "find-non-living-thing",
+      "variation": 3,
+      "initial_state_key": "5bbf3721badbdd5f64722fdeab5319136aa5460945b546eda461d4e5bf8607f4",
+      "update_arm": "ON",
+      "pair_index": 2,
+      "selection_hash": "a54622db74ac7b21c5869e9a1b10f918eba06bcd01968b87cde17b53a3de466c",
+      "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the kitchen.",
+      "observation": "You move to the kitchen.",
+      "observation_sha256": "3a676621b5ba068d87a76dcd6c083b128f4929e3ae39ef2912cb0654c1b46936",
+      "inventory": "In your inventory, you see:\n\tan axe\n\tan orange\n",
+      "history": [
+        [
+          "focus on axe",
+          "You focus on the axe."
+        ],
+        [
+          "pick up axe",
+          "You move the axe to the inventory."
+        ],
+        [
+          "open door to kitchen",
+          "The door is now open."
+        ],
+        [
+          "go kitchen",
+          "You move to the kitchen."
+        ]
+      ],
+      "templates": [
+        "activate OBJ",
+        "close OBJ",
+        "connect OBJ to OBJ",
+        "deactivate OBJ",
+        "disconnect OBJ",
+        "dunk OBJ in OBJ",
+        "eat OBJ",
+        "flush OBJ",
+        "focus on OBJ",
+        "go OBJ",
+        "inventory",
+        "look around",
+        "look at OBJ",
+        "look in OBJ",
+        "mix OBJ",
+        "move OBJ to OBJ",
+        "open OBJ",
+        "pick up OBJ",
+        "pour OBJ in OBJ",
+        "put down OBJ",
+        "read OBJ",
+        "reset task",
+        "task",
+        "use OBJ on OBJ",
+        "wait",
+        "wait1"
+      ],
+      "objects": [
+        "agent",
+        "air",
+        "apple",
+        "banana",
+        "bathroom",
+        "bathroom door",
+        "bowl",
+        "chair",
+        "counter",
+        "cup",
+        "cupboard",
+        "door to hallway",
+        "door to outside",
+        "drawer",
+        "freezer",
+        "fridge",
+        "glass jar",
+        "hallway",
+        "kitchen",
+        "lighter",
+        "orange",
+        "orange box",
+        "outside",
+        "oven",
+        "painting",
+        "potato",
+        "sink",
+        "soap",
+        "stopwatch",
+        "stove",
+        "table",
+        "thermometer"
+      ],
+      "repair_action": "put axe in orange box",
+      "teacher_state_id": "u2-s0",
+      "source_start_score": 58,
+      "teacher_branch_full_sequence": [
+        "open door to kitchen",
+        "go kitchen",
+        "put axe in orange box"
+      ],
+      "teacher_branch_full_final_score": 100,
+      "teacher_branch_step": 2,
+      "teacher_suffix": [
+        "put axe in orange box"
+      ],
+      "teacher_suffix_expected_final_score": 100,
+      "replay_prefix_actions": [
+        "focus on axe",
+        "pick up axe"
+      ],
+      "adapter_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-2/adapters/headroom-find-non-living-thing-q2-1/onpolicy_shared_teacher",
+      "adapter_model_sha256": "69ad7767467d84e8236d3cea3b8574244b2f27ac2054c13cf3d7b52a560d9028",
+      "original_training_eval": {
+        "observation_sha256": "3a676621b5ba068d87a76dcd6c083b128f4929e3ae39ef2912cb0654c1b46936",
+        "repair_action": "put axe in orange box",
+        "pred_action": "put axe in orange box",
+        "exact": true,
+        "raw": "Action: put axe in orange box"
+      }
+    },
+    {
+      "context_id": "headroom-find-non-living-thing-q2-1::OFF::p0",
+      "unit_id": "headroom-find-non-living-thing-q2-1",
+      "task_family": "find-non-living-thing",
+      "variation": 3,
+      "initial_state_key": "5bbf3721badbdd5f64722fdeab5319136aa5460945b546eda461d4e5bf8607f4",
+      "update_arm": "OFF",
+      "pair_index": 0,
+      "selection_hash": "83292182ac0b790f739d52f14f3661969ce5ca5de52e228c12fa9ac4e1f5683b",
+      "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the kitchen.",
+      "observation": "This outside location is called the outside. Here you see: \n\tthe agent\n\ta substance called air\n\tan axe\n\ta blue jay egg\n\ta butterfly egg\n\ta dove egg\n\ta fire pit (containing nothing)\n\ta fountain (containing nothing)\n\tthe ground\n\ta substance called wood\nYou also see:\n\tA door to the foundry (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)",
+      "observation_sha256": "46bf88894890c64f5912389efac6200b1733b0028d27771a77051a4176b051f6",
+      "inventory": "In your inventory, you see:\n\tan orange\n",
+      "history": [],
+      "templates": [
+        "activate OBJ",
+        "close OBJ",
+        "connect OBJ to OBJ",
+        "deactivate OBJ",
+        "disconnect OBJ",
+        "dunk OBJ in OBJ",
+        "eat OBJ",
+        "flush OBJ",
+        "focus on OBJ",
+        "go OBJ",
+        "inventory",
+        "look around",
+        "look at OBJ",
+        "look in OBJ",
+        "mix OBJ",
+        "move OBJ to OBJ",
+        "open OBJ",
+        "pick up OBJ",
+        "pour OBJ in OBJ",
+        "put down OBJ",
+        "read OBJ",
+        "reset task",
+        "task",
+        "use OBJ on OBJ",
+        "wait",
+        "wait1"
+      ],
+      "objects": [
+        "agent",
+        "air",
+        "axe",
+        "blue jay",
+        "butterfly",
+        "door to foundry",
+        "door to greenhouse",
+        "door to kitchen",
+        "dove",
+        "fire pit",
+        "foundry",
+        "fountain",
+        "greenhouse",
+        "ground",
+        "kitchen",
+        "outside",
+        "wood"
+      ],
+      "repair_action": "focus on orange",
+      "teacher_state_id": "off-headroom-find-non-living-thing-q2-1-e0",
+      "source_start_score": 0,
+      "teacher_branch_full_sequence": [
+        "focus on orange",
+        "open door to kitchen",
+        "go kitchen"
+      ],
+      "teacher_branch_full_final_score": 83,
+      "teacher_branch_step": 0,
+      "teacher_suffix": [
+        "focus on orange",
+        "open door to kitchen",
+        "go kitchen"
+      ],
+      "teacher_suffix_expected_final_score": 83,
+      "replay_prefix_actions": [],
+      "adapter_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-2/adapters/headroom-find-non-living-thing-q2-1/offpolicy_shared_teacher",
+      "adapter_model_sha256": "c91b6c640186095c41e49963750cbbe12daaf9c8196b92d169e9a4d268be5776",
+      "original_training_eval": {
+        "observation_sha256": "46bf88894890c64f5912389efac6200b1733b0028d27771a77051a4176b051f6",
+        "repair_action": "focus on orange",
+        "pred_action": "focus on orange",
+        "exact": true,
+        "raw": "Action: focus on orange"
+      }
+    },
+    {
+      "context_id": "headroom-find-plant-q2-2::OFF::p4",
+      "unit_id": "headroom-find-plant-q2-2",
+      "task_family": "find-plant",
+      "variation": 54,
+      "initial_state_key": "ae7f4465dc27555c2a300fab620b3cf57494b136076c8ccb30af12ad8e70a79f",
+      "update_arm": "OFF",
+      "pair_index": 4,
+      "selection_hash": "23279a1081dbb09a62891f17452bc64678adbaeae9ef7b55c80f8c6e7a2e2d20",
+      "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+      "observation": "You focus on the banana tree.",
+      "observation_sha256": "c1aac1e4b9d481f4e6f6a70c9785041e08f84d5b233f2f9b361e0e4c778b424b",
+      "inventory": "In your inventory, you see:\n\tan orange\n",
+      "history": [
+        [
+          "open door to hallway",
+          "The door is now open."
+        ],
+        [
+          "go to hallway",
+          "You move to the hallway."
+        ],
+        [
+          "open door to greenhouse",
+          "The door is now open."
+        ],
+        [
+          "go to greenhouse",
+          "You move to the greenhouse."
+        ],
+        [
+          "look around",
+          "This room is called the greenhouse. In it, you see: \n\tthe agent\n\ta substance called air\n\ta bee hive. The bee hive door is closed. \n\ta flower pot 3 (containing nothing)\n\ta flower pot 4 (containing a banana tree in the adult stage, soil)\n\ta flower pot 5 (containing a pea plant in the adult stage with a short height, soil)\n\ta flower pot 7 (containing nothing)\n\ta flower pot 9 (containing a peach tree in the adult stage, soil)\n\ta jug (containing nothing)\n\ta sink, which is turned off. In the sink is: nothing.\nYou also see:\n\tA door to the hallway (that is open)\n\tA door to the outside (that is closed)"
+        ],
+        [
+          "focus on adult banana tree",
+          "You focus on the banana tree."
+        ]
+      ],
+      "templates": [
+        "activate OBJ",
+        "close OBJ",
+        "connect OBJ to OBJ",
+        "deactivate OBJ",
+        "disconnect OBJ",
+        "dunk OBJ in OBJ",
+        "eat OBJ",
+        "flush OBJ",
+        "focus on OBJ",
+        "go OBJ",
+        "inventory",
+        "look around",
+        "look at OBJ",
+        "look in OBJ",
+        "mix OBJ",
+        "move OBJ to OBJ",
+        "open OBJ",
+        "pick up OBJ",
+        "pour OBJ in OBJ",
+        "put down OBJ",
+        "read OBJ",
+        "reset task",
+        "task",
+        "use OBJ on OBJ",
+        "wait",
+        "wait1"
+      ],
+      "objects": [
+        "agent",
+        "air",
+        "banana tree",
+        "bee hive",
+        "door to hallway",
+        "door to outside",
+        "flower pot 3",
+        "flower pot 4",
+        "flower pot 5",
+        "flower pot 7",
+        "flower pot 9",
+        "greenhouse",
+        "hallway",
+        "jug",
+        "living thing in flower pot 5",
+        "living thing in flower pot 9",
+        "outside",
+        "sink",
+        "soil in flower pot 4",
+        "soil in flower pot 5",
+        "soil in flower pot 9"
+      ],
+      "repair_action": "pick up banana tree",
+      "teacher_state_id": "off-headroom-find-plant-q2-2-e5",
+      "source_start_score": 67,
+      "teacher_branch_full_sequence": [
+        "pick up banana tree",
+        "go to hallway",
+        "open door to workshop"
+      ],
+      "teacher_branch_full_final_score": 75,
+      "teacher_branch_step": 0,
+      "teacher_suffix": [
+        "pick up banana tree",
+        "go to hallway",
+        "open door to workshop"
+      ],
+      "teacher_suffix_expected_final_score": 75,
+      "replay_prefix_actions": [
+        "open door to hallway",
+        "go to hallway",
+        "open door to greenhouse",
+        "go to greenhouse",
+        "look around",
+        "focus on adult banana tree"
+      ],
+      "adapter_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-1/adapters/headroom-find-plant-q2-2/offpolicy_shared_teacher",
+      "adapter_model_sha256": "0bcb7363473407e4b87914ca1237f90be47bfc426ddc56773ad1ed65d10fb054",
+      "original_training_eval": {
+        "observation_sha256": "c1aac1e4b9d481f4e6f6a70c9785041e08f84d5b233f2f9b361e0e4c778b424b",
+        "repair_action": "pick up banana tree",
+        "pred_action": "pick up banana tree",
+        "exact": true,
+        "raw": "Action: pick up banana tree"
+      }
+    },
+    {
+      "context_id": "headroom-mendelian-genetics-known-plant-q2-3::OFF::p0",
+      "unit_id": "headroom-mendelian-genetics-known-plant-q2-3",
+      "task_family": "mendelian-genetics-known-plant",
+      "variation": 59,
+      "initial_state_key": "10843c7139a2954669759c0c3b38b641faf687a1a58972204d9e0fedca0224bf",
+      "update_arm": "OFF",
+      "pair_index": 0,
+      "selection_hash": "69ce3f54e6b57a43a57dbd43a577b125ed8b296460ef988b233dda2a92a92c55",
+      "task_desc": "Task Description:\nYour task is to determine whether wrinkly seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+      "observation": "This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta table. On the table is: a battery, a black wire, a blue light bulb, which is off, a red light bulb, which is off, a red wire, a switch, which is off, a violet light bulb, which is off, a yellow wire.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \nYou also see:\n\tA door to the hallway (that is closed)",
+      "observation_sha256": "82558c8ad54e3f63203c50b4dcabe31984ac2c6dee2ed60b5535fd0ca9de343c",
+      "inventory": "In your inventory, you see:\n\tan orange\n",
+      "history": [],
+      "templates": [
+        "activate OBJ",
+        "close OBJ",
+        "connect OBJ to OBJ",
+        "deactivate OBJ",
+        "disconnect OBJ",
+        "dunk OBJ in OBJ",
+        "eat OBJ",
+        "flush OBJ",
+        "focus on OBJ",
+        "go OBJ",
+        "inventory",
+        "look around",
+        "look at OBJ",
+        "look in OBJ",
+        "mix OBJ",
+        "move OBJ to OBJ",
+        "open OBJ",
+        "pick up OBJ",
+        "pour OBJ in OBJ",
+        "put down OBJ",
+        "read OBJ",
+        "reset task",
+        "task",
+        "use OBJ on OBJ",
+        "wait",
+        "wait1"
+      ],
+      "objects": [
+        "agent",
+        "air",
+        "anode in battery",
+        "anode in blue light bulb",
+        "anode in component",
+        "anode in red light bulb",
+        "anode in violet light bulb",
+        "battery",
+        "battery cathode",
+        "black wire",
+        "black wire terminal 1",
+        "black wire terminal 2",
+        "blue light bulb",
+        "blue light bulb cathode",
+        "cathode in component",
+        "cathode in red light bulb",
+        "cathode in violet light bulb",
+        "door",
+        "freezer",
+        "hallway",
+        "red light bulb",
+        "red wire",
+        "red wire terminal 1",
+        "red wire terminal 2",
+        "switch",
+        "table",
+        "terminal 1 in yellow wire",
+        "terminal 2 in yellow wire",
+        "violet light bulb",
+        "workshop",
+        "yellow wire"
+      ],
+      "repair_action": "open door to hallway",
+      "teacher_state_id": "off-headroom-mendelian-genetics-known-plant-q2-3-e0",
+      "source_start_score": 0,
+      "teacher_branch_full_sequence": [
+        "open door to hallway",
+        "go hallway",
+        "open door to greenhouse"
+      ],
+      "teacher_branch_full_final_score": 1,
+      "teacher_branch_step": 0,
+      "teacher_suffix": [
+        "open door to hallway",
+        "go hallway",
+        "open door to greenhouse"
+      ],
+      "teacher_suffix_expected_final_score": 1,
+      "replay_prefix_actions": [],
+      "adapter_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-0/adapters/headroom-mendelian-genetics-known-plant-q2-3/offpolicy_shared_teacher",
+      "adapter_model_sha256": "f1d16258964befd4878752dc678234855b7cee90d811b69bc11bbf2b1dc31e7a",
+      "original_training_eval": {
+        "observation_sha256": "82558c8ad54e3f63203c50b4dcabe31984ac2c6dee2ed60b5535fd0ca9de343c",
+        "repair_action": "open door to hallway",
+        "pred_action": "open door to hallway",
+        "exact": true,
+        "raw": "Action: open door to hallway"
+      }
+    },
+    {
+      "context_id": "headroom-mendelian-genetics-known-plant-q2-4::ON::p1",
+      "unit_id": "headroom-mendelian-genetics-known-plant-q2-4",
+      "task_family": "mendelian-genetics-known-plant",
+      "variation": 35,
+      "initial_state_key": "968aa7438921d164d174e210a32dcbee263b656093a017e2ce998fa6a044abb2",
+      "update_arm": "ON",
+      "pair_index": 1,
+      "selection_hash": "6888285ebc3c2a6ce6c6c51525c15d53379e0da4a2f7318e45db172bad0ea478",
+      "task_desc": "Task Description:\nYour task is to determine whether round seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+      "observation": "The door is now open.",
+      "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+      "inventory": "In your inventory, you see:\n\tan orange\n",
+      "history": [
+        [
+          "open door to hallway",
+          "The door is now open."
+        ]
+      ],
+      "templates": [
+        "activate OBJ",
+        "close OBJ",
+        "connect OBJ to OBJ",
+        "deactivate OBJ",
+        "disconnect OBJ",
+        "dunk OBJ in OBJ",
+        "eat OBJ",
+        "flush OBJ",
+        "focus on OBJ",
+        "go OBJ",
+        "inventory",
+        "look around",
+        "look at OBJ",
+        "look in OBJ",
+        "mix OBJ",
+        "move OBJ to OBJ",
+        "open OBJ",
+        "pick up OBJ",
+        "pour OBJ in OBJ",
+        "put down OBJ",
+        "read OBJ",
+        "reset task",
+        "task",
+        "use OBJ on OBJ",
+        "wait",
+        "wait1"
+      ],
+      "objects": [
+        "agent",
+        "air",
+        "art studio",
+        "blue paint",
+        "cup containing blue paint",
+        "cup containing red paint",
+        "cup containing yellow paint",
+        "cupboard",
+        "door",
+        "hallway",
+        "jug",
+        "paint in cup containing red paint",
+        "paint in cup containing yellow paint",
+        "table"
+      ],
+      "repair_action": "go to hallway",
+      "teacher_state_id": "u6-s0",
+      "source_start_score": 0,
+      "teacher_branch_full_sequence": [
+        "open door to hallway",
+        "go to hallway"
+      ],
+      "teacher_branch_full_final_score": 1,
+      "teacher_branch_step": 1,
+      "teacher_suffix": [
+        "go to hallway"
+      ],
+      "teacher_suffix_expected_final_score": 1,
+      "replay_prefix_actions": [],
+      "adapter_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-2/adapters/headroom-mendelian-genetics-known-plant-q2-4/onpolicy_shared_teacher",
+      "adapter_model_sha256": "07107828247f17a385140c197713531c11a508b9a6d3edc6e377ae43a3955a82",
+      "original_training_eval": {
+        "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+        "repair_action": "go to hallway",
+        "pred_action": "go to hallway",
+        "exact": true,
+        "raw": "Action: go to hallway"
+      }
+    },
+    {
+      "context_id": "headroom-mendelian-genetics-known-plant-q2-4::OFF::p1",
+      "unit_id": "headroom-mendelian-genetics-known-plant-q2-4",
+      "task_family": "mendelian-genetics-known-plant",
+      "variation": 35,
+      "initial_state_key": "968aa7438921d164d174e210a32dcbee263b656093a017e2ce998fa6a044abb2",
+      "update_arm": "OFF",
+      "pair_index": 1,
+      "selection_hash": "4cb675b946df53a863f2e8145b02b83e31533e70756be71d4802a4ba4df82bb4",
+      "task_desc": "Task Description:\nYour task is to determine whether round seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+      "observation": "The door is now open.",
+      "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+      "inventory": "In your inventory, you see:\n\tan orange\n",
+      "history": [
+        [
+          "open door to hallway",
+          "The door is now open."
+        ]
+      ],
+      "templates": [
+        "activate OBJ",
+        "close OBJ",
+        "connect OBJ to OBJ",
+        "deactivate OBJ",
+        "disconnect OBJ",
+        "dunk OBJ in OBJ",
+        "eat OBJ",
+        "flush OBJ",
+        "focus on OBJ",
+        "go OBJ",
+        "inventory",
+        "look around",
+        "look at OBJ",
+        "look in OBJ",
+        "mix OBJ",
+        "move OBJ to OBJ",
+        "open OBJ",
+        "pick up OBJ",
+        "pour OBJ in OBJ",
+        "put down OBJ",
+        "read OBJ",
+        "reset task",
+        "task",
+        "use OBJ on OBJ",
+        "wait",
+        "wait1"
+      ],
+      "objects": [
+        "agent",
+        "air",
+        "art studio",
+        "blue paint",
+        "cup containing blue paint",
+        "cup containing red paint",
+        "cup containing yellow paint",
+        "cupboard",
+        "door",
+        "hallway",
+        "jug",
+        "paint in cup containing red paint",
+        "paint in cup containing yellow paint",
+        "table"
+      ],
+      "repair_action": "go to hallway",
+      "teacher_state_id": "off-headroom-mendelian-genetics-known-plant-q2-4-e0",
+      "source_start_score": 0,
+      "teacher_branch_full_sequence": [
+        "open door to hallway",
+        "go to hallway",
+        "look around"
+      ],
+      "teacher_branch_full_final_score": 1,
+      "teacher_branch_step": 1,
+      "teacher_suffix": [
+        "go to hallway",
+        "look around"
+      ],
+      "teacher_suffix_expected_final_score": 1,
+      "replay_prefix_actions": [],
+      "adapter_dir": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-2/adapters/headroom-mendelian-genetics-known-plant-q2-4/offpolicy_shared_teacher",
+      "adapter_model_sha256": "81505b25c87541b9d46a109768b5b3436751e36d14f0b32eb852bbceed8dc76b",
+      "original_training_eval": {
+        "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+        "repair_action": "go to hallway",
+        "pred_action": "go to hallway",
+        "exact": true,
+        "raw": "Action: go to hallway"
+      }
+    }
+  ],
+  "source_files": {
+    "source_f0_plan": {
+      "path": "/home/hdd/yutong/agent-evolution-p0-data/audits/scienceworld-correction-closure-symmetric-f0-thinking4096-plan-v1.json",
+      "sha256": "48486033cdb53935c45efd9fde68fb20cdd1ed0f6794c69eecdef2f1e4eaa10e"
+    },
+    "on_teacher_result": {
+      "path": "/home/hdd/yutong/agent-evolution-p0-data/audits/scienceworld-shared-teacher-q0-thinking4096-result-v1.json",
+      "sha256": "d1fde0b9bb3f4f707b877627581920003ad0251fb64cbbfb885d8b07791caacb"
+    },
+    "on_teacher_inputs": {
+      "path": "/home/hdd/yutong/agent-evolution-p0-data/audits/scienceworld-onpolicy-teacher-inputs-v1.json",
+      "sha256": "aab3a0463d42e229772b2fcd275f71a75b3a249f56b1e6d15bf26e83ae88df8c"
+    },
+    "off_teacher_result": {
+      "path": "/home/hdd/yutong/agent-evolution-p0-data/audits/scienceworld-offpolicy-shared-teacher-thinking4096-verification-v1.json",
+      "sha256": "fbd48afb604244c2b7640a6f13d29ff0376e35887f72ebc7809bbcf7d212894e"
+    },
+    "off_teacher_inputs": {
+      "path": "/home/hdd/yutong/agent-evolution-p0-data/audits/scienceworld-offpolicy-shared-teacher-inputs-v1.json",
+      "sha256": "ebc1743f131da7619c5707da6a5161a7a562456840dae3f4ada944a78c234398"
+    },
+    "off_source_snapshot": {
+      "path": "/home/hdd/yutong/agent-evolution-p0-data/audits/scienceworld-moderate-offpolicy-gold-v1.json",
+      "sha256": "fffd7991918a76b6b187993b0e627f0445ce91c09090395178ce85698afaf912"
+    },
+    "old_f0_runner": {
+      "path": "/home/hdd/yutong/agent-self-evolution-p0/research_pipeline/run_scienceworld_correction_closure_symmetric_f0_shard.py",
+      "sha256": "346338dfd3babd3bfb20e06b709b9ea496c8893d14e82473ba189a51b9bf439a"
+    },
+    "headroom_runtime": {
+      "path": "/home/hdd/yutong/agent-self-evolution-p0/research_pipeline/run_scienceworld_base_headroom_q1_shard.py",
+      "sha256": "a1fdf1a4e7083ce7435b564c66bc57c119cc1706c86a3cb6bd07fef7f4d2f465"
+    },
+    "qwen_adapter": {
+      "path": "/home/hdd/yutong/agent-self-evolution-p0/research_pipeline/scienceworld_qwen_adapter.py",
+      "sha256": "e9230b34ca3560302bf7e356c7873bc6f602e881f5afe4f8f26ef69612963e06"
+    },
+    "lora_runtime": {
+      "path": "/home/hdd/yutong/agent-self-evolution-p0/research_pipeline/scienceworld_sapd_f0_runtime.py",
+      "sha256": "c533330f2872aa5cd3bed9fa4a57f8a08c0414c6f36680c7c27de04cd9ba24d2"
+    }
+  },
+  "source_unit_result_files": [
+    {
+      "path": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-0/unit-results.json",
+      "sha256": "ce752c8771e4cd1870ed9c795151b399bab4b5bc02bc7f21795da6030607dd0b"
+    },
+    {
+      "path": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-1/unit-results.json",
+      "sha256": "eb0ad969cfd40f1b8bab6cfd3d34c4bcda042aa51a57a7109ed33716ace05ae5"
+    },
+    {
+      "path": "/home/hdd/yutong/agent-evolution-p0-data/runs/sw-correction-closure-symmetric-f0-thinking4096-20260812-v2/shard-2/unit-results.json",
+      "sha256": "c93c6b94450476d01f6be29c53d1c3e78350daf0aef0b2bd8a5ccaf9cdb4804f"
+    }
+  ],
+  "adapter_count": 12,
+  "task_family_count": 4,
+  "budget": {
+    "new_training_steps": 0,
+    "new_rollouts_max": 48,
+    "max_env_steps_per_rollout_from_reset": 50,
+    "projected_generation_calls_upper_bound": 2400,
+    "gpu_hours_cap": 0.9,
+    "wall_hours_cap": 0.85,
+    "single_frozen_backbone": true,
+    "second_backbone": false
+  },
+  "mature_reduction_risks": [
+    "model-editing/fine-tuning locality and side effects",
+    "DAgger/policy-induced occupancy shift",
+    "generic causal mediation/step intervention; replay is instrumentation only"
+  ],
+  "current_source_novelty": "UNRESOLVED; no Paper Design authority until a current-source review shows the surviving claim is specifically persistent-update mechanism fidelity rather than generic editing locality or counterfactual repair.",
+  "if_strongest_baseline_wins_problem_exists": false,
+  "contract_hash": "ff311fb54d8b33babf35ee5033da1703e52c00572fadf723358b198be91dcc15"
+}
