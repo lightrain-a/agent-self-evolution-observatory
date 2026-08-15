@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-STRI-DYNAMIC-MIXTURE-F0-20260816",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "purpose": "Test whether a semantics-preserving multiplicity change in the irreducible Skill-SP partial-overlap core changes the realized future curriculum distribution produced by a frozen proposer, using matched source-conditional generations and external author validators.",
+  "scientific_claim_boundary": "This is a dynamic curriculum-distribution falsifier, not an end-task learning or accuracy claim.",
+  "author_asset": {
+    "repo": "/data/wyt/skill-self-play-agent3-20260816",
+    "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "paper": "arXiv:2607.22529",
+    "tool_prompts_sha256": "4180b75adad460c0dd9cdd915d5d5da63b900fcce051088c1dbf1a215823c738",
+    "tool_parsing_sha256": "289155f1740a33404ae82b9616c393f13461f5394f6dd9d98c6c32aaed14be69",
+    "tool_contracts_sha256": "4360a1f8cb30f1024dfd55b3bc5dc543fd659aae2c9e7e8555c8d05d5cbc304a",
+    "package_hashes": {
+      "skill_003": "e91e75f9326bf55ca2c285d5c8010403178d07bec920b63024fed7d3e0d5ee91",
+      "skill_004": "ac71fc3baaf9d51a286daeba345a616682c42d8c2d951b8f025427c7c427e7fd",
+      "skill_015": "069158b98e771864754cc1b4a829de9b035def722d865363266d9d6d05c72dc2"
+    }
+  },
+  "proposer": {
+    "model_path": "/data/wyt/models/indept/Qwen2.5-7B-Instruct",
+    "model_config_sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c",
+    "generation_config_sha256": "3a8f9087e486054c8a4a08dae2e5a3ba62e23da212b5b8c08bc42cb983c3459f",
+    "tokenizer_config_sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+    "tokenizer_sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+    "frozen_backbone_only": true,
+    "training": false,
+    "disclosure_level": "full",
+    "samples_per_source_skill": 24,
+    "source_skill_ids": ["skill_003", "skill_004", "skill_015"],
+    "batch_size": 4,
+    "max_new_tokens": 384,
+    "temperature": 0.8,
+    "top_p": 0.95,
+    "do_sample": true,
+    "seed_by_source": {
+      "skill_003": 2026081603,
+      "skill_004": 2026081604,
+      "skill_015": 2026081615
+    }
+  },
+  "matched_mixture_replay": {
+    "generation_rule": "Generate each source-skill conditional output bank exactly once. Both counterfactual arms reuse the same parsed/validated conditional banks; no arm-specific model generation is allowed.",
+    "arm_original": {
+      "representation": ["skill_003", "skill_004", "skill_015"],
+      "mixture_weights": {"skill_003": 0.3333333333333333, "skill_004": 0.3333333333333333, "skill_015": 0.3333333333333333}
+    },
+    "arm_semantic_split": {
+      "representation": ["skill_003", "skill_004", "skill_015", "skill_015_exact_control_copy"],
+      "semantic_change": "none; the fourth control entry uses the exact same skill_015 prompt/content/output bank",
+      "mixture_weights_after_quotienting_identical_015_entries": {"skill_003": 0.25, "skill_004": 0.25, "skill_015": 0.5}
+    },
+    "only_treatment": "mixture mass induced by representing the same skill_015 semantic control entry once versus twice"
+  },
+  "external_truth": {
+    "parser": "author tool_call.parsing.parse_task_sample",
+    "contract": "author tool_call.contracts.check_task_sample_contract",
+    "validators": "all 15 released tool_call package validators",
+    "semantic_pattern": "sorted tuple of validator skill IDs accepting a parsed contract-valid generated task",
+    "secondary_observable": "reference answer function/tool name from the generated task"
+  },
+  "frozen_gate": {
+    "contract_valid_per_source_min": 16,
+    "validator_pattern_tv_distance_min": 0.05,
+    "validator_pattern_tv_bootstrap_lower95_min": 0.025,
+    "max_single_pattern_probability_shift_min": 0.04,
+    "bootstrap_replicates": 2000
+  },
+  "strongest_reduction": {
+    "name": "representation perturbation does not propagate through the proposer",
+    "wins_if": "source-conditional generated semantic distributions are sufficiently similar that changing skill_015 control multiplicity leaves the matched replay validator-pattern distribution below the frozen TV/CI gates"
+  },
+  "budget": {
+    "gpu_count": 1,
+    "gpu_hours_cap": 0.5,
+    "model_loads": 1,
+    "model_generations": 72,
+    "training_steps": 0,
+    "second_backbone": 0
+  },
+  "authority": {
+    "paper_design_authorized_before_result": false,
+    "method_authorized": false,
+    "p0_authorized": false,
+    "second_backbone_authorized": false
+  },
+  "next_if_positive": "Combine the two-system control-plane replication, partial-overlap pruning/LP residual, and dynamic curriculum-distribution result into a Paper Design candidate centered on Skill-Taxonomy Representation Invariance; still require an outcome-level experiment before full-paper claims.",
+  "next_if_negative": "Downgrade STRI to a control-plane algebra/audit issue; do not advance standalone ICLR Paper Design without a different dynamic substrate."
+}

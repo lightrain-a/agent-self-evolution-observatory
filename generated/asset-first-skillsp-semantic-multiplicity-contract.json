@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-SKILLSP-SEMANTIC-MULTIPLICITY-R1-20260816",
+  "candidate_id": "semantic-multiplicity-bias-in-self-evolving-skill-libraries",
+  "scientific_object": "Whether a package-wise adaptive skill scheduler is invariant to semantically redundant or overlapping skill representations when released skill validators define overlapping support on real benchmark tasks.",
+  "paper_claim_forbidden": true,
+  "author_asset": {
+    "repo": "/data/wyt/skill-self-play-agent3-20260816",
+    "remote": "https://github.com/Qwen-Applications/skill-self-play.git",
+    "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "paper": "arXiv:2607.22529",
+    "library_py_sha256": "8441de35078fc4c70880204c46a06856e99cdde7700ff859097032065e2756e0",
+    "package_library_py_sha256": "0d86c1eed3042371834bc44e17f9f304cb693ce949aaa0a5123f4ccd7e6a52fd",
+    "validator_bundle_sha256": "0902b3275f6609f670db9ee1f568a73bb313770b65961717460051640e5dc3a4",
+    "api_bank_level_1_sha256": "51ebc8209ba467ce4cc1854d23b2cfd89759f3c45ff2aaf90de4f003162ea98f",
+    "api_bank_level_3_sha256": "57228427976f05725d9cf2f0ab03ac16487efaed67d5a929b28e974b9b27ef05"
+  },
+  "selection": {
+    "domain": "tool_call",
+    "benchmark": "API-Bank bundled by author repository",
+    "levels": [1, 3],
+    "all_rows_selected": true,
+    "rows_total": 530,
+    "selection_reads_validator_outcomes": false,
+    "selection_reads_model_outcomes": false,
+    "adapter": "Only for rows whose original answer is a length-1 list containing one dict, copy the row and replace answer with that sole dict so the released validate_sample interface can parse the unchanged ground-truth tool call. Do not change system, user, tool name, or parameters.",
+    "skill_ids": [
+      "skill_001", "skill_002", "skill_003", "skill_004", "skill_005",
+      "skill_006", "skill_007", "skill_008", "skill_009", "skill_010",
+      "skill_011", "skill_012", "skill_013", "skill_014", "skill_015"
+    ],
+    "specific_skill_ids": [
+      "skill_001", "skill_002", "skill_003", "skill_004", "skill_005",
+      "skill_006", "skill_007", "skill_008", "skill_009", "skill_010"
+    ],
+    "generic_skill_ids": ["skill_011", "skill_012", "skill_013", "skill_014", "skill_015"]
+  },
+  "released_control_plane": {
+    "sampling_function": "skill_library.library.sampling_weights/sample_skill",
+    "credit_function": "skill_library.library.update_skill_stats_from_records",
+    "refinement_grouping": "tool_call.refine_skills groups evidence by record.skill_id",
+    "semantic_overlap_normalization_present": false,
+    "test_current_iteration": 0,
+    "use_quality": true,
+    "use_exploration": true,
+    "use_decay": false
+  },
+  "representation_counterfactual": {
+    "type": "exact-semantic-id-split",
+    "operation": "For each released skill independently, append one exact copy with the same name, description, example, added_iteration, and stats but a fresh ID. Recompute the author sampling weights. The semantic support represented by the original+clone is by construction unchanged relative to the unsplit skill.",
+    "observable": "relative increase in normalized probability mass assigned to the exact-equivalence class {original, clone}",
+    "no_task_generation": true,
+    "no_model_calls": true
+  },
+  "strongest_same_information_reduction": {
+    "name": "intentional hierarchical taxonomy / harmless overlap",
+    "wins_if": "released validators have little real benchmark overlap, or exact semantic ID-splitting leaves normalized semantic-class sampling mass unchanged",
+    "candidate_survives_only_if": "real benchmark overlap is broad and package-wise sampling is materially representation-sensitive even under exact semantic equivalence"
+  },
+  "frozen_gate": {
+    "validator_covered_rows_min": 200,
+    "multi_membership_fraction_of_covered_min": 0.25,
+    "specific_generic_overlap_rows_min": 100,
+    "distinct_specific_generic_overlap_pairs_min": 4,
+    "distinct_answer_tools_with_multi_membership_min": 8,
+    "exact_clone_relative_class_mass_inflation_min": 0.50,
+    "all_15_clone_counterfactuals_must_change_mass": true
+  },
+  "budget": {
+    "gpu_hours": 0,
+    "model_calls": 0,
+    "new_task_generation": 0,
+    "benchmark_rows": 530,
+    "validator_calls": 7950,
+    "wall_clock_cap_seconds": 180
+  },
+  "authority": {
+    "paper_design_authorized": false,
+    "method_authorized": false,
+    "p0_authorized": false,
+    "gpu_authorized": false,
+    "second_backbone_authorized": false
+  },
+  "next_if_positive": "Run current-source novelty/reduction review, then seek an independent second-domain/public-system replication and a decision-changing dynamic falsifier before Paper Design.",
+  "next_if_negative": "Kill semantic-multiplicity candidate on Skill-SP; do not rescue by generating synthetic overlap tasks or changing validators."
+}

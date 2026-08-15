@@ -1,0 +1,207 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "target_venue": "ICLR",
+  "working_title": "Self-Evolution Should Not Depend on How Skills Are Split",
+  "stage": "PAPER_DESIGN_ACTIVE_ASSET_FIRST",
+  "canonical_live_problem_gate_mutated": false,
+  "problem": {
+    "scientific_object": "The control law of a self-evolving skill system under semantics-preserving reparameterizations of its evolving skill taxonomy.",
+    "paper_problem": "Self-evolving agents commonly treat skill package identities as the units of curriculum sampling, fixed-budget retrieval, feedback credit, refinement, and admission. If two taxonomies expose the same executable semantic support but differ only in how that support is split, cloned, merged, or partially overlapped across package identities, should the future evolution process change? Existing controllers can change solely because categorical package multiplicity changes, even when no capability is added.",
+    "exact_prediction": "For package-indexed self-evolution controllers, semantics-preserving taxonomy transformations can change control exposure/retrieval composition/update credit despite unchanged semantic support. This dependence persists after text/semantic clone dedup, exact-coverage whole-package pruning, and arbitrary context-independent global package reweighting when the support hypergraph contains irreducible partial overlap.",
+    "prediction_unit": "A matched pair of taxonomy states connected by a semantics-preserving transformation, evaluated on the same task/support universe, quality/outcome evidence, control budget, and evolution operator.",
+    "independent_truth": "First-party author support/applicability validators and environment/program task outcomes. No LLM judge defines the STRI treatment or primary correctness label.",
+    "prohibited_claims": [
+      "skill redundancy or semantic clone detection is novel",
+      "all duplicate skills are harmful",
+      "simple deduplication is the proposed contribution",
+      "the invalid Qwen2.5 dynamic F0 is evidence against STRI",
+      "algebraic exposure change alone proves downstream task harm",
+      "fixed-arm contextual bandit similarity theory is absent or irrelevant"
+    ]
+  },
+  "replicated_real_evidence": {
+    "skill_sp": {
+      "source": "Skill Self-Play arXiv:2607.22529 author implementation",
+      "author_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+      "rows_total": 530,
+      "released_validator_covered_rows": 348,
+      "multi_membership_rows": 183,
+      "multi_membership_fraction": 0.5258620689655172,
+      "support_overlap_pairs": 5,
+      "answer_tools_with_overlap": 14,
+      "released_text_dedup_threshold": 0.33,
+      "support_overlap_pairs_missed_by_text_dedup": "5/5",
+      "exact_semantic_id_split_changes_sampler_mass": "15/15 released skills"
+    },
+    "skillrl": {
+      "source": "SkillRL arXiv:2602.08234 author implementation",
+      "author_commit": "8e66726ed866a4e0a7f053586a41022798192e6c",
+      "exact_content_fresh_id_clones_accepted": "12/12",
+      "released_task_descriptions": 223,
+      "clone_targets_changing_unique_semantic_retrieval_set_at_top_k_6": "11/12",
+      "clone_targets_reducing_unique_general_skill_contents": "5/12"
+    }
+  },
+  "strongest_reduction_results": {
+    "whole_package_pruning": {
+      "baseline": "minimum-cardinality whole-package pruning with exact preservation of all 348 released covered tasks",
+      "active_skills_before": 10,
+      "minimum_full_coverage_skill_count": 7,
+      "multi_membership_before": 183,
+      "multi_membership_after": 71,
+      "full_coverage_preserved": true,
+      "verdict": "PARTIAL_REDUCTION_RESIDUAL_REMAINS",
+      "why_residual_is_structural": "All seven retained packages have at least one globally unique supported row, so deleting any remaining overlapping package loses support."
+    },
+    "global_package_reweighting": {
+      "baseline": "arbitrary nonnegative context-independent package weights with every covered task constrained to exposure >= 1 and objective minimize maximum task exposure",
+      "optimal_min_exposure": 1.0,
+      "optimal_max_exposure": 2.0,
+      "optimal_max_to_min_ratio": 2.0,
+      "all_task_exposure_equalizable": false,
+      "verdict": "GLOBAL_PACKAGE_REWEIGHTING_CANNOT_REMOVE_PARTIAL_OVERLAP_RESIDUAL"
+    },
+    "next_strongest_same_information_baseline": "Decision-time matched baselines: (i) upstream curriculum — the strongest generic pre-context controller using exactly the same library, support fingerprints, quality/exploration statistics and sampling budget, including clone quotienting and arbitrary global/support-aware weighting but no generated-task lookahead; (ii) post-context retrieval/credit — a context-conditioned simplex/router using the same task context, support fingerprints, quality/outcome evidence and budget. If either valid baseline matches SQC on its corresponding surface, that part of the method claim dies."
+  },
+  "mechanistic_hypothesis": {
+    "name": "Identity-Mass Refinement Dependence",
+    "statement": "The failure arises because package-indexed controllers place sampling/retrieval/credit mass on artifact identities rather than on semantic support. A semantics-preserving refinement changes the counting measure over identities. With partial overlap, fixed global per-package weights cannot in general make the induced semantic-context exposure invariant while simultaneously preserving all uniquely supported regions.",
+    "causal_timing_boundary": "In released Skill-SP, sample_skill() is called before the proposer task is generated and uses only skill-level quality/exploration/decay statistics. Therefore task context is a descendant of the upstream skill-sampling decision. A task-context-conditioned router is not a same-information baseline for upstream curriculum sampling; it is allowed only for post-context retrieval/credit comparisons. The strongest upstream baseline may use the identical pre-task skill library, support fingerprints, statistics, and budget, but not the generated task that does not yet exist.",
+    "formal_objects": {
+      "X": "semantic/task contexts",
+      "S": "current skill artifacts",
+      "A_s": "support/applicability set of skill s over X",
+      "H": "bipartite support hypergraph between X and S",
+      "tau": "taxonomy transformation preserving the union of executable semantic support and underlying implementation semantics",
+      "C": "self-evolution control operator producing curriculum/retrieval/credit/update mass",
+      "STRI": "C is representation-invariant when the pushforward control process over semantic contexts/support atoms is unchanged under tau, up to preregistered equivalence tolerance"
+    },
+    "theory_targets": [
+      "Clone/refinement dependence lemma: any controller assigning positive additive mass directly to artifact IDs changes total semantic mass under an exact clone unless it explicitly quotients equivalent support.",
+      "Partial-overlap impossibility condition: for support hypergraphs with mandatory uniquely supported packages that also overlap, no context-independent global weight vector can equalize semantic-context exposure while retaining a positive exposure floor on every supported context.",
+      "Quotient invariance proposition: a context/support-first controller whose control measure factors through semantic support atoms rather than artifact multiplicity is invariant to exact clones and support-preserving refinements under explicit support-equivalence assumptions."
+    ]
+  },
+  "method_design": {
+    "working_name": "Support-Quotient Control (SQC)",
+    "principle_to_method_derivation": "Because the mechanism is identity-counting over an overlapping support hypergraph, the controller must factor through semantic support before assigning mass to implementations. The method therefore moves curriculum, retrieval-budget, and update-credit allocation from package identities to support atoms/quotient classes, then chooses among implementations conditionally.",
+    "components": [
+      "Support fingerprint: estimate each skill's applicability/support on exactly the same observable context/task evidence available to the strongest baseline; no private outcome features.",
+      "Exact-support quotient: collapse exact/near-identical support implementations into one semantic class so clones cannot consume extra curriculum or retrieval mass.",
+      "Context/support-first allocation: allocate one normalized control mass to semantic contexts/support atoms before selecting a compatible skill implementation, preventing generic+specific overlap multiplicity from multiplying context exposure.",
+      "Conditional implementation selection: within a semantic support atom, select among compatible implementations using frozen quality/utility evidence; the total atom mass remains one regardless of representation multiplicity.",
+      "Quotient credit: aggregate feedback at semantic-support level and distribute responsibility within the compatible implementation set with weights summing to one, so splitting an implementation cannot multiply future update credit.",
+      "Transformation audit: expose a representation-invariance diagnostic by applying semantics-preserving split/clone/merge transformations to the frozen taxonomy and measuring control-law distance before any expensive end-to-end run."
+    ],
+    "method_stop_rule": "STOP standalone SQC if a generic controller with the identical information available at the same decision time matches SQC on taxonomy-transformation invariance and held-out evolution utility. For upstream curriculum sampling this baseline may use the frozen library/support fingerprints/quality-exploration statistics but not post-generation task context; for post-context retrieval/credit, a context-conditioned simplex/router is required as the strongest baseline. In either case, if the generic baseline matches, STRI remains a diagnostic principle but not a novel method.",
+    "not_method": [
+      "text deduplication",
+      "whole-package deletion",
+      "a global scalar weight per package",
+      "a larger learned router with extra information",
+      "threshold tuning on hidden outcomes"
+    ]
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "claim": "Real self-evolving skill controllers are representation-sensitive: semantics-preserving identity multiplicity/overlap changes curriculum or fixed-budget retrieval control despite unchanged semantic support.",
+      "current_support": "SUPPORTED_AT_CONTROL_PLANE on two first-party systems (Skill-SP, SkillRL).",
+      "paper_scale_requirement": "Replicate on at least two released systems with exact transformation provenance and no hidden tuning."
+    },
+    {
+      "id": "C2",
+      "claim": "The residual cannot be eliminated by clone/text dedup, exact-coverage whole-package pruning, or arbitrary context-independent global package reweighting when partial overlap is structurally necessary.",
+      "current_support": "SUPPORTED on the released Skill-SP validator-support matrix; pruning leaves 71/348 multi-membership rows and optimal global exposure ratio is 2.0.",
+      "paper_scale_requirement": "Formalize the impossibility condition and reproduce on at least one additional real support graph or released dynamic taxonomy."
+    },
+    {
+      "id": "C3",
+      "claim": "Support-Quotient Control removes taxonomy-representation dependence without deleting unique semantic support and beats the strongest same-information contextual controller on invariance/utility tradeoff.",
+      "current_support": "METHOD HYPOTHESIS ONLY.",
+      "paper_scale_requirement": "Decisive P0 followed by held-out matched-budget experiments."
+    },
+    {
+      "id": "C4",
+      "claim": "Representation sensitivity propagates to a meaningful end-of-evolution state, cumulative evolution utility/regret, or downstream task performance under a faithful first-party evolution workflow.",
+      "current_support": "UNRESOLVED. The Qwen2.5 F0 is invalid and cannot update belief.",
+      "paper_scale_requirement": "Faithful author-workflow P0 with independent truth and preregistered transformation/baseline. No claim if this gate fails."
+    }
+  ],
+  "current_source_novelty": {
+    "independent_verdict": "SURVIVES_NARROWLY",
+    "strongest_collisions": [
+      "SkillClone arXiv:2603.22447",
+      "SkillsVote arXiv:2605.18401",
+      "Practice Makes Unsafe / SkillMisevo arXiv:2608.12851",
+      "ERSkill arXiv:2608.12720",
+      "Agent Skills Can Be Harmful arXiv:2608.11888",
+      "Skill-Harness Evolution / SHAPER arXiv:2608.11350",
+      "SkillZip arXiv:2608.11079",
+      "fixed-arm contextual bandit/similarity-aware experts reductions"
+    ],
+    "surviving_difference": "A representation-invariance requirement for an endogenous self-evolving taxonomy whose artifact identities jointly drive curriculum, retrieval budget, credit, and update state; not merely duplicate detection, low-redundancy routing, content safety, or compression."
+  },
+  "decisive_p0": {
+    "status": "DESIGN_REQUIRED_BEFORE_EXECUTION",
+    "primary_question": "Does a faithful real/public self-evolution workflow exhibit a qualified taxonomy-representation effect on end-of-evolution control/outcome, and does SQC eliminate that effect beyond the strongest same-information contextual baseline?",
+    "faithful_substrate_requirement": "Use a backbone/workflow explicitly released by the chosen author implementation. The prior Qwen2.5 Skill-SP rollout is excluded. A different author-published backbone may be used only as the single preregistered P0 substrate after independent operationalization review; it must not be run as a second-backbone rescue or compared adaptively against the invalid run.",
+    "tier": 2,
+    "resource_ceiling": "single frozen model, <=1 GPU-hour for local P0; no second backbone, no full training, no multi-GPU",
+    "outcomes": [
+      "taxonomy-transformation distance in end-of-evolution control state",
+      "cumulative independently verified evolution utility/regret where available",
+      "downstream task/environment success if available within the same bounded substrate"
+    ],
+    "interpretation_matrix": {
+      "native_sensitive_sqc_invariant_contextual_baseline_sensitive": "mechanism and method survive; proceed to full blueprint",
+      "native_sensitive_contextual_baseline_invariant_and_matches_sqc": "problem survives but SQC method is reducible; redesign/stop method",
+      "native_not_sensitive_under_qualified_faithful_test": "dynamic paper problem weakens; retain control-plane diagnostic only and stop paper-scale claim",
+      "qualification_or_provenance_failure": "substrate/operationalization wrong; no scientific belief update"
+    }
+  },
+  "full_experiment_blueprint_if_p0_passes": {
+    "systems": "at least two released self-evolving skill systems with independent support/outcome truth",
+    "transformations": [
+      "exact semantic clone",
+      "support-preserving split/refinement",
+      "support-preserving merge/coarsening where implementation semantics can be held fixed",
+      "irreducible partial-overlap reparameterization"
+    ],
+    "baselines": [
+      "native controller",
+      "author text/semantic dedup",
+      "full-coverage whole-package pruning",
+      "optimal global package reweighting",
+      "SkillsVote-style low-redundancy recommendation/attribution when reproducible",
+      "generic context-conditioned router/simplex baseline with identical support/context/quality information",
+      "SQC"
+    ],
+    "primary_metrics": [
+      "control-law distance under matched taxonomy transformations",
+      "semantic coverage retention",
+      "unique semantic retrieval per fixed budget",
+      "end-of-evolution task distribution/control state",
+      "cumulative utility/regret or task success",
+      "extra inference/evolution cost"
+    ],
+    "mandatory_ablations": [
+      "exact quotient only",
+      "context/support-first allocation only",
+      "quotient credit only",
+      "no partial-overlap normalization",
+      "support-fingerprint quality/sparsity sensitivity"
+    ]
+  },
+  "authority": {
+    "asset_first_paper_design_draft": true,
+    "canonical_live_problem_gate": false,
+    "method_execution": false,
+    "p0_execution": false,
+    "full_experiment": false,
+    "gpu": false
+  },
+  "next_action": "Independent current-source and method premortems are complete. Keep idea search closed; reopen Decisive-P0 execution only after a faithful author-workflow runtime/substrate passes independent operationalization review and budget preflight. Do not claim C3/C4 until that qualified P0 resolves the strongest decision-time-matched baseline."
+}

@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "stage": "METHOD_DESIGN",
+  "method_name": "Support-Quotient Control (SQC)",
+  "method_authorized_for_execution": false,
+  "mechanism": "Artifact-identity mass is not invariant to taxonomy refinement. In a partial-overlap support hypergraph, no context-independent package-weight vector can generally preserve all support while making semantic-context exposure invariant. Therefore a representation-invariant controller must factor through semantic support before assigning mass/credit to package implementations.",
+  "decision_time_information_contract": {
+    "upstream_curriculum": [
+      "current skill library/package metadata",
+      "precomputed support/applicability fingerprints from frozen first-party validators or released task-support evidence",
+      "skill-level quality/exploration/decay statistics available before task generation",
+      "frozen semantic support prior / anchor distribution"
+    ],
+    "upstream_forbidden_baseline_information": [
+      "the generated task that does not yet exist",
+      "post-generation validator outcome",
+      "hidden downstream task reward"
+    ],
+    "post_context_retrieval_credit": "Task context/outcome becomes available and must be shared identically with contextual baselines."
+  },
+  "algorithm": [
+    {
+      "step": 1,
+      "name": "Build support quotient",
+      "description": "From the frozen task/support incidence matrix, collapse exact support-equivalent implementations and form support atoms/cells whose identity depends on semantic applicability rather than package count. The P0 uses exact first-party validator support only; no learned similarity threshold is tuned on outcomes."
+    },
+    {
+      "step": 2,
+      "name": "Allocate semantic control mass",
+      "description": "Place curriculum/retrieval/update mass on support atoms under a frozen semantic prior. Package multiplicity cannot create new atom mass."
+    },
+    {
+      "step": 3,
+      "name": "Choose implementation conditionally",
+      "description": "Within an atom, distribute its unit mass among compatible implementations using only the same pre-decision quality/exploration evidence available to baselines; member responsibilities sum to one."
+    },
+    {
+      "step": 4,
+      "name": "Realize upstream generation",
+      "description": "For generative curricula, the selected support atom must constrain realization rather than collapse back to an unconstrained global package draw. Allowed realizations are a first-party support-conditioned proposer interface if available, or validator-gated/rejection realization under a preregistered call budget. If neither exists, upstream SQC is not operationally identified on that substrate."
+    },
+    {
+      "step": 5,
+      "name": "Quotient credit",
+      "description": "After independently verified feedback, update semantic support/atom statistics once and distribute responsibility across compatible implementations with total responsibility one. Splitting one implementation cannot multiply total future credit."
+    },
+    {
+      "step": 6,
+      "name": "Transformation audit",
+      "description": "Before scale-up, apply frozen semantics-preserving clone/split/merge/overlap transformations and require the SQC control process to remain within preregistered representation-distance tolerance while semantic coverage is unchanged."
+    }
+  ],
+  "strongest_same_information_baselines": [
+    {
+      "name": "optimal-global-support-aware-weighting",
+      "surface": "upstream",
+      "information": "same support matrix and pre-task stats",
+      "status": "already falsified on released Skill-SP support matrix for exact exposure equalization; optimum max/min ratio=2.0"
+    },
+    {
+      "name": "generic-pre-context-controller",
+      "surface": "upstream",
+      "information": "same library/support fingerprints/quality-exploration stats and sampling budget; no future task lookahead",
+      "stop_rule": "If a generic pre-context controller matches SQC under the same transformation and utility/cost budget, stop standalone SQC."
+    },
+    {
+      "name": "matched-validator-rejection-sampling",
+      "surface": "upstream realization",
+      "information": "same target support atom and same first-party validators",
+      "budget": "same proposer/validator call budget as SQC",
+      "stop_rule": "If simple rejection sampling matches SQC representation invariance, semantic coverage, evolution utility, and call efficiency at matched budget, the specialized realization component is unnecessary."
+    },
+    {
+      "name": "context-conditioned-simplex-router",
+      "surface": "post-context retrieval/credit",
+      "information": "same task context, support fingerprints, quality/outcome evidence, clone quotienting, capacity and fixed budget",
+      "stop_rule": "If it matches SQC on retrieval/credit invariance and downstream utility, drop that SQC component."
+    }
+  ],
+  "formal_targets": [
+    "Refinement-dependence lemma for positive artifact-ID mass.",
+    "Partial-overlap infeasibility condition for context-independent global package weights under coverage constraints.",
+    "Support-quotient invariance proposition under exact support-equivalence and a frozen semantic support measure.",
+    "Credit conservation proposition: total semantic credit is invariant to implementation split when responsibility weights sum to one."
+  ],
+  "method_success_condition": "SQC must produce a residual over every valid same-information baseline on a qualified real/public dynamic substrate. Control-plane invariance alone is not enough for C3; dynamic/end-of-evolution evidence is required.",
+  "method_failure_conditions": [
+    "generic pre-context controller matches SQC",
+    "matched rejection sampling matches SQC at the same proposer/validator budget",
+    "contextual router matches SQC on post-context surfaces",
+    "faithful qualified native dynamic substrate shows no representation sensitivity",
+    "SQC obtains invariance only by reducing semantic coverage or consuming materially more information/calls"
+  ],
+  "scientific_authority": false,
+  "authority": {"method_execution": false, "p0": false, "gpu": false},
+  "next_action": "Freeze one faithful author-workflow P0 only after substrate/runtime preflight and an independent operationalization review. Do not train SQC or run paper-scale experiments before that gate."
+}

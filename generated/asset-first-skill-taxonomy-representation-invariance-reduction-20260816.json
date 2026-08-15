@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "working_title": "Self-Evolution Should Not Depend on How Skills Are Split",
+  "status": "REPLICATED_MECHANISM_NOVELTY_UNRESOLVED",
+  "problem_statement": "Self-evolving skill systems use skill artifacts as control units for sampling, retrieval, feedback credit, refinement, and admission. If two taxonomies represent the same semantic capability/support set but differ only in how that set is split, cloned, or hierarchically overlapped across package identities, a representation-invariant evolution operator should not change its induced control distribution solely because the artifact parameterization changed.",
+  "narrow_principle": {
+    "name": "Skill-Taxonomy Representation Invariance (STRI)",
+    "informal_definition": "For a semantics-preserving taxonomy transformation phi that does not add a new executable capability or support region, the induced self-evolution control law should remain invariant, or any change must be explicitly justified by new evidence rather than package multiplicity.",
+    "objects": [
+      "future curriculum/sampling mass",
+      "retrieval exposure under a fixed semantic budget",
+      "feedback-credit allocation",
+      "refinement/admission state"
+    ],
+    "not_claimed": [
+      "semantic skill redundancy is newly discovered",
+      "all overlapping skills should be merged",
+      "duplicate arms are a new online-learning phenomenon",
+      "Skill-SP or SkillRL overall performance is poor",
+      "current control-plane violations necessarily reduce end-task accuracy without a dynamic test"
+    ]
+  },
+  "first_party_evidence": [
+    {
+      "system": "Skill Self-Play (Skill-SP)",
+      "paper": "arXiv:2607.22529",
+      "author_repo_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+      "mechanism": "package-wise adaptive skill sampling plus skill_id-level feedback/refinement credit",
+      "real_support_evidence": "On all 530 bundled API-Bank level-1/3 rows, released validators cover 348; 183/348 covered rows (52.586%) have multiple skill memberships, all as specific+generic overlap across 5 distinct pairs and 14 answer tools.",
+      "released_taxonomy_result": "Without adding any clone, median package-level eligibility exposure mass is 2.0x for multi-membership versus single-membership rows under the released sampler state.",
+      "dedup_result": "The released name+description Jaccard duplicate filter at threshold 0.33 misses all 5/5 observed support-overlap pairs (pair similarities 0.1429-0.20).",
+      "exact_equivalence_result": "An exact semantic ID split inflates the equivalence-class normalized sampler mass by 87.5% for all 15 released skills under the frozen reset-stat state.",
+      "result_paths": [
+        "/data/wyt/agent-self-evolution-observatory/runs/asset-first-skillsp-semantic-multiplicity-r1-20260816/result.json",
+        "/data/wyt/agent-self-evolution-observatory/runs/asset-first-skillsp-semantic-multiplicity-r1b-20260816/result.json"
+      ]
+    },
+    {
+      "system": "SkillRL",
+      "paper": "arXiv:2602.08234",
+      "author_repo_commit": "8e66726ed866a4e0a7f053586a41022798192e6c",
+      "mechanism": "dynamic skill IDs receive retrieval priority in the official template-mode SkillBank; add_skills rejects only duplicate IDs",
+      "exact_equivalence_result": "For each of 12 released general skills independently, an exact content clone with only a fresh dyn_NNN ID is accepted 12/12. Across 223 released ALFWorld task descriptions, all 2676 prompt comparisons change; 11/12 clone targets change the unique semantic retrieval set and 5/12 reduce the number of unique general-skill contents under fixed top_k=6.",
+      "result_path": "/data/wyt/agent-self-evolution-observatory/runs/asset-first-skillrl-representation-invariance-r2-20260816/result.json"
+    }
+  ],
+  "reduction_matrix": [
+    {
+      "neighbor": "SkillClone",
+      "source": "arXiv:2603.22447",
+      "established_object": "multi-modal skill clone detection, including semantic clones, ecosystem-scale clone propagation, and deduplication analysis",
+      "directly_absorbs": "Any novelty claim that semantic skill redundancy/cloning is common or that exact duplicate skills should be detected/deduplicated.",
+      "residual": "STRI concerns how online self-evolution control changes under semantically equivalent or partially overlapping taxonomy representations; Skill-SP's decisive released overlap is hierarchical partial support overlap rather than exact clone identity.",
+      "verdict": "CONCEDE_REDUNDANCY_AND_DEDUP; RESIDUAL_ONLY_DYNAMIC_CONTROL_INVARIANCE"
+    },
+    {
+      "neighbor": "SkillsVote",
+      "source": "arXiv:2605.18401",
+      "established_object": "lifecycle governance of redundant/environment-sensitive skills: recommendation before execution, skill-linked attribution after execution, evidence-gated updates",
+      "directly_absorbs": "Generic claims that redundancy can harm exposure/credit or that lifecycle governance should combine recommendation, attribution, and evolution.",
+      "residual": "A formal representation-invariance test asks whether two semantics-preserving taxonomies induce the same evolution operator. Low-redundancy recommendation and attribution need not guarantee invariance to split/merge/overlap reparameterization.",
+      "verdict": "STRONG_COLLISION; SURVIVES_ONLY_IF_INVARIANCE_IS_DECISIVE_AND_NOT_SOLVED_BY_LOW_REDUNDANCY_RETRIEVAL"
+    },
+    {
+      "neighbor": "SkillRL",
+      "source": "arXiv:2602.08234",
+      "established_object": "hierarchical SkillBank, adaptive retrieval, recursive skill evolution",
+      "directly_absorbs": "Generic hierarchical skill-library and recursive-evolution method claims.",
+      "residual": "Author implementation itself provides an independent violation witness: fresh dynamic identity changes fixed-budget retrieval despite exact content equivalence.",
+      "verdict": "EVIDENCE_SYSTEM_NOT_METHOD_NOVELTY"
+    },
+    {
+      "neighbor": "Skill Self-Play",
+      "source": "arXiv:2607.22529",
+      "established_object": "co-evolving proposer, solver, dynamic skill controller; tasks conditioned on dynamically sampled skills and execution feedback updates/expands the library",
+      "directly_absorbs": "Generic adaptive skill-curriculum/self-play method claims.",
+      "residual": "Released controller supplies the first support-overlap witness: package multiplicity changes eligibility mass and identity is also the feedback/refinement unit.",
+      "verdict": "EVIDENCE_SYSTEM_NOT_METHOD_NOVELTY"
+    },
+    {
+      "neighbor": "Contextual Bandits with Similarity Information",
+      "source": "COLT 2011 / PMLR 19",
+      "established_object": "online decisions with similarity structure over context-arm pairs and adaptive partitions that exploit that similarity",
+      "directly_absorbs": "The generic idea that similar alternatives should share structure instead of being treated as unrelated categorical arms.",
+      "residual": "STRI is not a fixed-arm regret problem: the skill identities/support regions are endogenously created, refined, and reused as both curriculum/retrieval actions and future credit/update state.",
+      "verdict": "MATURE_THEORY_REDUCTION_FOR_FIXED_LIBRARY; ENDOGENOUS_LIBRARY_COUPLING_REMAINS"
+    },
+    {
+      "neighbor": "Contextual Bandits with Stochastic Experts",
+      "source": "AISTATS 2018 / PMLR 84",
+      "established_object": "reward estimation for stochastic experts leveraging information leakage among experts",
+      "directly_absorbs": "The generic idea that overlapping/similar experts provide cross-expert information and independent per-expert treatment wastes structure.",
+      "residual": "Does not by itself define invariance of an evolving artifact library to semantics-preserving split/clone/merge operations, nor the coupled effect on artifact creation and future training distribution.",
+      "verdict": "MATURE_INFORMATION_SHARING_BASELINE; NOT YET DIRECT COLLISION"
+    }
+  ],
+  "strongest_simple_reductions_to_test_next": [
+    {
+      "baseline": "author text duplicate filter",
+      "status": "FAILED_ON_RELEASED_SKILLSP_OVERLAP",
+      "evidence": "5/5 support-overlap pairs below the frozen 0.33 Jaccard threshold"
+    },
+    {
+      "baseline": "exact semantic clone deduplication",
+      "status": "INSUFFICIENT_FOR_RELEASED_SKILLSP_PARTIAL_OVERLAP",
+      "reason": "R1b uses no synthetic clone; 183 real tasks are accepted by distinct specific and generic skills. Removing an exact clone does not resolve hierarchical partial support overlap."
+    },
+    {
+      "baseline": "fixed-library similarity-aware / overlapping-expert control",
+      "status": "UNRESOLVED_STRONGEST_THEORY_REDUCTION",
+      "required_test": "Instantiate a same-information overlap-aware control baseline on the frozen Skill-SP support matrix and determine whether it removes representation sensitivity without needing a new STRI-specific method."
+    },
+    {
+      "baseline": "low-redundancy recommendation / attribution governance (SkillsVote-style)",
+      "status": "UNRESOLVED_STRONGEST_SYSTEM_REDUCTION",
+      "required_test": "Test whether low-redundancy selection alone makes control mass and credit invariant under partial hierarchical overlap; if yes, stop standalone STRI method claim."
+    }
+  ],
+  "current_verdict": "SURVIVES_NARROWLY_AS_REPRESENTATION_INVARIANT_SELF_EVOLUTION",
+  "paper_design_authorized": false,
+  "method_authorized": false,
+  "p0_authorized": false,
+  "gpu_authorized": false,
+  "scientific_belief_update_allowed": true,
+  "reason_paper_design_still_blocked": "Two independent first-party control-plane violations establish a real mechanism, but the strongest mature reduction has not yet been falsified: similarity-aware/overlap-aware fixed-library control or SkillsVote-style low-redundancy governance may absorb the effect. In addition, no dynamic end-task or future-learning outcome has yet shown that the representation violation changes a scientific decision beyond control-plane algebra.",
+  "next_decisive_steps": [
+    "Run a frozen same-information overlap-aware baseline on the Skill-SP released support matrix; kill the candidate if a standard similarity/overlap normalization makes the control law representation-invariant with no residual.",
+    "If a residual remains, design one bounded dynamic counterfactual with unchanged skill semantics and matched compute where taxonomy split/overlap alone changes verified future-task acquisition or retained performance; require an external verifier, not self-report.",
+    "Only after both tests pass, compile Problem -> Principle (STRI) -> Method -> decisive evidence and request Paper Design authority."
+  ],
+  "created_at": "2026-08-16"
+}

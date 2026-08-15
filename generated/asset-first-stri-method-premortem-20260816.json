@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "review_kind": "independent-paper-design-method-premortem",
+  "resolved_model": "doubao-seed-2-0-lite-260215",
+  "verdict": "ADVANCE_METHOD_DESIGN",
+  "problem_strength": "Strong and constrained: representation sensitivity is replicated on two real systems and partial-overlap residual survives whole-package pruning/global reweighting.",
+  "mechanism_assessment": "Identity-Mass Refinement Dependence is stronger than generic overlap normalization because it makes representation invariance of the evolving control law the object and identifies failure of artifact-ID counting under refinement.",
+  "reviewer_strongest_same_information_baseline": "Context-conditioned neural simplex router with the same task context, precomputed support fingerprints, exact-clone quotienting, capacity, and fixed control/retrieval budget.",
+  "causal_timing_followup": "Author Skill-SP code establishes that sample_skill() runs before the proposer task exists and sees only skill-level stats. Therefore a task-context-conditioned router has post-treatment information for the upstream curriculum decision and is not a valid same-information baseline for that specific control surface. It remains a valid strong baseline for post-context retrieval/credit surfaces. The upstream baseline must be restricted to pre-task observable library/support/statistics information.",
+  "method_stop_rule": "If a generic controller using only the same pre-decision information and budget matches SQC on transformation invariance and evolution utility, stop the standalone SQC method claim.",
+  "claims_now": ["C1", "C2"],
+  "claims_locked_until_p0": ["C3", "C4"],
+  "fatal_risks": [
+    "Generic same-information control may reproduce SQC, making the method reducible even if STRI remains a valid diagnostic principle.",
+    "A faithful qualified dynamic P0 may show no meaningful propagation; then downstream paper claims must be dropped.",
+    "Adaptive switching among multiple backbones/substrates after seeing results is prohibited."
+  ],
+  "source_review_receipt": "/data/wyt/agent-self-evolution-observatory/runs/asset-first-stri-method-premortem-20260816/review.json",
+  "scientific_authority": false,
+  "authority": {"method_execution": false, "p0": false, "gpu": false}
+}

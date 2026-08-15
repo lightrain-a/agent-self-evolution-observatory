@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "paper_id": "STRI",
+  "stage": "DECISIVE_P0_BLUEPRINT",
+  "execution_status": "SUBSTRATE_HOLD_RUNTIME_AND_RESOURCE",
+  "execution_authorized": false,
+  "primary_scientific_question": "Under a faithful first-party self-evolution workflow, does a semantics-preserving taxonomy reparameterization change an end-of-evolution control/outcome quantity, and does Support-Quotient Control remove that dependence beyond the strongest decision-time-matched baseline?",
+  "claim_lock": {
+    "C1_control_plane_representation_sensitivity": "already supported",
+    "C2_global_reduction_insufficiency": "already supported",
+    "C3_sqc_method_superiority": "locked until P0",
+    "C4_dynamic_or_end_of_evolution_propagation": "locked until P0"
+  },
+  "preferred_primary_substrate": {
+    "system": "Skill Self-Play tool-call workflow",
+    "author_repo_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "single_backbone": "Qwen3-8B",
+    "why_this_is_not_second_backbone_rescue": "The prior Qwen2.5 execution produced zero qualified units and is formally invalidated, so it is not a scientific backbone result. Qwen3-8B is an author-published tool-call configuration and would be the single preregistered qualified P0 backbone. It must not be adaptively compared with another backbone after outcomes are observed.",
+    "author_generation_contract": {
+      "runtime_family": "vLLM in released question_generate.py",
+      "max_tokens": 4096,
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "chat_template": "author tokenizer apply_chat_template with add_generation_prompt/add_special_tokens"
+    },
+    "independent_truth": "author parser/question contract plus the 15 released tool-call package validators; environment/downstream utility only when obtained from a frozen first-party executor"
+  },
+  "local_asset_preflight": {
+    "host_231": {
+      "checkpoint_path": "/data/lry/models/Qwen3-8B",
+      "checkpoint_exists": true,
+      "config_sha256": "f7c4eadfbbf522470667b797a3c89be2524832d2d599797248dc304fff447c30",
+      "tokenizer_config_sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "generation_config_sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "safetensors_files": 5,
+      "safetensors_total_bytes": 16381516776,
+      "vllm_runtime_found": false,
+      "gpu": "A100-SXM4-80GB",
+      "latest_gpu_utilization_percent": 100,
+      "latest_gpu_memory_used_mib": 67436,
+      "execution_ready": false
+    },
+    "host_69": {
+      "author_repo_available": true,
+      "qwen3_8b_checkpoint_found": false,
+      "execution_ready": false
+    },
+    "host_52": {
+      "gpus_idle_at_last_probe": true,
+      "qwen3_4b_or_8b_checkpoint_found": false,
+      "execution_ready": false
+    },
+    "host_232": {
+      "qwen3_checkpoint_found": false,
+      "execution_ready": false
+    }
+  },
+  "p0_design_constraints": {
+    "tier": 2,
+    "max_gpu_hours": 1.0,
+    "max_gpus": 1,
+    "training": "none",
+    "second_backbone": "forbidden",
+    "threshold_shopping": "forbidden",
+    "post_outcome_substrate_switch": "forbidden",
+    "qualification_before_scientific_metrics": true,
+    "qualification_failure_disposition": "INCONCLUSIVE_SUBSTRATE_OR_OPERATIONALIZATION; no belief update"
+  },
+  "causal_timing": {
+    "upstream_curriculum": "Skill-SP sample_skill() selects a skill using skill-level quality/exploration/decay stats before proposer task generation. Generated task context is therefore unavailable at the upstream decision and cannot be given to a same-information baseline.",
+    "post_context_retrieval_credit": "Task context/outcome may be used by both SQC and a context-conditioned baseline after it exists."
+  },
+  "treatments": [
+    "Original released taxonomy/control state",
+    "A preregistered semantics-preserving taxonomy refinement/overlap reparameterization with no new executable support",
+    "The same transformed state controlled by SQC",
+    "The same transformed state controlled by the strongest decision-time-matched generic baseline"
+  ],
+  "strongest_same_information_baselines": {
+    "upstream": "Generic pre-context controller with identical library, support fingerprints, quality/exploration statistics, clone quotient information, and sampling budget; may optimize arbitrary global/support-aware package weights but may not observe the not-yet-generated task.",
+    "post_context": "Context-conditioned neural/simplex router with identical task context, support fingerprints, quality/outcome evidence, exact-clone quotient preprocessing, capacity, and fixed budget."
+  },
+  "primary_outcomes": [
+    "distance between original and transformed end-of-step/end-of-evolution semantic control distributions",
+    "semantic coverage retained",
+    "cumulative independently verified evolution utility/regret where a faithful executor is available",
+    "downstream task/environment success where available under the same frozen run"
+  ],
+  "go_stop": {
+    "mechanism_and_method_survive": "Native controller is representation-sensitive under a qualified faithful run; SQC materially reduces the matched transformation distance while preserving coverage/utility; strongest valid same-information baseline leaves a preregistered residual.",
+    "method_reducible": "A strongest valid same-information baseline matches SQC on invariance and utility/cost; stop standalone SQC and retain STRI only as a diagnostic/scientific principle.",
+    "dynamic_problem_weakens": "A qualified faithful native controller shows no meaningful representation effect under the preregistered transformation; stop C4 and do not scale the paper as a dynamic-harm claim.",
+    "invalid": "Any provenance, parser/contract qualification, runtime, or support failure prevents scientific update."
+  },
+  "current_blockers": [
+    "No existing vLLM environment found on host 231 for the author-released generation path.",
+    "Host 231 A100 is currently fully utilized by unrelated work.",
+    "No alternative host simultaneously has the author-published Qwen3 checkpoint and faithful runtime; moving/installing assets solely to rescue execution is not authorized."
+  ],
+  "next_action": "Do not execute P0 yet. Reopen execution only when a faithful existing runtime/substrate becomes available or an independent operationalization review clears a strictly equivalent runtime without changing backbone, prompts, decoding, thresholds, or truth."
+}

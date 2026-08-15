@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "experiment_id": "ASSET-FIRST-STRI-DYNAMIC-MIXTURE-F0-20260816",
+  "disposition": "INVALID_OPERATIONALIZATION_NO_SCIENTIFIC_BELIEF_UPDATE",
+  "failed_execution_result_sha256": "34067d1a89edff08a7d7d4a98308f0a6fb6bc441138ed1777935a81e5b5a89a8",
+  "failed_execution_raw_sha256": "5c693e1e1ad2256bdf89e73fe517caf3636ea83370116f4fe4cab743269faace",
+  "observed": {
+    "generated_total": 72,
+    "parsed_total": 40,
+    "contract_valid_total": 0,
+    "contract_valid_per_source": {
+      "skill_003": 0,
+      "skill_004": 0,
+      "skill_015": 0
+    },
+    "gpu_hours": 0.09301019395675716,
+    "empty_distribution_metrics_are_not_scientific_evidence": true
+  },
+  "dominant_contract_failures": [
+    "tool_call_format=0 for all 40 parsed generations",
+    "system_missing_tool_call_output_contract for all 40 parsed generations",
+    "user_missing_final_one_tool_call_request for 37/40 parsed generations"
+  ],
+  "operationalization_mismatch": {
+    "invalid_f0_proposer": "Qwen2.5-7B-Instruct with max_new_tokens=384 and temperature=0.8",
+    "released_tool_call_workflow": "Skill-SP README reports Qwen3-4B-Instruct-2507 and Qwen3-8B tool-call configurations; question_generate.py defaults to Qwen/Qwen3-4B and uses max_tokens=4096 (unless overridden), temperature=1.0, top_p=0.95 via vLLM.",
+    "interpretation": "The F0 proposer did not instantiate the released Skill-SP question-generation substrate faithfully. Zero qualified units therefore invalidates both positive and negative STRI inference."
+  },
+  "belief_update": {
+    "baseline_reduction_supported": false,
+    "residual_survives_from_this_f0": false,
+    "scientific_failure_authorized": false,
+    "method_failure_authorized": false,
+    "paper_design_failure_authorized": false
+  },
+  "system_fix": "asset_first_stri_dynamic_mixture_falsifier.adjudicate_dynamic_gate now separates proposer qualification from the scientific gate and returns INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED with scientific_result_available=false when the qualification gate fails.",
+  "repair_policy": "At most one independently reviewed faithful operationalization may be compiled later. Do not tune thresholds, reuse empty-distribution TV=0, or switch backbones merely to rescue a negative result.",
+  "scientific_authority": false,
+  "authority": {
+    "live_problem_gate": false,
+    "method": false,
+    "p0": false,
+    "gpu": false
+  }
+}

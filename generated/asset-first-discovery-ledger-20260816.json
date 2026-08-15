@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0",
+  "mode": "ASSET_FIRST_EXPERIMENTAL_DISCOVERY",
+  "selected_problem": "skill-taxonomy-representation-invariance",
+  "idea_search_stopped": true,
+  "stop_reason": "One real/public problem now has replicated control-plane residuals across two first-party systems, survives strongest simple reductions and current-source collision review, and has entered Paper Design. Additional idea generation would reduce information efficiency.",
+  "assets": [
+    {
+      "asset": "ALFWorld OOD134 + TextWorld/PDDL",
+      "observable": ["observation", "admissible commands", "actions", "success/won", "underlying PDDL state/facts"],
+      "intervention": ["prefix replay", "forced action", "memory/prompt arm"],
+      "truth": "ALFWorld environment success/won and executable PDDL state",
+      "unit_count": {"games": 134, "task_families": 7},
+      "variation": "task/family/context; deterministic state transitions",
+      "reusable": true,
+      "tier": "0/1/2 depending model use"
+    },
+    {
+      "asset": "Qwen2.5 ALFWorld memory 72x3 table",
+      "observable": ["retrieved/placebo/no-memory success", "action trajectories", "token counts"],
+      "intervention": "retrieved memory vs exactly token-matched irrelevant placebo vs no memory",
+      "truth": "ALFWorld success/won",
+      "unit_count": {"matched_units": 72, "executions": 216, "memories": 12, "source_families": 4, "target_families": 4},
+      "variation": "benefit/harm/placebo effects and context reuse",
+      "reusable": true,
+      "discovery_outcome": "single-reference instability candidate later falsified; old first-divergence mediator remains terminal STOP"
+    },
+    {
+      "asset": "C2 first-divergence forced-action continuation",
+      "observable": ["same-prefix forced A1/A0", "memory-free continuation", "endpoint success"],
+      "intervention": "force one divergent action from identical prefix, then frozen continuation",
+      "truth": "ALFWorld success/won",
+      "unit_count": {"structural_units": 23, "executions": 92},
+      "variation": "first action carries only minority of endpoint effects",
+      "reusable": "evidence only",
+      "terminal_boundary": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM"
+    },
+    {
+      "asset": "B3 real co-retrieval factorial",
+      "observable": ["none", "A", "B", "A+B"],
+      "intervention": "2x2 memory co-retrieval",
+      "truth": "ALFWorld success/won",
+      "unit_count": {"attempted_pairs": 6, "strict_fresh_eligible": 5, "frozen_required": 6},
+      "variation": "non-additive-looking development outcomes but target overlap invalidated prevalence",
+      "reusable": false,
+      "terminal_boundary": "STOP_CURRENT_SUBSTRATE_FRESH_CINTERACTION_SUPPORT_INSUFFICIENT"
+    },
+    {
+      "asset": "E1 workflow paired edit cache",
+      "observable": ["workflow success/reward", "step probabilities", "edit scores"],
+      "intervention": "five edits across sixteen workflows",
+      "truth": "programmatic workflow verifier",
+      "unit_count": {"workflows": 16, "edits": 5, "cached_scores": 612, "evaluations": 204},
+      "variation": "edit x workflow interactions",
+      "reusable": true,
+      "terminal_boundary": "fit-gate inconclusive; no hidden scientific result"
+    },
+    {
+      "asset": "public/stateful API P/E/X harnesses",
+      "observable": ["transition effect", "state snapshots", "recovery"],
+      "intervention": "typed read-only and stateful transitions",
+      "truth": "public API behavior / executable state snapshots",
+      "unit_count": {"public_hidden": 12, "stateful_hidden": 12},
+      "variation": "cross-family transition/state/recovery",
+      "reusable": true,
+      "discovery_outcome": "killed by deterministic same-information P/E/X baseline at 12/12 on both harnesses"
+    },
+    {
+      "asset": "3x3 evaluator anchor matrix",
+      "observable": ["evaluator score", "anchor truth", "shortcut atom"],
+      "intervention": "evaluator version and shortcut neutralization",
+      "truth": "external/program anchor score",
+      "unit_count": {"anchors": 18, "cross_scores": 54},
+      "variation": "evaluator bias / shortcut weights",
+      "reusable": "diagnostic only",
+      "discovery_outcome": "killed because simple per-evaluator anchor residual calibration is parameter-equivalent"
+    },
+    {
+      "asset": "Skill Self-Play released tool-call skill system",
+      "location": "/data/wyt/skill-self-play-agent3-20260816",
+      "author_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+      "observable": ["skill package stats", "pre-task sampling weights", "released validator support", "question-generation prompts"],
+      "intervention": ["taxonomy identity split/clone", "whole-package pruning", "global package reweighting", "support quotient"],
+      "truth": "author-frozen 15 package validators over API-Bank tasks; author sampling/update code",
+      "unit_count": {"benchmark_rows": 530, "covered_rows": 348, "released_skills": 15, "multi_membership_rows": 183},
+      "variation": "specific+generic partial overlap across 5 pairs / 14 tools; pre-task quality/exploration sampling",
+      "reusable": true,
+      "critical_residual": "exact-coverage minimum pruning leaves 71 multi-membership rows; arbitrary context-independent global weights have optimal exposure ratio 2.0"
+    },
+    {
+      "asset": "SkillRL released ALFWorld skill bank",
+      "location": "/data/wyt/agent2-asset-first-external/SkillRL",
+      "author_commit": "8e66726ed866a4e0a7f053586a41022798192e6c",
+      "observable": ["official template retrieval set", "dynamic skill IDs", "fixed top-k semantic retrieval"],
+      "intervention": "exact-content clone under a fresh dynamic ID using official add_skills path",
+      "truth": "author retrieval implementation over 223 released ALFWorld task descriptions",
+      "unit_count": {"tasks": 223, "general_skill_clone_targets": 12},
+      "variation": "12/12 clones admitted; 11/12 alter unique semantic retrieval set at top_k=6; 5/12 reduce unique general-skill contents",
+      "reusable": true,
+      "role": "independent control-plane replication; not sufficient by itself for SQC method novelty because exact-clone quotienting is a strong reduction"
+    },
+    {
+      "asset": "STRI dynamic Skill-SP F0",
+      "observable": "author contract-valid generated-task/validator-pattern mixture",
+      "intervention": "shared source-conditional banks under original vs representation-changed mixture",
+      "truth": "author parser/contract/validators",
+      "unit_count": {"generated": 72, "parsed": 40, "qualified": 0},
+      "variation": "none estimable because proposer qualification failed",
+      "reusable": false,
+      "disposition": "INVALID_OPERATIONALIZATION_NO_SCIENTIFIC_BELIEF_UPDATE",
+      "cost_gpu_hours": 0.09301019395675716,
+      "reason": "Qwen2.5/384-token proposer did not faithfully instantiate released Skill-SP tool-call workflow; empty-distribution TV=0 is not negative evidence"
+    }
+  ],
+  "candidates": [
+    {"candidate": "neutral-reference-nonidentifiability", "decision": "KILL", "reason": "bounded exact-token multi-reference Round-1 did not replicate required instability"},
+    {"candidate": "world-state-reconvergence-hysteresis", "decision": "KILL", "reason": "0/11 controlled nonzero retrieved-vs-placebo units exhibited required PDDL-state reconvergence"},
+    {"candidate": "co-retrieval-interaction", "decision": "NOT_NEW_HOLD", "reason": "existing B3 object; strict fresh support 5 < frozen 6"},
+    {"candidate": "stateful-api-path-dependence", "decision": "KILL", "reason": "deterministic P/E/X baseline reaches 12/12 hidden on both real/public and stateful harnesses"},
+    {"candidate": "evaluator-version-interaction", "decision": "KILL", "reason": "same-information anchor calibration reproduces proposed repair"},
+    {"candidate": "skill-taxonomy-representation-invariance", "decision": "SELECT_FOR_PAPER_DESIGN", "reason": "replicated on Skill-SP + SkillRL; whole-package pruning/global reweighting leave structural residual; independent current-source review=SURVIVES_NARROWLY; method premortem=ADVANCE_METHOD_DESIGN"}
+  ],
+  "selected_problem_state": {
+    "paper_design": "ACTIVE_ASSET_FIRST",
+    "claims_supported_now": ["C1 control-plane representation sensitivity", "C2 irreducible partial-overlap reduction residual"],
+    "claims_locked_until_decisive_p0": ["C3 SQC method superiority/necessity", "C4 meaningful dynamic/end-of-evolution propagation"],
+    "canonical_live_problem_gate_mutated": false,
+    "method_execution_authorized": false,
+    "p0_execution_authorized": false,
+    "gpu_authorized": false
+  }
+}

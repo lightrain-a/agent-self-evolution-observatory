@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-SKILLRL-REPRESENTATION-INVARIANCE-R2-20260816",
+  "candidate_id": "semantic-multiplicity-bias-in-self-evolving-skill-libraries",
+  "purpose": "Independent public-system replication of representation sensitivity using SkillRL's released ALFWorld SkillBank and official template retrieval control plane.",
+  "author_asset": {
+    "repo": "/data/wyt/agent2-asset-first-external/SkillRL",
+    "remote": "https://github.com/aiming-lab/SkillRL.git",
+    "commit": "8e66726ed866a4e0a7f053586a41022798192e6c",
+    "paper": "arXiv:2602.08234",
+    "skills_only_memory_sha256": "ba663c6d94fa35ac6ca81cafbd39196c3a29c68254a2e2469122d9ce67d01e64",
+    "skill_updater_sha256": "d2c8df9b9bfad2b01d31c9515e97133010ba17c6e37435968d4ba741a71125a9",
+    "alfworld_skillbank_sha256": "e8a953beac1809591fadf0d3509db5dea6e66b0fb56ddb573cf30e6d8879e909",
+    "alfworld_released_memories_sha256": "574738bbf6666182ff7faf5e60f454978f5081fe2e854b4ee41cb780d8e992df"
+  },
+  "selection": {
+    "task_source": "memory_data/alfworld/generated_memories_alfworld_total.json",
+    "task_field": "contextual_description",
+    "all_released_rows": true,
+    "task_count": 223,
+    "general_skill_counterfactual_targets": "all 12 released general skills",
+    "selection_reads_counterfactual_outcomes": false
+  },
+  "author_control_plane": {
+    "retrieval_mode": "template",
+    "top_k_general": 6,
+    "task_specific_top_k": null,
+    "dynamic_identity_rule": "skill_id startswith dyn_",
+    "dynamic_retrieval_rule": "include every dynamic general skill, then fill remaining top_k budget with static skills",
+    "admission_rule": "add_skills rejects only duplicate skill_id"
+  },
+  "representation_counterfactual": {
+    "operation": "Independently for each released general skill, add an exact content copy with a fresh dyn_NNN ID via the official add_skills API. The semantic set of available skill content is unchanged up to exact duplication; only package identity/provenance changes.",
+    "fresh_instance_per_target": true,
+    "model_calls": 0,
+    "gpu_hours": 0
+  },
+  "frozen_gate": {
+    "clone_admission_fraction_min": 1.0,
+    "prompt_change_fraction_min": 0.9,
+    "targets_changing_unique_semantic_retrieval_set_min": 8,
+    "targets_reducing_unique_general_content_count_min": 4
+  },
+  "strongest_reduction": {
+    "name": "harmless duplicate storage",
+    "wins_if": "fresh-ID exact clones are rejected or leave retrieved semantic content invariant under the official dynamic-update retrieval path"
+  },
+  "authority": {"paper_design_authorized": false, "method_authorized": false, "p0_authorized": false, "gpu_authorized": false},
+  "next_if_positive": "Treat representation sensitivity as replicated across two independent self-evolving skill systems, then run novelty adjudication against SkillClone, SkillsVote, duplicate-arm/overlapping-expert theory, and simple semantic-dedup baselines before Paper Design.",
+  "next_if_negative": "Keep the finding Skill-SP-specific and do not generalize it into a self-evolving-skill principle."
+}

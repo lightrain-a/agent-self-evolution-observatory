@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-SKILLSP-RELEASED-TAXONOMY-R1B-20260816",
+  "parent_experiment_id": "ASSET-FIRST-SKILLSP-SEMANTIC-MULTIPLICITY-R1-20260816",
+  "candidate_id": "semantic-multiplicity-bias-in-self-evolving-skill-libraries",
+  "scientific_object": "Whether the released, non-cloned Skill-SP taxonomy already allocates different package-sampling eligibility mass to otherwise ordinary benchmark tasks solely because some tasks lie in overlapping skill support, and whether the released textual duplicate filter detects those support overlaps.",
+  "inputs": {
+    "parent_result": "/data/wyt/agent-self-evolution-observatory/runs/asset-first-skillsp-semantic-multiplicity-r1-20260816/result.json",
+    "parent_membership": "/data/wyt/agent-self-evolution-observatory/runs/asset-first-skillsp-semantic-multiplicity-r1-20260816/membership.jsonl",
+    "author_repo": "/data/wyt/skill-self-play-agent3-20260816",
+    "author_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83"
+  },
+  "frozen_definitions": {
+    "eligibility_exposure_mass": "For a benchmark task t, sum the author sampler's normalized package probability p(s) over every released skill s whose released validator accepts t. This is control-plane eligibility mass, not the realized probability that the question generator emits t.",
+    "specific_generic_pairs_only": true,
+    "duplicate_filter": "author skill_library.library.jaccard_similarity on name+description with threshold 0.33",
+    "no_realized_task_probability_claim": true
+  },
+  "frozen_gate": {
+    "released_overlap_rows_min": 100,
+    "distinct_released_overlap_pairs_min": 4,
+    "median_multi_to_single_eligibility_mass_ratio_min": 1.5,
+    "released_overlap_pairs_missed_by_text_filter_fraction_min": 0.75
+  },
+  "budget": {"gpu_hours": 0, "model_calls": 0, "new_task_generation": 0},
+  "authority": {"paper_design_authorized": false, "method_authorized": false, "p0_authorized": false, "gpu_authorized": false},
+  "next_if_positive": "Run mature-theory reduction against semantic clone detection, duplicate-arm/categorical-mixture sensitivity, overlapping-expert/contextual-bandit formulations, and adaptive curriculum literature. Do not enter Paper Design yet.",
+  "next_if_negative": "Reduce R1 to exact-clone pathology and stop the candidate."
+}

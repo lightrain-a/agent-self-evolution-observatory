@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "review_kind": "independent-current-source-collision-review",
+  "requested_model": "doubao-seed-2.0-lite",
+  "resolved_model": "doubao-seed-2-0-lite-260215",
+  "verdict": "SURVIVES_NARROWLY",
+  "reason": "Existing work covers skill redundancy/clone detection, lifecycle governance, unsafe skill evolution, skill-induced failures, router/skill co-evolution, skill compression, and skill-harness optimization, but the supplied primary evidence does not define or solve invariance of an endogenous self-evolving skill control law to semantics-preserving taxonomy split/clone/merge/irreducible partial overlap. Real first-party support-matrix evidence also shows that text dedup, exact-coverage whole-package pruning, and arbitrary context-independent global package reweighting do not remove the residual.",
+  "direct_collisions": [
+    {
+      "source": "SkillClone arXiv:2603.22447",
+      "absorbs": "semantic skill-clone prevalence/detection and clone-propagation/dedup motivation",
+      "does_not_absorb": "representation invariance of endogenous self-evolution control under taxonomy reparameterization and irreducible partial overlap"
+    },
+    {
+      "source": "SkillsVote arXiv:2605.18401",
+      "absorbs": "lifecycle governance of redundant/environment-sensitive skills through recommendation and attribution",
+      "does_not_absorb": "a guarantee that upstream curriculum/control mass, retrieval budget, and update credit are invariant to semantics-preserving split/merge/partial overlap"
+    },
+    {
+      "source": "Practice Makes Unsafe / SkillMisevo arXiv:2608.12851",
+      "absorbs": "lifecycle safety of evolved skill content and later reuse",
+      "does_not_absorb": "taxonomy-reparameterization sensitivity of the self-evolution control law"
+    },
+    {
+      "source": "ERSkill arXiv:2608.12720",
+      "absorbs": "co-evolution of retrieval skills and query-dependent router",
+      "does_not_absorb": "representation invariance to semantics-preserving skill taxonomy transformations"
+    },
+    {
+      "source": "Agent Skills Can Be Harmful arXiv:2608.11888",
+      "absorbs": "paired attribution of content-induced skill failures and regressions",
+      "does_not_absorb": "taxonomy representation sensitivity of upstream control"
+    },
+    {
+      "source": "Skill-Harness Evolution / SHAPER arXiv:2608.11350",
+      "absorbs": "train-free skill+harness optimization and candidate selection",
+      "does_not_absorb": "taxonomy representation invariance of self-evolving control"
+    },
+    {
+      "source": "SkillZip arXiv:2608.11079",
+      "absorbs": "compression of repeated internal skill structure under hard coverage",
+      "does_not_absorb": "global evolving-control invariance under external taxonomy split/merge/overlap"
+    }
+  ],
+  "mature_theory_reduction": "Fixed-arm contextual-bandit/similarity-aware-experts theory covers information sharing among similar fixed arms, but does not by itself guarantee invariance of an endogenous artifact taxonomy whose identities jointly determine curriculum sampling, fixed-budget retrieval, feedback credit, and incremental refinement.",
+  "surviving_boundary": "For a self-evolving skill system that treats skill package identities as control units, determine whether semantics-preserving taxonomy transformations that add no semantic support nevertheless change the evolution process solely through representation multiplicity/overlap, after clone dedup, full-coverage package pruning, and arbitrary context-independent global reweighting are exhausted.",
+  "strongest_future_same_information_baseline": "Decision-time matched control: for upstream curriculum, the strongest generic pre-context controller over the identical library/support fingerprints/quality-exploration statistics and budget, without access to the not-yet-generated task; for post-context retrieval/credit, a context-conditioned simplex/router over the identical task context, support fingerprints, quality/outcome evidence, clone quotienting, capacity, and budget.",
+  "paper_design_readiness": "PROBLEM_FORMULATION_JUSTIFIED_BUT_DYNAMIC_EVIDENCE_PENDING",
+  "required_next_evidence": "A faithful real/public dynamic P0 must test end-of-evolution control state, cumulative evolution utility/regret, or downstream task performance under a semantics-preserving taxonomy transformation and the strongest decision-time-matched same-information baseline. The invalid Qwen2.5 rollout provides no scientific evidence.",
+  "source_review_receipt": "/data/wyt/agent-self-evolution-observatory/runs/asset-first-stri-current-source-review-20260816/review.json",
+  "scientific_authority": false,
+  "authority": {
+    "live_problem_gate": false,
+    "method": false,
+    "p0": false,
+    "gpu": false
+  }
+}
