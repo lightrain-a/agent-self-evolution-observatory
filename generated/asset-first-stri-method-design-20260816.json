@@ -81,7 +81,7 @@
   ],
   "formal_targets": [
     "Refinement-dependence lemma for positive artifact-ID mass.",
-    "Partial-overlap infeasibility condition for context-independent global package weights under coverage constraints.",
+    "Tight partial-overlap lower bound: if two active packages each have an exclusive-support context and share an overlap context, then every nonnegative context-independent package-weight controller has max/min context exposure ratio >=2. The released Skill-SP graph supplies two witnesses and the LP optimum equals 2.",
     "Support-quotient invariance proposition under exact support-equivalence and a frozen semantic support measure.",
     "Credit conservation proposition: total semantic credit is invariant to implementation split when responsibility weights sum to one."
   ],

@@ -61,6 +61,8 @@
       "optimal_max_exposure": 2.0,
       "optimal_max_to_min_ratio": 2.0,
       "all_task_exposure_equalizable": false,
+      "structural_lower_bound": "Tight at 2.0 without an optimizer: in the minimum full-coverage set, skill_003 and skill_015 each have an exclusive-support row and also share an overlap row; likewise skill_004 and skill_015. For any nonnegative global package weights, if m is the minimum positive task exposure, each exclusive row forces its package weight >=m, so the shared row has exposure >=2m and max/min>=2.",
+      "structural_witness_receipt": "generated/asset-first-stri-structural-witness-20260816.json",
       "verdict": "GLOBAL_PACKAGE_REWEIGHTING_CANNOT_REMOVE_PARTIAL_OVERLAP_RESIDUAL"
     },
     "next_strongest_same_information_baseline": "Decision-time matched baselines: (i) upstream curriculum — the strongest generic pre-context controller using exactly the same library, support fingerprints, quality/exploration statistics and sampling budget, including clone quotienting and arbitrary global/support-aware weighting but no generated-task lookahead; (ii) post-context retrieval/credit — a context-conditioned simplex/router using the same task context, support fingerprints, quality/outcome evidence and budget. If either valid baseline matches SQC on its corresponding surface, that part of the method claim dies."
@@ -80,7 +82,7 @@
     },
     "theory_targets": [
       "Clone/refinement dependence lemma: any controller assigning positive additive mass directly to artifact IDs changes total semantic mass under an exact clone unless it explicitly quotients equivalent support.",
-      "Partial-overlap impossibility condition: for support hypergraphs with mandatory uniquely supported packages that also overlap, no context-independent global weight vector can equalize semantic-context exposure while retaining a positive exposure floor on every supported context.",
+      "Partial-overlap impossibility theorem: if two active packages each have an exclusive-support context and share any overlap context, every nonnegative context-independent package-weight controller has max/min semantic-context exposure ratio at least 2. The released Skill-SP graph has two independent witnesses and the LP optimum attains 2, making the bound tight.",
       "Quotient invariance proposition: a context/support-first controller whose control measure factors through semantic support atoms rather than artifact multiplicity is invariant to exact clones and support-preserving refinements under explicit support-equivalence assumptions."
     ]
   },

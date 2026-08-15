@@ -1,0 +1,66 @@
+{
+  "covered_rows": 348,
+  "selected_skills": [
+    "skill_003",
+    "skill_004",
+    "skill_006",
+    "skill_008",
+    "skill_009",
+    "skill_010",
+    "skill_015"
+  ],
+  "unique_support_counts": {
+    "skill_003": 17,
+    "skill_004": 5,
+    "skill_006": 8,
+    "skill_008": 6,
+    "skill_009": 15,
+    "skill_010": 5,
+    "skill_015": 221
+  },
+  "witness_count": 2,
+  "witnesses": [
+    {
+      "left_skill": "skill_003",
+      "right_skill": "skill_015",
+      "left_unique_row": {
+        "level": 1,
+        "index": 44,
+        "tool": "ModifyRegistration"
+      },
+      "right_unique_row": {
+        "level": 1,
+        "index": 12,
+        "tool": "EmergencyKnowledge"
+      },
+      "overlap_row": {
+        "level": 1,
+        "index": 0,
+        "tool": "ModifyRegistration"
+      },
+      "exposure_ratio_lower_bound": 2.0
+    },
+    {
+      "left_skill": "skill_004",
+      "right_skill": "skill_015",
+      "left_unique_row": {
+        "level": 1,
+        "index": 98,
+        "tool": "RecordHealthData"
+      },
+      "right_unique_row": {
+        "level": 1,
+        "index": 12,
+        "tool": "EmergencyKnowledge"
+      },
+      "overlap_row": {
+        "level": 1,
+        "index": 1,
+        "tool": "QueryHealthData"
+      },
+      "exposure_ratio_lower_bound": 2.0
+    }
+  ],
+  "global_nonnegative_package_weight_exposure_ratio_lower_bound": 2.0,
+  "proof": "For any witness (a,b), let m be the minimum positive task exposure. The a-only row implies w_a>=m and the b-only row implies w_b>=m. Their overlap row has exposure at least w_a+w_b>=2m, so max/min>=2."
+}
