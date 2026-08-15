@@ -1,0 +1,4753 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "SCIENCEWORLD-CORRECTION-CLOSURE-SYMMETRIC-F0",
+  "contract_sha256": "6b68daeb9e08a1c4172ca8e5de0ffd82890eaa0d601373b3d0fd78b5954f9a54",
+  "amendment_sha256": "abe1e1d22a5be77eada5d97e1fb2b5ebb229087d23cda7e81801d2643b4e8fce",
+  "source_plan_sha256": "057142dc6938c8b17759a0f98c6cc9804927840b43229f22b1dfc794f8a7901d",
+  "onpolicy_result_sha256": "d1fde0b9bb3f4f707b877627581920003ad0251fb64cbbfb885d8b07791caacb",
+  "offpolicy_verification_sha256": "fbd48afb604244c2b7640a6f13d29ff0376e35887f72ebc7809bbcf7d212894e",
+  "pair_match_sha256": "d7341b2717d71e7bff3358d2d85253aed045107b49f946ce42fe30f8be039a8c",
+  "pair_matching": "for each source m=min(6, number of frozen verified on-policy correction pairs); collect the first m verified off-policy correction pairs in frozen off-policy example order and chosen-branch action order; require both arms to have exactly m pairs",
+  "pair_ordering": "preserve verifier-emitted frozen state order and chosen-branch action order exactly; no post-hoc deduplication or reordering",
+  "update_surface": {
+    "model": "Qwen2.5-7B-Instruct",
+    "lora_r": 4,
+    "alpha": 8,
+    "dropout": 0.0,
+    "layers": [
+      26,
+      27
+    ],
+    "target_modules": [
+      "q_proj",
+      "v_proj"
+    ],
+    "optimizer": "AdamW",
+    "learning_rate": 0.0002,
+    "weight_decay": 0.0,
+    "steps": 40,
+    "batch_size": 1,
+    "example_cycle": "deterministic frozen pair order",
+    "same_seed_and_initialization_across_offpolicy_onpolicy": true
+  },
+  "source_truth": "same exact frozen base initial state for BASE/OFFPOLICY/ONPOLICY; generateGoldPath=false; max 50 steps; primary outcomes final_score and success>=100",
+  "family_advantage_definition": "For each task family, compute the median across pair-matched units of (ONPOLICY final_score - OFFPOLICY final_score); the family has ON-policy advantage iff this median is strictly greater than zero.",
+  "go_gate": {
+    "pair_matched_units_min": 6,
+    "onpolicy_improved_vs_base_fraction_min": 0.5,
+    "onpolicy_strictly_better_than_offpolicy_fraction_min": 0.5,
+    "families_with_onpolicy_advantage_min": 3,
+    "onpolicy_regressed_vs_base_units_max": 1
+  },
+  "units": [
+    {
+      "unit_id": "headroom-find-animal-q1-1",
+      "task_family": "find-animal",
+      "variation": 107,
+      "initial_state_key": "ac156fd9c62182f96f0435d069d15d54af88e7135f6b6e369423887f8732abc4",
+      "frozen_base_final_score": 58,
+      "frozen_base_success": 0,
+      "pair_count": 6,
+      "onpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+          "observation": "You move the giant tortoise to the inventory.",
+          "observation_sha256": "0b29c6d2abd10034aac456c7c3ddb326a5157b202c92dd1640537851ce874555",
+          "inventory": "In your inventory, you see:\n\ta giant tortoise egg\n\tan orange\n",
+          "history": [
+            [
+              "focus on egg giant tortoise Action: focus on egg giant tortoise",
+              "No known action matches that input."
+            ],
+            [
+              "move egg giant tortoise to purple box",
+              "No known action matches that input."
+            ],
+            [
+              "focus on egg giant tortoise",
+              "You focus on the giant tortoise egg."
+            ],
+            [
+              "pick up egg giant tortoise",
+              "You move the giant tortoise to the inventory."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "egg parrot",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "open door to kitchen"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\ta giant tortoise egg\n\tan orange\n",
+          "history": [
+            [
+              "focus on egg giant tortoise Action: focus on egg giant tortoise",
+              "No known action matches that input."
+            ],
+            [
+              "move egg giant tortoise to purple box",
+              "No known action matches that input."
+            ],
+            [
+              "focus on egg giant tortoise",
+              "You focus on the giant tortoise egg."
+            ],
+            [
+              "pick up egg giant tortoise",
+              "You move the giant tortoise to the inventory."
+            ],
+            [
+              "open door to kitchen",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "egg parrot",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "go to kitchen"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+          "observation": "You move to the kitchen.",
+          "observation_sha256": "3a676621b5ba068d87a76dcd6c083b128f4929e3ae39ef2912cb0654c1b46936",
+          "inventory": "In your inventory, you see:\n\ta giant tortoise egg\n\tan orange\n",
+          "history": [
+            [
+              "focus on egg giant tortoise Action: focus on egg giant tortoise",
+              "No known action matches that input."
+            ],
+            [
+              "move egg giant tortoise to purple box",
+              "No known action matches that input."
+            ],
+            [
+              "focus on egg giant tortoise",
+              "You focus on the giant tortoise egg."
+            ],
+            [
+              "pick up egg giant tortoise",
+              "You move the giant tortoise to the inventory."
+            ],
+            [
+              "open door to kitchen",
+              "The door is now open."
+            ],
+            [
+              "go to kitchen",
+              "You move to the kitchen."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "apple",
+            "banana",
+            "bathroom",
+            "bathroom door",
+            "bowl",
+            "chair",
+            "counter",
+            "cup",
+            "cupboard",
+            "door to hallway",
+            "door to outside",
+            "drawer",
+            "freezer",
+            "fridge",
+            "glass jar",
+            "hallway",
+            "kitchen",
+            "lighter",
+            "orange",
+            "outside",
+            "oven",
+            "painting",
+            "potato",
+            "sink",
+            "soap",
+            "stopwatch",
+            "stove",
+            "table",
+            "thermometer"
+          ],
+          "repair_action": "look around"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+          "observation": "No known action matches that input.",
+          "observation_sha256": "e18afcfe2740ec762484e86ca1121d280a713f7fd44b407d7433163671a8e514",
+          "inventory": "In your inventory, you see:\n\ta giant tortoise egg\n\tan orange\n",
+          "history": [
+            [
+              "focus on egg giant tortoise Action: focus on egg giant tortoise",
+              "No known action matches that input."
+            ],
+            [
+              "move egg giant tortoise to purple box",
+              "No known action matches that input."
+            ],
+            [
+              "focus on egg giant tortoise",
+              "You focus on the giant tortoise egg."
+            ],
+            [
+              "pick up egg giant tortoise",
+              "You move the giant tortoise to the inventory."
+            ],
+            [
+              "move giant tortoise to purple box",
+              "No known action matches that input."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "egg parrot",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "open door to kitchen"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\ta giant tortoise egg\n\tan orange\n",
+          "history": [
+            [
+              "focus on egg giant tortoise Action: focus on egg giant tortoise",
+              "No known action matches that input."
+            ],
+            [
+              "move egg giant tortoise to purple box",
+              "No known action matches that input."
+            ],
+            [
+              "focus on egg giant tortoise",
+              "You focus on the giant tortoise egg."
+            ],
+            [
+              "pick up egg giant tortoise",
+              "You move the giant tortoise to the inventory."
+            ],
+            [
+              "move giant tortoise to purple box",
+              "No known action matches that input."
+            ],
+            [
+              "open door to kitchen",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "egg parrot",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "go kitchen"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+          "observation": "You move to the kitchen.",
+          "observation_sha256": "3a676621b5ba068d87a76dcd6c083b128f4929e3ae39ef2912cb0654c1b46936",
+          "inventory": "In your inventory, you see:\n\ta giant tortoise egg\n\tan orange\n",
+          "history": [
+            [
+              "focus on egg giant tortoise Action: focus on egg giant tortoise",
+              "No known action matches that input."
+            ],
+            [
+              "move egg giant tortoise to purple box",
+              "No known action matches that input."
+            ],
+            [
+              "focus on egg giant tortoise",
+              "You focus on the giant tortoise egg."
+            ],
+            [
+              "pick up egg giant tortoise",
+              "You move the giant tortoise to the inventory."
+            ],
+            [
+              "move giant tortoise to purple box",
+              "No known action matches that input."
+            ],
+            [
+              "open door to kitchen",
+              "The door is now open."
+            ],
+            [
+              "go kitchen",
+              "You move to the kitchen."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "apple",
+            "banana",
+            "bathroom",
+            "bathroom door",
+            "bowl",
+            "chair",
+            "counter",
+            "cup",
+            "cupboard",
+            "door to hallway",
+            "door to outside",
+            "drawer",
+            "freezer",
+            "fridge",
+            "glass jar",
+            "hallway",
+            "kitchen",
+            "lighter",
+            "orange",
+            "outside",
+            "oven",
+            "painting",
+            "potato",
+            "sink",
+            "soap",
+            "stopwatch",
+            "stove",
+            "table",
+            "thermometer"
+          ],
+          "repair_action": "look around"
+        }
+      ],
+      "offpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+          "observation": "This outside location is called the outside. Here you see: \n\tthe agent\n\ta substance called air\n\tan axe\n\ta blue jay egg\n\ta fire pit (containing nothing)\n\ta fountain (containing nothing)\n\ta giant tortoise egg\n\tthe ground\n\ta parrot egg\n\ta substance called wood\nYou also see:\n\tA door to the foundry (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)",
+          "observation_sha256": "d09f4503b8b50a24d6521e5595addb5c18a64d5af00d3c0eb19d563b2d5cf89a",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "look around",
+              "This outside location is called the outside. Here you see: \n\tthe agent\n\ta substance called air\n\tan axe\n\ta blue jay egg\n\ta fire pit (containing nothing)\n\ta fountain (containing nothing)\n\ta giant tortoise egg\n\tthe ground\n\ta parrot egg\n\ta substance called wood\nYou also see:\n\tA door to the foundry (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)"
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "egg giant tortoise",
+            "egg parrot",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "wood"
+          ],
+          "repair_action": "focus on blue jay egg"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+          "observation": "You focus on the blue jay egg.",
+          "observation_sha256": "12d3404367d12e37b3899478bc9ce1471d845a05cf98955ea99bdaac6e01c43c",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "look around",
+              "This outside location is called the outside. Here you see: \n\tthe agent\n\ta substance called air\n\tan axe\n\ta blue jay egg\n\ta fire pit (containing nothing)\n\ta fountain (containing nothing)\n\ta giant tortoise egg\n\tthe ground\n\ta parrot egg\n\ta substance called wood\nYou also see:\n\tA door to the foundry (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)"
+            ],
+            [
+              "focus on blue jay egg",
+              "You focus on the blue jay egg."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "egg giant tortoise",
+            "egg parrot",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "pick up blue jay egg"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+          "observation": "You focus on the giant tortoise egg.",
+          "observation_sha256": "ec65a759415f06ec05cba0bbbe70ab54ebbeb44109a58017ea2a29a098622100",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "look around",
+              "This outside location is called the outside. Here you see: \n\tthe agent\n\ta substance called air\n\tan axe\n\ta blue jay egg\n\ta fire pit (containing nothing)\n\ta fountain (containing nothing)\n\ta giant tortoise egg\n\tthe ground\n\ta parrot egg\n\ta substance called wood\nYou also see:\n\tA door to the foundry (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)"
+            ],
+            [
+              "focus on egg giant tortoise",
+              "You focus on the giant tortoise egg."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "egg giant tortoise",
+            "egg parrot",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "pick up giant tortoise egg"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+          "observation": "You move the giant tortoise to the inventory.",
+          "observation_sha256": "0b29c6d2abd10034aac456c7c3ddb326a5157b202c92dd1640537851ce874555",
+          "inventory": "In your inventory, you see:\n\ta giant tortoise egg\n\tan orange\n",
+          "history": [
+            [
+              "look around",
+              "This outside location is called the outside. Here you see: \n\tthe agent\n\ta substance called air\n\tan axe\n\ta blue jay egg\n\ta fire pit (containing nothing)\n\ta fountain (containing nothing)\n\ta giant tortoise egg\n\tthe ground\n\ta parrot egg\n\ta substance called wood\nYou also see:\n\tA door to the foundry (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)"
+            ],
+            [
+              "focus on egg giant tortoise",
+              "You focus on the giant tortoise egg."
+            ],
+            [
+              "pick up giant tortoise egg",
+              "You move the giant tortoise to the inventory."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "egg parrot",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "open door to kitchen"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\ta giant tortoise egg\n\tan orange\n",
+          "history": [
+            [
+              "look around",
+              "This outside location is called the outside. Here you see: \n\tthe agent\n\ta substance called air\n\tan axe\n\ta blue jay egg\n\ta fire pit (containing nothing)\n\ta fountain (containing nothing)\n\ta giant tortoise egg\n\tthe ground\n\ta parrot egg\n\ta substance called wood\nYou also see:\n\tA door to the foundry (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)"
+            ],
+            [
+              "focus on egg giant tortoise",
+              "You focus on the giant tortoise egg."
+            ],
+            [
+              "pick up giant tortoise egg",
+              "You move the giant tortoise to the inventory."
+            ],
+            [
+              "open door to kitchen",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "egg parrot",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "go kitchen"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the purple box in the living room.",
+          "observation": "You move the giant tortoise to the inventory.",
+          "observation_sha256": "0b29c6d2abd10034aac456c7c3ddb326a5157b202c92dd1640537851ce874555",
+          "inventory": "In your inventory, you see:\n\ta giant tortoise egg\n\tan orange\n",
+          "history": [
+            [
+              "look around",
+              "This outside location is called the outside. Here you see: \n\tthe agent\n\ta substance called air\n\tan axe\n\ta blue jay egg\n\ta fire pit (containing nothing)\n\ta fountain (containing nothing)\n\ta giant tortoise egg\n\tthe ground\n\ta parrot egg\n\ta substance called wood\nYou also see:\n\tA door to the foundry (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)"
+            ],
+            [
+              "focus on egg giant tortoise",
+              "You focus on the giant tortoise egg."
+            ],
+            [
+              "pick up egg giant tortoise",
+              "You move the giant tortoise to the inventory."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "egg parrot",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "open door to kitchen"
+        }
+      ],
+      "onpolicy_pair_keys": [
+        [
+          "0b29c6d2abd10034aac456c7c3ddb326a5157b202c92dd1640537851ce874555",
+          "open door to kitchen"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go to kitchen"
+        ],
+        [
+          "3a676621b5ba068d87a76dcd6c083b128f4929e3ae39ef2912cb0654c1b46936",
+          "look around"
+        ],
+        [
+          "e18afcfe2740ec762484e86ca1121d280a713f7fd44b407d7433163671a8e514",
+          "open door to kitchen"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go kitchen"
+        ],
+        [
+          "3a676621b5ba068d87a76dcd6c083b128f4929e3ae39ef2912cb0654c1b46936",
+          "look around"
+        ]
+      ],
+      "offpolicy_pair_keys": [
+        [
+          "d09f4503b8b50a24d6521e5595addb5c18a64d5af00d3c0eb19d563b2d5cf89a",
+          "focus on blue jay egg"
+        ],
+        [
+          "12d3404367d12e37b3899478bc9ce1471d845a05cf98955ea99bdaac6e01c43c",
+          "pick up blue jay egg"
+        ],
+        [
+          "ec65a759415f06ec05cba0bbbe70ab54ebbeb44109a58017ea2a29a098622100",
+          "pick up giant tortoise egg"
+        ],
+        [
+          "0b29c6d2abd10034aac456c7c3ddb326a5157b202c92dd1640537851ce874555",
+          "open door to kitchen"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go kitchen"
+        ],
+        [
+          "0b29c6d2abd10034aac456c7c3ddb326a5157b202c92dd1640537851ce874555",
+          "open door to kitchen"
+        ]
+      ]
+    },
+    {
+      "unit_id": "headroom-find-animal-q2-3",
+      "task_family": "find-animal",
+      "variation": 139,
+      "initial_state_key": "f56dbfc79e13255e71101212ff0bc71c2d7c7d38e23f2998cac432971e8c1a9b",
+      "frozen_base_final_score": 0,
+      "frozen_base_success": 0,
+      "pair_count": 6,
+      "onpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+          "observation": "This room is called the hallway. In it, you see: \n\tthe agent\n\ta substance called air\n\ta painting\nYou also see:\n\tA door to the art studio (that is closed)\n\tA door to the bedroom (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)\n\tA door to the living room (that is closed)\n\tA door to the workshop (that is closed)",
+          "observation_sha256": "cb68eaf90344c461d47fa727f91e4a9286cf6747a7a7aa45e8933bde0edeca5e",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "painting",
+            "workshop"
+          ],
+          "repair_action": "open bedroom door"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open bedroom door",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "painting",
+            "workshop"
+          ],
+          "repair_action": "go to bedroom"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+          "observation": "You move to the bedroom.",
+          "observation_sha256": "078acbf059ea895ed3fc2475c37944f067683848bb318beec481ed4c8512a9a5",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open bedroom door",
+              "The door is now open."
+            ],
+            [
+              "go to bedroom",
+              "You move to the bedroom."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "bed",
+            "bedroom",
+            "book (frankenstein)",
+            "book (sherlock holmes)",
+            "book shelf",
+            "closet",
+            "cloth sittable",
+            "door",
+            "drawing",
+            "green box",
+            "hallway",
+            "object",
+            "table"
+          ],
+          "repair_action": "look around"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+          "observation": "The door is not open.",
+          "observation_sha256": "87d9ce29b566a667631b329be1a530d20621a2ff6fe7f52284edc26ad97a9bd4",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "go to bedroom door",
+              "The door is not open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "painting",
+            "workshop"
+          ],
+          "repair_action": "open bedroom door"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "go to bedroom door",
+              "The door is not open."
+            ],
+            [
+              "open bedroom door",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "painting",
+            "workshop"
+          ],
+          "repair_action": "go to bedroom"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+          "observation": "You move to the bedroom.",
+          "observation_sha256": "078acbf059ea895ed3fc2475c37944f067683848bb318beec481ed4c8512a9a5",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "go to bedroom door",
+              "The door is not open."
+            ],
+            [
+              "open bedroom door",
+              "The door is now open."
+            ],
+            [
+              "go to bedroom",
+              "You move to the bedroom."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "bed",
+            "bedroom",
+            "book (frankenstein)",
+            "book (sherlock holmes)",
+            "book shelf",
+            "closet",
+            "cloth sittable",
+            "door",
+            "drawing",
+            "green box",
+            "hallway",
+            "object",
+            "table"
+          ],
+          "repair_action": "look around"
+        }
+      ],
+      "offpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+          "observation": "This room is called the hallway. In it, you see: \n\tthe agent\n\ta substance called air\n\ta painting\nYou also see:\n\tA door to the art studio (that is closed)\n\tA door to the bedroom (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)\n\tA door to the living room (that is closed)\n\tA door to the workshop (that is closed)",
+          "observation_sha256": "cb68eaf90344c461d47fa727f91e4a9286cf6747a7a7aa45e8933bde0edeca5e",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "painting",
+            "workshop"
+          ],
+          "repair_action": "open door to living room"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to living room",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "painting",
+            "workshop"
+          ],
+          "repair_action": "go to living room"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+          "observation": "You move to the living room.",
+          "observation_sha256": "9fd1c4e89229dc9d3602e983501879c11530a0ca1766f06c58c585ed641a8670",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to living room",
+              "The door is now open."
+            ],
+            [
+              "go to living room",
+              "You move to the living room."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "beowulf",
+            "book (moby dick)",
+            "book (pride and prejudice)",
+            "book shelf",
+            "chair",
+            "cloth sittable",
+            "desk",
+            "door",
+            "drawer",
+            "hallway",
+            "living room",
+            "object",
+            "painting"
+          ],
+          "repair_action": "look around"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to greenhouse",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "painting",
+            "workshop"
+          ],
+          "repair_action": "go greenhouse"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+          "observation": "You move to the greenhouse.",
+          "observation_sha256": "db771748a0aac386505e038245d9e4f87b0502249e1d21d1019fe80748af62e9",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to greenhouse",
+              "The door is now open."
+            ],
+            [
+              "go greenhouse",
+              "You move to the greenhouse."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "adult apple tree",
+            "adult avocado tree",
+            "adult peach tree",
+            "agent",
+            "air",
+            "bee hive",
+            "door to hallway",
+            "door to outside",
+            "flower pot 2",
+            "flower pot 3",
+            "flower pot 4",
+            "flower pot 6",
+            "flower pot 7",
+            "greenhouse",
+            "hallway",
+            "jug",
+            "outside",
+            "shovel",
+            "sink",
+            "soil in flower pot 3",
+            "soil in flower pot 4",
+            "soil in flower pot 6"
+          ],
+          "repair_action": "look around"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) animal. First, focus on the thing. Then, move it to the green box in the bedroom.",
+          "observation": "You focus on the dove egg.",
+          "observation_sha256": "eb083065c4265ec7fc711ba1271642a80bdd23c47bce0274cf700d104b65bc20",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to greenhouse",
+              "The door is now open."
+            ],
+            [
+              "go to greenhouse",
+              "You move to the greenhouse."
+            ],
+            [
+              "open door to outside",
+              "The door is now open."
+            ],
+            [
+              "go to outside",
+              "You move to the outside."
+            ],
+            [
+              "look around",
+              "This outside location is called the outside. Here you see: \n\tthe agent\n\ta substance called air\n\tan axe\n\ta dove egg\n\ta fire pit (containing nothing)\n\ta fountain (containing a substance called water)\n\ta giant tortoise egg\n\tthe ground\n\ta butterfly egg\n\ta substance called wood\nYou also see:\n\tA door to the foundry (that is closed)\n\tA door to the greenhouse (that is open)\n\tA door to the kitchen (that is closed)"
+            ],
+            [
+              "focus on dove",
+              "You focus on the dove egg."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "butterfly egg",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "dove",
+            "egg giant tortoise",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "pick up dove egg"
+        }
+      ],
+      "onpolicy_pair_keys": [
+        [
+          "cb68eaf90344c461d47fa727f91e4a9286cf6747a7a7aa45e8933bde0edeca5e",
+          "open bedroom door"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go to bedroom"
+        ],
+        [
+          "078acbf059ea895ed3fc2475c37944f067683848bb318beec481ed4c8512a9a5",
+          "look around"
+        ],
+        [
+          "87d9ce29b566a667631b329be1a530d20621a2ff6fe7f52284edc26ad97a9bd4",
+          "open bedroom door"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go to bedroom"
+        ],
+        [
+          "078acbf059ea895ed3fc2475c37944f067683848bb318beec481ed4c8512a9a5",
+          "look around"
+        ]
+      ],
+      "offpolicy_pair_keys": [
+        [
+          "cb68eaf90344c461d47fa727f91e4a9286cf6747a7a7aa45e8933bde0edeca5e",
+          "open door to living room"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go to living room"
+        ],
+        [
+          "9fd1c4e89229dc9d3602e983501879c11530a0ca1766f06c58c585ed641a8670",
+          "look around"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go greenhouse"
+        ],
+        [
+          "db771748a0aac386505e038245d9e4f87b0502249e1d21d1019fe80748af62e9",
+          "look around"
+        ],
+        [
+          "eb083065c4265ec7fc711ba1271642a80bdd23c47bce0274cf700d104b65bc20",
+          "pick up dove egg"
+        ]
+      ]
+    },
+    {
+      "unit_id": "headroom-find-non-living-thing-q2-1",
+      "task_family": "find-non-living-thing",
+      "variation": 3,
+      "initial_state_key": "5bbf3721badbdd5f64722fdeab5319136aa5460945b546eda461d4e5bf8607f4",
+      "frozen_base_final_score": 58,
+      "frozen_base_success": 0,
+      "pair_count": 3,
+      "onpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the kitchen.",
+          "observation": "You move the axe to the inventory.",
+          "observation_sha256": "9cc07ec05c0eff84235229a9ddea749509f736ddefec8f968035a57bdcf1b2e2",
+          "inventory": "In your inventory, you see:\n\tan axe\n\tan orange\n",
+          "history": [
+            [
+              "focus on axe",
+              "You focus on the axe."
+            ],
+            [
+              "pick up axe",
+              "You move the axe to the inventory."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "blue jay",
+            "butterfly",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "dove",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "open door to kitchen"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the kitchen.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan axe\n\tan orange\n",
+          "history": [
+            [
+              "focus on axe",
+              "You focus on the axe."
+            ],
+            [
+              "pick up axe",
+              "You move the axe to the inventory."
+            ],
+            [
+              "open door to kitchen",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "blue jay",
+            "butterfly",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "dove",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "go kitchen"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the kitchen.",
+          "observation": "You move to the kitchen.",
+          "observation_sha256": "3a676621b5ba068d87a76dcd6c083b128f4929e3ae39ef2912cb0654c1b46936",
+          "inventory": "In your inventory, you see:\n\tan axe\n\tan orange\n",
+          "history": [
+            [
+              "focus on axe",
+              "You focus on the axe."
+            ],
+            [
+              "pick up axe",
+              "You move the axe to the inventory."
+            ],
+            [
+              "open door to kitchen",
+              "The door is now open."
+            ],
+            [
+              "go kitchen",
+              "You move to the kitchen."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "apple",
+            "banana",
+            "bathroom",
+            "bathroom door",
+            "bowl",
+            "chair",
+            "counter",
+            "cup",
+            "cupboard",
+            "door to hallway",
+            "door to outside",
+            "drawer",
+            "freezer",
+            "fridge",
+            "glass jar",
+            "hallway",
+            "kitchen",
+            "lighter",
+            "orange",
+            "orange box",
+            "outside",
+            "oven",
+            "painting",
+            "potato",
+            "sink",
+            "soap",
+            "stopwatch",
+            "stove",
+            "table",
+            "thermometer"
+          ],
+          "repair_action": "put axe in orange box"
+        }
+      ],
+      "offpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the kitchen.",
+          "observation": "This outside location is called the outside. Here you see: \n\tthe agent\n\ta substance called air\n\tan axe\n\ta blue jay egg\n\ta butterfly egg\n\ta dove egg\n\ta fire pit (containing nothing)\n\ta fountain (containing nothing)\n\tthe ground\n\ta substance called wood\nYou also see:\n\tA door to the foundry (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)",
+          "observation_sha256": "46bf88894890c64f5912389efac6200b1733b0028d27771a77051a4176b051f6",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "butterfly",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "dove",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "wood"
+          ],
+          "repair_action": "focus on orange"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the kitchen.",
+          "observation": "You focus on the orange.",
+          "observation_sha256": "139c04fb217bb390cb16845840edbadd51319f570c62c48abbdc4c0f557b0dcb",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "focus on orange",
+              "You focus on the orange."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "butterfly",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "dove",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "open door to kitchen"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the kitchen.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "focus on orange",
+              "You focus on the orange."
+            ],
+            [
+              "open door to kitchen",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "axe",
+            "blue jay",
+            "butterfly",
+            "door to foundry",
+            "door to greenhouse",
+            "door to kitchen",
+            "dove",
+            "fire pit",
+            "foundry",
+            "fountain",
+            "greenhouse",
+            "ground",
+            "kitchen",
+            "outside",
+            "substance in fountain",
+            "wood"
+          ],
+          "repair_action": "go kitchen"
+        }
+      ],
+      "onpolicy_pair_keys": [
+        [
+          "9cc07ec05c0eff84235229a9ddea749509f736ddefec8f968035a57bdcf1b2e2",
+          "open door to kitchen"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go kitchen"
+        ],
+        [
+          "3a676621b5ba068d87a76dcd6c083b128f4929e3ae39ef2912cb0654c1b46936",
+          "put axe in orange box"
+        ]
+      ],
+      "offpolicy_pair_keys": [
+        [
+          "46bf88894890c64f5912389efac6200b1733b0028d27771a77051a4176b051f6",
+          "focus on orange"
+        ],
+        [
+          "139c04fb217bb390cb16845840edbadd51319f570c62c48abbdc4c0f557b0dcb",
+          "open door to kitchen"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go kitchen"
+        ]
+      ]
+    },
+    {
+      "unit_id": "headroom-find-non-living-thing-q1-1",
+      "task_family": "find-non-living-thing",
+      "variation": 39,
+      "initial_state_key": "e561ef488254e13aac25181d20fafa80dc38629cad491a805ebbab35bf4c08a4",
+      "frozen_base_final_score": 50,
+      "frozen_base_success": 0,
+      "pair_count": 6,
+      "onpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+          "observation": "You focus on the drawing.",
+          "observation_sha256": "cc88951d5a4301a3241f23d7406f86286ec6d1037e8f4cc7d53dd493691e35a9",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "focus on drawing",
+              "You focus on the drawing."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "drawing",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "workshop"
+          ],
+          "repair_action": "pick up drawing"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+          "observation": "You move the drawing to the inventory.",
+          "observation_sha256": "054f12bcd587b645db9c40e0e541af536bbd82120511a9fecf61fc970dcf598e",
+          "inventory": "In your inventory, you see:\n\ta drawing of the moon.  The artist is listed as Lily. \n\tan orange\n",
+          "history": [
+            [
+              "focus on drawing",
+              "You focus on the drawing."
+            ],
+            [
+              "pick up drawing",
+              "You move the drawing to the inventory."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "workshop"
+          ],
+          "repair_action": "open door to living room"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\ta drawing of the moon.  The artist is listed as Lily. \n\tan orange\n",
+          "history": [
+            [
+              "focus on drawing",
+              "You focus on the drawing."
+            ],
+            [
+              "pick up drawing",
+              "You move the drawing to the inventory."
+            ],
+            [
+              "open door to living room",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "workshop"
+          ],
+          "repair_action": "go to living room"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+          "observation": "That can't be moved there.",
+          "observation_sha256": "d6de29fe740a92a026ee7099dee4f0c0b4b017e79421af2e2e58dfcaef653722",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "focus on drawing",
+              "You focus on the drawing."
+            ],
+            [
+              "focus on drawing",
+              "You focus on the drawing."
+            ],
+            [
+              "move drawing to orange",
+              "That can't be moved there."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "drawing",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "workshop"
+          ],
+          "repair_action": "pick up drawing"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+          "observation": "You move the drawing to the inventory.",
+          "observation_sha256": "054f12bcd587b645db9c40e0e541af536bbd82120511a9fecf61fc970dcf598e",
+          "inventory": "In your inventory, you see:\n\ta drawing of the moon.  The artist is listed as Lily. \n\tan orange\n",
+          "history": [
+            [
+              "focus on drawing",
+              "You focus on the drawing."
+            ],
+            [
+              "focus on drawing",
+              "You focus on the drawing."
+            ],
+            [
+              "move drawing to orange",
+              "That can't be moved there."
+            ],
+            [
+              "pick up drawing",
+              "You move the drawing to the inventory."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "workshop"
+          ],
+          "repair_action": "open art studio door"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\ta drawing of the moon.  The artist is listed as Lily. \n\tan orange\n",
+          "history": [
+            [
+              "focus on drawing",
+              "You focus on the drawing."
+            ],
+            [
+              "focus on drawing",
+              "You focus on the drawing."
+            ],
+            [
+              "move drawing to orange",
+              "That can't be moved there."
+            ],
+            [
+              "pick up drawing",
+              "You move the drawing to the inventory."
+            ],
+            [
+              "open art studio door",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "workshop"
+          ],
+          "repair_action": "go hallway"
+        }
+      ],
+      "offpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+          "observation": "This room is called the hallway. In it, you see: \n\tthe agent\n\ta substance called air\n\ta drawing\nYou also see:\n\tA door to the art studio (that is closed)\n\tA door to the bedroom (that is closed)\n\tA door to the greenhouse (that is closed)\n\tA door to the kitchen (that is closed)\n\tA door to the living room (that is closed)\n\tA door to the workshop (that is closed)",
+          "observation_sha256": "4644a3761d0331dbdff2f6dc8513300985cecc8efc885c992c1daf1cac0b2aa2",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "drawing",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "workshop"
+          ],
+          "repair_action": "focus on orange"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+          "observation": "You focus on the orange.",
+          "observation_sha256": "139c04fb217bb390cb16845840edbadd51319f570c62c48abbdc4c0f557b0dcb",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "focus on orange",
+              "You focus on the orange."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "drawing",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "workshop"
+          ],
+          "repair_action": "open bedroom door"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "focus on orange",
+              "You focus on the orange."
+            ],
+            [
+              "open bedroom door",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "drawing",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "workshop"
+          ],
+          "repair_action": "go bedroom"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to kitchen",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "drawing",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "workshop"
+          ],
+          "repair_action": "focus on orange"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+          "observation": "You focus on the orange.",
+          "observation_sha256": "139c04fb217bb390cb16845840edbadd51319f570c62c48abbdc4c0f557b0dcb",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to kitchen",
+              "The door is now open."
+            ],
+            [
+              "focus on orange",
+              "You focus on the orange."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "drawing",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "workshop"
+          ],
+          "repair_action": "open door to living room"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) non-living thing. First, focus on the thing. Then, move it to the orange box in the bathroom.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to kitchen",
+              "The door is now open."
+            ],
+            [
+              "focus on orange",
+              "You focus on the orange."
+            ],
+            [
+              "open door to living room",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "drawing",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "workshop"
+          ],
+          "repair_action": "go living room"
+        }
+      ],
+      "onpolicy_pair_keys": [
+        [
+          "cc88951d5a4301a3241f23d7406f86286ec6d1037e8f4cc7d53dd493691e35a9",
+          "pick up drawing"
+        ],
+        [
+          "054f12bcd587b645db9c40e0e541af536bbd82120511a9fecf61fc970dcf598e",
+          "open door to living room"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go to living room"
+        ],
+        [
+          "d6de29fe740a92a026ee7099dee4f0c0b4b017e79421af2e2e58dfcaef653722",
+          "pick up drawing"
+        ],
+        [
+          "054f12bcd587b645db9c40e0e541af536bbd82120511a9fecf61fc970dcf598e",
+          "open art studio door"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go hallway"
+        ]
+      ],
+      "offpolicy_pair_keys": [
+        [
+          "4644a3761d0331dbdff2f6dc8513300985cecc8efc885c992c1daf1cac0b2aa2",
+          "focus on orange"
+        ],
+        [
+          "139c04fb217bb390cb16845840edbadd51319f570c62c48abbdc4c0f557b0dcb",
+          "open bedroom door"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go bedroom"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "focus on orange"
+        ],
+        [
+          "139c04fb217bb390cb16845840edbadd51319f570c62c48abbdc4c0f557b0dcb",
+          "open door to living room"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go living room"
+        ]
+      ]
+    },
+    {
+      "unit_id": "headroom-find-plant-q2-2",
+      "task_family": "find-plant",
+      "variation": 54,
+      "initial_state_key": "ae7f4465dc27555c2a300fab620b3cf57494b136076c8ccb30af12ad8e70a79f",
+      "frozen_base_final_score": 0,
+      "frozen_base_success": 0,
+      "pair_count": 6,
+      "onpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+          "observation": "This room is called the living room. In it, you see: \n\tthe agent\n\ta substance called air\n\ta book shelf (containing A book (Moby Dick) titled Moby Dick by Herman Melville)\n\ta chair. On the chair is: nothing.\n\ta couch. On the couch is: a white pillow.\n\ta finger painting\n\ta table. On the table is: nothing.\nYou also see:\n\tA door to the hallway (that is closed)",
+          "observation_sha256": "55496003ca3984ae25be5bfcbf5640167ab58435c1d909320554df68f0b2bd3a",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "book",
+            "book shelf",
+            "chair",
+            "cloth sittable",
+            "door",
+            "finger painting",
+            "hallway",
+            "living room",
+            "object",
+            "steel table"
+          ],
+          "repair_action": "open door to hallway"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to hallway",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "book",
+            "book shelf",
+            "chair",
+            "cloth sittable",
+            "door",
+            "finger painting",
+            "hallway",
+            "living room",
+            "object",
+            "steel table"
+          ],
+          "repair_action": "go hallway"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+          "observation": "You move to the hallway.",
+          "observation_sha256": "632382364c7b86a986d047a1a13e961dc66e48f04efdf26cd5da288d54b3ce13",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to hallway",
+              "The door is now open."
+            ],
+            [
+              "go hallway",
+              "You move to the hallway."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "painting",
+            "workshop"
+          ],
+          "repair_action": "look around"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+          "observation": "No known action matches that input.",
+          "observation_sha256": "e18afcfe2740ec762484e86ca1121d280a713f7fd44b407d7433163671a8e514",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "focus on plant",
+              "No known action matches that input."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "book",
+            "book shelf",
+            "chair",
+            "cloth sittable",
+            "door",
+            "finger painting",
+            "hallway",
+            "living room",
+            "object",
+            "steel table"
+          ],
+          "repair_action": "open the door"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "focus on plant",
+              "No known action matches that input."
+            ],
+            [
+              "open the door",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "book",
+            "book shelf",
+            "chair",
+            "cloth sittable",
+            "door",
+            "finger painting",
+            "hallway",
+            "living room",
+            "object",
+            "steel table"
+          ],
+          "repair_action": "go to the hallway"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+          "observation": "You move to the hallway.",
+          "observation_sha256": "632382364c7b86a986d047a1a13e961dc66e48f04efdf26cd5da288d54b3ce13",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "focus on plant",
+              "No known action matches that input."
+            ],
+            [
+              "open the door",
+              "The door is now open."
+            ],
+            [
+              "go to the hallway",
+              "You move to the hallway."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "painting",
+            "workshop"
+          ],
+          "repair_action": "look around"
+        }
+      ],
+      "offpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+          "observation": "This room is called the living room. In it, you see: \n\tthe agent\n\ta substance called air\n\ta book shelf (containing A book (Moby Dick) titled Moby Dick by Herman Melville)\n\ta chair. On the chair is: nothing.\n\ta couch. On the couch is: a white pillow.\n\ta finger painting\n\ta table. On the table is: nothing.\nYou also see:\n\tA door to the hallway (that is closed)",
+          "observation_sha256": "55496003ca3984ae25be5bfcbf5640167ab58435c1d909320554df68f0b2bd3a",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "book",
+            "book shelf",
+            "chair",
+            "cloth sittable",
+            "door",
+            "finger painting",
+            "hallway",
+            "living room",
+            "object",
+            "steel table"
+          ],
+          "repair_action": "open door"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "book",
+            "book shelf",
+            "chair",
+            "cloth sittable",
+            "door",
+            "finger painting",
+            "hallway",
+            "living room",
+            "object",
+            "steel table"
+          ],
+          "repair_action": "go hallway"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to hallway",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "book",
+            "book shelf",
+            "chair",
+            "cloth sittable",
+            "door",
+            "finger painting",
+            "hallway",
+            "living room",
+            "object",
+            "steel table"
+          ],
+          "repair_action": "go to hallway"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+          "observation": "You move to the hallway.",
+          "observation_sha256": "632382364c7b86a986d047a1a13e961dc66e48f04efdf26cd5da288d54b3ce13",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to hallway",
+              "The door is now open."
+            ],
+            [
+              "go to hallway",
+              "You move to the hallway."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "painting",
+            "workshop"
+          ],
+          "repair_action": "look around"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+          "observation": "You focus on the banana tree.",
+          "observation_sha256": "c1aac1e4b9d481f4e6f6a70c9785041e08f84d5b233f2f9b361e0e4c778b424b",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to hallway",
+              "The door is now open."
+            ],
+            [
+              "go to hallway",
+              "You move to the hallway."
+            ],
+            [
+              "open door to greenhouse",
+              "The door is now open."
+            ],
+            [
+              "go to greenhouse",
+              "You move to the greenhouse."
+            ],
+            [
+              "look around",
+              "This room is called the greenhouse. In it, you see: \n\tthe agent\n\ta substance called air\n\ta bee hive. The bee hive door is closed. \n\ta flower pot 3 (containing nothing)\n\ta flower pot 4 (containing a banana tree in the adult stage, soil)\n\ta flower pot 5 (containing a pea plant in the adult stage with a short height, soil)\n\ta flower pot 7 (containing nothing)\n\ta flower pot 9 (containing a peach tree in the adult stage, soil)\n\ta jug (containing nothing)\n\ta sink, which is turned off. In the sink is: nothing.\nYou also see:\n\tA door to the hallway (that is open)\n\tA door to the outside (that is closed)"
+            ],
+            [
+              "focus on adult banana tree",
+              "You focus on the banana tree."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "banana tree",
+            "bee hive",
+            "door to hallway",
+            "door to outside",
+            "flower pot 3",
+            "flower pot 4",
+            "flower pot 5",
+            "flower pot 7",
+            "flower pot 9",
+            "greenhouse",
+            "hallway",
+            "jug",
+            "living thing in flower pot 5",
+            "living thing in flower pot 9",
+            "outside",
+            "sink",
+            "soil in flower pot 4",
+            "soil in flower pot 5",
+            "soil in flower pot 9"
+          ],
+          "repair_action": "pick up banana tree"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to find a(n) plant. First, focus on the thing. Then, move it to the red box in the workshop.",
+          "observation": "You move the banana tree to the inventory.",
+          "observation_sha256": "4cd692c35dd6eadf531087d677f4e9fcb38b1224d58fdf30cf40f7f870ef928f",
+          "inventory": "In your inventory, you see:\n\ta banana tree in the reproducing stage\n\tan orange\n",
+          "history": [
+            [
+              "go to hallway",
+              "You move to the hallway."
+            ],
+            [
+              "open door to greenhouse",
+              "The door is now open."
+            ],
+            [
+              "go to greenhouse",
+              "You move to the greenhouse."
+            ],
+            [
+              "look around",
+              "This room is called the greenhouse. In it, you see: \n\tthe agent\n\ta substance called air\n\ta bee hive. The bee hive door is closed. \n\ta flower pot 3 (containing nothing)\n\ta flower pot 4 (containing a banana tree in the adult stage, soil)\n\ta flower pot 5 (containing a pea plant in the adult stage with a short height, soil)\n\ta flower pot 7 (containing nothing)\n\ta flower pot 9 (containing a peach tree in the adult stage, soil)\n\ta jug (containing nothing)\n\ta sink, which is turned off. In the sink is: nothing.\nYou also see:\n\tA door to the hallway (that is open)\n\tA door to the outside (that is closed)"
+            ],
+            [
+              "focus on adult banana tree",
+              "You focus on the banana tree."
+            ],
+            [
+              "pick up banana tree",
+              "You move the banana tree to the inventory."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "bee hive",
+            "door to hallway",
+            "door to outside",
+            "flower pot 3",
+            "flower pot 4",
+            "flower pot 5",
+            "flower pot 7",
+            "flower pot 9",
+            "greenhouse",
+            "hallway",
+            "jug",
+            "living thing in flower pot 5",
+            "living thing in flower pot 9",
+            "outside",
+            "sink",
+            "soil in flower pot 4",
+            "soil in flower pot 5",
+            "soil in flower pot 9"
+          ],
+          "repair_action": "go to hallway"
+        }
+      ],
+      "onpolicy_pair_keys": [
+        [
+          "55496003ca3984ae25be5bfcbf5640167ab58435c1d909320554df68f0b2bd3a",
+          "open door to hallway"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go hallway"
+        ],
+        [
+          "632382364c7b86a986d047a1a13e961dc66e48f04efdf26cd5da288d54b3ce13",
+          "look around"
+        ],
+        [
+          "e18afcfe2740ec762484e86ca1121d280a713f7fd44b407d7433163671a8e514",
+          "open the door"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go to the hallway"
+        ],
+        [
+          "632382364c7b86a986d047a1a13e961dc66e48f04efdf26cd5da288d54b3ce13",
+          "look around"
+        ]
+      ],
+      "offpolicy_pair_keys": [
+        [
+          "55496003ca3984ae25be5bfcbf5640167ab58435c1d909320554df68f0b2bd3a",
+          "open door"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go hallway"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go to hallway"
+        ],
+        [
+          "632382364c7b86a986d047a1a13e961dc66e48f04efdf26cd5da288d54b3ce13",
+          "look around"
+        ],
+        [
+          "c1aac1e4b9d481f4e6f6a70c9785041e08f84d5b233f2f9b361e0e4c778b424b",
+          "pick up banana tree"
+        ],
+        [
+          "4cd692c35dd6eadf531087d677f4e9fcb38b1224d58fdf30cf40f7f870ef928f",
+          "go to hallway"
+        ]
+      ]
+    },
+    {
+      "unit_id": "headroom-mendelian-genetics-known-plant-q2-4",
+      "task_family": "mendelian-genetics-known-plant",
+      "variation": 35,
+      "initial_state_key": "968aa7438921d164d174e210a32dcbee263b656093a017e2ce998fa6a044abb2",
+      "frozen_base_final_score": 0,
+      "frozen_base_success": 0,
+      "pair_count": 2,
+      "onpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to determine whether round seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+          "observation": "This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing red paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing blue paint)\nYou also see:\n\tA door to the hallway (that is closed)",
+          "observation_sha256": "f74ae8d7e788c6c560c2db7fedcb42583d273e68731c12cc5a8093c14b042400",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "blue paint",
+            "cup containing blue paint",
+            "cup containing red paint",
+            "cup containing yellow paint",
+            "cupboard",
+            "door",
+            "hallway",
+            "jug",
+            "paint in cup containing red paint",
+            "paint in cup containing yellow paint",
+            "table"
+          ],
+          "repair_action": "open door to hallway"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to determine whether round seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to hallway",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "blue paint",
+            "cup containing blue paint",
+            "cup containing red paint",
+            "cup containing yellow paint",
+            "cupboard",
+            "door",
+            "hallway",
+            "jug",
+            "paint in cup containing red paint",
+            "paint in cup containing yellow paint",
+            "table"
+          ],
+          "repair_action": "go to hallway"
+        }
+      ],
+      "offpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to determine whether round seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+          "observation": "This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing red paint)\n\ta wood cup (containing blue paint)\nYou also see:\n\tA door to the hallway (that is closed)",
+          "observation_sha256": "38aedec8b5b603e1558f63d385893b781f160c638a48e166f2562d251793212c",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "blue paint",
+            "cup containing blue paint",
+            "cup containing red paint",
+            "cup containing yellow paint",
+            "cupboard",
+            "door",
+            "hallway",
+            "jug",
+            "paint in cup containing red paint",
+            "paint in cup containing yellow paint",
+            "table"
+          ],
+          "repair_action": "open door to hallway"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to determine whether round seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to hallway",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "blue paint",
+            "cup containing blue paint",
+            "cup containing red paint",
+            "cup containing yellow paint",
+            "cupboard",
+            "door",
+            "hallway",
+            "jug",
+            "paint in cup containing red paint",
+            "paint in cup containing yellow paint",
+            "table"
+          ],
+          "repair_action": "go to hallway"
+        }
+      ],
+      "onpolicy_pair_keys": [
+        [
+          "f74ae8d7e788c6c560c2db7fedcb42583d273e68731c12cc5a8093c14b042400",
+          "open door to hallway"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go to hallway"
+        ]
+      ],
+      "offpolicy_pair_keys": [
+        [
+          "38aedec8b5b603e1558f63d385893b781f160c638a48e166f2562d251793212c",
+          "open door to hallway"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go to hallway"
+        ]
+      ]
+    },
+    {
+      "unit_id": "headroom-mendelian-genetics-known-plant-q2-3",
+      "task_family": "mendelian-genetics-known-plant",
+      "variation": 59,
+      "initial_state_key": "10843c7139a2954669759c0c3b38b641faf687a1a58972204d9e0fedca0224bf",
+      "frozen_base_final_score": 0,
+      "frozen_base_success": 0,
+      "pair_count": 4,
+      "onpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to determine whether wrinkly seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+          "observation": "This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta table. On the table is: a battery, a black wire, a blue light bulb, which is off, a red light bulb, which is off, a red wire, a switch, which is off, a violet light bulb, which is off, a yellow wire.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \nYou also see:\n\tA door to the hallway (that is closed)",
+          "observation_sha256": "82558c8ad54e3f63203c50b4dcabe31984ac2c6dee2ed60b5535fd0ca9de343c",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "anode in battery",
+            "anode in blue light bulb",
+            "anode in component",
+            "anode in red light bulb",
+            "anode in violet light bulb",
+            "battery",
+            "battery cathode",
+            "black wire",
+            "black wire terminal 1",
+            "black wire terminal 2",
+            "blue light bulb",
+            "blue light bulb cathode",
+            "cathode in component",
+            "cathode in red light bulb",
+            "cathode in violet light bulb",
+            "door",
+            "freezer",
+            "hallway",
+            "red light bulb",
+            "red wire",
+            "red wire terminal 1",
+            "red wire terminal 2",
+            "switch",
+            "table",
+            "terminal 1 in yellow wire",
+            "terminal 2 in yellow wire",
+            "violet light bulb",
+            "workshop",
+            "yellow wire"
+          ],
+          "repair_action": "open door"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to determine whether wrinkly seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "anode in battery",
+            "anode in blue light bulb",
+            "anode in component",
+            "anode in red light bulb",
+            "anode in violet light bulb",
+            "battery",
+            "battery cathode",
+            "black wire",
+            "black wire terminal 1",
+            "black wire terminal 2",
+            "blue light bulb",
+            "blue light bulb cathode",
+            "cathode in component",
+            "cathode in red light bulb",
+            "cathode in violet light bulb",
+            "door",
+            "freezer",
+            "hallway",
+            "red light bulb",
+            "red wire",
+            "red wire terminal 1",
+            "red wire terminal 2",
+            "switch",
+            "table",
+            "terminal 1 in yellow wire",
+            "terminal 2 in yellow wire",
+            "violet light bulb",
+            "workshop",
+            "yellow wire"
+          ],
+          "repair_action": "go hallway"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to determine whether wrinkly seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+          "observation": "No known action matches that input.",
+          "observation_sha256": "e18afcfe2740ec762484e86ca1121d280a713f7fd44b407d7433163671a8e514",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "focus on orange box",
+              "No known action matches that input."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "anode in battery",
+            "anode in blue light bulb",
+            "anode in component",
+            "anode in red light bulb",
+            "anode in violet light bulb",
+            "battery",
+            "battery cathode",
+            "black wire",
+            "black wire terminal 1",
+            "black wire terminal 2",
+            "blue light bulb",
+            "blue light bulb cathode",
+            "cathode in component",
+            "cathode in red light bulb",
+            "cathode in violet light bulb",
+            "door",
+            "freezer",
+            "hallway",
+            "red light bulb",
+            "red wire",
+            "red wire terminal 1",
+            "red wire terminal 2",
+            "switch",
+            "table",
+            "terminal 1 in yellow wire",
+            "terminal 2 in yellow wire",
+            "violet light bulb",
+            "workshop",
+            "yellow wire"
+          ],
+          "repair_action": "open door"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to determine whether wrinkly seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "focus on orange box",
+              "No known action matches that input."
+            ],
+            [
+              "open door",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "anode in battery",
+            "anode in blue light bulb",
+            "anode in component",
+            "anode in red light bulb",
+            "anode in violet light bulb",
+            "battery",
+            "battery cathode",
+            "black wire",
+            "black wire terminal 1",
+            "black wire terminal 2",
+            "blue light bulb",
+            "blue light bulb cathode",
+            "cathode in component",
+            "cathode in red light bulb",
+            "cathode in violet light bulb",
+            "door",
+            "freezer",
+            "hallway",
+            "red light bulb",
+            "red wire",
+            "red wire terminal 1",
+            "red wire terminal 2",
+            "switch",
+            "table",
+            "terminal 1 in yellow wire",
+            "terminal 2 in yellow wire",
+            "violet light bulb",
+            "workshop",
+            "yellow wire"
+          ],
+          "repair_action": "go to hallway"
+        }
+      ],
+      "offpolicy_pairs": [
+        {
+          "task_desc": "Task Description:\nYour task is to determine whether wrinkly seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+          "observation": "This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta table. On the table is: a battery, a black wire, a blue light bulb, which is off, a red light bulb, which is off, a red wire, a switch, which is off, a violet light bulb, which is off, a yellow wire.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \nYou also see:\n\tA door to the hallway (that is closed)",
+          "observation_sha256": "82558c8ad54e3f63203c50b4dcabe31984ac2c6dee2ed60b5535fd0ca9de343c",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "anode in battery",
+            "anode in blue light bulb",
+            "anode in component",
+            "anode in red light bulb",
+            "anode in violet light bulb",
+            "battery",
+            "battery cathode",
+            "black wire",
+            "black wire terminal 1",
+            "black wire terminal 2",
+            "blue light bulb",
+            "blue light bulb cathode",
+            "cathode in component",
+            "cathode in red light bulb",
+            "cathode in violet light bulb",
+            "door",
+            "freezer",
+            "hallway",
+            "red light bulb",
+            "red wire",
+            "red wire terminal 1",
+            "red wire terminal 2",
+            "switch",
+            "table",
+            "terminal 1 in yellow wire",
+            "terminal 2 in yellow wire",
+            "violet light bulb",
+            "workshop",
+            "yellow wire"
+          ],
+          "repair_action": "open door to hallway"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to determine whether wrinkly seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+          "observation": "The door is now open.",
+          "observation_sha256": "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to hallway",
+              "The door is now open."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "anode in battery",
+            "anode in blue light bulb",
+            "anode in component",
+            "anode in red light bulb",
+            "anode in violet light bulb",
+            "battery",
+            "battery cathode",
+            "black wire",
+            "black wire terminal 1",
+            "black wire terminal 2",
+            "blue light bulb",
+            "blue light bulb cathode",
+            "cathode in component",
+            "cathode in red light bulb",
+            "cathode in violet light bulb",
+            "door",
+            "freezer",
+            "hallway",
+            "red light bulb",
+            "red wire",
+            "red wire terminal 1",
+            "red wire terminal 2",
+            "switch",
+            "table",
+            "terminal 1 in yellow wire",
+            "terminal 2 in yellow wire",
+            "violet light bulb",
+            "workshop",
+            "yellow wire"
+          ],
+          "repair_action": "go hallway"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to determine whether wrinkly seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+          "observation": "You move to the hallway.",
+          "observation_sha256": "632382364c7b86a986d047a1a13e961dc66e48f04efdf26cd5da288d54b3ce13",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to hallway",
+              "The door is now open."
+            ],
+            [
+              "go hallway",
+              "You move to the hallway."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "picture",
+            "workshop"
+          ],
+          "repair_action": "open door to greenhouse"
+        },
+        {
+          "task_desc": "Task Description:\nYour task is to determine whether wrinkly seed shape is a dominant or recessive trait in the pea plant. If the trait is dominant, focus on the blue box. If the trait is recessive, focus on the orange box.",
+          "observation": "You move to the hallway.",
+          "observation_sha256": "632382364c7b86a986d047a1a13e961dc66e48f04efdf26cd5da288d54b3ce13",
+          "inventory": "In your inventory, you see:\n\tan orange\n",
+          "history": [
+            [
+              "open door to hallway",
+              "The door is now open."
+            ],
+            [
+              "go to hallway",
+              "You move to the hallway."
+            ]
+          ],
+          "templates": [
+            "activate OBJ",
+            "close OBJ",
+            "connect OBJ to OBJ",
+            "deactivate OBJ",
+            "disconnect OBJ",
+            "dunk OBJ in OBJ",
+            "eat OBJ",
+            "flush OBJ",
+            "focus on OBJ",
+            "go OBJ",
+            "inventory",
+            "look around",
+            "look at OBJ",
+            "look in OBJ",
+            "mix OBJ",
+            "move OBJ to OBJ",
+            "open OBJ",
+            "pick up OBJ",
+            "pour OBJ in OBJ",
+            "put down OBJ",
+            "read OBJ",
+            "reset task",
+            "task",
+            "use OBJ on OBJ",
+            "wait",
+            "wait1"
+          ],
+          "objects": [
+            "agent",
+            "air",
+            "art studio",
+            "art studio door",
+            "bedroom",
+            "bedroom door",
+            "door to greenhouse",
+            "door to kitchen",
+            "door to living room",
+            "door to workshop",
+            "greenhouse",
+            "hallway",
+            "kitchen",
+            "living room",
+            "picture",
+            "workshop"
+          ],
+          "repair_action": "open door to greenhouse"
+        }
+      ],
+      "onpolicy_pair_keys": [
+        [
+          "82558c8ad54e3f63203c50b4dcabe31984ac2c6dee2ed60b5535fd0ca9de343c",
+          "open door"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go hallway"
+        ],
+        [
+          "e18afcfe2740ec762484e86ca1121d280a713f7fd44b407d7433163671a8e514",
+          "open door"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go to hallway"
+        ]
+      ],
+      "offpolicy_pair_keys": [
+        [
+          "82558c8ad54e3f63203c50b4dcabe31984ac2c6dee2ed60b5535fd0ca9de343c",
+          "open door to hallway"
+        ],
+        [
+          "d7d01970a271d0f3fdadad1587be6a688a6af4a0cdb682e308ebc44e0b712352",
+          "go hallway"
+        ],
+        [
+          "632382364c7b86a986d047a1a13e961dc66e48f04efdf26cd5da288d54b3ce13",
+          "open door to greenhouse"
+        ],
+        [
+          "632382364c7b86a986d047a1a13e961dc66e48f04efdf26cd5da288d54b3ce13",
+          "open door to greenhouse"
+        ]
+      ]
+    }
+  ],
+  "plan_hash": "c6d05eec74c5db5fcf9ce7af63251e8bd5f418c151664eea2a1929b06845f9d7"
+}
