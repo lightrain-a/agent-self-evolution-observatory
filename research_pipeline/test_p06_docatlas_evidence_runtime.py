@@ -43,6 +43,10 @@ class P06DocAtlasRuntimeTest(unittest.TestCase):
         self.assertEqual(p06.raw_page_chars([1,2,3,4,5,6]),1800)
         self.assertEqual(p06.raw_page_chars([1,2,3,4,5,6])*6,p06.RAW_CONTEXT_CHARS)
 
+    def test_gpu_seconds_counts_visible_devices(self):
+        self.assertEqual(p06.gpu_seconds(10.0,2),20.0)
+        self.assertEqual(p06.gpu_seconds(10.0,0),10.0)
+
     def test_generation_fails_closed_before_silent_truncation(self):
         class Shape:
             shape=(1,p06.MAX_INPUT_TOKENS+1)

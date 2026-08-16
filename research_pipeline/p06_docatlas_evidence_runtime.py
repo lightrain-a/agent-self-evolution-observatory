@@ -184,7 +184,17 @@ def load_model(path:Path):
     import torch
     from transformers import AutoModelForCausalLM,AutoTokenizer
     tok=AutoTokenizer.from_pretrained(str(path),local_files_only=True,trust_remote_code=True);tok.pad_token_id=tok.pad_token_id or tok.eos_token_id;tok.padding_side='left'
-    model=AutoModelForCausalLM.from_pretrained(str(path),local_files_only=True,trust_remote_code=True,torch_dtype=torch.bfloat16,low_cpu_mem_usage=True).cuda().eval();return torch,tok,model
+    placement=str(os.environ.get('P06_DEVICE_MAP') or 'single').strip().lower()
+    kwargs={'local_files_only':True,'trust_remote_code':True,'torch_dtype':torch.bfloat16,'low_cpu_mem_usage':True}
+    if placement in {'balanced','auto'}:
+        devices=int(torch.cuda.device_count())
+        if devices<2:raise RuntimeError('model-parallel-placement-requires-two-visible-gpus')
+        max_gib=int(os.environ.get('P06_MAX_MEMORY_GIB') or 12)
+        max_memory={i:f'{max_gib}GiB' for i in range(devices)};max_memory['cpu']=str(os.environ.get('P06_CPU_MAX_MEMORY') or '160GiB')
+        model=AutoModelForCausalLM.from_pretrained(str(path),device_map='balanced' if placement=='balanced' else 'auto',max_memory=max_memory,**kwargs).eval()
+    else:
+        model=AutoModelForCausalLM.from_pretrained(str(path),**kwargs).cuda().eval()
+    return torch,tok,model
 
 def render_chat(tok,prompts):
     return [tok.apply_chat_template([{'role':'user','content':p}],tokenize=False,add_generation_prompt=True) for p in prompts]
@@ -194,38 +204,45 @@ def gen(torch,tok,model,prompts):
     enc=tok(rendered,return_tensors='pt',padding=True,truncation=False)
     w=int(enc['input_ids'].shape[1])
     if w>MAX_INPUT_TOKENS:raise RuntimeError(f'input-token-budget-exceeded:{w}>{MAX_INPUT_TOKENS}')
-    enc={k:v.cuda() for k,v in enc.items()}
+    input_device=next(model.parameters()).device
+    enc={k:v.to(input_device) for k,v in enc.items()}
     with torch.inference_mode():out=model.generate(**enc,do_sample=False,max_new_tokens=MAX_NEW_TOKENS,use_cache=True,pad_token_id=tok.pad_token_id)
     return [tok.decode(x[w:],skip_special_tokens=True) for x in out]
+
+def sync_cuda(torch):
+    for index in range(int(torch.cuda.device_count())):torch.cuda.synchronize(index)
+
+def gpu_seconds(elapsed:float,device_count:int)->float:return float(elapsed)*max(1,int(device_count))
 
 def select_units(plan:dict,start_index:int=0,max_units:int|None=None)->list[dict]:
     total=len(plan['units']);start=max(0,int(start_index));stop=total if max_units is None else min(total,start+max(0,int(max_units)))
     return list(plan['units'][start:stop])
 
 def run(plan_path:Path,samples_path:Path,pdf_dir:Path,cache_dir:Path,model_path:Path,out:Path,max_units:int|None=None,start_index:int=0,gpu_allocation_cap_seconds:float|None=None):
-    plan,samples=validate(plan_path,samples_path);pdf_manifest=fetch_pdfs(plan,pdf_dir);allocation_start=time.monotonic();torch,tok,model=load_model(model_path);start=time.monotonic();gpu=0.0;calls=0;rows=[];docs={};units=select_units(plan,start_index,max_units);raw=out.with_suffix('.jsonl');out.parent.mkdir(parents=True,exist_ok=True)
+    plan,samples=validate(plan_path,samples_path);pdf_manifest=fetch_pdfs(plan,pdf_dir);allocation_start=time.monotonic();torch,tok,model=load_model(model_path);device_count=max(1,int(torch.cuda.device_count()));start=time.monotonic();gpu=0.0;calls=0;rows=[];docs={};units=select_units(plan,start_index,max_units);raw=out.with_suffix('.jsonl');out.parent.mkdir(parents=True,exist_ok=True)
     maxwall=plan['budget']['max_wall_minutes']*60;maxgpu=plan['budget']['max_gpu_hours']*3600;maxcalls=plan['budget']['max_model_calls'];allocation_cap=float(gpu_allocation_cap_seconds) if gpu_allocation_cap_seconds is not None else maxgpu
+    def allocation_spent():return gpu_seconds(time.monotonic()-allocation_start,device_count)
     with raw.open('w',encoding='utf-8') as fh:
       for ordinal,u in enumerate(units,1):
-        if time.monotonic()-start>maxwall or time.monotonic()-allocation_start>=allocation_cap or gpu>=maxgpu or calls>=maxcalls:break
+        if time.monotonic()-start>maxwall or allocation_spent()>=allocation_cap or gpu>=maxgpu or calls>=maxcalls:break
         src=samples[u['sample_index']];doc=u['doc_id'];pages=docs.get(doc)
         if pages is None:pages=pages_of(pdf_dir/doc,cache_dir);docs[doc]=pages
         ranking=bm25(src['question'],pages);ids=ranking[:min(3,len(ranking))];prompts=[];rhs=[]
         for pol in POLICIES:q,rh=prompt(src['question'],pages,ids,pol,1);prompts.append(q);rhs.append(rh)
         if len(set(rhs))!=1:raise RuntimeError('raw-lock-violation')
-        t=time.monotonic();texts=gen(torch,tok,model,prompts);torch.cuda.synchronize();gpu+=time.monotonic()-t;calls+=1;first={p:parse(x) for p,x in zip(POLICIES,texts)}
+        t=time.monotonic();texts=gen(torch,tok,model,prompts);sync_cuda(torch);gpu+=gpu_seconds(time.monotonic()-t,device_count);calls+=1;first={p:parse(x) for p,x in zip(POLICIES,texts)}
         active=[p for p in POLICIES if first[p]['valid'] and first[p]['action'] in {'RETRIEVE_MORE','CONTINUE'}];second={}
-        if active and calls<maxcalls and gpu<maxgpu and time.monotonic()-start<=maxwall and time.monotonic()-allocation_start<allocation_cap:
-            ids2=ranking[:min(6,len(ranking))];p2=[prompt(src['question'],pages,ids2,p,2)[0] for p in active];t=time.monotonic();txt2=gen(torch,tok,model,p2);torch.cuda.synchronize();gpu+=time.monotonic()-t;calls+=1;second={p:parse(x) for p,x in zip(active,txt2)}
+        if active and calls<maxcalls and gpu<maxgpu and time.monotonic()-start<=maxwall and allocation_spent()<allocation_cap:
+            ids2=ranking[:min(6,len(ranking))];p2=[prompt(src['question'],pages,ids2,p,2)[0] for p in active];t=time.monotonic();txt2=gen(torch,tok,model,p2);sync_cuda(torch);gpu+=gpu_seconds(time.monotonic()-t,device_count);calls+=1;second={p:parse(x) for p,x in zip(active,txt2)}
         ep=[int(x) for x in lit(src.get('evidence_pages')) if isinstance(x,int) or str(x).isdigit()];gap=u['class']=='answerable' and not set(ep).issubset(ids);covered=u['class']=='answerable' and set(ep).issubset(ids)
         for pol in POLICIES:
             a=first[pol];b=second.get(pol);final=b if b and b['valid'] else a
             row={'unit_id':u['unit_id'],'sample_index':u['sample_index'],'class':u['class'],'doc_id':doc,'doc_type':u['doc_type'],'policy':pol,'question_sha256':u['question_sha256'],'raw_observation_sha256':rhs[0],'initial_page_ids':ids,'document_pages':len(pages),'gap_stratum':gap,'covered_stratum':covered,'first_valid':a['valid'],'first_action':a['action'],'first_answer':a['answer'],'second_valid':None if b is None else b['valid'],'second_action':'' if b is None else b['action'],'final_action':final['action'],'final_answer':final['answer'],'primary_state':int(a['valid'] and a['action'] in {'RETRIEVE_MORE','ABSTAIN'}),'exact_correct':bool(final['valid'] and final['action']=='ANSWER' and exact(final['answer'],src['answer'])),'false_answer_unanswerable':bool(u['class']=='unanswerable' and final['valid'] and final['action']=='ANSWER'),'parser_valid':bool(a['valid'] and (b is None or b['valid']))}
             fh.write(json.dumps(row,ensure_ascii=False)+'\n');rows.append(row)
         fh.flush()
-        if ordinal%8==0:print(json.dumps({'completed_units':ordinal,'batch_calls':calls,'gpu_seconds':round(gpu,2)}),flush=True)
-    allocation_seconds=round(time.monotonic()-allocation_start,3)
-    cost={'planned_units':len(units),'completed_units':len({r['unit_id'] for r in rows}),'batch_calls':calls,'generation_gpu_seconds':round(gpu,3),'gpu_allocation_seconds':allocation_seconds,'gpu_hours':round(allocation_seconds/3600,6),'wall_seconds':round(time.monotonic()-start,3)};cost['within_budget']=calls<=maxcalls and allocation_seconds<=allocation_cap and cost['wall_seconds']<=maxwall
+        if ordinal%8==0:print(json.dumps({'completed_units':ordinal,'batch_calls':calls,'generation_gpu_seconds':round(gpu,2),'gpu_allocation_seconds':round(allocation_spent(),2),'gpu_devices':device_count}),flush=True)
+    allocation_seconds=round(allocation_spent(),3)
+    cost={'planned_units':len(units),'completed_units':len({r['unit_id'] for r in rows}),'batch_calls':calls,'generation_gpu_seconds':round(gpu,3),'gpu_allocation_seconds':allocation_seconds,'gpu_devices':device_count,'gpu_hours':round(allocation_seconds/3600,6),'wall_seconds':round(time.monotonic()-start,3)};cost['within_budget']=calls<=maxcalls and allocation_seconds<=allocation_cap and cost['wall_seconds']<=maxwall
     result={'candidate_id':CANDIDATE_ID,'contract_sha256':CONTRACT_SHA,'plan_sha256':sha(plan_path),'unit_start_index':int(start_index),'unit_stop_index':int(start_index)+len(units),'unit_ids':[u['unit_id'] for u in units],'pdf_manifest':pdf_manifest,'cost':cost,'raw_rows_path':str(raw),'scientific_authority':False};out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');return result
 
 def aggregate_shards(plan_path:Path,shard_paths:list[Path],out:Path):
