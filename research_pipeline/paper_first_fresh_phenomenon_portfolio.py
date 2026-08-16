@@ -12,7 +12,10 @@ DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-fresh-phenomenon-portfo
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-fresh-phenomenon-portfolio-20260817.js"
 EVIDENCE_ECHO_JSON = PROJECT_ROOT / "generated" / "paper-first-evidence-echo-retrospective-20260817.json"
 EVIDENCE_ECHO_F0 = PROJECT_ROOT / "research_pipeline" / "paper_first_evidence_echo_f0.py"
-EXPECTED_EVIDENCE_ECHO_F0_SHA256 = "8f3b04d09c4101335434fa7a8a50bba965ab95ce244cf24c5fe9e53ba6feadf6"
+EVIDENCE_ECHO_F0_REPAIR = PROJECT_ROOT / "generated" / "paper-first-evidence-echo-f0-operationalization-repair-20260817.json"
+EXPECTED_EVIDENCE_ECHO_F0_ORIGINAL_SHA256 = "8f3b04d09c4101335434fa7a8a50bba965ab95ce244cf24c5fe9e53ba6feadf6"
+EXPECTED_EVIDENCE_ECHO_F0_SHA256 = "f64ae7c42f5e02b2f18abd67e4a784e3790b3c75107a4140666d9faa1c39842e"
+EXPECTED_EVIDENCE_ECHO_F0_REPAIR_SHA256 = "8965c54594356a87e642ebe3cc4cd76eb899ece5e6436eb96f097d09473aad30"
 PRIMARY_STATE_JSON = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.json"
 DEAD_END_MEMORY_JSON = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-adjudication.json"
 
@@ -116,6 +119,24 @@ def build_fresh_phenomenon_portfolio(
 
     echo_signal = evidence_echo.get("observed_signal") or {}
     echo_f0 = evidence_echo.get("next_f0") or {}
+    echo_repair = _load(EVIDENCE_ECHO_F0_REPAIR)
+    echo_repair_source = echo_repair.get("source_state") or {}
+    echo_reviewer = echo_repair.get("independent_review") or {}
+    echo_repair_clear = bool(
+        _sha(EVIDENCE_ECHO_F0_REPAIR) == EXPECTED_EVIDENCE_ECHO_F0_REPAIR_SHA256
+        and echo_repair.get("status") == "CLEAR_FOR_BOUNDED_F0_EXECUTION"
+        and echo_repair.get("pre_execution_only") is True
+        and echo_repair.get("model_outcomes_inspected_before_repair") is False
+        and echo_repair_source.get("original_runtime_sha256") == EXPECTED_EVIDENCE_ECHO_F0_ORIGINAL_SHA256
+        and echo_repair_source.get("repaired_runtime_sha256") == EXPECTED_EVIDENCE_ECHO_F0_SHA256
+        and echo_reviewer.get("verdict") == "CLEAR_FOR_EXECUTION"
+        and echo_reviewer.get("same_scientific_object") is True
+        and echo_reviewer.get("unit_arm_gate_identity_preserved") is True
+        and echo_reviewer.get("outcome_blind_repair") is True
+        and echo_reviewer.get("new_information_advantage_created") is False
+        and echo_reviewer.get("hidden_tuning_detected") is False
+        and not list(echo_reviewer.get("blockers") or [])
+    )
     echo_ready = bool(
         evidence_echo.get("decision") == "KEEP_AS_ACTIVE_F0_NOT_PAPER_IDEA"
         and int((evidence_echo.get("scope") or {}).get("units") or 0) >= 128
@@ -125,6 +146,7 @@ def build_fresh_phenomenon_portfolio(
         and len(echo_f0.get("required_arms") or []) >= 5
         and echo_f0.get("gpu_authorized") is False
         and _sha(EVIDENCE_ECHO_F0) == EXPECTED_EVIDENCE_ECHO_F0_SHA256
+        and echo_repair_clear
     )
 
     harness_hold = _memory_hold(dead_end_memory, "SHADOW-P07-C01")
@@ -282,6 +304,7 @@ def build_fresh_phenomenon_portfolio(
             "one_active_f0_slot_max": ACTIVE_F0_LIMIT,
             "active_f0_requires_provenance_audited_substrate": True,
             "active_f0_requires_frozen_same_information_falsifier": True,
+            "preexecution_operationalization_repair_requires_hash_chain_and_independent_review": True,
             "source_only_candidates_cannot_consume_experiment_slot": True,
             "support_unavailable_is_hold_not_scientific_failure": True,
             "positive_f0_does_not_grant_problem_gate_or_paper_design": True,
@@ -300,6 +323,11 @@ def build_fresh_phenomenon_portfolio(
             "evidence_echo_f0_harness": {
                 "path": str(EVIDENCE_ECHO_F0.relative_to(PROJECT_ROOT)),
                 "sha256": _sha(EVIDENCE_ECHO_F0),
+            },
+            "evidence_echo_f0_operationalization_repair": {
+                "path": str(EVIDENCE_ECHO_F0_REPAIR.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(EVIDENCE_ECHO_F0_REPAIR),
+                "review_verdict": echo_reviewer.get("verdict"),
             },
             "primary_state": {
                 "path": str(PRIMARY_STATE_JSON.relative_to(PROJECT_ROOT)),
@@ -325,6 +353,8 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
         errors.append("portfolio must stay outside canonical problem queue")
     if policy.get("active_f0_requires_provenance_audited_substrate") is not True:
         errors.append("active F0 must require audited substrate")
+    if policy.get("preexecution_operationalization_repair_requires_hash_chain_and_independent_review") is not True:
+        errors.append("F0 operationalization repair must require a frozen hash chain plus independent review")
     if policy.get("source_only_candidates_cannot_consume_experiment_slot") is not True:
         errors.append("source-only candidate may not consume F0 slot")
     if policy.get("positive_f0_does_not_grant_problem_gate_or_paper_design") is not True:
@@ -336,6 +366,11 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
         errors.append("ACTIVE_F0 summary mismatch")
     if int(summary.get("candidates") or 0) != len(rows):
         errors.append("candidate summary mismatch")
+    bindings = state.get("source_bindings") or {}
+    repair_binding = bindings.get("evidence_echo_f0_operationalization_repair") or {}
+    if any(row.get("candidate_id") == "PA-01-EVIDENCE-ECHO" and row.get("status") == "ACTIVE_F0" for row in rows):
+        if repair_binding.get("sha256") != EXPECTED_EVIDENCE_ECHO_F0_REPAIR_SHA256 or repair_binding.get("review_verdict") != "CLEAR_FOR_EXECUTION":
+            errors.append("ACTIVE Evidence Echo F0 lacks the reviewed operationalization-repair binding")
     for row in rows:
         if row.get("status") not in ALLOWED_STATUSES:
             errors.append(f"invalid status:{row.get('candidate_id')}")

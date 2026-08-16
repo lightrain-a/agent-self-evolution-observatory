@@ -10,7 +10,7 @@ from typing import Any
 from . import p06_docatlas_evidence_runtime as p06
 
 CANDIDATE_ID = "PA-01-EVIDENCE-ECHO"
-CONTRACT_VERSION = "evidence-echo-f0-v1"
+CONTRACT_VERSION = "evidence-echo-f0-v2-full-prompt-parity"
 ARMS = (
     "RAW_ONLY",
     "ECHO_EXTRACTIVE",
@@ -97,17 +97,41 @@ def _exact_token_prefix(tok: Any, source: str, target_n: int) -> str:
     raise RuntimeError(f"exact-token-prefix-not-found:{target_n}")
 
 
+def _verbatim_payload_prefix(tok: Any, source: str, target_n: int) -> tuple[str, int]:
+    """Choose a real character prefix at target tokens, or exactly one token below.
+
+    Some BPE/SentencePiece tokenizers have no character boundary whose standalone
+    retokenization has exactly ``target_n`` tokens: a one-character extension can
+    jump from N-1 directly to N+1.  That is an operational tokenization artifact,
+    not a scientific treatment.  We therefore permit one bounded fallback to
+    ``target_n-1`` and let the already-frozen neutral-suffix matcher restore exact
+    *whole-note* token parity.  Larger shortfalls remain fail-closed.
+    """
+    try:
+        prefix = _exact_token_prefix(tok, source, target_n)
+        return prefix, target_n
+    except RuntimeError as exact_error:
+        if target_n <= 1:
+            raise
+        try:
+            prefix = _exact_token_prefix(tok, source, target_n - 1)
+        except RuntimeError:
+            raise exact_error
+        return prefix, target_n - 1
+
+
 def _arm_note_drafts(tok: Any, pages: list[str], ids: list[int]) -> tuple[dict[str, str], int, str]:
     """Build non-RAW note arms without deleting evidence to obtain token parity.
 
     ECHO_EXTRACTIVE and DEDUP_WARNING contain exactly the same extractive payload.
-    VERBATIM_DUPLICATE uses an equal-token contiguous visible-evidence excerpt.  The
+    VERBATIM_DUPLICATE uses a contiguous visible-evidence character prefix matched
+    to the extractive payload within at most one tokenizer-boundary token. The
     longest semantic arm determines the common note budget and shorter arms receive
-    only neutral suffix padding; no semantic arm is truncated for token matching.
+    only neutral suffix padding; no evidence text is rewritten for token matching.
     """
     extractive = p06.extractive(pages, ids)
     payload_tokens = len(_encode(tok, extractive))
-    verbatim_payload = _exact_token_prefix(tok, p06.raw_block(pages, ids), payload_tokens)
+    verbatim_payload, _ = _verbatim_payload_prefix(tok, p06.raw_block(pages, ids), payload_tokens)
     drafts = {
         "ECHO_EXTRACTIVE": "Extractive note from visible text: " + extractive,
         "VERBATIM_DUPLICATE": "Duplicated visible evidence: " + verbatim_payload,
@@ -138,10 +162,46 @@ def arm_note(tok: Any, arm: str, pages: list[str], ids: list[int]) -> tuple[str,
     return matched[arm], target_n
 
 
-def render_arm_prompts(tok: Any, question: str, pages: list[str], ids: list[int], step: int) -> dict[str, tuple[str, str, int]]:
-    """Render all five arms while tokenizing the semantic note payload only once."""
+def _chat_input_token_count(tok: Any, prompt_text: str) -> int:
+    rendered = tok.apply_chat_template(
+        [{"role": "user", "content": prompt_text}],
+        tokenize=False,
+        add_generation_prompt=True,
+    )
+    return len(_encode(tok, rendered))
+
+
+def _pad_note_for_full_prompt_parity(tok: Any, common: str, note: str, decision_tail: str, target_n: int) -> str:
+    """Append neutral note suffixes until the final chat input reaches target_n.
+
+    This matches what ``p06.gen`` actually sends after the chat template, avoiding
+    one-token BPE boundary differences that can survive local note-token matching.
+    Evidence/notice text is always an exact prefix of the repaired note.
+    """
+    text = str(note)
+    fillers = (" .", " metadata", " x", " neutral", " padding", "\n")
+    for _ in range(16):
+        prompt_text = common + "\n\nPERSISTENT NOTE REPRESENTATION:\n" + text + decision_tail
+        current = _chat_input_token_count(tok, prompt_text)
+        if current == target_n:
+            return text
+        if current > target_n:
+            raise RuntimeError(f"full-prompt-token-padding-overshoot:{current}>{target_n}")
+        for filler in fillers:
+            candidate = text + filler
+            candidate_prompt = common + "\n\nPERSISTENT NOTE REPRESENTATION:\n" + candidate + decision_tail
+            if _chat_input_token_count(tok, candidate_prompt) == target_n:
+                return candidate
+        # The current empirical contract only permits the observed one-token BPE
+        # boundary repair. Fail closed instead of accumulating arbitrary padding.
+        raise RuntimeError(f"no-full-prompt-neutral-padding:{current}->{target_n}")
+    raise RuntimeError("full-prompt-token-padding-iteration-cap")
+
+
+def render_arm_prompts(tok: Any, question: str, pages: list[str], ids: list[int], step: int) -> dict[str, tuple[str, str, int, int]]:
+    """Render five arms and exactly match final chat tokens across non-RAW arms."""
     raw = p06.raw_block(pages, ids)
-    matched, nonraw_tokens, _ = _arm_note_drafts(tok, pages, ids)
+    matched, _, _ = _arm_note_drafts(tok, pages, ids)
     raw_note = "Visible evidence may be incomplete. Use only visible pages. If insufficient, request more evidence or abstain."
     notes = {"RAW_ONLY": raw_note, **matched}
     common = (
@@ -149,21 +209,32 @@ def render_arm_prompts(tok: Any, question: str, pages: list[str], ids: list[int]
         f"QUESTION:\n{question}\n\nRAW VISIBLE PAGES:\n{raw}\n"
     )
     raw_hash = p06.htext(common)
-    rendered: dict[str, tuple[str, str, int]] = {}
+    decision_tail = (
+        f"\n\nChoose exactly one action: ANSWER, RETRIEVE_MORE, ABSTAIN, CONTINUE. Return one JSON object only with keys action and answer. For non-ANSWER set answer to empty string. Decision step {step} of 2."
+    )
+    provisional = {
+        arm: common + "\n\nPERSISTENT NOTE REPRESENTATION:\n" + notes[arm] + decision_tail
+        for arm in ARMS if arm != "RAW_ONLY"
+    }
+    target_input_tokens = max(_chat_input_token_count(tok, text) for text in provisional.values())
+    for arm in ARMS:
+        if arm == "RAW_ONLY":
+            continue
+        notes[arm] = _pad_note_for_full_prompt_parity(tok, common, notes[arm], decision_tail, target_input_tokens)
+    rendered: dict[str, tuple[str, str, int, int]] = {}
     for arm in ARMS:
         note = notes[arm]
-        note_tokens = len(_encode(tok, note)) if arm == "RAW_ONLY" else nonraw_tokens
-        tail = (
-            "\n\nPERSISTENT NOTE REPRESENTATION:\n"
-            + note
-            + f"\n\nChoose exactly one action: ANSWER, RETRIEVE_MORE, ABSTAIN, CONTINUE. Return one JSON object only with keys action and answer. For non-ANSWER set answer to empty string. Decision step {step} of 2."
-        )
-        rendered[arm] = (common + tail, raw_hash, note_tokens)
+        prompt_text = common + "\n\nPERSISTENT NOTE REPRESENTATION:\n" + note + decision_tail
+        rendered[arm] = (prompt_text, raw_hash, len(_encode(tok, note)), _chat_input_token_count(tok, prompt_text))
+    nonraw_input_counts = {rendered[arm][3] for arm in ARMS if arm != "RAW_ONLY"}
+    if len(nonraw_input_counts) != 1:
+        raise RuntimeError("nonraw-full-prompt-token-count-not-locked")
     return rendered
 
 
 def prompt(tok: Any, question: str, pages: list[str], ids: list[int], arm: str, step: int) -> tuple[str, str, int]:
-    return render_arm_prompts(tok, question, pages, ids, step)[arm]
+    rendered = render_arm_prompts(tok, question, pages, ids, step)[arm]
+    return rendered[0], rendered[1], rendered[2]
 
 
 def select_units(plan: dict[str, Any]) -> list[dict[str, Any]]:
@@ -206,7 +277,8 @@ def build_plan(parent_plan_path: Path, samples_path: Path) -> dict[str, Any]:
             "temperature=0",
             "two decision steps",
             "retrieval expansion from top-3 to top-6",
-            "note-token count across the four non-RAW arms",
+            "final chat-input token count across the four non-RAW arms",
+            "verbatim evidence payload may use at most one fewer token only when no exact character-prefix token boundary exists; neutral suffix restores final prompt parity",
         ],
         "truth_use": {
             "unanswerable label": "primary endpoint only",
@@ -354,9 +426,9 @@ def run(
             raw_hashes = [item[1] for item in rendered]
             if len(set(raw_hashes)) != 1:
                 raise RuntimeError("raw-visible-pages-not-locked")
-            nonraw_note_counts = [rendered_by_arm[arm][2] for arm in ARMS if arm != "RAW_ONLY"]
-            if len(set(nonraw_note_counts)) != 1:
-                raise RuntimeError("nonraw-note-token-count-not-locked")
+            nonraw_input_counts = [rendered_by_arm[arm][3] for arm in ARMS if arm != "RAW_ONLY"]
+            if len(set(nonraw_input_counts)) != 1:
+                raise RuntimeError("nonraw-full-prompt-token-count-not-locked")
             t = time.monotonic()
             texts = p06.gen(torch, tok, model, [item[0] for item in rendered])
             p06.sync_cuda(torch)
@@ -390,6 +462,7 @@ def run(
                     "initial_page_ids": ids,
                     "document_pages": len(pages),
                     "note_tokens": rendered_item[2],
+                    "input_tokens": rendered_item[3],
                     "first_valid": a["valid"],
                     "first_action": a["action"],
                     "first_answer": a["answer"],

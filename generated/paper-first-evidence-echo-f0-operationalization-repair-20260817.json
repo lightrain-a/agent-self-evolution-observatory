@@ -1,0 +1,108 @@
+{
+  "schema_version": "1.0-operationalization-repair",
+  "candidate_id": "PA-01-EVIDENCE-ECHO",
+  "status": "CLEAR_FOR_BOUNDED_F0_EXECUTION",
+  "scientific_authority": false,
+  "repair_date": "2026-08-17",
+  "repair_class": "TOKENIZER_BOUNDARY_AND_FULL_PROMPT_PARITY_NUISANCE_ONLY",
+  "pre_execution_only": true,
+  "model_outcomes_inspected_before_repair": false,
+  "parent_f0_contract_version": "evidence-echo-f0-v1",
+  "repaired_f0_contract_version": "evidence-echo-f0-v2-full-prompt-parity",
+  "source_state": {
+    "parent_candidate_id": "SHADOW-P06-C01",
+    "parent_plan_sha256": "dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39",
+    "source_samples_sha256": "4ffadad60b18cd7ede864155f3e8a366fe4deec2189b3d0a25691b7df4b839e8",
+    "model_snapshot": "/root/.cache/huggingface/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28",
+    "original_runtime_sha256": "8f3b04d09c4101335434fa7a8a50bba965ab95ce244cf24c5fe9e53ba6feadf6",
+    "repaired_runtime_sha256": "f64ae7c42f5e02b2f18abd67e4a784e3790b3c75107a4140666d9faa1c39842e",
+    "test_sha256": "6e7557d2419c137aa59ac3eb09b36faf5b06a5ee1eb081a8508c4e0bcc2647dc"
+  },
+  "frozen_scientific_field_hashes": {
+    "arms": "ededa78e722b1535345e0acc3abd6d882a9d2ab11822e022e6ccaf1665d91144",
+    "selection": "b774bff8a8e717a5d679d73119f024da366be7759c2e0f72149be49f559670bf",
+    "truth_use": "a8cf9c3aea61e4cde5021164b69ce70791a7e09ca67249865f9371825c7e1036",
+    "primary_endpoint": "a256c6285992ee821824f7758deba83bfed1c8cf91cdb151302bceee22566661",
+    "secondary_endpoint": "744c52d40a77377b438514a38dedb5ca665670fc00472f00dd899495accd629b",
+    "decision_rule": "3640f742273144edc2749e10f53d4aadd120662875a771e786eb7efbb60284fb"
+  },
+  "repair": {
+    "tokenizer_boundary_cases": [
+      {
+        "unit_id": "P06-U027",
+        "step": 2,
+        "requested_verbatim_payload_tokens": 362,
+        "attainable_lower_prefix_tokens": 361,
+        "next_character_prefix_tokens": 363
+      },
+      {
+        "unit_id": "P06-U047",
+        "step": 2,
+        "requested_verbatim_payload_tokens": 326,
+        "attainable_lower_prefix_tokens": 325,
+        "next_character_prefix_tokens": 327
+      }
+    ],
+    "rule": "Use an exact target-token contiguous visible-evidence character prefix when it exists. Only when no such character prefix exists, permit exactly target-1 token and no larger shortfall. Existing semantically neutral suffix padding restores the matched final input budget.",
+    "full_prompt_parity_upgrade": "Match the final chat-template input token count across ECHO_EXTRACTIVE, VERBATIM_DUPLICATE, TOKEN_MATCHED_NEUTRAL, and DEDUP_WARNING rather than matching only the local note token count.",
+    "semantic_payload_rewritten": false,
+    "raw_visible_evidence_changed": false,
+    "arm_identity_changed": false,
+    "numeric_gate_changed": false,
+    "sample_changed": false,
+    "model_changed": false
+  },
+  "offline_preflight": {
+    "units": 96,
+    "unanswerable_units": 64,
+    "answerable_units": 32,
+    "documents": 50,
+    "pdf_hash_mismatches": 0,
+    "contexts_checked": 192,
+    "prompts_checked": 960,
+    "raw_lock_violations": 0,
+    "nonraw_full_prompt_parity_violations": 0,
+    "inputs_over_4096": 0,
+    "maximum_input_tokens": 3364,
+    "one_token_verbatim_fallbacks": 2,
+    "repaired_plan_canonical_sha256": "f7c1b8cce177a0efff84cfcf404ef436cf89ead1648548bcd6d633aa3c80a621",
+    "unit_tests": "6/6 PASS"
+  },
+  "independent_review": {
+    "requested_model": "doubao-seed-2.1-turbo",
+    "resolved_model": "doubao-seed-2-1-turbo-260628",
+    "response_id": "resp_02178690849139276e706cca72a7c4abc35179fe35310d812b73c",
+    "response_sha256": "fa2a93de59aea5336a760903e7eff7ca84a1d3c1f7d36e7ce3e83b61bb7cedb9",
+    "verdict": "CLEAR_FOR_EXECUTION",
+    "same_scientific_object": true,
+    "unit_arm_gate_identity_preserved": true,
+    "outcome_blind_repair": true,
+    "full_prompt_parity_strengthens_control": true,
+    "one_token_fallback_nuisance_only": true,
+    "new_information_advantage_created": false,
+    "hidden_tuning_detected": false,
+    "blockers": [],
+    "required_changes": [],
+    "concise_reason": "Nuisance-only operational tokenizer repair preserves all frozen scientific fields, arm/selection/truth/decision rule hashes, and gate identity. Outcome-blind, strengthens prompt parity control, with only 2 minimal neutral one-token fallbacks; no new info or tuning detected."
+  },
+  "failed_reviewer_attempts": [
+    {
+      "model": "glm-5.3",
+      "status": "ZERO_USABLE_REVIEW_INVALID_THINKING_PARAMETER",
+      "scientific_effect": false
+    },
+    {
+      "model": "glm-5.3",
+      "status": "ZERO_USABLE_REVIEW_OUTPUT_LENGTH_CEILING",
+      "scientific_effect": false
+    }
+  ],
+  "authority": {
+    "bounded_f0_execution_clear": true,
+    "paper_problem_authorized": false,
+    "method_authorized": false,
+    "p0_authorized": false,
+    "full_experiment_authorized": false,
+    "automatic_gpu_authority": false
+  }
+}

@@ -7,8 +7,10 @@ from research_pipeline.paper_first_evidence_echo_f0 import (
     ARMS,
     UNANSWERABLE_TARGET,
     _arm_note_drafts,
+    _verbatim_payload_prefix,
     analyze_rows,
     arm_note,
+    render_arm_prompts,
     select_units,
 )
 
@@ -21,8 +23,31 @@ class FakeTokenizer:
     def decode(self, ids, skip_special_tokens=True):
         return "".join(chr(int(i)) for i in ids)
 
+    def apply_chat_template(self, messages, tokenize=False, add_generation_prompt=True):
+        return "".join(str(row.get("content") or "") for row in messages) + ("<assistant>" if add_generation_prompt else "")
+
+
+class JumpTokenizer(FakeTokenizer):
+    def encode(self, text, add_special_tokens=False):
+        n = len(str(text))
+        # No standalone prefix has exactly 10 tokens: the count jumps 9 -> 11.
+        return list(range(n if n < 10 else n + 1))
+
 
 class EvidenceEchoF0Test(unittest.TestCase):
+    def test_verbatim_prefix_allows_only_one_token_boundary_shortfall(self) -> None:
+        prefix, n = _verbatim_payload_prefix(JumpTokenizer(), "abcdefghijklmnop", 10)
+        self.assertEqual(9, n)
+        self.assertEqual("abcdefghi", prefix)
+
+    def test_nonraw_arms_are_exactly_full_prompt_token_matched(self) -> None:
+        tok = FakeTokenizer()
+        pages = ["alpha beta gamma " * 200, "target evidence delta " * 200, "other page " * 200]
+        rendered = render_arm_prompts(tok, "which target?", pages, [1, 2, 3], 1)
+        full = {rendered[arm][3] for arm in ARMS if arm != "RAW_ONLY"}
+        self.assertEqual(1, len(full))
+        self.assertTrue(all(rendered[arm][0].startswith("You are a document agent") for arm in ARMS))
+
     def test_nonraw_arms_are_exactly_note_token_matched(self) -> None:
         tok = FakeTokenizer()
         pages = ["alpha beta gamma " * 200, "target evidence delta " * 200, "other page " * 200]

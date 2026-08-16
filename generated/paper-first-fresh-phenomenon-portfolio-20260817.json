@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T18:41:58+00:00",
+  "generated_at": "2026-08-16T19:32:16+00:00",
   "status": "ACTIVE_F0_EXISTS",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -8,6 +8,7 @@
     "one_active_f0_slot_max": 1,
     "active_f0_requires_provenance_audited_substrate": true,
     "active_f0_requires_frozen_same_information_falsifier": true,
+    "preexecution_operationalization_repair_requires_hash_chain_and_independent_review": true,
     "source_only_candidates_cannot_consume_experiment_slot": true,
     "support_unavailable_is_hold_not_scientific_failure": true,
     "positive_f0_does_not_grant_problem_gate_or_paper_design": true,
@@ -166,7 +167,12 @@
     },
     "evidence_echo_f0_harness": {
       "path": "research_pipeline/paper_first_evidence_echo_f0.py",
-      "sha256": "8f3b04d09c4101335434fa7a8a50bba965ab95ce244cf24c5fe9e53ba6feadf6"
+      "sha256": "f64ae7c42f5e02b2f18abd67e4a784e3790b3c75107a4140666d9faa1c39842e"
+    },
+    "evidence_echo_f0_operationalization_repair": {
+      "path": "generated/paper-first-evidence-echo-f0-operationalization-repair-20260817.json",
+      "sha256": "8965c54594356a87e642ebe3cc4cd76eb899ece5e6436eb96f097d09473aad30",
+      "review_verdict": "CLEAR_FOR_EXECUTION"
     },
     "primary_state": {
       "path": "generated/paper-first-primary-evidence-state.json",
