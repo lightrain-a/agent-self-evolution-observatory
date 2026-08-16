@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "STRI-SKILLRL-FIXED-TASK-DYNAMIC-P0D-20260816",
+  "artifact_kind": "pre-outcome-representation-audit",
+  "author_repo_commit": "8e66726ed866a4e0a7f053586a41022798192e6c",
+  "released_task_descriptions": 223,
+  "top_k_general": 6,
+  "arms": {
+    "pristine": {
+      "bank": "released pristine skill bank"
+    },
+    "displacement_clone": {
+      "operation": "append exact-content gen_001 with fresh dynamic id dyn_001",
+      "prompt_changed_rows": 223,
+      "unique_semantic_set_changed_rows": 223,
+      "unique_general_count_reduced_rows": 223
+    },
+    "identity_placebo": {
+      "operation": "append exact-content gen_006 with fresh dynamic id dyn_006",
+      "prompt_changed_rows": 223,
+      "unique_semantic_set_changed_rows": 0,
+      "unique_general_count_reduced_rows": 0
+    },
+    "exact_quotient_repair": {
+      "source_arm": "displacement_clone",
+      "operation": "author candidate order dynamic+static, collapse exact semantic_key duplicates before filling top_k=6",
+      "semantic_set_restored_rows": 223,
+      "formatted_memory_prompt_byte_identical_to_pristine_rows": 223
+    }
+  },
+  "selection_reads_environment_outcomes": false,
+  "audit_reads_model_outputs": false,
+  "scientific_authority": false,
+  "prior_asset_first_result_sha256": "4404e4254b5ca38de3c3f6be85fb6c98cfb619b079b1369ce9a90f1fd6078b03"
+}

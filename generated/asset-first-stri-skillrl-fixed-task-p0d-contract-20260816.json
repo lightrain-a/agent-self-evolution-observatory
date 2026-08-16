@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "experiment_id": "STRI-SKILLRL-FIXED-TASK-DYNAMIC-P0D-20260816",
+  "artifact_kind": "bounded-fixed-task-dynamic-falsifier-contract",
+  "status": "FROZEN_PENDING_INDEPENDENT_REVIEW",
+  "scientific_authority": false,
+  "scientific_role": "C4 evidence bridge only: test whether already-demonstrated SkillRL control-plane representation sensitivity propagates to final ALFWorld success under a fixed policy. This exact-clone experiment is not the paper novelty and cannot establish SQC superiority or partial-overlap dynamic behavior.",
+  "frozen_prediction": "A fresh-ID exact clone that mechanically displaces one unique general-skill semantic content under the released top_k=6 controller will change final-task success on a fixed ALFWorld panel more than an equally fresh-ID identity placebo whose prompt changes but unique semantic set is unchanged; exact-semantic quotienting of the treatment arm will restore pristine downstream outcomes.",
+  "strongest_reduction": "The observed effect is only generic prompt/order/duplicate-context perturbation or stochastic decoding noise. The gen_006 identity-placebo controls fresh-ID/prompt perturbation without semantic-set change, and the quotient arm restores the pristine formatted memory prompt byte-for-byte while preserving the same model, tasks and budget.",
+  "author_asset": {
+    "repo": "SkillRL",
+    "commit": "8e66726ed866a4e0a7f053586a41022798192e6c",
+    "skills_only_memory_sha256": "ba663c6d94fa35ac6ca81cafbd39196c3a29c68254a2e2469122d9ce67d01e64",
+    "alfworld_prompt_sha256": "063bd5d629694d459f77c1f5cabec704e62ca1e5c9b58589ccfb5e571e65753e",
+    "projection_sha256": "e794d1217d613ef4b550cfe4bfd0b39b4deb10d47493f31f78aef7b5ebf6dd98",
+    "env_manager_sha256": "243ef4e511dc797a544646bfef98d384ea6319c263bc4457fd5464578c6a2f86",
+    "skillbank_sha256": "e8a953beac1809591fadf0d3509db5dea6e66b0fb56ddb573cf30e6d8879e909",
+    "released_memories_sha256": "574738bbf6666182ff7faf5e60f454978f5081fe2e854b4ee41cb780d8e992df",
+    "run_script_sha256": "480a9189d776a2ac68996d29730f79fdb421e00903ff8ae3afc170a6b827a106",
+    "alfworld_config_sha256": "a33f87ab43253ea602f93c9a0b176771a8ae16a34cd953130e45fc03700f1f49"
+  },
+  "model": {
+    "repo": "Jianwen/Alfworld-7B-SFT",
+    "revision": "ba9c962eef80a49fc63a94c9728209a36057c671",
+    "subdir": "checkpoint-140",
+    "architecture": "Qwen2ForCausalLM",
+    "parameters": 7615616512,
+    "weight_bytes": 15231233024,
+    "role": "author-released SFT warm-start explicitly used by the SkillRL RL-with-SkillBank recipe; do not describe as final RL checkpoint"
+  },
+  "representation_audit": {
+    "path": "generated/asset-first-stri-skillrl-fixed-task-p0d-representation-audit-20260816.json",
+    "sha256": "00bc3acdf79fe59460b1908d455f72cf93394fc975b63d4c5a48d659aa16c076",
+    "required_before_execution": {
+      "treatment_unique_set_changed": "223/223",
+      "placebo_unique_set_changed": "0/223",
+      "quotient_prompt_restored": "223/223"
+    }
+  },
+  "task_panel": {
+    "path": "generated/asset-first-stri-skillrl-fixed-task-p0d-panel-20260816.json",
+    "sha256": "e1d6740cea30328c283f3658aa982631d8f2f2207f6806692dd47c2a2a3688b8",
+    "split": "valid_unseen",
+    "families": [
+      "pick_and_place_simple",
+      "look_at_obj_in_light",
+      "pick_clean_then_place_in_recep",
+      "pick_heat_then_place_in_recep",
+      "pick_cool_then_place_in_recep",
+      "pick_two_obj_and_place"
+    ],
+    "local_tasks": 12,
+    "sealed_confirmation_tasks": 12,
+    "selection_outcome_blind": true,
+    "confirmation_locked_until_local_go": true
+  },
+  "arms": [
+    {
+      "id": "A_pristine",
+      "bank": "released pristine"
+    },
+    {
+      "id": "B_displacement_clone",
+      "bank": "released + exact-content gen_001 as fresh dyn_001"
+    },
+    {
+      "id": "C_identity_placebo",
+      "bank": "released + exact-content gen_006 as fresh dyn_006"
+    },
+    {
+      "id": "D_exact_quotient",
+      "bank": "same as B, but collapse exact semantic_key duplicates while filling exactly six unique general contents; formatted memory prompt must equal A byte-for-byte for every task"
+    }
+  ],
+  "execution": {
+    "environment": "SkillRL first-party AlfredTWEnv / valid_unseen",
+    "max_steps": 50,
+    "domain_randomization": false,
+    "general_top_k": 6,
+    "task_specific_mode": "released template mode",
+    "memory_injection": "author ALFWORLD_TEMPLATE_WITH_MEMORY from step 2; init step has no memory",
+    "common_prefix": "for each task×seed, generate one shared step-1 response from the identical init prompt, then reset/replay that same projected action into all four arms; branch only from step 2",
+    "prompt_max_tokens": 4096,
+    "prompt_overflow": "fail closed",
+    "response_max_tokens": 512,
+    "decoding": {
+      "do_sample": true,
+      "temperature": 0.4,
+      "top_p": 0.8,
+      "top_k": 20,
+      "repetition_penalty": 1.05,
+      "seeds": [
+        2026081601,
+        2026081602
+      ]
+    },
+    "truth": "ALFWorld won/success only; invalid action is recorded from released projection and is not a truth substitute"
+  },
+  "local_p0_unit": "one task × decoding seed, paired across all four arms; 12 tasks × 2 seeds = 24 paired units, 96 arm-episodes",
+  "qualification": {
+    "all_24_paired_units_complete": true,
+    "all_four_arms_same_model_task_seed_step_cap": true,
+    "common_prefix_replay_exact": true,
+    "treatment_semantic_displacement_all_units": true,
+    "placebo_semantic_set_unchanged_all_units": true,
+    "quotient_memory_prompt_byte_identical_all_units": true,
+    "pristine_success_min": 4,
+    "pristine_success_max": 20,
+    "reason": "avoid floor/ceiling; qualification failure is inconclusive, not negative"
+  },
+  "frozen_metrics": {
+    "paired_final_success": "won",
+    "paired_success_disagreement": "A vs each arm",
+    "mcnemar_exact_two_sided": "B vs A",
+    "family_replicated_flip_count": "number of task families with >=1 B-vs-A success flip across paired units"
+  },
+  "decision": {
+    "GO_C4_FIXED_POLICY_DOWNSTREAM_EVIDENCE": {
+      "B_vs_A_mcnemar_p_lt": 0.05,
+      "abs_success_rate_B_minus_A_min": 0.125,
+      "B_vs_A_disagreement_minus_C_vs_A_min": 0.125,
+      "D_vs_A_disagreement_max": 0.05,
+      "abs_success_rate_D_minus_A_max": 0.05,
+      "family_replicated_flip_count_min": 2
+    },
+    "STOP_FIXED_POLICY_DYNAMIC_BRIDGE": {
+      "condition": "qualified run, B-vs-A is not significant and B-vs-A disagreement is within 0.05 of C-vs-A, with D-vs-A <=0.05; then exact-clone SkillRL downstream propagation is not supported under this local contract"
+    },
+    "INCONCLUSIVE": "qualification/headroom fails, quotient no longer restores pristine prompt, task/seed/arm missing, prompt overflow, runtime drift, or neither GO nor STOP conditions hold"
+  },
+  "claim_boundary": {
+    "on_go": "supports only C4 fixed-policy downstream representation sensitivity on SkillRL exact-clone subclass; C2 partial-overlap theorem remains separate novelty evidence; C3/SQC method superiority remains locked",
+    "on_stop": "does not invalidate C1/C2 STRI; it only rejects this fixed-policy exact-clone downstream bridge",
+    "no_second_backbone_rescue": true,
+    "no_prompt_or_threshold_tuning_after_outcomes": true
+  },
+  "budget": {
+    "model_download_gib": 14.2,
+    "local_tasks": 12,
+    "seeds": 2,
+    "arms": 4,
+    "arm_episodes": 96,
+    "max_steps_each": 50,
+    "full_confirmation_locked": true,
+    "gpu_count_max": 2,
+    "gpu_hours_max": 2.0
+  },
+  "authority": {
+    "paper_claim_C4": false,
+    "method": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}
