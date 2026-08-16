@@ -157,6 +157,8 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertTrue(policy["positive_residual_requires_prospective_pre_outcome_prediction"])
         self.assertTrue(policy["positive_residual_outcome_leakage_forbidden"])
         self.assertTrue(policy["positive_residual_direct_seed_required_in_unexplained_boundary_shard"])
+        self.assertTrue(policy["inactive_search_assets_hidden_from_generator"])
+        self.assertTrue(policy["inactive_search_assets_remain_provenance_archived"])
         self.assertTrue(policy["temporal_exposure_relabeling_after_longitudinal_reduction_forbidden"])
         self.assertTrue(policy["treatment_semantics_seed_requires_executable_version_change"])
         self.assertTrue(policy["treatment_semantics_seed_requires_versioned_treatment_reduction_first"])

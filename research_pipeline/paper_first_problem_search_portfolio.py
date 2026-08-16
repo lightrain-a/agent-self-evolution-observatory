@@ -137,7 +137,7 @@ def _evidence_payload(records):
 def _inversion_asset_records(dead_end_memory):
     records=[];seen=set()
     for row in (dead_end_memory or {}).get("inversion_asset_evidence") or []:
-        if not isinstance(row,dict) or row.get("scientific_authority") is not False:continue
+        if not isinstance(row,dict) or row.get("scientific_authority") is not False or row.get("search_active") is False:continue
         ref=str(row.get("asset_ref") or "").strip();sha=str(row.get("source_sha256") or "").strip().lower();url=str(row.get("primary_url") or "").strip();title=str(row.get("title") or "").strip()
         facts=[" ".join(str(value or "").split()) for value in row.get("empirical_facts") or [] if str(value or "").strip()]
         if not ref.startswith("first-party-asset:") or ref in seen or not re.fullmatch(r"[0-9a-f]{64}",sha) or not url.startswith("https://") or not title or not facts:continue
@@ -168,6 +168,28 @@ def _positive_residual_asset_records(dead_end_memory):
 def _search_asset_records(dead_end_memory):
     return list(_inversion_asset_records(dead_end_memory))+list(_positive_residual_asset_records(dead_end_memory))
 
+def _prompt_dead_end_memory(dead_end_memory):
+    """Project persistent memory into a search-safe prompt view.
+
+    Archived search assets remain in the canonical memory for provenance, but their
+    direct inversion seeds and asset payloads must not be visible to generators.
+    Keep the dead-end statement/reopen boundary so the model still avoids re-entry.
+    """
+    memory=json.loads(json.dumps(dead_end_memory or {},ensure_ascii=False))
+    memory["inversion_asset_evidence"]=[row for row in memory.get("inversion_asset_evidence") or [] if not isinstance(row,dict) or row.get("search_active") is not False]
+    memory["positive_residual_asset_evidence"]=[row for row in memory.get("positive_residual_asset_evidence") or [] if not isinstance(row,dict) or row.get("search_active") is True]
+    for row in memory.get("blocked_objects") or []:
+        if not isinstance(row,dict):continue
+        asset=row.get("opposite_search_asset_evidence") or {}
+        if not isinstance(asset,dict) or not asset or asset.get("search_active") is not False:continue
+        row["opposite_search_asset_evidence"]={"asset_ref":str(asset.get("asset_ref") or ""),"search_active":False,"scientific_authority":False}
+        counter=row.get("counter_explanation") or {}
+        if isinstance(counter,dict):
+            counter=dict(counter);counter["opposite_search_seed"]="ARCHIVED_INACTIVE_SEARCH_ASSET";row["counter_explanation"]=counter
+    memory["inversion_asset_evidence_count"]=len(memory["inversion_asset_evidence"])
+    memory["positive_residual_asset_evidence_count"]=len(memory["positive_residual_asset_evidence"])
+    return memory
+
 def _positive_residual_priors(dead_end_memory,limit=6):
     priors=[]
     for row in (dead_end_memory or {}).get("positive_residual_asset_evidence") or []:
@@ -181,6 +203,8 @@ def _opposite_search_priors(dead_end_memory,limit=8):
     priors=[]
     for row in (dead_end_memory or {}).get("blocked_objects") or []:
         if not isinstance(row,dict) or row.get("dead_end_certified") is not True:continue
+        asset=row.get("opposite_search_asset_evidence") or {}
+        if isinstance(asset,dict) and asset and asset.get("search_active") is False:continue
         counter=row.get("counter_explanation") or {}
         if not isinstance(counter,dict):continue
         principle=str(counter.get("opposite_principle") or "").strip();seed=str(counter.get("opposite_search_seed") or "").strip()
@@ -221,7 +245,7 @@ def _expansion_prompt(lane,records,count,dead_end_memory=None):
         f"Use two grounded evidence items and at least {LANE_DISTINCT_SOURCE_MINIMUM[lane]} distinct primary source ref(s), following the lane contract; obey evidence roles. Claims must be supported by supplied primary text. "
         "Vary problem families and structural signatures; avoid paraphrase-only variants. "
         "For CROSS_DOMAIN_STRUCTURAL_ANALOGY, the external domain is only an analogy prior and never novelty by itself; state the Agent-specific structural constraint. "
-        f"Analogy priors={json.dumps(analogy,ensure_ascii=False)}. FIRST_PARTY_INVERSION_ASSETS={json.dumps(_evidence_payload(assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_ASSETS={json.dumps(_evidence_payload(positive_assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. CERTIFIED DEAD-END INVERSION PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. DEAD-END SEARCH MEMORY (search-control only, never scientific authority)={json.dumps(dead_end_memory or {},ensure_ascii=False,separators=(',',':'))}. VERIFIED PRIMARY EVIDENCE={json.dumps(_evidence_payload(records),ensure_ascii=False,separators=(',',':'))}. "
+        f"Analogy priors={json.dumps(analogy,ensure_ascii=False)}. FIRST_PARTY_INVERSION_ASSETS={json.dumps(_evidence_payload(assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_ASSETS={json.dumps(_evidence_payload(positive_assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. CERTIFIED DEAD-END INVERSION PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. DEAD-END SEARCH MEMORY (search-control only, never scientific authority)={json.dumps(_prompt_dead_end_memory(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. VERIFIED PRIMARY EVIDENCE={json.dumps(_evidence_payload(records),ensure_ascii=False,separators=(',',':'))}. "
         f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 
@@ -268,7 +292,7 @@ def _formulation_prompt(branches,registry,dead_end_memory=None):
         "Inspect branch-local closest_work_candidates. A duplicate/collision or VALID_HARD_VETO branch must be returned in rejected rather than silently omitted. If a branch follows a certified dead-end inversion prior, explicitly verify that fresh primary evidence grounds the opposite principle and that the formulation satisfies the recorded reopen condition; otherwise reject or hold it rather than rewarding inversion wording. When first-party code directly determines the dependency graph, the graph fact itself is not an identifiability contribution: require a downstream decision/utility/regret consequence and explicitly test generic distribution-shift, stale-supervisor, online-adaptation, or alternating-optimization reductions before keeping the branch. If a branch follows a POSITIVE_RESIDUAL_ASSET, require one prospective pre-outcome prediction that jointly explains the surviving phenomenon and every named failed mechanism; reject endpoint-leaking features, post-hoc full-trajectory geometry, or a renamed K-step mediator unless independent pre-outcome evidence distinguishes it from the failed first-action mechanism. "
         "Prefer a residual whose cheapest falsifier is an actual controlled comparison we can materialize quickly from released units, first-party code, or an existing provenance-audited substrate. Do not claim such support exists unless the supplied evidence establishes it; missing support should be an explicit preflight dependency, not a fabricated PASS. "
         "Preserve the inherited typed evidence/lane contract and source refs. "
-        f"BRANCHES={json.dumps(compact,ensure_ascii=False,separators=(',',':'))}. DEAD_END_MEMORY={json.dumps(dead_end_memory or {},ensure_ascii=False,separators=(',',':'))}. CERTIFIED_DEAD_END_INVERSION_PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. PRIMARY_EVIDENCE={json.dumps(evidence,ensure_ascii=False,separators=(',',':'))}. REDUCTION_LEDGER={json.dumps(reduction_pattern_audit(),ensure_ascii=False,separators=(',',':'))}. "
+        f"BRANCHES={json.dumps(compact,ensure_ascii=False,separators=(',',':'))}. DEAD_END_MEMORY={json.dumps(_prompt_dead_end_memory(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. CERTIFIED_DEAD_END_INVERSION_PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. PRIMARY_EVIDENCE={json.dumps(evidence,ensure_ascii=False,separators=(',',':'))}. REDUCTION_LEDGER={json.dumps(reduction_pattern_audit(),ensure_ascii=False,separators=(',',':'))}. "
         f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T15:23:47+00:00",
+  "generated_at": "2026-08-16T15:46:52+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T15:23:47+00:00",
+    "generated_at": "2026-08-16T15:46:52+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -421,6 +421,10 @@
             "SkillEvo reconstructs per-skill replay pools from online and offline provenance, binds them to lineage_id and skill_id/version history, and persists replay, judgment, promotion, and provenance artifacts."
           ],
           "source_readjudication_artifact": "generated/p03-autoskill-context-conditioned-uptake-principle-readjudication-20260816.json",
+          "search_active": false,
+          "search_closed_by": "generated/p03-autoskill-matched-uptake-reopen-adjudication-20260816.json",
+          "search_closed_by_sha256": "502ecfdcbfc0aaa364d5ac013fa13735490d42035e4af8fa9762864e335aee10",
+          "search_closed_reason": "The preregistered outcome-blind held-out screen produced 9/9 execution-valid units, 0 harmful units, 0 same-uptake/different-harm pairs, and 0 harm-without-uptake units. This closes only the current matched-uptake inversion asset; the original P19 positive effect remains archived evidence.",
           "scientific_authority": false
         },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
@@ -597,6 +601,10 @@
             "The released adaptive controller gates on metric maturity and metric-graded skill train progress while eval_locked remains report-only for the metric side."
           ],
           "source_readjudication_artifact": "generated/shadow-v4-reciprocal-coupling-principle-readjudication-20260816.json",
+          "search_active": true,
+          "search_closed_by": "",
+          "search_closed_by_sha256": "",
+          "search_closed_reason": "",
           "scientific_authority": false
         },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
@@ -776,6 +784,10 @@
             "Skill phases are graded by the current evolved metric through make_expr_grader, while the skill-phase outputs are not inserted into the dev_items or train objects consumed by later metric phases; the released coupling is metric-to-skill without a reciprocal skill-output-to-metric-data path."
           ],
           "source_readjudication_artifact": "generated/shadow-p01-locked-set-causal-nopath-principle-readjudication-20260816.json",
+          "search_active": true,
+          "search_closed_by": "",
+          "search_closed_by_sha256": "",
+          "search_closed_reason": "",
           "scientific_authority": false
         },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
@@ -838,6 +850,10 @@
           "SkillEvo reconstructs per-skill replay pools from online and offline provenance, binds them to lineage_id and skill_id/version history, and persists replay, judgment, promotion, and provenance artifacts."
         ],
         "source_readjudication_artifact": "generated/p03-autoskill-context-conditioned-uptake-principle-readjudication-20260816.json",
+        "search_active": false,
+        "search_closed_by": "generated/p03-autoskill-matched-uptake-reopen-adjudication-20260816.json",
+        "search_closed_by_sha256": "502ecfdcbfc0aaa364d5ac013fa13735490d42035e4af8fa9762864e335aee10",
+        "search_closed_reason": "The preregistered outcome-blind held-out screen produced 9/9 execution-valid units, 0 harmful units, 0 same-uptake/different-harm pairs, and 0 harm-without-uptake units. This closes only the current matched-uptake inversion asset; the original P19 positive effect remains archived evidence.",
         "scientific_authority": false
       },
       {
@@ -854,10 +870,15 @@
           "Skill phases are graded by the current evolved metric through make_expr_grader, while the skill-phase outputs are not inserted into the dev_items or train objects consumed by later metric phases; the released coupling is metric-to-skill without a reciprocal skill-output-to-metric-data path."
         ],
         "source_readjudication_artifact": "generated/shadow-p01-locked-set-causal-nopath-principle-readjudication-20260816.json",
+        "search_active": true,
+        "search_closed_by": "",
+        "search_closed_by_sha256": "",
+        "search_closed_reason": "",
         "scientific_authority": false
       }
     ],
     "inversion_asset_evidence_count": 2,
+    "inversion_asset_search_active_count": 1,
     "positive_residual_asset_evidence": [
       {
         "asset_ref": "positive-residual-asset:memory-effect-transport-b9-c2-20260816",

@@ -309,6 +309,10 @@ def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict
                     "commit": commit,
                     "empirical_facts": facts[:8],
                     "source_readjudication_artifact": artifact_ref,
+                    "search_active": asset.get("search_active") is not False,
+                    "search_closed_by": str(asset.get("search_closed_by") or "").strip(),
+                    "search_closed_by_sha256": str(asset.get("search_closed_by_sha256") or "").strip().lower(),
+                    "search_closed_reason": str(asset.get("search_closed_reason") or "").strip(),
                     "scientific_authority": False,
                 }
         rows.append({
@@ -542,6 +546,7 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
             asset_by_ref[str(asset["asset_ref"])] = dict(asset)
     memory["inversion_asset_evidence"] = [asset_by_ref[key] for key in sorted(asset_by_ref)]
     memory["inversion_asset_evidence_count"] = len(asset_by_ref)
+    memory["inversion_asset_search_active_count"] = sum(row.get("search_active") is not False for row in memory["inversion_asset_evidence"])
     positive_registry = build_positive_residual_asset_registry()
     positive_assets = [dict(row) for row in positive_registry.get("assets") or [] if isinstance(row, dict) and row.get("scientific_authority") is False]
     memory["positive_residual_asset_evidence"] = positive_assets

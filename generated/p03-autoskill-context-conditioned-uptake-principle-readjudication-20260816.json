@@ -81,6 +81,10 @@
       "SkillEvo reconstructs per-skill replay pools from online and offline provenance, binds them to lineage_id and skill_id/version history, and persists replay, judgment, promotion, and provenance artifacts."
     ],
     "search_use_only": true,
+    "search_active": false,
+    "search_closed_by": "generated/p03-autoskill-matched-uptake-reopen-adjudication-20260816.json",
+    "search_closed_by_sha256": "502ecfdcbfc0aaa364d5ac013fa13735490d42035e4af8fa9762864e335aee10",
+    "search_closed_reason": "The preregistered outcome-blind held-out screen produced 9/9 execution-valid units, 0 harmful units, 0 same-uptake/different-harm pairs, and 0 harm-without-uptake units. This closes only the current matched-uptake inversion asset; the original P19 positive effect remains archived evidence.",
     "scientific_authority": false
   },
   "authority": {

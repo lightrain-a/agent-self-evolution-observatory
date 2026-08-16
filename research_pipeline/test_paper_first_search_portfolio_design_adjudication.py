@@ -55,6 +55,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertIn("SP-15", {row["source_candidate_id"] for row in memory["hold_objects"]})
         self.assertTrue(all(row["dead_end_certified"] is True and row.get("counter_explanation") for row in memory["blocked_objects"]))
         self.assertEqual(memory.get("inversion_asset_evidence_count"),len(memory.get("inversion_asset_evidence") or []))
+        self.assertEqual(memory.get("inversion_asset_search_active_count"),1)
         p01_assets=[row for row in memory.get("inversion_asset_evidence") or [] if str(row.get("asset_ref") or "").startswith("first-party-asset:double-ratchet@")]
         self.assertEqual(len(p01_assets),1)
         self.assertEqual(p01_assets[0]["source_sha256"],"2e996c0b543c03a1f6c68cb06aaa26498d52b36f0775b7b36cf2025783f68ab0")
@@ -62,6 +63,8 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         autoskill_assets=[row for row in memory.get("inversion_asset_evidence") or [] if str(row.get("asset_ref") or "").startswith("first-party-asset:autoskill@")]
         self.assertEqual(len(autoskill_assets),1)
         self.assertEqual(autoskill_assets[0]["source_sha256"],"0d7553874390685344102cd9654a376a1f1e3e7d7490fa53b48f1f138f3f383b")
+        self.assertFalse(autoskill_assets[0]["search_active"])
+        self.assertEqual(autoskill_assets[0]["search_closed_by_sha256"],"502ecfdcbfc0aaa364d5ac013fa13735490d42035e4af8fa9762864e335aee10")
         self.assertFalse(autoskill_assets[0]["scientific_authority"])
         self.assertEqual(memory.get("positive_residual_asset_evidence_count"),len(memory.get("positive_residual_asset_evidence") or []))
         positive=[row for row in memory.get("positive_residual_asset_evidence") or [] if str(row.get("asset_ref") or "").startswith("positive-residual-asset:memory-effect-transport-b9-c2")]
