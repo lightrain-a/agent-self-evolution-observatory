@@ -190,7 +190,22 @@ def _fresh_phenomenon_priors(records,limit=32,recent_days=45,dead_end_memory=Non
         ref=str(r.get("ref") or "");typed=r.get("typed_evidence") or {};facts=[x for x in r.get("empirical_facts") or [] if isinstance(x,dict) and str(x.get("text") or "").strip()]
         items=[]
         items.extend(("measured_failure",x) for x in typed.get("measured_failures") or [] if isinstance(x,dict) and str(x.get("text") or "").strip() and failure_cue.search(str(x.get("text") or "")))
-        items.extend(("boundary_observation",x) for x in typed.get("boundary_observations") or [] if isinstance(x,dict) and str(x.get("text") or "").strip())
+        boundary_protocol_only=re.compile(
+            r"(?:\bwe\s+(?:set|use)\b.{0,80}\b(?:threshold|temperature)\b|"
+            r"\bnot\s+applied\s+to\b.{0,80}\b(?:mini|benchmark|batch)\b|"
+            r"\billustrates?\s+(?:one\s+)?representative\s+failure\s+trace\b|"
+            r"\bcrosses?\s+the\s+evidence\s+threshold\s+on\s+its\s+second\b)",re.I)
+        items.extend(
+            ("boundary_observation",x)
+            for x in typed.get("boundary_observations") or []
+            if isinstance(x,dict)
+            and str(x.get("text") or "").strip()
+            and not boundary_protocol_only.search(str(x.get("text") or ""))
+            and (
+                failure_cue.search(str(x.get("text") or ""))
+                or (number.search(str(x.get("text") or "")) and contrast.search(str(x.get("text") or "")))
+            )
+        )
         items.extend(("quantitative_anomaly",x) for x in facts if number.search(str(x.get("text") or "")) and contrast.search(str(x.get("text") or "")))
         seen=set()
         for kind,item in items:

@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "ERSKILL-SKILL-ROUTER-ABLATION",
+  "title": "Large skill-evolution and router ablation drops do not identify a co-evolution interaction",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_erskill_effect_falsified": false,
+  "dead_end_scope": "The standalone claim that ERSkill's two largest ablation drops establish a new co-evolution cliff or nonseparable skill-router mechanism merely because removing skill evolution and replacing the learned router each reduces performance substantially.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2608.12720",
+    "closed_evidence_sha256": [
+      "e46954576b1c8919b29e880040f4399c47e46f97990ca62a90fb629ea88e20f8"
+    ],
+    "closure_scope": "the reported largest drops from w/o skill evolution and w/o router ablations only",
+    "scientific_authority": false
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The two ablations remove different ordinary resources and therefore do not identify an interaction. ERSkill's w/o-skill-evolution condition freezes the expert/action space at three seed retrieval skills, while w/o-router retains the skill system but replaces the trained query-dependent router with LLM-based skill selection. A large drop from reducing the available expert set and a large drop from degrading expert selection are both predicted by standard representation/action-set plus gating/routing decompositions. They do not imply a nonseparable co-evolution cliff. The paper's own evolution case study further reports that routed deploy accuracy can temporarily fall when higher-coverage skills replace older skills before the router adapts, then recover after subsequent router updates, which is the expected lag of a selector adapting to a changing expert set rather than evidence for a new causal primitive.",
+      "opposite_prediction": "With task/query information and evaluation fixed, performance is bounded jointly by the best utility available in the skill set and by the selector's regret relative to that best skill. Shrinking the skill set can lower oracle capability even under perfect routing; weakening the router can lower realized utility even with a strong skill set. Both marginal effects may be large without any interaction term. When the expert set changes, a temporarily stale router may underperform until retrained, an effect expressible by ordinary expert-selection, contextual routing, and nonstationary gating models.",
+      "opposite_principle": "Capability discovery and query-dependent routing are separable resources until a matched factorial test shows an interaction beyond expert-set quality plus selector regret; two large one-factor ablations are not evidence of co-evolutionary nonseparability.",
+      "opposite_search_seed": "Search only for a preregistered 2x2 or equivalent matched design that independently varies skill-set evolution and router adaptation while holding the final candidate skill contents, query information, rollout/evaluation budget, selection candidate set, and supervision information comparable. Require a non-additive held-out interaction or a prediction that same-information contextual routing / mixture-of-experts / nonstationary expert-selection models cannot express. Do not reopen from another pair of large component ablations or from transient router lag after the expert set changes.",
+      "scope": "ERSkill arXiv:2608.12720v1, especially Section 3.3 ablations and Section 3.5 skill-router evolution case study.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.12720",
+        "primary-fulltext:arXiv:2608.12720#sha256=018906026616cd95dfd028e348e45537d4a3f7a99d87b2ad56bde293ba05efb4"
+      ],
+      "alternative_explanations_ruled_out": [
+        "w/o skill evolution and w/o router are symmetric removals of the same variable: false; the first changes the available skill/action set and the second changes the selector while using a different selection mechanism.",
+        "The reported ablations estimate an interaction term: false; no factorial same-information interaction contrast is reported in the cited ablation statement.",
+        "Transient routed-performance degradation proves an unstable co-evolution mechanism: the paper explicitly explains it as deploy-frontier replacement preceding router adaptation, followed by recovery after subsequent updates.",
+        "Oracle capability and routed capability are the same object: ERSkill explicitly separates capability-frontier oracle value from router-facing routed deploy performance."
+      ],
+      "reopen_condition": "Reopen only with a preregistered matched factorial comparison that holds query/task distribution, final skill candidates/content, rollout and judge information, compute, and selector candidate set comparable while independently varying skill evolution and router adaptation, and shows a repeatable non-additive held-out interaction that same-information contextual routing, mixture-of-experts gating, selector-regret, and nonstationary expert-set models cannot express. Separate large ablation drops or router-lag anecdotes are insufficient."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "ERSkill does not work",
+      "skill evolution is unnecessary",
+      "routing is unnecessary",
+      "skill-router co-evolution cannot have interactions"
+    ],
+    "safe_claim": "ERSkill provides positive evidence that both expanding retrieval capability and learning query-dependent selection matter. The cited ablation result does not by itself identify a new co-evolution interaction because it removes two distinct resources in non-factorial conditions.",
+    "new_search_basin": "same-information-factorial-skill-router-interaction"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

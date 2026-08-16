@@ -11,7 +11,7 @@
   "fresh_phenomenon_closure": {
     "source_ref": "arXiv:2608.12743",
     "closed_evidence_sha256": [
-      "496c78e91a4649291fb57b46fbb9642f7cc73261ee1dbf91899e3920c6cc886b"
+      "1425c8815c403b618368164251577372c85038db035bb0988ceb652c5a79ad9c"
     ],
     "closure_scope": "high-TRS qualitative failure cases explicitly attributed by the primary paper to base-model visual-grounding limitations",
     "scientific_authority": false

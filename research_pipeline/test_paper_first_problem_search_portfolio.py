@@ -48,7 +48,7 @@ class SearchPortfolioTest(unittest.TestCase):
     def test_fresh_phenomenon_prior_uses_evidence_level_closure_without_blacklisting_source(self):
         boundary_sha="a"*64;failure_sha="b"*64;older_sha="c"*64
         records=[
-            {"ref":"arXiv:new-boundary","publication_date":"2026-08-13","title":"New boundary","typed_evidence":{"measured_failures":[{"text":"Utility collapses after a restrictive update.","text_sha256":failure_sha}],"boundary_observations":[{"text":"Reward jumps at K=32 and then plateaus.","text_sha256":boundary_sha}]},"empirical_facts":[{"text":"Quantitative sensitivity curve."}]},
+            {"ref":"arXiv:new-boundary","publication_date":"2026-08-13","title":"New boundary","typed_evidence":{"measured_failures":[{"text":"Utility collapses after a restrictive update.","text_sha256":failure_sha}],"boundary_observations":[{"text":"Reward rises from 0.56 at 16 tokens to 0.637 at K=32 and then plateaus.","text_sha256":boundary_sha}]},"empirical_facts":[{"text":"Quantitative sensitivity curve."}]},
             {"ref":"arXiv:new-no-anomaly","publication_date":"2026-08-13","title":"New but smooth","typed_evidence":{"measured_failures":[],"boundary_observations":[]},"empirical_facts":[{"text":"Performance improves."}]},
             {"ref":"arXiv:older-boundary","publication_date":"2026-08-12","title":"Older boundary","typed_evidence":{"measured_failures":[{"text":"The older method fails despite matched support.","text_sha256":older_sha}],"boundary_observations":[]},"empirical_facts":[]},
         ]
@@ -65,10 +65,24 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertIn("FRESH-PHENOMENON BOUNDARY-COVERAGE REQUIREMENT",prompt)
         self.assertIn("FRESH_PHENOMENON_TARGET",prompt)
         self.assertIn(boundary_sha,prompt)
-        self.assertIn("Reward jumps at K=32",prompt)
+        self.assertIn("Reward rises from 0.56",prompt)
         self.assertNotIn(failure_sha,prompt.split("FRESH_PHENOMENON_PRIORS=",1)[1].split(". CERTIFIED",1)[0])
         self.assertIn("strongest mature reduction",prompt)
         self.assertIn("independent truth",prompt)
+
+    def test_fresh_boundary_precision_excludes_protocol_rules_and_example_intros(self):
+        records=[
+            {"ref":"arXiv:protocol","publication_date":"2026-08-13","title":"Protocol","typed_evidence":{"measured_failures":[],"boundary_observations":[
+                {"text":"For batches of at least 20 readable posters, a blinded check may only reduce the score; it is not applied to the mini benchmark.","text_sha256":"a"*64},
+                {"text":"All components use temperature 0, and we set the security threshold to 0.5.","text_sha256":"b"*64},
+                {"text":"The box below illustrates one representative failure trace from the first evolution round.","text_sha256":"c"*64},
+            ]},"empirical_facts":[]},
+            {"ref":"arXiv:empirical","publication_date":"2026-08-13","title":"Empirical","typed_evidence":{"measured_failures":[],"boundary_observations":[
+                {"text":"Reward rises from 0.56 at 16 tokens to 0.637 at 32 tokens and then plateaus.","text_sha256":"d"*64},
+            ]},"empirical_facts":[]},
+        ]
+        priors=_fresh_phenomenon_priors(records)
+        self.assertEqual([row["phenomenon_id"] for row in priors],["d"*64])
 
     def test_provenance_bound_inversion_asset_becomes_primary_search_registry_record(self):
         memory={"inversion_asset_evidence":[{"asset_ref":"first-party-asset:demo@"+"a"*40,"title":"Author implementation","primary_url":"https://github.com/example/repo","source_sha256":"b"*64,"asset_manifest_artifact":"generated/demo.json","asset_manifest_file_sha256":"c"*64,"commit":"a"*40,"empirical_facts":["The released controller reuses the same evaluation signal in every selection round."],"scientific_authority":False}]}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "SHAPER-CROSS-LEVEL-SCALING-REVERSAL",
+  "title": "The reported cross-level scaling reversal disappears under matched local baselines",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_shaper_effect_falsified": false,
+  "dead_end_scope": "The standalone claim that SHAPER's VLABench table exhibits a sign reversal in the causal effect of MG-Select/VOTE when moving from direct VLA execution to the Seed Agent, inferred from the fact that scaled Seed-Agent scores exceed direct VLA scores while scaled VLA scores fall below direct VLA.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2608.11350",
+    "closed_evidence_sha256": [
+      "6e8df54284f449377617c456f14f43b8fb4c3c2c45968b3723e789c94523b34e"
+    ],
+    "closure_scope": "the claimed cross-level sign-reversal interpretation of MG-Select/VOTE versus the appropriate local unscaled baselines",
+    "scientific_authority": false
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "IMPOSSIBILITY_OR_INVARIANCE",
+    "counter_explanation": {
+      "type": "IMPOSSIBILITY_OR_INVARIANCE",
+      "statement": "There is no cross-level sign reversal in the scaling treatment effect once each scaled condition is compared with its matched unscaled baseline. At the VLA level, MG-Select changes success from 23.25 to 21.38 (-1.87 points) and VOTE from 23.25 to 22.00 (-1.25). At the Seed-Agent level, MG-Select changes 28.25 to 24.38 (-3.87) and VOTE changes 28.25 to 23.50 (-4.75). Both scaling operators are therefore harmful relative to their local baseline at both levels. The apparent reversal arises only by comparing the scaled Seed-Agent conditions against the lower direct-VLA baseline, thereby mixing the positive effect of introducing the Seed-Agent scaffold with the negative marginal effect of scaling.",
+      "opposite_prediction": "For any nested intervention comparison, the sign of the scaling effect must be computed conditionally within the same scaffold/execution regime. If the Seed-Agent scaffold raises the baseline while scaling lowers performance within that scaffold, the absolute scaled Seed-Agent score can remain above direct VLA without implying a positive scaling effect. A genuine cross-level sign reversal would require delta_scaling(VLA) and delta_scaling(Seed) to have opposite signs under matched local baselines; the reported table has both deltas negative.",
+      "opposite_principle": "Treatment-effect signs are comparator-relative: changing the baseline while changing the treatment confounds scaffold gain with scaling gain. Cross-level sign reversal requires opposite within-regime treatment contrasts, not crossed absolute scores.",
+      "opposite_search_seed": "Do not search for a scaling sign-reversal mechanism from this table. Reopen only with a preregistered matched factorial or paired comparison in which the scaling intervention is defined identically within each scaffold level and its local treatment contrasts have reproducibly opposite signs after matching candidate count, rollout budget, selection information, executor, and task split. Otherwise treat the result as scaling degradation in both regimes plus an independent positive scaffold effect.",
+      "scope": "SHAPER arXiv:2608.11350v1 VLABench Table 2: Direct VLA 23.25; VLA+MG-Select 21.38; VLA+VOTE 22.00; Seed Agent 28.25; Seed+MG-Select 24.38; Seed+VOTE 23.50.",
+      "same_information_or_scope_matched": true,
+      "proof_or_structural_witness": true,
+      "structural_witness": "The table itself supplies all four local counterfactual contrasts. Subtracting the unscaled baseline at each level gives negative deltas for both MG-Select and VOTE at both levels. No further experiment, model assumption, or statistical fit is needed to establish the absence of the proposed sign reversal in the reported aggregate results.",
+      "evidence_refs": [
+        "arXiv:2608.11350",
+        "primary-fulltext:arXiv:2608.11350#sha256=b03c9040d0bcc6148ceb8e89a4a0c5a635e88700179eba8b3a238ce90d7e5011",
+        "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260817-boundary-closure-v12-r1/expand-UNEXPLAINED_BOUNDARY-p16.json#sha256=27e946082a5339844e81226ab51cb365e8be94c397f8df0691e21f789a06be4b"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The Seed-Agent scaling effect is positive because 24.38/23.50 exceed direct VLA 23.25: this compares different scaffold states and attributes the Seed-Agent baseline improvement to scaling.",
+        "The cross-level comparison lacks a local Seed baseline: the paper reports the unscaled Seed Agent at 28.25, so the matched marginal scaling effect is directly computable.",
+        "The result might become a sign reversal after statistical modeling: aggregate point estimates already have the same negative direction in both matched contrasts; statistical uncertainty may change confidence, not convert the reported point-estimate pattern into the claimed crossed comparator effect.",
+        "Artifact evolution and test-time scaling are equivalent treatments: they are distinct interventions; the paper's strong artifact-evolution gains remain valid and are not refuted by this comparator correction."
+      ],
+      "reopen_condition": "Reopen only if new primary or first-party evidence supplies a matched factorial/paired test where MG-Select/VOTE or an equivalent scaling intervention is held definitionally fixed across scaffold levels, all local unscaled controls are present, and the within-level scaling deltas have opposite reproducible signs under matched candidate count, rollout/compute budget, task split, executor, and selection information. Crossed absolute scores are insufficient."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "test-time scaling never helps embodied agents",
+      "SHAPER's artifact evolution result is invalid",
+      "Seed Agent provides no benefit",
+      "MG-Select and VOTE are universally harmful"
+    ],
+    "safe_claim": "The SHAPER table shows scaling degradation relative to the local baseline at both the VLA and Seed-Agent levels, while the Seed-Agent scaffold itself improves the baseline. The proposed cross-level scaling sign reversal is therefore a comparator artifact, not a new mechanism.",
+    "new_search_basin": "matched-factorial-scaling-by-scaffold-interaction"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}
