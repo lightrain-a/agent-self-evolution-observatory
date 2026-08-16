@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T18:33:04+00:00",
+  "generated_at": "2026-08-16T18:42:53+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6129,12 +6129,12 @@
     }
   },
   "summary": {
-    "papers": 334,
+    "papers": 281,
     "queries": 26,
     "ideas": 29,
     "passed_ideas": 26,
-    "evidence_nodes": 582,
-    "evidence_edges": 958,
+    "evidence_nodes": 500,
+    "evidence_edges": 612,
     "research_capabilities": 9,
     "literature_retrieval_modes": 4,
     "literature_benchmark_status": "spec-ready-not-yet-scored",
@@ -6142,7 +6142,7 @@
     "evidence_verifier_calibration_status": "spec-ready-not-yet-calibrated",
     "methodology_cross_cutting_controls": 3,
     "methodology_primary_components_added": 0,
-    "collision_flags": 87,
+    "collision_flags": 70,
     "lineage_edges": 258,
     "pilot_results": 0,
     "pre_p0_audited": 4,
@@ -6199,29 +6199,29 @@
     "paper_first_object_candidate_activation_authorized": 0,
     "paper_first_problem_gate_fields": 17,
     "paper_first_problem_gate_saturation_patterns": 34,
-    "paper_first_problem_generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
-    "paper_first_problem_generator_generated": 1,
+    "paper_first_problem_generator_status": "GENERATED_ZERO_CANDIDATES",
+    "paper_first_problem_generator_generated": 0,
     "paper_first_problem_generator_semantic_clear": 0,
-    "paper_first_problem_generator_semantic_blocked": 1,
-    "paper_first_problem_generator_saturation_entries": 2,
+    "paper_first_problem_generator_semantic_blocked": 0,
+    "paper_first_problem_generator_saturation_entries": 3,
     "paper_first_problem_generator_prior_identical_zero": 0,
-    "paper_first_problem_blocked_attempts": 11,
+    "paper_first_problem_blocked_attempts": 12,
     "paper_first_problem_top_reduction_basin": "procedural-memory-nonmonotonicity",
     "paper_first_problem_top_reduction_count": 6,
     "paper_first_problem_repeated_reduction_basin": true,
     "paper_first_problem_search_escape_required": true,
     "paper_first_problem_lane_search_complete": true,
-    "paper_first_problem_lane_search_candidate_lanes": 1,
+    "paper_first_problem_lane_search_candidate_lanes": 0,
     "paper_first_problem_lane_search_reducible_lanes": 1,
-    "paper_first_problem_lane_search_no_pair_lanes": 2,
+    "paper_first_problem_lane_search_no_pair_lanes": 3,
     "paper_first_problem_last_lane_search_available": true,
-    "paper_first_problem_last_lane_search_run_id": "20260816T173305Z",
-    "paper_first_problem_last_lane_search_candidate_lanes": 1,
+    "paper_first_problem_last_lane_search_run_id": "20260816T182735Z",
+    "paper_first_problem_last_lane_search_candidate_lanes": 0,
     "paper_first_problem_last_lane_search_reducible_lanes": 1,
-    "paper_first_problem_last_lane_search_no_pair_lanes": 2,
-    "paper_first_problem_queue_submitted": 1,
+    "paper_first_problem_last_lane_search_no_pair_lanes": 3,
+    "paper_first_problem_queue_submitted": 0,
     "paper_first_problem_queue_passed": 0,
-    "paper_first_problem_queue_blocked": 1,
+    "paper_first_problem_queue_blocked": 0,
     "paper_first_search_portfolio_design_reviewed": 2,
     "paper_first_search_portfolio_design_advance_method": 0,
     "paper_first_search_portfolio_design_revise": 1,
@@ -6235,10 +6235,10 @@
     "paper_first_search_portfolio_semantic_blocker_inherited": 0,
     "paper_first_search_portfolio_near_miss_dead_ends": 3,
     "paper_first_search_portfolio_near_miss_support_holds": 1,
-    "paper_first_search_portfolio_near_miss_terminal_support_holds": 1,
+    "paper_first_search_portfolio_near_miss_terminal_support_holds": 0,
     "paper_first_search_portfolio_near_miss_current_primary_stops": 2,
     "paper_first_search_portfolio_near_miss_mature_theory_stops": 1,
-    "paper_first_search_portfolio_memory_last_ingested_run_id": "shadow-20260817-fresh-phenomenon-v10-r1",
+    "paper_first_search_portfolio_memory_last_ingested_run_id": "",
     "paper_first_support_release_watch_status": "NOT_RUN",
     "paper_first_support_release_holds": 0,
     "paper_first_support_release_targets": 0,
@@ -6308,6 +6308,11 @@
     "paper_first_discovery_frontier_external_triggers": 5,
     "paper_first_discovery_frontier_model_calls": 0,
     "paper_first_discovery_frontier_evidence_open": 0,
+    "paper_first_fresh_phenomenon_status": "ACTIVE_F0_EXISTS",
+    "paper_first_fresh_phenomenon_candidates": 4,
+    "paper_first_fresh_phenomenon_active_f0": 1,
+    "paper_first_fresh_phenomenon_support_holds": 3,
+    "paper_first_fresh_phenomenon_ready_problem_review": 0,
     "paper_first_evidence_migration_status": "NOT_RUN",
     "asset_first_stri_status": "READY_NARROW_ICLR",
     "asset_first_stri_paper_ready": 1,
@@ -6399,14 +6404,14 @@
     "pre_experiment_formal_ready": 0,
     "research_execution_plans": 4,
     "experiment_diagnoses": 4,
-    "experiment_repair_children": 0,
+    "experiment_repair_children": 8,
     "experiment_scale_up": 0,
     "principle_certificates_passed": 4,
     "principle_falsifications": 0,
     "protocol_validity_pass": 4,
     "meta_trace_unresolved": 2,
     "failure_assets": 6,
-    "value_scheduler_candidates": 0,
+    "value_scheduler_candidates": 6,
     "research_replay_passed": 8,
     "external_systems_reviewed": 31,
     "repair_queue": 1,
@@ -6497,11 +6502,11 @@
     "final_revise": 0,
     "final_block": 0,
     "final_ready": true,
-    "mem_xfer_full_table_status": "collecting",
-    "mem_xfer_offline_analysis_status": "offline_analysis_pending",
-    "mem_xfer_support_qualification_status": "support_qualification_hold",
-    "mem_xfer_support_full_status": "full_support_hold",
-    "mem_xfer_support_analysis_status": "support_enriched_analysis_pending",
+    "mem_xfer_full_table_status": "full_table_collected",
+    "mem_xfer_offline_analysis_status": "offline_analysis_complete",
+    "mem_xfer_support_qualification_status": "support_qualification_pass",
+    "mem_xfer_support_full_status": "full_support_complete",
+    "mem_xfer_support_analysis_status": "support_enriched_analysis_complete",
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 11,
     "architecture_functional_layers": 6
@@ -29278,7 +29283,7 @@
   },
   "paper_first_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T18:32:47+00:00",
+    "generated_at": "2026-08-16T18:42:49+00:00",
     "review_id": "paper-first-pf1-pf2-pf4-pf6-design-20260812",
     "target_venue": "ICLR",
     "policy": {
@@ -29556,7 +29561,7 @@
   },
   "paper_first_pf1_problem_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T18:32:47+00:00",
+    "generated_at": "2026-08-16T18:42:49+00:00",
     "incubation_id": "PF-1",
     "paper_id": "evolvability-debt-under-persistent-agent-updates",
     "prior_design_verdict": "REVISE_PAPER_PROBLEM",
@@ -29694,7 +29699,7 @@
   },
   "paper_first_pf2_method_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T18:32:47+00:00",
+    "generated_at": "2026-08-16T18:42:49+00:00",
     "paper_id": "repair-surface-identifiability-under-persistent-agent-updates",
     "incubation_id": "PF-2",
     "reviewed_method": "Repair-Surface Identification Certificate",
@@ -29765,7 +29770,7 @@
   },
   "paper_first_pf357_problem_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T18:32:47+00:00",
+    "generated_at": "2026-08-16T18:42:49+00:00",
     "review_id": "paper-first-pf357-final-20260813",
     "policy": {
       "domain_transfer_is_not_novelty": true,
@@ -29910,7 +29915,7 @@
   },
   "paper_first_fresh_saturation": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T18:32:47+00:00",
+    "generated_at": "2026-08-16T18:42:49+00:00",
     "review_id": "fresh-problem-saturation-20260813-r2",
     "policy": {
       "schema_version": "1.1",
@@ -31436,7 +31441,7 @@
       }
     ],
     "status": "READY",
-    "discovery_transaction_id": "9fa9d8eb7f0c63ad1223549e68c2a1ea0f939decd8497c28a32727497c66a488",
+    "discovery_transaction_id": "c1b476ed37ad9149abe715b6c2eafc10c29587401c64662b765b9d2e09ce6d89",
     "discovery_transaction_role": "primary"
   },
   "paper_first_scientific_object_retrieval_audit": {
@@ -31562,12 +31567,18 @@
       "fresh_phenomenon_asset_readiness_is_priority_not_novelty_authority": true,
       "fresh_phenomenon_missing_substrate_is_hold_not_scientific_fail": true,
       "fresh_phenomenon_recent_window_source_coverage_required": true,
+      "fresh_phenomenon_target_is_evidence_level_not_source_level": true,
+      "fresh_phenomenon_principle_closure_is_exact_evidence_sha_only": true,
+      "fresh_phenomenon_closure_does_not_blacklist_source": true,
+      "fresh_phenomenon_measured_failure_requires_failure_cue": true,
       "fresh_phenomenon_shard_has_deterministic_target_ref": true,
+      "fresh_phenomenon_shard_has_deterministic_phenomenon_id": true,
       "fresh_phenomenon_seed1_must_match_target_ref": true,
+      "fresh_phenomenon_seed1_must_match_target_phenomenon": true,
       "temporal_exposure_relabeling_after_longitudinal_reduction_forbidden": true,
       "treatment_semantics_seed_requires_executable_version_change": true,
       "treatment_semantics_seed_requires_versioned_treatment_reduction_first": true,
-      "discovery_operator_version": "fresh-phenomenon-source-coverage-v11",
+      "discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
       "shared_limitation_without_empirical_failure_forbidden": true,
       "pure_topic_brainstorm_forbidden": true,
       "open_world_missing_cell_claim_forbidden": true,
@@ -32330,13 +32341,13 @@
   },
   "paper_first_problem_generator": {
     "schema_version": "2.5",
-    "generated_at": "2026-08-16T17:33:05+00:00",
-    "run_id": "20260816T173305Z",
+    "generated_at": "2026-08-16T18:27:35+00:00",
+    "run_id": "20260816T182735Z",
     "generator_model": "ark-code-latest",
     "reviewer_model": "glm-5.2",
     "policy": {
       "zero_candidates_is_valid": true,
-      "discovery_operator_version": "fresh-phenomenon-source-coverage-v11",
+      "discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
       "single_source_anomaly_first_enabled": true,
       "source_coverage_saturation_reopens_once_on_operator_change": true,
       "search_portfolio_enabled": false,
@@ -32426,16 +32437,16 @@
       "evolved_branches": 0,
       "max_branch_depth": 0,
       "portfolio_calls": 0,
-      "generated": 1,
+      "generated": 0,
       "structurally_reviewable": 0,
       "semantic_clear": 0,
-      "semantic_blocked": 1,
-      "written_to_auto_inbox": 1,
+      "semantic_blocked": 0,
+      "written_to_auto_inbox": 0,
       "generated_by_lane": {
         "CONTRADICTION": 0,
         "CONVERGENT_FAILURE": 0,
         "ASSUMPTION_BREAK": 0,
-        "UNEXPLAINED_BOUNDARY": 1,
+        "UNEXPLAINED_BOUNDARY": 0,
         "OTHER": 0
       },
       "structurally_reviewable_by_lane": {
@@ -32456,18 +32467,18 @@
         "CONTRADICTION": 0,
         "CONVERGENT_FAILURE": 0,
         "ASSUMPTION_BREAK": 0,
-        "UNEXPLAINED_BOUNDARY": 1,
+        "UNEXPLAINED_BOUNDARY": 0,
         "OTHER": 0
       }
     },
     "raw_artifacts": {
       "generator": {
-        "sha256": "6b4471ac4eb9faf7cd1e92b858f6776a41640c362ff3a9b52571d507b4094869",
+        "sha256": "33bfa8d60cafc7f99ed7cbef6a2b3ab256c23d0f61e70e38ddc2231162a256ca",
         "requested_model": "ark-code-latest",
         "resolved_model": "doubao-seed-evolving"
       }
     },
-    "generation_notes": "One candidate survives. The ASSUMPTION_BREAK tuple was rejected as reducible to procedural-memory nonmonotonicity/redundancy; CONTRADICTION and CONVERGENT_FAILURE had no qualifying evidence tuple.",
+    "generation_notes": "Zero candidates survive. The only grounded lane-level tuple is an ASSUMPTION_BREAK between the memory-basis monotonicity assumption and empirical skill-induced failures, but it is blocked by the procedural-memory-nonmonotonicity saturation key.",
     "search_diagnostics": {
       "lane_search_priority": [
         "CONTRADICTION",
@@ -32487,32 +32498,30 @@
           "lane": "CONVERGENT_FAILURE",
           "status": "NO_PAIR",
           "source_refs": [],
-          "reason": "No pair of independent method families showed quantitative failure under the same bounded operational condition with a common failure object; observed failures are task- or method-specific."
+          "reason": "No pair of independent method families was found with quantitative failure under the same bounded operational condition and a common failure object; observed failures are task- or system-specific."
         },
         {
           "lane": "UNEXPLAINED_BOUNDARY",
-          "status": "CANDIDATE",
-          "source_refs": [
-            "arXiv:2608.13040"
-          ],
-          "reason": "One paper quantitatively establishes a sharp latent-context-capacity boundary and adjacent lower-capacity/control regimes for the same EnvScaler reward measurement, with no explanation for the transition."
+          "status": "NO_PAIR",
+          "source_refs": [],
+          "reason": "The strongest within-paper boundary observations are either generic retrieval/token plateaus or evaluation thresholds, and none survives the negative-space scan as an unresolved transition object."
         },
         {
           "lane": "ASSUMPTION_BREAK",
           "status": "REDUCIBLE",
           "source_refs": [
             "arXiv:2608.11654",
-            "arXiv:2608.10494"
+            "arXiv:2608.11888"
           ],
-          "reason": "The explicit monotonicity assumption in the formal memory paper is violated by excessive retrieval degrading trajectory quality in GeoForge, but the object is reducible to ordinary nonmonotonic conflict/redundancy under the same information."
+          "reason": "An explicit monotonicity assumption in the formal memory framework is violated by empirical skill-induced failures, but the same conflict is already expressible as nonmonotonic reasoning/belief revision under conflict information, so it is reducible."
         }
       ],
       "last_completed_lane_search": {
-        "run_id": "20260816T173305Z",
-        "generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
-        "generated_at": "2026-08-16T17:33:05+00:00",
+        "run_id": "20260816T182735Z",
+        "generator_status": "GENERATED_ZERO_CANDIDATES",
+        "generated_at": "2026-08-16T18:27:35+00:00",
         "mode": "anomaly_first_evidence_tuple_audit",
-        "discovery_operator_version": "fresh-phenomenon-source-coverage-v11",
+        "discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
         "lane_search_priority": [
           "CONTRADICTION",
           "CONVERGENT_FAILURE",
@@ -32530,40 +32539,38 @@
             "lane": "CONVERGENT_FAILURE",
             "status": "NO_PAIR",
             "source_refs": [],
-            "reason": "No pair of independent method families showed quantitative failure under the same bounded operational condition with a common failure object; observed failures are task- or method-specific."
+            "reason": "No pair of independent method families was found with quantitative failure under the same bounded operational condition and a common failure object; observed failures are task- or system-specific."
           },
           {
             "lane": "UNEXPLAINED_BOUNDARY",
-            "status": "CANDIDATE",
-            "source_refs": [
-              "arXiv:2608.13040"
-            ],
-            "reason": "One paper quantitatively establishes a sharp latent-context-capacity boundary and adjacent lower-capacity/control regimes for the same EnvScaler reward measurement, with no explanation for the transition."
+            "status": "NO_PAIR",
+            "source_refs": [],
+            "reason": "The strongest within-paper boundary observations are either generic retrieval/token plateaus or evaluation thresholds, and none survives the negative-space scan as an unresolved transition object."
           },
           {
             "lane": "ASSUMPTION_BREAK",
             "status": "REDUCIBLE",
             "source_refs": [
               "arXiv:2608.11654",
-              "arXiv:2608.10494"
+              "arXiv:2608.11888"
             ],
-            "reason": "The explicit monotonicity assumption in the formal memory paper is violated by excessive retrieval degrading trajectory quality in GeoForge, but the object is reducible to ordinary nonmonotonic conflict/redundancy under the same information."
+            "reason": "An explicit monotonicity assumption in the formal memory framework is violated by empirical skill-induced failures, but the same conflict is already expressible as nonmonotonic reasoning/belief revision under conflict information, so it is reducible."
           }
         ],
-        "generation_notes": "One candidate survives. The ASSUMPTION_BREAK tuple was rejected as reducible to procedural-memory nonmonotonicity/redundancy; CONTRADICTION and CONVERGENT_FAILURE had no qualifying evidence tuple.",
+        "generation_notes": "Zero candidates survive. The only grounded lane-level tuple is an ASSUMPTION_BREAK between the memory-basis monotonicity assumption and empirical skill-induced failures, but it is blocked by the procedural-memory-nonmonotonicity saturation key.",
         "scientific_authority": false
       },
       "scientific_authority": false
     },
     "saturation_memory": {
-      "ledger_entries": 2,
+      "ledger_entries": 3,
       "prior_identical_zero_runs": 0,
       "current_run_recorded": true,
       "current_review_receipt": {
-        "run_id": "20260816T173305Z",
+        "run_id": "20260816T182735Z",
         "pool_sha256": "a2bfda699834ab2cf6c426185c45d8bded443ce64563d24640151f324b2f0921",
         "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
-        "discovery_operator_version": "fresh-phenomenon-source-coverage-v11",
+        "discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
         "source_refs": [
           "arXiv:2607.12790",
           "arXiv:2607.13683",
@@ -32598,10 +32605,10 @@
           "arXiv:2608.13040",
           "arXiv:2608.13560"
         ],
-        "status": "GENERATED_AWAIT_PROBLEM_GATE",
+        "status": "GENERATED_ZERO_CANDIDATES",
         "requested_model": "ark-code-latest",
         "resolved_model": "doubao-seed-evolving",
-        "raw_sha256": "6b4471ac4eb9faf7cd1e92b858f6776a41640c362ff3a9b52571d507b4094869",
+        "raw_sha256": "33bfa8d60cafc7f99ed7cbef6a2b3ab256c23d0f61e70e38ddc2231162a256ca",
         "scientific_authority": false
       },
       "portable_review_receipts": [
@@ -33531,15 +33538,60 @@
           "resolved_model": "doubao-seed-evolving",
           "raw_sha256": "6b4471ac4eb9faf7cd1e92b858f6776a41640c362ff3a9b52571d507b4094869",
           "scientific_authority": false
+        },
+        {
+          "run_id": "20260816T182735Z",
+          "pool_sha256": "a2bfda699834ab2cf6c426185c45d8bded443ce64563d24640151f324b2f0921",
+          "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
+          "discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
+          "source_refs": [
+            "arXiv:2607.12790",
+            "arXiv:2607.13683",
+            "arXiv:2607.13940",
+            "arXiv:2607.13987",
+            "arXiv:2607.14777",
+            "arXiv:2607.15314",
+            "arXiv:2607.15524",
+            "arXiv:2607.16636",
+            "arXiv:2607.17621",
+            "arXiv:2607.17719",
+            "arXiv:2607.19592",
+            "arXiv:2607.20019",
+            "arXiv:2607.21125",
+            "arXiv:2607.22529",
+            "arXiv:2608.07527",
+            "arXiv:2608.10494",
+            "arXiv:2608.10504",
+            "arXiv:2608.11079",
+            "arXiv:2608.11224",
+            "arXiv:2608.11350",
+            "arXiv:2608.11596",
+            "arXiv:2608.11654",
+            "arXiv:2608.11888",
+            "arXiv:2608.12428",
+            "arXiv:2608.12629",
+            "arXiv:2608.12720",
+            "arXiv:2608.12743",
+            "arXiv:2608.12841",
+            "arXiv:2608.12851",
+            "arXiv:2608.12977",
+            "arXiv:2608.13040",
+            "arXiv:2608.13560"
+          ],
+          "status": "GENERATED_ZERO_CANDIDATES",
+          "requested_model": "ark-code-latest",
+          "resolved_model": "doubao-seed-evolving",
+          "raw_sha256": "33bfa8d60cafc7f99ed7cbef6a2b3ab256c23d0f61e70e38ddc2231162a256ca",
+          "scientific_authority": false
         }
       ],
       "blocked_problem_memory": {
-        "blocked_candidate_attempts": 11,
+        "blocked_candidate_attempts": 12,
         "lane_contract_verified_blocks": 9,
         "source_grounded_blocks": 6,
         "blocked_by_lane": {
           "ASSUMPTION_BREAK": 9,
-          "UNEXPLAINED_BOUNDARY": 1,
+          "UNEXPLAINED_BOUNDARY": 2,
           "CONVERGENT_FAILURE": 1
         },
         "reduction_pattern_counts": {
@@ -33557,7 +33609,7 @@
           "procedural-memory-nonmonotonicity": 1,
           "procedural-memory-nonmonotonicity and cross-layer-behavior-persistence": 1,
           "artifact-uptake-after-retrieval": 1,
-          "structural-or-provenance-gate-failed": 1,
+          "structural-or-provenance-gate-failed": 2,
           "Nonmonotonic logic / belief revision (defeasible rule conflict and conclusion retraction)": 1,
           "procedural-memory-nonmonotonicity (Nonmonotonic / defeasible logic, belief revision / AGM-style belief change)": 1,
           "Bayesian optimization / information bottleneck / selective sampling": 1,
@@ -33566,7 +33618,7 @@
         "top_reduction_basin": {
           "pattern": "procedural-memory-nonmonotonicity",
           "count": 6,
-          "fraction": 0.5455
+          "fraction": 0.5
         },
         "repeated_reduction_basin": true,
         "search_escape_required": true,
@@ -33700,29 +33752,25 @@
             "lane_contract_verified": true,
             "source_claims_grounded": true,
             "scientific_authority": false
+          },
+          {
+            "signature_id": "4e17f2f8f422919a2f3d",
+            "title": "Sharp latent-privilege capacity threshold in on-policy self-distillation",
+            "discovery_lane": "UNEXPLAINED_BOUNDARY",
+            "matched_patterns": [],
+            "strongest_reduction": "structural-or-provenance-gate-failed",
+            "lane_contract_verified": false,
+            "source_claims_grounded": false,
+            "scientific_authority": false
           }
         ],
         "scientific_authority": false
       },
       "scientific_authority": false,
-      "portable_review_receipt_count": 21
+      "portable_review_receipt_count": 22
     },
-    "candidates": [
-      {
-        "candidate_id": "AUTO-1",
-        "title": "Sharp latent-privilege capacity threshold in on-policy self-distillation",
-        "discovery_lane": "UNEXPLAINED_BOUNDARY",
-        "source_branch_id": "",
-        "source_refs": [
-          "arXiv:2608.13040",
-          "arXiv:2608.13040"
-        ],
-        "semantic_verdict": "BLOCK",
-        "lane_contract_verified": false,
-        "matched_patterns": []
-      }
-    ],
-    "primary_pool_age_hours": 1.1434,
+    "candidates": [],
+    "primary_pool_age_hours": 2.0519,
     "source_coverage": {
       "coverage_exhausted": true,
       "source_retrieval_complete": true,
@@ -33736,13 +33784,13 @@
       "scientific_authority": false
     },
     "operator_recompile_reason": "Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged.",
-    "status": "GENERATED_AWAIT_PROBLEM_GATE",
-    "discovery_transaction_id": "9fa9d8eb7f0c63ad1223549e68c2a1ea0f939decd8497c28a32727497c66a488",
+    "status": "GENERATED_ZERO_CANDIDATES",
+    "discovery_transaction_id": "c1b476ed37ad9149abe715b6c2eafc10c29587401c64662b765b9d2e09ce6d89",
     "discovery_transaction_role": "generator"
   },
   "paper_first_problem_gate_queue": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-16T17:35:44+00:00",
+    "generated_at": "2026-08-16T18:30:59+00:00",
     "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
     "source_inboxes": [
       "private-data://paper-first-problem-discovery/candidate-inbox.json",
@@ -33768,10 +33816,10 @@
       "automatic_p0_authority": false
     },
     "summary": {
-      "submitted": 1,
-      "audited": 1,
+      "submitted": 0,
+      "audited": 0,
       "passed_problem_gate": 0,
-      "blocked_problem_gate": 1,
+      "blocked_problem_gate": 0,
       "paper_design_eligible": 0,
       "inbox_errors": 0,
       "primary_evidence_records": 32,
@@ -33779,7 +33827,7 @@
         "CONTRADICTION": 0,
         "CONVERGENT_FAILURE": 0,
         "ASSUMPTION_BREAK": 0,
-        "UNEXPLAINED_BOUNDARY": 1,
+        "UNEXPLAINED_BOUNDARY": 0,
         "OTHER": 0
       },
       "passed_by_lane": {
@@ -33793,7 +33841,7 @@
         "CONTRADICTION": 0,
         "CONVERGENT_FAILURE": 0,
         "ASSUMPTION_BREAK": 0,
-        "UNEXPLAINED_BOUNDARY": 1,
+        "UNEXPLAINED_BOUNDARY": 0,
         "OTHER": 0
       },
       "method_authorized": 0,
@@ -33802,354 +33850,15 @@
     },
     "inbox_errors": [],
     "passed": [],
-    "blocked": [
-      {
-        "candidate_id": "AUTO-1",
-        "title": "Sharp latent-privilege capacity threshold in on-policy self-distillation",
-        "discovery_lane": "UNEXPLAINED_BOUNDARY",
-        "status": "PROBLEM_GATE_BLOCKED",
-        "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
-        "blockers": [
-          "invalid-mature-theory-baseline:1",
-          "invalid-mature-theory-baseline:2",
-          "missing-or-empty:reduction_falsifiability_contract",
-          "reduction-falsifiability-contract-incomplete",
-          "semantic-reduction-review-missing"
-        ]
-      }
-    ],
-    "audited": [
-      {
-        "candidate_id": "AUTO-1",
-        "title": "Sharp latent-privilege capacity threshold in on-policy self-distillation",
-        "discovery_lane": "UNEXPLAINED_BOUNDARY",
-        "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
-        "candidate": {
-          "candidate_id": "AUTO-1",
-          "title": "Sharp latent-privilege capacity threshold in on-policy self-distillation",
-          "discovery_lane": "UNEXPLAINED_BOUNDARY",
-          "source_branch_id": "",
-          "branch_depth": 0,
-          "empirical_evidence": {
-            "source_a": {
-              "ref": "arXiv:2608.13040",
-              "title": "Latent On-Policy Self-Distillation",
-              "claim": "In LOPD sensitivity analysis on EnvScaler, reward remains near 0.56 with 8 or 16 tokens per experience, rises sharply to 0.637 with 32 tokens, and then fluctuates without consistent gain at 64 and 128 tokens.",
-              "evidence_role": "EMPIRICAL_FACT",
-              "primary_source": true,
-              "primary_url": "https://arxiv.org/abs/2608.13040",
-              "source_sha256": "5286649a98dd8633511961d35fecf5a02c652a3a2cb8c786a509e3e2ea71c864"
-            },
-            "source_b": {
-              "ref": "arXiv:2608.13040",
-              "title": "Latent On-Policy Self-Distillation",
-              "claim": "In the same EnvScaler sensitivity analysis, reward improves from 0.605 with one retrieval to 0.637 with three retrievals, but additional retrievals yield no monotonic benefit.",
-              "evidence_role": "EMPIRICAL_FACT",
-              "primary_source": true,
-              "primary_url": "https://arxiv.org/abs/2608.13040",
-              "source_sha256": "5286649a98dd8633511961d35fecf5a02c652a3a2cb8c786a509e3e2ea71c864"
-            },
-            "relation": "Both items measure LOPD EnvScaler reward under controlled changes to latent privileged context: one varies latent-token capacity and the other varies retrieval count. They jointly show a narrow regime where added latent privilege produces a sharp gain, while adjacent lower and higher regimes do not."
-          },
-          "lane_evidence": {
-            "shared_measurement": "EnvScaler reward under LOPD sensitivity analysis, with default n_ret=3 for the token sweep and token-per-experience setting held at the reported default for the retrieval sweep.",
-            "boundary_observation": "Reward is near 0.56 at 8 and 16 tokens per experience, then jumps to 0.637 at 32 tokens.",
-            "adjacent_regime": "Below the boundary, 8 and 16 tokens remain near 0.56; above it, 64 and 128 tokens fluctuate without consistent gain. A separate retrieval sweep shows improvement from one to three retrievals but no monotonic benefit beyond three.",
-            "unexplained_transition": "The paper reports the sharp 32-token onset and subsequent plateau but does not identify what information becomes representable at 32 tokens or why further latent capacity and retrieval do not continue to help."
-          },
-          "irreducible_object": "A capacity-conditioned privilege sufficiency boundary: the minimum latent-context bandwidth at which a self-teacher can represent enough trajectory-conditioned privileged information to change the student policy, above which additional same-information latent tokens and retrievals are not converted into reward.",
-          "novelty_category": "",
-          "closest_work": {},
-          "closest_work_distance": null,
-          "mature_theory_baselines": [
-            {
-              "name": "Rate-distortion / information bottleneck",
-              "same_information_projection": "Treat latent tokens as a fixed-capacity channel for privileged experience; predict monotone diminishing returns as capacity increases until the relevant sufficient statistic is encoded.",
-              "reduction_test": "This predicts a smooth saturation curve, not a sharp jump from 0.56 at 16 tokens to 0.637 at 32 tokens followed by no consistent gain; it also does not predict why the threshold is localized at 32 tokens for the same retrieved experiences."
-            },
-            {
-              "name": "Retrieval-augmented context utility / redundancy",
-              "same_information_projection": "Treat extra retrievals as redundant evidence and predict that performance improves with useful evidence and plateaus once relevant evidence is present.",
-              "reduction_test": "This can explain the retrieval-count plateau but not the token-capacity discontinuity: the same retrieval set is present across token settings, so redundancy alone cannot explain why 16 tokens are insufficient and 32 tokens become sufficient."
-            }
-          ],
-          "reduction_falsifiability_contract": {},
-          "same_information_nonreducibility": {
-            "claim": "The unresolved object is the transition in representable privileged information at a fixed capacity, not merely diminishing returns from more context.",
-            "why_each_baseline_cannot_express_prediction": "Rate-distortion predicts gradual saturation rather than a sharp threshold under the same information source. Retrieval redundancy predicts plateauing after enough evidence is retrieved but is invariant to latent-token width and therefore cannot predict the 16-to-32 token discontinuity."
-          },
-          "exact_prediction": "For LOPD on EnvScaler, holding model, task set, rollout budget, and retrieval set fixed, reward will remain near the low regime below a critical latent-token width, exhibit a discrete upward step around 32 tokens per experience, and remain statistically indistinguishable from the stepped regime at larger widths; the step will coincide with a measurable change in which prefix-level teacher constraints become jointly encodable rather than with increased retrieval coverage.",
-          "strongest_same_information_baseline": "Rate-distortion / information bottleneck with a fixed sufficient-statistic capacity.",
-          "domain_transfer_audit": {
-            "mature_source_domain": "Information theory and representation learning",
-            "mature_object": "Capacity-constrained encoding and diminishing returns",
-            "why_not_domain_transfer": "The candidate does not merely rename compression or bottleneck theory; it targets an empirically sharp, task-local transition in a self-distillation teacher's latent privileged context that existing monotone saturation theory does not predict under the same information."
-          },
-          "saturation_scan": {
-            "checked": true,
-            "matched_patterns": [],
-            "pending_patterns": [],
-            "rejected_patterns": [
-              {
-                "key": "validation-filter-information-loss",
-                "reason": "The boundary is not a sparse validation or filtering tradeoff; it concerns latent teacher-context capacity and reward under fixed evaluation."
-              },
-              {
-                "key": "self-generated-supervision-information-limit",
-                "reason": "No new theorem about an information ceiling for self-generated supervision is asserted; the anomaly is the sharp onset and plateau of reward as latent privilege capacity changes."
-              },
-              {
-                "key": "artifact-uptake-after-retrieval",
-                "reason": "The issue is not retrieved experience failing to change behavior after retrieval; the retrieval sweep shows uptake up to three retrievals, and the token sweep changes the form of latent context rather than retrieval utilization alone."
-              }
-            ],
-            "invalid_entries": []
-          },
-          "semantic_reduction_review": {
-            "reviewed": false,
-            "block_only": true,
-            "verdict": "BLOCK",
-            "reviewer_model": "",
-            "raw_sha256": "",
-            "source_claims_grounded": false,
-            "source_claim_grounding": {},
-            "lane_contract_verified": false,
-            "lane_contract_reason": "structural-or-provenance-gate-failed",
-            "matched_patterns": [],
-            "strongest_reduction": "structural-or-provenance-gate-failed"
-          },
-          "cheapest_problem_falsifier": "Re-run LOPD on EnvScaler at 8, 16, 24, 32, 48, 64, and 128 latent tokens per experience with multiple seeds, fixed retrievals, and logged teacher-token attention/supervision norms; test whether the 16-to-32 jump disappears into a smooth monotone saturation curve or is explained solely by retrieval-count variation.",
-          "endpoint_headroom_requirement": "A valid problem requires the sharp boundary to survive seed variation and fixed-retrieval controls; if reward increases smoothly with token capacity or the 32-token result is within noise of 16 and 64, the candidate collapses to ordinary diminishing returns.",
-          "importance": "",
-          "likely_iclr_story": ""
-        },
-        "audit": {
-          "schema_version": "2.0",
-          "candidate_id": "AUTO-1",
-          "discovery_lane": "UNEXPLAINED_BOUNDARY",
-          "passed": false,
-          "status": "PROBLEM_GATE_BLOCKED",
-          "blockers": [
-            "invalid-mature-theory-baseline:1",
-            "invalid-mature-theory-baseline:2",
-            "missing-or-empty:reduction_falsifiability_contract",
-            "reduction-falsifiability-contract-incomplete",
-            "semantic-reduction-review-missing"
-          ],
-          "checks": [
-            {
-              "key": "field:candidate_id",
-              "pass": true
-            },
-            {
-              "key": "field:title",
-              "pass": true
-            },
-            {
-              "key": "field:discovery_lane",
-              "pass": true
-            },
-            {
-              "key": "field:empirical_evidence",
-              "pass": true
-            },
-            {
-              "key": "field:lane_evidence",
-              "pass": true
-            },
-            {
-              "key": "field:irreducible_object",
-              "pass": true
-            },
-            {
-              "key": "field:mature_theory_baselines",
-              "pass": true
-            },
-            {
-              "key": "field:reduction_falsifiability_contract",
-              "pass": false
-            },
-            {
-              "key": "field:same_information_nonreducibility",
-              "pass": true
-            },
-            {
-              "key": "field:exact_prediction",
-              "pass": true
-            },
-            {
-              "key": "field:strongest_same_information_baseline",
-              "pass": true
-            },
-            {
-              "key": "field:domain_transfer_audit",
-              "pass": true
-            },
-            {
-              "key": "field:saturation_scan",
-              "pass": true
-            },
-            {
-              "key": "field:cheapest_problem_falsifier",
-              "pass": true
-            },
-            {
-              "key": "field:endpoint_headroom_requirement",
-              "pass": true
-            },
-            {
-              "key": "field:semantic_reduction_review",
-              "pass": true
-            },
-            {
-              "key": "field:authority",
-              "pass": true
-            },
-            {
-              "key": "discovery-lane-contract",
-              "pass": true,
-              "lane": "UNEXPLAINED_BOUNDARY"
-            },
-            {
-              "key": "primary-source-1",
-              "pass": true,
-              "role": "EMPIRICAL_FACT"
-            },
-            {
-              "key": "primary-source-2",
-              "pass": true,
-              "role": "EMPIRICAL_FACT"
-            }
-          ],
-          "policy": {
-            "schema_version": "2.2",
-            "multi_lane_discovery_required": true,
-            "contradiction_first_required": false,
-            "contradiction_lane_retained": true,
-            "allowed_discovery_lanes": [
-              "CONTRADICTION",
-              "CONVERGENT_FAILURE",
-              "ASSUMPTION_BREAK",
-              "UNEXPLAINED_BOUNDARY"
-            ],
-            "search_portfolio_primitives": [
-              "CONTRADICTION",
-              "CONVERGENT_FAILURE",
-              "ASSUMPTION_BREAK",
-              "UNEXPLAINED_BOUNDARY",
-              "IDENTIFIABILITY_GAP",
-              "MISSING_DECISION_OBJECT",
-              "COMPOSITION_INTERACTION",
-              "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
-              "NEW_CAPABILITY_QUESTION",
-              "LONGITUDINAL_EMERGENCE"
-            ],
-            "forbidden_discovery_lanes": [
-              "MISSING_CELL",
-              "SHARED_LIMITATION",
-              "PURE_TOPIC_BRAINSTORM"
-            ],
-            "lane_specific_machine_evidence_contract_required": true,
-            "search_portfolio_required": false,
-            "search_portfolio_is_shadow_only": true,
-            "search_portfolio_cannot_publish_canonical_generator_or_queue": true,
-            "one_content_addressed_pool_allows_at_most_one_live_generator_call": true,
-            "one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator": true,
-            "source_coverage_saturation_reopens_once_on_operator_change": true,
-            "expansion_reduction_separated": true,
-            "mature_theory_veto_delayed_until_formulated_branch": true,
-            "diversity_archives_required": true,
-            "branch_lineage_required": true,
-            "reduction_falsifiability_contract_required": true,
-            "generic_theory_label_cannot_veto": true,
-            "two_grounded_evidence_items_required": true,
-            "same_primary_source_can_supply_multiple_evidence_items_when_lane_minimum_is_one": true,
-            "distinct_primary_source_minimum_is_lane_specific": true,
-            "single_source_anomaly_first_search_enabled": true,
-            "primary_anomaly_can_trigger_controlled_residual_search_without_cross_paper_metric_match": true,
-            "support_feasibility_is_search_priority_not_novelty_authority": true,
-            "principle_dead_end_inversion_search_enabled": true,
-            "dead_end_inversion_requires_certified_counter_explanation": true,
-            "dead_end_inversion_is_search_prior_not_scientific_authority": true,
-            "dead_end_inversion_requires_fresh_primary_grounding": true,
-            "dead_end_inversion_must_satisfy_recorded_reopen_condition": true,
-            "first_party_inversion_asset_grounding_enabled": true,
-            "first_party_inversion_asset_requires_provenance_manifest": true,
-            "first_party_inversion_asset_is_zero_authority_search_evidence": true,
-            "first_party_inversion_asset_requires_one_direct_seed_per_shard": true,
-            "observed_dependency_graph_is_not_an_identifiability_gap": true,
-            "reciprocal_coupling_claim_requires_downstream_residual_beyond_distribution_shift": true,
-            "feedback_mechanism_requires_causal_write_path_before_experiment": true,
-            "positive_residual_search_enabled": true,
-            "positive_residual_asset_requires_provenance_manifest": true,
-            "positive_residual_asset_is_zero_authority_search_evidence": true,
-            "positive_residual_requires_surviving_phenomenon_and_clean_mechanism_stop": true,
-            "positive_residual_requires_prospective_pre_outcome_prediction": true,
-            "positive_residual_outcome_leakage_forbidden": true,
-            "positive_residual_direct_seed_required_in_unexplained_boundary_shard": true,
-            "inactive_search_assets_hidden_from_generator": true,
-            "inactive_search_assets_remain_provenance_archived": true,
-            "no_active_asset_fallback_requires_latest_primary_quantitative_anomaly": true,
-            "fresh_phenomenon_seed_must_name_measured_boundary_or_failure": true,
-            "fresh_phenomenon_asset_readiness_is_priority_not_novelty_authority": true,
-            "fresh_phenomenon_missing_substrate_is_hold_not_scientific_fail": true,
-            "fresh_phenomenon_recent_window_source_coverage_required": true,
-            "fresh_phenomenon_shard_has_deterministic_target_ref": true,
-            "fresh_phenomenon_seed1_must_match_target_ref": true,
-            "temporal_exposure_relabeling_after_longitudinal_reduction_forbidden": true,
-            "treatment_semantics_seed_requires_executable_version_change": true,
-            "treatment_semantics_seed_requires_versioned_treatment_reduction_first": true,
-            "discovery_operator_version": "fresh-phenomenon-source-coverage-v11",
-            "shared_limitation_without_empirical_failure_forbidden": true,
-            "pure_topic_brainstorm_forbidden": true,
-            "open_world_missing_cell_claim_forbidden": true,
-            "two_mature_theory_baselines_required": true,
-            "same_information_nonreducibility_required": true,
-            "domain_transfer_veto_required": true,
-            "saturation_map_check_required": true,
-            "problem_falsifier_required_before_method_design": true,
-            "reduction_pending_is_provisional_not_failed": true,
-            "bounded_first_party_evidence_acquisition_allowed_before_problem_gate_pass": true,
-            "support_inventory_is_one_evidence_route_not_global_prerequisite": true,
-            "first_party_evidence_cannot_auto_certify_novelty": true,
-            "endpoint_headroom_required_before_terminal_interpretation": true,
-            "independent_reviewer_must_verify_lane_contract": true,
-            "no_lane_specific_downstream_relaxation": true,
-            "ai_generation_is_advisory_only": true,
-            "zero_survivors_is_valid": true,
-            "method_design_authorized_by_problem_gate": false,
-            "local_validation_authorized_by_problem_gate": false,
-            "p0_authorized_by_problem_gate": false,
-            "gpu_authorized_by_problem_gate": false
-          },
-          "authority": {
-            "paper_design_eligible_for_human_review": false,
-            "method_design": false,
-            "experiment_blueprint": false,
-            "local_validation": false,
-            "p0": false,
-            "gpu": false,
-            "full_experiment": false
-          }
-        },
-        "paper_design_eligible": false,
-        "authority": {
-          "method_design": false,
-          "experiment_blueprint": false,
-          "local_validation": false,
-          "p0": false,
-          "gpu": false,
-          "full_experiment": false
-        }
-      }
-    ],
+    "blocked": [],
+    "audited": [],
     "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry.",
-    "discovery_transaction_id": "9fa9d8eb7f0c63ad1223549e68c2a1ea0f939decd8497c28a32727497c66a488",
+    "discovery_transaction_id": "c1b476ed37ad9149abe715b6c2eafc10c29587401c64662b765b9d2e09ce6d89",
     "discovery_transaction_role": "queue"
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T18:32:47+00:00",
+    "generated_at": "2026-08-16T18:42:49+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -34196,7 +33905,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-16T18:32:47+00:00",
+      "generated_at": "2026-08-16T18:42:49+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -34337,20 +34046,9 @@
         "persistent_dead_end_requires_positive_counter_explanation": true,
         "canonical_generator_and_queue_untouched": true
       },
-      "last_ingested_run_id": "shadow-20260817-fresh-phenomenon-v10-r1",
-      "last_ingested_stage_manifest_sha256": "5f9d53572cc0bc1d4b76689aa69af1204ad9fd9b624a67b73c86f7f24c327f91",
-      "receipts": [
-        {
-          "run_id": "shadow-20260817-fresh-phenomenon-v10-r1",
-          "stage_manifest_sha256": "5f9d53572cc0bc1d4b76689aa69af1204ad9fd9b624a67b73c86f7f24c327f91",
-          "terminal_generated_at": "2026-08-16T17:27:22+00:00",
-          "hard_veto_added": 0,
-          "semantic_blocker_added": 0,
-          "semantic_hold_added": 0,
-          "support_hold_added": 1,
-          "scientific_authority": false
-        }
-      ],
+      "last_ingested_run_id": "",
+      "last_ingested_stage_manifest_sha256": "",
+      "receipts": [],
       "scientific_authority": false
     },
     "shadow_dead_end_memory": {
@@ -34587,6 +34285,7 @@
             "search_closed_reason": "The preregistered outcome-blind held-out screen produced 9/9 execution-valid units, 0 harmful units, 0 same-uptake/different-harm pairs, and 0 harm-without-uptake units. This closes only the current matched-uptake inversion asset; the original P19 positive effect remains archived evidence.",
             "scientific_authority": false
           },
+          "fresh_phenomenon_closure": {},
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
           "scientific_authority": false
         },
@@ -34640,6 +34339,144 @@
           },
           "source_readjudication_artifact": "generated/p06-relevance-conditioned-evidence-debt-principle-readjudication-20260816.json",
           "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {},
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "MINDMEMOS-SKILL-SIGN-REVERSAL",
+          "basin": "principle-readjudication-4d80ae03a78e958a",
+          "search_primitive": "",
+          "title": "Initial-skill harm followed by evolved-skill gains is corrective adaptation, not a new self-evolution primitive",
+          "avoid": [
+            "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Initial-skill harm followed by evolved-skill gains is corrective adaptation, not a new self-evolution primitive",
+            "using the negative experiment metric alone as the reason for the dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "The reported sign reversal is predicted by ordinary task-conditioned negative transfer followed by error-driven corrective skill optimization. MindMemOS's initial xlsx skill is a generic procedural artifact with sparse cautions and is worse than No-skill on SpreadsheetBench. Its unsupervised evolution turns recurring execution failures into concrete error-avoidance rules, while supervised evolution uses task scores to bound those rules and avoid overgeneralization, e.g. preserving requested formulas rather than hard-coding values merely to satisfy cached-value checks. SkillGrad independently reports the same qualitative object on SpreadsheetBench Verified across two backbones and two skill initializations: base xlsx skills can underperform No-skill, and failed plus contrastive-success trajectories are used as corrective evidence to patch the same skill into a higher-performing artifact. Therefore the negative-to-positive transition does not require an additional self-evolution primitive beyond skill-task misalignment, corrective learning, and rule specialization/applicability learning.",
+          "current_source_refs": [
+            "arXiv:2605.27760",
+            "arXiv:2608.12428"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.12428",
+            "primary-fulltext:arXiv:2608.12428#sha256=79a9c92991d928c4d8e4629a4a71ea8c92d2c56f8fe81e3a4a5ba6822f4b3a32",
+            "first-party:https://github.com/mindscale-noah/MindMemOS@90491828726e1540442b17cd445d0308d0b8093c",
+            "repo:MindMemOS/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+            "repo:MindMemOS/src/mindmemos/mindmemos/pipelines/skill/evolution.py",
+            "repo:MindMemOS/src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py",
+            "arXiv:2605.27760",
+            "primary-fulltext:arXiv:2605.27760#sha256=7265a9097cb273168256689ae6266254d1516cd7106d539cb65b11803afad7a1",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#feedback-polarity-by-update-surface",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#procedural-memory-nonmonotonicity"
+          ],
+          "problem_text": "The standalone claim that MindMemOS's SpreadsheetBench transition from Init-skill below No-skill to evolved-skill above No-skill identifies a new agent-specific causal mechanism merely from the sign reversal or from supervised evolution adding more bounded rules.",
+          "reason": "MindMemOS provides positive evidence that trajectory-driven skill refinement can turn a harmful generic skill into a useful task-aligned one, but the aggregate sign reversal and supervised boundary refinement are already explained by mature negative-transfer and corrective-learning objects.",
+          "reopen_only_if": "Reopen only if a preregistered matched comparison equalizes task-skill compatibility, initial skill content, executor, failed/successful trajectory evidence, task-score information, edit/token budget, update count, and held-out evaluation, yet a self-evolution-specific structural variable yields a distinct ex-ante task-level sign-flip prediction that generic prompt/skill optimization, corrective learning, rule specialization, and nonmonotonic rule revision cannot express. More iterations, a different skill seed, a larger skill, or another negative-to-positive aggregate result is insufficient.",
+          "dead_end_certified": true,
+          "memory_class": "PRINCIPLE_DEAD_END",
+          "counter_explanation": {
+            "type": "SAME_INFORMATION_REDUCTION",
+            "statement": "The reported sign reversal is predicted by ordinary task-conditioned negative transfer followed by error-driven corrective skill optimization. MindMemOS's initial xlsx skill is a generic procedural artifact with sparse cautions and is worse than No-skill on SpreadsheetBench. Its unsupervised evolution turns recurring execution failures into concrete error-avoidance rules, while supervised evolution uses task scores to bound those rules and avoid overgeneralization, e.g. preserving requested formulas rather than hard-coding values merely to satisfy cached-value checks. SkillGrad independently reports the same qualitative object on SpreadsheetBench Verified across two backbones and two skill initializations: base xlsx skills can underperform No-skill, and failed plus contrastive-success trajectories are used as corrective evidence to patch the same skill into a higher-performing artifact. Therefore the negative-to-positive transition does not require an additional self-evolution primitive beyond skill-task misalignment, corrective learning, and rule specialization/applicability learning.",
+            "opposite_prediction": "Under matched executor, task distribution, skill initialization, feedback budget, and update capacity, held-out improvement should track how well edits correct task-relevant failure modes and constrain over-broad rules. An initially harmful skill can become beneficial when corrective examples remove or specialize misleading guidance; supervised counterexamples can further improve performance by learning when a rule should not apply. A generic prompt/skill optimizer with the same failed/successful traces and scores can express the same sign reversal without any special lineage, memory, or self-evolution variable.",
+            "opposite_principle": "Skill utility is conditional on task-artifact alignment; negative transfer from an unoptimized procedural artifact and its reversal through corrective rule specialization are ordinary adaptation phenomena, not evidence of a new self-evolution mechanism by themselves.",
+            "opposite_search_seed": "Search only for a preregistered residual where two skill-update procedures receive the same task-skill compatibility information, failed/successful trajectory evidence, task scores, edit/token budget, and held-out split yet make different ex-ante predictions about which task outcomes will flip sign. The residual must beat generic prompt optimization, error-driven corrective learning, positive-versus-negative concept learning, and nonmonotonic rule-revision baselines. Do not reopen from another base-skill-below-no-skill result or from merely adding applicability conditions.",
+            "scope": "MindMemOS arXiv:2608.12428v1 MindSkillEvolve evaluation and first-party repository commit 90491828726e1540442b17cd445d0308d0b8093c; SkillGrad arXiv:2605.27760v1 SpreadsheetBench skill optimization evidence.",
+            "same_information_or_scope_matched": true,
+            "same_information_reduction_verified": true,
+            "positive_support": true,
+            "evidence_refs": [
+              "arXiv:2608.12428",
+              "primary-fulltext:arXiv:2608.12428#sha256=79a9c92991d928c4d8e4629a4a71ea8c92d2c56f8fe81e3a4a5ba6822f4b3a32",
+              "first-party:https://github.com/mindscale-noah/MindMemOS@90491828726e1540442b17cd445d0308d0b8093c",
+              "repo:MindMemOS/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+              "repo:MindMemOS/src/mindmemos/mindmemos/pipelines/skill/evolution.py",
+              "repo:MindMemOS/src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py",
+              "arXiv:2605.27760",
+              "primary-fulltext:arXiv:2605.27760#sha256=7265a9097cb273168256689ae6266254d1516cd7106d539cb65b11803afad7a1",
+              "repo:research_pipeline/paper_first_fresh_saturation.py#feedback-polarity-by-update-surface",
+              "repo:research_pipeline/paper_first_fresh_saturation.py#procedural-memory-nonmonotonicity"
+            ],
+            "alternative_explanations_ruled_out": [
+              "The initial skill is simply neutral context: contradicted by both MindMemOS and SkillGrad, where base xlsx skills underperform No-skill on SpreadsheetBench.",
+              "MindMemOS evolution is only skill-length growth: contradicted by the first-party pipeline and Appendix B, which explicitly support add/revise/remove edits and show supervised boundary conditions that restrict over-broad rules.",
+              "The sign reversal is unique to MindMemOS: contradicted by SkillGrad's independent SpreadsheetBench results using two backbones and two skill initializations.",
+              "Task scores create an unidentified new mechanism: the supervised-only additions are applicability/exception boundaries and preservation constraints, directly expressible as counterexample-driven concept/rule specialization under the same feedback information."
+            ],
+            "reopen_condition": "Reopen only if a preregistered matched comparison equalizes task-skill compatibility, initial skill content, executor, failed/successful trajectory evidence, task-score information, edit/token budget, update count, and held-out evaluation, yet a self-evolution-specific structural variable yields a distinct ex-ante task-level sign-flip prediction that generic prompt/skill optimization, corrective learning, rule specialization, and nonmonotonic rule revision cannot express. More iterations, a different skill seed, a larger skill, or another negative-to-positive aggregate result is insufficient."
+          },
+          "source_readjudication_artifact": "generated/mindmemos-skill-sign-reversal-principle-readjudication-20260817.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {
+            "source_ref": "arXiv:2608.12428",
+            "closed_evidence_sha256": [
+              "49839a18c055f9c01c3fde110d15aea378c449ea13cdefd2b93663dc4191997d",
+              "ce227d474666943446da68f0120763d60cf3978db3ecd19af5da536d7643d920",
+              "f19a1910a6773bacce3f76cccf9bc1d74ea699157e13dbaafe5815fa2d60d858"
+            ],
+            "closure_scope": "initial-skill negative transfer and corrective skill-evolution sign reversal only",
+            "source_readjudication_artifact": "generated/mindmemos-skill-sign-reversal-principle-readjudication-20260817.json",
+            "scientific_authority": false
+          },
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "AUTODESIGN-DEV-ACCEPTANCE-FEEDBACK",
+          "basin": "principle-readjudication-5f9b40020b463e11",
+          "search_primitive": "",
+          "title": "Repeated accept/reject feedback from a fixed development split is adaptive validation, not a new self-evolution primitive",
+          "avoid": [
+            "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Repeated accept/reject feedback from a fixed development split is adaptive validation, not a new self-evolution primitive",
+            "using the negative experiment metric alone as the reason for the dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "The released AutoDesign loop repeatedly evaluates candidate harnesses on a fixed development set, maps the result into an accept/reject decision, stores that acceptance decision in the persistent optimization record, and gives the updated record to the optimizer in the next iteration. Raw dev scores are hidden, but the acceptance bit is still an adaptive function of the fixed dev set. This is a direct instance of adaptive validation/reusable-held-out feedback rather than a new causal primitive. The same reduction also applies to recursive keep-better schemes such as RSEA, where successive candidate states are repeatedly selected using the same held-out validation split.",
+          "current_source_refs": [
+            "arXiv:2606.28374",
+            "arXiv:2608.13560"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.13560",
+            "primary-fulltext:arXiv:2608.13560#sha256=f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417",
+            "arXiv:2606.28374",
+            "primary-fulltext:arXiv:2606.28374#sha256=8a56dd24499a96b4897abfa77751385ebb0ec97f6912a64ea4f49318bab455eb",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#snapshot-validity-horizon",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#verifier-exogeneity"
+          ],
+          "problem_text": "The standalone claim that AutoDesign's hidden dev-score gate creates a novel self-evolving-agent information channel merely because raw dev trajectories/scores are withheld while the dev-dependent acceptance decision is stored and reused.",
+          "reason": "AutoDesign's dev gate is selection-facing despite hiding raw dev scores, but the resulting repeated feedback channel is already a mature adaptive-validation object. It is useful as a governance warning, not a standalone paper thesis.",
+          "reopen_only_if": "Reopen only with a preregistered matched comparison that equalizes the full validation feedback transcript/information budget, dev sample size, proposal/update capacity, iteration count, and compute, yet two self-evolution structures make different fresh-test generalization predictions that a same-information adaptive-validation/reusable-holdout model cannot express. More iterations, a different score threshold, binary-versus-real-valued feedback, or a new agent domain alone is insufficient.",
+          "dead_end_certified": true,
+          "memory_class": "PRINCIPLE_DEAD_END",
+          "counter_explanation": {
+            "type": "SAME_INFORMATION_REDUCTION",
+            "statement": "The released AutoDesign loop repeatedly evaluates candidate harnesses on a fixed development set, maps the result into an accept/reject decision, stores that acceptance decision in the persistent optimization record, and gives the updated record to the optimizer in the next iteration. Raw dev scores are hidden, but the acceptance bit is still an adaptive function of the fixed dev set. This is a direct instance of adaptive validation/reusable-held-out feedback rather than a new causal primitive. The same reduction also applies to recursive keep-better schemes such as RSEA, where successive candidate states are repeatedly selected using the same held-out validation split.",
+            "opposite_prediction": "Under the same query sequence and feedback transcript, a generic adaptive-validation/reusable-holdout model predicts that repeated dev-dependent accept/reject outcomes can convey information about the fixed validation sample and can eventually induce validation-specific selection even when raw dev scores are hidden. The risk is governed by the information released by the adaptive transcript, query/update capacity, validation sample size, and selection rule; renaming the queries as harness updates or context evolution does not change that prediction.",
+            "opposite_principle": "A held-out split stops being statistically independent of an adaptive search once functions of that split are repeatedly fed back into future proposals; hiding raw scores does not remove the feedback channel.",
+            "opposite_search_seed": "Search only for a self-evolution-specific structural constraint that changes fresh-test generalization after matching the complete validation-information budget/transcript, validation sample size, proposal capacity, update count, and compute. A promising residual must make a different ex-ante prediction from adaptive-data-analysis/reusable-holdout theory under identical feedback bits, rather than simply showing that repeated validation can overfit.",
+            "scope": "AutoDesign arXiv:2608.13560v1 outer-loop acceptance history and Recursive Self-Evolving Agents via Held-Out Selection arXiv:2606.28374v1 repeated held-out keep-better selection.",
+            "same_information_or_scope_matched": true,
+            "positive_support": true,
+            "same_information_reduction_verified": true,
+            "evidence_refs": [
+              "arXiv:2608.13560",
+              "primary-fulltext:arXiv:2608.13560#sha256=f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417",
+              "arXiv:2606.28374",
+              "primary-fulltext:arXiv:2606.28374#sha256=8a56dd24499a96b4897abfa77751385ebb0ec97f6912a64ea4f49318bab455eb",
+              "repo:research_pipeline/paper_first_fresh_saturation.py#snapshot-validity-horizon",
+              "repo:research_pipeline/paper_first_fresh_saturation.py#verifier-exogeneity"
+            ],
+            "alternative_explanations_ruled_out": [
+              "No dev information reaches future proposals: contradicted because AutoDesign stores each dev-dependent acceptance decision in the optimization record supplied to the next iteration.",
+              "The development split is queried only once: contradicted by the outer-loop algorithm, which evaluates every candidate on D_dev before acceptance.",
+              "This structure is unique to AutoDesign: RSEA independently uses repeated held-out keep-better selection across generations, demonstrating that the object is a generic adaptive-selection pattern rather than an AutoDesign-only mechanism."
+            ],
+            "reopen_condition": "Reopen only with a preregistered matched comparison that equalizes the full validation feedback transcript/information budget, dev sample size, proposal/update capacity, iteration count, and compute, yet two self-evolution structures make different fresh-test generalization predictions that a same-information adaptive-validation/reusable-holdout model cannot express. More iterations, a different score threshold, binary-versus-real-valued feedback, or a new agent domain alone is insufficient."
+          },
+          "source_readjudication_artifact": "generated/autodesign-dev-acceptance-feedback-principle-readjudication-20260817.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {},
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
           "scientific_authority": false
         },
@@ -34659,8 +34496,8 @@
             "arXiv:2607.02901"
           ],
           "evidence_basis": [
-            "run:private-data://runs/shadow-20260816-treatment-semantics-v8-r1/formulate-p1.json#sha256=f0c39f8b6826c75c91566eab97d82b918e43155b4ef7ae201dda2789f43c48d7",
-            "run:private-data://runs/shadow-20260816-treatment-semantics-v8-r1/raw/formulate-p1-2bc1537aec0b.txt#sha256=2bc1537aec0b5810894c0e4ff8f4a15a5139b78d0056962f457b79927b2a1aed",
+            "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-treatment-semantics-v8-r1/formulate-p1.json#sha256=f0c39f8b6826c75c91566eab97d82b918e43155b4ef7ae201dda2789f43c48d7",
+            "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-treatment-semantics-v8-r1/raw/formulate-p1-2bc1537aec0b.txt#sha256=2bc1537aec0b5810894c0e4ff8f4a15a5139b78d0056962f457b79927b2a1aed",
             "repo:generated/positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json#sha256=2656e6faf2132ebdac5842f8249eef90d5ae18aa3fef0a7c0956084c2dbaeff1",
             "arXiv:2607.02901",
             "arXiv:1806.11153"
@@ -34681,8 +34518,8 @@
             "same_information_reduction_verified": true,
             "positive_support": true,
             "evidence_refs": [
-              "run:private-data://runs/shadow-20260816-treatment-semantics-v8-r1/formulate-p1.json#sha256=f0c39f8b6826c75c91566eab97d82b918e43155b4ef7ae201dda2789f43c48d7",
-              "run:private-data://runs/shadow-20260816-treatment-semantics-v8-r1/raw/formulate-p1-2bc1537aec0b.txt#sha256=2bc1537aec0b5810894c0e4ff8f4a15a5139b78d0056962f457b79927b2a1aed",
+              "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-treatment-semantics-v8-r1/formulate-p1.json#sha256=f0c39f8b6826c75c91566eab97d82b918e43155b4ef7ae201dda2789f43c48d7",
+              "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-treatment-semantics-v8-r1/raw/formulate-p1-2bc1537aec0b.txt#sha256=2bc1537aec0b5810894c0e4ff8f4a15a5139b78d0056962f457b79927b2a1aed",
               "repo:generated/positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json#sha256=2656e6faf2132ebdac5842f8249eef90d5ae18aa3fef0a7c0956084c2dbaeff1",
               "arXiv:2607.02901",
               "arXiv:1806.11153"
@@ -34697,6 +34534,65 @@
           },
           "source_readjudication_artifact": "generated/positive-residual-memory-treatment-semantics-principle-readjudication-20260816.json",
           "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {},
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "AUTODESIGN-POSTERBENCH-OPTIMIZER-CALIBRATION",
+          "basin": "principle-readjudication-7621dc2dd3cd8c90",
+          "search_primitive": "",
+          "title": "PosterBench calibration cannot drift through an optimization loop that does not consume PosterBench",
+          "avoid": [
+            "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: PosterBench calibration cannot drift through an optimization loop that does not consume PosterBench",
+            "using the negative experiment metric alone as the reason for the dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "AutoDesign explicitly separates the optimization-time evaluator R_meta from the frozen PosterBench protocol. R_meta is built before autonomous optimization and supplies rollout scores and train/dev acceptance feedback. PosterBench is a distinct frozen protocol used for completed-system comparison and the system-blind human-alignment study. Because PosterBench scores are not consumed by the released update proposal or acceptance transition, PosterBench itself has no causal write path into the optimization trajectory.",
+          "current_source_refs": [
+            "arXiv:2608.13560"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.13560",
+            "primary-fulltext:arXiv:2608.13560#sha256=f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417"
+          ],
+          "problem_text": "The standalone claim that AutoDesign's recursive optimization can directly overfit or reward-hack PosterBench itself, causing PosterBench's human-preference calibration to drift during the released optimization loop.",
+          "reason": "PosterBench-human calibration is useful external evidence but cannot by itself diagnose optimizer-induced benchmark overfitting in AutoDesign because PosterBench is outside the released update path.",
+          "reopen_only_if": "Reopen only if first-party evidence shows PosterBench or an equivalent frozen final benchmark score is actually consumed by a later AutoDesign update, gate, rollback, synthesis, or selection transition. Merely evaluating more checkpoints on PosterBench after optimization is insufficient.",
+          "dead_end_certified": true,
+          "memory_class": "PRINCIPLE_DEAD_END",
+          "counter_explanation": {
+            "type": "IMPOSSIBILITY_OR_INVARIANCE",
+            "statement": "AutoDesign explicitly separates the optimization-time evaluator R_meta from the frozen PosterBench protocol. R_meta is built before autonomous optimization and supplies rollout scores and train/dev acceptance feedback. PosterBench is a distinct frozen protocol used for completed-system comparison and the system-blind human-alignment study. Because PosterBench scores are not consumed by the released update proposal or acceptance transition, PosterBench itself has no causal write path into the optimization trajectory.",
+            "opposite_prediction": "Holding R_meta, train/dev tasks, optimizer inputs, proposed updates, and randomness fixed, changing only PosterBench scores or PosterBench membership cannot change the released AutoDesign harness-update trajectory. It can change only the final reported benchmark comparison. Any optimizer-induced validity failure must therefore occur in R_meta, the repeatedly reused dev gate, or another selection-facing signal, not in report-only PosterBench.",
+            "opposite_principle": "Evaluation can be adaptively overfit only through a selection-facing feedback path; a frozen report-only benchmark is trajectory-invariant by construction.",
+            "opposite_search_seed": "Search for optimization-time evaluator or validation signals that are actually consumed by update proposal, gating, rollback, or persistent optimization history. Do not use final report-only PosterBench calibration as evidence of optimizer feedback. A valid next object must identify the selection-facing signal and then survive adaptive-validation/reusable-holdout reductions.",
+            "scope": "AutoDesign arXiv:2608.13560v1, especially the outer-loop definition distinguishing fixed R_meta from the separate frozen PosterBench final evaluation protocol.",
+            "same_information_or_scope_matched": true,
+            "proof_or_structural_witness": true,
+            "structural_witness": "The paper states that R_meta remains fixed during autonomous optimization and is used to score rollouts; it separately states that this optimization-time evaluator is distinct from the frozen PosterBench protocol used for final system comparison. PosterBench therefore has no update-edge in the released outer-loop equations.",
+            "evidence_refs": [
+              "arXiv:2608.13560",
+              "primary-fulltext:arXiv:2608.13560#sha256=f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417"
+            ],
+            "alternative_explanations_ruled_out": [
+              "PosterBench is the optimization evaluator: contradicted by the paper's explicit R_meta-versus-PosterBench distinction.",
+              "PosterBench controls update acceptance: the released acceptance equation uses J_train and J_dev under R_meta, not PosterBench.",
+              "Human-blind preference enters the optimization loop: the human study is reported as final independent evaluation, not an update signal."
+            ],
+            "reopen_condition": "Reopen only if first-party evidence shows PosterBench or an equivalent frozen final benchmark score is actually consumed by a later AutoDesign update, gate, rollback, synthesis, or selection transition. Merely evaluating more checkpoints on PosterBench after optimization is insufficient."
+          },
+          "source_readjudication_artifact": "generated/autodesign-posterbench-causal-nopath-principle-readjudication-20260817.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {
+            "source_ref": "arXiv:2608.13560",
+            "closed_evidence_sha256": [
+              "c8406fed7b91273f18fcc410a614c5100c7d9398bd718c3fda7bfd1fe5b2149e"
+            ],
+            "closure_scope": "PosterBench score-gap versus human-preference agreement calibration phenomenon only",
+            "source_readjudication_artifact": "generated/autodesign-posterbench-causal-nopath-principle-readjudication-20260817.json",
+            "scientific_authority": false
+          },
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
           "scientific_authority": false
         },
@@ -34716,8 +34612,8 @@
           ],
           "evidence_basis": [
             "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
-            "run:private-data://runs/shadow-20260816-double-ratchet-v9-r1/formulate-p1.json#sha256=c5f06dc71e323bbed7cb18f9c11f23515ecdd196597c9d358d0dab62f5b9a3b0",
-            "run:private-data://runs/shadow-20260816-double-ratchet-v9-r1/raw/formulate-p1-92f8ef904761.txt#sha256=92f8ef904761caeac882af386dcc4bb18299bbc6aca8d3de8b7cb212d65a0808",
+            "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-double-ratchet-v9-r1/formulate-p1.json#sha256=c5f06dc71e323bbed7cb18f9c11f23515ecdd196597c9d358d0dab62f5b9a3b0",
+            "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-double-ratchet-v9-r1/raw/formulate-p1-92f8ef904761.txt#sha256=92f8ef904761caeac882af386dcc4bb18299bbc6aca8d3de8b7cb212d65a0808",
             "repo:generated/shadow-v4-reciprocal-coupling-principle-readjudication-20260816.json",
             "repo:generated/shadow-p01-locked-set-causal-nopath-principle-readjudication-20260816.json",
             "arXiv:2607.12790"
@@ -34739,8 +34635,8 @@
             "positive_support": true,
             "evidence_refs": [
               "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
-              "run:private-data://runs/shadow-20260816-double-ratchet-v9-r1/formulate-p1.json#sha256=c5f06dc71e323bbed7cb18f9c11f23515ecdd196597c9d358d0dab62f5b9a3b0",
-              "run:private-data://runs/shadow-20260816-double-ratchet-v9-r1/raw/formulate-p1-92f8ef904761.txt#sha256=92f8ef904761caeac882af386dcc4bb18299bbc6aca8d3de8b7cb212d65a0808",
+              "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-double-ratchet-v9-r1/formulate-p1.json#sha256=c5f06dc71e323bbed7cb18f9c11f23515ecdd196597c9d358d0dab62f5b9a3b0",
+              "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-double-ratchet-v9-r1/raw/formulate-p1-92f8ef904761.txt#sha256=92f8ef904761caeac882af386dcc4bb18299bbc6aca8d3de8b7cb212d65a0808",
               "repo:generated/shadow-v4-reciprocal-coupling-principle-readjudication-20260816.json",
               "repo:generated/shadow-p01-locked-set-causal-nopath-principle-readjudication-20260816.json",
               "arXiv:2607.12790"
@@ -34775,6 +34671,7 @@
             "search_closed_reason": "The only remaining v9 downstream-cliff seed is same-information reducible to nonstationary stale-supervisor/covariate-shift/online-adaptation models; no model run is required to certify this scoped reduction.",
             "scientific_authority": false
           },
+          "fresh_phenomenon_closure": {},
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
           "scientific_authority": false
         },
@@ -34845,6 +34742,7 @@
             "search_closed_reason": "",
             "scientific_authority": false
           },
+          "fresh_phenomenon_closure": {},
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
           "scientific_authority": false
         },
@@ -34866,7 +34764,7 @@
             "arXiv:2608.07527",
             "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/plan.json#sha256=dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39",
             "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/analysis.json#sha256=2b5ca3000d2c491ff2df6a1126667edd6fb59dfa7ec8fc446c9a6b30da959a16",
-            "host52:repo://generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P06-C01"
+            "host52:/home/wyt/code/agent-self-evolution-observatory-automation/generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P06-C01"
           ],
           "problem_text": "The standalone P06 mechanism claiming that page-coverage certification, with no answer-relevance information beyond the same retrieved snippets/question, selectively exposes hidden answer-evidence gaps relative to covered-answerable cases.",
           "reason": "The frozen P06 realization is a dead end because relevance-agnostic page-coverage quantity cannot identify the hidden answer-evidence gap it is supposed to selectively repair. The experiment supplies compatible behavioral evidence, but the dead-end decision is authorized by the stronger information-structure witness, not by the negative metric alone.",
@@ -34888,7 +34786,7 @@
               "arXiv:2608.07527",
               "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/plan.json#sha256=dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39",
               "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/analysis.json#sha256=2b5ca3000d2c491ff2df6a1126667edd6fb59dfa7ec8fc446c9a6b30da959a16",
-              "host52:repo://generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P06-C01"
+              "host52:/home/wyt/code/agent-self-evolution-observatory-automation/generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P06-C01"
             ],
             "alternative_explanations_ruled_out": [
               "support insufficiency: the repaired run had 128 valid units, including 47 gap-answerable and 17 covered-answerable units",
@@ -34900,6 +34798,7 @@
           },
           "source_readjudication_artifact": "generated/p06-coverage-starvation-principle-readjudication-20260816.json",
           "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {},
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
           "scientific_authority": false
         },
@@ -34955,6 +34854,7 @@
           },
           "source_readjudication_artifact": "generated/positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json",
           "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {},
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
           "scientific_authority": false
         },
@@ -35028,6 +34928,206 @@
             "search_closed_reason": "",
             "scientific_authority": false
           },
+          "fresh_phenomenon_closure": {},
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "GEOFORGE-RETRIEVAL-REDUNDANCY",
+          "basin": "principle-readjudication-ea20793051a9268c",
+          "search_primitive": "",
+          "title": "Top-k retrieval degradation is a marginal-information trade-off, not a new self-evolution primitive",
+          "avoid": [
+            "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Top-k retrieval degradation is a marginal-information trade-off, not a new self-evolution primitive",
+            "using the negative experiment metric alone as the reason for the dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "GeoForge itself attributes the sensitivity curve to the ordinary quality-coverage trade-off of retrieved guidance: a small number of high-quality skills performs best, excessive retrieval slightly degrades trajectory quality because guidance becomes redundant, and an overly strict score threshold hurts Tool-Exact-Match by filtering useful experiences. This is exactly the prediction of marginal-information/complementarity-versus-redundancy models under a finite context/action-planning budget. The system's own mature reduction ledger likewise treats sharing-helpful versus sharing-collapse behavior as information redundancy/correlation or diversity-consensus trade-off unless a same-information residual survives.",
+          "current_source_refs": [
+            "arXiv:2608.10494"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.10494",
+            "primary-fulltext:arXiv:2608.10494#sha256=30c2a1deaceac1b3b20a79711ab05bc3344ff48762d4a149c3900f16c40d112a",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#experience-sharing-sign-reversal",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#artifact-uptake-after-retrieval"
+          ],
+          "problem_text": "The standalone claim that GeoForge's slight trajectory-quality degradation under excessive skill retrieval and its optimum near Top-k=3 / Min-Retrieve-Score=0.6 identify a new agent-specific self-evolution mechanism merely from the nonmonotonic retrieval curve.",
+          "reason": "GeoForge provides a clean quantitative example that retrieval quality is nonmonotonic in quantity, but its own explanation and same-information mature theory already identify the governing object as marginal useful information versus redundant guidance.",
+          "reopen_only_if": "Reopen only if a preregistered matched comparison equalizes retrieved-skill count, relevance/score profile, context/token budget, pairwise redundancy/complementarity, planner/backbone, and observable retrieval-utilization information, yet a self-evolution-specific structural variable produces a distinct ex-ante trajectory-quality or task-utility prediction that same-information redundancy/correlation, submodular-diversity, negative-transfer, and retrieval-utilization models cannot express. A new k, threshold, domain, or retrieval curve is insufficient.",
+          "dead_end_certified": true,
+          "memory_class": "PRINCIPLE_DEAD_END",
+          "counter_explanation": {
+            "type": "SAME_INFORMATION_REDUCTION",
+            "statement": "GeoForge itself attributes the sensitivity curve to the ordinary quality-coverage trade-off of retrieved guidance: a small number of high-quality skills performs best, excessive retrieval slightly degrades trajectory quality because guidance becomes redundant, and an overly strict score threshold hurts Tool-Exact-Match by filtering useful experiences. This is exactly the prediction of marginal-information/complementarity-versus-redundancy models under a finite context/action-planning budget. The system's own mature reduction ledger likewise treats sharing-helpful versus sharing-collapse behavior as information redundancy/correlation or diversity-consensus trade-off unless a same-information residual survives.",
+            "opposite_prediction": "With the retrieval scoring function, candidate skill pool, context/token budget, and downstream planner fixed, increasing k should initially add useful complementary information, then yield diminishing marginal value as lower-ranked skills become redundant, weakly relevant, or conflicting; raising the score threshold should remove noise until it begins discarding useful evidence. A nonmonotonic optimum in k or threshold is therefore expected without introducing a new self-evolution object.",
+            "opposite_principle": "Retrieval utility depends on marginal complementary information under a finite planning/context budget; more retrieved skills are not monotonically better when lower-ranked guidance is redundant or conflicting.",
+            "opposite_search_seed": "Search only for matched retrieval sets with the same relevance scores, token/context budget, redundancy/complementarity statistics, skill count, and planner information where an agent-specific structural variable still predicts a different ex-ante trajectory or task outcome. Require same-information redundancy/correlation, submodular-diversity, retrieval-utilization, and negative-transfer baselines to fail. Do not reopen from another Top-k optimum or another observation that more context can hurt.",
+            "scope": "GeoForge arXiv:2608.10494v1 sensitivity analysis over the number of retrieved skills and minimum retrieval-score threshold, including the reported Top-k=3 and Min-Retrieve-Score=0.6 operating point.",
+            "same_information_or_scope_matched": true,
+            "same_information_reduction_verified": true,
+            "positive_support": true,
+            "evidence_refs": [
+              "arXiv:2608.10494",
+              "primary-fulltext:arXiv:2608.10494#sha256=30c2a1deaceac1b3b20a79711ab05bc3344ff48762d4a149c3900f16c40d112a",
+              "repo:research_pipeline/paper_first_fresh_saturation.py#experience-sharing-sign-reversal",
+              "repo:research_pipeline/paper_first_fresh_saturation.py#artifact-uptake-after-retrieval"
+            ],
+            "alternative_explanations_ruled_out": [
+              "The degradation reflects an unexplained optimizer instability: the paper explicitly attributes it to redundant guidance under excessive retrieval.",
+              "The optimum is caused only by a strict filtering failure: the two sweeps have opposite sides of the same quality-coverage trade-off—too much low-marginal-value guidance versus filtering useful experiences.",
+              "The effect requires a geospatial-specific causal object: the stated mechanism depends on relevance, redundancy, retrieval count, and planning quality, all directly expressible by generic marginal-information and negative-transfer models.",
+              "A new self-evolution mechanism follows because the retrieved objects are evolved skills: evolution determines the available artifacts, but the reported sensitivity experiment varies retrieval hyperparameters over the resulting library; the observed Top-k nonmonotonicity is a retrieval-selection phenomenon."
+            ],
+            "reopen_condition": "Reopen only if a preregistered matched comparison equalizes retrieved-skill count, relevance/score profile, context/token budget, pairwise redundancy/complementarity, planner/backbone, and observable retrieval-utilization information, yet a self-evolution-specific structural variable produces a distinct ex-ante trajectory-quality or task-utility prediction that same-information redundancy/correlation, submodular-diversity, negative-transfer, and retrieval-utilization models cannot express. A new k, threshold, domain, or retrieval curve is insufficient."
+          },
+          "source_readjudication_artifact": "generated/geoforge-retrieval-redundancy-principle-readjudication-20260817.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {
+            "source_ref": "arXiv:2608.10494",
+            "closed_evidence_sha256": [
+              "b5df526fa03415b713b12858c57b5503d0eb6fa3324a11dadca40c147ceca2cd",
+              "db9fdc7933b5629a50c0a95a245cd7cf65ff3a6ef8532bd61b7b5901cd8a29c6",
+              "f305512e03d39c9494532c57bc68497ea80f49fe082c6fcf77f5d4233367b724"
+            ],
+            "closure_scope": "retrieval-count/relevance-threshold quality-coverage trade-off only",
+            "source_readjudication_artifact": "generated/geoforge-retrieval-redundancy-principle-readjudication-20260817.json",
+            "scientific_authority": false
+          },
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "HARD-SECURITY-UTILITY-COLLAPSE",
+          "basin": "principle-readjudication-f30978960c19222b",
+          "search_primitive": "",
+          "title": "Backbone-dependent overrestriction is a security-utility operating point, not a new self-evolution cliff",
+          "avoid": [
+            "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Backbone-dependent overrestriction is a security-utility operating point, not a new self-evolution cliff",
+            "using the negative experiment metric alone as the reason for the dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "The reported GPT-5.5 behavior is already represented by the paper's own multiobjective runtime-defense formulation and by ordinary overblocking/conservative-policy trade-offs. HARD defines the defense objective in terms of security and utility, explicitly notes that overly restrictive interventions can improve security at the cost of legitimate capability, and interprets different HARD variants as different operating points on a security-utility frontier. In the backbone ablation the execution agent, judges, tasks, evolution rounds, and budget are fixed while the evolution backbone changes; the resulting policies occupy different ASR/BU/UA points. The GPT-5.5 point (ASR 20.3, BU 94.9, UA 7.2) therefore demonstrates a poor utility-conditioned operating point, not an additional causal primitive or an identified phase transition.",
+          "current_source_refs": [
+            "arXiv:2608.12977"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.12977",
+            "primary-fulltext:arXiv:2608.12977#sha256=d810b39f050dd6d3330e08aade701b1325511e98a47cb009be1ca5d975172957"
+          ],
+          "problem_text": "The standalone claim that HARD's GPT-5.5 backbone result (lower attack success but utility-under-attack collapsing to 7.2%) identifies a new self-evolving-defense utility-collapse mechanism merely because failure-driven security refinement and task utility move in opposite directions.",
+          "reason": "HARD provides strong evidence that defense-evolution backbones can land at very different security-utility operating points, including severe overrestriction. The extreme GPT-5.5 result is scientifically useful as a failure case but does not by itself identify a new utility-collapse mechanism beyond mature multiobjective/overblocking explanations.",
+          "reopen_only_if": "Reopen only if a preregistered matched experiment holds the execution agent, attack/benign task mix, security and utility evaluators, pre-update performance, feedback information, update budget, and objective weights/information fixed, while a self-evolution-specific structural variable yields a different ex-ante security-utility outcome that the strongest same-information Pareto/constrained-optimization, calibration, and overblocking baselines cannot express. A different evolution backbone, another extreme UA value, or a new scalarization is insufficient.",
+          "dead_end_certified": true,
+          "memory_class": "PRINCIPLE_DEAD_END",
+          "counter_explanation": {
+            "type": "SAME_INFORMATION_REDUCTION",
+            "statement": "The reported GPT-5.5 behavior is already represented by the paper's own multiobjective runtime-defense formulation and by ordinary overblocking/conservative-policy trade-offs. HARD defines the defense objective in terms of security and utility, explicitly notes that overly restrictive interventions can improve security at the cost of legitimate capability, and interprets different HARD variants as different operating points on a security-utility frontier. In the backbone ablation the execution agent, judges, tasks, evolution rounds, and budget are fixed while the evolution backbone changes; the resulting policies occupy different ASR/BU/UA points. The GPT-5.5 point (ASR 20.3, BU 94.9, UA 7.2) therefore demonstrates a poor utility-conditioned operating point, not an additional causal primitive or an identified phase transition.",
+            "opposite_prediction": "Given the same attack/benign task distributions, execution agent, judges, update budget, and observable security and utility feedback, a generic multiobjective/constrained policy-optimization or overblocking model predicts that different proposal/evolution backbones can settle at different Pareto operating points. Strong attack correction need not imply utility preservation, and a conservative artifact can sharply reduce UA while retaining high BU if its restrictions are triggered primarily in attacked contexts. A single extreme point does not identify a cliff without an independently varied control parameter and a same-information baseline that fails to express the frontier.",
+            "opposite_principle": "Failure-driven defense evolution is multiobjective policy refinement: security gains and task utility are separate objectives, and overrestriction is an ordinary Pareto/overblocking failure unless a structural variable predicts a residual beyond a same-information security-utility model.",
+            "opposite_search_seed": "Search only for a preregistered structural variable that separates defense updates with matched pre-update ASR, BU, UA, attack/benign context features, update budget, execution model, evaluator information, and security-utility objective, yet yields a distinct ex-ante downstream safety/utility prediction that a same-information Pareto, constrained-optimization, calibration, or overblocking model cannot express. Do not reopen from another backbone with a different ASR/UA point, a tuned utility weight, or a visually sharp trade-off curve.",
+            "scope": "HARD / Beyond Handcrafted Security arXiv:2608.12977v1, especially the harness-optimization objective, the HARD-Policy/HARD-Gate/HARD-Both security-utility comparisons, and the evolution-backbone ablation on memory contamination.",
+            "same_information_or_scope_matched": true,
+            "same_information_reduction_verified": true,
+            "positive_support": true,
+            "evidence_refs": [
+              "arXiv:2608.12977",
+              "primary-fulltext:arXiv:2608.12977#sha256=d810b39f050dd6d3330e08aade701b1325511e98a47cb009be1ca5d975172957"
+            ],
+            "alternative_explanations_ruled_out": [
+              "The 7.2% UA point is a failure of the execution agent or evaluator rather than the evolved defense: the paper holds the execution agent, judges, benchmark tasks, and evaluation protocol fixed across the backbone ablation and varies only the evolution backbone.",
+              "Security and utility are intended to move monotonically together: contradicted by the paper's explicit multiobjective formulation and its statement that overly restrictive interventions can improve security while degrading legitimate capabilities.",
+              "The paper establishes a controlled utility-collapse threshold: it reports discrete backbone-dependent operating points under one five-round budget; no independently varied scalar control parameter or changepoint experiment identifies a threshold.",
+              "Joint defense artifacts uniformly dominate single-artifact evolution: the paper itself reports non-additive interactions and explicitly interprets HARD variants as different security-utility operating points."
+            ],
+            "reopen_condition": "Reopen only if a preregistered matched experiment holds the execution agent, attack/benign task mix, security and utility evaluators, pre-update performance, feedback information, update budget, and objective weights/information fixed, while a self-evolution-specific structural variable yields a different ex-ante security-utility outcome that the strongest same-information Pareto/constrained-optimization, calibration, and overblocking baselines cannot express. A different evolution backbone, another extreme UA value, or a new scalarization is insufficient."
+          },
+          "source_readjudication_artifact": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {
+            "source_ref": "arXiv:2608.12977",
+            "closed_evidence_sha256": [
+              "91d63905c50552497f265db3f06747a17d47ec78d3457910ecf5284927e8e273",
+              "cfdbe09702de11059185f4de82697418fcac8cd83c75edbd017c1462a0dce392"
+            ],
+            "closure_scope": "backbone-dependent ASR/BU/UA overrestriction operating-point phenomenon only",
+            "source_readjudication_artifact": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
+            "scientific_authority": false
+          },
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "MINDMEMOS-DREAMING-COMPRESSION-PLATEAU",
+          "basin": "principle-readjudication-fc9f8df4be78cc69",
+          "search_primitive": "",
+          "title": "The reported ~20% MindMemOS dreaming compression is not an independently identified compression plateau",
+          "avoid": [
+            "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: The reported ~20% MindMemOS dreaming compression is not an independently identified compression plateau",
+            "using the negative experiment metric alone as the reason for the dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "On the released FactConsolidation object, the archive fraction is a post-action summary of targeted consolidation, not an independently varied treatment. The benchmark defines the later contradictory fact as the valid memory, while the first-party dreaming pipeline deterministically archives exact duplicates before LLM actions, can merge multiple source memories while archiving the sources, and represents directed conflict resolution with relations such as supersedes. Therefore simultaneously reducing active-memory volume and improving both single- and multi-hop accuracy is predicted by a same-information conflict-aware selective-forgetting/belief-revision account whenever removed memories are duplicate, stale, or contradictory. The paper reports one naturally induced archive fraction per model/hop regime rather than a controlled AMCR sweep, so the observed ~20% operating point does not identify a plateau or cliff in compression ratio.",
+          "current_source_refs": [
+            "arXiv:2608.12428"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.12428",
+            "first-party:https://github.com/mindscale-noah/MindMemOS@90491828726e1540442b17cd445d0308d0b8093c",
+            "repo:MindMemOS/README.md#sha256=16fc60fababb89b4866440ba15a568e4c736d639cd36cc7bcc69eae83810c399",
+            "repo:MindMemOS/src/mindmemos/mindmemos/pipelines/dreaming/default.py#sha256=6762ce312475c75caa4630521b931d12be2afc0a70f91aeefd910dc918709909",
+            "repo:MindMemOS/src/mindmemos/mindmemos/components/dreaming/action_planning.py#sha256=5541c07c386fff7cb9df6074d412d5be3463d7f68e45487fd7254411d08a9040",
+            "repo:MindMemOS/tests/pipelines/dreaming/test_default.py#sha256=6ab7fbfb4033db0f0fc051150812c1bd41f795b3a117519af62ebd708b91a71a",
+            "repo:MindMemOS/tests/components/dreaming/test_action_planning.py#sha256=893b26ebaa31e4bd023b5fe2486d89b359fb1433f7532c24f9c1464d020384ca",
+            "repo:MindMemOS/docs/eval/README_ZH.md#sha256=0dc912c7cb98070c607d1f438481f7291ffb2495ca8010706283eeff23b1047b",
+            "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260817-source-coverage-v11-r1/formulate-p1.json#sha256=daa18de25a298c67391053af6f6a9e2f779bf05f39fbefd7c5147ea4f409882e"
+          ],
+          "problem_text": "The v11 MindMemOS formulation claiming that the reported ~19-23% active-memory archive ratio identifies a nonmonotone compression plateau/cliff whose location is a new causal object beyond conflict-aware selective forgetting, redundancy removal, and belief revision on MemoryAgentBench FactConsolidation.",
+          "reason": "The reported MindMemOS FactConsolidation result supports targeted consolidation/selective forgetting, but it does not identify a standalone ~20% compression plateau. The latter is reduced by benchmark semantics plus first-party conflict-aware dreaming behavior before any new experiment is run.",
+          "reopen_only_if": "Reopen only when a source-faithful or independently validated substrate supports an intervention that separates compression quantity from conflict-resolution semantics: either vary AMCR while matching which answer-critical conflict paths are resolved/preserved, or vary conflict-resolution quality at matched AMCR. The strongest conflict-aware selective-forgetting/rate-distortion baseline must receive the same memory provenance, temporal order, retrieval state, and query information and still make a distinct ex-ante prediction.",
+          "dead_end_certified": true,
+          "memory_class": "PRINCIPLE_DEAD_END",
+          "counter_explanation": {
+            "type": "SAME_INFORMATION_REDUCTION",
+            "statement": "On the released FactConsolidation object, the archive fraction is a post-action summary of targeted consolidation, not an independently varied treatment. The benchmark defines the later contradictory fact as the valid memory, while the first-party dreaming pipeline deterministically archives exact duplicates before LLM actions, can merge multiple source memories while archiving the sources, and represents directed conflict resolution with relations such as supersedes. Therefore simultaneously reducing active-memory volume and improving both single- and multi-hop accuracy is predicted by a same-information conflict-aware selective-forgetting/belief-revision account whenever removed memories are duplicate, stale, or contradictory. The paper reports one naturally induced archive fraction per model/hop regime rather than a controlled AMCR sweep, so the observed ~20% operating point does not identify a plateau or cliff in compression ratio.",
+            "opposite_prediction": "Under matched memory store, query set, temporal ordering, conflict graph, and dreaming action provenance, answer accuracy should track whether dreaming removes duplicate/stale/contradictory evidence and preserves the benchmark-valid newer evidence, not the archive fraction alone. Two runs with the same AMCR but different conflict-resolution quality can have different accuracy, while different AMCR values can have similar accuracy if they remove only irrelevant or superseded memories. A standalone compression-ratio threshold should disappear after conditioning on which answer-relevant conflict paths were preserved or resolved.",
+            "opposite_principle": "For FactConsolidation, conflict-aware selective forgetting is the causal object; active-memory compression ratio is an outcome summary unless it is independently manipulated under matched conflict-resolution semantics.",
+            "opposite_search_seed": "Reopen only with a preregistered intervention that independently varies archive/compression ratio while holding conflict-resolution semantics, answer-critical evidence retention, temporal ordering, retrieval policy, model, and query set fixed, or independently varies conflict-resolution quality at matched AMCR. The residual must beat a same-information conflict-aware selective-forgetting/rate-distortion baseline. A natural ~20% archive rate, a larger sweep created by deleting arbitrary memories, or a renamed consolidation cliff is insufficient.",
+            "scope": "MindMemOS first-party repository commit 90491828726e1540442b17cd445d0308d0b8093c; MemoryAgentBench FactConsolidation evaluation; shadow run shadow-20260817-source-coverage-v11-r1 candidate SHADOW-P01-C01.",
+            "same_information_or_scope_matched": true,
+            "same_information_reduction_verified": true,
+            "positive_support": true,
+            "evidence_refs": [
+              "arXiv:2608.12428",
+              "first-party:https://github.com/mindscale-noah/MindMemOS@90491828726e1540442b17cd445d0308d0b8093c",
+              "repo:MindMemOS/README.md#sha256=16fc60fababb89b4866440ba15a568e4c736d639cd36cc7bcc69eae83810c399",
+              "repo:MindMemOS/src/mindmemos/mindmemos/pipelines/dreaming/default.py#sha256=6762ce312475c75caa4630521b931d12be2afc0a70f91aeefd910dc918709909",
+              "repo:MindMemOS/src/mindmemos/mindmemos/components/dreaming/action_planning.py#sha256=5541c07c386fff7cb9df6074d412d5be3463d7f68e45487fd7254411d08a9040",
+              "repo:MindMemOS/tests/pipelines/dreaming/test_default.py#sha256=6ab7fbfb4033db0f0fc051150812c1bd41f795b3a117519af62ebd708b91a71a",
+              "repo:MindMemOS/tests/components/dreaming/test_action_planning.py#sha256=893b26ebaa31e4bd023b5fe2486d89b359fb1433f7532c24f9c1464d020384ca",
+              "repo:MindMemOS/docs/eval/README_ZH.md#sha256=0dc912c7cb98070c607d1f438481f7291ffb2495ca8010706283eeff23b1047b",
+              "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260817-source-coverage-v11-r1/formulate-p1.json#sha256=daa18de25a298c67391053af6f6a9e2f779bf05f39fbefd7c5147ea4f409882e"
+            ],
+            "alternative_explanations_ruled_out": [
+              "The ~20% value is a controlled compression treatment: not supported. The paper reports the archive fraction produced by dreaming for each evaluated condition, not an intervention sweep over AMCR.",
+              "Dreaming is generic random deletion: ruled out by the released implementation, which clusters entity-related memories, deterministically archives exact duplicates, detects relation/issues, and applies merge/create/link/delete-style consolidation actions with provenance.",
+              "Multi-hop improvement is incompatible with selective forgetting: no. On FactConsolidation, removing a stale contradictory fact can improve any query whose reasoning path otherwise includes that conflict; multi-hop reasoning does not require preserving contradictory superseded evidence.",
+              "The current release supports a faithful paper-table compression sweep anyway: the repository documentation explicitly notes that the current CLI does not expose the full Add -> Dreaming -> Answer/Search -> Score switch needed to reproduce the README Vanilla + Dreaming row from the configuration alone; this is an additional execution limitation but is not the reason for the principle reduction."
+            ],
+            "reopen_condition": "Reopen only when a source-faithful or independently validated substrate supports an intervention that separates compression quantity from conflict-resolution semantics: either vary AMCR while matching which answer-critical conflict paths are resolved/preserved, or vary conflict-resolution quality at matched AMCR. The strongest conflict-aware selective-forgetting/rate-distortion baseline must receive the same memory provenance, temporal order, retrieval state, and query information and still make a distinct ex-ante prediction."
+          },
+          "source_readjudication_artifact": "generated/mindmemos-dreaming-compression-principle-readjudication-20260817.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {
+            "source_ref": "arXiv:2608.12428",
+            "closed_evidence_sha256": [
+              "0e70938c7225ba7229c309f6849cdf7e593c661dace3c06261514130481f74d6",
+              "74cb6b7181d902c6d9456f3c1db6ac25b496f131df566c7764d3feb7d399a3e1"
+            ],
+            "closure_scope": "dreaming compression/accuracy co-movement and ~20% AMCR phenomenon only",
+            "source_readjudication_artifact": "generated/mindmemos-dreaming-compression-principle-readjudication-20260817.json",
+            "scientific_authority": false
+          },
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
           "scientific_authority": false
         }
@@ -35055,36 +35155,6 @@
           "scientific_authority": false
         },
         {
-          "source_candidate_id": "SHADOW-P01-C01",
-          "basin": "near-miss-terminal-support-hold-834575272a040cca",
-          "title": "The 32-token experience cliff and post-threshold plateau in latent on-policy self-distillation",
-          "disposition": "HOLD_SUPPORT_UNAVAILABLE",
-          "support_status": "SOURCE_SPECIFIC_PRIMARY_ASSET_UNAVAILABLE",
-          "required_unit": "On the released LOPD/ACEBench configuration, run a preregistered tokens-per-experience sweep {8,16,32,64,128} crossed with retrieval counts {1,3,5} under fixed model, split, seeds, and rollout budget. Fit the strongest same-information capacity/redundancy model on one subset of regimes and test exact prediction of the 16→32 jump and 32→128 plateau in held-out regimes. The candidate is falsified if that model predicts the curve and there is no residual token×retrieval interaction.",
-          "evidence_basis": [
-            "arXiv:2608.13040"
-          ],
-          "strongest_reduction": "the proposed residual remains unresolved until the frozen same-information falsifier can be executed on source-faithful or independently equivalent assets",
-          "reason": "The preregistered scientific comparison requires faithful reproduction of the reported tokens-per-experience sensitivity. In the first-party LOPD release at commit 362d3742fc7b4dbbc0677b219990f2a4b4d0a90f, the README explicitly states that training code is not yet released, while the EnvScaler latent inference configuration requires a compressor checkpoint but contains the placeholder YOUR_COMPRESSOR_CHECKPOINT. The token budget K is the QFormer num_queries architecture parameter. Without the source-specific trained compressor/training artifacts for the sensitivity conditions, changing K in the released code would instantiate an untrained or incompatible compressor rather than reproduce the paper intervention. A locally trained substitute, random QFormer, different model, or retuned checkpoint would change the frozen scientific object.",
-          "avoid": [
-            "re-proposing the unsupported problem object without resolving its frozen asset dependency: The 32-token experience cliff and post-threshold plateau in latent on-policy self-distillation",
-            "substituting a locally invented, randomly initialized, differently trained, or outcome-tuned asset for the source-specific scientific object",
-            "treating missing source assets as scientific evidence for or against the proposed residual"
-          ],
-          "reopen_only_if": "Reopen only when the source-specific/released assets required by the frozen falsifier become available with provenance sufficient to execute the same scientific object, or when an independently reviewed operationalization proves equivalent without changing the frozen prediction, same-information baseline, or causal unit.",
-          "source_run_id": "shadow-20260817-fresh-phenomenon-v10-r1",
-          "source_stage_manifest_sha256": "5f9d53572cc0bc1d4b76689aa69af1204ad9fd9b624a67b73c86f7f24c327f91",
-          "hold_origin": "bounded-evidence-acquisition",
-          "dead_end_certified": false,
-          "memory_class": "REOPENABLE_HOLD",
-          "automatic_problem_gate_authority": false,
-          "automatic_method_authority": false,
-          "automatic_experiment_authority": false,
-          "automatic_p0_authority": false,
-          "automatic_gpu_authority": false,
-          "scientific_authority": false
-        },
-        {
           "source_candidate_id": "SP-15",
           "basin": "implicit-query-decomposition-skill-routing",
           "avoid": [
@@ -35101,8 +35171,10 @@
           "scientific_authority": false
         }
       ],
-      "principle_dead_end_count": 12,
-      "principle_readjudication_dead_end_count": 8,
+      "principle_dead_end_count": 18,
+      "principle_readjudication_dead_end_count": 14,
+      "fresh_phenomenon_closure_count": 5,
+      "fresh_phenomenon_closed_evidence_count": 11,
       "inversion_asset_evidence": [
         {
           "asset_ref": "first-party-asset:autoskill@94c47ca488d4ba4117d20272e66d49b9877e68cf",
@@ -35258,7 +35330,7 @@
       "positive_residual_asset_evidence_count": 1,
       "positive_residual_search_active_count": 0,
       "positive_residual_asset_registry_id": "positive-residual-search-assets-v4",
-      "hold_object_count": 3,
+      "hold_object_count": 2,
       "current_source_hard_veto_count": 0,
       "current_source_hard_veto_added_from_latest_run": 0,
       "current_source_hard_veto_added_from_terminal_run": 0,
@@ -35272,9 +35344,9 @@
       "semantic_hold_added_from_terminal_run": 0,
       "semantic_hold_inherited": 0,
       "near_miss_preflight_count": 3,
-      "near_miss_hold_count": 2,
+      "near_miss_hold_count": 1,
       "near_miss_base_preflight_count": 4,
-      "near_miss_terminal_support_hold_count": 1
+      "near_miss_terminal_support_hold_count": 0
     },
     "shadow_source": {
       "portfolio_status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
@@ -35325,9 +35397,9 @@
       "revise_paper_problem": 1,
       "stop_standalone": 1,
       "support_inventory_required": 1,
-      "shadow_dead_end_objects": 12,
-      "principle_readjudication_dead_ends": 8,
-      "shadow_hold_objects": 3,
+      "shadow_dead_end_objects": 18,
+      "principle_readjudication_dead_ends": 14,
+      "shadow_hold_objects": 2,
       "current_source_hard_veto_dead_ends": 0,
       "current_source_hard_veto_added_from_latest_run": 0,
       "current_source_hard_veto_added_from_terminal_run": 0,
@@ -35338,8 +35410,8 @@
       "semantic_hold_added_from_terminal_run": 0,
       "semantic_hold_inherited": 0,
       "near_miss_preflight_dead_ends": 3,
-      "near_miss_holds": 2,
-      "near_miss_terminal_support_holds": 1,
+      "near_miss_holds": 1,
+      "near_miss_terminal_support_holds": 0,
       "near_miss_support_holds": 1,
       "near_miss_current_primary_stops": 2,
       "near_miss_mature_theory_stops": 1,
@@ -35602,7 +35674,7 @@
   },
   "paper_first_discovery_frontier": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T18:32:47+00:00",
+    "generated_at": "2026-08-16T18:42:49+00:00",
     "status": "SHADOW_QUALIFICATION_PENDING",
     "policy": {
       "scientific_authority": false,
@@ -35946,7 +36018,7 @@
   },
   "paper_first_sp15_identifiability_support": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T18:32:47+00:00",
+    "generated_at": "2026-08-16T18:42:49+00:00",
     "support_id": "sp15-query-only-identifiability-support-20260814",
     "paper_problem_id": "SP-15",
     "revised_claim": "Under fixed query-only inference and a fixed skill library, a minimally sufficient skill set may be observationally non-identifiable when multiple task semantics compatible with the same available query require incompatible sufficient sets.",
@@ -36301,18 +36373,18 @@
       "preconditions_are_deterministic_search_control_only": true
     },
     "summary": {
-      "new_boundary_sources": 0,
-      "last_scanned_sources": 228,
       "failed": 6,
-      "current_reviewed_sources": 228,
-      "passed": 9,
-      "new_assumption_sources": 0,
-      "new_failure_sources": 0,
       "checks": 15,
+      "new_failure_sources": 0,
       "new_reviewed_sources": 0,
-      "manual_scan_eligible": false,
+      "new_boundary_sources": 0,
       "new_empirical_sources": 0,
-      "automatic_model_scan_authorized": false
+      "new_assumption_sources": 0,
+      "last_scanned_sources": 228,
+      "automatic_model_scan_authorized": false,
+      "current_reviewed_sources": 228,
+      "manual_scan_eligible": false,
+      "passed": 9
     },
     "failed_check_count": 6,
     "freshness_status": "STALE_RELATION_UNIVERSE",
@@ -36338,7 +36410,7 @@
       "latest_shadow_present": true,
       "latest_shadow_terminal": true,
       "same_source_transaction": true,
-      "current_discovery_operator_version": "fresh-phenomenon-source-coverage-v11",
+      "current_discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
       "latest_discovery_operator_version": "fresh-phenomenon-first-v10",
       "same_discovery_operator_version": false,
       "operator_upgrade_recompile": true,
@@ -36359,7 +36431,7 @@
       "latest_source_set_sha256": "07e49fe2546a7161684fa35f98841344738b18c331def25572c5d3a82871a2c6",
       "latest_primary_content_sha256": "7465c68bacf4badbbeb19d948db8c12e001da76c3065eb7f01b14f22a489f245",
       "latest_source_pool_sha256": "a2bfda699834ab2cf6c426185c45d8bded443ce64563d24640151f324b2f0921",
-      "current_discovery_operator_version": "fresh-phenomenon-source-coverage-v11",
+      "current_discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
       "latest_discovery_operator_version": "fresh-phenomenon-first-v10"
     },
     "scientific_authority": false
@@ -36772,7 +36844,7 @@
   },
   "paper_first_post_c2": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T18:32:47+00:00",
+    "generated_at": "2026-08-16T18:42:49+00:00",
     "paper_id": "trajectory-mediated-memory-effect-transport",
     "decision": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
     "reason": "All ten strict C2 units are execution-valid and the full pre-divergence policy decision context is reproducible, yet only 2/10 controlled action contrasts are nonzero and the preregistered same-memory cross-context sign reversal is absent. The earliest-divergent-action controlled-mediator mechanism is therefore unsupported by its local falsifier.",
@@ -36886,8 +36958,8 @@
   },
   "paper_first_premature_method_diagnostics": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-12T18:48:51+00:00",
-    "run_root": "private-data://runs/paper-first-p0-method-20260812",
+    "generated_at": "2026-08-16T18:42:49+00:00",
+    "run_root": "private-data://external/paper-first-p0-method-20260812",
     "authority": {
       "authority_type": "premature-paper-first-method-diagnostic-only",
       "scientific_authority": false,
@@ -36979,8 +37051,8 @@
         "dominant_problem_authority": {
           "decision": "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT",
           "paper_problem_status": "TERMINATED_AS_STANDALONE_AFTER_FINAL_COLLISION_REVIEW",
-          "artifact_generated_at": "2026-08-12T16:48:27+00:00",
-          "artifact_sha256": "aca168a8a0bb491bc4ea366c637a07df07d0d9687fd66bdc8f34839699c1f013",
+          "artifact_generated_at": "2026-08-16T18:32:46+00:00",
+          "artifact_sha256": "8375f99acaf110b514cd57d78cef6a495eea4ed179771264d306a3da51b070da",
           "timestamp_is_not_authority": true,
           "problem_stop_dominates_diagnostic_regardless_of_rebuild_timestamp": true,
           "p0_authorized": false,
@@ -45066,8 +45138,8 @@
   },
   "paper_first_p0_f0": {
     "schema_version": "1.3",
-    "generated_at": "2026-08-16T13:59:14+00:00",
-    "run_root": "private-data://runs/paper-first-p0-20260812",
+    "generated_at": "2026-08-16T18:42:49+00:00",
+    "run_root": "private-data://external/paper-first-p0-20260812",
     "authority": {
       "promotion_authorized": false,
       "local_validation_authorized": false,
@@ -73892,7 +73964,7 @@
       {
         "key": "corpus",
         "pass": true,
-        "detail": "334 papers"
+        "detail": "281 papers"
       },
       {
         "key": "evidence-coverage",
@@ -73913,9 +73985,9 @@
             "retrieval_modes": 4,
             "claim_evidence_routes": 4,
             "benchmark_status": "spec-ready-not-yet-scored",
-            "current_evidence_nodes": 582,
-            "current_evidence_edges": 958,
-            "current_corpus_papers": 334
+            "current_evidence_nodes": 500,
+            "current_evidence_edges": 612,
+            "current_corpus_papers": 281
           },
           "evidence_integrity": {
             "claim_types": 5,
@@ -74343,18 +74415,18 @@
         "detail": {
           "status": "HOLD_MANUAL_RELATION_SCAN",
           "summary": {
-            "new_boundary_sources": 0,
-            "last_scanned_sources": 228,
             "failed": 6,
-            "current_reviewed_sources": 228,
-            "passed": 9,
-            "new_assumption_sources": 0,
-            "new_failure_sources": 0,
             "checks": 15,
+            "new_failure_sources": 0,
             "new_reviewed_sources": 0,
-            "manual_scan_eligible": false,
+            "new_boundary_sources": 0,
             "new_empirical_sources": 0,
-            "automatic_model_scan_authorized": false
+            "new_assumption_sources": 0,
+            "last_scanned_sources": 228,
+            "automatic_model_scan_authorized": false,
+            "current_reviewed_sources": 228,
+            "manual_scan_eligible": false,
+            "passed": 9
           }
         }
       },
@@ -74384,7 +74456,7 @@
         "key": "paper-first-retrieval-incomplete-generator-boundary",
         "pass": true,
         "detail": {
-          "status": "GENERATED_AWAIT_PROBLEM_GATE",
+          "status": "GENERATED_ZERO_CANDIDATES",
           "source_coverage": {
             "coverage_exhausted": true,
             "source_retrieval_complete": true,
@@ -74403,7 +74475,7 @@
         "key": "paper-first-carrier-pending-generator-boundary",
         "pass": true,
         "detail": {
-          "status": "GENERATED_AWAIT_PROBLEM_GATE",
+          "status": "GENERATED_ZERO_CANDIDATES",
           "source_coverage": {
             "coverage_exhausted": true,
             "source_retrieval_complete": true,
@@ -74422,7 +74494,7 @@
         "key": "paper-first-problem-generator",
         "pass": true,
         "detail": {
-          "status": "GENERATED_AWAIT_PROBLEM_GATE",
+          "status": "GENERATED_ZERO_CANDIDATES",
           "summary": {
             "primary_evidence_records": 32,
             "raw_seeds": 0,
@@ -74433,16 +74505,16 @@
             "evolved_branches": 0,
             "max_branch_depth": 0,
             "portfolio_calls": 0,
-            "generated": 1,
+            "generated": 0,
             "structurally_reviewable": 0,
             "semantic_clear": 0,
-            "semantic_blocked": 1,
-            "written_to_auto_inbox": 1,
+            "semantic_blocked": 0,
+            "written_to_auto_inbox": 0,
             "generated_by_lane": {
               "CONTRADICTION": 0,
               "CONVERGENT_FAILURE": 0,
               "ASSUMPTION_BREAK": 0,
-              "UNEXPLAINED_BOUNDARY": 1,
+              "UNEXPLAINED_BOUNDARY": 0,
               "OTHER": 0
             },
             "structurally_reviewable_by_lane": {
@@ -74463,7 +74535,7 @@
               "CONTRADICTION": 0,
               "CONVERGENT_FAILURE": 0,
               "ASSUMPTION_BREAK": 0,
-              "UNEXPLAINED_BOUNDARY": 1,
+              "UNEXPLAINED_BOUNDARY": 0,
               "OTHER": 0
             }
           }
@@ -74473,10 +74545,10 @@
         "key": "paper-first-problem-gate-queue",
         "pass": true,
         "detail": {
-          "submitted": 1,
-          "audited": 1,
+          "submitted": 0,
+          "audited": 0,
           "passed_problem_gate": 0,
-          "blocked_problem_gate": 1,
+          "blocked_problem_gate": 0,
           "paper_design_eligible": 0,
           "inbox_errors": 0,
           "primary_evidence_records": 32,
@@ -74484,7 +74556,7 @@
             "CONTRADICTION": 0,
             "CONVERGENT_FAILURE": 0,
             "ASSUMPTION_BREAK": 0,
-            "UNEXPLAINED_BOUNDARY": 1,
+            "UNEXPLAINED_BOUNDARY": 0,
             "OTHER": 0
           },
           "passed_by_lane": {
@@ -74498,7 +74570,7 @@
             "CONTRADICTION": 0,
             "CONVERGENT_FAILURE": 0,
             "ASSUMPTION_BREAK": 0,
-            "UNEXPLAINED_BOUNDARY": 1,
+            "UNEXPLAINED_BOUNDARY": 0,
             "OTHER": 0
           },
           "method_authorized": 0,
@@ -74515,9 +74587,9 @@
           "revise_paper_problem": 1,
           "stop_standalone": 1,
           "support_inventory_required": 1,
-          "shadow_dead_end_objects": 12,
-          "principle_readjudication_dead_ends": 8,
-          "shadow_hold_objects": 3,
+          "shadow_dead_end_objects": 18,
+          "principle_readjudication_dead_ends": 14,
+          "shadow_hold_objects": 2,
           "current_source_hard_veto_dead_ends": 0,
           "current_source_hard_veto_added_from_latest_run": 0,
           "current_source_hard_veto_added_from_terminal_run": 0,
@@ -74528,8 +74600,8 @@
           "semantic_hold_added_from_terminal_run": 0,
           "semantic_hold_inherited": 0,
           "near_miss_preflight_dead_ends": 3,
-          "near_miss_holds": 2,
-          "near_miss_terminal_support_holds": 1,
+          "near_miss_holds": 1,
+          "near_miss_terminal_support_holds": 0,
           "near_miss_support_holds": 1,
           "near_miss_current_primary_stops": 2,
           "near_miss_mature_theory_stops": 1,
@@ -74723,7 +74795,7 @@
           "registered_prediction_rejections_pending_counterexplanation": 0,
           "principle_falsifications": 0,
           "principle_dead_end_certifications": 0,
-          "principle_repairs_or_refinements": 0
+          "principle_repairs_or_refinements": 2
         }
       },
       {
@@ -74747,7 +74819,7 @@
           "formal_p0_total": 2,
           "gate_failures": {
             "parameter_provenance": 0,
-            "baseline_competence": 4,
+            "baseline_competence": 0,
             "mechanism_identifiability": 4,
             "statistical_resolution": 0,
             "compute_graph": 0,
@@ -74828,20 +74900,20 @@
           "meta": {
             "principles": 2,
             "unresolved_principles": 2,
-            "cross_branch_reference_edges": 1,
+            "cross_branch_reference_edges": 2,
             "current_launchable": 0
           },
           "failure_assets": {
             "assets": 6,
-            "unique_signatures": 3,
+            "unique_signatures": 6,
             "principle_dead_ends": 0,
             "economy_dead_ends": 0,
             "experimental_stops_not_dead_ends": 23
           },
           "scheduler": {
-            "candidates": 0,
-            "cross_branch_reference_edges": 0,
-            "top_candidate": ""
+            "candidates": 6,
+            "cross_branch_reference_edges": 1,
+            "top_candidate": "budgeted-evolution-controller:target-variation-design:0"
           },
           "replay": {
             "cases": 8,
@@ -74869,7 +74941,7 @@
           },
           "valid_result_files": 0,
           "invalid_result_files": 0,
-          "invalidated_result_files": 0,
+          "invalidated_result_files": 1,
           "valid_approval_files": 0,
           "invalid_approval_files": 0,
           "awaiting_human_approval": 0,
@@ -74887,12 +74959,15 @@
         "pass": true,
         "detail": {
           "nodes": 4,
-          "identifiable": 0,
-          "belief_updates_allowed": 0,
+          "identifiable": 1,
+          "belief_updates_allowed": 1,
           "scale_up_allowed": 0,
-          "repair_children": 0,
+          "repair_children": 8,
           "diagnosis_counts": {
-            "infrastructure-error": 4
+            "representation-signal-mismatch": 1,
+            "no-label-variation": 1,
+            "matched-simplification-tie": 1,
+            "objective-claim-mismatch": 1
           }
         }
       },
@@ -74901,9 +74976,9 @@
         "pass": true,
         "detail": {
           "semantic_errors": [],
-          "support_qualification": "support_qualification_hold",
-          "full_support": "full_support_hold",
-          "cpu_gate": "support_enriched_analysis_pending",
+          "support_qualification": "support_qualification_pass",
+          "full_support": "full_support_complete",
+          "cpu_gate": "support_enriched_analysis_complete",
           "second_model": "second_model_hold"
         }
       },
@@ -75019,7 +75094,7 @@
         "pass": true,
         "detail": {
           "schema_version": "2.3",
-          "generated_at": "2026-08-16T18:32:47+00:00",
+          "generated_at": "2026-08-16T18:42:49+00:00",
           "policy": {
             "schema_version": "2.3",
             "paper_novelty_precedes_method_design": true,
@@ -75155,8 +75230,8 @@
           "stage_scope_note": "The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; experimental failure classes may update scoped belief or routing but cannot create persistent dead ends without principle-level counter-explanation certification.",
           "runtime": {
             "active_gpu_leases": 0,
-            "lease_root": "private-data://resource-leases",
-            "repair_budget_root": "private-data://governance/repair-budget"
+            "lease_root": "private-data://external/resource-leases",
+            "repair_budget_root": "private-data://external/repair-budget"
           }
         }
       },
@@ -75206,5 +75281,186 @@
         }
       }
     ]
+  },
+  "paper_first_fresh_phenomenon_portfolio": {
+    "schema_version": "1.0",
+    "generated_at": "2026-08-16T18:42:49+00:00",
+    "status": "ACTIVE_F0_EXISTS",
+    "policy": {
+      "portfolio_is_outside_canonical_problem_queue": true,
+      "fresh_quantitative_phenomenon_precedes_method_ideation": true,
+      "one_active_f0_slot_max": 1,
+      "active_f0_requires_provenance_audited_substrate": true,
+      "active_f0_requires_frozen_same_information_falsifier": true,
+      "source_only_candidates_cannot_consume_experiment_slot": true,
+      "support_unavailable_is_hold_not_scientific_failure": true,
+      "positive_f0_does_not_grant_problem_gate_or_paper_design": true,
+      "f0_must_test_strongest_generic_reduction_before_novelty_claim": true,
+      "failed_f0_is_archived_as_negative_search_control": true,
+      "paper_problem_claim_requires_separate_current_source_collision_review": true,
+      "scientific_authority": false
+    },
+    "summary": {
+      "candidates": 4,
+      "active_f0": 1,
+      "scout_asset": 0,
+      "hold_support": 3,
+      "hold_reduction": 0,
+      "ready_for_problem_review": 0,
+      "stop_reduction": 0,
+      "primary_verified": 32,
+      "primary_empirical_fact_candidates": 107,
+      "canonical_problem_gate_added": 0,
+      "method_authorized": 0,
+      "experiment_authorized": 0,
+      "p0_authorized": 0,
+      "gpu_authorized": 0
+    },
+    "candidates": [
+      {
+        "candidate_id": "PA-01-EVIDENCE-ECHO",
+        "title": "Evidence Echo in Agent Notes: Redundant Extractive Notes Can Turn Safe Deferral into False Answers",
+        "source_refs": [
+          "arXiv:2608.07527"
+        ],
+        "phenomenon": "On 64 benchmark-unanswerable units with raw visible pages locked across policies, adding an extractive persistent note raised false-answer rate from 10.9% to 21.9%; the paired naive-summary transition was 7 induced versus 0 repaired false answers (exact p=0.015625), with zero net exact-accuracy gain on the 64 answerable units.",
+        "strongest_reduction": "generic prompt salience/repetition, correlated-evidence double counting, extra decision opportunity, context-length effects, or ordinary calibration shift under redundant context",
+        "cheapest_falsifier": "Keep raw pages, retrieval ranking, model, temperature, and two-step budget fixed; compare RAW_ONLY vs ECHO_EXTRACTIVE vs VERBATIM_DUPLICATE vs TOKEN_MATCHED_NEUTRAL vs DEDUP_WARNING on the frozen unanswerable/answerable units.",
+        "support_status": "PROVENANCE_AUDITED_LOCAL_SUBSTRATE",
+        "status": "ACTIVE_F0",
+        "priority": 100,
+        "why_now": "This is the only current scout with a real matched substrate, a nonzero paired residual, and a falsifier that changes one representation axis without requiring a new benchmark.",
+        "substrate": {
+          "host": "52",
+          "run": "p06-coverage-starvation-v2-exec-20260816",
+          "aggregate_jsonl_sha256": "9a74f7eaf7029c5933a4c2fa088d649356eb7df253d899c498747dc2c7410634",
+          "raw_visible_pages_locked_across_policies": true,
+          "second_retrieval_ranking_locked_across_active_policies": true
+        },
+        "evidence": {
+          "baseline_false_answer_rate": 0.109375,
+          "naive_summary_false_answer_rate": 0.21875,
+          "induced_false": 7,
+          "repaired_false": 0,
+          "paired_p": 0.015625,
+          "answerable_exact_net_delta": 0.0
+        },
+        "reopen_only_if": "If the F0 is reduced by token-matched neutral padding or the paired effect disappears, archive. If redundant evidence remains uniquely harmful and DEDUP_WARNING selectively recovers safety, then run current-source collision review before any Problem-Gate submission.",
+        "paper_problem_claimed": false,
+        "scientific_authority": false,
+        "authority": {
+          "problem_gate": false,
+          "paper_design": false,
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false,
+          "full_experiment": false
+        }
+      },
+      {
+        "candidate_id": "PA-02-DEFENSE-RESTRICTIVENESS",
+        "title": "Failure-Driven Defense Can Improve Security While Collapsing Utility",
+        "source_refs": [
+          "arXiv:2608.12977"
+        ],
+        "phenomenon": "Under the same five-round defense-evolution budget, the reported backbone ablation lowers attack success while one backbone yields only 7.2% utility accuracy, showing a sharp security/utility mismatch.",
+        "strongest_reduction": "ordinary constrained optimization / security-utility Pareto trade-off and conservative policy bias",
+        "cheapest_falsifier": "Requires paired evolution histories with matched current ASR/utility and candidate patch benefit but different accumulated restrictiveness; no such current released unit is available.",
+        "support_status": "SUPPORT_UNAVAILABLE",
+        "status": "HOLD_SUPPORT",
+        "priority": 70,
+        "why_now": "Strong quantitative failure boundary, but it must not consume compute before the required history-level asset exists.",
+        "substrate": {},
+        "evidence": {},
+        "reopen_only_if": "Author release exposes replayable evolution histories with rule/patch lineage.",
+        "paper_problem_claimed": false,
+        "scientific_authority": false,
+        "authority": {
+          "problem_gate": false,
+          "paper_design": false,
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false,
+          "full_experiment": false
+        }
+      },
+      {
+        "candidate_id": "PA-03-HARNESS-SELECTION-INVERSION",
+        "title": "Train-Selected Harnesses Need Not Be the Harnesses That Generalize Best",
+        "source_refs": [
+          "arXiv:2607.13683"
+        ],
+        "phenomenon": "HarnessBank reports a GDPval train/test ranking disagreement and 62-76% phantom-progress rounds under weaker crediting rules after convergence, suggesting a selection-stability boundary.",
+        "strongest_reduction": "small-n ranking noise, winner's curse, adaptive validation, and ordinary selection bias",
+        "cheapest_falsifier": "Sweep the frozen verification rule on released paired gene histories while matching candidate count, selection pressure, and deployment n; the required histories are not released.",
+        "support_status": "SUPPORT_UNAVAILABLE",
+        "status": "HOLD_SUPPORT",
+        "priority": 60,
+        "why_now": "Potentially strong self-evolution-specific selection phenomenon, but support is still source-only.",
+        "substrate": {},
+        "evidence": {},
+        "reopen_only_if": "HarnessBank releases paired run histories/outcomes.",
+        "paper_problem_claimed": false,
+        "scientific_authority": false,
+        "authority": {
+          "problem_gate": false,
+          "paper_design": false,
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false,
+          "full_experiment": false
+        }
+      },
+      {
+        "candidate_id": "PA-04-SPATIAL-MEMORY-CONFLICT",
+        "title": "High-Relevance Procedure Memory Can Still Fail When Visual Grounding or Procedure Compatibility Breaks",
+        "source_refs": [
+          "arXiv:2608.12743"
+        ],
+        "phenomenon": "Spatial Memory Agent reports baseline and memory-agent failures even with high-quality relevant memories (TRS >= 0.6), separating memory relevance from executability/grounding.",
+        "strongest_reduction": "base-model visual grounding failure or ordinary retrieval/execution mismatch",
+        "cheapest_falsifier": "Needs query-level retrieved lesson identities/text, TRS/relevance metadata, and outcomes to construct matched conflicting versus non-conflicting procedure sets.",
+        "support_status": "SUPPORT_UNAVAILABLE",
+        "status": "HOLD_SUPPORT",
+        "priority": 50,
+        "why_now": "Good reserve phenomenon but no independent query-level support asset is currently available.",
+        "substrate": {},
+        "evidence": {},
+        "reopen_only_if": "Authors release query-level retrieval logs and outcomes.",
+        "paper_problem_claimed": false,
+        "scientific_authority": false,
+        "authority": {
+          "problem_gate": false,
+          "paper_design": false,
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false,
+          "full_experiment": false
+        }
+      }
+    ],
+    "source_bindings": {
+      "evidence_echo_receipt": {
+        "path": "generated/paper-first-evidence-echo-retrospective-20260817.json",
+        "sha256": "5b3d0d05a968fc507d62fb805675836bd03bfc1f96c0bbc26fae1c12e5d9b099"
+      },
+      "evidence_echo_f0_harness": {
+        "path": "research_pipeline/paper_first_evidence_echo_f0.py",
+        "sha256": "8f3b04d09c4101335434fa7a8a50bba965ab95ce244cf24c5fe9e53ba6feadf6"
+      },
+      "primary_state": {
+        "path": "generated/paper-first-primary-evidence-state.json",
+        "sha256": "d61b944ab553d023fd4169a067121dda4ca1c45dad8234deafd5c1ed6b83d4d9"
+      },
+      "dead_end_memory": {
+        "path": "generated/paper-first-search-portfolio-design-adjudication.json",
+        "sha256": "013b7c30c83b52fc9364c434d9ec15361a2d1513df0b21b15f84daba90f36c72"
+      }
+    },
+    "scientific_authority": false
   }
 }

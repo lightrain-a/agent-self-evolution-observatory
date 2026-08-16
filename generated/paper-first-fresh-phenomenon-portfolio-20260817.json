@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T18:41:04+00:00",
+  "generated_at": "2026-08-16T18:41:58+00:00",
   "status": "ACTIVE_F0_EXISTS",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -170,11 +170,11 @@
     },
     "primary_state": {
       "path": "generated/paper-first-primary-evidence-state.json",
-      "sha256": "4c62ec1e417174811acbf72fb4c2abaa00e650bd1cbed80406aae33aac37a585"
+      "sha256": "d61b944ab553d023fd4169a067121dda4ca1c45dad8234deafd5c1ed6b83d4d9"
     },
     "dead_end_memory": {
       "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-      "sha256": "d85052d737731106944dc01bd5ace8db7600d1ed9bd8c938f38851fdbc4ed8a0"
+      "sha256": "013b7c30c83b52fc9364c434d9ec15361a2d1513df0b21b15f84daba90f36c72"
     }
   },
   "scientific_authority": false
