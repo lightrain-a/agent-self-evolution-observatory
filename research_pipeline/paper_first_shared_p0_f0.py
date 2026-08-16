@@ -11,6 +11,11 @@ from .p0_alfworld_adapter import ALFWorldGameRunner,HFAdmissiblePolicy,load_conf
 from .paper_first_p0_promotions import require_local_validation_authority
 
 FAULTS=("prompt","workflow","tool"); SURFACES=("prompt","workflow","tool")
+# Historical shared-surface repairs were designed to test surface ownership, not
+# future diagnosability after a committed persistent update. Prompt repair is an
+# always-on patch; workflow/tool repairs merely cancel their matching injected
+# fault and are inert when a different future fault is active.
+PERSISTENT_CROSS_FAULT_REPAIR_ACTIVE={"prompt":True,"workflow":False,"tool":False}
 RISK={"success":0.0,"premature-stop":1.0,"search-timeout":2.0,"missing-required-transform":3.0,"loop-timeout":3.0,"invalid-action":4.0}
 
 def now(): return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -90,10 +95,10 @@ def analyze(rows,tasks):
   for fault in FAULTS:
    base=idx[task,fault,"none"]; reps={s:idx[task,fault,s] for s in SURFACES}; gains={s:reps[s]["success"]-base["success"] for s in SURFACES}; best=max(SURFACES,key=lambda s:(gains[s],-reps[s]["steps"],s==fault)); own.append({"task_id":task,"fault":fault,"split":"heldout" if task in held else "dev","baseline_success":base["success"],"repair_success":{s:reps[s]["success"] for s in SURFACES},"best_surface":best,"oracle_correct":best==fault})
  h=[r for r in own if r["split"]=="heldout"]; per={s:sum(r["repair_success"][s] for r in h)/max(1,len(h)) for s in SURFACES}; oracle=sum(r["repair_success"][r["fault"]] for r in h)/max(1,len(h)); fixed=max(per.values()); ownacc=sum(r["oracle_correct"] for r in h)/max(1,len(h)); distinct=len({r["best_surface"] for r in h}); pf2=distinct>=2 and oracle-fixed>=.15 and ownacc>=.60
- cen=centers([idx[t,f,"none"] for t in dev for f in FAULTS]); base_diag=acc([idx[t,f,"none"] for t in held for f in FAULTS],cen); post={}; succ={}
+ cen=centers([idx[t,f,"none"] for t in dev for f in FAULTS]); base_diag=acc([idx[t,f,"none"] for t in held for f in FAULTS],cen); post={}; paired_pre={}; succ={}; eligible={}
  for s in SURFACES:
-  subset=[idx[t,f,s] for t in held for f in FAULTS if f!=s]; failed=[r for r in subset if not r["success"]]; post[s]=acc(failed,cen); succ[s]=sum(r["success"] for r in subset)/max(1,len(subset))
- drops={s:base_diag-post[s] for s in SURFACES}; pf4=base_diag>=.5 and max(drops.values())>=.15
+  pairs=[(idx[t,f,"none"],idx[t,f,s]) for t in held for f in FAULTS if f!=s and not idx[t,f,s]["success"]]; pre=[a for a,b in pairs]; failed=[b for a,b in pairs]; post[s]=acc(failed,cen); paired_pre[s]=acc(pre,cen); eligible[s]=len(pairs); subset=[idx[t,f,s] for t in held for f in FAULTS if f!=s]; succ[s]=sum(r["success"] for r in subset)/max(1,len(subset))
+ drops={s:paired_pre[s]-post[s] for s in SURFACES}; legacy_unpaired={s:base_diag-post[s] for s in SURFACES}; composition={s:base_diag-paired_pre[s] for s in SURFACES}; pf4_operationalization_valid=all(PERSISTENT_CROSS_FAULT_REPAIR_ACTIVE.values()); pf4=pf4_operationalization_valid and base_diag>=.5 and max(drops.values())>=.15
  transport=Counter(); summaries={}
  for s in SURFACES:
   pairs=[]
@@ -105,7 +110,7 @@ def analyze(rows,tasks):
  for i,a in enumerate(SURFACES):
   for b in SURFACES[i+1:]: pair.append({"a":a,"b":b,"success_gap":abs(summaries[a]["success_rate"]-summaries[b]["success_rate"]),"risk_gap":abs(summaries[a]["residual_failure_risk"]-summaries[b]["residual_failure_risk"])})
  modes={b for _,b,a in transport}|{a for _,b,a in transport}; non=sum(v for (s,b,a),v in transport.items() if a!=b); dp=next((x for x in pair if x["success_gap"]<=.17 and x["risk_gap"]>=.5),None); pf6=len(modes)>=3 and non>0 and dp is not None
- return {"schema_version":"1.0","experiment":"PF-SHARED-SURFACE-F0","analyzed_at":now(),"task_count":len(tasks),"rows":len(rows),"pf2":{"support_pass":pf2,"heldout_oracle_repair_rate":oracle,"best_fixed_surface_rate":fixed,"ownership_accuracy":ownacc,"distinct_best_surfaces":distinct,"per_surface":per},"pf4":{"support_pass":pf4,"baseline_diagnostic_accuracy":base_diag,"post_update_wrong_surface_accuracy":post,"diagnostic_drop":drops},"pf6":{"support_pass":pf6,"failure_modes":sorted(modes),"non_diagonal_transitions":non,"repair_summaries":summaries,"decision_relevant_pair":dp,"transport":[{"surface":s,"before":b,"after":a,"count":n} for (s,b,a),n in sorted(transport.items())]},"scientific_semantics":"F0/P0-Support only; no METHOD-PASS/FAIL authority."}
+ return {"schema_version":"1.0","experiment":"PF-SHARED-SURFACE-F0","analyzed_at":now(),"task_count":len(tasks),"rows":len(rows),"pf2":{"support_pass":pf2,"heldout_oracle_repair_rate":oracle,"best_fixed_surface_rate":fixed,"ownership_accuracy":ownacc,"distinct_best_surfaces":distinct,"per_surface":per},"pf4":{"support_pass":pf4,"baseline_diagnostic_accuracy":base_diag,"paired_baseline_accuracy_same_units":paired_pre,"post_update_wrong_surface_accuracy":post,"diagnostic_drop":drops,"legacy_unpaired_diagnostic_drop":legacy_unpaired,"cohort_composition_term":composition,"eligible_failed_wrong_surface_pairs":eligible,"estimand":"paired pre/post diagnostic accuracy on the identical post-qualification cohort; full-baseline vs post-selected-subset comparisons are forbidden","persistent_cross_fault_repair_active":dict(PERSISTENT_CROSS_FAULT_REPAIR_ACTIVE),"operationalization_valid":pf4_operationalization_valid,"operationalization_reason":"PF-4 future diagnosability requires a committed update that remains active under independent later faults. Historical workflow/tool repair arms only cancel their matching injected fault and are no-ops for other faults."},"pf6":{"support_pass":pf6,"failure_modes":sorted(modes),"non_diagonal_transitions":non,"repair_summaries":summaries,"decision_relevant_pair":dp,"transport":[{"surface":s,"before":b,"after":a,"count":n} for (s,b,a),n in sorted(transport.items())]},"scientific_semantics":"F0/P0-Support only; no METHOD-PASS/FAIL authority."}
 
 def main():
  p=argparse.ArgumentParser();p.add_argument("--data-root",required=True);p.add_argument("--model-path",required=True);p.add_argument("--alfworld-config",required=True);p.add_argument("--output-dir",required=True);p.add_argument("--device",default="cuda");p.add_argument("--resume",action="store_true");a=p.parse_args(); require_local_validation_authority({"PF-2","PF-4","PF-6"}); out=Path(a.output_dir);out.mkdir(parents=True,exist_ok=True); traces=out/"raw-traces.jsonl"; progress=out/"progress.json"

@@ -1,0 +1,238 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "pf4-paired-diagnosability-estimand-readjudication-20260816",
+  "generated_at": "2026-08-16T10:39:44+00:00",
+  "source_run_root": "/data/wyt/agent-self-evolution-observatory/runs/paper-first-p0-20260812/shared-surface",
+  "source_raw_trace_sha256": "6d206e4912489aa058992faffc4566f1c1d4d4be1b9ab03fac5c6efb1427874b",
+  "source_analysis_sha256": "9deeba9ef06c1f8621b853b96aa2802a37c22ae7301c050f3d6f75afbfe44795",
+  "source_rows": 72,
+  "heldout_probe_count": 9,
+  "frozen_observer_centers": {
+    "prompt": [
+      0.7466666666666667,
+      0.0,
+      0.5822222222222222,
+      0.006666666666666667,
+      0.034444444444444444,
+      0.027777777777777776,
+      0.5055555555555555,
+      0.0,
+      0.02666666666666667
+    ],
+    "workflow": [
+      1.0,
+      0.0,
+      0.82,
+      0.03333333333333333,
+      0.0,
+      0.0,
+      0.43999999999999995,
+      0.18000000000000002,
+      0.0
+    ],
+    "tool": [
+      1.0,
+      0.0,
+      0.86,
+      0.0,
+      0.006666666666666667,
+      0.0,
+      0.52,
+      0.03333333333333333,
+      0.03333333333333333
+    ]
+  },
+  "legacy_pf4_support_pass": true,
+  "legacy_unpaired_baseline_accuracy": 0.6666666666666666,
+  "registered_drop_gate": 0.15,
+  "surfaces": {
+    "prompt": {
+      "eligible_failed_wrong_surface_pairs": 5,
+      "paired_baseline_accuracy_same_units": 0.8,
+      "paired_post_accuracy": 1.0,
+      "legacy_unpaired_drop": -0.33333333333333337,
+      "cohort_composition_term": -0.13333333333333341,
+      "paired_causal_drop": -0.19999999999999996,
+      "reconstructed_drop": -0.33333333333333337,
+      "exact_feature_identity_pairs": 0,
+      "same_prediction_pairs": 4,
+      "pairs": [
+        {
+          "task_id": "/home/hdd/yutong/agent-evolution-p0-data/alfworld/json_2.1.1/valid_seen/pick_and_place_simple-Mug-None-SideTable-329/trial_T20190909_032340_274147/game.tw-pddl",
+          "fault": "workflow",
+          "baseline_prediction": "workflow",
+          "post_prediction": "workflow",
+          "baseline_correct": true,
+          "post_correct": true,
+          "features_exactly_equal": false,
+          "feature_l2_shift": 0.13114877048604,
+          "baseline_success": 0,
+          "post_success": 0
+        },
+        {
+          "task_id": "/home/hdd/yutong/agent-evolution-p0-data/alfworld/json_2.1.1/valid_seen/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-415/trial_T20190908_050518_595510/game.tw-pddl",
+          "fault": "workflow",
+          "baseline_prediction": "workflow",
+          "post_prediction": "workflow",
+          "baseline_correct": true,
+          "post_correct": true,
+          "features_exactly_equal": false,
+          "feature_l2_shift": 0.04472135954999581,
+          "baseline_success": 0,
+          "post_success": 0
+        },
+        {
+          "task_id": "/home/hdd/yutong/agent-evolution-p0-data/alfworld/json_2.1.1/valid_seen/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-415/trial_T20190908_050518_595510/game.tw-pddl",
+          "fault": "tool",
+          "baseline_prediction": "prompt",
+          "post_prediction": "tool",
+          "baseline_correct": false,
+          "post_correct": true,
+          "features_exactly_equal": false,
+          "feature_l2_shift": 1.0779610382569491,
+          "baseline_success": 1,
+          "post_success": 0
+        },
+        {
+          "task_id": "/home/hdd/yutong/agent-evolution-p0-data/alfworld/json_2.1.1/valid_seen/pick_clean_then_place_in_recep-ButterKnife-None-CounterTop-8/trial_T20190909_105559_983897/game.tw-pddl",
+          "fault": "workflow",
+          "baseline_prediction": "workflow",
+          "post_prediction": "workflow",
+          "baseline_correct": true,
+          "post_correct": true,
+          "features_exactly_equal": false,
+          "feature_l2_shift": 0.20784609690826522,
+          "baseline_success": 0,
+          "post_success": 0
+        },
+        {
+          "task_id": "/home/hdd/yutong/agent-evolution-p0-data/alfworld/json_2.1.1/valid_seen/pick_clean_then_place_in_recep-ButterKnife-None-CounterTop-8/trial_T20190909_105559_983897/game.tw-pddl",
+          "fault": "tool",
+          "baseline_prediction": "tool",
+          "post_prediction": "tool",
+          "baseline_correct": true,
+          "post_correct": true,
+          "features_exactly_equal": false,
+          "feature_l2_shift": 0.07211102550927977,
+          "baseline_success": 0,
+          "post_success": 0
+        }
+      ]
+    },
+    "workflow": {
+      "eligible_failed_wrong_surface_pairs": 2,
+      "paired_baseline_accuracy_same_units": 0.5,
+      "paired_post_accuracy": 0.5,
+      "legacy_unpaired_drop": 0.16666666666666663,
+      "cohort_composition_term": 0.16666666666666663,
+      "paired_causal_drop": 0.0,
+      "reconstructed_drop": 0.16666666666666663,
+      "exact_feature_identity_pairs": 2,
+      "same_prediction_pairs": 2,
+      "pairs": [
+        {
+          "task_id": "/home/hdd/yutong/agent-evolution-p0-data/alfworld/json_2.1.1/valid_seen/pick_clean_then_place_in_recep-ButterKnife-None-CounterTop-8/trial_T20190909_105559_983897/game.tw-pddl",
+          "fault": "prompt",
+          "baseline_prediction": "tool",
+          "post_prediction": "tool",
+          "baseline_correct": false,
+          "post_correct": false,
+          "features_exactly_equal": true,
+          "feature_l2_shift": 0.0,
+          "baseline_success": 0,
+          "post_success": 0
+        },
+        {
+          "task_id": "/home/hdd/yutong/agent-evolution-p0-data/alfworld/json_2.1.1/valid_seen/pick_clean_then_place_in_recep-ButterKnife-None-CounterTop-8/trial_T20190909_105559_983897/game.tw-pddl",
+          "fault": "tool",
+          "baseline_prediction": "tool",
+          "post_prediction": "tool",
+          "baseline_correct": true,
+          "post_correct": true,
+          "features_exactly_equal": true,
+          "feature_l2_shift": 0.0,
+          "baseline_success": 0,
+          "post_success": 0
+        }
+      ]
+    },
+    "tool": {
+      "eligible_failed_wrong_surface_pairs": 4,
+      "paired_baseline_accuracy_same_units": 0.75,
+      "paired_post_accuracy": 0.75,
+      "legacy_unpaired_drop": -0.08333333333333337,
+      "cohort_composition_term": -0.08333333333333337,
+      "paired_causal_drop": 0.0,
+      "reconstructed_drop": -0.08333333333333337,
+      "exact_feature_identity_pairs": 4,
+      "same_prediction_pairs": 4,
+      "pairs": [
+        {
+          "task_id": "/home/hdd/yutong/agent-evolution-p0-data/alfworld/json_2.1.1/valid_seen/pick_and_place_simple-Mug-None-SideTable-329/trial_T20190909_032340_274147/game.tw-pddl",
+          "fault": "workflow",
+          "baseline_prediction": "workflow",
+          "post_prediction": "workflow",
+          "baseline_correct": true,
+          "post_correct": true,
+          "features_exactly_equal": true,
+          "feature_l2_shift": 0.0,
+          "baseline_success": 0,
+          "post_success": 0
+        },
+        {
+          "task_id": "/home/hdd/yutong/agent-evolution-p0-data/alfworld/json_2.1.1/valid_seen/pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-415/trial_T20190908_050518_595510/game.tw-pddl",
+          "fault": "workflow",
+          "baseline_prediction": "workflow",
+          "post_prediction": "workflow",
+          "baseline_correct": true,
+          "post_correct": true,
+          "features_exactly_equal": true,
+          "feature_l2_shift": 0.0,
+          "baseline_success": 0,
+          "post_success": 0
+        },
+        {
+          "task_id": "/home/hdd/yutong/agent-evolution-p0-data/alfworld/json_2.1.1/valid_seen/pick_clean_then_place_in_recep-ButterKnife-None-CounterTop-8/trial_T20190909_105559_983897/game.tw-pddl",
+          "fault": "prompt",
+          "baseline_prediction": "tool",
+          "post_prediction": "tool",
+          "baseline_correct": false,
+          "post_correct": false,
+          "features_exactly_equal": true,
+          "feature_l2_shift": 0.0,
+          "baseline_success": 0,
+          "post_success": 0
+        },
+        {
+          "task_id": "/home/hdd/yutong/agent-evolution-p0-data/alfworld/json_2.1.1/valid_seen/pick_clean_then_place_in_recep-ButterKnife-None-CounterTop-8/trial_T20190909_105559_983897/game.tw-pddl",
+          "fault": "workflow",
+          "baseline_prediction": "workflow",
+          "post_prediction": "workflow",
+          "baseline_correct": true,
+          "post_correct": true,
+          "features_exactly_equal": true,
+          "feature_l2_shift": 0.0,
+          "baseline_success": 0,
+          "post_success": 0
+        }
+      ]
+    }
+  },
+  "paired_max_diagnostic_drop": 0.0,
+  "paired_support_gate_pass": false,
+  "persistent_cross_fault_repair_active": {
+    "prompt": true,
+    "workflow": false,
+    "tool": false
+  },
+  "operationalization_valid_for_future_diagnosability": false,
+  "operationalization_structural_witness": "In run_one(), prompt repair always changes the prompt patch. Workflow repair only changes behavior by disabling the injected workflow-fault branch when fault==workflow; tool repair only restores hidden open actions when fault==tool. Therefore workflow/tool repair are guaranteed no-ops on wrong-surface future faults and cannot instantiate a committed update whose downstream diagnostic channel is being measured.",
+  "readjudication": "INVALIDATE_OLD_SUPPORT_PASS_ESTIMAND_AND_OPERATIONALIZATION",
+  "diagnosis_layer": "experiment-design-estimand-and-operationalization",
+  "scientific_interpretation": "The historical PF-4 support gate compared diagnostic accuracy on all heldout no-repair faults with a different, surface-specific post-treatment subset restricted to wrong-surface repairs that still failed, mixing cohort composition with paired change. More fundamentally, workflow/tool historical repair arms are fault-cancellation controls rather than persistent cross-fault updates, so they are inert on the very wrong-surface probes used to claim future diagnosability. On the same eligible units, workflow and tool have zero diagnostic degradation; prompt improves. Therefore the historical support-pass cannot update belief about repair-induced future diagnosability loss. The broader diagnosability-preservation principle remains open and requires independent sealed future-fault probes after a committed update that remains active under those faults.",
+  "broader_principle_falsified": false,
+  "method_failure_authorized": false,
+  "p0_authorized": false,
+  "gpu_authorized": false,
+  "scientific_authority": "readjudication-of-historical-diagnostic-only"
+}
