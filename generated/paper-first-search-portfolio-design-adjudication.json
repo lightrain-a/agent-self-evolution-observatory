@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T08:33:32+00:00",
+  "generated_at": "2026-08-16T09:18:23+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T08:33:32+00:00",
+    "generated_at": "2026-08-16T09:12:13+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -183,10 +183,13 @@
       "terminal_run_need_not_remain_public_latest": true,
       "machine_only_blocks_do_not_become_persistent_semantic_dead_ends": true,
       "support_unavailable_is_a_reopenable_hold_not_scientific_failure": true,
+      "lane_contract_failure_is_a_reopenable_hold_not_dead_end": true,
+      "unresolved_exact_reduction_test_is_a_hold_not_dead_end": true,
+      "persistent_dead_end_requires_positive_counter_explanation": true,
       "canonical_generator_and_queue_untouched": true
     },
-    "last_ingested_run_id": "shadow-auto-a0ea279fac5b4997",
-    "last_ingested_stage_manifest_sha256": "5dd78e11f1c638bf97cfec2d81e779791c020f2cb14f99ed10c904df8373d2fd",
+    "last_ingested_run_id": "shadow-20260816-deadend-inversion-r1",
+    "last_ingested_stage_manifest_sha256": "300b3ef30709534470e3cb14bab345389ed8a8ad3434350b08aae08fc71f4b39",
     "receipts": [
       {
         "run_id": "shadow-20260814-r4b",
@@ -204,6 +207,16 @@
         "hard_veto_added": 0,
         "semantic_blocker_added": 0,
         "support_hold_added": 9,
+        "scientific_authority": false
+      },
+      {
+        "run_id": "shadow-20260816-deadend-inversion-r1",
+        "stage_manifest_sha256": "300b3ef30709534470e3cb14bab345389ed8a8ad3434350b08aae08fc71f4b39",
+        "terminal_generated_at": "2026-08-16T09:18:23+00:00",
+        "hard_veto_added": 0,
+        "semantic_blocker_added": 0,
+        "semantic_hold_added": 0,
+        "support_hold_added": 0,
         "scientific_authority": false
       }
     ],
@@ -502,6 +515,59 @@
           "reopen_condition": "Reopen only with a preregistered treatment that exposes or preserves relevance-conditioned evidence debt without using benchmark answer/evidence truth at decision time, and show a selective held-out gap effect beyond the strongest same-information uncertainty/conservatism baseline under matched retrieval and context budget."
         },
         "source_readjudication_artifact": "generated/p06-coverage-starvation-principle-readjudication-20260816.json",
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SHADOW-P01-C01",
+        "basin": "principle-readjudication-e9865d17d90f9ab0",
+        "search_primitive": "",
+        "title": "Reused Locked-Set Agreement Cannot Identify Metric Validity after Anchor-Guard Removal",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Reused Locked-Set Agreement Cannot Identify Metric Validity after Anchor-Guard Removal",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "In the released Double Ratchet implementation, eval_locked is a measurement-only sink: it is scored only after the round-best metric has already been selected by the dev-agreement × train-coverage objective, and the source explicitly states that eval_locked never selects, gates, rolls back, or otherwise influences the loop. Therefore replacing a reused locked set with an equally sized rotated locked set cannot causally change the metric-evolution trajectory unless an additional outer feedback/selection path is introduced, which would change the frozen scientific object.",
+        "current_source_refs": [
+          "arXiv:2607.12790"
+        ],
+        "evidence_basis": [
+          "arXiv:2607.12790",
+          "https://github.com/amazon-science/Self-Evolving-Agents-Double-Ratchet@0f14e910d361196422d9b938f45280919952d4fd",
+          "first-party:evalratchet/evolve.py:evolve_metric_expr-docstring-and-round-selection-before-_report_locked",
+          "first-party:scripts/run_metric_evo.py:eval_locked=REPORT_ONLY"
+        ],
+        "problem_text": "The candidate claim that reusing versus rotating Double Ratchet's eval_locked reference set can change or disambiguate metric-evolution trajectories while keeping the released loop unchanged and preserving the no-direct-locked-set-access condition.",
+        "reason": "The locked-set-reuse candidate is a dead end for the released Double Ratchet loop because the proposed treatment is causally disconnected from evolution. This conclusion is authorized by a source-code structural invariance witness, not by a failed experiment.",
+        "reopen_only_if": "Reopen only for a system or explicitly modeled outer loop where a reused evaluation signal is demonstrably consumed by a later selection/update transition, with the feedback edge frozen before outcomes and a same-information rotating/fresh-probe control.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "IMPOSSIBILITY_OR_INVARIANCE",
+          "statement": "In the released Double Ratchet implementation, eval_locked is a measurement-only sink: it is scored only after the round-best metric has already been selected by the dev-agreement × train-coverage objective, and the source explicitly states that eval_locked never selects, gates, rolls back, or otherwise influences the loop. Therefore replacing a reused locked set with an equally sized rotated locked set cannot causally change the metric-evolution trajectory unless an additional outer feedback/selection path is introduced, which would change the frozen scientific object.",
+          "opposite_prediction": "Under identical model calls, train/eval_dev inputs, candidate expressions, random seed, and loop state, two executions that differ only in eval_locked membership must produce the same selected metric expressions and evolution state round by round; only the reported locked agreement/eval records may differ.",
+          "opposite_principle": "A validation signal can induce adaptive evaluator overfitting only if it has a causal write path into selection, gating, rollback, synthesis, or another state transition; report-only evaluation is trajectory-invariant by construction.",
+          "opposite_search_seed": "Search for self-evolving agent systems where the same evaluator/validation set is repeatedly reused and its score actually feeds back into update selection, gating, rollback, memory admission, or artifact promotion. Test whether fresh or rotating hidden probes change the selected evolution trajectory under matched information and budget, rather than studying report-only held-out sets.",
+          "scope": "Double Ratchet first-party repository commit 0f14e910d361196422d9b938f45280919952d4fd, specifically scripts/run_metric_evo.py and evalratchet/evolve.py under the released metric-evolution loop.",
+          "same_information_or_scope_matched": true,
+          "proof_or_structural_witness": true,
+          "structural_witness": "The source's evolve_metric_expr() selects round_best/best from combined dev_agreement × train_coverage first, then calls _report_locked(best['expr'], r). _report_locked() writes held-out statistics and eval records but its return value is only appended to history. No selection/gating/rollback branch consumes locked_report. The function docstring and runner note both explicitly state eval_locked is report-only and never influences the loop.",
+          "evidence_refs": [
+            "arXiv:2607.12790",
+            "https://github.com/amazon-science/Self-Evolving-Agents-Double-Ratchet@0f14e910d361196422d9b938f45280919952d4fd",
+            "first-party:evalratchet/evolve.py:evolve_metric_expr-docstring-and-round-selection-before-_report_locked",
+            "first-party:scripts/run_metric_evo.py:eval_locked=REPORT_ONLY"
+          ],
+          "alternative_explanations_ruled_out": [
+            "Locked-set rollback: the released metric loop explicitly has no metric rollback and locked agreement is not read by the rollback or acceptance logic.",
+            "Locked-set gating: validity gating is applied to candidate expressions before held-out reporting and uses eval_dev/dev-derived quantities, not eval_locked.",
+            "Naive-arm feedback: --naive disables the fail-closed eval_dev anchor and discriminating validity gate; it does not make eval_locked selection-facing.",
+            "Elite-history leakage: elites are ranked by the combined selection score; locked_report is recorded only after best selection and is not added to elite scoring or synthesis inputs."
+          ],
+          "reopen_condition": "Reopen only for a system or explicitly modeled outer loop where a reused evaluation signal is demonstrably consumed by a later selection/update transition, with the feedback edge frozen before outcomes and a same-information rotating/fresh-probe control."
+        },
+        "source_readjudication_artifact": "generated/shadow-p01-locked-set-causal-nopath-principle-readjudication-20260816.json",
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       }
@@ -1050,8 +1116,8 @@
         "scientific_authority": false
       }
     ],
-    "principle_dead_end_count": 7,
-    "principle_readjudication_dead_end_count": 1,
+    "principle_dead_end_count": 8,
+    "principle_readjudication_dead_end_count": 2,
     "hold_object_count": 19,
     "current_source_hard_veto_count": 2,
     "current_source_hard_veto_added_from_latest_run": 0,
@@ -1119,8 +1185,8 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 7,
-    "principle_readjudication_dead_ends": 1,
+    "shadow_dead_end_objects": 8,
+    "principle_readjudication_dead_ends": 2,
     "shadow_hold_objects": 19,
     "current_source_hard_veto_dead_ends": 2,
     "current_source_hard_veto_added_from_latest_run": 0,
@@ -1141,7 +1207,10 @@
     "experiment_blueprint_authorized": 0,
     "local_validation_authorized": 0,
     "p0_authorized": 0,
-    "gpu_authorized": 0
+    "gpu_authorized": 0,
+    "semantic_blocker_added_from_latest_run": 0,
+    "semantic_blocker_added_from_terminal_run": 0,
+    "semantic_blocker_inherited": 0
   },
   "portfolio_priority": [
     "SP-15",

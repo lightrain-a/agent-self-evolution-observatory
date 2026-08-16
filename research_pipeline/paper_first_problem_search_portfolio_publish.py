@@ -30,6 +30,18 @@ def manifest_sha(root):
         for path in sorted(root.glob(pattern)): pairs.append((path.name,hashlib.sha256(path.read_bytes()).hexdigest()))
     return hashlib.sha256(json.dumps(pairs,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
+def _evidence_unresolved_count(summary:dict)->int:
+    terminal_keys=(
+        'evidence_reduction_supported',
+        'evidence_wait_primary_asset',
+        'evidence_design_invalid',
+        'evidence_review_blocked',
+        'evidence_substrate_hold',
+        'evidence_inconclusive',
+    )
+    resolved=sum(int(summary.get(key) or 0) for key in terminal_keys)
+    return max(0,int(summary.get('provisional_problem_candidates') or 0)-resolved)
+
 def _latest_shadow_run(root:Path)->dict:
     base=load(root/'base.json'); frozen=load(root/'frozen-primary-evidence-pool.json'); machine=load(root/'machine-audit.json')
     final=load(root/'shadow-final-audit.json'); terminal=load(root/'shadow-terminal-current-source-gate.json');qualification=load(root/'shadow-run-qualification.json') if (root/'shadow-run-qualification.json').exists() else {}
@@ -73,7 +85,7 @@ def _latest_shadow_run(root:Path)->dict:
         evidence_refs=sorted({str((candidate.get('empirical_evidence') or {}).get(key,{}).get('ref') or '') for key in ('source_a','source_b') if str((candidate.get('empirical_evidence') or {}).get(key,{}).get('ref') or '').startswith('arXiv:')})
         candidate_rows.append({'candidate_id':cid,'title':str(row.get('title') or ''),'search_primitive':str(row.get('search_primitive') or ''),'semantic_shadow_clear':row.get('shadow_clear') is True,'semantic_verdict':str(semantic.get('verdict') or ''),'semantic_reduction_class':str(semantic.get('reduction_class') or ''),'semantic_matched_patterns':sorted({str(value) for value in semantic.get('matched_patterns') or [] if str(value)}),'semantic_strongest_reduction':' '.join(str(semantic.get('strongest_reduction') or '').split())[:800],'semantic_exact_reduction_test':' '.join(str(semantic.get('exact_reduction_test') or '').split())[:1200],'semantic_reason':' '.join(str(semantic.get('reason') or '').split())[:1200],'semantic_lane_contract_verified':semantic.get('lane_contract_verified') is True,'semantic_lane_contract_reason':' '.join(str(semantic.get('lane_contract_reason') or '').split())[:1000],'semantic_source_refs':evidence_refs,'semantic_source_claims':[str(((candidate.get('empirical_evidence') or {}).get(key) or {}).get('claim') or '')[:1200] for key in ('source_a','source_b')],'semantic_problem_text':' '.join(str(candidate.get(key) or '') for key in ('title','irreducible_object','exact_prediction'))[:2400],'current_source_status':str(current.get('status') or ''),'current_source_verdict':str(current.get('verdict') or ''),'current_source_reduction_class':str(current.get('reduction_class') or ''),'current_source_strongest_reduction':' '.join(str(current.get('strongest_reduction') or '').split())[:800],'current_source_reason':' '.join(str(current.get('reason') or '').split())[:1200],'current_source_source_refs':current_sources,'terminal_shadow_clear':term.get('terminal_shadow_clear') is True,'live_problem_gate_compatible':term.get('live_problem_gate_compatible') is True,'paper_design_eligible':False,'scientific_authority':False,'authority':{'method':False,'experiment':False,'p0':False,'gpu':False}})
     t=terminal.get('summary') or {};m=machine.get('summary') or {};run_id=root.name
-    expansion_successful=len(list(root.glob('expand-*-p*.json')));expansion_error_rows=[load(path) for path in root.glob('error-expand-*.json')];expansion_errors=len(expansion_error_rows);expansion_requested_shards=20
+    expansion_successful=len(list(root.glob('expand-*-p*.json')));expansion_error_rows=[load(path) for path in root.glob('error-expand-*.json')];expansion_errors=len(expansion_error_rows);expansion_requested_shards=expansion_successful+expansion_errors
     expansion_parse_failures=sum(str(row.get('status') or '')=='PARSE_ERROR_ZERO_AUTHORITY' for row in expansion_error_rows)
     expansion_provider_failures=sum(str(row.get('status') or '').startswith('PROVIDER_') for row in expansion_error_rows)
     evolution_paths=list(root.glob('evolve-*.json'));evolution_error_paths=list(root.glob('error-evolve-*.json'))
@@ -170,7 +182,12 @@ def _latest_shadow_run(root:Path)->dict:
     terminal_status=str(terminal.get('status') or 'SHADOW_TERMINAL_INCOMPLETE_CURRENT_SOURCE_REVIEW')
     evidence_present=bool(evidence_plan)
     evidence_internal_open=sum(int(summary.get(key) or 0) for key in ('evidence_design_pending','evidence_operationalization_recompile_pending','evidence_review_pending','evidence_substrate_preflight_pending','evidence_harness_implementation_pending','evidence_execution_ready','evidence_residual_survives','evidence_branch_repair_ready'))
-    evidence_unresolved=max(0,int(summary.get('provisional_problem_candidates') or 0)-int(summary.get('evidence_reduction_supported') or 0)-int(summary.get('evidence_wait_primary_asset') or 0)-int(summary.get('evidence_design_invalid') or 0)-int(summary.get('evidence_inconclusive') or 0))
+    # Terminal evidence dispositions must close their provisional slot. A candidate
+    # held because the reviewed substrate is unavailable/budget-infeasible, or blocked
+    # by independent evidence review, is scientifically unresolved as a broader idea
+    # but operationally terminal for this frozen evidence-acquisition transaction.
+    # Do not keep the shadow run artificially pending after such a fail-closed hold.
+    evidence_unresolved=_evidence_unresolved_count(summary)
     if evidence_present and (evidence_internal_open or evidence_unresolved):terminal_status='SHADOW_EVIDENCE_ACQUISITION_PENDING'
     elif not evidence_present and falsifier_resolved!=falsifier_eligible:terminal_status='SHADOW_TERMINAL_INCOMPLETE_PROBLEM_FALSIFIER_PREFLIGHT'
     stage_runner_schema=str(qualification.get('stage_runner_required_schema') or '');control_snapshot_sha=str(qualification.get('control_snapshot_sha256') or '');control_bound=stage_runner_schema=='1.4' and bool(re.fullmatch(r'[0-9a-f]{64}',control_snapshot_sha));control_terminal_verified=False

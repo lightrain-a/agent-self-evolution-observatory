@@ -11,6 +11,18 @@ from . import paper_first_problem_search_portfolio_publish as publisher
 
 
 class SearchPortfolioPublishTest(unittest.TestCase):
+    def test_terminal_evidence_holds_close_frozen_transaction(self) -> None:
+        summary={
+            "provisional_problem_candidates": 4,
+            "evidence_wait_primary_asset": 1,
+            "evidence_substrate_hold": 1,
+            "evidence_review_blocked": 1,
+            "evidence_inconclusive": 1,
+        }
+        self.assertEqual(publisher._evidence_unresolved_count(summary),0)
+        summary["provisional_problem_candidates"]=5
+        self.assertEqual(publisher._evidence_unresolved_count(summary),1)
+
     def test_publisher_writes_shadow_state_only(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

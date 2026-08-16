@@ -5,7 +5,7 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
-DISCOVERY_OPERATOR_VERSION = "anomaly-first-v1"
+DISCOVERY_OPERATOR_VERSION = "anomaly-first-deadend-inversion-v2"
 
 DISCOVERY_LANES: tuple[str, ...] = (
     "CONTRADICTION",
@@ -168,6 +168,12 @@ POLICY: dict[str, Any] = {
     "single_source_anomaly_first_search_enabled": True,
     "primary_anomaly_can_trigger_controlled_residual_search_without_cross_paper_metric_match": True,
     "support_feasibility_is_search_priority_not_novelty_authority": True,
+    "principle_dead_end_inversion_search_enabled": True,
+    "dead_end_inversion_requires_certified_counter_explanation": True,
+    "dead_end_inversion_is_search_prior_not_scientific_authority": True,
+    "dead_end_inversion_requires_fresh_primary_grounding": True,
+    "dead_end_inversion_must_satisfy_recorded_reopen_condition": True,
+    "feedback_mechanism_requires_causal_write_path_before_experiment": True,
     "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
     "shared_limitation_without_empirical_failure_forbidden": True,
     "pure_topic_brainstorm_forbidden": True,
@@ -648,6 +654,8 @@ def build_problem_discovery_contract_state() -> dict[str, Any]:
         },
         "lane_contracts":[{"lane":lane,"source_roles":list(LANE_SOURCE_ROLES[lane]),"minimum_distinct_primary_sources":LANE_DISTINCT_SOURCE_MINIMUM[lane],"required_lane_evidence":list(LANE_EVIDENCE_REQUIRED[lane]),"machine_contract":LANE_MACHINE_CONTRACTS[lane]} for lane in DISCOVERY_LANES],
         "generator_order":[
+            "INVERT principle-certified dead ends only as zero-authority search priors: extract the opposite principle/search seed, then require fresh primary grounding and the recorded reopen condition before retaining a branch",
+            "VERIFY any proposed feedback mechanism has a causal write path into selection, gating, rollback, synthesis, memory admission, artifact promotion, or another state transition; report-only measurements cannot justify feedback-effect experiments",
             "DETECT a grounded anomaly, sign reversal, threshold, nonmonotonic regime, or assumption violation; UNEXPLAINED_BOUNDARY may begin from one primary paper when it contains both required evidence items",
             "OPERATIONALIZE the smallest shared observable and adjacent/control regime without requiring a second paper to have used the same metric",
             "MATERIALIZE a cheapest independent-truth falsifier from released units, first-party code, or an existing provenance-audited substrate whenever possible",

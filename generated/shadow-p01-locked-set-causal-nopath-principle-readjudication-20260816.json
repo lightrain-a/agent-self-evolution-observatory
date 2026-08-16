@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "SHADOW-P01-C01",
+  "title": "Reused Locked-Set Agreement Cannot Identify Metric Validity after Anchor-Guard Removal",
+  "principle_dead_end_certified": true,
+  "dead_end_scope": "The candidate claim that reusing versus rotating Double Ratchet's eval_locked reference set can change or disambiguate metric-evolution trajectories while keeping the released loop unchanged and preserving the no-direct-locked-set-access condition.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "IMPOSSIBILITY_OR_INVARIANCE",
+    "counter_explanation": {
+      "type": "IMPOSSIBILITY_OR_INVARIANCE",
+      "statement": "In the released Double Ratchet implementation, eval_locked is a measurement-only sink: it is scored only after the round-best metric has already been selected by the dev-agreement × train-coverage objective, and the source explicitly states that eval_locked never selects, gates, rolls back, or otherwise influences the loop. Therefore replacing a reused locked set with an equally sized rotated locked set cannot causally change the metric-evolution trajectory unless an additional outer feedback/selection path is introduced, which would change the frozen scientific object.",
+      "opposite_prediction": "Under identical model calls, train/eval_dev inputs, candidate expressions, random seed, and loop state, two executions that differ only in eval_locked membership must produce the same selected metric expressions and evolution state round by round; only the reported locked agreement/eval records may differ.",
+      "opposite_principle": "A validation signal can induce adaptive evaluator overfitting only if it has a causal write path into selection, gating, rollback, synthesis, or another state transition; report-only evaluation is trajectory-invariant by construction.",
+      "opposite_search_seed": "Search for self-evolving agent systems where the same evaluator/validation set is repeatedly reused and its score actually feeds back into update selection, gating, rollback, memory admission, or artifact promotion. Test whether fresh or rotating hidden probes change the selected evolution trajectory under matched information and budget, rather than studying report-only held-out sets.",
+      "scope": "Double Ratchet first-party repository commit 0f14e910d361196422d9b938f45280919952d4fd, specifically scripts/run_metric_evo.py and evalratchet/evolve.py under the released metric-evolution loop.",
+      "same_information_or_scope_matched": true,
+      "proof_or_structural_witness": true,
+      "structural_witness": "The source's evolve_metric_expr() selects round_best/best from combined dev_agreement × train_coverage first, then calls _report_locked(best['expr'], r). _report_locked() writes held-out statistics and eval records but its return value is only appended to history. No selection/gating/rollback branch consumes locked_report. The function docstring and runner note both explicitly state eval_locked is report-only and never influences the loop.",
+      "evidence_refs": [
+        "arXiv:2607.12790",
+        "https://github.com/amazon-science/Self-Evolving-Agents-Double-Ratchet@0f14e910d361196422d9b938f45280919952d4fd",
+        "first-party:evalratchet/evolve.py:evolve_metric_expr-docstring-and-round-selection-before-_report_locked",
+        "first-party:scripts/run_metric_evo.py:eval_locked=REPORT_ONLY"
+      ],
+      "alternative_explanations_ruled_out": [
+        "Locked-set rollback: the released metric loop explicitly has no metric rollback and locked agreement is not read by the rollback or acceptance logic.",
+        "Locked-set gating: validity gating is applied to candidate expressions before held-out reporting and uses eval_dev/dev-derived quantities, not eval_locked.",
+        "Naive-arm feedback: --naive disables the fail-closed eval_dev anchor and discriminating validity gate; it does not make eval_locked selection-facing.",
+        "Elite-history leakage: elites are ranked by the combined selection score; locked_report is recorded only after best selection and is not added to elite scoring or synthesis inputs."
+      ],
+      "reopen_condition": "Reopen only for a system or explicitly modeled outer loop where a reused evaluation signal is demonstrably consumed by a later selection/update transition, with the feedback edge frozen before outcomes and a same-information rotating/fresh-probe control."
+    }
+  },
+  "scientific_interpretation": {
+    "safe_claim": "The locked-set-reuse candidate is a dead end for the released Double Ratchet loop because the proposed treatment is causally disconnected from evolution. This conclusion is authorized by a source-code structural invariance witness, not by a failed experiment.",
+    "do_not_say": [
+      "Double Ratchet cannot overfit any evaluator signal",
+      "adaptive validation overfitting is irrelevant to self-evolving agents",
+      "rotating validation sets never matters"
+    ],
+    "new_search_basin": "selection-facing-evaluator-reuse",
+    "new_problem_seed": "When an evaluator score actually has write authority over self-evolution, does repeatedly reusing the same small validation signal create a self-reinforcing validity blind spot that fresh hidden probes reveal?"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}
