@@ -546,6 +546,7 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     positive_assets = [dict(row) for row in positive_registry.get("assets") or [] if isinstance(row, dict) and row.get("scientific_authority") is False]
     memory["positive_residual_asset_evidence"] = positive_assets
     memory["positive_residual_asset_evidence_count"] = len(positive_assets)
+    memory["positive_residual_search_active_count"] = sum(row.get("search_active") is True for row in positive_assets)
     memory["positive_residual_asset_registry_id"] = positive_registry.get("registry_id")
     memory["hold_object_count"] = len(hold_rows)
     memory["current_source_hard_veto_count"] = len(hard_rows)

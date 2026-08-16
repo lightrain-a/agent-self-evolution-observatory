@@ -11,10 +11,12 @@ SUPPORT_INVENTORY = PROJECT_ROOT / "research_pipeline" / "paper_first_c2_support
 POST_C2_ADJUDICATION = PROJECT_ROOT / "generated" / "paper-first-post-c2-adjudication.json"
 LOCAL_MECHANISM_READJUDICATION = PROJECT_ROOT / "generated" / "positive-residual-memory-local-mechanism-readjudication-20260816.json"
 TEMPORAL_EXPOSURE_READJUDICATION = PROJECT_ROOT / "generated" / "positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json"
+TREATMENT_SEMANTICS_READJUDICATION = PROJECT_ROOT / "generated" / "positive-residual-memory-treatment-semantics-principle-readjudication-20260816.json"
 EXPECTED_SUPPORT_INVENTORY_SHA256 = "00fd656673a86ec92445930628fb4a171547148d8fe9b60666701bd4dee11683"
 EXPECTED_POST_C2_SHA256 = "1d21e65d260e6be77c86b86e75db19e3d50a56d588caffb926e9a0b9863f2df5"
 EXPECTED_LOCAL_MECHANISM_READJUDICATION_SHA256 = "60a5f330049613f7163e2fee5bfa5f82e32283fed1951e32da83e9f11e712552"
 EXPECTED_TEMPORAL_EXPOSURE_READJUDICATION_SHA256 = "2656e6faf2132ebdac5842f8249eef90d5ae18aa3fef0a7c0956084c2dbaeff1"
+EXPECTED_TREATMENT_SEMANTICS_READJUDICATION_SHA256 = "ed09316950002ca43b88c427da70dc22e30f6f17076ef7c3010c604ef6f1269e"
 
 
 def _sha(path: Path) -> str:
@@ -35,10 +37,13 @@ def _memory_effect_transport_residual() -> dict[str, Any]:
         raise ValueError("B-9/C2 local-mechanism readjudication provenance drift")
     if _sha(TEMPORAL_EXPOSURE_READJUDICATION) != EXPECTED_TEMPORAL_EXPOSURE_READJUDICATION_SHA256:
         raise ValueError("B-9/C2 temporal-exposure readjudication provenance drift")
+    if _sha(TREATMENT_SEMANTICS_READJUDICATION) != EXPECTED_TREATMENT_SEMANTICS_READJUDICATION_SHA256:
+        raise ValueError("B-9/C2 treatment-semantics readjudication provenance drift")
     inventory = json.loads(SUPPORT_INVENTORY.read_text(encoding="utf-8"))
     post = json.loads(POST_C2_ADJUDICATION.read_text(encoding="utf-8"))
     local = json.loads(LOCAL_MECHANISM_READJUDICATION.read_text(encoding="utf-8"))
     temporal = json.loads(TEMPORAL_EXPOSURE_READJUDICATION.read_text(encoding="utf-8"))
+    semantics = json.loads(TREATMENT_SEMANTICS_READJUDICATION.read_text(encoding="utf-8"))
     summary = inventory.get("summary") or {}
     c2 = (post.get("c2_result") or {}).get("metrics") or {}
     validity = post.get("decision_context_validity") or {}
@@ -62,6 +67,11 @@ def _memory_effect_transport_residual() -> dict[str, Any]:
     temporal_counter = (temporal.get("principle_diagnosis") or {}).get("counter_explanation") or {}
     if str(temporal_counter.get("opposite_principle") or "") != "Persistent context is a repeated intervention, not a new causal primitive.":
         raise ValueError("B-9/C2 temporal-exposure reduction principle drift")
+    if semantics.get("principle_dead_end_certified") is not True or semantics.get("broader_parent_phenomenon_falsified") is not False:
+        raise ValueError("B-9/C2 treatment-semantics readjudication must close only the scoped mechanism")
+    semantics_counter = (semantics.get("principle_diagnosis") or {}).get("counter_explanation") or {}
+    if not str(semantics_counter.get("opposite_principle") or "").startswith("Executable semantics is part of treatment identity"):
+        raise ValueError("B-9/C2 treatment-semantics reduction principle drift")
 
     provenance = {
         "support_inventory": {
@@ -79,6 +89,10 @@ def _memory_effect_transport_residual() -> dict[str, Any]:
         "temporal_exposure_readjudication": {
             "path": str(TEMPORAL_EXPOSURE_READJUDICATION.relative_to(PROJECT_ROOT)),
             "sha256": EXPECTED_TEMPORAL_EXPOSURE_READJUDICATION_SHA256,
+        },
+        "treatment_semantics_readjudication": {
+            "path": str(TREATMENT_SEMANTICS_READJUDICATION.relative_to(PROJECT_ROOT)),
+            "sha256": EXPECTED_TREATMENT_SEMANTICS_READJUDICATION_SHA256,
         },
         "frozen_raw_traces_sha256": str(((inventory.get("raw_trace_authority") or {}).get("raw_traces") or {}).get("sha256") or ""),
         "frozen_main_table_sha256": str(((inventory.get("raw_trace_authority") or {}).get("main_table") or {}).get("sha256") or ""),
@@ -99,7 +113,7 @@ def _memory_effect_transport_residual() -> dict[str, Any]:
         "pre-divergence symbolic memory-consistent admissible-option collapse",
     ]
     search_contract = {
-        "question": "What prospective agent-specific formal object can explain context-dependent persistent-memory endpoint effects after transport representation, local applicability, earliest-action mediation, symbolic pre-divergence option geometry, and repeated/windowed-exposure novelty have all been reduced or stopped?",
+        "question": "The sparse context-dependent persistent-memory effect remains an archived phenomenon, but all current representation/local/temporal/treatment-semantics rescue classes are closed. What genuinely new primary evidence could introduce a structural object that survives same-information reduction?",
         "must_explain": [
             "a real sparse controlled memory-effect phenomenon",
             "failure of the historical transport representation to beat simple same-information baselines",
@@ -112,6 +126,9 @@ def _memory_effect_transport_residual() -> dict[str, Any]:
         "pre_outcome_information_only": True,
         "temporal_exposure_standalone_branch_closed": True,
         "temporal_exposure_readjudication_sha256": EXPECTED_TEMPORAL_EXPOSURE_READJUDICATION_SHA256,
+        "treatment_semantics_standalone_branch_closed": True,
+        "treatment_semantics_readjudication_sha256": EXPECTED_TREATMENT_SEMANTICS_READJUDICATION_SHA256,
+        "active_mechanism_seed": False,
         "must_beat_or_condition_on": [
             "target-family/context baseline",
             "source-family and source-target relation baseline",
@@ -137,8 +154,8 @@ def _memory_effect_transport_residual() -> dict[str, Any]:
             "calling a changed memory string a new causal primitive unless executable treatment semantics/version changes and versioned-treatment baselines fail",
             "treating this asset as novelty, Problem-Gate, Method, P0, GPU, or full-experiment authority",
         ],
-        "opposite_search_seed": "Search for a preregistered case where self-evolution mutates the executable semantics/version identity of the persistent treatment itself, not merely its timing or duration, and require a distinct ex-ante prediction after matching full pre-outcome history and nominal exposure schedule. First defeat same-information nonstationary/versioned-treatment, policy-regime-change, intervention-mapping-drift, and concept-drift reductions.",
-        "cheapest_next_step": "Run a current/mature-theory collision and exact-reduction test for treatment-semantics/version mutation before designing any new rollout; no temporal-window or K-step experiment is authorized.",
+        "opposite_search_seed": "No active mechanism seed remains on the current B-9/C2 substrate. Reopen only from new primary evidence that yields a preregistered ex-ante prediction after the strongest same-information baseline receives the same executable treatment map, version state, history, and schedule.",
+        "cheapest_next_step": "Archive this positive phenomenon and move discovery budget to another substrate until a genuinely new primary structural constraint satisfies the treatment-semantics reopen condition; no further B-9/C2 rollout is authorized.",
     }
     source_manifest = {
         "provenance": provenance,
@@ -148,7 +165,7 @@ def _memory_effect_transport_residual() -> dict[str, Any]:
     }
     return {
         "asset_ref": "positive-residual-asset:memory-effect-transport-b9-c2-20260816",
-        "title": "Persistent memory effects survive local-mechanism stops and temporal-exposure reduction",
+        "title": "Persistent memory effects remain archived after local, temporal, and treatment-semantics reductions",
         "source_kind": "provenance-audited-internal-positive-residual",
         "primary_url": "https://github.com/lightrain-a/agent-self-evolution-observatory/blob/main/research_pipeline/paper_first_c2_support_inventory_20260812.json",
         "source_sha256": _canonical_sha(source_manifest),
@@ -157,7 +174,9 @@ def _memory_effect_transport_residual() -> dict[str, Any]:
         "failed_mechanisms": failed_mechanisms,
         "search_contract": search_contract,
         "phenomenon_status": "SURVIVES_AS_ARCHIVED_PARENT_EVIDENCE",
-        "mechanism_status": "LOCAL_MECHANISMS_STOPPED_TEMPORAL_EXPOSURE_REDUCED_TO_LONGITUDINAL_TREATMENT",
+        "mechanism_status": "NO_ACTIVE_MECHANISM_AFTER_LOCAL_TEMPORAL_AND_TREATMENT_SEMANTICS_REDUCTIONS",
+        "search_status": "ARCHIVED_NO_ACTIVE_MECHANISM_SEED",
+        "search_active": False,
         "scientific_authority": False,
         "authority": {
             "novelty": False,
@@ -175,9 +194,10 @@ def build_positive_residual_asset_registry() -> dict[str, Any]:
     assets = [_memory_effect_transport_residual()]
     return {
         "schema_version": "1.0",
-        "registry_id": "positive-residual-search-assets-v3",
+        "registry_id": "positive-residual-search-assets-v4",
         "assets": assets,
         "asset_count": len(assets),
+        "active_asset_count": sum(row.get("search_active") is True for row in assets),
         "scientific_authority": False,
         "policy": {
             "phenomenon_support_does_not_authorize_a_new_problem": True,
@@ -186,7 +206,9 @@ def build_positive_residual_asset_registry() -> dict[str, Any]:
             "prospective_pre_outcome_prediction_required": True,
             "outcome_leakage_forbidden": True,
             "temporal_exposure_relabeling_is_not_a_new_mechanism": True,
-            "next_memory_seed_requires_treatment_semantics_or_version_change": True,
+            "next_memory_seed_requires_treatment_semantics_or_version_change": False,
             "treatment_semantics_seed_requires_versioned_treatment_reduction_first": True,
+            "closed_positive_residual_assets_remain_archived_but_do_not_enter_search": True,
+            "new_primary_evidence_required_to_reopen_closed_positive_residual": True,
         },
     }

@@ -67,12 +67,18 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         positive=[row for row in memory.get("positive_residual_asset_evidence") or [] if str(row.get("asset_ref") or "").startswith("positive-residual-asset:memory-effect-transport-b9-c2")]
         self.assertEqual(len(positive),1)
         self.assertEqual(positive[0]["phenomenon_status"],"SURVIVES_AS_ARCHIVED_PARENT_EVIDENCE")
-        self.assertEqual(positive[0]["mechanism_status"],"LOCAL_MECHANISMS_STOPPED_TEMPORAL_EXPOSURE_REDUCED_TO_LONGITUDINAL_TREATMENT")
+        self.assertEqual(positive[0]["mechanism_status"],"NO_ACTIVE_MECHANISM_AFTER_LOCAL_TEMPORAL_AND_TREATMENT_SEMANTICS_REDUCTIONS")
+        self.assertFalse(positive[0]["search_active"])
+        self.assertEqual(memory.get("positive_residual_search_active_count"),0)
         self.assertTrue((positive[0].get("search_contract") or {}).get("prospective_prediction_required"))
         self.assertTrue((positive[0].get("search_contract") or {}).get("temporal_exposure_standalone_branch_closed"))
+        self.assertTrue((positive[0].get("search_contract") or {}).get("treatment_semantics_standalone_branch_closed"))
         temporal=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="POSITIVE-RESIDUAL-MEMORY-TEMPORAL-EXPOSURE"]
+        semantics=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="POSITIVE-RESIDUAL-MEMORY-TREATMENT-SEMANTICS"]
         self.assertEqual(len(temporal),1)
+        self.assertEqual(len(semantics),1)
         self.assertEqual((temporal[0].get("counter_explanation") or {}).get("opposite_principle"),"Persistent context is a repeated intervention, not a new causal primitive.")
+        self.assertIn("part of treatment identity",(semantics[0].get("counter_explanation") or {}).get("opposite_principle",""))
         self.assertTrue((positive[0].get("search_contract") or {}).get("pre_outcome_information_only"))
         self.assertFalse(positive[0]["scientific_authority"])
 

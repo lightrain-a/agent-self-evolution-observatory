@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "POSITIVE-RESIDUAL-MEMORY-TREATMENT-SEMANTICS",
+  "title": "Executable treatment semantics/version as a standalone persistent-memory causal object",
+  "adjudication_date": "2026-08-16",
+  "principle_dead_end_certified": true,
+  "dead_end_scope": "On the frozen B-9/C2 ALFWorld memory substrate, treating executable memory semantics or version identity as a new standalone causal primitive after local mechanisms and repeated/windowed exposure have already been reduced or stopped.",
+  "registered_prediction_rejected": false,
+  "experiment_run_for_this_readjudication": false,
+  "broader_parent_phenomenon_falsified": false,
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "diagnosis_layer": "same-information reduction / information-parity failure",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The proposed treatment-semantics predictor is not irreducible under a fair same-information comparison. If the executable memory-to-option/action mapping is observable enough for the proposed predictor to use prospectively, the same mapping must also be supplied to the strongest versioned/nonstationary treatment baseline, which can absorb it into the treatment/state definition, e.g. A_t=(artifact version, executable mapping). If that mapping is not observable before outcome, the proposed predictor cannot prospectively use it either. Withholding the mapping from the baseline while giving it to the candidate creates an information advantage rather than a new causal object.",
+      "opposite_prediction": "Under identical pre-outcome information, adding an explicit executable-semantics variable cannot by itself create a prediction unavailable to a sufficiently expressive versioned/dynamic treatment or policy-regime model: the baseline can condition on the same version, mapping, history, and schedule. Any apparent residual that exists only when the baseline is denied the mapping will disappear once information parity is restored; if the mapping is hidden, neither method can identify a semantics-specific effect without additional intervention or assumptions.",
+      "opposite_principle": "Executable semantics is part of treatment identity when observable, and an identification problem when it is not; it is not an extra causal primitive by itself.",
+      "opposite_search_seed": "Do not continue representation-level rescue on the current B-9/C2 memory substrate. Reopen only from genuinely new primary evidence that introduces a structural constraint changing an ex-ante prediction even after the baseline receives the same executable treatment map, version state, history, and schedule; otherwise archive the surviving memory-effect phenomenon without an active mechanism seed.",
+      "scope": "The v8 treatment-semantics formulation in which the candidate uses a pre-outcome executable memory-to-admissible-option/action mapping while the stated strongest versioned-treatment baseline initially omits that mapping, on the same frozen B-9/C2 ALFWorld memory-effect substrate.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-treatment-semantics-v8-r1/formulate-p1.json#sha256=f0c39f8b6826c75c91566eab97d82b918e43155b4ef7ae201dda2789f43c48d7",
+        "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-treatment-semantics-v8-r1/raw/formulate-p1-2bc1537aec0b.txt#sha256=2bc1537aec0b5810894c0e4ff8f4a15a5139b78d0056962f457b79927b2a1aed",
+        "repo:generated/positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json#sha256=2656e6faf2132ebdac5842f8249eef90d5ae18aa3fef0a7c0956084c2dbaeff1",
+        "arXiv:2607.02901",
+        "arXiv:1806.11153"
+      ],
+      "alternative_explanations_ruled_out": [
+        "mere repeated/windowed exposure: already closed by the longitudinal-treatment same-information reduction",
+        "local applicability, earliest-action, local-state, or admissibility geometry: already stopped on the frozen parent phenomenon",
+        "version label alone: the candidate itself requires executable semantic mapping beyond a nominal lineage/version label",
+        "a fair baseline lacking expressive capacity: the strongest reduction is allowed the same mapping/version/history information and can represent it as part of the treatment or policy-regime state"
+      ],
+      "reopen_condition": "Reopen only if new primary evidence supports a preregistered structural constraint for self-modifying persistent treatments and, under identical pre-outcome information including the full executable treatment map/version state, a matched versioned/nonstationary treatment or dynamic policy-regime baseline makes a different ex-ante prediction and fails an exact reduction test. A renamed mapping feature, extra representation, new version label, new K-step/window schedule, or withholding information from the baseline is insufficient."
+    }
+  },
+  "information_parity_witness": {
+    "candidate_information": [
+      "artifact version/lineage",
+      "full pre-outcome history",
+      "nominal exposure schedule",
+      "reconstructed executable memory-to-option/action mapping"
+    ],
+    "unfair_baseline_as_formulated": "versioned treatment model with version/history/schedule but without the executable mapping",
+    "fair_same_information_baseline": "versioned/dynamic treatment or policy-regime model receiving the same artifact version, executable mapping, history, and schedule",
+    "reduction": "The fair baseline can absorb executable semantics into treatment identity/state. If the mapping is unavailable prospectively, the candidate cannot use it either."
+  },
+  "scientific_interpretation": {
+    "safe_claim": "The treatment-semantics branch is closed by information-parity and same-information reduction, not by a negative rollout. The v8 formulation's only claimed residual required giving the proposed predictor an executable mapping that its strongest versioned-treatment baseline did not receive. Once parity is restored, the mapping is simply part of treatment/state identity; if it is unobservable, the problem becomes identification rather than a new causal primitive. The sparse B-9/C2 memory-effect phenomenon remains archived evidence, but this substrate has no active mechanism seed after the current reductions.",
+    "do_not_say": [
+      "versioned memories cannot matter",
+      "the B-9 memory effect is false",
+      "a treatment-semantics experiment failed",
+      "all self-modifying treatments are reducible in every possible agent system"
+    ],
+    "broader_positive_residual_status": "SURVIVES_AS_ARCHIVED_PARENT_EVIDENCE",
+    "closed_mechanism": "executable treatment semantics/version as standalone novelty under unequal-information comparison",
+    "next_search_basin": "new-primary-evidence-required",
+    "active_mechanism_seed": false
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "same_information_reduction_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_experiment_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

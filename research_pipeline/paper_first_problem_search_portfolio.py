@@ -152,7 +152,7 @@ def _inversion_asset_records(dead_end_memory):
 def _positive_residual_asset_records(dead_end_memory):
     records=[];seen=set()
     for row in (dead_end_memory or {}).get("positive_residual_asset_evidence") or []:
-        if not isinstance(row,dict) or row.get("scientific_authority") is not False:continue
+        if not isinstance(row,dict) or row.get("scientific_authority") is not False or row.get("search_active") is not True:continue
         ref=str(row.get("asset_ref") or "").strip();sha=str(row.get("source_sha256") or "").strip().lower();url=str(row.get("primary_url") or "").strip();title=str(row.get("title") or "").strip();contract=row.get("search_contract") or {}
         facts=[" ".join(str(value or "").split()) for value in row.get("empirical_facts") or [] if str(value or "").strip()]
         if not ref.startswith("positive-residual-asset:") or ref in seen or not re.fullmatch(r"[0-9a-f]{64}",sha) or not url.startswith("https://") or not title or len(facts)<2:continue
@@ -171,7 +171,7 @@ def _search_asset_records(dead_end_memory):
 def _positive_residual_priors(dead_end_memory,limit=6):
     priors=[]
     for row in (dead_end_memory or {}).get("positive_residual_asset_evidence") or []:
-        if not isinstance(row,dict) or row.get("scientific_authority") is not False:continue
+        if not isinstance(row,dict) or row.get("scientific_authority") is not False or row.get("search_active") is not True:continue
         contract=row.get("search_contract") or {}
         priors.append({"asset_ref":str(row.get("asset_ref") or ""),"phenomenon_status":str(row.get("phenomenon_status") or ""),"mechanism_status":str(row.get("mechanism_status") or ""),"failed_mechanisms":list(row.get("failed_mechanisms") or []),"question":str(contract.get("question") or ""),"must_explain":list(contract.get("must_explain") or []),"must_beat_or_condition_on":list(contract.get("must_beat_or_condition_on") or []),"temporal_exposure_standalone_branch_closed":contract.get("temporal_exposure_standalone_branch_closed") is True,"mandatory_reduction_before_treatment_semantics_experiment":list(contract.get("mandatory_reduction_before_treatment_semantics_experiment") or []),"opposite_search_seed":str(contract.get("opposite_search_seed") or ""),"prohibited_rescues":list(contract.get("prohibited_rescues") or []),"prospective_prediction_required":contract.get("prospective_prediction_required") is True,"pre_outcome_information_only":contract.get("pre_outcome_information_only") is True})
         if len(priors)>=limit:break
