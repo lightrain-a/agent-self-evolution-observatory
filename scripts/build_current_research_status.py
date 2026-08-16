@@ -169,8 +169,20 @@ state = {
         "scientific_authority": False,
         "canonical_problem_gate_added": int(stri_summary.get("canonical_problem_gate_pass_added", 0)),
         "downloads": (sys_stri.get("submission_handoff") or {}).get("downloads", {}),
+        "deadline_status": (sys_stri.get("submission_handoff") or {}).get("official_source_conflict_status"),
+        "official_source_conflict": bool((sys_stri.get("submission_handoff") or {}).get("official_source_conflict", False)),
+        "operational_safe_abstract_deadline_aoe": (sys_stri.get("submission_handoff") or {}).get("operational_safe_abstract_deadline_aoe"),
+        "operational_safe_full_paper_deadline_aoe": (sys_stri.get("submission_handoff") or {}).get("operational_safe_full_paper_deadline_aoe"),
+        "recorded_author_guide_abstract_deadline_aoe": (sys_stri.get("submission_handoff") or {}).get("recorded_author_guide_abstract_deadline_aoe"),
+        "recorded_author_guide_full_paper_deadline_aoe": (sys_stri.get("submission_handoff") or {}).get("recorded_author_guide_full_paper_deadline_aoe"),
+        "author_membership_freezes_at_abstract_deadline": bool((sys_stri.get("submission_handoff") or {}).get("author_membership_freezes_at_abstract_deadline", False)),
+        "title_freezes_at_full_paper_deadline": bool((sys_stri.get("submission_handoff") or {}).get("title_freezes_at_full_paper_deadline", False)),
         "prior_mechanical_submission_state": stri.get("status"),
-        "next_action": stri.get("next_action") or quality_debt.get("cheap_first"),
+        "next_action": (
+            "Human authors must verify the live ICLR/OpenReview deadline because official ICLR pages currently conflict. Until resolved, operate against the earlier published dates: genuine abstract and frozen author membership by 2026-09-11 AoE; full paper and anonymous supplement by 2026-09-16 AoE. Complete profile/quota/reviewer/dual-submission/ethics/AI-use signoff; do not reopen dynamic P0 or broaden N1-N3."
+            if bool((sys_stri.get("submission_handoff") or {}).get("official_source_conflict", False))
+            else (stri.get("next_action") or quality_debt.get("cheap_first"))
+        ),
         "claim_boundary": sys_stri.get("claim_boundary", {}),
     },
     "canonical_live": {

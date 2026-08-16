@@ -13,6 +13,7 @@
 - Current narrow claim scope requires no new GPU evidence.
 - Paper Quality v2.1 visual evidence: 4 main figures, source-bound to data/scripts/captions; new ablation/robustness/failure panel included.
 - Anonymous supplementary reproduction bundle: manifest PASS, `reproduce.py` PASS, 13/13 unit tests PASS, clone/split + sensitivity reproduction PASS, sanitized SkillRL P0-E receipt verification PASS, figure regeneration PASS, identity/path scan PASS.
+- **Deadline source conflict is intentionally not machine-closed:** the current ICLR 2027 Author Guidelines say abstract/full deadlines are 2026-09-18/2026-09-25 AoE, while the official Dates, Call for Papers, and conference homepage publish 2026-09-11/2026-09-16 AoE. Until a human confirms the live OpenReview deadline, this checklist uses the earlier 2026-09-11/2026-09-16 dates operationally.
 
 ## Files to upload / archive
 
@@ -25,21 +26,22 @@
 
 ## Human signoff required before abstract submission
 
-- [ ] Freeze the **complete author list**. ICLR 2027 does not allow adding or removing authors after the abstract deadline; author order may still be changed up to the full-paper deadline.
+- [ ] **Before 2026-09-11 AoE, verify the live ICLR/OpenReview deadlines** and resolve the official-page conflict above. Do not plan against the later dates until this is confirmed.
+- [ ] Freeze the **complete author list** by the confirmed abstract deadline (use 2026-09-11 AoE operationally until the conflict is resolved). ICLR 2027 does not allow adding or removing authors after the abstract deadline; author order may still be changed up to the full-paper deadline.
 - [ ] Confirm every author has the correct OpenReview profile and verified email; update profile/affiliation information now rather than near the deadline.
 - [ ] Check ICLR 2027 author quotas and reciprocal-reviewing obligations for the complete author list; register a qualified reviewer if required.
 - [ ] Confirm there is no substantially similar archival submission under parallel review that violates the ICLR dual-submission policy.
 - [ ] All authors read and acknowledge the ICLR Code of Ethics / Code of Conduct obligations.
 - [ ] All authors review the paper's mandatory **AI-use statement** and explicitly accept responsibility for the final manuscript, claims, code, and AI-assisted artifacts.
-- [ ] Review the title and genuine abstract used for reviewer bidding; do not submit a placeholder abstract.
+- [ ] Review the title and genuine abstract used for reviewer bidding; do not submit a placeholder abstract. The title may still be revised before the confirmed full-paper deadline; use **2026-09-16 AoE** as the operational freeze until the official-page conflict is resolved.
 
 ## Final upload check
 
 - [ ] Recompute SHA256 for the PDF and supplementary ZIP immediately before upload and match the values above.
 - [ ] Open the exact upload PDF and visually confirm `Anonymous authors / Paper under double-blind review`.
 - [ ] Search the exact PDF and supplementary archive once more for author names, affiliations, usernames, local paths, private repository names, tokens, and identifying URLs.
-- [ ] Submit the genuine abstract by **2026-09-18 AoE**.
-- [ ] Submit the full paper and supplementary materials by **2026-09-25 AoE**.
+- [ ] Unless the official-page conflict is resolved to a later live OpenReview deadline, submit the genuine abstract by the operational-safe **2026-09-11 AoE**.
+- [ ] Unless the official-page conflict is resolved to a later live OpenReview deadline, submit the full paper and supplementary materials by the operational-safe **2026-09-16 AoE**.
 
 ## Scientific lock
 

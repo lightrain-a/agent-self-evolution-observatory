@@ -8,6 +8,12 @@ from typing import Any
 from .config import PROJECT_ROOT
 
 SCHEMA_VERSION = "1.0"
+AUTHOR_GUIDE_ABSTRACT_DEADLINE_AOE = "2026-09-18"
+AUTHOR_GUIDE_FULL_PAPER_DEADLINE_AOE = "2026-09-25"
+OTHER_OFFICIAL_ABSTRACT_DEADLINE_AOE = "2026-09-11"
+OTHER_OFFICIAL_FULL_PAPER_DEADLINE_AOE = "2026-09-16"
+OPERATIONAL_SAFE_ABSTRACT_DEADLINE_AOE = "2026-09-11"
+OPERATIONAL_SAFE_FULL_PAPER_DEADLINE_AOE = "2026-09-16"
 
 FINAL_REVIEW = "generated/asset-first-stri-narrow-final-review-20260816.json"
 COHERENCE = "generated/asset-first-stri-narrow-paper-coherence-20260816.json"
@@ -67,6 +73,11 @@ POLICY = {
     "official_submission_ready_requires_anonymous_supplement_reproduction": True,
     "public_downloads_are_anonymous_submission_assets": True,
     "human_author_signoff_cannot_be_auto_authorized": True,
+    "abstract_deadline_freezes_author_membership": True,
+    "full_paper_deadline_freezes_title": True,
+    "official_deadline_source_conflict_must_be_visible": True,
+    "deadline_source_conflict_fails_safe_to_earliest_published_official_date": True,
+    "human_deadline_verification_cannot_be_auto_authorized": True,
 }
 
 AUTHORITY = {
@@ -216,8 +227,20 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
             "gpu_authorized": 0,
         },
         "submission_handoff": {
-            "abstract_deadline_aoe": str((official_final.get("official_deadlines_aoe") or {}).get("abstract") or ""),
-            "full_paper_deadline_aoe": str((official_final.get("official_deadlines_aoe") or {}).get("full_paper") or ""),
+            "recorded_author_guide_abstract_deadline_aoe": str((official_final.get("official_deadlines_aoe") or {}).get("abstract") or ""),
+            "recorded_author_guide_full_paper_deadline_aoe": str((official_final.get("official_deadlines_aoe") or {}).get("full_paper") or ""),
+            "official_source_conflict": True,
+            "official_source_conflict_status": "HUMAN_VERIFICATION_REQUIRED",
+            "conflicting_official_dates": {
+                "author_guidelines": {"abstract": AUTHOR_GUIDE_ABSTRACT_DEADLINE_AOE, "full_paper": AUTHOR_GUIDE_FULL_PAPER_DEADLINE_AOE},
+                "dates_cfp_conference_pages": {"abstract": OTHER_OFFICIAL_ABSTRACT_DEADLINE_AOE, "full_paper": OTHER_OFFICIAL_FULL_PAPER_DEADLINE_AOE},
+            },
+            "operational_safe_abstract_deadline_aoe": OPERATIONAL_SAFE_ABSTRACT_DEADLINE_AOE,
+            "operational_safe_full_paper_deadline_aoe": OPERATIONAL_SAFE_FULL_PAPER_DEADLINE_AOE,
+            "author_membership_freezes_at_abstract_deadline": True,
+            "title_freezes_at_full_paper_deadline": True,
+            "deadline_source_verified_on": "2026-08-17",
+            "deadline_human_action": "Confirm the live OpenReview/ICLR deadline before submission; until resolved, plan against the earlier published official dates.",
             "pdf_sha256": str((((official_final.get("delivery") or {}).get("pdf") or {}).get("sha256")) or ""),
             "source_zip_sha256": str((((official_final.get("delivery") or {}).get("source_zip") or {}).get("sha256")) or ""),
             "supplement_zip_sha256": str((((official_final.get("delivery") or {}).get("supplement_zip") or {}).get("sha256")) or ""),
@@ -320,6 +343,22 @@ def validate_asset_first_stri_public_status(state: dict[str, Any]) -> list[str]:
         if int(summary.get("new_gpu_evidence_required") or 0) != 0:
             errors.append("current narrow STRI submission cannot require a new GPU rescue")
         handoff = state.get("submission_handoff") or {}
+        deadline_conflict = handoff.get("conflicting_official_dates") or {}
+        if (
+            handoff.get("recorded_author_guide_abstract_deadline_aoe") != AUTHOR_GUIDE_ABSTRACT_DEADLINE_AOE
+            or handoff.get("recorded_author_guide_full_paper_deadline_aoe") != AUTHOR_GUIDE_FULL_PAPER_DEADLINE_AOE
+            or handoff.get("official_source_conflict") is not True
+            or handoff.get("official_source_conflict_status") != "HUMAN_VERIFICATION_REQUIRED"
+            or (deadline_conflict.get("author_guidelines") or {}).get("abstract") != AUTHOR_GUIDE_ABSTRACT_DEADLINE_AOE
+            or (deadline_conflict.get("author_guidelines") or {}).get("full_paper") != AUTHOR_GUIDE_FULL_PAPER_DEADLINE_AOE
+            or (deadline_conflict.get("dates_cfp_conference_pages") or {}).get("abstract") != OTHER_OFFICIAL_ABSTRACT_DEADLINE_AOE
+            or (deadline_conflict.get("dates_cfp_conference_pages") or {}).get("full_paper") != OTHER_OFFICIAL_FULL_PAPER_DEADLINE_AOE
+            or handoff.get("operational_safe_abstract_deadline_aoe") != OPERATIONAL_SAFE_ABSTRACT_DEADLINE_AOE
+            or handoff.get("operational_safe_full_paper_deadline_aoe") != OPERATIONAL_SAFE_FULL_PAPER_DEADLINE_AOE
+            or handoff.get("author_membership_freezes_at_abstract_deadline") is not True
+            or handoff.get("title_freezes_at_full_paper_deadline") is not True
+        ):
+            errors.append("READY_NARROW_ICLR official deadline conflict/fail-safe policy drift")
         for key in ("pdf_sha256", "source_zip_sha256", "supplement_zip_sha256"):
             if len(str(handoff.get(key) or "")) != 64:
                 errors.append(f"READY_NARROW_ICLR submission handoff digest invalid:{key}")
