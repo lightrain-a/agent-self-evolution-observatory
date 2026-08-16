@@ -106,6 +106,14 @@
   "p0b_frozen_contract": "generated/asset-first-stri-quotient-rejection-p0b-contract-20260816.json",
   "p0b_independent_review": "generated/asset-first-stri-quotient-rejection-p0b-review-20260816.json",
   "p0b_execution_dependency": "P0-A must GO and P0-B must bind the exact P0-A raw SHA; P0-B uses zero additional GPU/model calls.",
+  "p0c_optional_one_step_consequence": {
+    "contract": "generated/asset-first-stri-qwen3-solver-consequence-p0c-contract-20260816.json",
+    "review": "generated/asset-first-stri-qwen3-solver-consequence-p0c-review-20260816.json",
+    "preflight": "generated/asset-first-stri-qwen3-solver-consequence-p0c-preflight-20260816.json",
+    "review_verdict": "CLEAR",
+    "execution_dependency": "P0-A GO + exact P0-A raw SHA + GPU resource",
+    "scientific_role": "one-step frozen-solver curriculum consequence only; never end-of-evolution C4"
+  },
   "full_experiment_if_p0_passes": {
     "tool_disjoint_split": "generated/asset-first-stri-tool-disjoint-split-20260816.json",
     "calibration_prior": "generated/asset-first-stri-calibration-prior-20260816.json",

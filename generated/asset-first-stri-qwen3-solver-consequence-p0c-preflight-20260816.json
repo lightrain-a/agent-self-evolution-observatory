@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-STRI-QWEN3-SOLVER-CONSEQUENCE-P0C-20260816",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "status": "READY_IF_P0A_GO_AND_GPU_RESOURCE_AVAILABLE",
+  "contract_sha256": "3dedf3690732466543d6002b427ba2d93277d3784639799e44a722697ed84a9a",
+  "runner_sha256": "399e87981e28044d794ec2a141f97f83a0fc407b17405538951f0c669fc41c32",
+  "substrate_preflight_sha256": "24f4083d69e97f8486838338356d1c50ef9e83249a04eff2d7f2ae5a3df52c22",
+  "independent_review_sha256": "b58b742beb4351133bacb8ef19578ec45be23ede51ead386e5789c05253db948",
+  "substrate": {
+    "host": "231",
+    "author_repo": "/data/wyt/skill-self-play-stri-p0-20260816",
+    "model": "/data/lry/models/Qwen3-8B",
+    "runtime": "/data/lry/vllm-envs/qwen3-14b-vllm-0.19.1/bin/python",
+    "preflight_pass": true,
+    "checks_passed": 21,
+    "checks_total": 21,
+    "gpu_work_started_by_preflight": false
+  },
+  "execution_dependency": "P0-A must GO and P0-C must bind the exact P0-A raw SHA. No new questioner generation is allowed.",
+  "execution_authorized": false,
+  "paper_claim_C4_end_of_evolution": false,
+  "gpu_authorized": false,
+  "scientific_authority": false
+}

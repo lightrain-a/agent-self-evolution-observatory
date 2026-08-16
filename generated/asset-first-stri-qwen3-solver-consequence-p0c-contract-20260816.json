@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-STRI-QWEN3-SOLVER-CONSEQUENCE-P0C-20260816",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "stage": "OPTIONAL_P0_C_ONE_STEP_VERIFIED_CONSEQUENCE",
+  "execution_dependency": "P0-A must be DYNAMIC_PARTIAL_OVERLAP_REPRESENTATION_SENSITIVITY_SUPPORTED and this run must bind the exact P0-A raw SHA. P0-B is not required because P0-C tests problem consequence, not SQC feasibility.",
+  "purpose": "Test whether the same representation-induced source-mixture change that shifts qualified semantic task distributions also changes the expected correctness/difficulty of those tasks for a frozen author-style Qwen3 solver, using independent reference tool-call truth and no arm-specific solver evaluation.",
+  "claim_boundary": "P0-C is one-step curriculum consequence evidence only. It does not establish end-of-evolution training utility, cumulative regret, or SQC method superiority and cannot by itself unlock the full C4 claim.",
+  "author_asset": {
+    "repo_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "evaluate_py_sha256": "20529cb403bbdfc1bbcda2f1e3f204c32fcb5b943c2552c6d16cffa926628c6a",
+    "grading_py_sha256": "ca054d10f74eae5a3e6e5dd0c4b2c4c015174174a85ec5eb889f2baf83826098",
+    "prompts_py_sha256": "4180b75adad460c0dd9cdd915d5d5da63b900fcce051088c1dbf1a215823c738",
+    "parsing_py_sha256": "289155f1740a33404ae82b9616c393f13461f5394f6dd9d98c6c32aaed14be69",
+    "contracts_py_sha256": "4360a1f8cb30f1024dfd55b3bc5dc543fd659aae2c9e7e8555c8d05d5cbc304a"
+  },
+  "execution_substrate": {
+    "host": "231",
+    "author_repo": "/data/wyt/skill-self-play-stri-p0-20260816",
+    "model_path": "/data/lry/models/Qwen3-8B",
+    "runtime_python": "/data/lry/vllm-envs/qwen3-14b-vllm-0.19.1/bin/python",
+    "vllm_version": "0.19.1",
+    "torch_version": "2.10.0+cu130",
+    "transformers_version": "5.14.1",
+    "model_hashes": {
+      "config.json": "f7c4eadfbbf522470667b797a3c89be2524832d2d599797248dc304fff447c30",
+      "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+    }
+  },
+  "solver": {
+    "model": "Qwen3-8B",
+    "model_path": "/data/lry/models/Qwen3-8B",
+    "runtime_python": "/data/lry/vllm-envs/qwen3-14b-vllm-0.19.1/bin/python",
+    "skill_mode": false,
+    "system_prompt": "Use each parsed generated sample's own system field or author default_solver_system_prompt, exactly as question_evaluate.evaluate._chat_from_item with skill_mode=False.",
+    "samples_per_task": 3,
+    "author_default_samples_per_task": 9,
+    "bounded_deviation": "Only n is reduced 9->3 to keep the falsifier within <=1 GPU-hour. The reduction is frozen before P0-A outcomes and applies identically to every task/source/representation. Temperature/top-p/top-k/max_tokens remain author settings.",
+    "max_tokens": 4096,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "top_k": 40,
+    "seed": 20260819,
+    "training": false,
+    "second_backbone": false
+  },
+  "units": {
+    "selection": "Evaluate every P0-A contract-valid generated task; no outcome-based subsampling. P0-A already requires >=16 valid tasks per source.",
+    "source_skill_ids": ["skill_003", "skill_004", "skill_015"],
+    "truth": "author summarize_tool_call_predictions against each parsed sample's frozen reference answer",
+    "per_task_metric": "p_hat = fraction of the 3 solver samples containing a matching reference tool call",
+    "invalid_solver_output": "counts as incorrect through the author grading function"
+  },
+  "counterfactual_reuse": {
+    "arm_specific_solver_calls": false,
+    "split_weights": {"skill_003": 0.3333333333333333, "skill_004": 0.3333333333333333, "skill_015": 0.3333333333333333},
+    "merge_003_015_weights": {"skill_003": 0.25, "skill_004": 0.5, "skill_015": 0.25},
+    "merge_004_015_weights": {"skill_003": 0.5, "skill_004": 0.25, "skill_015": 0.25},
+    "observable": "Expected p_hat under each frozen mixture, computed from the same source-conditioned task/solver results."
+  },
+  "statistics": {
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20260820,
+    "bootstrap_unit": "contract-valid generated task resampled within source skill, preserving the frozen mixture weights",
+    "meaningful_effect_margin_absolute_p_hat": 0.05,
+    "margin_provenance": "P0-C is only a bounded coarse one-step consequence screen with n=3 per-task samples. The effect margin is fixed at 5 absolute percentage points before P0-A outcomes, matching the 0.05 meaningful dynamic-shift scale already preregistered for P0-A. This does NOT change the stricter 2pp heldout utility non-inferiority margin in the full confirmatory experiment.",
+    "per_merge_pass": "Signed expected-p_hat delta relative to split has a 95% task-bootstrap interval entirely above +0.05 or entirely below -0.05."
+  },
+  "decision_rule": {
+    "STRONG_GO": "Both mandatory-overlap merges pass the per-merge solver-consequence criterion.",
+    "PARTIAL": "Exactly one merge passes; report transformation-specific one-step consequence without generalizing to both witnesses.",
+    "STOP_ONE_STEP_UTILITY_CONSEQUENCE": "Neither merge passes; representation changes semantic curriculum distribution but no >2pp verified frozen-solver consequence is established on this bank.",
+    "INVALID": "P0-A not GO, raw SHA mismatch, qualification/provenance failure, solver runtime/hash mismatch, or GPU budget exceeded."
+  },
+  "budget": {
+    "gpu_count": 1,
+    "gpu_hours_cap": 1.0,
+    "wall_minutes_cap": 60,
+    "model_loads": 1,
+    "maximum_tasks": 72,
+    "maximum_solver_sequences": 216,
+    "training_steps": 0,
+    "new_questioner_generations": 0,
+    "second_backbone": 0
+  },
+  "next_if_strong_go": "Use as bounded one-step consequence evidence in the paper motivation/P0 section; C4 end-of-evolution remains locked to the full confirmatory design.",
+  "next_if_partial": "Report only the passing transformation; do not average it into a broad C4 claim.",
+  "next_if_stop": "Do not add solver samples, tune the 2pp margin, or switch backbone. Continue to full experiment only if P0-B/method rationale independently justifies it; do not cite P0-C as utility support.",
+  "authority": {
+    "execution_authorized": false,
+    "paper_claim_C3": false,
+    "paper_claim_C4_end_of_evolution": false,
+    "gpu_authorized": false
+  },
+  "scientific_authority": false
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-STRI-QWEN3-SOLVER-CONSEQUENCE-P0C-20260816",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "review_kind": "independent-second-pass-bounded-one-step-consequence-review",
+  "verdict": "CLEAR",
+  "checks": {
+    "n3_with_5pp_valid": true,
+    "margin_provenance_valid": true,
+    "independent_truth_valid": true,
+    "matched_reuse_valid": true,
+    "budget_valid": true
+  },
+  "reason": "Using n=3 solver samples per task is acceptable for a bounded coarse one-step consequence screen once the meaningful-effect margin is widened to a preregistered +/-5 percentage points. Reference tool-call grading is independent outcome truth, skill_mode=False isolates generated-task difficulty, and split/merge arms reuse identical task/solver outcomes. The full confirmatory heldout utility margin remains 2pp and is not changed by this P0-C design.",
+  "provider": {
+    "requested_model": "doubao-seed-2.1-turbo",
+    "resolved_model": "doubao-seed-2-1-turbo-260628",
+    "thinking": "disabled",
+    "scientific_authority": false
+  },
+  "scientific_authority": false,
+  "authority": {"paper_claim_C4_end_of_evolution": false, "p0": false, "gpu": false}
+}

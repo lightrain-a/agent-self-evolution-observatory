@@ -92,6 +92,9 @@ Residual: representation invariance of an **endogenously evolving taxonomy whose
 ### P0-B — zero-extra-GPU quotient feasibility
 Only after P0-A GO. Reuse exact P0-A raw SHA; no new model calls. Online/no-lookahead validator rejection must realize all five semantic cells 3 times each within the original 72 total / 24-per-source calls. GO is local feasibility only, not utility evidence.
 
+### P0-C — optional frozen-solver one-step consequence
+Only after P0-A GO and on the exact same raw bank. Every contract-valid generated task is solved by the frozen author-style Qwen3-8B base solver with n=3 samples/task and independent reference tool-call grading. Split/merge expected p_hat values reuse the same task/solver outcomes; there are no arm-specific solver calls. A clear consequence requires a bootstrap interval entirely outside +/-5 percentage points. This is intentionally a coarse one-step curriculum-difficulty screen and does not replace the stricter 2pp full heldout utility gate or establish end-of-evolution C4.
+
 ## Leakage-safe full experiment
 Frozen tool-disjoint Level-1 split:
 
