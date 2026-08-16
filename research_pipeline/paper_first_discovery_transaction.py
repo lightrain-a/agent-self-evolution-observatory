@@ -15,13 +15,17 @@ from .config import PROJECT_ROOT, StorageSettings
 from .paper_first_primary_evidence import (
     DEFAULT_JSON as PRIMARY_JSON,
     DEFAULT_JS as PRIMARY_JS,
+    load_private_primary_pool,
+    private_primary_pool_path,
     write_primary_evidence_pool,
 )
-from .paper_first_problem_discovery_contract import DISCOVERY_LANES
+from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION
 from .paper_first_problem_generator import (
     DEFAULT_JSON as GENERATOR_JSON,
     DEFAULT_JS as GENERATOR_JS,
+    _load_saturation_ledger,
     _normalize_last_completed_lane_search_receipt,
+    _pool_sha,
     write_problem_generator_state,
 )
 from .paper_first_problem_gate_queue import (
@@ -274,6 +278,149 @@ def _commit_files(temp_targets: list[tuple[Path, Path]]) -> None:
             else:
                 target.write_bytes(previous)
         raise
+
+
+def close_existing_problem_discovery_transaction(
+    *,
+    storage: StorageSettings | None = None,
+    primary_json: Path = PRIMARY_JSON,
+    primary_js: Path = PRIMARY_JS,
+    generator_json: Path = GENERATOR_JSON,
+    generator_js: Path = GENERATOR_JS,
+    queue_json: Path = QUEUE_JSON,
+    queue_js: Path = QUEUE_JS,
+    private_pool_source: Path | None = None,
+) -> dict[str, Any]:
+    """Atomically envelope an already-completed Primary -> Generator -> Queue state.
+
+    This path is intentionally zero-provider and zero-retrieval. It exists for the
+    case where the three canonical stages have already completed against one
+    content-addressed Primary pool but were written by standalone stage writers.
+    Re-running Primary merely to add a transaction id is unsafe once the source
+    coverage scheduler has advanced, because that replay can silently select a
+    different exploration tranche. Therefore this function requires an exact
+    generator saturation receipt and an exact private-pool record match before it
+    may stamp the existing closed state.
+    """
+    storage = storage or StorageSettings.from_env(); storage.ensure()
+    primary = _load(primary_json); generator = _load(generator_json); queue = _load(queue_json)
+    errors = _validate(primary, generator, queue)
+    if errors:
+        raise RuntimeError("existing paper-first discovery state invalid: " + ",".join(errors))
+    public_records = [row for row in primary.get("records") or [] if isinstance(row, dict)]
+    public_manifest = [
+        (str(row.get("ref") or ""), str(row.get("source_sha256") or ""), str(row.get("fulltext_sha256") or ""))
+        for row in public_records
+    ]
+    if not public_manifest or any(not ref or len(source_sha) != 64 for ref, source_sha, _ in public_manifest):
+        raise RuntimeError("existing Primary manifest is incomplete")
+
+    source_path = Path(private_pool_source) if private_pool_source is not None else private_primary_pool_path(storage)
+    source_pool = load_private_primary_pool(source_path) or {}
+    source_records = [row for row in source_pool.get("records") or [] if isinstance(row, dict)]
+    source_manifest = [
+        (str(row.get("ref") or ""), str(row.get("source_sha256") or ""), str(row.get("fulltext_sha256") or ""))
+        for row in source_records
+    ]
+    if source_manifest != public_manifest:
+        raise RuntimeError("private Primary replay source does not exactly match current public Primary records")
+    source_pool_sha = _pool_sha(source_pool)
+
+    generator_raw = ((generator.get("raw_artifacts") or {}).get("generator") or {})
+    generator_raw_sha = str(generator_raw.get("sha256") or "")
+    generator_run_id = str(generator.get("run_id") or "")
+    generator_status = str(generator.get("status") or "")
+    receipts = [row for row in _load_saturation_ledger(storage) if isinstance(row, dict)]
+    receipt = next((
+        row for row in reversed(receipts)
+        if row.get("scientific_authority") is False
+        and str(row.get("discovery_operator_version") or "") == DISCOVERY_OPERATOR_VERSION
+        and str(row.get("pool_sha256") or "") == source_pool_sha
+        and str(row.get("run_id") or "") == generator_run_id
+        and str(row.get("status") or "") == generator_status
+        and str(row.get("raw_sha256") or "") == generator_raw_sha
+        and len(list(row.get("source_refs") or [])) == len(public_manifest)
+        and set(str(ref) for ref in row.get("source_refs") or []) == {ref for ref, _, _ in public_manifest}
+    ), None)
+    if receipt is None:
+        raise RuntimeError("no exact current-operator generator receipt binds the existing Primary and Generator state")
+
+    txn_id = _transaction_id(primary, generator, queue)
+    target_private = private_primary_pool_path(storage)
+    replay_pool = json.loads(json.dumps(source_pool, ensure_ascii=False))
+    replay_pool["generated_at"] = str(primary.get("generated_at") or "")
+    replay_pool["transaction_replay"] = {
+        "mode": "existing-closed-state-envelope",
+        "source_generated_at": str(source_pool.get("generated_at") or ""),
+        "source_pool_sha256": source_pool_sha,
+        "generator_receipt_run_id": generator_run_id,
+        "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
+        "scientific_authority": False,
+    }
+    coverage = replay_pool.setdefault("source_coverage", {})
+    portable = [dict(row) for row in coverage.get("portable_review_receipts") or [] if isinstance(row, dict)]
+    key = (generator_run_id, source_pool_sha, DISCOVERY_OPERATOR_VERSION)
+    by_key = {
+        (str(row.get("run_id") or ""), str(row.get("pool_sha256") or ""), str(row.get("discovery_operator_version") or "")): row
+        for row in portable
+    }
+    by_key[key] = {
+        "run_id": generator_run_id,
+        "pool_sha256": source_pool_sha,
+        "negative_space_sha256": receipt.get("negative_space_sha256"),
+        "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
+        "source_refs": [ref for ref, _, _ in public_manifest],
+        "status": generator_status,
+        "requested_model": receipt.get("requested_model"),
+        "resolved_model": receipt.get("resolved_model"),
+        "raw_sha256": generator_raw_sha,
+        "scientific_authority": False,
+    }
+    coverage["portable_review_receipts"] = list(by_key.values())
+    coverage["portable_review_receipts_merged"] = len(coverage["portable_review_receipts"])
+    coverage["saturation_ledger_runs"] = max(int(coverage.get("saturation_ledger_runs") or 0), len(receipts))
+    if _pool_sha(replay_pool) != source_pool_sha:
+        raise RuntimeError("private Primary replay changed the content-addressed pool")
+
+    run_root = storage.run_dir / "paper-first-discovery-transactions"; run_root.mkdir(parents=True, exist_ok=True)
+    started = _now()
+    with _transaction_lock(storage):
+        temp_root = Path(tempfile.mkdtemp(prefix=".paper-first-close-", dir=str(primary_json.parent)))
+        try:
+            targets: list[tuple[Path, Path]] = []
+            for role, payload, out_json, out_js, global_name in (
+                ("primary", primary, primary_json, primary_js, "PAPER_FIRST_PRIMARY_EVIDENCE"),
+                ("generator", generator, generator_json, generator_js, "PAPER_FIRST_PROBLEM_GENERATOR"),
+                ("queue", queue, queue_json, queue_js, "PAPER_FIRST_PROBLEM_GATE_QUEUE"),
+            ):
+                temp_json = temp_root / f"{role}.json"; temp_js = temp_root / f"{role}.js"
+                clean = dict(payload); clean.pop("discovery_transaction_id", None); clean.pop("discovery_transaction_role", None)
+                temp_json.write_text(json.dumps(clean, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                _stamp(temp_json, temp_js, global_name, txn_id, role)
+                targets.extend([(temp_json, out_json), (temp_js, out_js)])
+            temp_private = temp_root / "primary-private.json"
+            temp_private.write_text(json.dumps(replay_pool, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            targets.append((temp_private, target_private))
+            _commit_files(targets)
+        finally:
+            shutil.rmtree(temp_root, ignore_errors=True)
+
+    record = {
+        "schema_version": "1.0",
+        "started_at": started,
+        "completed_at": _now(),
+        "status": "COMMITTED_EXISTING_CLOSED_STATE",
+        "transaction_id": txn_id,
+        "source_pool_sha256": source_pool_sha,
+        "generator_receipt_run_id": generator_run_id,
+        "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
+        "provider_calls_executed": 0,
+        "source_scheduler_runs_executed": 0,
+        "scientific_authority": False,
+        "authority": {"paper": False, "method": False, "experiment": False, "p0": False, "gpu": False},
+    }
+    (run_root / f"{txn_id}.json").write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return record
 
 
 def write_problem_discovery_transaction(

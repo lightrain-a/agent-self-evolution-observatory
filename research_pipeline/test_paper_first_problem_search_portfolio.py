@@ -3,7 +3,7 @@ from __future__ import annotations
 import json,re,unittest
 
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES,SEARCH_PORTFOLIO_PRIMITIVES,LANE_EVIDENCE_REQUIRED,LANE_SOURCE_ROLES
-from .paper_first_problem_search_portfolio import DEFAULT_MAX_PARALLEL_CALLS,_expansion_prompt,_formulation_prompt,_inversion_asset_records,_opposite_search_priors,_valid_seed,run_search_portfolio
+from .paper_first_problem_search_portfolio import DEFAULT_MAX_PARALLEL_CALLS,_expansion_prompt,_formulation_prompt,_fresh_phenomenon_priors,_inversion_asset_records,_opposite_search_priors,_valid_seed,run_search_portfolio
 from .paper_first_fresh_saturation import reduction_pattern_audit
 
 
@@ -44,6 +44,21 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertGreaterEqual(state["summary"]["max_branch_depth"],1)
         self.assertGreater(state["summary"]["formulated_candidates"],0)
         self.assertFalse(state["scientific_authority"])
+
+    def test_fresh_phenomenon_prior_uses_latest_explicit_measured_boundary_only(self):
+        records=[
+            {"ref":"arXiv:new-boundary","publication_date":"2026-08-13","title":"New boundary","typed_evidence":{"measured_failures":[],"boundary_observations":[{"text":"Reward jumps at K=32 and then plateaus."}]},"empirical_facts":[{"text":"Quantitative sensitivity curve."}]},
+            {"ref":"arXiv:new-no-anomaly","publication_date":"2026-08-13","title":"New but smooth","typed_evidence":{"measured_failures":[],"boundary_observations":[]},"empirical_facts":[{"text":"Performance improves."}]},
+            {"ref":"arXiv:older-boundary","publication_date":"2026-08-12","title":"Older boundary","typed_evidence":{"measured_failures":[{"text":"A prior failure."}],"boundary_observations":[]},"empirical_facts":[]},
+        ]
+        priors=_fresh_phenomenon_priors(records)
+        self.assertEqual([row["ref"] for row in priors],["arXiv:new-boundary"])
+        self.assertIn("plateaus",priors[0]["boundary_observations"][0])
+        prompt=_expansion_prompt("UNEXPLAINED_BOUNDARY",records,2,{"blocked_objects":[],"inversion_asset_evidence":[],"positive_residual_asset_evidence":[]})
+        self.assertIn("FRESH-PHENOMENON EXECUTION REQUIREMENT",prompt)
+        self.assertIn("arXiv:new-boundary",prompt)
+        self.assertIn("strongest mature reduction",prompt)
+        self.assertIn("independent truth",prompt)
 
     def test_provenance_bound_inversion_asset_becomes_primary_search_registry_record(self):
         memory={"inversion_asset_evidence":[{"asset_ref":"first-party-asset:demo@"+"a"*40,"title":"Author implementation","primary_url":"https://github.com/example/repo","source_sha256":"b"*64,"asset_manifest_artifact":"generated/demo.json","asset_manifest_file_sha256":"c"*64,"commit":"a"*40,"empirical_facts":["The released controller reuses the same evaluation signal in every selection round."],"scientific_authority":False}]}

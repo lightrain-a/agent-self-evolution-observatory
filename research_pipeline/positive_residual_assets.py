@@ -13,7 +13,7 @@ LOCAL_MECHANISM_READJUDICATION = PROJECT_ROOT / "generated" / "positive-residual
 TEMPORAL_EXPOSURE_READJUDICATION = PROJECT_ROOT / "generated" / "positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json"
 TREATMENT_SEMANTICS_READJUDICATION = PROJECT_ROOT / "generated" / "positive-residual-memory-treatment-semantics-principle-readjudication-20260816.json"
 EXPECTED_SUPPORT_INVENTORY_SHA256 = "00fd656673a86ec92445930628fb4a171547148d8fe9b60666701bd4dee11683"
-EXPECTED_POST_C2_SHA256 = "1d21e65d260e6be77c86b86e75db19e3d50a56d588caffb926e9a0b9863f2df5"
+EXPECTED_POST_C2_SCIENTIFIC_SHA256 = "2acb82319bd6c91fdc8ccd07d8cfe6548c5204d00c0942bce6e76534891c631b"
 EXPECTED_LOCAL_MECHANISM_READJUDICATION_SHA256 = "60a5f330049613f7163e2fee5bfa5f82e32283fed1951e32da83e9f11e712552"
 EXPECTED_TEMPORAL_EXPOSURE_READJUDICATION_SHA256 = "2656e6faf2132ebdac5842f8249eef90d5ae18aa3fef0a7c0956084c2dbaeff1"
 EXPECTED_TREATMENT_SEMANTICS_READJUDICATION_SHA256 = "ed09316950002ca43b88c427da70dc22e30f6f17076ef7c3010c604ef6f1269e"
@@ -28,11 +28,21 @@ def _canonical_sha(payload: dict[str, Any]) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
+def _scientific_json_sha(path: Path, *, volatile_keys: tuple[str, ...] = ("generated_at",)) -> str:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError(f"scientific provenance JSON root must be an object: {path}")
+    stable = dict(payload)
+    for key in volatile_keys:
+        stable.pop(key, None)
+    return _canonical_sha(stable)
+
+
 def _memory_effect_transport_residual() -> dict[str, Any]:
     if _sha(SUPPORT_INVENTORY) != EXPECTED_SUPPORT_INVENTORY_SHA256:
         raise ValueError("B-9/C2 support inventory provenance drift")
-    if _sha(POST_C2_ADJUDICATION) != EXPECTED_POST_C2_SHA256:
-        raise ValueError("B-9/C2 post-C2 adjudication provenance drift")
+    if _scientific_json_sha(POST_C2_ADJUDICATION) != EXPECTED_POST_C2_SCIENTIFIC_SHA256:
+        raise ValueError("B-9/C2 post-C2 scientific content provenance drift")
     if _sha(LOCAL_MECHANISM_READJUDICATION) != EXPECTED_LOCAL_MECHANISM_READJUDICATION_SHA256:
         raise ValueError("B-9/C2 local-mechanism readjudication provenance drift")
     if _sha(TEMPORAL_EXPOSURE_READJUDICATION) != EXPECTED_TEMPORAL_EXPOSURE_READJUDICATION_SHA256:
@@ -80,7 +90,8 @@ def _memory_effect_transport_residual() -> dict[str, Any]:
         },
         "post_c2_adjudication": {
             "path": str(POST_C2_ADJUDICATION.relative_to(PROJECT_ROOT)),
-            "sha256": EXPECTED_POST_C2_SHA256,
+            "scientific_sha256": EXPECTED_POST_C2_SCIENTIFIC_SHA256,
+            "hash_scope": "canonical-json-excluding-generated_at",
         },
         "local_mechanism_readjudication": {
             "path": str(LOCAL_MECHANISM_READJUDICATION.relative_to(PROJECT_ROOT)),

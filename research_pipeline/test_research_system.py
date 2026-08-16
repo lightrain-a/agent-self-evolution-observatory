@@ -355,8 +355,12 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertTrue(discovery["policy"]["observed_dependency_graph_is_not_an_identifiability_gap"])
         self.assertTrue(discovery["policy"]["reciprocal_coupling_claim_requires_downstream_residual_beyond_distribution_shift"])
         self.assertTrue(discovery["policy"]["feedback_mechanism_requires_causal_write_path_before_experiment"])
-        self.assertEqual(discovery["policy"]["discovery_operator_version"],"anomaly-first-active-asset-only-v9")
+        self.assertEqual(discovery["policy"]["discovery_operator_version"],"fresh-phenomenon-first-v10")
         self.assertTrue(discovery["policy"]["inactive_search_assets_hidden_from_generator"])
+        self.assertTrue(discovery["policy"]["no_active_asset_fallback_requires_latest_primary_quantitative_anomaly"])
+        self.assertTrue(discovery["policy"]["fresh_phenomenon_seed_must_name_measured_boundary_or_failure"])
+        self.assertTrue(discovery["policy"]["fresh_phenomenon_asset_readiness_is_priority_not_novelty_authority"])
+        self.assertTrue(discovery["policy"]["fresh_phenomenon_missing_substrate_is_hold_not_scientific_fail"])
         self.assertTrue(discovery["policy"]["inactive_search_assets_remain_provenance_archived"])
         self.assertTrue(discovery["policy"]["positive_residual_search_enabled"])
         self.assertTrue(discovery["policy"]["positive_residual_requires_prospective_pre_outcome_prediction"])
@@ -778,8 +782,7 @@ class ResearchSystemTest(unittest.TestCase):
         expected=relation_recall_freshness(state["paper_first_problem_generator"],state["paper_first_global_relation_recall"])
         self.assertEqual(state["paper_first_global_relation_freshness"]["status"],expected["status"])
         stale=copy.deepcopy(state)
-        stale["paper_first_global_relation_freshness"]["status"]="STALE_RELATION_UNIVERSE"
-        stale["paper_first_global_relation_freshness"]["summary"]["universe_stale"]=True
+        stale["paper_first_global_relation_freshness"]["status"]=("CURRENT_RELATION_UNIVERSE" if expected["status"]!="CURRENT_RELATION_UNIVERSE" else "STALE_RELATION_UNIVERSE")
         self.assertTrue(any("freshness must match embedded Generator and Relation state" in error for error in validate_state(stale)))
 
     def test_relation_delta_preflight_is_typed_opportunity_only_and_cannot_reopen(self) -> None:

@@ -8,7 +8,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from .config import StorageSettings
-from .paper_first_discovery_transaction import _transaction_id, _validate, write_problem_discovery_transaction
+from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, _transaction_id, _validate, write_problem_discovery_transaction
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES
 
 
@@ -79,6 +79,29 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual(payloads[1]["status"],"GENERATED_ZERO_CANDIDATES");self.assertEqual(payloads[1]["summary"]["generated"],0)
         self.assertEqual(payloads[2]["summary"]["submitted"],0)
         self.assertEqual(result["authority"],{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False})
+
+    def test_close_existing_transaction_replays_exact_private_pool_without_rerunning_scheduler(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
+            first=self.run_txn(root,storage,targets,now)
+            current_private=storage.data_root/"paper-first-problem-discovery"/"primary-evidence-pool.json"
+            replay_source=root/"frozen-primary-replay.json";replay_source.write_bytes(current_private.read_bytes())
+            source=json.loads(replay_source.read_text());source["generated_at"]="2026-08-12T00:00:00+00:00";replay_source.write_text(json.dumps(source),encoding="utf-8")
+            for key in ("primary_json","generator_json","queue_json"):
+                payload=json.loads(targets[key].read_text());payload.pop("discovery_transaction_id",None);payload.pop("discovery_transaction_role",None);targets[key].write_text(json.dumps(payload),encoding="utf-8")
+            drift=json.loads(current_private.read_text());drift["records"][0]["ref"]="arXiv:drifted";current_private.write_text(json.dumps(drift),encoding="utf-8")
+            result=close_existing_problem_discovery_transaction(storage=storage,**targets,private_pool_source=replay_source)
+            payloads=[json.loads(targets[key].read_text()) for key in ("primary_json","generator_json","queue_json")]
+            rebound=json.loads(current_private.read_text())
+        self.assertEqual(first["status"],"COMMITTED")
+        self.assertEqual(result["status"],"COMMITTED_EXISTING_CLOSED_STATE")
+        self.assertEqual(result["provider_calls_executed"],0)
+        self.assertEqual(result["source_scheduler_runs_executed"],0)
+        self.assertEqual({row["discovery_transaction_id"] for row in payloads},{result["transaction_id"]})
+        self.assertEqual([row["discovery_transaction_role"] for row in payloads],["primary","generator","queue"])
+        self.assertEqual([row["ref"] for row in rebound["records"]],[row["ref"] for row in payloads[0]["records"]])
+        self.assertEqual(rebound["generated_at"],payloads[0]["generated_at"])
+        self.assertEqual((rebound.get("transaction_replay") or {}).get("mode"),"existing-closed-state-envelope")
 
     def test_generator_error_aborts_without_changing_any_public_file(self) -> None:
         with tempfile.TemporaryDirectory() as td:

@@ -129,10 +129,36 @@ def _lane_records(lane,records,max_records=20):
 
 def _evidence_payload(records):
     return [{
-        "ref":r.get("ref"),"title":r.get("title"),"abstract":str(r.get("abstract") or "")[:1500],
+        "ref":r.get("ref"),"title":r.get("title"),"publication_date":r.get("publication_date"),"abstract":str(r.get("abstract") or "")[:1500],
         "empirical_facts":[str(f.get("text") or "")[:340] for f in (r.get("empirical_facts") or [])[:3] if isinstance(f,dict)],
         "typed_evidence":{k:[str(f.get("text") or "")[:340] for f in ((r.get("typed_evidence") or {}).get(k) or [])[:2] if isinstance(f,dict)] for k in ("operational_assumptions","measured_failures","boundary_observations")},
     } for r in records[:32]]
+
+def _fresh_phenomenon_priors(records,limit=8):
+    """Return newest primary records that contain an explicit measured anomaly.
+
+    This is search control only: recency and support readiness prioritize what to
+    inspect, but never confer novelty or downstream scientific authority.
+    """
+    rows=[r for r in records if isinstance(r,dict) and str(r.get("ref") or "") and str(r.get("publication_date") or "")]
+    if not rows:return []
+    latest=max(str(r.get("publication_date") or "") for r in rows)
+    newest=[r for r in rows if str(r.get("publication_date") or "")==latest]
+    priors=[]
+    for r in newest:
+        typed=r.get("typed_evidence") or {}
+        failures=[str(x.get("text") or "").strip() for x in typed.get("measured_failures") or [] if isinstance(x,dict) and str(x.get("text") or "").strip()]
+        boundaries=[str(x.get("text") or "").strip() for x in typed.get("boundary_observations") or [] if isinstance(x,dict) and str(x.get("text") or "").strip()]
+        facts=[str(x.get("text") or "").strip() for x in r.get("empirical_facts") or [] if isinstance(x,dict) and str(x.get("text") or "").strip()]
+        if not failures and not boundaries:continue
+        priors.append({
+            "ref":str(r.get("ref") or ""),"publication_date":latest,"title":str(r.get("title") or ""),
+            "measured_failures":failures[:2],"boundary_observations":boundaries[:2],"empirical_facts":facts[:2],
+            "search_instruction":"target the measured boundary/failure itself; name the strongest mature reduction and cheapest independent-truth substrate before proposing a method",
+            "scientific_authority":False,
+        })
+    priors.sort(key=lambda row:(len(row["boundary_observations"]),len(row["measured_failures"]),row["ref"]),reverse=True)
+    return priors[:limit]
 
 def _inversion_asset_records(dead_end_memory):
     records=[];seen=set()
@@ -235,10 +261,12 @@ def _opposite_search_priors(dead_end_memory,limit=8):
 
 def _expansion_prompt(lane,records,count,dead_end_memory=None):
     assets=_inversion_asset_records(dead_end_memory);positive_assets=_positive_residual_asset_records(dead_end_memory);asset_refs={str(row.get("ref") or "") for row in assets+positive_assets};paper_records=[row for row in records if str(row.get("ref") or "") not in asset_refs]
+    fresh_priors=_fresh_phenomenon_priors(paper_records)
     records=(assets+positive_assets+_lane_records(lane,paper_records,max_records=max(1,20-len(assets)-len(positive_assets))))[:20]
     asset_requirement=("ASSET-INVERSION EXECUTION REQUIREMENT: provenance-bound first-party inversion assets are available. Seed 1 MUST directly execute one certified opposite-search prior by citing a FIRST_PARTY_INVERSION_ASSET ref in source_a; because this lane permits a single distinct source, source_b MAY cite the same asset ref for a second independently stated grounded fact. The seed must test the opposite principle/reopen boundary rather than restate the certified dead end. STRUCTURAL-GRAPH RULE: if the first-party implementation directly exposes whether a causal/update edge exists, do NOT formulate identifiability of that edge. Instead target a downstream consequence of that structure and state what ordinary distribution-shift, stale-supervisor, online-adaptation, or alternating-optimization explanation must be beaten. Remaining seeds may explore any grounded anomaly. " if assets and count>0 else "")
     positive_slot=2 if assets else 1
     positive_requirement=(f"POSITIVE-RESIDUAL EXECUTION REQUIREMENT: Seed {positive_slot} MUST cite a POSITIVE_RESIDUAL_ASSET ref in source_a (source_b MAY reuse the same ref because this lane permits one distinct source). It must propose a NEW scientific mechanism/problem that simultaneously explains the surviving phenomenon and the recorded failed/reduced mechanisms. It MUST make a prospective prediction from pre-outcome information, explicitly condition on or beat the recorded same-information baselines, and obey every prohibited_rescue in the asset. If the asset marks temporal_exposure_standalone_branch_closed, DO NOT propose K-step mediation, ON/OFF exposure windows, duration, cumulative dose, or repeated conditioning as the new mechanism. The only permitted next memory seed must change executable treatment semantics/version identity and must name the mandatory nonstationary/versioned-treatment reductions it must beat before any experiment. Do not use full-trajectory distance or endpoint length/success. This asset is search evidence only, never novelty or experiment authority. " if lane=="UNEXPLAINED_BOUNDARY" and positive_assets and count>=positive_slot else "")
+    fresh_requirement=("FRESH-PHENOMENON EXECUTION REQUIREMENT: no active inversion or positive-residual asset exists. For UNEXPLAINED_BOUNDARY, Seed 1 MUST cite one ref from FRESH_PHENOMENON_PRIORS and target its explicit measured failure, nonmonotonicity, threshold, plateau, reversal, or adjacent-regime boundary. The seed must name in scientific_tension the strongest mature reduction class it expects to face (for example information redundancy, rate-distortion, adaptive validation, distribution shift, or ceiling effects) and in agent_specific_constraint state what released/independent truth could falsify the residual. Missing released substrate is a HOLD, never evidence of novelty or scientific failure. " if lane=="UNEXPLAINED_BOUNDARY" and not assets and not positive_assets and fresh_priors and count>0 else "")
     contract={"source_roles":list(LANE_SOURCE_ROLES[lane]),"minimum_distinct_primary_sources":LANE_DISTINCT_SOURCE_MINIMUM[lane],"required_lane_evidence":list(LANE_EVIDENCE_REQUIRED[lane]),"machine_contract":LANE_MACHINE_CONTRACTS[lane]}
     analogy=list(CROSS_DOMAIN_STRUCTURES) if lane=="CROSS_DOMAIN_STRUCTURAL_ANALOGY" else []
     shape={"seeds":[{
@@ -251,12 +279,12 @@ def _expansion_prompt(lane,records,count,dead_end_memory=None):
         "This is exploration, not adjudication: DO NOT apply mature-theory, closest-work, domain-transfer, or Negative-Space novelty vetoes here. "
         "Do not invent open-world missing-cell claims. Preserve structurally unusual seeds even if their final novelty is uncertain. "
         "ANOMALY-FIRST SEARCH: actively inspect source-local sign reversals, nonmonotonicity, thresholds, plateaus, history dependence, composition effects, and bounded failure transitions; do not wait for a second paper to have used the same metric when this lane permits one source. When equally grounded seeds compete, prefer an operational core whose decisive comparison could plausibly be materialized on released units, first-party code, or an existing provenance-audited agent substrate. Support feasibility is a search priority only and never novelty evidence. "
-        "DEAD-END INVERSION is a search prior, never authority: a principle-certified dead end may contribute its opposite principle/search seed, but only generate an inversion seed when the supplied fresh primary evidence independently grounds it and the seed escapes the certified basin/reopen condition. Never turn a dead-end inversion into an automatic survivor or fabricate support merely to reuse it. "+asset_requirement+positive_requirement+
+        "DEAD-END INVERSION is a search prior, never authority: a principle-certified dead end may contribute its opposite principle/search seed, but only generate an inversion seed when the supplied fresh primary evidence independently grounds it and the seed escapes the certified basin/reopen condition. Never turn a dead-end inversion into an automatic survivor or fabricate support merely to reuse it. "+asset_requirement+positive_requirement+fresh_requirement+
         f"Generate exactly {count} materially distinct grounded seeds for lane {lane}. The lane machine contract is {json.dumps(contract,ensure_ascii=False)}. "
         f"Use two grounded evidence items and at least {LANE_DISTINCT_SOURCE_MINIMUM[lane]} distinct primary source ref(s), following the lane contract; obey evidence roles. Claims must be supported by supplied primary text. "
         "Vary problem families and structural signatures; avoid paraphrase-only variants. "
         "For CROSS_DOMAIN_STRUCTURAL_ANALOGY, the external domain is only an analogy prior and never novelty by itself; state the Agent-specific structural constraint. "
-        f"Analogy priors={json.dumps(analogy,ensure_ascii=False)}. FIRST_PARTY_INVERSION_ASSETS={json.dumps(_evidence_payload(assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_ASSETS={json.dumps(_evidence_payload(positive_assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. CERTIFIED DEAD-END INVERSION PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. DEAD-END SEARCH MEMORY (search-control only, never scientific authority)={json.dumps(_prompt_dead_end_memory(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. VERIFIED PRIMARY EVIDENCE={json.dumps(_evidence_payload(records),ensure_ascii=False,separators=(',',':'))}. "
+        f"Analogy priors={json.dumps(analogy,ensure_ascii=False)}. FIRST_PARTY_INVERSION_ASSETS={json.dumps(_evidence_payload(assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_ASSETS={json.dumps(_evidence_payload(positive_assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. FRESH_PHENOMENON_PRIORS={json.dumps(fresh_priors,ensure_ascii=False,separators=(',',':'))}. CERTIFIED DEAD-END INVERSION PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. DEAD-END SEARCH MEMORY (search-control only, never scientific authority)={json.dumps(_prompt_dead_end_memory(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. VERIFIED PRIMARY EVIDENCE={json.dumps(_evidence_payload(records),ensure_ascii=False,separators=(',',':'))}. "
         f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 

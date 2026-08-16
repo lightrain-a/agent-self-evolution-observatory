@@ -59,7 +59,7 @@ def build_paper_first_discovery_frontier(
         and ps.get("carrier_probe_complete") is True
     )
     live_generator_closed = bool(
-        generator_state.get("status") == "SKIPPED_SOURCE_COVERAGE_SATURATED"
+        generator_state.get("status") in {"SKIPPED_SOURCE_COVERAGE_SATURATED", "GENERATED_ZERO_CANDIDATES"}
         and _int(gs, "generated") == 0
         and _int(gs, "written_to_auto_inbox") == 0
     )

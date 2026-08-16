@@ -36,6 +36,13 @@ class PaperFirstDiscoveryFrontierTest(unittest.TestCase):
         self.assertTrue(state["policy"]["trigger_satisfaction_must_reenter_original_control_plane"])
         self.assertTrue(all(row["scientific_authority"] is False and row["automatic_model_call_authorized"] is False for row in state["triggers"]))
 
+    def test_operator_recompile_zero_candidates_is_closed_live_generator(self) -> None:
+        states=self.states();states["generator_state"]={"status":"GENERATED_ZERO_CANDIDATES","summary":{"generated":0,"written_to_auto_inbox":0}}
+        state=self.build(states)
+        self.assertEqual(state["status"],"WAIT_EXTERNAL_EVIDENCE_TRIGGERS")
+        self.assertTrue(state["summary"]["live_generator_closed"])
+        self.assertEqual(validate_paper_first_discovery_frontier(state),[])
+
     def test_new_live_source_backlog_opens_live_source_frontier_not_model_authority(self) -> None:
         states=self.states();states["primary_state"]["summary"].update({"source_coverage_exhausted":False,"unreviewed_lane_linked_sources":2})
         state=self.build(states)

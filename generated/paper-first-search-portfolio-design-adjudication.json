@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T16:14:10+00:00",
+  "generated_at": "2026-08-16T17:04:27+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T16:14:10+00:00",
+    "generated_at": "2026-08-16T17:04:27+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -963,7 +963,7 @@
         "title": "Persistent memory effects remain archived after local, temporal, and treatment-semantics reductions",
         "source_kind": "provenance-audited-internal-positive-residual",
         "primary_url": "https://github.com/lightrain-a/agent-self-evolution-observatory/blob/main/research_pipeline/paper_first_c2_support_inventory_20260812.json",
-        "source_sha256": "433f60cd0d1560b2d4517c7ce87eced9178c04c31d3cfe53a6b6fab9913db10b",
+        "source_sha256": "eaf6759abcd643ad9e767534588158f1c1ef2e6e9517ab6c8ec3051f40860d43",
         "provenance": {
           "support_inventory": {
             "path": "research_pipeline/paper_first_c2_support_inventory_20260812.json",
@@ -971,7 +971,8 @@
           },
           "post_c2_adjudication": {
             "path": "generated/paper-first-post-c2-adjudication.json",
-            "sha256": "1d21e65d260e6be77c86b86e75db19e3d50a56d588caffb926e9a0b9863f2df5"
+            "scientific_sha256": "2acb82319bd6c91fdc8ccd07d8cfe6548c5204d00c0942bce6e76534891c631b",
+            "hash_scope": "canonical-json-excluding-generated_at"
           },
           "local_mechanism_readjudication": {
             "path": "generated/positive-residual-memory-local-mechanism-readjudication-20260816.json",

@@ -5,7 +5,7 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
-DISCOVERY_OPERATOR_VERSION = "anomaly-first-active-asset-only-v9"
+DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-first-v10"
 
 DISCOVERY_LANES: tuple[str, ...] = (
     "CONTRADICTION",
@@ -189,6 +189,10 @@ POLICY: dict[str, Any] = {
     "positive_residual_direct_seed_required_in_unexplained_boundary_shard": True,
     "inactive_search_assets_hidden_from_generator": True,
     "inactive_search_assets_remain_provenance_archived": True,
+    "no_active_asset_fallback_requires_latest_primary_quantitative_anomaly": True,
+    "fresh_phenomenon_seed_must_name_measured_boundary_or_failure": True,
+    "fresh_phenomenon_asset_readiness_is_priority_not_novelty_authority": True,
+    "fresh_phenomenon_missing_substrate_is_hold_not_scientific_fail": True,
     "temporal_exposure_relabeling_after_longitudinal_reduction_forbidden": True,
     "treatment_semantics_seed_requires_executable_version_change": True,
     "treatment_semantics_seed_requires_versioned_treatment_reduction_first": True,
