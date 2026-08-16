@@ -7,7 +7,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier
-from .paper_first_shadow_search_admission import build_shadow_search_admission, primary_content_sha256, source_set_sha256
+from .paper_first_shadow_search_admission import DISCOVERY_OPERATOR_VERSION, build_shadow_search_admission, primary_content_sha256, source_set_sha256
 from .problem_search_shadow_qualification_consumer import consume_shadow_qualification_handoff
 
 
@@ -24,7 +24,7 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
         latest_records=json.loads(json.dumps(records))
         if not same_source:
             latest_records[0]["fulltext_sha256"]="9"*64
-        shadow={"latest_run_id":"shadow-old","latest_run":{"run_id":"shadow-old","status":"SHADOW_TERMINAL_COMPLETE","source_generated_at":"2026-08-13T00:00:00+00:00","source_set_sha256":source_set_sha256(latest_records),"source_primary_content_sha256":primary_content_sha256(latest_records),"source_pool_sha256":"b"*64,"scientific_authority":False},"scientific_authority":False,"policy":{"shadow_only":True}}
+        shadow={"latest_run_id":"shadow-old","latest_run":{"run_id":"shadow-old","status":"SHADOW_TERMINAL_COMPLETE","discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"source_generated_at":"2026-08-13T00:00:00+00:00","source_set_sha256":source_set_sha256(latest_records),"source_primary_content_sha256":primary_content_sha256(latest_records),"source_pool_sha256":"b"*64,"scientific_authority":False},"scientific_authority":False,"policy":{"shadow_only":True}}
         admission=build_shadow_search_admission(primary_state=primary,generator_state=generator,queue_state=queue,shadow_state=shadow)
         watch={"status":"SUPPORT_RELEASE_WATCH_COMPLETE","summary":{"support_holds":0,"recheck_required":0},"scientific_authority":False}
         asset={"status":"SUPPORT_ASSET_RECHECK_QUEUE_EMPTY","summary":{"support_holds":0,"queued":0},"scientific_authority":False}

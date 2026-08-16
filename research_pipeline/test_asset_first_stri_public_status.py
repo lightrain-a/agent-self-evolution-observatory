@@ -18,6 +18,13 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertEqual(state["summary"]["claims_supported"], 3)
         self.assertEqual(state["summary"]["claims_total"], 3)
         self.assertEqual(state["summary"]["qa_checks_passed"], state["summary"]["qa_checks_total"])
+        self.assertEqual(state["submission_status"], "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW")
+        self.assertEqual(state["summary"]["official_qa_checks_passed"], state["summary"]["official_qa_checks_total"])
+        self.assertEqual((state["summary"]["main_text_pages"], state["summary"]["main_text_page_limit"]), (9, 9))
+        self.assertEqual(state["summary"]["supplement_ready"], 1)
+        self.assertEqual(state["summary"]["supplement_unit_tests"], "11/11 PASS")
+        self.assertEqual(state["summary"]["human_signoff_pending"], 1)
+        self.assertEqual(state["summary"]["new_gpu_evidence_required"], 0)
         self.assertFalse(state["scientific_authority"])
         self.assertFalse(any(state["authority"].values()))
         self.assertEqual(validate_asset_first_stri_public_status(state), [])
@@ -36,6 +43,14 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         drift["gates"]["current_source"] = False
         errors = validate_asset_first_stri_public_status(drift)
         self.assertTrue(any("every cross-validated" in error for error in errors))
+
+    def test_missing_official_supplement_gate_cannot_keep_ready_status(self) -> None:
+        state = build_asset_first_stri_public_status()
+        drift = copy.deepcopy(state)
+        drift["gates"]["anonymous_supplement"] = False
+        drift["summary"]["supplement_ready"] = 0
+        errors = validate_asset_first_stri_public_status(drift)
+        self.assertTrue(any("paper-ready/submission gate" in error or "supplement" in error for error in errors))
 
 
 if __name__ == "__main__":

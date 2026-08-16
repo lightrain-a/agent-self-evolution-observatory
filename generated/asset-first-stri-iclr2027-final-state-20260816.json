@@ -48,13 +48,23 @@
       "sha256": "3450a445c7c2a74d7fd9475eb441631af18bce7b46889d45987268a1f532751a",
       "files": 11,
       "isolated_compile_verified": true
+    },
+    "supplement_zip": {
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
+      "sha256": "70a811e4c08addaf36f008dca3f1ef6fcc378dc1b346bb405c1670fb01cc74f8",
+      "manifest_sha256": "74ba3e24a25c97de13f6b06e0639c3878c12b90ba6e7ce2f3aafcf16413f468a",
+      "isolated_reproduction_verified": true,
+      "unit_tests": "11/11 PASS",
+      "identity_path_scan": "PASS"
     }
   },
   "official_deadlines_aoe": {
     "abstract": "2026-09-18",
     "full_paper": "2026-09-25"
   },
-  "next_action": "Human authors review and accept responsibility for the final manuscript and AI-use disclosure, freeze the complete author list before the ICLR abstract deadline, then submit the abstract by 2026-09-18 AoE and the paper by 2026-09-25 AoE. Do not reopen dynamic P0 or broaden N1-N3 unless independently qualified new evidence appears.",
+  "openreview_handoff": "generated/asset-first-stri-iclr2027-openreview-readiness-20260816.json",
+  "supplement_state": "generated/asset-first-stri-iclr2027-supplement-state-20260816.json",
+  "next_action": "Human authors review and accept responsibility for the final manuscript and AI-use disclosure, freeze the complete author list before the ICLR abstract deadline, complete the OpenReview signoff checklist, then submit the genuine abstract by 2026-09-18 AoE and the paper plus anonymous supplement by 2026-09-25 AoE. Do not reopen dynamic P0 or broaden N1-N3 unless independently qualified new evidence appears.",
   "scientific_authority": false,
   "authority": {
     "paper_claim_expansion": false,

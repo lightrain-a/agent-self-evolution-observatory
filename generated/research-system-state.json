@@ -6353,7 +6353,14 @@
     "asset_first_stri_claims_total": 3,
     "asset_first_stri_qa_checks_passed": 59,
     "asset_first_stri_qa_checks_total": 59,
-    "asset_first_stri_canonical_problem_gate_added": 0
+    "asset_first_stri_canonical_problem_gate_added": 0,
+    "asset_first_stri_submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
+    "asset_first_stri_official_qa_checks_passed": 50,
+    "asset_first_stri_official_qa_checks_total": 50,
+    "asset_first_stri_main_text_pages": 9,
+    "asset_first_stri_main_text_page_limit": 9,
+    "asset_first_stri_supplement_ready": 1,
+    "asset_first_stri_human_signoff_pending": 1
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -73386,6 +73393,7 @@
     "candidate_id": "skill-taxonomy-representation-invariance",
     "title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
     "status": "READY_NARROW_ICLR",
+    "submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
     "track": "ASSET_FIRST_PAPER_READY",
     "gates": {
       "final_review": true,
@@ -73393,7 +73401,10 @@
       "submission_qa": true,
       "current_source": true,
       "superseding_reduction": true,
-      "paper_design": true
+      "paper_design": true,
+      "official_iclr2027_format": true,
+      "anonymous_supplement": true,
+      "openreview_machine_handoff": true
     },
     "claims": {
       "N1": {
@@ -73418,6 +73429,14 @@
       "claims_total": 3,
       "qa_checks_passed": 59,
       "qa_checks_total": 59,
+      "official_qa_checks_passed": 50,
+      "official_qa_checks_total": 50,
+      "main_text_pages": 9,
+      "main_text_page_limit": 9,
+      "supplement_ready": 1,
+      "supplement_unit_tests": "11/11 PASS",
+      "human_signoff_pending": 1,
+      "new_gpu_evidence_required": 0,
       "final_review_confidence": 0.92,
       "canonical_problem_gate_pass_added": 0,
       "canonical_generator_candidates_added": 0,
@@ -73426,6 +73445,14 @@
       "experiment_authorized": 0,
       "p0_authorized": 0,
       "gpu_authorized": 0
+    },
+    "submission_handoff": {
+      "abstract_deadline_aoe": "2026-09-18",
+      "full_paper_deadline_aoe": "2026-09-25",
+      "pdf_sha256": "8fc54720faa68d5a3afcd7bc412f8a2ef60f6ed41e64cb53850d8a4fcc6e0fca",
+      "source_zip_sha256": "3450a445c7c2a74d7fd9475eb441631af18bce7b46889d45987268a1f532751a",
+      "supplement_zip_sha256": "70a811e4c08addaf36f008dca3f1ef6fcc378dc1b346bb405c1670fb01cc74f8",
+      "human_action": "author-list/profile/quota/dual-submission/ethics/AI-use signoff and OpenReview upload only"
     },
     "claim_boundary": {
       "dynamic_p0": "qualification failure is disclosed and excluded from narrow scientific evidence",
@@ -73463,6 +73490,26 @@
         "path": "generated/asset-first-stri-current-source-review-20260816.json",
         "sha256": "521acfdcc54e01ae1ee5407c9c5d63e3eec330e220bfa392d7a56c818b5d655a",
         "present": true
+      },
+      "official_final_state": {
+        "path": "generated/asset-first-stri-iclr2027-final-state-20260816.json",
+        "sha256": "2de6327022f2aeae04ade152971a50491e0e2bc88516ff266f9efa5f12671ef5",
+        "present": true
+      },
+      "official_submission_qa": {
+        "path": "generated/asset-first-stri-iclr2027-submission-qa-20260816.json",
+        "sha256": "b7fb6508e7c710511e482198b3f32a66126d9c602885e00bec7da57bd39b48fc",
+        "present": true
+      },
+      "supplement_state": {
+        "path": "generated/asset-first-stri-iclr2027-supplement-state-20260816.json",
+        "sha256": "4f6660c673398dd08401c4d2dee6bcb7c7d495cd796db58f32ef005ca693fcec",
+        "present": true
+      },
+      "openreview_readiness": {
+        "path": "generated/asset-first-stri-iclr2027-openreview-readiness-20260816.json",
+        "sha256": "3f91c6704aecc8d81828558ac48b2fd7b2ebb7c8baa5285e785959029e577401",
+        "present": true
       }
     },
     "policy": {
@@ -73476,7 +73523,10 @@
       "paper_ready_requires_superseding_reduction_state": true,
       "dynamic_p0_is_not_required_for_the_narrow_claim_scope": true,
       "dynamic_qualification_failure_is_not_positive_or_negative_narrow_evidence": true,
-      "paper_ready_does_not_authorize_method_p0_or_gpu": true
+      "paper_ready_does_not_authorize_method_p0_or_gpu": true,
+      "official_submission_ready_requires_iclr2027_format_qa": true,
+      "official_submission_ready_requires_anonymous_supplement_reproduction": true,
+      "human_author_signoff_cannot_be_auto_authorized": true
     },
     "scientific_authority": false,
     "authority": {

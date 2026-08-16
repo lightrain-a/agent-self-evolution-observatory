@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "stage": "ICLR2027_ANONYMOUS_SUPPLEMENT_READY",
+  "status": "PASS",
+  "package": {
+    "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
+    "sha256": "70a811e4c08addaf36f008dca3f1ef6fcc378dc1b346bb405c1670fb01cc74f8",
+    "manifest_sha256": "74ba3e24a25c97de13f6b06e0639c3878c12b90ba6e7ce2f3aafcf16413f468a",
+    "package_metadata_sha256": "2e06406e54f25a3d182e8e1e2ffdc6efc5018b10d5eceb9498e7a54637868349"
+  },
+  "isolated_verification": {
+    "fresh_extract_manifest": "PASS",
+    "reproduce_py": "PASS",
+    "unit_tests": "11/11 PASS",
+    "binary_identity_path_scan": "PASS",
+    "text_identity_path_scan": "PASS",
+    "figure_regeneration": "PASS"
+  },
+  "reproduced_results": {
+    "skillsp_level1_full": {
+      "covered_rows": 314,
+      "multi_membership_rows": 183,
+      "R_star": 2.0
+    },
+    "skillsp_level1_calibration": {
+      "covered_rows": 47,
+      "multi_membership_rows": 33,
+      "R_star": 2.0
+    },
+    "skillsp_level1_tool_disjoint_heldout": {
+      "covered_rows": 52,
+      "multi_membership_rows": 38,
+      "R_star": 2.0
+    },
+    "skillsp_level3_negative": {
+      "covered_rows": 34,
+      "multi_membership_rows": 0,
+      "R_star": 1.0
+    },
+    "skillsp_logical_negative": {
+      "covered_rows": 128,
+      "multi_membership_rows": 127,
+      "R_star": 1.0
+    },
+    "whole_package_exact_coverage_pruning": {
+      "active_packages_before": 10,
+      "minimum_active_packages": 7,
+      "overlap_rows_before": 183,
+      "minimum_overlap_rows_after": 71
+    },
+    "skillrl_identity_witness": {
+      "fresh_id_exact_clones_admitted": "12/12",
+      "targets_changing_unique_semantic_retrieval_set": "11/12",
+      "targets_reducing_unique_general_content_count": "5/12"
+    },
+    "dynamic_p0a_transparency_receipt": {
+      "decision": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED",
+      "contract_valid_by_source": {
+        "skill_003": 14,
+        "skill_004": 5,
+        "skill_015": 8
+      },
+      "required_per_source": 16,
+      "scientific_belief_update": false
+    }
+  },
+  "frozen_external_repositories": {
+    "skill_self_play": {
+      "url": "https://github.com/Qwen-Applications/skill-self-play.git",
+      "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83"
+    },
+    "skillrl": {
+      "url": "https://github.com/aiming-lab/SkillRL.git",
+      "commit": "8e66726ed866a4e0a7f053586a41022798192e6c"
+    }
+  },
+  "claim_boundary": {
+    "supported": [
+      "N1 released control-plane representation sensitivity",
+      "N2 exact finite support equalizability R*(A)",
+      "N3 non-equalizable support geometry boundary"
+    ],
+    "forbidden": [
+      "downstream utility harm",
+      "dynamic STRI success",
+      "empirical SQC success",
+      "LP algorithm novelty",
+      "using the qualification-failed Qwen3 pilot as scientific evidence for or against dynamic STRI"
+    ]
+  },
+  "new_gpu_evidence_required_for_current_claim_scope": false,
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_expansion": false,
+    "dynamic_claim": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}

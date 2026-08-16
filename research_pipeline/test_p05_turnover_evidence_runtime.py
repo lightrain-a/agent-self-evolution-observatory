@@ -8,7 +8,7 @@ import numpy as np
 
 from . import p05_turnover_evidence_runtime as p05
 
-PLAN = Path('/data/wyt/agent-self-evolution-p0-52-data/runs/p05-turnover-collapse-20260816/plan.json')
+PLAN = Path(__file__).resolve().parent / 'testdata' / 'p05-turnover-collapse-plan.json'
 
 
 class P05TurnoverRuntimeTest(unittest.TestCase):

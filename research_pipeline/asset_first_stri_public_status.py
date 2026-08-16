@@ -15,6 +15,10 @@ SUBMISSION_QA = "generated/asset-first-stri-submission-qa-20260816.json"
 REDUCTION = "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json"
 PAPER_DESIGN = "generated/asset-first-stri-narrow-paper-design-20260816.json"
 CURRENT_SOURCE = "generated/asset-first-stri-current-source-review-20260816.json"
+OFFICIAL_FINAL_STATE = "generated/asset-first-stri-iclr2027-final-state-20260816.json"
+OFFICIAL_SUBMISSION_QA = "generated/asset-first-stri-iclr2027-submission-qa-20260816.json"
+SUPPLEMENT_STATE = "generated/asset-first-stri-iclr2027-supplement-state-20260816.json"
+OPENREVIEW_READINESS = "generated/asset-first-stri-iclr2027-openreview-readiness-20260816.json"
 
 SOURCE_ARTIFACTS = {
     "final_review": FINAL_REVIEW,
@@ -23,6 +27,10 @@ SOURCE_ARTIFACTS = {
     "reduction": REDUCTION,
     "paper_design": PAPER_DESIGN,
     "current_source_review": CURRENT_SOURCE,
+    "official_final_state": OFFICIAL_FINAL_STATE,
+    "official_submission_qa": OFFICIAL_SUBMISSION_QA,
+    "supplement_state": SUPPLEMENT_STATE,
+    "openreview_readiness": OPENREVIEW_READINESS,
 }
 
 POLICY = {
@@ -37,6 +45,9 @@ POLICY = {
     "dynamic_p0_is_not_required_for_the_narrow_claim_scope": True,
     "dynamic_qualification_failure_is_not_positive_or_negative_narrow_evidence": True,
     "paper_ready_does_not_authorize_method_p0_or_gpu": True,
+    "official_submission_ready_requires_iclr2027_format_qa": True,
+    "official_submission_ready_requires_anonymous_supplement_reproduction": True,
+    "human_author_signoff_cannot_be_auto_authorized": True,
 }
 
 AUTHORITY = {
@@ -73,12 +84,19 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
     reduction = values["reduction"]
     design = values["paper_design"]
     current = values["current_source_review"]
+    official_final = values["official_final_state"]
+    official_qa = values["official_submission_qa"]
+    supplement = values["supplement_state"]
+    openreview = values["openreview_readiness"]
 
     claims = coherence.get("claims") if isinstance(coherence.get("claims"), dict) else {}
     claim_ids = ("N1", "N2", "N3")
     supported = [claim_id for claim_id in claim_ids if (claims.get(claim_id) or {}).get("status") == "SUPPORTED"]
     qa_passed = int(qa.get("checks_passed") or 0)
     qa_total = int(qa.get("checks_total") or 0)
+    official_qa_passed = int(official_qa.get("checks_passed") or 0)
+    official_qa_total = int(official_qa.get("checks_total") or 0)
+    supplement_tests = str((supplement.get("isolated_verification") or {}).get("unit_tests") or "")
 
     gates = {
         "final_review": final.get("verdict") == "READY_NARROW_ICLR",
@@ -87,6 +105,9 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
         "current_source": current.get("verdict") == "SURVIVES_NARROWLY",
         "superseding_reduction": reduction.get("status") == "NARROW_PAPER_READY_AFTER_DYNAMIC_QUALIFICATION_HOLD",
         "paper_design": str(design.get("submission_readiness") or "").startswith("READY_NARROW_ICLR"),
+        "official_iclr2027_format": official_final.get("status") == "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW" and official_qa.get("status") == "PASS" and official_qa_total > 0 and official_qa_passed == official_qa_total,
+        "anonymous_supplement": supplement.get("status") == "PASS" and (supplement.get("isolated_verification") or {}).get("fresh_extract_manifest") == "PASS" and (supplement.get("isolated_verification") or {}).get("reproduce_py") == "PASS",
+        "openreview_machine_handoff": openreview.get("status") == "MACHINE_READY_HUMAN_SIGNOFF_REQUIRED",
     }
     ready = all(gates.values())
     artifacts = {
@@ -100,6 +121,7 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
         "candidate_id": "skill-taxonomy-representation-invariance",
         "title": str(coherence.get("title") or design.get("recommended_title") or "Skill-Taxonomy Representation Invariance"),
         "status": "READY_NARROW_ICLR" if ready else "HOLD_ASSET_FIRST_PAPER_NOT_READY",
+        "submission_status": str(official_final.get("status") or "NOT_READY"),
         "track": "ASSET_FIRST_PAPER_READY",
         "gates": gates,
         "claims": {
@@ -116,6 +138,14 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
             "claims_total": len(claim_ids),
             "qa_checks_passed": qa_passed,
             "qa_checks_total": qa_total,
+            "official_qa_checks_passed": official_qa_passed,
+            "official_qa_checks_total": official_qa_total,
+            "main_text_pages": int(official_qa.get("main_text_pages") or 0),
+            "main_text_page_limit": int(official_qa.get("main_text_page_limit") or 0),
+            "supplement_ready": 1 if gates["anonymous_supplement"] else 0,
+            "supplement_unit_tests": supplement_tests,
+            "human_signoff_pending": 1 if openreview.get("status") == "MACHINE_READY_HUMAN_SIGNOFF_REQUIRED" else 0,
+            "new_gpu_evidence_required": 1 if official_final.get("new_gpu_evidence_required_for_current_claim_scope") is True else 0,
             "final_review_confidence": float(final.get("confidence") or 0.0),
             "canonical_problem_gate_pass_added": 0,
             "canonical_generator_candidates_added": 0,
@@ -124,6 +154,14 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
             "experiment_authorized": 0,
             "p0_authorized": 0,
             "gpu_authorized": 0,
+        },
+        "submission_handoff": {
+            "abstract_deadline_aoe": str((official_final.get("official_deadlines_aoe") or {}).get("abstract") or ""),
+            "full_paper_deadline_aoe": str((official_final.get("official_deadlines_aoe") or {}).get("full_paper") or ""),
+            "pdf_sha256": str((((official_final.get("delivery") or {}).get("pdf") or {}).get("sha256")) or ""),
+            "source_zip_sha256": str((((official_final.get("delivery") or {}).get("source_zip") or {}).get("sha256")) or ""),
+            "supplement_zip_sha256": str((((official_final.get("delivery") or {}).get("supplement_zip") or {}).get("sha256")) or ""),
+            "human_action": "author-list/profile/quota/dual-submission/ethics/AI-use signoff and OpenReview upload only",
         },
         "claim_boundary": {
             "dynamic_p0": "qualification failure is disclosed and excluded from narrow scientific evidence",
@@ -166,15 +204,34 @@ def validate_asset_first_stri_public_status(state: dict[str, Any]) -> list[str]:
     ready = state.get("status") == "READY_NARROW_ICLR"
     if ready:
         if not all(gates.get(key) is True for key in (
-            "final_review", "claim_coherence", "submission_qa", "current_source", "superseding_reduction", "paper_design"
+            "final_review", "claim_coherence", "submission_qa", "current_source", "superseding_reduction", "paper_design",
+            "official_iclr2027_format", "anonymous_supplement", "openreview_machine_handoff",
         )):
-            errors.append("READY_NARROW_ICLR requires every cross-validated paper-ready gate")
+            errors.append("READY_NARROW_ICLR requires every cross-validated paper-ready/submission gate")
         if int(summary.get("paper_ready") or 0) != 1:
             errors.append("READY_NARROW_ICLR must expose paper_ready=1")
         if (int(summary.get("claims_supported") or 0), int(summary.get("claims_total") or 0)) != (3, 3):
             errors.append("READY_NARROW_ICLR requires N1/N2/N3 supported")
         if int(summary.get("qa_checks_total") or 0) <= 0 or int(summary.get("qa_checks_passed") or 0) != int(summary.get("qa_checks_total") or 0):
             errors.append("READY_NARROW_ICLR requires complete submission QA")
+        if state.get("submission_status") != "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW":
+            errors.append("READY_NARROW_ICLR official submission status is stale")
+        if int(summary.get("official_qa_checks_total") or 0) <= 0 or int(summary.get("official_qa_checks_passed") or 0) != int(summary.get("official_qa_checks_total") or 0):
+            errors.append("READY_NARROW_ICLR requires complete official ICLR format QA")
+        pages = int(summary.get("main_text_pages") or 0)
+        page_limit = int(summary.get("main_text_page_limit") or 0)
+        if pages <= 0 or page_limit <= 0 or pages > page_limit:
+            errors.append("READY_NARROW_ICLR violates official ICLR main-text page gate")
+        if int(summary.get("supplement_ready") or 0) != 1 or "PASS" not in str(summary.get("supplement_unit_tests") or ""):
+            errors.append("READY_NARROW_ICLR requires verified anonymous supplement reproduction")
+        if int(summary.get("human_signoff_pending") or 0) != 1:
+            errors.append("machine-ready STRI must remain pending human author signoff")
+        if int(summary.get("new_gpu_evidence_required") or 0) != 0:
+            errors.append("current narrow STRI submission cannot require a new GPU rescue")
+        handoff = state.get("submission_handoff") or {}
+        for key in ("pdf_sha256", "source_zip_sha256", "supplement_zip_sha256"):
+            if len(str(handoff.get(key) or "")) != 64:
+                errors.append(f"READY_NARROW_ICLR submission handoff digest invalid:{key}")
         for key, row in (state.get("source_artifacts") or {}).items():
             if row.get("present") is not True or len(str(row.get("sha256") or "")) != 64:
                 errors.append(f"READY_NARROW_ICLR source artifact missing/digest invalid:{key}")

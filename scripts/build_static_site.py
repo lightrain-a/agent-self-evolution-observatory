@@ -24,6 +24,16 @@ ROOT_FILES = (
     "site.webmanifest",
 )
 GENERATED_PATTERNS = ("*.js", "*.json")
+TEXT_PUBLIC_SUFFIXES = {"", ".html", ".css", ".js", ".json", ".svg", ".txt", ".xml", ".webmanifest"}
+PUBLIC_REDACTIONS = (
+    (re.compile(r"(?<![\w.])(?:[A-Za-z0-9._-]+@)?(?:222\.20\.126\.\d+|10\.42\.8\.\d+):/[^\s\"'`<>#\\]+"), "[internal-remote-path-redacted]"),
+    (re.compile(r"(?<![\w.])host\d+:/[^\s\"'`<>#\\]+", re.IGNORECASE), "[internal-remote-path-redacted]"),
+    (re.compile(r"/(?:data/(?:wyt|lry)|home/(?:wyt|lry|hdd))/[^\s\"'`<>#\\]+"), "[internal-path-redacted]"),
+    (re.compile(r"\b[A-Za-z0-9._-]+@(?:222\.20\.126\.\d+|10\.42\.8\.\d+)\b"), "[internal-ssh-redacted]"),
+    (re.compile(r"\b(?:222\.20\.126\.\d+|10\.42\.8\.\d+)\b"), "[internal-host-redacted]"),
+    (re.compile(r"\badmin\d+-NF[A-Za-z0-9_-]+\b", re.IGNORECASE), "[internal-hostname-redacted]"),
+    (re.compile(r"\bhf_[A-Za-z0-9]{20,}\b"), "[secret-token-redacted]"),
+)
 EXCLUDED_PUBLIC_FILES = {
     "advisor-priority-view.js",
     "advisor-priority-ideas.js",
@@ -36,6 +46,7 @@ EXCLUDED_PUBLIC_PREFIXES = (
     "r32-final-ideas",
     "r32-targeted-recheck",
     "final-method-refinement-",
+    "asset-first-stri-",
 )
 LOCAL_ASSET_RE = re.compile(
     r'(?P<prefix>\b(?:src|href)=["\'])(?P<url>(?!https?://|//|data:|mailto:|#)[^"\']+\.(?:css|js))(?P<suffix>["\'])'
@@ -46,9 +57,39 @@ def excluded_public_file(name: str) -> bool:
     return name in EXCLUDED_PUBLIC_FILES or any(name.startswith(prefix) for prefix in EXCLUDED_PUBLIC_PREFIXES)
 
 
+def redact_public_text(text: str) -> str:
+    for pattern, replacement in PUBLIC_REDACTIONS:
+        text = pattern.sub(replacement, text)
+    return text
+
+
 def copy_file(source: Path, destination: Path) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
+    if source.suffix.lower() in TEXT_PUBLIC_SUFFIXES:
+        try:
+            text = source.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            shutil.copy2(source, destination)
+        else:
+            destination.write_text(redact_public_text(text), encoding="utf-8")
+        return
     shutil.copy2(source, destination)
+
+
+def assert_no_sensitive_public_text(root: Path) -> None:
+    leaks: list[str] = []
+    for path in sorted(p for p in root.rglob("*") if p.is_file() and p.suffix.lower() in TEXT_PUBLIC_SUFFIXES):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+        for pattern, _ in PUBLIC_REDACTIONS:
+            match = pattern.search(text)
+            if match:
+                leaks.append(f"{path.relative_to(root)}: {match.group(0)[:120]}")
+                break
+    if leaks:
+        raise RuntimeError("Sensitive internal text leaked into the static site: " + "; ".join(leaks[:20]))
 
 
 def cache_guard_script(build_sha: str) -> str:
@@ -200,6 +241,7 @@ def build() -> Path:
         for source in path.iterdir() if path.exists() else ():
             if source.is_file() and excluded_public_file(source.name):
                 raise RuntimeError(f"Backend/internal artifact leaked into the static site: {source.name}")
+    assert_no_sensitive_public_text(OUTPUT)
 
     print(f"Built {len(copied)} public files in {OUTPUT}")
     return OUTPUT

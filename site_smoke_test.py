@@ -508,14 +508,38 @@ def main() -> None:
         fail("Search Portfolio shadow queue must never expose live eligibility")
     latest_shadow = shadow_portfolio.get("latest_run") or {}
     latest_summary = latest_shadow.get("summary") or {}
-    if shadow_portfolio.get("latest_run_id") != "shadow-auto-a0ea279fac5b4997" or (latest_summary.get("requested_raw_seeds"),latest_summary.get("expansion_successful_shards"),latest_summary.get("expansion_execution_failures"),latest_summary.get("raw_seeds"),latest_summary.get("semantic_unique"),latest_summary.get("evolved_branches"),latest_summary.get("evolution_g1_requested"),latest_summary.get("evolution_g1_valid"),latest_summary.get("evolution_g2_requested"),latest_summary.get("evolution_g2_valid"),latest_summary.get("formulation_successful_shards"),latest_summary.get("formulation_provider_failures"),latest_summary.get("formulation_parse_failures"),latest_summary.get("formulation_successful_branches"),latest_summary.get("formulation_execution_censored_branches"),latest_summary.get("formulated_candidates"),latest_summary.get("formulation_reduction_pending"),latest_summary.get("machine_reviewable"),latest_summary.get("machine_reduction_pending"),latest_summary.get("problem_falsifier_eligible"),latest_summary.get("problem_falsifier_inventory_requested"),latest_summary.get("problem_falsifier_support_qualified"),latest_summary.get("problem_falsifier_hold_support_unavailable"),latest_summary.get("problem_falsifier_executed"),latest_summary.get("semantic_clear"),latest_summary.get("terminal_shadow_survivors")) != (120,20,0,103,36,35,24,23,12,12,11,1,0,22,2,0,9,0,9,9,9,0,9,0,0,0):
-        fail(f"latest Search Portfolio r6 funnel/accounting is stale: {latest_shadow}")
+    latest_run_id = str(shadow_portfolio.get("latest_run_id") or "")
+    if not latest_run_id or latest_shadow.get("run_id") != latest_run_id:
+        fail(f"latest Search Portfolio run identity is inconsistent: {latest_run_id}/{latest_shadow.get('run_id')}")
+    nonnegative_fields = (
+        "requested_raw_seeds","expansion_requested_shards","expansion_successful_shards","expansion_execution_failures",
+        "raw_seeds","semantic_unique","evolved_branches","evolution_g1_requested","evolution_g1_valid","evolution_g2_requested","evolution_g2_valid",
+        "formulation_requested_shards","formulation_successful_shards","formulation_provider_failures","formulation_parse_failures",
+        "formulation_requested_branches","formulation_successful_branches","formulation_execution_censored_branches","formulated_candidates",
+        "formulation_reduction_pending","formulation_rejected","machine_reviewable","machine_reduction_pending","machine_reduction_blocked",
+        "problem_falsifier_eligible","problem_falsifier_inventory_requested","problem_falsifier_support_qualified",
+        "problem_falsifier_hold_support_unavailable","problem_falsifier_executed","semantic_clear","terminal_shadow_survivors",
+    )
+    if any(int(latest_summary.get(key) or 0) < 0 for key in nonnegative_fields):
+        fail(f"latest Search Portfolio funnel contains negative counters: {latest_summary}")
+    if int(latest_summary.get("expansion_successful_shards") or 0) + int(latest_summary.get("expansion_execution_failures") or 0) != int(latest_summary.get("expansion_requested_shards") or 0):
+        fail(f"latest Search Portfolio expansion accounting is inconsistent: {latest_summary}")
+    if int(latest_summary.get("formulation_successful_shards") or 0) + int(latest_summary.get("formulation_provider_failures") or 0) + int(latest_summary.get("formulation_parse_failures") or 0) != int(latest_summary.get("formulation_requested_shards") or 0):
+        fail(f"latest Search Portfolio formulation-shard accounting is inconsistent: {latest_summary}")
+    if int(latest_summary.get("formulation_successful_branches") or 0) + int(latest_summary.get("formulation_execution_censored_branches") or 0) != int(latest_summary.get("formulation_requested_branches") or 0):
+        fail(f"latest Search Portfolio formulation-branch accounting is inconsistent: {latest_summary}")
+    if int(latest_summary.get("formulated_candidates") or 0) + int(latest_summary.get("formulation_reduction_pending") or 0) + int(latest_summary.get("formulation_rejected") or 0) != int(latest_summary.get("formulation_successful_branches") or 0):
+        fail(f"latest Search Portfolio formulation disposition accounting is inconsistent: {latest_summary}")
+    if int(latest_summary.get("problem_falsifier_eligible") or 0) != int(latest_summary.get("machine_reduction_pending") or 0):
+        fail(f"latest Search Portfolio falsifier eligibility must track machine reduction-pending objects: {latest_summary}")
     latest_policy = latest_shadow.get("policy") or {}; latest_authority = latest_shadow.get("authority") or {}
-    if latest_shadow.get("status") != "SHADOW_TERMINAL_COMPLETE" or latest_shadow.get("scientific_authority") is not False or latest_policy.get("current_source_web_receipt_required_after_semantic_clear") is not True or latest_policy.get("missing_or_failed_current_source_reviewer_is_not_pass") is not True or latest_policy.get("execution_loss_is_not_scientific_negative") is not True or latest_policy.get("problem_falsifier_hold_is_not_scientific_fail") is not True or latest_policy.get("problem_falsifier_support_inventory_hash_verified") is not True or latest_summary.get("current_source_missing") != 0 or latest_summary.get("live_paper_design_eligible") != 0 or any(latest_authority.get(key) is not False for key in ("live_problem_gate","paper_design","method","experiment","p0","gpu")):
+    inventory_requested = int(latest_summary.get("problem_falsifier_inventory_requested") or 0)
+    inventory_policy_ok = latest_policy.get("problem_falsifier_support_inventory_hash_verified") is True if inventory_requested else latest_policy.get("support_inventory_is_one_evidence_route_not_global_prerequisite") is True
+    if latest_shadow.get("status") != "SHADOW_TERMINAL_COMPLETE" or latest_shadow.get("scientific_authority") is not False or latest_policy.get("current_source_web_receipt_required_after_semantic_clear") is not True or latest_policy.get("missing_or_failed_current_source_reviewer_is_not_pass") is not True or latest_policy.get("execution_loss_is_not_scientific_negative") is not True or latest_policy.get("problem_falsifier_hold_is_not_scientific_fail") is not True or not inventory_policy_ok or int(latest_summary.get("current_source_missing") or 0) != 0 or int(latest_summary.get("live_paper_design_eligible") or 0) != 0 or any(latest_authority.get(key) is not False for key in ("live_problem_gate","paper_design","method","experiment","p0","gpu")):
         fail("latest Search Portfolio terminal must be complete, fail-closed on current-source review, and zero-authority")
     latest_queue = shadow_queue.get("latest_run") or {}; latest_queue_summary = latest_queue.get("summary") or {}
-    if shadow_queue.get("latest_run_id") != "shadow-auto-a0ea279fac5b4997" or latest_queue_summary.get("terminal_shadow_survivors") != 0 or latest_queue_summary.get("live_paper_design_eligible") != 0:
-        fail("shadow queue latest-run projection must remain zero-survivor and zero-live-authority")
+    if shadow_queue.get("latest_run_id") != latest_run_id or latest_queue.get("run_id") != latest_run_id or int(latest_queue_summary.get("terminal_shadow_survivors") or 0) != 0 or int(latest_queue_summary.get("live_paper_design_eligible") or 0) != 0:
+        fail("shadow queue latest-run projection must match the current portfolio run and remain zero-survivor/zero-live-authority")
     system_content = (ROOT / "content-system-overview.js").read_text(encoding="utf-8")
     forbidden_idea_markers = ("主 ICLR Idea Bank", "最终师兄讨论门槛", "Main ICLR idea bank", "Final advisor gate", "paper-ideas.html#discussed-ideas")
     if any(marker in system_text or marker in system_content for marker in forbidden_idea_markers):
