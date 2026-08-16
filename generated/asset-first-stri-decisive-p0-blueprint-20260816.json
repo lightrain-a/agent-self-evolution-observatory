@@ -3,7 +3,7 @@
   "candidate_id": "skill-taxonomy-representation-invariance",
   "paper_id": "STRI",
   "stage": "DECISIVE_P0_BLUEPRINT",
-  "execution_status": "READY_EXCEPT_GPU_RESOURCE_BUSY",
+  "execution_status": "HOST52_SCIENTIFIC_CONTRACT_CLEAR_BLOCKED_ONLY_BY_CURRENT_GPU_CONTENTION",
   "execution_authorized": false,
   "primary_scientific_question": "Under a faithful first-party self-evolution workflow, does a semantics-preserving taxonomy reparameterization change an end-of-evolution control/outcome quantity, and can support-quotient control remove that dependence while preserving semantic coverage, verified evolution utility, and the matched proposer/validator call budget? The pre-context single-package baseline class is already analytically reduced.",
   "claim_lock": {
@@ -123,5 +123,10 @@
     "review_verdict": "CLEAR_BLUEPRINT",
     "execution_authorized": false
   },
-  "next_action": "Launch the exact frozen Qwen3-8B P0-A once on host 231 when the unrelated GPU workload releases the resource gate. Do not redesign, retune, move to another backbone, or generate a second bank before this run resolves."
+  "next_action": "Use the already-materialized, independently CLEAR host52 author-runtime operationalization when one RTX3090 becomes uncontested. Immediately before launch recheck PIDs/memory/artifacts; execute the exact frozen 72-generation Qwen3-8B P0-A once. Do not preempt external LLMPrint jobs, alter the parent scientific contract, add generations, change thresholds, or switch backbone.",
+  "p0a_host52_operationalization_contract": "generated/asset-first-stri-qwen3-merge-split-p0a-host52-author-runtime-contract-20260816.json",
+  "p0a_host52_operationalization_review": "generated/asset-first-stri-p0a-host52-operationalization-review-20260816.json",
+  "p0a_host52_operationalization_clarification": "generated/asset-first-stri-p0a-host52-operationalization-clarification-20260816.json",
+  "p0a_host52_runtime_materialization": "generated/asset-first-stri-p0a-host52-runtime-materialization-20260816.json",
+  "p0a_host52_execution_state": "generated/asset-first-stri-p0a-host52-execution-state-20260816.json"
 }

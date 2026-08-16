@@ -224,5 +224,16 @@
     "full_experiment": false,
     "gpu": false
   },
-  "next_action": "All pre-outcome Paper Design work is frozen: current-source/theory/method reviews, faithful Qwen3 P0-A, zero-extra-GPU P0-B, optional CLEAR P0-C frozen-solver consequence, leakage-safe heldout split, calibration prior, confirmatory thresholds, and a CLEAR Full Experiment Blueprint. Keep idea search closed. Launch only P0-A on host 231 when the unrelated GPU workload releases the resource gate; if and only if P0-A GO, run frozen P0-B on the same raw SHA and optionally P0-C on that same bank without new questioner generation. Do not modify any split/prior/gate after outcomes are observed."
+  "next_action": "All pre-outcome Paper Design work is frozen. The faithful Qwen3 P0-A scientific contract is unchanged; an independently reviewed host52 author-runtime operationalization is materialized and currently blocked only by external GPU contention. Keep idea search closed. Launch exactly one 72-generation P0-A on host52 only when one RTX3090 is uncontested; on GO run frozen P0-B on the same raw SHA and optionally P0-C without new questioner generation. Do not modify split/prior/gates or preempt external jobs.",
+  "execution_operationalization": {
+    "parent_contract": "generated/asset-first-stri-qwen3-merge-split-p0a-contract-20260816.json",
+    "host52_contract": "generated/asset-first-stri-qwen3-merge-split-p0a-host52-author-runtime-contract-20260816.json",
+    "review": "generated/asset-first-stri-p0a-host52-operationalization-review-20260816.json",
+    "clarification": "generated/asset-first-stri-p0a-host52-operationalization-clarification-20260816.json",
+    "runtime": "generated/asset-first-stri-p0a-host52-runtime-materialization-20260816.json",
+    "execution_state": "generated/asset-first-stri-p0a-host52-execution-state-20260816.json",
+    "scientific_fields_changed": false,
+    "current_resource_ready": false,
+    "scientific_authority": false
+  }
 }
