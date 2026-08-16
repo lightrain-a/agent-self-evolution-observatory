@@ -62,18 +62,20 @@ class ResearchSystemTest(unittest.TestCase):
     def test_fresh_phenomenon_portfolio_separates_f0_from_problem_authority(self) -> None:
         portfolio=self.state["paper_first_fresh_phenomenon_portfolio"]
         summary=portfolio["summary"]
-        self.assertEqual(portfolio["status"],"F0_EXECUTION_HOLD")
+        self.assertEqual(portfolio["status"],"NO_ACTIVE_F0")
         self.assertEqual(summary["active_f0"],0)
-        self.assertEqual(summary["design_ready_f0"],1)
-        self.assertEqual(summary["hold_execution"],1)
-        self.assertEqual(summary["hold_support"],3)
+        self.assertEqual(summary["design_ready_f0"],0)
+        self.assertEqual(summary["hold_execution"],0)
+        self.assertEqual(summary["hold_support"],1)
+        self.assertEqual(summary["stop_reduction"],3)
         self.assertEqual(summary["ready_for_problem_review"],0)
         self.assertEqual(summary["canonical_problem_gate_added"],0)
         self.assertEqual(summary["gpu_authorized"],0)
         active=[row for row in portfolio["candidates"] if row.get("status")=="ACTIVE_F0"]
         self.assertEqual(active,[])
         echo=next(row for row in portfolio["candidates"] if row.get("candidate_id")=="PA-01-EVIDENCE-ECHO")
-        self.assertEqual(echo["status"],"HOLD_EXECUTION")
+        self.assertEqual(echo["status"],"STOP_REDUCTION")
+        self.assertEqual(echo["support_status"],"F0_REDUCED_BY_GENERIC_PROMPT_EFFECT")
         self.assertFalse((echo.get("execution_readiness") or {}).get("execution_ready"))
         self.assertFalse((echo.get("execution_readiness") or {}).get("unauthorized_partial_run_ingestable"))
         self.assertTrue(all(row.get("paper_problem_claimed") is False for row in portfolio["candidates"]))
