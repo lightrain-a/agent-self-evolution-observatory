@@ -1,5 +1,6 @@
 from __future__ import annotations
 import unittest
+from pathlib import Path
 from . import p06_docatlas_evidence_runtime as p06
 
 class P06DocAtlasRuntimeTest(unittest.TestCase):
@@ -26,5 +27,11 @@ class P06DocAtlasRuntimeTest(unittest.TestCase):
     def test_answer_normalization_is_deterministic(self):
         self.assertTrue(p06.exact('New-York','new york'))
         self.assertFalse(p06.exact('42','43'))
+
+    def test_official_document_path_does_not_double_suffix_pdf(self):
+        doc='example.pdf'
+        self.assertEqual(p06.pdf_path(Path('/tmp/pdfs'),doc),Path('/tmp/pdfs/example.pdf'))
+        self.assertTrue(p06.pdf_url(doc).endswith('/data/documents/example.pdf'))
+        self.assertNotIn('.pdf.pdf',p06.pdf_url(doc))
 
 if __name__=='__main__':unittest.main()

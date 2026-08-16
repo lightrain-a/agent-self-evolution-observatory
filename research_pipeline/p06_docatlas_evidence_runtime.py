@@ -9,7 +9,7 @@ CONTRACT_SHA='abab137697817d2716bc2823e6bad7e3e0da16d8654d146dc775443c24f3cd47'
 PLAN_SHA='829601282dbf00f11f102a88d3bb64a2487b68c3270fc1c89f7259b671c4b9d2'
 SOURCE_SHA='4ffadad60b18cd7ede864155f3e8a366fe4deec2189b3d0a25691b7df4b839e8'
 SOURCE_COMMIT='d73f0dc0be7e0a2ff6a403d5fe65fcd96461f384'
-RAW_ROOT=f'https://raw.githubusercontent.com/mayubo2333/MMLongBench-Doc/{SOURCE_COMMIT}/data/pdfs'
+RAW_ROOT=f'https://raw.githubusercontent.com/mayubo2333/MMLongBench-Doc/{SOURCE_COMMIT}/data/documents'
 DEFAULT_MODEL=Path('/root/.cache/huggingface/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28')
 POLICIES=('negative_evidence_baseline','naive_summary','evidence_gap_aware','coverage_certified')
 ACTIONS={'ANSWER','RETRIEVE_MORE','ABSTAIN','CONTINUE'}
@@ -36,7 +36,7 @@ def validate(plan_path:Path,samples_path:Path):
         if i in seen:
             raise ValueError('duplicate-sample')
         seen.add(i)
-        if u['doc_id']!=r['doc_id'] or r.get('filename')!=r['doc_id']+'.pdf' or u['question_sha256']!=htext(r['question']) or u['answer_sha256']!=htext(str(r['answer'])):
+        if u['doc_id']!=r['doc_id'] or u['question_sha256']!=htext(r['question']) or u['answer_sha256']!=htext(str(r['answer'])):
             raise ValueError('unit-identity-mismatch')
     return p,s
 
@@ -53,12 +53,18 @@ def bm25(q:str,pages:list[str])->list[int]:
         scored.append((v,i))
     return [i for _,i in sorted(scored,key=lambda z:(-z[0],z[1]))]
 
+def pdf_path(pdf_dir:Path,doc_id:str)->Path:
+    return pdf_dir/doc_id
+
+def pdf_url(doc_id:str)->str:
+    return RAW_ROOT+'/'+urllib.parse.quote(doc_id)
+
 def fetch_pdfs(plan:dict,pdf_dir:Path):
     pdf_dir.mkdir(parents=True,exist_ok=True);opener=urllib.request.build_opener(urllib.request.ProxyHandler({}));rows=[]
     for doc in sorted({u['doc_id'] for u in plan['units']}):
-        dst=pdf_dir/(doc+'.pdf')
+        dst=pdf_path(pdf_dir,doc)
         if not(dst.is_file() and dst.stat().st_size>1024):
-            url=RAW_ROOT+'/'+urllib.parse.quote(doc+'.pdf');last=None
+            url=pdf_url(doc);last=None
             for k in range(2):
                 try:
                     with opener.open(urllib.request.Request(url,headers={'User-Agent':'agent-self-evolution-observatory'}),timeout=30) as r:data=r.read()
