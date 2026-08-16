@@ -18,6 +18,8 @@ POLICY: dict[str, Any] = {
     "novelty_requires_closest_work_and_irreducible_difference": True,
     "paper_quality_v2_requires_typed_baselines_ablations_and_analyses": True,
     "paper_quality_v2_requires_why_better_and_ruling_out_evidence": True,
+    "paper_quality_v2_1_requires_visual_evidence_contract": True,
+    "visual_evidence_is_claim_mapped_not_decorative": True,
     "paper_quality_v2_is_required_for_schema_2_3_plus_or_explicit_v2_contract": True,
     "legacy_contracts_are_not_retroactively_rewritten": True,
 }
@@ -152,7 +154,7 @@ def audit_paper_design_contract(config: dict[str, Any]) -> dict[str, Any]:
             "status": "LEGACY_PREDATES_PAPER_QUALITY_V2",
             "blockers": [],
             "warnings": ["paper-quality-v2-not-retroactively-invented"],
-            "summary": {"baselines": 0, "ablations": 0, "analyses": 0},
+            "summary": {"baselines": 0, "ablations": 0, "analyses": 0, "visualizations": 0, "main_visualizations": 0, "main_visual_roles": []},
             "scientific_authority": False,
         }
 
@@ -172,6 +174,9 @@ def audit_paper_design_contract(config: dict[str, Any]) -> dict[str, Any]:
             "typed_baselines": int((quality_audit.get("summary") or {}).get("baselines") or 0),
             "typed_ablations": int((quality_audit.get("summary") or {}).get("ablations") or 0),
             "typed_analyses": int((quality_audit.get("summary") or {}).get("analyses") or 0),
+            "visualizations": int((quality_audit.get("summary") or {}).get("visualizations") or 0),
+            "main_visualizations": int((quality_audit.get("summary") or {}).get("main_visualizations") or 0),
+            "main_visual_roles": list((quality_audit.get("summary") or {}).get("main_visual_roles") or []),
         },
         "paper_quality": quality_audit,
         "contract": contract,
@@ -197,6 +202,8 @@ def build_paper_first_workflow_state(pre_experiment: dict[str, Any]) -> dict[str
             "typed_baselines": sum(int((audit.get("summary") or {}).get("typed_baselines") or 0) for audit in audits),
             "typed_ablations": sum(int((audit.get("summary") or {}).get("typed_ablations") or 0) for audit in audits),
             "typed_analyses": sum(int((audit.get("summary") or {}).get("typed_analyses") or 0) for audit in audits),
+            "visualizations": sum(int((audit.get("summary") or {}).get("visualizations") or 0) for audit in audits),
+            "main_visualizations": sum(int((audit.get("summary") or {}).get("main_visualizations") or 0) for audit in audits),
         },
         "rule": "A local pilot tests a frozen paper-motivated method. If the core method changes, return to novelty/method design and invalidate any full-experiment authorization.",
     }

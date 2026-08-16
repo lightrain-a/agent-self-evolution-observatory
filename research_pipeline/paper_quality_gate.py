@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Iterable
 
 
-SCHEMA_VERSION = "2.0"
+SCHEMA_VERSION = "2.1"
 
 PAPER_ARCHETYPES = {"method", "system", "empirical_analysis", "theory_certificate"}
 CLAIM_TYPES = {"performance", "mechanism", "system", "robustness", "cost", "empirical_analysis", "theory", "negative"}
@@ -34,7 +34,37 @@ ANALYSIS_TYPES = {
     "alternative_explanation",
     "stratified",
     "uncertainty",
+    "scaling",
+    "human_evaluation",
 }
+VISUAL_TYPES = {
+    "multi_panel",
+    "bar",
+    "line",
+    "scatter",
+    "heatmap",
+    "matrix",
+    "distribution",
+    "flow",
+    "case_panel",
+    "table_figure",
+}
+VISUAL_ROLES = {
+    "overview",
+    "main_comparison",
+    "ablation",
+    "mechanism",
+    "boundary",
+    "failure",
+    "sensitivity",
+    "uncertainty",
+    "scaling",
+    "cost",
+    "human_evaluation",
+    "qualitative_case",
+    "traceability",
+}
+VISUAL_PLACEMENTS = {"main", "appendix", "supplement"}
 
 POLICY: dict[str, Any] = {
     "schema_version": SCHEMA_VERSION,
@@ -47,6 +77,11 @@ POLICY: dict[str, Any] = {
     "theory_certificate_may_waive_component_ablation_only_with_explicit_non_applicability": True,
     "paper_ready_requires_completed_evidence_not_planned_evidence": True,
     "failed_or_inconclusive_experiments_remain_visible_evidence": True,
+    "visual_evidence_requires_reviewer_question_and_takeaway": True,
+    "multi_panel_visuals_may_cover_multiple_evidence_roles": True,
+    "quantitative_visuals_require_versioned_data_and_figure_qa": True,
+    "negative_failure_or_boundary_evidence_must_be_visually_exposed": True,
+    "manuscript_ready_requires_visual_artifact_data_script_caption_binding": True,
     "quality_gate_cannot_authorize_method_experiment_p0_or_gpu": True,
 }
 
@@ -94,6 +129,7 @@ def audit_paper_evidence_plan(quality: dict[str, Any] | None, *, method_componen
     ablations = _rows(quality.get("ablations"))
     analyses = _rows(quality.get("analyses"))
     outputs = _rows(quality.get("planned_outputs"))
+    visualizations = _rows(quality.get("visualizations"))
 
     if not claims:
         blockers.append("paper-quality-claims-missing")
@@ -103,14 +139,18 @@ def audit_paper_evidence_plan(quality: dict[str, Any] | None, *, method_componen
         blockers.append("paper-quality-analyses-missing")
     if not outputs:
         blockers.append("paper-quality-planned-outputs-missing")
+    if not visualizations:
+        blockers.append("paper-quality-visualizations-missing")
 
     claim_ids = _ids(claims)
     baseline_ids = _ids(baselines)
     ablation_ids = _ids(ablations)
     analysis_ids = _ids(analyses)
     output_ids = _ids(outputs)
+    visualization_ids = _ids(visualizations)
+    evidence_ids = baseline_ids | ablation_ids | analysis_ids | output_ids
 
-    for collection, rows in (("claim", claims), ("baseline", baselines), ("ablation", ablations), ("analysis", analyses), ("output", outputs)):
+    for collection, rows in (("claim", claims), ("baseline", baselines), ("ablation", ablations), ("analysis", analyses), ("output", outputs), ("visualization", visualizations)):
         seen: set[str] = set()
         for index, row in enumerate(rows):
             row_id = _text(row.get("id"))
@@ -158,9 +198,39 @@ def audit_paper_evidence_plan(quality: dict[str, Any] | None, *, method_componen
         if not targets or any(target not in claim_ids for target in targets):
             blockers.append(f"paper-quality-analysis-claim-link-invalid:{xid}")
 
+    for index, row in enumerate(visualizations):
+        vid = _text(row.get("id")) or str(index)
+        visual_type = _text(row.get("visual_type"))
+        placement = _text(row.get("placement"))
+        roles = _list_text(row.get("panel_roles"))
+        targets = _list_text(row.get("target_claim_ids"))
+        source_evidence = _list_text(row.get("source_evidence_ids"))
+        quantitative = row.get("quantitative")
+        uncertainty_required = row.get("uncertainty_required")
+        negative_visible = row.get("negative_or_failure_visible")
+        if visual_type not in VISUAL_TYPES:
+            blockers.append(f"paper-quality-visual-type-invalid:{vid}")
+        if placement not in VISUAL_PLACEMENTS:
+            blockers.append(f"paper-quality-visual-placement-invalid:{vid}")
+        if not roles or any(role not in VISUAL_ROLES for role in roles):
+            blockers.append(f"paper-quality-visual-role-invalid:{vid}")
+        if not targets or any(target not in claim_ids for target in targets):
+            blockers.append(f"paper-quality-visual-claim-link-invalid:{vid}")
+        if not source_evidence or any(item not in evidence_ids for item in source_evidence):
+            blockers.append(f"paper-quality-visual-evidence-link-invalid:{vid}")
+        if not _text(row.get("reviewer_question")) or not _text(row.get("takeaway")):
+            blockers.append(f"paper-quality-visual-question-or-takeaway-missing:{vid}")
+        if not isinstance(quantitative, bool):
+            blockers.append(f"paper-quality-visual-quantitative-flag-missing:{vid}")
+        if quantitative is True and not isinstance(uncertainty_required, bool):
+            blockers.append(f"paper-quality-visual-uncertainty-plan-missing:{vid}")
+        if not isinstance(negative_visible, bool):
+            blockers.append(f"paper-quality-visual-negative-failure-flag-missing:{vid}")
+
     baseline_by_id = {str(row.get("id")): row for row in baselines if _text(row.get("id"))}
     ablation_by_id = {str(row.get("id")): row for row in ablations if _text(row.get("id"))}
     analysis_by_id = {str(row.get("id")): row for row in analyses if _text(row.get("id"))}
+    visual_by_id = {str(row.get("id")): row for row in visualizations if _text(row.get("id"))}
 
     for index, row in enumerate(claims):
         cid = _text(row.get("id")) or str(index)
@@ -179,6 +249,7 @@ def audit_paper_evidence_plan(quality: dict[str, Any] | None, *, method_componen
         linked_ablations = _list_text(row.get("ablation_ids"))
         linked_analyses = _list_text(row.get("analysis_ids"))
         linked_outputs = _list_text(row.get("output_ids"))
+        linked_visuals = _list_text(row.get("visualization_ids"))
         if any(item not in baseline_ids for item in linked_baselines):
             blockers.append(f"paper-quality-claim-baseline-link-invalid:{cid}")
         if any(item not in ablation_ids for item in linked_ablations):
@@ -187,6 +258,10 @@ def audit_paper_evidence_plan(quality: dict[str, Any] | None, *, method_componen
             blockers.append(f"paper-quality-claim-analysis-link-invalid:{cid}")
         if not linked_outputs or any(item not in output_ids for item in linked_outputs):
             blockers.append(f"paper-quality-claim-output-link-invalid:{cid}")
+        if not linked_visuals or any(item not in visualization_ids for item in linked_visuals):
+            blockers.append(f"paper-quality-claim-visual-link-invalid:{cid}")
+        elif not any(_text(visual_by_id[item].get("placement")) == "main" for item in linked_visuals if item in visual_by_id):
+            blockers.append(f"paper-quality-claim-without-main-visual:{cid}")
 
         if _claim_requires_empirical_baseline(claim_type):
             empirical = [baseline_by_id[item] for item in linked_baselines if item in baseline_by_id and baseline_by_id[item].get("evidence_type") == "empirical"]
@@ -214,6 +289,11 @@ def audit_paper_evidence_plan(quality: dict[str, Any] | None, *, method_componen
         blockers.append("paper-quality-sensitivity-or-robustness-analysis-missing")
     if any(_claim_requires_empirical_baseline(_text(row.get("claim_type"))) for row in claims) and "uncertainty" not in analysis_types:
         blockers.append("paper-quality-uncertainty-analysis-missing")
+    if archetype == "system":
+        if "scaling" not in analysis_types:
+            blockers.append("paper-quality-system-scaling-analysis-missing")
+        if "human_evaluation" not in analysis_types:
+            warnings.append("paper-quality-system-human-evaluation-recommended")
 
     if archetype in {"method", "system"} and method_components > 1:
         if not any(_text(row.get("ablation_type")) == "component" for row in ablations):
@@ -223,6 +303,34 @@ def audit_paper_evidence_plan(quality: dict[str, Any] | None, *, method_componen
             blockers.append("paper-quality-theory-certificate-analytical-baseline-missing")
         if not any(_text(row.get("ablation_type")) == "assumption_boundary" for row in ablations):
             blockers.append("paper-quality-theory-certificate-boundary-stress-missing")
+
+    main_visuals = [row for row in visualizations if _text(row.get("placement")) == "main"]
+    main_visual_roles = {role for row in main_visuals for role in _list_text(row.get("panel_roles"))}
+    if len(main_visuals) < 3:
+        blockers.append("paper-quality-main-visual-count-below-three")
+    required_visual_roles = {
+        "method": {"main_comparison", "ablation", "mechanism", "failure", "sensitivity"},
+        "system": {"overview", "main_comparison", "failure", "sensitivity", "scaling"},
+        "empirical_analysis": {"main_comparison", "mechanism", "failure", "sensitivity"},
+        "theory_certificate": {"boundary", "mechanism", "failure", "sensitivity"},
+    }.get(archetype, set())
+    for role in sorted(required_visual_roles - main_visual_roles):
+        blockers.append(f"paper-quality-main-visual-role-missing:{role}")
+    if archetype == "method" and "overview" not in main_visual_roles:
+        warnings.append("paper-quality-method-overview-visual-recommended")
+    if archetype == "system" and "human_evaluation" not in main_visual_roles:
+        warnings.append("paper-quality-system-human-evaluation-visual-recommended")
+    needs_negative_visible = archetype in PAPER_ARCHETYPES and (
+        archetype == "theory_certificate"
+        or any(_claim_requires_empirical_baseline(_text(row.get("claim_type"))) for row in claims)
+    )
+    if needs_negative_visible and not any(row.get("negative_or_failure_visible") is True for row in main_visuals):
+        blockers.append("paper-quality-main-visual-negative-or-failure-evidence-missing")
+    uncertainty_analyses = {_text(row.get("id")) for row in analyses if _text(row.get("analysis_type")) == "uncertainty"}
+    for row in main_visuals:
+        if row.get("quantitative") is True and row.get("uncertainty_required") is True:
+            if not uncertainty_analyses.intersection(_list_text(row.get("source_evidence_ids"))):
+                blockers.append(f"paper-quality-visual-uncertainty-evidence-link-missing:{_text(row.get('id'))}")
 
     required_output_kinds = {"main_comparison", "ablation", "mechanism", "failure", "sensitivity"}
     output_kinds = {_text(row.get("output_type")) for row in outputs}
@@ -253,6 +361,9 @@ def audit_paper_evidence_plan(quality: dict[str, Any] | None, *, method_componen
             "ablations": len(ablations),
             "analyses": len(analyses),
             "planned_outputs": len(outputs),
+            "visualizations": len(visualizations),
+            "main_visualizations": len(main_visuals),
+            "main_visual_roles": sorted(main_visual_roles),
         },
         "policy": dict(POLICY),
         "scientific_authority": False,
@@ -271,6 +382,7 @@ def audit_manuscript_evidence_completion(quality: dict[str, Any] | None, complet
         "analysis": _ids(_rows((quality or {}).get("analyses"))),
         "output": _ids(_rows((quality or {}).get("planned_outputs"))),
     }
+    visual_specs = _rows((quality or {}).get("visualizations"))
     completed = _rows(completion.get("evidence"))
     completed_by_id = {_text(row.get("id")): row for row in completed if _text(row.get("id"))}
 
@@ -287,6 +399,38 @@ def audit_manuscript_evidence_completion(quality: dict[str, Any] | None, complet
                     blockers.append(f"paper-quality-not-applicable-without-justification:{kind}:{item_id}")
             elif not artifact_refs:
                 blockers.append(f"paper-quality-completed-evidence-without-artifact:{kind}:{item_id}")
+
+    visual_completion = _rows(completion.get("visualizations"))
+    visual_completion_by_id = {_text(row.get("id")): row for row in visual_completion if _text(row.get("id"))}
+    for spec in visual_specs:
+        vid = _text(spec.get("id"))
+        if not vid:
+            continue
+        row = visual_completion_by_id.get(vid) or {}
+        status = _text(row.get("status"))
+        if status not in {"PASS", "FAIL", "INCONCLUSIVE", "NOT_APPLICABLE"}:
+            blockers.append(f"paper-quality-visual-not-completed:{vid}")
+            continue
+        if status == "NOT_APPLICABLE":
+            if not _text(row.get("justification")):
+                blockers.append(f"paper-quality-visual-not-applicable-without-justification:{vid}")
+            continue
+        if not _list_text(row.get("artifact_refs")):
+            blockers.append(f"paper-quality-visual-artifact-missing:{vid}")
+        if not _list_text(row.get("script_refs")):
+            blockers.append(f"paper-quality-visual-script-missing:{vid}")
+        if not _text(row.get("caption_ref")):
+            blockers.append(f"paper-quality-visual-caption-binding-missing:{vid}")
+        if spec.get("quantitative") is True and not _list_text(row.get("data_refs")):
+            blockers.append(f"paper-quality-visual-data-binding-missing:{vid}")
+        review = row.get("visual_review") if isinstance(row.get("visual_review"), dict) else {}
+        for check in ("caption_claim_aligned", "legible_labels", "legend_or_direct_labels", "non_deceptive_scale", "source_data_versioned"):
+            if review.get(check) is not True:
+                blockers.append(f"paper-quality-visual-review-failed:{vid}:{check}")
+        if spec.get("uncertainty_required") is True and review.get("uncertainty_visible") is not True:
+            blockers.append(f"paper-quality-visual-review-failed:{vid}:uncertainty_visible")
+        if spec.get("negative_or_failure_visible") is True and review.get("negative_or_failure_visible") is not True:
+            blockers.append(f"paper-quality-visual-review-failed:{vid}:negative_or_failure_visible")
 
     claim_rows = _rows((quality or {}).get("claims"))
     claim_completion = completion.get("claims") if isinstance(completion.get("claims"), dict) else {}
@@ -313,6 +457,7 @@ def audit_manuscript_evidence_completion(quality: dict[str, Any] | None, complet
             **(plan.get("summary") or {}),
             "completed_evidence_rows": len(completed),
             "claim_adjudications": len(claim_completion),
+            "completed_visualizations": len(visual_completion),
         },
         "policy": dict(POLICY),
         "scientific_authority": False,

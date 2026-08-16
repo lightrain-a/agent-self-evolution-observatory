@@ -100,7 +100,7 @@ check("bibliography_declared", "\\bibliography{stri-20260816-references}" in wra
 # Figure reproducibility / nonempty artifacts.
 def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
-for filename in ["stri-overview.pdf", "stri-rstar-boundary.pdf", "stri-factor2-witnesses.pdf"]:
+for filename in ["stri-overview.pdf", "stri-rstar-boundary.pdf", "stri-factor2-witnesses.pdf", "stri-ablation-robustness.pdf"]:
     path = PAPER / "figures" / filename
     check(f"figure_{filename}_exists", path.is_file() and path.stat().st_size > 1000)
 
@@ -118,7 +118,7 @@ result = {
     "citation_keys": sorted(cite_keys),
     "figure_sha256": {
         name: sha(PAPER / "figures" / name)
-        for name in ["stri-overview.pdf", "stri-rstar-boundary.pdf", "stri-factor2-witnesses.pdf"]
+        for name in ["stri-overview.pdf", "stri-rstar-boundary.pdf", "stri-factor2-witnesses.pdf", "stri-ablation-robustness.pdf"]
         if (PAPER / "figures" / name).exists()
     },
     "review_state": {

@@ -11,16 +11,17 @@
 - Independent final paper review after the baseline/ablation/failure/sensitivity revision: `READY_TO_SUBMIT` (score 8/10, 0 required revisions).
 - Paper Evidence Quality v2: `PASS_MANUSCRIPT_EVIDENCE`, evidence debt 0.
 - Current narrow claim scope requires no new GPU evidence.
-- Anonymous supplementary reproduction bundle: manifest PASS, `reproduce.py` PASS, 11/11 unit tests PASS, clone/split + sensitivity reproduction PASS, figure regeneration PASS, identity/path scan PASS.
+- Paper Quality v2.1 visual evidence: 4 main figures, source-bound to data/scripts/captions; new ablation/robustness/failure panel included.
+- Anonymous supplementary reproduction bundle: manifest PASS, `reproduce.py` PASS, 13/13 unit tests PASS, clone/split + sensitivity reproduction PASS, figure regeneration PASS, identity/path scan PASS.
 
 ## Files to upload / archive
 
 - Paper PDF: `/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816.pdf`
-  - SHA256: `1f7a3d9a34a1112c5cdc4e0202bc02b2a40fd87f9693f021960a6bf66957f002`
+  - SHA256: `2a590430a441fa0318286345a4863462b098996e73b24243eeb7ad240e77f8c6`
 - Paper source ZIP: `/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-source.zip`
-  - SHA256: `532766c44241169a1c628c4fe164e79f876fe47fb9660914b0d762ef8113b0fe`
+  - SHA256: `14874816f4751b2605d91ee520768f4a346c5cc177d66f2455ee7c04149df69a`
 - Anonymous supplementary ZIP: `/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip`
-  - SHA256: `98d0bbe6c9347f7b38d5e316d1ebd12b75c450720dd8410e438b8f192627e0a8`
+  - SHA256: `3b02f38bd9b2827c553674443f4b8648110fef6f2e9a4e946466bacc0c06f64c`
 
 ## Human signoff required before abstract submission
 

@@ -14,15 +14,16 @@
     "resolved_citations": 11,
     "ai_use_statement_present": true,
     "reproducibility_statement_present": true,
-    "paper_pdf_sha256": "1f7a3d9a34a1112c5cdc4e0202bc02b2a40fd87f9693f021960a6bf66957f002",
-    "paper_source_zip_sha256": "532766c44241169a1c628c4fe164e79f876fe47fb9660914b0d762ef8113b0fe",
-    "anonymous_supplement_zip_sha256": "98d0bbe6c9347f7b38d5e316d1ebd12b75c450720dd8410e438b8f192627e0a8",
+    "paper_pdf_sha256": "2a590430a441fa0318286345a4863462b098996e73b24243eeb7ad240e77f8c6",
+    "paper_source_zip_sha256": "14874816f4751b2605d91ee520768f4a346c5cc177d66f2455ee7c04149df69a",
+    "anonymous_supplement_zip_sha256": "3b02f38bd9b2827c553674443f4b8648110fef6f2e9a4e946466bacc0c06f64c",
     "supplement_reproduction": "PASS",
-    "supplement_unit_tests": "11/11 PASS",
+    "supplement_unit_tests": "13/13 PASS",
     "final_independent_review": "READY_TO_SUBMIT",
     "new_gpu_evidence_required_for_current_claim_scope": false,
-    "paper_quality_v2": "PASS_MANUSCRIPT_EVIDENCE",
-    "paper_quality_evidence_debt": 0
+    "paper_quality_v2": "PASS_MANUSCRIPT_EVIDENCE_V2_1",
+    "paper_quality_evidence_debt": 0,
+    "visual_evidence": "4_MAIN_FIGURES_SOURCE_BOUND"
   },
   "human_signoff_required": [
     {

@@ -5,18 +5,18 @@
   "status": "PASS",
   "package": {
     "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-    "sha256": "98d0bbe6c9347f7b38d5e316d1ebd12b75c450720dd8410e438b8f192627e0a8",
-    "manifest_sha256": "5e7a16a50697a5f7be6b816fa2a50237bc2c0d4c243727f2a36f245991904bec",
-    "package_metadata_sha256": "4feeb98537f547f97f89e5c8a2a4e715650ba86d3a7bb4172705a234465b57f5"
+    "sha256": "3b02f38bd9b2827c553674443f4b8648110fef6f2e9a4e946466bacc0c06f64c",
+    "manifest_sha256": "b6bef06fc3e44dade50d4f560349daa18bf82af8af7e5fe3bd47b7c194f1a608",
+    "package_metadata_sha256": "a23452ecbedcbb25a571d33cbf8df971428094b363698837d472ec2084d50a94"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
     "reproduce_py": "PASS",
-    "unit_tests": "11/11 PASS",
+    "unit_tests": "13/13 PASS",
     "binary_identity_path_scan": "PASS",
     "text_identity_path_scan": "PASS",
-    "figure_regeneration": "PASS_WITH_CONTENT_IDENTICAL_PNG_AND_REGENERATED_PDF_METADATA",
-    "paper_quality_v2_reproduction": "PASS"
+    "figure_regeneration": "PASS_4_OF_4_FIGURES",
+    "paper_quality_v2_reproduction": "PASS_V2_1_VISUAL_EVIDENCE"
   },
   "reproduced_results": {
     "skillsp_level1_full": {
@@ -71,7 +71,12 @@
       "leave_one_row_out_two_witness_fraction": 1.0,
       "tool_bootstrap_two_witness_fraction": 0.972,
       "tool_bootstrap_any_witness_fraction": 1.0,
-      "taxonomy_perturbation_ablation": "PASS"
+      "taxonomy_perturbation_ablation": "PASS",
+      "visual_evidence": {
+        "main_figures": 4,
+        "ablation_robustness": "REPRODUCED",
+        "paper_quality_schema": "2.1"
+      }
     }
   },
   "frozen_external_repositories": {

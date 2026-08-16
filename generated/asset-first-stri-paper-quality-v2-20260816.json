@@ -4,7 +4,7 @@
   "status": "PASS_MANUSCRIPT_EVIDENCE",
   "paper_quality_gate_passed": true,
   "quality_contract": {
-    "schema_version": "2.0",
+    "schema_version": "2.1",
     "paper_archetype": "theory_certificate",
     "claims": [
       {
@@ -40,6 +40,11 @@
           "O-ABLATION",
           "O-FAILURE",
           "O-SENSITIVITY"
+        ],
+        "visualization_ids": [
+          "V-OVERVIEW",
+          "V-BOUNDARY",
+          "V-ABLATION-ROBUSTNESS"
         ]
       },
       {
@@ -67,6 +72,11 @@
           "O-MAIN",
           "O-MECHANISM",
           "O-SENSITIVITY"
+        ],
+        "visualization_ids": [
+          "V-WITNESS",
+          "V-BOUNDARY",
+          "V-ABLATION-ROBUSTNESS"
         ]
       },
       {
@@ -105,6 +115,12 @@
           "O-MECHANISM",
           "O-FAILURE",
           "O-SENSITIVITY"
+        ],
+        "visualization_ids": [
+          "V-OVERVIEW",
+          "V-WITNESS",
+          "V-BOUNDARY",
+          "V-ABLATION-ROBUSTNESS"
         ]
       }
     ],
@@ -255,6 +271,108 @@
         "output_type": "sensitivity",
         "purpose": "Sensitivity panel for thresholds, package constraints, singleton witnesses, and split/merge/clone edits."
       }
+    ],
+    "visualizations": [
+      {
+        "id": "V-OVERVIEW",
+        "placement": "main",
+        "visual_type": "flow",
+        "panel_roles": [
+          "overview",
+          "traceability"
+        ],
+        "target_claim_ids": [
+          "N1",
+          "N3"
+        ],
+        "source_evidence_ids": [
+          "B-RAW-OVERLAP",
+          "B-DEDUP",
+          "O-MAIN"
+        ],
+        "reviewer_question": "What representation nuisance is STRI auditing, and how does package identity alter a semantic control surface?",
+        "takeaway": "Separate semantic capability/support from package identity before interpreting self-evolution control changes.",
+        "quantitative": false,
+        "negative_or_failure_visible": false
+      },
+      {
+        "id": "V-WITNESS",
+        "placement": "main",
+        "visual_type": "case_panel",
+        "panel_roles": [
+          "mechanism"
+        ],
+        "target_claim_ids": [
+          "N2",
+          "N3"
+        ],
+        "source_evidence_ids": [
+          "B-ANALYTICAL",
+          "AN-MECHANISM",
+          "O-MECHANISM"
+        ],
+        "reviewer_question": "Why does irreducible partial overlap force a factor-2 exposure distortion?",
+        "takeaway": "Two inspectable singleton-plus-overlap structures explain the tight lower bound rather than relying on the LP as a black box.",
+        "quantitative": true,
+        "uncertainty_required": false,
+        "negative_or_failure_visible": false
+      },
+      {
+        "id": "V-BOUNDARY",
+        "placement": "main",
+        "visual_type": "scatter",
+        "panel_roles": [
+          "boundary",
+          "main_comparison"
+        ],
+        "target_claim_ids": [
+          "N1",
+          "N2",
+          "N3"
+        ],
+        "source_evidence_ids": [
+          "B-RAW-OVERLAP",
+          "B-ANALYTICAL",
+          "AN-MECHANISM",
+          "O-MAIN",
+          "O-MECHANISM"
+        ],
+        "reviewer_question": "Is overlap prevalence itself the mechanism, or does exact support geometry separate positive and negative regimes?",
+        "takeaway": "High overlap can still be exactly equalizable; R*(A), not overlap prevalence, separates the audited regimes.",
+        "quantitative": true,
+        "uncertainty_required": false,
+        "negative_or_failure_visible": true
+      },
+      {
+        "id": "V-ABLATION-ROBUSTNESS",
+        "placement": "main",
+        "visual_type": "multi_panel",
+        "panel_roles": [
+          "ablation",
+          "failure",
+          "sensitivity",
+          "uncertainty"
+        ],
+        "target_claim_ids": [
+          "N1",
+          "N2",
+          "N3"
+        ],
+        "source_evidence_ids": [
+          "A-TAXONOMY-PERTURB",
+          "AN-FAILURE",
+          "AN-SENSITIVITY",
+          "AN-UNCERTAINTY",
+          "O-ABLATION",
+          "O-FAILURE",
+          "O-SENSITIVITY"
+        ],
+        "reviewer_question": "Does the diagnosis survive representation edits and subset perturbations, and where is the closed-form witness not applicable?",
+        "takeaway": "Exact-support quotienting removes clone/split nuisance, both witnesses are deletion-robust, and witness absence is visibly typed as inconclusive rather than a negative result.",
+        "quantitative": true,
+        "uncertainty_required": true,
+        "negative_or_failure_visible": true
+      }
     ]
   },
   "completion": {
@@ -378,6 +496,94 @@
         ]
       }
     ],
+    "visualizations": [
+      {
+        "id": "V-OVERVIEW",
+        "status": "PASS",
+        "artifact_refs": [
+          "paper_drafts/figures/stri-overview.pdf"
+        ],
+        "script_refs": [
+          "paper_drafts/stri-20260816-plot-overview.py"
+        ],
+        "caption_ref": "fig:stri-overview",
+        "visual_review": {
+          "caption_claim_aligned": true,
+          "legible_labels": true,
+          "legend_or_direct_labels": true,
+          "non_deceptive_scale": true,
+          "source_data_versioned": true
+        }
+      },
+      {
+        "id": "V-WITNESS",
+        "status": "PASS",
+        "artifact_refs": [
+          "paper_drafts/figures/stri-factor2-witnesses.pdf"
+        ],
+        "data_refs": [
+          "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json"
+        ],
+        "script_refs": [
+          "paper_drafts/stri-20260816-plot-witnesses.py"
+        ],
+        "caption_ref": "fig:factor2-witnesses",
+        "visual_review": {
+          "caption_claim_aligned": true,
+          "legible_labels": true,
+          "legend_or_direct_labels": true,
+          "non_deceptive_scale": true,
+          "source_data_versioned": true
+        }
+      },
+      {
+        "id": "V-BOUNDARY",
+        "status": "PASS",
+        "artifact_refs": [
+          "paper_drafts/figures/stri-rstar-boundary.pdf"
+        ],
+        "data_refs": [
+          "generated/asset-first-stri-narrow-paper-coherence-20260816.json",
+          "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json"
+        ],
+        "script_refs": [
+          "paper_drafts/stri-20260816-plot-boundary.py"
+        ],
+        "caption_ref": "fig:rstar-boundary",
+        "visual_review": {
+          "caption_claim_aligned": true,
+          "legible_labels": true,
+          "legend_or_direct_labels": true,
+          "non_deceptive_scale": true,
+          "source_data_versioned": true,
+          "negative_or_failure_visible": true
+        }
+      },
+      {
+        "id": "V-ABLATION-ROBUSTNESS",
+        "status": "PASS",
+        "artifact_refs": [
+          "paper_drafts/figures/stri-ablation-robustness.pdf"
+        ],
+        "data_refs": [
+          "generated/asset-first-stri-paper-analysis-suite-20260816.json",
+          "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
+        ],
+        "script_refs": [
+          "paper_drafts/stri-20260816-plot-ablation-robustness.py"
+        ],
+        "caption_ref": "fig:ablation-robustness",
+        "visual_review": {
+          "caption_claim_aligned": true,
+          "legible_labels": true,
+          "legend_or_direct_labels": true,
+          "non_deceptive_scale": true,
+          "source_data_versioned": true,
+          "uncertainty_visible": true,
+          "negative_or_failure_visible": true
+        }
+      }
+    ],
     "claims": {
       "N1": {
         "status": "SUPPORTED_NARROWLY",
@@ -409,14 +615,14 @@
     }
   },
   "audit": {
-    "schema_version": "2.0",
+    "schema_version": "2.1",
     "required": true,
     "is_formal_gate": false,
     "passed": true,
     "status": "PASS_MANUSCRIPT_EVIDENCE",
     "blockers": [],
     "plan": {
-      "schema_version": "2.0",
+      "schema_version": "2.1",
       "required": true,
       "is_formal_gate": false,
       "passed": true,
@@ -429,10 +635,23 @@
         "baselines": 3,
         "ablations": 2,
         "analyses": 5,
-        "planned_outputs": 5
+        "planned_outputs": 5,
+        "visualizations": 4,
+        "main_visualizations": 4,
+        "main_visual_roles": [
+          "ablation",
+          "boundary",
+          "failure",
+          "main_comparison",
+          "mechanism",
+          "overview",
+          "sensitivity",
+          "traceability",
+          "uncertainty"
+        ]
       },
       "policy": {
-        "schema_version": "2.0",
+        "schema_version": "2.1",
         "paper_quality_is_claim_evidence_not_prose_quality": true,
         "baseline_presence_without_role_is_insufficient": true,
         "empirical_superiority_requires_empirical_matched_baseline": true,
@@ -442,6 +661,11 @@
         "theory_certificate_may_waive_component_ablation_only_with_explicit_non_applicability": true,
         "paper_ready_requires_completed_evidence_not_planned_evidence": true,
         "failed_or_inconclusive_experiments_remain_visible_evidence": true,
+        "visual_evidence_requires_reviewer_question_and_takeaway": true,
+        "multi_panel_visuals_may_cover_multiple_evidence_roles": true,
+        "quantitative_visuals_require_versioned_data_and_figure_qa": true,
+        "negative_failure_or_boundary_evidence_must_be_visually_exposed": true,
+        "manuscript_ready_requires_visual_artifact_data_script_caption_binding": true,
         "quality_gate_cannot_authorize_method_experiment_p0_or_gpu": true
       },
       "scientific_authority": false,
@@ -459,11 +683,25 @@
       "ablations": 2,
       "analyses": 5,
       "planned_outputs": 5,
+      "visualizations": 4,
+      "main_visualizations": 4,
+      "main_visual_roles": [
+        "ablation",
+        "boundary",
+        "failure",
+        "main_comparison",
+        "mechanism",
+        "overview",
+        "sensitivity",
+        "traceability",
+        "uncertainty"
+      ],
       "completed_evidence_rows": 15,
-      "claim_adjudications": 3
+      "claim_adjudications": 3,
+      "completed_visualizations": 4
     },
     "policy": {
-      "schema_version": "2.0",
+      "schema_version": "2.1",
       "paper_quality_is_claim_evidence_not_prose_quality": true,
       "baseline_presence_without_role_is_insufficient": true,
       "empirical_superiority_requires_empirical_matched_baseline": true,
@@ -473,6 +711,11 @@
       "theory_certificate_may_waive_component_ablation_only_with_explicit_non_applicability": true,
       "paper_ready_requires_completed_evidence_not_planned_evidence": true,
       "failed_or_inconclusive_experiments_remain_visible_evidence": true,
+      "visual_evidence_requires_reviewer_question_and_takeaway": true,
+      "multi_panel_visuals_may_cover_multiple_evidence_roles": true,
+      "quantitative_visuals_require_versioned_data_and_figure_qa": true,
+      "negative_failure_or_boundary_evidence_must_be_visually_exposed": true,
+      "manuscript_ready_requires_visual_artifact_data_script_caption_binding": true,
       "quality_gate_cannot_authorize_method_experiment_p0_or_gpu": true
     },
     "scientific_authority": false,
@@ -486,7 +729,7 @@
   "evidence_debt": {
     "missing_or_incomplete_ids": [],
     "priority": [],
-    "interpretation": "The prior 59/59 manuscript QA and 50/50 format QA remain valid mechanical checks, but they cannot establish top-tier scientific completeness. The CPU evidence suite supplies taxonomy perturbation, ruling-out, failure, sensitivity, and finite-snapshot uncertainty analyses; Paper Quality v2 passes only when the manuscript itself consumes those artifacts as explicit baseline/ablation/failure/sensitivity evidence.",
+    "interpretation": "Manuscript QA and venue-format QA remain valid mechanical checks, but they cannot establish top-tier scientific completeness. The CPU evidence suite supplies taxonomy perturbation, ruling-out, failure, sensitivity, and finite-snapshot uncertainty analyses; Paper Quality v2.1 passes only when the manuscript itself consumes those artifacts as explicit baseline/ablation/failure/sensitivity evidence and binds reviewer-question-driven visualizations to versioned data, scripts, figures, and captions.",
     "gpu_rescue_required": false,
     "cheap_first": "Prefer CPU/released-artifact taxonomy perturbation, reduction ablations, uncertainty, and sensitivity before reopening any dynamic GPU lane."
   },
@@ -497,7 +740,15 @@
     "generated/asset-first-stri-paper-analysis-suite-20260816.json",
     "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json",
     "paper_drafts/stri-20260816-narrow-body.tex",
-    "paper_drafts/stri-20260816-tables.tex"
+    "paper_drafts/stri-20260816-tables.tex",
+    "paper_drafts/figures/stri-overview.pdf",
+    "paper_drafts/figures/stri-factor2-witnesses.pdf",
+    "paper_drafts/figures/stri-rstar-boundary.pdf",
+    "paper_drafts/figures/stri-ablation-robustness.pdf",
+    "paper_drafts/stri-20260816-plot-overview.py",
+    "paper_drafts/stri-20260816-plot-witnesses.py",
+    "paper_drafts/stri-20260816-plot-boundary.py",
+    "paper_drafts/stri-20260816-plot-ablation-robustness.py"
   ],
   "source_sha256": {
     "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json": "94ebdfa6e970882744dc7d15c51e146157efac332526a710810345833e5ad2f0",
@@ -505,8 +756,16 @@
     "generated/asset-first-stri-narrow-final-review-20260816.json": "9af211d9482130f74c9bacf067b5bcf0d1fc3442e36d6488c31ccd3a5e1aa66d",
     "generated/asset-first-stri-paper-analysis-suite-20260816.json": "ff9477c181f01896063019d969265fa65660ea238f0966da7e221825c02d3fba",
     "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json": "c0a7761fde29b4d3e5f2c5dde752cfed2b5fe8693d1c229bb6e01a0971c86df2",
-    "paper_drafts/stri-20260816-narrow-body.tex": "eafef092ccc86a8c84b26a5ad2d21a7b24f931b684caa35904cf567a96c46ced",
-    "paper_drafts/stri-20260816-tables.tex": "7747c8595d7575909ca68f9083437f14c0fba8a4654a4a839f16b878a6195fad"
+    "paper_drafts/stri-20260816-narrow-body.tex": "c41d55b5949681b270371739f9a13dc569a7d9441c907e8508da007d06608e2f",
+    "paper_drafts/stri-20260816-tables.tex": "652f2d0f79a40624449042f64ae087b6a7fdbc0b41ae2fc0a18ac8879fe3d62a",
+    "paper_drafts/figures/stri-overview.pdf": "dcb62917f4394ecc5e486220d9d411d0afc9028f8f11525831efb4c3b41aebf9",
+    "paper_drafts/figures/stri-factor2-witnesses.pdf": "ed10fb150579d42027e6bb24a773d3a17bd6fa2cadc845099f54d7772bb1506d",
+    "paper_drafts/figures/stri-rstar-boundary.pdf": "70225e96d5c2c2a56fafbcf4d713415537e9ee8b93987cabfa4cb8812fa9ac02",
+    "paper_drafts/figures/stri-ablation-robustness.pdf": "fa47cec4d82263f8b5976b2d73d05950c2129e94c34bb7096a3bdb7bcbd05542",
+    "paper_drafts/stri-20260816-plot-overview.py": "38c672cbdb7afa06de6dfde3faa75bf5beb704bde06b46b9778f845112c7edef",
+    "paper_drafts/stri-20260816-plot-witnesses.py": "35e8fe8793f47b46d1ff3efc0a3dff2b67479aa7636dc653f16404979c72dfa3",
+    "paper_drafts/stri-20260816-plot-boundary.py": "46fc03a500b09b2bc70fdae24e964e76963e7709fc184c88ebb99834363fde25",
+    "paper_drafts/stri-20260816-plot-ablation-robustness.py": "f8201eb55bf6778014f7cf1b9fc5d7f2c6d218c77061013d8bf98980ac88f262"
   },
   "scientific_authority": false,
   "authority": {

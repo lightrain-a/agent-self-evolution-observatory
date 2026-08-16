@@ -42,8 +42,8 @@
     },
     "official_iclr2027_final_review": {
       "verdict": "READY_TO_SUBMIT",
-      "confidence": 0.9,
-      "overall_score_1_to_10": 8,
+      "confidence": 0.92,
+      "overall_score_1_to_10": 7,
       "required_revisions": 0
     }
   },
@@ -52,22 +52,22 @@
     "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages",
     "pdf": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816.pdf",
-      "sha256": "1f7a3d9a34a1112c5cdc4e0202bc02b2a40fd87f9693f021960a6bf66957f002"
+      "sha256": "2a590430a441fa0318286345a4863462b098996e73b24243eeb7ad240e77f8c6"
     },
     "source_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-source.zip",
-      "sha256": "532766c44241169a1c628c4fe164e79f876fe47fb9660914b0d762ef8113b0fe",
-      "files": 11,
+      "sha256": "14874816f4751b2605d91ee520768f4a346c5cc177d66f2455ee7c04149df69a",
+      "files": 13,
       "isolated_compile_verified": true
     },
     "supplement_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-      "sha256": "98d0bbe6c9347f7b38d5e316d1ebd12b75c450720dd8410e438b8f192627e0a8",
-      "manifest_sha256": "5e7a16a50697a5f7be6b816fa2a50237bc2c0d4c243727f2a36f245991904bec",
+      "sha256": "3b02f38bd9b2827c553674443f4b8648110fef6f2e9a4e946466bacc0c06f64c",
+      "manifest_sha256": "b6bef06fc3e44dade50d4f560349daa18bf82af8af7e5fe3bd47b7c194f1a608",
       "isolated_reproduction_verified": true,
-      "unit_tests": "11/11 PASS",
+      "unit_tests": "13/13 PASS",
       "identity_path_scan": "PASS",
-      "paper_quality_v2_reproduction": "PASS"
+      "paper_quality_v2_reproduction": "PASS_V2_1_VISUAL_EVIDENCE"
     }
   },
   "official_deadlines_aoe": {
@@ -87,6 +87,24 @@
   "paper_quality_v2": {
     "status": "PASS_MANUSCRIPT_EVIDENCE",
     "passed": true,
-    "evidence_debt": 0
+    "evidence_debt": 0,
+    "schema_version": "2.1",
+    "main_visualizations": 4,
+    "visual_roles": [
+      "overview",
+      "main_comparison",
+      "ablation",
+      "mechanism",
+      "boundary",
+      "failure",
+      "sensitivity",
+      "uncertainty"
+    ]
+  },
+  "visual_evidence": {
+    "main_figures": 4,
+    "new_result_figure": "stri-ablation-robustness",
+    "source_bound": true,
+    "figure_qa": "PASS"
   }
 }

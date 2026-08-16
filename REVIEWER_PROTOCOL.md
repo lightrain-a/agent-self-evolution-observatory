@@ -57,6 +57,22 @@ A planned baseline or ablation does not count as manuscript evidence. Each plann
 
 For theory/certificate papers, an analytical simplification and assumption-boundary stress test may replace a conventional component ablation only when the non-applicability is explicit. Mechanical manuscript QA, venue-format QA, compilation, and supplement reproduction can never substitute for this scientific evidence review.
 
+## Visual evidence reviewer
+
+The visual evidence reviewer treats a figure as a scientific argument, not decoration. The design pattern follows strong autonomous-research papers: combine workflow/overview diagrams with quantitative comparison, ablation, mechanism/boundary, failure/sensitivity, and—when the scientific object is a research system—scaling/progression evidence. Multi-panel figures are preferred when several panels answer one reviewer question.
+
+Every planned main-text visualization must bind:
+
+- one explicit reviewer question and one sentence-level takeaway;
+- the paper claim(s) it supports and the baseline/ablation/analysis evidence IDs it consumes;
+- a versioned data artifact, a generation script/specification, the rendered figure artifact, and a manuscript caption/label;
+- uncertainty/error bars or another preregistered uncertainty display when the quantitative claim requires it;
+- negative, failure, boundary, or inconclusive regimes when those qualify the claim rather than hiding them in prose or appendix.
+
+Before manuscript-ready, figure QA must verify caption/claim alignment, readable labels, direct labels or a legend, non-deceptive axes/scales, and versioned source data. A figure that is visually polished but cannot answer its registered reviewer question is evidence-incomplete. A table may remain for exact values, but it does not replace a required visual explanation of mechanism, heterogeneity, robustness, scaling, or failure boundaries.
+
+For method papers, the main visual portfolio must cover at least main comparison, ablation, mechanism, failure, and sensitivity; an overview figure is recommended. For system papers, require overview, main comparison, failure, sensitivity, and scaling/progression; human evaluation is recommended when the claimed value includes research quality or usefulness. For theory/certificate papers, require boundary, mechanism, failure, and sensitivity views rather than theorem statements alone.
+
 ## Adversarial reviewer
 
 The adversarial reviewer should try to reject the paper using these hypotheses:
@@ -77,7 +93,7 @@ A direction is considered ready only when:
 - no reviewer identifies a direct method collision;
 - all blocking experimental objections have a planned test;
 - the D0 continuation criteria are satisfied;
-- Paper Evidence Quality v2 passes with completed claim-matched baseline/ablation/analysis artifacts;
+- Paper Evidence Quality v2.1 passes with completed claim-matched baseline/ablation/analysis artifacts and source-bound visual evidence;
 - the claim is reduced to the lowest contribution level supported by evidence;
 - unresolved limitations are documented rather than hidden.
 

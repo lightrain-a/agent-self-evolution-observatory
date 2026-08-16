@@ -51,6 +51,7 @@ POLICY = {
     "paper_ready_requires_current_source_survival": True,
     "paper_ready_requires_superseding_reduction_state": True,
     "paper_ready_requires_paper_quality_v2": True,
+    "paper_ready_requires_visual_evidence_contract": True,
     "paper_quality_receipt_is_content_addressed": True,
     "mechanical_and_format_qa_cannot_substitute_for_scientific_evidence_completeness": True,
     "dynamic_p0_is_not_required_for_the_narrow_claim_scope": True,
@@ -122,6 +123,7 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
     )
     quality_sources = [str(rel) for rel in (paper_quality.get("source_artifacts") or []) if str(rel)]
     quality_source_sha = paper_quality.get("source_sha256") if isinstance(paper_quality.get("source_sha256"), dict) else {}
+    quality_plan_summary = ((((paper_quality.get("audit") or {}).get("plan") or {}).get("summary")) or {})
     paper_quality_source_binding = (
         bool(quality_sources)
         and set(quality_source_sha) == set(quality_sources)
@@ -188,6 +190,9 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
             "paper_quality_source_binding": 1 if gates["paper_quality_source_binding"] else 0,
             "paper_quality_evidence_debt": len(((paper_quality.get("evidence_debt") or {}).get("missing_or_incomplete_ids") or [])),
             "paper_quality_missing_ids": list(((paper_quality.get("evidence_debt") or {}).get("missing_or_incomplete_ids") or [])),
+            "paper_quality_visualizations": int(quality_plan_summary.get("visualizations") or 0),
+            "paper_quality_main_visualizations": int(quality_plan_summary.get("main_visualizations") or 0),
+            "paper_quality_main_visual_roles": list(quality_plan_summary.get("main_visual_roles") or []),
             "canonical_problem_gate_pass_added": 0,
             "canonical_generator_candidates_added": 0,
             "canonical_queue_candidates_added": 0,

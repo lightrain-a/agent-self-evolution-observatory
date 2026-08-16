@@ -6351,8 +6351,8 @@
     "asset_first_stri_paper_ready": 1,
     "asset_first_stri_claims_supported": 3,
     "asset_first_stri_claims_total": 3,
-    "asset_first_stri_qa_checks_passed": 59,
-    "asset_first_stri_qa_checks_total": 59,
+    "asset_first_stri_qa_checks_passed": 60,
+    "asset_first_stri_qa_checks_total": 60,
     "asset_first_stri_canonical_problem_gate_added": 0,
     "asset_first_stri_submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
     "asset_first_stri_official_qa_checks_passed": 50,
@@ -6363,7 +6363,12 @@
     "asset_first_stri_human_signoff_pending": 1,
     "asset_first_stri_paper_quality_v2_passed": 1,
     "asset_first_stri_paper_quality_evidence_debt": 0,
-    "asset_first_stri_paper_quality_source_binding": 1
+    "asset_first_stri_paper_quality_source_binding": 1,
+    "paper_visual_evidence_status": "VISUAL_EVIDENCE_PORTFOLIO_READY",
+    "paper_visual_evidence_designs": 4,
+    "paper_visual_evidence_planned_main": 16,
+    "paper_visual_evidence_stri_completed_main": 4,
+    "asset_first_stri_main_visualizations": 4
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -28864,7 +28869,13 @@
       "full_experiment_requires_frozen_method_and_blueprint": true,
       "method_change_after_local_validation_invalidates_full_experiment_authority": true,
       "pilot_score_cannot_redefine_paper_contribution": true,
-      "novelty_requires_closest_work_and_irreducible_difference": true
+      "novelty_requires_closest_work_and_irreducible_difference": true,
+      "paper_quality_v2_requires_typed_baselines_ablations_and_analyses": true,
+      "paper_quality_v2_requires_why_better_and_ruling_out_evidence": true,
+      "paper_quality_v2_1_requires_visual_evidence_contract": true,
+      "visual_evidence_is_claim_mapped_not_decorative": true,
+      "paper_quality_v2_is_required_for_schema_2_3_plus_or_explicit_v2_contract": true,
+      "legacy_contracts_are_not_retroactively_rewritten": true
     },
     "macro_stages": [
       "scope",
@@ -28883,7 +28894,14 @@
       "cards": 4,
       "paper_design_passed": 0,
       "paper_design_blocked": 4,
-      "historical_cards_predating_rule": 4
+      "historical_cards_predating_rule": 4,
+      "paper_quality_v2_applied": 0,
+      "paper_quality_v2_passed": 0,
+      "typed_baselines": 0,
+      "typed_ablations": 0,
+      "typed_analyses": 0,
+      "visualizations": 0,
+      "main_visualizations": 0
     },
     "rule": "A local pilot tests a frozen paper-motivated method. If the core method changes, return to novelty/method design and invalidate any full-experiment authorization."
   },
@@ -40859,8 +40877,8 @@
       "external_system_never_overrides_local_scientific_authority": true
     },
     "summary": {
-      "systems_reviewed": 26,
-      "adopted": 21,
+      "systems_reviewed": 31,
+      "adopted": 26,
       "merged_existing": 4,
       "next_backlog": 1
     },
@@ -41045,6 +41063,46 @@
           "verdict": "gap-confirmed-and-closed",
           "remaining_boundary": "evaluator/result filesystem isolation still requires its own runtime canary before claiming complete environment-level permission enforcement"
         }
+      },
+      {
+        "system": "The AI Scientist / AI Scientist-v2",
+        "design": "treat plotting as an experiment artifact, generate figures after experimental nodes, and critique figure legibility/misleading presentation before paper writing",
+        "gap": "our evidence compiler could certify tables while leaving reviewer-critical mechanism, failure, and uncertainty evidence visually opaque",
+        "local_mapping": "Paper Evidence Quality v2.1 Visual Evidence Contract + manuscript figure QA",
+        "status": "adopted",
+        "source": "https://www.nature.com/articles/s41586-026-10265-5"
+      },
+      {
+        "system": "PaperVizAgent",
+        "design": "generate academic figures from source context plus explicit communicative intent, then iteratively critique faithfulness, conciseness, readability, and aesthetics",
+        "gap": "a figure-generation script alone does not specify what scientific question the figure must answer or whether its caption matches the claim",
+        "local_mapping": "reviewer-question -> claim -> evidence -> data/script/figure/caption binding with figure-review checks",
+        "status": "adopted",
+        "source": "https://research.google/blog/improving-the-academic-workflow-introducing-two-ai-agents-for-better-figures-and-peer-review/"
+      },
+      {
+        "system": "Agent Laboratory",
+        "design": "visualize multi-dimensional human evaluation and auto-vs-human reviewer distributions rather than reporting one aggregate score",
+        "gap": "aggregate paper or system scores can hide topic/model heterogeneity and evaluator bias",
+        "local_mapping": "failure/stratified/human-evaluation visual roles and negative-regime visibility",
+        "status": "adopted",
+        "source": "https://arxiv.org/abs/2501.04227"
+      },
+      {
+        "system": "ERA / AI co-scientist / Kosmos",
+        "design": "pair system-overview figures with progression/scaling, heldout performance, uncertainty, breakthrough/search trajectories, and human or experimental validation",
+        "gap": "a research-system paper can look complete while showing only terminal scores and no evidence of how quality changes with compute, cycles, or search depth",
+        "local_mapping": "system archetype requires overview + scaling/progression + comparison + failure + sensitivity visual evidence",
+        "status": "adopted",
+        "source": "https://www.nature.com/articles/s41586-026-10658-6"
+      },
+      {
+        "system": "Science One Framework",
+        "design": "bind manuscript claims to evidence chains and audit score, reference, and method-code alignment",
+        "gap": "visual evidence can drift from the exact data/script/caption that produced a paper claim even when textual claim provenance is correct",
+        "local_mapping": "content-addressed visual receipt binds data artifact + generation script + rendered figure + caption to the claim evidence chain",
+        "status": "adopted",
+        "source": "https://research.google/blog/science-one-framework-a-verifiable-autonomous-research-framework-via-chain-of-evidence/"
       },
       {
         "system": "SAGE-MHFA",
@@ -71467,8 +71525,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "0/4 current cards satisfy the paper-first contract / post-C2: STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM / C3 locked=True",
-        "zh": "当前 0/4 份卡满足 paper-first 合同 / post-C2：STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM / C3 锁定=True"
+        "en": "0/4 live cards satisfy paper-first / visual portfolio 16 planned across 4 paper-first designs + 4 STRI completed / post-C2: STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
+        "zh": "当前 0/4 份 live 卡满足 paper-first / 可视化组合：4 个 paper-first 设计共规划 16 张主图 + STRI 已完成 4 张 / post-C2：STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM"
       },
       "key": "paper-design-contract",
       "primary_layer": "paper-design"
@@ -71551,8 +71609,8 @@
       },
       "status": "running",
       "evidence": {
-        "en": "26 systems / 21 adopted / 1 next backlog",
-        "zh": "已审 26 个系统 / 21 个已吸收 / 1 个下一批"
+        "en": "31 systems / 26 adopted / 1 next backlog",
+        "zh": "已审 31 个系统 / 26 个已吸收 / 1 个下一批"
       },
       "key": "external-system-learning",
       "primary_layer": "memory-publication"
@@ -73433,14 +73491,14 @@
       "paper_ready": 1,
       "claims_supported": 3,
       "claims_total": 3,
-      "qa_checks_passed": 59,
-      "qa_checks_total": 59,
+      "qa_checks_passed": 60,
+      "qa_checks_total": 60,
       "official_qa_checks_passed": 50,
       "official_qa_checks_total": 50,
       "main_text_pages": 9,
       "main_text_page_limit": 9,
       "supplement_ready": 1,
-      "supplement_unit_tests": "11/11 PASS",
+      "supplement_unit_tests": "13/13 PASS",
       "human_signoff_pending": 1,
       "new_gpu_evidence_required": 0,
       "final_review_confidence": 0.92,
@@ -73448,6 +73506,19 @@
       "paper_quality_source_binding": 1,
       "paper_quality_evidence_debt": 0,
       "paper_quality_missing_ids": [],
+      "paper_quality_visualizations": 4,
+      "paper_quality_main_visualizations": 4,
+      "paper_quality_main_visual_roles": [
+        "ablation",
+        "boundary",
+        "failure",
+        "main_comparison",
+        "mechanism",
+        "overview",
+        "sensitivity",
+        "traceability",
+        "uncertainty"
+      ],
       "canonical_problem_gate_pass_added": 0,
       "canonical_generator_candidates_added": 0,
       "canonical_queue_candidates_added": 0,
@@ -73459,9 +73530,9 @@
     "submission_handoff": {
       "abstract_deadline_aoe": "2026-09-18",
       "full_paper_deadline_aoe": "2026-09-25",
-      "pdf_sha256": "1f7a3d9a34a1112c5cdc4e0202bc02b2a40fd87f9693f021960a6bf66957f002",
-      "source_zip_sha256": "532766c44241169a1c628c4fe164e79f876fe47fb9660914b0d762ef8113b0fe",
-      "supplement_zip_sha256": "98d0bbe6c9347f7b38d5e316d1ebd12b75c450720dd8410e438b8f192627e0a8",
+      "pdf_sha256": "2a590430a441fa0318286345a4863462b098996e73b24243eeb7ad240e77f8c6",
+      "source_zip_sha256": "14874816f4751b2605d91ee520768f4a346c5cc177d66f2455ee7c04149df69a",
+      "supplement_zip_sha256": "3b02f38bd9b2827c553674443f4b8648110fef6f2e9a4e946466bacc0c06f64c",
       "downloads": {
         "tex": "downloads/STRI-ICLR2027.tex",
         "pdf": "downloads/STRI-ICLR2027.pdf",
@@ -73469,8 +73540,8 @@
       },
       "download_sha256": {
         "tex": "3fc6a59c822bede7c6952f6b625c24dc03e3731476a8dcc707cb56c5d49690f8",
-        "pdf": "1f7a3d9a34a1112c5cdc4e0202bc02b2a40fd87f9693f021960a6bf66957f002",
-        "source_zip": "532766c44241169a1c628c4fe164e79f876fe47fb9660914b0d762ef8113b0fe"
+        "pdf": "2a590430a441fa0318286345a4863462b098996e73b24243eeb7ad240e77f8c6",
+        "source_zip": "14874816f4751b2605d91ee520768f4a346c5cc177d66f2455ee7c04149df69a"
       },
       "human_action": "author-list/profile/quota/dual-submission/ethics/AI-use signoff and OpenReview upload only"
     },
@@ -73493,7 +73564,7 @@
       },
       "submission_qa": {
         "path": "generated/asset-first-stri-submission-qa-20260816.json",
-        "sha256": "127e95b8d9260517bbff6ba9d7ed6b0cab389ef2d5692ddfd3268bffe38d5cd9",
+        "sha256": "15b17c22c9668d7f1e7062f68aaf3850350d8544682cfa659236f7711f6f83aa",
         "present": true
       },
       "reduction": {
@@ -73508,7 +73579,7 @@
       },
       "paper_quality_v2": {
         "path": "generated/asset-first-stri-paper-quality-v2-20260816.json",
-        "sha256": "9dbf853d012275edd4cf2003a24d81657bb9bae82c5ea729910e9cefa3b9c35d",
+        "sha256": "ce5a51799091ab1d8e60df9596652a85bebf0ea33f0d2542167255e19990da17",
         "present": true
       },
       "current_source_review": {
@@ -73518,22 +73589,22 @@
       },
       "official_final_state": {
         "path": "generated/asset-first-stri-iclr2027-final-state-20260816.json",
-        "sha256": "55e447853c069a8c4f86c03d1dc8a5f61041766450d9b4b70c13888c63435085",
+        "sha256": "2f32f8163ce307d17770f2012a9585e9e6d7fbc65e9c4ef3c1fbcde5d5a6ad68",
         "present": true
       },
       "official_submission_qa": {
         "path": "generated/asset-first-stri-iclr2027-submission-qa-20260816.json",
-        "sha256": "1f2559e2ca8737338ad65d7434a432cf321cc18c27991025a7d607a952d9ba17",
+        "sha256": "28c0ea2981469af3d5692c0bf00e310b3583029121ddf2cbd00858a6085cdd45",
         "present": true
       },
       "supplement_state": {
         "path": "generated/asset-first-stri-iclr2027-supplement-state-20260816.json",
-        "sha256": "c212fe500a870338d61e9583fa476eccfb677302711c1d0008f608e305b54828",
+        "sha256": "92873cafeaf248ae4bfb44bddf697b5f3dd7acc38cea885e98373ffcf62727ce",
         "present": true
       },
       "openreview_readiness": {
         "path": "generated/asset-first-stri-iclr2027-openreview-readiness-20260816.json",
-        "sha256": "c5fe076bb3aba3b9913b19d5860648be23f90c2d6dcc1e8c8e7384a2be8f5e99",
+        "sha256": "8c42f8f19fa9c09993320335096c8ebd8b71128c14e58bf1b5ffdaaad5f88b3d",
         "present": true
       }
     },
@@ -73547,6 +73618,7 @@
       "paper_ready_requires_current_source_survival": true,
       "paper_ready_requires_superseding_reduction_state": true,
       "paper_ready_requires_paper_quality_v2": true,
+      "paper_ready_requires_visual_evidence_contract": true,
       "paper_quality_receipt_is_content_addressed": true,
       "mechanical_and_format_qa_cannot_substitute_for_scientific_evidence_completeness": true,
       "dynamic_p0_is_not_required_for_the_narrow_claim_scope": true,
@@ -73562,6 +73634,197 @@
       "canonical_problem_gate": false,
       "canonical_generator": false,
       "canonical_queue": false,
+      "method": false,
+      "experiment": false,
+      "p0": false,
+      "gpu": false
+    }
+  },
+  "paper_visual_evidence": {
+    "schema_version": "1.0",
+    "status": "VISUAL_EVIDENCE_PORTFOLIO_READY",
+    "summary": {
+      "papers": 5,
+      "paper_first_designs": 4,
+      "planned_main_visualizations": 16,
+      "planned_main_visualizations_per_paper_min": 4,
+      "stri_completed_main_visualizations": 4,
+      "main_visual_roles": [
+        "ablation",
+        "boundary",
+        "failure",
+        "main_comparison",
+        "mechanism",
+        "overview",
+        "sensitivity",
+        "traceability",
+        "uncertainty"
+      ],
+      "repair_required": 0
+    },
+    "papers": [
+      {
+        "paper_id": "future-learnability-preserving-self-evolution",
+        "source": "research_pipeline/p0_pf1_future_learnability_config.json",
+        "status": "PLANNED_VISUAL_EVIDENCE_READY",
+        "paper_archetype": "method",
+        "planned_visualizations": 4,
+        "planned_main_visualizations": 4,
+        "main_visual_roles": [
+          "ablation",
+          "failure",
+          "main_comparison",
+          "mechanism",
+          "sensitivity",
+          "uncertainty"
+        ],
+        "reviewer_questions": [
+          "Does the full method beat the strongest same-information baseline, and is the gap larger than its uncertainty?",
+          "Which novelty-carrying component is actually necessary?",
+          "Why and where does the mechanism help, tie, fail, or become non-identifiable?",
+          "Does the conclusion survive the preregistered task, seed, threshold, and support perturbations?"
+        ],
+        "scientific_authority": false,
+        "authority": {
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false
+        }
+      },
+      {
+        "paper_id": "cross-surface-repair-routing",
+        "source": "research_pipeline/p0_pf2_cross_surface_config.json",
+        "status": "PLANNED_VISUAL_EVIDENCE_READY",
+        "paper_archetype": "method",
+        "planned_visualizations": 4,
+        "planned_main_visualizations": 4,
+        "main_visual_roles": [
+          "ablation",
+          "failure",
+          "main_comparison",
+          "mechanism",
+          "sensitivity",
+          "uncertainty"
+        ],
+        "reviewer_questions": [
+          "Does the full method beat the strongest same-information baseline, and is the gap larger than its uncertainty?",
+          "Which novelty-carrying component is actually necessary?",
+          "Why and where does the mechanism help, tie, fail, or become non-identifiable?",
+          "Does the conclusion survive the preregistered task, seed, threshold, and support perturbations?"
+        ],
+        "scientific_authority": false,
+        "authority": {
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false
+        }
+      },
+      {
+        "paper_id": "diagnosability-preserving-self-evolution",
+        "source": "research_pipeline/p0_pf4_diagnosability_config.json",
+        "status": "PLANNED_VISUAL_EVIDENCE_READY",
+        "paper_archetype": "method",
+        "planned_visualizations": 4,
+        "planned_main_visualizations": 4,
+        "main_visual_roles": [
+          "ablation",
+          "failure",
+          "main_comparison",
+          "mechanism",
+          "sensitivity",
+          "uncertainty"
+        ],
+        "reviewer_questions": [
+          "Does the full method beat the strongest same-information baseline, and is the gap larger than its uncertainty?",
+          "Which novelty-carrying component is actually necessary?",
+          "Why and where does the mechanism help, tie, fail, or become non-identifiable?",
+          "Does the conclusion survive the preregistered task, seed, threshold, and support perturbations?"
+        ],
+        "scientific_authority": false,
+        "authority": {
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false
+        }
+      },
+      {
+        "paper_id": "failure-mode-transport-under-self-evolution",
+        "source": "research_pipeline/p0_pf6_failure_transport_config.json",
+        "status": "PLANNED_VISUAL_EVIDENCE_READY",
+        "paper_archetype": "method",
+        "planned_visualizations": 4,
+        "planned_main_visualizations": 4,
+        "main_visual_roles": [
+          "ablation",
+          "failure",
+          "main_comparison",
+          "mechanism",
+          "sensitivity",
+          "uncertainty"
+        ],
+        "reviewer_questions": [
+          "Does the full method beat the strongest same-information baseline, and is the gap larger than its uncertainty?",
+          "Which novelty-carrying component is actually necessary?",
+          "Why and where does the mechanism help, tie, fail, or become non-identifiable?",
+          "Does the conclusion survive the preregistered task, seed, threshold, and support perturbations?"
+        ],
+        "scientific_authority": false,
+        "authority": {
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false
+        }
+      },
+      {
+        "paper_id": "STRI",
+        "source": "generated/asset-first-stri-paper-quality-v2-20260816.json",
+        "status": "COMPLETED_VISUAL_EVIDENCE_PASS",
+        "paper_archetype": "theory_certificate",
+        "planned_visualizations": 4,
+        "planned_main_visualizations": 4,
+        "completed_main_visualizations": 4,
+        "main_visual_roles": [
+          "ablation",
+          "boundary",
+          "failure",
+          "main_comparison",
+          "mechanism",
+          "overview",
+          "sensitivity",
+          "traceability",
+          "uncertainty"
+        ],
+        "reviewer_questions": [
+          "What representation nuisance is STRI auditing, and how does package identity alter a semantic control surface?",
+          "Why does irreducible partial overlap force a factor-2 exposure distortion?",
+          "Is overlap prevalence itself the mechanism, or does exact support geometry separate positive and negative regimes?",
+          "Does the diagnosis survive representation edits and subset perturbations, and where is the closed-form witness not applicable?"
+        ],
+        "source_bound": true,
+        "scientific_authority": false,
+        "authority": {
+          "method": false,
+          "experiment": false,
+          "p0": false,
+          "gpu": false
+        }
+      }
+    ],
+    "policy": {
+      "schema_version": "1.0",
+      "visual_portfolio_is_design_and_manuscript_state_only": true,
+      "visual_portfolio_has_zero_scientific_authority": true,
+      "visual_plan_cannot_authorize_experiment_p0_or_gpu": true,
+      "main_visuals_are_reviewer_question_driven_not_decorative": true,
+      "visual_completion_requires_data_script_figure_caption_binding": true
+    },
+    "scientific_authority": false,
+    "authority": {
+      "paper_design": false,
       "method": false,
       "experiment": false,
       "p0": false,

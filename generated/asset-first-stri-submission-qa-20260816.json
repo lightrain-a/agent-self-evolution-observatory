@@ -3,8 +3,8 @@
   "paper_id": "STRI",
   "stage": "NARROW_SUBMISSION_BODY_QA",
   "status": "PASS",
-  "checks_passed": 59,
-  "checks_total": 59,
+  "checks_passed": 60,
+  "checks_total": 60,
   "latex": {
     "generic_compile": "PASS",
     "pages_with_references": 9,
@@ -26,12 +26,37 @@
     "overlap_always_harmful_claim_absent": true
   },
   "core_numeric_bindings": {
-    "level1_full": {"covered": 314, "multi": 183, "R_star": 2.0},
-    "calibration": {"covered": 47, "multi": 33, "R_star": 2.0},
-    "tool_disjoint_heldout": {"covered": 52, "multi": 38, "R_star": 2.0},
-    "level3_negative": {"covered": 34, "multi": 0, "R_star": 1.0},
-    "logical_high_overlap_negative": {"covered": 128, "multi": 127, "R_star": 1.0},
-    "qwen_p0a_contract_valid": {"skill_003": 14, "skill_004": 5, "skill_015": 8, "required_per_source": 16}
+    "level1_full": {
+      "covered": 314,
+      "multi": 183,
+      "R_star": 2.0
+    },
+    "calibration": {
+      "covered": 47,
+      "multi": 33,
+      "R_star": 2.0
+    },
+    "tool_disjoint_heldout": {
+      "covered": 52,
+      "multi": 38,
+      "R_star": 2.0
+    },
+    "level3_negative": {
+      "covered": 34,
+      "multi": 0,
+      "R_star": 1.0
+    },
+    "logical_high_overlap_negative": {
+      "covered": 128,
+      "multi": 127,
+      "R_star": 1.0
+    },
+    "qwen_p0a_contract_valid": {
+      "skill_003": 14,
+      "skill_004": 5,
+      "skill_015": 8,
+      "required_per_source": 16
+    }
   },
   "bibliography": {
     "ledger": "paper_drafts/stri-20260816-sources.json",
@@ -42,7 +67,8 @@
   "figures": {
     "overview_pdf_sha256": "dcb62917f4394ecc5e486220d9d411d0afc9028f8f11525831efb4c3b41aebf9",
     "rstar_boundary_pdf_sha256": "70225e96d5c2c2a56fafbcf4d713415537e9ee8b93987cabfa4cb8812fa9ac02",
-    "factor2_witnesses_pdf_sha256": "ed10fb150579d42027e6bb24a773d3a17bd6fa2cadc845099f54d7772bb1506d"
+    "factor2_witnesses_pdf_sha256": "ed10fb150579d42027e6bb24a773d3a17bd6fa2cadc845099f54d7772bb1506d",
+    "ablation_robustness_pdf_sha256": "fa47cec4d82263f8b5976b2d73d05950c2129e94c34bb7096a3bdb7bcbd05542"
   },
   "independent_review_state": {
     "final_premortem": "READY_NARROW_ICLR",
@@ -56,5 +82,19 @@
     "sqc_method_success": false,
     "full_experiment": false,
     "gpu": false
+  },
+  "visual_evidence": {
+    "main_figures": 4,
+    "roles": [
+      "overview",
+      "mechanism",
+      "boundary",
+      "ablation",
+      "failure",
+      "sensitivity",
+      "uncertainty"
+    ],
+    "paper_quality_schema": "2.1",
+    "source_bound": true
   }
 }

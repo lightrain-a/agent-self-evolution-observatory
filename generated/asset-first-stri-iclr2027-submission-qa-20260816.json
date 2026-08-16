@@ -19,8 +19,8 @@
   "overfull_boxes": 0,
   "official_style_zip_sha256": "0d940dfa9398ae99a18f24a85a8a683f367204b6af6d17d2899e60a67102529e",
   "source_sha256": "3fc6a59c822bede7c6952f6b625c24dc03e3731476a8dcc707cb56c5d49690f8",
-  "body_sha256": "eafef092ccc86a8c84b26a5ad2d21a7b24f931b684caa35904cf567a96c46ced",
-  "tables_sha256": "7747c8595d7575909ca68f9083437f14c0fba8a4654a4a839f16b878a6195fad",
+  "body_sha256": "c41d55b5949681b270371739f9a13dc569a7d9441c907e8508da007d06608e2f",
+  "tables_sha256": "652f2d0f79a40624449042f64ae087b6a7fdbc0b41ae2fc0a18ac8879fe3d62a",
   "bibliography_sha256": "ef9594dc2679bc0bc60bdf6367345082cf00872bc221658770292ce5a7642eef",
   "scientific_claim_scope": [
     "N1 released control-plane representation sensitivity",
@@ -40,5 +40,10 @@
     "dynamic_claim": false,
     "full_experiment": false,
     "gpu": false
+  },
+  "visual_evidence": {
+    "main_figures": 4,
+    "ablation_robustness_sha256": "fa47cec4d82263f8b5976b2d73d05950c2129e94c34bb7096a3bdb7bcbd05542",
+    "paper_quality_schema": "2.1"
   }
 }

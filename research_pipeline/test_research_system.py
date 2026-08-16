@@ -456,6 +456,8 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_v2_passed"),1)
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_source_binding"),1)
         self.assertEqual((stri.get("summary") or {}).get("paper_quality_evidence_debt"),0)
+        self.assertEqual((stri.get("summary") or {}).get("paper_quality_main_visualizations"),4)
+        self.assertIn("failure", (stri.get("summary") or {}).get("paper_quality_main_visual_roles") or [])
         self.assertEqual((stri.get("summary") or {}).get("canonical_problem_gate_pass_added"),0)
         self.assertFalse(stri["scientific_authority"])
         self.assertTrue(all(value is False for value in (stri.get("authority") or {}).values()))
@@ -471,6 +473,19 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["asset_first_stri_canonical_problem_gate_added"],0)
         broken=copy.deepcopy(self.state);broken["asset_first_stri_paper_ready"]["summary"]["canonical_problem_gate_pass_added"]=1
         self.assertTrue(any("asset-first stri" in error.lower() for error in validate_state(broken)))
+
+
+    def test_paper_visual_evidence_portfolio_is_zero_authority_and_complete(self) -> None:
+        visual=self.state["paper_visual_evidence"]
+        summary=visual["summary"]
+        self.assertEqual(visual["status"],"VISUAL_EVIDENCE_PORTFOLIO_READY")
+        self.assertEqual(summary["paper_first_designs"],4)
+        self.assertEqual(summary["planned_main_visualizations"],16)
+        self.assertEqual(summary["planned_main_visualizations_per_paper_min"],4)
+        self.assertEqual(summary["stri_completed_main_visualizations"],4)
+        self.assertEqual(summary["repair_required"],0)
+        self.assertFalse(visual["scientific_authority"])
+        self.assertTrue(all(value is False for value in visual["authority"].values()))
 
     def test_live_problem_discovery_rejects_shadow_portfolio_authority_leak(self) -> None:
         broken=copy.deepcopy(self.state)

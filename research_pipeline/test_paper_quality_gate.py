@@ -9,7 +9,7 @@ from .paper_quality_gate import audit_manuscript_evidence_completion, audit_pape
 
 def method_quality() -> dict:
     return {
-        "schema_version": "2.0",
+        "schema_version": "2.1",
         "paper_archetype": "method",
         "claims": [{
             "id": "C1",
@@ -22,6 +22,7 @@ def method_quality() -> dict:
             "ablation_ids": ["A1"],
             "analysis_ids": ["M1", "R1", "F1", "S1", "U1"],
             "output_ids": ["O1", "O2", "O3", "O4", "O5"],
+            "visualization_ids": ["V1", "V2", "V3", "V4"],
         }],
         "baselines": [{
             "id": "B1",
@@ -51,6 +52,12 @@ def method_quality() -> dict:
             {"id": "O3", "output_type": "mechanism", "purpose": "Mechanism analysis."},
             {"id": "O4", "output_type": "failure", "purpose": "Failure analysis."},
             {"id": "O5", "output_type": "sensitivity", "purpose": "Sensitivity analysis."},
+        ],
+        "visualizations": [
+            {"id": "V1", "placement": "main", "visual_type": "multi_panel", "panel_roles": ["main_comparison", "uncertainty"], "target_claim_ids": ["C1"], "source_evidence_ids": ["B1", "U1", "O1"], "reviewer_question": "Does the method beat the strongest matched baseline under uncertainty?", "takeaway": "The comparison is visible with uncertainty rather than point estimates alone.", "quantitative": True, "uncertainty_required": True, "negative_or_failure_visible": False},
+            {"id": "V2", "placement": "main", "visual_type": "bar", "panel_roles": ["ablation"], "target_claim_ids": ["C1"], "source_evidence_ids": ["A1", "O2"], "reviewer_question": "Which component carries the claimed gain?", "takeaway": "Removing the novelty-carrying component changes the registered metric.", "quantitative": True, "uncertainty_required": False, "negative_or_failure_visible": False},
+            {"id": "V3", "placement": "main", "visual_type": "multi_panel", "panel_roles": ["mechanism", "failure"], "target_claim_ids": ["C1"], "source_evidence_ids": ["M1", "F1", "O3", "O4"], "reviewer_question": "Why and where does the mechanism work or fail?", "takeaway": "Mechanism-predicted disagreement and failure strata are exposed together.", "quantitative": True, "uncertainty_required": False, "negative_or_failure_visible": True},
+            {"id": "V4", "placement": "main", "visual_type": "distribution", "panel_roles": ["sensitivity"], "target_claim_ids": ["C1"], "source_evidence_ids": ["S1", "O5"], "reviewer_question": "Does the conclusion survive registered perturbations?", "takeaway": "The conclusion is shown across the sensitivity family.", "quantitative": True, "uncertainty_required": False, "negative_or_failure_visible": False},
         ],
     }
 
@@ -146,9 +153,41 @@ class PaperQualityGateTest(unittest.TestCase):
         evidence = []
         for row in quality["baselines"] + quality["ablations"] + quality["analyses"] + quality["planned_outputs"]:
             evidence.append({"id": row["id"], "status": "PASS", "artifact_refs": [f"generated/{row['id']}.json"]})
-        completion = {"evidence": evidence, "claims": {"C1": {"status": "SUPPORTED", "evidence_ids": [row["id"] for row in evidence]}}}
+        visualizations = []
+        for row in quality["visualizations"]:
+            review = {
+                "caption_claim_aligned": True,
+                "legible_labels": True,
+                "legend_or_direct_labels": True,
+                "non_deceptive_scale": True,
+                "source_data_versioned": True,
+            }
+            if row["uncertainty_required"]:
+                review["uncertainty_visible"] = True
+            if row["negative_or_failure_visible"]:
+                review["negative_or_failure_visible"] = True
+            visualizations.append({"id": row["id"], "status": "PASS", "artifact_refs": [f"paper/{row['id']}.pdf"], "data_refs": [f"generated/{row['id']}.json"], "script_refs": [f"paper/{row['id']}.py"], "caption_ref": f"fig:{row['id']}", "visual_review": review})
+        completion = {"evidence": evidence, "visualizations": visualizations, "claims": {"C1": {"status": "SUPPORTED", "evidence_ids": [row["id"] for row in evidence]}}}
         passed = audit_manuscript_evidence_completion(quality, completion, method_components=2)
         self.assertTrue(passed["passed"], passed["blockers"])
+
+    def test_missing_visual_reviewer_question_blocks(self) -> None:
+        quality = method_quality()
+        quality["visualizations"][0]["reviewer_question"] = ""
+        audit = audit_paper_evidence_plan(quality, method_components=2)
+        self.assertFalse(audit["passed"])
+        self.assertIn("paper-quality-visual-question-or-takeaway-missing:V1", audit["blockers"])
+
+    def test_visual_completion_requires_data_script_caption_and_review(self) -> None:
+        quality = method_quality()
+        evidence = [{"id": row["id"], "status": "PASS", "artifact_refs": [f"generated/{row['id']}.json"]} for row in quality["baselines"] + quality["ablations"] + quality["analyses"] + quality["planned_outputs"]]
+        visualizations = [{"id": row["id"], "status": "PASS", "artifact_refs": [f"paper/{row['id']}.pdf"]} for row in quality["visualizations"]]
+        completion = {"evidence": evidence, "visualizations": visualizations, "claims": {"C1": {"status": "SUPPORTED", "evidence_ids": [row["id"] for row in evidence]}}}
+        audit = audit_manuscript_evidence_completion(quality, completion, method_components=2)
+        self.assertFalse(audit["passed"])
+        self.assertIn("paper-quality-visual-script-missing:V1", audit["blockers"])
+        self.assertIn("paper-quality-visual-data-binding-missing:V1", audit["blockers"])
+        self.assertIn("paper-quality-visual-caption-binding-missing:V1", audit["blockers"])
 
 
 if __name__ == "__main__":

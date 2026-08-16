@@ -36,6 +36,7 @@ from .methodology_controls import build_methodology_controls_state
 from .pilot_registry import build_pilot_registry
 from .p0_mem_xfer_offline_analysis import build_mem_xfer_workflow_state
 from .paper_design_contract import build_paper_first_workflow_state
+from .paper_visual_evidence import build_paper_visual_evidence_portfolio
 from .paper_first_design_adjudication import build_paper_first_design_adjudication, write_paper_first_design_adjudication
 from .paper_first_pf1_problem_adjudication import build_pf1_problem_adjudication, write_pf1_problem_adjudication
 from .paper_first_pf2_method_adjudication import build_pf2_method_adjudication, write_pf2_method_adjudication
@@ -167,6 +168,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     pre_p0 = state["pre_p0_identifiability"]["summary"]
     pre_experiment = state["pre_experiment_compiler"]["summary"]
     paper_first = state["paper_first_workflow"]["summary"]
+    visual_evidence = state["paper_visual_evidence"]["summary"]
     paper_post_c2 = state["paper_first_post_c2"]
     principle = state["principle_layer"]["summary"]
     meta_trace = state["scientific_meta_trace"]["summary"]
@@ -198,7 +200,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"ResearchAgent / MOOSE-Chem / Co-Scientist / HypoRefine / Virtual Scientists / autoresearch", "component":{"en":"Constrained composition and conditional revival","zh":"受约束组合与条件复活"}, "status":"running", "evidence":{"en":f"{v4['raw_candidates']} v4 candidates / {v4['tournament_finalists']} finalists / {v4['external_reviewed']} reviewed","zh":f"{v4['raw_candidates']} 个 v4 候选 / {v4['tournament_finalists']} 个 finalists / {v4['external_reviewed']} 个已复核"}},
         {"source":"HypoRefine / IdeaForge / ScholarEval / InnoEval / SciAtlas / InternAgent / AutoScientists", "component":{"en":"Wide-search simplification-challenge ideation","zh":"宽搜索与简化挑战式 Idea 发现"}, "status":"running", "evidence":{"en":f"{v5['raw_candidates']} v5 candidates / {v5['external_reviewed']} R2 reviewed / {v5['external_pass']} PASS","zh":f"{v5['raw_candidates']} 个 v5 候选 / {v5['external_reviewed']} 个 R2 已审 / {v5['external_pass']} 个 PASS"}},
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent", "component":{"en":"Pre-P0 identifiability auditor","zh":"Pre-P0 实验可识别性审计"}, "status":"running", "evidence":{"en":f"{pre_p0['execution_ready']}/{pre_p0['audited']} retrospective contracts execution-ready","zh":f"当前 {pre_p0['execution_ready']}/{pre_p0['audited']} 份 retrospective 合同允许启动"}},
-        {"source":"Advisor paper-first research contract", "component":{"en":"Paper novelty → method → experiment blueprint contract","zh":"论文 Novelty → 方法 → 实验蓝图合同"}, "status":"running", "evidence":{"en":f"{paper_first['paper_design_passed']}/{paper_first['cards']} current cards satisfy the paper-first contract / post-C2: {paper_post_c2['decision']} / C3 locked={paper_post_c2['authority']['C3_locked']}","zh":f"当前 {paper_first['paper_design_passed']}/{paper_first['cards']} 份卡满足 paper-first 合同 / post-C2：{paper_post_c2['decision']} / C3 锁定={paper_post_c2['authority']['C3_locked']}"}},
+        {"source":"Advisor paper-first research contract", "component":{"en":"Paper novelty → method → experiment blueprint contract","zh":"论文 Novelty → 方法 → 实验蓝图合同"}, "status":"running", "evidence":{"en":f"{paper_first['paper_design_passed']}/{paper_first['cards']} live cards satisfy paper-first / visual portfolio {visual_evidence['planned_main_visualizations']} planned across {visual_evidence['paper_first_designs']} paper-first designs + {visual_evidence['stri_completed_main_visualizations']} STRI completed / post-C2: {paper_post_c2['decision']}","zh":f"当前 {paper_first['paper_design_passed']}/{paper_first['cards']} 份 live 卡满足 paper-first / 可视化组合：{visual_evidence['paper_first_designs']} 个 paper-first 设计共规划 {visual_evidence['planned_main_visualizations']} 张主图 + STRI 已完成 {visual_evidence['stri_completed_main_visualizations']} 张 / post-C2：{paper_post_c2['decision']}"}},
         {"source":"FirstResearch / Popper / Co-Scientist / RD-Agent", "component":{"en":"Principle Certificate + epistemic adjudicator","zh":"原理证书 + 认识论裁决器"}, "status":"running", "evidence":{"en":f"{principle['certificates_passed']}/{principle['cards']} principle certificates valid / {principle.get('registered_prediction_rejections_pending_counterexplanation',0)} prediction rejections awaiting counter-explanation / {principle.get('principle_dead_end_certifications',0)} certified principle dead ends","zh":f"{principle['certificates_passed']}/{principle['cards']} 份原理证书有效 / {principle.get('registered_prediction_rejections_pending_counterexplanation',0)} 个预测反证待反机制解释 / {principle.get('principle_dead_end_certifications',0)} 个原理级 Dead-End 已认证"}},
         {"source":"Qiushi / Kosmos / MLEvolve", "component":{"en":"Scientific Meta-Trace + cross-branch world state","zh":"Scientific Meta-Trace + 跨分支科研状态"}, "status":"running", "evidence":{"en":f"{meta_trace['principles']} principles / {meta_trace['unresolved_principles']} unresolved / {meta_trace['cross_branch_reference_edges']} cross-branch links","zh":f"{meta_trace['principles']} 个原理 / {meta_trace['unresolved_principles']} 个未决 / {meta_trace['cross_branch_reference_edges']} 条跨分支引用"}},
         {"source":"MLEvolve / InternAgent / AutoResearchClaw", "component":{"en":"Failure Asset + dead-end memory","zh":"失败资产 + Dead-End 记忆库"}, "status":"running", "evidence":{"en":f"{failure_assets['assets']} failure assets / {failure_assets['unique_signatures']} reusable signatures / {failure_assets.get('experimental_stops_not_dead_ends',0)} experimental stops retained as diagnostics / {failure_assets.get('principle_dead_ends',0)} principle-certified dead ends","zh":f"{failure_assets['assets']} 条失败资产 / {failure_assets['unique_signatures']} 类可复用签名 / {failure_assets.get('experimental_stops_not_dead_ends',0)} 个实验 STOP 仅作诊断 / {failure_assets.get('principle_dead_ends',0)} 个原理认证 Dead-End"}},
@@ -345,6 +347,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_problem_search_portfolio = _load_shadow_search_portfolio_public()
     paper_first_evidence_migration = load_public_migration()
     asset_first_stri_paper_ready = build_asset_first_stri_public_status()
+    paper_visual_evidence = build_paper_visual_evidence_portfolio()
     paper_first_shadow_search_admission = public_shadow_search_admission_summary(build_shadow_search_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,queue_state=paper_first_problem_gate_queue,shadow_state=paper_first_problem_search_portfolio))
     paper_first_shadow_continuation_frontier = build_shadow_continuation_frontier(admission=paper_first_shadow_search_admission,support_watch=paper_first_support_release_watch,asset_queue=paper_first_support_asset_recheck,support_handoff=paper_first_support_asset_recheck_handoff)
     paper_first_discovery_frontier = build_paper_first_discovery_frontier(
@@ -468,6 +471,10 @@ def build_research_system_state() -> dict[str, Any]:
             "pre_experiment_cards":pre_experiment_compiler["summary"]["compiled_cards"],
             "paper_design_contract_passed":paper_first_workflow["summary"]["paper_design_passed"],
             "paper_design_contract_blocked":paper_first_workflow["summary"]["paper_design_blocked"],
+            "paper_visual_evidence_status":paper_visual_evidence.get("status"),
+            "paper_visual_evidence_designs":int((paper_visual_evidence.get("summary") or {}).get("paper_first_designs") or 0),
+            "paper_visual_evidence_planned_main":int((paper_visual_evidence.get("summary") or {}).get("planned_main_visualizations") or 0),
+            "paper_visual_evidence_stri_completed_main":int((paper_visual_evidence.get("summary") or {}).get("stri_completed_main_visualizations") or 0),
             "paper_first_design_reviewed":paper_first_design["summary"]["reviewed"],
             "paper_first_design_advance_method":paper_first_design["summary"]["advance_to_method_design"],
             "paper_first_design_revise_problem":paper_first_design["summary"]["revise_paper_problem"],
@@ -639,6 +646,7 @@ def build_research_system_state() -> dict[str, Any]:
             "asset_first_stri_paper_quality_v2_passed":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_quality_v2_passed") or 0),
             "asset_first_stri_paper_quality_source_binding":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_quality_source_binding") or 0),
             "asset_first_stri_paper_quality_evidence_debt":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_quality_evidence_debt") or 0),
+            "asset_first_stri_main_visualizations":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_quality_main_visualizations") or 0),
             "asset_first_stri_canonical_problem_gate_added":int((asset_first_stri_paper_ready.get("summary") or {}).get("canonical_problem_gate_pass_added") or 0),
             "paper_first_evidence_migration_pending":int((paper_first_evidence_migration.get("summary") or {}).get("current_reduction_pending") or 0),
             "paper_first_evidence_migration_design_pending":int((paper_first_evidence_migration.get("summary") or {}).get("evidence_design_pending") or 0),
@@ -828,6 +836,7 @@ def build_research_system_state() -> dict[str, Any]:
         "pre_gpu_candidate_gates":pre_gpu_candidate_gates,
         "pre_experiment_compiler":pre_experiment_compiler,
         "paper_first_workflow":paper_first_workflow,
+        "paper_visual_evidence":paper_visual_evidence,
         "paper_first_design_adjudication":paper_first_design,
         "paper_first_pf1_problem_adjudication":paper_first_pf1_problem,
         "paper_first_pf2_method_adjudication":paper_first_pf2_method,
@@ -1232,6 +1241,10 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["paper_first_workflow"]["policy"]["method_design_precedes_experiment_blueprint"]: errors.append("method design must precede experiment blueprint")
     if not state["paper_first_workflow"]["policy"]["local_validation_is_for_falsification_not_method_discovery"]: errors.append("local validation must not discover or redefine the core method")
     if not state["paper_first_workflow"]["policy"]["full_experiment_requires_frozen_method_and_blueprint"]: errors.append("full experiments require frozen method and experiment blueprint")
+    visual_portfolio=state.get("paper_visual_evidence") or {};visual_policy=visual_portfolio.get("policy") or {};visual_summary=visual_portfolio.get("summary") or {}
+    if visual_portfolio.get("scientific_authority") is not False or any((visual_portfolio.get("authority") or {}).values()): errors.append("paper visual evidence portfolio must remain zero-authority")
+    if visual_policy.get("main_visuals_are_reviewer_question_driven_not_decorative") is not True or visual_policy.get("visual_completion_requires_data_script_figure_caption_binding") is not True: errors.append("paper visual evidence portfolio policy missing")
+    if int(visual_summary.get("paper_first_designs") or 0)!=4 or int(visual_summary.get("planned_main_visualizations") or 0)!=16 or int(visual_summary.get("stri_completed_main_visualizations") or 0)!=4 or int(visual_summary.get("repair_required") or 0)!=0: errors.append("paper visual evidence portfolio accounting mismatch")
     design = state.get("paper_first_design_adjudication") or {}; design_summary = design.get("summary") or {}; design_policy = design.get("policy") or {}
     if (design_summary.get("reviewed"), design_summary.get("advance_to_method_design"), design_summary.get("revise_paper_problem"), design_summary.get("merge_as_cross_cutting_invariant"), design_summary.get("stop_standalone_merge_risk_axis")) != (4,1,1,1,1): errors.append("paper-first design adjudication must conservatively route PF-1/PF-2/PF-4/PF-6 as 1 method / 1 revise / 1 merge / 1 stop")
     if design_policy.get("local_validation_authorized") is not False or design_policy.get("p0_authorized") is not False or design_policy.get("premature_f0_cannot_support_problem_or_method_selection") is not True: errors.append("paper-first design adjudication must remain outside P0/local-validation authority and ignore premature F0 as scientific evidence")

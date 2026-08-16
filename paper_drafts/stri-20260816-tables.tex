@@ -54,25 +54,3 @@ Logical compiler validation & 128 & 127 & 99.2\% & 1.0 & Equalizable \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-\begin{table}[t]
-\centering
-\caption{Explicit representation ablations and robustness checks on the frozen Level-1 support matrix. The base has two closed-form factor-2 witnesses. Raw clone/split syntax can erase those witnesses, while exact-support quotienting recovers the original support rows and both witnesses exactly.}
-\label{tab:ablation-robustness}
-\small
-\setlength{\tabcolsep}{3.2pt}
-\begin{tabular}{p{0.30\linewidth}rrp{0.36\linewidth}}
-\toprule
-Intervention / check & Raw witness & Quotient witness & Result \\
-\midrule
-Exact clone of skill\_003 & 1 & 2 & Exact row support recovered \\
-Exact clone of skill\_004 & 1 & 2 & Exact row support recovered \\
-Exact clone of skill\_015 & 0 & 2 & Exact row support recovered \\
-Exact split, every active package & 0--2 & 2 & 6/6 split controls recover base \\
-Identity renaming, every package & 2 & 2 & Numerically invariant \\
-Leave one Level-1 tool out & -- & -- & 49/49 retain both witnesses \\
-Leave one Level-1 row out & -- & -- & 399/399 retain both witnesses \\
-Tool bootstrap (500, fixed seed) & -- & -- & 97.2\% retain both; 100\% retain $\ge1$ \\
-\bottomrule
-\end{tabular}
-\end{table}

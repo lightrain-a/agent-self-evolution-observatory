@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-08-16 · Visual Evidence Contract v2.1
+
+- Benchmarked paper-evidence presentation patterns from The AI Scientist / AI Scientist-v2, PaperVizAgent, Agent Laboratory, ERA / AI co-scientist / Kosmos, and Science One, then compiled the reusable parts into Paper Evidence Quality v2.1 rather than treating them as manuscript-style advice.
+- Added a fail-closed Visual Evidence Contract: every planned figure now declares a reviewer question, takeaway, target claims, source evidence IDs, visual type/role, main-vs-appendix placement, uncertainty requirement, and whether negative/failure evidence must be visible. Manuscript completion requires versioned data, generation script, rendered artifact, caption binding, and figure QA for labels, scales, source data, uncertainty, and failure visibility.
+- Added archetype-specific visual portfolios. Method papers require main comparison + ablation + mechanism + failure + sensitivity views; system papers additionally require scaling/progression and recommend human-evaluation visuals; theory/certificate papers require boundary + mechanism + failure + sensitivity. Multi-panel figures may satisfy several roles only when they answer one explicit reviewer question.
+- Upgraded all four current paper-first P0 design contracts to v2.1 with four reviewer-question-driven main visuals each, and added a zero-authority `Paper Visual Evidence Portfolio` exposing 16 planned main visuals across those four designs plus four completed STRI main figures.
+- Replaced STRI's former representation-ablation table with a compact three-panel result figure: clone/split raw-representation distortion versus exact quotient recovery; 49/49 leave-one-tool, 399/399 leave-one-row, and 500-resample witness robustness; and the 49-tool failure/boundary taxonomy. The richer visual evidence still fits the official 9/9-page ICLR main-text limit.
+- Rebuilt the paper/supplement chain: narrow manuscript QA is now 60/60, official ICLR QA remains 50/50 with 9/9 main pages, anonymous supplement reproduction is 13/13 tests with all four figures reproducible, and the post-visualization independent final review remains `READY_TO_SUBMIT` with zero required revisions.
+
 ## 2026-08-16 · Paper Evidence Quality v2 and STRI fail-closed reclassification
 
 - Added `paper_quality_gate.py` so Paper Design validates scientific evidence structure rather than merely checking that baseline/ablation fields are nonempty.

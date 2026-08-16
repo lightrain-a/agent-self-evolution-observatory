@@ -84,7 +84,7 @@ def _paper_design(idea_id: str, spec: dict[str, Any]) -> dict[str, Any]:
     }[idea_id]
     baseline_label = str(spec["baseline"]).rstrip(". ")
     quality = {
-        "schema_version": "2.0",
+        "schema_version": "2.1",
         "paper_archetype": "method",
         "claims": [{
             "id": "C1",
@@ -103,6 +103,7 @@ def _paper_design(idea_id: str, spec: dict[str, Any]) -> dict[str, Any]:
             "ablation_ids": ["A-CORE", "A-AGGREGATE"],
             "analysis_ids": ["AN-MECHANISM", "AN-RULEOUT", "AN-FAILURE", "AN-SENSITIVITY", "AN-UNCERTAINTY"],
             "output_ids": ["O-MAIN", "O-ABLATION", "O-MECHANISM", "O-FAILURE", "O-SENSITIVITY"],
+            "visualization_ids": ["V-MAIN", "V-ABLATION", "V-MECHANISM-FAILURE", "V-SENSITIVITY"],
         }],
         "baselines": [
             {"id": "B-STRONGEST", "role": "same_information_simplification", "evidence_type": "empirical", "target_claim_ids": ["C1"], "purpose": f"Test whether the proposed mechanism leaves residual value beyond {baseline_label}.", "matched_dimensions": ["tasks", "candidate interventions", "observable information", "model checkpoint", "inference budget", "environment interaction budget"]},
@@ -126,6 +127,12 @@ def _paper_design(idea_id: str, spec: dict[str, Any]) -> dict[str, Any]:
             {"id": "O-MECHANISM", "output_type": "mechanism", "purpose": "Why/where it works: disagreement-stratified mechanism figure or table."},
             {"id": "O-FAILURE", "output_type": "failure", "purpose": "Failure taxonomy and negative/inconclusive regimes."},
             {"id": "O-SENSITIVITY", "output_type": "sensitivity", "purpose": "Robustness/sensitivity evidence across preregistered perturbations."},
+        ],
+        "visualizations": [
+            {"id": "V-MAIN", "placement": "main", "visual_type": "multi_panel", "panel_roles": ["main_comparison", "uncertainty"], "target_claim_ids": ["C1"], "source_evidence_ids": ["B-STRONGEST", "B-AGGREGATE", "B-SHALLOW", "AN-UNCERTAINTY", "O-MAIN"], "reviewer_question": "Does the full method beat the strongest same-information baseline, and is the gap larger than its uncertainty?", "takeaway": "Show matched baselines, primary effect, uncertainty, and cost in one comparison rather than a bare headline number.", "quantitative": True, "uncertainty_required": True, "negative_or_failure_visible": False},
+            {"id": "V-ABLATION", "placement": "main", "visual_type": "bar", "panel_roles": ["ablation"], "target_claim_ids": ["C1"], "source_evidence_ids": ["A-CORE", "A-AGGREGATE", "O-ABLATION"], "reviewer_question": "Which novelty-carrying component is actually necessary?", "takeaway": "Expose the marginal contribution of the core mechanism and the aggregate-proxy replacement under matched information and compute.", "quantitative": True, "uncertainty_required": False, "negative_or_failure_visible": False},
+            {"id": "V-MECHANISM-FAILURE", "placement": "main", "visual_type": "multi_panel", "panel_roles": ["mechanism", "failure"], "target_claim_ids": ["C1"], "source_evidence_ids": ["AN-MECHANISM", "AN-RULEOUT", "AN-FAILURE", "O-MECHANISM", "O-FAILURE"], "reviewer_question": "Why and where does the mechanism help, tie, fail, or become non-identifiable?", "takeaway": "Place mechanism-predicted disagreement strata beside failure and inconclusive regimes so aggregate gains cannot hide the boundary.", "quantitative": True, "uncertainty_required": False, "negative_or_failure_visible": True},
+            {"id": "V-SENSITIVITY", "placement": "main", "visual_type": "distribution", "panel_roles": ["sensitivity"], "target_claim_ids": ["C1"], "source_evidence_ids": ["AN-SENSITIVITY", "O-SENSITIVITY"], "reviewer_question": "Does the conclusion survive the preregistered task, seed, threshold, and support perturbations?", "takeaway": "Show the stable region and any boundary where the paper claim must narrow.", "quantitative": True, "uncertainty_required": False, "negative_or_failure_visible": False},
         ],
     }
     return {
