@@ -3,7 +3,7 @@
   "paper_id": "STRI",
   "date": "2026-08-16",
   "source_review": "generated/asset-first-stri-narrow-final-review-20260816.json",
-  "status": "READY_FOR_FULL_BODY_WRITING_FIGURE_RENDERING_PENDING",
+  "status": "FULL_BODY_WRITTEN_FIGURES_RENDERED_SUBMISSION_QA_PASS",
   "reviewer_required_revisions": [
     {
       "revision": "Complete the proof of the global-singleton overlap lower bound.",
@@ -22,8 +22,8 @@
     },
     {
       "revision": "Complete final figure and table polish.",
-      "status": "PARTIAL",
-      "evidence": "Tables 1-3 and the dynamic P0 appendix table are now directly typeset in the draft from generated/asset-first-stri-narrow-paper-table-data-20260816.json; Figures 1-3 have frozen content specifications but final rendering remains."
+      "status": "DONE",
+      "evidence": "paper_drafts/stri-20260816-tables.tex typesets the released-system, reduction, support-boundary, and transparent P0-A qualification tables from generated/asset-first-stri-narrow-paper-table-data-20260816.json. Figures 1-3 are rendered as reproducible vector PDFs under paper_drafts/figures/: stri-overview.pdf, stri-factor2-witnesses.pdf, and stri-rstar-boundary.pdf; the template-independent LaTeX body compiles with all three figures and 11 resolved bibliography entries."
     }
   ],
   "scientific_closure": {
@@ -38,6 +38,6 @@
     "residual": "R*=2.0 on the positive released Level-1 regimes",
     "dynamic_p0": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED; no scientific belief update"
   },
-  "next_action": "Continue full paper body writing and render the three frozen figures; do not reopen dynamic P0 or broaden the claims unless new independently qualified evidence appears.",
+  "next_action": "Integrate the completed template-independent body, tables, figures, and bibliography into the official ICLR submission template and run a final reviewer pass; do not reopen dynamic P0 or broaden the claims unless new independently qualified evidence appears.",
   "scientific_authority": false
 }

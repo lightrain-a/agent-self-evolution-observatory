@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "purpose": "Submission bibliography/source ledger. Metadata is provenance-separated from scientific evidence; no entry author list is guessed from memory.",
+  "retrieved_at": "2026-08-16",
+  "entries": [
+    {
+      "key": "huang2026skill",
+      "title": "Skill Self-Play: Pushing the Frontier of LLM Capability with Co-Evolving Skills",
+      "authors": ["Siyuan Huang", "Pengyu Cheng", "Haotian Liu", "Tao Chen", "Yihao Liu", "Jingwei Ni", "Shijie Zhou", "Ziyi Yang", "Gangwei Jiang", "Mengyu Zhou", "Yu Cheng", "Xiaoxi Jiang", "Guanjun Jiang"],
+      "year": 2026,
+      "arxiv_id": "2607.22529",
+      "url": "https://arxiv.org/abs/2607.22529",
+      "metadata_provenance": ["author repository README BibTeX at commit bb693c89fee66e1f824d6a777759a49b7a295a83", "arXiv primary Atom metadata"],
+      "paper_role": "primary released support-geometry evidence system"
+    },
+    {
+      "key": "xia2026skillrl",
+      "title": "SkillRL: Evolving Agents via Recursive Skill-Augmented Reinforcement Learning",
+      "authors": ["Peng Xia", "Jianwen Chen", "Hanyang Wang", "Jiaqi Liu", "Kaide Zeng", "Yu Wang", "Siwei Han", "Yiyang Zhou", "Xujiang Zhao", "Haifeng Chen", "Zeyu Zheng", "Cihang Xie", "Huaxiu Yao"],
+      "year": 2026,
+      "arxiv_id": "2602.08234",
+      "url": "https://arxiv.org/abs/2602.08234",
+      "metadata_provenance": ["author repository README BibTeX at commit 8e66726ed866a4e0a7f053586a41022798192e6c", "arXiv primary Atom metadata used to expand README 'and others'"],
+      "paper_role": "independent implementation-level identity-sensitivity evidence system"
+    },
+    {
+      "key": "zhu2026skillclone",
+      "title": "SkillClone: Multi-Modal Clone Detection and Clone Propagation Analysis in the Agent Skill Ecosystem",
+      "authors": ["Jiaying Zhu", "Lyuye Zhang", "Wenbo Guo", "Yang Liu"],
+      "year": 2026,
+      "arxiv_id": "2603.22447",
+      "url": "https://arxiv.org/abs/2603.22447",
+      "metadata_provenance": ["arXiv primary Atom metadata"],
+      "paper_role": "direct collision: clone detection/propagation and dedup motivation"
+    },
+    {
+      "key": "liu2026skillsvote",
+      "title": "SkillsVote: Lifecycle Governance of Agent Skills from Collection, Recommendation to Evolution",
+      "authors": ["Hongyi Liu", "Haoyan Yang", "Tao Jiang", "Bo Tang", "Feiyu Xiong", "Yuyu Luo", "Zhiyu Li"],
+      "year": 2026,
+      "arxiv_id": "2605.18401",
+      "url": "https://arxiv.org/abs/2605.18401",
+      "metadata_provenance": ["arXiv primary Atom metadata"],
+      "paper_role": "direct collision: redundant/environment-sensitive skill lifecycle governance"
+    },
+    {
+      "key": "mao2026practiceunsafe",
+      "title": "Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents",
+      "authors": ["Xutao Mao", "Liangjie Zhao", "Xiang Zheng", "Cong Wang"],
+      "year": 2026,
+      "arxiv_id": "2608.12851",
+      "url": "https://arxiv.org/abs/2608.12851",
+      "metadata_provenance": ["canonical primary evidence title/ref", "arXiv primary Atom metadata"],
+      "paper_role": "direct collision: lifecycle safety of evolved skill content"
+    },
+    {
+      "key": "chen2026erskill",
+      "title": "ERSkill: Evolving for Skill-Guided Adaptive Memory Retrieval",
+      "authors": ["Haolong Chen", "Liang Zhang", "Zhuo Li", "Lei Xue", "Guanrxu Zhu"],
+      "year": 2026,
+      "arxiv_id": "2608.12720",
+      "url": "https://arxiv.org/abs/2608.12720",
+      "metadata_provenance": ["canonical primary evidence title/ref", "arXiv primary Atom metadata"],
+      "paper_role": "direct collision: co-evolving retrieval skills and adaptive router"
+    },
+    {
+      "key": "dong2026agentskills",
+      "title": "Agent Skills Can Be Harmful: An Empirical Study of Skill-Induced Failures in LLM Agents",
+      "authors": ["Gen Dong", "Yanjie Gao", "Liqun Li", "Tianyin Xu", "Yu Hua", "Fan Yang"],
+      "year": 2026,
+      "arxiv_id": "2608.11888",
+      "url": "https://arxiv.org/abs/2608.11888",
+      "metadata_provenance": ["canonical primary evidence title/ref", "arXiv primary Atom metadata"],
+      "paper_role": "direct collision: paired attribution of skill-induced failures"
+    },
+    {
+      "key": "wang2026shaper",
+      "title": "Self-Evolving Embodied Agents via Skill-Harness Evolution",
+      "authors": ["Peidong Wang", "Zhiming Ma", "Ying Chang", "Xufang Luo", "Xiaocui Yang", "Shi Feng", "Yuqing Yang", "Dongsheng Li"],
+      "year": 2026,
+      "arxiv_id": "2608.11350",
+      "url": "https://arxiv.org/abs/2608.11350",
+      "metadata_provenance": ["canonical primary evidence title/ref", "arXiv primary Atom metadata"],
+      "paper_role": "direct collision: skill+harness optimization and candidate selection"
+    },
+    {
+      "key": "bai2026skillzip",
+      "title": "SkillZip: Evaluation-Free Skill Compression for Self-Evolving Agents by Discovering Reusable Structure",
+      "authors": ["Xiaofan Bai", "Hongqiang Lin", "Chao Liu", "Yantao Zhang", "Xuan Jin", "Xipeng Cao", "Yuhong Li"],
+      "year": 2026,
+      "arxiv_id": "2608.11079",
+      "url": "https://arxiv.org/abs/2608.11079",
+      "metadata_provenance": ["canonical primary evidence title/ref", "arXiv primary Atom metadata"],
+      "paper_role": "direct collision: repeated skill-structure compression under coverage"
+    },
+    {
+      "key": "slivkins2011contextual",
+      "title": "Contextual Bandits with Similarity Information",
+      "authors": ["Aleksandrs Slivkins"],
+      "year": 2011,
+      "venue": "Proceedings of the 24th Annual Conference on Learning Theory",
+      "volume": "19",
+      "pages": "679--702",
+      "url": "https://proceedings.mlr.press/v19/slivkins11a.html",
+      "metadata_provenance": ["PMLR primary page citation metadata"],
+      "paper_role": "mature theory reduction: similarity-aware contextual bandits"
+    },
+    {
+      "key": "sen2018stochastic",
+      "title": "Contextual Bandits with Stochastic Experts",
+      "authors": ["Rajat Sen", "Karthikeyan Shanmugam", "Sanjay Shakkottai"],
+      "year": 2018,
+      "venue": "International Conference on Artificial Intelligence and Statistics",
+      "volume": "84",
+      "pages": "852--861",
+      "url": "https://proceedings.mlr.press/v84/sen18a.html",
+      "metadata_provenance": ["PMLR primary page citation metadata"],
+      "paper_role": "mature theory reduction: information sharing among stochastic experts"
+    }
+  ],
+  "scientific_authority": false
+}

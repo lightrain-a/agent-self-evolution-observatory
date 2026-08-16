@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "stage": "NARROW_SUBMISSION_BODY_QA",
+  "status": "PASS",
+  "checks_passed": 59,
+  "checks_total": 59,
+  "latex": {
+    "generic_compile": "PASS",
+    "pages_with_references": 9,
+    "bibliography_entries": 11,
+    "undefined_citations": 0,
+    "undefined_references": 0,
+    "overfull_boxes": 0,
+    "underfull_boxes": 6,
+    "note": "Generic article wrapper is syntax/layout QA only; it is not claimed to be the official ICLR template."
+  },
+  "claim_checks": {
+    "N1_released_representation_sensitivity": true,
+    "N2_exact_R_star_equalizability": true,
+    "N3_support_geometry_boundary": true,
+    "qwen_p0a_kept_inconclusive": true,
+    "dynamic_or_utility_success_claim_absent": true,
+    "sqc_success_claim_absent": true,
+    "lp_algorithm_novelty_claim_absent": true,
+    "overlap_always_harmful_claim_absent": true
+  },
+  "core_numeric_bindings": {
+    "level1_full": {"covered": 314, "multi": 183, "R_star": 2.0},
+    "calibration": {"covered": 47, "multi": 33, "R_star": 2.0},
+    "tool_disjoint_heldout": {"covered": 52, "multi": 38, "R_star": 2.0},
+    "level3_negative": {"covered": 34, "multi": 0, "R_star": 1.0},
+    "logical_high_overlap_negative": {"covered": 128, "multi": 127, "R_star": 1.0},
+    "qwen_p0a_contract_valid": {"skill_003": 14, "skill_004": 5, "skill_015": 8, "required_per_source": 16}
+  },
+  "bibliography": {
+    "ledger": "paper_drafts/stri-20260816-sources.json",
+    "bibtex": "paper_drafts/stri-20260816-references.bib",
+    "all_cited_keys_resolved": true,
+    "metadata_policy": "Skill-SP and SkillRL are bound to author-repository BibTeX and arXiv primary metadata; recent collision papers use arXiv primary metadata; mature bandit reductions use PMLR primary citation metadata."
+  },
+  "figures": {
+    "overview_pdf_sha256": "dcb62917f4394ecc5e486220d9d411d0afc9028f8f11525831efb4c3b41aebf9",
+    "rstar_boundary_pdf_sha256": "70225e96d5c2c2a56fafbcf4d713415537e9ee8b93987cabfa4cb8812fa9ac02",
+    "factor2_witnesses_pdf_sha256": "ed10fb150579d42027e6bb24a773d3a17bd6fa2cadc845099f54d7772bb1506d"
+  },
+  "independent_review_state": {
+    "final_premortem": "READY_NARROW_ICLR",
+    "final_premortem_confidence": 0.92,
+    "narrow_collision": "SURVIVES_NARROWLY",
+    "narrow_collision_confidence": 0.84
+  },
+  "scientific_authority": false,
+  "authority": {
+    "dynamic_claim": false,
+    "sqc_method_success": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}

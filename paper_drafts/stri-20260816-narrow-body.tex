@@ -1,0 +1,202 @@
+% Template-independent main body for the narrow STRI paper.
+% Venue-specific preamble, author block, and bibliography style are intentionally external.
+\begin{abstract}
+Self-evolving language-model agents increasingly use skill identities as control objects: a sampled skill can determine the next training task, a dynamic ID can receive retrieval priority, and feedback is often written back to the selected package. This creates a basic representation question. If two skill libraries expose the same semantic capabilities but differ only in how those capabilities are split, cloned, or grouped into package identities, should the induced self-evolution control change?
+
+We formulate \emph{Skill-Taxonomy Representation Invariance} (STRI) and show that released self-evolving skill systems can violate it. In Skill Self-Play (Skill-SP), 183 of 314 released-validator-covered API-Bank Level-1 tasks have multiple skill memberships; the release's text duplicate filter misses all observed specific--generic support-overlap pairs, and exact-support package pruning still leaves 71 overlapping tasks. In SkillRL, exact-content skills with fresh dynamic IDs are accepted 12/12 times, and 11/12 such identity changes alter the unique semantic contents returned under a fixed retrieval budget.
+
+For a frozen context-by-package support matrix $A$, define
+\[
+R^*(A)=\min_{w\ge 0,\,t\ge 0} t
+\quad\text{s.t.}\quad
+\mathbf 1\le Aw\le t\mathbf 1.
+\]
+We prove that $R^*(A)=1$ iff nonnegative package weights can equalize additive semantic exposure over all covered contexts, while $R^*(A)>1$ is the tight minimum multiplicative distortion. On Skill-SP API-Bank Level-1, $R^*=2$; the same value independently holds on a frozen calibration subset and a tool-disjoint heldout subset. Two real negative regimes sharpen the boundary: Level-3 has $R^*=1$ with disjoint support, while Skill-SP's released logical compilers yield 127/128 multi-membership tasks yet still have $R^*=1$ because an umbrella support permits exact equalization. Thus overlap prevalence is not the cause; \emph{non-equalizable support geometry} is.
+
+We operationalize this result as STRI-Cert, a fail-closed audit protocol that computes the exact certificate and optional human-readable lower-bound witnesses from independently defined support contracts. We do not claim LP computational novelty or downstream task harm. A faithful Qwen3-8B dynamic pilot completed its frozen generation budget but failed the author-native qualification gate, so it provides no dynamic scientific update and is not rerun.
+\end{abstract}
+
+\section{Introduction}
+Many self-evolving agents adapt through external state---memories, skills, workflows, tools, prompts, retrieval policies, or harness code---rather than only through foundation-model weights. Skills are especially attractive because a skill can package reusable procedure, metadata, examples, applicability information, and verification logic. Recent systems make the skill identity itself a control variable: Skill-SP~\cite{huang2026skill} samples a skill before generating a training task, while SkillRL~\cite{xia2026skillrl} gives dynamically created skill IDs priority in a fixed retrieval budget.
+
+This architecture makes the \emph{representation} of the skill library consequential. Consider two taxonomies that expose the same executable semantic capability. One stores a primitive once; another stores an exact clone under a fresh ID. One represents generic and specific capabilities separately; another groups unchanged primitives behind a macro package. If no new primitive behavior or support region is added, should the future curriculum, retrieval exposure, or credit allocation change solely because package bookkeeping changed?
+
+Existing work on semantic skill clones, redundancy governance, skill safety, adaptive routing, compression, and structured bandits establishes that skill quality, redundancy, and routing matter. These lines do not define a representation-invariance property for an endogenous evolution controller. We therefore ask: \emph{when can package-indexed control be made invariant to semantics-preserving changes in the skill taxonomy using the same frozen support information?}
+
+We approach the question asset-first. Rather than proposing a normalization method and manufacturing a benchmark, we inspect released control surfaces, reduce the phenomenon against strongest same-information baselines, and identify a support geometry that separates positive and negative regimes.
+
+\paragraph{Released Skill-SP.} On API-Bank Level-1, 314 released tasks are covered by at least one released validator and 183 have multiple memberships. The release's name+description Jaccard duplicate filter at threshold 0.33 misses all five observed specific--generic support-overlap pairs. Minimum-cardinality whole-package pruning can reduce the active library from 10 to 7 while preserving exact support, but 71 overlapping tasks remain. The residual is therefore not merely an exact-clone artifact.
+
+\paragraph{Released SkillRL.} In released template-mode retrieval, dynamic general skills are included before the remaining fixed \texttt{top\_k=6} budget is filled with static skills. Adding one exact-content fresh-ID copy at a time admits all 12 tested clones. Across 223 released ALFWorld task descriptions, 11/12 clone targets change the unique semantic retrieval set and 5/12 reduce the number of unique general-skill contents returned.
+
+These systems establish representation sensitivity, but not its mechanism. A natural hypothesis is simply that more overlap causes more sensitivity. Our main result rejects that hypothesis.
+
+\paragraph{Contributions.}
+\begin{enumerate}[leftmargin=*]
+\item \textbf{STRI problem and evidence.} We formulate Skill-Taxonomy Representation Invariance and document package-identity representation sensitivity in two independent released self-evolving skill systems.
+\item \textbf{Exact certificate.} We derive $R^*(A)$, an exact iff criterion for whether nonnegative package weights can equalize additive semantic exposure on a frozen support matrix, plus a global-singleton overlap theorem giving an interpretable factor-2 lower bound.
+\item \textbf{Real mechanism boundary.} Skill-SP Level-1, a frozen calibration subset, and a tool-disjoint heldout subset all have $R^*=2$; Level-3 has $R^*=1$; and 127/128 first-party logical-compiler tasks overlap while still yielding $R^*=1$. This falsifies overlap prevalence as the mechanism.
+\item \textbf{STRI-Cert.} We package the criterion and witness search into a fail-closed audit protocol without claiming a new LP algorithm, downstream improvement, or a validated dynamic repair.
+\end{enumerate}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\linewidth]{figures/stri-overview.pdf}
+\caption{STRI separates semantic capability from package representation. The conceptual identity-split example leaves the primitive basis and support predicates unchanged, yet a package-indexed controller can change primitive mass solely because one primitive has two package identities. Exact clones motivate the nuisance channel; the decisive released residual in Sec.~\ref{sec:evidence} survives clone reasoning and is characterized by non-equalizable partial-overlap support geometry.}
+\label{fig:stri-overview}
+\end{figure}
+
+\section{From Package Identity to Semantic Exposure}
+\label{sec:formalism}
+
+\subsection{Frozen support matrix}
+Let $X=\{x_1,\ldots,x_n\}$ be a finite set of semantic contexts or tasks with independently defined first-party support truth, and let $S=\{s_1,\ldots,s_m\}$ be the current skill packages. Define the binary incidence matrix
+\[
+A_{ij}=\mathbf{1}\{s_j\text{ supports }x_i\}.
+\]
+The support definition is frozen before evaluating STRI. In the tool-call study, support comes from released Skill-SP validators. In the logical-reasoning study, tasks are generated by released compiler specifications, checked by the author's fixed CSP/contract code, and cross-skill support is determined by the released compiler-alignment predicate.
+
+We study package-only pre-context control. At a frozen state, the controller chooses nonnegative package mass $w\in\mathbb{R}^m_{\ge0}$ before the semantic task to be generated exists. The additive eligibility exposure of context $x_i$ is $e_i=(Aw)_i$. This is a control-opportunity quantity, not a task probability and not utility.
+
+\subsection{Same-information pre-task controllers reduce to package mass}
+In released Skill-SP, skill selection occurs before task generation. At this decision point the action is one current package identity. For any fixed pre-task state $z$, every randomized same-information rule---including a bandit, MLP, or neural router---induces a categorical distribution over packages, hence one nonnegative mass vector $w(z)$. The strongest same-information baseline is therefore arbitrary nonnegative package mass with access to the complete frozen support matrix.
+
+This reduction is pointwise in $z$. It does \emph{not} claim that a longitudinal adaptive controller is globally equivalent to one static vector, and it does not allow a baseline to condition on the future generated task when the reviewed controller acts before that task exists.
+
+\section{Exact Equalizability and STRI-Cert}
+\label{sec:certificate}
+
+\subsection{Exact finite-support criterion}
+The max/min exposure ratio is invariant to positive scaling of $w$. We normalize every covered context to exposure at least one and define
+\begin{equation}
+\label{eq:rstar}
+R^*(A)=\min_{w\ge0,\,t\ge0}t
+\quad\text{s.t.}\quad
+\mathbf 1\le Aw\le t\mathbf 1.
+\end{equation}
+
+\paragraph{Theorem 1 (finite-support package-only equalizability).}
+$R^*(A)=1$ if and only if there exists a nonnegative package-only controller that gives exactly equal additive exposure to every covered context. If $R^*(A)>1$, no such package weighting exists, and $R^*(A)$ is the tight minimum achievable max/min exposure ratio.
+
+\paragraph{Proof.}
+If exact equalization exists, rescale its positive common exposure to one, giving a feasible solution with $t=1$. The constraints imply $t\ge1$, so $R^*(A)=1$. Conversely, $R^*(A)=1$ implies $\mathbf1\le Aw\le\mathbf1$, hence $Aw=\mathbf1$. For any $w$ with positive exposure on every covered row, let $r=\min_i(Aw)_i$ and rescale to $\tilde w=w/r$. Then $\min_i(A\tilde w)_i=1$ and the smallest feasible $t$ is $\max_i(Aw)_i/\min_i(Aw)_i$. Minimizing over $w$ yields exactly the tight multiplicative distortion. \hfill$\square$
+
+The optimization itself is standard linear programming. The scientific content is the representation-invariance object that the LP exactly decides for a released self-evolution control surface.
+
+\subsection{Human-readable factor-2 witness}
+\paragraph{Theorem 2 (global-singleton overlap lower bound).}
+Suppose packages $a,b$ each have a context supported by exactly that one package over the full frozen support universe, and another context is supported by both $a$ and $b$, possibly with additional packages. If both singleton contexts retain positive exposure, then every nonnegative package mass has max/min exposure ratio at least two on the focal rows, and therefore $R^*(A)\ge2$ for the full support matrix.
+
+\paragraph{Proof.}
+Let $r>0$ be the minimum exposure among the two singleton contexts and the shared context. Since the first singleton support signature is exactly $\{a\}$, its exposure is $w_a\ge r$; likewise $w_b\ge r$. The shared context contains both $a$ and $b$, and additional packages have nonnegative weight, so its exposure is at least $w_a+w_b\ge2r$. Thus every $w$ has focal max/min ratio at least two. For the same $w$, the full-matrix maximum is no smaller than the focal maximum and the full-matrix minimum is no larger than the focal minimum, so the full-matrix ratio is also at least two. Minimizing over $w$ gives $R^*(A)\ge2$. \hfill$\square$
+
+The released Skill-SP Level-1 graph contains two independent instances, involving \texttt{skill\_003}--\texttt{skill\_015} and \texttt{skill\_004}--\texttt{skill\_015}. The exact LP attains $R^*=2$, so the lower bound is tight.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.96\linewidth]{figures/stri-factor2-witnesses.pdf}
+\caption{Two released global-singleton overlap witnesses. In each case, retaining positive exposure on the two singleton regions forces at least twice that minimum exposure on the shared region.}
+\label{fig:factor2-witnesses}
+\end{figure}
+
+\subsection{STRI-Cert}
+STRI-Cert is a diagnostic protocol rather than a learned predictor or a new LP solver:
+\begin{enumerate}[leftmargin=*]
+\item freeze an independently defined context-by-package support matrix;
+\item solve Eq.~\eqref{eq:rstar};
+\item if $R^*=1$, report \emph{package-only equalizable};
+\item if $R^*>1$, report an \emph{irreducible package-only representation residual} and its tight distortion;
+\item search for globally valid singleton-overlap structures to provide interpretable lower bounds when available;
+\item fail closed if support truth or optimization is invalid.
+\end{enumerate}
+The strongest same-information reduction is built into the certificate: arbitrary nonnegative global package reweighting receives the complete frozen support matrix. Text deduplication, exact-clone removal, uniform routing, and fixed scalar retuning are weaker reductions.
+
+\input{stri-20260816-tables.tex}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/stri-rstar-boundary.pdf}
+\caption{Overlap prevalence does not determine STRI residual. The three Level-1 regimes independently have $R^*(A)=2$, while Level-3 is equalizable with disjoint support and the logical compiler domain is equalizable despite 127/128 multi-membership tasks.}
+\label{fig:rstar-boundary}
+\end{figure}
+
+\section{Released-System Evidence}
+\label{sec:evidence}
+
+\subsection{Skill-SP tool-call support: positive regime}
+On API-Bank Level-1, 314 rows are accepted by at least one released Skill-SP validator and 183 have multiple memberships. STRI-Cert gives $R^*=2.0$.
+
+To test whether this is an artifact of fitting package weights to the complete table, we use a tool-disjoint split frozen before the later certificate analysis. Calibration uses \texttt{AppointmentRegistration}, \texttt{ModifyRegistration}, \texttt{QueryHealthData}, and \texttt{RecordHealthData}; heldout uses \texttt{CancelRegistration}, \texttt{EmergencyKnowledge}, \texttt{QueryRegistration}, and \texttt{SymptomSearch}. Calibration has 47 covered tasks, 33 multi-membership rows, and $R^*=2$. Heldout has 52 covered tasks, 38 multi-membership rows, and again $R^*=2$. Both independently contain the two globally valid factor-2 witness structures.
+
+The witness rows are directly inspectable. For \texttt{skill\_003}/\texttt{skill\_015}, L1\#44 and L1\#12 are singleton regions while L1\#0 is shared. For \texttt{skill\_004}/\texttt{skill\_015}, L1\#98 and L1\#12 are singleton regions while L1\#1 is shared. In each case Theorem~2 yields the same lower bound attained by the exact LP.
+
+\subsection{Level-3: disjoint-support negative control}
+Level-3 provides a natural released negative regime. Thirty-four rows are covered, every covered row has exactly one skill membership, and $R^*=1$. Equal weights on the active packages equalize every covered task. STRI-Cert therefore does not mechanically label every released taxonomy problematic.
+
+\subsection{Logical compiler domain: high overlap but no residual}
+A stronger negative test asks whether high overlap alone triggers the certificate. Skill-SP's logical-reasoning release contains eight skill packages with programmatic compiler specifications. The author code can generate a zebra puzzle from a compiler, verify it with a fixed CSP solver, and check whether a generated sample satisfies each package's released compiler-alignment contract.
+
+We freeze the author's default compiler-validation sizes $(3\!\times\!3,4\!\times\!4,5\!\times\!5,6\!\times\!6)$ and seeds $0,1,2,3$ for each of eight released skills, giving 128 source units. No language model is used. All 128/128 units compile and pass the author's puzzle contract and uniqueness verifier; every task is then cross-evaluated against all eight released support specifications.
+
+The support matrix is extremely overlapping: 127/128 tasks have more than one supported skill, with 38 distinct support patterns. Yet $R^*=1$. The exact LP places weight one on \texttt{skill\_008} and zero on the remaining packages because the released \texttt{skill\_008} alignment contract supports every generated unit. This umbrella support makes the high-overlap matrix exactly equalizable.
+
+Thus the mechanism is not ``more overlap implies more representation dependence.'' It is whether the support geometry admits an equalizing nonnegative package mixture.
+
+\subsection{SkillRL: independent identity-sensitivity witness}
+SkillRL shows that the broader representation-sensitivity problem is not confined to one implementation. In released template-mode retrieval, fresh dynamic identities receive priority in a fixed general-skill budget. An exact-content clone under a fresh \texttt{dyn\_NNN} ID is admitted for all 12 tested general skills. For 11/12 clone targets, the unique semantic retrieval set changes over 223 released task descriptions; for 5/12, the number of unique general contents decreases under the same \texttt{top\_k=6} budget.
+
+We use SkillRL only as an independent identity-sensitivity witness. The exact $R^*$ analysis is performed on Skill-SP, where first-party support contracts expose the required support matrix directly.
+
+\section{Relation to Existing Work}
+\label{sec:related}
+
+\paragraph{Skill redundancy and clone detection.}
+Prior work studies semantic skill clones, duplicate propagation, and clone-aware filtering~\cite{zhu2026skillclone}. STRI therefore does not claim that duplicate skills exist or that exact duplicates should be detected. The focal positive regime survives exact-clone reasoning because specific and generic packages have distinct unique support regions in addition to shared contexts.
+
+\paragraph{Redundancy-aware lifecycle governance.}
+Prior governance methods recommend, attribute, suppress, merge, or update redundant and environment-sensitive skills~\cite{liu2026skillsvote}. Such policies may improve performance, but they do not answer whether a frozen taxonomy admits representation-invariant package-only control. STRI-Cert is a property test of control/support geometry rather than a competing recommendation algorithm.
+
+\paragraph{Skill safety and failures.}
+Work on unsafe skill evolution and harmful agent skills demonstrates that learned or retrieved skill content can propagate functional or efficiency failures~\cite{mao2026practiceunsafe,dong2026agentskills}. Our primary support transformations keep the audited semantic support predicates fixed. A positive STRI certificate does not imply unsafe content or downstream failure.
+
+\paragraph{Adaptive routing and evolving skills.}
+ERSkill, Skill-SP, SkillRL, SHAPER, and related systems learn routers or co-evolve skill libraries~\cite{chen2026erskill,huang2026skill,xia2026skillrl,wang2026shaper}. These works absorb any generic claim that adaptive routing or skill evolution is novel. They motivate STRI because package identities become endogenous actions or state, but they do not test invariance under a semantics-preserving reparameterization of that representation.
+
+\paragraph{Compression and structured online learning.}
+Skill-compression methods factor repeated procedural structure~\cite{bai2026skillzip}, while classical structured bandit/expert methods share information across similar fixed actions~\cite{slivkins2011contextual,sen2018stochastic}. We concede both mature ideas. STRI is not a new optimizer over similar arms; it is the exact representation-invariance question for an endogenous artifact taxonomy and a certificate on independently defined semantic support.
+
+\section{A Preregistered Dynamic Pilot That Did Not Qualify}
+\label{sec:dynamic}
+
+Static support distortion need not propagate through a real task generator. We therefore preregistered a faithful Qwen3-8B Skill-SP pilot before using any dynamic outcome. The contract fixed three source skills (003, 004, 015), 24 generations per source, author prompts and validators, released-style decoding, and a minimum of 16 contract-valid tasks per source before any merge/split statistic could update belief.
+
+All 72 frozen generations completed within budget. However, only 14/24, 5/24, and 8/24 outputs for the three sources satisfied the author-native task contract. The formal outcome is \texttt{INCONCLUSIVE\_\allowbreak PROPOSER\_\allowbreak QUALIFICATION\_\allowbreak FAILED}; no dynamic witness statistic is scientifically admissible.
+
+The dominant failures are requirements implemented by the author questioner contract itself, especially omission of the required solver \texttt{<tool\_call>...</tool\_call>} output contract. The released training pipeline uses the same contract checks before solver evaluation. We therefore classify the outcome as proposer/substrate competence insufficiency rather than a negative STRI result or a wrong observable. We do not lower the 16/source gate, add generations, change decoding, rerun the same contract, or switch backbone after observing the qualification failure.
+
+A separately frozen SkillRL fixed-task experiment can test an exact-clone downstream bridge, but it is evidence-only and is not required for the claims in this paper. Its outcome cannot rescue or invalidate the support-geometry certificate.
+
+\section{Discussion and Claim Boundary}
+\label{sec:discussion}
+
+STRI-Cert answers a precise question: given an independently defined finite support matrix and package-only nonnegative mass, is exact additive exposure equality achievable? A positive certificate ($R^*>1$) says that every package-only global weighting leaves a representation-dependent exposure distortion on the audited support domain. It does not say which package should be deleted, that the taxonomy is semantically bad, or that downstream utility decreases. A negative certificate ($R^*=1$) says that the support geometry is equalizable by some package mixture; it does not guarantee that the released controller actually uses that mixture or that all longitudinal dynamics are invariant.
+
+The logical-compiler result illustrates why this distinction matters. Its 99.2\% overlap rate appears more severe than the tool-call regime if one counts redundancy. STRI-Cert reaches the opposite mechanistic conclusion because an umbrella package makes exact equalization possible. A redundancy count or text-similarity score misses this boundary.
+
+The narrow claims are intentionally smaller than our original dynamic design. We \textbf{do} claim that released control surfaces can depend on skill-package representation, that $R^*(A)$ exactly characterizes package-only additive exposure equalizability on a frozen finite support matrix, and that the audited residual tracks support geometry rather than overlap prevalence. We \textbf{do not} claim that a positive certificate causes task failure, that static exposure predicts longitudinal utility, that STRI-Cert is computationally novel relative to linear programming, that high overlap is harmful in general, that Support-Quotient Control has been empirically validated, or that the unqualified Qwen3 bank provides evidence for or against dynamic STRI.
+
+A natural repair direction is to factor control through semantic support cells rather than current package IDs. We leave such control redesign as future work. The current paper identifies when a package-only control surface is structurally incapable of exact exposure invariance; it does not claim a tested utility-improving repair.
+
+\section{Limitations}
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Support truth is required.} STRI-Cert assumes a frozen, independently defined support matrix. Learned or uncertain support estimators introduce a separate identification problem.
+\item \textbf{Static exposure is not utility.} $R^*$ does not establish realized task-distribution change, regret, success degradation, or end-of-evolution harm.
+\item \textbf{Finite audited contexts.} The certificate is exact on the observed support matrix, not on unobserved semantic contexts outside the audited domain.
+\item \textbf{Package-only action class.} The criterion addresses controllers whose reviewed pre-context action is package mass. A system that acts directly on semantic support cells may avoid this representation channel by construction.
+\item \textbf{Dynamic qualification failed.} The faithful Skill-SP Qwen3 pilot failed its preregistered proposer-qualification gate. We expose this failure and keep dynamic/downstream claims out of the submission.
+\end{enumerate}
+
+\section{Conclusion}
+Self-evolving agents should not change their semantic control process merely because the same capability is packaged differently. Released systems show that skill identity can nevertheless alter curriculum and retrieval control. The relevant mechanism is not redundancy in the abstract, but whether the support incidence geometry can be equalized by package-only control.
+
+The quantity $R^*(A)$ turns this principle into an exact finite audit. Skill-SP tool-call support yields a tight factor-2 residual that replicates on tool-disjoint heldout tools. Two real negative regimes define the boundary: disjoint Level-3 support is equalizable, and a logical skill library remains equalizable despite nearly universal overlap. Together these results establish a representation-invariance problem, an exact support-geometry certificate, and a falsified alternative mechanism while keeping downstream utility claims explicitly separate.

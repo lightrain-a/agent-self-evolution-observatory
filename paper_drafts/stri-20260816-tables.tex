@@ -1,0 +1,75 @@
+% Auto-generated from generated/asset-first-stri-narrow-paper-table-data-20260816.json.
+% Narrow STRI submission tables. No dynamic/SQC success claims.
+
+\begin{table}[t]
+\centering
+\caption{Released-system evidence for package-identity representation sensitivity. The two systems expose different control channels; only Skill-SP supplies the support matrix used by STRI-Cert.}
+\label{tab:released-systems}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{p{0.20\linewidth}p{0.29\linewidth}p{0.43\linewidth}}
+\toprule
+System & Control surface & Released evidence \\
+\midrule
+Skill Self-Play (tool-call) & Pre-task skill sampling and skill-ID feedback/refinement & 183 multi-membership Level-1 rows among 314 covered rows; the released text duplicate filter misses all 5/5 observed specific--generic support-overlap pairs; exact-support whole-package pruning still leaves 71 overlap rows. \\
+SkillRL & Fixed-budget template-mode dynamic skill retrieval & 12/12 exact-content fresh-ID clones are admitted; 11/12 clone targets change the unique semantic retrieval set over 223 released ALFWorld task descriptions; 5/12 reduce the number of unique general-skill contents. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Reduction tournament on the Skill-SP tool-call support matrix. The strongest same-information reduction is arbitrary nonnegative global package weighting with access to the complete frozen support matrix.}
+\label{tab:reductions}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{p{0.31\linewidth}p{0.20\linewidth}p{0.41\linewidth}}
+\toprule
+Reduction & Outcome & Evidence \\
+\midrule
+Released name+description Jaccard duplicate filter & Does not absorb & Misses all 5/5 observed specific--generic support-overlap pairs; similarity 0.1429--0.20 is below the released 0.33 threshold. \\
+Exact semantic-clone deduplication & Does not absorb partial overlap & The positive regime uses distinct specific/generic packages with different unique support regions. \\
+Minimum-cardinality whole-package pruning preserving exact support & Partial reduction only & Active packages drop from 10 to 7, but 71 overlap rows remain while exact support is preserved. \\
+Arbitrary nonnegative global package weights & Exact residual & The exact optimum is $R^*(A)=2$. \\
+Global-singleton overlap witness & Closed-form lower bound & Two independent released witnesses imply $R^*(A)\ge 2$, and the exact LP attains 2. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Mechanism boundary across real first-party support regimes. High overlap is neither necessary nor sufficient for an irreducible package-only residual; the exact discriminator is $R^*(A)$.}
+\label{tab:support-boundary}
+\small
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{p{0.34\linewidth}rrrrp{0.18\linewidth}}
+\toprule
+Regime & Covered & Multi & Overlap & $R^*$ & Certificate \\
+\midrule
+API-Bank Level-1 full & 314 & 183 & 58.3\% & 2.0 & Residual \\
+Level-1 calibration tools & 47 & 33 & 70.2\% & 2.0 & Residual \\
+Level-1 tool-disjoint heldout & 52 & 38 & 73.1\% & 2.0 & Residual \\
+API-Bank Level-3 & 34 & 0 & 0.0\% & 1.0 & Equalizable \\
+Logical compiler validation & 128 & 127 & 99.2\% & 1.0 & Equalizable \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Preregistered faithful Qwen3-8B dynamic pilot. Qualification is checked before any dynamic STRI witness may update scientific belief.}
+\label{tab:qwen-p0a}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Source skill & Generated & Contract-valid & Required \\
+\midrule
+skill\_003 & 24 & 14 & 16 \\
+skill\_004 & 24 & 5 & 16 \\
+skill\_015 & 24 & 8 & 16 \\
+\bottomrule
+\end{tabular}
+\vspace{2pt}
+
+\footnotesize Formal outcome: \texttt{INCONCLUSIVE\_\allowbreak PROPOSER\_\allowbreak QUALIFICATION\_\allowbreak FAILED}. The 72-generation bank supplies no dynamic STRI belief update and is not rerun.
+\end{table}
