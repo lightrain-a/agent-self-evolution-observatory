@@ -1,12 +1,12 @@
 {
   "schema_version": "2.5",
-  "generated_at": "2026-08-16T17:33:05+00:00",
-  "run_id": "20260816T173305Z",
+  "generated_at": "2026-08-16T18:27:35+00:00",
+  "run_id": "20260816T182735Z",
   "generator_model": "ark-code-latest",
   "reviewer_model": "glm-5.2",
   "policy": {
     "zero_candidates_is_valid": true,
-    "discovery_operator_version": "fresh-phenomenon-source-coverage-v11",
+    "discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
     "single_source_anomaly_first_enabled": true,
     "source_coverage_saturation_reopens_once_on_operator_change": true,
     "search_portfolio_enabled": false,
@@ -96,16 +96,16 @@
     "evolved_branches": 0,
     "max_branch_depth": 0,
     "portfolio_calls": 0,
-    "generated": 1,
+    "generated": 0,
     "structurally_reviewable": 0,
     "semantic_clear": 0,
-    "semantic_blocked": 1,
-    "written_to_auto_inbox": 1,
+    "semantic_blocked": 0,
+    "written_to_auto_inbox": 0,
     "generated_by_lane": {
       "CONTRADICTION": 0,
       "CONVERGENT_FAILURE": 0,
       "ASSUMPTION_BREAK": 0,
-      "UNEXPLAINED_BOUNDARY": 1,
+      "UNEXPLAINED_BOUNDARY": 0,
       "OTHER": 0
     },
     "structurally_reviewable_by_lane": {
@@ -126,18 +126,18 @@
       "CONTRADICTION": 0,
       "CONVERGENT_FAILURE": 0,
       "ASSUMPTION_BREAK": 0,
-      "UNEXPLAINED_BOUNDARY": 1,
+      "UNEXPLAINED_BOUNDARY": 0,
       "OTHER": 0
     }
   },
   "raw_artifacts": {
     "generator": {
-      "sha256": "6b4471ac4eb9faf7cd1e92b858f6776a41640c362ff3a9b52571d507b4094869",
+      "sha256": "33bfa8d60cafc7f99ed7cbef6a2b3ab256c23d0f61e70e38ddc2231162a256ca",
       "requested_model": "ark-code-latest",
       "resolved_model": "doubao-seed-evolving"
     }
   },
-  "generation_notes": "One candidate survives. The ASSUMPTION_BREAK tuple was rejected as reducible to procedural-memory nonmonotonicity/redundancy; CONTRADICTION and CONVERGENT_FAILURE had no qualifying evidence tuple.",
+  "generation_notes": "Zero candidates survive. The only grounded lane-level tuple is an ASSUMPTION_BREAK between the memory-basis monotonicity assumption and empirical skill-induced failures, but it is blocked by the procedural-memory-nonmonotonicity saturation key.",
   "search_diagnostics": {
     "lane_search_priority": [
       "CONTRADICTION",
@@ -157,32 +157,30 @@
         "lane": "CONVERGENT_FAILURE",
         "status": "NO_PAIR",
         "source_refs": [],
-        "reason": "No pair of independent method families showed quantitative failure under the same bounded operational condition with a common failure object; observed failures are task- or method-specific."
+        "reason": "No pair of independent method families was found with quantitative failure under the same bounded operational condition and a common failure object; observed failures are task- or system-specific."
       },
       {
         "lane": "UNEXPLAINED_BOUNDARY",
-        "status": "CANDIDATE",
-        "source_refs": [
-          "arXiv:2608.13040"
-        ],
-        "reason": "One paper quantitatively establishes a sharp latent-context-capacity boundary and adjacent lower-capacity/control regimes for the same EnvScaler reward measurement, with no explanation for the transition."
+        "status": "NO_PAIR",
+        "source_refs": [],
+        "reason": "The strongest within-paper boundary observations are either generic retrieval/token plateaus or evaluation thresholds, and none survives the negative-space scan as an unresolved transition object."
       },
       {
         "lane": "ASSUMPTION_BREAK",
         "status": "REDUCIBLE",
         "source_refs": [
           "arXiv:2608.11654",
-          "arXiv:2608.10494"
+          "arXiv:2608.11888"
         ],
-        "reason": "The explicit monotonicity assumption in the formal memory paper is violated by excessive retrieval degrading trajectory quality in GeoForge, but the object is reducible to ordinary nonmonotonic conflict/redundancy under the same information."
+        "reason": "An explicit monotonicity assumption in the formal memory framework is violated by empirical skill-induced failures, but the same conflict is already expressible as nonmonotonic reasoning/belief revision under conflict information, so it is reducible."
       }
     ],
     "last_completed_lane_search": {
-      "run_id": "20260816T173305Z",
-      "generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
-      "generated_at": "2026-08-16T17:33:05+00:00",
+      "run_id": "20260816T182735Z",
+      "generator_status": "GENERATED_ZERO_CANDIDATES",
+      "generated_at": "2026-08-16T18:27:35+00:00",
       "mode": "anomaly_first_evidence_tuple_audit",
-      "discovery_operator_version": "fresh-phenomenon-source-coverage-v11",
+      "discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
       "lane_search_priority": [
         "CONTRADICTION",
         "CONVERGENT_FAILURE",
@@ -200,40 +198,38 @@
           "lane": "CONVERGENT_FAILURE",
           "status": "NO_PAIR",
           "source_refs": [],
-          "reason": "No pair of independent method families showed quantitative failure under the same bounded operational condition with a common failure object; observed failures are task- or method-specific."
+          "reason": "No pair of independent method families was found with quantitative failure under the same bounded operational condition and a common failure object; observed failures are task- or system-specific."
         },
         {
           "lane": "UNEXPLAINED_BOUNDARY",
-          "status": "CANDIDATE",
-          "source_refs": [
-            "arXiv:2608.13040"
-          ],
-          "reason": "One paper quantitatively establishes a sharp latent-context-capacity boundary and adjacent lower-capacity/control regimes for the same EnvScaler reward measurement, with no explanation for the transition."
+          "status": "NO_PAIR",
+          "source_refs": [],
+          "reason": "The strongest within-paper boundary observations are either generic retrieval/token plateaus or evaluation thresholds, and none survives the negative-space scan as an unresolved transition object."
         },
         {
           "lane": "ASSUMPTION_BREAK",
           "status": "REDUCIBLE",
           "source_refs": [
             "arXiv:2608.11654",
-            "arXiv:2608.10494"
+            "arXiv:2608.11888"
           ],
-          "reason": "The explicit monotonicity assumption in the formal memory paper is violated by excessive retrieval degrading trajectory quality in GeoForge, but the object is reducible to ordinary nonmonotonic conflict/redundancy under the same information."
+          "reason": "An explicit monotonicity assumption in the formal memory framework is violated by empirical skill-induced failures, but the same conflict is already expressible as nonmonotonic reasoning/belief revision under conflict information, so it is reducible."
         }
       ],
-      "generation_notes": "One candidate survives. The ASSUMPTION_BREAK tuple was rejected as reducible to procedural-memory nonmonotonicity/redundancy; CONTRADICTION and CONVERGENT_FAILURE had no qualifying evidence tuple.",
+      "generation_notes": "Zero candidates survive. The only grounded lane-level tuple is an ASSUMPTION_BREAK between the memory-basis monotonicity assumption and empirical skill-induced failures, but it is blocked by the procedural-memory-nonmonotonicity saturation key.",
       "scientific_authority": false
     },
     "scientific_authority": false
   },
   "saturation_memory": {
-    "ledger_entries": 2,
+    "ledger_entries": 3,
     "prior_identical_zero_runs": 0,
     "current_run_recorded": true,
     "current_review_receipt": {
-      "run_id": "20260816T173305Z",
+      "run_id": "20260816T182735Z",
       "pool_sha256": "a2bfda699834ab2cf6c426185c45d8bded443ce64563d24640151f324b2f0921",
       "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
-      "discovery_operator_version": "fresh-phenomenon-source-coverage-v11",
+      "discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
       "source_refs": [
         "arXiv:2607.12790",
         "arXiv:2607.13683",
@@ -268,10 +264,10 @@
         "arXiv:2608.13040",
         "arXiv:2608.13560"
       ],
-      "status": "GENERATED_AWAIT_PROBLEM_GATE",
+      "status": "GENERATED_ZERO_CANDIDATES",
       "requested_model": "ark-code-latest",
       "resolved_model": "doubao-seed-evolving",
-      "raw_sha256": "6b4471ac4eb9faf7cd1e92b858f6776a41640c362ff3a9b52571d507b4094869",
+      "raw_sha256": "33bfa8d60cafc7f99ed7cbef6a2b3ab256c23d0f61e70e38ddc2231162a256ca",
       "scientific_authority": false
     },
     "portable_review_receipts": [
@@ -1201,15 +1197,60 @@
         "resolved_model": "doubao-seed-evolving",
         "raw_sha256": "6b4471ac4eb9faf7cd1e92b858f6776a41640c362ff3a9b52571d507b4094869",
         "scientific_authority": false
+      },
+      {
+        "run_id": "20260816T182735Z",
+        "pool_sha256": "a2bfda699834ab2cf6c426185c45d8bded443ce64563d24640151f324b2f0921",
+        "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
+        "discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
+        "source_refs": [
+          "arXiv:2607.12790",
+          "arXiv:2607.13683",
+          "arXiv:2607.13940",
+          "arXiv:2607.13987",
+          "arXiv:2607.14777",
+          "arXiv:2607.15314",
+          "arXiv:2607.15524",
+          "arXiv:2607.16636",
+          "arXiv:2607.17621",
+          "arXiv:2607.17719",
+          "arXiv:2607.19592",
+          "arXiv:2607.20019",
+          "arXiv:2607.21125",
+          "arXiv:2607.22529",
+          "arXiv:2608.07527",
+          "arXiv:2608.10494",
+          "arXiv:2608.10504",
+          "arXiv:2608.11079",
+          "arXiv:2608.11224",
+          "arXiv:2608.11350",
+          "arXiv:2608.11596",
+          "arXiv:2608.11654",
+          "arXiv:2608.11888",
+          "arXiv:2608.12428",
+          "arXiv:2608.12629",
+          "arXiv:2608.12720",
+          "arXiv:2608.12743",
+          "arXiv:2608.12841",
+          "arXiv:2608.12851",
+          "arXiv:2608.12977",
+          "arXiv:2608.13040",
+          "arXiv:2608.13560"
+        ],
+        "status": "GENERATED_ZERO_CANDIDATES",
+        "requested_model": "ark-code-latest",
+        "resolved_model": "doubao-seed-evolving",
+        "raw_sha256": "33bfa8d60cafc7f99ed7cbef6a2b3ab256c23d0f61e70e38ddc2231162a256ca",
+        "scientific_authority": false
       }
     ],
     "blocked_problem_memory": {
-      "blocked_candidate_attempts": 11,
+      "blocked_candidate_attempts": 12,
       "lane_contract_verified_blocks": 9,
       "source_grounded_blocks": 6,
       "blocked_by_lane": {
         "ASSUMPTION_BREAK": 9,
-        "UNEXPLAINED_BOUNDARY": 1,
+        "UNEXPLAINED_BOUNDARY": 2,
         "CONVERGENT_FAILURE": 1
       },
       "reduction_pattern_counts": {
@@ -1227,7 +1268,7 @@
         "procedural-memory-nonmonotonicity": 1,
         "procedural-memory-nonmonotonicity and cross-layer-behavior-persistence": 1,
         "artifact-uptake-after-retrieval": 1,
-        "structural-or-provenance-gate-failed": 1,
+        "structural-or-provenance-gate-failed": 2,
         "Nonmonotonic logic / belief revision (defeasible rule conflict and conclusion retraction)": 1,
         "procedural-memory-nonmonotonicity (Nonmonotonic / defeasible logic, belief revision / AGM-style belief change)": 1,
         "Bayesian optimization / information bottleneck / selective sampling": 1,
@@ -1236,7 +1277,7 @@
       "top_reduction_basin": {
         "pattern": "procedural-memory-nonmonotonicity",
         "count": 6,
-        "fraction": 0.5455
+        "fraction": 0.5
       },
       "repeated_reduction_basin": true,
       "search_escape_required": true,
@@ -1370,29 +1411,25 @@
           "lane_contract_verified": true,
           "source_claims_grounded": true,
           "scientific_authority": false
+        },
+        {
+          "signature_id": "4e17f2f8f422919a2f3d",
+          "title": "Sharp latent-privilege capacity threshold in on-policy self-distillation",
+          "discovery_lane": "UNEXPLAINED_BOUNDARY",
+          "matched_patterns": [],
+          "strongest_reduction": "structural-or-provenance-gate-failed",
+          "lane_contract_verified": false,
+          "source_claims_grounded": false,
+          "scientific_authority": false
         }
       ],
       "scientific_authority": false
     },
     "scientific_authority": false,
-    "portable_review_receipt_count": 21
+    "portable_review_receipt_count": 22
   },
-  "candidates": [
-    {
-      "candidate_id": "AUTO-1",
-      "title": "Sharp latent-privilege capacity threshold in on-policy self-distillation",
-      "discovery_lane": "UNEXPLAINED_BOUNDARY",
-      "source_branch_id": "",
-      "source_refs": [
-        "arXiv:2608.13040",
-        "arXiv:2608.13040"
-      ],
-      "semantic_verdict": "BLOCK",
-      "lane_contract_verified": false,
-      "matched_patterns": []
-    }
-  ],
-  "primary_pool_age_hours": 1.1434,
+  "candidates": [],
+  "primary_pool_age_hours": 2.0519,
   "source_coverage": {
     "coverage_exhausted": true,
     "source_retrieval_complete": true,
@@ -1406,7 +1443,7 @@
     "scientific_authority": false
   },
   "operator_recompile_reason": "Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged.",
-  "status": "GENERATED_AWAIT_PROBLEM_GATE",
-  "discovery_transaction_id": "9fa9d8eb7f0c63ad1223549e68c2a1ea0f939decd8497c28a32727497c66a488",
+  "status": "GENERATED_ZERO_CANDIDATES",
+  "discovery_transaction_id": "c1b476ed37ad9149abe715b6c2eafc10c29587401c64662b765b9d2e09ce6d89",
   "discovery_transaction_role": "generator"
 }

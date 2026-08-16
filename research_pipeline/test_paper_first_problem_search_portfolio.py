@@ -50,7 +50,7 @@ class SearchPortfolioTest(unittest.TestCase):
         records=[
             {"ref":"arXiv:new-boundary","publication_date":"2026-08-13","title":"New boundary","typed_evidence":{"measured_failures":[{"text":"Utility collapses after a restrictive update.","text_sha256":failure_sha}],"boundary_observations":[{"text":"Reward jumps at K=32 and then plateaus.","text_sha256":boundary_sha}]},"empirical_facts":[{"text":"Quantitative sensitivity curve."}]},
             {"ref":"arXiv:new-no-anomaly","publication_date":"2026-08-13","title":"New but smooth","typed_evidence":{"measured_failures":[],"boundary_observations":[]},"empirical_facts":[{"text":"Performance improves."}]},
-            {"ref":"arXiv:older-boundary","publication_date":"2026-08-12","title":"Older boundary","typed_evidence":{"measured_failures":[{"text":"A prior failure.","text_sha256":older_sha}],"boundary_observations":[]},"empirical_facts":[]},
+            {"ref":"arXiv:older-boundary","publication_date":"2026-08-12","title":"Older boundary","typed_evidence":{"measured_failures":[{"text":"The older method fails despite matched support.","text_sha256":older_sha}],"boundary_observations":[]},"empirical_facts":[]},
         ]
         priors=_fresh_phenomenon_priors(records)
         self.assertEqual([row["phenomenon_id"] for row in priors],[failure_sha,boundary_sha,older_sha])
