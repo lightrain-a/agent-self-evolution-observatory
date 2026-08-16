@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "stage": "P0C_FIRST_PARTY_FEEDBACK_SELECTION_RETROSPECTIVE",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "experiment_id": "ASSET-FIRST-STRI-QWEN3-SOLVER-CONSEQUENCE-P0C-20260816",
+  "zero_gpu": true,
+  "provider_calls": 0,
+  "training_steps": 0,
+  "scientific_authority": false,
+  "policy": {
+    "requires_auditable_p0c_result_and_exact_solver_raw_sha": true,
+    "accepted_only_uses_first_party_upload_defaults": true,
+    "exposure_aware_changes_stats_visibility_only_not_solver_outputs": true,
+    "sampling_uses_first_party_quality_times_exploration_no_decay": true,
+    "strict_pairwise_preference_flip_or_prune_flip_required": true,
+    "ordinary_censoring_baseline_forbidden_until_real_reversal": true,
+    "missing_input_is_not_empirical_no_reversal": true
+  },
+  "field_provenance": {
+    "candidate_count": "ToolCallStats.valid_answer_count",
+    "correct_count": "round(ToolCallStats.p_hat * ToolCallStats.total_samples)",
+    "consistency": "ToolCallStats.consistency",
+    "p_hat": "ToolCallStats.p_hat"
+  },
+  "first_party_defaults": {
+    "upload_min_score": 0.3,
+    "upload_max_score": 0.7,
+    "require_consistency": false,
+    "require_unique_majority": false,
+    "reject_perfect_majority": false,
+    "validators_enabled": false,
+    "sampling_quality": true,
+    "sampling_exploration": true,
+    "sampling_decay": false,
+    "prune": {
+      "min_attempts": 8,
+      "avg_p_hat_threshold": 0.75,
+      "too_easy_rate_threshold": 0.6,
+      "preserve_initial_skills": true
+    }
+  },
+  "decision": "STOP_MISSING_AUDITABLE_P0C_RESULTS",
+  "scientific_result_available": false,
+  "empirical_no_reversal_established": false,
+  "decision_reversal_evaluated": false,
+  "baseline_authorized": false,
+  "baseline_next": "NONE_MISSING_AUDITABLE_INPUT",
+  "input_receipt": {
+    "p0c_result_present": false,
+    "solver_results_present": false,
+    "execution_audit_present": true,
+    "execution_audit_sha256": "d44f1e1dfecd133c25429ea3cdbbb0a25e48aee61943ab7ca41afd021dbbbe69",
+    "execution_audit_status": "PREPARED_PREFLIGHT_ONLY_NOT_EXECUTED"
+  }
+}
