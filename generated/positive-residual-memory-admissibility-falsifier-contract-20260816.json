@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "POSITIVE-RESIDUAL-MEMORY-ADMISSIBILITY-FALSIFIER-20260816",
+  "candidate_id": "SHADOW-P04-C01",
+  "candidate_title": "Pre-divergence admissible-option collapse predicts persistent endpoint memory effects after transport and earliest-action mediation fail",
+  "scientific_role": "zero-authority exact-reduction falsifier before any method design or new GPU rollout",
+  "hypothesis": "Before the first retrieved-versus-placebo action divergence, a lower fraction of currently admissible commands whose deterministic action skeleton appears in the retrieved memory procedure predicts a nonzero controlled memory effect beyond same-information task/context, source-target relation, state phase, first-action-family, divergence-timing, and total-admissible-count controls.",
+  "source_artifacts": {
+    "raw_traces": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/p0-mem-xfer-support-enriched-qwen-v1/full-support-table/raw-traces.jsonl",
+      "sha256": "45d9954a14f370936b5e1129f985130f4b9ef2b742e72a4c6e1e01bc068b1fbf"
+    },
+    "main_table": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/p0-mem-xfer-support-enriched-qwen-v1/full-support-table/main_table.csv",
+      "sha256": "eb861663351041e1f1a297b6791c7d31b4ba18285c3a13f0603d5d80c09b324f"
+    },
+    "source_memories": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/p0-mem-xfer-support-enriched-qwen-v1/source-memories.jsonl",
+      "sha256": "badf536cc4051cc29341e3c0a3a5c90b8c5c75b5a091d879aee5e22feb17c53f"
+    },
+    "prior_first_divergence_audit": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/p0-mem-xfer-support-enriched-qwen-v1/first-divergence-audit-v1/decision.json",
+      "sha256": "f32ea8e10b5b9d5e83ba632f10c5b1f61569d3bb2400ea55ba010d47cc3254bc"
+    },
+    "formulated_candidate": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-positive-residual-v6-r1/formulate-p4.json",
+      "sha256": "fbc537401abf6ec2eb079999d71fb7c4316f60addbb73f100a90373ec6a32564"
+    }
+  },
+  "frozen_split": {
+    "train_role": "probe_development",
+    "test_role": "future_eval",
+    "expected_train_units": 36,
+    "expected_test_units": 36,
+    "outcome": "controlled_delta != 0 where controlled_delta is retrieved_success - placebo_success"
+  },
+  "pre_outcome_feature_contract": {
+    "prefix_definition": "longest common prefix of retrieved and placebo historical action sequences",
+    "memory_consistent_command": "an admissible ALFWorld command whose deterministic action skeleton exactly matches a skeleton appearing in the frozen source-memory procedure; movable object identity is wildcarded while action verb and receptacle/appliance/landmark type are preserved",
+    "candidate_feature": "memory_consistent_fraction = matching_admissible_commands / total_admissible_commands at the reconstructed pre-divergence state",
+    "candidate_score_direction": "collapse predicts effect, so lower memory_consistent_fraction corresponds to higher predicted probability of nonzero controlled effect",
+    "forbidden_features": [
+      "retrieved_success",
+      "placebo_success",
+      "no_memory_success",
+      "controlled_delta",
+      "trajectory length after divergence",
+      "terminal status",
+      "post-divergence observations",
+      "post-divergence actions"
+    ],
+    "llm_or_semantic_judge_forbidden": true,
+    "threshold_tuning_forbidden": true
+  },
+  "same_information_baseline": {
+    "model": "fixed pure-Python class-balanced L2 logistic regression with deterministic full-batch gradient descent",
+    "optimizer": {
+      "steps": 5000,
+      "learning_rate": 0.05,
+      "l2": 0.01,
+      "initial_weights": 0.0,
+      "class_weight": "balanced",
+      "numeric_standardization": "train-mean/train-population-std",
+      "categorical_encoding": "sorted train-vocabulary one-hot with unknown test categories all-zero"
+    },
+    "categorical_features": [
+      "source_family",
+      "target_family",
+      "source_target_relation",
+      "phase",
+      "retrieved_action_family",
+      "placebo_action_family"
+    ],
+    "numeric_features": [
+      "first_divergence_fraction",
+      "prediv_admissible_count"
+    ],
+    "augmented_only_feature": "memory_consistent_fraction",
+    "frozen_prior_best_state_auc_reference": 0.7258064516129032
+  },
+  "support_gates": {
+    "total_units": 72,
+    "prefix_replay_bad_actions_max": 0,
+    "all_memory_ids_resolved": true,
+    "future_positive_units_min": 4,
+    "candidate_feature_finite_all_units": true
+  },
+  "decision_gates": {
+    "future_augmented_roc_auc_min": 0.75,
+    "future_augmented_auc_advantage_over_same_information_baseline_min": 0.10,
+    "future_augmented_brier_must_not_exceed_baseline": true,
+    "future_inverse_overlap_univariate_auc_min": 0.65,
+    "all_conjunctive": true
+  },
+  "decisions": {
+    "support_failure": "INCONCLUSIVE_PREOUTCOME_ADMISSIBILITY_SUBSTRATE_INVALID",
+    "all_decision_gates_pass": "RESIDUAL_SIGNAL_SURVIVES_EXACT_REDUCTION_FALSIFIER",
+    "otherwise": "STOP_CURRENT_ADMISSIBILITY_COLLAPSE_REDUCTION_NOT_BEATEN"
+  },
+  "authority": {
+    "scientific_authority": false,
+    "problem_gate_pass": false,
+    "paper_design": false,
+    "method_design": false,
+    "experiment_blueprint": false,
+    "local_validation": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  },
+  "policy": {
+    "no_new_model_calls": true,
+    "cpu_environment_replay_only": true,
+    "no_threshold_tuning": true,
+    "no_second_backbone": true,
+    "failure_is_specific_to_this_admissibility_operationalization": true
+  }
+}
