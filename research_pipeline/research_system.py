@@ -50,6 +50,7 @@ from .paper_first_support_asset_recheck import load_private_support_asset_rechec
 from .paper_first_support_asset_recheck_handoff import load_private_support_asset_recheck_handoff, public_support_asset_recheck_handoff_summary
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier, validate_paper_first_discovery_frontier
 from .paper_first_fresh_phenomenon_portfolio import build_fresh_phenomenon_portfolio, validate_fresh_phenomenon_portfolio, write_fresh_phenomenon_portfolio
+from .paper_first_skill_validation_transfer_scout import write_skill_validation_transfer_scout
 from .paper_first_legacy_reduction_migration import load_public_migration, validate_public_migration
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import load_problem_generator_state
@@ -1701,6 +1702,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_pf2_method_adjudication()
     write_pf357_problem_adjudication()
     write_fresh_saturation_state()
+    write_skill_validation_transfer_scout()
     write_fresh_phenomenon_portfolio()
     write_search_portfolio_design_adjudication()
     write_sp15_identifiability_support()

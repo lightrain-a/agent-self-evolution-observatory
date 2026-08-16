@@ -7,6 +7,11 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT
+from .paper_first_skill_validation_transfer_scout import (
+    DEFAULT_JSON as SKILL_VALIDATION_SCOUT_JSON,
+    F0_HARNESS as SKILL_VALIDATION_F0_HARNESS,
+    validate_skill_validation_transfer_scout,
+)
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-fresh-phenomenon-portfolio-20260817.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-fresh-phenomenon-portfolio-20260817.js"
@@ -27,8 +32,13 @@ EXPECTED_EVIDENCE_ECHO_F0_GOVERNANCE_GUARD_SHA256 = "2be69a4968575dcb4e4cab5cde6
 EXPECTED_EVIDENCE_ECHO_F0_PLAN_SHA256 = "f7c1b8cce177a0efff84cfcf404ef436cf89ead1648548bcd6d633aa3c80a621"
 PRIMARY_STATE_JSON = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.json"
 DEAD_END_MEMORY_JSON = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-adjudication.json"
+DEFENSE_PRINCIPLE_REDUCTION_JSON = PROJECT_ROOT / "generated" / "hard-security-utility-collapse-principle-readjudication-20260817.json"
 
 SCHEMA_VERSION = "1.0"
+AUDITED_SUBSTRATE_STATUSES = {
+    "PROVENANCE_AUDITED_LOCAL_SUBSTRATE",
+    "PROVENANCE_AUDITED_FIRST_PARTY_EXECUTABLE_SUBSTRATE",
+}
 ACTIVE_F0_LIMIT = 1
 ALLOWED_STATUSES = {
     "ACTIVE_F0",
@@ -117,6 +127,8 @@ def build_fresh_phenomenon_portfolio(
     defense_readjudication: dict[str, Any] | None = None,
     spatial_readjudication: dict[str, Any] | None = None,
     harnessbank_support_audit: dict[str, Any] | None = None,
+    skill_validation_scout: dict[str, Any] | None = None,
+    skill_execution_capability: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compile multiple paper scouts without letting unsupported ideas consume experiment slots.
 
@@ -138,7 +150,15 @@ def build_fresh_phenomenon_portfolio(
     defense_readjudication = defense_readjudication or _load(DEFENSE_RESTRICTIVENESS_READJUDICATION)
     spatial_readjudication = spatial_readjudication or _load(SPATIAL_MEMORY_READJUDICATION)
     harnessbank_support_audit = harnessbank_support_audit or _load(HARNESSBANK_SUPPORT_AUDIT)
+    skill_validation_scout = _load(SKILL_VALIDATION_SCOUT_JSON) if skill_validation_scout is None else skill_validation_scout
+    skill_execution_capability = skill_execution_capability or {}
     ps = primary_state.get("summary") or {}
+    defense_reduction = _load(DEFENSE_PRINCIPLE_REDUCTION_JSON)
+    defense_reduction_certified = bool(
+        defense_reduction.get("principle_dead_end_certified") is True
+        and ((defense_reduction.get("principle_diagnosis") or {}).get("status")) == "PRINCIPLE_DEAD_END_CERTIFIED"
+        and ((((defense_reduction.get("principle_diagnosis") or {}).get("counter_explanation") or {}).get("same_information_reduction_verified")) is True)
+    )
 
     defense_closure = defense_readjudication.get("fresh_phenomenon_closure") or {}
     defense_diagnosis = ((defense_readjudication.get("principle_diagnosis") or {}).get("counter_explanation") or {})
@@ -252,6 +272,30 @@ def build_fresh_phenomenon_portfolio(
         and len(list(execution_capability.get("gpu_lease_ids") or [])) > 0
     )
 
+    skill_scout_errors = validate_skill_validation_transfer_scout(skill_validation_scout) if skill_validation_scout else ["missing-scout-receipt"]
+    skill_f0 = skill_validation_scout.get("f0") or {}
+    skill_env = skill_validation_scout.get("execution_environment") or {}
+    skill_design_ready = bool(
+        not skill_scout_errors
+        and skill_f0.get("design_ready") is True
+        and int(skill_f0.get("families") or 0) == 30
+        and skill_f0.get("arms") == ["raw_trajectory_rag", "selfgen_experience_always"]
+        and int(skill_f0.get("model_calls_executed") or 0) == 0
+        and int(skill_f0.get("task_trials_executed") or 0) == 0
+    )
+    skill_execution_ready = bool(
+        skill_design_ready
+        and skill_env.get("execution_ready") is True
+        and skill_execution_capability.get("controller_verified") is True
+        and skill_execution_capability.get("valid") is True
+        and skill_execution_capability.get("idea_id") == "PA-05-SKILL-VALIDATION-TRANSFER"
+        and skill_execution_capability.get("plan_hash") == skill_f0.get("plan_sha256")
+        and str(skill_execution_capability.get("authority_id") or "")
+        and str(skill_execution_capability.get("run_id") or "")
+        and str(skill_execution_capability.get("server_id") or "")
+        and len(list(skill_execution_capability.get("resource_lease_ids") or [])) > 0
+    )
+
     harness_hold = _memory_hold(dead_end_memory, "SHADOW-P07-C01")
     defense_hold = _memory_hold(dead_end_memory, "SHADOW-P11-C02")
     spatial_hold = next(
@@ -332,6 +376,58 @@ def build_fresh_phenomenon_portfolio(
                 "Reopen only with a preregistered matched intervention that holds evidence content, repetition count, token budget, ordering, and generic instruction effects fixed while changing only the hypothesized representation, and shows a replicated residual plus mechanism-specific recovery."
                 if echo_f0_reduced
                 else "Execution requires a controller-verified experiment authority bound to the repaired F0 plan plus matching active GPU lease(s), with CUDA-visible GPU UUIDs exactly covered by those leases. If the F0 is reduced by token-matched neutral padding or the paired effect disappears, archive. If redundant evidence remains uniquely harmful and DEDUP_WARNING selectively recovers safety, then run current-source collision review before any Problem-Gate submission."
+            ),
+        ),
+        _candidate(
+            candidate_id="PA-05-SKILL-VALIDATION-TRANSFER",
+            title="Does Local Skill Validation Identify Deployment-Time Procedural Transfer?",
+            source_refs=["arXiv:2605.24117", "arXiv:2603.25158", "arXiv:2605.23904", "arXiv:2605.08693", "arXiv:2603.02766"],
+            phenomenon=(
+                "SkillEvolBench supplies 30 matched latent families with T1-T3 acquisition/replay and frozen T4 context-shift, "
+                "T5 adversarial, and T6 composition deployment. Current skill-evolution systems commonly use local/held-out validation "
+                "or related probe utility to accept/select skill edits, while SkillEvolBench reports that raw trajectory reuse can outperform "
+                "distilled skills and that skill gains are unstable under frozen deployment. The unresolved object is whether local validation "
+                "is an identifying selection statistic for which persistent representation actually transfers."
+            ),
+            strongest_reduction=(
+                "one representation globally dominates; ordinary family difficulty; raw trajectories are simply globally stronger; "
+                "local replay already predicts deployment; or one-seed model variance explains apparent inversions"
+            ),
+            cheapest_falsifier=(
+                "On the exact SkillEvolBench commit, run only raw_trajectory_rag and selfgen_experience_always with one model and seed A. "
+                "For each of 30 families, compare frozen T1-T3 within-env replay preference with T4-T6 deployment preference. Require both arms "
+                "to win nontrivial family subsets, >=10 joint-decisive families, >=40% preference inversions, and a bootstrap-positive oracle-vs-local "
+                "selection regret while local selection fails to beat the best global arm by >0.03."
+            ),
+            support_status="PROVENANCE_AUDITED_FIRST_PARTY_EXECUTABLE_SUBSTRATE" if skill_design_ready else "INCOMPLETE_RECEIPT",
+            status="ACTIVE_F0" if skill_execution_ready else ("HOLD_EXECUTION" if skill_design_ready else "HOLD_SUPPORT"),
+            priority=90,
+            why_now=(
+                "Unlike source-only scouts, this direction has an exact first-party benchmark commit, 180 validated tasks, two matched canonical arms, "
+                "a 270-task dry-run for each arm, per-family replay/deployment truth, and a frozen analyzer. It is held only by execution environment/authority."
+            ),
+            substrate={
+                "repository": ((skill_validation_scout.get("source") or {}).get("repository")),
+                "commit_sha": ((skill_validation_scout.get("source") or {}).get("commit_sha")),
+                "archive_sha256": ((skill_validation_scout.get("source") or {}).get("archive_sha256")),
+                "tasks": (((skill_validation_scout.get("source") or {}).get("asset_validation") or {}).get("tasks")),
+                "families": skill_f0.get("families"),
+                "tasks_per_arm": skill_f0.get("tasks_per_arm"),
+                "primary_tasks_per_arm": skill_f0.get("primary_tasks_per_arm"),
+                "learning_replays_per_arm": skill_f0.get("learning_replays_per_arm"),
+            },
+            evidence={
+                "design_ready": skill_design_ready,
+                "plan_sha256": skill_f0.get("plan_sha256"),
+                "harness_sha256": skill_f0.get("harness_sha256"),
+                "current_source_boundary": ((skill_validation_scout.get("current_source_boundary") or {}).get("status")),
+                "model_calls_executed": skill_f0.get("model_calls_executed"),
+                "task_trials_executed": skill_f0.get("task_trials_executed"),
+            },
+            reopen_only_if=(
+                "Provision the benchmark runtime (Harbor + agent-runtime image + agent and SkillAuthor credentials), then obtain a separate "
+                "controller-issued execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus current-source review; "
+                "it never authorizes Problem Gate, method design, or full experiments by itself."
             ),
         ),
         _candidate(
@@ -444,6 +540,24 @@ def build_fresh_phenomenon_portfolio(
         "unauthorized_partial_run_ingestable": False,
         "status": "EXECUTION_READY" if echo_execution_ready else "HOLD_EXECUTION_AUTHORITY_REQUIRED",
     }
+    skill_row = next(row for row in candidates if row["candidate_id"] == "PA-05-SKILL-VALIDATION-TRANSFER")
+    skill_row["f0_design_ready"] = skill_design_ready
+    skill_row["execution_readiness"] = {
+        "operationalization_ready": skill_design_ready,
+        "runtime_environment_ready": bool(skill_env.get("execution_ready")),
+        "controller_verified_capability_present": skill_execution_ready,
+        "execution_ready": skill_execution_ready,
+        "required_plan_sha256": skill_f0.get("plan_sha256"),
+        "active_experiment_authority_required": True,
+        "matching_resource_leases_required": True,
+        "unauthorized_partial_run_ingestable": False,
+        "status": (
+            "EXECUTION_READY"
+            if skill_execution_ready
+            else ("HOLD_CONTROLLER_AUTHORITY_REQUIRED" if skill_env.get("execution_ready") else "HOLD_EXECUTION_ENV_AND_AUTHORITY_REQUIRED")
+        ),
+        "hold_reason": list(skill_env.get("hold_reason") or []),
+    }
 
     active = [row for row in candidates if row["status"] == "ACTIVE_F0"]
     if len(active) > ACTIVE_F0_LIMIT:
@@ -488,6 +602,7 @@ def build_fresh_phenomenon_portfolio(
             "unauthorized_partial_runs_cannot_be_ingested_as_f0_evidence": True,
             "preexecution_operationalization_repair_requires_hash_chain_and_independent_review": True,
             "source_only_candidates_cannot_consume_experiment_slot": True,
+            "multiple_design_ready_f0s_may_wait_behind_one_execution_slot": True,
             "support_unavailable_is_hold_not_scientific_failure": True,
             "positive_f0_does_not_grant_problem_gate_or_paper_design": True,
             "f0_must_test_strongest_generic_reduction_before_novelty_claim": True,
@@ -551,6 +666,21 @@ def build_fresh_phenomenon_portfolio(
                 "path": str(DEAD_END_MEMORY_JSON.relative_to(PROJECT_ROOT)),
                 "sha256": _sha(DEAD_END_MEMORY_JSON),
             },
+            "defense_principle_reduction": {
+                "path": str(DEFENSE_PRINCIPLE_REDUCTION_JSON.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(DEFENSE_PRINCIPLE_REDUCTION_JSON),
+                "certified": defense_reduction_certified,
+            },
+            "skill_validation_transfer_scout": {
+                "path": str(SKILL_VALIDATION_SCOUT_JSON.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(SKILL_VALIDATION_SCOUT_JSON),
+                "status": skill_validation_scout.get("status"),
+                "plan_sha256": skill_f0.get("plan_sha256"),
+            },
+            "skill_validation_transfer_f0_harness": {
+                "path": str(SKILL_VALIDATION_F0_HARNESS.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(SKILL_VALIDATION_F0_HARNESS),
+            },
         },
         "scientific_authority": False,
     }
@@ -605,6 +735,23 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
             or guard_binding.get("repaired_plan_canonical_sha256") != EXPECTED_EVIDENCE_ECHO_F0_PLAN_SHA256
         ):
             errors.append("design-ready Evidence Echo F0 lacks the execution-governance guard binding")
+    skill_binding = bindings.get("skill_validation_transfer_scout") or {}
+    skill_harness_binding = bindings.get("skill_validation_transfer_f0_harness") or {}
+    skill_rows = [row for row in rows if row.get("candidate_id") == "PA-05-SKILL-VALIDATION-TRANSFER"]
+    if skill_rows and skill_rows[0].get("f0_design_ready") is True:
+        bound_skill_scout = _load(SKILL_VALIDATION_SCOUT_JSON)
+        skill_f0 = bound_skill_scout.get("f0") or {}
+        if (
+            validate_skill_validation_transfer_scout(bound_skill_scout)
+            or skill_binding.get("sha256") != _sha(SKILL_VALIDATION_SCOUT_JSON)
+            or skill_binding.get("status") != bound_skill_scout.get("status")
+            or skill_binding.get("plan_sha256") != skill_f0.get("plan_sha256")
+        ):
+            errors.append("design-ready Skill Validation Transfer F0 lacks the bound scout receipt")
+        if skill_harness_binding.get("sha256") != _sha(SKILL_VALIDATION_F0_HARNESS):
+            errors.append("design-ready Skill Validation Transfer F0 lacks the bound analyzer")
+        if (skill_rows[0].get("evidence") or {}).get("plan_sha256") != skill_f0.get("plan_sha256"):
+            errors.append("Skill Validation Transfer candidate plan binding drift")
     for row in rows:
         if row.get("status") not in ALLOWED_STATUSES:
             errors.append(f"invalid status:{row.get('candidate_id')}")
@@ -614,7 +761,7 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
         if any(bool(authority.get(key)) for key in ("problem_gate", "paper_design", "method", "experiment", "p0", "gpu", "full_experiment")):
             errors.append(f"candidate illegally carries downstream authority:{row.get('candidate_id')}")
         if row.get("status") in {"ACTIVE_F0", "HOLD_EXECUTION"}:
-            if row.get("support_status") != "PROVENANCE_AUDITED_LOCAL_SUBSTRATE":
+            if row.get("support_status") not in AUDITED_SUBSTRATE_STATUSES:
                 errors.append(f"design-ready F0 lacks audited substrate:{row.get('candidate_id')}")
             if not str(row.get("cheapest_falsifier") or "").strip():
                 errors.append(f"design-ready F0 lacks falsifier:{row.get('candidate_id')}")

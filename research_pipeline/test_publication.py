@@ -131,6 +131,8 @@ class PublicationTest(unittest.TestCase):
                 "generated/paper-first-evidence-echo-retrospective-20260817.json",
                 "generated/paper-first-fresh-phenomenon-portfolio-20260817.json",
                 "generated/paper-first-fresh-phenomenon-portfolio-20260817.js",
+                "generated/paper-first-skill-validation-transfer-scout-20260817.json",
+                "generated/paper-first-skill-validation-transfer-scout-20260817.js",
                 "generated/paper-first-primary-evidence-state.json",
                 "generated/paper-first-primary-evidence-state.js",
                 "generated/paper-first-problem-generator-state.json",

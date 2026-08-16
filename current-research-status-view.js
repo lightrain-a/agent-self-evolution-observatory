@@ -27,6 +27,13 @@
     const sp15 = shadow.sp15_support || {};
     const sp09 = (shadow.rows || []).find(x => x.id === "SP-09") || {};
     const sp15row = (shadow.rows || []).find(x => x.id === "SP-15") || {};
+    const freshRows = (fresh.rows || []).map(row => ({
+      id: row.candidate_id || "FRESH-F0",
+      scope: pick("fresh phenomenon · design-ready F0", "fresh phenomenon · design-ready F0"),
+      status: row.status || fresh.status || "NO_ACTIVE_F0",
+      decision: pick(`现象=${short(row.phenomenon, 320)}；最强约简=${short(row.strongest_reduction, 220)}。`, `Phenomenon=${short(row.phenomenon, 320)}; strongest reduction=${short(row.strongest_reduction, 220)}.`),
+      authority: pick(`execution=${row.execution_readiness?.status || "--"}；plan=${String(row.execution_readiness?.required_plan_sha256 || "--").slice(0,12)}；未授权 partial run 不可纳入证据。Problem Gate/Method/P0/GPU 自动权限均为 0。`, `execution=${row.execution_readiness?.status || "--"}; plan=${String(row.execution_readiness?.required_plan_sha256 || "--").slice(0,12)}; unauthorized partial runs are non-ingestable. Automatic Problem-Gate/Method/P0/GPU authority remains zero.`)
+    }));
     return [
       {
         id: "STRI", scope: pick("当前论文线", "current paper"), status: paper.submission_status || paper.status,
@@ -53,11 +60,7 @@
         decision: pick(`Generator=${canonical.generator_status || "--"}；Queue PASS=${canonical.problem_gate_pass || 0}；Paper Design backlog=${canonical.paper_design_backlog || 0}。`, `Generator=${canonical.generator_status || "--"}; Queue PASS=${canonical.problem_gate_pass || 0}; Paper Design backlog=${canonical.paper_design_backlog || 0}.`),
         authority: pick("当前没有 canonical live idea 可进入 Method/P0。", "There is no canonical live idea eligible for Method/P0.")
       },
-      {
-        id: "PA-01", scope: pick("fresh phenomenon · F0 execution HOLD", "fresh phenomenon · F0 execution hold"), status: fresh.status || "NO_ACTIVE_F0",
-        decision: pick(`当前 fresh portfolio=${fresh.design_ready_f0 || 0} design-ready / ${fresh.active_f0 || 0} ACTIVE_F0 / ${fresh.execution_holds || 0} execution HOLD / ${fresh.support_holds || 0} support HOLD。PA-01 retrospective 仍是 raw pages 锁定时 10.9%→21.9% 的 unanswerable 假答上升（paired 7→0, p=0.0156），但五臂 F0 还没有合法 scientific replay。`, `Fresh portfolio=${fresh.design_ready_f0 || 0} design-ready / ${fresh.active_f0 || 0} ACTIVE_F0 / ${fresh.execution_holds || 0} execution hold / ${fresh.support_holds || 0} support holds. PA-01 retains the retrospective 10.9%→21.9% false-answer increase on unanswerable units under locked raw pages (paired 7→0, p=0.0156), but there is still no authorized scientific five-arm replay.`),
-        authority: pick("F0 treatment/plan 已冻结，但执行必须先由 controller 发放绑定 f7c1… plan 的 experiment authority 与匹配 GPU lease；direct CUDA 禁止。此前未授权 partial run 不可用于 H1/H2/H3。Problem Gate/Method/P0/GPU 自动权限仍为 0。", "The F0 treatment/plan is frozen, but execution first requires controller-issued experiment authority bound to the f7c1… plan plus matching GPU leases; direct CUDA is forbidden. The prior unauthorized partial run is non-ingestable for H1/H2/H3. Automatic Problem-Gate/Method/P0/GPU authority remains zero.")
-      },
+      ...freshRows,
       {
         id: "SP-15", scope: pick("shadow HOLD", "shadow hold"), status: sp15.decision || sp15row.status,
         decision: pick(`已审 ${sp15.audited_sources || 0} 个一手/作者 release，但 query-level identifiability unit=${sp15.query_level_identifiability_units || 0}。`, `Audited ${sp15.audited_sources || 0} primary/author releases, but query-level identifiability units=${sp15.query_level_identifiability_units || 0}.`),

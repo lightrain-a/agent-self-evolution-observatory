@@ -7,6 +7,14 @@
 - Replayed the stronger gate on STRI: 14 actually referenced manuscript/evidence/visual files are SHA-bound, Paper Quality remains `PASS_MANUSCRIPT_EVIDENCE`, evidence debt remains zero, and the paper remains `READY_NARROW_ICLR` without changing any scientific claim or experiment result.
 - Exposed content-addressed completion in the public STRI projection and System Overview, and recorded the closed local gap under the Science One Chain-of-Evidence learning entry.
 
+## 2026-08-17 · Substrate-gated multi-paper F0 portfolio
+
+- Added `PA-05-SKILL-VALIDATION-TRANSFER`, asking whether local skill replay/validation identifies deployment-time procedural transfer rather than proposing another skill generator.
+- Bound PA-05 to the first-party SkillEvolBench commit `9e3daa339987c3cfa624121e1be442593a53d43c` and archive SHA256 `2892e337780746e547a748c947b379b3c55af09eea1d273ace383b80d2e569ee`. Official asset/config validation passes for 30 latent families / 180 primary tasks; `raw_trajectory_rag` and `selfgen_experience_always` each compile to the identical 270-trial schedule (180 primary + 90 frozen T1-T3 replays) with zero model calls executed during preflight.
+- Added the content-addressed `skill-validation-transfer-f0-v1` analyzer. A GO requires both representations to win nontrivial local and deployment family subsets, at least 10 jointly decisive families, at least 40% local-to-deployment preference inversions, positive family-bootstrap oracle-vs-local-selection regret, and no material advantage of the local selector over the best global arm. Global representation dominance therefore STOPs instead of being relabeled as a selection-validity problem.
+- PA-05 is currently the sole design-ready fresh F0 and is held only by execution environment/controller authority. PA-01 is `STOP_REDUCTION` after its authorized generic-repetition F0; PA-02 is `STOP_REDUCTION` after same-information Pareto/overblocking reduction; PA-03 remains `HOLD_SUPPORT`; PA-04 is `STOP_REDUCTION` after the primary paper's visual-grounding explanation.
+- Frontend current-state rendering enumerates the whole fresh portfolio, and System Overview distinguishes design-ready, execution-HOLD, support-HOLD, reduction-STOP, and ACTIVE_F0 states.
+
 ## 2026-08-17 · Fresh Phenomenon Portfolio and evidence-echo F0
 
 - Added a zero-authority Fresh Phenomenon Portfolio between primary-source discovery and canonical Problem Gate. The portfolio permits at most one `ACTIVE_F0`; a candidate may occupy that slot only when it already has a provenance-audited local substrate and a frozen same-information falsifier. Source-only ideas remain support HOLDs and cannot consume experiment/GPU budget.

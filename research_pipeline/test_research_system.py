@@ -62,10 +62,10 @@ class ResearchSystemTest(unittest.TestCase):
     def test_fresh_phenomenon_portfolio_separates_f0_from_problem_authority(self) -> None:
         portfolio=self.state["paper_first_fresh_phenomenon_portfolio"]
         summary=portfolio["summary"]
-        self.assertEqual(portfolio["status"],"NO_ACTIVE_F0")
+        self.assertEqual(portfolio["status"],"F0_EXECUTION_HOLD")
         self.assertEqual(summary["active_f0"],0)
-        self.assertEqual(summary["design_ready_f0"],0)
-        self.assertEqual(summary["hold_execution"],0)
+        self.assertEqual(summary["design_ready_f0"],1)
+        self.assertEqual(summary["hold_execution"],1)
         self.assertEqual(summary["hold_support"],1)
         self.assertEqual(summary["stop_reduction"],3)
         self.assertEqual(summary["ready_for_problem_review"],0)
@@ -78,6 +78,11 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(echo["support_status"],"F0_REDUCED_BY_GENERIC_PROMPT_EFFECT")
         self.assertFalse((echo.get("execution_readiness") or {}).get("execution_ready"))
         self.assertFalse((echo.get("execution_readiness") or {}).get("unauthorized_partial_run_ingestable"))
+        skill=next(row for row in portfolio["candidates"] if row.get("candidate_id")=="PA-05-SKILL-VALIDATION-TRANSFER")
+        self.assertEqual(skill["status"],"HOLD_EXECUTION")
+        self.assertEqual(skill["support_status"],"PROVENANCE_AUDITED_FIRST_PARTY_EXECUTABLE_SUBSTRATE")
+        self.assertTrue(skill["f0_design_ready"])
+        self.assertFalse((skill.get("execution_readiness") or {}).get("execution_ready"))
         self.assertTrue(all(row.get("paper_problem_claimed") is False for row in portfolio["candidates"]))
         broken=copy.deepcopy(self.state);broken["paper_first_fresh_phenomenon_portfolio"]["candidates"][0]["authority"]["gpu"]=True
         self.assertTrue(any("Fresh phenomenon portfolio" in error for error in validate_state(broken)))
