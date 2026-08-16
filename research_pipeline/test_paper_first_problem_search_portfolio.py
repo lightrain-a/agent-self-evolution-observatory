@@ -3,7 +3,7 @@ from __future__ import annotations
 import json,re,unittest
 
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES,SEARCH_PORTFOLIO_PRIMITIVES,LANE_EVIDENCE_REQUIRED,LANE_SOURCE_ROLES
-from .paper_first_problem_search_portfolio import DEFAULT_MAX_PARALLEL_CALLS,_formulation_prompt,run_search_portfolio
+from .paper_first_problem_search_portfolio import DEFAULT_MAX_PARALLEL_CALLS,_expansion_prompt,_formulation_prompt,_opposite_search_priors,run_search_portfolio
 from .paper_first_fresh_saturation import reduction_pattern_audit
 
 
@@ -44,6 +44,16 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertGreaterEqual(state["summary"]["max_branch_depth"],1)
         self.assertGreater(state["summary"]["formulated_candidates"],0)
         self.assertFalse(state["scientific_authority"])
+
+    def test_certified_dead_end_emits_opposite_search_prior_without_authority(self):
+        memory={"blocked_objects":[{"source_candidate_id":"D1","basin":"principle-dead-end-x","dead_end_certified":True,"counter_explanation":{"type":"IMPOSSIBILITY_OR_INVARIANCE","opposite_principle":"Evidence sufficiency is relevance-conditioned, not coverage-conditioned.","opposite_search_seed":"Search for relevance-conditioned evidence debt.","reopen_condition":"Fresh evidence must expose a same-information residual.","evidence_refs":["artifact:x"]}}],"hold_objects":[{"source_candidate_id":"H1","dead_end_certified":False,"counter_explanation":{"opposite_principle":"must not appear","opposite_search_seed":"must not appear"}}]}
+        priors=_opposite_search_priors(memory)
+        self.assertEqual(len(priors),1)
+        self.assertEqual(priors[0]["source_candidate_id"],"D1")
+        prompt=_expansion_prompt("CONTRADICTION",self.records(),1,memory)
+        self.assertIn("DEAD-END INVERSION is a search prior, never authority",prompt)
+        self.assertIn("relevance-conditioned evidence debt",prompt)
+        self.assertNotIn("must not appear",prompt.split("CERTIFIED DEAD-END INVERSION PRIORS=",1)[1].split(". DEAD-END SEARCH MEMORY",1)[0])
 
     def test_formulation_prompt_never_turns_unresolved_reduction_into_a_fake_clear(self):
         records=self.records();registry={row["ref"]:row for row in records};branch={"seed_id":"B1","parent_id":"","branch_depth":0,"discovery_lane":"UNEXPLAINED_BOUNDARY","title":"Boundary","problem_seed":"Question","scientific_tension":"Tension","problem_family":"boundary","structural_signature":"boundary|signal","agent_specific_constraint":"agent-specific","empirical_evidence":{"source_a":{"ref":records[0]["ref"],"claim":"A","evidence_role":"EMPIRICAL_FACT"},"source_b":{"ref":records[0]["ref"],"claim":"B","evidence_role":"EMPIRICAL_FACT"}},"lane_evidence":{},"cross_domain_origin":""}

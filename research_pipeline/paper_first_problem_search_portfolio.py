@@ -134,6 +134,26 @@ def _evidence_payload(records):
         "typed_evidence":{k:[str(f.get("text") or "")[:340] for f in ((r.get("typed_evidence") or {}).get(k) or [])[:2] if isinstance(f,dict)] for k in ("operational_assumptions","measured_failures","boundary_observations")},
     } for r in records[:32]]
 
+def _opposite_search_priors(dead_end_memory,limit=8):
+    priors=[]
+    for row in (dead_end_memory or {}).get("blocked_objects") or []:
+        if not isinstance(row,dict) or row.get("dead_end_certified") is not True:continue
+        counter=row.get("counter_explanation") or {}
+        if not isinstance(counter,dict):continue
+        principle=str(counter.get("opposite_principle") or "").strip();seed=str(counter.get("opposite_search_seed") or "").strip()
+        if not principle or not seed:continue
+        priors.append({
+            "source_candidate_id":str(row.get("source_candidate_id") or ""),
+            "basin":str(row.get("basin") or ""),
+            "counter_explanation_type":str(counter.get("type") or ""),
+            "opposite_principle":principle,
+            "opposite_search_seed":seed,
+            "reopen_condition":str(counter.get("reopen_condition") or row.get("reopen_only_if") or ""),
+            "evidence_refs":list(counter.get("evidence_refs") or row.get("current_source_refs") or [])[:6],
+        })
+        if len(priors)>=limit:break
+    return priors
+
 def _expansion_prompt(lane,records,count,dead_end_memory=None):
     records=_lane_records(lane,records)
     contract={"source_roles":list(LANE_SOURCE_ROLES[lane]),"minimum_distinct_primary_sources":LANE_DISTINCT_SOURCE_MINIMUM[lane],"required_lane_evidence":list(LANE_EVIDENCE_REQUIRED[lane]),"machine_contract":LANE_MACHINE_CONTRACTS[lane]}
@@ -148,11 +168,12 @@ def _expansion_prompt(lane,records,count,dead_end_memory=None):
         "This is exploration, not adjudication: DO NOT apply mature-theory, closest-work, domain-transfer, or Negative-Space novelty vetoes here. "
         "Do not invent open-world missing-cell claims. Preserve structurally unusual seeds even if their final novelty is uncertain. "
         "ANOMALY-FIRST SEARCH: actively inspect source-local sign reversals, nonmonotonicity, thresholds, plateaus, history dependence, composition effects, and bounded failure transitions; do not wait for a second paper to have used the same metric when this lane permits one source. When equally grounded seeds compete, prefer an operational core whose decisive comparison could plausibly be materialized on released units, first-party code, or an existing provenance-audited agent substrate. Support feasibility is a search priority only and never novelty evidence. "
+        "DEAD-END INVERSION is a search prior, never authority: a principle-certified dead end may contribute its opposite principle/search seed, but only generate an inversion seed when the supplied fresh primary evidence independently grounds it and the seed escapes the certified basin/reopen condition. Never turn a dead-end inversion into an automatic survivor or fabricate support merely to reuse it. "
         f"Generate exactly {count} materially distinct grounded seeds for lane {lane}. The lane machine contract is {json.dumps(contract,ensure_ascii=False)}. "
         f"Use two grounded evidence items and at least {LANE_DISTINCT_SOURCE_MINIMUM[lane]} distinct primary source ref(s), following the lane contract; obey evidence roles. Claims must be supported by supplied primary text. "
         "Vary problem families and structural signatures; avoid paraphrase-only variants. "
         "For CROSS_DOMAIN_STRUCTURAL_ANALOGY, the external domain is only an analogy prior and never novelty by itself; state the Agent-specific structural constraint. "
-        f"Analogy priors={json.dumps(analogy,ensure_ascii=False)}. DEAD-END SEARCH MEMORY (search-control only, never scientific authority)={json.dumps(dead_end_memory or {},ensure_ascii=False,separators=(',',':'))}. VERIFIED PRIMARY EVIDENCE={json.dumps(_evidence_payload(records),ensure_ascii=False,separators=(',',':'))}. "
+        f"Analogy priors={json.dumps(analogy,ensure_ascii=False)}. CERTIFIED DEAD-END INVERSION PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. DEAD-END SEARCH MEMORY (search-control only, never scientific authority)={json.dumps(dead_end_memory or {},ensure_ascii=False,separators=(',',':'))}. VERIFIED PRIMARY EVIDENCE={json.dumps(_evidence_payload(records),ensure_ascii=False,separators=(',',':'))}. "
         f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 
@@ -196,10 +217,10 @@ def _formulation_prompt(branches,registry,dead_end_memory=None):
         "A mature theory can HARD-VETO only under the Reduction Falsifiability Contract: same observable information, an ex-ante exact candidate-level prediction, a testable distinguishing/reduction prediction, and explicit scope boundary. A generic label such as CATE, dynamical systems, transfer, continual learning, nonmonotonicity, or information theory is not itself a veto. "
         "Use matched_patterns ONLY for a proven exact hard reduction. Use pending_patterns only when an exact reduction test is genuinely unresolved AND the branch is otherwise complete enough for a concrete problem-falsifier preflight; never set all_exact_reduction_tests_resolved=true while any pending pattern or NEEDS_EXACT_REDUCTION_TEST baseline remains. Use rejected_patterns when a broad ledger pattern was considered and the supplied frozen evidence is sufficient to show it cannot exactly reduce the candidate. "
         "Do not manufacture a reduction resolution from absence of evidence. If an unresolved exact reduction is the only remaining blocker, keep the full problem object, exact prediction, strongest same-information baseline, and cheapest falsifier concrete; the deterministic compiler will route it to a zero-authority reduction-pending hold rather than semantic review. If the branch also lacks lane grounding, provenance, same-information nonreducibility, domain-transfer separation, or a concrete falsifier, return it in rejected. "
-        "Inspect branch-local closest_work_candidates. A duplicate/collision or VALID_HARD_VETO branch must be returned in rejected rather than silently omitted. "
+        "Inspect branch-local closest_work_candidates. A duplicate/collision or VALID_HARD_VETO branch must be returned in rejected rather than silently omitted. If a branch follows a certified dead-end inversion prior, explicitly verify that fresh primary evidence grounds the opposite principle and that the formulation satisfies the recorded reopen condition; otherwise reject or hold it rather than rewarding inversion wording. "
         "Prefer a residual whose cheapest falsifier is an actual controlled comparison we can materialize quickly from released units, first-party code, or an existing provenance-audited substrate. Do not claim such support exists unless the supplied evidence establishes it; missing support should be an explicit preflight dependency, not a fabricated PASS. "
         "Preserve the inherited typed evidence/lane contract and source refs. "
-        f"BRANCHES={json.dumps(compact,ensure_ascii=False,separators=(',',':'))}. DEAD_END_MEMORY={json.dumps(dead_end_memory or {},ensure_ascii=False,separators=(',',':'))}. PRIMARY_EVIDENCE={json.dumps(evidence,ensure_ascii=False,separators=(',',':'))}. REDUCTION_LEDGER={json.dumps(reduction_pattern_audit(),ensure_ascii=False,separators=(',',':'))}. "
+        f"BRANCHES={json.dumps(compact,ensure_ascii=False,separators=(',',':'))}. DEAD_END_MEMORY={json.dumps(dead_end_memory or {},ensure_ascii=False,separators=(',',':'))}. CERTIFIED_DEAD_END_INVERSION_PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. PRIMARY_EVIDENCE={json.dumps(evidence,ensure_ascii=False,separators=(',',':'))}. REDUCTION_LEDGER={json.dumps(reduction_pattern_audit(),ensure_ascii=False,separators=(',',':'))}. "
         f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 

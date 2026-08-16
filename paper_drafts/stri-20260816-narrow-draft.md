@@ -89,7 +89,7 @@ An exact LP is useful but can be opaque. A common support pattern yields a close
 
 **Theorem 2 (global-singleton overlap lower bound).** Suppose two packages/primitives `a,b` each have a context supported by exactly that one package over the full frozen support universe, and there is another context supported by both `a` and `b` (possibly with additional packages). If both singleton contexts retain positive exposure, then every nonnegative package mass satisfies `R*(A)>=2` on the focal contexts.
 
-**Proof.** Let `r>0` be the minimum exposure among the two globally singleton contexts and the shared context. Because the first singleton support signature is exactly `{a}` over the full frozen package universe, its exposure is exactly `w_a`, so `w_a>=r`. Likewise the second singleton context has exposure exactly `w_b`, hence `w_b>=r`. The shared context contains both `a` and `b`; if it contains additional packages their nonnegative weights can only increase its exposure. Therefore its exposure is at least `w_a+w_b>=2r`. Thus the maximum focal exposure is at least twice the minimum focal exposure. Because restricting to the focal rows cannot make the global max/min ratio larger than the full-matrix optimum's best achievable distortion, every globally feasible package-only weighting satisfies `R*(A)>=2`. □
+**Proof.** Fix any nonnegative package mass `w` that gives all covered contexts positive exposure, and let `r>0` be the minimum exposure among the two globally singleton contexts and the shared context. Because the first singleton support signature is exactly `{a}` over the full frozen package universe, its exposure is exactly `w_a`, so `w_a>=r`. Likewise the second singleton context has exposure exactly `w_b`, hence `w_b>=r`. The shared context contains both `a` and `b`; if it contains additional packages, their nonnegative weights can only increase its exposure. Therefore its exposure is at least `w_a+w_b>=2r`, so the max/min ratio restricted to these three focal rows is at least two. The max over the full support matrix is no smaller than the focal maximum and the full-matrix minimum is no larger than the focal minimum; hence the full-matrix exposure ratio for this arbitrary `w` is also at least two. Minimizing over all feasible `w` gives `R*(A)>=2`. □
 
 The released Skill-SP Level-1 graph gives two independent instances: `skill_003`–`skill_015` and `skill_004`–`skill_015`. The exact LP reaches `R*=2`, so the closed-form lower bound is tight rather than merely qualitative.
 
@@ -207,12 +207,47 @@ The exact quantity `R*(A)` turns this principle into a falsifiable audit. Skill-
 | SQC improves utility / achieves dynamic STRI | **Not claimed** | dynamic P0 did not qualify |
 | static STRI causes downstream task harm | **Not claimed** | no qualified dynamic evidence |
 
-## Planned Figures / Tables
+## Ready-to-typeset Tables and Remaining Figures
+
+### Table 1. Released-system representation-sensitivity evidence
+
+| System | Control surface | Independent support / identity truth | Representation-sensitivity evidence | Role |
+|---|---|---|---|---|
+| Skill Self-Play (tool-call) | pre-task skill sampling + skill-ID feedback/refinement | 15 released package validators | 183/348 covered API-Bank rows have multi-membership; released text duplicate filter misses 5/5 observed specific–generic support-overlap pairs; exact-coverage pruning still leaves 71 overlap rows | primary support-geometry system |
+| SkillRL | fixed-budget template-mode dynamic skill retrieval | released exact skill contents + retrieval implementation on 223 released ALFWorld task descriptions | 12/12 exact-content fresh-ID clones admitted; 11/12 clone targets alter the unique semantic retrieval set; 5/12 reduce unique general contents | independent implementation-level identity witness |
+
+### Table 2. Reduction tournament on Skill-SP Level-1
+
+| Reduction | Information available | Outcome | Decisive evidence |
+|---|---|---|---|
+| Released name+description Jaccard duplicate filter | released skill text | does not absorb | misses 5/5 observed specific–generic support-overlap pairs; similarity 0.1429–0.20 < 0.33 threshold |
+| Exact semantic clone deduplication | exact content identity | does not absorb partial overlap | focal specific/generic packages are distinct and each retains unique support regions |
+| Minimum-cardinality whole-package pruning | complete released support matrix | partial reduction only | active packages 10→7, but 183→71 overlap rows remain under exact support preservation |
+| Arbitrary nonnegative global package weights | complete released support matrix | **strongest same-information residual remains** | exact optimum `R*(A)=2.0` |
+| Global-singleton overlap theorem | complete released support matrix | interpretable lower bound | two independent released witnesses imply `R*(A)>=2`; exact LP attains 2 |
+
+### Table 3. Real support-regime mechanism boundary
+
+| Regime | Covered rows | Multi-membership | Overlap fraction | Closed-form witnesses | `R*` | Certificate |
+|---|---:|---:|---:|---:|---:|---|
+| Skill-SP API-Bank Level-1 full | 314 | 183 | 58.3% | 2 | **2.0** | irreducible package-only residual |
+| Level-1 frozen calibration tools | 47 | 33 | 70.2% | 2 | **2.0** | irreducible package-only residual |
+| Level-1 tool-disjoint heldout tools | 52 | 38 | 73.1% | 2 | **2.0** | irreducible package-only residual |
+| Skill-SP API-Bank Level-3 | 34 | 0 | 0.0% | 0 | **1.0** | package-only equalizable negative |
+| Logical first-party compiler validation | 128 | 127 | 99.2% | 0 | **1.0** | high-overlap but globally equalizable negative |
+
+The last row is the key mechanism control: overlap prevalence is almost maximal while the exact representation residual vanishes. The first three rows establish that the positive Level-1 residual is not removed by fitting on the full support table or by changing to a tool-disjoint heldout subset.
+
+### Appendix table. Dynamic P0-A qualification (no scientific update)
+
+| Generated | skill_003 valid | skill_004 valid | skill_015 valid | Required/source | Decision |
+|---:|---:|---:|---:|---:|---|
+| 72 | 14/24 | 5/24 | 8/24 | 16/24 | `INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED` |
+
+The appendix row is reported for transparency only. It cannot support or refute N1–N3 and cannot be used as a negative dynamic STRI result.
+
+### Remaining figures
 
 - **Fig. 1:** Two package representations over the same semantic support basis and the definition of package exposure.
 - **Fig. 2:** Skill-SP Level-1 support graph with the two global-singleton factor-2 witnesses.
 - **Fig. 3:** `R*` mechanism boundary: Level-1/calibration/heldout = 2 versus Level-3/logical = 1 despite 127/128 logical overlap.
-- **Table 1:** Released-system representation-sensitivity evidence: Skill-SP and SkillRL.
-- **Table 2:** Reduction tournament: text dedup, exact-coverage pruning, optimal global weights, closed-form witness, exact certificate.
-- **Table 3:** Real support-regime comparison with covered rows, overlap fraction, witness count, `R*`, and certificate result.
-- **Appendix table:** faithful Qwen3 P0-A qualification outcome and no-rescue interpretation.

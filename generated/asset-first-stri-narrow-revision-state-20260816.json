@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "date": "2026-08-16",
+  "source_review": "generated/asset-first-stri-narrow-final-review-20260816.json",
+  "status": "READY_FOR_FULL_BODY_WRITING_FIGURE_RENDERING_PENDING",
+  "reviewer_required_revisions": [
+    {
+      "revision": "Complete the proof of the global-singleton overlap lower bound.",
+      "status": "DONE",
+      "evidence": "paper_drafts/stri-20260816-narrow-draft.md Section 3.2 now gives a complete arbitrary-w proof and the full-matrix max/min inequality before minimizing over w."
+    },
+    {
+      "revision": "Add a full related-work section separating STRI from redundancy, clone detection, governance, routing, compression, and bandit reductions.",
+      "status": "DONE",
+      "evidence": "paper_drafts/stri-20260816-narrow-draft.md Section 5"
+    },
+    {
+      "revision": "Restate all claim boundaries and keep failed dynamic P0 outside scientific evidence.",
+      "status": "DONE",
+      "evidence": "Sections 6-8 and the Claim / Evidence Table explicitly forbid downstream-harm, dynamic-STRI, LP-computational-novelty, and Qwen3-bank scientific claims."
+    },
+    {
+      "revision": "Complete final figure and table polish.",
+      "status": "PARTIAL",
+      "evidence": "Tables 1-3 and the dynamic P0 appendix table are now directly typeset in the draft from generated/asset-first-stri-narrow-paper-table-data-20260816.json; Figures 1-3 have frozen content specifications but final rendering remains."
+    }
+  ],
+  "scientific_closure": {
+    "positive_result": "Skill-SP Level-1 full, frozen calibration, and tool-disjoint heldout support all have exact R*(A)=2 under the strongest same-information arbitrary nonnegative global package weighting.",
+    "negative_mechanism_boundaries": [
+      "Skill-SP Level-3 has R*=1 with disjoint support.",
+      "Skill-SP logical first-party compiler validation has 127/128 multi-membership yet R*=1."
+    ],
+    "rejected_old_mechanism": "overlap prevalence itself causes irreducible representation dependence",
+    "surviving_mechanism": "non-equalizable support geometry",
+    "strongest_same_information_baseline": "exact optimal arbitrary nonnegative global package weighting using the full frozen support matrix",
+    "residual": "R*=2.0 on the positive released Level-1 regimes",
+    "dynamic_p0": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED; no scientific belief update"
+  },
+  "next_action": "Continue full paper body writing and render the three frozen figures; do not reopen dynamic P0 or broaden the claims unless new independently qualified evidence appears.",
+  "scientific_authority": false
+}
