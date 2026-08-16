@@ -138,6 +138,19 @@ def _shadow_dead_end_memory(path:Path|None)->dict:
     if not isinstance(memory,dict):memory=payload if isinstance(payload,dict) else {}
     if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True:
         raise ValueError("shadow dead-end memory must be zero-authority and unable to mutate canonical discovery")
+    # Defensive migration for old snapshots: lane-contract failures, support holds,
+    # and unresolved exact-reduction tests used to live in blocked_objects. Only
+    # an affirmative current/mature reduction certificate may remain blocking.
+    all_rows=[dict(row) for row in list(memory.get("blocked_objects") or [])+list(memory.get("hold_objects") or []) if isinstance(row,dict)]
+    blocked=[];holds=[]
+    for row in all_rows:
+        basin=str(row.get("basin") or "");disposition=str(row.get("disposition") or "")
+        certified=row.get("dead_end_certified") is True or basin.startswith("current-source-hard-veto-") or disposition in {"STOP_CURRENT_PRIMARY_COLLISION","STOP_MATURE_THEORY_REDUCTION"}
+        if certified:
+            row["dead_end_certified"]=True;row["memory_class"]="PRINCIPLE_DEAD_END";blocked.append(row)
+        else:
+            row["dead_end_certified"]=False;row.setdefault("memory_class","REOPENABLE_HOLD");holds.append(row)
+    memory=dict(memory);memory["blocked_objects"]=blocked;memory["hold_objects"]=holds
     return memory
 
 
@@ -157,7 +170,7 @@ def _semantic_dead_end_seed_blocker(seed:dict,memory:dict,pool_sha:str)->dict|No
     claims=" ".join(str((evidence.get(key) or {}).get("claim") or "") for key in ("source_a","source_b"))
     problem=" ".join(str(seed.get(key) or "") for key in ("title","problem_seed","scientific_tension","structural_signature","irreducible_object","exact_prediction"))
     for row in memory.get("blocked_objects") or []:
-        if not isinstance(row,dict):continue
+        if not isinstance(row,dict) or row.get("dead_end_certified") is not True:continue
         basin=str(row.get("basin") or "")
         if not basin.startswith(("semantic-exact-reduction-","semantic-lane-contract-")):continue
         if str(row.get("frozen_pool_sha256") or "")!=str(pool_sha or ""):continue

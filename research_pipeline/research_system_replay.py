@@ -47,6 +47,20 @@ def build_research_system_replay(pre_experiment: dict[str, Any]) -> dict[str, An
         "protocol_validity": True,
         "falsifier_triggered": True,
     }
+    certified_counter = {
+        "type": "COUNTER_MECHANISM_SUPPORTED",
+        "statement": "A simpler matched mechanism predicts the observed outcome while the proposed mechanism does not.",
+        "opposite_prediction": "Under matched information and scope, the simpler mechanism preserves the observed sign and the proposed residual disappears.",
+        "opposite_principle": "The simpler matched mechanism, not the proposed standalone mechanism, governs the observed effect.",
+        "opposite_search_seed": "Search for a setting with the same information where the simpler mechanism makes the wrong prediction and a residual is identifiable.",
+        "scope": "replay fixture",
+        "same_information_or_scope_matched": True,
+        "evidence_refs": ["replay:counter-mechanism"],
+        "alternative_explanations_ruled_out": ["execution", "substrate", "operationalization"],
+        "counter_prediction_observed": True,
+        "positive_support": True,
+        "reopen_condition": "Reopen only if a new scoped prediction survives the same-information counter-mechanism.",
+    }
     scenarios = [
         ("runtime-error", "infrastructure-error", {}, "NO_PRINCIPLE_UPDATE"),
         ("no-target-variation", "no-label-variation", {}, "EXPERIMENT_DESIGN_REPAIR"),
@@ -54,7 +68,8 @@ def build_research_system_replay(pre_experiment: dict[str, Any]) -> dict[str, An
         ("simple-baseline-tie", "matched-simplification-tie", {}, "METHOD_OR_NOVELTY_WEAKENED"),
         ("omitted-moderator", "true-negative", {"omitted_condition_discovered": True}, "ASSUMPTION_OR_SCOPE_REFINEMENT"),
         ("protocol-invalid-negative", "true-negative", {**full_falsifier, "protocol_validity": False}, "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED"),
-        ("registered-contradiction", "true-negative", full_falsifier, "PRINCIPLE_FALSIFIED"),
+        ("registered-contradiction", "true-negative", full_falsifier, "REGISTERED_PREDICTION_REJECTED_COUNTEREXPLANATION_REQUIRED"),
+        ("counter-explained-dead-end", "true-negative", {**full_falsifier, "counter_explanation": certified_counter}, "PRINCIPLE_DEAD_END_CERTIFIED"),
     ]
     rows: list[dict[str, Any]] = []
     for case_id, diagnosis, evidence, expected in scenarios:
@@ -75,7 +90,7 @@ def build_research_system_replay(pre_experiment: dict[str, Any]) -> dict[str, An
             "cases": len(rows),
             "passed": passed,
             "failed": len(rows) - passed,
-            "false_stop_guard_cases": 6,
+            "false_stop_guard_cases": 7,
             "true_falsification_cases": 1,
         },
         "cases": rows,

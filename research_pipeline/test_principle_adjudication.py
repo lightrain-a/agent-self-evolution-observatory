@@ -50,7 +50,7 @@ class PrincipleAdjudicationTest(unittest.TestCase):
         self.assertEqual(verdict["verdict"], "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED")
         self.assertFalse(verdict["principle_falsified"])
 
-    def test_registered_prediction_can_be_falsified_only_with_full_bridge(self) -> None:
+    def test_registered_prediction_rejection_is_not_dead_end_without_counter_explanation(self) -> None:
         verdict = adjudicate_experiment_evidence(
             "true-negative", self.certificate(), {
                 "registered_prediction_id": "A1-P1",
@@ -65,9 +65,47 @@ class PrincipleAdjudicationTest(unittest.TestCase):
                 "falsifier_triggered": True,
             },
         )
-        self.assertEqual(verdict["verdict"], "PRINCIPLE_FALSIFIED")
+        self.assertEqual(verdict["verdict"], "REGISTERED_PREDICTION_REJECTED_COUNTEREXPLANATION_REQUIRED")
+        self.assertTrue(verdict["registered_prediction_rejected"])
+        self.assertFalse(verdict["principle_falsified"])
+        self.assertFalse(verdict["core_mechanism_rejected"])
+        self.assertFalse(verdict["dead_end_certified"])
+
+    def test_dead_end_requires_positive_opposite_explanation(self) -> None:
+        verdict = adjudicate_experiment_evidence(
+            "true-negative", self.certificate(), {
+                "registered_prediction_id": "A1-P1",
+                "assumptions_hold": True,
+                "scope_conditions_hold": True,
+                "operationalization_valid": True,
+                "experiment_identifiable": True,
+                "optimization_adequate": True,
+                "independent_truth": True,
+                "matched_baseline": True,
+                "protocol_validity": True,
+                "falsifier_triggered": True,
+                "counter_explanation": {
+                    "type": "SAME_INFORMATION_REDUCTION",
+                    "statement": "The apparent mechanism is fully explained by the matched target-family prior.",
+                    "opposite_prediction": "Once information and budget are matched, the proposed mechanism has no residual decision advantage.",
+                    "opposite_principle": "The residual is explained by the matched target-family prior rather than a standalone mechanism.",
+                    "opposite_search_seed": "Search for settings where the target-family prior is information-equivalent yet provably cannot express the residual.",
+                    "scope": "frozen A1 substrate and decision information",
+                    "same_information_or_scope_matched": True,
+                    "evidence_refs": ["artifact:/matched-baseline.json"],
+                    "alternative_explanations_ruled_out": ["underfit", "protocol invalidity", "measurement mismatch"],
+                    "same_information_reduction_verified": True,
+                    "positive_support": True,
+                    "reopen_condition": "Reopen only with a preregistered setting where the same-information baseline cannot express the residual prediction.",
+                },
+            },
+        )
+        self.assertEqual(verdict["verdict"], "PRINCIPLE_DEAD_END_CERTIFIED")
+        self.assertTrue(verdict["registered_prediction_rejected"])
         self.assertTrue(verdict["principle_falsified"])
         self.assertTrue(verdict["core_mechanism_rejected"])
+        self.assertTrue(verdict["dead_end_certified"])
+        self.assertEqual(verdict["counter_explanation"]["type"], "SAME_INFORMATION_REDUCTION")
 
     def test_missing_failure_update_rule_invalidates_certificate(self) -> None:
         config = load_json(Path(__file__).with_name("p0_a1_confirm_config.json"))

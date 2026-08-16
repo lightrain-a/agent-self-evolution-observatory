@@ -9,21 +9,24 @@ from .system_architecture import TEMPORAL_FLOW
 
 STAGES=("problem","substrate","f0-identifiability","p0-support","p0-method","p1-replication","paper-experiment")
 FAILURES={
- "FAIL_PROBLEM":(True,"stop-or-reframe"),"FAIL_SUBSTRATE":(False,"change-substrate"),
- "FAIL_TARGET_DEGENERACY":(False,"repair-target-construction"),"FAIL_REPRESENTATION":(False,"atomic-representation-repair"),
- "FAIL_BASELINE_CEILING":(True,"simplify-or-merge"),"SUPPORT_INSUFFICIENT":(False,"hold-method-inference"),
- "METHOD_FAIL":(True,"merge-stop-or-pivot"),"IMPLEMENTATION_ERROR":(False,"repair-execution-only"),
- "RUNTIME_ERROR":(False,"repair-runtime-only"),"PROVENANCE_INCONCLUSIVE":(False,"repair-provenance-or-rerun"),
- "BUDGET_STOP":(False,"replan-cost-before-rerun"),
+ "FAIL_PROBLEM":(True,"stop-or-reframe",False),"FAIL_SUBSTRATE":(False,"change-substrate",False),
+ "FAIL_TARGET_DEGENERACY":(False,"repair-target-construction",False),"FAIL_REPRESENTATION":(False,"atomic-representation-repair",False),
+ "FAIL_BASELINE_CEILING":(True,"simplify-or-merge",False),"SUPPORT_INSUFFICIENT":(False,"hold-method-inference",False),
+ "METHOD_FAIL":(True,"merge-stop-or-pivot",False),"IMPLEMENTATION_ERROR":(False,"repair-execution-only",False),
+ "RUNTIME_ERROR":(False,"repair-runtime-only",False),"PROVENANCE_INCONCLUSIVE":(False,"repair-provenance-or-rerun",False),
+ "BUDGET_STOP":(False,"replan-cost-before-rerun",False),
+ "PRINCIPLE_DEAD_END":(True,"archive-scoped-principle-and-search-opposite-basin",True),
 }
 POLICY={
- "schema_version":"2.2","paper_novelty_precedes_method_design":True,"method_design_precedes_experiment_plan":True,
+ "schema_version":"2.3","paper_novelty_precedes_method_design":True,"method_design_precedes_experiment_plan":True,
  "local_validation_precedes_full_experiment":True,"core_method_change_returns_to_paper_design":True,
  "full_experiment_requires_frozen_method_and_experiment_blueprint":True,
  "support_and_method_are_distinct":True,"p0_method_requires_frozen_support_pass":True,
  "support_insufficient_is_not_method_fail":True,"one_load_bearing_repair_per_child":True,
  "max_representation_or_objective_repairs_per_substrate":2,"second_backbone_cannot_rescue_failed_substrate_or_f0":True,
  "raw_trace_is_mandatory_for_gpu_runs":True,"pre_model_load_audit_required":True,"f0_required_before_p0_support":True,
+ "experimental_failure_class_cannot_authorize_persistent_dead_end":True,
+ "persistent_dead_end_requires_principle_counter_explanation":True,
 }
 PASS_TOKENS={"pass","support-pass","support_qualification_pass","consensus_support_pass","consensus_full_pass","method-pass","qualified"}
 PREDECESSOR_EVIDENCE={"substrate":"problem_evidence","f0-identifiability":"substrate_evidence","p0-support":"f0_evidence","p0-method":"support_evidence","p1-replication":"method_evidence","paper-experiment":"p1_evidence"}
@@ -96,7 +99,7 @@ def evaluate_stage_contract(idea_id:str,config:dict[str,Any],root:Path)->dict[st
  return {"schema_version":"2.0","idea_id":idea_id,"stage":stage,"stage_index":STAGES.index(stage),"predecessor_authorization":predecessor,"support_authorization":support,"repair_budget":budget,"execution_authorized":not blockers,"blockers":blockers,"policy":POLICY}
 
 def build_governance_state()->dict[str,Any]:
- return {"schema_version":"2.2","generated_at":_now(),"policy":POLICY,"paper_first_macro_stages":[str(row["key"]) for row in TEMPORAL_FLOW],"stages":[{"index":i,"key":k} for i,k in enumerate(STAGES)],"predecessor_evidence":PREDECESSOR_EVIDENCE,"failure_classes":{k:{"belief_authority":v[0],"next_action":v[1]} for k,v in FAILURES.items()},"stage_scope_note":"The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; they do not replace the paper lifecycle."}
+ return {"schema_version":"2.3","generated_at":_now(),"policy":POLICY,"paper_first_macro_stages":[str(row["key"]) for row in TEMPORAL_FLOW],"stages":[{"index":i,"key":k} for i,k in enumerate(STAGES)],"predecessor_evidence":PREDECESSOR_EVIDENCE,"failure_classes":{k:{"belief_authority":v[0],"next_action":v[1],"persistent_dead_end_authority":v[2]} for k,v in FAILURES.items()},"stage_scope_note":"The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; experimental failure classes may update scoped belief or routing but cannot create persistent dead ends without principle-level counter-explanation certification."}
 
 def write_governance_state(json_path:Path,js_path:Path)->dict[str,Any]:
  row=build_governance_state(); _atomic(json_path,row); js_path.parent.mkdir(parents=True,exist_ok=True)

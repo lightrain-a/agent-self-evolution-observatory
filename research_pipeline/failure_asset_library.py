@@ -5,10 +5,14 @@ from typing import Any
 
 
 POLICY: dict[str, Any] = {
-    "schema_version": "1.0",
+    "schema_version": "1.1",
     "every_negative_or_blocked_run_yields_reusable_asset": True,
+    "failure_asset_is_not_dead_end": True,
     "assets_are_retrieved_before_new_experiment_design": True,
     "dead_end_registry_is_preserved_across_runs": True,
+    "persistent_dead_end_requires_principle_adjudication": True,
+    "persistent_dead_end_requires_positive_counter_explanation": True,
+    "economy_or_substrate_stop_is_not_persistent_dead_end": True,
     "failure_asset_must_name_affected_scientific_layer": True,
     "historical_failure_does_not_auto_block_new_scope": True,
     "institutional_memory_requires_scope_and_effectiveness_tracking": True,
@@ -42,6 +46,7 @@ def build_failure_asset_library(
     economy_gate: dict[str, Any] | None = None,
     post_c2_adjudication: dict[str, Any] | None = None,
     paper_first_p0_f0: dict[str, Any] | None = None,
+    principle_layer: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     assets: list[dict[str, Any]] = []
     for node in experiment_iteration.get("nodes") or []:
@@ -138,19 +143,43 @@ def build_failure_asset_library(
         })
 
     econ = (economy_gate or {}).get("summary") or {}
-    dead_end_registry = {
+    principle_dead_ends = []
+    for row in (principle_layer or {}).get("adjudications") or []:
+        if not isinstance(row, dict) or row.get("dead_end_certified") is not True:
+            continue
+        counter = row.get("counter_explanation") or {}
+        principle_dead_ends.append({
+            "principle_id": str(row.get("principle_id") or ""),
+            "verdict": str(row.get("verdict") or ""),
+            "counter_explanation_type": str(counter.get("type") or ""),
+            "counter_explanation": str(counter.get("statement") or ""),
+            "opposite_prediction": str(counter.get("opposite_prediction") or ""),
+            "opposite_principle": str(counter.get("opposite_principle") or ""),
+            "opposite_search_seed": str(counter.get("opposite_search_seed") or ""),
+            "scope": str(counter.get("scope") or ""),
+            "evidence_refs": list(counter.get("evidence_refs") or []),
+            "reopen_condition": str(counter.get("reopen_condition") or ""),
+        })
+    experimental_stops = {
         "matched_simplification_stops": int(econ.get("matched_simplification_stops") or 0),
         "substrate_stops": int(econ.get("substrate_stops") or 0),
-        "rule": "A dead end is reusable evidence about a formulation/substrate, not a permanent ban on a materially changed principle or scope.",
+    }
+    dead_end_registry = {
+        "principle_dead_ends": len(principle_dead_ends),
+        "certified_principle_dead_ends": principle_dead_ends,
+        "experimental_stops_not_dead_ends": experimental_stops,
+        "rule": "Negative experiments, Economy STOPs, support failures, and substrate failures are reusable failure assets, not persistent dead ends. A persistent dead end requires principle adjudication plus an affirmative counter-explanation and explicit reopen condition.",
     }
     return {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "policy": POLICY,
         "references": REFERENCES,
         "summary": {
             "assets": len(assets),
             "unique_signatures": len(reusable),
-            "economy_dead_ends": dead_end_registry["matched_simplification_stops"] + dead_end_registry["substrate_stops"],
+            "principle_dead_ends": len(principle_dead_ends),
+            "economy_dead_ends": 0,
+            "experimental_stops_not_dead_ends": experimental_stops["matched_simplification_stops"] + experimental_stops["substrate_stops"],
         },
         "assets": assets,
         "reusable_prechecks": reusable,

@@ -1,8 +1,8 @@
 {
-  "schema_version": "2.2",
-  "generated_at": "2026-08-14T18:30:00+00:00",
+  "schema_version": "2.3",
+  "generated_at": "2026-08-16T08:23:25+00:00",
   "policy": {
-    "schema_version": "2.2",
+    "schema_version": "2.3",
     "paper_novelty_precedes_method_design": true,
     "method_design_precedes_experiment_plan": true,
     "local_validation_precedes_full_experiment": true,
@@ -16,7 +16,9 @@
     "second_backbone_cannot_rescue_failed_substrate_or_f0": true,
     "raw_trace_is_mandatory_for_gpu_runs": true,
     "pre_model_load_audit_required": true,
-    "f0_required_before_p0_support": true
+    "f0_required_before_p0_support": true,
+    "experimental_failure_class_cannot_authorize_persistent_dead_end": true,
+    "persistent_dead_end_requires_principle_counter_explanation": true
   },
   "paper_first_macro_stages": [
     "scope",
@@ -72,48 +74,64 @@
   "failure_classes": {
     "FAIL_PROBLEM": {
       "belief_authority": true,
-      "next_action": "stop-or-reframe"
+      "next_action": "stop-or-reframe",
+      "persistent_dead_end_authority": false
     },
     "FAIL_SUBSTRATE": {
       "belief_authority": false,
-      "next_action": "change-substrate"
+      "next_action": "change-substrate",
+      "persistent_dead_end_authority": false
     },
     "FAIL_TARGET_DEGENERACY": {
       "belief_authority": false,
-      "next_action": "repair-target-construction"
+      "next_action": "repair-target-construction",
+      "persistent_dead_end_authority": false
     },
     "FAIL_REPRESENTATION": {
       "belief_authority": false,
-      "next_action": "atomic-representation-repair"
+      "next_action": "atomic-representation-repair",
+      "persistent_dead_end_authority": false
     },
     "FAIL_BASELINE_CEILING": {
       "belief_authority": true,
-      "next_action": "simplify-or-merge"
+      "next_action": "simplify-or-merge",
+      "persistent_dead_end_authority": false
     },
     "SUPPORT_INSUFFICIENT": {
       "belief_authority": false,
-      "next_action": "hold-method-inference"
+      "next_action": "hold-method-inference",
+      "persistent_dead_end_authority": false
     },
     "METHOD_FAIL": {
       "belief_authority": true,
-      "next_action": "merge-stop-or-pivot"
+      "next_action": "merge-stop-or-pivot",
+      "persistent_dead_end_authority": false
     },
     "IMPLEMENTATION_ERROR": {
       "belief_authority": false,
-      "next_action": "repair-execution-only"
+      "next_action": "repair-execution-only",
+      "persistent_dead_end_authority": false
     },
     "RUNTIME_ERROR": {
       "belief_authority": false,
-      "next_action": "repair-runtime-only"
+      "next_action": "repair-runtime-only",
+      "persistent_dead_end_authority": false
     },
     "PROVENANCE_INCONCLUSIVE": {
       "belief_authority": false,
-      "next_action": "repair-provenance-or-rerun"
+      "next_action": "repair-provenance-or-rerun",
+      "persistent_dead_end_authority": false
     },
     "BUDGET_STOP": {
       "belief_authority": false,
-      "next_action": "replan-cost-before-rerun"
+      "next_action": "replan-cost-before-rerun",
+      "persistent_dead_end_authority": false
+    },
+    "PRINCIPLE_DEAD_END": {
+      "belief_authority": true,
+      "next_action": "archive-scoped-principle-and-search-opposite-basin",
+      "persistent_dead_end_authority": true
     }
   },
-  "stage_scope_note": "The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; they do not replace the paper lifecycle."
+  "stage_scope_note": "The seven scientific stages are the experiment-evidence state machine nested inside the 11-stage paper-first lifecycle; experimental failure classes may update scoped belief or routing but cannot create persistent dead ends without principle-level counter-explanation certification."
 }

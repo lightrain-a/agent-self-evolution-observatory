@@ -46,16 +46,20 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertFalse(memory["scientific_authority"])
         self.assertFalse(memory["live_source_coverage_effect"])
         self.assertTrue(memory["cannot_mutate_canonical_generator_or_queue"])
-        self.assertTrue({"SP-09", "SP-15"}.issubset({row["source_candidate_id"] for row in memory["blocked_objects"]}))
+        self.assertIn("SP-09", {row["source_candidate_id"] for row in memory["blocked_objects"]})
+        self.assertNotIn("SP-15", {row["source_candidate_id"] for row in memory["blocked_objects"]})
+        self.assertIn("SP-15", {row["source_candidate_id"] for row in memory["hold_objects"]})
+        self.assertTrue(all(row["dead_end_certified"] is True and row.get("counter_explanation") for row in memory["blocked_objects"]))
 
     def test_r2_near_miss_preflight_compiles_into_future_shadow_search_memory(self) -> None:
         memory=self.state["shadow_dead_end_memory"]
-        rows=[row for row in memory["blocked_objects"] if str(row.get("basin") or "").startswith("near-miss-")]
+        rows=[row for row in list(memory["blocked_objects"])+list(memory["hold_objects"]) if str(row.get("basin") or "").startswith("near-miss-")]
         by_candidate={}
         for row in rows:
             by_candidate.setdefault(row["source_candidate_id"],[]).append(row)
         self.assertEqual(memory["near_miss_base_preflight_count"],4)
-        self.assertGreaterEqual(memory["near_miss_preflight_count"],4)
+        self.assertEqual(memory["near_miss_preflight_count"],3)
+        self.assertGreaterEqual(memory["near_miss_hold_count"],1)
         self.assertEqual(self.state["summary"]["near_miss_support_holds"],1)
         self.assertEqual(self.state["summary"]["near_miss_current_primary_stops"],2)
         self.assertEqual(self.state["summary"]["near_miss_mature_theory_stops"],1)
@@ -69,6 +73,10 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
             matches=[row for row in by_candidate.get(cid,[]) if row.get("disposition")==disposition]
             self.assertTrue(matches,f"missing persistent near-miss receipt {cid}:{disposition}")
             self.assertTrue(all(row["scientific_authority"] is False for row in matches))
+            if disposition == "HOLD_SUPPORT_UNAVAILABLE":
+                self.assertTrue(all(row["dead_end_certified"] is False for row in matches))
+            else:
+                self.assertTrue(all(row["dead_end_certified"] is True and row.get("counter_explanation") for row in matches))
 
     def test_current_source_hard_veto_compiles_into_future_shadow_search_memory(self) -> None:
         memory=_shadow_dead_end_memory({"latest_run":{"candidates":[{"candidate_id":"SHADOW-X","title":"Retrieval attribution gap","search_primitive":"IDENTIFIABILITY_GAP","current_source_status":"complete","current_source_verdict":"BLOCK","current_source_reduction_class":"VALID_HARD_VETO","current_source_strongest_reduction":"generic identifiability over an omitted compiled-context variable","current_source_reason":"Current primary work already exposes retrieval and compilation as separate pipeline objects.","current_source_source_refs":["arXiv:2605.10114","arXiv:2608.05604"]}]}},prior_hard_veto_rows=[])
@@ -110,7 +118,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(validate_search_portfolio_design_adjudication(first),[])
         memory=first["shadow_dead_end_memory"]
         hard=[row for row in memory["blocked_objects"] if row.get("source_run_id")=="shadow-parallel-r4b" and str(row.get("basin") or "").startswith("current-source-hard-veto-")]
-        holds=[row for row in memory["blocked_objects"] if row.get("source_run_id")=="shadow-parallel-r4b" and str(row.get("basin") or "").startswith("near-miss-terminal-support-hold-")]
+        holds=[row for row in memory["hold_objects"] if row.get("source_run_id")=="shadow-parallel-r4b" and str(row.get("basin") or "").startswith("near-miss-terminal-support-hold-")]
         self.assertEqual((len(hard),len(holds)),(1,1))
         self.assertEqual(first["summary"]["current_source_hard_veto_added_from_latest_run"],0)
         self.assertEqual(first["summary"]["current_source_hard_veto_added_from_terminal_run"],1)
@@ -127,7 +135,8 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         exact={"candidate_id":"R3-X","title":"layer sign inversion","search_primitive":"UNEXPLAINED_BOUNDARY","semantic_verdict":"BLOCK","semantic_reduction_class":"NEEDS_EXACT_REDUCTION_TEST","semantic_lane_contract_verified":True,"semantic_matched_patterns":["persistent-update-vs-test-time-compute"],"semantic_strongest_reduction":"generic test-time scaling","semantic_exact_reduction_test":"match candidate quality and diversity","semantic_reason":"same-information reduction remains unresolved","semantic_lane_contract_reason":"lane valid","semantic_source_refs":["arXiv:2608.11350"],"semantic_source_claims":["harness improves while raw VLA voting hurts"],"semantic_problem_text":"layer sign inversion under tied budget"}
         soft={"candidate_id":"R3-SOFT","title":"soft only","search_primitive":"UNEXPLAINED_BOUNDARY","semantic_verdict":"BLOCK","semantic_reduction_class":"SOFT_COLLISION","semantic_lane_contract_verified":True,"semantic_strongest_reduction":"generic portfolio diversity","semantic_reason":"soft collision only","semantic_lane_contract_reason":"lane valid","semantic_source_refs":["arXiv:2608.11350"]}
         memory=_shadow_dead_end_memory({"latest_run":{"frozen_pool_sha256":"a"*64,"candidates":[exact,soft]}},prior_hard_veto_rows=[],prior_semantic_rows=[])
-        rows=[row for row in memory["blocked_objects"] if str(row.get("basin") or "").startswith("semantic-")]
+        self.assertFalse([row for row in memory["blocked_objects"] if str(row.get("basin") or "").startswith("semantic-")])
+        rows=[row for row in memory["hold_objects"] if str(row.get("basin") or "").startswith("semantic-")]
         self.assertEqual(len(rows),1)
         self.assertTrue(rows[0]["basin"].startswith("semantic-exact-reduction-"))
         self.assertEqual(rows[0]["matched_patterns"],["persistent-update-vs-test-time-compute"])
@@ -135,14 +144,17 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(rows[0]["evidence_claims"],["harness improves while raw VLA voting hurts"])
         self.assertEqual(rows[0]["problem_text"],"layer sign inversion under tied budget")
         self.assertEqual(rows[0]["frozen_pool_sha256"],"a"*64)
-        self.assertEqual(memory["semantic_blocker_count"],1)
-        self.assertEqual(memory["semantic_blocker_added_from_latest_run"],1)
+        self.assertEqual(memory["semantic_blocker_count"],0)
+        self.assertEqual(memory["semantic_hold_count"],1)
+        self.assertEqual(memory["semantic_hold_added_from_latest_run"],1)
+        self.assertFalse(rows[0]["dead_end_certified"])
         self.assertFalse(rows[0]["scientific_authority"])
 
     def test_lane_contract_failure_precedes_exact_reduction_classification(self) -> None:
         candidate={"candidate_id":"R2-LANE","title":"planner executor granularity mismatch","search_primitive":"COMPOSITION_INTERACTION","semantic_verdict":"BLOCK","semantic_reduction_class":"NEEDS_EXACT_REDUCTION_TEST","semantic_lane_contract_verified":False,"semantic_matched_patterns":[],"semantic_strongest_reduction":"generic subgoal distribution shift","semantic_exact_reduction_test":"none","semantic_reason":"lane contract fails before reduction is identified","semantic_lane_contract_reason":"fixed granularity contract is not grounded by the supplied evidence","semantic_source_refs":["arXiv:2608.05999"]}
         memory=_shadow_dead_end_memory({"latest_run":{"frozen_pool_sha256":"a"*64,"candidates":[candidate]}},prior_hard_veto_rows=[],prior_semantic_rows=[])
-        rows=[row for row in memory["blocked_objects"] if str(row.get("basin") or "").startswith("semantic-")]
+        self.assertFalse([row for row in memory["blocked_objects"] if str(row.get("basin") or "").startswith("semantic-")])
+        rows=[row for row in memory["hold_objects"] if str(row.get("basin") or "").startswith("semantic-")]
         self.assertEqual(len(rows),1)
         self.assertTrue(rows[0]["basin"].startswith("semantic-lane-contract-"))
         self.assertFalse(rows[0]["basin"].startswith("semantic-exact-reduction-"))
@@ -151,14 +163,16 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
     def test_semantic_lane_contract_block_persists_across_shadow_runs(self) -> None:
         candidate={"candidate_id":"R3-LANE","title":"optimizer threshold","search_primitive":"CONVERGENT_FAILURE","semantic_verdict":"BLOCK","semantic_reduction_class":"SOFT_COLLISION","semantic_lane_contract_verified":False,"semantic_matched_patterns":["model-scaffold-enactability"],"semantic_strongest_reduction":"cross-model instruction compatibility","semantic_exact_reduction_test":"hold budget fixed","semantic_reason":"lane contract fails","semantic_lane_contract_reason":"no shared bounded operational condition","semantic_source_refs":["arXiv:2608.09629","arXiv:2608.11340"]}
         first=_shadow_dead_end_memory({"latest_run":{"candidates":[candidate]}},prior_hard_veto_rows=[],prior_semantic_rows=[])
-        row=next(row for row in first["blocked_objects"] if str(row.get("basin") or "").startswith("semantic-lane-contract-"))
+        row=next(row for row in first["hold_objects"] if str(row.get("basin") or "").startswith("semantic-lane-contract-"))
         self.assertIn("shared bounded operational condition",row["lane_contract_reason"])
         second=_shadow_dead_end_memory({"latest_run":{"candidates":[]}},prior_hard_veto_rows=[],prior_semantic_rows=[row])
-        rows=[x for x in second["blocked_objects"] if x.get("basin")==row["basin"]]
+        rows=[x for x in second["hold_objects"] if x.get("basin")==row["basin"]]
         self.assertEqual(len(rows),1)
-        self.assertEqual(second["semantic_blocker_count"],1)
-        self.assertEqual(second["semantic_blocker_added_from_latest_run"],0)
-        self.assertEqual(second["semantic_blocker_inherited"],1)
+        self.assertEqual(second["semantic_blocker_count"],0)
+        self.assertEqual(second["semantic_hold_count"],1)
+        self.assertEqual(second["semantic_hold_added_from_latest_run"],0)
+        self.assertEqual(second["semantic_hold_inherited"],1)
+        self.assertFalse(rows[0]["dead_end_certified"])
 
     def test_missing_domestic_reviewers_are_recorded_as_missing_not_pass(self) -> None:
         consultation = self.state["advisory_consultation"]

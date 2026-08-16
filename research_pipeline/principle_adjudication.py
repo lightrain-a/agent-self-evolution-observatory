@@ -25,6 +25,13 @@ REQUIRED_FAILURE_UPDATE_RULES = {
     "registered-prediction-contradicted",
 }
 
+DEAD_END_COUNTER_EXPLANATION_TYPES = {
+    "COUNTER_MECHANISM_SUPPORTED",
+    "SAME_INFORMATION_REDUCTION",
+    "NECESSARY_ASSUMPTION_REFUTED",
+    "IMPOSSIBILITY_OR_INVARIANCE",
+}
+
 POLICY: dict[str, Any] = {
     "schema_version": "1.0",
     "principle_certificate_required_before_experiment_compile": True,
@@ -37,6 +44,11 @@ POLICY: dict[str, Any] = {
     "true_negative_does_not_automatically_falsify_principle": True,
     "principle_falsification_requires_registered_prediction": True,
     "principle_falsification_requires_all_preconditions": True,
+    "registered_prediction_rejection_is_not_persistent_dead_end": True,
+    "persistent_dead_end_requires_positive_counter_explanation": True,
+    "counter_explanation_must_be_same_information_or_scope_matched": True,
+    "counter_explanation_must_name_reopen_condition": True,
+    "certified_dead_end_must_emit_opposite_principle_search_seed": True,
     "omitted_condition_updates_assumption_or_scope_before_core_mechanism": True,
     "positive_evidence_supports_but_does_not_prove_principle": True,
 }
@@ -54,7 +66,7 @@ CONSULTATION_POLICY = {
     "pre_experiment": ["experimentalist", "statistics-reviewer", "systems-cost-reviewer", "falsification-reviewer"],
     "negative_result": ["design-critic", "operationalization-critic", "principle-advocate", "principle-falsifier", "meta-adjudicator"],
     "scale_up": ["replication-reviewer", "baseline-fairness-reviewer", "human-approval"],
-    "rule": "No single reviewer may convert a negative run directly into a core-principle STOP; the meta-adjudicator must name the exact belief layer updated.",
+    "rule": "No single reviewer may convert a negative run directly into a core-principle STOP. Even a fully valid contradiction only rejects the registered prediction; persistent dead-end status additionally requires a positive counter-explanation (counter-mechanism, same-information reduction, necessary-assumption refutation, or impossibility/invariance witness) and an explicit reopen condition.",
 }
 
 COMMON_FALSIFICATION_REQUIRES = sorted(REQUIRED_FALSIFICATION_PRECONDITIONS)
@@ -64,7 +76,7 @@ COMMON_FAILURE_UPDATE_RULES = {
     "operationalization-failure": "repair the measurement, representation, or objective bridge before retesting the same principle",
     "assumption-violation": "revise the omitted assumption or scope condition, derive a new prediction, and keep the core mechanism unresolved",
     "matched-simplification": "weaken or merge the current method realization/novelty claim; do not automatically reject the broader principle",
-    "registered-prediction-contradicted": "only after all falsification preconditions hold may the registered principle prediction be rejected",
+    "registered-prediction-contradicted": "only after all falsification preconditions hold may the registered prediction be rejected; persistent dead-end still requires a positive counter-explanation",
 }
 
 
@@ -193,6 +205,68 @@ def audit_principle_certificate(config: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def audit_dead_end_counter_explanation(value: Any) -> dict[str, Any]:
+    """Require an affirmative explanation for persistent dead-end status.
+
+    A negative experiment can reject a registered prediction, but dead-end memory is
+    stronger: it must state what principle/mechanism explains the observation instead.
+    """
+    if not isinstance(value, dict) or not value:
+        return {
+            "passed": False,
+            "status": "missing-counter-explanation",
+            "blockers": ["counter-explanation-missing"],
+        }
+    blockers: list[str] = []
+    explanation_type = _text(value.get("type")).upper()
+    if explanation_type not in DEAD_END_COUNTER_EXPLANATION_TYPES:
+        blockers.append("counter-explanation-type-invalid")
+    for key in ("statement", "opposite_prediction", "opposite_principle", "opposite_search_seed", "scope", "reopen_condition"):
+        if not _text(value.get(key)):
+            blockers.append(f"counter-explanation-{key.replace('_', '-')}-missing")
+    if value.get("same_information_or_scope_matched") is not True:
+        blockers.append("counter-explanation-same-information-or-scope-match-missing")
+    if not _nonempty_text_list(value.get("evidence_refs")):
+        blockers.append("counter-explanation-evidence-refs-missing")
+    if not _nonempty_text_list(value.get("alternative_explanations_ruled_out")):
+        blockers.append("counter-explanation-alternative-explanations-not-ruled-out")
+
+    if explanation_type == "COUNTER_MECHANISM_SUPPORTED":
+        if value.get("counter_prediction_observed") is not True:
+            blockers.append("counter-mechanism-prediction-not-observed")
+        if value.get("positive_support") is not True:
+            blockers.append("counter-mechanism-positive-support-missing")
+    elif explanation_type == "SAME_INFORMATION_REDUCTION":
+        if value.get("same_information_reduction_verified") is not True:
+            blockers.append("same-information-reduction-not-verified")
+        if value.get("positive_support") is not True:
+            blockers.append("same-information-reduction-positive-support-missing")
+    elif explanation_type == "NECESSARY_ASSUMPTION_REFUTED":
+        if not _text(value.get("necessary_assumption_id")):
+            blockers.append("necessary-assumption-id-missing")
+        if value.get("necessity_established") is not True:
+            blockers.append("necessary-assumption-necessity-not-established")
+        if value.get("assumption_refuted") is not True:
+            blockers.append("necessary-assumption-not-refuted")
+    elif explanation_type == "IMPOSSIBILITY_OR_INVARIANCE":
+        if value.get("proof_or_structural_witness") is not True:
+            blockers.append("impossibility-or-invariance-witness-missing")
+
+    return {
+        "passed": not blockers,
+        "status": "pass" if not blockers else "repair-required",
+        "type": explanation_type,
+        "blockers": blockers,
+        "statement": _text(value.get("statement")),
+        "opposite_prediction": _text(value.get("opposite_prediction")),
+        "opposite_principle": _text(value.get("opposite_principle")),
+        "opposite_search_seed": _text(value.get("opposite_search_seed")),
+        "scope": _text(value.get("scope")),
+        "evidence_refs": list(value.get("evidence_refs") or []),
+        "reopen_condition": _text(value.get("reopen_condition")),
+    }
+
+
 def adjudicate_experiment_evidence(
     diagnosis: str,
     certificate: dict[str, Any],
@@ -206,8 +280,10 @@ def adjudicate_experiment_evidence(
     base = {
         "diagnosis": diagnosis,
         "principle_id": _text(contract.get("principle_id")),
+        "registered_prediction_rejected": False,
         "principle_falsified": False,
         "core_mechanism_rejected": False,
+        "dead_end_certified": False,
         "scientific_belief_target": "none",
         "requires_human_review": False,
     }
@@ -279,16 +355,33 @@ def adjudicate_experiment_evidence(
             "reason": "A method-level negative exists, but the registered principle falsifier has not been established under every required condition.",
         }
 
+    counter = audit_dead_end_counter_explanation(evidence.get("counter_explanation"))
+    if counter.get("passed") is not True:
+        return {
+            **base,
+            "verdict": "REGISTERED_PREDICTION_REJECTED_COUNTEREXPLANATION_REQUIRED",
+            "registered_prediction_rejected": True,
+            "scientific_belief_target": "registered-prediction",
+            "requires_human_review": True,
+            "preconditions": checks,
+            "registered_prediction_id": registered_prediction_id,
+            "counter_explanation_audit": counter,
+            "reason": "The preregistered prediction is contradicted under a valid test, but a negative result alone is not a persistent dead end. The system must identify and positively support the opposing mechanism/reduction/necessary-assumption refutation/impossibility witness before rejecting the core principle.",
+        }
+
     return {
         **base,
-        "verdict": "PRINCIPLE_FALSIFIED",
+        "verdict": "PRINCIPLE_DEAD_END_CERTIFIED",
+        "registered_prediction_rejected": True,
         "principle_falsified": True,
         "core_mechanism_rejected": True,
+        "dead_end_certified": True,
         "scientific_belief_target": "core-principle",
         "requires_human_review": True,
         "preconditions": checks,
         "registered_prediction_id": registered_prediction_id,
-        "reason": "A preregistered principle prediction was contradicted with assumptions, scope, measurement validity, identifiability, optimization, independent truth, matched baselines, and evaluation-protocol validity all verified.",
+        "counter_explanation": counter,
+        "reason": "The registered prediction is contradicted under a valid test and an affirmative opposite explanation is independently specified and supported under the same information/scope. Persistent dead-end memory is therefore scoped to this principle formulation and its explicit reopen condition.",
     }
 
 
@@ -315,7 +408,9 @@ def build_principle_layer_state(cards: list[dict[str, Any]], experiment_nodes: l
             "certificates_passed": sum(audit.get("passed") is True for audit in audits),
             "certificates_blocked": sum(audit.get("passed") is not True for audit in audits),
             "postrun_adjudications": len(verdicts),
-            "principle_falsifications": counts.get("PRINCIPLE_FALSIFIED", 0),
+            "registered_prediction_rejections_pending_counterexplanation": counts.get("REGISTERED_PREDICTION_REJECTED_COUNTEREXPLANATION_REQUIRED", 0),
+            "principle_falsifications": counts.get("PRINCIPLE_DEAD_END_CERTIFIED", 0),
+            "principle_dead_end_certifications": counts.get("PRINCIPLE_DEAD_END_CERTIFIED", 0),
             "principle_repairs_or_refinements": sum(
                 value for key, value in counts.items()
                 if key in {"PRINCIPLE_CONTRACT_REPAIR", "EXPERIMENT_DESIGN_REPAIR", "OPERATIONALIZATION_REPAIR", "ASSUMPTION_OR_SCOPE_REFINEMENT"}

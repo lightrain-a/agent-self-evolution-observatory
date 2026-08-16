@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "SHADOW-P06-C01",
+  "title": "Coverage-note starvation under selective evidence access in document agents",
+  "adjudication_date": "2026-08-16",
+  "old_experiment_outcome": "REDUCTION_SUPPORTED",
+  "old_outcome_may_directly_authorize_dead_end": false,
+  "registered_prediction_rejected": true,
+  "principle_dead_end_certified": true,
+  "dead_end_scope": "The standalone P06 mechanism claiming that page-coverage certification, with no answer-relevance information beyond the same retrieved snippets/question, selectively exposes hidden answer-evidence gaps relative to covered-answerable cases.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "IMPOSSIBILITY_OR_INVARIANCE",
+    "counter_explanation": {
+      "type": "IMPOSSIBILITY_OR_INVARIANCE",
+      "statement": "Page coverage is not answer-evidence sufficiency. A coverage certificate that reveals only retrieved page ids, total pages, coverage ratio, unchecked-page count, and FULL/PARTIAL status does not reveal whether any unread page contains answer-relevant evidence. The target gap/covered distinction is defined post hoc with hidden benchmark evidence_pages, so the P06 treatment does not expose the latent variable that distinguishes the two strata.",
+      "opposite_prediction": "Under matched question, retrieved snippets, and inference budget, adding relevance-agnostic page-coverage metadata can at most induce a generic uncertainty/conservatism shift. It has no information-theoretic basis for selectively increasing RETRIEVE_MORE/ABSTAIN on hidden answer-evidence-gap units more than on covered-answerable units. A selective residual requires an observable relevance-conditioned evidence-debt signal, not coverage quantity alone.",
+      "opposite_principle": "Evidence sufficiency is relevance-conditioned, not coverage-conditioned.",
+      "opposite_search_seed": "Search for an observable relevance-conditioned evidence-debt state: a state that predicts whether unread evidence can change the answer, is invariant to adding irrelevant unread pages, and beats a same-information generic uncertainty/conservatism baseline under matched retrieval and context budget.",
+      "scope": "Frozen P06-COVERAGE-STARVATION-V2 information set: same question and raw retrieved pages across policies; coverage_certified adds only retrieved ids, total pages, coverage ratio, unchecked-page count and FULL/PARTIAL certificate; benchmark evidence_pages remain forbidden from retrieval/prompt and are used only for posthoc stratification/evaluation.",
+      "same_information_or_scope_matched": true,
+      "proof_or_structural_witness": true,
+      "structural_witness": "Construct two latent document worlds with the same observed question, same retrieved snippets, same retrieved page ids, same total page count and therefore the same coverage certificate, but place the decisive answer evidence on an unread page in one world and no decisive answer evidence on unread pages in the other. The coverage-certified policy receives identical coverage information in both worlds while the posthoc gap label differs. Therefore coverage quantity alone cannot identify answer-relevant omission.",
+      "positive_support": true,
+      "evidence_refs": [
+        "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/plan.json#sha256=dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39",
+        "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/analysis.json#sha256=2b5ca3000d2c491ff2df6a1126667edd6fb59dfa7ec8fc446c9a6b30da959a16",
+        "host52:/home/wyt/code/agent-self-evolution-observatory-automation/generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P06-C01"
+      ],
+      "alternative_explanations_ruled_out": [
+        "support insufficiency: the repaired run had 128 valid units, including 47 gap-answerable and 17 covered-answerable units",
+        "protocol invalidity: the final analysis marked protocol_valid=true",
+        "simple lack of behavioral response: the coverage-certified policy shifted the primary state on covered-answerable units by +0.11765, so the intervention was behaviorally active",
+        "selective gap benefit hidden by noise: the observed gap shift was only +0.02128, the gap-vs-covered difference-in-differences was -0.09637, and the paired gap McNemar p-value was 1.0"
+      ],
+      "reopen_condition": "Reopen only with a preregistered treatment that exposes or preserves relevance-conditioned evidence debt without using benchmark answer/evidence truth at decision time, and show a selective held-out gap effect beyond the strongest same-information uncertainty/conservatism baseline under matched retrieval and context budget."
+    }
+  },
+  "experiment_evidence": {
+    "protocol_valid": true,
+    "valid_units": 128,
+    "gap_answerable": 47,
+    "covered_answerable": 17,
+    "unanswerable": 64,
+    "coverage_certified_minus_baseline_gap_shift": 0.02127659574468077,
+    "coverage_certified_minus_baseline_covered_shift": 0.11764705882352944,
+    "difference_in_differences": -0.09637046307884867,
+    "paired_gap_mcnemar_p": 1.0,
+    "false_answer_improvement_unanswerable": -0.078125
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "coverage never matters",
+      "negative evidence never helps",
+      "document agents cannot benefit from explicit evidence sufficiency signals"
+    ],
+    "safe_claim": "The frozen P06 realization is a dead end because relevance-agnostic page-coverage quantity cannot identify the hidden answer-evidence gap it is supposed to selectively repair. The experiment supplies compatible behavioral evidence, but the dead-end decision is authorized by the stronger information-structure witness, not by the negative metric alone.",
+    "opposite_principle": "Evidence sufficiency is relevance-conditioned, not coverage-conditioned.",
+    "new_search_basin": "relevance-conditioned-evidence-debt",
+    "new_problem_seed": "When an agent has inspected only a subset of evidence, the actionable uncertainty is not how much remains unread but whether the unread region can still change the answer. A useful evidence-debt state must therefore encode relevance-conditioned missing support under the same observable information, and should be invariant to adding irrelevant unread material."
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

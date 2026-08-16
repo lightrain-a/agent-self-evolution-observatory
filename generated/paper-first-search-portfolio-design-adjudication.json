@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T18:29:42+00:00",
+  "generated_at": "2026-08-16T08:23:25+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -12,8 +12,10 @@
     "cannot_grant_or_revoke_live_paper_design_authority": true,
     "counterfactual_problem_gate_pass_only_triggers_retrospective_collision_audit": true,
     "current_source_hard_veto_memory_persists_across_shadow_runs": true,
-    "semantic_blocker_memory_persists_across_shadow_runs": true,
+    "semantic_hold_memory_persists_across_shadow_runs": true,
+    "semantic_lane_or_pending_reduction_is_not_a_dead_end": true,
     "semantic_soft_collision_alone_is_not_a_dead_end": true,
+    "persistent_dead_end_requires_positive_counter_explanation": true,
     "current_primary_source_collision_review_required": true,
     "same_information_reduction_required_before_method_design": true,
     "failed_or_missing_ai_reviewer_is_not_pass": true,
@@ -44,7 +46,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-14T18:29:42+00:00",
+    "generated_at": "2026-08-16T08:23:25+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -207,7 +209,7 @@
     "scientific_authority": false
   },
   "shadow_dead_end_memory": {
-    "memory_id": "shadow-paper-design-dead-ends-persistent-current-source-semantic-near-miss",
+    "memory_id": "shadow-paper-design-principle-dead-ends-and-holds-v2",
     "scientific_authority": false,
     "live_source_coverage_effect": false,
     "cannot_mutate_canonical_generator_or_queue": true,
@@ -222,19 +224,35 @@
           "model-conditioned skill utility or risk as the novelty",
           "generic contextual constrained or risk-sensitive scalar acceptance"
         ],
-        "reopen_only_if": "Current primary evidence supports an ex-ante non-separability or impossibility prediction for the same skill under identical model/trigger/workflow/security/utility information that generic contextual governance cannot express."
-      },
-      {
-        "source_candidate_id": "SP-15",
-        "basin": "implicit-query-decomposition-skill-routing",
-        "avoid": [
-          "implicit queries are harder",
-          "task decomposition improves skill retrieval",
-          "top-rank relevance differs from complete capability coverage",
-          "query-conditional multi-skill compatibility alone",
-          "generic abstention, uncertainty, or clarification policy"
+        "strongest_reduction": "generic contextual constrained governance using the same model, trigger, workflow, security, and utility information",
+        "current_source_refs": [
+          "arXiv:2602.12430",
+          "arXiv:2607.01136",
+          "arXiv:2608.09732",
+          "arXiv:2605.30723"
         ],
-        "reopen_only_if": "A new provenance-audited query-level unit shows that the same observable or information-equivalent query is compatible with multiple task semantics requiring incompatible sufficient skill sets, and a generic partial-identification/clarification baseline using the same information cannot absorb the claim."
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "The proposed acceptance object is expressible as contextual constrained governance when the same model/trigger/workflow/security/utility observations are available.",
+          "opposite_prediction": "A generic contextual constrained policy with identical information can reproduce the proposed install/update/block/escalate decisions, so no standalone irreducible acceptance principle is required.",
+          "opposite_principle": "Contextual governance is sufficient unless an ex-ante non-separability or impossibility residual survives same-information control.",
+          "opposite_search_seed": "Search for identical-information skill cases whose correct governance actions are provably non-separable for generic contextual constrained policies.",
+          "scope": "SP-09 paper-problem formulation under the reviewed primary-source evidence",
+          "same_information_or_scope_matched": true,
+          "evidence_refs": [
+            "arXiv:2602.12430",
+            "arXiv:2607.01136",
+            "arXiv:2608.09732",
+            "arXiv:2605.30723"
+          ],
+          "positive_support": true,
+          "same_information_reduction_verified": true,
+          "reopen_condition": "Current primary evidence supports an ex-ante non-separability or impossibility prediction for the same skill under identical model/trigger/workflow/security/utility information that generic contextual governance cannot express."
+        },
+        "reopen_only_if": "Current primary evidence supports an ex-ante non-separability or impossibility prediction for the same skill under identical model/trigger/workflow/security/utility information that generic contextual governance cannot express.",
+        "scientific_authority": false
       },
       {
         "source_candidate_id": "SHADOW-P09-C01",
@@ -256,7 +274,27 @@
         "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope; renaming components, changing application domain, or proposing an unexecuted ablation does not reopen the basin.",
         "source_run_id": "shadow-20260814-r4b",
         "source_stage_manifest_sha256": "efd3b54902fd5b514bf7caf90ba14daae055cbabd44121ba8ba2c23fe38eb775",
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "Attribution/diagnosis-guided target-specific revision followed by executable validation or rerun is already an explicit current agent-repair and skill-evolution mechanism; VeriSkill already contains the candidate's attribution-to-target-to-transfer-validation loop, making the proposed object a within-method mediator/ablation rather than a distinct paper problem.",
+          "opposite_prediction": "Under the same information and bounded operational scope, the recorded reduction explains the candidate prediction without the proposed standalone principle.",
+          "scope": "the recorded shadow paper-problem basin",
+          "same_information_or_scope_matched": true,
+          "evidence_refs": [
+            "arXiv:2606.06324",
+            "arXiv:2606.09071",
+            "arXiv:2607.18754",
+            "arXiv:2607.27733"
+          ],
+          "positive_support": true,
+          "same_information_reduction_verified": true,
+          "reopen_condition": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope; renaming components, changing application domain, or proposing an unexecuted ablation does not reopen the basin.",
+          "opposite_principle": "Attribution/diagnosis-guided target-specific revision followed by executable validation or rerun is already an explicit current agent-repair and skill-evolution mechanism; VeriSkill already contains the candidate's attribution-to-target-to-transfer-validation loop, making the proposed object a within-method mediator/ablation rather than a distinct paper problem.",
+          "opposite_search_seed": "Search only for a bounded same-information case where the recorded reduction cannot express the candidate's residual prediction."
+        }
       },
       {
         "source_candidate_id": "SHADOW-P12-C01",
@@ -276,8 +314,144 @@
         ],
         "reason": "The semantic CLEAR does not survive current-source collision review. Existing work already separates retrieval from compiled/incorporated execution context and evaluates downstream execution-aware utility, so the residual standard-log non-identifiability claim is expressible by generic causal identifiability over an omitted compiled-context variable plus existing retrieval-to-compilation instrumentation.",
         "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that remains non-reducible after explicitly instrumenting the omitted retrieval/compilation/execution variable identified by the current-source review; renaming the pipeline stages or dropping that variable from the log does not reopen the basin.",
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "generic causal identifiability over an omitted compiled-context variable, instantiated by existing retrieval-versus-compilation pipeline work",
+          "opposite_prediction": "Under the same information and bounded operational scope, the recorded reduction explains the candidate prediction without the proposed standalone principle.",
+          "scope": "the recorded shadow paper-problem basin",
+          "same_information_or_scope_matched": true,
+          "evidence_refs": [
+            "arXiv:2604.24594",
+            "arXiv:2605.10114",
+            "arXiv:2608.05604",
+            "arXiv:2608.09168"
+          ],
+          "positive_support": true,
+          "same_information_reduction_verified": true,
+          "reopen_condition": "New primary evidence supplies an ex-ante same-information prediction that remains non-reducible after explicitly instrumenting the omitted retrieval/compilation/execution variable identified by the current-source review; renaming the pipeline stages or dropping that variable from the log does not reopen the basin.",
+          "opposite_principle": "generic causal identifiability over an omitted compiled-context variable, instantiated by existing retrieval-versus-compilation pipeline work",
+          "opposite_search_seed": "Search only for a bounded same-information case where the recorded reduction cannot express the candidate's residual prediction."
+        }
       },
+      {
+        "source_candidate_id": "SHADOW-P09-C01",
+        "basin": "near-miss-current-primary-collision",
+        "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+        "disposition": "STOP_CURRENT_PRIMARY_COLLISION",
+        "avoid": [
+          "renaming skill technical debt as retrieval-mediated debt",
+          "adding retrieval exposure as a second axis without an ex-ante residual prediction",
+          "claiming stored-but-unretrieved or obsolete-and-over-retrieved artifacts as novelty by itself"
+        ],
+        "strongest_reduction": "skill technical debt with persistent skill-library defects affecting future retrieval, composition, execution, and maintenance",
+        "current_source_refs": [
+          "arXiv:2605.13716"
+        ],
+        "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
+        "reason": "Current primary work already treats skill technical debt as a long-lived skill-library maintenance object whose defects degrade later retrieval, composition, and execution. Splitting the realization mechanism into validity/obsolescence and retrieval exposure changes the accounting of when debt is behaviorally realized, but does not yet define an irreducible paper object beyond the same technical-debt lifecycle under identical information.",
+        "reopen_only_if": "New primary evidence supports an ex-ante same-information prediction about access-mediated debt that a SkillOps-style technical-debt/maintenance model with the same artifact validity, retrieval, composition, execution, and maintenance observations cannot express; a two-axis relabeling alone does not reopen the basin.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "scientific_authority": false,
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "skill technical debt with persistent skill-library defects affecting future retrieval, composition, execution, and maintenance",
+          "opposite_prediction": "Under the same available information and operational scope, the named current/mature reduction explains the candidate prediction without requiring the proposed standalone principle.",
+          "opposite_principle": "The named current/mature reduction is sufficient within the bounded near-miss formulation.",
+          "opposite_search_seed": "Search for a same-information bounded case where the named reduction makes a distinct falsifiable prediction and fails to absorb the residual.",
+          "scope": "the bounded near-miss paper-problem formulation and its cited primary evidence",
+          "same_information_or_scope_matched": true,
+          "evidence_refs": [
+            "arXiv:2605.13716"
+          ],
+          "positive_support": true,
+          "same_information_reduction_verified": true,
+          "reopen_condition": "New primary evidence supports an ex-ante same-information prediction about access-mediated debt that a SkillOps-style technical-debt/maintenance model with the same artifact validity, retrieval, composition, execution, and maintenance observations cannot express; a two-axis relabeling alone does not reopen the basin."
+        }
+      },
+      {
+        "source_candidate_id": "SHADOW-P12-C02",
+        "basin": "near-miss-current-primary-collision",
+        "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+        "disposition": "STOP_CURRENT_PRIMARY_COLLISION",
+        "avoid": [
+          "renaming buggy-code-induced test misguidance or in-band self-evaluation bias as a new intervention-contamination object",
+          "claiming that more self-tests solve causal ambiguity without specifying an independent information source",
+          "using skill/workflow vocabulary to restate the need for specification-based or externally grounded verification"
+        ],
+        "strongest_reduction": "self-generated verification inherits the defect or in-band information channel under test, so externally grounded or specification-independent verification is required",
+        "current_source_refs": [
+          "arXiv:2607.22883",
+          "arXiv:2607.25152",
+          "arXiv:2602.07900"
+        ],
+        "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
+        "reason": "Current primary work directly shows that buggy code can misguide LLM-generated tests into asserting the same erroneous behavior while suppressing bug-finding tests, and that long-running agents' in-band self-evaluation can accept stagnation or regression until an externally grounded signal is introduced. Agent-generated tests are also empirically observed to function mainly as in-band observational feedback channels. This already instantiates the candidate's structural contamination claim that a self-test generated through the suspect artifact or workflow may fail to supply independent evidence.",
+        "reopen_only_if": "New primary evidence demonstrates a contamination-induced non-identifiability residual that persists after matching test budget, using a specification-independent or externally grounded test generator, and controlling evaluator ancestry; the residual must not reduce to buggy-artifact test misguidance, in-band self-evaluation bias, verifier exogeneity, or generic active-testing partial identification.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "scientific_authority": false,
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "self-generated verification inherits the defect or in-band information channel under test, so externally grounded or specification-independent verification is required",
+          "opposite_prediction": "Under the same available information and operational scope, the named current/mature reduction explains the candidate prediction without requiring the proposed standalone principle.",
+          "opposite_principle": "The named current/mature reduction is sufficient within the bounded near-miss formulation.",
+          "opposite_search_seed": "Search for a same-information bounded case where the named reduction makes a distinct falsifiable prediction and fails to absorb the residual.",
+          "scope": "the bounded near-miss paper-problem formulation and its cited primary evidence",
+          "same_information_or_scope_matched": true,
+          "evidence_refs": [
+            "arXiv:2607.22883",
+            "arXiv:2607.25152",
+            "arXiv:2602.07900"
+          ],
+          "positive_support": true,
+          "same_information_reduction_verified": true,
+          "reopen_condition": "New primary evidence demonstrates a contamination-induced non-identifiability residual that persists after matching test budget, using a specification-independent or externally grounded test generator, and controlling evaluator ancestry; the residual must not reduce to buggy-artifact test misguidance, in-band self-evaluation bias, verifier exogeneity, or generic active-testing partial identification."
+        }
+      },
+      {
+        "source_candidate_id": "SHADOW-P05-C01",
+        "basin": "near-miss-mature-theory-reduction",
+        "search_primitive": "NEW_CAPABILITY_QUESTION",
+        "disposition": "STOP_MATURE_THEORY_REDUCTION",
+        "avoid": [
+          "renaming treatment-induced monitoring or measurement endogeneity as endogenous trace observability",
+          "claiming novelty from a textual skill changing which future logs are observed without a residual beyond joint treatment-monitoring causal inference",
+          "using matched outcome or trace-coverage summaries as evidence of a new causal object when monitoring itself is treatment-dependent"
+        ],
+        "strongest_reduction": "treatment-induced confounding plus joint treatment-monitoring interventions / informative monitoring processes",
+        "current_source_refs": [
+          "arXiv:2607.02901",
+          "arXiv:1806.11153"
+        ],
+        "support_status": "MATURE_CAUSAL_OBJECT_ALREADY_EXPRESSES_PREDICTION",
+        "reason": "The candidate's residual claim is that a skill edit changes not only execution but the future diagnostic observation map used to evaluate that edit. Mature longitudinal causal inference already treats treatment-induced confounding and non-systematic monitoring as identification problems, and explicitly formulates joint treatment/monitoring interventions. Replacing treatment with a textual skill and monitoring with future trace exposure instantiates that mature object but does not yet add an ex-ante prediction that the same-information causal model cannot express.",
+        "reopen_only_if": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "scientific_authority": false,
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "treatment-induced confounding plus joint treatment-monitoring interventions / informative monitoring processes",
+          "opposite_prediction": "Under the same available information and operational scope, the named current/mature reduction explains the candidate prediction without requiring the proposed standalone principle.",
+          "opposite_principle": "The named current/mature reduction is sufficient within the bounded near-miss formulation.",
+          "opposite_search_seed": "Search for a same-information bounded case where the named reduction makes a distinct falsifiable prediction and fails to absorb the residual.",
+          "scope": "the bounded near-miss paper-problem formulation and its cited primary evidence",
+          "same_information_or_scope_matched": true,
+          "evidence_refs": [
+            "arXiv:2607.02901",
+            "arXiv:1806.11153"
+          ],
+          "positive_support": true,
+          "same_information_reduction_verified": true,
+          "reopen_condition": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin."
+        }
+      }
+    ],
+    "hold_objects": [
       {
         "source_candidate_id": "SHADOW-P06-C02",
         "basin": "semantic-exact-reduction-de18df5490d5d9b9",
@@ -304,7 +478,9 @@
         "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
         "reason": "The source grounding and lane contract are fully satisfied. However, under the Reduction Falsifiability Contract, the candidate collides with the mature theory of persistent-update-vs-test-time-compute (test-time scaling). The candidate proposes that test-time selection/voting systematically inverts its sign of improvement depending on the representation layer (raw VLA vs. skill-harness). While the candidate provides a falsifier matching candidate sets on diversity, mean success, and verifier availability, whether generic test-time scaling variables with structural constraints (like candidate quality, redundancy, and verifier availability) fail to predict this sign reversal remains unresolved. Because the exact reduction against generic test-time-scaling models is not definitively resolved as non-expressible, the review mandates a BLOCK under the NEEDS_EXACT_REDUCTION_TEST protocol.",
         "reopen_only_if": "New primary evidence directly instantiates the recorded exact reduction test under matched information and leaves a residual prediction the named mature reduction cannot express; new wording, a new application domain, or an unexecuted proposed falsifier does not reopen this basin.",
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P06-C01",
@@ -332,7 +508,9 @@
         "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
         "reason": "Although source grounding is verified for both facts, the lane contract fails because the candidate does not establish a genuinely shared operational condition between symbolic regression and customer support evaluation. The failures are independently observed but do not meet the CONVERGENT_FAILURE machine contract.",
         "reopen_only_if": "New primary evidence supplies the missing lane-contract elements explicitly (shared bounded condition, common failure object, and correctly typed evidence roles) and the resulting formulation still leaves a same-information residual beyond the recorded strongest reduction.",
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P04-C01",
@@ -359,7 +537,9 @@
         "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
         "reason": "Source grounding fails for source_b because the claim and irreducible object depend on a fixed granularity contract that is not supported by the excerpt. Lane contract fails due to incorrect evidence roles and missing shared operationalization for the proposed failure regime.",
         "reopen_only_if": "New primary evidence supplies the missing lane-contract elements explicitly (shared bounded condition, common failure object, and correctly typed evidence roles) and the resulting formulation still leaves a same-information residual beyond the recorded strongest reduction.",
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P12-C01",
@@ -390,67 +570,9 @@
         "frozen_pool_sha256": "3e09ec64b4ead80e14562d8006991523bc77a3aa37709858dc29a84a47bbcc74",
         "reason": "The source claims are accurately grounded in the supplied primary evidence. However, the candidate fails the CONVERGENT_FAILURE lane contract because the two empirical facts do not share an explicitly bounded operational condition; they represent isolated failures of weaker LLMs on distinct agent tasks (skill optimization vs. SMT encoding extension) rather than a convergent quantitative failure under a common operational condition with a named common failure object. Furthermore, the candidate's identified irreducible object (optimizer-capability threshold for enacting self-evolution interfaces) is a SOFT_COLLISION with known patterns of model-scaffold-enactability and persistent-update-vs-test-time-compute, as weaker models failing to operate interfaces is highly reducible to standard instruction-following and test-time compute limitations. Because the lane contract fails, the verdict is BLOCK.",
         "reopen_only_if": "New primary evidence supplies the missing lane-contract elements explicitly (shared bounded condition, common failure object, and correctly typed evidence roles) and the resulting formulation still leaves a same-information residual beyond the recorded strongest reduction.",
-        "scientific_authority": false
-      },
-      {
-        "source_candidate_id": "SHADOW-P09-C01",
-        "basin": "near-miss-current-primary-collision",
-        "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
-        "disposition": "STOP_CURRENT_PRIMARY_COLLISION",
-        "avoid": [
-          "renaming skill technical debt as retrieval-mediated debt",
-          "adding retrieval exposure as a second axis without an ex-ante residual prediction",
-          "claiming stored-but-unretrieved or obsolete-and-over-retrieved artifacts as novelty by itself"
-        ],
-        "strongest_reduction": "skill technical debt with persistent skill-library defects affecting future retrieval, composition, execution, and maintenance",
-        "current_source_refs": [
-          "arXiv:2605.13716"
-        ],
-        "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
-        "reason": "Current primary work already treats skill technical debt as a long-lived skill-library maintenance object whose defects degrade later retrieval, composition, and execution. Splitting the realization mechanism into validity/obsolescence and retrieval exposure changes the accounting of when debt is behaviorally realized, but does not yet define an irreducible paper object beyond the same technical-debt lifecycle under identical information.",
-        "reopen_only_if": "New primary evidence supports an ex-ante same-information prediction about access-mediated debt that a SkillOps-style technical-debt/maintenance model with the same artifact validity, retrieval, composition, execution, and maintenance observations cannot express; a two-axis relabeling alone does not reopen the basin.",
-        "scientific_authority": false
-      },
-      {
-        "source_candidate_id": "SHADOW-P12-C02",
-        "basin": "near-miss-current-primary-collision",
-        "search_primitive": "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
-        "disposition": "STOP_CURRENT_PRIMARY_COLLISION",
-        "avoid": [
-          "renaming buggy-code-induced test misguidance or in-band self-evaluation bias as a new intervention-contamination object",
-          "claiming that more self-tests solve causal ambiguity without specifying an independent information source",
-          "using skill/workflow vocabulary to restate the need for specification-based or externally grounded verification"
-        ],
-        "strongest_reduction": "self-generated verification inherits the defect or in-band information channel under test, so externally grounded or specification-independent verification is required",
-        "current_source_refs": [
-          "arXiv:2607.22883",
-          "arXiv:2607.25152",
-          "arXiv:2602.07900"
-        ],
-        "support_status": "CURRENT_PRIMARY_DIRECT_COLLISION",
-        "reason": "Current primary work directly shows that buggy code can misguide LLM-generated tests into asserting the same erroneous behavior while suppressing bug-finding tests, and that long-running agents' in-band self-evaluation can accept stagnation or regression until an externally grounded signal is introduced. Agent-generated tests are also empirically observed to function mainly as in-band observational feedback channels. This already instantiates the candidate's structural contamination claim that a self-test generated through the suspect artifact or workflow may fail to supply independent evidence.",
-        "reopen_only_if": "New primary evidence demonstrates a contamination-induced non-identifiability residual that persists after matching test budget, using a specification-independent or externally grounded test generator, and controlling evaluator ancestry; the residual must not reduce to buggy-artifact test misguidance, in-band self-evaluation bias, verifier exogeneity, or generic active-testing partial identification.",
-        "scientific_authority": false
-      },
-      {
-        "source_candidate_id": "SHADOW-P05-C01",
-        "basin": "near-miss-mature-theory-reduction",
-        "search_primitive": "NEW_CAPABILITY_QUESTION",
-        "disposition": "STOP_MATURE_THEORY_REDUCTION",
-        "avoid": [
-          "renaming treatment-induced monitoring or measurement endogeneity as endogenous trace observability",
-          "claiming novelty from a textual skill changing which future logs are observed without a residual beyond joint treatment-monitoring causal inference",
-          "using matched outcome or trace-coverage summaries as evidence of a new causal object when monitoring itself is treatment-dependent"
-        ],
-        "strongest_reduction": "treatment-induced confounding plus joint treatment-monitoring interventions / informative monitoring processes",
-        "current_source_refs": [
-          "arXiv:2607.02901",
-          "arXiv:1806.11153"
-        ],
-        "support_status": "MATURE_CAUSAL_OBJECT_ALREADY_EXPRESSES_PREDICTION",
-        "reason": "The candidate's residual claim is that a skill edit changes not only execution but the future diagnostic observation map used to evaluate that edit. Mature longitudinal causal inference already treats treatment-induced confounding and non-systematic monitoring as identification problems, and explicitly formulates joint treatment/monitoring interventions. Replacing treatment with a textual skill and monitoring with future trace exposure instantiates that mature object but does not yet add an ex-ante prediction that the same-information causal model cannot express.",
-        "reopen_only_if": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin.",
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P03-C01",
@@ -469,6 +591,8 @@
         "support_status": "NO_RELEASED_MATCHED_IRF_RRO_UNITS_FOUND",
         "reason": "The primary paper already defines IRF and RRO as distinct root causes, uses paired execution trajectories for attribution, and reports high automatic root-cause matching. The audited primary/full-text material does not expose a downloadable released trace/label asset containing matched units with the same observable outcome/trace/differential evidence but incompatible correct repair targets. The existence claim needed by this near-miss is therefore unsupported, not falsified.",
         "reopen_only_if": "A released or provenance-audited dataset supplies at least one non-synthetic matched unit in which observable outcome, execution trace, and differential evidence are information-equivalent while the correct repairs are incompatible (for example add omitted helper versus correct neighboring fill), and a generic partial-identification/fault-localization baseline using the same information does not absorb the residual claim.",
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD",
         "scientific_authority": false
       },
       {
@@ -496,7 +620,9 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P03-C01",
@@ -524,7 +650,9 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P01-C01",
@@ -552,7 +680,9 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P06-C01",
@@ -579,7 +709,9 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P07-C01",
@@ -606,7 +738,9 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P06-C01",
@@ -633,7 +767,9 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P12-C01",
@@ -661,7 +797,9 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P09-C01",
@@ -689,7 +827,9 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P04-C01",
@@ -716,7 +856,9 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P11-C01",
@@ -744,7 +886,9 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P05-C01",
@@ -771,7 +915,9 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P11-C02",
@@ -798,7 +944,9 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
-        "scientific_authority": false
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
       },
       {
         "source_candidate_id": "SHADOW-P10-C01",
@@ -826,18 +974,43 @@
         "automatic_experiment_authority": false,
         "automatic_p0_authority": false,
         "automatic_gpu_authority": false,
+        "scientific_authority": false,
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD"
+      },
+      {
+        "source_candidate_id": "SP-15",
+        "basin": "implicit-query-decomposition-skill-routing",
+        "avoid": [
+          "implicit queries are harder",
+          "task decomposition improves skill retrieval",
+          "top-rank relevance differs from complete capability coverage",
+          "query-conditional multi-skill compatibility alone",
+          "generic abstention, uncertainty, or clarification policy"
+        ],
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD",
+        "hold_reason": "The revised sufficient-skill-set identifiability problem still requires provenance-audited query-level support and therefore has not earned a principle dead-end or principle pass.",
+        "reopen_only_if": "A new provenance-audited query-level unit shows that the same observable or information-equivalent query is compatible with multiple task semantics requiring incompatible sufficient skill sets, and a generic partial-identification/clarification baseline using the same information cannot absorb the claim.",
         "scientific_authority": false
       }
     ],
+    "principle_dead_end_count": 6,
+    "hold_object_count": 19,
     "current_source_hard_veto_count": 2,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
     "current_source_hard_veto_inherited": 2,
-    "semantic_blocker_count": 4,
+    "semantic_blocker_count": 0,
+    "semantic_hold_count": 4,
     "semantic_blocker_added_from_latest_run": 0,
     "semantic_blocker_added_from_terminal_run": 0,
-    "semantic_blocker_inherited": 4,
-    "near_miss_preflight_count": 17,
+    "semantic_blocker_inherited": 0,
+    "semantic_hold_added_from_latest_run": 0,
+    "semantic_hold_added_from_terminal_run": 0,
+    "semantic_hold_inherited": 4,
+    "near_miss_preflight_count": 3,
+    "near_miss_hold_count": 14,
     "near_miss_base_preflight_count": 4,
     "near_miss_terminal_support_hold_count": 13
   },
@@ -890,16 +1063,19 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 25,
+    "shadow_dead_end_objects": 6,
+    "shadow_hold_objects": 19,
     "current_source_hard_veto_dead_ends": 2,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
     "current_source_hard_veto_inherited": 2,
-    "semantic_blocker_dead_ends": 4,
-    "semantic_blocker_added_from_latest_run": 0,
-    "semantic_blocker_added_from_terminal_run": 0,
-    "semantic_blocker_inherited": 4,
-    "near_miss_preflight_dead_ends": 17,
+    "semantic_blocker_dead_ends": 0,
+    "semantic_hold_objects": 4,
+    "semantic_hold_added_from_latest_run": 0,
+    "semantic_hold_added_from_terminal_run": 0,
+    "semantic_hold_inherited": 4,
+    "near_miss_preflight_dead_ends": 3,
+    "near_miss_holds": 14,
     "near_miss_terminal_support_holds": 13,
     "near_miss_support_holds": 1,
     "near_miss_current_primary_stops": 2,

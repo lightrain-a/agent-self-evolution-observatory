@@ -110,12 +110,15 @@ SHADOW_MEMORY_MAINTENANCE_POLICY = {
     "terminal_run_need_not_remain_public_latest": True,
     "machine_only_blocks_do_not_become_persistent_semantic_dead_ends": True,
     "support_unavailable_is_a_reopenable_hold_not_scientific_failure": True,
+    "lane_contract_failure_is_a_reopenable_hold_not_dead_end": True,
+    "unresolved_exact_reduction_test_is_a_hold_not_dead_end": True,
+    "persistent_dead_end_requires_positive_counter_explanation": True,
     "canonical_generator_and_queue_untouched": True,
 }
 
 
 BASE_SHADOW_DEAD_END_MEMORY = {
-    "memory_id": "shadow-paper-design-dead-ends-20260814-r1",
+    "memory_id": "shadow-paper-design-principle-memory-20260816-v2",
     "scientific_authority": False,
     "live_source_coverage_effect": False,
     "cannot_mutate_canonical_generator_or_queue": True,
@@ -130,8 +133,28 @@ BASE_SHADOW_DEAD_END_MEMORY = {
                 "model-conditioned skill utility or risk as the novelty",
                 "generic contextual constrained or risk-sensitive scalar acceptance",
             ],
+            "strongest_reduction": "generic contextual constrained governance using the same model, trigger, workflow, security, and utility information",
+            "current_source_refs": ["arXiv:2602.12430", "arXiv:2607.01136", "arXiv:2608.09732", "arXiv:2605.30723"],
+            "dead_end_certified": True,
+            "memory_class": "PRINCIPLE_DEAD_END",
+            "counter_explanation": {
+                "type": "SAME_INFORMATION_REDUCTION",
+                "statement": "The proposed acceptance object is expressible as contextual constrained governance when the same model/trigger/workflow/security/utility observations are available.",
+                "opposite_prediction": "A generic contextual constrained policy with identical information can reproduce the proposed install/update/block/escalate decisions, so no standalone irreducible acceptance principle is required.",
+                "opposite_principle": "Contextual governance is sufficient unless an ex-ante non-separability or impossibility residual survives same-information control.",
+                "opposite_search_seed": "Search for identical-information skill cases whose correct governance actions are provably non-separable for generic contextual constrained policies.",
+                "scope": "SP-09 paper-problem formulation under the reviewed primary-source evidence",
+                "same_information_or_scope_matched": True,
+                "evidence_refs": ["arXiv:2602.12430", "arXiv:2607.01136", "arXiv:2608.09732", "arXiv:2605.30723"],
+                "positive_support": True,
+                "same_information_reduction_verified": True,
+                "reopen_condition": "Current primary evidence supports an ex-ante non-separability or impossibility prediction for the same skill under identical model/trigger/workflow/security/utility information that generic contextual governance cannot express."
+            },
             "reopen_only_if": "Current primary evidence supports an ex-ante non-separability or impossibility prediction for the same skill under identical model/trigger/workflow/security/utility information that generic contextual governance cannot express.",
-        },
+            "scientific_authority": False
+        }
+    ],
+    "hold_objects": [
         {
             "source_candidate_id": "SP-15",
             "basin": "implicit-query-decomposition-skill-routing",
@@ -142,8 +165,12 @@ BASE_SHADOW_DEAD_END_MEMORY = {
                 "query-conditional multi-skill compatibility alone",
                 "generic abstention, uncertainty, or clarification policy",
             ],
+            "dead_end_certified": False,
+            "memory_class": "REOPENABLE_HOLD",
+            "hold_reason": "The revised sufficient-skill-set identifiability problem still requires provenance-audited query-level support and therefore has not earned a principle dead-end or principle pass.",
             "reopen_only_if": "A new provenance-audited query-level unit shows that the same observable or information-equivalent query is compatible with multiple task semantics requiring incompatible sufficient skill sets, and a generic partial-identification/clarification baseline using the same information cannot absorb the claim.",
-        },
+            "scientific_authority": False
+        }
     ],
 }
 
@@ -152,7 +179,7 @@ def _prior_current_source_hard_veto_rows(path: Path = DEFAULT_JSON) -> list[dict
     prior = _load_json(path)
     memory = prior.get("shadow_dead_end_memory") or {}
     rows = []
-    for row in memory.get("blocked_objects") or []:
+    for row in list(memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or []):
         if not isinstance(row, dict) or not str(row.get("basin") or "").startswith("current-source-hard-veto-"):
             continue
         if row.get("scientific_authority") is not False or not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip():
@@ -165,7 +192,7 @@ def _prior_semantic_block_rows(path: Path = DEFAULT_JSON) -> list[dict[str, Any]
     prior = _load_json(path)
     memory = prior.get("shadow_dead_end_memory") or {}
     rows = []
-    for row in memory.get("blocked_objects") or []:
+    for row in list(memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or []):
         basin = str(row.get("basin") or "") if isinstance(row, dict) else ""
         if not basin.startswith(("semantic-exact-reduction-", "semantic-lane-contract-")):
             continue
@@ -179,7 +206,7 @@ def _prior_near_miss_rows(path: Path = DEFAULT_JSON) -> list[dict[str, Any]]:
     prior = _load_json(path)
     memory = prior.get("shadow_dead_end_memory") or {}
     rows = []
-    for row in memory.get("blocked_objects") or []:
+    for row in list(memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or []):
         basin = str(row.get("basin") or "") if isinstance(row, dict) else ""
         if not basin.startswith("near-miss-"):
             continue
@@ -221,6 +248,8 @@ def _terminal_support_hold_rows(preflight: dict[str, Any] | None, *, run_id: str
             "reopen_only_if": reopen_only_if,
             "source_run_id": run_id,
             "source_stage_manifest_sha256": stage_manifest_sha256,
+            "dead_end_certified": False,
+            "memory_class": "REOPENABLE_HOLD",
             "automatic_problem_gate_authority": False,
             "automatic_method_authority": False,
             "automatic_experiment_authority": False,
@@ -267,6 +296,21 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
             "current_source_refs": refs,
             "reason": reason,
             "reopen_only_if": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope; renaming components, changing application domain, or proposing an unexecuted ablation does not reopen the basin.",
+            "dead_end_certified": True,
+            "memory_class": "PRINCIPLE_DEAD_END",
+            "counter_explanation": {
+                "type": "SAME_INFORMATION_REDUCTION",
+                "statement": strongest,
+                "opposite_prediction": "Under matched information, budget, and operational scope, the cited current-source mechanism explains the proposed prediction without the candidate's standalone principle.",
+                "opposite_principle": "The cited same-information mechanism is sufficient on this bounded formulation.",
+                "opposite_search_seed": "Search for a bounded condition where the cited mechanism receives identical information but makes a distinct falsifiable prediction from the candidate mechanism.",
+                "scope": "the bounded candidate problem formulation and current-source collision review",
+                "same_information_or_scope_matched": True,
+                "evidence_refs": refs,
+                "positive_support": True,
+                "same_information_reduction_verified": True,
+                "reopen_condition": "New primary evidence supplies an ex-ante same-information prediction that the recorded current-source reduction cannot express under matched information, budget, and operational scope."
+            },
             "source_run_id": str(latest.get("run_id") or ""),
             "source_stage_manifest_sha256": str(latest.get("stage_manifest_sha256") or ""),
             "scientific_authority": False,
@@ -315,6 +359,8 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
                 "frozen_pool_sha256": latest_pool_sha,
                 "reason": reason,
                 "reopen_only_if": "New primary evidence supplies the missing lane-contract elements explicitly (shared bounded condition, common failure object, and correctly typed evidence roles) and the resulting formulation still leaves a same-information residual beyond the recorded strongest reduction.",
+                "dead_end_certified": False,
+                "memory_class": "FORMULATION_HOLD",
                 "scientific_authority": False,
             }
         elif reduction_class == "NEEDS_EXACT_REDUCTION_TEST" and strongest and exact_test and exact_test.lower() != "none" and reason:
@@ -337,6 +383,8 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
                 "frozen_pool_sha256": latest_pool_sha,
                 "reason": reason,
                 "reopen_only_if": "New primary evidence directly instantiates the recorded exact reduction test under matched information and leaves a residual prediction the named mature reduction cannot express; new wording, a new application domain, or an unexecuted proposed falsifier does not reopen this basin.",
+                "dead_end_certified": False,
+                "memory_class": "REDUCTION_TEST_HOLD",
                 "scientific_authority": False,
             }
     semantic_rows = [semantic_by_basin[key] for key in sorted(semantic_by_basin)]
@@ -355,16 +403,73 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
             near_by_key[near_key(row)] = dict(row)
     near_miss_rows = [near_by_key[key] for key in sorted(near_by_key)]
     memory["blocked_objects"].extend(near_miss_rows)
-    memory["memory_id"] = "shadow-paper-design-dead-ends-persistent-current-source-semantic-near-miss"
+
+    # Migrate legacy memory into the stricter epistemic split. Only rows with an
+    # affirmative reduction/collision explanation become persistent dead ends.
+    # Missing support, lane-contract failures, and unresolved reduction tests are
+    # retained as holds and must never machine-veto future scientific search.
+    all_rows = [dict(row) for row in list(memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or []) if isinstance(row, dict)]
+    certified_rows: list[dict[str, Any]] = []
+    hold_rows: list[dict[str, Any]] = []
+    for item in all_rows:
+        basin = str(item.get("basin") or "")
+        disposition = str(item.get("disposition") or "")
+        legacy_reduction_dead_end = basin.startswith("current-source-hard-veto-") or disposition in {"STOP_CURRENT_PRIMARY_COLLISION", "STOP_MATURE_THEORY_REDUCTION"}
+        certified = item.get("dead_end_certified") is True or legacy_reduction_dead_end
+        if certified:
+            item["dead_end_certified"] = True
+            item["memory_class"] = "PRINCIPLE_DEAD_END"
+            strongest = str(item.get("strongest_reduction") or "").strip()
+            refs = list(item.get("current_source_refs") or item.get("evidence_basis") or [])
+            reopen = str(item.get("reopen_only_if") or "").strip()
+            if not isinstance(item.get("counter_explanation"), dict):
+                item["counter_explanation"] = {
+                    "type": "SAME_INFORMATION_REDUCTION",
+                    "statement": strongest,
+                    "opposite_prediction": "Under the same information and bounded operational scope, the recorded reduction explains the candidate prediction without the proposed standalone principle.",
+                    "opposite_principle": "The recorded same-information reduction is sufficient within this basin.",
+                    "opposite_search_seed": "Search only for a bounded same-information case where the recorded reduction cannot express the candidate's residual prediction.",
+                    "scope": "the recorded shadow paper-problem basin",
+                    "same_information_or_scope_matched": True,
+                    "evidence_refs": refs,
+                    "positive_support": True,
+                    "same_information_reduction_verified": True,
+                    "reopen_condition": reopen,
+                }
+            else:
+                counter = dict(item["counter_explanation"])
+                counter.setdefault("opposite_principle", strongest or "The recorded same-information reduction is sufficient within this basin.")
+                counter.setdefault("opposite_search_seed", "Search only for a bounded same-information case where the recorded reduction cannot express the candidate's residual prediction.")
+                counter.setdefault("reopen_condition", reopen)
+                item["counter_explanation"] = counter
+            certified_rows.append(item)
+        else:
+            item["dead_end_certified"] = False
+            if not str(item.get("memory_class") or "").strip():
+                item["memory_class"] = "REOPENABLE_HOLD"
+            hold_rows.append(item)
+
+    memory["blocked_objects"] = certified_rows
+    memory["hold_objects"] = hold_rows
+    memory["memory_id"] = "shadow-paper-design-principle-dead-ends-and-holds-v2"
+    memory["principle_dead_end_count"] = len(certified_rows)
+    memory["hold_object_count"] = len(hold_rows)
     memory["current_source_hard_veto_count"] = len(hard_rows)
     memory["current_source_hard_veto_added_from_latest_run"] = added
     memory["current_source_hard_veto_added_from_terminal_run"] = added
     memory["current_source_hard_veto_inherited"] = max(0, len(hard_rows) - added)
-    memory["semantic_blocker_count"] = len(semantic_rows)
-    memory["semantic_blocker_added_from_latest_run"] = semantic_added
-    memory["semantic_blocker_added_from_terminal_run"] = semantic_added
-    memory["semantic_blocker_inherited"] = max(0, len(semantic_rows) - semantic_added)
-    memory["near_miss_preflight_count"] = len(near_miss_rows)
+    memory["semantic_blocker_count"] = 0
+    memory["semantic_hold_count"] = len(semantic_rows)
+    memory["semantic_blocker_added_from_latest_run"] = 0
+    memory["semantic_blocker_added_from_terminal_run"] = 0
+    memory["semantic_blocker_inherited"] = 0
+    memory["semantic_hold_added_from_latest_run"] = semantic_added
+    memory["semantic_hold_added_from_terminal_run"] = semantic_added
+    memory["semantic_hold_inherited"] = max(0, len(semantic_rows) - semantic_added)
+    certified_near = [row for row in near_miss_rows if row.get("dead_end_certified") is True or str(row.get("disposition") or "") in {"STOP_CURRENT_PRIMARY_COLLISION", "STOP_MATURE_THEORY_REDUCTION"}]
+    held_near = [row for row in near_miss_rows if row not in certified_near]
+    memory["near_miss_preflight_count"] = len(certified_near)
+    memory["near_miss_hold_count"] = len(held_near)
     memory["near_miss_base_preflight_count"] = len(base_near_miss_rows)
     memory["near_miss_terminal_support_hold_count"] = sum(str(row.get("basin") or "").startswith("near-miss-terminal-support-hold-") for row in near_miss_rows)
     memory["scientific_authority"] = False
@@ -384,10 +489,10 @@ def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[s
 
     merged = json.loads(json.dumps(state, ensure_ascii=False))
     prior_memory = merged.get("shadow_dead_end_memory") or {}
-    prior_blocked = [row for row in prior_memory.get("blocked_objects") or [] if isinstance(row, dict)]
-    prior_hard = [dict(row) for row in prior_blocked if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
-    prior_semantic = [dict(row) for row in prior_blocked if str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-"))]
-    prior_near = [dict(row) for row in prior_blocked if str(row.get("basin") or "").startswith("near-miss-")]
+    prior_rows = [row for row in list(prior_memory.get("blocked_objects") or []) + list(prior_memory.get("hold_objects") or []) if isinstance(row, dict)]
+    prior_hard = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
+    prior_semantic = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-"))]
+    prior_near = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith("near-miss-")]
     extra_near = _terminal_support_hold_rows(preflight, run_id=run_id, stage_manifest_sha256=stage_manifest_sha256)
 
     memory = _shadow_dead_end_memory(
@@ -402,19 +507,24 @@ def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[s
     summary = merged.setdefault("summary", {})
     summary.update({
         "shadow_dead_end_objects": len(memory.get("blocked_objects") or []),
+        "shadow_hold_objects": len(memory.get("hold_objects") or []),
         "current_source_hard_veto_dead_ends": int(memory.get("current_source_hard_veto_count") or 0),
         "current_source_hard_veto_added_from_latest_run": 0,
         "current_source_hard_veto_added_from_terminal_run": int(memory.get("current_source_hard_veto_added_from_terminal_run") or 0),
         "current_source_hard_veto_inherited": int(memory.get("current_source_hard_veto_inherited") or 0),
-        "semantic_blocker_dead_ends": int(memory.get("semantic_blocker_count") or 0),
+        "semantic_blocker_dead_ends": 0,
+        "semantic_hold_objects": int(memory.get("semantic_hold_count") or 0),
         "semantic_blocker_added_from_latest_run": 0,
-        "semantic_blocker_added_from_terminal_run": int(memory.get("semantic_blocker_added_from_terminal_run") or 0),
-        "semantic_blocker_inherited": int(memory.get("semantic_blocker_inherited") or 0),
+        "semantic_blocker_added_from_terminal_run": 0,
+        "semantic_blocker_inherited": 0,
+        "semantic_hold_added_from_terminal_run": int(memory.get("semantic_hold_added_from_terminal_run") or 0),
         "near_miss_preflight_dead_ends": int(memory.get("near_miss_preflight_count") or 0),
+        "near_miss_holds": int(memory.get("near_miss_hold_count") or 0),
         "near_miss_terminal_support_holds": int(memory.get("near_miss_terminal_support_hold_count") or 0),
     })
     memory["current_source_hard_veto_added_from_latest_run"] = 0
     memory["semantic_blocker_added_from_latest_run"] = 0
+    memory["semantic_hold_added_from_latest_run"] = 0
 
     prior_maintenance = merged.get("shadow_memory_maintenance") or {}
     receipts = [dict(row) for row in prior_maintenance.get("receipts") or [] if isinstance(row, dict)]
@@ -426,7 +536,8 @@ def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[s
         "stage_manifest_sha256": stage_manifest_sha256,
         "terminal_generated_at": terminal_run.get("generated_at"),
         "hard_veto_added": max(0, int(memory.get("current_source_hard_veto_count") or 0) - before_hard),
-        "semantic_blocker_added": max(0, int(memory.get("semantic_blocker_count") or 0) - before_semantic),
+        "semantic_blocker_added": 0,
+        "semantic_hold_added": max(0, int(memory.get("semantic_hold_count") or 0) - before_semantic),
         "support_hold_added": max(0, int(memory.get("near_miss_terminal_support_hold_count") or 0) - before_terminal_holds),
         "scientific_authority": False,
     }
@@ -619,8 +730,10 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "cannot_grant_or_revoke_live_paper_design_authority": True,
             "counterfactual_problem_gate_pass_only_triggers_retrospective_collision_audit": True,
             "current_source_hard_veto_memory_persists_across_shadow_runs": True,
-            "semantic_blocker_memory_persists_across_shadow_runs": True,
+            "semantic_hold_memory_persists_across_shadow_runs": True,
+            "semantic_lane_or_pending_reduction_is_not_a_dead_end": True,
             "semantic_soft_collision_alone_is_not_a_dead_end": True,
+            "persistent_dead_end_requires_positive_counter_explanation": True,
             "current_primary_source_collision_review_required": True,
             "same_information_reduction_required_before_method_design": True,
             "failed_or_missing_ai_reviewer_is_not_pass": True,
@@ -651,15 +764,18 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "stop_standalone": counts.get("STOP_STANDALONE_COLLISION_KEEP_CONTEXT_RISK_AXIS", 0),
             "support_inventory_required": counts.get("REVISE_PAPER_PROBLEM_SUPPORT_INVENTORY_REQUIRED", 0),
             "shadow_dead_end_objects": len(dead_end_memory.get("blocked_objects") or []),
+            "shadow_hold_objects": len(dead_end_memory.get("hold_objects") or []),
             "current_source_hard_veto_dead_ends": int(dead_end_memory.get("current_source_hard_veto_count") or 0),
             "current_source_hard_veto_added_from_latest_run": int(dead_end_memory.get("current_source_hard_veto_added_from_latest_run") or 0),
             "current_source_hard_veto_added_from_terminal_run": int(dead_end_memory.get("current_source_hard_veto_added_from_terminal_run") or 0),
             "current_source_hard_veto_inherited": int(dead_end_memory.get("current_source_hard_veto_inherited") or 0),
-            "semantic_blocker_dead_ends": int(dead_end_memory.get("semantic_blocker_count") or 0),
-            "semantic_blocker_added_from_latest_run": int(dead_end_memory.get("semantic_blocker_added_from_latest_run") or 0),
-            "semantic_blocker_added_from_terminal_run": int(dead_end_memory.get("semantic_blocker_added_from_terminal_run") or 0),
-            "semantic_blocker_inherited": int(dead_end_memory.get("semantic_blocker_inherited") or 0),
+            "semantic_blocker_dead_ends": 0,
+            "semantic_hold_objects": int(dead_end_memory.get("semantic_hold_count") or 0),
+            "semantic_hold_added_from_latest_run": int(dead_end_memory.get("semantic_hold_added_from_latest_run") or 0),
+            "semantic_hold_added_from_terminal_run": int(dead_end_memory.get("semantic_hold_added_from_terminal_run") or 0),
+            "semantic_hold_inherited": int(dead_end_memory.get("semantic_hold_inherited") or 0),
             "near_miss_preflight_dead_ends": int(dead_end_memory.get("near_miss_preflight_count") or 0),
+            "near_miss_holds": int(dead_end_memory.get("near_miss_hold_count") or 0),
             "near_miss_terminal_support_holds": int(dead_end_memory.get("near_miss_terminal_support_hold_count") or 0),
             "near_miss_support_holds": int((near_miss_preflight.get("summary") or {}).get("support_holds") or 0),
             "near_miss_current_primary_stops": int((near_miss_preflight.get("summary") or {}).get("current_primary_stops") or 0),
@@ -690,25 +806,30 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
         errors.append("SP design adjudication cannot authorize downstream work")
     if policy.get("this_is_a_substate_not_a_new_backend_component") is not True or policy.get("paper_problem_support_inventory_precedes_method_design_when_identifiability_is_claimed") is not True:
         errors.append("SP design must remain a Paper Design substate and gate identifiability on support inventory")
-    if policy.get("source_is_shadow_search_portfolio") is not True or policy.get("shadow_queue_has_zero_paper_design_authority") is not True or policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True or policy.get("current_source_hard_veto_memory_persists_across_shadow_runs") is not True or policy.get("semantic_blocker_memory_persists_across_shadow_runs") is not True or policy.get("semantic_soft_collision_alone_is_not_a_dead_end") is not True:
-        errors.append("SP design audit must remain retrospective shadow feedback with zero live Paper Design authority")
+    if policy.get("source_is_shadow_search_portfolio") is not True or policy.get("shadow_queue_has_zero_paper_design_authority") is not True or policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True or policy.get("current_source_hard_veto_memory_persists_across_shadow_runs") is not True or policy.get("semantic_hold_memory_persists_across_shadow_runs") is not True or policy.get("semantic_lane_or_pending_reduction_is_not_a_dead_end") is not True or policy.get("persistent_dead_end_requires_positive_counter_explanation") is not True or policy.get("semantic_soft_collision_alone_is_not_a_dead_end") is not True:
+        errors.append("SP design audit must remain retrospective shadow feedback with zero live Paper Design authority and principle-certified dead-end semantics")
     if (state.get("advisory_consultation") or {}).get("scientific_authority") is not False or (state.get("advisory_consultation") or {}).get("failed_or_missing_review_is_not_pass") is not True:
         errors.append("unavailable AI premortem reviewers must remain zero-authority and cannot count as PASS")
-    memory = state.get("shadow_dead_end_memory") or {}; blocked_objects=[row for row in memory.get("blocked_objects") or [] if isinstance(row,dict)]; blocked_ids={str(row.get("source_candidate_id") or "") for row in blocked_objects}
-    if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True or not {"SP-09","SP-15"}.issubset(blocked_ids):
-        errors.append("Paper Design dead-end memory must remain shadow-only and retain both SP-09/SP-15 basins")
+    memory = state.get("shadow_dead_end_memory") or {}; blocked_objects=[row for row in memory.get("blocked_objects") or [] if isinstance(row,dict)]; hold_objects=[row for row in memory.get("hold_objects") or [] if isinstance(row,dict)]; blocked_ids={str(row.get("source_candidate_id") or "") for row in blocked_objects}; hold_ids={str(row.get("source_candidate_id") or "") for row in hold_objects}
+    if memory.get("scientific_authority") is not False or memory.get("live_source_coverage_effect") is not False or memory.get("cannot_mutate_canonical_generator_or_queue") is not True or "SP-09" not in blocked_ids or "SP-15" not in hold_ids or "SP-15" in blocked_ids:
+        errors.append("Paper Design memory must retain SP-09 as a principle-certified dead end and SP-15 only as a reopenable hold")
+    if any(row.get("dead_end_certified") is not True or row.get("memory_class") != "PRINCIPLE_DEAD_END" or not isinstance(row.get("counter_explanation"),dict) or not str((row.get("counter_explanation") or {}).get("statement") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_principle") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_search_seed") or "").strip() or not (row.get("counter_explanation") or {}).get("evidence_refs") or not str(row.get("reopen_only_if") or "").strip() for row in blocked_objects):
+        errors.append("every persistent blocked object must carry an affirmative counter-explanation, opposite-principle search seed, and reopen condition")
+    if any(row.get("dead_end_certified") is not False for row in hold_objects):
+        errors.append("reopenable hold objects cannot be marked as dead ends")
     dynamic=[row for row in blocked_objects if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
     hard_added=int(memory.get("current_source_hard_veto_added_from_terminal_run",memory.get("current_source_hard_veto_added_from_latest_run",0)) or 0)
     if int(memory.get("current_source_hard_veto_count") or 0)!=len(dynamic) or hard_added+int(memory.get("current_source_hard_veto_inherited") or 0)!=len(dynamic) or any(not str(row.get("strongest_reduction") or "").strip() or not row.get("current_source_refs") or not str(row.get("reopen_only_if") or "").strip() or row.get("scientific_authority") is not False for row in dynamic):
         errors.append("current-source hard vetoes must persist as bounded zero-authority shadow dead-end fingerprints")
-    semantic_rows=[row for row in blocked_objects if str(row.get("basin") or "").startswith(("semantic-exact-reduction-","semantic-lane-contract-"))]
-    semantic_added=int(memory.get("semantic_blocker_added_from_terminal_run",memory.get("semantic_blocker_added_from_latest_run",0)) or 0)
-    if int(memory.get("semantic_blocker_count") or 0)!=len(semantic_rows) or semantic_added+int(memory.get("semantic_blocker_inherited") or 0)!=len(semantic_rows) or any(row.get("scientific_authority") is not False or not str(row.get("strongest_reduction") or "").strip() or not str(row.get("reason") or "").strip() or not str(row.get("reopen_only_if") or "").strip() for row in semantic_rows):
-        errors.append("semantic reduction/lane blockers must persist as bounded zero-authority shadow dead-end fingerprints")
-    near_miss=state.get("shadow_near_miss_preflight") or {}; near_rows=[row for row in blocked_objects if str(row.get("basin") or "").startswith("near-miss-")]
+    semantic_dead=[row for row in blocked_objects if str(row.get("basin") or "").startswith(("semantic-exact-reduction-","semantic-lane-contract-"))]
+    semantic_holds=[row for row in hold_objects if str(row.get("basin") or "").startswith(("semantic-exact-reduction-","semantic-lane-contract-"))]
+    semantic_hold_added=int(memory.get("semantic_hold_added_from_terminal_run",memory.get("semantic_hold_added_from_latest_run",0)) or 0)
+    if semantic_dead or int(memory.get("semantic_blocker_count") or 0)!=0 or int(memory.get("semantic_hold_count") or 0)!=len(semantic_holds) or semantic_hold_added+int(memory.get("semantic_hold_inherited") or 0)!=len(semantic_holds) or any(row.get("scientific_authority") is not False or row.get("dead_end_certified") is not False or not str(row.get("strongest_reduction") or "").strip() or not str(row.get("reason") or "").strip() or not str(row.get("reopen_only_if") or "").strip() for row in semantic_holds):
+        errors.append("lane-contract and unresolved exact-reduction records must persist only as zero-authority reopenable holds")
+    near_miss=state.get("shadow_near_miss_preflight") or {}; near_dead=[row for row in blocked_objects if str(row.get("basin") or "").startswith("near-miss-")]; near_holds=[row for row in hold_objects if str(row.get("basin") or "").startswith("near-miss-")]
     base_near=int(memory.get("near_miss_base_preflight_count",(near_miss.get("summary") or {}).get("receipts",0)) or 0);terminal_holds=int(memory.get("near_miss_terminal_support_hold_count") or 0)
-    if int(memory.get("near_miss_preflight_count") or 0)!=len(near_rows) or base_near+terminal_holds!=len(near_rows) or int((near_miss.get("summary") or {}).get("receipts") or 0)!=base_near or any(row.get("scientific_authority") is not False or not str(row.get("reopen_only_if") or "").strip() for row in near_rows):
-        errors.append("near-miss preflight and terminal support-hold receipts must compile into bounded zero-authority shadow dead-end fingerprints")
+    if int(memory.get("near_miss_preflight_count") or 0)!=len(near_dead) or int(memory.get("near_miss_hold_count") or 0)!=len(near_holds) or int((near_miss.get("summary") or {}).get("receipts") or 0)!=base_near or terminal_holds>len(near_holds) or any(row.get("scientific_authority") is not False or not str(row.get("reopen_only_if") or "").strip() for row in near_dead+near_holds):
+        errors.append("near-miss reductions/collisions must split into certified dead ends while support-unavailable records remain holds")
     maintenance=state.get("shadow_memory_maintenance") or {}
     if maintenance and (maintenance.get("scientific_authority") is not False or (maintenance.get("policy") or {}).get("terminal_run_ingestion_is_zero_authority_search_control") is not True or (maintenance.get("policy") or {}).get("canonical_generator_and_queue_untouched") is not True or any(row.get("scientific_authority") is not False or not row.get("run_id") or not row.get("stage_manifest_sha256") for row in maintenance.get("receipts") or [] if isinstance(row,dict))):
         errors.append("terminal shadow-run memory maintenance must remain bounded zero-authority search control")

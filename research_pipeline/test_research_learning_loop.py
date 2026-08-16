@@ -202,7 +202,8 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertEqual(replay["summary"]["failed"], 0)
         by_id = {row["case_id"]: row for row in replay["cases"]}
         self.assertEqual(by_id["protocol-invalid-negative"]["actual"], "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED")
-        self.assertEqual(by_id["registered-contradiction"]["actual"], "PRINCIPLE_FALSIFIED")
+        self.assertEqual(by_id["registered-contradiction"]["actual"], "REGISTERED_PREDICTION_REJECTED_COUNTEREXPLANATION_REQUIRED")
+        self.assertEqual(by_id["counter-explained-dead-end"]["actual"], "PRINCIPLE_DEAD_END_CERTIFIED")
         self.assertEqual(replay["paper_scale_reproduction"]["status"], "spec-ready-not-yet-run")
 
     def test_external_system_intake_requires_gap_test(self) -> None:

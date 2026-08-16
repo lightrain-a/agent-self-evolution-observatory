@@ -108,19 +108,40 @@ def compile_shadow_dead_end_rows(state: dict[str, Any]) -> list[dict[str, Any]]:
     for receipt in state.get("receipts") or []:
         disposition = str(receipt.get("disposition") or "")
         basin = "near-miss-support-hold" if disposition == "HOLD_SUPPORT_UNAVAILABLE" else ("near-miss-current-primary-collision" if disposition == "STOP_CURRENT_PRIMARY_COLLISION" else "near-miss-mature-theory-reduction")
-        rows.append({
+        strongest = str(receipt.get("strongest_reduction") or "")
+        refs = [str(ref) for ref in receipt.get("evidence_basis") or [] if str(ref)]
+        reopen = str(receipt.get("reopen_only_if") or "")
+        certified = disposition in {"STOP_CURRENT_PRIMARY_COLLISION", "STOP_MATURE_THEORY_REDUCTION"}
+        row = {
             "source_candidate_id": str(receipt.get("source_candidate_id") or ""),
             "basin": basin,
             "search_primitive": str(receipt.get("search_primitive") or ""),
             "disposition": disposition,
             "avoid": [str(value) for value in receipt.get("avoid") or [] if str(value)],
-            "strongest_reduction": str(receipt.get("strongest_reduction") or ""),
-            "current_source_refs": [str(ref) for ref in receipt.get("evidence_basis") or [] if str(ref)],
+            "strongest_reduction": strongest,
+            "current_source_refs": refs,
             "support_status": str(receipt.get("support_status") or ""),
             "reason": str(receipt.get("reason") or ""),
-            "reopen_only_if": str(receipt.get("reopen_only_if") or ""),
+            "reopen_only_if": reopen,
+            "dead_end_certified": certified,
+            "memory_class": "PRINCIPLE_DEAD_END" if certified else "REOPENABLE_HOLD",
             "scientific_authority": False,
-        })
+        }
+        if certified:
+            row["counter_explanation"] = {
+                "type": "SAME_INFORMATION_REDUCTION",
+                "statement": strongest,
+                "opposite_prediction": "Under the same available information and operational scope, the named current/mature reduction explains the candidate prediction without requiring the proposed standalone principle.",
+                "opposite_principle": "The named current/mature reduction is sufficient within the bounded near-miss formulation.",
+                "opposite_search_seed": "Search for a same-information bounded case where the named reduction makes a distinct falsifiable prediction and fails to absorb the residual.",
+                "scope": "the bounded near-miss paper-problem formulation and its cited primary evidence",
+                "same_information_or_scope_matched": True,
+                "evidence_refs": refs,
+                "positive_support": True,
+                "same_information_reduction_verified": True,
+                "reopen_condition": reopen,
+            }
+        rows.append(row)
     return rows
 
 
