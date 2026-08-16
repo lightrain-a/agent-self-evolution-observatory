@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "paper_id": "STRI",
-  "stage": "PAPER_DRAFT_COHERENCE_AUDIT_PRE_P0",
+  "stage": "PAPER_DRAFT_COHERENCE_AUDIT_POST_P0A_INCONCLUSIVE",
   "draft": "paper_drafts/stri-20260816-draft.md",
-  "status": "COHERENT_C1_C2_SUPPORTED_C3_C4_LOCKED",
+  "status": "COHERENT_C1_C2_SUPPORTED_C3_C4_LOCKED_P0A_INCONCLUSIVE",
   "claims": {
     "C1": {
       "status": "SUPPORTED_CONTROL_PLANE",
@@ -46,7 +46,7 @@
       "forbidden_upgrade": "Do not infer STRI-Q/STRI-D or task utility from STRI-E theorem."
     },
     "C3": {
-      "status": "LOCKED_PENDING_P0_AND_FULL",
+      "status": "LOCKED_P0A_NOT_GO",
       "statement": "SQC removes representation dependence without utility/coverage/resource loss.",
       "required": [
         "P0-A GO",
@@ -72,7 +72,7 @@
       ]
     },
     "C4": {
-      "status": "LOCKED_PENDING_FAITHFUL_DYNAMIC_EVIDENCE",
+      "status": "LOCKED_P0A_INCONCLUSIVE_NEEDS_DIFFERENT_FAITHFUL_DYNAMIC_SUBSTRATE",
       "statement": "Native representation sensitivity propagates to realized qualified tasks or evolution utility.",
       "required": [
         "qualified P0-A for STRI-Q",
@@ -101,7 +101,7 @@
     "rejection_sampling_not_claimed_novel": true,
     "decision_time_information_boundary_explicit": true
   },
-  "current_execution_gate": "P0-A parent scientific contract unchanged; host52 equivalent author-runtime operationalization independently CLEAR and materialized; execution blocked only by current external GPU contention; zero scientific generations completed in technical attempts.",
+  "current_execution_gate": "Frozen P0-A completed 72/72 generations on host52 but failed proposer qualification (contract-valid counts 14/5/8 vs 16/source). The dynamic witness was therefore not evaluated; this is INVALID/INCONCLUSIVE, not a STRI STOP. Same-contract rerun/tuning is forbidden.",
   "scientific_authority": false,
   "authority": {
     "paper_claim_C3": false,
@@ -118,8 +118,10 @@
   "host52_operationalization": {
     "review_verdict": "CLEAR_FOR_EXECUTION",
     "scientific_fields_identical": true,
-    "attempted_generations": 0,
+    "attempted_generations": 72,
     "current_resource_ready": false,
-    "external_jobs_must_not_be_preempted": true
+    "external_jobs_must_not_be_preempted": true,
+    "execution_complete": true,
+    "qualification_pass": false
   }
 }

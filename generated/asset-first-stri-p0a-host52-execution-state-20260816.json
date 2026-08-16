@@ -3,9 +3,9 @@
   "candidate_id": "skill-taxonomy-representation-invariance",
   "experiment_id": "ASSET-FIRST-STRI-QWEN3-MERGE-SPLIT-P0A-20260816",
   "artifact_kind": "bounded-p0-execution-state",
-  "status": "READY_SCIENTIFIC_CONTRACT_BLOCKED_ONLY_BY_CURRENT_GPU_CONTENTION",
+  "status": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED",
   "scientific_result_available": false,
-  "p0a_outcome_generations_completed": 0,
+  "p0a_outcome_generations_completed": 72,
   "scientific_belief_update_allowed_from_attempts": false,
   "attempts": [
     {
@@ -37,7 +37,10 @@
       "runtime": "cleared author runtime with official vLLM0.20+cu129 / torch2.11+cu128",
       "failure_stage": "model loaded; Inductor autotune before task generation",
       "failure": "external LLMPrint jobs entered selected GPU1 during initialization and consumed about 8.8 GiB; combined peak caused CUDA OOM",
-      "external_pids": [3677571, 3677573],
+      "external_pids": [
+        3677571,
+        3677573
+      ],
       "external_process_family": "/data/wyt/llmprint52/ACL-LLMPrint-official/build_fingerprint.py",
       "generations": 0,
       "scientific_update": false,
@@ -48,26 +51,43 @@
       "runtime": "same cleared author runtime on GPU2",
       "failure_stage": "resource gate before model generation",
       "failure": "external LLMPrint jobs occupied GPU2 between resource scan and launch; own STRI process was terminated before model generation to avoid a second contention OOM",
-      "external_pids": [3679467, 3679469],
+      "external_pids": [
+        3679467,
+        3679469
+      ],
       "generations": 0,
       "scientific_update": false,
       "external_processes_preserved": true
+    },
+    {
+      "attempt": 6,
+      "runtime": "independently cleared host52 author runtime; single Qwen3-8B / vLLM / gpu_count=1",
+      "failure_stage": "frozen proposer qualification after all 72 preregistered generations completed",
+      "failure": "minimum contract-valid samples per source failed: skill_003=14/24, skill_004=5/24, skill_015=8/24; frozen minimum is 16/source",
+      "generations": 72,
+      "protocol_valid": true,
+      "budget_pass": true,
+      "gpu_hours": 0.07372141143876232,
+      "qualification_pass": false,
+      "witness_passes": null,
+      "scientific_update": false,
+      "raw_generations_sha256": "8aacc8a0ae5d8be71f09f1cf11ef1aa33e6e75eed35aa783869a5d21c3437503",
+      "result_sha256": "29d75013617333467ba672ea1ef50bbab5adbfba25f1bd97369d9e1672f05014",
+      "preflight_sha256": "7911870e8cae661938b8da6c89855f26719d6d6e4a584c44ad7ec68bf12e86aa",
+      "no_retry_same_contract": true
     }
   ],
   "current_resource_snapshot": {
-    "host52": "all eight RTX3090 cards currently occupied by LLMPrint fingerprint workers at roughly 8-9 GiB/card; insufficient uncontested headroom for the Qwen3-8B single-GPU P0-A",
-    "host60": "all three RTX3090-class GPUs occupied; about 15-19 GiB used per card",
-    "host69": "A100-80GB occupied at 100% utilization with about 44.6 GiB used",
-    "host231": "A100-80GB occupied at 100% utilization with about 41.4 GiB used",
-    "host222": "unreachable from current execution routes"
+    "host52": "P0-A execution completed on one uncontested RTX3090; resource contention is no longer the blocker for this frozen P0-A.",
+    "execution_complete": true
   },
-  "why_no_scientific_decision_yet": "The frozen P0-A has not produced a single task generation. Every attempted stop occurred before outcome acquisition and therefore cannot be counted as P0 STOP or negative evidence against STRI.",
+  "why_no_scientific_decision_yet": "All 72 frozen generations completed, but proposer qualification failed before the preregistered dynamic witness could be evaluated. The bank has only 14/5/8 contract-valid samples for skill_003/004/015 versus the frozen 16/source minimum. This is an invalid/inconclusive substrate result, not evidence for or against STRI dynamic propagation.",
   "scientific_state": {
     "C1_control_plane_representation_sensitivity": "SUPPORTED",
     "C2_package_only_reduction_insufficiency": "SUPPORTED",
-    "P0A_dynamic_distribution_propagation": "PENDING_RESOURCE_ONLY",
-    "P0B_support_quotient_feasibility": "LOCKED_UNTIL_P0A_GO",
-    "P0C_solver_consequence": "LOCKED_UNTIL_P0A_GO",
+    "P0A_dynamic_distribution_propagation": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED",
+    "P0B_support_quotient_feasibility": "LOCKED_P0A_NOT_GO",
+    "P0C_solver_consequence": "LOCKED_P0A_NOT_GO",
     "C3_method_superiority": "LOCKED",
     "C4_dynamic_or_utility_propagation": "LOCKED"
   },
@@ -76,15 +96,17 @@
     "Do not change 24x3 generation counts, prompts, decoding, seed, truth, gates, or decision thresholds.",
     "Do not kill or preempt LLMPrint/other external GPU jobs.",
     "Do not interpret technical/runtime/resource failures as scientific STOP.",
-    "Do not add determinism generations outside the frozen 72-call budget."
+    "Do not add determinism generations outside the frozen 72-call budget.",
+    "Do not rerun the same frozen P0-A bank or tune proposer prompts/decoding/sample counts after observing qualification failure."
   ],
-  "next_action": "Use the already-materialized host52 author runtime when one uncontested GPU becomes available; recheck external GPU PIDs immediately before engine load. On P0-A GO, freeze its raw bank and run P0-B with zero new questioner generations, then P0-C if its prerequisites remain satisfied.",
+  "next_action": "Archive the 72-generation bank as a proposer-qualification failure asset; do not rerun the frozen P0-A. Preserve C1/C2 and seek a different faithful fixed-task/independent-truth dynamic substrate, or keep C3/C4 locked and narrow the paper claim.",
   "authority": {
     "current_p0a_execution_ready": false,
     "p0a_scientific_contract_clear": true,
     "paper_design_authority_from_attempts": false,
     "method_authority_from_attempts": false,
     "full_experiment_authorized": false,
-    "second_backbone_authorized": false
+    "second_backbone_authorized": false,
+    "p0a_rerun_authorized": false
   }
 }

@@ -166,7 +166,7 @@ For each merge, native sensitivity requires all three preregistered conditions: 
 **P0-A STOP:** neither passes.
 **P0-A INCONCLUSIVE:** exactly one passes.
 
-`TBD-P0-A: result, qualified counts, TVs, bootstrap intervals, max shifts.`
+**Observed frozen P0-A:** `INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED`. All 72 preregistered generations completed, but contract-valid counts were `14/24`, `5/24`, and `8/24` for `skill_003`, `skill_004`, and `skill_015`, below the frozen `16/source` qualification gate. The merge witnesses were therefore not evaluated, and this run is neither P0-A GO nor scientific STOP. We do not retune or rerun the same P0-A contract.
 
 ### 7.2 P0-B: zero-extra-generation quotient feasibility
 
@@ -246,7 +246,7 @@ Static STRI-E is also not sufficient evidence of practical harm. The actual prop
 1. **Validator-defined semantics.** The strongest current evidence uses released validators to define support. Systems without reliable applicability contracts may require uncertainty-aware quotient construction.
 2. **Transformation class.** We cover identity duplication and grouping/ungrouping of unchanged content-addressed primitives. We do not claim arbitrary semantic decomposition or learned ontology induction.
 3. **Pointwise controller theorem.** The controller-class reduction is pointwise at a frozen pre-task state. It does not collapse a longitudinal adaptive policy to one static vector.
-4. **Dynamic evidence pending.** C3/C4 remain locked until the preregistered Qwen3 P0/full chain completes.
+4. **Dynamic evidence unresolved.** The preregistered Qwen3 P0-A completed its 72-call bank but failed the frozen proposer-qualification gate before any dynamic witness was admissible. C3/C4 therefore remain locked; the failed bank is treated as a substrate failure asset rather than a negative STRI result, and the same P0-A is not rerun.
 5. **Two-system control-plane replication, one primary dynamic substrate.** SkillRL supplies an independent representation-sensitivity witness, while the decisive dynamic method experiment uses Skill-SP because it exposes first-party support/validation suitable for matched counterfactuals.
 
 ## 11. Claim/Evidence Status
@@ -255,8 +255,8 @@ Static STRI-E is also not sufficient evidence of practical harm. The actual prop
 |---|---|---|
 | C1: real representation sensitivity | Supported | retain exact first-party provenance on Skill-SP + SkillRL |
 | C2: irreducible package-only residual | Supported | theorem + real graph witnesses + tight LP |
-| C3: SQC removes dependence without loss | **LOCKED** | P0-A GO + P0-B GO + heldout 2x3 all primary gates |
-| C4: dynamic/utility propagation | **LOCKED** | qualified native P0-A; stronger utility language additionally needs P0-C/full outcome |
+| C3: SQC removes dependence without loss | **LOCKED** | current P0-A is inconclusive; requires a different faithful dynamic substrate before any method-success claim |
+| C4: dynamic/utility propagation | **LOCKED** | current native P0-A failed proposer qualification; requires a different faithful dynamic/independent-truth substrate |
 
 ## Planned Figures and Tables
 
