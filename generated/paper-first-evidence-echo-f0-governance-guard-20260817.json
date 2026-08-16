@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0-governance-guard",
+  "candidate_id": "PA-01-EVIDENCE-ECHO",
+  "status": "PREMODEL_EXECUTION_CAPABILITY_ENFORCED",
+  "repair_date": "2026-08-17",
+  "scientific_authority": false,
+  "pre_execution_only": true,
+  "model_outcomes_inspected_during_guard_repair": false,
+  "scientific_treatment_changed": false,
+  "source_state": {
+    "reviewed_scientific_runtime_sha256": "f64ae7c42f5e02b2f18abd67e4a784e3790b3c75107a4140666d9faa1c39842e",
+    "guarded_runtime_sha256": "5c5e25957388b723a301cac7e78c81d972b77eb0dc62b8bb53343318c6ea6ab3",
+    "repaired_plan_canonical_sha256": "f7c1b8cce177a0efff84cfcf404ef436cf89ead1648548bcd6d633aa3c80a621",
+    "operationalization_receipt": "generated/paper-first-evidence-echo-f0-operationalization-repair-20260817.json"
+  },
+  "guard": {
+    "argparse_abbreviation_disabled": true,
+    "plan_hash_checked_before_model_load": true,
+    "active_experiment_authority_required_before_model_load": true,
+    "matching_active_gpu_lease_required_before_model_load": true,
+    "visible_gpu_uuid_set_must_equal_leased_gpu_uuid_set": true,
+    "runner_can_acquire_authority": false,
+    "runner_can_acquire_gpu_lease": false
+  },
+  "unauthorized_partial_run": {
+    "run_id": "evidence-echo-f0-v2-exec-20260817",
+    "host": "52",
+    "status": "UNAUTHORIZED_DIAGNOSTIC_NO_SCIENTIFIC_AUTHORITY",
+    "rows": 105,
+    "rows_sha256": "c80314df9d0595ff92340d8569d1546435244331ccb25046c615c8975451ce6",
+    "analysis_json_created": false,
+    "outcomes_inspected_by_governance_audit": false,
+    "ingestable_for_h1_h2_h3": false,
+    "reusable_for_current_source_review": false
+  },
+  "execution_readiness": {
+    "operationalization_ready": true,
+    "current_controller_experiment_authority_present": false,
+    "current_matching_gpu_lease_present": false,
+    "current_execution_ready": false,
+    "status": "HOLD_EXECUTION_AUTHORITY_REQUIRED",
+    "reopen_only_if": "A controller issues active experiment authority bound to the repaired plan hash and matching active GPU lease(s), with CUDA-visible GPU UUIDs exactly covered by those leases; alternatively, an independently audited pre-existing complete five-arm replay may be ingested without new execution."
+  },
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  }
+}

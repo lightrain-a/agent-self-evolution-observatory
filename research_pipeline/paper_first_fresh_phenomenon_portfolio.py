@@ -13,9 +13,13 @@ DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-fresh-phenomenon-portfoli
 EVIDENCE_ECHO_JSON = PROJECT_ROOT / "generated" / "paper-first-evidence-echo-retrospective-20260817.json"
 EVIDENCE_ECHO_F0 = PROJECT_ROOT / "research_pipeline" / "paper_first_evidence_echo_f0.py"
 EVIDENCE_ECHO_F0_REPAIR = PROJECT_ROOT / "generated" / "paper-first-evidence-echo-f0-operationalization-repair-20260817.json"
+EVIDENCE_ECHO_F0_GOVERNANCE_GUARD = PROJECT_ROOT / "generated" / "paper-first-evidence-echo-f0-governance-guard-20260817.json"
 EXPECTED_EVIDENCE_ECHO_F0_ORIGINAL_SHA256 = "8f3b04d09c4101335434fa7a8a50bba965ab95ce244cf24c5fe9e53ba6feadf6"
-EXPECTED_EVIDENCE_ECHO_F0_SHA256 = "f64ae7c42f5e02b2f18abd67e4a784e3790b3c75107a4140666d9faa1c39842e"
+EXPECTED_EVIDENCE_ECHO_F0_REVIEWED_SHA256 = "f64ae7c42f5e02b2f18abd67e4a784e3790b3c75107a4140666d9faa1c39842e"
+EXPECTED_EVIDENCE_ECHO_F0_GUARDED_SHA256 = "5c5e25957388b723a301cac7e78c81d972b77eb0dc62b8bb53343318c6ea6ab3"
 EXPECTED_EVIDENCE_ECHO_F0_REPAIR_SHA256 = "8965c54594356a87e642ebe3cc4cd76eb899ece5e6436eb96f097d09473aad30"
+EXPECTED_EVIDENCE_ECHO_F0_GOVERNANCE_GUARD_SHA256 = "2be69a4968575dcb4e4cab5cde686709f15bc3375f52eb68b34f8b2781589a87"
+EXPECTED_EVIDENCE_ECHO_F0_PLAN_SHA256 = "f7c1b8cce177a0efff84cfcf404ef436cf89ead1648548bcd6d633aa3c80a621"
 PRIMARY_STATE_JSON = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state.json"
 DEAD_END_MEMORY_JSON = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-adjudication.json"
 
@@ -25,6 +29,7 @@ ALLOWED_STATUSES = {
     "ACTIVE_F0",
     "SCOUT_ASSET",
     "HOLD_SUPPORT",
+    "HOLD_EXECUTION",
     "HOLD_REDUCTION",
     "READY_FOR_PROBLEM_REVIEW",
     "STOP_REDUCTION",
@@ -102,19 +107,23 @@ def build_fresh_phenomenon_portfolio(
     evidence_echo: dict[str, Any] | None = None,
     primary_state: dict[str, Any] | None = None,
     dead_end_memory: dict[str, Any] | None = None,
+    execution_capability: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compile multiple paper scouts without letting unsupported ideas consume experiment slots.
 
     This portfolio is search/execution control only. It intentionally sits outside the
     canonical Problem Queue. A candidate can occupy the single ACTIVE_F0 slot only when
-    a provenance-audited substrate and a frozen same-information falsifier already exist.
-    A positive F0 does not grant Problem-Gate or Paper-Design authority; it merely moves
-    the candidate to READY_FOR_PROBLEM_REVIEW on the next explicit adjudication pass.
+    a provenance-audited substrate, a frozen same-information falsifier, and a separate
+    controller-verified execution capability already exist. Design-ready candidates that
+    lack experiment authority/GPU leases remain HOLD_EXECUTION. A positive F0 does not
+    grant Problem-Gate or Paper-Design authority; it merely moves the candidate to
+    READY_FOR_PROBLEM_REVIEW on the next explicit adjudication pass.
     """
 
     evidence_echo = evidence_echo or _load(EVIDENCE_ECHO_JSON)
     primary_state = primary_state or _load(PRIMARY_STATE_JSON)
     dead_end_memory = dead_end_memory or _load(DEAD_END_MEMORY_JSON)
+    execution_capability = execution_capability or {}
     ps = primary_state.get("summary") or {}
 
     echo_signal = evidence_echo.get("observed_signal") or {}
@@ -128,7 +137,7 @@ def build_fresh_phenomenon_portfolio(
         and echo_repair.get("pre_execution_only") is True
         and echo_repair.get("model_outcomes_inspected_before_repair") is False
         and echo_repair_source.get("original_runtime_sha256") == EXPECTED_EVIDENCE_ECHO_F0_ORIGINAL_SHA256
-        and echo_repair_source.get("repaired_runtime_sha256") == EXPECTED_EVIDENCE_ECHO_F0_SHA256
+        and echo_repair_source.get("repaired_runtime_sha256") == EXPECTED_EVIDENCE_ECHO_F0_REVIEWED_SHA256
         and echo_reviewer.get("verdict") == "CLEAR_FOR_EXECUTION"
         and echo_reviewer.get("same_scientific_object") is True
         and echo_reviewer.get("unit_arm_gate_identity_preserved") is True
@@ -137,7 +146,27 @@ def build_fresh_phenomenon_portfolio(
         and echo_reviewer.get("hidden_tuning_detected") is False
         and not list(echo_reviewer.get("blockers") or [])
     )
-    echo_ready = bool(
+    echo_guard = _load(EVIDENCE_ECHO_F0_GOVERNANCE_GUARD)
+    echo_guard_source = echo_guard.get("source_state") or {}
+    echo_guard_rule = echo_guard.get("guard") or {}
+    echo_guard_clear = bool(
+        _sha(EVIDENCE_ECHO_F0_GOVERNANCE_GUARD) == EXPECTED_EVIDENCE_ECHO_F0_GOVERNANCE_GUARD_SHA256
+        and echo_guard.get("status") == "PREMODEL_EXECUTION_CAPABILITY_ENFORCED"
+        and echo_guard.get("pre_execution_only") is True
+        and echo_guard.get("model_outcomes_inspected_during_guard_repair") is False
+        and echo_guard.get("scientific_treatment_changed") is False
+        and echo_guard_source.get("reviewed_scientific_runtime_sha256") == EXPECTED_EVIDENCE_ECHO_F0_REVIEWED_SHA256
+        and echo_guard_source.get("guarded_runtime_sha256") == EXPECTED_EVIDENCE_ECHO_F0_GUARDED_SHA256
+        and echo_guard_source.get("repaired_plan_canonical_sha256") == EXPECTED_EVIDENCE_ECHO_F0_PLAN_SHA256
+        and _sha(EVIDENCE_ECHO_F0) == EXPECTED_EVIDENCE_ECHO_F0_GUARDED_SHA256
+        and echo_guard_rule.get("plan_hash_checked_before_model_load") is True
+        and echo_guard_rule.get("active_experiment_authority_required_before_model_load") is True
+        and echo_guard_rule.get("matching_active_gpu_lease_required_before_model_load") is True
+        and echo_guard_rule.get("visible_gpu_uuid_set_must_equal_leased_gpu_uuid_set") is True
+        and echo_guard_rule.get("runner_can_acquire_authority") is False
+        and echo_guard_rule.get("runner_can_acquire_gpu_lease") is False
+    )
+    echo_design_ready = bool(
         evidence_echo.get("decision") == "KEEP_AS_ACTIVE_F0_NOT_PAPER_IDEA"
         and int((evidence_echo.get("scope") or {}).get("units") or 0) >= 128
         and int(echo_signal.get("naive_summary_induced_false_answers") or 0) >= 7
@@ -145,8 +174,19 @@ def build_fresh_phenomenon_portfolio(
         and float(echo_signal.get("naive_summary_exact_paired_p") or 1.0) <= 0.05
         and len(echo_f0.get("required_arms") or []) >= 5
         and echo_f0.get("gpu_authorized") is False
-        and _sha(EVIDENCE_ECHO_F0) == EXPECTED_EVIDENCE_ECHO_F0_SHA256
         and echo_repair_clear
+        and echo_guard_clear
+    )
+    echo_execution_ready = bool(
+        echo_design_ready
+        and execution_capability.get("controller_verified") is True
+        and execution_capability.get("valid") is True
+        and execution_capability.get("idea_id") == "PA-01-EVIDENCE-ECHO"
+        and execution_capability.get("plan_hash") == EXPECTED_EVIDENCE_ECHO_F0_PLAN_SHA256
+        and str(execution_capability.get("authority_id") or "")
+        and str(execution_capability.get("run_id") or "")
+        and str(execution_capability.get("server_id") or "")
+        and len(list(execution_capability.get("gpu_lease_ids") or [])) > 0
     )
 
     harness_hold = _memory_hold(dead_end_memory, "SHADOW-P07-C01")
@@ -181,8 +221,8 @@ def build_fresh_phenomenon_portfolio(
                 "RAW_ONLY vs ECHO_EXTRACTIVE vs VERBATIM_DUPLICATE vs TOKEN_MATCHED_NEUTRAL vs DEDUP_WARNING "
                 "on the frozen unanswerable/answerable units."
             ),
-            support_status="PROVENANCE_AUDITED_LOCAL_SUBSTRATE" if echo_ready else "INCOMPLETE_RECEIPT",
-            status="ACTIVE_F0" if echo_ready else "HOLD_SUPPORT",
+            support_status="PROVENANCE_AUDITED_LOCAL_SUBSTRATE" if echo_design_ready else "INCOMPLETE_RECEIPT",
+            status="ACTIVE_F0" if echo_execution_ready else ("HOLD_EXECUTION" if echo_design_ready else "HOLD_SUPPORT"),
             priority=100,
             why_now=(
                 "This is the only current scout with a real matched substrate, a nonzero paired residual, "
@@ -204,9 +244,9 @@ def build_fresh_phenomenon_portfolio(
                 "answerable_exact_net_delta": echo_signal.get("naive_summary_answerable_exact_net_delta"),
             },
             reopen_only_if=(
-                "If the F0 is reduced by token-matched neutral padding or the paired effect disappears, archive. "
-                "If redundant evidence remains uniquely harmful and DEDUP_WARNING selectively recovers safety, "
-                "then run current-source collision review before any Problem-Gate submission."
+                "Execution requires a controller-verified experiment authority bound to the repaired F0 plan plus matching active GPU lease(s), "
+                "with CUDA-visible GPU UUIDs exactly covered by those leases. If the F0 is reduced by token-matched neutral padding or the paired effect disappears, archive. "
+                "If redundant evidence remains uniquely harmful and DEDUP_WARNING selectively recovers safety, then run current-source collision review before any Problem-Gate submission."
             ),
         ),
         _candidate(
@@ -268,6 +308,20 @@ def build_fresh_phenomenon_portfolio(
         ),
     ]
 
+    echo_row = next(row for row in candidates if row["candidate_id"] == "PA-01-EVIDENCE-ECHO")
+    echo_row["f0_design_ready"] = echo_design_ready
+    echo_row["execution_readiness"] = {
+        "operationalization_ready": echo_design_ready,
+        "controller_verified_capability_present": echo_execution_ready,
+        "execution_ready": echo_execution_ready,
+        "required_plan_sha256": EXPECTED_EVIDENCE_ECHO_F0_PLAN_SHA256,
+        "active_experiment_authority_required": True,
+        "matching_gpu_leases_required": True,
+        "visible_gpu_uuid_set_must_equal_leased_gpu_uuid_set": True,
+        "unauthorized_partial_run_ingestable": False,
+        "status": "EXECUTION_READY" if echo_execution_ready else "HOLD_EXECUTION_AUTHORITY_REQUIRED",
+    }
+
     active = [row for row in candidates if row["status"] == "ACTIVE_F0"]
     if len(active) > ACTIVE_F0_LIMIT:
         active.sort(key=lambda row: (-int(row.get("priority") or 0), row["candidate_id"]))
@@ -280,8 +334,10 @@ def build_fresh_phenomenon_portfolio(
     summary = {
         "candidates": len(candidates),
         "active_f0": sum(row["status"] == "ACTIVE_F0" for row in candidates),
+        "design_ready_f0": sum(bool(row.get("f0_design_ready")) for row in candidates),
         "scout_asset": sum(row["status"] == "SCOUT_ASSET" for row in candidates),
         "hold_support": sum(row["status"] == "HOLD_SUPPORT" for row in candidates),
+        "hold_execution": sum(row["status"] == "HOLD_EXECUTION" for row in candidates),
         "hold_reduction": sum(row["status"] == "HOLD_REDUCTION" for row in candidates),
         "ready_for_problem_review": sum(row["status"] == "READY_FOR_PROBLEM_REVIEW" for row in candidates),
         "stop_reduction": sum(row["status"] == "STOP_REDUCTION" for row in candidates),
@@ -297,13 +353,16 @@ def build_fresh_phenomenon_portfolio(
     return {
         "schema_version": SCHEMA_VERSION,
         "generated_at": _now(),
-        "status": "ACTIVE_F0_EXISTS" if summary["active_f0"] else "NO_ACTIVE_F0",
+        "status": "ACTIVE_F0_EXISTS" if summary["active_f0"] else ("F0_EXECUTION_HOLD" if summary["hold_execution"] else "NO_ACTIVE_F0"),
         "policy": {
             "portfolio_is_outside_canonical_problem_queue": True,
             "fresh_quantitative_phenomenon_precedes_method_ideation": True,
             "one_active_f0_slot_max": ACTIVE_F0_LIMIT,
             "active_f0_requires_provenance_audited_substrate": True,
             "active_f0_requires_frozen_same_information_falsifier": True,
+            "active_f0_requires_controller_verified_execution_capability": True,
+            "direct_gpu_execution_without_experiment_authority_and_matching_leases_is_forbidden": True,
+            "unauthorized_partial_runs_cannot_be_ingested_as_f0_evidence": True,
             "preexecution_operationalization_repair_requires_hash_chain_and_independent_review": True,
             "source_only_candidates_cannot_consume_experiment_slot": True,
             "support_unavailable_is_hold_not_scientific_failure": True,
@@ -329,6 +388,13 @@ def build_fresh_phenomenon_portfolio(
                 "sha256": _sha(EVIDENCE_ECHO_F0_REPAIR),
                 "review_verdict": echo_reviewer.get("verdict"),
             },
+            "evidence_echo_f0_governance_guard": {
+                "path": str(EVIDENCE_ECHO_F0_GOVERNANCE_GUARD.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(EVIDENCE_ECHO_F0_GOVERNANCE_GUARD),
+                "status": echo_guard.get("status"),
+                "guarded_runtime_sha256": echo_guard_source.get("guarded_runtime_sha256"),
+                "repaired_plan_canonical_sha256": echo_guard_source.get("repaired_plan_canonical_sha256"),
+            },
             "primary_state": {
                 "path": str(PRIMARY_STATE_JSON.relative_to(PROJECT_ROOT)),
                 "sha256": _sha(PRIMARY_STATE_JSON),
@@ -353,6 +419,12 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
         errors.append("portfolio must stay outside canonical problem queue")
     if policy.get("active_f0_requires_provenance_audited_substrate") is not True:
         errors.append("active F0 must require audited substrate")
+    if policy.get("active_f0_requires_controller_verified_execution_capability") is not True:
+        errors.append("active F0 must require controller-verified execution capability")
+    if policy.get("direct_gpu_execution_without_experiment_authority_and_matching_leases_is_forbidden") is not True:
+        errors.append("direct GPU execution must remain behind experiment authority and resource leases")
+    if policy.get("unauthorized_partial_runs_cannot_be_ingested_as_f0_evidence") is not True:
+        errors.append("unauthorized partial runs must remain non-ingestable")
     if policy.get("preexecution_operationalization_repair_requires_hash_chain_and_independent_review") is not True:
         errors.append("F0 operationalization repair must require a frozen hash chain plus independent review")
     if policy.get("source_only_candidates_cannot_consume_experiment_slot") is not True:
@@ -364,13 +436,27 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
         errors.append("too many ACTIVE_F0 candidates")
     if int(summary.get("active_f0") or 0) != len(active):
         errors.append("ACTIVE_F0 summary mismatch")
+    execution_holds = [row for row in rows if row.get("status") == "HOLD_EXECUTION"]
+    if int(summary.get("hold_execution") or 0) != len(execution_holds):
+        errors.append("HOLD_EXECUTION summary mismatch")
+    if int(summary.get("design_ready_f0") or 0) != sum(bool(row.get("f0_design_ready")) for row in rows):
+        errors.append("design-ready F0 summary mismatch")
     if int(summary.get("candidates") or 0) != len(rows):
         errors.append("candidate summary mismatch")
     bindings = state.get("source_bindings") or {}
     repair_binding = bindings.get("evidence_echo_f0_operationalization_repair") or {}
-    if any(row.get("candidate_id") == "PA-01-EVIDENCE-ECHO" and row.get("status") == "ACTIVE_F0" for row in rows):
+    guard_binding = bindings.get("evidence_echo_f0_governance_guard") or {}
+    echo_rows = [row for row in rows if row.get("candidate_id") == "PA-01-EVIDENCE-ECHO"]
+    if echo_rows and echo_rows[0].get("f0_design_ready") is True:
         if repair_binding.get("sha256") != EXPECTED_EVIDENCE_ECHO_F0_REPAIR_SHA256 or repair_binding.get("review_verdict") != "CLEAR_FOR_EXECUTION":
-            errors.append("ACTIVE Evidence Echo F0 lacks the reviewed operationalization-repair binding")
+            errors.append("design-ready Evidence Echo F0 lacks the reviewed operationalization-repair binding")
+        if (
+            guard_binding.get("sha256") != EXPECTED_EVIDENCE_ECHO_F0_GOVERNANCE_GUARD_SHA256
+            or guard_binding.get("status") != "PREMODEL_EXECUTION_CAPABILITY_ENFORCED"
+            or guard_binding.get("guarded_runtime_sha256") != EXPECTED_EVIDENCE_ECHO_F0_GUARDED_SHA256
+            or guard_binding.get("repaired_plan_canonical_sha256") != EXPECTED_EVIDENCE_ECHO_F0_PLAN_SHA256
+        ):
+            errors.append("design-ready Evidence Echo F0 lacks the execution-governance guard binding")
     for row in rows:
         if row.get("status") not in ALLOWED_STATUSES:
             errors.append(f"invalid status:{row.get('candidate_id')}")
@@ -379,11 +465,19 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
         authority = row.get("authority") or {}
         if any(bool(authority.get(key)) for key in ("problem_gate", "paper_design", "method", "experiment", "p0", "gpu", "full_experiment")):
             errors.append(f"candidate illegally carries downstream authority:{row.get('candidate_id')}")
-        if row.get("status") == "ACTIVE_F0":
+        if row.get("status") in {"ACTIVE_F0", "HOLD_EXECUTION"}:
             if row.get("support_status") != "PROVENANCE_AUDITED_LOCAL_SUBSTRATE":
-                errors.append(f"ACTIVE_F0 lacks audited substrate:{row.get('candidate_id')}")
+                errors.append(f"design-ready F0 lacks audited substrate:{row.get('candidate_id')}")
             if not str(row.get("cheapest_falsifier") or "").strip():
-                errors.append(f"ACTIVE_F0 lacks falsifier:{row.get('candidate_id')}")
+                errors.append(f"design-ready F0 lacks falsifier:{row.get('candidate_id')}")
+        if row.get("status") == "ACTIVE_F0":
+            readiness = row.get("execution_readiness") or {}
+            if readiness.get("controller_verified_capability_present") is not True or readiness.get("execution_ready") is not True:
+                errors.append(f"ACTIVE_F0 lacks controller-verified execution capability:{row.get('candidate_id')}")
+        if row.get("status") == "HOLD_EXECUTION":
+            readiness = row.get("execution_readiness") or {}
+            if readiness.get("execution_ready") is not False or readiness.get("unauthorized_partial_run_ingestable") is not False:
+                errors.append(f"HOLD_EXECUTION readiness drift:{row.get('candidate_id')}")
     if int(summary.get("canonical_problem_gate_added") or 0) != 0:
         errors.append("portfolio cannot add canonical Problem-Gate rows")
     if any(int(summary.get(key) or 0) != 0 for key in ("method_authorized", "experiment_authorized", "p0_authorized", "gpu_authorized")):

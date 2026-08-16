@@ -1,13 +1,18 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
+import os
+import subprocess
 import time
 from pathlib import Path
 from typing import Any
 
 from . import p06_docatlas_evidence_runtime as p06
+from .experiment_authority import validate_authority
+from .resource_lease import list_gpu_leases
 
 CANDIDATE_ID = "PA-01-EVIDENCE-ECHO"
 CONTRACT_VERSION = "evidence-echo-f0-v2-full-prompt-parity"
@@ -21,6 +26,7 @@ ARMS = (
 UNANSWERABLE_TARGET = 64
 ANSWERABLE_TARGET = 32
 MAX_UNITS = UNANSWERABLE_TARGET + ANSWERABLE_TARGET
+EXPECTED_REPAIRED_PLAN_SHA256 = "f7c1b8cce177a0efff84cfcf404ef436cf89ead1648548bcd6d633aa3c80a621"
 
 
 def _encode(tok: Any, text: str) -> list[int]:
@@ -309,6 +315,102 @@ def build_plan(parent_plan_path: Path, samples_path: Path) -> dict[str, Any]:
     }
 
 
+def canonical_plan_sha256(plan: dict[str, Any]) -> str:
+    payload = json.dumps(plan, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _visible_gpu_uuids() -> list[str]:
+    try:
+        output = subprocess.check_output(
+            ["nvidia-smi", "--query-gpu=index,uuid", "--format=csv,noheader,nounits"],
+            text=True,
+            stderr=subprocess.STDOUT,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise RuntimeError("gpu-capability-check-cannot-query-nvidia-smi") from exc
+    mapping: dict[str, str] = {}
+    ordered: list[str] = []
+    for raw in output.splitlines():
+        if not raw.strip():
+            continue
+        index, uuid = [part.strip() for part in raw.split(",", 1)]
+        mapping[index] = uuid
+        mapping[uuid] = uuid
+        ordered.append(uuid)
+    visible = str(os.environ.get("CUDA_VISIBLE_DEVICES") or "").strip()
+    if not visible:
+        return ordered
+    resolved: list[str] = []
+    for token in (part.strip() for part in visible.split(",")):
+        if not token:
+            continue
+        if token not in mapping:
+            raise RuntimeError(f"gpu-capability-check-unknown-visible-device:{token}")
+        resolved.append(mapping[token])
+    if not resolved:
+        raise RuntimeError("gpu-capability-check-no-visible-gpus")
+    return resolved
+
+
+def validate_execution_capability(
+    *,
+    plan: dict[str, Any],
+    authority_root: Path,
+    authority_id: str,
+    run_id: str,
+    plan_hash: str,
+    server_id: str,
+    gpu_lease_ids: list[str],
+    visible_gpu_uuids: list[str] | None = None,
+) -> dict[str, Any]:
+    actual_plan_hash = canonical_plan_sha256(plan)
+    if actual_plan_hash != EXPECTED_REPAIRED_PLAN_SHA256:
+        raise RuntimeError(f"f0-plan-hash-drift:{actual_plan_hash}")
+    if str(plan_hash) != actual_plan_hash:
+        raise RuntimeError("f0-authority-plan-hash-mismatch")
+    validation = validate_authority(authority_root, CANDIDATE_ID, authority_id, actual_plan_hash)
+    if validation.get("valid") is not True:
+        raise RuntimeError("f0-execution-requires-active-experiment-authority")
+    authority = validation.get("authority") or {}
+    if str(authority.get("run_id") or "") != str(run_id):
+        raise RuntimeError("f0-execution-authority-run-mismatch")
+    requested = [str(value) for value in gpu_lease_ids if str(value)]
+    if not requested or len(set(requested)) != len(requested):
+        raise RuntimeError("f0-execution-requires-explicit-unique-gpu-leases")
+    active = {str(row.get("lease_id") or ""): row for row in list_gpu_leases(authority_root, True)}
+    leases: list[dict[str, Any]] = []
+    for lease_id in requested:
+        row = active.get(lease_id)
+        if not row:
+            raise RuntimeError(f"f0-gpu-lease-not-active:{lease_id}")
+        if (
+            str(row.get("idea_id") or "") != CANDIDATE_ID
+            or str(row.get("plan_hash") or "") != actual_plan_hash
+            or str(row.get("run_id") or "") != str(run_id)
+            or str(row.get("authority_id") or "") != str(authority_id)
+            or str(row.get("server_id") or "") != str(server_id)
+        ):
+            raise RuntimeError(f"f0-gpu-lease-binding-mismatch:{lease_id}")
+        leases.append(row)
+    visible = list(visible_gpu_uuids) if visible_gpu_uuids is not None else _visible_gpu_uuids()
+    leased = [str(row.get("gpu_uuid") or "") for row in leases]
+    if len(visible) != len(set(visible)) or len(leased) != len(set(leased)):
+        raise RuntimeError("f0-gpu-capability-duplicate-device")
+    if set(visible) != set(leased):
+        raise RuntimeError(f"f0-visible-gpu-lease-set-mismatch:visible={sorted(visible)} leased={sorted(leased)}")
+    return {
+        "valid": True,
+        "idea_id": CANDIDATE_ID,
+        "run_id": str(run_id),
+        "plan_hash": actual_plan_hash,
+        "authority_id": str(authority_id),
+        "server_id": str(server_id),
+        "gpu_lease_ids": requested,
+        "gpu_uuids": visible,
+    }
+
+
 def exact_mcnemar(left: list[bool], right: list[bool]) -> dict[str, Any]:
     b = sum((not a) and c for a, c in zip(left, right))
     c = sum(a and (not z) for a, z in zip(left, right))
@@ -396,8 +498,23 @@ def run(
     cache_dir: Path,
     model_path: Path,
     out_dir: Path,
+    authority_root: Path,
+    authority_id: str,
+    run_id: str,
+    plan_hash: str,
+    server_id: str,
+    gpu_lease_ids: list[str],
 ) -> dict[str, Any]:
     plan = build_plan(parent_plan_path, samples_path)
+    capability = validate_execution_capability(
+        plan=plan,
+        authority_root=authority_root,
+        authority_id=authority_id,
+        run_id=run_id,
+        plan_hash=plan_hash,
+        server_id=server_id,
+        gpu_lease_ids=gpu_lease_ids,
+    )
     samples = p06.load(samples_path)
     torch, tok, model = p06.load_model(model_path)
     device_count = max(1, int(torch.cuda.device_count()))
@@ -491,6 +608,7 @@ def run(
         "samples_sha256": p06.sha(samples_path),
         "rows_sha256": p06.sha(raw_path),
         "pdf_manifest": pdf_manifest,
+        "execution_capability": capability,
     }
     analysis_path = out_dir / "analysis.json"
     analysis_path.write_text(json.dumps(analysis, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -498,19 +616,46 @@ def run(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(allow_abbrev=False)
     parser.add_argument("--parent-plan", type=Path, required=True)
     parser.add_argument("--samples", type=Path, required=True)
     parser.add_argument("--pdf-dir", type=Path, required=True)
     parser.add_argument("--cache-dir", type=Path, required=True)
     parser.add_argument("--model", type=Path, default=p06.DEFAULT_MODEL)
     parser.add_argument("--out-dir", type=Path, required=True)
+    parser.add_argument("--authority-root", type=Path)
+    parser.add_argument("--authority-id", default="")
+    parser.add_argument("--run-id", default="")
+    parser.add_argument("--plan-hash", default="")
+    parser.add_argument("--server-id", default="")
+    parser.add_argument("--gpu-lease-id", action="append", default=[])
     parser.add_argument("--plan-only", action="store_true")
     args = parser.parse_args()
     if args.plan_only:
         print(json.dumps(build_plan(args.parent_plan, args.samples), ensure_ascii=False, indent=2))
         return
-    print(json.dumps(run(parent_plan_path=args.parent_plan, samples_path=args.samples, pdf_dir=args.pdf_dir, cache_dir=args.cache_dir, model_path=args.model, out_dir=args.out_dir), ensure_ascii=False, indent=2))
+    if not args.authority_root or not args.authority_id or not args.run_id or not args.plan_hash or not args.server_id or not args.gpu_lease_id:
+        parser.error("execution requires --authority-root --authority-id --run-id --plan-hash --server-id and at least one --gpu-lease-id")
+    print(
+        json.dumps(
+            run(
+                parent_plan_path=args.parent_plan,
+                samples_path=args.samples,
+                pdf_dir=args.pdf_dir,
+                cache_dir=args.cache_dir,
+                model_path=args.model,
+                out_dir=args.out_dir,
+                authority_root=args.authority_root,
+                authority_id=args.authority_id,
+                run_id=args.run_id,
+                plan_hash=args.plan_hash,
+                server_id=args.server_id,
+                gpu_lease_ids=args.gpu_lease_id,
+            ),
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

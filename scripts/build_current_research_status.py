@@ -130,7 +130,9 @@ state = {
         "shadow_method_ready": int(shadow_summary.get("advance_to_method_design", 0)),
         "shadow_qualification_ready": int(bool(shadow_admission_summary.get("qualification_allowed", False)) and bool((positive_treatment.get("scientific_interpretation") or {}).get("active_mechanism_seed", True))),
         "fresh_active_f0": int(fresh_phenomenon_summary.get("active_f0", 0)),
+        "fresh_design_ready_f0": int(fresh_phenomenon_summary.get("design_ready_f0", 0)),
         "fresh_support_holds": int(fresh_phenomenon_summary.get("hold_support", 0)),
+        "fresh_execution_holds": int(fresh_phenomenon_summary.get("hold_execution", 0)),
         "fresh_ready_problem_review": int(fresh_phenomenon_summary.get("ready_for_problem_review", 0)),
         "method_authorized": 0,
         "gpu_authorized": 0,
@@ -201,7 +203,9 @@ state = {
     "fresh_phenomenon_portfolio": {
         "status": fresh_phenomenon.get("status"),
         "active_f0": int(fresh_phenomenon_summary.get("active_f0", 0)),
+        "design_ready_f0": int(fresh_phenomenon_summary.get("design_ready_f0", 0)),
         "support_holds": int(fresh_phenomenon_summary.get("hold_support", 0)),
+        "execution_holds": int(fresh_phenomenon_summary.get("hold_execution", 0)),
         "ready_for_problem_review": int(fresh_phenomenon_summary.get("ready_for_problem_review", 0)),
         "canonical_problem_gate_added": int(fresh_phenomenon_summary.get("canonical_problem_gate_added", 0)),
         "scientific_authority": False,
@@ -215,6 +219,8 @@ state = {
                 "strongest_reduction": row.get("strongest_reduction"),
                 "cheapest_falsifier": row.get("cheapest_falsifier"),
                 "why_now": row.get("why_now"),
+                "f0_design_ready": bool(row.get("f0_design_ready", False)),
+                "execution_readiness": row.get("execution_readiness") or {},
                 "paper_problem_claimed": bool(row.get("paper_problem_claimed", False)),
             }
             for row in fresh_phenomenon.get("candidates", [])

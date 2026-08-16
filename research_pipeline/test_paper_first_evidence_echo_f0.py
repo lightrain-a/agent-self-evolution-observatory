@@ -1,7 +1,16 @@
 from __future__ import annotations
 
+import hashlib
+import json
+import sys
+import tempfile
 import unittest
+from pathlib import Path
+from unittest import mock
 
+from research_pipeline.experiment_authority import acquire_authority
+from research_pipeline.resource_lease import acquire_gpu_lease
+from research_pipeline import paper_first_evidence_echo_f0 as echo_f0
 from research_pipeline.paper_first_evidence_echo_f0 import (
     ANSWERABLE_TARGET,
     ARMS,
@@ -9,9 +18,12 @@ from research_pipeline.paper_first_evidence_echo_f0 import (
     _arm_note_drafts,
     _verbatim_payload_prefix,
     analyze_rows,
+    canonical_plan_sha256,
     arm_note,
     render_arm_prompts,
+    run,
     select_units,
+    validate_execution_capability,
 )
 
 
@@ -35,6 +47,86 @@ class JumpTokenizer(FakeTokenizer):
 
 
 class EvidenceEchoF0Test(unittest.TestCase):
+    def test_canonical_plan_hash_uses_compact_sorted_json(self) -> None:
+        plan = {"z": [3, 2, 1], "a": {"k": "v"}}
+        expected = hashlib.sha256(json.dumps(plan, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+        self.assertEqual(expected, canonical_plan_sha256(plan))
+
+    def test_execution_capability_requires_matching_authority_and_gpu_lease(self) -> None:
+        plan = {"candidate_id": echo_f0.CANDIDATE_ID, "contract_version": echo_f0.CONTRACT_VERSION, "units": []}
+        plan_hash = canonical_plan_sha256(plan)
+        with tempfile.TemporaryDirectory() as td, mock.patch.object(echo_f0, "EXPECTED_REPAIRED_PLAN_SHA256", plan_hash):
+            root = Path(td)
+            authority = acquire_authority(root, echo_f0.CANDIDATE_ID, plan_hash, "test-controller", "F0", "run-a")
+            lease = acquire_gpu_lease(
+                root,
+                "52",
+                "GPU-X",
+                "run-a",
+                "test-controller",
+                idea_id=echo_f0.CANDIDATE_ID,
+                authority_id=authority["authority_id"],
+                plan_hash=plan_hash,
+                ttl_minutes=60,
+            )
+            capability = validate_execution_capability(
+                plan=plan,
+                authority_root=root,
+                authority_id=authority["authority_id"],
+                run_id="run-a",
+                plan_hash=plan_hash,
+                server_id="52",
+                gpu_lease_ids=[lease["lease_id"]],
+                visible_gpu_uuids=["GPU-X"],
+            )
+            self.assertTrue(capability["valid"])
+            self.assertEqual(["GPU-X"], capability["gpu_uuids"])
+            with self.assertRaisesRegex(RuntimeError, "visible-gpu-lease-set-mismatch"):
+                validate_execution_capability(
+                    plan=plan,
+                    authority_root=root,
+                    authority_id=authority["authority_id"],
+                    run_id="run-a",
+                    plan_hash=plan_hash,
+                    server_id="52",
+                    gpu_lease_ids=[lease["lease_id"]],
+                    visible_gpu_uuids=["GPU-Y"],
+                )
+
+    def test_run_without_authority_fails_before_model_load(self) -> None:
+        plan = {"candidate_id": echo_f0.CANDIDATE_ID, "contract_version": echo_f0.CONTRACT_VERSION, "units": []}
+        plan_hash = canonical_plan_sha256(plan)
+        with tempfile.TemporaryDirectory() as td, mock.patch.object(echo_f0, "EXPECTED_REPAIRED_PLAN_SHA256", plan_hash), mock.patch.object(echo_f0, "build_plan", return_value=plan), mock.patch.object(echo_f0.p06, "load_model", side_effect=AssertionError("model-load-must-not-run")):
+            with self.assertRaisesRegex(RuntimeError, "requires-active-experiment-authority"):
+                run(
+                    parent_plan_path=Path(td) / "parent.json",
+                    samples_path=Path(td) / "samples.jsonl",
+                    pdf_dir=Path(td) / "pdfs",
+                    cache_dir=Path(td) / "cache",
+                    model_path=Path(td) / "model",
+                    out_dir=Path(td) / "run",
+                    authority_root=Path(td) / "authority",
+                    authority_id="missing",
+                    run_id="run-a",
+                    plan_hash=plan_hash,
+                    server_id="52",
+                    gpu_lease_ids=["missing-lease"],
+                )
+
+    def test_cli_rejects_mode_abbreviation(self) -> None:
+        argv = [
+            "paper_first_evidence_echo_f0",
+            "--parent-plan", "parent.json",
+            "--samples", "samples.jsonl",
+            "--pdf-dir", "pdfs",
+            "--cache-dir", "cache",
+            "--out-dir", "run",
+            "--plan-only",
+            "--mode", "run",
+        ]
+        with mock.patch.object(sys, "argv", argv), self.assertRaises(SystemExit):
+            echo_f0.main()
+
     def test_verbatim_prefix_allows_only_one_token_boundary_shortfall(self) -> None:
         prefix, n = _verbatim_payload_prefix(JumpTokenizer(), "abcdefghijklmnop", 10)
         self.assertEqual(9, n)

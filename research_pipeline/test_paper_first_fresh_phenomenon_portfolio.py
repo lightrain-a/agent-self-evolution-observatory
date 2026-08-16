@@ -10,6 +10,18 @@ from research_pipeline.paper_first_fresh_phenomenon_portfolio import (
 
 
 class FreshPhenomenonPortfolioTest(unittest.TestCase):
+    def execution_capability(self) -> dict:
+        return {
+            "controller_verified": True,
+            "valid": True,
+            "idea_id": "PA-01-EVIDENCE-ECHO",
+            "plan_hash": "f7c1b8cce177a0efff84cfcf404ef436cf89ead1648548bcd6d633aa3c80a621",
+            "authority_id": "authority-demo",
+            "run_id": "run-demo",
+            "server_id": "52",
+            "gpu_lease_ids": ["lease-demo"],
+        }
+
     def echo_receipt(self) -> dict:
         return {
             "decision": "KEEP_AS_ACTIVE_F0_NOT_PAPER_IDEA",
@@ -61,19 +73,38 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
             }
         }
 
-    def test_only_audited_candidate_consumes_active_f0_slot(self) -> None:
+    def test_design_ready_candidate_holds_without_execution_capability(self) -> None:
         state = build_fresh_phenomenon_portfolio(
             evidence_echo=self.echo_receipt(),
             primary_state={"summary": {"verified": 32, "empirical_fact_candidates": 107}},
             dead_end_memory=self.memory(),
         )
         self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
-        self.assertEqual(ACTIVE_F0_LIMIT, state["summary"]["active_f0"])
-        active = [row for row in state["candidates"] if row["status"] == "ACTIVE_F0"]
-        self.assertEqual(["PA-01-EVIDENCE-ECHO"], [row["candidate_id"] for row in active])
+        self.assertEqual("F0_EXECUTION_HOLD", state["status"])
+        self.assertEqual(0, state["summary"]["active_f0"])
+        self.assertEqual(1, state["summary"]["design_ready_f0"])
+        self.assertEqual(1, state["summary"]["hold_execution"])
+        echo = next(row for row in state["candidates"] if row["candidate_id"] == "PA-01-EVIDENCE-ECHO")
+        self.assertEqual("HOLD_EXECUTION", echo["status"])
+        self.assertFalse(echo["execution_readiness"]["execution_ready"])
+        self.assertFalse(echo["execution_readiness"]["unauthorized_partial_run_ingestable"])
         self.assertEqual(3, state["summary"]["hold_support"])
         self.assertEqual(0, state["summary"]["canonical_problem_gate_added"])
         self.assertTrue(all(row["scientific_authority"] is False for row in state["candidates"]))
+
+    def test_controller_verified_capability_consumes_single_active_f0_slot(self) -> None:
+        state = build_fresh_phenomenon_portfolio(
+            evidence_echo=self.echo_receipt(),
+            primary_state={"summary": {"verified": 32, "empirical_fact_candidates": 107}},
+            dead_end_memory=self.memory(),
+            execution_capability=self.execution_capability(),
+        )
+        self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
+        self.assertEqual(ACTIVE_F0_LIMIT, state["summary"]["active_f0"])
+        self.assertEqual(0, state["summary"]["hold_execution"])
+        active = [row for row in state["candidates"] if row["status"] == "ACTIVE_F0"]
+        self.assertEqual(["PA-01-EVIDENCE-ECHO"], [row["candidate_id"] for row in active])
+        self.assertTrue(active[0]["execution_readiness"]["execution_ready"])
 
     def test_weak_retrospective_signal_does_not_consume_slot(self) -> None:
         receipt = self.echo_receipt()
@@ -94,6 +125,7 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
             evidence_echo=self.echo_receipt(),
             primary_state={"summary": {}},
             dead_end_memory=self.memory(),
+            execution_capability=self.execution_capability(),
         )
         echo = next(row for row in state["candidates"] if row["candidate_id"] == "PA-01-EVIDENCE-ECHO")
         self.assertFalse(echo["paper_problem_claimed"])
@@ -101,6 +133,7 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertFalse(echo["authority"]["paper_design"])
         self.assertFalse(echo["authority"]["experiment"])
         self.assertFalse(echo["authority"]["gpu"])
+        self.assertTrue(echo["execution_readiness"]["execution_ready"])
 
 
 if __name__ == "__main__":

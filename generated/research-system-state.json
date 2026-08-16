@@ -6308,9 +6308,9 @@
     "paper_first_discovery_frontier_external_triggers": 5,
     "paper_first_discovery_frontier_model_calls": 0,
     "paper_first_discovery_frontier_evidence_open": 0,
-    "paper_first_fresh_phenomenon_status": "ACTIVE_F0_EXISTS",
+    "paper_first_fresh_phenomenon_status": "F0_EXECUTION_HOLD",
     "paper_first_fresh_phenomenon_candidates": 4,
-    "paper_first_fresh_phenomenon_active_f0": 1,
+    "paper_first_fresh_phenomenon_active_f0": 0,
     "paper_first_fresh_phenomenon_support_holds": 3,
     "paper_first_fresh_phenomenon_ready_problem_review": 0,
     "paper_first_evidence_migration_status": "NOT_RUN",
@@ -6509,7 +6509,9 @@
     "mem_xfer_support_analysis_status": "support_enriched_analysis_complete",
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 11,
-    "architecture_functional_layers": 6
+    "architecture_functional_layers": 6,
+    "paper_first_fresh_phenomenon_design_ready_f0": 1,
+    "paper_first_fresh_phenomenon_execution_holds": 1
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -75284,14 +75286,18 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T18:42:49+00:00",
-    "status": "ACTIVE_F0_EXISTS",
+    "generated_at": "2026-08-16T19:51:47+00:00",
+    "status": "F0_EXECUTION_HOLD",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
       "fresh_quantitative_phenomenon_precedes_method_ideation": true,
       "one_active_f0_slot_max": 1,
       "active_f0_requires_provenance_audited_substrate": true,
       "active_f0_requires_frozen_same_information_falsifier": true,
+      "active_f0_requires_controller_verified_execution_capability": true,
+      "direct_gpu_execution_without_experiment_authority_and_matching_leases_is_forbidden": true,
+      "unauthorized_partial_runs_cannot_be_ingested_as_f0_evidence": true,
+      "preexecution_operationalization_repair_requires_hash_chain_and_independent_review": true,
       "source_only_candidates_cannot_consume_experiment_slot": true,
       "support_unavailable_is_hold_not_scientific_failure": true,
       "positive_f0_does_not_grant_problem_gate_or_paper_design": true,
@@ -75302,9 +75308,11 @@
     },
     "summary": {
       "candidates": 4,
-      "active_f0": 1,
+      "active_f0": 0,
+      "design_ready_f0": 1,
       "scout_asset": 0,
       "hold_support": 3,
+      "hold_execution": 1,
       "hold_reduction": 0,
       "ready_for_problem_review": 0,
       "stop_reduction": 0,
@@ -75327,7 +75335,7 @@
         "strongest_reduction": "generic prompt salience/repetition, correlated-evidence double counting, extra decision opportunity, context-length effects, or ordinary calibration shift under redundant context",
         "cheapest_falsifier": "Keep raw pages, retrieval ranking, model, temperature, and two-step budget fixed; compare RAW_ONLY vs ECHO_EXTRACTIVE vs VERBATIM_DUPLICATE vs TOKEN_MATCHED_NEUTRAL vs DEDUP_WARNING on the frozen unanswerable/answerable units.",
         "support_status": "PROVENANCE_AUDITED_LOCAL_SUBSTRATE",
-        "status": "ACTIVE_F0",
+        "status": "HOLD_EXECUTION",
         "priority": 100,
         "why_now": "This is the only current scout with a real matched substrate, a nonzero paired residual, and a falsifier that changes one representation axis without requiring a new benchmark.",
         "substrate": {
@@ -75345,7 +75353,7 @@
           "paired_p": 0.015625,
           "answerable_exact_net_delta": 0.0
         },
-        "reopen_only_if": "If the F0 is reduced by token-matched neutral padding or the paired effect disappears, archive. If redundant evidence remains uniquely harmful and DEDUP_WARNING selectively recovers safety, then run current-source collision review before any Problem-Gate submission.",
+        "reopen_only_if": "Execution requires a controller-verified experiment authority bound to the repaired F0 plan plus matching active GPU lease(s), with CUDA-visible GPU UUIDs exactly covered by those leases. If the F0 is reduced by token-matched neutral padding or the paired effect disappears, archive. If redundant evidence remains uniquely harmful and DEDUP_WARNING selectively recovers safety, then run current-source collision review before any Problem-Gate submission.",
         "paper_problem_claimed": false,
         "scientific_authority": false,
         "authority": {
@@ -75356,6 +75364,18 @@
           "p0": false,
           "gpu": false,
           "full_experiment": false
+        },
+        "f0_design_ready": true,
+        "execution_readiness": {
+          "operationalization_ready": true,
+          "controller_verified_capability_present": false,
+          "execution_ready": false,
+          "required_plan_sha256": "f7c1b8cce177a0efff84cfcf404ef436cf89ead1648548bcd6d633aa3c80a621",
+          "active_experiment_authority_required": true,
+          "matching_gpu_leases_required": true,
+          "visible_gpu_uuid_set_must_equal_leased_gpu_uuid_set": true,
+          "unauthorized_partial_run_ingestable": false,
+          "status": "HOLD_EXECUTION_AUTHORITY_REQUIRED"
         }
       },
       {
@@ -75450,7 +75470,19 @@
       },
       "evidence_echo_f0_harness": {
         "path": "research_pipeline/paper_first_evidence_echo_f0.py",
-        "sha256": "8f3b04d09c4101335434fa7a8a50bba965ab95ce244cf24c5fe9e53ba6feadf6"
+        "sha256": "5c5e25957388b723a301cac7e78c81d972b77eb0dc62b8bb53343318c6ea6ab3"
+      },
+      "evidence_echo_f0_operationalization_repair": {
+        "path": "generated/paper-first-evidence-echo-f0-operationalization-repair-20260817.json",
+        "sha256": "8965c54594356a87e642ebe3cc4cd76eb899ece5e6436eb96f097d09473aad30",
+        "review_verdict": "CLEAR_FOR_EXECUTION"
+      },
+      "evidence_echo_f0_governance_guard": {
+        "path": "generated/paper-first-evidence-echo-f0-governance-guard-20260817.json",
+        "sha256": "2be69a4968575dcb4e4cab5cde686709f15bc3375f52eb68b34f8b2781589a87",
+        "status": "PREMODEL_EXECUTION_CAPABILITY_ENFORCED",
+        "guarded_runtime_sha256": "5c5e25957388b723a301cac7e78c81d972b77eb0dc62b8bb53343318c6ea6ab3",
+        "repaired_plan_canonical_sha256": "f7c1b8cce177a0efff84cfcf404ef436cf89ead1648548bcd6d633aa3c80a621"
       },
       "primary_state": {
         "path": "generated/paper-first-primary-evidence-state.json",

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T19:19:49+00:00",
-  "source_revision": "4438f2afd22f7d1408b657e10979f49eeb5ee075",
+  "generated_at": "2026-08-16T20:18:16+00:00",
+  "source_revision": "e66e30b40b91bce96b0effcd1e7a0ca0516842f9",
   "as_of_date": "2026-08-16",
   "headline": {
     "paper_ready": 1,
@@ -20,8 +20,10 @@
     "shadow_holds": 2,
     "shadow_method_ready": 0,
     "shadow_qualification_ready": 0,
-    "fresh_active_f0": 1,
+    "fresh_active_f0": 0,
+    "fresh_design_ready_f0": 1,
     "fresh_support_holds": 3,
+    "fresh_execution_holds": 1,
     "fresh_ready_problem_review": 0,
     "method_authorized": 0,
     "gpu_authorized": 0
@@ -113,9 +115,11 @@
     "note": "The canonical live generator/queue remains empty; asset-first STRI is a separate paper track and does not mutate canonical authority."
   },
   "fresh_phenomenon_portfolio": {
-    "status": "ACTIVE_F0_EXISTS",
-    "active_f0": 1,
+    "status": "F0_EXECUTION_HOLD",
+    "active_f0": 0,
+    "design_ready_f0": 1,
     "support_holds": 3,
+    "execution_holds": 1,
     "ready_for_problem_review": 0,
     "canonical_problem_gate_added": 0,
     "scientific_authority": false,
@@ -123,12 +127,24 @@
       {
         "candidate_id": "PA-01-EVIDENCE-ECHO",
         "title": "Evidence Echo in Agent Notes: Redundant Extractive Notes Can Turn Safe Deferral into False Answers",
-        "status": "ACTIVE_F0",
+        "status": "HOLD_EXECUTION",
         "support_status": "PROVENANCE_AUDITED_LOCAL_SUBSTRATE",
         "phenomenon": "On 64 benchmark-unanswerable units with raw visible pages locked across policies, adding an extractive persistent note raised false-answer rate from 10.9% to 21.9%; the paired naive-summary transition was 7 induced versus 0 repaired false answers (exact p=0.015625), with zero net exact-accuracy gain on the 64 answerable units.",
         "strongest_reduction": "generic prompt salience/repetition, correlated-evidence double counting, extra decision opportunity, context-length effects, or ordinary calibration shift under redundant context",
         "cheapest_falsifier": "Keep raw pages, retrieval ranking, model, temperature, and two-step budget fixed; compare RAW_ONLY vs ECHO_EXTRACTIVE vs VERBATIM_DUPLICATE vs TOKEN_MATCHED_NEUTRAL vs DEDUP_WARNING on the frozen unanswerable/answerable units.",
         "why_now": "This is the only current scout with a real matched substrate, a nonzero paired residual, and a falsifier that changes one representation axis without requiring a new benchmark.",
+        "f0_design_ready": true,
+        "execution_readiness": {
+          "operationalization_ready": true,
+          "controller_verified_capability_present": false,
+          "execution_ready": false,
+          "required_plan_sha256": "f7c1b8cce177a0efff84cfcf404ef436cf89ead1648548bcd6d633aa3c80a621",
+          "active_experiment_authority_required": true,
+          "matching_gpu_leases_required": true,
+          "visible_gpu_uuid_set_must_equal_leased_gpu_uuid_set": true,
+          "unauthorized_partial_run_ingestable": false,
+          "status": "HOLD_EXECUTION_AUTHORITY_REQUIRED"
+        },
         "paper_problem_claimed": false
       },
       {
@@ -140,6 +156,8 @@
         "strongest_reduction": "ordinary constrained optimization / security-utility Pareto trade-off and conservative policy bias",
         "cheapest_falsifier": "Requires paired evolution histories with matched current ASR/utility and candidate patch benefit but different accumulated restrictiveness; no such current released unit is available.",
         "why_now": "Strong quantitative failure boundary, but it must not consume compute before the required history-level asset exists.",
+        "f0_design_ready": false,
+        "execution_readiness": {},
         "paper_problem_claimed": false
       },
       {
@@ -151,6 +169,8 @@
         "strongest_reduction": "small-n ranking noise, winner's curse, adaptive validation, and ordinary selection bias",
         "cheapest_falsifier": "Sweep the frozen verification rule on released paired gene histories while matching candidate count, selection pressure, and deployment n; the required histories are not released.",
         "why_now": "Potentially strong self-evolution-specific selection phenomenon, but support is still source-only.",
+        "f0_design_ready": false,
+        "execution_readiness": {},
         "paper_problem_claimed": false
       },
       {
@@ -162,6 +182,8 @@
         "strongest_reduction": "base-model visual grounding failure or ordinary retrieval/execution mismatch",
         "cheapest_falsifier": "Needs query-level retrieved lesson identities/text, TRS/relevance metadata, and outcomes to construct matched conflicting versus non-conflicting procedure sets.",
         "why_now": "Good reserve phenomenon but no independent query-level support asset is currently available.",
+        "f0_design_ready": false,
+        "execution_readiness": {},
         "paper_problem_claimed": false
       }
     ]
