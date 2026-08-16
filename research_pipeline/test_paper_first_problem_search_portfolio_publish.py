@@ -11,6 +11,33 @@ from . import paper_first_problem_search_portfolio_publish as publisher
 
 
 class SearchPortfolioPublishTest(unittest.TestCase):
+    def test_model_identity_uses_real_provider_receipts_and_review_generator_binding(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/"expand-UNEXPLAINED_BOUNDARY-p1.json").write_text(json.dumps({"requested_model":"kimi-k3","resolved_model":"kimi-k3-endpoint","raw_sha256":"1"*64}),encoding="utf-8")
+            (root/"formulate-p1.json").write_text(json.dumps({"requested_model":"glm-5.3","resolved_model":"glm-5.3-endpoint","raw_sha256":"2"*64}),encoding="utf-8")
+            (root/"review-p1.json").write_text(json.dumps({"requested_model":"deepseek-v4-pro","resolved_model":"deepseek-v4-pro-endpoint","generator_resolved_model":"glm-5.3-endpoint","generator_receipts":[{"source_artifact":"formulate-p1.json","requested_model":"glm-5.3","resolved_model":"glm-5.3-endpoint","raw_sha256":"2"*64}],"candidates":[]}),encoding="utf-8")
+            identity=publisher._model_identity_receipts(root)
+        self.assertEqual(identity["generator_requested_model"],"glm-5.3|kimi-k3")
+        self.assertEqual(identity["generator_resolved_model"],"glm-5.3-endpoint|kimi-k3-endpoint")
+        self.assertEqual(identity["reviewer_requested_model"],"deepseek-v4-pro")
+        self.assertEqual(identity["reviewer_resolved_model"],"deepseek-v4-pro-endpoint")
+        self.assertEqual(identity["review_generator_resolved_model"],"glm-5.3-endpoint")
+        self.assertTrue(identity["identity_complete_for_review_independence"])
+        self.assertTrue(identity["all_review_batches_independent_resolved_model"])
+
+    def test_missing_or_same_review_identity_never_counts_as_independent(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/"review-p1.json").write_text(json.dumps({"requested_model":"deepseek-v4-pro","resolved_model":"glm-5.3-endpoint","generator_resolved_model":"glm-5.3-endpoint","candidates":[]}),encoding="utf-8")
+            same=publisher._model_identity_receipts(root)
+            (root/"review-p1.json").write_text(json.dumps({"requested_model":"deepseek-v4-pro","resolved_model":"deepseek-v4-pro-endpoint","candidates":[]}),encoding="utf-8")
+            missing=publisher._model_identity_receipts(root)
+        self.assertFalse(same["all_review_batches_independent_resolved_model"])
+        self.assertTrue(same["identity_complete_for_review_independence"])
+        self.assertFalse(missing["all_review_batches_independent_resolved_model"])
+        self.assertFalse(missing["identity_complete_for_review_independence"])
+
     def test_terminal_evidence_holds_close_frozen_transaction(self) -> None:
         summary={
             "provisional_problem_candidates": 4,

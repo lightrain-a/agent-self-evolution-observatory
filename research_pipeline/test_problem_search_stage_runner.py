@@ -352,10 +352,10 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
     def test_review_generator_receipts_use_real_formulation_resolved_identity(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             run=Path(td);control_sha="f"*64;raw_sha="a"*64
-            (run/"formulate-p1.json").write_text(json.dumps({"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"resolved_model":"glm-5.3-real-endpoint","raw_sha256":raw_sha}),encoding="utf-8")
+            (run/"formulate-p1.json").write_text(json.dumps({"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"requested_model":"glm-5.3","resolved_model":"glm-5.3-real-endpoint","raw_sha256":raw_sha}),encoding="utf-8")
             receipts,resolved=runner._review_generator_receipts(run,[{"source_artifact":"formulate-p1.json"}],control_sha)
         self.assertEqual(resolved,"glm-5.3-real-endpoint")
-        self.assertEqual(receipts,[{"source_artifact":"formulate-p1.json","resolved_model":"glm-5.3-real-endpoint","raw_sha256":raw_sha}])
+        self.assertEqual(receipts,[{"source_artifact":"formulate-p1.json","requested_model":"glm-5.3","resolved_model":"glm-5.3-real-endpoint","raw_sha256":raw_sha}])
 
     def test_review_generator_receipts_fail_closed_without_resolved_identity(self) -> None:
         with tempfile.TemporaryDirectory() as td:
