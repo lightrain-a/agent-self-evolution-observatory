@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "post-negative-statistical-resolution-audit",
+  "experiment_id": "STRI-SKILLRL-FINAL-POLICY-COMPETENCY-P0E-20260816",
+  "input_analysis_path": "/data/wyt/agent-self-evolution-observatory/runs/agent3-stri-skillrl-p0e-causal-20260816/analysis.json",
+  "input_analysis_sha256": "1d8d56c343fa832bcdda5e52a4b7f8816710aca442b9937eeb1bf28e0743a560",
+  "input_panel_path": "generated/asset-first-stri-skillrl-final-policy-p0e-panel-20260816.json",
+  "input_panel_sha256": "2713dd3c15aa8fd539526fd2960a45374cf28fc2b99a0e29b84c2b32d1592284",
+  "experimental_stop_rule_valid": true,
+  "experimental_stop_outcome": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
+  "persistent_principle_dead_end_statistically_certified": false,
+  "reason": "The frozen experiment validly maps this sample to STOP, but it did not preregister an equivalence/non-inferiority margin, power target, or clustered-task inference sufficient to turn a null endpoint contrast into a persistent population-level principle dead end.",
+  "paired_units": 24,
+  "task_clusters": 12,
+  "decode_seeds_per_task": 2,
+  "observed_B_vs_A_endpoint_discordances": 0,
+  "observed_C_vs_A_endpoint_discordances": 0,
+  "registered_go_effect_floor": 0.125,
+  "registered_go_effect_floor_equivalent_unidirectional_flips": 3,
+  "two_sided_exact_mcnemar_p_at_effect_floor_if_all_flips_one_direction": 0.25,
+  "minimum_unidirectional_discordances_for_two_sided_mcnemar_p_lt_0_05": 6,
+  "corresponding_minimum_detectable_signed_rate_difference_under_best_case_directionality": 0.25,
+  "zero_discordance_upper_bounds": {
+    "assuming_24_independent_units_one_sided_95pct": 0.11734615615494881,
+    "assuming_24_independent_units_two_sided_95pct": 0.14247359772252566,
+    "conservative_12_task_clusters_one_sided_95pct": 0.22092219194555585,
+    "conservative_12_task_clusters_two_sided_95pct": 0.2646484693970512
+  },
+  "interpretation": {
+    "what_is_decided": "The preregistered C4 realization fails its GO rule and satisfies its STOP rule under a competent final policy and valid controls.",
+    "what_is_not_decided": "The data do not, under a preregistered equivalence/power analysis, establish that every scientifically meaningful nonzero endpoint-transport effect in this scoped population is absent.",
+    "why_no_more_seeds_now": "This audit blocks overclaiming a persistent principle dead end; it does not reopen the frozen experiment or authorize post-hoc sample-size expansion.",
+    "relation_to_same_information_screen": "The trajectory-only residual is separately weakened by the matched C placebo. Statistical-resolution uncertainty at the endpoint does not create a novel trajectory claim."
+  },
+  "recommended_principle_layer_disposition": "REGISTERED_REALIZATION_STOP_PRINCIPLE_NOT_PERSISTENT_DEAD_END",
+  "reopen_condition": "Only a new predeclared paper contract with an explicit equivalence/effect margin, task-cluster inference/power plan, independent support qualification, and matched B/C/D controls could test a population-level endpoint-transport dead end. Do not add seeds to the current frozen P0-E run.",
+  "new_gpu_authorized": false,
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_expansion": false,
+    "method": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}
