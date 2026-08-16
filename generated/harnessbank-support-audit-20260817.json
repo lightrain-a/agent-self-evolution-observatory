@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "PA-03-HARNESS-SELECTION-INVERSION",
+  "source_ref": "arXiv:2607.13683",
+  "audited_at": "2026-08-17T03:36:00+08:00",
+  "status": "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT",
+  "required_unit": "paired per-gene harness evolution histories and downstream outcomes under the frozen verification rule, with enough lineage to reconstruct selected-versus-rejected verification decisions",
+  "primary_source": {
+    "fulltext_sha256": "74082edc56e911da43e9b70b8eeaf4d6552b8fea7e15b7a0ab00d4c20aff2997",
+    "code_disclosure": "Our code will be publicly available upon acceptance.",
+    "release_interpretation": "The primary paper itself describes code release as future/conditional rather than an already available replay substrate."
+  },
+  "current_release_surface_audit": {
+    "github_repository_search_query": "HarnessBank agent harness self evolution",
+    "github_repository_search_total_count": 0,
+    "discovery_only": true,
+    "scientific_evidence": false,
+    "interpretation": "No publicly discoverable repository matching the paper/system name was found in the bounded current search. This is only a release-surface check; it is not evidence that no repository can ever exist."
+  },
+  "why_hold": "The paper-level aggregate result is insufficient for the frozen inversion falsifier. Without auditable gene-level selection histories and downstream outcomes, selected-harness survivorship cannot be separated from a genuine verification-selection inversion mechanism.",
+  "reopen_only_if": "A first-party release exposes replayable paired gene histories/outcomes and verification lineage sufficient to reconstruct the frozen selected-versus-rejected decision unit without substituting synthetic or inferred histories.",
+  "authority": {
+    "scientific_authority": false,
+    "problem_gate_authority": false,
+    "paper_design_authority": false,
+    "method_authority": false,
+    "experiment_authority": false,
+    "p0_authority": false,
+    "gpu_authority": false,
+    "automatic_release_polling_authority": false
+  }
+}

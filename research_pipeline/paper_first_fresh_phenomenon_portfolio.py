@@ -14,6 +14,9 @@ EVIDENCE_ECHO_JSON = PROJECT_ROOT / "generated" / "paper-first-evidence-echo-ret
 EVIDENCE_ECHO_F0 = PROJECT_ROOT / "research_pipeline" / "paper_first_evidence_echo_f0.py"
 EVIDENCE_ECHO_F0_REPAIR = PROJECT_ROOT / "generated" / "paper-first-evidence-echo-f0-operationalization-repair-20260817.json"
 EVIDENCE_ECHO_F0_GOVERNANCE_GUARD = PROJECT_ROOT / "generated" / "paper-first-evidence-echo-f0-governance-guard-20260817.json"
+DEFENSE_RESTRICTIVENESS_READJUDICATION = PROJECT_ROOT / "generated" / "hard-security-utility-collapse-principle-readjudication-20260817.json"
+SPATIAL_MEMORY_READJUDICATION = PROJECT_ROOT / "generated" / "spatial-memory-high-trs-grounding-principle-readjudication-20260817.json"
+HARNESSBANK_SUPPORT_AUDIT = PROJECT_ROOT / "generated" / "harnessbank-support-audit-20260817.json"
 EXPECTED_EVIDENCE_ECHO_F0_ORIGINAL_SHA256 = "8f3b04d09c4101335434fa7a8a50bba965ab95ce244cf24c5fe9e53ba6feadf6"
 EXPECTED_EVIDENCE_ECHO_F0_REVIEWED_SHA256 = "f64ae7c42f5e02b2f18abd67e4a784e3790b3c75107a4140666d9faa1c39842e"
 EXPECTED_EVIDENCE_ECHO_F0_GUARDED_SHA256 = "5c5e25957388b723a301cac7e78c81d972b77eb0dc62b8bb53343318c6ea6ab3"
@@ -108,6 +111,9 @@ def build_fresh_phenomenon_portfolio(
     primary_state: dict[str, Any] | None = None,
     dead_end_memory: dict[str, Any] | None = None,
     execution_capability: dict[str, Any] | None = None,
+    defense_readjudication: dict[str, Any] | None = None,
+    spatial_readjudication: dict[str, Any] | None = None,
+    harnessbank_support_audit: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compile multiple paper scouts without letting unsupported ideas consume experiment slots.
 
@@ -124,7 +130,35 @@ def build_fresh_phenomenon_portfolio(
     primary_state = primary_state or _load(PRIMARY_STATE_JSON)
     dead_end_memory = dead_end_memory or _load(DEAD_END_MEMORY_JSON)
     execution_capability = execution_capability or {}
+    defense_readjudication = defense_readjudication or _load(DEFENSE_RESTRICTIVENESS_READJUDICATION)
+    spatial_readjudication = spatial_readjudication or _load(SPATIAL_MEMORY_READJUDICATION)
+    harnessbank_support_audit = harnessbank_support_audit or _load(HARNESSBANK_SUPPORT_AUDIT)
     ps = primary_state.get("summary") or {}
+
+    defense_closure = defense_readjudication.get("fresh_phenomenon_closure") or {}
+    defense_diagnosis = ((defense_readjudication.get("principle_diagnosis") or {}).get("counter_explanation") or {})
+    defense_principle_closed = bool(
+        defense_readjudication.get("principle_dead_end_certified") is True
+        and defense_readjudication.get("experiment_run_for_this_readjudication") is False
+        and defense_closure.get("source_ref") == "arXiv:2608.12977"
+        and str(defense_closure.get("closure_scope") or "").strip()
+        and defense_diagnosis.get("same_information_or_scope_matched") is True
+        and defense_diagnosis.get("same_information_reduction_verified") is True
+        and defense_diagnosis.get("positive_support") is True
+        and ((defense_readjudication.get("authority") or {}).get("experiment_alone_authorizes_dead_end") is False)
+    )
+    spatial_closure = spatial_readjudication.get("fresh_phenomenon_closure") or {}
+    spatial_diagnosis = ((spatial_readjudication.get("principle_diagnosis") or {}).get("counter_explanation") or {})
+    spatial_principle_closed = bool(
+        spatial_readjudication.get("principle_dead_end_certified") is True
+        and spatial_readjudication.get("experiment_run_for_this_readjudication") is False
+        and spatial_closure.get("source_ref") == "arXiv:2608.12743"
+        and str(spatial_closure.get("closure_scope") or "").strip()
+        and spatial_diagnosis.get("same_information_or_scope_matched") is True
+        and spatial_diagnosis.get("same_information_reduction_verified") is True
+        and spatial_diagnosis.get("positive_support") is True
+        and ((spatial_readjudication.get("authority") or {}).get("experiment_alone_authorizes_dead_end") is False)
+    )
 
     echo_signal = evidence_echo.get("observed_signal") or {}
     echo_f0 = evidence_echo.get("next_f0") or {}
@@ -262,11 +296,24 @@ def build_fresh_phenomenon_portfolio(
                 "Requires paired evolution histories with matched current ASR/utility and candidate patch benefit but "
                 "different accumulated restrictiveness; no such current released unit is available."
             ),
-            support_status=str(defense_hold.get("support_status") or "SUPPORT_UNAVAILABLE"),
-            status="HOLD_SUPPORT",
+            support_status=(
+                "PRINCIPLE_CLOSED_SAME_INFORMATION_REDUCTION"
+                if defense_principle_closed
+                else str(defense_hold.get("support_status") or "SUPPORT_UNAVAILABLE")
+            ),
+            status="STOP_REDUCTION" if defense_principle_closed else "HOLD_SUPPORT",
             priority=70,
-            why_now="Strong quantitative failure boundary, but it must not consume compute before the required history-level asset exists.",
-            reopen_only_if=str(defense_hold.get("reopen_only_if") or "Author release exposes replayable evolution histories with rule/patch lineage."),
+            why_now=(
+                "Scoped principle readjudication already reduces the reported 7.2% utility point to a same-information "
+                "security-utility Pareto/overblocking operating point; spending compute on the same standalone claim is forbidden."
+                if defense_principle_closed
+                else "Strong quantitative failure boundary, but it must not consume compute before the required history-level asset exists."
+            ),
+            reopen_only_if=(
+                str(defense_diagnosis.get("reopen_condition") or "")
+                if defense_principle_closed
+                else str(defense_hold.get("reopen_only_if") or "Author release exposes replayable evolution histories with rule/patch lineage.")
+            ),
         ),
         _candidate(
             candidate_id="PA-03-HARNESS-SELECTION-INVERSION",
@@ -281,11 +328,24 @@ def build_fresh_phenomenon_portfolio(
                 "Sweep the frozen verification rule on released paired gene histories while matching candidate count, "
                 "selection pressure, and deployment n; the required histories are not released."
             ),
-            support_status=str(harness_hold.get("support_status") or "SUPPORT_UNAVAILABLE"),
+            support_status=(
+                str(harnessbank_support_audit.get("status") or "")
+                if harnessbank_support_audit.get("candidate_id") == "PA-03-HARNESS-SELECTION-INVERSION"
+                else str(harness_hold.get("support_status") or "SUPPORT_UNAVAILABLE")
+            ),
             status="HOLD_SUPPORT",
             priority=60,
-            why_now="Potentially strong self-evolution-specific selection phenomenon, but support is still source-only.",
-            reopen_only_if=str(harness_hold.get("reopen_only_if") or "HarnessBank releases paired run histories/outcomes."),
+            why_now=(
+                "Primary-source code disclosure remains future/conditional, and the bounded current release audit found no "
+                "first-party replay substrate exposing the paired gene histories required to distinguish verification-selection inversion from survivorship/selection bias."
+                if harnessbank_support_audit.get("status") == "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT"
+                else "Potentially strong self-evolution-specific selection phenomenon, but support is still source-only."
+            ),
+            reopen_only_if=str(
+                harnessbank_support_audit.get("reopen_only_if")
+                or harness_hold.get("reopen_only_if")
+                or "HarnessBank releases paired run histories/outcomes."
+            ),
         ),
         _candidate(
             candidate_id="PA-04-SPATIAL-MEMORY-CONFLICT",
@@ -300,11 +360,23 @@ def build_fresh_phenomenon_portfolio(
                 "Needs query-level retrieved lesson identities/text, TRS/relevance metadata, and outcomes to construct "
                 "matched conflicting versus non-conflicting procedure sets."
             ),
-            support_status=str(spatial_hold.get("support_status") or "SUPPORT_UNAVAILABLE"),
-            status="HOLD_SUPPORT",
+            support_status=(
+                "PRINCIPLE_CLOSED_VISUAL_GROUNDING_REDUCTION"
+                if spatial_principle_closed
+                else str(spatial_hold.get("support_status") or "SUPPORT_UNAVAILABLE")
+            ),
+            status="STOP_REDUCTION" if spatial_principle_closed else "HOLD_SUPPORT",
             priority=50,
-            why_now="Good reserve phenomenon but no independent query-level support asset is currently available.",
-            reopen_only_if=str(spatial_hold.get("reopen_only_if") or "Authors release query-level retrieval logs and outcomes."),
+            why_now=(
+                "The primary paper itself isolates the cited TRS>=0.6 cases as base-model visual-grounding failures: both baseline and SMA fail after the response attempts to use the retrieved procedure. The high-relevance failure therefore does not establish a separate procedure-conflict mechanism."
+                if spatial_principle_closed
+                else "Good reserve phenomenon but no independent query-level support asset is currently available."
+            ),
+            reopen_only_if=(
+                str(spatial_diagnosis.get("reopen_condition") or "")
+                if spatial_principle_closed
+                else str(spatial_hold.get("reopen_only_if") or "Authors release query-level retrieval logs and outcomes.")
+            ),
         ),
     ]
 
@@ -394,6 +466,24 @@ def build_fresh_phenomenon_portfolio(
                 "status": echo_guard.get("status"),
                 "guarded_runtime_sha256": echo_guard_source.get("guarded_runtime_sha256"),
                 "repaired_plan_canonical_sha256": echo_guard_source.get("repaired_plan_canonical_sha256"),
+            },
+            "defense_restrictiveness_principle_readjudication": {
+                "path": str(DEFENSE_RESTRICTIVENESS_READJUDICATION.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(DEFENSE_RESTRICTIVENESS_READJUDICATION),
+                "principle_dead_end_certified": defense_readjudication.get("principle_dead_end_certified") is True,
+                "same_information_reduction_verified": defense_diagnosis.get("same_information_reduction_verified") is True,
+            },
+            "spatial_memory_principle_readjudication": {
+                "path": str(SPATIAL_MEMORY_READJUDICATION.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(SPATIAL_MEMORY_READJUDICATION),
+                "principle_dead_end_certified": spatial_readjudication.get("principle_dead_end_certified") is True,
+                "same_information_reduction_verified": spatial_diagnosis.get("same_information_reduction_verified") is True,
+            },
+            "harnessbank_support_audit": {
+                "path": str(HARNESSBANK_SUPPORT_AUDIT.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(HARNESSBANK_SUPPORT_AUDIT),
+                "status": harnessbank_support_audit.get("status"),
+                "required_unit": harnessbank_support_audit.get("required_unit"),
             },
             "primary_state": {
                 "path": str(PRIMARY_STATE_JSON.relative_to(PROJECT_ROOT)),

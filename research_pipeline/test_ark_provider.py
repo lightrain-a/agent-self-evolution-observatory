@@ -6,11 +6,11 @@ from .ark_provider import ArkResponsesClient, ArkSettings
 
 
 class _Response:
-    status_code = 200
     text = ""
 
-    def __init__(self, payload):
+    def __init__(self, payload, status_code=200):
         self._payload = payload
+        self.status_code = status_code
 
     def json(self):
         return self._payload
@@ -66,6 +66,48 @@ class ArkProviderTest(unittest.TestCase):
         result = client.respond("x", model="deepseek-v4-pro")
         self.assertEqual(result["text"], "ok")
         self.assertEqual(result["resolved_model"], "deepseek-v4-pro-260425")
+        self.assertFalse(result["thinking_compatibility_fallback"])
+
+    def test_unsupported_disabled_thinking_retries_once_without_thinking(self) -> None:
+        client = self.client()
+        calls = []
+
+        def post(*args, **kwargs):
+            calls.append(dict(kwargs["json"]))
+            if len(calls) == 1:
+                return _Response({
+                    "error": {
+                        "code": "InvalidParameter",
+                        "message": "thinking.type `disabled` is not supported by this model",
+                    }
+                }, status_code=400)
+            return _Response({
+                "id": "resp_glm",
+                "status": "completed",
+                "model": "glm-5.3-260817",
+                "output": [{"type": "message", "content": [{"type": "output_text", "text": "ok"}]}],
+                "usage": {"output_tokens": 1},
+            })
+
+        client.session.post = post
+        result = client.respond("x", model="glm-5.3", thinking="disabled")
+        self.assertEqual(2, len(calls))
+        self.assertEqual({"type": "disabled"}, calls[0]["thinking"])
+        self.assertNotIn("thinking", calls[1])
+        self.assertEqual("glm-5.3-260817", result["resolved_model"])
+        self.assertEqual("disabled", result["thinking_requested"])
+        self.assertIsNone(result["thinking_effective"])
+        self.assertTrue(result["thinking_compatibility_fallback"])
+
+    def test_other_400_does_not_trigger_thinking_compatibility_retry(self) -> None:
+        client = self.client()
+        calls = []
+        client.session.post = lambda *args, **kwargs: calls.append(kwargs["json"]) or _Response(
+            {"error": {"message": "invalid max_output_tokens"}}, status_code=400
+        )
+        with self.assertRaisesRegex(RuntimeError, "invalid max_output_tokens"):
+            client.respond("x", model="glm-5.3", thinking="disabled")
+        self.assertEqual(1, len(calls))
 
 
 if __name__ == "__main__":

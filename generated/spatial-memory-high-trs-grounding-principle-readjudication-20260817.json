@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "PA-04-SPATIAL-MEMORY-CONFLICT",
+  "title": "High-TRS spatial-memory failures do not establish a procedure-compatibility mechanism",
+  "adjudication_date": "2026-08-17",
+  "search_primitive": "UNEXPLAINED_BOUNDARY",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_memory_transfer_effect_falsified": false,
+  "dead_end_scope": "The standalone claim that Spatial Memory Agent failures with semantically relevant retrieved memories at TRS >= 0.6 identify a new procedure-memory conflict or executability mechanism merely because retrieval relevance is high while the final answer remains wrong.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2608.12743",
+    "closed_evidence_sha256": [
+      "496c78e91a4649291fb57b46fbb9642f7cc73261ee1dbf91899e3920c6cc886b"
+    ],
+    "closure_scope": "high-TRS qualitative failure cases explicitly attributed by the primary paper to base-model visual-grounding limitations",
+    "scientific_authority": false
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The reported TRS>=0.6 failure cases are already explained in the primary paper as base-model visual-grounding errors rather than incompatible or non-executable procedure memories. In the cited cases both the no-memory baseline and SMA fail, the retrieved memories are described as high-quality and semantically relevant, the response attempts to apply the procedure, and the remaining error is misreading movement direction, object count, or spatial connectivity. The observed high-relevance-plus-failure pattern therefore does not identify an additional memory-conflict mechanism.",
+      "opposite_prediction": "When a retrieved procedure is relevant but the frozen VLM misperceives task-critical visual evidence, both memory-assisted and no-memory inference can fail despite high retrieval reliability. Under the same query, image, base VLM, and retrieved memory, correcting or independently verifying the visual grounding should remove the apparent high-TRS failure without changing the memory compatibility relation.",
+      "opposite_principle": "Procedure-memory relevance and visual evidence correctness are distinct prerequisites. High retrieval reliability cannot compensate for an upstream perceptual grounding error, so relevance-conditioned failures should not be interpreted as memory incompatibility unless grounding is matched or independently verified.",
+      "opposite_search_seed": "Search only for matched query-level units with equivalent visual-grounding correctness and retrieval relevance/TRS where two retrieved procedures differ in executable compatibility and produce different outcomes, or where a compatibility variable predicts residual failure after a same-information grounding/retrieval baseline. Do not reopen from additional high-TRS failures that the frozen VLM also gets wrong without memory.",
+      "scope": "Spatial Memory Agent arXiv:2608.12743v1 qualitative high-TRS failure cases and the proposed PA-04 inference from relevant-memory failure to procedure incompatibility.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.12743",
+        "primary-fulltext:arXiv:2608.12743#sha256=496c78e91a4649291fb57b46fbb9642f7cc73261ee1dbf91899e3920c6cc886b"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The cited cases show retrieval failure or irrelevant memories: the primary paper describes the retrieved memories as high-quality and semantically relevant with TRS >= 0.6.",
+        "The memory procedure is ignored: the primary paper states that the responses attempt to apply the retrieved procedure before misreading critical visual evidence.",
+        "The failures isolate a memory-specific incompatibility: the primary paper reports that both the baseline and SMA fail in the selected model-limitation cases and explicitly attributes them to visual grounding.",
+        "High TRS is claimed to guarantee correctness: the paper defines TRS as transfer reliability evidence for retrieval and separately states that memory cannot replace accurate visual grounding."
+      ],
+      "reopen_condition": "Reopen only with provenance-audited query-level matched units that hold visual-grounding correctness, query/image evidence, base model, retrieval budget, semantic relevance, and TRS information fixed while retrieved procedures differ in an independently defined executable-compatibility variable, and that variable predicts a downstream residual not absorbed by same-information grounding, retrieval-quality, or ordinary execution-mismatch baselines."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "SMA memory never helps spatial reasoning",
+      "TRS is invalid",
+      "procedure memory cannot transfer",
+      "all memory-assisted spatial failures are perceptual"
+    ],
+    "safe_claim": "The paper's high-TRS qualitative failures are useful evidence that reliable retrieval does not eliminate frozen-VLM visual-grounding errors, but those cases do not by themselves identify a distinct procedure-memory compatibility mechanism.",
+    "new_search_basin": "matched-procedure-compatibility-residual-after-grounding-control"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

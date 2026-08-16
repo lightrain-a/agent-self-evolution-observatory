@@ -113,7 +113,9 @@ class ArkResponsesClient:
         if thinking:
             body["thinking"] = {"type": thinking}
         last_error = ""
-        for attempt in range(self.settings.max_retries + 1):
+        retry_attempt = 0
+        thinking_compatibility_fallback = False
+        while True:
             try:
                 response = self.session.post(self.endpoint, json=body, timeout=self.settings.timeout_seconds)
                 if response.status_code >= 400:
@@ -121,6 +123,18 @@ class ArkResponsesClient:
                         detail = response.json()
                     except Exception:
                         detail = response.text[:500]
+                    detail_text = str(detail).lower()
+                    unsupported_disabled_thinking = bool(
+                        response.status_code == 400
+                        and body.get("thinking") == {"type": "disabled"}
+                        and not thinking_compatibility_fallback
+                        and "thinking.type" in detail_text
+                        and "not supported" in detail_text
+                    )
+                    if unsupported_disabled_thinking:
+                        body.pop("thinking", None)
+                        thinking_compatibility_fallback = True
+                        continue
                     raise RuntimeError(f"Ark HTTP {response.status_code}: {detail}")
                 payload = response.json()
                 text = self.output_text(payload)
@@ -155,12 +169,16 @@ class ArkResponsesClient:
                     "usage": payload.get("usage") or {},
                     "response_id": payload.get("id"),
                     "status": payload.get("status"),
+                    "thinking_requested": thinking,
+                    "thinking_effective": None if thinking_compatibility_fallback else thinking,
+                    "thinking_compatibility_fallback": thinking_compatibility_fallback,
                 }
             except Exception as error:
                 last_error = str(error)
-                if attempt >= self.settings.max_retries:
+                if retry_attempt >= self.settings.max_retries:
                     break
-                time.sleep(min(2 ** attempt, 4))
+                time.sleep(min(2 ** retry_attempt, 4))
+                retry_attempt += 1
         raise RuntimeError(last_error)
 
 
