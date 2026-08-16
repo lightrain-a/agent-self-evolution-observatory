@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "requested_model": "doubao-seed-2.0-lite",
+  "resolved_model": "doubao-seed-2-0-lite-260215",
+  "raw_sha256": "6d725518af77099d15a076472436dbb067445704d673beb0fc464e77bc71e2cd",
+  "review": {
+    "verdict": "CLEAR_FOR_IMPLEMENTATION",
+    "confidence": 0.91,
+    "generic_composition_reduction_closed": true,
+    "sequence_observer_nontrivial": true,
+    "jackknife_valid": true,
+    "sample_size_interpretation": "Consistent with bounded falsification objective",
+    "remaining_confound": "None identified that changes the scientific object",
+    "required_change": "None",
+    "scientific_authority": false
+  },
+  "scientific_authority": false
+}

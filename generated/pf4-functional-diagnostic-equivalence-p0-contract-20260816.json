@@ -1,0 +1,153 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "PF4-FUNCTIONAL-DIAGNOSTIC-EQUIVALENCE-P0-20260816",
+  "paper_problem_id": "functional-equivalence-diagnostic-non-equivalence",
+  "working_title": "Functional Equivalence Does Not Imply Diagnostic Equivalence in Self-Evolving Agents",
+  "target_venue": "ICLR",
+  "scientific_role": "bounded mechanism falsifier only; no automatic Problem-Gate, Method, full-experiment, or GPU authority",
+  "historical_pf4_evidence": {
+    "status": "INVALIDATED_FOR_SCIENTIFIC_UPDATE",
+    "artifact": "generated/pf4-paired-diagnosability-readjudication-20260816.json",
+    "reason": "Historical support-pass used an unpaired post-treatment survivor cohort and workflow/tool repairs that were not persistent cross-fault interventions."
+  },
+  "principle": "A persistent self-repair changes both task behavior and the trajectory channel through which later failures are diagnosed. Distinct repair realizations can therefore be functionally equivalent on current behavior while diagnostically non-equivalent under sealed future faults.",
+  "irreducible_prediction": "Among persistent prompt/workflow/tool realizations that pass a frozen functional-equivalence qualification for the same repair contract, at least two realizations induce reproducibly different held-out future-fault separability under the same trace budget, and the difference is not explained by generic trace-completeness statistics alone.",
+  "strongest_reductions_conceded": [
+    "mature closed-loop fault diagnosability / active diagnosis: controller policy can change fault observability",
+    "AHE-style observability optimization on agent harness traces (arXiv:2604.25850)",
+    "REFLECT-style intervention-supported error attribution (arXiv:2606.09071)",
+    "longitudinal silent-failure/actionable-signal loss (arXiv:2606.14589)",
+    "task-regression plus fixed diagnosability constraint or scalarization",
+    "trace length/completeness/action-diversity explanation"
+  ],
+  "surviving_residual": "The paper does not claim diagnosability theory. It tests whether functionally equivalent autonomous repair realizations across common agent update surfaces differ in future diagnostic channel quality enough to change which realization should be committed when current utility is tied.",
+  "substrate": {
+    "dataset": "ALFWorld valid_seen",
+    "task_relative_paths": [
+      "look_at_obj_in_light-CD-None-DeskLamp-314/trial_T20190907_114323_767231/game.tw-pddl",
+      "pick_and_place_simple-Book-None-Sofa-229/trial_T20190907_042856_259139/game.tw-pddl",
+      "pick_and_place_simple-Mug-None-Dresser-311/trial_T20190909_152837_739016/game.tw-pddl",
+      "pick_and_place_simple-Mug-None-SideTable-329/trial_T20190909_032340_274147/game.tw-pddl",
+      "pick_and_place_simple-ToiletPaper-None-ToiletPaperHanger-415/trial_T20190908_050518_595510/game.tw-pddl",
+      "pick_clean_then_place_in_recep-ButterKnife-None-CounterTop-8/trial_T20190909_105559_983897/game.tw-pddl"
+    ],
+    "task_selection": "frozen historical substrate before this corrected experiment; no outcome-adaptive task selection",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "model_snapshot": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "model_config_sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c",
+    "model_index_sha256": "624bf7c47cd12468fdc16e38a47cf4f19e0415b859a223ba3c027eed2f0e1028",
+    "tokenizer_config_sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+    "policy_mode": "react-family",
+    "max_steps": 50,
+    "decoding": "greedy; do_sample=false"
+  },
+  "repair_contract": {
+    "semantic_rule": "Never execute the exact same admissible command in two consecutive environment steps when at least one different admissible command exists.",
+    "why_chosen": "A generic loop-avoidance repair that can be realized at prompt, workflow, and tool-interface surfaces without referring to any future fault label or diagnostic metric.",
+    "realizations": {
+      "none": "no persistent repair",
+      "prompt": "append a persistent prompt instruction requiring a different admissible command whenever the previous command would repeat",
+      "workflow": "allow the model to see the unchanged admissible set; after selection, if it repeats the previous executed command and an alternative exists, replace it deterministically with the first different admissible command",
+      "tool": "before model selection, hide the previous executed command from the admissible set whenever an alternative exists"
+    },
+    "fault_independent": true,
+    "diagnostic_metric_not_used_in_realization": true
+  },
+  "qualification": {
+    "conditions": "fault=none on all six frozen tasks under none/prompt/workflow/tool; no diagnostic faults or fault labels consulted",
+    "repair_contract_compliance": "For each of prompt/workflow/tool, immediate-repeat violation rate <= 0.05 across qualification action transitions.",
+    "behavioral_activity": "The baseline must contain at least one immediate-repeat opportunity, and each hard realization (workflow/tool) must intervene at least once; prompt must reduce immediate-repeat count relative to none by at least one event.",
+    "utility_equivalence": "Across prompt/workflow/tool, success-rate range <= 1/6 and at least 5/6 tasks have identical binary success across all three realizations.",
+    "baseline_noninferiority": "No repair realization may reduce aggregate success by more than 1/6 versus none.",
+    "failure_action": "INCONCLUSIVE_FUNCTIONAL_EQUIVALENCE_QUALIFICATION_FAILED; no diagnostic-channel scientific update and no threshold/repair redesign within this experiment."
+  },
+  "sealed_future_faults": {
+    "prompt": "persistent misleading instruction that forbids open actions",
+    "workflow": "after the first two steps, productive selected actions are replaced by a deterministic non-progress admissible action",
+    "tool": "open commands are hidden from the admissible command interface",
+    "truth": "fault label assigned by experiment construction and never exposed as a label to the policy or observer",
+    "probe_eligibility": "Freeze eligible task/fault pairs solely from the none-update baseline: a fault must record at least one activation in the none condition. The identical frozen eligible set is then used for all repair realizations. No post-update success/failure filtering is permitted.",
+    "minimum_support": "At least 12 eligible task/fault probes total and at least 3 for each fault family; otherwise INCONCLUSIVE_FAULT_SUPPORT."
+  },
+  "trace_observables": {
+    "fixed_budget": "maximum 50 executed actions per episode for every arm",
+    "generic_composition_features": [
+      "step_fraction",
+      "invalid_action_fraction",
+      "immediate_repeat_fraction",
+      "open_fraction",
+      "take_fraction",
+      "move_fraction",
+      "examine_fraction",
+      "look_fraction",
+      "use_or_transform_fraction"
+    ],
+    "sequence_features": "generic nine features concatenated with normalized 7x7 executed-action category bigram frequencies over categories open,take,move,examine,look,use_or_transform,other; no fault/update label is a feature",
+    "trace_completeness_baseline_features": [
+      "step_fraction",
+      "invalid_action_fraction",
+      "immediate_repeat_fraction"
+    ],
+    "raw_trace_required": [
+      "observations",
+      "visible_admissible_commands",
+      "raw_model_choices",
+      "selected_actions_before_update",
+      "executed_actions",
+      "update_intervention_flags",
+      "fault_intervention_flags",
+      "success"
+    ]
+  },
+  "observer_protocol": {
+    "evaluation": "leave-one-task-out across the six frozen tasks; each fold trains fault centroids on the other tasks within the same repair realization and predicts fault labels for the held-out task",
+    "completeness_baseline": "nearest-centroid Euclidean classifier on the three trace-completeness features",
+    "generic_composition_baseline": "nearest-centroid Euclidean fault classifier on the nine frozen non-fault-specific trace composition features; this is the strongest generic trace-summary reduction and is not the candidate mechanism",
+    "sequence_observer": "nearest-centroid Euclidean fault classifier on the nine generic features plus the frozen 7x7 executed-action-category bigram frequencies",
+    "frozen_probe_set": "baseline-qualified task/fault pairs only; identical across realization arms",
+    "post_update_refit_required": true,
+    "reason": "A fixed pre-update observer can fail under harmless representation shift. Surface-specific post-update refitting tests whether fault information itself remains separable under the same observable feature family."
+  },
+  "decision_rule": {
+    "RESIDUAL_SURVIVES": "qualification PASS; fault support PASS; max-min sequence-observer LOSO accuracy across prompt/workflow/tool >= 0.20; max-min of (sequence-observer accuracy - generic-composition-baseline accuracy) >= 0.15; the diagnostically best realization beats the worst by at least 3 correctly classified frozen probes while current utility remains tied; and jackknife robustness passes.",
+    "REDUCTION_SUPPORTED": "qualification and fault support PASS, but sequence-observer accuracy range < 0.20 OR the residual beyond the nine-feature generic composition baseline is < 0.15 OR jackknife robustness fails, indicating no stable decision-relevant diagnostic non-equivalence beyond generic trace composition on this substrate.",
+    "INCONCLUSIVE": "functional-equivalence qualification fails, fault support is insufficient, protocol/runtime invalid, or any arm exceeds the frozen budget.",
+    "jackknife_robustness": "After selecting the best/worst realization pair by full frozen-probe sequence accuracy, recompute the same pair after deleting each one of the six task groups in turn. The best-minus-worst sequence accuracy gap must remain >0 in every deletion and be >=0.10 in at least 5/6 deletions. No task may be removed for any other reason.",
+    "no_threshold_tuning": true,
+    "no_single_variable_repair": true
+  },
+  "anti_bake_in": [
+    "repair rule fixed before new outcomes and contains no future fault labels or diagnostic objective",
+    "task set frozen from historical substrate, not selected for this effect",
+    "fault probe eligibility frozen from none-update baseline only",
+    "post-update success/failure never selects diagnostic probes",
+    "same model snapshot, decoding, task set, max steps, and observer family across arms",
+    "surface-specific observer refitting prevents a mere representation-coordinate shift from masquerading as information loss",
+    "historical invalid PF-4 effect is not used to choose thresholds or surfaces"
+  ],
+  "budget": {
+    "conditions": ["none", "prompt", "workflow", "tool"],
+    "episodes_per_condition": 24,
+    "qualification_episodes_per_condition": 6,
+    "fault_episodes_per_condition": 18,
+    "total_episodes": 96,
+    "max_gpu_hours_total": 2.0,
+    "max_wall_minutes": 120,
+    "second_backbone": false,
+    "training": false
+  },
+  "prior_review": {
+    "artifact": "generated/pf4-corrected-paper-premortem-20260816.json",
+    "verdict": "ADVANCE_TO_BOUNDED_FALSIFIER",
+    "confidence": 0.82,
+    "scientific_authority": false
+  },
+  "authority": {
+    "paper_problem_pass": false,
+    "method": false,
+    "full_experiment": false,
+    "p0": false,
+    "gpu": false,
+    "scientific_authority": false
+  }
+}

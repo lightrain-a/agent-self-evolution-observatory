@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "requested_model": "doubao-seed-evolving",
+  "resolved_model": "doubao-seed-evolving",
+  "raw_sha256": "8b4633ae154753d642ce81efd9a32dd16a373da8f716703e2f3e4af6bc8fa62c",
+  "review": {
+    "verdict": "REVISE_BEFORE_IMPLEMENTATION",
+    "confidence": 0.78,
+    "checks": {
+      "object_same_repair": "PASS",
+      "equivalence_gate_valid": "PASS",
+      "probe_selection_valid": "PASS",
+      "refit_control_valid": "PASS",
+      "completeness_reduction_valid": "REVISE",
+      "fault_independence_valid": "PASS",
+      "no_bake_in": "PASS",
+      "budget_valid": "PASS"
+    },
+    "strongest_remaining_confound": "The completeness baseline is only a weak three-feature trace-summary control, so the claimed residual may still be absorbed by other generic trace-composition/action-distribution features rather than surface-specific diagnostic information loss. At n<=18 probes, the frozen residual gate is also statistically fragile and may be driven by one or two probes.",
+    "required_change": "Before implementation, strengthen the reduction control by adding a frozen generic full-trace-composition baseline using the non-fault-specific action-distribution features already available (for example take/move/examine/look/use fractions plus step/invalid/repeat fractions), and require the residual to survive beyond that baseline as well as the current three-feature completeness baseline. Also predefine a probe-level uncertainty/robustness check for the n<=18 gate, such as leave-one-probe-out sensitivity or exact paired resampling, without tuning thresholds after outcomes.",
+    "implementation_invariants": [
+      "Keep prompt/workflow/tool realizations tied to the identical no-immediate-repeat repair contract; do not add fault-label-dependent or diagnostic-metric-dependent behavior.",
+      "Freeze all qualification thresholds, task set, model snapshot/config hashes, decoding, max steps, feature sets, observer family, and decision thresholds before running new episodes.",
+      "Use only the none-update baseline to determine eligible task/fault probes; apply that identical frozen probe set to all repair arms.",
+      "Do not filter probes by post-update success, failure, trajectory length, or survivorship.",
+      "Refit observers separately per repair surface after update, but keep the same observable feature family and LOSO protocol across arms.",
+      "Preserve raw traces including observations, visible admissible commands, raw model choices, pre-update selections, executed actions, update flags, fault flags, and success.",
+      "Do not use invalidated historical PF-4 results as evidence or to choose tasks, thresholds, surfaces, or faults.",
+      "Report qualification failures, insufficient fault support, budget overruns, and protocol violations as inconclusive rather than redesigning within the experiment."
+    ],
+    "scientific_authority": false
+  },
+  "scientific_authority": false
+}

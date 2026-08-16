@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "requested_model": "doubao-seed-2.0-lite",
+  "resolved_model": "doubao-seed-2-0-lite-260215",
+  "raw_sha256": "c22ba8e1b347c24cf0ed8c4174b2a4f4c1e8570c0a96d791e891951279a428a9",
+  "review": {
+    "verdict": "ADVANCE_TO_BOUNDED_FALSIFIER",
+    "confidence": 0.82,
+    "strongest_reduction": "Mature closed-loop fault diagnosis theory already establishes that system modifications (including policy updates) change the observation distribution and thus fault diagnosability. The closest specific reduction to this work is Agentic Harness Engineering (arXiv:2604.25850), which already treats observability as a first-class objective in agent self-evolution, and When Errors Become Narratives (arXiv:2606.14589) which already documents longitudinal actionable signal loss from silent agent failures.",
+    "surviving_residual": "A novel, agent-specific open question: whether persistent self-repair realizations that are strictly equivalent on both current task utility and intended functional behavior, implemented across different common agent update surfaces (prompt, workflow, tool/harness), still produce reproducible differences in future fault separability that are not explained by trace completeness differences, and that change the choice of which repair to commit when current utility is tied.",
+    "why_not_domain_transfer": "While the core diagnosability insight is generic, the specific phenomenon under investigation is unique to self-evolving agent systems, where autonomous self-repair routinely produces functionally equivalent updates across heterogeneous update surfaces with no explicit consideration of future diagnosability. This concrete, practically relevant instantiation of the general diagnosability principle is not already addressed or tested in prior mature work.",
+    "falsifier_valid": true,
+    "required_changes": [
+      "Explicitly cite and contextualize all mature reductions conceded in the introduction and related work, clearly demarcating the residual open question the paper addresses",
+      "Remove any implicit novelty claims for general diagnosability theory or task-regression with diagnosability constraints, which are already conceded as non-novel",
+      "Pre-register the falsifier protocol, utility equivalence threshold, and separability comparison metrics before running experiments to avoid post-hoc tuning",
+      "Clarify that the contribution is empirical validation of the specific phenomenon, not new mechanism theory, as the core mechanism (repair-induced change to observation distributions) is already known"
+    ],
+    "advance_condition": "The revised paper correctly contextualizes prior work, clearly bounds the residual open question, pre-registers the proposed falsifier protocol, and executes the experiment as specified. The paper reports all results transparently regardless of outcome.",
+    "stop_condition": "The experiment finds no reproducible cross-realization separability differences after controlling for trace completeness, or all separability differences are fully explained by existing observability frameworks and do not change realization selection under current utility ties. The claimed residual phenomenon is therefore falsified.",
+    "paper_story_score_1_to_5": 4,
+    "scientific_authority": false
+  },
+  "scientific_authority": false
+}
