@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "repair_id": "POSITIVE-RESIDUAL-MEMORY-ADMISSIBILITY-RUNTIME-REPAIR-20260816",
+  "parent_contract": "generated/positive-residual-memory-admissibility-falsifier-contract-20260816.json",
+  "parent_contract_sha256": "4e1b1f5de991ce6f656443a8e798880857faf4d0331fb32687ecc78995bb9eb9",
+  "parent_commit": "4da9a7541b1aa5257339f74d1030174f370698ad",
+  "failed_attempt": {
+    "decision_artifact_created": false,
+    "feature_artifact_created": false,
+    "episodes_started": 0,
+    "model_calls": 0,
+    "gpu_calls": 0,
+    "error": "ALFWorld exposed no game files for split eval_out_of_distribution",
+    "diagnosis": "execution-substrate environment variable ALFWORLD_DATA was not set to the historical run-local data root before ALFWorldGameRunner construction"
+  },
+  "repair": {
+    "only_change": "Set ALFWORLD_DATA to <run-root-parent>/alfworld before load_config/runner construction, matching the historical C2 runtime behavior.",
+    "resolved_path": "/data/wyt/agent-self-evolution-observatory/alfworld",
+    "scientific_object_changed": false,
+    "feature_definition_changed": false,
+    "train_test_split_changed": false,
+    "baseline_changed": false,
+    "decision_gate_changed": false,
+    "outcome_used_for_repair": false
+  },
+  "authority": {
+    "scientific_authority": false,
+    "problem_gate_pass": false,
+    "method_design": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  }
+}

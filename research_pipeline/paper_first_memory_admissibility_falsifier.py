@@ -5,6 +5,7 @@ import csv
 import hashlib
 import json
 import math
+import os
 import re
 from collections import defaultdict
 from pathlib import Path
@@ -143,6 +144,8 @@ def build_preoutcome_rows(run_dir: Path, config: Path, contract: dict[str, Any])
     by: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
     for row in raw:
         by[str(row["unit_id"])][str(row["arm"])] = row
+    alfworld_data_root = run_dir.parents[1] / "alfworld"
+    os.environ.setdefault("ALFWORLD_DATA", str(alfworld_data_root))
     runner = ALFWorldGameRunner(load_config(config))
     rows: list[dict[str, Any]] = []
     bad_prefix_actions = 0
@@ -211,6 +214,7 @@ def build_preoutcome_rows(run_dir: Path, config: Path, contract: dict[str, Any])
         )
     support = {
         "units": len(rows),
+        "alfworld_data_root": str(alfworld_data_root),
         "bad_prefix_actions": bad_prefix_actions,
         "unresolved_memory_ids": sorted(set(unresolved_memories)),
         "empty_skeleton_memory_ids": sorted(set(empty_skeleton_memories)),
@@ -430,6 +434,7 @@ def run(run_dir: Path, output_dir: Path, config: Path, contract_path: Path) -> d
     manifest = {
         "schema_version": "1.0",
         "contract_sha256": result["contract_sha256"],
+        "runtime_sha256": _sha(Path(__file__)),
         "output_feature_sha256": _sha(output_dir / "preoutcome-features.csv"),
         "decision_sha256": _sha(output_dir / "decision.json"),
         "cpu_only": True,
