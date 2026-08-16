@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "review_kind": "independent-second-pass-full-experiment-premortem",
+  "verdict": "CLEAR_BLUEPRINT",
+  "checks": {
+    "all_four_first_review_revisions_satisfied": true,
+    "split_leakage_valid": true,
+    "same_information_baseline_valid": true,
+    "validator_truth_separation_valid": true,
+    "thresholds_predeclared_valid": true,
+    "prior_lock_valid": true
+  },
+  "strongest_full_baseline": "optimal-global package allocation using the identical shared validator-gated/rejection backend and matched resources",
+  "remaining_fatal_issue": "",
+  "claim_if_success": "Support-Quotient Control achieves taxonomy representation invariance across semantics-preserving skill merge/split transformations on a heldout tool-disjoint evaluation set, while preserving heldout evolution utility, semantic coverage, and matched resource efficiency relative to optimal-global package allocation, which exhibits measurable representation sensitivity.",
+  "provider": {
+    "requested_model": "doubao-seed-2.1-turbo",
+    "resolved_model": "doubao-seed-2-1-turbo-260628",
+    "thinking": "disabled",
+    "scientific_authority": false
+  },
+  "authority": {
+    "full_experiment": false,
+    "paper_claim_C3": false,
+    "paper_claim_C4": false,
+    "gpu": false
+  },
+  "scientific_authority": false
+}

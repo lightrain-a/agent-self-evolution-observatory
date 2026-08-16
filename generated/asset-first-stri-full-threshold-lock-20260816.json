@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "lock_id": "STRI-FULL-CONFIRMATORY-THRESHOLDS-v1",
+  "timing": "Frozen before any heldout full-experiment method outcome and before P0-A scientific result.",
+  "provenance": {
+    "native_dynamic_threshold_source": "The exact preregistered P0-A thresholds inherited unchanged from the earlier invalid Qwen2.5 contract; they were not selected from Qwen3 or heldout outcomes.",
+    "sqc_equivalence_derivation": "Set the SQC invariance margin to one-half of the preregistered native meaningful-shift thresholds: TV 0.025 = 0.5 x 0.05 and max-pattern shift 0.02 = 0.5 x 0.04. This creates a strict separation between a meaningful native effect and an acceptable residual under SQC.",
+    "utility_margin_derivation": "A fixed 2 percentage-point absolute success non-inferiority margin is declared before heldout outcomes; it is a design tolerance, not tuned to observed variance."
+  },
+  "native_representation_sensitivity": {
+    "per_merge_validator_pattern_tv_point_min": 0.05,
+    "per_merge_validator_pattern_tv_bootstrap_lower95_min": 0.025,
+    "per_merge_max_single_pattern_shift_min": 0.04,
+    "both_mandatory_overlap_merges_required": true,
+    "failure_action": "Narrow/stop downstream dynamic representation-sensitivity claim; no secondary endpoint may rescue it."
+  },
+  "sqc_representation_invariance": {
+    "per_merge_validator_pattern_tv_bootstrap_upper95_max": 0.025,
+    "per_merge_max_single_pattern_shift_max": 0.02,
+    "both_mandatory_overlap_merges_required": true,
+    "failure_action": "Stop C3 support-quotient invariance claim."
+  },
+  "heldout_utility_noninferiority": {
+    "primary_reference": "optimal global support-aware package allocation using the identical shared validator-gated/rejection realization backend and matched resource budget",
+    "absolute_success_margin": 0.02,
+    "criterion": "For each taxonomy representation, the paired/cluster-bootstrap lower 95% confidence bound of SQC_success - reference_success must be greater than -0.02; aggregate reporting cannot hide a representation-specific violation.",
+    "failure_action": "SQC invariance obtained at material utility loss; stop C3."
+  },
+  "semantic_coverage": {
+    "required_five_atoms": 5,
+    "atom_loss_allowed": 0,
+    "heldout_tool_set": ["CancelRegistration", "EmergencyKnowledge", "QueryRegistration", "SymptomSearch"],
+    "criterion": "No frozen semantic atom may disappear because of the controller. Heldout tool coverage is reported and may not be improved by changing the prior after evaluation begins."
+  },
+  "resource_matching": {
+    "same_proposer_call_cap_per_cell": true,
+    "same_validator_call_cap_per_cell": true,
+    "same_solver_rollout_cap_per_cell": true,
+    "same_update_step_and_training_token_cap_per_cell": true,
+    "rejected_candidates_consume_budget": true,
+    "failure_action": "If SQC requires a larger matched resource cap to satisfy invariance/coverage, the primary C3 gate fails; report a cost frontier only as secondary analysis."
+  },
+  "calibration_prior_lock": {
+    "receipt": "generated/asset-first-stri-calibration-prior-20260816.json",
+    "prior_sha256": "b6470e9a106fb01c859af7b4d606f1af0484994874a2a760a4e6d8d85033f525",
+    "heldout_frequency_may_update_prior": false,
+    "heldout_frequency_may_update_atom_structure": false
+  },
+  "validator_freeze": {
+    "author_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "validator_bundle_sha256": "0902b3275f6609f670db9ee1f568a73bb313770b65961717460051640e5dc3a4",
+    "frozen_before_split_generation": true,
+    "allowed_use": "Mechanistic support/applicability and realization verification only.",
+    "forbidden_use": "May not replace heldout task-success/reference-answer truth or be modified using heldout outcomes."
+  },
+  "authority": {
+    "full_experiment": false,
+    "paper_claim_C3": false,
+    "paper_claim_C4": false,
+    "gpu": false
+  },
+  "scientific_authority": false
+}

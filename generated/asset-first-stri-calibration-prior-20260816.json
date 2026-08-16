@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "split_id": "STRI-API-BANK-L1-TOOL-DISJOINT-v1",
+  "calibration_tools": [
+    "AppointmentRegistration",
+    "ModifyRegistration",
+    "QueryHealthData",
+    "RecordHealthData"
+  ],
+  "heldout_tools": [
+    "CancelRegistration",
+    "EmergencyKnowledge",
+    "QueryRegistration",
+    "SymptomSearch"
+  ],
+  "atoms": [
+    "skill_003",
+    "skill_004",
+    "skill_015",
+    "skill_003+skill_015",
+    "skill_004+skill_015"
+  ],
+  "calibration_counts": {
+    "skill_003": 8,
+    "skill_004": 3,
+    "skill_015": 3,
+    "skill_003+skill_015": 17,
+    "skill_004+skill_015": 16
+  },
+  "calibration_non_none_rows": 47,
+  "empirical_calibration_prior": {
+    "skill_003": 0.1702127659574468,
+    "skill_004": 0.06382978723404255,
+    "skill_015": 0.06382978723404255,
+    "skill_003+skill_015": 0.3617021276595745,
+    "skill_004+skill_015": 0.3404255319148936
+  },
+  "prior_sha256": "b6470e9a106fb01c859af7b4d606f1af0484994874a2a760a4e6d8d85033f525",
+  "heldout_frequency_audit_only": {
+    "counts": {
+      "skill_003": 9,
+      "skill_004": 2,
+      "skill_015": 3,
+      "skill_003+skill_015": 18,
+      "skill_004+skill_015": 20
+    },
+    "non_none_rows": 52,
+    "other_patterns": 0,
+    "may_change_prior_or_structure": false
+  },
+  "calibration_other_patterns": 0,
+  "lock": {
+    "prior_uses_heldout_rows": false,
+    "heldout_frequency_cannot_update_prior": true,
+    "heldout_frequency_cannot_update_atoms": true,
+    "validator_outputs_are_support_labels_not_task_utility": true
+  },
+  "scientific_authority": false,
+  "membership_sha256": "b73d86370e06e83179a1ce4c7f26431c58b27f7958722974e96a4c316f2e17d4",
+  "split_sha256": "990cdd30928400bb721cd896c56fe5de487a65878c5a16b1a05e535d94e3bd76"
+}

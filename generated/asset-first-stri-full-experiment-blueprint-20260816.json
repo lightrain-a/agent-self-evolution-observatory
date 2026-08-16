@@ -1,0 +1,204 @@
+{
+  "schema_version": "1.1",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "stage": "FULL_EXPERIMENT_BLUEPRINT_LOCKED_BEHIND_P0",
+  "execution_authorized": false,
+  "entry_gate": {
+    "required_p0a": "DYNAMIC_PARTIAL_OVERLAP_REPRESENTATION_SENSITIVITY_SUPPORTED",
+    "required_p0b": "QUOTIENT_REJECTION_LOCAL_FEASIBILITY_PASS",
+    "if_either_fails": "Do not execute this blueprint. Preserve C1/C2 only and revise/stop C3/C4 according to the frozen P0 interpretation matrix."
+  },
+  "paper_question": "Does an endogenous skill-based self-evolution process depend on an arbitrary semantics-preserving taxonomy representation, and can semantic support-quotient control remove that dependence without sacrificing heldout evolution utility, semantic coverage, or matched resource efficiency?",
+  "frozen_evaluation_split": {
+    "split_id": "STRI-API-BANK-L1-TOOL-DISJOINT-v1",
+    "receipt": "generated/asset-first-stri-tool-disjoint-split-20260816.json",
+    "membership_sha256": "b73d86370e06e83179a1ce4c7f26431c58b27f7958722974e96a4c316f2e17d4",
+    "selection_reads_model_method_or_p0_outcomes": false,
+    "calibration_tools": ["AppointmentRegistration", "ModifyRegistration", "QueryHealthData", "RecordHealthData"],
+    "heldout_tools": ["CancelRegistration", "EmergencyKnowledge", "QueryRegistration", "SymptomSearch"],
+    "calibration_rows": 49,
+    "heldout_rows": 54,
+    "calibration_five_atom_counts": {
+      "skill_003": 8,
+      "skill_004": 3,
+      "skill_015": 3,
+      "skill_003+skill_015": 17,
+      "skill_004+skill_015": 16
+    },
+    "heldout_five_atom_counts": {
+      "skill_003": 9,
+      "skill_004": 2,
+      "skill_015": 3,
+      "skill_003+skill_015": 18,
+      "skill_004+skill_015": 20
+    },
+    "why_valid": "Both partitions contain all five frozen semantic atoms and both mandatory-overlap theorem witnesses, while tool identities and row identities are disjoint. The all-530-row audit remains descriptive/theory evidence only and is not reused as heldout method evaluation."
+  },
+  "validator_and_prior_lock": {
+    "validator_author_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "validator_bundle_sha256": "0902b3275f6609f670db9ee1f568a73bb313770b65961717460051640e5dc3a4",
+    "validator_logic_frozen_before_split": true,
+    "validator_allowed_role": "Released semantic support/applicability and realization verification. Validators may be applied to heldout tasks because they are part of the released skill contract, but their code cannot be changed using heldout outcomes and they cannot substitute for heldout task-success/reference-answer truth.",
+    "calibration_prior_receipt": "generated/asset-first-stri-calibration-prior-20260816.json",
+    "calibration_prior_sha256": "b6470e9a106fb01c859af7b4d606f1af0484994874a2a760a4e6d8d85033f525",
+    "empirical_calibration_prior": {
+      "skill_003": 0.1702127659574468,
+      "skill_004": 0.06382978723404255,
+      "skill_015": 0.06382978723404255,
+      "skill_003+skill_015": 0.3617021276595745,
+      "skill_004+skill_015": 0.3404255319148936
+    },
+    "heldout_frequency_may_update_prior": false,
+    "heldout_frequency_may_update_atom_structure": false,
+    "heldout_frequency_shift_sanity": "Report calibration-versus-heldout atom-frequency shift after unblinding, but verify in code/artifact hashes that the SQC prior and quotient structure are byte-identical to the pre-heldout frozen objects."
+  },
+  "confirmatory_threshold_lock": {
+    "receipt": "generated/asset-first-stri-full-threshold-lock-20260816.json",
+    "native_sensitivity_per_merge": {
+      "validator_pattern_tv_point_min": 0.05,
+      "validator_pattern_tv_bootstrap_lower95_min": 0.025,
+      "max_single_pattern_shift_min": 0.04,
+      "both_merges_required": true
+    },
+    "sqc_invariance_per_merge": {
+      "validator_pattern_tv_bootstrap_upper95_max": 0.025,
+      "max_single_pattern_shift_max": 0.02,
+      "both_merges_required": true
+    },
+    "heldout_success_noninferiority_margin_absolute": 0.02,
+    "semantic_atom_loss_allowed": 0,
+    "post_hoc_margin_changes": "forbidden"
+  },
+  "backbone_and_workflow": {
+    "system": "author Skill Self-Play tool-call workflow",
+    "author_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "single_backbone": "Qwen3-8B",
+    "second_backbone": "locked; may not be added adaptively after primary results",
+    "questioner_generation_contract": "author Qwen3/vLLM/chat-template settings frozen in P0-A",
+    "support_truth": "released first-party package validators",
+    "heldout_utility_truth": "API-Bank reference tool calls / frozen author benchmark score or independently verified solver/environment outcome; validator acceptance alone is not utility truth"
+  },
+  "shared_realization_backend": {
+    "name": "validator-gated/rejection realization",
+    "novelty_claim": false,
+    "applies_identically_to": ["optimal-global package allocation", "Support-Quotient Control"],
+    "matching": "same proposer, same validators, same candidate ordering/random seeds, same proposer/validator call cap, same solver rollout cap; every rejected candidate consumes resource budget",
+    "why_shared": "The full matched method table isolates the control-mass allocation law. Rejection is implementation substrate, not a competing method."
+  },
+  "primary_matched_factorial": {
+    "controller_factor": [
+      {
+        "name": "optimal-global package allocation",
+        "definition": "For each taxonomy representation, choose the strongest nonnegative context-independent package weights using calibration support only, with exact semantic-coverage constraints. This is the strongest representative of the analytically reduced pre-context single-package controller class."
+      },
+      {
+        "name": "Support-Quotient Control",
+        "definition": "Allocate the frozen calibration semantic prior on support atoms/quotient objects, then distribute implementation responsibility with total mass one and use the identical shared rejection backend."
+      }
+    ],
+    "taxonomy_factor": [
+      "split: skill_003, skill_004, skill_015",
+      "merge_003_015: macro(skill_003, skill_015) plus skill_004, preserving the same implementation prompts/support",
+      "merge_004_015: skill_003 plus macro(skill_004, skill_015), preserving the same implementation prompts/support"
+    ],
+    "design": "2 x 3 matched factorial. The realization backend, implementation prompt set, validators, Qwen3 backbone, solver/evaluator, call/rollout/update budget, calibration data, heldout evaluation data, and seeds are identical across controller cells.",
+    "primary_causal_contrast": "Controller x taxonomy interaction: optimal-global package allocation should retain representation dependence, whereas SQC must satisfy the frozen equivalence margin under both merges while remaining non-inferior on heldout utility and preserving all five semantic atoms."
+  },
+  "author_native_deployment_reference": {
+    "arms": [
+      "author-native split",
+      "author-native merge_003_015",
+      "author-native merge_004_015"
+    ],
+    "realization": "author-native questioner/controller path rather than the shared matched rejection backend",
+    "role": "External/deployment reference for C4 and reproducibility, not the causal method comparison because its realization differs from the matched factorial.",
+    "native_sensitivity_gate": "must satisfy the frozen native threshold lock for both merges in confirmatory runs"
+  },
+  "static_simplification_controls": [
+    "author text/name duplicate filter",
+    "exact-clone deduplication",
+    "minimum-cardinality whole-package pruning under exact coverage",
+    "uniform package sampling"
+  ],
+  "resource_matching": {
+    "same_questioner_proposer_calls": true,
+    "same_validator_calls": true,
+    "same_solver_rollouts": true,
+    "same_update_steps": true,
+    "same_training_tokens": true,
+    "same_wall_clock_ceiling_per_matched_cell": true,
+    "rejected_candidates_consume_budget": true,
+    "budget_reporting": "Report utility and invariance versus proposer calls, validator calls, solver rollouts, wall time and GPU-hours. No free rejection."
+  },
+  "primary_outcomes": [
+    {
+      "name": "heldout evolution utility",
+      "unit": "tool-disjoint heldout API-Bank task identities and/or frozen author-verifiable heldout generated tasks",
+      "truth": "reference answer/tool-call correctness or independent environment/solver score",
+      "gate": "For every taxonomy cell, paired/cluster-bootstrap lower95 of SQC_success - optimal_global_success > -0.02."
+    },
+    {
+      "name": "taxonomy transformation distance",
+      "unit": "split versus each mandatory-overlap merge within controller",
+      "metric": "TV over independently validator-labeled semantic support atoms; tool/task distribution reported separately",
+      "gate": "Native/optimal package controls use frozen sensitivity thresholds; SQC uses frozen equivalence thresholds."
+    },
+    {
+      "name": "semantic coverage retained",
+      "metric": "five-atom support coverage on heldout evaluation",
+      "gate": "5/5 atoms; no atom loss allowed."
+    },
+    {
+      "name": "resource efficiency",
+      "metric": "proposer/validator calls, solver rollouts, wall/GPU hours",
+      "gate": "primary comparison uses identical resource caps; extra-cost frontiers are secondary only"
+    }
+  ],
+  "secondary_outcomes": [
+    "per-atom heldout utility and realization cost",
+    "specific-versus-generic implementation responsibility",
+    "credit conservation under split/merge",
+    "unique-support versus overlap-support error decomposition",
+    "tool-level heldout generalization",
+    "calibration-versus-heldout atom-frequency shift with frozen-prior hash verification"
+  ],
+  "statistics": {
+    "primary_analysis": "paired controller-by-taxonomy interaction with tool as heldout cluster and seeds paired across taxonomy representations",
+    "native_sensitivity": "both mandatory-overlap merges must meet the preregistered native TV/lower95/max-shift thresholds",
+    "sqc_equivalence": "for both merges, bootstrap upper95 TV <=0.025 and max single-pattern shift <=0.02",
+    "heldout_utility": "2pp absolute non-inferiority margin against optimal-global package allocation, checked within every taxonomy representation",
+    "multiple_endpoints": "C3 requires invariance + heldout utility + semantic coverage + resource matching jointly. Secondary metrics cannot rescue a failed primary gate."
+  },
+  "minimum_seed_plan_after_p0": {
+    "development": "one seed per cell for technical smoke only; cannot change thresholds, prior, split or method",
+    "confirmatory": "at least 3 frozen seeds per matched 2x3 cell if runtime budget permits; identical seeds paired across taxonomy representations within controller",
+    "native_reference": "same seed set where technically meaningful",
+    "adaptive_repeats": "technical failures only under a preregistered retry rule"
+  },
+  "ablation_plan": [
+    "remove quotient credit conservation while preserving quotient sampling",
+    "calibration empirical prior versus frozen uniform five-atom stress prior",
+    "replace exact released-validator support with author text/name Jaccard dedup",
+    "whole-package pruning/global package weighting controls on the same heldout tools"
+  ],
+  "paper_stop_rules": [
+    "P0-A qualified STOP => do not execute full experiment; C4 dies.",
+    "P0-B STOP => do not execute current method full experiment; C3 stays locked and realization requires Paper Design revision.",
+    "Confirmatory native/deployment reference does not retain representation sensitivity under both merges => narrow paper to control-plane/theory diagnosis.",
+    "SQC fails frozen equivalence on either merge => stop C3.",
+    "SQC violates 2pp heldout utility non-inferiority in any taxonomy cell => stop C3.",
+    "SQC loses any of the five heldout semantic atoms => stop C3.",
+    "SQC needs a larger primary proposer/validator/solver budget => primary C3 fails; report only secondary cost frontier.",
+    "Heldout tool/row information changes support atoms, calibration prior, thresholds or stop rules after unblinding => invalidate confirmatory run."
+  ],
+  "paper_success_shape": "Problem (taxonomy representation dependence) -> structural mechanism (identity-mass refinement dependence + decision-time controller-class lower bound) -> method core (support quotient + credit conservation; rejection is shared backend) -> faithful dynamic P0 -> leakage-safe tool-disjoint matched factorial demonstrating invariance without heldout utility/coverage/resource loss.",
+  "authority": {
+    "full_experiment": false,
+    "multi_gpu": false,
+    "second_backbone": false,
+    "paper_claim_C3": false,
+    "paper_claim_C4": false
+  },
+  "scientific_authority": false
+}

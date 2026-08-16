@@ -198,6 +198,16 @@
       "support-fingerprint quality/sparsity sensitivity"
     ]
   },
+  "full_experiment_freeze": {
+    "tool_disjoint_split": "generated/asset-first-stri-tool-disjoint-split-20260816.json",
+    "calibration_prior": "generated/asset-first-stri-calibration-prior-20260816.json",
+    "confirmatory_threshold_lock": "generated/asset-first-stri-full-threshold-lock-20260816.json",
+    "full_blueprint": "generated/asset-first-stri-full-experiment-blueprint-20260816.json",
+    "independent_review": "generated/asset-first-stri-full-experiment-blueprint-review-20260816.json",
+    "review_verdict": "CLEAR_BLUEPRINT",
+    "execution_dependency": "P0-A GO and P0-B GO",
+    "heldout_tool_information_may_change_method_or_gates": false
+  },
   "authority": {
     "asset_first_paper_design_draft": true,
     "canonical_live_problem_gate": false,
@@ -206,5 +216,5 @@
     "full_experiment": false,
     "gpu": false
   },
-  "next_action": "Independent current-source/method/P0-A/P0-B reviews are complete. The faithful Qwen3-8B/vLLM P0-A substrate preflight is PASS, and P0-B's no-lookahead 5-atom rejection feasibility protocol is frozen before outcomes. Keep idea search closed. Launch only P0-A on host 231 when the unrelated GPU workload releases the resource gate; if and only if P0-A GO, run the already-frozen P0-B on the same raw SHA with zero extra model calls. Do not claim C3/C4 before the qualified gates resolve."
+  "next_action": "All pre-outcome Paper Design work is frozen: current-source review, method/P0 premortems, faithful Qwen3 P0-A preflight/review, zero-extra-GPU P0-B, leakage-safe heldout split, calibration prior, confirmatory thresholds, and a CLEAR Full Experiment Blueprint. Keep idea search closed. Launch only P0-A on host 231 when the unrelated GPU workload releases the resource gate; if and only if P0-A GO, run the already-frozen P0-B on the same raw SHA. Do not modify full-experiment split/prior/gates after any heldout outcome is observed."
 }

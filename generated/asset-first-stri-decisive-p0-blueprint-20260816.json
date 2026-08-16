@@ -106,5 +106,14 @@
   "p0b_frozen_contract": "generated/asset-first-stri-quotient-rejection-p0b-contract-20260816.json",
   "p0b_independent_review": "generated/asset-first-stri-quotient-rejection-p0b-review-20260816.json",
   "p0b_execution_dependency": "P0-A must GO and P0-B must bind the exact P0-A raw SHA; P0-B uses zero additional GPU/model calls.",
+  "full_experiment_if_p0_passes": {
+    "tool_disjoint_split": "generated/asset-first-stri-tool-disjoint-split-20260816.json",
+    "calibration_prior": "generated/asset-first-stri-calibration-prior-20260816.json",
+    "threshold_lock": "generated/asset-first-stri-full-threshold-lock-20260816.json",
+    "blueprint": "generated/asset-first-stri-full-experiment-blueprint-20260816.json",
+    "independent_review": "generated/asset-first-stri-full-experiment-blueprint-review-20260816.json",
+    "review_verdict": "CLEAR_BLUEPRINT",
+    "execution_authorized": false
+  },
   "next_action": "Launch the exact frozen Qwen3-8B P0-A once on host 231 when the unrelated GPU workload releases the resource gate. Do not redesign, retune, move to another backbone, or generate a second bank before this run resolves."
 }

@@ -1,0 +1,230 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "split_id": "STRI-API-BANK-L1-TOOL-DISJOINT-v1",
+  "selection_rule": {
+    "level": 1,
+    "focal_specific_skills": [
+      "skill_003",
+      "skill_004"
+    ],
+    "generic_skill": "skill_015",
+    "eligible_tool_rule": "For each focal specific skill, include every Level-1 tool having at least one specific-only row and at least one specific+skill_015 overlap row under the frozen released validators.",
+    "partition_rule": "Within each focal-specific eligible-tool set, sort by SHA256('STRI-TOOL-SPLIT-v1|<tool>') and alternate calibration, heldout starting with calibration.",
+    "selection_reads_model_or_method_outcomes": false,
+    "selection_reads_p0_outcomes": false
+  },
+  "level1_rows_total": 399,
+  "selected_tools_total": 8,
+  "selected_rows_total": 103,
+  "focal_tool_groups_hash_order": {
+    "skill_003": [
+      "ModifyRegistration",
+      "QueryRegistration",
+      "AppointmentRegistration",
+      "CancelRegistration"
+    ],
+    "skill_004": [
+      "RecordHealthData",
+      "EmergencyKnowledge",
+      "QueryHealthData",
+      "SymptomSearch"
+    ]
+  },
+  "partitions": {
+    "calibration": {
+      "tools": [
+        "AppointmentRegistration",
+        "ModifyRegistration",
+        "QueryHealthData",
+        "RecordHealthData"
+      ],
+      "tool_hashes": {
+        "AppointmentRegistration": "2f4ee3a331c7857e5048cb7110eadc836b01fc045efac658784d82190df7e1a6",
+        "ModifyRegistration": "0d2714ce833e92fea2c9a08df2d7250cf5e2930b2af72e62062cfa9a5de1799e",
+        "QueryHealthData": "bfa47b7d123243ed26609d2d49e728990fa7a332728088bbbc1a9cee2257e74e",
+        "RecordHealthData": "71bfe2c39411c34f1b6386715e221487bef007047dc106f16ce81fff46db2517"
+      },
+      "rows": 49,
+      "row_ids": [
+        "L1:0:ModifyRegistration",
+        "L1:1:QueryHealthData",
+        "L1:6:ModifyRegistration",
+        "L1:7:RecordHealthData",
+        "L1:10:AppointmentRegistration",
+        "L1:11:ModifyRegistration",
+        "L1:33:RecordHealthData",
+        "L1:44:ModifyRegistration",
+        "L1:53:RecordHealthData",
+        "L1:54:AppointmentRegistration",
+        "L1:66:ModifyRegistration",
+        "L1:70:ModifyRegistration",
+        "L1:80:QueryHealthData",
+        "L1:89:RecordHealthData",
+        "L1:90:AppointmentRegistration",
+        "L1:98:RecordHealthData",
+        "L1:109:RecordHealthData",
+        "L1:110:AppointmentRegistration",
+        "L1:118:ModifyRegistration",
+        "L1:133:QueryHealthData",
+        "L1:135:RecordHealthData",
+        "L1:137:RecordHealthData",
+        "L1:138:AppointmentRegistration",
+        "L1:148:ModifyRegistration",
+        "L1:154:ModifyRegistration",
+        "L1:161:ModifyRegistration",
+        "L1:162:QueryHealthData",
+        "L1:177:ModifyRegistration",
+        "L1:178:RecordHealthData",
+        "L1:181:ModifyRegistration",
+        "L1:199:ModifyRegistration",
+        "L1:200:RecordHealthData",
+        "L1:201:AppointmentRegistration",
+        "L1:207:RecordHealthData",
+        "L1:208:AppointmentRegistration",
+        "L1:221:ModifyRegistration",
+        "L1:233:QueryHealthData",
+        "L1:256:RecordHealthData",
+        "L1:275:RecordHealthData",
+        "L1:292:AppointmentRegistration",
+        "L1:305:AppointmentRegistration",
+        "L1:310:RecordHealthData",
+        "L1:311:RecordHealthData",
+        "L1:318:AppointmentRegistration",
+        "L1:344:RecordHealthData",
+        "L1:375:AppointmentRegistration",
+        "L1:392:RecordHealthData",
+        "L1:395:RecordHealthData",
+        "L1:398:RecordHealthData"
+      ],
+      "five_atom_counts": {
+        "skill_003": 8,
+        "skill_004": 3,
+        "skill_015": 3,
+        "skill_003+skill_015": 17,
+        "skill_004+skill_015": 16
+      },
+      "none_rows": 2,
+      "other_pattern_counts": {},
+      "mandatory_overlap_witnesses": {
+        "skill_003": {
+          "unique_rows": 8,
+          "overlap_rows": 17,
+          "pass": true
+        },
+        "skill_004": {
+          "unique_rows": 3,
+          "overlap_rows": 16,
+          "pass": true
+        }
+      }
+    },
+    "heldout": {
+      "tools": [
+        "CancelRegistration",
+        "EmergencyKnowledge",
+        "QueryRegistration",
+        "SymptomSearch"
+      ],
+      "tool_hashes": {
+        "CancelRegistration": "8834aecf358a4788657b0498991a19a4180d6a05e47a63b55a898f9e8340c375",
+        "EmergencyKnowledge": "850bd27d267c8e0037890425ef9ee96e5fe0500a23770a2086886bab617e7bce",
+        "QueryRegistration": "2840d1f2bce37429c7e39521a8e2fcadeec72a5404de00e3b2d096f93ae98ba1",
+        "SymptomSearch": "e8a901e743418f460e9acab8e91fc8ded5ad6862d2bb9d1a58b083493b8ae65f"
+      },
+      "rows": 54,
+      "row_ids": [
+        "L1:2:CancelRegistration",
+        "L1:5:EmergencyKnowledge",
+        "L1:8:SymptomSearch",
+        "L1:9:SymptomSearch",
+        "L1:12:EmergencyKnowledge",
+        "L1:13:EmergencyKnowledge",
+        "L1:32:CancelRegistration",
+        "L1:34:QueryRegistration",
+        "L1:55:EmergencyKnowledge",
+        "L1:65:EmergencyKnowledge",
+        "L1:71:EmergencyKnowledge",
+        "L1:81:CancelRegistration",
+        "L1:82:SymptomSearch",
+        "L1:91:EmergencyKnowledge",
+        "L1:111:EmergencyKnowledge",
+        "L1:134:CancelRegistration",
+        "L1:136:QueryRegistration",
+        "L1:139:EmergencyKnowledge",
+        "L1:155:EmergencyKnowledge",
+        "L1:163:CancelRegistration",
+        "L1:176:EmergencyKnowledge",
+        "L1:202:QueryRegistration",
+        "L1:209:EmergencyKnowledge",
+        "L1:222:EmergencyKnowledge",
+        "L1:255:CancelRegistration",
+        "L1:262:QueryRegistration",
+        "L1:263:EmergencyKnowledge",
+        "L1:274:CancelRegistration",
+        "L1:276:QueryRegistration",
+        "L1:286:SymptomSearch",
+        "L1:289:CancelRegistration",
+        "L1:293:QueryRegistration",
+        "L1:295:CancelRegistration",
+        "L1:297:EmergencyKnowledge",
+        "L1:302:QueryRegistration",
+        "L1:303:EmergencyKnowledge",
+        "L1:304:QueryRegistration",
+        "L1:308:QueryRegistration",
+        "L1:309:SymptomSearch",
+        "L1:315:QueryRegistration",
+        "L1:324:QueryRegistration",
+        "L1:325:EmergencyKnowledge",
+        "L1:335:QueryRegistration",
+        "L1:343:CancelRegistration",
+        "L1:360:QueryRegistration",
+        "L1:361:EmergencyKnowledge",
+        "L1:362:EmergencyKnowledge",
+        "L1:365:CancelRegistration",
+        "L1:372:SymptomSearch",
+        "L1:373:QueryRegistration",
+        "L1:391:CancelRegistration",
+        "L1:394:CancelRegistration",
+        "L1:396:QueryRegistration",
+        "L1:397:SymptomSearch"
+      ],
+      "five_atom_counts": {
+        "skill_003": 9,
+        "skill_004": 2,
+        "skill_015": 3,
+        "skill_003+skill_015": 18,
+        "skill_004+skill_015": 20
+      },
+      "none_rows": 2,
+      "other_pattern_counts": {},
+      "mandatory_overlap_witnesses": {
+        "skill_003": {
+          "unique_rows": 9,
+          "overlap_rows": 18,
+          "pass": true
+        },
+        "skill_004": {
+          "unique_rows": 2,
+          "overlap_rows": 20,
+          "pass": true
+        }
+      }
+    }
+  },
+  "leakage_checks": {
+    "tool_disjoint": true,
+    "row_disjoint": true,
+    "five_atoms_present_in_both": true,
+    "two_mandatory_overlap_witnesses_present_in_both": true
+  },
+  "scientific_role": "Leakage-safe method/full-experiment calibration versus heldout split. The earlier all-530-row phenomenon/theory audit remains valid descriptive evidence but must not be treated as heldout method evaluation.",
+  "authority": {
+    "paper_design": false,
+    "method_execution": false,
+    "p0": false,
+    "gpu": false
+  },
+  "scientific_authority": false,
+  "membership_sha256": "b73d86370e06e83179a1ce4c7f26431c58b27f7958722974e96a4c316f2e17d4"
+}
