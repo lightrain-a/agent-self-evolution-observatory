@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "asset_id": "double-ratchet-first-party-inversion-evidence",
+  "repository": "https://github.com/amazon-science/Self-Evolving-Agents-Double-Ratchet",
+  "commit": "0f14e910d361196422d9b938f45280919952d4fd",
+  "manifest_sha256": "2e996c0b543c03a1f6c68cb06aaa26498d52b36f0775b7b36cf2025783f68ab0",
+  "files": [
+    {"path": "evalratchet/evolve.py", "sha256": "86edd1c9b75e4926b3ebe754fa9cb7e85819c9cf307aed94a53323a71eda8618", "bytes": 72590},
+    {"path": "evalratchet/coevolve.py", "sha256": "a1a002388df929effc3514216bc28a2ac9545be71643eb0a8967a5cb17064d7b", "bytes": 30837},
+    {"path": "scripts/run_metric_evo.py", "sha256": "fd6a2b776e1f64edb361401451e3e62d50b9caf21d129c3fa5dcbe336116dac0", "bytes": 6490},
+    {"path": "scripts/run_co_evo.py", "sha256": "33c88e71e38408b62d18e20f56833c3fcba0f4972c47402e11f8d92b71cdbe97", "bytes": 8134},
+    {"path": "README.md", "sha256": "31cbfd5115f015135d112c93661df5f040af12fb91f4b36aee480c5ca42c7e67", "bytes": 9663}
+  ],
+  "verified_facts": [
+    {
+      "evidence_role": "EMPIRICAL_FACT",
+      "text": "evolve_metric_expr selects the round-best metric from the combined dev-agreement and train-coverage score before calling _report_locked; eval_locked is report-only and has no write path into metric selection, gating, rollback, synthesis, or elite ranking."
+    },
+    {
+      "evidence_role": "EMPIRICAL_FACT",
+      "text": "run_coevolution calls _prepare once before alternating phases; _prepare constructs the soft eval_dev anchor, eval_locked outputs, and train outputs once from frozen no-skill solver outputs, and every later metric phase reuses those same dev_items, locked, and train objects."
+    },
+    {
+      "evidence_role": "EMPIRICAL_FACT",
+      "text": "Skill phases are graded by the current evolved metric through make_expr_grader, while the skill-phase outputs are not inserted into the dev_items or train objects consumed by later metric phases; the released coupling is metric-to-skill without a reciprocal skill-output-to-metric-data path."
+    }
+  ],
+  "scientific_authority": false
+}

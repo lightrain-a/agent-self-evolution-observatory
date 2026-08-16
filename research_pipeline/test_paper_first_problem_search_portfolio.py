@@ -3,7 +3,7 @@ from __future__ import annotations
 import json,re,unittest
 
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES,SEARCH_PORTFOLIO_PRIMITIVES,LANE_EVIDENCE_REQUIRED,LANE_SOURCE_ROLES
-from .paper_first_problem_search_portfolio import DEFAULT_MAX_PARALLEL_CALLS,_expansion_prompt,_formulation_prompt,_opposite_search_priors,run_search_portfolio
+from .paper_first_problem_search_portfolio import DEFAULT_MAX_PARALLEL_CALLS,_expansion_prompt,_formulation_prompt,_inversion_asset_records,_opposite_search_priors,_valid_seed,run_search_portfolio
 from .paper_first_fresh_saturation import reduction_pattern_audit
 
 
@@ -44,6 +44,19 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertGreaterEqual(state["summary"]["max_branch_depth"],1)
         self.assertGreater(state["summary"]["formulated_candidates"],0)
         self.assertFalse(state["scientific_authority"])
+
+    def test_provenance_bound_inversion_asset_becomes_primary_search_registry_record(self):
+        memory={"inversion_asset_evidence":[{"asset_ref":"first-party-asset:demo@"+"a"*40,"title":"Author implementation","primary_url":"https://github.com/example/repo","source_sha256":"b"*64,"asset_manifest_artifact":"generated/demo.json","asset_manifest_file_sha256":"c"*64,"commit":"a"*40,"empirical_facts":["The released controller reuses the same evaluation signal in every selection round."],"scientific_authority":False}]}
+        rows=_inversion_asset_records(memory)
+        self.assertEqual(len(rows),1)
+        self.assertTrue(rows[0]["primary_source_verified"])
+        self.assertEqual(rows[0]["ref"],memory["inversion_asset_evidence"][0]["asset_ref"])
+        lane="IDENTIFIABILITY_GAP";roles=LANE_SOURCE_ROLES[lane]
+        seed={"discovery_lane":lane,"title":"feedback path","problem_seed":"does feedback matter","structural_signature":"feedback|evaluation|selection|drift","empirical_evidence":{"source_a":{"ref":rows[0]["ref"],"claim":"selection reuses evaluator","evidence_role":roles[0]},"source_b":{"ref":rows[0]["ref"],"claim":"same released path","evidence_role":roles[1]},"relation":"same first-party implementation exposes the causal path"},"lane_evidence":{key:"grounded" for key in LANE_EVIDENCE_REQUIRED[lane]}}
+        self.assertTrue(_valid_seed(seed,{rows[0]["ref"]:rows[0]}))
+        prompt=_expansion_prompt(lane,self.records(),1,memory)
+        self.assertIn(rows[0]["ref"],prompt)
+        self.assertIn("Author implementation",prompt)
 
     def test_certified_dead_end_emits_opposite_search_prior_without_authority(self):
         memory={"blocked_objects":[{"source_candidate_id":"D1","basin":"principle-dead-end-x","dead_end_certified":True,"counter_explanation":{"type":"IMPOSSIBILITY_OR_INVARIANCE","opposite_principle":"Evidence sufficiency is relevance-conditioned, not coverage-conditioned.","opposite_search_seed":"Search for relevance-conditioned evidence debt.","reopen_condition":"Fresh evidence must expose a same-information residual.","evidence_refs":["artifact:x"]}}],"hold_objects":[{"source_candidate_id":"H1","dead_end_certified":False,"counter_explanation":{"opposite_principle":"must not appear","opposite_search_seed":"must not appear"}}]}

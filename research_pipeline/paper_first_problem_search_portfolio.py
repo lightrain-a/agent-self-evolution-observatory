@@ -134,6 +134,21 @@ def _evidence_payload(records):
         "typed_evidence":{k:[str(f.get("text") or "")[:340] for f in ((r.get("typed_evidence") or {}).get(k) or [])[:2] if isinstance(f,dict)] for k in ("operational_assumptions","measured_failures","boundary_observations")},
     } for r in records[:32]]
 
+def _inversion_asset_records(dead_end_memory):
+    records=[];seen=set()
+    for row in (dead_end_memory or {}).get("inversion_asset_evidence") or []:
+        if not isinstance(row,dict) or row.get("scientific_authority") is not False:continue
+        ref=str(row.get("asset_ref") or "").strip();sha=str(row.get("source_sha256") or "").strip().lower();url=str(row.get("primary_url") or "").strip();title=str(row.get("title") or "").strip()
+        facts=[" ".join(str(value or "").split()) for value in row.get("empirical_facts") or [] if str(value or "").strip()]
+        if not ref.startswith("first-party-asset:") or ref in seen or not re.fullmatch(r"[0-9a-f]{64}",sha) or not url.startswith("https://") or not title or not facts:continue
+        seen.add(ref);records.append({
+            "ref":ref,"title":title,"abstract":" ".join(facts)[:4000],"primary_url":url,"source_sha256":sha,"primary_source_verified":True,
+            "empirical_facts":[{"text":fact,"evidence_tier":"first-party-code-structural-witness"} for fact in facts[:8]],
+            "typed_evidence":{"operational_assumptions":[],"measured_failures":[],"boundary_observations":[]},
+            "source_kind":"principle-readjudication-first-party-asset","scientific_authority":False,
+        })
+    return records
+
 def _opposite_search_priors(dead_end_memory,limit=8):
     priors=[]
     for row in (dead_end_memory or {}).get("blocked_objects") or []:
@@ -150,12 +165,14 @@ def _opposite_search_priors(dead_end_memory,limit=8):
             "opposite_search_seed":seed,
             "reopen_condition":str(counter.get("reopen_condition") or row.get("reopen_only_if") or ""),
             "evidence_refs":list(counter.get("evidence_refs") or row.get("current_source_refs") or [])[:6],
+            "asset_ref":str((row.get("opposite_search_asset_evidence") or {}).get("asset_ref") or ""),
         })
         if len(priors)>=limit:break
     return priors
 
 def _expansion_prompt(lane,records,count,dead_end_memory=None):
-    records=_lane_records(lane,records)
+    assets=_inversion_asset_records(dead_end_memory);asset_refs={str(row.get("ref") or "") for row in assets};paper_records=[row for row in records if str(row.get("ref") or "") not in asset_refs]
+    records=(assets+_lane_records(lane,paper_records,max_records=max(1,20-len(assets))))[:20]
     contract={"source_roles":list(LANE_SOURCE_ROLES[lane]),"minimum_distinct_primary_sources":LANE_DISTINCT_SOURCE_MINIMUM[lane],"required_lane_evidence":list(LANE_EVIDENCE_REQUIRED[lane]),"machine_contract":LANE_MACHINE_CONTRACTS[lane]}
     analogy=list(CROSS_DOMAIN_STRUCTURES) if lane=="CROSS_DOMAIN_STRUCTURAL_ANALOGY" else []
     shape={"seeds":[{
@@ -225,7 +242,7 @@ def _formulation_prompt(branches,registry,dead_end_memory=None):
     )
 
 def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,model:str,target_raw_seeds:int=DEFAULT_RAW_SEEDS,archive_capacity:int=DEFAULT_ARCHIVE_CAPACITY,evolution_parents:int=DEFAULT_EVOLUTION_PARENTS,second_generation:int=DEFAULT_SECOND_GENERATION,formulation_budget:int=DEFAULT_FORMULATION_BUDGET,max_parallel_calls:int=DEFAULT_MAX_PARALLEL_CALLS,dead_end_memory:dict[str,Any]|None=None)->dict[str,Any]:
-    reg={str(r.get("ref")):r for r in records if isinstance(r,dict) and r.get("ref")};per_lane=max(1,int(math.ceil(target_raw_seeds/max(1,len(SEARCH_PORTFOLIO_PRIMITIVES)))))
+    effective_records=list(_inversion_asset_records(dead_end_memory))+list(records);reg={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};per_lane=max(1,int(math.ceil(target_raw_seeds/max(1,len(SEARCH_PORTFOLIO_PRIMITIVES)))))
     raw=[];errors=[];calls=0
     def expand_one(lane,part,count):
         res=call(role=f"expand-{lane.lower()}-p{part}",prompt=_expansion_prompt(lane,records,count,dead_end_memory),model=model,max_output_tokens=5200);payload=extract_json_object(str(res.get("text") or ""));seeds=payload.get("seeds") or []

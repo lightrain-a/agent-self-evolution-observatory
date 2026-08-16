@@ -42,6 +42,22 @@
     "new_search_basin": "selection-facing-evaluator-reuse",
     "new_problem_seed": "When an evaluator score actually has write authority over self-evolution, does repeatedly reusing the same small validation signal create a self-reinforcing validity blind spot that fresh hidden probes reveal?"
   },
+  "opposite_search_asset_evidence": {
+    "asset_ref": "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
+    "title": "Double Ratchet first-party metric/skill co-evolution implementation",
+    "primary_url": "https://github.com/amazon-science/Self-Evolving-Agents-Double-Ratchet",
+    "source_sha256": "2e996c0b543c03a1f6c68cb06aaa26498d52b36f0775b7b36cf2025783f68ab0",
+    "asset_manifest_artifact": "generated/shadow-p01-first-party-inversion-asset-manifest-20260816.json",
+    "asset_manifest_file_sha256": "cf8fd07c87f25ff00b281ed07145fddc93cc665dae3b7111ee98a0ddfc9be568",
+    "commit": "0f14e910d361196422d9b938f45280919952d4fd",
+    "empirical_facts": [
+      "evolve_metric_expr selects the round-best metric from the combined dev-agreement and train-coverage score before calling _report_locked; eval_locked is report-only and has no write path into metric selection, gating, rollback, synthesis, or elite ranking.",
+      "run_coevolution calls _prepare once before alternating phases; _prepare constructs the soft eval_dev anchor, eval_locked outputs, and train outputs once from frozen no-skill solver outputs, and every later metric phase reuses those same dev_items, locked, and train objects.",
+      "Skill phases are graded by the current evolved metric through make_expr_grader, while the skill-phase outputs are not inserted into the dev_items or train objects consumed by later metric phases; the released coupling is metric-to-skill without a reciprocal skill-output-to-metric-data path."
+    ],
+    "search_use_only": true,
+    "scientific_authority": false
+  },
   "authority": {
     "experiment_alone_authorizes_dead_end": false,
     "counter_explanation_authorizes_scoped_dead_end": true,

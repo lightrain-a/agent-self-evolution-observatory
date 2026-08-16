@@ -5,7 +5,7 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
-DISCOVERY_OPERATOR_VERSION = "anomaly-first-deadend-inversion-v2"
+DISCOVERY_OPERATOR_VERSION = "anomaly-first-asset-inversion-v3"
 
 DISCOVERY_LANES: tuple[str, ...] = (
     "CONTRADICTION",
@@ -173,6 +173,9 @@ POLICY: dict[str, Any] = {
     "dead_end_inversion_is_search_prior_not_scientific_authority": True,
     "dead_end_inversion_requires_fresh_primary_grounding": True,
     "dead_end_inversion_must_satisfy_recorded_reopen_condition": True,
+    "first_party_inversion_asset_grounding_enabled": True,
+    "first_party_inversion_asset_requires_provenance_manifest": True,
+    "first_party_inversion_asset_is_zero_authority_search_evidence": True,
     "feedback_mechanism_requires_causal_write_path_before_experiment": True,
     "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
     "shared_limitation_without_empirical_failure_forbidden": True,

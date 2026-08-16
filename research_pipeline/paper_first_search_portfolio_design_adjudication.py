@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -287,6 +288,28 @@ def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict
             artifact_ref = str(path.relative_to(PROJECT_ROOT))
         except ValueError:
             artifact_ref = str(path)
+        asset = payload.get("opposite_search_asset_evidence") or {}
+        asset_row: dict[str, Any] = {}
+        if isinstance(asset, dict) and asset:
+            asset_ref = str(asset.get("asset_ref") or "").strip()
+            source_sha = str(asset.get("source_sha256") or "").strip().lower()
+            manifest_file_sha = str(asset.get("asset_manifest_file_sha256") or "").strip().lower()
+            commit = str(asset.get("commit") or "").strip().lower()
+            manifest_artifact = str(asset.get("asset_manifest_artifact") or "").strip()
+            facts = [" ".join(str(value or "").split()) for value in asset.get("empirical_facts") or [] if str(value or "").strip()]
+            if asset_ref.startswith("first-party-asset:") and re.fullmatch(r"[0-9a-f]{64}", source_sha) and re.fullmatch(r"[0-9a-f]{64}", manifest_file_sha) and re.fullmatch(r"[0-9a-f]{40}", commit) and manifest_artifact.startswith("generated/") and str(asset.get("primary_url") or "").startswith("https://") and facts:
+                asset_row = {
+                    "asset_ref": asset_ref,
+                    "title": str(asset.get("title") or title).strip(),
+                    "primary_url": str(asset.get("primary_url") or "").strip(),
+                    "source_sha256": source_sha,
+                    "asset_manifest_artifact": manifest_artifact,
+                    "asset_manifest_file_sha256": manifest_file_sha,
+                    "commit": commit,
+                    "empirical_facts": facts[:8],
+                    "source_readjudication_artifact": artifact_ref,
+                    "scientific_authority": False,
+                }
         rows.append({
             "source_candidate_id": candidate_id,
             "basin": f"principle-readjudication-{signature}",
@@ -307,6 +330,7 @@ def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict
             "memory_class": "PRINCIPLE_DEAD_END",
             "counter_explanation": dict(counter),
             "source_readjudication_artifact": artifact_ref,
+            "opposite_search_asset_evidence": asset_row,
             "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
             "scientific_authority": False,
         })
@@ -510,6 +534,13 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     memory["memory_id"] = "shadow-paper-design-principle-dead-ends-and-holds-v2"
     memory["principle_dead_end_count"] = len(certified_rows)
     memory["principle_readjudication_dead_end_count"] = sum(str(row.get("basin") or "").startswith("principle-readjudication-") for row in certified_rows)
+    asset_by_ref: dict[str, dict[str, Any]] = {}
+    for row in certified_rows:
+        asset = row.get("opposite_search_asset_evidence") or {}
+        if isinstance(asset, dict) and str(asset.get("asset_ref") or "").startswith("first-party-asset:") and asset.get("scientific_authority") is False:
+            asset_by_ref[str(asset["asset_ref"])] = dict(asset)
+    memory["inversion_asset_evidence"] = [asset_by_ref[key] for key in sorted(asset_by_ref)]
+    memory["inversion_asset_evidence_count"] = len(asset_by_ref)
     memory["hold_object_count"] = len(hold_rows)
     memory["current_source_hard_veto_count"] = len(hard_rows)
     memory["current_source_hard_veto_added_from_latest_run"] = added
