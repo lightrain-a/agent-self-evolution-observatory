@@ -55,7 +55,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertIn("SP-15", {row["source_candidate_id"] for row in memory["hold_objects"]})
         self.assertTrue(all(row["dead_end_certified"] is True and row.get("counter_explanation") for row in memory["blocked_objects"]))
         self.assertEqual(memory.get("inversion_asset_evidence_count"),len(memory.get("inversion_asset_evidence") or []))
-        self.assertEqual(memory.get("inversion_asset_search_active_count"),1)
+        self.assertEqual(memory.get("inversion_asset_search_active_count"),0)
         p01_assets=[row for row in memory.get("inversion_asset_evidence") or [] if str(row.get("asset_ref") or "").startswith("first-party-asset:double-ratchet@")]
         self.assertEqual(len(p01_assets),1)
         self.assertEqual(p01_assets[0]["source_sha256"],"2e996c0b543c03a1f6c68cb06aaa26498d52b36f0775b7b36cf2025783f68ab0")

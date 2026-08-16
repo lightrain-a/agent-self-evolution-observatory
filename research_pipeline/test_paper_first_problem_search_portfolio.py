@@ -63,7 +63,8 @@ class SearchPortfolioTest(unittest.TestCase):
     def test_inactive_inversion_asset_is_retained_in_memory_but_excluded_from_search(self):
         active={"asset_ref":"first-party-asset:active@"+"a"*40,"title":"Active asset","primary_url":"https://github.com/example/active","source_sha256":"b"*64,"empirical_facts":["Active first-party fact."],"scientific_authority":False}
         inactive={"asset_ref":"first-party-asset:inactive@"+"c"*40,"title":"Inactive asset","primary_url":"https://github.com/example/inactive","source_sha256":"d"*64,"empirical_facts":["Inactive first-party fact."],"search_active":False,"scientific_authority":False}
-        memory={"inversion_asset_evidence":[active,inactive],"blocked_objects":[{"source_candidate_id":"ACTIVE","dead_end_certified":True,"opposite_search_asset_evidence":active,"counter_explanation":{"opposite_principle":"active principle","opposite_search_seed":"active seed","reopen_condition":"fresh evidence","evidence_refs":["asset:active"]}},{"source_candidate_id":"INACTIVE","dead_end_certified":True,"opposite_search_asset_evidence":inactive,"counter_explanation":{"opposite_principle":"inactive principle","opposite_search_seed":"inactive seed","reopen_condition":"fresh evidence","evidence_refs":["asset:inactive"]}}]}
+        stale_active_copy={**inactive,"search_active":True,"title":"Inactive asset stale receipt"}
+        memory={"inversion_asset_evidence":[active,inactive],"blocked_objects":[{"source_candidate_id":"ACTIVE","dead_end_certified":True,"opposite_search_asset_evidence":active,"counter_explanation":{"opposite_principle":"active principle","opposite_search_seed":"active seed","reopen_condition":"fresh evidence","evidence_refs":["asset:active"]}},{"source_candidate_id":"INACTIVE-STALE","dead_end_certified":True,"opposite_search_asset_evidence":stale_active_copy,"counter_explanation":{"opposite_principle":"inactive stale principle","opposite_search_seed":"inactive stale seed","reopen_condition":"fresh evidence","evidence_refs":["asset:inactive"]}},{"source_candidate_id":"INACTIVE","dead_end_certified":True,"opposite_search_asset_evidence":inactive,"counter_explanation":{"opposite_principle":"inactive principle","opposite_search_seed":"inactive seed","reopen_condition":"fresh evidence","evidence_refs":["asset:inactive"]}}]}
         rows=_inversion_asset_records(memory)
         self.assertEqual([row["ref"] for row in rows],[active["asset_ref"]])
         priors=_opposite_search_priors(memory)
@@ -71,7 +72,10 @@ class SearchPortfolioTest(unittest.TestCase):
         prompt=_expansion_prompt("UNEXPLAINED_BOUNDARY",self.records(),2,memory)
         self.assertIn("Active asset",prompt)
         self.assertNotIn("Inactive asset",prompt)
-        self.assertNotIn("inactive seed",prompt.split("CERTIFIED DEAD-END INVERSION PRIORS=",1)[1].split(". DEAD-END SEARCH MEMORY",1)[0])
+        certified_slice=prompt.split("CERTIFIED DEAD-END INVERSION PRIORS=",1)[1].split(". DEAD-END SEARCH MEMORY",1)[0]
+        self.assertNotIn("inactive seed",certified_slice)
+        self.assertNotIn("inactive stale seed",certified_slice)
+        self.assertNotIn("Inactive asset stale receipt",prompt)
 
     def test_certified_dead_end_emits_opposite_search_prior_without_authority(self):
         memory={"blocked_objects":[{"source_candidate_id":"D1","basin":"principle-dead-end-x","dead_end_certified":True,"counter_explanation":{"type":"IMPOSSIBILITY_OR_INVARIANCE","opposite_principle":"Evidence sufficiency is relevance-conditioned, not coverage-conditioned.","opposite_search_seed":"Search for relevance-conditioned evidence debt.","reopen_condition":"Fresh evidence must expose a same-information residual.","evidence_refs":["artifact:x"]}}],"hold_objects":[{"source_candidate_id":"H1","dead_end_certified":False,"counter_explanation":{"opposite_principle":"must not appear","opposite_search_seed":"must not appear"}}]}

@@ -174,18 +174,27 @@ def _prompt_dead_end_memory(dead_end_memory):
     Archived search assets remain in the canonical memory for provenance, but their
     direct inversion seeds and asset payloads must not be visible to generators.
     Keep the dead-end statement/reopen boundary so the model still avoids re-entry.
+    Global closure wins over stale per-certificate asset flags.
     """
     memory=json.loads(json.dumps(dead_end_memory or {},ensure_ascii=False))
+    globally_inactive={str(row.get("asset_ref") or "") for row in memory.get("inversion_asset_evidence") or [] if isinstance(row,dict) and row.get("search_active") is False}
     memory["inversion_asset_evidence"]=[row for row in memory.get("inversion_asset_evidence") or [] if not isinstance(row,dict) or row.get("search_active") is not False]
     memory["positive_residual_asset_evidence"]=[row for row in memory.get("positive_residual_asset_evidence") or [] if not isinstance(row,dict) or row.get("search_active") is True]
     for row in memory.get("blocked_objects") or []:
         if not isinstance(row,dict):continue
         asset=row.get("opposite_search_asset_evidence") or {}
-        if not isinstance(asset,dict) or not asset or asset.get("search_active") is not False:continue
-        row["opposite_search_asset_evidence"]={"asset_ref":str(asset.get("asset_ref") or ""),"search_active":False,"scientific_authority":False}
+        ref=str(asset.get("asset_ref") or "") if isinstance(asset,dict) else ""
+        if not ref or (ref not in globally_inactive and asset.get("search_active") is not False):continue
+        row["opposite_search_asset_evidence"]={"search_active":False,"scientific_authority":False}
+        if isinstance(row.get("evidence_basis"),list):
+            row["evidence_basis"]=[value for value in row["evidence_basis"] if str(value)!=ref]
         counter=row.get("counter_explanation") or {}
         if isinstance(counter,dict):
-            counter=dict(counter);counter["opposite_search_seed"]="ARCHIVED_INACTIVE_SEARCH_ASSET";row["counter_explanation"]=counter
+            counter=dict(counter)
+            counter["opposite_search_seed"]="ARCHIVED_INACTIVE_SEARCH_ASSET"
+            if isinstance(counter.get("evidence_refs"),list):
+                counter["evidence_refs"]=[value for value in counter["evidence_refs"] if str(value)!=ref]
+            row["counter_explanation"]=counter
     memory["inversion_asset_evidence_count"]=len(memory["inversion_asset_evidence"])
     memory["positive_residual_asset_evidence_count"]=len(memory["positive_residual_asset_evidence"])
     return memory
@@ -201,10 +210,12 @@ def _positive_residual_priors(dead_end_memory,limit=6):
 
 def _opposite_search_priors(dead_end_memory,limit=8):
     priors=[]
+    globally_inactive={str(row.get("asset_ref") or "") for row in (dead_end_memory or {}).get("inversion_asset_evidence") or [] if isinstance(row,dict) and row.get("search_active") is False}
     for row in (dead_end_memory or {}).get("blocked_objects") or []:
         if not isinstance(row,dict) or row.get("dead_end_certified") is not True:continue
         asset=row.get("opposite_search_asset_evidence") or {}
-        if isinstance(asset,dict) and asset and asset.get("search_active") is False:continue
+        ref=str(asset.get("asset_ref") or "") if isinstance(asset,dict) else ""
+        if ref in globally_inactive or (isinstance(asset,dict) and asset and asset.get("search_active") is False):continue
         counter=row.get("counter_explanation") or {}
         if not isinstance(counter,dict):continue
         principle=str(counter.get("opposite_principle") or "").strip();seed=str(counter.get("opposite_search_seed") or "").strip()

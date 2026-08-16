@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "DOUBLE-RATCHET-HELDOUT-SELECTION-CLIFF",
+  "title": "Actor-drift evaluator cliffs are not irreducible when the same-information stale-supervisor baseline observes the same current outputs and drift state",
+  "adjudication_date": "2026-08-17",
+  "old_experiment_outcome": "NOT_RUN_REDUCTION_PRECEDES_EXPERIMENT",
+  "old_outcome_may_directly_authorize_dead_end": false,
+  "registered_prediction_rejected": false,
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "dead_end_scope": "The v9 Double Ratchet formulation claiming an agent-specific held-out metric-selection cliff as actor/skill outputs drift away from frozen no-skill evaluator anchors, when the strongest same-information comparison already observes the same current skill outputs, drift features, candidate metric expressions, round history, random state, and compute budget.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The proposed cliff is fully representable by the strongest same-information nonstationary stale-supervisor/covariate-shift model once information parity is enforced. The v9 formulation gives that baseline the frozen anchor objects, all current skill-phase outputs, drift features, round scores/history, random seeds, candidate metric expressions, and the same compute budget, and even permits it to reweight or refresh its selection signal from current outputs. A nonlinear or threshold degradation of current-output ranking quality as drift increases is therefore a prediction inside that baseline class, not an additional agent-specific causal primitive. Calling the transition a cliff does not create nonreducibility.",
+      "opposite_prediction": "Under identical observable round information, a sufficiently expressive nonstationary stale-supervisor/covariate-shift or online-adaptation model can represent arbitrary smooth or threshold relationships between actor-induced drift and current-output evaluator regret, including a changepoint d*. If the candidate and baseline receive the same current outputs, drift state, candidate metrics, history, and budget, an observed cliff cannot distinguish the candidate mechanism from the mature reduction. If current outputs are withheld from the baseline, the comparison is not same-information; if they are withheld from both, neither side can use the proposed current-output-dependent oracle/regret object prospectively.",
+      "opposite_principle": "Evaluator staleness under actor-induced distribution shift is a nonstationary supervision problem unless a structural constraint yields a distinct ex-ante prediction after the baseline receives the same current-output and drift information.",
+      "opposite_search_seed": "Do not continue Double Ratchet by renaming drift magnitude, changepoints, stale anchors, or refresh policies. Reopen only from new first-party evidence supporting a structural constraint that forces two systems with identical pre-outcome current-output information, drift state, candidate metrics, update history, and compute to make different evaluator-selection predictions, and show that a matched nonstationary/covariate-shift/online-adaptation model cannot express that difference.",
+      "scope": "Double Ratchet first-party repository commit 0f14e910d361196422d9b938f45280919952d4fd plus shadow run shadow-20260816-double-ratchet-v9-r1, specifically formulation candidate SHADOW-P01-C01 and its frozen v9 search information set.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
+        "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-double-ratchet-v9-r1/formulate-p1.json#sha256=c5f06dc71e323bbed7cb18f9c11f23515ecdd196597c9d358d0dab62f5b9a3b0",
+        "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260816-double-ratchet-v9-r1/raw/formulate-p1-92f8ef904761.txt#sha256=92f8ef904761caeac882af386dcc4bb18299bbc6aca8d3de8b7cb212d65a0808",
+        "repo:generated/shadow-v4-reciprocal-coupling-principle-readjudication-20260816.json",
+        "repo:generated/shadow-p01-locked-set-causal-nopath-principle-readjudication-20260816.json",
+        "arXiv:2607.12790"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The candidate needs a threshold rather than smooth shift: a flexible same-information nonstationary model can represent changepoints as well as smooth degradation, so threshold shape alone is not distinguishing.",
+        "The candidate is rescued by current-output oracle regret: the stated strongest baseline already observes all current skill-phase outputs and candidate metrics, so the same oracle/regret comparison is available to it under information parity.",
+        "The candidate is rescued by the missing reciprocal edge: that edge is already a directly observed structural fact in the first-party implementation and was separately adjudicated; the v9 question requires a downstream consequence beyond the fact itself.",
+        "The candidate is rescued by eval_locked: eval_locked is report-only and has no write path into selection, as established by the earlier structural invariance certificate.",
+        "A local Qwen qualification run is required to decide the principle: no, because the reduction is about the expressive information set of the proposed scientific comparison and holds before any model-specific outcome."
+      ],
+      "reopen_condition": "Reopen only if new primary/first-party evidence supports a preregistered structural constraint and a matched comparison where the candidate and the strongest nonstationary/covariate-shift/online-adaptation baseline receive identical pre-outcome current-output information, drift state, candidate metrics, update history, and compute, yet make different ex-ante evaluator-selection predictions. A new drift metric, threshold estimator, refresh heuristic, longer run, more seeds, or withholding current-output information from the baseline is insufficient."
+    }
+  },
+  "scientific_interpretation": {
+    "broader_double_ratchet_system_falsified": false,
+    "do_not_say": [
+      "Double Ratchet has no evaluator staleness",
+      "actor-induced drift never hurts frozen evaluators",
+      "refreshing evaluator data cannot help",
+      "the local Qwen substrate failed scientifically"
+    ],
+    "safe_claim": "The specific v9 held-out-cliff formulation is not an irreducible paper problem because its strongest same-information mature baseline can express the same drift-to-regret threshold. This conclusion is a principle-level reduction, not a negative experiment result.",
+    "new_search_basin": "structural-prediction-beyond-same-information-nonstationarity"
+  },
+  "opposite_search_asset_evidence": {
+    "asset_ref": "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
+    "title": "Double Ratchet first-party metric/skill co-evolution implementation",
+    "primary_url": "https://github.com/amazon-science/Self-Evolving-Agents-Double-Ratchet",
+    "source_sha256": "2e996c0b543c03a1f6c68cb06aaa26498d52b36f0775b7b36cf2025783f68ab0",
+    "asset_manifest_artifact": "generated/shadow-p01-first-party-inversion-asset-manifest-20260816.json",
+    "asset_manifest_file_sha256": "cf8fd07c87f25ff00b281ed07145fddc93cc665dae3b7111ee98a0ddfc9be568",
+    "commit": "0f14e910d361196422d9b938f45280919952d4fd",
+    "empirical_facts": [
+      "The first-party implementation prepares no-skill train/dev/locked metric-side objects once and reuses them across later metric phases.",
+      "Skill phases consume the current metric and update the warm skill bank, but skill outputs are not written back into the metric-selection dataset.",
+      "eval_locked is report-only and does not write into metric selection, gating, rollback, synthesis, or elite ranking."
+    ],
+    "search_active": false,
+    "search_closed_by": "generated/double-ratchet-heldout-cliff-principle-readjudication-20260817.json",
+    "search_closed_reason": "The only remaining v9 downstream-cliff seed is same-information reducible to nonstationary stale-supervisor/covariate-shift/online-adaptation models; no model run is required to certify this scoped reduction.",
+    "scientific_authority": false
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

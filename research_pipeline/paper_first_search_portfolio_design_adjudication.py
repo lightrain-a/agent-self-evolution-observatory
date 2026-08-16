@@ -543,7 +543,16 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     for row in certified_rows:
         asset = row.get("opposite_search_asset_evidence") or {}
         if isinstance(asset, dict) and str(asset.get("asset_ref") or "").startswith("first-party-asset:") and asset.get("scientific_authority") is False:
-            asset_by_ref[str(asset["asset_ref"])] = dict(asset)
+            ref = str(asset["asset_ref"])
+            incoming = dict(asset)
+            current = asset_by_ref.get(ref)
+            # Closure is monotone: a later principle certificate may retire a
+            # previously active search asset, but an older active receipt must
+            # never reopen it merely because file/order traversal changes.
+            if current is None or current.get("search_active") is not False:
+                asset_by_ref[ref] = incoming
+            if incoming.get("search_active") is False:
+                asset_by_ref[ref] = incoming
     memory["inversion_asset_evidence"] = [asset_by_ref[key] for key in sorted(asset_by_ref)]
     memory["inversion_asset_evidence_count"] = len(asset_by_ref)
     memory["inversion_asset_search_active_count"] = sum(row.get("search_active") is not False for row in memory["inversion_asset_evidence"])
