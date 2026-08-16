@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "POSITIVE-RESIDUAL-MEMORY-TEMPORAL-EXPOSURE",
+  "title": "Temporally distributed persistent-memory exposure as a standalone causal mechanism",
+  "adjudication_date": "2026-08-16",
+  "principle_dead_end_certified": true,
+  "dead_end_scope": "On the frozen ALFWorld persistent-memory substrate, treating repeated memory injection, cumulative exposure duration, or preregistered ON/OFF exposure windows as a new standalone agent-specific causal mechanism after local-state/action mechanisms have failed.",
+  "registered_prediction_rejected": false,
+  "experiment_run_for_this_readjudication": false,
+  "broader_parent_phenomenon_falsified": false,
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "diagnosis_layer": "mature-theory/same-information-reduction",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The frozen memory treatment is re-injected at every policy decision until termination, so fixed ON/OFF memory is a repeated longitudinal treatment regimen. Predetermined ON/OFF windows, cumulative exposure, mediation through treatment-affected history/state, and termination-dependent opportunity for future exposure are representable by the same treatment-history/state-history objects used by longitudinal/dynamic-treatment causal models; persistence or textual memory does not by itself create a new causal primitive.",
+      "opposite_prediction": "For any prospectively fixed memory-exposure schedule on this substrate, the endpoint distribution can be expressed as a function of the same pre-outcome treatment history and treatment-affected state/history. If earlier treatment changes later state, monitoring, or the number of remaining decision opportunities, longitudinal treatment/monitoring formulations already absorb that dependence. Therefore an ON/OFF-window or cumulative-dose effect is not an irreducible agent-specific mechanism merely because the intervention is persistent memory.",
+      "opposite_principle": "Persistent context is a repeated intervention, not a new causal primitive.",
+      "opposite_search_seed": "Search only for a setting in which self-evolution changes the executable semantics or version identity of the persistent treatment itself, rather than only its timing or duration. Any such seed must first beat nonstationary/versioned-treatment models, dynamic policy-regime changes, intervention-mapping drift, and concept-drift explanations under the same observable version/history information.",
+      "scope": "Frozen ALFWorld HFAdmissiblePolicy persistent-memory runs in which the same MEMORY:: artifact is passed into policy.choose at every decision step until terminal success/failure or the step cap, including any prospective fixed exposure-window variant that changes only whether that same artifact is present at each step.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "repo:research_pipeline/p0_alfworld_adapter.py#sha256=7cb65832fefd882e560f47acbc7e8df9629fa6322115c375bed3fe31b41e030b",
+        "repo:generated/positive-residual-memory-local-mechanism-readjudication-20260816.json#sha256=60a5f330049613f7163e2fee5bfa5f82e32283fed1951e32da83e9f11e712552",
+        "arXiv:2607.02901",
+        "arXiv:1806.11153"
+      ],
+      "alternative_explanations_ruled_out": [
+        "one-time initial-state perturbation: the first-party harness passes the same patch to policy.choose inside the decision loop and reconstructs the system prompt with MEMORY:: content on every step",
+        "local earliest-action carrier: the prior C2 readjudication already stopped that mechanism while preserving the broad memory phenomenon",
+        "static local decision-boundary/admissibility carrier: the preregistered same-information augmentation failed to improve the baseline and is already recorded as a local-mechanism stop",
+        "endpoint-duration mechanism: terminal length and full-trajectory distance are post-outcome/leakage variables and are explicitly excluded from the prospective residual contract"
+      ],
+      "reopen_condition": "Reopen only if a preregistered case matches the full pre-outcome history and nominal exposure schedule yet changes the executable semantics/version of the persistent artifact, yields a distinct ex-ante prediction, and an explicit same-information nonstationary/versioned-treatment or policy-regime model given the same observable version signal cannot express that prediction. A new timing window, longer exposure, cumulative-dose statistic, K-step label, or memory terminology is insufficient."
+    }
+  },
+  "structural_witness": {
+    "implementation_fact": "run_episode repeatedly calls policy.choose(..., patch, ...) inside the while loop; HFAdmissiblePolicy.choose appends the MEMORY:: artifact to the system prompt whenever patch is nonempty.",
+    "treatment_schedule_interpretation": "The same persistent-memory artifact is therefore re-administered at every decision step until termination.",
+    "causal_reduction": [
+      "fixed MEMORY ON/OFF -> static repeated longitudinal regimen",
+      "preregistered ON->OFF or OFF->ON window -> time-varying/dynamic treatment regimen",
+      "state/history changed by earlier memory exposure -> treatment-affected time-varying state/confounding",
+      "episode termination changes the number of future exposure opportunities -> treatment-dependent follow-up/monitoring or truncation"
+    ]
+  },
+  "scientific_interpretation": {
+    "safe_claim": "No temporal-exposure experiment is needed to kill the standalone claim that repeated or windowed persistent-memory exposure is a new causal primitive on this frozen substrate. The implementation exposes a repeated treatment regimen, and a previously certified same-information mature-theory reduction already covers treatment-affected longitudinal history and monitoring. The B-9/C2 context-dependent memory-effect phenomenon remains archived positive residual evidence; only this temporal-exposure mechanism class is closed.",
+    "do_not_say": [
+      "persistent memory has no temporal effects",
+      "the B-9 phenomenon is false",
+      "a K-step or window experiment failed",
+      "longitudinal causal inference explains the empirical endpoint labels without further modeling"
+    ],
+    "broader_positive_residual_status": "SURVIVES_AS_ARCHIVED_PARENT_EVIDENCE",
+    "closed_mechanism": "repeated/cumulative/windowed exposure as standalone novelty",
+    "next_search_basin": "treatment-semantics-or-version-mutation",
+    "next_search_is_zero_authority": true
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "mature_same_information_reduction_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_experiment_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

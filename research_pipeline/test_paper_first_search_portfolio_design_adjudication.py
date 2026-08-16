@@ -67,8 +67,12 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         positive=[row for row in memory.get("positive_residual_asset_evidence") or [] if str(row.get("asset_ref") or "").startswith("positive-residual-asset:memory-effect-transport-b9-c2")]
         self.assertEqual(len(positive),1)
         self.assertEqual(positive[0]["phenomenon_status"],"SURVIVES_AS_ARCHIVED_PARENT_EVIDENCE")
-        self.assertEqual(positive[0]["mechanism_status"],"FOUR_LOCAL_OR_REPRESENTATIONAL_EXPLANATIONS_STOPPED")
+        self.assertEqual(positive[0]["mechanism_status"],"LOCAL_MECHANISMS_STOPPED_TEMPORAL_EXPOSURE_REDUCED_TO_LONGITUDINAL_TREATMENT")
         self.assertTrue((positive[0].get("search_contract") or {}).get("prospective_prediction_required"))
+        self.assertTrue((positive[0].get("search_contract") or {}).get("temporal_exposure_standalone_branch_closed"))
+        temporal=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="POSITIVE-RESIDUAL-MEMORY-TEMPORAL-EXPOSURE"]
+        self.assertEqual(len(temporal),1)
+        self.assertEqual((temporal[0].get("counter_explanation") or {}).get("opposite_principle"),"Persistent context is a repeated intervention, not a new causal primitive.")
         self.assertTrue((positive[0].get("search_contract") or {}).get("pre_outcome_information_only"))
         self.assertFalse(positive[0]["scientific_authority"])
 

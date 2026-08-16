@@ -17,7 +17,7 @@
     "latest_shadow_present": true,
     "latest_shadow_terminal": true,
     "same_source_transaction": true,
-    "current_discovery_operator_version": "anomaly-first-temporal-residual-v7",
+    "current_discovery_operator_version": "anomaly-first-treatment-semantics-residual-v8",
     "latest_discovery_operator_version": "anomaly-first-v1",
     "same_discovery_operator_version": false,
     "operator_upgrade_recompile": true,
@@ -38,7 +38,7 @@
     "latest_source_set_sha256": "07e49fe2546a7161684fa35f98841344738b18c331def25572c5d3a82871a2c6",
     "latest_primary_content_sha256": "7465c68bacf4badbbeb19d948db8c12e001da76c3065eb7f01b14f22a489f245",
     "latest_source_pool_sha256": "a2bfda699834ab2cf6c426185c45d8bded443ce64563d24640151f324b2f0921",
-    "current_discovery_operator_version": "anomaly-first-temporal-residual-v7",
+    "current_discovery_operator_version": "anomaly-first-treatment-semantics-residual-v8",
     "latest_discovery_operator_version": "anomaly-first-v1"
   },
   "scientific_authority": false
