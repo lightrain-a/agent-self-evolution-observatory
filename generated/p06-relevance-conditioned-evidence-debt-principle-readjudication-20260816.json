@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "SHADOW-P06-C01",
+  "title": "Relevance-conditioned evidence debt under selective evidence access",
+  "principle_dead_end_certified": true,
+  "dead_end_scope": "The standalone paper problem/method object that replaces page-coverage quantity with an explicit relevance-conditioned 'evidence debt' or unresolved-information-gap state to decide whether a long-document agent should continue searching/reading before answering.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "DocAtlas already makes unresolved, relevance-conditioned information gaps an explicit mutable control state rather than relying on page-coverage quantity. Its structured Note is n=(found,evidence,plan), where plan states remaining information gaps; subsequent Search consumes accumulated findings and may issue a new sub-question, and Selective Evidence Access explicitly allows reading pages from unresolved gaps recorded in memory. Thus the correct opposite principle discovered from the P06 coverage-count dead end is already a first-class current-source information-seeking mechanism, not a new standalone evidence-debt object.",
+      "opposite_prediction": "Under the same observed question, read evidence, note state, and budget, a policy equipped with DocAtlas-style remaining-gap plan state plus mutable Search/Read can express the decision to continue evidence acquisition without any separate scalar/page-coverage evidence-debt variable. A standalone evidence-debt formulation has no residual unless two states that are equivalent under the full found/evidence/plan plus mutable-search information require different answer/continue decisions for reasons the current-source state cannot express.",
+      "opposite_principle": "Evidence sufficiency is relevance-conditioned, but relevance-conditioned unresolved information is already representable as mutable plan/search state. Novelty requires a residual beyond explicit remaining-gap state, not a renamed debt score.",
+      "opposite_search_seed": "Search for matched selective-evidence states with the same question, read evidence, source-attributed findings, remaining-gap plan, mutable search state, and budget, but different counterfactual answer-change risk under additional evidence. Only if this same-information pair yields different optimal answer-versus-continue decisions does an answer-change-risk object survive beyond DocAtlas-style mutable information seeking.",
+      "scope": "DocAtlas arXiv:2608.07527, especially Sections 3.1-3.3: mutable Search state, Selective Evidence Access, and Note=(found,evidence,plan) where plan records remaining information gaps.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.07527",
+        "primary-cache:arxiv-full-2608.07527-dff07ace5689.html#S3.SS1-S3.SS3",
+        "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/plan.json#sha256=dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39",
+        "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/analysis.json#sha256=2b5ca3000d2c491ff2df6a1126667edd6fb59dfa7ec8fc446c9a6b30da959a16"
+      ],
+      "alternative_explanations_ruled_out": [
+        "Page-coverage quantity as the missing control state: the protocol-valid P06 run showed coverage metadata did not selectively identify answer-evidence gaps, and the original principle readjudication established a structural indistinguishability witness for coverage-only states.",
+        "Static lexical/dense retrieval quality as the full explanation: on the frozen 64 answerable MMLongBench-Doc units, BM25, MiniLM dense, and hybrid retrieval all left substantial complete-evidence gaps at top-6; even hybrid top-20 recovered only 31/47 original BM25-gap units completely. These diagnostics are supportive only and do not authorize the dead-end decision.",
+        "Answer-conditioned retrieval similarity as a distinct residual: on the frozen 20 answer-hypothesis units, question-only and question-plus-answer MiniLM top-6 both achieved 9/20 complete evidence coverage, so simple answer-conditioned semantic similarity did not create a new control object. This diagnostic is supportive only."
+      ],
+      "reopen_condition": "Reopen only with provenance-audited matched states that are equivalent under DocAtlas-style found/evidence/plan, mutable search/index state, explored-page history, and budget, but have different counterfactual answer-change risk and different optimal answer-versus-continue actions; the residual must also survive generic value-of-information/active sequential testing under the same information."
+    }
+  },
+  "scientific_interpretation": {
+    "safe_claim": "The P06 coverage-count realization failed because page quantity is not answer-evidence sufficiency. That opposite principle remains scientifically correct, but turning it into a standalone relevance-conditioned evidence-debt state is absorbed by DocAtlas's existing mutable information-gap planning and Search/Read loop. The dead-end is authorized by the current-source same-information reduction, not by negative exploratory screens.",
+    "do_not_say": [
+      "relevance-conditioned evidence sufficiency is false",
+      "active evidence acquisition cannot improve document agents",
+      "dense retrieval solves the original P06 gap",
+      "the exploratory BM25/MiniLM diagnostics are confirmatory evidence"
+    ],
+    "new_search_basin": "answer-change-risk-beyond-explicit-information-gap-state",
+    "new_problem_seed": "Can two document-agent states with the same explicit unresolved information gaps and mutable retrieval state nevertheless differ in whether unseen evidence can change the current answer, making answer-change risk a distinct decision object beyond information-seeking plans?"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}
