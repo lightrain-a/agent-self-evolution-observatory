@@ -25,6 +25,16 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertEqual(state["summary"]["supplement_unit_tests"], "11/11 PASS")
         self.assertEqual(state["summary"]["human_signoff_pending"], 1)
         self.assertEqual(state["summary"]["new_gpu_evidence_required"], 0)
+        self.assertTrue(state["gates"]["public_download_assets"])
+        self.assertEqual(
+            state["submission_handoff"]["downloads"],
+            {
+                "tex": "downloads/STRI-ICLR2027.tex",
+                "pdf": "downloads/STRI-ICLR2027.pdf",
+                "source_zip": "downloads/STRI-ICLR2027-source.zip",
+            },
+        )
+        self.assertTrue(all(len(value) == 64 for value in state["submission_handoff"]["download_sha256"].values()))
         self.assertFalse(state["scientific_authority"])
         self.assertFalse(any(state["authority"].values()))
         self.assertEqual(validate_asset_first_stri_public_status(state), [])
@@ -51,6 +61,13 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         drift["summary"]["supplement_ready"] = 0
         errors = validate_asset_first_stri_public_status(drift)
         self.assertTrue(any("paper-ready/submission gate" in error or "supplement" in error for error in errors))
+
+    def test_public_download_urls_are_fail_closed(self) -> None:
+        state = build_asset_first_stri_public_status()
+        drift = copy.deepcopy(state)
+        drift["submission_handoff"]["downloads"]["pdf"] = "private/internal.pdf"
+        errors = validate_asset_first_stri_public_status(drift)
+        self.assertTrue(any("download URLs" in error for error in errors))
 
 
 if __name__ == "__main__":

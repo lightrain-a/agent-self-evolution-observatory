@@ -24,7 +24,7 @@ ROOT_FILES = (
     "site.webmanifest",
 )
 GENERATED_PATTERNS = ("*.js", "*.json")
-TEXT_PUBLIC_SUFFIXES = {"", ".html", ".css", ".js", ".json", ".svg", ".txt", ".xml", ".webmanifest"}
+TEXT_PUBLIC_SUFFIXES = {"", ".html", ".css", ".js", ".json", ".svg", ".txt", ".tex", ".xml", ".webmanifest"}
 PUBLIC_REDACTIONS = (
     (re.compile(r"(?<![\w.])(?:[A-Za-z0-9._-]+@)?(?:222\.20\.126\.\d+|10\.42\.8\.\d+):/[^\s\"'`<>#\\]+"), "[internal-remote-path-redacted]"),
     (re.compile(r"(?<![\w.])host\d+:/[^\s\"'`<>#\\]+", re.IGNORECASE), "[internal-remote-path-redacted]"),
@@ -155,6 +155,15 @@ def build() -> Path:
                 copy_file(source, destination)
                 copied.add(destination)
 
+    downloads_source = ROOT / "downloads"
+    downloads_output = OUTPUT / "downloads"
+    for name in ("STRI-ICLR2027.tex", "STRI-ICLR2027.pdf", "STRI-ICLR2027-source.zip"):
+        source = downloads_source / name
+        if source.exists():
+            destination = downloads_output / name
+            copy_file(source, destination)
+            copied.add(destination)
+
     required = (
         OUTPUT / "index.html",
         OUTPUT / "paper-ideas.html",
@@ -223,6 +232,9 @@ def build() -> Path:
         OUTPUT / "generated" / "p0-experiment-plan.js",
         OUTPUT / "generated" / "p0-collision-recheck.js",
         OUTPUT / "generated" / "p0-runtime-readiness.js",
+        OUTPUT / "downloads" / "STRI-ICLR2027.tex",
+        OUTPUT / "downloads" / "STRI-ICLR2027.pdf",
+        OUTPUT / "downloads" / "STRI-ICLR2027-source.zip",
     )
     missing = [str(path.relative_to(OUTPUT)) for path in required if not path.exists()]
     if missing:

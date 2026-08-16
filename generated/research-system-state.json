@@ -73404,6 +73404,7 @@
       "paper_design": true,
       "official_iclr2027_format": true,
       "anonymous_supplement": true,
+      "public_download_assets": true,
       "openreview_machine_handoff": true
     },
     "claims": {
@@ -73452,6 +73453,16 @@
       "pdf_sha256": "8fc54720faa68d5a3afcd7bc412f8a2ef60f6ed41e64cb53850d8a4fcc6e0fca",
       "source_zip_sha256": "3450a445c7c2a74d7fd9475eb441631af18bce7b46889d45987268a1f532751a",
       "supplement_zip_sha256": "70a811e4c08addaf36f008dca3f1ef6fcc378dc1b346bb405c1670fb01cc74f8",
+      "downloads": {
+        "tex": "downloads/STRI-ICLR2027.tex",
+        "pdf": "downloads/STRI-ICLR2027.pdf",
+        "source_zip": "downloads/STRI-ICLR2027-source.zip"
+      },
+      "download_sha256": {
+        "tex": "3fc6a59c822bede7c6952f6b625c24dc03e3731476a8dcc707cb56c5d49690f8",
+        "pdf": "8fc54720faa68d5a3afcd7bc412f8a2ef60f6ed41e64cb53850d8a4fcc6e0fca",
+        "source_zip": "3450a445c7c2a74d7fd9475eb441631af18bce7b46889d45987268a1f532751a"
+      },
       "human_action": "author-list/profile/quota/dual-submission/ethics/AI-use signoff and OpenReview upload only"
     },
     "claim_boundary": {
@@ -73526,6 +73537,7 @@
       "paper_ready_does_not_authorize_method_p0_or_gpu": true,
       "official_submission_ready_requires_iclr2027_format_qa": true,
       "official_submission_ready_requires_anonymous_supplement_reproduction": true,
+      "public_downloads_are_anonymous_submission_assets": true,
       "human_author_signoff_cannot_be_auto_authorized": true
     },
     "scientific_authority": false,

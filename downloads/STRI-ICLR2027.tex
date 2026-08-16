@@ -1,0 +1,38 @@
+\documentclass{article}
+\usepackage{iclr2027_conference,times}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{url}
+
+\title{Self-Evolution Should Not Depend on How Skills Are Split:\\An Exact Certificate for Skill-Taxonomy Representation Invariance}
+
+% The ICLR 2027 submission style ignores this author block unless \iclrfinalcopy is enabled.
+% Keep it anonymous in the source as well to reduce accidental de-anonymization risk.
+\author{Anonymous Authors}
+
+% DO NOT enable \iclrfinalcopy for submission.
+\begin{document}
+\maketitle
+
+\input{stri-20260816-narrow-body.tex}
+
+% Flush every main-text float before entering sections that ICLR explicitly excludes
+% from the page limit. The label records the first non-main-text page, so the
+% main-text page count is (label page - 1).
+\clearpage
+\label{stri:post-main-page}
+
+\subsection*{AI use statement}
+In this work, generative AI tools assisted with conceptual framing and hypothesis refinement; formulation and critique of mathematical claims and proof drafts; experiment and falsifier design; implementation and review of analysis, experiment-control, and manuscript-quality-assurance code; interpretation of intermediate results; primary-source literature triage; and preparation or editing of manuscript text, figures, tables, and references. Generative models were also used as the task proposer in the preregistered Qwen3-8B dynamic pilot reported in Section~\ref{sec:dynamic}; that pilot failed its frozen author-native qualification gate, and its generated bank was excluded from scientific claims about dynamic STRI. Load-bearing numerical claims in the submitted narrow paper are bound to released first-party artifacts or deterministic/programmatic analysis outputs. The support certificate, theorem edge cases, transition logic, and paper-level numerical/citation constraints were exercised by executable tests; related-work boundaries and bibliographic metadata were checked against primary or official sources. AI-assisted outputs were not treated as independent scientific authority. We take responsibility for the final content of this work, including text, claims, code, and artifacts produced with the aid of generative AI.
+
+\subsection*{Reproducibility statement}
+The main paper states the finite-support assumptions and complete proofs needed for the two certificate theorems, identifies the released-system support regimes used for every load-bearing result, and reports the exact positive and negative mechanism boundaries. The supplementary material will include the STRI-Cert implementation, first-party logical-compiler support protocol, frozen result/contract receipts, source ledger, figure-generation scripts, and machine-readable claim-to-evidence checks. All reported dynamic qualification thresholds were frozen before outcomes and the failed Qwen3-8B bank is retained as a transparent non-result rather than rerun or retuned.
+
+\bibliography{stri-20260816-references}
+\bibliographystyle{iclr2027_conference}
+
+\end{document}

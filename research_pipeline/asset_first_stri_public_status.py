@@ -19,6 +19,12 @@ OFFICIAL_FINAL_STATE = "generated/asset-first-stri-iclr2027-final-state-20260816
 OFFICIAL_SUBMISSION_QA = "generated/asset-first-stri-iclr2027-submission-qa-20260816.json"
 SUPPLEMENT_STATE = "generated/asset-first-stri-iclr2027-supplement-state-20260816.json"
 OPENREVIEW_READINESS = "generated/asset-first-stri-iclr2027-openreview-readiness-20260816.json"
+PUBLIC_TEX_SOURCE = "paper_drafts/stri-20260816-iclr2027-main.tex"
+PUBLIC_DOWNLOADS = {
+    "tex": "downloads/STRI-ICLR2027.tex",
+    "pdf": "downloads/STRI-ICLR2027.pdf",
+    "source_zip": "downloads/STRI-ICLR2027-source.zip",
+}
 
 SOURCE_ARTIFACTS = {
     "final_review": FINAL_REVIEW,
@@ -47,6 +53,7 @@ POLICY = {
     "paper_ready_does_not_authorize_method_p0_or_gpu": True,
     "official_submission_ready_requires_iclr2027_format_qa": True,
     "official_submission_ready_requires_anonymous_supplement_reproduction": True,
+    "public_downloads_are_anonymous_submission_assets": True,
     "human_author_signoff_cannot_be_auto_authorized": True,
 }
 
@@ -97,6 +104,16 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
     official_qa_passed = int(official_qa.get("checks_passed") or 0)
     official_qa_total = int(official_qa.get("checks_total") or 0)
     supplement_tests = str((supplement.get("isolated_verification") or {}).get("unit_tests") or "")
+    download_sha256 = {key: _sha(project_root / rel) for key, rel in PUBLIC_DOWNLOADS.items()}
+    expected_pdf_sha256 = str((((official_final.get("delivery") or {}).get("pdf") or {}).get("sha256")) or "")
+    expected_source_zip_sha256 = str((((official_final.get("delivery") or {}).get("source_zip") or {}).get("sha256")) or "")
+    expected_tex_sha256 = _sha(project_root / PUBLIC_TEX_SOURCE)
+    public_downloads_ready = (
+        all(len(value) == 64 for value in download_sha256.values())
+        and download_sha256["pdf"] == expected_pdf_sha256
+        and download_sha256["source_zip"] == expected_source_zip_sha256
+        and download_sha256["tex"] == expected_tex_sha256
+    )
 
     gates = {
         "final_review": final.get("verdict") == "READY_NARROW_ICLR",
@@ -107,6 +124,7 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
         "paper_design": str(design.get("submission_readiness") or "").startswith("READY_NARROW_ICLR"),
         "official_iclr2027_format": official_final.get("status") == "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW" and official_qa.get("status") == "PASS" and official_qa_total > 0 and official_qa_passed == official_qa_total,
         "anonymous_supplement": supplement.get("status") == "PASS" and (supplement.get("isolated_verification") or {}).get("fresh_extract_manifest") == "PASS" and (supplement.get("isolated_verification") or {}).get("reproduce_py") == "PASS",
+        "public_download_assets": public_downloads_ready,
         "openreview_machine_handoff": openreview.get("status") == "MACHINE_READY_HUMAN_SIGNOFF_REQUIRED",
     }
     ready = all(gates.values())
@@ -161,6 +179,8 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
             "pdf_sha256": str((((official_final.get("delivery") or {}).get("pdf") or {}).get("sha256")) or ""),
             "source_zip_sha256": str((((official_final.get("delivery") or {}).get("source_zip") or {}).get("sha256")) or ""),
             "supplement_zip_sha256": str((((official_final.get("delivery") or {}).get("supplement_zip") or {}).get("sha256")) or ""),
+            "downloads": dict(PUBLIC_DOWNLOADS),
+            "download_sha256": download_sha256,
             "human_action": "author-list/profile/quota/dual-submission/ethics/AI-use signoff and OpenReview upload only",
         },
         "claim_boundary": {
@@ -205,7 +225,7 @@ def validate_asset_first_stri_public_status(state: dict[str, Any]) -> list[str]:
     if ready:
         if not all(gates.get(key) is True for key in (
             "final_review", "claim_coherence", "submission_qa", "current_source", "superseding_reduction", "paper_design",
-            "official_iclr2027_format", "anonymous_supplement", "openreview_machine_handoff",
+            "official_iclr2027_format", "anonymous_supplement", "public_download_assets", "openreview_machine_handoff",
         )):
             errors.append("READY_NARROW_ICLR requires every cross-validated paper-ready/submission gate")
         if int(summary.get("paper_ready") or 0) != 1:
@@ -232,6 +252,13 @@ def validate_asset_first_stri_public_status(state: dict[str, Any]) -> list[str]:
         for key in ("pdf_sha256", "source_zip_sha256", "supplement_zip_sha256"):
             if len(str(handoff.get(key) or "")) != 64:
                 errors.append(f"READY_NARROW_ICLR submission handoff digest invalid:{key}")
+        downloads = handoff.get("downloads") or {}
+        download_sha256 = handoff.get("download_sha256") or {}
+        if downloads != PUBLIC_DOWNLOADS:
+            errors.append("READY_NARROW_ICLR public download URLs are stale")
+        for key in PUBLIC_DOWNLOADS:
+            if len(str(download_sha256.get(key) or "")) != 64:
+                errors.append(f"READY_NARROW_ICLR public download digest invalid:{key}")
         for key, row in (state.get("source_artifacts") or {}).items():
             if row.get("present") is not True or len(str(row.get("sha256") or "")) != 64:
                 errors.append(f"READY_NARROW_ICLR source artifact missing/digest invalid:{key}")
