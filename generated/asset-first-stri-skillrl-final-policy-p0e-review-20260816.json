@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "experiment_id": "STRI-SKILLRL-FINAL-POLICY-COMPETENCY-P0E-20260816",
+  "artifact_kind": "independent-scientific-contract-review",
+  "reviewed_contract_sha256": "4c507965d55158b65834e3ad486c3ea7d74e556c00bfc982e2dd4adad351d310",
+  "reviewed_panel_sha256": "2713dd3c15aa8fd539526fd2960a45374cf28fc2b99a0e29b84c2b32d1592284",
+  "reviewed_model_manifest_sha256": "1c592fa736ff64e9dfa30ba22caaf1d08d4f6355ddd801dac6102baf04ca473a",
+  "reviewed_dead_end_sha256": "5e0f5a781d5c05f14f22ace3d0a0f6f53155e59f7bebe98833e73f9c7cc40daa",
+  "verdict": "CLEAR_FOR_BOUNDED_EXECUTION",
+  "confidence": "high",
+  "checks": {
+    "independent_truth": true,
+    "competence_gate_nonadaptive": true,
+    "substrate_change_principled": true,
+    "model_merge_provenance_valid": true,
+    "task_partition_outcome_blind": true,
+    "treatment_placebo_identifiable": true,
+    "stochastic_control_valid": true,
+    "statistics_valid": true,
+    "anti_bake_in": true,
+    "claim_boundary_valid": true
+  },
+  "reason": "The contract correctly treats P0-D as INCONCLUSIVE due to endpoint floor, not as a negative result. The substrate change to the author-released final RL policy is principled and predeclared, with the model merge provenance pinned and validated pre-outcome. The competence gate is a non-adaptive qualification prerequisite with frozen GO/STOP thresholds, and failure forbids any alternative policy/task search. Task partitions are disjoint and outcome-blind, with all P0-D tasks excluded from calibration and confirmation. The causal design includes a proper identity placebo (C) and exact quotient (D) with byte-identical prompt verification and stochastic coupling only for A/D after prompt identity is confirmed. Statistics are appropriate for paired binary outcomes, and the claim boundary correctly limits any conclusion to the exact-clone subclass without overclaiming SQC superiority. All checks pass.",
+  "required_revision": "",
+  "claim_if_calibration_go": "The author final RL policy has non-degenerate final-success support on the outcome-blind competence panel, enabling a scientifically interpretable downstream causal test.",
+  "claim_if_calibration_stop": "No scientific update on STRI mechanism; the single canonical author final RL policy lacks endpoint support, so the downstream bridge cannot be tested.",
+  "claim_if_causal_go": "Under the author final RL policy, semantic displacement of fresh-ID memory entries changes final ALFWorld success more than an identity placebo, while exact semantic quotienting restores the pristine outcome, indicating representation sensitivity propagates to final success on the exact-clone subclass.",
+  "claim_if_causal_stop": "Under the author final RL policy, semantic displacement does not change final success beyond an identity placebo, and exact quotienting restores the pristine outcome, rejecting the exact-clone downstream bridge for this policy.",
+  "reviewer_requested_model": "deepseek-v4-flash",
+  "reviewer_model": "deepseek-v4-flash-ga-260731",
+  "raw_path": "generated/research-data/runs/stri-skillrl-final-policy-p0e-review-20260816/deepseek-v4-flash.raw.txt",
+  "raw_sha256": "e9aeb7a94bc434035e19167492dd0e02480279868b31fbb87bc4c800b918add4",
+  "scientific_authority": false,
+  "authority": {
+    "paper_novelty": false,
+    "method": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "pre-outcome-vllm-smoke-receipt",
+  "model_dir": "/data/wyt/models/SkillRL-Alfworld-7B-RL-2ce16cb/hf-merged",
+  "passed": true,
+  "prompt_sha256": "d8adb66f9915732364edb6bad6a36db633ed580ae32a4edfa75d17ae3c1801e2",
+  "rendered_prompt_sha256": "368250d63feff927194ec99e082bc74d64f2abf3f9de07b93f07b7e77d2faef5",
+  "response_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+  "response_nonempty": true,
+  "runtime": {
+    "python": "3.11.11",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.5.4",
+    "vllm": "0.20.0"
+  },
+  "environment_outcomes_read": false,
+  "scientific_authority": false
+}

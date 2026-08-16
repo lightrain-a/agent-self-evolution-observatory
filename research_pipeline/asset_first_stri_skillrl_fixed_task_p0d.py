@@ -280,7 +280,9 @@ def analyze(project:pathlib.Path,aggregate_path:pathlib.Path,out:pathlib.Path)->
   if d['general_semantic_set_sha256']!=a['general_semantic_set_sha256'] or d['memory_prompt_sha256']!=a['memory_prompt_sha256']:errors.append(f'quotient-not-restored:{uid}')
   if d['projected_actions_sha256']!=a['projected_actions_sha256'] or d['response_sha256s']!=a['response_sha256s'] or d['won']!=a['won'] or d['steps']!=a['steps']:errors.append(f'A-D-trajectory-not-identical:{uid}')
  units=sorted(groups);A=[int(groups[u]['A_pristine']['won']) for u in units if set(groups[u])==set(ARMS)];B=[int(groups[u]['B_displacement_clone']['won']) for u in units if set(groups[u])==set(ARMS)];C=[int(groups[u]['C_identity_placebo']['won']) for u in units if set(groups[u])==set(ARMS)];D=[int(groups[u]['D_exact_quotient']['won']) for u in units if set(groups[u])==set(ARMS)]
- pristine=sum(A);qualified=not errors and len(A)==24 and 4<=pristine<=20
+ pristine=sum(A)
+ if len(A)==24 and not 4<=pristine<=20:errors.append(f'pristine-success-headroom:{pristine}')
+ qualified=not errors and len(A)==24
  def rate(x):return sum(x)/len(x) if x else float('nan')
  def dis(x,y):return sum(a!=b for a,b in zip(x,y))/len(x) if x else float('nan')
  p,b01,b10=mcnemar(A,B) if len(A)==24 else (1.0,0,0);rA,rB,rC,rD=map(rate,(A,B,C,D));dB,dC,dD=dis(A,B),dis(A,C),dis(A,D)

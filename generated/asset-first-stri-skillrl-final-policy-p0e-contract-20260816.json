@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "experiment_id": "STRI-SKILLRL-FINAL-POLICY-COMPETENCY-P0E-20260816",
+  "artifact_kind": "competency-qualified-final-policy-downstream-falsifier-contract",
+  "status": "FROZEN_FOR_BOUNDED_EXECUTION_REVIEW",
+  "scientific_authority": false,
+  "scientific_role": "New-substrate C4 falsifier. P0-D remains INCONCLUSIVE due endpoint floor and is not repaired or reclassified. P0-E asks whether the already-demonstrated SkillRL representation sensitivity propagates to final ALFWorld success under the single author-released final RL policy, conditional on an outcome-blind competence gate.",
+  "parent_dead_end": {
+    "path": "generated/asset-first-stri-skillrl-p0d-dead-end-diagnosis-20260816.json",
+    "disposition": "SUBSTRATE_SUPPORT_FAILURE",
+    "p0d_contract_sha256": "1f40378349825557aa66bdcb01b98542ad396cbea449dd46cf7cfb76e541a718",
+    "p0d_original_evidence_manifest_sha256": "ea8dfea6fc3834eab3c9e46f0309b0430dd3564dd419b5a1dd68976d5ad09a1d",
+    "p0d_diagnosed_analysis_sha256": "fc9356958dd585aeee2c6ee447060f967e8c122d991dc3a8f6f207564611ca57",
+    "p0d_diagnosed_evidence_manifest_sha256": "69b1e55135c60832c3450f4303b3c36d3a22c149f5f7e9bb5d72ff411916c6a7",
+    "p0d_qualification_error": "pristine-success-headroom:1",
+    "p0d_pristine_success": "1/24"
+  },
+  "principle_certificate": {
+    "principle": "Endpoint treatment effects are scientifically interpretable only when the reference policy supplies non-degenerate endpoint support. Policy competence is therefore a qualification variable, not a nuisance to be tuned after intervention outcomes.",
+    "falsifiable_prediction": "If the author final RL policy has usable final-success support, fresh-ID semantic displacement should change final success more than an identity placebo, while exact semantic quotienting should restore the pristine trajectory/outcome.",
+    "strongest_reduction": "Any apparent effect is generic fresh-ID/prompt perturbation or stochastic sampling rather than semantic displacement. C controls fresh-ID/prompt change without semantic-set change; D restores A memory prompt byte-for-byte and reuses A realized stochastic response after prompt identity is verified."
+  },
+  "author_asset": {
+    "source_repo": "https://github.com/aiming-lab/SkillRL.git",
+    "source_commit": "8e66726ed866a4e0a7f053586a41022798192e6c",
+    "readme_sha256": "09d32518ad3e07d7cf8fe0bdcb353f92c0b083c8d5837f4bbb5479ee387f637d",
+    "run_alfworld_skills_sha256": "480a9189d776a2ac68996d29730f79fdb421e00903ff8ae3afc170a6b827a106",
+    "model_merger_sha256": "ad50e027112ad9c5d067764e05a5eda6ef644041a099b68dee60670a7a6f2cff",
+    "model_merger_shim_path": "research_pipeline/skillrl_model_merger_shim.py",
+    "model_merger_shim_sha256": "a8c649774de57b615185aed011a43c0b2860ab96526e1ce18173e22bfff62871",
+    "model_merger_shim_boundary": "The shim replaces only verl.utils hf_tokenizer/hf_processor imports with standard Transformers helpers, then executes the pinned upstream merger unchanged via runpy; all FSDP state-dict/DTensor/concatenation/save math remains upstream code.",
+    "readme_claim": "README separately releases ALFWorld SFT Model and RL Model and describes the SFT model as the warm start for RL With SkillBank."
+  },
+  "policy": {
+    "repo": "Jianwen/Alfworld-7B-RL",
+    "revision": "2ce16cb90e6357892dde201928279d4513d35c59",
+    "selection": "single predeclared author final RL artifact; no checkpoint/model search after P0-E outcomes",
+    "checkpoint_format": "verl FSDP actor, world_size=4; merge pre-outcome with pinned source scripts/model_merger.py --backend fsdp executed through the audited tokenizer-only shim",
+    "source_model_shards": [
+      {
+        "file": "actor/model_world_size_4_rank_0.pt",
+        "bytes": 7615805455,
+        "sha256": "82336e369faec11529d7b6b2f1570531be302c546a2fcc3a20f6bc2bf0d6a1bd"
+      },
+      {
+        "file": "actor/model_world_size_4_rank_1.pt",
+        "bytes": 7615805455,
+        "sha256": "e0bfd396384c412a20c5ba942f105fea3ea3c5039ff8f0c5bae7d89b6ebb8366"
+      },
+      {
+        "file": "actor/model_world_size_4_rank_2.pt",
+        "bytes": 7615805455,
+        "sha256": "839b26609fdb601119b1dbd7a963ca97d2150bcfdd304cc9de53868ecbeea0be"
+      },
+      {
+        "file": "actor/model_world_size_4_rank_3.pt",
+        "bytes": 7615805455,
+        "sha256": "69931c4d203a86d7cbf6eea6e8248d82b76ae0b189e5cabd5bdeb5043cd70b3e"
+      }
+    ],
+    "merged_hf_manifest": {
+      "path": "generated/asset-first-stri-skillrl-final-policy-p0e-model-manifest-20260816.json",
+      "sha256": "1c592fa736ff64e9dfa30ba22caaf1d08d4f6355ddd801dac6102baf04ca473a",
+      "status": "VALIDATED_PRE_OUTCOME_HF_MODEL",
+      "parameters": 7615616512,
+      "state_key_count": 339,
+      "tensor_dtype": "BF16",
+      "vllm_smoke_passed": true,
+      "environment_outcomes_read": false
+    }
+  },
+  "task_panel": {
+    "path": "generated/asset-first-stri-skillrl-final-policy-p0e-panel-20260816.json",
+    "sha256": "2713dd3c15aa8fd539526fd2960a45374cf28fc2b99a0e29b84c2b32d1592284",
+    "split": "valid_unseen",
+    "competence_calibration_tasks": 12,
+    "local_causal_tasks": 12,
+    "future_confirmation_tasks": 12,
+    "all_three_disjoint": true,
+    "p0d_seen_local_excluded": true,
+    "p0d_never_run_sealed_promoted_to_local_causal": true,
+    "selection_outcome_blind": true
+  },
+  "decoding": {
+    "seeds": [
+      2026081603,
+      2026081604
+    ],
+    "do_sample": true,
+    "temperature": 0.4,
+    "top_p": 0.8,
+    "top_k": 20,
+    "repetition_penalty": 1.05,
+    "max_prompt_tokens": 4096,
+    "max_response_tokens": 512,
+    "max_steps": 50
+  },
+  "stage_0_competence_calibration": {
+    "arms": [
+      "A_pristine"
+    ],
+    "tasks": 12,
+    "seeds": 2,
+    "episodes": 24,
+    "truth": "ALFWorld won only",
+    "GO_COMPETENT_POLICY_SUPPORT": {
+      "pristine_success_min": 4,
+      "pristine_success_max": 20,
+      "families_with_at_least_one_success_min": 3,
+      "all_24_complete": true
+    },
+    "STOP_NO_COMPETENT_POLICY_SUPPORT": "If the single author final RL policy fails the frozen support gate, do not launch B/C/D and do not search alternative policies/checkpoints/tasks."
+  },
+  "stage_1_local_causal": {
+    "launch_condition": "stage_0 GO only",
+    "arms": [
+      "A_pristine",
+      "B_displacement_clone",
+      "C_identity_placebo",
+      "D_exact_quotient"
+    ],
+    "tasks": 12,
+    "seeds": 2,
+    "paired_units": 24,
+    "arm_episodes": 96,
+    "representation_contract": {
+      "B": "released pristine + exact-content gen_001 as fresh dyn_001; semantic displacement required on every unit",
+      "C": "released pristine + exact-content gen_006 as fresh dyn_006; unique semantic set unchanged on every unit",
+      "D": "same source as B but exact semantic_key quotient; A/D formatted memory prompt byte-identical on every unit"
+    },
+    "stochastic_contract": "For A/D only, after byte-identical prompt verification, reuse A realized response for D. B/C remain independent stochastic requests.",
+    "qualification": {
+      "all_24_paired_units_complete": true,
+      "pristine_success_min": 4,
+      "pristine_success_max": 20,
+      "families_with_at_least_one_A_success_min": 3,
+      "common_prefix_exact": true,
+      "A_D_exact_trajectory": true,
+      "treatment_semantic_displacement_all_units": true,
+      "placebo_semantic_set_unchanged_all_units": true
+    },
+    "GO_C4_FIXED_POLICY_DOWNSTREAM_EVIDENCE": {
+      "B_vs_A_mcnemar_p_lt": 0.05,
+      "abs_success_rate_B_minus_A_min": 0.125,
+      "B_vs_A_disagreement_minus_C_vs_A_min": 0.125,
+      "D_vs_A_disagreement_max": 0.05,
+      "abs_success_rate_D_minus_A_max": 0.05,
+      "family_replicated_flip_count_min": 2
+    },
+    "STOP_FIXED_POLICY_DYNAMIC_BRIDGE": "Qualified run; B-vs-A non-significant and B disagreement within 0.05 of C-vs-A, with D-vs-A <=0.05 and |D-A|<=0.05.",
+    "INCONCLUSIVE": "Any support/representation/runtime qualification failure or neither GO nor STOP."
+  },
+  "stage_2_confirmation": {
+    "locked": true,
+    "tasks": 12,
+    "unlock_only_after": "qualified stage_1 GO plus independent review of exact local evidence"
+  },
+  "claim_boundary": {
+    "on_go": "Only C4 final-policy downstream representation sensitivity on the SkillRL exact-clone subclass. Does not establish SQC superiority or partial-overlap behavior.",
+    "on_stop": "Rejects only the exact-clone downstream bridge under the author final RL policy. C1/C2 STRI remain unchanged.",
+    "on_calibration_stop": "No scientific update on STRI mechanism; only lack of endpoint support under the single canonical author policy.",
+    "no_second_policy_rescue": true,
+    "no_task_selection_after_outcomes": true,
+    "no_threshold_tuning": true
+  },
+  "budget": {
+    "stage_0_gpu_hours_max": 0.75,
+    "stage_1_gpu_hours_max": 2.0,
+    "stage_2_locked": true
+  },
+  "authority": {
+    "paper_claim_C4": false,
+    "method": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}
