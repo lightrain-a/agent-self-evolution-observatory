@@ -21,12 +21,13 @@ from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_relation_coverage import coobserved_pairs, portable_review_receipts, relation_universe_digest, source_pair_coverage
 from .paper_first_scientific_object_ontology import current_lane_axes, reviewed_primary_cache_records
 from .public_state_redaction import redact_private_paths
+from .premium_model_policy import preferred_model
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-global-relation-recall.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-global-relation-recall.js"
-RELATION_MODEL = "ark-code-latest"
-LANE_REVIEW_MODEL = "glm-5.2"
-REDUCTION_MODEL = "deepseek-v4-flash"
+RELATION_MODEL = preferred_model("relation_mining")
+LANE_REVIEW_MODEL = preferred_model("relation_lane_review")
+REDUCTION_MODEL = preferred_model("relation_reduction_review")
 PAIR_RELATION_BUDGETS = {
     "CONTRADICTION": 5,
     "CONVERGENT_FAILURE": 5,

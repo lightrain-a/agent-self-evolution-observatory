@@ -14,13 +14,14 @@ from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_O
 from .paper_first_problem_gate_queue import default_auto_inbox_path
 from .paper_first_problem_generator_prompts import generator_prompt,reviewer_prompt
 from .paper_first_problem_search_portfolio import DEFAULT_RAW_SEEDS, run_search_portfolio
+from .premium_model_policy import preferred_model
 from .public_state_redaction import redact_private_paths
 
 DEFAULT_JSON=PROJECT_ROOT/"generated"/"paper-first-problem-generator-state.json"
 DEFAULT_JS=PROJECT_ROOT/"generated"/"paper-first-problem-generator-state.js"
 PORTABLE_REVIEW_RECEIPT_LIMIT=64
 PORTABLE_BLOCKED_MEMORY_LIMIT=24
-GENERATOR_MODEL="ark-code-latest"; REVIEWER_MODEL="glm-5.2"; MAX_CANDIDATES=5; MAX_POOL_AGE_HOURS=36.0
+GENERATOR_MODEL=preferred_model("problem_generation"); REVIEWER_MODEL=preferred_model("semantic_review"); MAX_CANDIDATES=5; MAX_POOL_AGE_HOURS=36.0
 Responder=Callable[...,dict[str,Any]]
 
 
@@ -303,7 +304,7 @@ def _source_grounding(review:dict[str,Any],candidate:dict[str,Any],registry:dict
     return out,all_grounded
 
 def _apply_reviews(cands,payload,requested,resolved,generator_resolved,raw_sha,registry):
-    by={str(r.get("candidate_id") or ""):r for r in (payload or {}).get("reviews") or [] if isinstance(r,dict)};known={r["key"] for r in REDUCTION_PATTERNS};generator_models={x for x in str(generator_resolved or "").split("|") if x};ind=bool(resolved and resolved not in generator_models)
+    by={str(r.get("candidate_id") or ""):r for r in (payload or {}).get("reviews") or [] if isinstance(r,dict)};known={r["key"] for r in REDUCTION_PATTERNS};generator_models={x for x in str(generator_resolved or "").split("|") if x};ind=bool(resolved and generator_models and resolved not in generator_models)
     for c in cands:
         r=by.get(c["candidate_id"]) or {};v=str(r.get("verdict") or "BLOCK").upper();matched=sorted({str(x) for x in r.get("matched_patterns") or [] if str(x) in known});grounding,grounded=_source_grounding(r,c,registry);lane_verified=r.get("lane_contract_verified") is True;reduction_class=str(r.get("reduction_class") or "").strip().upper();exact_test=str(r.get("exact_reduction_test") or "").strip()
         if reduction_class in {"VALID_HARD_VETO","NEEDS_EXACT_REDUCTION_TEST"}:v="BLOCK"

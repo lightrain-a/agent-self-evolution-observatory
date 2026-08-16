@@ -16,6 +16,7 @@ ARK_MODELS = (
     "doubao-seed-2.0-lite",
     "doubao-seed-2.0-mini",
     "glm-5.2",
+    "glm-5.3",
     "kimi-k2.7-code",
     "deepseek-v4-pro",
     "minimax-m3",

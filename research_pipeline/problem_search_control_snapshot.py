@@ -32,6 +32,7 @@ CONTROL_FILES = (
     "research_pipeline/paper_first_legacy_reduction_migration.py",
     "research_pipeline/paper_first_shadow_current_source_gate.py",
     "research_pipeline/ark_provider.py",
+    "research_pipeline/premium_model_policy.py",
 )
 AUTHORITY = {
     "canonical_generator": False,

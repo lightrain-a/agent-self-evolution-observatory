@@ -9,6 +9,7 @@ from .config import PROJECT_ROOT
 from .paper_first_problem_discovery_contract import SEARCH_PORTFOLIO_PRIMITIVES, audit_problem_candidate, audit_shadow_problem_candidate
 from .paper_first_problem_generator import _ark,_apply_reviews,_normalize
 from .paper_first_problem_generator_prompts import reviewer_prompt
+from .premium_model_policy import PREMIUM_AUTO, preferred_model
 from .paper_first_problem_falsifier_preflight import write_problem_falsifier_preflight,write_support_inventory_request
 from .paper_first_evidence_acquisition import (
     PLAN_FILENAME as EVIDENCE_PLAN_FILENAME,
@@ -66,6 +67,32 @@ def _require_artifact_control(payload:dict,control_sha:str,path:Path,expected_sc
         raise ValueError(f"mixed shadow control snapshot artifact: {path.name}")
     if expected_schema is not None and str(payload.get("schema_version") or "")!=expected_schema:
         raise ValueError(f"shadow artifact schema drift: {path.name} expected={expected_schema} actual={payload.get('schema_version')}")
+
+def _review_generator_receipts(run_root:Path,selected:list[dict],control_sha:str)->tuple[list[dict],str]:
+    """Resolve the actual model identities that generated this review batch.
+
+    Machine-audit rows retain the formulation artifact that produced each candidate.
+    Independence must be checked against those provider receipts, never against a
+    requested alias or a hard-coded historical generator name.
+    """
+    receipts=[]
+    seen=set()
+    for row in selected:
+        name=str(row.get("source_artifact") or "").strip()
+        if not name or Path(name).name!=name or not name.startswith("formulate-p") or not name.endswith(".json"):
+            raise ValueError("semantic review requires a valid formulation source artifact")
+        if name in seen:continue
+        seen.add(name)
+        path=run_root/name
+        if not path.is_file():raise ValueError(f"semantic review missing generator receipt artifact: {name}")
+        payload=json.loads(path.read_text(encoding="utf-8"));_require_artifact_control(payload,control_sha,path,STAGE_RUNNER_ARTIFACT_SCHEMA)
+        resolved=str(payload.get("resolved_model") or "").strip();raw_sha=str(payload.get("raw_sha256") or "").strip()
+        if not resolved or not re.fullmatch(r"[0-9a-f]{64}",raw_sha):
+            raise ValueError(f"semantic review generator receipt incomplete: {name}")
+        receipts.append({"source_artifact":name,"resolved_model":resolved,"raw_sha256":raw_sha})
+    resolved_models=sorted({row["resolved_model"] for row in receipts})
+    if not resolved_models:raise ValueError("semantic review requires generator resolved-model receipts")
+    return receipts,"|".join(resolved_models)
 
 
 def _archive_raw_before_parse(run_root:Path,stem:str,raw:str,resolved_model:str)->tuple[str,Path]:
@@ -200,7 +227,8 @@ def _semantic_dead_end_seed_blocker(seed:dict,memory:dict,pool_sha:str)->dict|No
     return None
 
 
-def expand(*,pool:Path|None,run_root:Path,lane:str,count:int=6,model:str="ark-code-latest",part:int=1,memory_path:Path|None=None) -> dict:
+def expand(*,pool:Path|None,run_root:Path,lane:str,count:int=6,model:str=PREMIUM_AUTO,part:int=1,memory_path:Path|None=None) -> dict:
+    model=preferred_model("portfolio_expand",model)
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=_assert_run_control(run_root,pool,memory_path)
     payload=json.loads(pool.read_text(encoding="utf-8"));records=payload.get("records") or []
     lane=lane.strip().upper()
@@ -236,7 +264,8 @@ def assemble(*,run_root:Path,archive_capacity:int=48,evolution_parents:int=24)->
     return out["summary"]
 
 
-def evolve(*,pool:Path|None,run_root:Path,generation:int,part:int,batch_size:int=6,model:str="ark-code-latest",memory_path:Path|None=None)->dict:
+def evolve(*,pool:Path|None,run_root:Path,generation:int,part:int,batch_size:int=6,model:str=PREMIUM_AUTO,memory_path:Path|None=None)->dict:
+    model=preferred_model("portfolio_evolve",model)
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=_assert_run_control(run_root,pool,memory_path)
     pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_dead_end_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();base_path=run_root/"base.json";base=json.loads(base_path.read_text(encoding="utf-8"));_require_artifact_control(base,control_sha,base_path,"1.2")
     if generation==1:parents=base.get("parents") or []
@@ -293,7 +322,8 @@ def _formulation_precheck(candidate:dict,registry:dict)->tuple[str,dict,dict]:
     return "rejected",normalized,audit
 
 
-def formulate(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,budget:int=24,model:str="ark-code-latest",memory_path:Path|None=None)->dict:
+def formulate(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,budget:int=24,model:str=PREMIUM_AUTO,memory_path:Path|None=None)->dict:
+    model=preferred_model("portfolio_formulate",model)
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=_assert_run_control(run_root,pool,memory_path)
     pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_dead_end_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget,control_sha);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
     if not batch:raise ValueError(f"empty formulation batch part={part}")
@@ -358,7 +388,8 @@ def machine_audit(*,pool:Path|None,run_root:Path)->dict:
     return out["summary"]
 
 
-def evidence_design(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,model:str="ark-code-latest")->dict:
+def evidence_design(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,model:str=PREMIUM_AUTO)->dict:
+    model=preferred_model("evidence_design",model)
     pool=_require_resolved_pool(run_root,pool);control_sha=_assert_run_control(run_root,pool)
     machine_path=run_root/"machine-audit.json";machine=json.loads(machine_path.read_text(encoding="utf-8"));_require_artifact_control(machine,control_sha,machine_path,"1.3-shadow")
     plan_path=run_root/EVIDENCE_PLAN_FILENAME
@@ -375,7 +406,8 @@ def evidence_design(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,mod
     return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
 
 
-def evidence_operationalization_recompile(*,run_root:Path,part:int,batch_size:int=2,model:str="ark-code-latest")->dict:
+def evidence_operationalization_recompile(*,run_root:Path,part:int,batch_size:int=2,model:str=PREMIUM_AUTO)->dict:
+    model=preferred_model("evidence_recompile",model)
     control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
     if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
     prompt,candidate_ids=operationalization_recompile_prompt(plan,part=part,batch_size=batch_size);res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-recompile-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5600,temperature=0.0)
@@ -384,7 +416,8 @@ def evidence_operationalization_recompile(*,run_root:Path,part:int,batch_size:in
     (run_root/f"evidence-recompile-p{part}.json").write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return {"part":part,"candidate_ids":candidate_ids,"resolved_model":resolved,"raw_sha256":sha,"summary":state.get("summary") or {},"scientific_authority":False}
 
 
-def evidence_contract_review(*,run_root:Path,part:int,batch_size:int=2,model:str="glm-5.2")->dict:
+def evidence_contract_review(*,run_root:Path,part:int,batch_size:int=2,model:str=PREMIUM_AUTO)->dict:
+    model=preferred_model("evidence_review",model)
     control_sha=_assert_run_control(run_root);plan_path=run_root/EVIDENCE_PLAN_FILENAME;plan=json.loads(plan_path.read_text(encoding="utf-8"))
     if str(plan.get("control_snapshot_sha256") or "")!=control_sha:raise ValueError("bounded evidence plan control snapshot mismatch")
     prompt,candidate_ids=evidence_review_prompt(plan,part=part,batch_size=batch_size);res=_ark_with_provider_receipt(run_root=run_root,stem=f"evidence-review-p{part}",requested_model=model,context={"part":part,"candidate_ids":candidate_ids,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=4200,temperature=0.0)
@@ -424,14 +457,16 @@ def evidence_adjudicate(*,run_root:Path,receipt_path:Path)->dict:
     return {"status":state.get("status"),"summary":state.get("summary") or {},"scientific_authority":False}
 
 
-def review(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,model:str="glm-5.2")->dict:
+def review(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,model:str=PREMIUM_AUTO)->dict:
+    model=preferred_model("semantic_review",model)
     pool=_require_resolved_pool(run_root,pool);control_sha=_assert_run_control(run_root,pool)
     records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_dead_end_memory(_resolve_run_memory(run_root,None));effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
     audit_path=run_root/"machine-audit.json";audit=json.loads(audit_path.read_text(encoding="utf-8"));_require_artifact_control(audit,control_sha,audit_path,"1.3-shadow");rows=audit.get("reviewable") or [];start=(part-1)*batch_size;selected=rows[start:start+batch_size]
     if not selected:raise ValueError(f"empty review batch part={part}")
+    generator_receipts,generator_resolved=_review_generator_receipts(run_root,selected,control_sha)
     candidates=[dict(row["candidate"]) for row in selected];prompt=reviewer_prompt(candidates,registry,shadow_mode=True);res=_ark_with_provider_receipt(run_root=run_root,stem=f"review-p{part}",requested_model=model,context={"part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=0.0);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_json(run_root,f"review-p{part}",raw,resolved)
-    _apply_reviews(candidates,payload,model,resolved,"doubao-seed-evolving",sha,registry)
-    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"requested_model":model,"resolved_model":resolved,"raw_sha256":sha,"raw_archived_before_parse":True,"candidates":candidates,"scientific_authority":False}
+    _apply_reviews(candidates,payload,model,resolved,generator_resolved,sha,registry)
+    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"requested_model":model,"resolved_model":resolved,"generator_resolved_model":generator_resolved,"generator_receipts":generator_receipts,"raw_sha256":sha,"raw_archived_before_parse":True,"candidates":candidates,"scientific_authority":False}
     (run_root/f"review-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {"part":part,"candidate_ids":out["candidate_ids"],"resolved_model":resolved,"raw_sha256":sha,"semantic_clear":sum((c.get("semantic_reduction_review") or {}).get("verdict")=="CLEAR" for c in candidates)}
 
@@ -457,7 +492,7 @@ def finalize(*,pool:Path|None,run_root:Path)->dict:
 def main()->None:
     ap=argparse.ArgumentParser()
     ap.add_argument("command",choices=("expand","assemble","evolve","formulate","audit","evidence-design","evidence-recompile","evidence-review","evidence-substrate-request","evidence-substrate-compile","evidence-harness-compile","evidence-adjudicate","falsifier-request","falsifier-preflight","review","finalize"))
-    ap.add_argument("--pool",type=Path);ap.add_argument("--run-root",type=Path,required=True);ap.add_argument("--lane");ap.add_argument("--count",type=int,default=6);ap.add_argument("--part",type=int,default=1);ap.add_argument("--generation",type=int,default=1);ap.add_argument("--model",default="ark-code-latest");ap.add_argument("--memory",type=Path);ap.add_argument("--support-inventory",type=Path);ap.add_argument("--evidence-receipts",type=Path);ap.add_argument("--substrate-receipts",type=Path);ap.add_argument("--harness-receipts",type=Path);a=ap.parse_args()
+    ap.add_argument("--pool",type=Path);ap.add_argument("--run-root",type=Path,required=True);ap.add_argument("--lane");ap.add_argument("--count",type=int,default=6);ap.add_argument("--part",type=int,default=1);ap.add_argument("--generation",type=int,default=1);ap.add_argument("--model",default=PREMIUM_AUTO);ap.add_argument("--memory",type=Path);ap.add_argument("--support-inventory",type=Path);ap.add_argument("--evidence-receipts",type=Path);ap.add_argument("--substrate-receipts",type=Path);ap.add_argument("--harness-receipts",type=Path);a=ap.parse_args()
     stop_marker=a.run_root/"shadow-run-qualification-stop.json"
     if stop_marker.exists():
         state=json.loads(stop_marker.read_text(encoding="utf-8"));raise SystemExit(f"shadow run stopped by qualification gate: {state.get('status','STOPPED')}")
@@ -469,7 +504,7 @@ def main()->None:
     elif a.command=="audit":result=machine_audit(pool=a.pool,run_root=a.run_root)
     elif a.command=="evidence-design":result=evidence_design(pool=a.pool,run_root=a.run_root,part=a.part,model=a.model)
     elif a.command=="evidence-recompile":result=evidence_operationalization_recompile(run_root=a.run_root,part=a.part,model=a.model)
-    elif a.command=="evidence-review":result=evidence_contract_review(run_root=a.run_root,part=a.part,model="glm-5.2" if a.model=="ark-code-latest" else a.model)
+    elif a.command=="evidence-review":result=evidence_contract_review(run_root=a.run_root,part=a.part,model=a.model)
     elif a.command=="evidence-substrate-request":result=evidence_substrate_request(run_root=a.run_root)
     elif a.command=="evidence-substrate-compile":
         if a.substrate_receipts is None:raise SystemExit("--substrate-receipts is required for evidence-substrate-compile")
@@ -486,7 +521,7 @@ def main()->None:
         if a.support_inventory is None:raise SystemExit("--support-inventory is required for falsifier-preflight")
         machine_path=a.run_root/"machine-audit.json";machine=json.loads(machine_path.read_text(encoding="utf-8"));_require_artifact_control(machine,control_sha,machine_path,"1.3-shadow");state=write_problem_falsifier_preflight(run_root=a.run_root,support_inventory_path=a.support_inventory);result={"status":state.get("status"),"summary":state.get("summary"),"scientific_authority":False}
     elif a.command=="finalize":result=finalize(pool=a.pool,run_root=a.run_root)
-    else:result=review(pool=a.pool,run_root=a.run_root,part=a.part,model="glm-5.2" if a.model=="ark-code-latest" else a.model)
+    else:result=review(pool=a.pool,run_root=a.run_root,part=a.part,model=a.model)
     print(json.dumps(result,ensure_ascii=False))
 
 if __name__=="__main__":main()

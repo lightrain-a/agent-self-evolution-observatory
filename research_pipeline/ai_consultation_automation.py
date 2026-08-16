@@ -400,7 +400,7 @@ def execute_pending(
     web_enabled: bool = True,
     domestic_models: list[str] | None = None,
 ) -> list[str]:
-    domestic_models = domestic_models or ["glm-5.2", "deepseek-v4-pro"]
+    domestic_models = domestic_models or ["glm-5.3", "deepseek-v4-pro", "minimax-m3", "kimi-k3"]
     completed: list[str] = []
     max_attempts = int(os.getenv("AUTOMATION_AI_CLINIC_MAX_ATTEMPTS", "2"))
     pending = [
@@ -504,7 +504,7 @@ def run_ai_consultation_automation(
     if execute and state.get("baseline_initialized"):
         models = [
             item.strip()
-            for item in os.getenv("AUTOMATION_AI_CLINIC_ARK_MODELS", "glm-5.2,deepseek-v4-pro").split(",")
+            for item in os.getenv("AUTOMATION_AI_CLINIC_ARK_MODELS", "glm-5.3,deepseek-v4-pro,minimax-m3,kimi-k3").split(",")
             if item.strip()
         ]
         executed = execute_pending(

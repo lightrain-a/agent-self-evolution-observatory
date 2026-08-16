@@ -8,6 +8,7 @@ from typing import Any, Callable
 
 from .ark_provider import extract_json_object
 from .paper_first_fresh_saturation import reduction_pattern_audit
+from .premium_model_policy import preferred_model
 from .paper_first_problem_discovery_contract import (
     DISCOVERY_LANES, SEARCH_PORTFOLIO_PRIMITIVES, LANE_DISTINCT_SOURCE_MINIMUM, LANE_EVIDENCE_REQUIRED, LANE_MACHINE_CONTRACTS, LANE_SOURCE_ROLES,
 )
@@ -398,7 +399,7 @@ def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,mode
     effective_records=list(_search_asset_records(dead_end_memory))+list(records);reg={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};per_lane=max(1,int(math.ceil(target_raw_seeds/max(1,len(SEARCH_PORTFOLIO_PRIMITIVES)))))
     raw=[];errors=[];calls=0
     def expand_one(lane,part,count):
-        res=call(role=f"expand-{lane.lower()}-p{part}",prompt=_expansion_prompt(lane,records,count,dead_end_memory),model=model,max_output_tokens=5200);payload=extract_json_object(str(res.get("text") or ""));seeds=payload.get("seeds") or []
+        res=call(role=f"expand-{lane.lower()}-p{part}",prompt=_expansion_prompt(lane,records,count,dead_end_memory),model=preferred_model("portfolio_expand",model),max_output_tokens=5200);payload=extract_json_object(str(res.get("text") or ""));seeds=payload.get("seeds") or []
         if not isinstance(seeds,list):raise ValueError("seeds-must-be-array")
         out=[]
         for i,item in enumerate(seeds[:count],1):
@@ -420,7 +421,7 @@ def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,mode
     unique,dups=_semantic_dedup(raw);unique,cluster_count=_assign_structural_clusters(unique);archives=_archives(unique,archive_capacity);by_id={r["seed_id"]:r for r in unique};breadth=[by_id[x] for x in archives["breadth"] if x in by_id]
     parents=_maxmin_select(breadth,min(evolution_parents,len(breadth)));evolved=[]
     def evolve_one(batch,generation,label):
-        res=call(role=label,prompt=_evolution_prompt(batch,generation),model=model,max_output_tokens=6200);children=extract_json_object(str(res.get("text") or "")).get("children") or []
+        res=call(role=label,prompt=_evolution_prompt(batch,generation),model=preferred_model("portfolio_evolve",model),max_output_tokens=6200);children=extract_json_object(str(res.get("text") or "")).get("children") or []
         if not isinstance(children,list):raise ValueError("children-must-be-array")
         pmap={p["seed_id"]:p for p in batch};out=[]
         for i,ch in enumerate(children,1):
@@ -447,7 +448,7 @@ def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,mode
 
     formulation_pool=_maxmin_select(evolved+parents,min(formulation_budget,len(evolved)+len(parents)));formulated=[];rejected=[]
     def formulate_one(batch,label):
-        res=call(role=label,prompt=_formulation_prompt(batch,reg,dead_end_memory),model=model,max_output_tokens=5600);payload=extract_json_object(str(res.get("text") or ""));live=payload.get("candidates") or [];dead=payload.get("rejected") or []
+        res=call(role=label,prompt=_formulation_prompt(batch,reg,dead_end_memory),model=preferred_model("portfolio_formulate",model),max_output_tokens=5600);payload=extract_json_object(str(res.get("text") or ""));live=payload.get("candidates") or [];dead=payload.get("rejected") or []
         if not isinstance(live,list) or not isinstance(dead,list):raise ValueError("formulation-arrays-invalid")
         parents={row["seed_id"]:row for row in batch};normalized=[]
         for item in live:
