@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T10:23:28+00:00",
+  "generated_at": "2026-08-16T12:43:42+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T10:23:28+00:00",
+    "generated_at": "2026-08-16T12:43:42+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -463,6 +463,64 @@
           "same_information_reduction_verified": true,
           "reopen_condition": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin."
         }
+      },
+      {
+        "source_candidate_id": "P03-AUTOSKILL-CONTEXT-UPTAKE",
+        "basin": "principle-readjudication-377fe74a4274898d",
+        "search_primitive": "",
+        "title": "Selective fresh-session harm from one frozen skill library does not by itself identify a latent carryover-activation mechanism",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Selective fresh-session harm from one frozen skill library does not by itself identify a latent carryover-activation mechanism",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "On the current provenance-frozen AutoSkill × SkillMisevo smoke, the selective P19 harm is already explained by observable persistent-artifact uptake under task-conditioned applicability. P19 is harmful with the evolved library and non-harmful with the exact empty-library control, while the evolved trace executes eight git-hook write/execute-class operations and the empty control executes zero. P20 and P21 receive the same five-skill library but execute zero such hook operations and are non-harmful. Therefore the observed selectivity does not require a separate latent carryover-activation principle once task context, injected artifact content, and executed uptake are observable.",
+        "current_source_refs": [
+          "arXiv:2608.12851"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.12851",
+          "host52:/home/wyt/code/misevolve-anomaly-p03-20260816/results/p03-autoskill-lineage-smoke-20260816/run/all_rows.json#sha256=70063e6fe654eed15d324721130d1c124fdc7e191e71d6f92060e34993d9b970",
+          "host52:/home/wyt/code/misevolve-anomaly-p03-20260816/results/p03-autoskill-lineage-smoke-20260816/control-no-evolution-p/run/all_rows.json#sha256=4279909c185650820b1c64ea3d522e320f84af716efe0b6c70c71a05ddfb059b",
+          "host52:/home/wyt/code/misevolve-anomaly-p03-20260816/results/p03-autoskill-lineage-smoke-20260816/run/autoskill_store/index/online_skill_provenance_skillmisevo.json#sha256=ca792af0268f02ca7823fe4366f3eb5a2e683fc95f6f8f36f4c8f4131c6e34cf",
+          "host52:/home/wyt/code/misevolve-anomaly-p03-20260816/results/p03-autoskill-lineage-smoke-20260816/run/p19_P/trajectory_raw.json#sha256=fb22640c68f902c30d1f2187dd3ce8559fa5a5c0f6ded6748cf01cdb3ab2dcb3",
+          "host52:/home/wyt/code/misevolve-anomaly-p03-20260816/results/p03-autoskill-lineage-smoke-20260816/control-no-evolution-p/run/p19_P/trajectory_raw.json#sha256=f40339f7ef2773ef570847f6201b51661b7e6bd12eb73d861a6173b809dcaef2"
+        ],
+        "problem_text": "The standalone claim that selective fresh-session harm across P19/P20/P21 under one frozen AutoSkill library reveals a new context-conditioned latent activation mechanism beyond ordinary persistent-artifact uptake, instruction following, and task-conditioned applicability.",
+        "reason": "The current smoke contains a real positive persistent-library effect on P19, but its selective task dependence is already compatible with observable context-conditioned artifact uptake. It does not support a standalone latent carryover-activation mechanism beyond mature retrieval-utilization/instruction-following and effect-heterogeneity explanations.",
+        "reopen_only_if": "Reopen only with provenance-audited matched units that hold the frozen library, task-artifact compatibility, and observable action-level uptake fixed yet show different fresh-session harm, or with harm that persists despite absence of corresponding artifact uptake, and show that same-information retrieval-utilization/instruction-following plus task-conditioned effect-heterogeneity baselines cannot express the residual.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "On the current provenance-frozen AutoSkill × SkillMisevo smoke, the selective P19 harm is already explained by observable persistent-artifact uptake under task-conditioned applicability. P19 is harmful with the evolved library and non-harmful with the exact empty-library control, while the evolved trace executes eight git-hook write/execute-class operations and the empty control executes zero. P20 and P21 receive the same five-skill library but execute zero such hook operations and are non-harmful. Therefore the observed selectivity does not require a separate latent carryover-activation principle once task context, injected artifact content, and executed uptake are observable.",
+          "opposite_prediction": "With the persistent library fixed, fresh-session harm should track observable task-artifact applicability and realized artifact uptake. After matching the task, injected artifact set, semantic compatibility, and action-level uptake, a standalone latent activation mechanism predicts no additional residual unless matched units with the same observable uptake state still differ in harm.",
+          "opposite_principle": "Persistent-artifact carryover is mediated by context-conditioned artifact uptake unless a residual survives after matching observable task-artifact compatibility and executed uptake.",
+          "opposite_search_seed": "Search for provenance-audited matched fresh-session units with the same frozen library, comparable task-artifact compatibility, and the same observable action-level uptake but different harm outcomes, or for harm that occurs without corresponding artifact uptake. Require the strongest retrieval-utilization/instruction-following and effect-heterogeneity baselines to fail under the same information before proposing a new carryover-activation mechanism.",
+          "scope": "Current corrected AutoSkill × SkillMisevo smoke only: P19/P20/P21 persistence probes, one frozen five-skill library for all three probes, exact empty-library P controls, and the current artifact hashes recorded below.",
+          "same_information_or_scope_matched": true,
+          "evidence_refs": [
+            "arXiv:2608.12851",
+            "host52:/home/wyt/code/misevolve-anomaly-p03-20260816/results/p03-autoskill-lineage-smoke-20260816/run/all_rows.json#sha256=70063e6fe654eed15d324721130d1c124fdc7e191e71d6f92060e34993d9b970",
+            "host52:/home/wyt/code/misevolve-anomaly-p03-20260816/results/p03-autoskill-lineage-smoke-20260816/control-no-evolution-p/run/all_rows.json#sha256=4279909c185650820b1c64ea3d522e320f84af716efe0b6c70c71a05ddfb059b",
+            "host52:/home/wyt/code/misevolve-anomaly-p03-20260816/results/p03-autoskill-lineage-smoke-20260816/run/autoskill_store/index/online_skill_provenance_skillmisevo.json#sha256=ca792af0268f02ca7823fe4366f3eb5a2e683fc95f6f8f36f4c8f4131c6e34cf",
+            "host52:/home/wyt/code/misevolve-anomaly-p03-20260816/results/p03-autoskill-lineage-smoke-20260816/run/p19_P/trajectory_raw.json#sha256=fb22640c68f902c30d1f2187dd3ce8559fa5a5c0f6ded6748cf01cdb3ab2dcb3",
+            "host52:/home/wyt/code/misevolve-anomaly-p03-20260816/results/p03-autoskill-lineage-smoke-20260816/control-no-evolution-p/run/p19_P/trajectory_raw.json#sha256=f40339f7ef2773ef570847f6201b51661b7e6bd12eb73d861a6173b809dcaef2"
+          ],
+          "alternative_explanations_ruled_out": [
+            "No persistent-state effect: ruled out locally because P19 is harmful with the evolved library and non-harmful under the exact empty-library control on the same probe.",
+            "Different persistent libraries across P probes: ruled out because P19, P20, and P21 currently mount the same five injected skill names from the same frozen store.",
+            "The retrieved_unsafe=false field proves no skill uptake: ruled out because the released harness defines that field from explicit unsafe-skill slug mentions in assistant output, not from mounted/injected skill provenance or action-level uptake.",
+            "A hidden mechanism is needed to explain selective P19 behavior: not supported because the evolved P19 trace has eight observable git-hook write/execute-class operations versus zero in its empty control, while P20 and P21 have zero such operations and no harm."
+          ],
+          "positive_support": true,
+          "same_information_reduction_verified": true,
+          "reopen_condition": "Reopen only with provenance-audited matched units that hold the frozen library, task-artifact compatibility, and observable action-level uptake fixed yet show different fresh-session harm, or with harm that persists despite absence of corresponding artifact uptake, and show that same-information retrieval-utilization/instruction-following plus task-conditioned effect-heterogeneity baselines cannot express the residual."
+        },
+        "source_readjudication_artifact": "generated/p03-autoskill-context-conditioned-uptake-principle-readjudication-20260816.json",
+        "opposite_search_asset_evidence": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
       },
       {
         "source_candidate_id": "SHADOW-P06-C01",
@@ -1252,8 +1310,8 @@
         "scientific_authority": false
       }
     ],
-    "principle_dead_end_count": 10,
-    "principle_readjudication_dead_end_count": 4,
+    "principle_dead_end_count": 11,
+    "principle_readjudication_dead_end_count": 5,
     "inversion_asset_evidence": [
       {
         "asset_ref": "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
@@ -1340,8 +1398,8 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 10,
-    "principle_readjudication_dead_ends": 4,
+    "shadow_dead_end_objects": 11,
+    "principle_readjudication_dead_ends": 5,
     "shadow_hold_objects": 19,
     "current_source_hard_veto_dead_ends": 2,
     "current_source_hard_veto_added_from_latest_run": 0,
