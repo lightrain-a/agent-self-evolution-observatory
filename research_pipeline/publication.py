@@ -77,6 +77,8 @@ DAILY_ARTIFACTS = (
     "generated/research-system-state.json",
     "generated/research-system-state.js",
     "generated/asset-first-stri-paper-quality-v2-20260816.json",
+    "generated/asset-first-stri-paper-analysis-suite-20260816.json",
+    "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json",
     "generated/paper-first-p0-f0-state.json",
     "generated/paper-first-p0-f0-state.js",
     "generated/paper-first-design-adjudication.json",

@@ -5,9 +5,9 @@
   "status": "PASS",
   "package": {
     "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-    "sha256": "70a811e4c08addaf36f008dca3f1ef6fcc378dc1b346bb405c1670fb01cc74f8",
-    "manifest_sha256": "74ba3e24a25c97de13f6b06e0639c3878c12b90ba6e7ce2f3aafcf16413f468a",
-    "package_metadata_sha256": "2e06406e54f25a3d182e8e1e2ffdc6efc5018b10d5eceb9498e7a54637868349"
+    "sha256": "98d0bbe6c9347f7b38d5e316d1ebd12b75c450720dd8410e438b8f192627e0a8",
+    "manifest_sha256": "5e7a16a50697a5f7be6b816fa2a50237bc2c0d4c243727f2a36f245991904bec",
+    "package_metadata_sha256": "4feeb98537f547f97f89e5c8a2a4e715650ba86d3a7bb4172705a234465b57f5"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
@@ -15,7 +15,8 @@
     "unit_tests": "11/11 PASS",
     "binary_identity_path_scan": "PASS",
     "text_identity_path_scan": "PASS",
-    "figure_regeneration": "PASS"
+    "figure_regeneration": "PASS_WITH_CONTENT_IDENTICAL_PNG_AND_REGENERATED_PDF_METADATA",
+    "paper_quality_v2_reproduction": "PASS"
   },
   "reproduced_results": {
     "skillsp_level1_full": {
@@ -63,6 +64,14 @@
       },
       "required_per_source": 16,
       "scientific_belief_update": false
+    },
+    "paper_quality_v2": {
+      "alternative_explanation_ruleout": true,
+      "leave_one_tool_out_two_witness_fraction": 1.0,
+      "leave_one_row_out_two_witness_fraction": 1.0,
+      "tool_bootstrap_two_witness_fraction": 0.972,
+      "tool_bootstrap_any_witness_fraction": 1.0,
+      "taxonomy_perturbation_ablation": "PASS"
     }
   },
   "frozen_external_repositories": {

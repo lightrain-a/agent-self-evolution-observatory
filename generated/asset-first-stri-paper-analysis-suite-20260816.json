@@ -1,0 +1,1139 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis_type": "Paper Evidence Quality v2 CPU suite",
+  "input": {
+    "membership_sha256": "b73d86370e06e83179a1ce4c7f26431c58b27f7958722974e96a4c316f2e17d4",
+    "rows": 530,
+    "split_id": "STRI-API-BANK-L1-TOOL-DISJOINT-v1"
+  },
+  "baseline_table": [
+    {
+      "baseline": "raw package overlap",
+      "matched_information": "released binary package membership",
+      "result": "183/314 Level-1 covered rows have >1 package",
+      "absorbs": false,
+      "why_not": "exact clone/split changes raw multiplicity while quotient support is unchanged"
+    },
+    {
+      "baseline": "exact support-signature dedup",
+      "matched_information": "same support matrix",
+      "result": "base duplicate groups=0; injected exact clones/splits quotient exactly",
+      "absorbs": false,
+      "why_not": "real partial-overlap columns are not exact duplicates"
+    },
+    {
+      "baseline": "minimum exact-coverage whole-package pruning",
+      "matched_information": "complete support matrix",
+      "result": "multi rows 183 -> 71 (61.2% removed)",
+      "absorbs": false,
+      "why_not": "71 multi-membership rows remain under the minimum full-cover subset"
+    },
+    {
+      "baseline": "arbitrary nonnegative global package weighting / exact LP",
+      "matched_information": "complete support matrix",
+      "result": {
+        "api_bank_level1_all": 2.0,
+        "api_bank_level1_calibration_tools": 2.0,
+        "api_bank_level1_heldout_tools": 2.0,
+        "api_bank_level3_negative_control": 1.0
+      },
+      "absorbs": false,
+      "why_not": "R*=2 on full/calibration/heldout Level-1, but R*=1 on released Level-3 negative control"
+    }
+  ],
+  "taxonomy_perturbation_ablation": {
+    "level1_all": {
+      "base": {
+        "rows": 399,
+        "covered_rows": 314,
+        "active_skills": [
+          "skill_001",
+          "skill_002",
+          "skill_003",
+          "skill_004",
+          "skill_005",
+          "skill_015"
+        ],
+        "total_memberships": 497,
+        "mean_membership": 1.5828025477707006,
+        "multi_rows": 183,
+        "multi_fraction": 0.5828025477707006,
+        "hist": {
+          "1": 131,
+          "2": 183
+        },
+        "duplicate_support_groups": [],
+        "witness_count": 2,
+        "witness_lb": 2.0
+      },
+      "identity_rename_pass": true,
+      "clone_controls": [
+        {
+          "skill": "skill_001",
+          "raw_membership_inflation": 0.1529175050301811,
+          "raw_witness_count": 2,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_002",
+          "raw_membership_inflation": 0.06639839034205232,
+          "raw_witness_count": 2,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_003",
+          "raw_membership_inflation": 0.10462776659959759,
+          "raw_witness_count": 1,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_004",
+          "raw_membership_inflation": 0.08249496981891348,
+          "raw_witness_count": 1,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_005",
+          "raw_membership_inflation": 0.006036217303822937,
+          "raw_witness_count": 2,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_015",
+          "raw_membership_inflation": 0.5875251509054326,
+          "raw_witness_count": 0,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        }
+      ],
+      "split_controls": [
+        {
+          "skill": "skill_001",
+          "raw_membership_inflation": 0.1529175050301811,
+          "raw_witness_count": 2,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_002",
+          "raw_membership_inflation": 0.06639839034205232,
+          "raw_witness_count": 2,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_003",
+          "raw_membership_inflation": 0.10462776659959759,
+          "raw_witness_count": 1,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_004",
+          "raw_membership_inflation": 0.08249496981891348,
+          "raw_witness_count": 1,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_005",
+          "raw_membership_inflation": 0.006036217303822937,
+          "raw_witness_count": 2,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_015",
+          "raw_membership_inflation": 0.5875251509054326,
+          "raw_witness_count": 0,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        }
+      ],
+      "all_clone_quotients_recover": true,
+      "all_split_quotients_recover": true,
+      "all_clone_duplicates_detected": true,
+      "duplicate_column_rstar_proof": "For an exact duplicate support column a'=a, extend any original solution with w_a'=0; conversely merge duplicated weights by w_a<-w_a+w_a'. Row exposures are identical both ways, hence R*(A')=R*(A). Raw overlap and singleton-witness syntax may still change before quotienting."
+    },
+    "level1_calibration": {
+      "base": {
+        "rows": 49,
+        "covered_rows": 47,
+        "active_skills": [
+          "skill_003",
+          "skill_004",
+          "skill_015"
+        ],
+        "total_memberships": 80,
+        "mean_membership": 1.702127659574468,
+        "multi_rows": 33,
+        "multi_fraction": 0.7021276595744681,
+        "hist": {
+          "1": 14,
+          "2": 33
+        },
+        "duplicate_support_groups": [],
+        "witness_count": 2,
+        "witness_lb": 2.0
+      },
+      "identity_rename_pass": true,
+      "clone_controls": [
+        {
+          "skill": "skill_003",
+          "raw_membership_inflation": 0.3125,
+          "raw_witness_count": 1,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_004",
+          "raw_membership_inflation": 0.2375,
+          "raw_witness_count": 1,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_015",
+          "raw_membership_inflation": 0.45,
+          "raw_witness_count": 0,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        }
+      ],
+      "split_controls": [
+        {
+          "skill": "skill_003",
+          "raw_membership_inflation": 0.3125,
+          "raw_witness_count": 1,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_004",
+          "raw_membership_inflation": 0.2375,
+          "raw_witness_count": 1,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_015",
+          "raw_membership_inflation": 0.45,
+          "raw_witness_count": 0,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        }
+      ],
+      "all_clone_quotients_recover": true,
+      "all_split_quotients_recover": true,
+      "all_clone_duplicates_detected": true,
+      "duplicate_column_rstar_proof": "For an exact duplicate support column a'=a, extend any original solution with w_a'=0; conversely merge duplicated weights by w_a<-w_a+w_a'. Row exposures are identical both ways, hence R*(A')=R*(A). Raw overlap and singleton-witness syntax may still change before quotienting."
+    },
+    "level1_heldout": {
+      "base": {
+        "rows": 54,
+        "covered_rows": 52,
+        "active_skills": [
+          "skill_003",
+          "skill_004",
+          "skill_015"
+        ],
+        "total_memberships": 90,
+        "mean_membership": 1.7307692307692308,
+        "multi_rows": 38,
+        "multi_fraction": 0.7307692307692307,
+        "hist": {
+          "1": 14,
+          "2": 38
+        },
+        "duplicate_support_groups": [],
+        "witness_count": 2,
+        "witness_lb": 2.0
+      },
+      "identity_rename_pass": true,
+      "clone_controls": [
+        {
+          "skill": "skill_003",
+          "raw_membership_inflation": 0.3,
+          "raw_witness_count": 1,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_004",
+          "raw_membership_inflation": 0.24444444444444444,
+          "raw_witness_count": 1,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_015",
+          "raw_membership_inflation": 0.45555555555555555,
+          "raw_witness_count": 0,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        }
+      ],
+      "split_controls": [
+        {
+          "skill": "skill_003",
+          "raw_membership_inflation": 0.3,
+          "raw_witness_count": 1,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_004",
+          "raw_membership_inflation": 0.24444444444444444,
+          "raw_witness_count": 1,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        },
+        {
+          "skill": "skill_015",
+          "raw_membership_inflation": 0.45555555555555555,
+          "raw_witness_count": 0,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 2
+        }
+      ],
+      "all_clone_quotients_recover": true,
+      "all_split_quotients_recover": true,
+      "all_clone_duplicates_detected": true,
+      "duplicate_column_rstar_proof": "For an exact duplicate support column a'=a, extend any original solution with w_a'=0; conversely merge duplicated weights by w_a<-w_a+w_a'. Row exposures are identical both ways, hence R*(A')=R*(A). Raw overlap and singleton-witness syntax may still change before quotienting."
+    },
+    "level3_negative": {
+      "base": {
+        "rows": 131,
+        "covered_rows": 34,
+        "active_skills": [
+          "skill_006",
+          "skill_008",
+          "skill_009",
+          "skill_010"
+        ],
+        "total_memberships": 34,
+        "mean_membership": 1.0,
+        "multi_rows": 0,
+        "multi_fraction": 0.0,
+        "hist": {
+          "1": 34
+        },
+        "duplicate_support_groups": [],
+        "witness_count": 0,
+        "witness_lb": null
+      },
+      "identity_rename_pass": true,
+      "clone_controls": [
+        {
+          "skill": "skill_006",
+          "raw_membership_inflation": 0.23529411764705882,
+          "raw_witness_count": 0,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 0
+        },
+        {
+          "skill": "skill_008",
+          "raw_membership_inflation": 0.17647058823529413,
+          "raw_witness_count": 0,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 0
+        },
+        {
+          "skill": "skill_009",
+          "raw_membership_inflation": 0.4411764705882353,
+          "raw_witness_count": 0,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 0
+        },
+        {
+          "skill": "skill_010",
+          "raw_membership_inflation": 0.14705882352941177,
+          "raw_witness_count": 0,
+          "support_duplicate_detected": true,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 0
+        }
+      ],
+      "split_controls": [
+        {
+          "skill": "skill_006",
+          "raw_membership_inflation": 0.23529411764705882,
+          "raw_witness_count": 0,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 0
+        },
+        {
+          "skill": "skill_008",
+          "raw_membership_inflation": 0.17647058823529413,
+          "raw_witness_count": 0,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 0
+        },
+        {
+          "skill": "skill_009",
+          "raw_membership_inflation": 0.4411764705882353,
+          "raw_witness_count": 0,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 0
+        },
+        {
+          "skill": "skill_010",
+          "raw_membership_inflation": 0.14705882352941177,
+          "raw_witness_count": 0,
+          "quotient_exact_recovery": true,
+          "quotient_witness_count": 0
+        }
+      ],
+      "all_clone_quotients_recover": true,
+      "all_split_quotients_recover": true,
+      "all_clone_duplicates_detected": true,
+      "duplicate_column_rstar_proof": "For an exact duplicate support column a'=a, extend any original solution with w_a'=0; conversely merge duplicated weights by w_a<-w_a+w_a'. Row exposures are identical both ways, hence R*(A')=R*(A). Raw overlap and singleton-witness syntax may still change before quotienting."
+    }
+  },
+  "failure_and_sensitivity": {
+    "per_tool": [
+      {
+        "tool": "AddAgenda",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 13,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "AddAlarm",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 3,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "AddMeeting",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 3,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "AddReminder",
+        "regime": "OVERLAP_WITNESS_INCONCLUSIVE",
+        "covered": 5,
+        "multi": 1,
+        "multi_fraction": 0.2,
+        "witness_count": 0
+      },
+      {
+        "tool": "AppointmentRegistration",
+        "regime": "OVERLAP_WITNESS_INCONCLUSIVE",
+        "covered": 11,
+        "multi": 8,
+        "multi_fraction": 0.7272727272727273,
+        "witness_count": 0
+      },
+      {
+        "tool": "BookHotel",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "Calculator",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 5,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "CancelRegistration",
+        "regime": "OVERLAP_WITNESS_INCONCLUSIVE",
+        "covered": 13,
+        "multi": 9,
+        "multi_fraction": 0.6923076923076923,
+        "witness_count": 0
+      },
+      {
+        "tool": "CancelTimedSwitch",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "DeleteAccount",
+        "regime": "OVERLAP_WITNESS_INCONCLUSIVE",
+        "covered": 14,
+        "multi": 14,
+        "multi_fraction": 1.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "DeleteAgenda",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 5,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "DeleteAlarm",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 4,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "DeleteMeeting",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 1,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "DeleteReminder",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 1,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "DeleteScene",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "Dictionary",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "DocumentQA",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "EmergencyKnowledge",
+        "regime": "CLOSED_FORM_WITNESS",
+        "covered": 18,
+        "multi": 16,
+        "multi_fraction": 0.8888888888888888,
+        "witness_count": 1
+      },
+      {
+        "tool": "ForgotPassword",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 4,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "GetToday",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "GetUserToken",
+        "regime": "OVERLAP_WITNESS_INCONCLUSIVE",
+        "covered": 82,
+        "multi": 76,
+        "multi_fraction": 0.926829268292683,
+        "witness_count": 0
+      },
+      {
+        "tool": "ImageCaption",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "ModifyAgenda",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 2,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "ModifyAlarm",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 6,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "ModifyMeeting",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 5,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "ModifyPassword",
+        "regime": "OVERLAP_WITNESS_INCONCLUSIVE",
+        "covered": 6,
+        "multi": 6,
+        "multi_fraction": 1.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "ModifyRegistration",
+        "regime": "OVERLAP_WITNESS_INCONCLUSIVE",
+        "covered": 14,
+        "multi": 9,
+        "multi_fraction": 0.6428571428571429,
+        "witness_count": 0
+      },
+      {
+        "tool": "ModifyReminder",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 8,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "OpenBankAccount",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 9,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "PlayMusic",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "QueryAgenda",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 1,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "QueryAlarm",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 1,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "QueryBalance",
+        "regime": "OVERLAP_WITNESS_INCONCLUSIVE",
+        "covered": 13,
+        "multi": 13,
+        "multi_fraction": 1.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "QueryHealthData",
+        "regime": "OVERLAP_WITNESS_INCONCLUSIVE",
+        "covered": 5,
+        "multi": 3,
+        "multi_fraction": 0.6,
+        "witness_count": 0
+      },
+      {
+        "tool": "QueryHistoryToday",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 5,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "QueryMeeting",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 3,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "QueryRegistration",
+        "regime": "CLOSED_FORM_WITNESS",
+        "covered": 15,
+        "multi": 9,
+        "multi_fraction": 0.6,
+        "witness_count": 1
+      },
+      {
+        "tool": "QueryReminder",
+        "regime": "OVERLAP_WITNESS_INCONCLUSIVE",
+        "covered": 4,
+        "multi": 2,
+        "multi_fraction": 0.5,
+        "witness_count": 0
+      },
+      {
+        "tool": "QueryScene",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "QueryStock",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 11,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "RecordHealthData",
+        "regime": "CLOSED_FORM_WITNESS",
+        "covered": 17,
+        "multi": 13,
+        "multi_fraction": 0.7647058823529411,
+        "witness_count": 1
+      },
+      {
+        "tool": "RegisterUser",
+        "regime": "DISJOINT_OR_SINGLETON_ONLY",
+        "covered": 1,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "SearchEngine",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "SendEmail",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "SpeechRecognition",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "SymptomSearch",
+        "regime": "CLOSED_FORM_WITNESS",
+        "covered": 6,
+        "multi": 4,
+        "multi_fraction": 0.6666666666666666,
+        "witness_count": 1
+      },
+      {
+        "tool": "TimedSwitch",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "Translate",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      },
+      {
+        "tool": "Wiki",
+        "regime": "NO_SUPPORT",
+        "covered": 0,
+        "multi": 0,
+        "multi_fraction": 0.0,
+        "witness_count": 0
+      }
+    ],
+    "regime_counts": {
+      "DISJOINT_OR_SINGLETON_ONLY": 20,
+      "OVERLAP_WITNESS_INCONCLUSIVE": 10,
+      "NO_SUPPORT": 15,
+      "CLOSED_FORM_WITNESS": 4
+    },
+    "leave_one_tool_out": {
+      "n": 49,
+      "any_witness_fraction": 1.0,
+      "two_witness_fraction": 1.0,
+      "rows": [
+        {
+          "removed_tool": "AddAgenda",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "AddAlarm",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "AddMeeting",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "AddReminder",
+          "witness_count": 2,
+          "multi_rows": 182
+        },
+        {
+          "removed_tool": "AppointmentRegistration",
+          "witness_count": 2,
+          "multi_rows": 175
+        },
+        {
+          "removed_tool": "BookHotel",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "Calculator",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "CancelRegistration",
+          "witness_count": 2,
+          "multi_rows": 174
+        },
+        {
+          "removed_tool": "CancelTimedSwitch",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "DeleteAccount",
+          "witness_count": 2,
+          "multi_rows": 169
+        },
+        {
+          "removed_tool": "DeleteAgenda",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "DeleteAlarm",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "DeleteMeeting",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "DeleteReminder",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "DeleteScene",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "Dictionary",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "DocumentQA",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "EmergencyKnowledge",
+          "witness_count": 2,
+          "multi_rows": 167
+        },
+        {
+          "removed_tool": "ForgotPassword",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "GetToday",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "GetUserToken",
+          "witness_count": 2,
+          "multi_rows": 107
+        },
+        {
+          "removed_tool": "ImageCaption",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "ModifyAgenda",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "ModifyAlarm",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "ModifyMeeting",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "ModifyPassword",
+          "witness_count": 2,
+          "multi_rows": 177
+        },
+        {
+          "removed_tool": "ModifyRegistration",
+          "witness_count": 2,
+          "multi_rows": 174
+        },
+        {
+          "removed_tool": "ModifyReminder",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "OpenBankAccount",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "PlayMusic",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "QueryAgenda",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "QueryAlarm",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "QueryBalance",
+          "witness_count": 2,
+          "multi_rows": 170
+        },
+        {
+          "removed_tool": "QueryHealthData",
+          "witness_count": 2,
+          "multi_rows": 180
+        },
+        {
+          "removed_tool": "QueryHistoryToday",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "QueryMeeting",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "QueryRegistration",
+          "witness_count": 2,
+          "multi_rows": 174
+        },
+        {
+          "removed_tool": "QueryReminder",
+          "witness_count": 2,
+          "multi_rows": 181
+        },
+        {
+          "removed_tool": "QueryScene",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "QueryStock",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "RecordHealthData",
+          "witness_count": 2,
+          "multi_rows": 170
+        },
+        {
+          "removed_tool": "RegisterUser",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "SearchEngine",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "SendEmail",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "SpeechRecognition",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "SymptomSearch",
+          "witness_count": 2,
+          "multi_rows": 179
+        },
+        {
+          "removed_tool": "TimedSwitch",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "Translate",
+          "witness_count": 2,
+          "multi_rows": 183
+        },
+        {
+          "removed_tool": "Wiki",
+          "witness_count": 2,
+          "multi_rows": 183
+        }
+      ]
+    },
+    "leave_one_row_out": {
+      "n": 399,
+      "any_witness_fraction": 1.0,
+      "two_witness_fraction": 1.0,
+      "hist": {
+        "2": 399
+      }
+    },
+    "tool_bootstrap": {
+      "seed": 20260816,
+      "replicates": 500,
+      "scope": "descriptive released-tool resampling stability, not a population-generalization confidence interval",
+      "any_witness_fraction": 1.0,
+      "two_witness_fraction": 0.972,
+      "multi_fraction_p05_p50_p95": [
+        0.3507875307629204,
+        0.5692948154083313,
+        0.7333308693081015
+      ]
+    },
+    "uncertainty_scope": {
+      "frozen_snapshot_counts_exact": true,
+      "reason": "N1/N3 are deterministic functions of the versioned finite support matrix. Bootstrap is subset robustness only; broader-population uncertainty would require a separately sampled system/task population."
+    }
+  },
+  "alternative_explanation_ruleout": {
+    "pass": true,
+    "tested": [
+      "raw overlap",
+      "exact support-signature dedup",
+      "minimum full-cover pruning",
+      "arbitrary global package weighting"
+    ],
+    "interpretation": "The residual survives stronger matched-information reductions while exact clone/split nuisance representations are removed by quotienting. This supports only the frozen support-geometry diagnosis, not downstream utility or SQC superiority."
+  },
+  "why_and_where": {
+    "why": "STRI-Cert distinguishes reducible representation multiplicity from support geometry that no context-independent nonnegative package weighting can equalize.",
+    "where": "The closed-form witness is decisive when both singleton cells and an overlap cell exist; overlap without that witness is explicitly inconclusive and must defer to exact LP.",
+    "negative_boundary": "Released Level-3 disjoint support is equalizable (R*=1).",
+    "merge_boundary": "A macro-ID-only merge that discards primitive fingerprints/responsibility metadata is not semantics-preserving for the certificate interface; it is an assumption-boundary control rather than a valid invariance failure."
+  },
+  "quality_v2_evidence": {
+    "A-TAXONOMY-PERTURB": "PASS",
+    "AN-RULEOUT": "PASS",
+    "AN-FAILURE": "PASS",
+    "AN-SENSITIVITY": "PASS",
+    "AN-UNCERTAINTY": "PASS_WITH_FINITE_SNAPSHOT_SCOPE",
+    "O-ABLATION": "TABLE_DATA_READY",
+    "O-FAILURE": "TABLE_DATA_READY",
+    "O-SENSITIVITY": "TABLE_DATA_READY"
+  },
+  "claim_boundary": {
+    "supported": [
+      "released support-geometry residual after matched simple reductions",
+      "clone/split quotient necessity",
+      "closed-form witness boundary",
+      "finite-snapshot robustness"
+    ],
+    "not_supported": [
+      "downstream success improvement",
+      "SQC superiority",
+      "population-wide prevalence",
+      "LP algorithmic novelty"
+    ]
+  },
+  "scientific_authority": false,
+  "authority": {
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

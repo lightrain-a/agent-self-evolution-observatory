@@ -1,26 +1,26 @@
 {
   "verdict": "READY_TO_SUBMIT",
-  "confidence": 0.91,
-  "overall_score_1_to_10": 7,
-  "strongest_contribution": "Formalizes a novel representation invariance problem for self-evolving skill control surfaces, provides an exact interpretable certificate for additive equalizability, and empirically falsifies the intuitive overlap-prevalence mechanism with well-designed released-system audits and negative controls.",
-  "strongest_reviewer_objection": "The claims are intentionally narrow, so the work provides only a diagnostic audit rather than a tested solution to the identified representation sensitivity problem, which limits immediate applied impact.",
-  "theorem_correctness": "PASS. Both Theorem 1 (equivalence of R*(A)=1 to exact equalizability) and Theorem 2 (global-singleton overlap factor-2 lower bound) are correctly proven and align with the stated problem scope.",
-  "novelty_boundary": "PASS. The paper explicitly disclaims novelty of the underlying LP method, and correctly bounds novelty to the formulation of the STRI problem, the R*(A) equalizability criterion, and the mechanistic boundary result, which matches the stated claim scope.",
-  "evidence_closure": "PASS. All retained claims N1-N3 are fully supported by static analysis of released systems, with properly designed negative controls that falsify the overlap-prevalence hypothesis. The failed dynamic pilot is correctly excluded from evidence as required, and no required evidence is missing for the current narrow claim scope.",
-  "clarity_story": "PASS. The paper is well-structured, explicitly states all claim boundaries, and clearly communicates the narrow scope and mechanistic conclusion without overclaiming.",
+  "confidence": 0.9,
+  "overall_score_1_to_10": 8,
+  "strongest_contribution": "Formalizes a novel representation-invariance problem (STRI) for self-evolving skill systems, provides an exact interpretable linear programming certificate for additive exposure equalizability, and empirically falsifies the intuitive overlap-prevalence hypothesis via well-controlled negative regimes on released systems.",
+  "strongest_reviewer_objection": "The scope is intentionally narrow, and the core result is limited to static frozen support geometry with no validated dynamic or downstream implications; some readers may find the constrained claim set unsatisfying for a full conference submission.",
+  "theorem_correctness": "PASS, both theorems are correctly proven: Theorem 1 is a straightforward formalization of the equalizability problem and the tightness of R*(A) follows directly from the constraints, and Theorem 2's factor-2 lower bound argument is logically sound and matches the empirical tightness observed on released data.",
+  "novelty_boundary": "PASS, the paper explicitly does not claim novelty for the underlying linear programming method, and correctly restricts novelty to the formulation of the STRI problem, the interpretation of R*(A) as an exact equalizability criterion, and the mechanistic boundary result. All novelty claims align with the stated scope.",
+  "evidence_closure": "PASS, all retained claims (N1-N3) are fully supported by static analysis of released systems, with appropriate controls, heldout validation, and negative regimes. The failed Qwen3 pilot is correctly excluded from evidence per the stated boundary, and no required evidence for the current claim scope is missing.",
+  "clarity_story": "PASS, the paper is well-structured, explicitly states claim boundaries and limitations, and clearly separates retained claims from explicitly dropped forbidden claims. The narrative tightly follows the narrow scope without tangential expansion.",
   "required_revisions": [],
   "optional_revisions": [
-    "Add a brief note in the discussion clarifying that STRI-Cert can be applied to any frozen support matrix, not just the released Skill-SP/RL regimes studied in this work, to increase general accessibility.",
-    "Consider explicitly marking the R*(A) formulation as the core scientific contribution in the introduction to reinforce the novelty boundary for readers who may skip the claim scope section."
+    "Add a brief forward-looking paragraph discussing how future work could extend the static result to dynamic or contextual controllers, for readers unfamiliar with the problem domain.",
+    "Explicitly note in the abstract that the result is a static mechanistic characterization of existing released systems, not a validated method for downstream performance improvement, to set clear reader expectations."
   ],
   "claims_that_must_remain_forbidden": [
-    "downstream utility harm claim",
     "dynamic STRI success claim",
+    "downstream utility harm claim",
     "empirical SQC success claim",
     "LP-algorithm novelty claim",
-    "any use of the Qwen3-8B failed dynamic pilot as scientific evidence for or against STRI"
+    "any use of the qualification-failed Qwen3-8B pilot as scientific evidence for or against any STRI claim"
   ],
   "whether_new_gpu_evidence_is_required_for_current_claim_scope": false,
-  "recommended_title": "Non-Equalizable Support Geometry: A Boundary on Skill-Taxonomy Representation Invariance in Released Self-Evolving Control",
+  "recommended_title": "Non-Equalizable Support Geometry: A Mechanistic Boundary for Skill-Taxonomy Representation Invariance",
   "scientific_authority": false
 }

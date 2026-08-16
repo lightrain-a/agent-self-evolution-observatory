@@ -20,15 +20,17 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
             state["gates"][key] = True
         return state
 
-    def test_current_artifacts_are_held_by_paper_quality_v2(self) -> None:
+    def test_current_artifacts_are_ready_only_after_paper_quality_v2_closes(self) -> None:
         state = build_asset_first_stri_public_status()
-        self.assertEqual(state["status"], "HOLD_ASSET_FIRST_PAPER_NOT_READY")
-        self.assertEqual(state["submission_status"], "HOLD_PAPER_QUALITY_V2")
+        self.assertEqual(state["status"], "READY_NARROW_ICLR")
+        self.assertEqual(state["submission_status"], "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW")
         self.assertEqual(state["paper_id"], "STRI")
-        self.assertEqual(state["summary"]["paper_ready"], 0)
-        self.assertEqual(state["summary"]["paper_quality_v2_passed"], 0)
-        self.assertEqual(state["summary"]["paper_quality_evidence_debt"], 8)
-        self.assertIn("O-ABLATION", state["summary"]["paper_quality_missing_ids"])
+        self.assertEqual(state["summary"]["paper_ready"], 1)
+        self.assertEqual(state["summary"]["paper_quality_v2_passed"], 1)
+        self.assertEqual(state["summary"]["paper_quality_source_binding"], 1)
+        self.assertTrue(state["gates"]["paper_quality_source_binding"])
+        self.assertEqual(state["summary"]["paper_quality_evidence_debt"], 0)
+        self.assertEqual(state["summary"]["paper_quality_missing_ids"], [])
         self.assertEqual(state["summary"]["claims_supported"], 3)
         self.assertEqual(state["summary"]["claims_total"], 3)
         self.assertEqual(state["summary"]["qa_checks_passed"], state["summary"]["qa_checks_total"])

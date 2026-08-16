@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "analysis_type": "strongest-simple-baseline deterministic reduction audit",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "baseline": "minimum-cardinality whole-package support pruning under exact coverage preservation",
+  "rows_total": 530,
+  "covered_rows": 348,
+  "active_skills_before": 10,
+  "active_skill_ids_before": [
+    "skill_001",
+    "skill_002",
+    "skill_003",
+    "skill_004",
+    "skill_005",
+    "skill_006",
+    "skill_008",
+    "skill_009",
+    "skill_010",
+    "skill_015"
+  ],
+  "multi_membership_rows_before": 183,
+  "minimum_full_coverage_skill_count": 7,
+  "minimum_multi_membership_rows_among_minimum_full_coverage_subsets": 71,
+  "selected_skill_ids": [
+    "skill_003",
+    "skill_004",
+    "skill_006",
+    "skill_008",
+    "skill_009",
+    "skill_010",
+    "skill_015"
+  ],
+  "selected_pair_overlap": [
+    {
+      "left": "skill_003",
+      "right": "skill_015",
+      "shared_rows": 35
+    },
+    {
+      "left": "skill_004",
+      "right": "skill_015",
+      "shared_rows": 36
+    }
+  ],
+  "mandatory_skills_with_globally_unique_support": [
+    {
+      "skill_id": "skill_003",
+      "unique_rows": 17
+    },
+    {
+      "skill_id": "skill_004",
+      "unique_rows": 5
+    },
+    {
+      "skill_id": "skill_006",
+      "unique_rows": 8
+    },
+    {
+      "skill_id": "skill_008",
+      "unique_rows": 6
+    },
+    {
+      "skill_id": "skill_009",
+      "unique_rows": 15
+    },
+    {
+      "skill_id": "skill_010",
+      "unique_rows": 5
+    },
+    {
+      "skill_id": "skill_015",
+      "unique_rows": 109
+    }
+  ],
+  "multi_membership_rows_after": 71,
+  "multi_membership_fraction_of_covered_after": 0.20402298850574713,
+  "overlap_removed_fraction": 0.6120218579234973,
+  "full_coverage_preserved": true,
+  "reduction_verdict": "PARTIAL_REDUCTION_RESIDUAL_REMAINS",
+  "interpretation": "Whole-package pruning is allowed to use the full released validator-support matrix and is therefore stronger than the author text dedup filter. Any residual overlap after exact coverage preservation cannot be removed by deleting whole packages without losing at least one benchmark-supported region; it requires task-conditional arbitration, support splitting/quotienting, or another overlap-aware control law.",
+  "paper_design_authorized": false,
+  "method_authorized": false,
+  "gpu_authorized": false
+}

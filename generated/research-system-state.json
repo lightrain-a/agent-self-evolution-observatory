@@ -6347,22 +6347,23 @@
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 11,
     "architecture_functional_layers": 6,
-    "asset_first_stri_status": "HOLD_ASSET_FIRST_PAPER_NOT_READY",
-    "asset_first_stri_paper_ready": 0,
+    "asset_first_stri_status": "READY_NARROW_ICLR",
+    "asset_first_stri_paper_ready": 1,
     "asset_first_stri_claims_supported": 3,
     "asset_first_stri_claims_total": 3,
     "asset_first_stri_qa_checks_passed": 59,
     "asset_first_stri_qa_checks_total": 59,
     "asset_first_stri_canonical_problem_gate_added": 0,
-    "asset_first_stri_submission_status": "HOLD_PAPER_QUALITY_V2",
+    "asset_first_stri_submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
     "asset_first_stri_official_qa_checks_passed": 50,
     "asset_first_stri_official_qa_checks_total": 50,
     "asset_first_stri_main_text_pages": 9,
     "asset_first_stri_main_text_page_limit": 9,
     "asset_first_stri_supplement_ready": 1,
     "asset_first_stri_human_signoff_pending": 1,
-    "asset_first_stri_paper_quality_v2_passed": 0,
-    "asset_first_stri_paper_quality_evidence_debt": 8
+    "asset_first_stri_paper_quality_v2_passed": 1,
+    "asset_first_stri_paper_quality_evidence_debt": 0,
+    "asset_first_stri_paper_quality_source_binding": 1
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -73394,9 +73395,9 @@
     "paper_id": "STRI",
     "candidate_id": "skill-taxonomy-representation-invariance",
     "title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
-    "status": "HOLD_ASSET_FIRST_PAPER_NOT_READY",
-    "submission_status": "HOLD_PAPER_QUALITY_V2",
-    "track": "ASSET_FIRST_PAPER_QUALITY_REPAIR",
+    "status": "READY_NARROW_ICLR",
+    "submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
+    "track": "ASSET_FIRST_PAPER_READY",
     "gates": {
       "final_review": true,
       "claim_coherence": true,
@@ -73404,7 +73405,8 @@
       "current_source": true,
       "superseding_reduction": true,
       "paper_design": true,
-      "paper_quality_v2": false,
+      "paper_quality_v2": true,
+      "paper_quality_source_binding": true,
       "official_iclr2027_format": true,
       "anonymous_supplement": true,
       "public_download_assets": true,
@@ -73428,7 +73430,7 @@
       }
     },
     "summary": {
-      "paper_ready": 0,
+      "paper_ready": 1,
       "claims_supported": 3,
       "claims_total": 3,
       "qa_checks_passed": 59,
@@ -73442,18 +73444,10 @@
       "human_signoff_pending": 1,
       "new_gpu_evidence_required": 0,
       "final_review_confidence": 0.92,
-      "paper_quality_v2_passed": 0,
-      "paper_quality_evidence_debt": 8,
-      "paper_quality_missing_ids": [
-        "A-TAXONOMY-PERTURB",
-        "AN-FAILURE",
-        "AN-RULEOUT",
-        "AN-SENSITIVITY",
-        "AN-UNCERTAINTY",
-        "O-ABLATION",
-        "O-FAILURE",
-        "O-SENSITIVITY"
-      ],
+      "paper_quality_v2_passed": 1,
+      "paper_quality_source_binding": 1,
+      "paper_quality_evidence_debt": 0,
+      "paper_quality_missing_ids": [],
       "canonical_problem_gate_pass_added": 0,
       "canonical_generator_candidates_added": 0,
       "canonical_queue_candidates_added": 0,
@@ -73465,9 +73459,9 @@
     "submission_handoff": {
       "abstract_deadline_aoe": "2026-09-18",
       "full_paper_deadline_aoe": "2026-09-25",
-      "pdf_sha256": "8fc54720faa68d5a3afcd7bc412f8a2ef60f6ed41e64cb53850d8a4fcc6e0fca",
-      "source_zip_sha256": "3450a445c7c2a74d7fd9475eb441631af18bce7b46889d45987268a1f532751a",
-      "supplement_zip_sha256": "70a811e4c08addaf36f008dca3f1ef6fcc378dc1b346bb405c1670fb01cc74f8",
+      "pdf_sha256": "1f7a3d9a34a1112c5cdc4e0202bc02b2a40fd87f9693f021960a6bf66957f002",
+      "source_zip_sha256": "532766c44241169a1c628c4fe164e79f876fe47fb9660914b0d762ef8113b0fe",
+      "supplement_zip_sha256": "98d0bbe6c9347f7b38d5e316d1ebd12b75c450720dd8410e438b8f192627e0a8",
       "downloads": {
         "tex": "downloads/STRI-ICLR2027.tex",
         "pdf": "downloads/STRI-ICLR2027.pdf",
@@ -73475,8 +73469,8 @@
       },
       "download_sha256": {
         "tex": "3fc6a59c822bede7c6952f6b625c24dc03e3731476a8dcc707cb56c5d49690f8",
-        "pdf": "8fc54720faa68d5a3afcd7bc412f8a2ef60f6ed41e64cb53850d8a4fcc6e0fca",
-        "source_zip": "3450a445c7c2a74d7fd9475eb441631af18bce7b46889d45987268a1f532751a"
+        "pdf": "1f7a3d9a34a1112c5cdc4e0202bc02b2a40fd87f9693f021960a6bf66957f002",
+        "source_zip": "532766c44241169a1c628c4fe164e79f876fe47fb9660914b0d762ef8113b0fe"
       },
       "human_action": "author-list/profile/quota/dual-submission/ethics/AI-use signoff and OpenReview upload only"
     },
@@ -73514,7 +73508,7 @@
       },
       "paper_quality_v2": {
         "path": "generated/asset-first-stri-paper-quality-v2-20260816.json",
-        "sha256": "cfcd939033a377dc3b5ec61122bfb9193b535998d89b3bb6695a47dd0564ee95",
+        "sha256": "9dbf853d012275edd4cf2003a24d81657bb9bae82c5ea729910e9cefa3b9c35d",
         "present": true
       },
       "current_source_review": {
@@ -73524,22 +73518,22 @@
       },
       "official_final_state": {
         "path": "generated/asset-first-stri-iclr2027-final-state-20260816.json",
-        "sha256": "2de6327022f2aeae04ade152971a50491e0e2bc88516ff266f9efa5f12671ef5",
+        "sha256": "55e447853c069a8c4f86c03d1dc8a5f61041766450d9b4b70c13888c63435085",
         "present": true
       },
       "official_submission_qa": {
         "path": "generated/asset-first-stri-iclr2027-submission-qa-20260816.json",
-        "sha256": "b7fb6508e7c710511e482198b3f32a66126d9c602885e00bec7da57bd39b48fc",
+        "sha256": "1f2559e2ca8737338ad65d7434a432cf321cc18c27991025a7d607a952d9ba17",
         "present": true
       },
       "supplement_state": {
         "path": "generated/asset-first-stri-iclr2027-supplement-state-20260816.json",
-        "sha256": "4f6660c673398dd08401c4d2dee6bcb7c7d495cd796db58f32ef005ca693fcec",
+        "sha256": "c212fe500a870338d61e9583fa476eccfb677302711c1d0008f608e305b54828",
         "present": true
       },
       "openreview_readiness": {
         "path": "generated/asset-first-stri-iclr2027-openreview-readiness-20260816.json",
-        "sha256": "3f91c6704aecc8d81828558ac48b2fd7b2ebb7c8baa5285e785959029e577401",
+        "sha256": "c5fe076bb3aba3b9913b19d5860648be23f90c2d6dcc1e8c8e7384a2be8f5e99",
         "present": true
       }
     },
@@ -73553,6 +73547,7 @@
       "paper_ready_requires_current_source_survival": true,
       "paper_ready_requires_superseding_reduction_state": true,
       "paper_ready_requires_paper_quality_v2": true,
+      "paper_quality_receipt_is_content_addressed": true,
       "mechanical_and_format_qa_cannot_substitute_for_scientific_evidence_completeness": true,
       "dynamic_p0_is_not_required_for_the_narrow_claim_scope": true,
       "dynamic_qualification_failure_is_not_positive_or_negative_narrow_evidence": true,
