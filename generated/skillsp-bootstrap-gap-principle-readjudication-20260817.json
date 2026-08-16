@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "SKILLSP-SELF-EVOLUTION-BOOTSTRAP-GAP",
+  "title": "Skill-SP bootstrap recovery currently changes generation responsibility, not an identified self-evolution reproduction threshold",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_skillsp_effect_falsified": false,
+  "dead_end_scope": "The standalone claim that Skill Self-Play's reported recovery of initially misaligned models, failure of unguided logical self-play to bootstrap, or large Ministral gains already identify a new self-evolution reproduction-threshold/phase-transition mechanism.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2607.22529",
+    "closed_evidence_sha256": [
+      "8fcce0595dd72982d96f9b7c51c1cc26995b3c0c50e840a39a70c74085ab51c8",
+      "e17d1bb0d3ff23794b197d4a728c151d6b305f2195dc5e8a4e7f6ed8aaf07aa1",
+      "1ced7cd77258c9ea23a71b4febf3797d3b961cf788eee1a186aa9c9c867d68b3"
+    ],
+    "closure_scope": "bootstrap/stagnation and misaligned-model recovery evidence only; does not close separate routing, online-evolution, or taxonomy phenomena",
+    "scientific_authority": false
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The reported bootstrap contrast does not hold generation information and computation responsibility fixed. In the released author implementation, unguided logical generation requires the LLM itself to emit a complete hidden solution plus constraints and the repository only validates that object. Skill-guided generation instead asks the LLM for a semantic blueprint, after which package-specific compiler resources sample the hidden solution, construct true clues, render the puzzle, and verify uniqueness. The initial skill library is itself constructed from domain-level task formats and verifier interfaces and contains reusable construction/compiler resources. Therefore the observed valid-task-yield recovery is already predicted by ordinary model-scaffold compatibility, structured program synthesis, rejection-yield/curriculum coverage, and recursive self-training-collapse accounts when one arm offloads constraint construction to deterministic scaffolding. The current evidence cannot identify an additional self-evolution reproduction threshold beyond those mature objects.",
+      "opposite_prediction": "Holding backbone and proposal count fixed while moving hidden-solution construction, true-clue construction, and uniqueness enforcement from the LLM into a deterministic compiler should sharply raise accepted valid-task yield even without any new self-evolution phase-transition law. Conversely, sufficiently capable end-to-end proposers can reduce the gap. Thus yield extinction/recovery should track how much structural generation responsibility and verifier-compatible computation the scaffold absorbs, unless a future information- and computation-matched comparison leaves a residual.",
+      "opposite_principle": "A self-play loop cannot be diagnosed as subcritical from unequal proposal interfaces: accepted learning-signal yield depends on the information and constraint-satisfaction computation allocated to the proposer versus its scaffold.",
+      "opposite_search_seed": "Search only for a same-information, same-computation comparison in which both arms receive the same domain/verifier rules, the same compiler/constraint-satisfaction budget, the same output responsibility, the same proposal and validation budget, and the same frozen learner; then test whether a self-evolution-specific state variable still predicts extinction versus sustained production of independently valid frontier tasks. Do not reopen from another large endpoint gain or from an unguided arm that must synthesize a harder object than the structured arm.",
+      "scope": "Skill Self-Play arXiv:2607.22529v1, released logical-generation implementation and the reported unguided-bootstrap / initially-misaligned-model recovery observations.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2607.22529",
+        "primary-fulltext:arXiv:2607.22529#sha256=9f4aa516220cb30d62990d63398ad3c5c28aea3633a6b1b374eb980eedc309ab",
+        "first-party-repo:Qwen-Applications/skill-self-play#bb693c89fee66e1f824d6a777759a49b7a295a83:question_generate/logical_question_generate.py",
+        "first-party-repo:Qwen-Applications/skill-self-play#bb693c89fee66e1f824d6a777759a49b7a295a83:logical_reasoning/prompts.py",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#self-generated-supervision-information-limit",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#self-play-evidence-endogeneity",
+        "review:deepseek-v4-pro-260425:PRINCIPLE_DEAD_END_CURRENT_REALIZATION:confidence=0.95"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The contrast is merely endpoint solver capability: the primary paper explicitly attributes stagnation to failure to synthesize valid tasks, but that still does not identify a new threshold because proposal interfaces are unequal.",
+        "Both arms receive the same structural assistance: false in the released implementation; unguided output is only validated, while skill mode invokes package compiler resources to create the hidden solution and constraints from a blueprint.",
+        "The initial skills are information-free labels: false; the paper says they are built from domain-level task formats and verifier interfaces, and the packages contain reusable generation/compiler resources.",
+        "A large Ministral gain itself proves a phase transition: endpoint gain is compatible with ordinary scaffold-assisted data generation followed by training, so magnitude alone cannot identify the mechanism."
+      ],
+      "reopen_condition": "Reopen only if a preregistered comparison equalizes domain/verifier information, compiler/constraint-satisfaction computation, output responsibility, proposal count, validation/rejection budget, learner snapshot, and decoding, yet exhibits a reproducible ex-ante extinction-versus-sustained-learning-signal boundary that the strongest recursive-self-training-collapse, curriculum-coverage/active-learning, rejection-yield, and model-scaffold-compatibility baselines cannot predict. The comparison must measure independently valid frontier-task reproduction before using downstream training gains as evidence."
+    }
+  },
+  "independent_review": {
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-260425",
+    "verdict": "PRINCIPLE_DEAD_END_CURRENT_REALIZATION",
+    "confidence": 0.95,
+    "experiment_now": "DO_NOT_RUN",
+    "scientific_authority": false
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "Skill-SP does not work",
+      "self-play has no bootstrap threshold in general",
+      "structured skills cannot enable weak models",
+      "all curriculum effects reduce to prompt engineering"
+    ],
+    "safe_claim": "Skill-SP provides strong evidence that structured scaffolding can rescue self-play data generation, but its released unguided-versus-skill logical-generation contrast changes who performs the hard constraint-construction computation; therefore the current observation does not identify a standalone self-evolution reproduction-threshold mechanism.",
+    "new_search_basin": "same-information-same-compiler-budget-learning-signal-reproduction"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}
