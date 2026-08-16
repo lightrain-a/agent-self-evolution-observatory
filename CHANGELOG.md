@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-17 · Fresh Phenomenon Portfolio and evidence-echo F0
+
+- Added a zero-authority Fresh Phenomenon Portfolio between primary-source discovery and canonical Problem Gate. The portfolio permits at most one `ACTIVE_F0`; a candidate may occupy that slot only when it already has a provenance-audited local substrate and a frozen same-information falsifier. Source-only ideas remain support HOLDs and cannot consume experiment/GPU budget.
+- Registered four current scouts without inflating the canonical queue: PA-01 evidence echo is the sole `ACTIVE_F0`; security/utility collapse in self-evolving defense, train/test harness-selection inversion, and high-relevance spatial-memory failure remain `HOLD_SUPPORT`. A positive F0 still grants no Problem-Gate, Paper-Design, Method, P0, GPU, or full-experiment authority.
+- Bound PA-01 to the frozen 128-unit P06/DocAtlas substrate. On the 64 benchmark-unanswerable units, the existing `naive_summary` arm raises false-answer rate from 10.9% to 21.9% relative to the negative-evidence baseline, with 7 induced versus 0 repaired false answers (exact paired p=0.015625) and zero net exact-accuracy change on the 64 answerable units. This is treated only as a retrospective phenomenon, not novelty evidence.
+- Compiled a five-arm decisive falsifier: `RAW_ONLY`, `ECHO_EXTRACTIVE`, `VERBATIM_DUPLICATE`, `TOKEN_MATCHED_NEUTRAL`, and `DEDUP_WARNING`. Raw pages, BM25 ranking, model snapshot, temperature, two-step decision budget, and retrieval expansion are frozen; all four non-RAW note arms have an exact common token budget. `ECHO_EXTRACTIVE` and `DEDUP_WARNING` preserve the identical extractive evidence payload, so token matching never deletes evidence.
+- The F0 distinguishes correlated-evidence double counting from extractive-summary salience and generic prompt-length/repetition/calibration effects. Neutral-padding reproduction, loss of the paired effect, or costly warning recovery is a preregistered STOP; either scoped GO only advances to current-source collision review, never directly to a paper claim.
+- Integrated fresh-F0/hold counts into the research-system and current-status projections and added a System Overview card documenting the single-slot/no-substrate-no-compute rule. Updated browser invariants for the current four scientific-object lanes, digest-based relation-universe staleness, and the new terminal fresh-support HOLD accounting.
+- No PA-01 GPU run was launched in this change: all authorized GPUs inspected on 52/69 were occupied, while MCP-Yu credentials for 60/220 were unavailable. The experiment is protocol-ready rather than silently queued or run by preempting unrelated jobs.
+
 ## 2026-08-16 · Visual Evidence Contract v2.1
 
 - Benchmarked paper-evidence presentation patterns from The AI Scientist / AI Scientist-v2, PaperVizAgent, Agent Laboratory, ERA / AI co-scientist / Kosmos, and Science One, then compiled the reusable parts into Paper Evidence Quality v2.1 rather than treating them as manuscript-style advice.

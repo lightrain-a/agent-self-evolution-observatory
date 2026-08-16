@@ -47,6 +47,7 @@ stri_p0d_dead_end = load("asset-first-stri-skillrl-p0d-dead-end-diagnosis-202608
 stri_p0e_principle = load("asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json")
 stri_p0e_diagnosis = load("asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json")
 support_release = load("paper-first-support-release-targets.json")
+fresh_phenomenon = load("paper-first-fresh-phenomenon-portfolio-20260817.json")
 shadow_admission = system.get("paper_first_shadow_search_admission") or load("paper-first-shadow-search-admission.json")
 positive_local = load("positive-residual-memory-local-mechanism-readjudication-20260816.json")
 positive_temporal = load("positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json")
@@ -67,6 +68,7 @@ shadow_summary = shadow.get("summary", {})
 sp15_summary = sp15.get("summary", {})
 quality_debt = paper_quality.get("evidence_debt", {})
 shadow_admission_summary = shadow_admission.get("summary", {})
+fresh_phenomenon_summary = fresh_phenomenon.get("summary", {})
 
 shadow_rows = []
 for row in shadow.get("rows", []):
@@ -127,6 +129,9 @@ state = {
         "shadow_holds": int(shadow_summary.get("shadow_hold_objects", 0)),
         "shadow_method_ready": int(shadow_summary.get("advance_to_method_design", 0)),
         "shadow_qualification_ready": int(bool(shadow_admission_summary.get("qualification_allowed", False)) and bool((positive_treatment.get("scientific_interpretation") or {}).get("active_mechanism_seed", True))),
+        "fresh_active_f0": int(fresh_phenomenon_summary.get("active_f0", 0)),
+        "fresh_support_holds": int(fresh_phenomenon_summary.get("hold_support", 0)),
+        "fresh_ready_problem_review": int(fresh_phenomenon_summary.get("ready_for_problem_review", 0)),
         "method_authorized": 0,
         "gpu_authorized": 0,
     },
@@ -180,6 +185,28 @@ state = {
         "p0_authorized": int(queue_summary.get("p0_authorized", 0)),
         "gpu_authorized": int(backlog_summary.get("gpu_authorized", 0)),
         "note": "The canonical live generator/queue remains empty; asset-first STRI is a separate paper track and does not mutate canonical authority.",
+    },
+    "fresh_phenomenon_portfolio": {
+        "status": fresh_phenomenon.get("status"),
+        "active_f0": int(fresh_phenomenon_summary.get("active_f0", 0)),
+        "support_holds": int(fresh_phenomenon_summary.get("hold_support", 0)),
+        "ready_for_problem_review": int(fresh_phenomenon_summary.get("ready_for_problem_review", 0)),
+        "canonical_problem_gate_added": int(fresh_phenomenon_summary.get("canonical_problem_gate_added", 0)),
+        "scientific_authority": False,
+        "rows": [
+            {
+                "candidate_id": row.get("candidate_id"),
+                "title": row.get("title"),
+                "status": row.get("status"),
+                "support_status": row.get("support_status"),
+                "phenomenon": row.get("phenomenon"),
+                "strongest_reduction": row.get("strongest_reduction"),
+                "cheapest_falsifier": row.get("cheapest_falsifier"),
+                "why_now": row.get("why_now"),
+                "paper_problem_claimed": bool(row.get("paper_problem_claimed", False)),
+            }
+            for row in fresh_phenomenon.get("candidates", [])
+        ],
     },
     "stri_dynamic_evidence": {
         "p0a": {

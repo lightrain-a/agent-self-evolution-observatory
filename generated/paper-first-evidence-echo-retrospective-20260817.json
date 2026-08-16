@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-17T01:43:00+08:00",
+  "candidate_id": "PA-01-EVIDENCE-ECHO",
+  "title": "Evidence Echo in Agent Notes: Redundant Extractive Notes Can Turn Safe Deferral into False Answers",
+  "source_primary_ref": "arXiv:2608.07527",
+  "source_substrate": {
+    "host": "52",
+    "run": "p06-coverage-starvation-v2-exec-20260816",
+    "aggregate_jsonl_sha256": "9a74f7eaf7029c5933a4c2fa088d649356eb7df253d899c498747dc2c7410634",
+    "analysis_json_sha256": "2b5ca3000d2c491ff2df6a1126667edd6fb59dfa7ec8fc446c9a6b30da959a16",
+    "plan_json_sha256": "dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39",
+    "runtime_code_sha256": "74d4687e23dc3d4120c4b42cde8bbaeac10ec3c43998318404fa674334180d8a",
+    "source_repo_commit": "069da97dcb6caa8446fa8d5ef353747af0f5807b",
+    "raw_visible_pages_locked_across_policies": true,
+    "second_retrieval_ranking_locked_across_active_policies": true
+  },
+  "scope": {
+    "units": 128,
+    "answerable": 64,
+    "unanswerable": 64,
+    "policies": [
+      "negative_evidence_baseline",
+      "naive_summary",
+      "coverage_certified",
+      "evidence_gap_aware"
+    ],
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "temperature": 0.0,
+    "max_decision_steps": 2
+  },
+  "observed_signal": {
+    "negative_evidence_baseline_unanswerable_false_answer_rate": 0.109375,
+    "naive_summary_unanswerable_false_answer_rate": 0.21875,
+    "naive_summary_false_answer_delta": 0.109375,
+    "naive_summary_induced_false_answers": 7,
+    "naive_summary_fixed_false_answers": 0,
+    "naive_summary_exact_paired_p": 0.015625,
+    "coverage_certified_false_answer_delta": 0.078125,
+    "coverage_certified_induced_false_answers": 5,
+    "coverage_certified_fixed_false_answers": 0,
+    "coverage_certified_exact_paired_p": 0.0625,
+    "evidence_gap_aware_false_answer_delta": 0.078125,
+    "evidence_gap_aware_induced_false_answers": 5,
+    "evidence_gap_aware_fixed_false_answers": 0,
+    "evidence_gap_aware_exact_paired_p": 0.0625,
+    "naive_summary_answerable_exact_improve": 1,
+    "naive_summary_answerable_exact_worsen": 1,
+    "naive_summary_answerable_exact_net_delta": 0.0,
+    "baseline_safe_unanswerable_units": 57,
+    "baseline_safe_units_false_under_at_least_one_note_policy": 10,
+    "screen_union_is_descriptive_not_a_single_treatment_test": true
+  },
+  "path_decomposition": {
+    "naive_summary_same_first_action_units": 29,
+    "naive_summary_same_first_action_induced_false": 4,
+    "naive_summary_same_first_action_fixed_false": 0,
+    "naive_summary_same_first_action_exact_p": 0.125,
+    "coverage_certified_same_first_action_induced_false": 2,
+    "coverage_certified_same_first_action_fixed_false": 0,
+    "evidence_gap_aware_same_first_action_induced_false": 2,
+    "evidence_gap_aware_same_first_action_fixed_false": 0,
+    "interpretation": "Extra decision opportunity or first-step action shift explains part, but not all, of the observed false-answer transitions. The residual after matching the first action is currently too small to establish a mechanism."
+  },
+  "candidate_mechanism": {
+    "name": "correlated-evidence echo",
+    "statement": "When the same visible evidence is presented both as raw pages and as a persistent extractive note, the model may overweight the duplicated support as if it were independent evidence, increasing commitment on unanswerable queries even though no new answer-relevant information was added.",
+    "not_claimed": [
+      "that all summaries are harmful",
+      "that page-coverage metadata is the cause",
+      "that compression loses information in this experiment",
+      "that the phenomenon is novel before current-source collision review",
+      "that the retrospective signal authorizes Paper Design, Method, P0, GPU, or full experiments"
+    ]
+  },
+  "strongest_reductions": [
+    "generic prompt salience / repetition bias",
+    "correlated-evidence double counting",
+    "extra decision opportunity / repeated querying / optional stopping",
+    "context-length or token-budget effects",
+    "ordinary calibration shift under redundant context"
+  ],
+  "next_f0": {
+    "status": "ACTIVE_F0_PROTOCOL_ONLY_NO_GPU_CURRENTLY_FREE",
+    "frozen_question": "Does redundant representation of already-visible evidence increase false commitment beyond token length and extra decision opportunity?",
+    "single_changed_axis": "representation redundancy of the same visible evidence",
+    "required_arms": [
+      "RAW_ONLY: raw pages plus generic insufficiency instruction",
+      "ECHO_EXTRACTIVE: identical raw pages plus extractive note duplicating visible evidence",
+      "VERBATIM_DUPLICATE: identical raw pages plus a token-matched verbatim duplicate of already-visible evidence",
+      "TOKEN_MATCHED_NEUTRAL: identical raw pages plus token-matched non-evidential neutral text",
+      "DEDUP_WARNING: identical raw pages plus the same extractive note explicitly marked as a redundant copy that must not increase evidence weight"
+    ],
+    "locked": [
+      "question",
+      "visible page ids",
+      "raw page characters",
+      "retrieval ranking",
+      "number of decision steps",
+      "model snapshot",
+      "temperature",
+      "generation budget"
+    ],
+    "primary_endpoint": "paired false ANSWER transition on benchmark-unanswerable units",
+    "secondary_endpoint": "exact answer accuracy on answerable units",
+    "go": "Two scoped GO routes only: correlated-evidence double counting requires both ECHO_EXTRACTIVE and VERBATIM_DUPLICATE to increase false-answer rate by >=0.08 over RAW_ONLY, ECHO_EXTRACTIVE to beat TOKEN_MATCHED_NEUTRAL by >=0.05 with exact paired p<0.05, and DEDUP_WARNING to recover >=0.05 without >0.03 answerable exact-accuracy loss; extractive-summary salience instead requires VERBATIM_DUPLICATE to remain within 0.03 of RAW_ONLY while the same ECHO-versus-neutral and warning-recovery gates pass.",
+    "stop": "TOKEN_MATCHED_NEUTRAL reproduces ECHO_EXTRACTIVE within 0.03, ECHO_EXTRACTIVE fails the paired significance/effect gate, or the apparent warning recovery costs >0.03 answerable exact accuracy. Any such result means generic prompt-length/repetition/calibration explanations are sufficient for the current realization.",
+    "minimum_units": {
+      "unanswerable": 64,
+      "answerable": 32
+    },
+    "gpu_authorized": false
+  },
+  "decision": "KEEP_AS_ACTIVE_F0_NOT_PAPER_IDEA",
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  }
+}

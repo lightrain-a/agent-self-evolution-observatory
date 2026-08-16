@@ -49,6 +49,7 @@ from .paper_first_support_release_watch import load_private_support_release_watc
 from .paper_first_support_asset_recheck import load_private_support_asset_recheck_queue, public_support_asset_recheck_summary
 from .paper_first_support_asset_recheck_handoff import load_private_support_asset_recheck_handoff, public_support_asset_recheck_handoff_summary
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier, validate_paper_first_discovery_frontier
+from .paper_first_fresh_phenomenon_portfolio import build_fresh_phenomenon_portfolio, validate_fresh_phenomenon_portfolio, write_fresh_phenomenon_portfolio
 from .paper_first_legacy_reduction_migration import load_public_migration, validate_public_migration
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import load_problem_generator_state
@@ -363,6 +364,7 @@ def build_research_system_state() -> dict[str, Any]:
         shadow_portfolio_state=paper_first_problem_search_portfolio,
         evidence_migration_state=paper_first_evidence_migration,
     )
+    paper_first_fresh_phenomenon_portfolio = build_fresh_phenomenon_portfolio()
     paper_first_shadow_latest = paper_first_problem_search_portfolio.get("latest_run") or {}
     paper_first_shadow_latest_summary = paper_first_shadow_latest.get("summary") or {}
     paper_first_post_c2 = build_post_c2_adjudication()
@@ -629,6 +631,11 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_discovery_frontier_external_triggers":int((paper_first_discovery_frontier.get("summary") or {}).get("external_triggers") or 0),
             "paper_first_discovery_frontier_model_calls":int((paper_first_discovery_frontier.get("summary") or {}).get("automatic_model_calls_authorized") or 0),
             "paper_first_discovery_frontier_evidence_open":int((paper_first_discovery_frontier.get("summary") or {}).get("evidence_internal_open") or 0),
+            "paper_first_fresh_phenomenon_status":paper_first_fresh_phenomenon_portfolio.get("status","NO_ACTIVE_F0"),
+            "paper_first_fresh_phenomenon_candidates":int((paper_first_fresh_phenomenon_portfolio.get("summary") or {}).get("candidates") or 0),
+            "paper_first_fresh_phenomenon_active_f0":int((paper_first_fresh_phenomenon_portfolio.get("summary") or {}).get("active_f0") or 0),
+            "paper_first_fresh_phenomenon_support_holds":int((paper_first_fresh_phenomenon_portfolio.get("summary") or {}).get("hold_support") or 0),
+            "paper_first_fresh_phenomenon_ready_problem_review":int((paper_first_fresh_phenomenon_portfolio.get("summary") or {}).get("ready_for_problem_review") or 0),
             "paper_first_evidence_migration_status":paper_first_evidence_migration.get("status","NOT_RUN"),
             "asset_first_stri_status":asset_first_stri_paper_ready.get("status","HOLD_ASSET_FIRST_PAPER_NOT_READY"),
             "asset_first_stri_paper_ready":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_ready") or 0),
@@ -853,6 +860,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_support_asset_recheck_queue":paper_first_support_asset_recheck,
         "paper_first_support_asset_recheck_handoff":paper_first_support_asset_recheck_handoff,
         "paper_first_discovery_frontier":paper_first_discovery_frontier,
+        "paper_first_fresh_phenomenon_portfolio":paper_first_fresh_phenomenon_portfolio,
         "paper_first_evidence_migration":paper_first_evidence_migration,
         "asset_first_stri_paper_ready":asset_first_stri_paper_ready,
         "paper_first_sp15_identifiability_support":paper_first_sp15_support,
@@ -1463,6 +1471,12 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         )
         if any(discovery_frontier.get(key)!=expected_discovery_frontier.get(key) for key in ("status","policy","summary","blockers","triggers")):
             errors.append("paper-first discovery frontier must equal the deterministic projection of embedded control states")
+    fresh_phenomenon_portfolio=state.get("paper_first_fresh_phenomenon_portfolio") or {}
+    if fresh_phenomenon_portfolio:
+        errors.extend(f"Fresh phenomenon portfolio: {error}" for error in validate_fresh_phenomenon_portfolio(fresh_phenomenon_portfolio))
+        fresh_summary=fresh_phenomenon_portfolio.get("summary") or {}
+        if int(fresh_summary.get("canonical_problem_gate_added") or 0)!=0 or any(int(fresh_summary.get(key) or 0)!=0 for key in ("method_authorized","experiment_authorized","p0_authorized","gpu_authorized")):
+            errors.append("fresh phenomenon portfolio cannot mutate canonical or downstream scientific authority")
     shadow_portfolio=state.get("paper_first_problem_search_portfolio") or {};shadow_latest=shadow_portfolio.get("latest_run") or {}
     if shadow_latest:
         latest_policy=shadow_latest.get("policy") or {};latest_summary=shadow_latest.get("summary") or {};latest_authority=shadow_latest.get("authority") or {}
@@ -1683,6 +1697,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_pf2_method_adjudication()
     write_pf357_problem_adjudication()
     write_fresh_saturation_state()
+    write_fresh_phenomenon_portfolio()
     write_search_portfolio_design_adjudication()
     write_sp15_identifiability_support()
     # Problem-gate Queue is a frozen output of the Primary -> Generator -> Queue
