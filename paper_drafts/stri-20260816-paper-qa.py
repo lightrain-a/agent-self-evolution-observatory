@@ -81,7 +81,7 @@ for name, pattern in forbidden_positive_patterns.items():
 # Bibliography/source ledger consistency.
 bib_keys = set(re.findall(r"@\w+\{([^,]+),", bib))
 cite_keys: set[str] = set()
-for group in re.findall(r"\\cite\{([^}]+)\}", body):
+for group in re.findall(r"\\cite(?:p|t)?\{([^}]+)\}", body):
     cite_keys.update(k.strip() for k in group.split(",") if k.strip())
 ledger_keys = {str(e["key"]) for e in sources.get("entries", [])}
 check("all_cites_in_bib", cite_keys <= bib_keys, str(sorted(cite_keys - bib_keys)))

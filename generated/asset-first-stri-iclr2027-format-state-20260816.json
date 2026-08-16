@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "stage": "OFFICIAL_ICLR2027_FORMAT_INTEGRATION",
+  "status": "OFFICIAL_ICLR2027_SUBMISSION_FORMAT_QA_PASS",
+  "verified_date": "2026-08-16",
+  "official_sources": {
+    "call_for_papers": "https://iclr.cc/Conferences/2027/CallForPapers",
+    "author_guidelines": "https://iclr.cc/Conferences/2027/AuthorGuidelines",
+    "ai_policy_for_authors": "https://iclr.cc/Conferences/2027/AIPolicyForAuthors",
+    "openreview": "https://openreview.net/group?id=ICLR.cc/2027/Conference",
+    "style_zip": "https://media.iclr.cc/Conferences/ICLR2027/iclr-2027-style-files.zip"
+  },
+  "deadlines_aoe": {
+    "abstract": "2026-09-18",
+    "full_paper": "2026-09-25"
+  },
+  "format_rules": {
+    "double_blind": true,
+    "initial_main_text_pages_max": 9,
+    "references_count_toward_main_limit": false,
+    "appendix_pages_unlimited_after_bibliography": true,
+    "rebuttal_camera_ready_main_pages": 10,
+    "current_official_style_required": true,
+    "ai_use_statement_required": true,
+    "ai_use_statement_counts_toward_page_limit": false,
+    "reproducibility_statement_recommended": true,
+    "reproducibility_statement_counts_toward_page_limit": false,
+    "new_authors_after_abstract_deadline_allowed": false
+  },
+  "official_style": {
+    "zip_sha256": "0d940dfa9398ae99a18f24a85a8a683f367204b6af6d17d2899e60a67102529e",
+    "repo_directory": "paper_drafts/iclr2027-official",
+    "files": {
+      "iclr2027_conference.sty": "797deef41724e93761426ac0cbcca46279a91cc650dd1f0ce76a4f08d2098ea6",
+      "iclr2027_conference.bst": "2d67552db7ed38ccfccb5957b52f95656e25c249724761d3cf5f7922ad1844c5",
+      "math_commands.tex": "90473c4d0542070db244cea73ef962d6cddc5b2a746757e6a40ddf5fdfb90ba9",
+      "natbib.sty": "88bc70c0e48461934cab5b2accef06b74a8b3ac45ad03ccd3f2a6b7e0d6d530d",
+      "fancyhdr.sty": "b56ec4434b9f4607529a4b23dc68ad8d4b94f1f631c8cddaf7da78140d53a5ea",
+      "template-reference.tex": "03e556d6e5593e498fd39f262ec2d184ebfe8693cbf47fb7cea3402d8d5166ac"
+    },
+    "modified_after_download": false
+  },
+  "build_validation": {
+    "official_style_compile": "PASS",
+    "main_text_pages": 9,
+    "main_text_page_limit": 9,
+    "post_main_page": 10,
+    "total_pdf_pages": 11,
+    "resolved_citations": 11,
+    "undefined_citations": 0,
+    "undefined_references": 0,
+    "overfull_boxes": 0,
+    "anonymous_pdf": true,
+    "ai_use_statement_present": true,
+    "reproducibility_statement_present": true,
+    "source_sha256": "3fc6a59c822bede7c6952f6b625c24dc03e3731476a8dcc707cb56c5d49690f8",
+    "body_sha256": "72c7159cf41576ca279965b6d8daeb7bf198a85a52518da0b6025ae3477ac2a3",
+    "tables_sha256": "2a03503eafcd30effdcd187ac93029fa68f3a251a5ff87e2787e8a7963147dde",
+    "bibliography_sha256": "ef9594dc2679bc0bc60bdf6367345082cf00872bc221658770292ce5a7642eef"
+  },
+  "submission_source": "paper_drafts/stri-20260816-iclr2027-main.tex",
+  "shared_scientific_body": "paper_drafts/stri-20260816-narrow-body.tex",
+  "bibliography": "paper_drafts/stri-20260816-references.bib",
+  "required_ai_disclosure_scope": [
+    "conceptual framing and hypothesis refinement",
+    "mathematical claim and proof assistance",
+    "method and experiment/falsifier design",
+    "analysis and experiment-control code implementation/review",
+    "result interpretation",
+    "literature and primary-source triage",
+    "manuscript drafting/editing",
+    "figure/table/reference preparation"
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_expansion": false,
+    "dynamic_claim": false,
+    "gpu": false
+  }
+}

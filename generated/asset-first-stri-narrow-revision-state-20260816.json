@@ -3,7 +3,7 @@
   "paper_id": "STRI",
   "date": "2026-08-16",
   "source_review": "generated/asset-first-stri-narrow-final-review-20260816.json",
-  "status": "FULL_BODY_WRITTEN_FIGURES_RENDERED_SUBMISSION_QA_PASS",
+  "status": "OFFICIAL_ICLR2027_READY_TO_SUBMIT_PENDING_HUMAN_SIGNOFF",
   "reviewer_required_revisions": [
     {
       "revision": "Complete the proof of the global-singleton overlap lower bound.",
@@ -38,6 +38,6 @@
     "residual": "R*=2.0 on the positive released Level-1 regimes",
     "dynamic_p0": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED; no scientific belief update"
   },
-  "next_action": "Integrate the completed template-independent body, tables, figures, and bibliography into the official ICLR submission template and run a final reviewer pass; do not reopen dynamic P0 or broaden the claims unless new independently qualified evidence appears.",
+  "next_action": "Official ICLR 2027 integration is complete and independently reviewed READY_TO_SUBMIT. Human authors should now review the final manuscript and AI-use disclosure, freeze the complete author list before the 2026-09-18 AoE abstract deadline, and submit the full paper by 2026-09-25 AoE. Do not reopen dynamic P0 or broaden the claims unless new independently qualified evidence appears.",
   "scientific_authority": false
 }

@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "stage": "OFFICIAL_ICLR2027_SUBMISSION_READY",
+  "status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
+  "title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
+  "scientific_claim_scope": [
+    "N1: released self-evolving skill control surfaces can be sensitive to skill-package representation",
+    "N2: R*(A) exactly decides finite package-only additive-exposure equalizability on a frozen support matrix",
+    "N3: in the audited released regimes, non-equalizable support geometry rather than overlap prevalence tracks the static STRI residual"
+  ],
+  "claims_forbidden": [
+    "downstream utility harm",
+    "dynamic STRI success",
+    "empirical SQC success",
+    "LP algorithm novelty",
+    "using the Qwen3-8B proposer-qualification-failed bank as scientific evidence for or against dynamic STRI"
+  ],
+  "official_format": {
+    "venue": "ICLR 2027",
+    "double_blind": true,
+    "main_text_pages": 9,
+    "main_text_page_limit": 9,
+    "total_pdf_pages": 11,
+    "abstract_single_paragraph": true,
+    "ai_use_statement_present": true,
+    "reproducibility_statement_present": true,
+    "resolved_citations": 11,
+    "overfull_boxes": 0,
+    "undefined_citations": 0,
+    "undefined_references": 0,
+    "official_style_zip_sha256": "0d940dfa9398ae99a18f24a85a8a683f367204b6af6d17d2899e60a67102529e"
+  },
+  "independent_reviews": {
+    "narrow_premortem": {"verdict": "READY_NARROW_ICLR", "confidence": 0.92},
+    "narrow_collision": {"verdict": "SURVIVES_NARROWLY", "confidence": 0.84},
+    "official_iclr2027_final_review": {"verdict": "READY_TO_SUBMIT", "confidence": 0.91, "overall_score_1_to_10": 7, "required_revisions": 0}
+  },
+  "new_gpu_evidence_required_for_current_claim_scope": false,
+  "delivery": {
+    "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages",
+    "pdf": {
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816.pdf",
+      "sha256": "8fc54720faa68d5a3afcd7bc412f8a2ef60f6ed41e64cb53850d8a4fcc6e0fca"
+    },
+    "source_zip": {
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-source.zip",
+      "sha256": "3450a445c7c2a74d7fd9475eb441631af18bce7b46889d45987268a1f532751a",
+      "files": 11,
+      "isolated_compile_verified": true
+    }
+  },
+  "official_deadlines_aoe": {
+    "abstract": "2026-09-18",
+    "full_paper": "2026-09-25"
+  },
+  "next_action": "Human authors review and accept responsibility for the final manuscript and AI-use disclosure, freeze the complete author list before the ICLR abstract deadline, then submit the abstract by 2026-09-18 AoE and the paper by 2026-09-25 AoE. Do not reopen dynamic P0 or broaden N1-N3 unless independently qualified new evidence appears.",
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_expansion": false,
+    "dynamic_claim": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}

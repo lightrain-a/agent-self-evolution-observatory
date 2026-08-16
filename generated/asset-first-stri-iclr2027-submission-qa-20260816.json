@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "stage": "OFFICIAL_ICLR2027_SUBMISSION_QA",
+  "status": "PASS",
+  "checks_passed": 50,
+  "checks_total": 50,
+  "main_text_pages": 9,
+  "main_text_page_limit": 9,
+  "post_main_page": 10,
+  "total_pdf_pages": 11,
+  "citation_count": 11,
+  "double_blind_anonymity": "PASS",
+  "abstract_single_paragraph": true,
+  "ai_use_statement": "PRESENT_REQUIRED",
+  "reproducibility_statement": "PRESENT_RECOMMENDED",
+  "undefined_citations": 0,
+  "undefined_references": 0,
+  "overfull_boxes": 0,
+  "official_style_zip_sha256": "0d940dfa9398ae99a18f24a85a8a683f367204b6af6d17d2899e60a67102529e",
+  "source_sha256": "3fc6a59c822bede7c6952f6b625c24dc03e3731476a8dcc707cb56c5d49690f8",
+  "body_sha256": "72c7159cf41576ca279965b6d8daeb7bf198a85a52518da0b6025ae3477ac2a3",
+  "tables_sha256": "2a03503eafcd30effdcd187ac93029fa68f3a251a5ff87e2787e8a7963147dde",
+  "bibliography_sha256": "ef9594dc2679bc0bc60bdf6367345082cf00872bc221658770292ce5a7642eef",
+  "scientific_claim_scope": [
+    "N1 released control-plane representation sensitivity",
+    "N2 exact finite support equalizability R*(A)",
+    "N3 non-equalizable support geometry boundary"
+  ],
+  "claims_still_forbidden": [
+    "dynamic STRI success",
+    "downstream utility harm",
+    "SQC empirical success",
+    "LP algorithm novelty",
+    "using the Qwen3 qualification-failed bank as scientific evidence"
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_expansion": false,
+    "dynamic_claim": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}
