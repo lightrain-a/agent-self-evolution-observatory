@@ -70,7 +70,7 @@
   if (sources["research-directions"]) {
     pages["research-directions"] = Object.assign({}, sources["research-directions"], {
       title:{en:"Research directions and long-term agenda",zh:"研究方向地图与长期议程"},
-      lead:{en:"Ten stable scientific directions organize the field. The historical idea lineage explains how the search evolved, while the 20 current FINAL-PASS contracts and all current experiment decisions live on Paper Ideas and Experiments respectively.",zh:"十个稳定科学方向组织领域结构。历史 Idea 谱系解释搜索如何演化；20 个当前 FINAL-PASS 合同与所有当前实验决策分别由 Paper Ideas 和 Experiments 负责。"},
+      lead:{en:"Ten stable scientific directions organize the field. Historical idea lineages explain how the search evolved; the current STRI paper, zero-authority positive-residual search, canonical/shadow discovery state, and terminal experiment ledger are synchronized on Paper Ideas and Experiments.",zh:"十个稳定科学方向组织领域结构。历史 Idea 谱系解释搜索如何演化；当前 STRI 论文、零权限 positive-residual 搜索、canonical/shadow discovery 状态与终态实验账本统一同步到 Paper Ideas 和 Experiments。"},
       groupsAfter:[group("research-agenda")]
     });
   }
@@ -78,7 +78,7 @@
   if (sources["paper-ideas"]) {
     pages["paper-ideas"] = Object.assign({}, sources["paper-ideas"], {
       title:{en:"ICLR-first current research contracts and terminal decisions",zh:"ICLR-first 当前研究合同与终态决策"},
-      lead:{en:"The canonical page now centers the 20 current FINAL-PASS formulations and their human-terminal/P0 contracts. Earlier 26-idea R1/R2 banks, advisor rankings, and visual specialization rounds are retained only as provenance for how the current contracts were produced.",zh:"规范页面现在以 20 个当前 FINAL-PASS 表述及其人工终态/P0 合同为主；更早的 26-Idea R1/R2 候选池、导师排序和视觉专门化轮次仅作为形成当前合同的历史溯源。"},
+      lead:{en:"The canonical page starts from one current-status ledger: STRI is paper-ready after Paper Quality v2 closes with zero evidence debt; canonical live ideas remain zero; the memory positive residual is shadow-only; shadow holds/dead ends and the 27 legacy P0 lifecycle records are shown as separate authority layers. Older candidate banks remain provenance only.",zh:"规范页面先看一张 current-status ledger：STRI 在 Paper Quality v2 闭环且 evidence debt 清零后已 paper-ready；canonical live idea 仍为 0；memory positive residual 只在 shadow 搜索层；shadow HOLD/dead-end 与 27 个历史 P0 lifecycle 作为不同权限层分开显示。更早候选池仅作溯源。"},
       includeRanking:true
     });
   }

@@ -6,6 +6,8 @@ import json
 import os
 import re
 import shutil
+import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -113,6 +115,13 @@ def version_html_assets(html: str, build_sha: str) -> str:
 
 
 def build() -> Path:
+    # Recompute the small public current-state ledger from authoritative generated artifacts
+    # immediately before copying the site, so every publish uses the same backend truth.
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_current_research_status.py")],
+        cwd=ROOT,
+        check=True,
+    )
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True)
@@ -168,6 +177,7 @@ def build() -> Path:
         OUTPUT / "index.html",
         OUTPUT / "paper-ideas.html",
         OUTPUT / "paper-first-incubation-view.js",
+        OUTPUT / "current-research-status-view.js",
         OUTPUT / "experiments.html",
         OUTPUT / "system-overview.html",
         OUTPUT / "app.js",
@@ -225,6 +235,8 @@ def build() -> Path:
         OUTPUT / "generated" / "idea-discovery-v5.js",
         OUTPUT / "generated" / "idea-discovery-v53.js",
         OUTPUT / "generated" / "research-system-state.js",
+        OUTPUT / "generated" / "current-research-status.js",
+        OUTPUT / "generated" / "current-research-status.json",
         OUTPUT / "generated" / "paper-first-p0-f0-state.js",
         OUTPUT / "generated" / "paper-first-p0-f0-state.json",
         OUTPUT / "generated" / "paper-first-premature-method-diagnostics.js",

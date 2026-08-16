@@ -421,9 +421,12 @@ def main() -> None:
               terminalStats: document.querySelectorAll('.human-review-stats .human-stat').length,
               legacyPreGpuBoards: document.querySelectorAll('.pre-gpu-candidate-board').length,
               legacyP0Entry: document.querySelectorAll('.p0-entry-panel').length,
-              finalPass: Number(window.RESEARCH_SYSTEM_STATE?.summary?.final_pass || 0),
+              currentLedger: document.querySelectorAll('#current-research-portfolio').length,
+              currentRows: document.querySelectorAll('#current-research-portfolio .current-research-table tbody tr').length,
+              leadingPaperTracks: document.querySelectorAll('#current-research-portfolio .current-paper-track-card').length,
+              currentStatus: window.CURRENT_RESEARCH_STATUS?.headline || {},
+              legacyFinalPass: Number(window.RESEARCH_SYSTEM_STATE?.summary?.final_pass || 0),
               experimentStops: Number(window.RESEARCH_SYSTEM_STATE?.p0_decision_ledger?.summary?.experiment_stopped || 0),
-              launchable: Number(window.RESEARCH_SYSTEM_STATE?.p0_decision_ledger?.summary?.launchable || 0),
               text: document.body.textContent || ''
             };""",
         )
@@ -434,9 +437,12 @@ def main() -> None:
         require("STOP_MATCHED_POST_ONLY_EQUIVALENT" in idea_portfolio["text"] and "STOP_MATCHED_SOFT_SCALAR_EQUIVALENT" in idea_portfolio["text"] and "DIAGNOSTIC ONLY" in idea_portfolio["text"], "completed premature Method diagnostics are not visible on Paper Ideas")
         require(idea_portfolio["terminalGroups"] >= 3 and idea_portfolio["terminalStats"] == 4, f"terminal routing UI is incomplete: {idea_portfolio['terminalGroups']}/{idea_portfolio['terminalStats']}")
         require(idea_portfolio["legacyPreGpuBoards"] == 0 and idea_portfolio["legacyP0Entry"] == 0, "legacy Pre-GPU/P0-entry boards leaked back into canonical Paper Ideas")
-        require(idea_portfolio["finalPass"] == 20 and idea_portfolio["experimentStops"] >= 16 and idea_portfolio["launchable"] == 0, f"current portfolio state is wrong: {idea_portfolio}")
+        require((idea_portfolio["currentLedger"],idea_portfolio["currentRows"],idea_portfolio["leadingPaperTracks"]) == (1,6,1), f"unified current idea ledger is incomplete: {idea_portfolio}")
+        cs=idea_portfolio["currentStatus"]
+        require((cs.get("paper_ready"),cs.get("paper_quality_hold"),cs.get("paper_quality_evidence_debt"),cs.get("canonical_live_ideas"),cs.get("launchable_formal_experiments"),cs.get("shadow_dead_ends"),cs.get("shadow_holds"),cs.get("shadow_qualification_ready"),cs.get("legacy_p0_lifecycle")) == (1,0,0,0,0,11,2,0,27), f"current status snapshot is wrong: {cs}")
+        require(idea_portfolio["legacyFinalPass"] == 20 and idea_portfolio["experimentStops"] >= 16, f"historical lineage state is unexpectedly missing: {idea_portfolio}")
         require("Historical ICLR Paper Workspace" not in idea_portfolio["text"] and "Selected ICLR Paper Workspace" not in idea_portfolio["text"], "historical paper workspace content leaked into Paper Ideas")
-        require(("当前科研状态" in idea_portfolio["text"] and "终态独立方法" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "Terminal standalone" in idea_portfolio["text"]), "Paper Ideas current-state labels are incomplete")
+        require((("当前科研状态" in idea_portfolio["text"] and "Positive residual 当前边界" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "Positive-residual boundary" in idea_portfolio["text"])) and "20 个当前 FINAL-PASS" not in idea_portfolio["text"], "Paper Ideas current-state labels are incomplete or stale FINAL-PASS framing leaked into the current view")
 
         redirect_checks = {
             "/memory-evolution.html": "mechanisms.html#group-memory-evolution",

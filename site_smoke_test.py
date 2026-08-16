@@ -67,6 +67,7 @@ REQUIRED_STATIC = [
     "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
     "content-system-overview.js", "system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
     "idea-lab.css", "emerging-niche-view.js", "generated/emerging-niche-policy.json", "generated/emerging-niche-policy.js",
+    "current-research-status-view.js", "generated/current-research-status.json", "generated/current-research-status.js",
     "generated/p0-experiment-plan.js", "generated/p0-collision-recheck.js", "generated/p0-runtime-readiness.js",
 ]
 PLACEHOLDERS = ["PAGE_CHUNKS", "<!--NEXT", "<!--PAPERS", "<!--SCRIPT"]
@@ -116,6 +117,10 @@ def main() -> None:
             fail(f"{filename} must load data.js and app.js")
         if "page-architecture-data.js" not in scripts:
             fail(f"{filename} must load page-architecture-data.js")
+        if "generated/current-research-status.js" not in scripts or "current-research-status-view.js" not in scripts:
+            fail(f"{filename} must load the unified public current-research status before app.js")
+        if scripts.index("generated/current-research-status.js") > scripts.index("app.js") or scripts.index("current-research-status-view.js") > scripts.index("app.js"):
+            fail(f"{filename} must load current-research status/view before app.js")
         for script in scripts:
             referenced_scripts.add(script)
             if not (ROOT / script).exists():

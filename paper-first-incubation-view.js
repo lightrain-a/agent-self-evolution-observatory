@@ -22,7 +22,12 @@
   const freshState=()=>window.PAPER_FIRST_FRESH_SATURATION||window.RESEARCH_SYSTEM_STATE?.paper_first_fresh_saturation||{summary:{},policy:{}};
   const prematureMethodState=()=>window.PAPER_FIRST_PREMATURE_METHOD_DIAGNOSTICS||window.RESEARCH_SYSTEM_STATE?.paper_first_premature_method_diagnostics||{summary:{},cards:[]};
   const shadowSearchDesignState=()=>window.PAPER_FIRST_SEARCH_PORTFOLIO_DESIGN_ADJUDICATION||window.RESEARCH_SYSTEM_STATE?.paper_first_search_portfolio_design_adjudication||{summary:{},rows:[],shadow_source:{}};
-  const shadowSearchAdmissionState=()=>window.RESEARCH_SYSTEM_STATE?.paper_first_shadow_search_admission||{summary:{},source_identity:{}};
+  const shadowSearchAdmissionState=()=>{
+    const historical=window.RESEARCH_SYSTEM_STATE?.paper_first_shadow_search_admission||{summary:{},source_identity:{}};
+    const current=window.CURRENT_RESEARCH_STATUS?.shadow_search?.qualification||null;
+    if(!current)return historical;
+    return {...historical,status:current.status||historical.status,summary:{...(historical.summary||{}),qualification_allowed:Boolean(current.qualification_allowed),automatic_provider_calls_authorized:Number(current.automatic_provider_calls_authorized||0)},current_override:true};
+  };
   const shadowPortfolioState=()=>window.RESEARCH_SYSTEM_STATE?.paper_first_problem_search_portfolio||{latest_run:{}};
   const sp15SupportState=()=>window.PAPER_FIRST_SP15_IDENTIFIABILITY_SUPPORT||window.RESEARCH_SYSTEM_STATE?.paper_first_sp15_identifiability_support||{summary:{}};
   const prematureMethodFor=(id)=>(prematureMethodState().cards||[]).find(x=>String(x.incubation_id||"")===String(id||""))||null;
