@@ -69,6 +69,11 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         self.assertEqual(validate_evidence_plan(state),[])
         self.assertEqual(state["summary"]["paper_design_authorized"],0)
 
+    def test_provisional_plan_preserves_primary_source_refs_for_terminal_holds(self):
+        m=machine(1);m["problem_falsifier_queue"][0]["candidate"]={"empirical_evidence":{"source_a":{"ref":"arXiv:2608.13040"},"source_b":{"ref":"arXiv:2608.13040"}}}
+        state=build_provisional_evidence_plan(m)
+        self.assertEqual(state["entries"][0]["source_refs"],["arXiv:2608.13040"])
+
     def test_first_party_design_gets_execution_not_scientific_authority(self):
         plan=build_provisional_evidence_plan(machine(1))
         state=compile_evidence_designs(plan,{"designs":[design_for(plan["entries"][0])]},part=1,design_model="designer")

@@ -58,15 +58,24 @@ def build_paper_first_discovery_frontier(
         and _int(ps, "carrier_probe_pending") == 0
         and ps.get("carrier_probe_complete") is True
     )
-    live_generator_closed = bool(
-        generator_state.get("status") in {"SKIPPED_SOURCE_COVERAGE_SATURATED", "GENERATED_ZERO_CANDIDATES"}
-        and _int(gs, "generated") == 0
-        and _int(gs, "written_to_auto_inbox") == 0
-    )
     live_queue_closed = bool(
-        _int(qs, "submitted") == 0
+        _int(qs, "submitted") == _int(qs, "audited")
         and _int(qs, "passed_problem_gate") == 0
         and _int(qs, "paper_design_eligible") == 0
+        and _int(qs, "inbox_errors") == 0
+    )
+    live_generator_closed = bool(
+        (
+            generator_state.get("status") in {"SKIPPED_SOURCE_COVERAGE_SATURATED", "GENERATED_ZERO_CANDIDATES"}
+            and _int(gs, "generated") == 0
+            and _int(gs, "written_to_auto_inbox") == 0
+        )
+        or (
+            generator_state.get("status") == "GENERATED_AWAIT_PROBLEM_GATE"
+            and _int(gs, "written_to_auto_inbox") == _int(qs, "submitted")
+            and _int(qs, "submitted") == _int(qs, "audited")
+            and live_queue_closed
+        )
     )
     relation_current_closed = bool(
         relation_freshness_state.get("status") == "CURRENT_RELATION_UNIVERSE"

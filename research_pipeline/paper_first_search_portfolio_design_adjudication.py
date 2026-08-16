@@ -264,6 +264,88 @@ def _terminal_support_hold_rows(preflight: dict[str, Any] | None, *, run_id: str
     return rows
 
 
+def _terminal_evidence_hold_rows(plan: dict[str, Any] | None, *, run_id: str, stage_manifest_sha256: str, fallback_primary_refs: dict[str, list[str]] | None = None) -> list[dict[str, Any]]:
+    """Persist terminal evidence-acquisition asset/support holds as reopenable memory.
+
+    Evidence acquisition is newer than the legacy problem-falsifier preflight. A
+    source-specific WAIT must survive terminal publication just like a legacy
+    support-unavailable receipt, but it remains explicitly non-dead-end.
+    """
+    rows: list[dict[str, Any]] = []
+    fallback_primary_refs = fallback_primary_refs or {}
+    terminal_statuses = {
+        "WAIT_PRIMARY_ASSET_RELEASE": "SOURCE_SPECIFIC_PRIMARY_ASSET_UNAVAILABLE",
+        "HOLD_SUBSTRATE_UNAVAILABLE": "SUBSTRATE_UNAVAILABLE_FOR_FROZEN_FALSIFIER",
+        "HOLD_SUBSTRATE_BUDGET_INFEASIBLE": "SUBSTRATE_BUDGET_INFEASIBLE_FOR_FROZEN_FALSIFIER",
+    }
+    for entry in (plan or {}).get("entries") or []:
+        if not isinstance(entry, dict):
+            continue
+        status = str(entry.get("status") or "")
+        support_status = terminal_statuses.get(status)
+        if not support_status:
+            continue
+        candidate_id = str(entry.get("candidate_id") or "").strip()
+        title = " ".join(str(entry.get("title") or "").split())[:300]
+        required_unit = " ".join(str(entry.get("frozen_falsifier_expression") or "").split())[:1800]
+        reason = " ".join(str(entry.get("review_feedback") or ((entry.get("substrate_preflight") or {}).get("reason")) or "").split())[:2200]
+        refs = sorted({str(ref) for ref in (entry.get("source_refs") or fallback_primary_refs.get(candidate_id) or []) if str(ref).startswith("arXiv:")})
+        if not candidate_id or not required_unit or not reason or not refs:
+            continue
+        reopen = (
+            "Reopen only when the source-specific/released assets required by the frozen falsifier become available with provenance sufficient to execute the same scientific object, "
+            "or when an independently reviewed operationalization proves equivalent without changing the frozen prediction, same-information baseline, or causal unit."
+        )
+        signature = hashlib.sha256(json.dumps({"candidate_id": candidate_id, "required_unit": required_unit, "primary_refs": refs, "status": status}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
+        rows.append({
+            "source_candidate_id": candidate_id,
+            "basin": f"near-miss-terminal-support-hold-{signature}",
+            "title": title,
+            "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+            "support_status": support_status,
+            "required_unit": required_unit,
+            "evidence_basis": refs,
+            "strongest_reduction": "the proposed residual remains unresolved until the frozen same-information falsifier can be executed on source-faithful or independently equivalent assets",
+            "reason": reason,
+            "avoid": [
+                f"re-proposing the unsupported problem object without resolving its frozen asset dependency: {title}",
+                "substituting a locally invented, randomly initialized, differently trained, or outcome-tuned asset for the source-specific scientific object",
+                "treating missing source assets as scientific evidence for or against the proposed residual",
+            ],
+            "reopen_only_if": reopen,
+            "source_run_id": run_id,
+            "source_stage_manifest_sha256": stage_manifest_sha256,
+            "hold_origin": "bounded-evidence-acquisition",
+            "dead_end_certified": False,
+            "memory_class": "REOPENABLE_HOLD",
+            "automatic_problem_gate_authority": False,
+            "automatic_method_authority": False,
+            "automatic_experiment_authority": False,
+            "automatic_p0_authority": False,
+            "automatic_gpu_authority": False,
+            "scientific_authority": False,
+        })
+    return rows
+
+
+def _run_formulation_primary_refs(run_root: Path) -> dict[str, list[str]]:
+    refs: dict[str, set[str]] = {}
+    for path in sorted(run_root.glob("formulate-p*.json")):
+        payload = _load_json(path)
+        for bucket in ("candidates", "reduction_pending", "rejected"):
+            for outer in payload.get(bucket) or []:
+                if not isinstance(outer, dict):
+                    continue
+                candidate = outer.get("candidate") or outer
+                cid = str(outer.get("candidate_id") or candidate.get("candidate_id") or "").strip()
+                evidence = candidate.get("empirical_evidence") or {}
+                values = {str((evidence.get(key) or {}).get("ref") or "") for key in ("source_a", "source_b")}
+                values = {value for value in values if value.startswith("arXiv:")}
+                if cid and values:
+                    refs.setdefault(cid, set()).update(values)
+    return {key: sorted(values) for key, values in refs.items()}
+
+
 def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict[str, Any]]:
     candidates = paths if paths is not None else sorted((PROJECT_ROOT / "generated").glob(PRINCIPLE_READJUDICATION_GLOB))
     rows: list[dict[str, Any]] = []
@@ -585,7 +667,7 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     return memory
 
 
-def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[str, Any], preflight: dict[str, Any] | None = None) -> dict[str, Any]:
+def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[str, Any], preflight: dict[str, Any] | None = None, *, evidence_plan: dict[str, Any] | None = None, evidence_fallback_primary_refs: dict[str, list[str]] | None = None) -> dict[str, Any]:
     run_id = str(terminal_run.get("run_id") or "").strip()
     stage_manifest_sha256 = str(terminal_run.get("stage_manifest_sha256") or "").strip()
     policy = terminal_run.get("policy") or {}
@@ -606,6 +688,7 @@ def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[s
     current_principle = _principle_readjudication_rows()
     principle_by_basin = {str(row.get("basin") or ""): row for row in prior_principle + current_principle if str(row.get("basin") or "")}
     extra_near = _terminal_support_hold_rows(preflight, run_id=run_id, stage_manifest_sha256=stage_manifest_sha256)
+    extra_near.extend(_terminal_evidence_hold_rows(evidence_plan, run_id=run_id, stage_manifest_sha256=stage_manifest_sha256, fallback_primary_refs=evidence_fallback_primary_refs))
 
     memory = _shadow_dead_end_memory(
         {"latest_run": terminal_run},
@@ -676,8 +759,16 @@ def merge_terminal_shadow_run_memory(*, run_root: Path, json_path: Path = DEFAUL
     terminal_run = _latest_shadow_run(run_root)
     preflight_path = run_root / "problem-falsifier-preflight.json"
     preflight = _load_json(preflight_path) if preflight_path.exists() else {}
+    evidence_plan_path = run_root / "evidence-acquisition-plan.json"
+    evidence_plan = _load_json(evidence_plan_path) if evidence_plan_path.exists() else {}
     state = _load_json(json_path)
-    merged = merge_shadow_terminal_run_memory(state, terminal_run, preflight)
+    merged = merge_shadow_terminal_run_memory(
+        state,
+        terminal_run,
+        preflight,
+        evidence_plan=evidence_plan,
+        evidence_fallback_primary_refs=_run_formulation_primary_refs(run_root),
+    )
     errors = validate_search_portfolio_design_adjudication(merged)
     if errors:
         raise ValueError("Invalid Search Portfolio dead-end memory maintenance:\n- " + "\n- ".join(errors))

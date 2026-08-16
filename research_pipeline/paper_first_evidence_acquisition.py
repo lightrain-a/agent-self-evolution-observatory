@@ -67,8 +67,11 @@ def build_provisional_evidence_plan(machine:dict,*,run_id:str="",max_active:int=
  cap=max(0,min(int(max_active),MAX_ACTIVE));entries=[]
  for rank,r in enumerate(ranked,1):
   selected=rank<=cap
+  candidate=r.get("candidate") or {}
+  evidence=candidate.get("empirical_evidence") or {}
+  source_refs=sorted({str((evidence.get(key) or {}).get("ref") or "") for key in ("source_a","source_b") if str((evidence.get(key) or {}).get("ref") or "").startswith("arXiv:")})
   entries.append({
-   "candidate_id":str(r.get("candidate_id") or ""),"title":_b(r.get("title"),500),"discovery_lane":str(r.get("discovery_lane") or ""),"source_branch_id":str(r.get("source_branch_id") or ""),
+   "candidate_id":str(r.get("candidate_id") or ""),"title":_b(r.get("title"),500),"discovery_lane":str(r.get("discovery_lane") or ""),"source_branch_id":str(r.get("source_branch_id") or ""),"source_refs":source_refs,
    "priority_rank":rank,"selection_basis":"fewest-unresolved-reduction-blockers-then-stable-id","design_selected":selected,
    "status":"NEEDS_BOUNDED_EVIDENCE_DESIGN" if selected else "DEFERRED_BY_ACTIVE_PORTFOLIO_BUDGET",
    "frozen_irreducible_object":_b(r.get("irreducible_object"),2400),"frozen_endpoint_headroom_requirement":_b(r.get("endpoint_headroom_requirement"),1800),"frozen_exact_prediction":_b(r.get("exact_prediction")),"frozen_same_information_baseline":_b(r.get("strongest_same_information_baseline"),1600),"frozen_falsifier_expression":_b(r.get("cheapest_problem_falsifier"),2400),

@@ -73,7 +73,7 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
             local_memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[],"memory_id":"RUN_LOCAL"}),encoding="utf-8")
             global_memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[],"memory_id":"GLOBAL"}),encoding="utf-8")
             response={"text":json.dumps({"seeds":[]}),"resolved_model":"test-model"}
-            def prompt(lane,records,count,memory):
+            def prompt(lane,records,count,memory,**kwargs):
                 self.assertEqual(memory.get("memory_id"),"RUN_LOCAL")
                 return "prompt"
             with patch.object(runner,"DEFAULT_SHADOW_DEAD_END_MEMORY_PATH",global_memory),patch("research_pipeline.problem_search_stage_runner.validate_shadow_run_control",return_value={"control_snapshot_sha256":"f"*64}) as validate,patch("research_pipeline.problem_search_stage_runner._expansion_prompt",side_effect=prompt),patch("research_pipeline.problem_search_stage_runner._ark",return_value=response):
@@ -104,9 +104,10 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
                 result=runner.expand(pool=pool,run_root=run,lane="UNEXPLAINED_BOUNDARY",count=1,model="test",part=1,memory_path=mem)
             artifact=json.loads((run/"expand-UNEXPLAINED_BOUNDARY-p1.json").read_text(encoding="utf-8"))
         self.assertEqual(result["valid_seeds"],0)
-        self.assertEqual(artifact["fresh_phenomenon_seed_count"],0)
+        self.assertEqual(artifact["fresh_phenomenon_seed_count"],1)
         self.assertFalse(artifact["fresh_phenomenon_requirement_satisfied"])
-        self.assertEqual(artifact["fresh_phenomenon_refs"],["arXiv:new-boundary"])
+        self.assertEqual(artifact["fresh_phenomenon_target_ref"],"arXiv:new-boundary")
+        self.assertEqual(artifact["fresh_phenomenon_refs"],["arXiv:new-boundary","arXiv:older"])
 
     def test_same_pool_certified_semantic_reduction_is_machine_filtered_after_model_output(self) -> None:
         pool_sha="a"*64

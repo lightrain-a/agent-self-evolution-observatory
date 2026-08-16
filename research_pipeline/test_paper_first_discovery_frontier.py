@@ -12,7 +12,7 @@ class PaperFirstDiscoveryFrontierTest(unittest.TestCase):
         return {
             "primary_state": {"status":"READY","summary":{"source_retrieval_complete":True,"source_coverage_exhausted":True,"unreviewed_lane_linked_sources":0,"carrier_probe_pending":0,"carrier_probe_complete":True}},
             "generator_state": {"status":"SKIPPED_SOURCE_COVERAGE_SATURATED","summary":{"generated":0,"written_to_auto_inbox":0}},
-            "queue_state": {"summary":{"submitted":0,"passed_problem_gate":0,"paper_design_eligible":0}},
+            "queue_state": {"summary":{"submitted":0,"audited":0,"passed_problem_gate":0,"paper_design_eligible":0,"inbox_errors":0}},
             "relation_freshness_state": {"status":"CURRENT_RELATION_UNIVERSE","summary":{"universe_stale":False,"current_not_reduced_unknown":False,"focused_problem_generator_reopen_allowed":False}},
             "relation_admission_state": {"status":"HOLD_MANUAL_RELATION_SCAN","summary":{"manual_scan_eligible":False,"automatic_model_scan_authorized":False}},
             "shadow_admission_state": {"status":"SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL","summary":{"same_source_transaction":True,"qualification_allowed":False,"automatic_provider_calls_authorized":0}},
@@ -41,6 +41,14 @@ class PaperFirstDiscoveryFrontierTest(unittest.TestCase):
         state=self.build(states)
         self.assertEqual(state["status"],"WAIT_EXTERNAL_EVIDENCE_TRIGGERS")
         self.assertTrue(state["summary"]["live_generator_closed"])
+        self.assertEqual(validate_paper_first_discovery_frontier(state),[])
+
+    def test_generator_candidate_fully_blocked_by_queue_is_closed_live_review(self) -> None:
+        states=self.states();states["generator_state"]={"status":"GENERATED_AWAIT_PROBLEM_GATE","summary":{"generated":1,"written_to_auto_inbox":1}};states["queue_state"]={"summary":{"submitted":1,"audited":1,"passed_problem_gate":0,"blocked_problem_gate":1,"paper_design_eligible":0,"inbox_errors":0}}
+        state=self.build(states)
+        self.assertTrue(state["summary"]["live_generator_closed"])
+        self.assertTrue(state["summary"]["live_queue_closed"])
+        self.assertEqual(state["status"],"WAIT_EXTERNAL_EVIDENCE_TRIGGERS")
         self.assertEqual(validate_paper_first_discovery_frontier(state),[])
 
     def test_new_live_source_backlog_opens_live_source_frontier_not_model_authority(self) -> None:

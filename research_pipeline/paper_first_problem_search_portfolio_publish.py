@@ -51,7 +51,12 @@ def _latest_shadow_run(root:Path)->dict:
     formulation_error_paths=list(root.glob('error-formulate-*.json'))
     for path in formulation_paths:
         payload=load(path);formulated+=len(payload.get('candidates') or []);reduction_pending+=len(payload.get('reduction_pending') or []);rejected+=len(payload.get('rejected') or []);successful_formulation_branches+=len(payload.get('branch_ids') or [])
-    formulation_errors=[load(path) for path in formulation_error_paths]
+    successful_formulation_parts={int(match.group(1)) for path in formulation_paths if (match:=re.search(r'formulate-p(\d+)',path.name))}
+    unresolved_formulation_error_paths=[]
+    for path in formulation_error_paths:
+        match=re.search(r'formulate-p(\d+)',path.name)
+        if not match or int(match.group(1)) not in successful_formulation_parts:unresolved_formulation_error_paths.append(path)
+    formulation_errors=[load(path) for path in unresolved_formulation_error_paths]
     formulation_provider_failures=sum(str(row.get('status') or '').startswith('PROVIDER_') for row in formulation_errors)
     formulation_parse_failures=sum(str(row.get('status') or '')=='PARSE_ERROR_ZERO_AUTHORITY' for row in formulation_errors)
     formulation_parts=[]

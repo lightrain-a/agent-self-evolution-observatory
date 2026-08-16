@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T17:04:27+00:00",
+  "generated_at": "2026-08-16T17:27:22+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -188,9 +188,20 @@
       "persistent_dead_end_requires_positive_counter_explanation": true,
       "canonical_generator_and_queue_untouched": true
     },
-    "last_ingested_run_id": "",
-    "last_ingested_stage_manifest_sha256": "",
-    "receipts": [],
+    "last_ingested_run_id": "shadow-20260817-fresh-phenomenon-v10-r1",
+    "last_ingested_stage_manifest_sha256": "5f9d53572cc0bc1d4b76689aa69af1204ad9fd9b624a67b73c86f7f24c327f91",
+    "receipts": [
+      {
+        "run_id": "shadow-20260817-fresh-phenomenon-v10-r1",
+        "stage_manifest_sha256": "5f9d53572cc0bc1d4b76689aa69af1204ad9fd9b624a67b73c86f7f24c327f91",
+        "terminal_generated_at": "2026-08-16T17:27:22+00:00",
+        "hard_veto_added": 0,
+        "semantic_blocker_added": 0,
+        "semantic_hold_added": 0,
+        "support_hold_added": 1,
+        "scientific_authority": false
+      }
+    ],
     "scientific_authority": false
   },
   "shadow_dead_end_memory": {
@@ -895,6 +906,36 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "SHADOW-P01-C01",
+        "basin": "near-miss-terminal-support-hold-834575272a040cca",
+        "title": "The 32-token experience cliff and post-threshold plateau in latent on-policy self-distillation",
+        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+        "support_status": "SOURCE_SPECIFIC_PRIMARY_ASSET_UNAVAILABLE",
+        "required_unit": "On the released LOPD/ACEBench configuration, run a preregistered tokens-per-experience sweep {8,16,32,64,128} crossed with retrieval counts {1,3,5} under fixed model, split, seeds, and rollout budget. Fit the strongest same-information capacity/redundancy model on one subset of regimes and test exact prediction of the 16→32 jump and 32→128 plateau in held-out regimes. The candidate is falsified if that model predicts the curve and there is no residual token×retrieval interaction.",
+        "evidence_basis": [
+          "arXiv:2608.13040"
+        ],
+        "strongest_reduction": "the proposed residual remains unresolved until the frozen same-information falsifier can be executed on source-faithful or independently equivalent assets",
+        "reason": "The preregistered scientific comparison requires faithful reproduction of the reported tokens-per-experience sensitivity. In the first-party LOPD release at commit 362d3742fc7b4dbbc0677b219990f2a4b4d0a90f, the README explicitly states that training code is not yet released, while the EnvScaler latent inference configuration requires a compressor checkpoint but contains the placeholder YOUR_COMPRESSOR_CHECKPOINT. The token budget K is the QFormer num_queries architecture parameter. Without the source-specific trained compressor/training artifacts for the sensitivity conditions, changing K in the released code would instantiate an untrained or incompatible compressor rather than reproduce the paper intervention. A locally trained substitute, random QFormer, different model, or retuned checkpoint would change the frozen scientific object.",
+        "avoid": [
+          "re-proposing the unsupported problem object without resolving its frozen asset dependency: The 32-token experience cliff and post-threshold plateau in latent on-policy self-distillation",
+          "substituting a locally invented, randomly initialized, differently trained, or outcome-tuned asset for the source-specific scientific object",
+          "treating missing source assets as scientific evidence for or against the proposed residual"
+        ],
+        "reopen_only_if": "Reopen only when the source-specific/released assets required by the frozen falsifier become available with provenance sufficient to execute the same scientific object, or when an independently reviewed operationalization proves equivalent without changing the frozen prediction, same-information baseline, or causal unit.",
+        "source_run_id": "shadow-20260817-fresh-phenomenon-v10-r1",
+        "source_stage_manifest_sha256": "5f9d53572cc0bc1d4b76689aa69af1204ad9fd9b624a67b73c86f7f24c327f91",
+        "hold_origin": "bounded-evidence-acquisition",
+        "dead_end_certified": false,
+        "memory_class": "REOPENABLE_HOLD",
+        "automatic_problem_gate_authority": false,
+        "automatic_method_authority": false,
+        "automatic_experiment_authority": false,
+        "automatic_p0_authority": false,
+        "automatic_gpu_authority": false,
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "SP-15",
         "basin": "implicit-query-decomposition-skill-routing",
         "avoid": [
@@ -1068,7 +1109,7 @@
     "positive_residual_asset_evidence_count": 1,
     "positive_residual_search_active_count": 0,
     "positive_residual_asset_registry_id": "positive-residual-search-assets-v4",
-    "hold_object_count": 2,
+    "hold_object_count": 3,
     "current_source_hard_veto_count": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
@@ -1082,9 +1123,9 @@
     "semantic_hold_added_from_terminal_run": 0,
     "semantic_hold_inherited": 0,
     "near_miss_preflight_count": 3,
-    "near_miss_hold_count": 1,
+    "near_miss_hold_count": 2,
     "near_miss_base_preflight_count": 4,
-    "near_miss_terminal_support_hold_count": 0
+    "near_miss_terminal_support_hold_count": 1
   },
   "shadow_source": {
     "portfolio_status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
@@ -1137,7 +1178,7 @@
     "support_inventory_required": 1,
     "shadow_dead_end_objects": 12,
     "principle_readjudication_dead_ends": 8,
-    "shadow_hold_objects": 2,
+    "shadow_hold_objects": 3,
     "current_source_hard_veto_dead_ends": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
@@ -1148,8 +1189,8 @@
     "semantic_hold_added_from_terminal_run": 0,
     "semantic_hold_inherited": 0,
     "near_miss_preflight_dead_ends": 3,
-    "near_miss_holds": 1,
-    "near_miss_terminal_support_holds": 0,
+    "near_miss_holds": 2,
+    "near_miss_terminal_support_holds": 1,
     "near_miss_support_holds": 1,
     "near_miss_current_primary_stops": 2,
     "near_miss_mature_theory_stops": 1,
@@ -1157,7 +1198,10 @@
     "experiment_blueprint_authorized": 0,
     "local_validation_authorized": 0,
     "p0_authorized": 0,
-    "gpu_authorized": 0
+    "gpu_authorized": 0,
+    "semantic_blocker_added_from_latest_run": 0,
+    "semantic_blocker_added_from_terminal_run": 0,
+    "semantic_blocker_inherited": 0
   },
   "portfolio_priority": [
     "SP-15",

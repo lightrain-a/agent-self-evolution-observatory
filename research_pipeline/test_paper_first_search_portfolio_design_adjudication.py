@@ -8,6 +8,7 @@ from pathlib import Path
 from .paper_first_search_portfolio_design_adjudication import (
     _principle_readjudication_rows,
     _shadow_dead_end_memory,
+    _terminal_evidence_hold_rows,
     _terminal_support_hold_rows,
     build_search_portfolio_design_adjudication,
     merge_shadow_terminal_run_memory,
@@ -156,6 +157,18 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(row["disposition"],"HOLD_SUPPORT_UNAVAILABLE")
         self.assertFalse(row["scientific_authority"])
         self.assertIn("release",row["reopen_only_if"].lower())
+
+    def test_terminal_evidence_wait_primary_asset_is_reopenable_hold_not_dead_end(self) -> None:
+        plan={"entries":[{"candidate_id":"LOPD-X","title":"Latent token cliff","status":"WAIT_PRIMARY_ASSET_RELEASE","source_refs":["arXiv:2608.13040"],"frozen_falsifier_expression":"replay K={8,16,32,64,128} with source-faithful compressor checkpoints","review_feedback":"Training code and compressor checkpoints required by the frozen comparison are not released."}]}
+        rows=_terminal_evidence_hold_rows(plan,run_id="shadow-v10",stage_manifest_sha256="c"*64)
+        self.assertEqual(len(rows),1)
+        row=rows[0]
+        self.assertEqual(row["memory_class"],"REOPENABLE_HOLD")
+        self.assertFalse(row["dead_end_certified"])
+        self.assertEqual(row["support_status"],"SOURCE_SPECIFIC_PRIMARY_ASSET_UNAVAILABLE")
+        self.assertEqual(row["evidence_basis"],["arXiv:2608.13040"])
+        self.assertEqual(row["hold_origin"],"bounded-evidence-acquisition")
+        self.assertIn("become available",row["reopen_only_if"])
 
     def test_non_latest_terminal_run_memory_ingestion_is_idempotent(self) -> None:
         terminal={"run_id":"shadow-parallel-r4b","status":"SHADOW_TERMINAL_COMPLETE","generated_at":"2026-08-14T04:55:40+00:00","stage_manifest_sha256":"b"*64,"scientific_authority":False,"policy":{"shadow_only":True,"canonical_primary_generator_queue_untouched":True},"candidates":[{"candidate_id":"SHADOW-P09-C01","title":"Attribution-conditioned revision routing","search_primitive":"COMPOSITION_INTERACTION","current_source_status":"complete","current_source_verdict":"BLOCK","current_source_reduction_class":"VALID_HARD_VETO","current_source_strongest_reduction":"target-specific revision plus executable validation is already an explicit repair mechanism","current_source_reason":"Current primary work already maps diagnosis to target-specific revision and validation.","current_source_source_refs":["arXiv:2607.27733","arXiv:2606.09071"]}]}

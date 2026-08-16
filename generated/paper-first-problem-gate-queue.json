@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0",
-  "generated_at": "2026-08-16T16:46:41+00:00",
+  "generated_at": "2026-08-16T17:35:44+00:00",
   "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
   "source_inboxes": [
     "private-data://paper-first-problem-discovery/candidate-inbox.json",
@@ -26,10 +26,10 @@
     "automatic_p0_authority": false
   },
   "summary": {
-    "submitted": 0,
-    "audited": 0,
+    "submitted": 1,
+    "audited": 1,
     "passed_problem_gate": 0,
-    "blocked_problem_gate": 0,
+    "blocked_problem_gate": 1,
     "paper_design_eligible": 0,
     "inbox_errors": 0,
     "primary_evidence_records": 32,
@@ -37,7 +37,7 @@
       "CONTRADICTION": 0,
       "CONVERGENT_FAILURE": 0,
       "ASSUMPTION_BREAK": 0,
-      "UNEXPLAINED_BOUNDARY": 0,
+      "UNEXPLAINED_BOUNDARY": 1,
       "OTHER": 0
     },
     "passed_by_lane": {
@@ -51,7 +51,7 @@
       "CONTRADICTION": 0,
       "CONVERGENT_FAILURE": 0,
       "ASSUMPTION_BREAK": 0,
-      "UNEXPLAINED_BOUNDARY": 0,
+      "UNEXPLAINED_BOUNDARY": 1,
       "OTHER": 0
     },
     "method_authorized": 0,
@@ -60,9 +60,348 @@
   },
   "inbox_errors": [],
   "passed": [],
-  "blocked": [],
-  "audited": [],
+  "blocked": [
+    {
+      "candidate_id": "AUTO-1",
+      "title": "Sharp latent-privilege capacity threshold in on-policy self-distillation",
+      "discovery_lane": "UNEXPLAINED_BOUNDARY",
+      "status": "PROBLEM_GATE_BLOCKED",
+      "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
+      "blockers": [
+        "invalid-mature-theory-baseline:1",
+        "invalid-mature-theory-baseline:2",
+        "missing-or-empty:reduction_falsifiability_contract",
+        "reduction-falsifiability-contract-incomplete",
+        "semantic-reduction-review-missing"
+      ]
+    }
+  ],
+  "audited": [
+    {
+      "candidate_id": "AUTO-1",
+      "title": "Sharp latent-privilege capacity threshold in on-policy self-distillation",
+      "discovery_lane": "UNEXPLAINED_BOUNDARY",
+      "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
+      "candidate": {
+        "candidate_id": "AUTO-1",
+        "title": "Sharp latent-privilege capacity threshold in on-policy self-distillation",
+        "discovery_lane": "UNEXPLAINED_BOUNDARY",
+        "source_branch_id": "",
+        "branch_depth": 0,
+        "empirical_evidence": {
+          "source_a": {
+            "ref": "arXiv:2608.13040",
+            "title": "Latent On-Policy Self-Distillation",
+            "claim": "In LOPD sensitivity analysis on EnvScaler, reward remains near 0.56 with 8 or 16 tokens per experience, rises sharply to 0.637 with 32 tokens, and then fluctuates without consistent gain at 64 and 128 tokens.",
+            "evidence_role": "EMPIRICAL_FACT",
+            "primary_source": true,
+            "primary_url": "https://arxiv.org/abs/2608.13040",
+            "source_sha256": "5286649a98dd8633511961d35fecf5a02c652a3a2cb8c786a509e3e2ea71c864"
+          },
+          "source_b": {
+            "ref": "arXiv:2608.13040",
+            "title": "Latent On-Policy Self-Distillation",
+            "claim": "In the same EnvScaler sensitivity analysis, reward improves from 0.605 with one retrieval to 0.637 with three retrievals, but additional retrievals yield no monotonic benefit.",
+            "evidence_role": "EMPIRICAL_FACT",
+            "primary_source": true,
+            "primary_url": "https://arxiv.org/abs/2608.13040",
+            "source_sha256": "5286649a98dd8633511961d35fecf5a02c652a3a2cb8c786a509e3e2ea71c864"
+          },
+          "relation": "Both items measure LOPD EnvScaler reward under controlled changes to latent privileged context: one varies latent-token capacity and the other varies retrieval count. They jointly show a narrow regime where added latent privilege produces a sharp gain, while adjacent lower and higher regimes do not."
+        },
+        "lane_evidence": {
+          "shared_measurement": "EnvScaler reward under LOPD sensitivity analysis, with default n_ret=3 for the token sweep and token-per-experience setting held at the reported default for the retrieval sweep.",
+          "boundary_observation": "Reward is near 0.56 at 8 and 16 tokens per experience, then jumps to 0.637 at 32 tokens.",
+          "adjacent_regime": "Below the boundary, 8 and 16 tokens remain near 0.56; above it, 64 and 128 tokens fluctuate without consistent gain. A separate retrieval sweep shows improvement from one to three retrievals but no monotonic benefit beyond three.",
+          "unexplained_transition": "The paper reports the sharp 32-token onset and subsequent plateau but does not identify what information becomes representable at 32 tokens or why further latent capacity and retrieval do not continue to help."
+        },
+        "irreducible_object": "A capacity-conditioned privilege sufficiency boundary: the minimum latent-context bandwidth at which a self-teacher can represent enough trajectory-conditioned privileged information to change the student policy, above which additional same-information latent tokens and retrievals are not converted into reward.",
+        "novelty_category": "",
+        "closest_work": {},
+        "closest_work_distance": null,
+        "mature_theory_baselines": [
+          {
+            "name": "Rate-distortion / information bottleneck",
+            "same_information_projection": "Treat latent tokens as a fixed-capacity channel for privileged experience; predict monotone diminishing returns as capacity increases until the relevant sufficient statistic is encoded.",
+            "reduction_test": "This predicts a smooth saturation curve, not a sharp jump from 0.56 at 16 tokens to 0.637 at 32 tokens followed by no consistent gain; it also does not predict why the threshold is localized at 32 tokens for the same retrieved experiences."
+          },
+          {
+            "name": "Retrieval-augmented context utility / redundancy",
+            "same_information_projection": "Treat extra retrievals as redundant evidence and predict that performance improves with useful evidence and plateaus once relevant evidence is present.",
+            "reduction_test": "This can explain the retrieval-count plateau but not the token-capacity discontinuity: the same retrieval set is present across token settings, so redundancy alone cannot explain why 16 tokens are insufficient and 32 tokens become sufficient."
+          }
+        ],
+        "reduction_falsifiability_contract": {},
+        "same_information_nonreducibility": {
+          "claim": "The unresolved object is the transition in representable privileged information at a fixed capacity, not merely diminishing returns from more context.",
+          "why_each_baseline_cannot_express_prediction": "Rate-distortion predicts gradual saturation rather than a sharp threshold under the same information source. Retrieval redundancy predicts plateauing after enough evidence is retrieved but is invariant to latent-token width and therefore cannot predict the 16-to-32 token discontinuity."
+        },
+        "exact_prediction": "For LOPD on EnvScaler, holding model, task set, rollout budget, and retrieval set fixed, reward will remain near the low regime below a critical latent-token width, exhibit a discrete upward step around 32 tokens per experience, and remain statistically indistinguishable from the stepped regime at larger widths; the step will coincide with a measurable change in which prefix-level teacher constraints become jointly encodable rather than with increased retrieval coverage.",
+        "strongest_same_information_baseline": "Rate-distortion / information bottleneck with a fixed sufficient-statistic capacity.",
+        "domain_transfer_audit": {
+          "mature_source_domain": "Information theory and representation learning",
+          "mature_object": "Capacity-constrained encoding and diminishing returns",
+          "why_not_domain_transfer": "The candidate does not merely rename compression or bottleneck theory; it targets an empirically sharp, task-local transition in a self-distillation teacher's latent privileged context that existing monotone saturation theory does not predict under the same information."
+        },
+        "saturation_scan": {
+          "checked": true,
+          "matched_patterns": [],
+          "pending_patterns": [],
+          "rejected_patterns": [
+            {
+              "key": "validation-filter-information-loss",
+              "reason": "The boundary is not a sparse validation or filtering tradeoff; it concerns latent teacher-context capacity and reward under fixed evaluation."
+            },
+            {
+              "key": "self-generated-supervision-information-limit",
+              "reason": "No new theorem about an information ceiling for self-generated supervision is asserted; the anomaly is the sharp onset and plateau of reward as latent privilege capacity changes."
+            },
+            {
+              "key": "artifact-uptake-after-retrieval",
+              "reason": "The issue is not retrieved experience failing to change behavior after retrieval; the retrieval sweep shows uptake up to three retrievals, and the token sweep changes the form of latent context rather than retrieval utilization alone."
+            }
+          ],
+          "invalid_entries": []
+        },
+        "semantic_reduction_review": {
+          "reviewed": false,
+          "block_only": true,
+          "verdict": "BLOCK",
+          "reviewer_model": "",
+          "raw_sha256": "",
+          "source_claims_grounded": false,
+          "source_claim_grounding": {},
+          "lane_contract_verified": false,
+          "lane_contract_reason": "structural-or-provenance-gate-failed",
+          "matched_patterns": [],
+          "strongest_reduction": "structural-or-provenance-gate-failed"
+        },
+        "cheapest_problem_falsifier": "Re-run LOPD on EnvScaler at 8, 16, 24, 32, 48, 64, and 128 latent tokens per experience with multiple seeds, fixed retrievals, and logged teacher-token attention/supervision norms; test whether the 16-to-32 jump disappears into a smooth monotone saturation curve or is explained solely by retrieval-count variation.",
+        "endpoint_headroom_requirement": "A valid problem requires the sharp boundary to survive seed variation and fixed-retrieval controls; if reward increases smoothly with token capacity or the 32-token result is within noise of 16 and 64, the candidate collapses to ordinary diminishing returns.",
+        "importance": "",
+        "likely_iclr_story": ""
+      },
+      "audit": {
+        "schema_version": "2.0",
+        "candidate_id": "AUTO-1",
+        "discovery_lane": "UNEXPLAINED_BOUNDARY",
+        "passed": false,
+        "status": "PROBLEM_GATE_BLOCKED",
+        "blockers": [
+          "invalid-mature-theory-baseline:1",
+          "invalid-mature-theory-baseline:2",
+          "missing-or-empty:reduction_falsifiability_contract",
+          "reduction-falsifiability-contract-incomplete",
+          "semantic-reduction-review-missing"
+        ],
+        "checks": [
+          {
+            "key": "field:candidate_id",
+            "pass": true
+          },
+          {
+            "key": "field:title",
+            "pass": true
+          },
+          {
+            "key": "field:discovery_lane",
+            "pass": true
+          },
+          {
+            "key": "field:empirical_evidence",
+            "pass": true
+          },
+          {
+            "key": "field:lane_evidence",
+            "pass": true
+          },
+          {
+            "key": "field:irreducible_object",
+            "pass": true
+          },
+          {
+            "key": "field:mature_theory_baselines",
+            "pass": true
+          },
+          {
+            "key": "field:reduction_falsifiability_contract",
+            "pass": false
+          },
+          {
+            "key": "field:same_information_nonreducibility",
+            "pass": true
+          },
+          {
+            "key": "field:exact_prediction",
+            "pass": true
+          },
+          {
+            "key": "field:strongest_same_information_baseline",
+            "pass": true
+          },
+          {
+            "key": "field:domain_transfer_audit",
+            "pass": true
+          },
+          {
+            "key": "field:saturation_scan",
+            "pass": true
+          },
+          {
+            "key": "field:cheapest_problem_falsifier",
+            "pass": true
+          },
+          {
+            "key": "field:endpoint_headroom_requirement",
+            "pass": true
+          },
+          {
+            "key": "field:semantic_reduction_review",
+            "pass": true
+          },
+          {
+            "key": "field:authority",
+            "pass": true
+          },
+          {
+            "key": "discovery-lane-contract",
+            "pass": true,
+            "lane": "UNEXPLAINED_BOUNDARY"
+          },
+          {
+            "key": "primary-source-1",
+            "pass": true,
+            "role": "EMPIRICAL_FACT"
+          },
+          {
+            "key": "primary-source-2",
+            "pass": true,
+            "role": "EMPIRICAL_FACT"
+          }
+        ],
+        "policy": {
+          "schema_version": "2.2",
+          "multi_lane_discovery_required": true,
+          "contradiction_first_required": false,
+          "contradiction_lane_retained": true,
+          "allowed_discovery_lanes": [
+            "CONTRADICTION",
+            "CONVERGENT_FAILURE",
+            "ASSUMPTION_BREAK",
+            "UNEXPLAINED_BOUNDARY"
+          ],
+          "search_portfolio_primitives": [
+            "CONTRADICTION",
+            "CONVERGENT_FAILURE",
+            "ASSUMPTION_BREAK",
+            "UNEXPLAINED_BOUNDARY",
+            "IDENTIFIABILITY_GAP",
+            "MISSING_DECISION_OBJECT",
+            "COMPOSITION_INTERACTION",
+            "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+            "NEW_CAPABILITY_QUESTION",
+            "LONGITUDINAL_EMERGENCE"
+          ],
+          "forbidden_discovery_lanes": [
+            "MISSING_CELL",
+            "SHARED_LIMITATION",
+            "PURE_TOPIC_BRAINSTORM"
+          ],
+          "lane_specific_machine_evidence_contract_required": true,
+          "search_portfolio_required": false,
+          "search_portfolio_is_shadow_only": true,
+          "search_portfolio_cannot_publish_canonical_generator_or_queue": true,
+          "one_content_addressed_pool_allows_at_most_one_live_generator_call": true,
+          "one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator": true,
+          "source_coverage_saturation_reopens_once_on_operator_change": true,
+          "expansion_reduction_separated": true,
+          "mature_theory_veto_delayed_until_formulated_branch": true,
+          "diversity_archives_required": true,
+          "branch_lineage_required": true,
+          "reduction_falsifiability_contract_required": true,
+          "generic_theory_label_cannot_veto": true,
+          "two_grounded_evidence_items_required": true,
+          "same_primary_source_can_supply_multiple_evidence_items_when_lane_minimum_is_one": true,
+          "distinct_primary_source_minimum_is_lane_specific": true,
+          "single_source_anomaly_first_search_enabled": true,
+          "primary_anomaly_can_trigger_controlled_residual_search_without_cross_paper_metric_match": true,
+          "support_feasibility_is_search_priority_not_novelty_authority": true,
+          "principle_dead_end_inversion_search_enabled": true,
+          "dead_end_inversion_requires_certified_counter_explanation": true,
+          "dead_end_inversion_is_search_prior_not_scientific_authority": true,
+          "dead_end_inversion_requires_fresh_primary_grounding": true,
+          "dead_end_inversion_must_satisfy_recorded_reopen_condition": true,
+          "first_party_inversion_asset_grounding_enabled": true,
+          "first_party_inversion_asset_requires_provenance_manifest": true,
+          "first_party_inversion_asset_is_zero_authority_search_evidence": true,
+          "first_party_inversion_asset_requires_one_direct_seed_per_shard": true,
+          "observed_dependency_graph_is_not_an_identifiability_gap": true,
+          "reciprocal_coupling_claim_requires_downstream_residual_beyond_distribution_shift": true,
+          "feedback_mechanism_requires_causal_write_path_before_experiment": true,
+          "positive_residual_search_enabled": true,
+          "positive_residual_asset_requires_provenance_manifest": true,
+          "positive_residual_asset_is_zero_authority_search_evidence": true,
+          "positive_residual_requires_surviving_phenomenon_and_clean_mechanism_stop": true,
+          "positive_residual_requires_prospective_pre_outcome_prediction": true,
+          "positive_residual_outcome_leakage_forbidden": true,
+          "positive_residual_direct_seed_required_in_unexplained_boundary_shard": true,
+          "inactive_search_assets_hidden_from_generator": true,
+          "inactive_search_assets_remain_provenance_archived": true,
+          "no_active_asset_fallback_requires_latest_primary_quantitative_anomaly": true,
+          "fresh_phenomenon_seed_must_name_measured_boundary_or_failure": true,
+          "fresh_phenomenon_asset_readiness_is_priority_not_novelty_authority": true,
+          "fresh_phenomenon_missing_substrate_is_hold_not_scientific_fail": true,
+          "fresh_phenomenon_recent_window_source_coverage_required": true,
+          "fresh_phenomenon_shard_has_deterministic_target_ref": true,
+          "fresh_phenomenon_seed1_must_match_target_ref": true,
+          "temporal_exposure_relabeling_after_longitudinal_reduction_forbidden": true,
+          "treatment_semantics_seed_requires_executable_version_change": true,
+          "treatment_semantics_seed_requires_versioned_treatment_reduction_first": true,
+          "discovery_operator_version": "fresh-phenomenon-source-coverage-v11",
+          "shared_limitation_without_empirical_failure_forbidden": true,
+          "pure_topic_brainstorm_forbidden": true,
+          "open_world_missing_cell_claim_forbidden": true,
+          "two_mature_theory_baselines_required": true,
+          "same_information_nonreducibility_required": true,
+          "domain_transfer_veto_required": true,
+          "saturation_map_check_required": true,
+          "problem_falsifier_required_before_method_design": true,
+          "reduction_pending_is_provisional_not_failed": true,
+          "bounded_first_party_evidence_acquisition_allowed_before_problem_gate_pass": true,
+          "support_inventory_is_one_evidence_route_not_global_prerequisite": true,
+          "first_party_evidence_cannot_auto_certify_novelty": true,
+          "endpoint_headroom_required_before_terminal_interpretation": true,
+          "independent_reviewer_must_verify_lane_contract": true,
+          "no_lane_specific_downstream_relaxation": true,
+          "ai_generation_is_advisory_only": true,
+          "zero_survivors_is_valid": true,
+          "method_design_authorized_by_problem_gate": false,
+          "local_validation_authorized_by_problem_gate": false,
+          "p0_authorized_by_problem_gate": false,
+          "gpu_authorized_by_problem_gate": false
+        },
+        "authority": {
+          "paper_design_eligible_for_human_review": false,
+          "method_design": false,
+          "experiment_blueprint": false,
+          "local_validation": false,
+          "p0": false,
+          "gpu": false,
+          "full_experiment": false
+        }
+      },
+      "paper_design_eligible": false,
+      "authority": {
+        "method_design": false,
+        "experiment_blueprint": false,
+        "local_validation": false,
+        "p0": false,
+        "gpu": false,
+        "full_experiment": false
+      }
+    }
+  ],
   "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry.",
-  "discovery_transaction_id": "3458f770f86c88adc83aea2998e5c40d0440c813b13328cf267947c5906140b2",
+  "discovery_transaction_id": "9fa9d8eb7f0c63ad1223549e68c2a1ea0f939decd8497c28a32727497c66a488",
   "discovery_transaction_role": "queue"
 }
