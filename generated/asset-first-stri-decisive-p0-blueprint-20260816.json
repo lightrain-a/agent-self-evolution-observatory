@@ -3,9 +3,9 @@
   "candidate_id": "skill-taxonomy-representation-invariance",
   "paper_id": "STRI",
   "stage": "DECISIVE_P0_BLUEPRINT",
-  "execution_status": "SUBSTRATE_HOLD_RUNTIME_AND_RESOURCE",
+  "execution_status": "READY_EXCEPT_GPU_RESOURCE_BUSY",
   "execution_authorized": false,
-  "primary_scientific_question": "Under a faithful first-party self-evolution workflow, does a semantics-preserving taxonomy reparameterization change an end-of-evolution control/outcome quantity, and does Support-Quotient Control remove that dependence beyond the strongest decision-time-matched baseline?",
+  "primary_scientific_question": "Under a faithful first-party self-evolution workflow, does a semantics-preserving taxonomy reparameterization change an end-of-evolution control/outcome quantity, and can support-quotient control remove that dependence while preserving semantic coverage, verified evolution utility, and the matched proposer/validator call budget? The pre-context single-package baseline class is already analytically reduced.",
   "claim_lock": {
     "C1_control_plane_representation_sensitivity": "already supported",
     "C2_global_reduction_insufficiency": "already supported",
@@ -35,10 +35,15 @@
       "generation_config_sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
       "safetensors_files": 5,
       "safetensors_total_bytes": 16381516776,
-      "vllm_runtime_found": false,
+      "vllm_runtime_found": true,
+      "vllm_runtime": "/data/lry/vllm-envs/qwen3-14b-vllm-0.19.1/bin/python",
+      "author_repo_mirrored_exact_commit": true,
+      "author_repo_path": "/data/wyt/skill-self-play-stri-p0-20260816",
+      "p0a_substrate_preflight_pass": true,
+      "p0a_independent_operationalization_review": "CLEAR_FOR_EXECUTION",
       "gpu": "A100-SXM4-80GB",
       "latest_gpu_utilization_percent": 100,
-      "latest_gpu_memory_used_mib": 67436,
+      "latest_gpu_memory_used_mib": 57480,
       "execution_ready": false
     },
     "host_69": {
@@ -74,12 +79,12 @@
   "treatments": [
     "Original released taxonomy/control state",
     "A preregistered semantics-preserving taxonomy refinement/overlap reparameterization with no new executable support",
-    "The same transformed state controlled by SQC",
-    "The same transformed state controlled by the strongest decision-time-matched generic baseline"
+    "The same transformed state controlled by the support-quotient semantic target, realized through the shared faithful validator-gated/rejection backend under a matched call budget"
   ],
   "strongest_same_information_baselines": {
-    "upstream": "Generic pre-context controller with identical library, support fingerprints, quality/exploration statistics, clone quotient information, and sampling budget; may optimize arbitrary global/support-aware package weights but may not observe the not-yet-generated task.",
-    "post_context": "Context-conditioned neural/simplex router with identical task context, support fingerprints, quality/outcome evidence, exact-clone quotient preprocessing, capacity, and fixed budget."
+    "upstream_single_package_class": "CLOSED BY DECISION-TIME REDUCTION: because the released workflow selects exactly one package before task generation, every same-information randomized pre-context controller induces only a categorical package-weight vector. The released support graph gives a tight max/min exposure lower bound of 2.0 for this entire class.",
+    "upstream_realization": "SHARED NON-NOVEL BACKEND: matched support-conditioned validator-gated/rejection realization using the identical frozen support target, proposer, validators, semantic coverage requirement, and proposer/validator call budget. The paper does not claim a specialized realization algorithm beyond this backend.",
+    "post_context_optional": "For retrieval/credit extensions only, a context-conditioned neural/simplex router with identical task context, support fingerprints, quality/outcome evidence, exact-clone quotient preprocessing, capacity, and fixed budget. This is not the primary upstream P0 baseline."
   },
   "primary_outcomes": [
     "distance between original and transformed end-of-step/end-of-evolution semantic control distributions",
@@ -88,15 +93,15 @@
     "downstream task/environment success where available under the same frozen run"
   ],
   "go_stop": {
-    "mechanism_and_method_survive": "Native controller is representation-sensitive under a qualified faithful run; SQC materially reduces the matched transformation distance while preserving coverage/utility; strongest valid same-information baseline leaves a preregistered residual.",
-    "method_reducible": "A strongest valid same-information baseline matches SQC on invariance and utility/cost; stop standalone SQC and retain STRI only as a diagnostic/scientific principle.",
+    "mechanism_and_method_survive": "Native controller is representation-sensitive under a qualified faithful run; quotient control materially reduces the preregistered transformation distance while preserving semantic coverage, verified evolution utility, and matched proposer/validator call budget.",
+    "method_operationally_insufficient": "Quotient control reaches invariance only by exceeding the matched call budget, losing semantic coverage, or reducing verified evolution utility beyond tolerance; retain STRI problem/theory but stop or redesign the current method.",
     "dynamic_problem_weakens": "A qualified faithful native controller shows no meaningful representation effect under the preregistered transformation; stop C4 and do not scale the paper as a dynamic-harm claim.",
     "invalid": "Any provenance, parser/contract qualification, runtime, or support failure prevents scientific update."
   },
   "current_blockers": [
-    "No existing vLLM environment found on host 231 for the author-released generation path.",
-    "Host 231 A100 is currently fully utilized by unrelated work.",
-    "No alternative host simultaneously has the author-published Qwen3 checkpoint and faithful runtime; moving/installing assets solely to rescue execution is not authorized."
+    "Host 231 A100 is currently fully utilized by unrelated Aegis work; preemption is not authorized."
   ],
-  "next_action": "Do not execute P0 yet. Reopen execution only when a faithful existing runtime/substrate becomes available or an independent operationalization review clears a strictly equivalent runtime without changing backbone, prompts, decoding, thresholds, or truth."
+  "p0a_frozen_contract": "generated/asset-first-stri-qwen3-merge-split-p0a-contract-20260816.json",
+  "p0a_preflight_receipt": "generated/asset-first-stri-qwen3-merge-split-p0a-preflight-20260816.json",
+  "next_action": "Launch the exact frozen Qwen3-8B P0-A once on host 231 when the unrelated GPU workload releases the resource gate. Do not redesign, retune, move to another backbone, or generate a second bank before this run resolves."
 }

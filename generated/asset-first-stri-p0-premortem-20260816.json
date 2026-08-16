@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "review_kind": "independent-decisive-p0-premortem-after-controller-class-reduction",
+  "verdict": "REVISE_METHOD_OR_P0",
+  "controller_class_reduction_valid": true,
+  "controller_class_reason": "At frozen pre-task state, sample_skill selects exactly one package from a fixed action space using only pre-task information; any randomized same-information controller therefore reduces pointwise to a categorical package-weight vector p(s), which falls into the nonnegative global package-weight class already bounded by the 2.0 max/min exposure ratio via the two mandatory-overlap witnesses. No neural/bandit/rule capacity can escape this bound without changing the action space or using post-decision information.",
+  "remaining_strongest_baseline": "matched validator-gated rejection realization with the same support target, proposer, validators, semantic coverage requirement, and proposer/validator call budget",
+  "method_narrowing": "Do not claim a specialized upstream realization algorithm. Treat validator-gated/rejection realization as a shared non-novel backend. Retain only support-quotient semantic mass allocation and quotient credit/conservation as the method core; if that core cannot be realized at matched coverage/call budget on a faithful author workflow, the method fails.",
+  "revised_decisive_p0": "On one preregistered faithful author-published Skill-SP backbone/workflow, first establish qualified native taxonomy-representation sensitivity under a semantics-preserving transformation. Then replace package-indexed control mass with the frozen support-quotient target while using validator-gated/rejection realization under the same total proposer/validator call budget and semantic coverage requirement. GO only if quotient control reduces the preregistered transformation distance while retaining coverage and bounded evolution utility/cost. STOP if native sensitivity is absent, quotient realization exceeds the matched budget/loses coverage, or a package-only control matches despite the structural theorem assumptions being satisfied.",
+  "p0_stop_if": [
+    "native faithful controller shows no meaningful representation sensitivity",
+    "quotient control cannot be realized within the matched proposer/validator call budget",
+    "quotient control reduces semantic coverage or verified evolution utility beyond the frozen tolerance",
+    "the frozen support fingerprints use information unavailable at the upstream decision time",
+    "substrate/operationalization qualification fails"
+  ],
+  "p0_go_if": "Native controller is representation-sensitive and quotient control, using the shared rejection backend, meets the frozen invariance margin while preserving semantic coverage and matched call/utility constraints.",
+  "claims_allowed_before_p0": ["C1", "C2"],
+  "claims_locked_until_p0": ["C3", "C4"],
+  "provider": {
+    "requested_model": "doubao-seed-2.1-turbo",
+    "resolved_model": "doubao-seed-2-1-turbo-260628",
+    "thinking": "disabled",
+    "scientific_authority": false
+  },
+  "first_provider_attempt": {
+    "status": "PROVIDER_INCOMPLETE_ZERO_AUTHORITY",
+    "reason": "length: all 5000 output tokens consumed as reasoning tokens before assistant output"
+  },
+  "scientific_authority": false,
+  "authority": {
+    "method_execution": false,
+    "p0": false,
+    "gpu": false
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-STRI-QWEN3-MERGE-SPLIT-P0A-20260816",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "status": "READY_EXCEPT_GPU_RESOURCE_BUSY",
+  "contract_sha256": "498fac1a2762aac9377bf39e8b258c0a6fe9e7a70815536c89750854fcfb92b2",
+  "runner_sha256": "ea290b22b9d71fa77bbe2241d65f4e9b3c9d8da38ec738918d61b3352f0e888e",
+  "substrate_preflight_sha256": "7911870e8cae661938b8da6c89855f26719d6d6e4a584c44ad7ec68bf12e86aa",
+  "operationalization_review_sha256": "b0e242cf434c3d0032d170b500801ef0ee66118313ab80af75593a63b945e8cf",
+  "substrate": {
+    "host": "231",
+    "author_repo": "/data/wyt/skill-self-play-stri-p0-20260816",
+    "author_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "model_path": "/data/lry/models/Qwen3-8B",
+    "runtime_python": "/data/lry/vllm-envs/qwen3-14b-vllm-0.19.1/bin/python",
+    "vllm": "0.19.1",
+    "torch": "2.10.0+cu130",
+    "transformers": "5.14.1",
+    "preflight_pass": true,
+    "preflight_checks_passed": 29,
+    "preflight_checks_total": 29,
+    "validator_count": 15,
+    "source_prompt_count": 3,
+    "gpu_work_started_by_preflight": false
+  },
+  "independent_review": {
+    "verdict": "CLEAR_FOR_EXECUTION",
+    "scientific_object_preserved": true,
+    "no_mechanism_bake_in": true,
+    "independent_truth_valid": true,
+    "matched_bank_isolation_valid": true,
+    "thresholds_valid": true,
+    "resolved_model": "doubao-seed-2-1-turbo-260628",
+    "scientific_authority": false
+  },
+  "resource_gate": {
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "latest_memory_used_mib": 57480,
+    "latest_memory_free_mib": 23672,
+    "latest_utilization_percent": 100,
+    "active_unrelated_processes": [
+      {"pid": 499903, "used_memory_mib": 16048, "process": "/home/lry/miniconda3/envs/aegis/bin/python"},
+      {"pid": 542346, "used_memory_mib": 41404, "process": "/home/lry/miniconda3/envs/aegis/bin/python"}
+    ],
+    "resource_ready": false,
+    "preemption_authorized": false
+  },
+  "execution_authorized": false,
+  "execution_reopen_condition": "Launch the exact frozen P0-A once on host 231 only after the unrelated GPU workload releases sufficient memory/utilization. Do not change contract, runner, backbone, thresholds, prompts, decoding, source counts, or truth before launch.",
+  "paper_design_authorized_by_this_receipt": false,
+  "method_authorized": false,
+  "p0_authorized": false,
+  "gpu_authorized": false,
+  "scientific_authority": false
+}

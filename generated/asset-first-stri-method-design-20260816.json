@@ -38,8 +38,8 @@
     },
     {
       "step": 4,
-      "name": "Realize upstream generation",
-      "description": "For generative curricula, the selected support atom must constrain realization rather than collapse back to an unconstrained global package draw. Allowed realizations are a first-party support-conditioned proposer interface if available, or validator-gated/rejection realization under a preregistered call budget. If neither exists, upstream SQC is not operationally identified on that substrate."
+      "name": "Realize upstream generation with a shared non-novel backend",
+      "description": "For generative curricula, the selected support atom must constrain realization rather than collapse back to an unconstrained global package draw. Use a first-party support-conditioned proposer interface if the author exposes one; otherwise use validator-gated/rejection realization under a preregistered matched call budget. This realization backend is not claimed as novel. If neither faithful backend exists, upstream quotient control is not operationally identified on that substrate."
     },
     {
       "step": 5,
@@ -60,17 +60,19 @@
       "status": "already falsified on released Skill-SP support matrix for exact exposure equalization; optimum max/min ratio=2.0"
     },
     {
-      "name": "generic-pre-context-controller",
+      "name": "generic-pre-context-single-package-controller",
       "surface": "upstream",
       "information": "same library/support fingerprints/quality-exploration stats and sampling budget; no future task lookahead",
-      "stop_rule": "If a generic pre-context controller matches SQC under the same transformation and utility/cost budget, stop standalone SQC."
+      "status": "CLOSED_BY_DECISION_TIME_REDUCTION",
+      "reduction": "Released Skill-SP selects exactly one package before task generation. Any randomized same-information controller therefore induces only a categorical package-weight vector at the frozen state, so the tight global-weight lower bound applies to the full rule/MLP/bandit/neural single-package class."
     },
     {
       "name": "matched-validator-rejection-sampling",
       "surface": "upstream realization",
       "information": "same target support atom and same first-party validators",
-      "budget": "same proposer/validator call budget as SQC",
-      "stop_rule": "If simple rejection sampling matches SQC representation invariance, semantic coverage, evolution utility, and call efficiency at matched budget, the specialized realization component is unnecessary."
+      "budget": "same proposer/validator call budget as quotient control",
+      "status": "SHARED_NON_NOVEL_REALIZATION_BACKEND",
+      "role": "Use rejection sampling as the default generic realization implementation when no native support-conditioned proposer exists. Do not claim a specialized SQC realization advantage over this backend."
     },
     {
       "name": "context-conditioned-simplex-router",
@@ -85,15 +87,15 @@
     "Support-quotient invariance proposition under exact support-equivalence and a frozen semantic support measure.",
     "Credit conservation proposition: total semantic credit is invariant to implementation split when responsibility weights sum to one."
   ],
-  "method_success_condition": "SQC must produce a residual over every valid same-information baseline on a qualified real/public dynamic substrate. Control-plane invariance alone is not enough for C3; dynamic/end-of-evolution evidence is required.",
+  "method_success_condition": "The support-quotient control core must remove the qualified native taxonomy sensitivity on a real/public dynamic substrate while using a faithful shared realization backend, preserving semantic coverage and staying within the matched proposer/validator call and evolution-utility budget. Control-plane algebra alone is not enough for C3.",
   "method_failure_conditions": [
-    "generic pre-context controller matches SQC",
-    "matched rejection sampling matches SQC at the same proposer/validator budget",
-    "contextual router matches SQC on post-context surfaces",
     "faithful qualified native dynamic substrate shows no representation sensitivity",
-    "SQC obtains invariance only by reducing semantic coverage or consuming materially more information/calls"
+    "support-quotient control cannot be realized within the matched proposer/validator call budget",
+    "support-quotient control obtains invariance only by reducing semantic coverage or verified evolution utility",
+    "the support fingerprints or quotient prior use information unavailable at the upstream decision time",
+    "contextual router matches the optional post-context retrieval/credit extension, in which case that extension is dropped"
   ],
   "scientific_authority": false,
   "authority": {"method_execution": false, "p0": false, "gpu": false},
-  "next_action": "Freeze one faithful author-workflow P0 only after substrate/runtime preflight and an independent operationalization review. Do not train SQC or run paper-scale experiments before that gate."
+  "next_action": "Freeze one faithful author-workflow P0 in which rejection/validator gating is a shared backend, not a competing claimed method. Test only native taxonomy sensitivity plus whether support-quotient control removes it within matched coverage/call/utility constraints. Do not train an upstream neural single-package baseline; that class is already analytically reduced."
 }

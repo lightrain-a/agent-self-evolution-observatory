@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "analysis_type": "decision-time controller-class reduction theorem",
+  "author_asset": {
+    "repo": "/data/wyt/skill-self-play-agent3-20260816",
+    "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "question_generate_sha256": "1b4cb67f36d20d9768e47674dce3b4cc0c74daf27ae476f45c479cef782d739b",
+    "skill_library_sha256": "8441de35078fc4c70880204c46a06856e99cdde7700ff859097032065e2756e0"
+  },
+  "verified_causal_order": "sample one skill package before build_questioner_messages(skill); the generated task therefore does not exist at the upstream curriculum decision time",
+  "verified_action_space": "one package identity selected by categorical generator.choices over nonnegative sampling_weights",
+  "same_information_class": {
+    "allowed": [
+      "frozen current skill library/package metadata",
+      "precomputed support/applicability fingerprints",
+      "skill-level quality/exploration/decay statistics",
+      "randomness available before task generation"
+    ],
+    "forbidden": [
+      "future generated task",
+      "post-generation validator outcome",
+      "hidden downstream reward"
+    ]
+  },
+  "theorem": {
+    "name": "Pre-context single-package controller reduction",
+    "statement": "At any frozen pre-task library/statistics state z, every randomized controller that must choose exactly one package before the task exists induces only a categorical probability vector p(s|z). For a released semantic support row x with package-incidence set A(x), its additive package exposure is E_z(x)=sum_{s in A(x)} p(s|z). Therefore, pointwise in z, the full same-information class of pre-context single-package controllers is exactly the nonnegative global package-weight class already audited by the structural lower bound.",
+    "consequence": "Because the released Skill-SP support graph contains 2 mandatory-overlap witness pairs, every such controller has max/min positive semantic-context exposure ratio >= 2.0 on the frozen support graph. Neural capacity, bandit learning, or a more complex rule cannot remove this bound without changing the action space or using post-decision information."
+  },
+  "strongest_reduction_verdict": "PRE_CONTEXT_SINGLE_PACKAGE_CONTROLLER_CLASS_REDUCED_TO_GLOBAL_WEIGHTS",
+  "remaining_method_competitors": [
+    "support-conditioned realization using the same frozen support information",
+    "matched validator-gated/rejection realization with the same proposer/validator call budget",
+    "post-context context-conditioned router for retrieval/credit surfaces"
+  ],
+  "claim_boundary": "This is a control-law/class-reduction result on the released support graph. It does not establish downstream task-performance harm, end-of-evolution utility gain, or that SQC beats matched support-conditioned realization.",
+  "paper_design_authorized": false,
+  "method_execution_authorized": false,
+  "p0_authorized": false,
+  "gpu_authorized": false,
+  "scientific_authority": false
+}

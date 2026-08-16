@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-STRI-QWEN3-MERGE-SPLIT-P0A-20260816",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "stage": "DECISIVE_P0_A_DYNAMIC_PHENOMENON",
+  "purpose": "Faithfully test whether two real mandatory-overlap Skill-SP taxonomy witnesses propagate a semantics-preserving merge-versus-split control reparameterization into the generated task semantic distribution. Generate source-conditioned task banks once and reuse them for every counterfactual arm; no arm-specific model generation is allowed.",
+  "claim_boundary": "P0-A can support or weaken C4 at the dynamic curriculum-distribution level. It does not establish downstream task-performance harm and does not test the SQC method. P0-B may reuse the same qualified raw bank with zero additional model calls if and only if P0-A supports both witness transformations.",
+  "author_asset": {
+    "repo_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "question_generate_sha256": "1b4cb67f36d20d9768e47674dce3b4cc0c74daf27ae476f45c479cef782d739b",
+    "skill_library_sha256": "8441de35078fc4c70880204c46a06856e99cdde7700ff859097032065e2756e0",
+    "tool_prompts_sha256": "4180b75adad460c0dd9cdd915d5d5da63b900fcce051088c1dbf1a215823c738",
+    "tool_parsing_sha256": "289155f1740a33404ae82b9616c393f13461f5394f6dd9d98c6c32aaed14be69",
+    "tool_contracts_sha256": "4360a1f8cb30f1024dfd55b3bc5dc543fd659aae2c9e7e8555c8d05d5cbc304a",
+    "package_hashes": {
+      "skill_003": "e91e75f9326bf55ca2c285d5c8010403178d07bec920b63024fed7d3e0d5ee91",
+      "skill_004": "ac71fc3baaf9d51a286daeba345a616682c42d8c2d951b8f025427c7c427e7fd",
+      "skill_015": "069158b98e771864754cc1b4a829de9b035def722d865363266d9d6d05c72dc2"
+    }
+  },
+  "execution_substrate": {
+    "host": "231",
+    "author_repo": "/data/wyt/skill-self-play-stri-p0-20260816",
+    "model_path": "/data/lry/models/Qwen3-8B",
+    "runtime_python": "/data/lry/vllm-envs/qwen3-14b-vllm-0.19.1/bin/python",
+    "vllm_version": "0.19.1",
+    "torch_version": "2.10.0+cu130",
+    "transformers_version": "5.14.1",
+    "model_hashes": {
+      "config.json": "f7c4eadfbbf522470667b797a3c89be2524832d2d599797248dc304fff447c30",
+      "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+    }
+  },
+  "generation": {
+    "source_skill_ids": ["skill_003", "skill_004", "skill_015"],
+    "samples_per_source": 24,
+    "total_generations": 72,
+    "global_seed": 20260816,
+    "disclosure_level": "full",
+    "max_tokens": 4096,
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "n": 1,
+    "author_prompt_builder": "tool_call.prompts.build_questioner_messages",
+    "author_runtime": "vllm.LLM + vllm.SamplingParams as in released question_generate.py",
+    "arm_specific_generation": false,
+    "training": false
+  },
+  "representation_counterfactuals": {
+    "split": {
+      "control_units": ["skill_003", "skill_004", "skill_015"],
+      "source_mixture_weights": {"skill_003": 0.3333333333333333, "skill_004": 0.3333333333333333, "skill_015": 0.3333333333333333},
+      "justification": "Released reset-stat sampling weights are equal across the three frozen source packages."
+    },
+    "merge_003_015": {
+      "control_units": ["macro(skill_003,skill_015)", "skill_004"],
+      "macro_semantics": "The macro exposes exactly the same two underlying implementation prompts; it adds no implementation or validator support. Conditional implementation responsibility inside the macro is frozen 1/2,1/2.",
+      "source_mixture_weights": {"skill_003": 0.25, "skill_004": 0.5, "skill_015": 0.25},
+      "mandatory_overlap_witness": "skill_003 + skill_015"
+    },
+    "merge_004_015": {
+      "control_units": ["skill_003", "macro(skill_004,skill_015)"],
+      "macro_semantics": "The macro exposes exactly the same two underlying implementation prompts; it adds no implementation or validator support. Conditional implementation responsibility inside the macro is frozen 1/2,1/2.",
+      "source_mixture_weights": {"skill_003": 0.5, "skill_004": 0.25, "skill_015": 0.25},
+      "mandatory_overlap_witness": "skill_004 + skill_015"
+    },
+    "only_treatment": "grouping/mass over the same three frozen implementation-conditioned output banks"
+  },
+  "independent_truth": {
+    "parser": "author tool_call.parsing.parse_task_sample",
+    "contract": "author tool_call.contracts.check_task_sample_contract",
+    "validators": "all 15 released tool_call package validators",
+    "primary_semantic_observable": "sorted full validator skill-ID acceptance pattern for each contract-valid generated task",
+    "secondary_observable": "reference answer function/tool name"
+  },
+  "frozen_released_support_prior_for_p0b_only": {
+    "source": "530-row released API-Bank membership audit; restrict to rows accepted by at least one of skill_003/skill_004/skill_015",
+    "rows": 314,
+    "atom_counts": {
+      "skill_015": 221,
+      "skill_004+skill_015": 36,
+      "skill_003+skill_015": 35,
+      "skill_003": 17,
+      "skill_004": 5
+    },
+    "selection_reads_p0a_generation_outcomes": false,
+    "p0a_does_not_use_this_prior_for_gating": true
+  },
+  "qualification_gate": {
+    "contract_valid_per_source_min": 16,
+    "failure_disposition": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED; no scientific belief update"
+  },
+  "per_witness_dynamic_gate": {
+    "validator_pattern_tv_distance_min": 0.05,
+    "validator_pattern_tv_bootstrap_lower95_min": 0.025,
+    "max_single_pattern_probability_shift_min": 0.04,
+    "bootstrap_replicates": 2000,
+    "threshold_provenance": "identical to the preregistered thresholds in the invalid Qwen2.5 F0; not tuned after Qwen3 outcomes"
+  },
+  "decision_rule": {
+    "GO": "qualification passes and BOTH merge_003_015 vs split and merge_004_015 vs split pass all three dynamic gates",
+    "STOP": "qualification passes and NEITHER witness passes all three dynamic gates",
+    "INCONCLUSIVE": "qualification passes and exactly one witness passes all three dynamic gates",
+    "INVALID": "qualification fails or provenance/hash/runtime contract fails"
+  },
+  "budget": {
+    "gpu_count": 1,
+    "gpu_hours_cap": 0.75,
+    "wall_minutes_cap": 45,
+    "model_loads": 1,
+    "model_generations": 72,
+    "training_steps": 0,
+    "second_backbone": 0
+  },
+  "next_if_go": "Freeze the raw generation bank and run P0-B support-quotient/rejection feasibility with zero additional model calls. Do not generate a second bank.",
+  "next_if_stop": "Stop C4 dynamic propagation on this faithful Skill-SP local P0 and do not rescue by another backbone; retain C1/C2 control-plane/theory only.",
+  "next_if_inconclusive": "Do not tune thresholds or add samples automatically. Human/paper-design review decides whether one-witness support is sufficient or the dynamic claim remains locked.",
+  "authority": {
+    "execution_authorized": false,
+    "paper_design_authorized_by_this_contract": false,
+    "method_authorized": false,
+    "p0_authorized": false,
+    "second_backbone_authorized": false
+  },
+  "scientific_authority": false
+}
