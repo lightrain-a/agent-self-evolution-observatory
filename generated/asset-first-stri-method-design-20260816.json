@@ -5,7 +5,7 @@
   "stage": "METHOD_DESIGN",
   "method_name": "Support-Quotient Control (SQC)",
   "method_authorized_for_execution": false,
-  "mechanism": "Artifact-identity mass is not invariant to taxonomy refinement. In a partial-overlap support hypergraph, no context-independent package-weight vector can generally preserve all support while making semantic-context exposure invariant. Therefore a representation-invariant controller must factor through semantic support before assigning mass/credit to package implementations.",
+  "mechanism": "Artifact-identity mass is not invariant to package duplication/grouping over a fixed content-addressed primitive semantic basis. In a partial-overlap primitive support hypergraph, no pre-context single-package additive-mass controller can preserve all exclusive support while equalizing support-cell exposure. Therefore a representation-invariant controller must factor through a taxonomy-independent quotient of semantic context space before mapping mass/credit back to the current package representation.",
   "decision_time_information_contract": {
     "upstream_curriculum": [
       "current skill library/package metadata",
@@ -23,8 +23,8 @@
   "algorithm": [
     {
       "step": 1,
-      "name": "Build support quotient",
-      "description": "From the frozen task/support incidence matrix, collapse exact support-equivalent implementations and form support atoms/cells whose identity depends on semantic applicability rather than package count. The P0 uses exact first-party validator support only; no learned similarity threshold is tuned on outcomes."
+      "name": "Freeze primitive basis and build the support quotient",
+      "description": "Identify primitive implementations by content-addressed semantic-contract fingerprints that exclude mutable stats. Freeze each primitive support predicate V_u from its first-party validator. Define x ~_U x' iff every frozen primitive validator gives the same support bit on x and x'; the support cells are the quotient C_U=X/~_U. Package IDs/grouping do not enter this equivalence relation, and no learned similarity threshold is tuned on outcomes."
     },
     {
       "step": 2,
@@ -33,8 +33,8 @@
     },
     {
       "step": 3,
-      "name": "Choose implementation conditionally",
-      "description": "Within an atom, distribute its unit mass among compatible implementations using only the same pre-decision quality/exploration evidence available to baselines; member responsibilities sum to one."
+      "name": "Choose primitive implementation conditionally",
+      "description": "Within a support cell c, distribute its unit mass among compatible content-addressed primitives u in sigma_U(c) using only the same pre-decision quality/exploration evidence available to baselines; primitive responsibilities sum to one. The current taxonomy then only wraps/groups those unchanged primitives."
     },
     {
       "step": 4,
@@ -49,7 +49,7 @@
     {
       "step": 6,
       "name": "Transformation audit",
-      "description": "Before scale-up, apply frozen semantics-preserving clone/split/merge/overlap transformations and require the SQC control process to remain within preregistered representation-distance tolerance while semantic coverage is unchanged."
+      "description": "Before scale-up, apply only the claimed semantics-preserving representation transformations over the frozen primitive set: identity duplication and package grouping/ungrouping. Require the realized support-cell control process to remain within preregistered distance tolerance while primitive content/support and semantic coverage remain unchanged. Do not claim arbitrary semantic decomposition of a primitive into new subskills."
     }
   ],
   "strongest_same_information_baselines": [
@@ -82,10 +82,11 @@
     }
   ],
   "formal_targets": [
-    "Refinement-dependence lemma for positive artifact-ID mass.",
-    "Tight partial-overlap lower bound: if two active packages each have an exclusive-support context and share an overlap context, then every nonnegative context-independent package-weight controller has max/min context exposure ratio >=2. The released Skill-SP graph supplies two witnesses and the LP optimum equals 2.",
-    "Support-quotient invariance proposition under exact support-equivalence and a frozen semantic support measure.",
-    "Credit conservation proposition: total semantic credit is invariant to implementation split when responsibility weights sum to one."
+    "Content-addressed primitive-basis definition and representation channel: package selection p_T(s|z) plus within-package responsibility rho_T(u|s,z) induces normalized primitive mass m_T(u|z).",
+    "Tight mandatory-overlap lower bound on additive eligibility exposure E_T(c|z)=sum_{u in sigma_U(c)}m_T(u|z): two exclusive cells plus one shared cell force max/min >=2. The released Skill-SP graph supplies two witnesses and the LP optimum equals 2.",
+    "Frozen-state decision-time reduction: every randomized same-information controller choosing exactly one package before task generation induces a categorical p_T(s|z) pointwise in z; this does not identify a whole longitudinal adaptive policy.",
+    "Support-quotient invariance proposition on C_U=X/~_U, where equal frozen primitive support signatures define the equivalence relation. Exact clones/grouping cannot create new quotient cells.",
+    "Credit conservation proposition: total semantic credit is invariant to package duplication/grouping when primitive responsibility weights sum to one."
   ],
   "method_success_condition": "The support-quotient control core must remove the qualified native taxonomy sensitivity on a real/public dynamic substrate while using a faithful shared realization backend, preserving semantic coverage and staying within the matched proposer/validator call and evolution-utility budget. Control-plane algebra alone is not enough for C3.",
   "method_failure_conditions": [

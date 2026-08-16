@@ -8,8 +8,8 @@
   "canonical_live_problem_gate_mutated": false,
   "problem": {
     "scientific_object": "The control law of a self-evolving skill system under semantics-preserving reparameterizations of its evolving skill taxonomy.",
-    "paper_problem": "Self-evolving agents commonly treat skill package identities as the units of curriculum sampling, fixed-budget retrieval, feedback credit, refinement, and admission. If two taxonomies expose the same executable semantic support but differ only in how that support is split, cloned, merged, or partially overlapped across package identities, should the future evolution process change? Existing controllers can change solely because categorical package multiplicity changes, even when no capability is added.",
-    "exact_prediction": "For package-indexed self-evolution controllers, semantics-preserving taxonomy transformations can change control exposure/retrieval composition/update credit despite unchanged semantic support. This dependence persists after text/semantic clone dedup, exact-coverage whole-package pruning, and arbitrary context-independent global package reweighting when the support hypergraph contains irreducible partial overlap.",
+    "paper_problem": "Self-evolving agents commonly treat skill package identities as the units of curriculum sampling, fixed-budget retrieval, feedback credit, refinement, and admission. Fix a content-addressed primitive implementation/support basis. If two package taxonomies expose exactly the same frozen primitives and support predicates but differ only by identity duplication or package grouping/ungrouping, should the future evolution process change? Existing controllers can change solely because categorical package multiplicity/grouping changes, especially when the frozen primitive supports partially overlap, even though no capability is added.",
+    "exact_prediction": "For package-indexed self-evolution controllers, semantics-preserving identity duplication and package grouping/ungrouping over a fixed primitive semantic basis can change control exposure/retrieval composition/update credit despite unchanged primitive support. This dependence persists after text/exact-clone dedup, exact-coverage whole-package pruning, and arbitrary context-independent global package reweighting when the frozen primitive support hypergraph contains irreducible partial overlap.",
     "prediction_unit": "A matched pair of taxonomy states connected by a semantics-preserving transformation, evaluated on the same task/support universe, quality/outcome evidence, control budget, and evolution operator.",
     "independent_truth": "First-party author support/applicability validators and environment/program task outcomes. No LLM judge defines the STRI treatment or primary correctness label.",
     "prohibited_claims": [
@@ -92,11 +92,11 @@
     "principle_to_method_derivation": "Because the mechanism is identity-counting over an overlapping support hypergraph, the controller must factor through semantic support before assigning mass to implementations. The method therefore moves curriculum, retrieval-budget, and update-credit allocation from package identities to support atoms/quotient classes, then chooses among implementations conditionally.",
     "components": [
       "Support fingerprint: estimate each skill's applicability/support on exactly the same observable context/task evidence available to the strongest baseline; no private outcome features.",
-      "Exact-support quotient: collapse exact/near-identical support implementations into one semantic class so clones cannot consume extra curriculum or retrieval mass.",
+      "Frozen primitive-support quotient: identify primitive implementations by content-addressed semantic-contract fingerprints, freeze their support predicates, and quotient semantic context space by equality of the resulting primitive support signatures. Current package IDs/grouping do not define the quotient.",
       "Context/support-first allocation: allocate one normalized control mass to semantic contexts/support atoms before selecting a compatible skill implementation, preventing generic+specific overlap multiplicity from multiplying context exposure.",
       "Conditional implementation selection: within a semantic support atom, select among compatible implementations using frozen quality/utility evidence; the total atom mass remains one regardless of representation multiplicity.",
       "Quotient credit: aggregate feedback at semantic-support level and distribute responsibility within the compatible implementation set with weights summing to one, so splitting an implementation cannot multiply future update credit.",
-      "Transformation audit: expose a representation-invariance diagnostic by applying semantics-preserving split/clone/merge transformations to the frozen taxonomy and measuring control-law distance before any expensive end-to-end run."
+      "Transformation audit: apply only the claimed representation transformations over the frozen primitive set—identity duplication and package grouping/ungrouping—and measure control-law distance before expensive end-to-end runs. Do not claim arbitrary semantic decomposition of a primitive into new subskills."
     ],
     "method_stop_rule": "STOP standalone SQC if a generic controller with the identical information available at the same decision time matches SQC on taxonomy-transformation invariance and held-out evolution utility. For upstream curriculum sampling this baseline may use the frozen library/support fingerprints/quality-exploration statistics but not post-generation task context; for post-context retrieval/credit, a context-conditioned simplex/router is required as the strongest baseline. In either case, if the generic baseline matches, STRI remains a diagnostic principle but not a novel method.",
     "not_method": [
@@ -169,7 +169,7 @@
     "systems": "at least two released self-evolving skill systems with independent support/outcome truth",
     "transformations": [
       "exact semantic clone",
-      "support-preserving split/refinement",
+      "identity duplication or package grouping/ungrouping over the same frozen primitive basis",
       "support-preserving merge/coarsening where implementation semantics can be held fixed",
       "irreducible partial-overlap reparameterization"
     ],
@@ -197,6 +197,14 @@
       "no partial-overlap normalization",
       "support-fingerprint quality/sparsity sensitivity"
     ]
+  },
+  "theory_freeze": {
+    "contract": "generated/asset-first-stri-theory-contract-20260816.json",
+    "independent_review": "generated/asset-first-stri-theory-review-20260816.json",
+    "review_verdict": "CLEAR_THEORY",
+    "primitive_identity": "content-addressed immutable semantic-contract fingerprint excluding mutable stats/package IDs",
+    "claimed_transformations": "identity duplication and package grouping/ungrouping over the unchanged primitive basis only",
+    "longitudinal_utility_from_static_theory": false
   },
   "full_experiment_freeze": {
     "tool_disjoint_split": "generated/asset-first-stri-tool-disjoint-split-20260816.json",

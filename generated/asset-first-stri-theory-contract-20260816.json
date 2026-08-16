@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "stage": "THEORY_CONTRACT_REVISED_AFTER_INDEPENDENT_PREMORTEM",
+  "primitive_basis": {
+    "definition": "A primitive is a content-addressed executable semantic contract, not a package ID. Its fingerprint is computed from immutable skill content, examples/generator hints, rules/solver rules, validator implementation and validator specification, excluding mutable sampling/evolution statistics.",
+    "author_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "primitives": {
+      "u_003": {
+        "semantic_contract_fingerprint": "3f43a8409cdea938c4c5781fdfc39e0845360c4d6b618d61cade8d37ef6539f8",
+        "validator_sha256": "2659fe2aed14315a05d453442c21852d91f640a7832cdd2b8b2fb4beaa955199"
+      },
+      "u_004": {
+        "semantic_contract_fingerprint": "4e5bac021bbf21bf653f21901243e7f29bf15a465e2517f0c83fb448145291f2",
+        "validator_sha256": "b8fee2e976c18bee92cb4048b4987f0ae2b66a6738592eb7aa4b86f08467c6c9"
+      },
+      "u_015": {
+        "semantic_contract_fingerprint": "42317749dc9f64cd7c59870efe6265ffdd6bb712c9aa7cac100a4c8ba25bb86d",
+        "validator_sha256": "3d0444f5f965183f27e57dad96700429b7b61b1ba36c59cdb94af98ddc26c320"
+      }
+    },
+    "support_predicate": "For each content-addressed primitive u, V_u(x)=1 iff its frozen first-party validator accepts semantic task/context x under the released contract. A_u={x:V_u(x)=1}.",
+    "independence_from_taxonomy": "Package names/IDs do not enter primitive fingerprints or V_u. A taxonomy transformation in the claimed class cannot modify primitive content, validator code, or A_u."
+  },
+  "taxonomy_representation": {
+    "definition": "A taxonomy T is a finite set of control package identities S_T together with a grouping relation M_T(s) subseteq U saying which frozen primitives are exposed by package s.",
+    "claimed_transformation_class": [
+      "identity duplication: multiple package identities may point to the same primitive fingerprint",
+      "package grouping/merge: one macro package may expose multiple unchanged primitive fingerprints",
+      "package ungrouping: a macro package may be represented by separate packages for the same unchanged primitive fingerprints"
+    ],
+    "not_claimed": [
+      "arbitrary semantic decomposition of one primitive applicability set into newly invented subskills",
+      "transformations that change primitive implementation content or validator predicates",
+      "transformations that add a new executable capability/support predicate"
+    ],
+    "semantics_preserving_condition": "The content-addressed primitive set U and every V_u/A_u remain exactly unchanged; only package identity/grouping and control responsibility change."
+  },
+  "representation_channel": {
+    "package_selection": "p_T(s|z) is the probability of choosing control package s at frozen pre-task state z.",
+    "within_package_responsibility": "rho_T(u|s,z)>=0 is supported only for u in M_T(s) and sums to one over primitives exposed by s. Singleton packages have rho=1. A macro merge used in P0 freezes rho=1/2,1/2 for its two unchanged primitives.",
+    "primitive_mass": "m_T(u|z)=sum_s p_T(s|z) rho_T(u|s,z). Under the normalized responsibility channel, sum_u m_T(u|z)=1.",
+    "why_needed": "A macro package cannot be treated as giving its full selection probability independently to every constituent primitive; the explicit responsibility channel defines the representation-to-primitive pushforward."
+  },
+  "support_quotient": {
+    "equivalence_relation": "For semantic contexts x,x' in X, x ~_U x' iff V_u(x)=V_u(x') for every frozen primitive u in U.",
+    "quotient_space": "C_U = X / ~_U. Each support cell c is identified by the primitive support signature sigma_U(c)={u:V_u(x)=1 for x in c}.",
+    "well_defined": "Equality of finite Boolean support signatures is reflexive, symmetric and transitive, so ~_U is an equivalence relation. Because U and V_u are frozen, C_U is invariant to package duplication/grouping/ungrouping in the claimed transformation class.",
+    "focal_observed_cells": [
+      "{u_003}",
+      "{u_004}",
+      "{u_015}",
+      "{u_003,u_015}",
+      "{u_004,u_015}"
+    ]
+  },
+  "exposure_objects": {
+    "eligibility_exposure": "For support cell c at frozen z, E_T(c|z)=sum_{u in sigma_U(c)} m_T(u|z). This is an additive control-opportunity measure and is not a probability distribution and not task utility.",
+    "realized_task_distribution": "Q_T(c|z) is the probability that the actual proposer/realization pipeline emits a qualified task in support cell c. Q is a probability distribution and is empirically distinct from E.",
+    "credit_process": "G_T records independently verified feedback on support cells/primitives. A representation-invariant credit rule must not duplicate total semantic credit when package identities are duplicated/regrouped.",
+    "dynamic_process": "The longitudinal distribution over realized support cells, verified outcomes and evolution state transitions is a separate empirical object; no static exposure theorem alone establishes its utility consequences."
+  },
+  "stri_levels": {
+    "STRI_E": "eligibility/control exposure invariance under a frozen primitive basis",
+    "STRI_Q": "realized qualified semantic-task distribution invariance under the first-party proposer/realization pipeline",
+    "STRI_G": "semantic credit conservation/invariance under package regrouping",
+    "STRI_D": "longitudinal/end-of-evolution outcome invariance; this is C4 and remains empirical"
+  },
+  "theorem_1": {
+    "name": "Mandatory-overlap additive-exposure lower bound",
+    "assumptions": [
+      "frozen primitive support basis U",
+      "nonnegative normalized primitive mass vector m induced by any one-primitive/package-first control law",
+      "there exist support cells c_a,c_b,c_ab with u_a in c_a only among {u_a,u_b}, u_b in c_b only among {u_a,u_b}, and both u_a,u_b in c_ab",
+      "positive exposure is retained on both exclusive cells"
+    ],
+    "statement": "Let r=min_c E(c)>0 over the focal supported cells. Exclusive cells force m(u_a)>=r and m(u_b)>=r. The overlap cell has E(c_ab)>=m(u_a)+m(u_b)>=2r, hence max_c E(c)/min_c E(c)>=2.",
+    "empirical_witnesses": ["u_003 with u_015", "u_004 with u_015"],
+    "tight_on_released_graph": true,
+    "claim_boundary": "This theorem is only about additive eligibility exposure E. It does not imply lower task accuracy, regret or end-of-evolution utility."
+  },
+  "theorem_2": {
+    "name": "Frozen-state pre-context single-package controller reduction",
+    "assumptions": [
+      "the upstream controller acts before the proposer task exists",
+      "the action space at the reviewed decision is exactly one current package identity",
+      "state z and available pre-decision information are frozen for the comparison"
+    ],
+    "statement": "Any randomized same-information controller at frozen state z is characterized by a categorical p_T(s|z). Combined with the fixed representation channel rho_T, it induces one nonnegative primitive-mass vector m_T(.|z), and therefore belongs to the additive exposure class constrained by Theorem 1 when the mandatory-overlap assumptions hold.",
+    "scope_limit": "This is pointwise in frozen z. It does not identify or equate longitudinal adaptive controller policies whose state distribution evolves over time, and it does not prove dynamic/utility harm. P0-A/C4 test propagation through the actual evolution pipeline.",
+    "forbidden_inference": "Do not claim that every longitudinal bandit/neural self-evolution algorithm is globally equivalent to one fixed categorical distribution."
+  },
+  "sqc_minimal_object": {
+    "control_object": "A probability measure mu over frozen support quotient cells C_U, not over current package identities.",
+    "implementation_responsibility": "alpha(u|c) is supported on u in sigma_U(c) and sums to one. It maps cell mass to unchanged primitive implementations without multiplying mass under package duplication.",
+    "package_realization": "The current taxonomy only supplies a representation/realization channel from chosen primitive implementation to a package wrapper. Validator-gated rejection is a shared non-novel backend when no native cell-conditioned proposer exists.",
+    "credit_conservation": "Independently verified feedback is written once to c/primitive responsibility and total responsibility sums to one before any package-specific bookkeeping."
+  },
+  "claims_allowed_before_p0": [
+    "C1: released systems exhibit package-identity representation sensitivity on tested control surfaces",
+    "C2: on the released Skill-SP focal graph, text dedup, exact-coverage package pruning and the entire frozen-state pre-context single-package additive-exposure class cannot remove the mandatory-overlap factor-2 residual"
+  ],
+  "claims_locked": [
+    "C3: SQC achieves realized/dynamic invariance without utility/coverage/resource loss",
+    "C4: static control representation sensitivity propagates to meaningful longitudinal/end-of-evolution outcomes"
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "method_execution": false,
+    "p0": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}
