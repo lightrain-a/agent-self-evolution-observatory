@@ -84,11 +84,11 @@
   }
 
   pages["selected-paper"] = {
-    eyebrow:{en:"Historical ICLR Paper Workspace",zh:"历史 ICLR 论文工作区"},
-    title:{en:"Regression-Gated Self-Evolution: archived formulation, protocol, and failure evidence",zh:"Regression-Gated Self-Evolution：归档表述、实验协议与失败证据"},
-    lead:{en:"This archived workspace preserves the original constrained-improvement formulation and proposed matched-budget protocol so later STOP evidence can be interpreted against the exact claim that was being tested. It is not the current selected paper or an active execution plan.",zh:"本历史工作区保留当时的受约束改进表述与拟定的等预算协议，方便把后续 STOP 证据对应回最初被检验的精确主张；它不再代表当前选中论文或活跃执行计划。"},
-    callout:{en:"Current decision: the Regression-Gated formulation is stopped under the unified experiment ledger. Keep this page only as provenance; use Paper Ideas for current research contracts and Experiments for current execution decisions.",zh:"当前决策：Regression-Gated formulation 已在统一实验账本中停止。本页只保留为溯源档案；当前研究合同请看 Paper Ideas，当前执行结论请看 Experiments。"},
-    renderMode:"merged-hub",
+    eyebrow:{en:"Selected ICLR Paper · STRI",zh:"当前选中 ICLR 论文 · STRI"},
+    title:{en:"STRI: Self-Evolution Should Not Depend on How Skills Are Split",zh:"STRI：Self-Evolution Should Not Depend on How Skills Are Split"},
+    lead:{en:"The current selected paper is STRI. This page starts from its exact paper-ready state, claim boundary, evidence completeness, downloads, and human handoff. The former Regression-Gated Self-Evolution workspace is preserved below as a clearly separated historical archive.",zh:"当前选中论文是 STRI。本页首先展示它精确的 paper-ready 状态、主张边界、证据完整性、下载与人工提交交接；原 Regression-Gated Self-Evolution 工作区整体下沉为明确分隔的历史归档。"},
+    callout:{en:"Current state: READY_NARROW_ICLR · Paper Quality v2 PASS · N1–N3 3/3 supported · evidence debt 0 · 9/9 main-text pages · anonymous supplement ready. Only human author signoff and OpenReview handoff remain; this asset-first paper-ready state does not create canonical Problem-Gate, Method, P0, or GPU authority.",zh:"当前状态：READY_NARROW_ICLR · Paper Quality v2 PASS · N1–N3 3/3 supported · evidence debt 0 · 正文 9/9 页 · anonymous supplement ready。当前只剩 human author signoff 与 OpenReview handoff；该 asset-first paper-ready 状态不会创建 canonical Problem-Gate、Method、P0 或 GPU 权限。"},
+    renderMode:"selected-paper-current",
     chapters:chaptersFor("selected-paper")
   };
 })();

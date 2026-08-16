@@ -370,7 +370,7 @@ def main() -> None:
             if page == "/evaluation.html":
                 require(result["resources"] == 2, "evaluation live resource indexes are incomplete")
             if page == "/selected-paper.html":
-                require("Historical ICLR" in result["text"] and "zero launchable directions" in result["text"], "historical selected-paper status or later STOP evidence is missing")
+                require("CURRENT SELECTED PAPER" in result["text"] and "Former Regression-Gated Self-Evolution workspace" in result["text"] and "zero launchable directions" in result["text"], "current STRI workspace or historical STOP archive is missing")
 
         navigate("/research-directions.html", 7)
         direction_map = execute(
@@ -439,10 +439,25 @@ def main() -> None:
         require(idea_portfolio["legacyPreGpuBoards"] == 0 and idea_portfolio["legacyP0Entry"] == 0, "legacy Pre-GPU/P0-entry boards leaked back into canonical Paper Ideas")
         require((idea_portfolio["currentLedger"],idea_portfolio["currentRows"],idea_portfolio["leadingPaperTracks"]) == (1,6,1), f"unified current idea ledger is incomplete: {idea_portfolio}")
         cs=idea_portfolio["currentStatus"]
-        require((cs.get("paper_ready"),cs.get("paper_quality_hold"),cs.get("paper_quality_evidence_debt"),cs.get("canonical_live_ideas"),cs.get("launchable_formal_experiments"),cs.get("shadow_dead_ends"),cs.get("shadow_holds"),cs.get("shadow_qualification_ready"),cs.get("legacy_p0_lifecycle")) == (1,0,0,0,0,11,2,0,27), f"current status snapshot is wrong: {cs}")
+        require((cs.get("paper_ready"),cs.get("paper_quality_hold"),cs.get("paper_quality_evidence_debt"),cs.get("canonical_live_ideas"),cs.get("launchable_formal_experiments"),cs.get("shadow_dead_ends"),cs.get("shadow_holds"),cs.get("shadow_qualification_ready"),cs.get("legacy_p0_lifecycle")) == (1,0,0,0,0,12,2,0,27), f"current status snapshot is wrong: {cs}")
         require(idea_portfolio["legacyFinalPass"] == 20 and idea_portfolio["experimentStops"] >= 16, f"historical lineage state is unexpectedly missing: {idea_portfolio}")
         require("Historical ICLR Paper Workspace" not in idea_portfolio["text"] and "Selected ICLR Paper Workspace" not in idea_portfolio["text"], "historical paper workspace content leaked into Paper Ideas")
         require((("当前科研状态" in idea_portfolio["text"] and "Positive residual 当前边界" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "Positive-residual boundary" in idea_portfolio["text"])) and "20 个当前 FINAL-PASS" not in idea_portfolio["text"], "Paper Ideas current-state labels are incomplete or stale FINAL-PASS framing leaked into the current view")
+
+        navigate("/selected-paper.html", 4)
+        selected = execute(session_id, """return {
+          chapters: document.querySelectorAll('.page-chapter').length,
+          currentSTRI: document.querySelectorAll('#selected-stri-current').length,
+          archive: document.querySelectorAll('#historical-paper-archive').length,
+          currentStatus: window.CURRENT_RESEARCH_STATUS?.headline || {},
+          currentPaper: window.CURRENT_RESEARCH_STATUS?.leading_paper_track || {},
+          title: document.title,
+          text: document.body.textContent || ''
+        };""")
+        require(selected["chapters"] == 5 and selected["currentSTRI"] == 1 and selected["archive"] == 1, f"selected-paper must render one current STRI chapter plus four historical archive chapters: {selected}")
+        require(selected["currentPaper"].get("paper_id") == "STRI" and selected["currentPaper"].get("paper_quality_v2_passed") is True and selected["currentPaper"].get("paper_quality_evidence_debt") == 0 and (selected["currentPaper"].get("qa_passed"),selected["currentPaper"].get("qa_total")) == (60,60) and selected["currentPaper"].get("paper_quality_schema_version") == "2.1" and selected["currentPaper"].get("paper_quality_main_visualizations") == 4 and selected["currentPaper"].get("paper_visual_figure_qa") == "PASS" and selected["currentPaper"].get("supplement_unit_tests") == "13/13 PASS" and selected["currentStatus"].get("paper_ready") == 1, f"selected-paper current STRI projection is stale: {selected}")
+        require("Self-Evolution Should Not Depend on How Skills Are Split" in selected["title"] and "CURRENT SELECTED PAPER" in selected["text"] and ("Former Regression-Gated Self-Evolution workspace" in selected["text"] or "旧 Regression-Gated Self-Evolution 工作区" in selected["text"]), f"selected-paper current/historical hierarchy is wrong: {selected}")
+        require("only permits a new shadow qualification" not in selected["text"] and "Historical ICLR Paper Workspace" not in selected["title"], f"selected-paper leaked stale shadow or historical-primary framing: {selected}")
 
         redirect_checks = {
             "/memory-evolution.html": "mechanisms.html#group-memory-evolution",

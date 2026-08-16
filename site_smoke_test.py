@@ -126,7 +126,7 @@ def main() -> None:
             if not (ROOT / script).exists():
                 fail(f"{filename} references missing script {script}")
 
-    current_state_pages = {"index.html", "research-directions.html", "paper-ideas.html", "experiments.html", "selected-paper.html"}
+    current_state_pages = {"index.html", "system-overview.html", "research-directions.html", "paper-ideas.html", "experiments.html", "selected-paper.html"}
     for filename in current_state_pages:
         if "generated/research-system-state.js" not in canonical_scripts.get(filename, []):
             fail(f"{filename} must load the unified current research-system state")
@@ -136,9 +136,12 @@ def main() -> None:
             fail(f"{filename} is a stable reference page and must not mix in current P0 state")
     selected_scripts = set(canonical_scripts.get("selected-paper.html", []))
     if {"content-review.js", "content-review-external.js"} & selected_scripts:
-        fail("historical selected-paper workspace must not load stale review overrides")
-    if "Historical ICLR Paper Workspace" not in (ROOT / "selected-paper.html").read_text(encoding="utf-8"):
-        fail("selected-paper must be explicitly labeled as a historical workspace")
+        fail("selected-paper must not load stale review overrides")
+    selected_html = (ROOT / "selected-paper.html").read_text(encoding="utf-8")
+    if "Selected ICLR Paper · STRI" not in selected_html:
+        fail("selected-paper must be explicitly labeled as the current STRI workspace")
+    if "current-research-status-view.js" not in selected_html:
+        fail("selected-paper must load the unified current-paper renderer")
 
     stale_markers = (
         "Selected ICLR Paper Workspace", "选中 ICLR 论文工作区",

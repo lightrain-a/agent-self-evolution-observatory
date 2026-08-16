@@ -3,7 +3,7 @@ window.PAGE_ARCHITECTURES = {
     chapters:[
       {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, what can change, and where does the field come from?",zh:"什么算自进化、哪些对象可以变化，以及这个领域从哪里发展而来？"},links:["foundations.html","mechanisms.html","domains.html","evaluation.html"]},
       {id:"select-research",title:{en:"Choose the next research formulation",zh:"选择下一轮研究 formulation"},question:{en:"How does the research system generate and falsify candidates, and which materially new formulation deserves the next validation cycle?",zh:"科研系统如何生成并证伪候选，哪一个实质性新 formulation 值得进入下一轮验证？"},links:["system-overview.html","research-directions.html","paper-ideas.html"]},
-      {id:"execute-audit",title:{en:"Execute and audit",zh:"执行与审计"},question:{en:"What are the current experiment decisions, how are they audited, and how can one historical formulation be reconstructed without confusing it with the current plan?",zh:"当前实验结论是什么、如何核查决定性证据，以及怎样复盘一个历史 formulation 而不把它误当成当前计划？"},links:["experiments.html","selected-paper.html","bibliography.html"]}
+      {id:"execute-audit",title:{en:"Execute and audit",zh:"执行与审计"},question:{en:"What are the current experiment decisions, what is the selected STRI paper state, and how can historical formulations be audited without confusing them with the current plan?",zh:"当前实验结论是什么、STRI 这篇选中论文现在处于什么状态，以及怎样复盘历史 formulation 而不把它误当成当前计划？"},links:["experiments.html","selected-paper.html","bibliography.html"]}
     ]
   },
   foundations:{
@@ -66,10 +66,11 @@ window.PAGE_ARCHITECTURES = {
   },
   "selected-paper":{
     chapters:[
-      {id:"problem-scope",title:{en:"I · Historical problem formulation and claim boundary",zh:"第一章 · 历史问题表述与主张边界"},question:{en:"What scientific problem was Regression-Gated Self-Evolution trying to isolate, and which assumptions did the archived formulation add?",zh:"Regression-Gated Self-Evolution 当时试图隔离什么科学问题，又额外加入了哪些后来需要检验的假设？"},sourceIds:["paper-problem"]},
-      {id:"evidence-experiments",title:{en:"II · Proposed falsification protocol",zh:"第二章 · 当时拟定的可证伪实验协议"},question:{en:"What matched-budget experiment was proposed, and which parts were never authorized as a current paper experiment?",zh:"当时提出了怎样的等预算实验，哪些部分后来并没有获得当前论文实验授权？"},sourceIds:["paper-experiments"]},
-      {id:"narrative-execution",title:{en:"III · Superseded execution roadmap",zh:"第三章 · 已被后续证据取代的执行路线"},question:{en:"What was the intended roadmap, and why should it now be read as provenance rather than an active schedule?",zh:"当时计划怎样推进，为什么现在只能把它当作溯源档案而不是活跃日程？"},sourceIds:["paper-roadmap"]},
-      {id:"review-gates",title:{en:"IV · What later evidence taught us",zh:"第四章 · 后续证据最终教会了什么"},question:{en:"Which later substrate, simplification, and falsification results stopped this formulation and became system-level rules?",zh:"哪些后续底座、简化基线和 falsifier 结果停止了这一 formulation，并进一步沉淀成系统规则？"},sourceIds:["review-log"]}
+      {id:"current-stri",title:{en:"I · Current selected paper — STRI",zh:"第一章 · 当前选中论文 — STRI"},question:{en:"What exactly is submission-ready, which claims are supported, what is explicitly excluded, and what human handoff remains?",zh:"STRI 当前究竟哪些内容已经 submission-ready、哪些主张得到支持、哪些内容明确不主张，以及还剩什么人工交接？"}},
+      {id:"problem-scope",title:{en:"II · Historical archive — Regression-Gated problem formulation",zh:"第二章 · 历史归档 — Regression-Gated 问题表述"},question:{en:"What scientific problem was the former Regression-Gated Self-Evolution formulation trying to isolate, and which assumptions did it add?",zh:"旧 Regression-Gated Self-Evolution formulation 当时试图隔离什么科学问题，又额外加入了哪些后来需要检验的假设？"},sourceIds:["paper-problem"]},
+      {id:"evidence-experiments",title:{en:"III · Historical proposed falsification protocol",zh:"第三章 · 历史拟定的可证伪实验协议"},question:{en:"What matched-budget experiment was proposed, and which parts were never authorized as a current paper experiment?",zh:"当时提出了怎样的等预算实验，哪些部分后来并没有获得当前论文实验授权？"},sourceIds:["paper-experiments"]},
+      {id:"narrative-execution",title:{en:"IV · Historical superseded execution roadmap",zh:"第四章 · 历史归档的已取代执行路线"},question:{en:"What was the intended roadmap, and why is it now provenance rather than an active schedule?",zh:"当时计划怎样推进，为什么现在只能作为溯源档案而不是活跃日程？"},sourceIds:["paper-roadmap"]},
+      {id:"review-gates",title:{en:"V · Historical lessons from later evidence",zh:"第五章 · 历史 formulation 的后续证据教训"},question:{en:"Which later substrate, simplification, and falsification results stopped the former formulation and became system-level rules?",zh:"哪些后续底座、简化基线和 falsifier 结果停止了旧 formulation，并进一步沉淀成系统规则？"},sourceIds:["review-log"]}
     ]
   },
   bibliography:{
