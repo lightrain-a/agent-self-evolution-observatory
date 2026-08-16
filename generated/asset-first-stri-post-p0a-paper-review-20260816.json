@@ -1,0 +1,24 @@
+{
+  "verdict": "ADVANCE_NARROW_THEORY_CONTROL_PAPER",
+  "confidence": 0.9,
+  "paper_thesis_if_survives": "Self-evolving skill systems that use package identities as core units of curriculum sampling, retrieval, and credit update are structurally sensitive to semantics-preserving taxonomy transformations (identity duplication, grouping/ungrouping) over a fixed content-addressed primitive basis; this sensitivity persists after standard fixes (text/clone dedup, full-coverage pruning, context-independent global reweighting) when the primitive support hypergraph contains irreducible partial overlap, which occurs in real released systems.",
+  "why_current_evidence_is_or_is_not_enough": "C1 is supported by first-party control-plane evidence from two released self-evolving skill systems; C2 is confirmed by structural analysis and a tight impossibility theorem verified on the real released Skill-SP support hypergraph. No invalid evidence is used, novelty survives all existing work collisions, and no new dynamic LLM generation is required to establish these narrow bounded claims.",
+  "minimum_submission_claims": [
+    "C1: Real self-evolving skill controllers are representation-sensitive: semantics-preserving identity multiplicity/overlap changes curriculum or fixed-budget retrieval control despite unchanged semantic support, confirmed on two released first-party systems",
+    "C2: The representation-sensitivity residual cannot be eliminated by clone/text dedup, exact-coverage whole-package pruning, or arbitrary context-independent global package reweighting when partial overlap is structurally necessary, proven via a tight impossibility theorem on a real released support graph"
+  ],
+  "claims_to_drop": [
+    "C3: Support-Quotient Control removes taxonomy-representation dependence while preserving all implementation and budget constraints",
+    "C4: Representation sensitivity propagates to measurable end-of-evolution state or downstream task performance"
+  ],
+  "strongest_reviewer_objection": "The proposed Support-Quotient Control method and the propagation of control-plane sensitivity to end-of-evolution outcomes remain untested on a qualified dynamic substrate, so neither can be claimed as a tested contribution in this narrow submission.",
+  "strongest_same_information_reduction": "Every pre-context single-package controller (including all neural/bandit adaptive controllers acting before task generation) is analytically reduced to a nonnegative global primitive weight vector at any frozen pre-decision state, so the tight 2x lower bound on exposure inequality applies to the entire class, with no escape via more complex models.",
+  "next_zero_gpu_work": "Write up the narrow theoretical/diagnostic contribution, formalize the full impossibility and reduction theory, present the existing released control-plane evidence, frame Support-Quotient Control as a testable future hypothesis rather than a tested contribution, and comply strictly with all preregistration constraints.",
+  "future_asset_trigger": "A preregistered single qualified P0 run on the author's released trained questioner substrate meeting the original >=16 contract-valid generations per source requirement will unlock full evaluation of C3 and C4 for a future full submission.",
+  "whether_sqc_method_should_remain_primary": false,
+  "whether_dynamic_evidence_is_submission_mandatory": false,
+  "scientific_authority": false,
+  "requested_model": "doubao-seed-2.0-lite",
+  "resolved_model": "doubao-seed-2-0-lite-260215",
+  "private_review_sha256": "c62f36d4c0e0a291d64b2fe16c2084b561fa76f98af78de28c5c9ddf47c811f0"
+}

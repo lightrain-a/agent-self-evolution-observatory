@@ -1,0 +1,36 @@
+{
+  "verdict": "READY_NARROW_ICLR",
+  "confidence": 0.92,
+  "strongest_contribution": "Formulates the previously unstudied problem of skill-taxonomy representation invariance for endogenous self-evolving agent control, derives a simple exact certificate for irreducible representation sensitivity, and provides decisive released-system positive/negative evidence that non-equalizable support geometry (not overlap prevalence) is the correct underlying mechanism.",
+  "strongest_reviewer_objection": "The work does not demonstrate downstream task harm or dynamic propagation of static representation distortion, and does not propose a solution to the STRI residual, so its practical relevance for self-evolving agent design could be questioned.",
+  "is_R_star_merely_trivial_LP_and_why": "No. The simplicity of the underlying LP formulation is a feature, not a bug. The novelty lies in the problem framing and the use of this LP as an exact certificate for the novel scientific question of representation invariance, not in the LP solver itself, which the authors explicitly do not claim as novel.",
+  "does_positive_heldout_negative_boundary_form_decisive_evidence": "Yes. Consistent R*=2 results across full, preregistered calibration, and tool-disjoint heldout sets, paired with two independent informative negative controls (zero-overlap disjoint R*=1, 127/128 high-overlap R*=1), provide decisive evidence separating the non-equalizable support geometry mechanism from the incorrect overlap prevalence hypothesis.",
+  "is_downstream_utility_mandatory_for_this_claim_scope": "No. The paper properly bounds its claims to problem formulation, mechanism identification, and diagnostic characterization of a previously unmeasured control-plane property, which is a valid scientific contribution for ICLR without requiring downstream utility improvement claims.",
+  "exact_required_revisions": [
+    "Complete the truncated proof for Theorem 2 (the global-singleton overlap lower bound) that is cut off in the provided draft",
+    "Add a full related work section that explicitly contrasts the STRI problem with existing work on skill redundancy, clone detection, and evolution governance as established in the current source review",
+    "Explicitly restate all claim boundaries in the discussion section to avoid overinterpretation: acknowledge that dynamic P0 qualification failed and provides no scientific evidence, no claim of downstream task harm, no claim of computational novelty for STRI-Cert relative to standard LP",
+    "Complete final figure and table polish for R* results and support geometry examples"
+  ],
+  "claims_that_must_remain_forbidden": [
+    "Any claim of downstream dynamic utility harm from static STRI residual",
+    "Any claim that STRI-Cert is computationally novel relative to standard linear programming",
+    "Any use of the unqualified Qwen3 P0 generation results to support scientific claims",
+    "Any claim that high overlap is always harmless in general",
+    "Any claim that SQC successfully solves the STRI problem",
+    "Any claim that all representation sensitivity in self-evolving systems is caused by non-equalizable support geometry"
+  ],
+  "recommended_title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
+  "recommended_three_contributions": [
+    "We formulate Skill-Taxonomy Representation Invariance (STRI), a fundamental representation property for package-indexed self-evolving agent control that is unaddressed by prior work on skill evolution and redundancy governance",
+    "We derive STRI-Cert, an exact finite-support certificate R*(A) that decides whether a frozen context-by-package support matrix admits equal additive semantic exposure across all contexts via nonnegative package weighting, with a simple closed-form interpretable lower bound for common support patterns",
+    "We provide decisive empirical evidence from released self-evolving skill systems: three independent positive tool sets all have R*=2 (irreducible STRI residual), while two well-designed negative controls confirm that high overlap alone does not cause residual, falsifying overlap prevalence as the underlying mechanism"
+  ],
+  "paper_story_score_1_to_5": 4,
+  "novelty_score_1_to_5": 4,
+  "evidence_score_1_to_5": 5,
+  "scientific_authority": false,
+  "requested_model": "doubao-seed-2.0-lite",
+  "resolved_model": "doubao-seed-2-0-lite-260215",
+  "private_review_sha256": "f538d20140d9fcfbbce8e103c0c4c18c1f146fe32edd0cd2f1192ba3c8a5cab4"
+}

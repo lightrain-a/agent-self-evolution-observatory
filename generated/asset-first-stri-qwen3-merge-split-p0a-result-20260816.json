@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-STRI-QWEN3-MERGE-SPLIT-P0A-20260816",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "decision": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED",
+  "scientific_result_available": false,
+  "protocol_valid_for_scientific_update": false,
+  "qualification": {
+    "minimum_contract_valid_per_source": 5,
+    "required_min": 16,
+    "pass": false,
+    "budget_gpu_hours": 0.07372141143876232,
+    "budget_gpu_hours_cap": 0.75,
+    "budget_pass": true
+  },
+  "generation_counts": {
+    "skill_003": {
+      "generated": 24,
+      "parsed": 20,
+      "contract_valid": 14
+    },
+    "skill_004": {
+      "generated": 24,
+      "parsed": 22,
+      "contract_valid": 5
+    },
+    "skill_015": {
+      "generated": 24,
+      "parsed": 23,
+      "contract_valid": 8
+    }
+  },
+  "gpu_hours": 0.07372141143876232,
+  "raw_sha256": "8aacc8a0ae5d8be71f09f1cf11ef1aa33e6e75eed35aa783869a5d21c3437503",
+  "paper_design_authorized": false,
+  "method_authorized": false,
+  "second_backbone": 0,
+  "scientific_authority": false
+}

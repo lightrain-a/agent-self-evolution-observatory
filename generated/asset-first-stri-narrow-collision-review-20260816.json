@@ -1,0 +1,13 @@
+{
+  "verdict": "SURVIVES_NARROWLY",
+  "confidence": 0.84,
+  "closest_neighbor": "Skill-SP co-evolving controller; SkillRL adaptive retrieval/evolution is secondary",
+  "covered_by_prior": false,
+  "surviving_boundary": "Exact finite-support equalizability R*(A)=min{t: w≥0, 1≤Aw≤t1}, and invariance of endogenous package-indexed self-evolution to semantics-preserving taxonomy reparameterization, with R*=2 on Skill-SP L1 full/calibration/tool-disjoint heldout and R*=1 on L3 and 127/128-overlap first-party logical domain.",
+  "mature_reduction": "No neighbor directly defines or tests this exact invariance or R* equalizability criterion; they cover clones, redundancy governance, retrieval, co-evolution, safety, harnesses, compression, or bandits.",
+  "required_concessions": "Concede LP computational novelty; disclaim new LP algorithms, clone/redundancy discovery, routing/compression, SQC effectiveness, and dynamic/downstream utility.",
+  "scientific_authority": false,
+  "requested_model": "ark-code-latest",
+  "resolved_model": "doubao-seed-evolving",
+  "private_review_sha256": "308ea29c31a4efa865e807f1a3a2712ef74ecc60612b08a2e97f5ee3a45be0a0"
+}

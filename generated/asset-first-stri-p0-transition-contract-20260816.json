@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "stage": "ZERO_AUTHORITY_P0_TRANSITION_CONTRACT",
+  "purpose": "Compile frozen P0-A/P0-B/P0-C receipts into deterministic next-state and claim-lock annotations without executing, authorizing, or repairing any experiment.",
+  "dependencies": {
+    "p0a_experiment_id": "ASSET-FIRST-STRI-QWEN3-MERGE-SPLIT-P0A-20260816",
+    "p0b_experiment_id": "ASSET-FIRST-STRI-QUOTIENT-REJECTION-P0B-20260816",
+    "p0c_experiment_id": "ASSET-FIRST-STRI-QWEN3-SOLVER-CONSEQUENCE-P0C-20260816",
+    "p0a_contract": "generated/asset-first-stri-qwen3-merge-split-p0a-contract-20260816.json",
+    "p0b_contract": "generated/asset-first-stri-quotient-rejection-p0b-contract-20260816.json",
+    "p0c_contract": "generated/asset-first-stri-qwen3-solver-consequence-p0c-contract-20260816.json"
+  },
+  "primary_rules": [
+    "P0-A GO may make frozen P0-B eligible only through a separate governed execution gate; the compiler never launches it.",
+    "P0-A qualified STOP disables P0-B/P0-C as primary rescue and disables the current full STRI method experiment.",
+    "P0-A qualification/budget failure produces no scientific belief update and does not authorize automatic retry.",
+    "P0-A one-witness inconclusive forbids adaptive extra generations, threshold changes, and second-backbone rescue.",
+    "P0-B must bind to the exact P0-A raw SHA and use zero new model calls/GPU hours.",
+    "P0-B STOP kills the current SQC realization/full progression even if P0-C is positive.",
+    "P0-B PASS only marks local quotient feasibility; it does not authorize the full experiment.",
+    "P0-C is secondary and can never rescue or override P0-A/P0-B progression."
+  ],
+  "claim_policy": {
+    "C1": "supported before P0 from two released control-plane systems",
+    "C2": "supported before P0 from real support graph plus theorem/reductions",
+    "C3": "locked until all full primary method gates pass",
+    "C4_realized_task_distribution": "may be annotated as supported only by qualified P0-A GO",
+    "C4_end_of_evolution_or_utility": "remains locked until P0-C/full evidence and claim-scope review"
+  },
+  "automatic_actions_forbidden": [
+    "GPU launch",
+    "P0-B launch",
+    "P0-C launch",
+    "full experiment launch",
+    "additional P0-A generations",
+    "threshold or split changes",
+    "second backbone",
+    "paper claim promotion"
+  ],
+  "scientific_authority": false,
+  "execution_authorized": false,
+  "authority": {
+    "paper_claim_C3": false,
+    "paper_claim_C4_end_of_evolution": false,
+    "method": false,
+    "p0": false,
+    "full_experiment": false,
+    "gpu": false,
+    "second_backbone": false
+  }
+}

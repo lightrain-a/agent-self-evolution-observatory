@@ -120,5 +120,29 @@
     "p0": false,
     "full_experiment": false,
     "gpu": false
+  },
+  "theorem_3": {
+    "name": "Finite-support package-only equalizability certificate",
+    "setup": "Let A in {0,1}^{n x m} be the frozen support-incidence matrix over n covered semantic contexts and m package controls, with every row containing at least one supported package. For nonnegative package weights w, additive context exposure is e=Aw.",
+    "scale_normalization": "Because max(e)/min(e) is scale invariant for positive exposure, normalize min_i (Aw)_i >= 1.",
+    "optimization": "R*(A)=min_{w>=0,t>=0} t subject to 1 <= Aw <= t*1 componentwise.",
+    "statement": "R*(A)=1 iff there exists a nonnegative package-only controller whose additive exposure is exactly equal across all covered contexts. If R*(A)>1, then no nonnegative context-independent package weighting can equalize the frozen support matrix, and R*(A) is the tight minimum achievable max/min exposure ratio.",
+    "proof_sketch": "If exact equalization exists, scale w so Aw=1 and obtain feasible t=1; since constraints force t>=1, R*=1. Conversely, if R*=1, feasibility gives 1<=Aw<=1, hence Aw=1. For any feasible w with positive exposures, rescale by min_i(Aw)_i; the resulting feasible t equals max_i(Aw)_i/min_i(Aw)_i, so the LP optimum is exactly the tight multiplicative distortion lower bound.",
+    "relation_to_theorem_1": "Theorem 1 is a closed-form sufficient witness: globally singleton cells {u_a},{u_b} plus an overlap containing both imply R*(A)>=2. Theorem 3 is the general exact finite-support criterion and does not require singleton witnesses.",
+    "real_positive_contexts": {
+      "skill_sp_api_bank_level1_all": "R*=2.0",
+      "skill_sp_level1_calibration_tools": "R*=2.0",
+      "skill_sp_level1_tool_disjoint_heldout": "R*=2.0"
+    },
+    "real_negative_contexts": {
+      "skill_sp_api_bank_level3": "R*=1.0 with disjoint support",
+      "skill_sp_logical_compiler": "R*=1.0 despite 127/128 multi-membership; released skill_008 is an umbrella alignment support that permits exact equalization"
+    },
+    "claim_boundary": "R*(A) is a certificate for package-only additive exposure on a frozen, independently defined support matrix. It does not by itself imply task failure, utility harm, dynamic propagation, or superiority of SQC."
+  },
+  "mechanism_revision_after_logical_negative": {
+    "old_overbroad_hypothesis": "support overlap or multiplicity itself causes irreducible representation dependence",
+    "revised_hypothesis": "irreducible representation dependence is determined by non-equalizable support incidence geometry, quantified exactly by R*(A)>1; overlap prevalence alone is neither necessary nor sufficient for R*>1.",
+    "negative_control_evidence": "The released logical compiler domain has 127/128 multi-membership units but R*=1 because one released compiler support (skill_008) covers all generated units, proving that high overlap alone does not imply the STRI residual."
   }
 }

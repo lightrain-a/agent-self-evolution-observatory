@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "candidate_id": "skill-taxonomy-representation-invariance",
   "working_title": "Self-Evolution Should Not Depend on How Skills Are Split",
-  "status": "SURVIVES_NARROWLY_PAPER_DESIGN_ACTIVE_DYNAMIC_P0_PENDING",
+  "status": "NARROW_PAPER_READY_AFTER_DYNAMIC_QUALIFICATION_HOLD",
   "problem_statement": "Self-evolving skill systems use skill artifacts as control units for sampling, retrieval, feedback credit, refinement, and admission. If two taxonomies represent the same semantic capability/support set but differ only in how that set is split, cloned, or hierarchically overlapped across package identities, a representation-invariant evolution operator should not change its induced control distribution solely because the artifact parameterization changed.",
   "narrow_principle": {
     "name": "Skill-Taxonomy Representation Invariance (STRI)",
@@ -123,11 +123,11 @@
   "p0_authorized": false,
   "gpu_authorized": false,
   "scientific_belief_update_allowed": true,
-  "reason_paper_design_still_blocked": "Static/control-plane reduction is no longer the blocker: current-source review is SURVIVES_NARROWLY; the mandatory-overlap theorem plus decision-time reduction closes the frozen-state pre-context single-package controller class on the released Skill-SP graph; SQC theory/method/full blueprint are frozen. The remaining blocker is qualified dynamic evidence: C3/C4 stay locked until faithful Qwen3 P0-A/P0-B and, if permitted, heldout confirmatory evaluation.",
+  "reason_paper_design_still_blocked": "No longer blocked for the narrow C1/C2-style submission. Dynamic SQC/C4 extensions remain blocked, but the superseding narrow design is independently reviewed READY_NARROW_ICLR and does not require dynamic evidence.",
   "next_decisive_steps": [
-    "Launch the exact frozen Qwen3-8B Skill-SP P0-A on host 231 only after the unrelated GPU resource gate clears; do not change backbone, prompts, decoding, source counts, truth, or thresholds.",
-    "If and only if P0-A GO, run P0-B on the exact same raw generation SHA with zero new model calls to test quotient/rejection feasibility at the frozen call budget; optional P0-C may reuse the same bank.",
-    "Only if P0-A and P0-B pass, execute the already frozen tool-disjoint full experiment blueprint. Keep idea search closed unless STRI is scientifically stopped."
+    "Write/polish the narrow STRI paper around R*(A), released-system positive/negative support regimes, and STRI-Cert as a theorem-derived audit protocol.",
+    "Keep SQC/dynamic utility as future work unless an independently governed optional dynamic bridge later produces qualified evidence; such evidence cannot redefine the narrow scientific object.",
+    "Do not reopen broad idea search unless the narrow N1/N2/N3 claims are falsified or directly absorbed by new current-source work."
   ],
   "created_at": "2026-08-16",
   "paper_design_stage": "PAPER_DESIGN_ACTIVE_ASSET_FIRST",
@@ -141,5 +141,20 @@
     "p0a": "generated/asset-first-stri-qwen3-merge-split-p0a-contract-20260816.json",
     "p0b": "generated/asset-first-stri-quotient-rejection-p0b-contract-20260816.json",
     "full_blueprint": "generated/asset-first-stri-full-experiment-blueprint-20260816.json"
+  },
+  "post_p0_narrowing": {
+    "superseding_design": "generated/asset-first-stri-narrow-paper-design-20260816.json",
+    "superseding_draft": "paper_drafts/stri-20260816-narrow-draft.md",
+    "current_submission_claims": [
+      "N1 released control-plane representation sensitivity",
+      "N2 exact finite support equalizability R*(A)",
+      "N3 non-equalizable support geometry boundary"
+    ],
+    "dynamic_p0a": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED_NO_BELIEF_UPDATE_NO_RERUN",
+    "SQC": "future repair only, not current submission method claim",
+    "dynamic_or_utility_claims": "dropped from narrow submission",
+    "logical_negative": "128/128 first-party valid; 127/128 multi-membership but R*=1, strengthening mechanism boundary",
+    "final_premortem": "READY_NARROW_ICLR confidence 0.92",
+    "narrow_collision": "SURVIVES_NARROWLY confidence 0.84"
   }
 }

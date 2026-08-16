@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "stage": "NARROW_PAPER_DESIGN_AFTER_P0A_QUALIFICATION_FAILURE",
+  "working_title": "Self-Evolution Should Not Depend on How Skills Are Split",
+  "target_venue": "ICLR",
+  "paper_type": "principle + exact diagnostic certificate + released-system evidence",
+  "central_question": "When can a self-evolving skill controller change its induced semantic control exposure solely because the same capability/support is represented by different skill package identities or groupings?",
+  "thesis": "The relevant failure is not redundancy or overlap prevalence itself. For a frozen independently defined support-incidence matrix A, package-only control is representation-safe exactly when nonnegative package weights can equalize all covered semantic contexts. The tight finite-support distortion R*(A) identifies when this is impossible. Released Skill-SP tool-call support has R*=2 and replicates on a tool-disjoint heldout subset, while two real negative regimes have R*=1, including a logical-skill domain with 127/128 multi-membership. This isolates non-equalizable support geometry as the mechanism.",
+  "submission_claims": [
+    {
+      "id": "N1",
+      "claim": "Released self-evolving skill systems exhibit package-identity representation sensitivity on real control surfaces even when semantic content is unchanged.",
+      "support": [
+        "Skill-SP: 348 released-validator-covered API-Bank rows, 183 multi-membership; released text duplicate filter misses all 5/5 observed specific-generic support-overlap pairs; exact-coverage pruning leaves 71 overlapping rows.",
+        "SkillRL: all 12 exact-content fresh-ID general-skill clones are admitted; 11/12 targets alter the unique fixed-budget semantic retrieval set and 5/12 reduce unique general content."
+      ],
+      "boundary": "Control-plane representation sensitivity only; no downstream utility-harm claim."
+    },
+    {
+      "id": "N2",
+      "claim": "For finite first-party support matrix A, R*(A)=min t subject to w>=0 and 1<=Aw<=t1 is the exact package-only equalizability certificate: R*=1 iff exact equal exposure exists; R*>1 is the tight minimum multiplicative distortion.",
+      "support": [
+        "Theorem 3 exact LP equivalence proof.",
+        "Theorem 1 globally-singleton+overlap witness gives interpretable R*>=2 sufficient condition and is tight on released Skill-SP Level-1 support."
+      ],
+      "boundary": "Frozen additive support exposure only; no dynamic/utility inference."
+    },
+    {
+      "id": "N3",
+      "claim": "The STRI residual tracks non-equalizable support geometry rather than overlap prevalence.",
+      "support": [
+        "Skill-SP Level-1 full: 314 covered, 183 multi-membership, R*=2.",
+        "Outcome-blind frozen calibration tools: 47 covered, 33 multi-membership, R*=2.",
+        "Tool-disjoint heldout tools: 52 covered, 38 multi-membership, R*=2.",
+        "Skill-SP Level-3: 34 covered, zero multi-membership, R*=1.",
+        "Skill-SP logical first-party compiler domain: 128/128 author-contract-valid, 127/128 multi-membership, but R*=1 because released skill_008 is an umbrella alignment support."
+      ],
+      "boundary": "The logical result is a real negative mechanism boundary, not evidence that overlap is harmless in general."
+    }
+  ],
+  "method_or_protocol": {
+    "name": "STRI-Cert",
+    "positioning": "sound theorem-derived diagnostic/audit protocol, not a learned optimizer and not claimed computationally superior to linear programming",
+    "input": "frozen independently defined context-by-package support incidence matrix",
+    "outputs": [
+      "exact R*(A) and optimal package weights",
+      "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE when R*=1",
+      "CERTIFIED_IRREDUCIBLE_PACKAGE_ONLY_RESIDUAL when R*>1",
+      "optional globally-singleton overlap witness/lower bound for interpretability",
+      "UNRESOLVED only when support truth or optimization is unavailable"
+    ],
+    "same_information_reduction": "the exact optimal nonnegative package-weight LP is not a competing baseline hidden from the method; it is the core exact certificate. Closed-form witnesses are explanatory sufficient certificates layered on the exact LP.",
+    "novelty_claim": "Novelty is the STRI scientific object, exact representation-dependence certificate for self-evolving skill support geometry, and released-system empirical boundary; not the use of an LP solver itself."
+  },
+  "mechanism": {
+    "name": "Non-Equalizable Support Geometry",
+    "old_rejected_mechanism": "overlap/multiplicity itself causes irreducible representation dependence",
+    "definition": "A package-indexed control surface has a static STRI residual on a frozen support domain iff R*(A)>1. High overlap may still be representation-safe when an equalizing package mixture exists; conversely mandatory unique regions plus shared regions can force R*>1.",
+    "interpretable_special_case": "true globally singleton support cells for a and b plus a shared a+b cell imply R*>=2"
+  },
+  "primary_real_evidence": {
+    "skill_sp_tool_call": {
+      "role": "primary positive released support graph",
+      "level1_R_star": 2.0,
+      "heldout_R_star": 2.0,
+      "calibration_R_star": 2.0,
+      "level3_R_star": 1.0
+    },
+    "skill_sp_logical": {
+      "role": "first-party high-overlap equalizable negative boundary",
+      "units": 128,
+      "valid_units": 128,
+      "multi_membership_units": 127,
+      "R_star": 1.0,
+      "model_calls": 0,
+      "gpu_hours": 0
+    },
+    "skillrl": {
+      "role": "independent implementation-level identity sensitivity replication",
+      "released_tasks": 223,
+      "clone_admission": "12/12",
+      "targets_changing_unique_semantic_retrieval_set": "11/12"
+    }
+  },
+  "dynamic_p0_disposition": {
+    "skill_sp_qwen3_p0a": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED; 72/72 generations completed, but 14/5/8 contract-valid vs frozen >=16/source; no scientific belief update and no rerun.",
+    "skillrl_fixed_task_p0d": "separately frozen/reviewed optional C4 bridge; not required for the narrow paper, not paper novelty, and cannot rescue or alter N1-N3.",
+    "sqc": "future repair direction only; not a submission method-success claim"
+  },
+  "claims_dropped_from_current_submission": [
+    "SQC improves downstream utility or achieves dynamic STRI",
+    "static support distortion causes task failure",
+    "P0-A invalid raw witness statistics support or refute STRI",
+    "overlap prevalence alone predicts representation sensitivity",
+    "STRI-Cert is a faster/better optimizer than LP",
+    "all self-evolving skill systems should merge or deduplicate overlaps"
+  ],
+  "strongest_reviewer_objection": "Without downstream performance consequences, STRI could be viewed as an architectural fairness/normalization diagnostic rather than a practical self-evolution failure. The paper must therefore foreground the exact invariance principle, demonstrate that existing dedup/pruning/global weighting do not explain the positive domain, and use the high-overlap R*=1 logical negative to show the certificate isolates a nontrivial mechanism rather than merely counting overlap.",
+  "response_to_objection": "Do not overclaim harm. Show that package identity is an endogenous evolution control variable in released systems, prove an exact representation-dependence criterion, validate it on independent positive/negative real support regimes, and separate the scientific invariance failure from any downstream utility hypothesis.",
+  "paper_structure": [
+    "Introduction: representation invariance as a missing property of self-evolving skill systems",
+    "Problem definition: package identity, support incidence, additive exposure, STRI-E",
+    "Exact certificate: R*(A), iff theorem, closed-form factor-2 witness",
+    "Released-system evidence: Skill-SP tool-call and SkillRL",
+    "Mechanism boundary: calibration/heldout R*=2, Level-3 R*=1, logical 127/128-overlap R*=1",
+    "STRI-Cert protocol and relation to dedup/pruning/similarity-aware control",
+    "Dynamic P0 qualification failure as limitation/no-belief-update",
+    "Discussion: SQC and dynamic STRI as future repair/evaluation work"
+  ],
+  "submission_readiness": "READY_NARROW_ICLR_DRAFT_AFTER_INDEPENDENT_PREMORTEM_AND_COLLISION_RECHECK",
+  "external_trigger_for_dynamic_extension": "a reproducible first-party trained questioner/dynamic checkpoint or optional independently governed SkillRL fixed-task P0-D may add C4 evidence, but absence or failure cannot invalidate N1-N3",
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_N1": false,
+    "paper_claim_N2": false,
+    "paper_claim_N3": false,
+    "paper_claim_C3": false,
+    "paper_claim_C4": false,
+    "method": false,
+    "p0": false,
+    "full_experiment": false,
+    "gpu": false
+  },
+  "recommended_title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
+  "independent_reviews": {
+    "post_p0_viability": {
+      "artifact": "generated/asset-first-stri-post-p0a-paper-review-20260816.json",
+      "verdict": "ADVANCE_NARROW_THEORY_CONTROL_PAPER",
+      "confidence": 0.9
+    },
+    "final_premortem": {
+      "artifact": "generated/asset-first-stri-narrow-final-review-20260816.json",
+      "verdict": "READY_NARROW_ICLR",
+      "confidence": 0.92,
+      "story": 4,
+      "novelty": 4,
+      "evidence": 5
+    },
+    "narrow_collision": {
+      "artifact": "generated/asset-first-stri-narrow-collision-review-20260816.json",
+      "verdict": "SURVIVES_NARROWLY",
+      "confidence": 0.84
+    }
+  },
+  "current_submission_claims_locked": true,
+  "idea_search_reopen_condition": "Only reopen idea search if N1/N2/N3 are later falsified or directly absorbed by a new current-source result; P0-D/SQC outcomes cannot reopen or redefine the narrow STRI scientific object."
+}

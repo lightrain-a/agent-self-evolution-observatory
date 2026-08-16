@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-STRI-LOGICAL-COMPILER-SUPPORT-R1-20260816",
+  "analysis_repair": "STRI-Cert decision generalized to exact LP criterion; raw support matrix and frozen experiment decision rule unchanged",
+  "support_matrix_sha256": "87cb13220c88aabe43b895a6217583523d1e60299da32d1ffd71b2b3a22a419f",
+  "certificate": {
+    "context_id": "skill_sp_logical_author_compiler_validation",
+    "rows": 128,
+    "covered_rows": 128,
+    "active_skills": [
+      "skill_001",
+      "skill_002",
+      "skill_003",
+      "skill_004",
+      "skill_005",
+      "skill_006",
+      "skill_007",
+      "skill_008"
+    ],
+    "single_membership_rows": 1,
+    "multi_membership_rows": 127,
+    "maximum_membership_cardinality": 8,
+    "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL",
+    "negative_control_subtype": "OVERLAP_BUT_GLOBALLY_EQUALIZABLE",
+    "structural_witness": {
+      "covered_rows": 128,
+      "selected_skills": [
+        "skill_001",
+        "skill_002",
+        "skill_003",
+        "skill_004",
+        "skill_005",
+        "skill_006",
+        "skill_007",
+        "skill_008"
+      ],
+      "unique_support_counts": {
+        "skill_001": 0,
+        "skill_002": 0,
+        "skill_003": 0,
+        "skill_004": 0,
+        "skill_005": 0,
+        "skill_006": 0,
+        "skill_007": 0,
+        "skill_008": 1
+      },
+      "unique_support_scope": "exact singleton accepted_skill_ids over the full released validator universe",
+      "witness_count": 0,
+      "witnesses": [],
+      "global_nonnegative_package_weight_exposure_ratio_lower_bound": null,
+      "proof": "No mandatory-overlap witness was found."
+    },
+    "optimal_global_package_weighting": {
+      "pass": true,
+      "ratio": 1.0,
+      "minimum_exposure": 1.0,
+      "maximum_exposure": 1.0,
+      "weights": {
+        "skill_001": 0.0,
+        "skill_002": 0.0,
+        "skill_003": 0.0,
+        "skill_004": 0.0,
+        "skill_005": 0.0,
+        "skill_006": 0.0,
+        "skill_007": 0.0,
+        "skill_008": 1.0
+      },
+      "skills": [
+        "skill_001",
+        "skill_002",
+        "skill_003",
+        "skill_004",
+        "skill_005",
+        "skill_006",
+        "skill_007",
+        "skill_008"
+      ]
+    },
+    "tight_lower_bound": false,
+    "scientific_authority": false
+  },
+  "top_level_experiment_decision": "DISJOINT_OR_EQUALIZABLE_NEGATIVE_CONTROL",
+  "scientific_result_available": true,
+  "protocol_valid_for_scientific_update": true,
+  "scientific_authority": false
+}

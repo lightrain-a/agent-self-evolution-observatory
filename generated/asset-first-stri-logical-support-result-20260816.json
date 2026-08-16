@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "experiment_id": "ASSET-FIRST-STRI-LOGICAL-COMPILER-SUPPORT-R1-20260816",
+  "artifact_kind": "first-party-logical-support-result-receipt",
+  "decision": "PACKAGE_ONLY_EQUALIZABLE_REAL_NEGATIVE_BOUNDARY",
+  "protocol_valid_for_scientific_update": true,
+  "scientific_result_available": true,
+  "author_repo_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+  "source_units_expected": 128,
+  "source_units_valid": 128,
+  "source_failures": 0,
+  "model_calls": 0,
+  "gpu_hours": 0.0,
+  "elapsed_seconds": 89.2294971961528,
+  "support_matrix_sha256": "87cb13220c88aabe43b895a6217583523d1e60299da32d1ffd71b2b3a22a419f",
+  "private_result_sha256": "12c9193c34d00486e11bb59d6db1def369306b31e53df189044ab1f657672a76",
+  "private_preflight_sha256": "a641d18c1b637a5b1e4fbcd15876dc9f2d564ef7b55482b94c28c6e5bd6c8c33",
+  "observed_support_geometry": {
+    "covered_rows": 128,
+    "multi_membership_rows": 127,
+    "single_membership_rows": 1,
+    "closed_form_witness_count": 0,
+    "R_star": 1.0,
+    "equalizing_weights": {
+      "skill_001": 0.0,
+      "skill_002": 0.0,
+      "skill_003": 0.0,
+      "skill_004": 0.0,
+      "skill_005": 0.0,
+      "skill_006": 0.0,
+      "skill_007": 0.0,
+      "skill_008": 1.0
+    },
+    "negative_control_subtype": "OVERLAP_BUT_GLOBALLY_EQUALIZABLE"
+  },
+  "mechanism_update": "High overlap is not sufficient for the STRI residual. The exact mechanism is non-equalizable support geometry R*(A)>1. Here R*=1 because released skill_008 supports all 128 author-valid logical compiler units, so package-only mass can be placed entirely on the umbrella support.",
+  "claim_effect": {
+    "C1": "unchanged",
+    "C2": "strengthened boundary: R*>1 rather than overlap prevalence",
+    "C3": "locked/not submission claim",
+    "C4": "locked/not submission claim"
+  },
+  "prohibited_inferences": [
+    "logical skills have no representation sensitivity under every possible support definition",
+    "high overlap is harmless in general",
+    "SQC is validated",
+    "downstream task utility is unaffected"
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_C3": false,
+    "paper_claim_C4": false,
+    "p0": false,
+    "gpu": false
+  }
+}

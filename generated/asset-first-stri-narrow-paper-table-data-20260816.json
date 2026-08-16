@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "stage": "NARROW_PAPER_FIGURE_TABLE_DATA",
+  "table_1_released_system_evidence": [
+    {
+      "system": "Skill Self-Play (tool-call)",
+      "released_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+      "control_surface": "pre-task skill sampling + skill-ID feedback/refinement",
+      "independent_support_truth": "15 released package validators",
+      "observed_representation_sensitivity": "183/348 covered API-Bank rows have multi-membership; released text duplicate filter misses 5/5 observed support-overlap pairs; exact-coverage pruning leaves 71 overlap rows",
+      "role": "primary support-geometry system"
+    },
+    {
+      "system": "SkillRL",
+      "released_commit": "8e66726ed866a4e0a7f053586a41022798192e6c",
+      "control_surface": "fixed-budget template-mode dynamic skill retrieval",
+      "independent_support_truth": "released exact skill content + retrieval implementation on 223 released ALFWorld task descriptions",
+      "observed_representation_sensitivity": "12/12 exact-content fresh-ID clones admitted; 11/12 clone targets alter unique semantic retrieval set; 5/12 reduce unique general contents",
+      "role": "independent implementation-level identity witness"
+    }
+  ],
+  "table_2_reduction_tournament_skill_sp_tool_call": [
+    {
+      "reduction": "released name+description Jaccard duplicate filter",
+      "information": "released skill text",
+      "outcome": "does not absorb",
+      "evidence": "misses all 5/5 observed specific-generic support-overlap pairs; similarities 0.1429-0.20 below threshold 0.33"
+    },
+    {
+      "reduction": "exact semantic clone deduplication",
+      "information": "exact content identity",
+      "outcome": "does not absorb partial overlap",
+      "evidence": "positive domain uses released distinct specific/generic packages with different unique support regions"
+    },
+    {
+      "reduction": "minimum-cardinality whole-package pruning preserving exact support",
+      "information": "complete released support matrix",
+      "outcome": "partial reduction only",
+      "evidence": "active packages 10 -> 7; overlap rows 183 -> 71 while exact support remains preserved"
+    },
+    {
+      "reduction": "arbitrary nonnegative global package weights",
+      "information": "complete released support matrix",
+      "outcome": "exact residual",
+      "evidence": "R*(A)=2.0"
+    },
+    {
+      "reduction": "global-singleton overlap theorem witness",
+      "information": "complete released support matrix",
+      "outcome": "closed-form lower bound",
+      "evidence": "two independent released witnesses imply R*(A)>=2; exact LP attains 2"
+    }
+  ],
+  "table_3_support_regime_boundary": [
+    {
+      "regime": "Skill-SP API-Bank Level-1 full",
+      "rows": 399,
+      "covered_rows": 314,
+      "multi_membership_rows": 183,
+      "overlap_fraction_of_covered": 0.5828025477707006,
+      "closed_form_witnesses": 2,
+      "R_star": 2.0,
+      "certificate": "IRREDUCIBLE_PACKAGE_ONLY_RESIDUAL"
+    },
+    {
+      "regime": "Skill-SP Level-1 frozen calibration tools",
+      "rows": 49,
+      "covered_rows": 47,
+      "multi_membership_rows": 33,
+      "overlap_fraction_of_covered": 0.7021276595744681,
+      "closed_form_witnesses": 2,
+      "R_star": 2.0,
+      "certificate": "IRREDUCIBLE_PACKAGE_ONLY_RESIDUAL"
+    },
+    {
+      "regime": "Skill-SP Level-1 tool-disjoint heldout tools",
+      "rows": 54,
+      "covered_rows": 52,
+      "multi_membership_rows": 38,
+      "overlap_fraction_of_covered": 0.7307692307692307,
+      "closed_form_witnesses": 2,
+      "R_star": 2.0,
+      "certificate": "IRREDUCIBLE_PACKAGE_ONLY_RESIDUAL"
+    },
+    {
+      "regime": "Skill-SP API-Bank Level-3",
+      "rows": 131,
+      "covered_rows": 34,
+      "multi_membership_rows": 0,
+      "overlap_fraction_of_covered": 0.0,
+      "closed_form_witnesses": 0,
+      "R_star": 1.0,
+      "certificate": "PACKAGE_ONLY_EQUALIZABLE_NEGATIVE"
+    },
+    {
+      "regime": "Skill-SP logical first-party compiler validation",
+      "rows": 128,
+      "covered_rows": 128,
+      "multi_membership_rows": 127,
+      "overlap_fraction_of_covered": 0.9921875,
+      "closed_form_witnesses": 0,
+      "R_star": 1.0,
+      "certificate": "OVERLAP_BUT_GLOBALLY_EQUALIZABLE_NEGATIVE"
+    }
+  ],
+  "figure_2_witnesses": [
+    {
+      "pair": ["skill_003", "skill_015"],
+      "left_singleton": "L1#44 ModifyRegistration",
+      "right_singleton": "L1#12 EmergencyKnowledge",
+      "shared": "L1#0 ModifyRegistration",
+      "lower_bound": 2.0
+    },
+    {
+      "pair": ["skill_004", "skill_015"],
+      "left_singleton": "L1#98 RecordHealthData",
+      "right_singleton": "L1#12 EmergencyKnowledge",
+      "shared": "L1#1 QueryHealthData",
+      "lower_bound": 2.0
+    }
+  ],
+  "figure_3_boundary_points": [
+    {"regime": "L1 full", "overlap_fraction": 0.5828025477707006, "R_star": 2.0},
+    {"regime": "calibration", "overlap_fraction": 0.7021276595744681, "R_star": 2.0},
+    {"regime": "heldout", "overlap_fraction": 0.7307692307692307, "R_star": 2.0},
+    {"regime": "Level-3", "overlap_fraction": 0.0, "R_star": 1.0},
+    {"regime": "logical compiler", "overlap_fraction": 0.9921875, "R_star": 1.0}
+  ],
+  "dynamic_p0_appendix": {
+    "decision": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED",
+    "generated": 72,
+    "contract_valid_by_source": {"skill_003": 14, "skill_004": 5, "skill_015": 8},
+    "required_per_source": 16,
+    "scientific_result_available": false,
+    "interpretation": "proposer/substrate qualification failure; no dynamic STRI belief update and no rerun"
+  },
+  "scientific_authority": false
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-STRI-LOGICAL-COMPILER-SUPPORT-R1-20260816",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "purpose": "Independent zero-GPU first-party cross-domain test of the STRI support-overlap mechanism using Skill-SP's released logical-reasoning compilers and fixed CSP truth, without LLM generation.",
+  "author_asset": {
+    "repo": "/data/wyt/skill-self-play-agent3-20260816",
+    "repo_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "compiler_py_sha256": "5229a321960ec05bde0ddb85c8ae3ebd9ff9c5ebda27fa2dbab30483646fb357",
+    "compiler_resources_py_sha256": "7eed3522c1a74f1c689043880314e52d32616c8c1257a945e80257fbf67792a5",
+    "contracts_py_sha256": "bdf1dcaae0b24f83a1882f8bfe6752856b1320db68ab024a4fb478e1db5d3edd",
+    "initial_skills_sha256": "cb04951fa5c7e26c2c89732a43adeb8839a751dcf3dac280fc18efa72e326710",
+    "compiler_bundle_sha256": "32764699b1194c9657ff355d977c1045b2382569c11e7527f8857ccacc933d4d"
+  },
+  "units": {
+    "skill_ids": ["skill_001", "skill_002", "skill_003", "skill_004", "skill_005", "skill_006", "skill_007", "skill_008"],
+    "grid_sizes": [[3, 3], [4, 4], [5, 5], [6, 6]],
+    "seeds": [0, 1, 2, 3],
+    "total_source_units": 128,
+    "selection_reads_outcomes": false,
+    "selection_basis": "exactly the author validate_compiler_spec default validation sizes and default seeds=4 over all eight released logical skills"
+  },
+  "generation": {
+    "function": "logical_reasoning.compiler.compile_zebra_blueprint",
+    "source_condition": "each source skill's released compiler.json",
+    "blueprint": "fixed author-style compiler-validation blueprint with house_count x attribute_count, deterministic neutral value sets, task_family=zebra_grid, and medium/hard difficulty based only on size",
+    "model_calls": 0,
+    "training": false
+  },
+  "independent_truth": {
+    "task_validity": "logical_reasoning.contracts.check_zebra_sample_contract with fixed CSP count_solutions uniqueness validation",
+    "cross_skill_support": "logical_reasoning.compiler_resources.compiler_sample_alignment_errors(target_compiler_spec, generated_sample)==[]",
+    "support_labels_are_candidate_independent": true,
+    "candidate_method_does_not_define_truth": true
+  },
+  "analysis": {
+    "support_matrix": "128 generated source units x 8 released target compiler specs",
+    "primary_reduction": "optimal nonnegative global package weighting over the same support matrix with minimum covered-unit exposure normalized to 1",
+    "certificate": "STRI-Cert global-singleton overlap witness where available; LP optimum is the general same-information reduction",
+    "no_subsetting_after_outcomes": true
+  },
+  "decision_rule": {
+    "CROSS_DOMAIN_PACKAGE_ONLY_RESIDUAL": "all 128 source units compile and pass author CSP contract, at least one unit has multi-skill support, and the optimal same-information global package-weight ratio is > 1 + 1e-8",
+    "DISJOINT_OR_EQUALIZABLE_NEGATIVE_CONTROL": "all 128 source units compile and pass author CSP contract and optimal global package-weight ratio is <= 1 + 1e-8",
+    "INVALID_FIRST_PARTY_SUBSTRATE": "any source unit fails author compile/contract or repository/compiler hashes drift",
+    "NO_SIMPLE_WITNESS_BUT_LP_RESIDUAL": "LP ratio >1 is sufficient for the residual even when the closed-form singleton-overlap witness does not fire; do not select a subset to create a witness"
+  },
+  "interpretation": {
+    "positive": "Independent first-party logical domain supports the same package-only representation residual under author compiler support truth; strengthens C2 cross-domain generality but still does not establish downstream utility harm or SQC performance.",
+    "negative": "Logical domain is a real negative boundary; retain tool-call C2 only and report that the mechanism depends on support topology.",
+    "invalid": "No scientific belief update; do not repair seeds/sizes/specs after outcome."
+  },
+  "budget": {
+    "gpu_hours": 0,
+    "model_calls": 0,
+    "source_units": 128,
+    "cross_support_checks": 1024,
+    "wall_clock_cap_minutes": 30
+  },
+  "scientific_authority": false,
+  "execution_authorized": false,
+  "authority": {
+    "paper_claim_C3": false,
+    "paper_claim_C4": false,
+    "method": false,
+    "p0": false,
+    "gpu": false
+  }
+}

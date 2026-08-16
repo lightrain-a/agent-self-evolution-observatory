@@ -1,0 +1,383 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "method": "STRI-Cert",
+  "role": "mechanism-derived representation-invariance diagnostic certificate; not a downstream utility method",
+  "contexts": {
+    "api_bank_level1_all": {
+      "context_id": "api_bank_level1_all",
+      "rows": 399,
+      "covered_rows": 314,
+      "active_skills": [
+        "skill_001",
+        "skill_002",
+        "skill_003",
+        "skill_004",
+        "skill_005",
+        "skill_015"
+      ],
+      "single_membership_rows": 131,
+      "multi_membership_rows": 183,
+      "maximum_membership_cardinality": 2,
+      "decision": "CERTIFIED_IRREDUCIBLE_PACKAGE_ONLY_REPRESENTATION_RESIDUAL_WITH_CLOSED_FORM_WITNESS",
+      "negative_control_subtype": "",
+      "structural_witness": {
+        "covered_rows": 314,
+        "selected_skills": [
+          "skill_001",
+          "skill_002",
+          "skill_003",
+          "skill_004",
+          "skill_005",
+          "skill_015"
+        ],
+        "unique_support_counts": {
+          "skill_001": 0,
+          "skill_002": 0,
+          "skill_003": 17,
+          "skill_004": 5,
+          "skill_005": 0,
+          "skill_015": 109
+        },
+        "unique_support_scope": "exact singleton accepted_skill_ids over the full released validator universe",
+        "witness_count": 2,
+        "witnesses": [
+          {
+            "left_skill": "skill_003",
+            "right_skill": "skill_015",
+            "left_unique_row": {
+              "level": 1,
+              "index": 44,
+              "tool": "ModifyRegistration"
+            },
+            "right_unique_row": {
+              "level": 1,
+              "index": 12,
+              "tool": "EmergencyKnowledge"
+            },
+            "overlap_row": {
+              "level": 1,
+              "index": 0,
+              "tool": "ModifyRegistration"
+            },
+            "exposure_ratio_lower_bound": 2.0
+          },
+          {
+            "left_skill": "skill_004",
+            "right_skill": "skill_015",
+            "left_unique_row": {
+              "level": 1,
+              "index": 98,
+              "tool": "RecordHealthData"
+            },
+            "right_unique_row": {
+              "level": 1,
+              "index": 12,
+              "tool": "EmergencyKnowledge"
+            },
+            "overlap_row": {
+              "level": 1,
+              "index": 1,
+              "tool": "QueryHealthData"
+            },
+            "exposure_ratio_lower_bound": 2.0
+          }
+        ],
+        "global_nonnegative_package_weight_exposure_ratio_lower_bound": 2.0,
+        "proof": "For any witness (a,b), let m be the minimum positive task exposure. The globally singleton a-only row implies w_a>=m and the globally singleton b-only row implies w_b>=m. Their overlap row has exposure at least w_a+w_b>=2m, so max/min>=2."
+      },
+      "optimal_global_package_weighting": {
+        "pass": true,
+        "ratio": 2.0,
+        "minimum_exposure": 1.0,
+        "maximum_exposure": 2.0,
+        "weights": {
+          "skill_001": 0.0,
+          "skill_002": 0.0,
+          "skill_003": 1.0,
+          "skill_004": 1.0,
+          "skill_005": 0.0,
+          "skill_015": 1.0
+        },
+        "skills": [
+          "skill_001",
+          "skill_002",
+          "skill_003",
+          "skill_004",
+          "skill_005",
+          "skill_015"
+        ]
+      },
+      "tight_lower_bound": true,
+      "scientific_authority": false
+    },
+    "api_bank_level1_calibration_tools": {
+      "context_id": "api_bank_level1_calibration_tools",
+      "rows": 49,
+      "covered_rows": 47,
+      "active_skills": [
+        "skill_003",
+        "skill_004",
+        "skill_015"
+      ],
+      "single_membership_rows": 14,
+      "multi_membership_rows": 33,
+      "maximum_membership_cardinality": 2,
+      "decision": "CERTIFIED_IRREDUCIBLE_PACKAGE_ONLY_REPRESENTATION_RESIDUAL_WITH_CLOSED_FORM_WITNESS",
+      "negative_control_subtype": "",
+      "structural_witness": {
+        "covered_rows": 47,
+        "selected_skills": [
+          "skill_003",
+          "skill_004",
+          "skill_015"
+        ],
+        "unique_support_counts": {
+          "skill_003": 8,
+          "skill_004": 3,
+          "skill_015": 3
+        },
+        "unique_support_scope": "exact singleton accepted_skill_ids over the full released validator universe",
+        "witness_count": 2,
+        "witnesses": [
+          {
+            "left_skill": "skill_003",
+            "right_skill": "skill_015",
+            "left_unique_row": {
+              "level": 1,
+              "index": 44,
+              "tool": "ModifyRegistration"
+            },
+            "right_unique_row": {
+              "level": 1,
+              "index": 109,
+              "tool": "RecordHealthData"
+            },
+            "overlap_row": {
+              "level": 1,
+              "index": 0,
+              "tool": "ModifyRegistration"
+            },
+            "exposure_ratio_lower_bound": 2.0
+          },
+          {
+            "left_skill": "skill_004",
+            "right_skill": "skill_015",
+            "left_unique_row": {
+              "level": 1,
+              "index": 98,
+              "tool": "RecordHealthData"
+            },
+            "right_unique_row": {
+              "level": 1,
+              "index": 109,
+              "tool": "RecordHealthData"
+            },
+            "overlap_row": {
+              "level": 1,
+              "index": 1,
+              "tool": "QueryHealthData"
+            },
+            "exposure_ratio_lower_bound": 2.0
+          }
+        ],
+        "global_nonnegative_package_weight_exposure_ratio_lower_bound": 2.0,
+        "proof": "For any witness (a,b), let m be the minimum positive task exposure. The globally singleton a-only row implies w_a>=m and the globally singleton b-only row implies w_b>=m. Their overlap row has exposure at least w_a+w_b>=2m, so max/min>=2."
+      },
+      "optimal_global_package_weighting": {
+        "pass": true,
+        "ratio": 2.0,
+        "minimum_exposure": 1.0,
+        "maximum_exposure": 2.0,
+        "weights": {
+          "skill_003": 1.0,
+          "skill_004": 1.0,
+          "skill_015": 1.0
+        },
+        "skills": [
+          "skill_003",
+          "skill_004",
+          "skill_015"
+        ]
+      },
+      "tight_lower_bound": true,
+      "scientific_authority": false
+    },
+    "api_bank_level1_heldout_tools": {
+      "context_id": "api_bank_level1_heldout_tools",
+      "rows": 54,
+      "covered_rows": 52,
+      "active_skills": [
+        "skill_003",
+        "skill_004",
+        "skill_015"
+      ],
+      "single_membership_rows": 14,
+      "multi_membership_rows": 38,
+      "maximum_membership_cardinality": 2,
+      "decision": "CERTIFIED_IRREDUCIBLE_PACKAGE_ONLY_REPRESENTATION_RESIDUAL_WITH_CLOSED_FORM_WITNESS",
+      "negative_control_subtype": "",
+      "structural_witness": {
+        "covered_rows": 52,
+        "selected_skills": [
+          "skill_003",
+          "skill_004",
+          "skill_015"
+        ],
+        "unique_support_counts": {
+          "skill_003": 9,
+          "skill_004": 2,
+          "skill_015": 3
+        },
+        "unique_support_scope": "exact singleton accepted_skill_ids over the full released validator universe",
+        "witness_count": 2,
+        "witnesses": [
+          {
+            "left_skill": "skill_003",
+            "right_skill": "skill_015",
+            "left_unique_row": {
+              "level": 1,
+              "index": 276,
+              "tool": "QueryRegistration"
+            },
+            "right_unique_row": {
+              "level": 1,
+              "index": 12,
+              "tool": "EmergencyKnowledge"
+            },
+            "overlap_row": {
+              "level": 1,
+              "index": 2,
+              "tool": "CancelRegistration"
+            },
+            "exposure_ratio_lower_bound": 2.0
+          },
+          {
+            "left_skill": "skill_004",
+            "right_skill": "skill_015",
+            "left_unique_row": {
+              "level": 1,
+              "index": 297,
+              "tool": "EmergencyKnowledge"
+            },
+            "right_unique_row": {
+              "level": 1,
+              "index": 12,
+              "tool": "EmergencyKnowledge"
+            },
+            "overlap_row": {
+              "level": 1,
+              "index": 5,
+              "tool": "EmergencyKnowledge"
+            },
+            "exposure_ratio_lower_bound": 2.0
+          }
+        ],
+        "global_nonnegative_package_weight_exposure_ratio_lower_bound": 2.0,
+        "proof": "For any witness (a,b), let m be the minimum positive task exposure. The globally singleton a-only row implies w_a>=m and the globally singleton b-only row implies w_b>=m. Their overlap row has exposure at least w_a+w_b>=2m, so max/min>=2."
+      },
+      "optimal_global_package_weighting": {
+        "pass": true,
+        "ratio": 2.0,
+        "minimum_exposure": 1.0,
+        "maximum_exposure": 2.0,
+        "weights": {
+          "skill_003": 1.0,
+          "skill_004": 1.0,
+          "skill_015": 1.0
+        },
+        "skills": [
+          "skill_003",
+          "skill_004",
+          "skill_015"
+        ]
+      },
+      "tight_lower_bound": true,
+      "scientific_authority": false
+    },
+    "api_bank_level3_negative_control": {
+      "context_id": "api_bank_level3_negative_control",
+      "rows": 131,
+      "covered_rows": 34,
+      "active_skills": [
+        "skill_006",
+        "skill_008",
+        "skill_009",
+        "skill_010"
+      ],
+      "single_membership_rows": 34,
+      "multi_membership_rows": 0,
+      "maximum_membership_cardinality": 1,
+      "decision": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL",
+      "negative_control_subtype": "DISJOINT_SUPPORT",
+      "structural_witness": {
+        "covered_rows": 34,
+        "selected_skills": [
+          "skill_006",
+          "skill_008",
+          "skill_009",
+          "skill_010"
+        ],
+        "unique_support_counts": {
+          "skill_006": 8,
+          "skill_008": 6,
+          "skill_009": 15,
+          "skill_010": 5
+        },
+        "unique_support_scope": "exact singleton accepted_skill_ids over the full released validator universe",
+        "witness_count": 0,
+        "witnesses": [],
+        "global_nonnegative_package_weight_exposure_ratio_lower_bound": null,
+        "proof": "No mandatory-overlap witness was found."
+      },
+      "optimal_global_package_weighting": {
+        "pass": true,
+        "ratio": 1.0,
+        "minimum_exposure": 1.0,
+        "maximum_exposure": 1.0,
+        "weights": {
+          "skill_006": 1.0,
+          "skill_008": 1.0,
+          "skill_009": 1.0,
+          "skill_010": 1.0
+        },
+        "skills": [
+          "skill_006",
+          "skill_008",
+          "skill_009",
+          "skill_010"
+        ]
+      },
+      "tight_lower_bound": false,
+      "scientific_authority": false
+    }
+  },
+  "expected_mechanism_boundary": {
+    "api_bank_level1_all": "CERTIFIED_IRREDUCIBLE_PACKAGE_ONLY_REPRESENTATION_RESIDUAL_WITH_CLOSED_FORM_WITNESS",
+    "api_bank_level1_calibration_tools": "CERTIFIED_IRREDUCIBLE_PACKAGE_ONLY_REPRESENTATION_RESIDUAL_WITH_CLOSED_FORM_WITNESS",
+    "api_bank_level1_heldout_tools": "CERTIFIED_IRREDUCIBLE_PACKAGE_ONLY_REPRESENTATION_RESIDUAL_WITH_CLOSED_FORM_WITNESS",
+    "api_bank_level3_negative_control": "CERTIFIED_PACKAGE_ONLY_EQUALIZABLE_NEGATIVE_CONTROL"
+  },
+  "checks": {
+    "api_bank_level1_all": true,
+    "api_bank_level1_calibration_tools": true,
+    "api_bank_level1_heldout_tools": true,
+    "api_bank_level3_negative_control": true
+  },
+  "all_expected_contexts_pass": true,
+  "interpretation": "The certificate fires on the full Level-1 support graph and independently on the preregistered tool-disjoint calibration and heldout subsets, while the released Level-3 disjoint-support regime is a real negative control where package weighting is exactly equalizable (ratio=1). This tests the mechanism boundary without new model generation.",
+  "prohibited_claims": [
+    "STRI-Cert improves task success",
+    "support overlap always causes downstream harm",
+    "absence of the simple singleton-overlap witness proves representation invariance in arbitrary overlap graphs",
+    "SQC has been validated dynamically"
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_C3": false,
+    "paper_claim_C4": false,
+    "p0": false,
+    "gpu": false
+  }
+}

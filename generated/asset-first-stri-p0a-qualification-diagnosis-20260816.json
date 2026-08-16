@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "stage": "POST_P0A_DIFFERENTIAL_DIAGNOSIS",
+  "p0a_result": "generated/asset-first-stri-qwen3-merge-split-p0a-result-20260816.json",
+  "decision": "SUBSTRATE_PROPOSER_COMPETENCE_INSUFFICIENT_NO_SCIENTIFIC_BELIEF_UPDATE",
+  "diagnosis_class": "D_SUBSTRATE_WRONG_OR_INSUFFICIENT",
+  "not_diagnosed_as": [
+    "A_baseline_reduction",
+    "B_mechanism_survives",
+    "C_formulation_falsified",
+    "E_observable_wrong"
+  ],
+  "frozen_execution": {
+    "generated_total": 72,
+    "source_counts": {
+      "skill_003": 24,
+      "skill_004": 24,
+      "skill_015": 24
+    },
+    "parsed_total": 65,
+    "contract_valid_total": 27,
+    "contract_valid_by_source": {
+      "skill_003": 14,
+      "skill_004": 5,
+      "skill_015": 8
+    },
+    "minimum_contract_valid_per_source": 5,
+    "required_min_per_source": 16,
+    "gpu_hours": 0.07372141143876232,
+    "budget_pass": true,
+    "raw_sha256": "8aacc8a0ae5d8be71f09f1cf11ef1aa33e6e75eed35aa783869a5d21c3437503"
+  },
+  "dominant_failure_evidence": {
+    "system_missing_tool_call_output_contract": {
+      "skill_003": 5,
+      "skill_004": 12,
+      "skill_015": 15,
+      "total": 32
+    },
+    "answer_parameters_lack_context_evidence": {
+      "skill_003": 1,
+      "skill_004": 9,
+      "skill_015": 0,
+      "total": 10
+    },
+    "user_missing_final_one_tool_call_request": {
+      "skill_003": 1,
+      "skill_004": 0,
+      "skill_015": 1,
+      "total": 2
+    }
+  },
+  "why_observable_is_not_the_problem": [
+    "The released tool_call.prompts questioner prompt explicitly requires the generated system field to contain the exact <tool_call>...</tool_call> solver-output contract, exact final one-tool-call request, and grounded parameter values.",
+    "The released tool_call.contracts.check_task_sample_contract implements these same checks and defines contract_valid=1 only when no contract error remains.",
+    "The released questioner reward path calls the same contract checks and sends only contract-valid samples to solver evaluation, so contract_valid is an author-native training/evaluation condition rather than an invented STRI label.",
+    "65/72 outputs parsed successfully, so the dominant failure is not parser/runtime collapse; it is low valid-task yield under the author-native contract."
+  ],
+  "why_no_automatic_repair_is_allowed": [
+    "The frozen P0-A contract preregistered >=16 contract-valid samples per source before any representation-sensitivity statistic may update belief.",
+    "Lowering the threshold after observing 14/5/8 would be threshold shopping and would also leave sharply imbalanced low-resolution source distributions.",
+    "Adding generations after the frozen 24/source budget would be adaptive support rescue.",
+    "Switching backbone or using another model after this result would violate the single-backbone/no-rescue rule.",
+    "P0-B and P0-C both require P0-A GO, protocol-valid scientific evidence, and the exact raw SHA; they are therefore disabled."
+  ],
+  "author_release_asset_check": {
+    "released_generated_task_bank_with_skill_provenance_found": false,
+    "released_trained_questioner_checkpoint_found": false,
+    "release_observation": "The author repository provides training scripts that write questioner_vN checkpoints under STORAGE_PATH/models/.../global_step_*/actor/huggingface, but README and repository contents do not provide a reusable trained questioner checkpoint or generated questioner task bank with skill provenance.",
+    "implication": "There is no existing first-party asset that can replace the failed base-questioner substrate without changing the operationalization after outcome observation."
+  },
+  "preexisting_exploratory_diagnostics": {
+    "default_qwen3_transformers": "RUNTIME_QUALIFICATION_FAIL; 2 samples/source exploratory, skill_015 0/2 valid; non-faithful runtime; no belief authority",
+    "no_thinking_qwen3_transformers": "RUNTIME_QUALIFICATION_FAIL_EARLY; skill_003 0/2 valid; dominant system_missing_tool_call_output_contract; no additional runtime repair authorized",
+    "interpretation": "Preexisting exploratory runs do not identify a simple thinking-mode repair and cannot be used to choose a new P0 configuration."
+  },
+  "scientific_belief_update": {
+    "C1_control_plane_representation_sensitivity": "UNCHANGED_SUPPORTED_PRE_P0",
+    "C2_structural_package_only_residual": "UNCHANGED_SUPPORTED_PRE_P0",
+    "C3_sqc_method_claim": "LOCKED",
+    "C4_realized_task_or_end_of_evolution": "LOCKED_NO_QUALIFIED_DYNAMIC_EVIDENCE"
+  },
+  "next_action": "Do not rerun P0-A, P0-B, or P0-C automatically. Return to Paper Design and independently adjudicate whether STRI is viable as a narrower representation-invariance principle/theory/control-plane paper with C1/C2 only, or must remain on external-asset HOLD until a first-party trained-questioner/dynamic release becomes available.",
+  "scientific_authority": false,
+  "execution_authorized": false,
+  "authority": {
+    "paper_claim_C3": false,
+    "paper_claim_C4": false,
+    "method": false,
+    "p0": false,
+    "full_experiment": false,
+    "gpu": false,
+    "second_backbone": false
+  }
+}

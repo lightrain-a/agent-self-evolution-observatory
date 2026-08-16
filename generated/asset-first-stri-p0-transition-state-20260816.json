@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "stage": "ZERO_AUTHORITY_P0_TRANSITION_COMPILER",
+  "status": "HOLD_P0A_INVALID_OR_BUDGET_NO_BELIEF_UPDATE",
+  "receipts": {
+    "p0a": {
+      "present": true,
+      "valid_identity": true,
+      "decision": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED",
+      "protocol_valid": false,
+      "raw_sha256": "8aacc8a0ae5d8be71f09f1cf11ef1aa33e6e75eed35aa783869a5d21c3437503",
+      "scientific_result_available": false,
+      "errors": []
+    },
+    "p0b": {
+      "present": false,
+      "decision": "",
+      "input_bound_to_p0a": false,
+      "errors": []
+    },
+    "p0c": {
+      "present": false,
+      "decision": "",
+      "secondary_only": true,
+      "input_bound_to_p0a": false,
+      "errors": []
+    }
+  },
+  "claim_state": {
+    "C1_control_plane_representation_sensitivity": "SUPPORTED_PRE_P0",
+    "C2_structural_package_only_residual": "SUPPORTED_PRE_P0",
+    "C3_sqc_method_claim": "LOCKED_UNTIL_FULL_PRIMARY_GATES",
+    "C4_realized_task_propagation": "LOCKED_PENDING_P0A",
+    "C4_end_of_evolution_or_utility": "LOCKED_UNTIL_P0C_OR_FULL_WITH_CLAIM_SCOPE_REVIEW"
+  },
+  "p0b_state": "LOCKED_PENDING_P0A",
+  "p0c_annotation": "NOT_RUN",
+  "full_experiment_state": "LOCKED",
+  "allowed_next_actions": [],
+  "primary_stop_reason": "P0-A did not produce a qualified scientific result; no automatic retry or repair is authorized.",
+  "policy": {
+    "p0c_is_secondary_and_cannot_rescue_p0a_or_p0b": true,
+    "p0a_stop_disables_p0b_p0c_as_primary_rescue_and_full": true,
+    "p0a_inconclusive_forbids_adaptive_extra_generation_threshold_change_or_second_backbone": true,
+    "p0b_requires_p0a_go_protocol_valid_and_exact_raw_sha": true,
+    "p0b_stop_disables_current_sqc_full_experiment": true,
+    "p0a_p0b_pass_does_not_auto_authorize_full_experiment": true,
+    "no_execution_is_triggered_by_this_compiler": true
+  },
+  "errors": [],
+  "scientific_authority": false,
+  "execution_authorized": false,
+  "authority": {
+    "paper_claim_C3": false,
+    "paper_claim_C4_end_of_evolution": false,
+    "method": false,
+    "p0": false,
+    "full_experiment": false,
+    "gpu": false,
+    "second_backbone": false
+  }
+}

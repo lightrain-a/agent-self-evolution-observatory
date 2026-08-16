@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "stage": "NARROW_PAPER_FINAL_COHERENCE_PRE_SUBMISSION",
+  "status": "READY_NARROW_ICLR_CLAIMS_COHERENT",
+  "title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
+  "claims": {
+    "N1": {
+      "status": "SUPPORTED",
+      "object": "released control-plane representation sensitivity",
+      "evidence": [
+        "Skill-SP released validator/support/controller audit",
+        "SkillRL exact fresh-ID clone retrieval audit"
+      ],
+      "forbidden": "no downstream utility or harm inference"
+    },
+    "N2": {
+      "status": "SUPPORTED",
+      "object": "exact finite support equalizability R*(A)",
+      "evidence": [
+        "Theorem 3 iff proof",
+        "exact LP implementation/tests",
+        "Theorem 1 closed-form factor-2 witness",
+        "independent CLEAR_THEOREM review"
+      ],
+      "forbidden": "no LP computational novelty claim"
+    },
+    "N3": {
+      "status": "SUPPORTED",
+      "object": "non-equalizable support geometry rather than overlap prevalence",
+      "evidence": [
+        "Level1 full R*=2",
+        "frozen calibration R*=2",
+        "tool-disjoint heldout R*=2",
+        "Level3 R*=1",
+        "logical first-party 128/128 valid, 127/128 overlap, R*=1"
+      ],
+      "forbidden": "do not generalize equalizability beyond audited support matrices"
+    }
+  },
+  "dropped_claims": {
+    "C3_SQC_success": "NOT_SUBMISSION_CLAIM",
+    "C4_dynamic_or_utility_propagation": "NOT_SUBMISSION_CLAIM",
+    "Qwen3_P0A_witness_statistics": "INVALID_UNDER_QUALIFICATION_NO_BELIEF_UPDATE"
+  },
+  "method_positioning": {
+    "name": "STRI-Cert",
+    "role": "sound theorem-derived audit/evaluation protocol",
+    "not_claimed": "new LP optimizer, learned method, downstream repair"
+  },
+  "critical_boundaries": {
+    "P0A": "72/72 generated; 14/5/8 valid <16/source; INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED; no rerun",
+    "P0D": "optional SkillRL fixed-task C4 bridge only; not required for narrow claims and cannot rescue/redefine N1-N3",
+    "SQC": "future repair direction only"
+  },
+  "reviews": {
+    "post_p0_viability": {
+      "artifact": "generated/asset-first-stri-post-p0a-paper-review-20260816.json",
+      "verdict": "ADVANCE_NARROW_THEORY_CONTROL_PAPER",
+      "confidence": 0.9
+    },
+    "final_premortem": {
+      "artifact": "generated/asset-first-stri-narrow-final-review-20260816.json",
+      "verdict": "READY_NARROW_ICLR",
+      "confidence": 0.92,
+      "story": 4,
+      "novelty": 4,
+      "evidence": 5
+    },
+    "narrow_collision": {
+      "artifact": "generated/asset-first-stri-narrow-collision-review-20260816.json",
+      "verdict": "SURVIVES_NARROWLY",
+      "confidence": 0.84
+    }
+  },
+  "draft": "paper_drafts/stri-20260816-narrow-draft.md",
+  "table_data": "generated/asset-first-stri-narrow-paper-table-data-20260816.json",
+  "required_remaining_work": [
+    "final bibliography/source formatting",
+    "figure rendering/polish",
+    "venue-length compression after results are frozen; no new scientific experiment required for N1-N3"
+  ],
+  "scientific_authority": false,
+  "execution_authorized": false,
+  "authority": {
+    "paper_claim_dynamic": false,
+    "method_SQC": false,
+    "p0": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}
