@@ -59,6 +59,10 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(len(p01_assets),1)
         self.assertEqual(p01_assets[0]["source_sha256"],"2e996c0b543c03a1f6c68cb06aaa26498d52b36f0775b7b36cf2025783f68ab0")
         self.assertFalse(p01_assets[0]["scientific_authority"])
+        autoskill_assets=[row for row in memory.get("inversion_asset_evidence") or [] if str(row.get("asset_ref") or "").startswith("first-party-asset:autoskill@")]
+        self.assertEqual(len(autoskill_assets),1)
+        self.assertEqual(autoskill_assets[0]["source_sha256"],"0d7553874390685344102cd9654a376a1f1e3e7d7490fa53b48f1f138f3f383b")
+        self.assertFalse(autoskill_assets[0]["scientific_authority"])
 
     def test_principle_readjudication_compiles_into_opposite_search_memory(self) -> None:
         payload={"candidate_id":"P06","title":"Coverage quantity","principle_dead_end_certified":True,"dead_end_scope":"coverage-only certificate","principle_diagnosis":{"counter_explanation":{"type":"IMPOSSIBILITY_OR_INVARIANCE","statement":"coverage quantity does not identify relevance","opposite_prediction":"generic uncertainty shift only","opposite_principle":"evidence sufficiency is relevance-conditioned","opposite_search_seed":"search relevance-conditioned evidence debt","scope":"coverage-only certificate","same_information_or_scope_matched":True,"proof_or_structural_witness":True,"evidence_refs":["arXiv:2608.07527"],"alternative_explanations_ruled_out":["execution"],"reopen_condition":"expose relevance-conditioned debt without hidden truth"}}}

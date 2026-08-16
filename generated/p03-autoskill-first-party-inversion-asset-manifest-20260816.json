@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "asset_id": "autoskill-first-party-uptake-evidence",
+  "repository": "https://github.com/ECNU-ICALK/AutoSkill",
+  "commit": "94c47ca488d4ba4117d20272e66d49b9877e68cf",
+  "manifest_sha256": "0d7553874390685344102cd9654a376a1f1e3e7d7490fa53b48f1f138f3f383b",
+  "files": [
+    {
+      "path": "AutoSkill4OpenClaw/service_runtime.py",
+      "sha256": "08df30e7a89737fef2932c340b760b0bf51ddcf9ad4b3e517e30f1239f4cd734",
+      "bytes": 62022
+    },
+    {
+      "path": "AutoSkill4OpenClaw/openclaw_usage_tracking.py",
+      "sha256": "6fd3ab863e468bdcc133de13371bba41c9ec33cbc73608cf0388ae4cd5aa5675",
+      "bytes": 35992
+    },
+    {
+      "path": "SkillEvo/replay_builder.py",
+      "sha256": "22bb9232837f50a6baff4d403bdfbfd2405172c3a94f9bb3456232e6a0719ae6",
+      "bytes": 13779
+    },
+    {
+      "path": "SkillEvo/runner.py",
+      "sha256": "1d6e65d76f92fd1d0b265ae37641403f4142d0a058f93d38d064979a789b51bf",
+      "bytes": 15962
+    }
+  ],
+  "verified_facts": [
+    {
+      "evidence_role": "EMPIRICAL_FACT",
+      "text": "AutoSkill's OpenClaw usage tracker preserves a retrieval snapshot containing selected_for_context_ids and selected_for_use_ids, then links that pending retrieval to a session-level usage update rather than treating retrieval itself as executed uptake."
+    },
+    {
+      "evidence_role": "EMPIRICAL_FACT",
+      "text": "The first-party agent-end write path records explicit used_skill_ids and inferred_used_skill_ids together with success/task_success/objective_met for the same session, so retrieved, selected-for-use, observed uptake, and task outcome are separately observable states."
+    },
+    {
+      "evidence_role": "EMPIRICAL_FACT",
+      "text": "SkillEvo reconstructs per-skill replay pools from online and offline provenance, binds them to a stable lineage_id and skill_id/version timeline, and writes replay, judgment, promotion, and provenance artifacts for later variant evaluation."
+    }
+  ],
+  "scientific_authority": false
+}

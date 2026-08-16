@@ -67,6 +67,22 @@
     "new_search_basin": "matched-uptake-residual-after-context-conditioning",
     "new_problem_seed": "Look only for fresh-session harm that remains after matching the persistent artifact set, task-artifact compatibility, and realized action-level uptake; otherwise treat selective carryover as ordinary context-conditioned artifact utilization."
   },
+  "opposite_search_asset_evidence": {
+    "asset_ref": "first-party-asset:autoskill@94c47ca488d4ba4117d20272e66d49b9877e68cf",
+    "title": "AutoSkill first-party retrieval, usage, and lineage runtime",
+    "primary_url": "https://github.com/ECNU-ICALK/AutoSkill",
+    "source_sha256": "0d7553874390685344102cd9654a376a1f1e3e7d7490fa53b48f1f138f3f383b",
+    "asset_manifest_artifact": "generated/p03-autoskill-first-party-inversion-asset-manifest-20260816.json",
+    "asset_manifest_file_sha256": "c9eb401070acf8b6684efad289161268f8e2a300846db1f3f3f559d75bf7e1e1",
+    "commit": "94c47ca488d4ba4117d20272e66d49b9877e68cf",
+    "empirical_facts": [
+      "AutoSkill's OpenClaw usage tracker preserves selected_for_context_ids and selected_for_use_ids in a pending retrieval snapshot, separating retrieved/selected artifacts from later realized use.",
+      "The first-party agent-end path records explicit used_skill_ids and inferred_used_skill_ids together with success/task_success/objective_met for the same session, so selected-for-use, observed uptake, and downstream outcome are separately observable states.",
+      "SkillEvo reconstructs per-skill replay pools from online and offline provenance, binds them to lineage_id and skill_id/version history, and persists replay, judgment, promotion, and provenance artifacts."
+    ],
+    "search_use_only": true,
+    "scientific_authority": false
+  },
   "authority": {
     "experiment_alone_authorizes_dead_end": false,
     "counter_explanation_authorizes_scoped_dead_end": true,
