@@ -14,7 +14,8 @@
     "dynamic STRI success",
     "empirical SQC success",
     "LP algorithm novelty",
-    "using the Qwen3-8B proposer-qualification-failed bank as scientific evidence for or against dynamic STRI"
+    "using the Qwen3-8B proposer-qualification-failed bank as scientific evidence for or against dynamic STRI",
+    "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end"
   ],
   "official_format": {
     "venue": "ICLR 2027",
@@ -42,7 +43,7 @@
     },
     "official_iclr2027_final_review": {
       "verdict": "READY_TO_SUBMIT",
-      "confidence": 0.92,
+      "confidence": 0.93,
       "overall_score_1_to_10": 7,
       "required_revisions": 0
     }
@@ -52,18 +53,18 @@
     "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages",
     "pdf": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816.pdf",
-      "sha256": "2a590430a441fa0318286345a4863462b098996e73b24243eeb7ad240e77f8c6"
+      "sha256": "15f02bcaef727853e6fa0a4387c22950fa9f82db83bb54bafceb8686c6b69589"
     },
     "source_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-source.zip",
-      "sha256": "14874816f4751b2605d91ee520768f4a346c5cc177d66f2455ee7c04149df69a",
-      "files": 13,
+      "sha256": "84ad1b0cff9504b9bebfc8b2178c6143f34a3bd34c063b562bcd25e551bee0f3",
+      "files": 12,
       "isolated_compile_verified": true
     },
     "supplement_zip": {
       "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-      "sha256": "3b02f38bd9b2827c553674443f4b8648110fef6f2e9a4e946466bacc0c06f64c",
-      "manifest_sha256": "b6bef06fc3e44dade50d4f560349daa18bf82af8af7e5fe3bd47b7c194f1a608",
+      "sha256": "ab38373f19c38a09de528ec2daac21c359cc819d970edb7594379e4913edfb5f",
+      "manifest_sha256": "f81fb7e911049a141bc067db5e6176caa458bfcf768cd700e449aa8b33770f96",
       "isolated_reproduction_verified": true,
       "unit_tests": "13/13 PASS",
       "identity_path_scan": "PASS",
@@ -106,5 +107,13 @@
     "new_result_figure": "stri-ablation-robustness",
     "source_bound": true,
     "figure_qa": "PASS"
+  },
+  "dynamic_boundary": {
+    "skillrl_p0e_experimental_realization": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
+    "skillrl_p0e_principle_disposition": "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED",
+    "persistent_principle_dead_end_certified": false,
+    "stage2_locked": true,
+    "new_gpu_authorized": false,
+    "broader_STRI_N1_N2_N3_unchanged": true
   }
 }

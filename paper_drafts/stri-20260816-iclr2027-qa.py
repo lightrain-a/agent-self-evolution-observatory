@@ -95,6 +95,8 @@ check("all_bib_entries_cited", cite_keys == bib_keys, f"cites={len(cite_keys)} b
 for phrase in [
     "We \\textbf{do not} claim that a positive certificate causes task failure",
     "no dynamic witness statistic is scientifically admissible",
+    "qualified realization stops the proposed exact-clone-to-final-success bridge",
+    "does not establish a population-level no-effect theorem",
     "Support-Quotient Control has been empirically validated",
     "STRI-Cert is computationally novel relative to linear programming",
 ]:

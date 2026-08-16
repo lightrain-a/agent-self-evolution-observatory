@@ -28,7 +28,10 @@ FORBIDDEN CLAIMS / EVIDENCE BOUNDARY:
 - no empirical SQC success claim;
 - no LP-algorithm novelty claim;
 - the Qwen3-8B dynamic pilot failed its frozen proposer-qualification gate and supplies no scientific evidence for or against dynamic STRI;
-- do not recommend lowering that gate, rerunning the same P0-A, adding generations, or changing backbone as a paper repair.
+- a separate SkillRL final-policy C4 bridge qualified on endpoint support (18/24 calibration successes across five families), then completed 24 paired A/B/C/D units with 18/24 terminal successes in every arm and zero endpoint disagreements; B and the matched identity placebo C changed action trajectories in 11/24 and 15/24 units respectively, while D restored A trajectories 24/24;
+- this SkillRL result is a qualified experimental-realization STOP only: no equivalence margin or task-cluster power analysis was preregistered, so it is not a population-level no-effect theorem or a persistent principle dead-end, and it neither expands nor invalidates N1-N3;
+- do not infer an active recovery mechanism from terminal equivalence, because the experiment does not distinguish policy recovery, multiple successful paths, or environment redundancy;
+- do not recommend lowering the Qwen gate, rerunning the same P0-A, adding seeds/models/tasks to rescue C4, or unlocking Stage-2/GPU as a paper repair.
 
 CURRENT FORMAL/FORMAT STATE:
 {json.dumps(FORMAT.get('build_validation', {}), ensure_ascii=False)}

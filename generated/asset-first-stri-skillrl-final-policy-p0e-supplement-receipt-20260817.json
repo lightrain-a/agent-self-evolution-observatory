@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "artifact_kind": "anonymous-sanitized-skillrl-p0e-receipt",
+  "experiment_id": "STRI-SKILLRL-FINAL-POLICY-COMPETENCY-P0E-20260816",
+  "role": "Optional C4 downstream-boundary evidence only; N1-N3 remain the paper claims.",
+  "frozen_protocol": {
+    "pre_outcome_freeze_commit": "8b7714c719c6d6f4271ec8b588c1aca212c25099",
+    "contract_sha256": "4c507965d55158b65834e3ad486c3ea7d74e556c00bfc982e2dd4adad351d310",
+    "panel_sha256": "2713dd3c15aa8fd539526fd2960a45374cf28fc2b99a0e29b84c2b32d1592284",
+    "model_manifest_sha256": "4a4a305f11f11a0eff0eec4aca409f044402bd6699c06b4185e029d637450bb6",
+    "panel_units": 24,
+    "causal_arms": [
+      "A_pristine",
+      "B_displacement_clone",
+      "C_identity_placebo",
+      "D_exact_quotient"
+    ]
+  },
+  "competence_calibration": {
+    "outcome": "GO_COMPETENT_POLICY_SUPPORT",
+    "pristine_success": 18,
+    "episodes": 24,
+    "success_rate": 0.75,
+    "success_family_count": 5
+  },
+  "paired_causal_result": {
+    "formal_outcome": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
+    "paired_units": 24,
+    "arm_episodes": 96,
+    "success_rate": {
+      "A_pristine": 0.75,
+      "B_displacement_clone": 0.75,
+      "C_identity_placebo": 0.75,
+      "D_exact_quotient": 0.75
+    },
+    "paired_disagreement": {
+      "B_vs_A": 0.0,
+      "C_vs_A": 0.0,
+      "D_vs_A": 0.0
+    },
+    "B_vs_A_mcnemar_p": 1.0,
+    "family_replicated_flip_count": 0
+  },
+  "trajectory_boundary": {
+    "B_vs_A_response_sequence_disagreement": 23,
+    "B_vs_A_action_sequence_disagreement": 11,
+    "B_vs_A_first_action_divergence_median_step": 7,
+    "C_vs_A_response_sequence_disagreement": 23,
+    "C_vs_A_action_sequence_disagreement": 15,
+    "C_vs_A_first_action_divergence_median_step": 6,
+    "D_vs_A_exact_trajectory_units": 24,
+    "same_information_screen_verdict": "NO_SEMANTIC_SPECIFIC_TRAJECTORY_RESIDUAL_IN_SIMPLE_SAME_INFORMATION_SCREEN",
+    "any_simple_B_over_C_dominance_supported": false
+  },
+  "statistical_resolution": {
+    "paired_units": 24,
+    "task_clusters": 12,
+    "registered_go_effect_floor": 0.125,
+    "effect_floor_unidirectional_flips": 3,
+    "two_sided_exact_mcnemar_p_at_effect_floor": 0.25,
+    "minimum_unidirectional_discordances_for_p_lt_0_05": 6,
+    "persistent_principle_dead_end_statistically_certified": false,
+    "reason": "The frozen experiment validly maps this sample to STOP, but it did not preregister an equivalence/non-inferiority margin, power target, or clustered-task inference sufficient to turn a null endpoint contrast into a persistent population-level principle dead end."
+  },
+  "final_disposition": {
+    "experimental_stop_valid": true,
+    "experimental_realization": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
+    "principle_disposition": "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED",
+    "persistent_principle_dead_end_certified": false,
+    "broader_STRI_N1_N2_N3_unchanged": true,
+    "stage2_locked": true,
+    "new_gpu_authorized": false
+  },
+  "claim_boundary": {
+    "supports": "A qualified sample-level STOP of the frozen exact-clone-to-final-success C4 realization.",
+    "does_not_support": [
+      "population-level absence of every downstream effect",
+      "a persistent principle dead end",
+      "an active recovery mechanism",
+      "expansion or invalidation of N1-N3",
+      "post-hoc seed/model/task expansion"
+    ]
+  },
+  "source_sha256": {
+    "contract": "4c507965d55158b65834e3ad486c3ea7d74e556c00bfc982e2dd4adad351d310",
+    "panel": "2713dd3c15aa8fd539526fd2960a45374cf28fc2b99a0e29b84c2b32d1592284",
+    "model_manifest": "4a4a305f11f11a0eff0eec4aca409f044402bd6699c06b4185e029d637450bb6",
+    "qualified_stop_diagnosis": "5b5827579df4824dea0be8f62ff7c0e2a1757e1cb81c071006e127ef3ba8437a",
+    "same_information_screen": "6823a062ab98e329fc1d6ebd644ea569ad36ad2c391e3712d490fb665e32a5c2",
+    "statistical_resolution_audit": "5e35a298e5568e07a9f8f3ed9c8d8fb5ebecb17874263ffd71a56e7cec24645f",
+    "principle_disposition": "e4ab9861c8705be4f27abe589d8348c983f4ac2a53d1f17cbd0bd096d7c625d7"
+  },
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_expansion": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

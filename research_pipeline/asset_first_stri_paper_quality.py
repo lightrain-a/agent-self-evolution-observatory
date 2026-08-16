@@ -15,6 +15,8 @@ COHERENCE = "generated/asset-first-stri-narrow-paper-coherence-20260816.json"
 FINAL_REVIEW = "generated/asset-first-stri-narrow-final-review-20260816.json"
 PAPER_ANALYSIS = "generated/asset-first-stri-paper-analysis-suite-20260816.json"
 PRUNING_BASELINE = "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
+P0E_DIAGNOSIS = "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json"
+P0E_PRINCIPLE = "generated/asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json"
 PAPER_BODY = "paper_drafts/stri-20260816-narrow-body.tex"
 PAPER_TABLES = "paper_drafts/stri-20260816-tables.tex"
 FIG_OVERVIEW = "paper_drafts/figures/stri-overview.pdf"
@@ -173,7 +175,7 @@ def build_asset_first_stri_paper_quality(project_root: Path = PROJECT_ROOT) -> d
         for blocker in audit.get("blockers") or []
         if str(blocker).startswith("paper-quality-evidence-not-completed:")
     })
-    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, PRUNING_BASELINE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
+    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
     source_sha256 = {rel: _sha256(project_root / rel) for rel in source_artifacts}
     return {
         "schema_version": "1.0",

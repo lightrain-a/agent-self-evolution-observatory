@@ -37,6 +37,9 @@ stri = load("asset-first-stri-iclr2027-final-state-20260816.json")
 paper_quality = load("asset-first-stri-paper-quality-v2-20260816.json")
 stri_p0a = load("asset-first-stri-p0a-host52-execution-state-20260816.json")
 stri_p0d_review = load("asset-first-stri-skillrl-fixed-task-p0d-review-20260816.json")
+stri_p0d_dead_end = load("asset-first-stri-skillrl-p0d-dead-end-diagnosis-20260816.json")
+stri_p0e_principle = load("asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json")
+stri_p0e_diagnosis = load("asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json")
 support_release = load("paper-first-support-release-targets.json")
 shadow_admission = system.get("paper_first_shadow_search_admission") or load("paper-first-shadow-search-admission.json")
 positive_local = load("positive-residual-memory-local-mechanism-readjudication-20260816.json")
@@ -173,11 +176,23 @@ state = {
             "next_action": stri_p0a.get("next_action"),
         },
         "skillrl_p0d": {
-            "status": "CONTRACT_CLEARED_RESULT_NOT_ESTABLISHED",
-            "review_verdict": stri_p0d_review.get("verdict"),
-            "scientific_authority": bool(stri_p0d_review.get("scientific_authority", False)),
-            "claim_if_go": stri_p0d_review.get("claim_if_go"),
-            "claim_if_stop": stri_p0d_review.get("claim_if_stop"),
+            "status": str(stri_p0d_dead_end.get("disposition") or "SUBSTRATE_SUPPORT_FAILURE"),
+            "outcome": str((stri_p0d_dead_end.get("evidence") or {}).get("outcome") or "INCONCLUSIVE"),
+            "pristine_success": int((stri_p0d_dead_end.get("evidence") or {}).get("pristine_success_count") or 0),
+            "role": "historical endpoint-support failure on the SFT warm-start; does not update STRI mechanism belief",
+            "scientific_authority": False,
+        },
+        "skillrl_p0e": {
+            "status": str(stri_p0e_principle.get("experimental_realization_disposition") or "UNKNOWN"),
+            "experimental_stop_valid": bool(stri_p0e_principle.get("experimental_stop_valid", False)),
+            "persistent_principle_dead_end_certified": bool(stri_p0e_principle.get("persistent_principle_dead_end_certified", False)),
+            "principle_disposition": str(stri_p0e_principle.get("principle_disposition") or "UNKNOWN"),
+            "stage2_locked": bool(stri_p0e_principle.get("stage2_confirmation_locked", True)),
+            "new_gpu_authorized": bool(stri_p0e_principle.get("new_gpu_authorized", False)),
+            "calibration": dict(stri_p0e_diagnosis.get("qualification") or {}),
+            "endpoint_result": dict(stri_p0e_diagnosis.get("endpoint_result") or {}),
+            "role": "qualified optional C4 realization negative; does not expand or invalidate N1-N3",
+            "scientific_authority": False,
         },
     },
     "shadow_search": {

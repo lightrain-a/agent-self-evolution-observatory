@@ -8,20 +8,20 @@
 - Citations: 11 resolved; no undefined references; no overfull boxes.
 - Mandatory AI-use statement: present.
 - Reproducibility statement: present.
-- Independent final paper review after the baseline/ablation/failure/sensitivity revision: `READY_TO_SUBMIT` (score 8/10, 0 required revisions).
+- Independent final paper review after the baseline/ablation/failure/sensitivity and qualified P0-E boundary revision: `READY_TO_SUBMIT` (confidence 0.93, score 7/10, 0 required revisions).
 - Paper Evidence Quality v2: `PASS_MANUSCRIPT_EVIDENCE`, evidence debt 0.
 - Current narrow claim scope requires no new GPU evidence.
 - Paper Quality v2.1 visual evidence: 4 main figures, source-bound to data/scripts/captions; new ablation/robustness/failure panel included.
-- Anonymous supplementary reproduction bundle: manifest PASS, `reproduce.py` PASS, 13/13 unit tests PASS, clone/split + sensitivity reproduction PASS, figure regeneration PASS, identity/path scan PASS.
+- Anonymous supplementary reproduction bundle: manifest PASS, `reproduce.py` PASS, 13/13 unit tests PASS, clone/split + sensitivity reproduction PASS, sanitized SkillRL P0-E receipt verification PASS, figure regeneration PASS, identity/path scan PASS.
 
 ## Files to upload / archive
 
 - Paper PDF: `/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816.pdf`
-  - SHA256: `2a590430a441fa0318286345a4863462b098996e73b24243eeb7ad240e77f8c6`
+  - SHA256: `15f02bcaef727853e6fa0a4387c22950fa9f82db83bb54bafceb8686c6b69589`
 - Paper source ZIP: `/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-source.zip`
-  - SHA256: `14874816f4751b2605d91ee520768f4a346c5cc177d66f2455ee7c04149df69a`
+  - SHA256: `84ad1b0cff9504b9bebfc8b2178c6143f34a3bd34c063b562bcd25e551bee0f3`
 - Anonymous supplementary ZIP: `/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip`
-  - SHA256: `3b02f38bd9b2827c553674443f4b8648110fef6f2e9a4e946466bacc0c06f64c`
+  - SHA256: `ab38373f19c38a09de528ec2daac21c359cc819d970edb7594379e4913edfb5f`
 
 ## Human signoff required before abstract submission
 
@@ -49,4 +49,4 @@ The submission claims only:
 2. `R*(A)` exactly decides finite package-only additive-exposure equalizability on a frozen support matrix;
 3. in the audited released regimes, non-equalizable support geometry rather than overlap prevalence tracks the static STRI residual.
 
-Do **not** add claims of downstream utility harm, dynamic STRI success, empirical SQC success, LP algorithmic novelty, or use the qualification-failed Qwen3-8B bank as scientific evidence for or against dynamic STRI.
+Do **not** add claims of downstream utility harm, dynamic STRI success, empirical SQC success, LP algorithmic novelty, or use the qualification-failed Qwen3-8B bank as scientific evidence for or against dynamic STRI. The separate SkillRL final-policy C4 experiment is a qualified `STOP_FIXED_POLICY_DYNAMIC_BRIDGE` realization only: it does not certify a population-level no-effect theorem or persistent principle dead end, does not identify active recovery as the mechanism, leaves N1--N3 unchanged, keeps Stage-2 locked, and authorizes no new GPU.

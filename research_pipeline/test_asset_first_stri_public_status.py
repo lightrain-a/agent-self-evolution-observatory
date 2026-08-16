@@ -42,6 +42,19 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertEqual(state["summary"]["supplement_unit_tests"], "13/13 PASS")
         self.assertEqual(state["summary"]["human_signoff_pending"], 1)
         self.assertEqual(state["summary"]["new_gpu_evidence_required"], 0)
+        self.assertEqual(state["summary"]["skillrl_p0e_experimental_stop_valid"], 1)
+        self.assertEqual(state["summary"]["skillrl_p0e_principle_dead_end"], 0)
+        self.assertEqual(state["summary"]["skillrl_p0e_stage2_locked"], 1)
+        self.assertEqual(state["summary"]["skillrl_p0e_new_gpu_authorized"], 0)
+        self.assertEqual(state["summary"]["skillrl_p0e_calibration_success"], 18)
+        self.assertEqual(state["summary"]["skillrl_p0e_paired_units"], 24)
+        p0e = state["claim_boundary"]["skillrl_p0e"]
+        self.assertEqual(p0e["experimental_realization"], "STOP_FIXED_POLICY_DYNAMIC_BRIDGE")
+        self.assertEqual(p0e["principle_disposition"], "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED")
+        self.assertFalse(p0e["persistent_principle_dead_end_certified"])
+        self.assertTrue(p0e["stage2_locked"])
+        self.assertFalse(p0e["new_gpu_authorized"])
+        self.assertTrue(p0e["broader_n1_n2_n3_unchanged"])
         self.assertTrue(state["gates"]["public_download_assets"])
         self.assertEqual(
             state["submission_handoff"]["downloads"],

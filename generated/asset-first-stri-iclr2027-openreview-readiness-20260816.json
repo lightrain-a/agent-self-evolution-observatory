@@ -14,16 +14,21 @@
     "resolved_citations": 11,
     "ai_use_statement_present": true,
     "reproducibility_statement_present": true,
-    "paper_pdf_sha256": "2a590430a441fa0318286345a4863462b098996e73b24243eeb7ad240e77f8c6",
-    "paper_source_zip_sha256": "14874816f4751b2605d91ee520768f4a346c5cc177d66f2455ee7c04149df69a",
-    "anonymous_supplement_zip_sha256": "3b02f38bd9b2827c553674443f4b8648110fef6f2e9a4e946466bacc0c06f64c",
+    "paper_pdf_sha256": "15f02bcaef727853e6fa0a4387c22950fa9f82db83bb54bafceb8686c6b69589",
+    "paper_source_zip_sha256": "84ad1b0cff9504b9bebfc8b2178c6143f34a3bd34c063b562bcd25e551bee0f3",
+    "anonymous_supplement_zip_sha256": "ab38373f19c38a09de528ec2daac21c359cc819d970edb7594379e4913edfb5f",
     "supplement_reproduction": "PASS",
     "supplement_unit_tests": "13/13 PASS",
     "final_independent_review": "READY_TO_SUBMIT",
     "new_gpu_evidence_required_for_current_claim_scope": false,
     "paper_quality_v2": "PASS_MANUSCRIPT_EVIDENCE_V2_1",
     "paper_quality_evidence_debt": 0,
-    "visual_evidence": "4_MAIN_FIGURES_SOURCE_BOUND"
+    "visual_evidence": "4_MAIN_FIGURES_SOURCE_BOUND",
+    "final_independent_review_confidence": 0.93,
+    "skillrl_p0e_experimental_realization": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
+    "skillrl_p0e_principle_disposition": "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED",
+    "skillrl_p0e_persistent_dead_end": false,
+    "skillrl_p0e_stage2_locked": true
   },
   "human_signoff_required": [
     {

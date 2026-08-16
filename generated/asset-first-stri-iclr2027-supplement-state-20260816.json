@@ -5,9 +5,9 @@
   "status": "PASS",
   "package": {
     "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-    "sha256": "3b02f38bd9b2827c553674443f4b8648110fef6f2e9a4e946466bacc0c06f64c",
-    "manifest_sha256": "b6bef06fc3e44dade50d4f560349daa18bf82af8af7e5fe3bd47b7c194f1a608",
-    "package_metadata_sha256": "a23452ecbedcbb25a571d33cbf8df971428094b363698837d472ec2084d50a94"
+    "sha256": "ab38373f19c38a09de528ec2daac21c359cc819d970edb7594379e4913edfb5f",
+    "manifest_sha256": "f81fb7e911049a141bc067db5e6176caa458bfcf768cd700e449aa8b33770f96",
+    "package_metadata_sha256": "cba083006a2d122bdc8f003e8a43f09ed1b5e67a91526bcd78f4824f6a3b062c"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
@@ -77,6 +77,74 @@
         "ablation_robustness": "REPRODUCED",
         "paper_quality_schema": "2.1"
       }
+    },
+    "skillrl_p0e": {
+      "role": "Optional C4 downstream-boundary evidence only; N1-N3 remain the paper claims.",
+      "competence_calibration": {
+        "outcome": "GO_COMPETENT_POLICY_SUPPORT",
+        "pristine_success": 18,
+        "episodes": 24,
+        "success_rate": 0.75,
+        "success_family_count": 5
+      },
+      "paired_causal_result": {
+        "formal_outcome": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
+        "paired_units": 24,
+        "arm_episodes": 96,
+        "success_rate": {
+          "A_pristine": 0.75,
+          "B_displacement_clone": 0.75,
+          "C_identity_placebo": 0.75,
+          "D_exact_quotient": 0.75
+        },
+        "paired_disagreement": {
+          "B_vs_A": 0.0,
+          "C_vs_A": 0.0,
+          "D_vs_A": 0.0
+        },
+        "B_vs_A_mcnemar_p": 1.0,
+        "family_replicated_flip_count": 0
+      },
+      "trajectory_boundary": {
+        "B_vs_A_response_sequence_disagreement": 23,
+        "B_vs_A_action_sequence_disagreement": 11,
+        "B_vs_A_first_action_divergence_median_step": 7,
+        "C_vs_A_response_sequence_disagreement": 23,
+        "C_vs_A_action_sequence_disagreement": 15,
+        "C_vs_A_first_action_divergence_median_step": 6,
+        "D_vs_A_exact_trajectory_units": 24,
+        "same_information_screen_verdict": "NO_SEMANTIC_SPECIFIC_TRAJECTORY_RESIDUAL_IN_SIMPLE_SAME_INFORMATION_SCREEN",
+        "any_simple_B_over_C_dominance_supported": false
+      },
+      "statistical_resolution": {
+        "paired_units": 24,
+        "task_clusters": 12,
+        "registered_go_effect_floor": 0.125,
+        "effect_floor_unidirectional_flips": 3,
+        "two_sided_exact_mcnemar_p_at_effect_floor": 0.25,
+        "minimum_unidirectional_discordances_for_p_lt_0_05": 6,
+        "persistent_principle_dead_end_statistically_certified": false,
+        "reason": "The frozen experiment validly maps this sample to STOP, but it did not preregister an equivalence/non-inferiority margin, power target, or clustered-task inference sufficient to turn a null endpoint contrast into a persistent population-level principle dead end."
+      },
+      "final_disposition": {
+        "experimental_stop_valid": true,
+        "experimental_realization": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
+        "principle_disposition": "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED",
+        "persistent_principle_dead_end_certified": false,
+        "broader_STRI_N1_N2_N3_unchanged": true,
+        "stage2_locked": true,
+        "new_gpu_authorized": false
+      },
+      "claim_boundary": {
+        "supports": "A qualified sample-level STOP of the frozen exact-clone-to-final-success C4 realization.",
+        "does_not_support": [
+          "population-level absence of every downstream effect",
+          "a persistent principle dead end",
+          "an active recovery mechanism",
+          "expansion or invalidation of N1-N3",
+          "post-hoc seed/model/task expansion"
+        ]
+      }
     }
   },
   "frozen_external_repositories": {
@@ -100,7 +168,8 @@
       "dynamic STRI success",
       "empirical SQC success",
       "LP algorithm novelty",
-      "using the qualification-failed Qwen3 pilot as scientific evidence for or against dynamic STRI"
+      "using the qualification-failed Qwen3 pilot as scientific evidence for or against dynamic STRI",
+      "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end"
     ]
   },
   "new_gpu_evidence_required_for_current_claim_scope": false,

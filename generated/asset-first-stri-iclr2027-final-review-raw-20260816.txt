@@ -1,26 +1,26 @@
 {
   "verdict": "READY_TO_SUBMIT",
-  "confidence": 0.92,
+  "confidence": 0.93,
   "overall_score_1_to_10": 7,
-  "strongest_contribution": "Formalizes the novel representation invariance question for self-evolving skill control surfaces, derives an exact interpretable linear programming criterion for additive equalizability, and provides rigorous empirical evidence that non-equalizable support geometry (not just overlap prevalence) is the source of representation sensitivity in two independent released systems, while strictly respecting explicit claim boundaries.",
-  "strongest_reviewer_objection": "The paper only addresses static finite-frozen support and does not resolve or claim dynamic/downstream effects, which is a narrow scope but intentional per the submission constraints.",
-  "theorem_correctness": "PASS, both theorems are correctly stated and proven: Theorem 1 correctly characterizes the iff condition for package-only additive equalizability, and Theorem 2 correctly derives the interpretable factor-2 lower bound for the singleton-overlap case.",
-  "novelty_boundary": "PASS, the paper explicitly disclaims LP algorithm novelty and unproven downstream/dynamic claims, while correctly identifying the novel scientific contribution of formalizing and answering the STRI question for released control surfaces.",
-  "evidence_closure": "PASS, all retained claims (N1-N3) are fully supported by the provided static analysis of released systems; the failed Qwen3 pilot is correctly excluded from scientific evidence per explicit pre-gated rules, and no required evidence for current claims is missing.",
-  "clarity_story": "PASS, the paper tells a tight, clear narrow story: it identifies the representation sensitivity phenomenon, derives the exact certificate, and falsifies the naive overlap prevalence hypothesis with matched negative controls; all claims and boundaries are explicitly stated.",
+  "strongest_contribution": "Formalizes the open question of skill-package representation invariance for self-evolving control systems, provides an exact interpretable linear programming certificate for package-only additive exposure equalizability, and empirically rules out overlap prevalence as the causal mechanism for representation sensitivity, identifying non-equalizable support geometry as the correct boundary.",
+  "strongest_reviewer_objection": "Claims are strictly bounded to narrow static analysis of released systems, with no validated dynamic or downstream utility conclusions, which some readers may find unsatisfying for a representation invariance problem.",
+  "theorem_correctness": "PASS: Both Theorem 1 (exact iff characterization of equalizability) and Theorem 2 (global-singleton overlap factor-2 lower bound) are correctly proven and correctly applied to the empirical data.",
+  "novelty_boundary": "PASS: The paper correctly does not claim novelty for the underlying linear programming method, and clearly articulates the novel scientific contribution (the representation invariance question and exact finite-support characterization) that falls within the stated scope.",
+  "evidence_closure": "PASS: All claims N1-N3 are fully supported by static analysis of two independent released self-evolving skill systems, with properly bounded evidence that adheres strictly to the stated forbidden boundary; failed/unqualified experiments are correctly excluded from scientific inference. Negative controls properly test the core mechanistic hypothesis, and ablations confirm robustness of the main result.",
+  "clarity_story": "PASS: The paper maintains a clear, narrow narrative with explicit claim boundaries, all formal definitions are precise, and all experiments are reported transparently including the failed qualification gate and qualified experimental STOP result.",
   "required_revisions": [],
   "optional_revisions": [
-    "Add a pointer to future work on factoring control through semantic support cells in the introduction for reader context",
-    "Clarify in the abstract that the result is a mechanistic audit of existing systems rather than a new method for downstream performance"
+    "Add a brief note to the discussion clarifying that while the current work is a diagnostic audit, not a method for taxonomy correction, for readers who may misinterpret STRI-Cert as a downstream improvement method.",
+    "Explicitly restate the core mechanistic conclusion (non-equalizable geometry, not overlap prevalence, causes representation sensitivity) in the abstract for easier scanning."
   ],
   "claims_that_must_remain_forbidden": [
     "dynamic STRI success claim",
     "downstream utility harm claim",
     "empirical SQC success claim",
     "LP-algorithm novelty claim",
-    "using the Qwen3-8B qualification-failed dynamic pilot as scientific evidence"
+    "any scientific inference from the Qwen3-8B failed qualification pilot"
   ],
   "whether_new_gpu_evidence_is_required_for_current_claim_scope": false,
-  "recommended_title": "Non-Equalizable Support Geometry: Representation Sensitivity in Released Self-Evolving Skill Control",
+  "recommended_title": "Skill-Taxonomy Representation Invariance: Non-Equalizable Support Geometry Drives Representation Sensitivity in Released Self-Evolving Skill Control",
   "scientific_authority": false
 }

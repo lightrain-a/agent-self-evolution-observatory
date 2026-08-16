@@ -20,6 +20,8 @@ OFFICIAL_FINAL_STATE = "generated/asset-first-stri-iclr2027-final-state-20260816
 OFFICIAL_SUBMISSION_QA = "generated/asset-first-stri-iclr2027-submission-qa-20260816.json"
 SUPPLEMENT_STATE = "generated/asset-first-stri-iclr2027-supplement-state-20260816.json"
 OPENREVIEW_READINESS = "generated/asset-first-stri-iclr2027-openreview-readiness-20260816.json"
+P0E_PRINCIPLE_DISPOSITION = "generated/asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json"
+P0E_DIAGNOSIS = "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json"
 PUBLIC_TEX_SOURCE = "paper_drafts/stri-20260816-iclr2027-main.tex"
 PUBLIC_DOWNLOADS = {
     "tex": "downloads/STRI-ICLR2027.tex",
@@ -39,6 +41,8 @@ SOURCE_ARTIFACTS = {
     "official_submission_qa": OFFICIAL_SUBMISSION_QA,
     "supplement_state": SUPPLEMENT_STATE,
     "openreview_readiness": OPENREVIEW_READINESS,
+    "skillrl_p0e_principle_disposition": P0E_PRINCIPLE_DISPOSITION,
+    "skillrl_p0e_diagnosis": P0E_DIAGNOSIS,
 }
 
 POLICY = {
@@ -56,6 +60,8 @@ POLICY = {
     "mechanical_and_format_qa_cannot_substitute_for_scientific_evidence_completeness": True,
     "dynamic_p0_is_not_required_for_the_narrow_claim_scope": True,
     "dynamic_qualification_failure_is_not_positive_or_negative_narrow_evidence": True,
+    "optional_c4_realization_stop_cannot_expand_or_invalidate_n1_n2_n3": True,
+    "persistent_principle_dead_end_requires_statistical_resolution_beyond_realization_stop": True,
     "paper_ready_does_not_authorize_method_p0_or_gpu": True,
     "official_submission_ready_requires_iclr2027_format_qa": True,
     "official_submission_ready_requires_anonymous_supplement_reproduction": True,
@@ -102,6 +108,8 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
     official_qa = values["official_submission_qa"]
     supplement = values["supplement_state"]
     openreview = values["openreview_readiness"]
+    p0e_principle = values["skillrl_p0e_principle_disposition"]
+    p0e_diagnosis = values["skillrl_p0e_diagnosis"]
 
     claims = coherence.get("claims") if isinstance(coherence.get("claims"), dict) else {}
     claim_ids = ("N1", "N2", "N3")
@@ -193,6 +201,12 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
             "paper_quality_visualizations": int(quality_plan_summary.get("visualizations") or 0),
             "paper_quality_main_visualizations": int(quality_plan_summary.get("main_visualizations") or 0),
             "paper_quality_main_visual_roles": list(quality_plan_summary.get("main_visual_roles") or []),
+            "skillrl_p0e_experimental_stop_valid": 1 if p0e_principle.get("experimental_stop_valid") is True else 0,
+            "skillrl_p0e_principle_dead_end": 1 if p0e_principle.get("persistent_principle_dead_end_certified") is True else 0,
+            "skillrl_p0e_stage2_locked": 1 if p0e_principle.get("stage2_confirmation_locked") is True else 0,
+            "skillrl_p0e_new_gpu_authorized": 1 if p0e_principle.get("new_gpu_authorized") is True else 0,
+            "skillrl_p0e_calibration_success": int((p0e_diagnosis.get("qualification") or {}).get("calibration_pristine_success") or 0),
+            "skillrl_p0e_paired_units": int((p0e_diagnosis.get("qualification") or {}).get("paired_units") or 0),
             "canonical_problem_gate_pass_added": 0,
             "canonical_generator_candidates_added": 0,
             "canonical_queue_candidates_added": 0,
@@ -212,8 +226,16 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
             "human_action": "author-list/profile/quota/dual-submission/ethics/AI-use signoff and OpenReview upload only",
         },
         "claim_boundary": {
-            "dynamic_p0": "qualification failure is disclosed and excluded from narrow scientific evidence",
-            "downstream_utility": "not claimed or required for the frozen narrow submission scope",
+            "dynamic_p0": "Qwen3 qualification failure is excluded from narrow evidence; the separate SkillRL P0-E fixed-policy bridge is a qualified C4 realization STOP only",
+            "skillrl_p0e": {
+                "experimental_realization": str(p0e_principle.get("experimental_realization_disposition") or "UNKNOWN"),
+                "principle_disposition": str(p0e_principle.get("principle_disposition") or "UNKNOWN"),
+                "persistent_principle_dead_end_certified": bool(p0e_principle.get("persistent_principle_dead_end_certified", False)),
+                "stage2_locked": bool(p0e_principle.get("stage2_confirmation_locked", True)),
+                "new_gpu_authorized": bool(p0e_principle.get("new_gpu_authorized", False)),
+                "broader_n1_n2_n3_unchanged": bool(p0e_principle.get("broader_STRI_N1_N2_N3_unchanged", False)),
+            },
+            "downstream_utility": "not claimed for the frozen N1-N3 scope; the P0-E sample-level endpoint STOP is not a population-level no-effect theorem",
             "solver_novelty": "STRI-Cert is not claimed as a computationally novel LP solver",
             "repair_method": "no claim that Support-Quotient Control has been empirically validated",
         },
@@ -248,6 +270,27 @@ def validate_asset_first_stri_public_status(state: dict[str, Any]) -> list[str]:
         "gpu_authorized",
     )):
         errors.append("asset-first paper-ready projection leaked canonical/execution authority")
+    p0e = (state.get("claim_boundary") or {}).get("skillrl_p0e") or {}
+    expected_p0e_summary = (1, 0, 1, 0, 18, 24)
+    actual_p0e_summary = tuple(int(summary.get(key) or 0) for key in (
+        "skillrl_p0e_experimental_stop_valid",
+        "skillrl_p0e_principle_dead_end",
+        "skillrl_p0e_stage2_locked",
+        "skillrl_p0e_new_gpu_authorized",
+        "skillrl_p0e_calibration_success",
+        "skillrl_p0e_paired_units",
+    ))
+    if actual_p0e_summary != expected_p0e_summary:
+        errors.append(f"SkillRL P0-E public summary drift:{actual_p0e_summary}")
+    if (
+        p0e.get("experimental_realization") != "STOP_FIXED_POLICY_DYNAMIC_BRIDGE"
+        or p0e.get("principle_disposition") != "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED"
+        or p0e.get("persistent_principle_dead_end_certified") is not False
+        or p0e.get("stage2_locked") is not True
+        or p0e.get("new_gpu_authorized") is not False
+        or p0e.get("broader_n1_n2_n3_unchanged") is not True
+    ):
+        errors.append("SkillRL P0-E claim boundary drift")
 
     ready = state.get("status") == "READY_NARROW_ICLR"
     if ready:
