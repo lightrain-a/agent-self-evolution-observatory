@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T17:27:22+00:00",
+  "generated_at": "2026-08-16T18:32:46+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T17:04:27+00:00",
+    "generated_at": "2026-08-16T18:32:46+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -1198,10 +1198,7 @@
     "experiment_blueprint_authorized": 0,
     "local_validation_authorized": 0,
     "p0_authorized": 0,
-    "gpu_authorized": 0,
-    "semantic_blocker_added_from_latest_run": 0,
-    "semantic_blocker_added_from_terminal_run": 0,
-    "semantic_blocker_inherited": 0
+    "gpu_authorized": 0
   },
   "portfolio_priority": [
     "SP-15",

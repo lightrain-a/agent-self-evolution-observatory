@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-14T18:29:18+00:00",
+  "generated_at": "2026-08-16T18:32:21+00:00",
   "policy": {
     "parent_batch_size": 20,
     "duplicate_existing_p0_compute_forbidden": true,
@@ -21,7 +21,7 @@
   "revived": [
     {
       "schema_version": "1.0",
-      "generated_at": "2026-08-14T18:29:18+00:00",
+      "generated_at": "2026-08-16T18:32:21+00:00",
       "idea_id": "self-label-confidence-flow",
       "code": "C-1",
       "scientific_role": "shared real-trace F0 from frozen C-1/C-4/C-5 substrate; no automatic METHOD-PASS authority",
@@ -85,7 +85,7 @@
     },
     {
       "schema_version": "1.0",
-      "generated_at": "2026-08-14T18:29:18+00:00",
+      "generated_at": "2026-08-16T18:32:21+00:00",
       "idea_id": "self-correction-collapse-detector",
       "code": "C-4",
       "scientific_role": "shared real-trace F0 from frozen C-1/C-4/C-5 substrate; no automatic METHOD-PASS authority",
@@ -149,7 +149,7 @@
     },
     {
       "schema_version": "1.0",
-      "generated_at": "2026-08-14T18:29:18+00:00",
+      "generated_at": "2026-08-16T18:32:21+00:00",
       "idea_id": "intervention-validated-self-correction",
       "code": "C-5",
       "scientific_role": "shared real-trace F0 from frozen C-1/C-4/C-5 substrate; no automatic METHOD-PASS authority",
@@ -213,7 +213,7 @@
     },
     {
       "schema_version": "1.0",
-      "generated_at": "2026-08-14T18:29:18+00:00",
+      "generated_at": "2026-08-16T18:32:21+00:00",
       "idea_id": "failure-frontier-curriculum",
       "code": "D-2",
       "scientific_role": "CPU programmatic versioned boundary-mutation F0; tests simplification before GPU curriculum work",
@@ -311,7 +311,7 @@
     },
     {
       "schema_version": "1.0",
-      "generated_at": "2026-08-14T18:29:18+00:00",
+      "generated_at": "2026-08-16T18:32:21+00:00",
       "idea_id": "world-model-error-gated-learning",
       "code": "F-1",
       "scientific_role": "CPU exact-margin world-model residual F0 with frozen-policy decision truth",
@@ -387,7 +387,7 @@
     },
     {
       "schema_version": "1.0",
-      "generated_at": "2026-08-14T18:29:18+00:00",
+      "generated_at": "2026-08-16T18:32:21+00:00",
       "idea_id": "irreversible-action-counterfactuals",
       "code": "F-2",
       "scientific_role": "topology-held-out finite-state predecessor F0",
@@ -460,7 +460,7 @@
     },
     {
       "schema_version": "1.0",
-      "generated_at": "2026-08-14T18:29:18+00:00",
+      "generated_at": "2026-08-16T18:32:21+00:00",
       "idea_id": "recovery-conditioned-experience",
       "code": "F-3",
       "scientific_role": "120-pair exact-state residual recurrence F0",
