@@ -10,7 +10,7 @@
     "upstream_curriculum": [
       "current skill library/package metadata",
       "precomputed support/applicability fingerprints from frozen first-party validators or released task-support evidence",
-      "skill-level quality/exploration/decay statistics available before task generation",
+      "the same raw pre-task quality/exploration/decay evidence available to native baselines; SQC deterministically aggregates it into content-addressed primitive/support-cell state rather than treating duplicate package IDs as independent state",
       "frozen semantic support prior / anchor distribution"
     ],
     "upstream_forbidden_baseline_information": [
@@ -34,7 +34,7 @@
     {
       "step": 3,
       "name": "Choose primitive implementation conditionally",
-      "description": "Within a support cell c, distribute its unit mass among compatible content-addressed primitives u in sigma_U(c) using only the same pre-decision quality/exploration evidence available to baselines; primitive responsibilities sum to one. The current taxonomy then only wraps/groups those unchanged primitives."
+      "description": "Within a support cell c, distribute its unit mass among compatible content-addressed primitives u in sigma_U(c) using only the same raw pre-decision quality/exploration evidence available to baselines after deterministic primitive-level aggregation; primitive responsibilities sum to one. Duplicate package IDs do not create independent quality/exploration state. The current taxonomy then only wraps/groups those unchanged primitives."
     },
     {
       "step": 4,
@@ -44,7 +44,7 @@
     {
       "step": 5,
       "name": "Quotient credit",
-      "description": "After independently verified feedback, update semantic support/atom statistics once and distribute responsibility across compatible implementations with total responsibility one. Splitting one implementation cannot multiply total future credit."
+      "description": "After independently verified feedback, update content-addressed primitive/support-cell state once and distribute responsibility across compatible primitives with total responsibility one. Package-level bookkeeping is a derived view. Identity duplication/grouping cannot multiply total future semantic credit or create an independent exploration counter."
     },
     {
       "step": 6,

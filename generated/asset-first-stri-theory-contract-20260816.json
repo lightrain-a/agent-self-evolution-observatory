@@ -93,9 +93,15 @@
   },
   "sqc_minimal_object": {
     "control_object": "A probability measure mu over frozen support quotient cells C_U, not over current package identities.",
+    "primitive_state": "Quality/exploration/credit state used by SQC is keyed by content-addressed primitive identity or support cell, not by independently duplicated package IDs. Package-level stats may be views, but cannot become independent scientific state after an identity clone.",
     "implementation_responsibility": "alpha(u|c) is supported on u in sigma_U(c) and sums to one. It maps cell mass to unchanged primitive implementations without multiplying mass under package duplication.",
     "package_realization": "The current taxonomy only supplies a representation/realization channel from chosen primitive implementation to a package wrapper. Validator-gated rejection is a shared non-novel backend when no native cell-conditioned proposer exists.",
     "credit_conservation": "Independently verified feedback is written once to c/primitive responsibility and total responsibility sums to one before any package-specific bookkeeping."
+  },
+  "sqc_conditional_propositions": {
+    "allocation_invariance": "Fix U, V_u, quotient C_U, semantic prior mu and representation-invariant primitive state theta. If alpha(u|c,theta) depends only on c, content-addressed primitive state and pre-decision evidence, then P(c,u)=mu(c)alpha(u|c,theta) is independent of package duplication/grouping. A taxonomy-specific wrapper may change package-label mass but not the joint support-cell/primitive mass.",
+    "credit_conservation": "For one verified semantic feedback value g(c,y), distribute primitive credit as alpha(u|c)g(c,y). Because sum_u alpha(u|c)=1, total primitive credit equals g(c,y). Package duplication/grouping cannot multiply total semantic credit when package bookkeeping is derived from the conserved primitive update.",
+    "scope_limit": "These are conditional design propositions for allocation/credit objects. Finite-budget rejection may fail to realize the target cells, and neither proposition implies heldout utility or longitudinal STRI_D; P0-B/C3/C4 remain empirical."
   },
   "claims_allowed_before_p0": [
     "C1: released systems exhibit package-identity representation sensitivity on tested control surfaces",
