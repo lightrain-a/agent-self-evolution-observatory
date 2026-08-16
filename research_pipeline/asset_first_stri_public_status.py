@@ -14,6 +14,7 @@ COHERENCE = "generated/asset-first-stri-narrow-paper-coherence-20260816.json"
 SUBMISSION_QA = "generated/asset-first-stri-submission-qa-20260816.json"
 REDUCTION = "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json"
 PAPER_DESIGN = "generated/asset-first-stri-narrow-paper-design-20260816.json"
+PAPER_QUALITY_V2 = "generated/asset-first-stri-paper-quality-v2-20260816.json"
 CURRENT_SOURCE = "generated/asset-first-stri-current-source-review-20260816.json"
 OFFICIAL_FINAL_STATE = "generated/asset-first-stri-iclr2027-final-state-20260816.json"
 OFFICIAL_SUBMISSION_QA = "generated/asset-first-stri-iclr2027-submission-qa-20260816.json"
@@ -32,6 +33,7 @@ SOURCE_ARTIFACTS = {
     "submission_qa": SUBMISSION_QA,
     "reduction": REDUCTION,
     "paper_design": PAPER_DESIGN,
+    "paper_quality_v2": PAPER_QUALITY_V2,
     "current_source_review": CURRENT_SOURCE,
     "official_final_state": OFFICIAL_FINAL_STATE,
     "official_submission_qa": OFFICIAL_SUBMISSION_QA,
@@ -48,6 +50,8 @@ POLICY = {
     "paper_ready_requires_submission_qa": True,
     "paper_ready_requires_current_source_survival": True,
     "paper_ready_requires_superseding_reduction_state": True,
+    "paper_ready_requires_paper_quality_v2": True,
+    "mechanical_and_format_qa_cannot_substitute_for_scientific_evidence_completeness": True,
     "dynamic_p0_is_not_required_for_the_narrow_claim_scope": True,
     "dynamic_qualification_failure_is_not_positive_or_negative_narrow_evidence": True,
     "paper_ready_does_not_authorize_method_p0_or_gpu": True,
@@ -90,6 +94,7 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
     qa = values["submission_qa"]
     reduction = values["reduction"]
     design = values["paper_design"]
+    paper_quality = values["paper_quality_v2"]
     current = values["current_source_review"]
     official_final = values["official_final_state"]
     official_qa = values["official_submission_qa"]
@@ -122,6 +127,7 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
         "current_source": current.get("verdict") == "SURVIVES_NARROWLY",
         "superseding_reduction": reduction.get("status") == "NARROW_PAPER_READY_AFTER_DYNAMIC_QUALIFICATION_HOLD",
         "paper_design": str(design.get("submission_readiness") or "").startswith("READY_NARROW_ICLR"),
+        "paper_quality_v2": paper_quality.get("paper_quality_gate_passed") is True and paper_quality.get("status") == "PASS_MANUSCRIPT_EVIDENCE",
         "official_iclr2027_format": official_final.get("status") == "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW" and official_qa.get("status") == "PASS" and official_qa_total > 0 and official_qa_passed == official_qa_total,
         "anonymous_supplement": supplement.get("status") == "PASS" and (supplement.get("isolated_verification") or {}).get("fresh_extract_manifest") == "PASS" and (supplement.get("isolated_verification") or {}).get("reproduce_py") == "PASS",
         "public_download_assets": public_downloads_ready,
@@ -139,8 +145,8 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
         "candidate_id": "skill-taxonomy-representation-invariance",
         "title": str(coherence.get("title") or design.get("recommended_title") or "Skill-Taxonomy Representation Invariance"),
         "status": "READY_NARROW_ICLR" if ready else "HOLD_ASSET_FIRST_PAPER_NOT_READY",
-        "submission_status": str(official_final.get("status") or "NOT_READY"),
-        "track": "ASSET_FIRST_PAPER_READY",
+        "submission_status": str(official_final.get("status") or "NOT_READY") if ready else "HOLD_PAPER_QUALITY_V2",
+        "track": "ASSET_FIRST_PAPER_READY" if ready else "ASSET_FIRST_PAPER_QUALITY_REPAIR",
         "gates": gates,
         "claims": {
             claim_id: {
@@ -165,6 +171,9 @@ def build_asset_first_stri_public_status(project_root: Path = PROJECT_ROOT) -> d
             "human_signoff_pending": 1 if openreview.get("status") == "MACHINE_READY_HUMAN_SIGNOFF_REQUIRED" else 0,
             "new_gpu_evidence_required": 1 if official_final.get("new_gpu_evidence_required_for_current_claim_scope") is True else 0,
             "final_review_confidence": float(final.get("confidence") or 0.0),
+            "paper_quality_v2_passed": 1 if gates["paper_quality_v2"] else 0,
+            "paper_quality_evidence_debt": len(((paper_quality.get("evidence_debt") or {}).get("missing_or_incomplete_ids") or [])),
+            "paper_quality_missing_ids": list(((paper_quality.get("evidence_debt") or {}).get("missing_or_incomplete_ids") or [])),
             "canonical_problem_gate_pass_added": 0,
             "canonical_generator_candidates_added": 0,
             "canonical_queue_candidates_added": 0,
@@ -224,7 +233,7 @@ def validate_asset_first_stri_public_status(state: dict[str, Any]) -> list[str]:
     ready = state.get("status") == "READY_NARROW_ICLR"
     if ready:
         if not all(gates.get(key) is True for key in (
-            "final_review", "claim_coherence", "submission_qa", "current_source", "superseding_reduction", "paper_design",
+            "final_review", "claim_coherence", "submission_qa", "current_source", "superseding_reduction", "paper_design", "paper_quality_v2",
             "official_iclr2027_format", "anonymous_supplement", "public_download_assets", "openreview_machine_handoff",
         )):
             errors.append("READY_NARROW_ICLR requires every cross-validated paper-ready/submission gate")

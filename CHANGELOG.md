@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-16 · Paper Evidence Quality v2 and STRI fail-closed reclassification
+
+- Added `paper_quality_gate.py` so Paper Design validates scientific evidence structure rather than merely checking that baseline/ablation fields are nonempty.
+- Added typed baseline roles with matched-information/budget requirements; claim-level `why better / where better`, alternative explanations, and ruling-out tests; component/representation/boundary ablations; and mandatory mechanism, failure, sensitivity/robustness, and uncertainty analyses where applicable.
+- Added manuscript-evidence completion checks: planned evidence must resolve to versioned artifacts with `PASS`, `FAIL`, `INCONCLUSIVE`, or justified `NOT_APPLICABLE`; failed and inconclusive evidence remains visible.
+- Activated Paper Evidence Quality v2 for schema 2.3+ Paper Design contracts while preserving historical pre-v2 cards without retroactively inventing evidence.
+- Migrated the four current paper-first P0 contracts to schema 2.3 with 3 typed empirical baselines, 2 ablations, 5 analyses, and 5 planned manuscript outputs each.
+- Replayed the new gate on STRI. Existing 59/59 manuscript QA, 50/50 ICLR format QA, page-limit checks, and supplement reproduction remain valid mechanical checks, but STRI is now `HOLD_PAPER_QUALITY_V2` with eight explicit evidence-debt items instead of being labeled submission-ready.
+- Updated the public STRI status/front-end and reviewer protocol so mechanical/format QA cannot substitute for claim-matched baselines, ablations, mechanism/ruling-out evidence, failure analysis, sensitivity, and uncertainty.
+
 ## 2026-08-08 · Reviewer-first paper-idea reading flow
 
 - Reorganized `paper-ideas.html` around the senior-review sequence rather than the backend generation chronology.

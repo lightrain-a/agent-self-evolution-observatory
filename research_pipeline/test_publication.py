@@ -113,6 +113,7 @@ class PublicationTest(unittest.TestCase):
                 "generated/p0-e4-permission-cpu.js",
                 "generated/research-system-state.json",
                 "generated/research-system-state.js",
+                "generated/asset-first-stri-paper-quality-v2-20260816.json",
                 "generated/paper-first-p0-f0-state.json",
                 "generated/paper-first-p0-f0-state.js",
                 "generated/paper-first-design-adjudication.json",

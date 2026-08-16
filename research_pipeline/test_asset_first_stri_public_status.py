@@ -10,15 +10,28 @@ from .asset_first_stri_public_status import (
 
 
 class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
-    def test_current_artifacts_compile_to_ready_narrow_iclr(self) -> None:
+    def forced_ready_projection(self) -> dict:
         state = build_asset_first_stri_public_status()
-        self.assertEqual(state["status"], "READY_NARROW_ICLR")
+        state["status"] = "READY_NARROW_ICLR"
+        state["submission_status"] = "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW"
+        state["track"] = "ASSET_FIRST_PAPER_READY"
+        state["summary"]["paper_ready"] = 1
+        for key in state["gates"]:
+            state["gates"][key] = True
+        return state
+
+    def test_current_artifacts_are_held_by_paper_quality_v2(self) -> None:
+        state = build_asset_first_stri_public_status()
+        self.assertEqual(state["status"], "HOLD_ASSET_FIRST_PAPER_NOT_READY")
+        self.assertEqual(state["submission_status"], "HOLD_PAPER_QUALITY_V2")
         self.assertEqual(state["paper_id"], "STRI")
-        self.assertEqual(state["summary"]["paper_ready"], 1)
+        self.assertEqual(state["summary"]["paper_ready"], 0)
+        self.assertEqual(state["summary"]["paper_quality_v2_passed"], 0)
+        self.assertEqual(state["summary"]["paper_quality_evidence_debt"], 8)
+        self.assertIn("O-ABLATION", state["summary"]["paper_quality_missing_ids"])
         self.assertEqual(state["summary"]["claims_supported"], 3)
         self.assertEqual(state["summary"]["claims_total"], 3)
         self.assertEqual(state["summary"]["qa_checks_passed"], state["summary"]["qa_checks_total"])
-        self.assertEqual(state["submission_status"], "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW")
         self.assertEqual(state["summary"]["official_qa_checks_passed"], state["summary"]["official_qa_checks_total"])
         self.assertEqual((state["summary"]["main_text_pages"], state["summary"]["main_text_page_limit"]), (9, 9))
         self.assertEqual(state["summary"]["supplement_ready"], 1)
@@ -40,7 +53,7 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertEqual(validate_asset_first_stri_public_status(state), [])
 
     def test_ready_projection_cannot_leak_canonical_problem_gate_authority(self) -> None:
-        state = build_asset_first_stri_public_status()
+        state = self.forced_ready_projection()
         drift = copy.deepcopy(state)
         drift["summary"]["canonical_problem_gate_pass_added"] = 1
         drift["authority"]["canonical_problem_gate"] = True
@@ -48,14 +61,14 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertTrue(any("authority" in error for error in errors))
 
     def test_missing_ready_gate_cannot_keep_ready_status(self) -> None:
-        state = build_asset_first_stri_public_status()
+        state = self.forced_ready_projection()
         drift = copy.deepcopy(state)
         drift["gates"]["current_source"] = False
         errors = validate_asset_first_stri_public_status(drift)
         self.assertTrue(any("every cross-validated" in error for error in errors))
 
     def test_missing_official_supplement_gate_cannot_keep_ready_status(self) -> None:
-        state = build_asset_first_stri_public_status()
+        state = self.forced_ready_projection()
         drift = copy.deepcopy(state)
         drift["gates"]["anonymous_supplement"] = False
         drift["summary"]["supplement_ready"] = 0
@@ -63,7 +76,7 @@ class AssetFirstSTRIPublicStatusTest(unittest.TestCase):
         self.assertTrue(any("paper-ready/submission gate" in error or "supplement" in error for error in errors))
 
     def test_public_download_urls_are_fail_closed(self) -> None:
-        state = build_asset_first_stri_public_status()
+        state = self.forced_ready_projection()
         drift = copy.deepcopy(state)
         drift["submission_handoff"]["downloads"]["pdf"] = "private/internal.pdf"
         errors = validate_asset_first_stri_public_status(drift)

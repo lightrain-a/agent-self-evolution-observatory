@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This protocol is used before treating a research direction as ready for a CVPR submission. It separates literature coverage, novelty, scientific validity, experimental feasibility, and website integrity.
+This protocol is used before treating a research direction as ready for a top-tier ML/CV submission. It separates literature coverage, novelty, scientific validity, experimental feasibility, paper-evidence completeness, and website integrity.
 
 ## Literature reviewer
 
@@ -39,6 +39,24 @@ The reviewer must verify:
 - stop/pivot conditions before expensive expansion;
 - a feasible D0 study before multi-backbone training.
 
+## Paper evidence quality reviewer
+
+The paper evidence quality reviewer must verify that a paper is supported by a completed evidence package rather than by prose or formatting QA alone.
+
+For every empirical performance, mechanism, system, robustness, or cost claim, require:
+
+- a typed baseline ladder that distinguishes current system, direct competitor, strongest same-information simplification, simple control, and oracle/upper-bound when applicable;
+- matched data, observable information, model/checkpoint, inference budget, environment interaction budget, and evaluation protocol for empirical comparisons;
+- an explicit `why better / where better` hypothesis plus plausible alternative explanations;
+- at least one ruling-out experiment for each material alternative explanation;
+- component ablations for multi-component methods, and representation / information-budget / assumption-boundary ablations when those carry the novelty;
+- explicit failure analysis, sensitivity or robustness analysis, and uncertainty for headline empirical comparisons;
+- claim-to-artifact links for the main comparison, ablations, mechanism analysis, failure analysis, and sensitivity analysis.
+
+A planned baseline or ablation does not count as manuscript evidence. Each planned evidence item must resolve to `PASS`, `FAIL`, `INCONCLUSIVE`, or justified `NOT_APPLICABLE` with a versioned artifact. Failed and inconclusive experiments remain visible in the evidence chain instead of being silently dropped.
+
+For theory/certificate papers, an analytical simplification and assumption-boundary stress test may replace a conventional component ablation only when the non-applicability is explicit. Mechanical manuscript QA, venue-format QA, compilation, and supplement reproduction can never substitute for this scientific evidence review.
+
 ## Adversarial reviewer
 
 The adversarial reviewer should try to reject the paper using these hypotheses:
@@ -59,6 +77,7 @@ A direction is considered ready only when:
 - no reviewer identifies a direct method collision;
 - all blocking experimental objections have a planned test;
 - the D0 continuation criteria are satisfied;
+- Paper Evidence Quality v2 passes with completed claim-matched baseline/ablation/analysis artifacts;
 - the claim is reduced to the lowest contribution level supported by evidence;
 - unresolved limitations are documented rather than hidden.
 

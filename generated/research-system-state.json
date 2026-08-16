@@ -6347,20 +6347,22 @@
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 11,
     "architecture_functional_layers": 6,
-    "asset_first_stri_status": "READY_NARROW_ICLR",
-    "asset_first_stri_paper_ready": 1,
+    "asset_first_stri_status": "HOLD_ASSET_FIRST_PAPER_NOT_READY",
+    "asset_first_stri_paper_ready": 0,
     "asset_first_stri_claims_supported": 3,
     "asset_first_stri_claims_total": 3,
     "asset_first_stri_qa_checks_passed": 59,
     "asset_first_stri_qa_checks_total": 59,
     "asset_first_stri_canonical_problem_gate_added": 0,
-    "asset_first_stri_submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
+    "asset_first_stri_submission_status": "HOLD_PAPER_QUALITY_V2",
     "asset_first_stri_official_qa_checks_passed": 50,
     "asset_first_stri_official_qa_checks_total": 50,
     "asset_first_stri_main_text_pages": 9,
     "asset_first_stri_main_text_page_limit": 9,
     "asset_first_stri_supplement_ready": 1,
-    "asset_first_stri_human_signoff_pending": 1
+    "asset_first_stri_human_signoff_pending": 1,
+    "asset_first_stri_paper_quality_v2_passed": 0,
+    "asset_first_stri_paper_quality_evidence_debt": 8
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -73392,9 +73394,9 @@
     "paper_id": "STRI",
     "candidate_id": "skill-taxonomy-representation-invariance",
     "title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
-    "status": "READY_NARROW_ICLR",
-    "submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
-    "track": "ASSET_FIRST_PAPER_READY",
+    "status": "HOLD_ASSET_FIRST_PAPER_NOT_READY",
+    "submission_status": "HOLD_PAPER_QUALITY_V2",
+    "track": "ASSET_FIRST_PAPER_QUALITY_REPAIR",
     "gates": {
       "final_review": true,
       "claim_coherence": true,
@@ -73402,6 +73404,7 @@
       "current_source": true,
       "superseding_reduction": true,
       "paper_design": true,
+      "paper_quality_v2": false,
       "official_iclr2027_format": true,
       "anonymous_supplement": true,
       "public_download_assets": true,
@@ -73425,7 +73428,7 @@
       }
     },
     "summary": {
-      "paper_ready": 1,
+      "paper_ready": 0,
       "claims_supported": 3,
       "claims_total": 3,
       "qa_checks_passed": 59,
@@ -73439,6 +73442,18 @@
       "human_signoff_pending": 1,
       "new_gpu_evidence_required": 0,
       "final_review_confidence": 0.92,
+      "paper_quality_v2_passed": 0,
+      "paper_quality_evidence_debt": 8,
+      "paper_quality_missing_ids": [
+        "A-TAXONOMY-PERTURB",
+        "AN-FAILURE",
+        "AN-RULEOUT",
+        "AN-SENSITIVITY",
+        "AN-UNCERTAINTY",
+        "O-ABLATION",
+        "O-FAILURE",
+        "O-SENSITIVITY"
+      ],
       "canonical_problem_gate_pass_added": 0,
       "canonical_generator_candidates_added": 0,
       "canonical_queue_candidates_added": 0,
@@ -73497,6 +73512,11 @@
         "sha256": "2f9c539b336e8d6f2098e40a3e4558e3653f6ffa29af156c6fc585537d81a301",
         "present": true
       },
+      "paper_quality_v2": {
+        "path": "generated/asset-first-stri-paper-quality-v2-20260816.json",
+        "sha256": "cfcd939033a377dc3b5ec61122bfb9193b535998d89b3bb6695a47dd0564ee95",
+        "present": true
+      },
       "current_source_review": {
         "path": "generated/asset-first-stri-current-source-review-20260816.json",
         "sha256": "521acfdcc54e01ae1ee5407c9c5d63e3eec330e220bfa392d7a56c818b5d655a",
@@ -73532,6 +73552,8 @@
       "paper_ready_requires_submission_qa": true,
       "paper_ready_requires_current_source_survival": true,
       "paper_ready_requires_superseding_reduction_state": true,
+      "paper_ready_requires_paper_quality_v2": true,
+      "mechanical_and_format_qa_cannot_substitute_for_scientific_evidence_completeness": true,
       "dynamic_p0_is_not_required_for_the_narrow_claim_scope": true,
       "dynamic_qualification_failure_is_not_positive_or_negative_narrow_evidence": true,
       "paper_ready_does_not_authorize_method_p0_or_gpu": true,

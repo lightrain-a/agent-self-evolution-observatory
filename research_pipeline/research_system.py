@@ -7,6 +7,7 @@ from typing import Any
 
 from .config import PROJECT_ROOT, StorageSettings, resolve_experiment_data_root
 from .asset_first_stri_public_status import build_asset_first_stri_public_status, validate_asset_first_stri_public_status
+from .asset_first_stri_paper_quality import write_asset_first_stri_paper_quality
 from .ai_consultation_clinic import build_ai_consultation_clinic_state, write_ai_consultation_clinic_state
 from .ai_consultation_automation import DEFAULT_JSON as AI_CONSULTATION_AUTOMATION_JSON, PUBLIC_POLICY as AI_AUTOMATION_POLICY
 from .discussion_portfolio import build_discussion_portfolio
@@ -635,6 +636,8 @@ def build_research_system_state() -> dict[str, Any]:
             "asset_first_stri_main_text_page_limit":int((asset_first_stri_paper_ready.get("summary") or {}).get("main_text_page_limit") or 0),
             "asset_first_stri_supplement_ready":int((asset_first_stri_paper_ready.get("summary") or {}).get("supplement_ready") or 0),
             "asset_first_stri_human_signoff_pending":int((asset_first_stri_paper_ready.get("summary") or {}).get("human_signoff_pending") or 0),
+            "asset_first_stri_paper_quality_v2_passed":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_quality_v2_passed") or 0),
+            "asset_first_stri_paper_quality_evidence_debt":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_quality_evidence_debt") or 0),
             "asset_first_stri_canonical_problem_gate_added":int((asset_first_stri_paper_ready.get("summary") or {}).get("canonical_problem_gate_pass_added") or 0),
             "paper_first_evidence_migration_pending":int((paper_first_evidence_migration.get("summary") or {}).get("current_reduction_pending") or 0),
             "paper_first_evidence_migration_design_pending":int((paper_first_evidence_migration.get("summary") or {}).get("evidence_design_pending") or 0),
@@ -1650,6 +1653,7 @@ def validate_state(state: dict[str, Any]) -> list[str]:
 
 
 def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAULT_JS) -> dict[str, Any]:
+    write_asset_first_stri_paper_quality()
     write_human_terminal_state()
     write_p0_realizability_suite()
     write_revived_batch_f0()

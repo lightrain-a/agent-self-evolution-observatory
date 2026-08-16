@@ -82,6 +82,52 @@ def _paper_design(idea_id: str, spec: dict[str, Any]) -> dict[str, Any]:
         "diagnosability-preserving-self-evolution": "held-out frozen-observer fault localization accuracy/AUROC at matched utility",
         "failure-mode-transport-under-self-evolution": "paired failure transport matrix + preregistered risk delta",
     }[idea_id]
+    baseline_label = str(spec["baseline"]).rstrip(". ")
+    quality = {
+        "schema_version": "2.0",
+        "paper_archetype": "method",
+        "claims": [{
+            "id": "C1",
+            "claim_type": "mechanism",
+            "statement": claim,
+            "why_better_or_why_matters": f"The registered mechanism should retain decision-relevant information that {baseline_label} discards.",
+            "alternative_explanations": [
+                "Any apparent gain is explained by extra information or interaction budget rather than the proposed mechanism.",
+                "A direct aggregate-utility rule or shallow same-feature model absorbs the apparent gain.",
+            ],
+            "ruling_out_experiments": [
+                "Match observable information, candidate set, environment interactions, and model calls against the strongest simplification.",
+                "Remove the core novelty-carrying component while keeping the rest of the pipeline fixed.",
+            ],
+            "baseline_ids": ["B-STRONGEST", "B-AGGREGATE", "B-SHALLOW"],
+            "ablation_ids": ["A-CORE", "A-AGGREGATE"],
+            "analysis_ids": ["AN-MECHANISM", "AN-RULEOUT", "AN-FAILURE", "AN-SENSITIVITY", "AN-UNCERTAINTY"],
+            "output_ids": ["O-MAIN", "O-ABLATION", "O-MECHANISM", "O-FAILURE", "O-SENSITIVITY"],
+        }],
+        "baselines": [
+            {"id": "B-STRONGEST", "role": "same_information_simplification", "evidence_type": "empirical", "target_claim_ids": ["C1"], "purpose": f"Test whether the proposed mechanism leaves residual value beyond {baseline_label}.", "matched_dimensions": ["tasks", "candidate interventions", "observable information", "model checkpoint", "inference budget", "environment interaction budget"]},
+            {"id": "B-AGGREGATE", "role": "simple_control", "evidence_type": "empirical", "target_claim_ids": ["C1"], "purpose": "Test whether direct aggregate utility or a best-fixed policy explains the result without the proposed mechanism.", "matched_dimensions": ["tasks", "candidate interventions", "observable information", "model checkpoint", "inference budget"]},
+            {"id": "B-SHALLOW", "role": "simple_control", "evidence_type": "empirical", "target_claim_ids": ["C1"], "purpose": "Test whether a shallow same-feature predictor absorbs the apparent mechanism gain.", "matched_dimensions": ["task split", "features", "labels", "training examples", "evaluation budget"]},
+        ],
+        "ablations": [
+            {"id": "A-CORE", "ablation_type": "component", "target_claim_ids": ["C1"], "purpose": f"Remove the novelty-carrying component ({components[-1]}) while preserving all other information and compute.", "decision_rule": "The claimed mechanism is unsupported if removing the core component does not reduce the preregistered held-out advantage on disagreement cases."},
+            {"id": "A-AGGREGATE", "ablation_type": "representation", "target_claim_ids": ["C1"], "purpose": "Replace the registered mechanism quantity with direct aggregate utility/risk while preserving the surrounding pipeline.", "decision_rule": "If the aggregate proxy matches the full method within uncertainty, narrow the claim to the simpler representation or merge the method."},
+        ],
+        "analyses": [
+            {"id": "AN-MECHANISM", "analysis_type": "mechanism", "target_claim_ids": ["C1"], "purpose": "Show that gains concentrate on preregistered cases where the mechanism predicts a different decision from the strongest simplification.", "decision_rule": "Report agreement and disagreement strata separately; no mechanism claim from aggregate improvement alone."},
+            {"id": "AN-RULEOUT", "analysis_type": "alternative_explanation", "target_claim_ids": ["C1"], "purpose": "Rule out extra information, extra calls, or direct aggregate utility as the source of the result.", "decision_rule": "Any unmatched information/budget advantage invalidates an algorithmic-superiority interpretation."},
+            {"id": "AN-FAILURE", "analysis_type": "failure", "target_claim_ids": ["C1"], "purpose": "Characterize where the mechanism fails, ties the baseline, or becomes non-identifiable.", "decision_rule": "Publish failure strata and typed inconclusive cases rather than deleting them from the main evidence chain."},
+            {"id": "AN-SENSITIVITY", "analysis_type": "sensitivity", "target_claim_ids": ["C1"], "purpose": "Test whether the conclusion survives preregistered task-family, seed, threshold, and support-definition changes.", "decision_rule": "A claim that only survives one unregistered setting is narrowed to that setting."},
+            {"id": "AN-UNCERTAINTY", "analysis_type": "uncertainty", "target_claim_ids": ["C1"], "purpose": "Quantify stochastic and sampling uncertainty for every headline comparison.", "decision_rule": "Main comparative claims require paired uncertainty intervals or a preregistered exact/randomization test, not point estimates alone."},
+        ],
+        "planned_outputs": [
+            {"id": "O-MAIN", "output_type": "main_comparison", "purpose": "Headline matched baseline table with primary metric, uncertainty, and cost."},
+            {"id": "O-ABLATION", "output_type": "ablation", "purpose": "Explicit component/representation ablation table, not buried in prose."},
+            {"id": "O-MECHANISM", "output_type": "mechanism", "purpose": "Why/where it works: disagreement-stratified mechanism figure or table."},
+            {"id": "O-FAILURE", "output_type": "failure", "purpose": "Failure taxonomy and negative/inconclusive regimes."},
+            {"id": "O-SENSITIVITY", "output_type": "sensitivity", "purpose": "Robustness/sensitivity evidence across preregistered perturbations."},
+        ],
+    }
     return {
         "novelty": {
             "paper_problem": spec["paper_problem"],
@@ -99,6 +145,7 @@ def _paper_design(idea_id: str, spec: dict[str, Any]) -> dict[str, Any]:
             "strongest_simplification": spec["baseline"],
             "method_change_rule": "Changing the causal quantity, update surface set, primary metric, or commit rule is a core-method change and returns to Paper Novelty/Method review.",
         },
+        "evidence_quality": quality,
         "experiment_blueprint": {
             "claim_experiment_matrix": [{"claim_id": "C1", "claim": claim, "local_test": spec["minimum_p0"], "full_test": "Frozen multi-seed / second-backbone / natural-failure evidence matrix after Method Freeze", "metric": metric, "strongest_baseline": spec["baseline"]}],
             "local_validation_scope": spec["minimum_p0"],
