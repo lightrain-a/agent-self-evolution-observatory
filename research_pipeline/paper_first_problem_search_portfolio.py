@@ -149,6 +149,34 @@ def _inversion_asset_records(dead_end_memory):
         })
     return records
 
+def _positive_residual_asset_records(dead_end_memory):
+    records=[];seen=set()
+    for row in (dead_end_memory or {}).get("positive_residual_asset_evidence") or []:
+        if not isinstance(row,dict) or row.get("scientific_authority") is not False:continue
+        ref=str(row.get("asset_ref") or "").strip();sha=str(row.get("source_sha256") or "").strip().lower();url=str(row.get("primary_url") or "").strip();title=str(row.get("title") or "").strip();contract=row.get("search_contract") or {}
+        facts=[" ".join(str(value or "").split()) for value in row.get("empirical_facts") or [] if str(value or "").strip()]
+        if not ref.startswith("positive-residual-asset:") or ref in seen or not re.fullmatch(r"[0-9a-f]{64}",sha) or not url.startswith("https://") or not title or len(facts)<2:continue
+        if contract.get("prospective_prediction_required") is not True or contract.get("pre_outcome_information_only") is not True:continue
+        seen.add(ref);records.append({
+            "ref":ref,"title":title,"abstract":" ".join(facts)[:5000],"primary_url":url,"source_sha256":sha,"primary_source_verified":True,
+            "empirical_facts":[{"text":fact,"evidence_tier":"provenance-audited-internal-experiment"} for fact in facts[:10]],
+            "typed_evidence":{"operational_assumptions":[],"measured_failures":[{"text":fact,"evidence_tier":"provenance-audited-internal-experiment"} for fact in facts[1:]],"boundary_observations":[{"text":facts[0],"evidence_tier":"provenance-audited-internal-experiment"}]},
+            "source_kind":"positive-residual-internal-experiment","search_contract":dict(contract),"failed_mechanisms":list(row.get("failed_mechanisms") or []),"scientific_authority":False,
+        })
+    return records
+
+def _search_asset_records(dead_end_memory):
+    return list(_inversion_asset_records(dead_end_memory))+list(_positive_residual_asset_records(dead_end_memory))
+
+def _positive_residual_priors(dead_end_memory,limit=6):
+    priors=[]
+    for row in (dead_end_memory or {}).get("positive_residual_asset_evidence") or []:
+        if not isinstance(row,dict) or row.get("scientific_authority") is not False:continue
+        contract=row.get("search_contract") or {}
+        priors.append({"asset_ref":str(row.get("asset_ref") or ""),"phenomenon_status":str(row.get("phenomenon_status") or ""),"mechanism_status":str(row.get("mechanism_status") or ""),"failed_mechanisms":list(row.get("failed_mechanisms") or []),"question":str(contract.get("question") or ""),"must_explain":list(contract.get("must_explain") or []),"must_beat_or_condition_on":list(contract.get("must_beat_or_condition_on") or []),"prohibited_rescues":list(contract.get("prohibited_rescues") or []),"prospective_prediction_required":contract.get("prospective_prediction_required") is True,"pre_outcome_information_only":contract.get("pre_outcome_information_only") is True})
+        if len(priors)>=limit:break
+    return priors
+
 def _opposite_search_priors(dead_end_memory,limit=8):
     priors=[]
     for row in (dead_end_memory or {}).get("blocked_objects") or []:
@@ -171,9 +199,11 @@ def _opposite_search_priors(dead_end_memory,limit=8):
     return priors
 
 def _expansion_prompt(lane,records,count,dead_end_memory=None):
-    assets=_inversion_asset_records(dead_end_memory);asset_refs={str(row.get("ref") or "") for row in assets};paper_records=[row for row in records if str(row.get("ref") or "") not in asset_refs]
-    records=(assets+_lane_records(lane,paper_records,max_records=max(1,20-len(assets))))[:20]
+    assets=_inversion_asset_records(dead_end_memory);positive_assets=_positive_residual_asset_records(dead_end_memory);asset_refs={str(row.get("ref") or "") for row in assets+positive_assets};paper_records=[row for row in records if str(row.get("ref") or "") not in asset_refs]
+    records=(assets+positive_assets+_lane_records(lane,paper_records,max_records=max(1,20-len(assets)-len(positive_assets))))[:20]
     asset_requirement=("ASSET-INVERSION EXECUTION REQUIREMENT: provenance-bound first-party inversion assets are available. Seed 1 MUST directly execute one certified opposite-search prior by citing a FIRST_PARTY_INVERSION_ASSET ref in source_a; because this lane permits a single distinct source, source_b MAY cite the same asset ref for a second independently stated grounded fact. The seed must test the opposite principle/reopen boundary rather than restate the certified dead end. STRUCTURAL-GRAPH RULE: if the first-party implementation directly exposes whether a causal/update edge exists, do NOT formulate identifiability of that edge. Instead target a downstream consequence of that structure and state what ordinary distribution-shift, stale-supervisor, online-adaptation, or alternating-optimization explanation must be beaten. Remaining seeds may explore any grounded anomaly. " if assets and count>0 else "")
+    positive_slot=2 if assets else 1
+    positive_requirement=(f"POSITIVE-RESIDUAL EXECUTION REQUIREMENT: Seed {positive_slot} MUST cite a POSITIVE_RESIDUAL_ASSET ref in source_a (source_b MAY reuse the same ref because this lane permits one distinct source). It must propose a NEW scientific mechanism/problem that simultaneously explains the surviving phenomenon and the recorded failed mechanisms. It MUST make a prospective prediction from pre-outcome information, explicitly condition on or beat the recorded simple context baselines, and obey every prohibited_rescue in the asset. Do not propose full-trajectory distance, endpoint length/success, or an ungrounded K-step mediator rescue. This asset is search evidence only, never novelty or experiment authority. " if lane=="UNEXPLAINED_BOUNDARY" and positive_assets and count>=positive_slot else "")
     contract={"source_roles":list(LANE_SOURCE_ROLES[lane]),"minimum_distinct_primary_sources":LANE_DISTINCT_SOURCE_MINIMUM[lane],"required_lane_evidence":list(LANE_EVIDENCE_REQUIRED[lane]),"machine_contract":LANE_MACHINE_CONTRACTS[lane]}
     analogy=list(CROSS_DOMAIN_STRUCTURES) if lane=="CROSS_DOMAIN_STRUCTURAL_ANALOGY" else []
     shape={"seeds":[{
@@ -186,12 +216,12 @@ def _expansion_prompt(lane,records,count,dead_end_memory=None):
         "This is exploration, not adjudication: DO NOT apply mature-theory, closest-work, domain-transfer, or Negative-Space novelty vetoes here. "
         "Do not invent open-world missing-cell claims. Preserve structurally unusual seeds even if their final novelty is uncertain. "
         "ANOMALY-FIRST SEARCH: actively inspect source-local sign reversals, nonmonotonicity, thresholds, plateaus, history dependence, composition effects, and bounded failure transitions; do not wait for a second paper to have used the same metric when this lane permits one source. When equally grounded seeds compete, prefer an operational core whose decisive comparison could plausibly be materialized on released units, first-party code, or an existing provenance-audited agent substrate. Support feasibility is a search priority only and never novelty evidence. "
-        "DEAD-END INVERSION is a search prior, never authority: a principle-certified dead end may contribute its opposite principle/search seed, but only generate an inversion seed when the supplied fresh primary evidence independently grounds it and the seed escapes the certified basin/reopen condition. Never turn a dead-end inversion into an automatic survivor or fabricate support merely to reuse it. "+asset_requirement+
+        "DEAD-END INVERSION is a search prior, never authority: a principle-certified dead end may contribute its opposite principle/search seed, but only generate an inversion seed when the supplied fresh primary evidence independently grounds it and the seed escapes the certified basin/reopen condition. Never turn a dead-end inversion into an automatic survivor or fabricate support merely to reuse it. "+asset_requirement+positive_requirement+
         f"Generate exactly {count} materially distinct grounded seeds for lane {lane}. The lane machine contract is {json.dumps(contract,ensure_ascii=False)}. "
         f"Use two grounded evidence items and at least {LANE_DISTINCT_SOURCE_MINIMUM[lane]} distinct primary source ref(s), following the lane contract; obey evidence roles. Claims must be supported by supplied primary text. "
         "Vary problem families and structural signatures; avoid paraphrase-only variants. "
         "For CROSS_DOMAIN_STRUCTURAL_ANALOGY, the external domain is only an analogy prior and never novelty by itself; state the Agent-specific structural constraint. "
-        f"Analogy priors={json.dumps(analogy,ensure_ascii=False)}. FIRST_PARTY_INVERSION_ASSETS={json.dumps(_evidence_payload(assets),ensure_ascii=False,separators=(',',':'))}. CERTIFIED DEAD-END INVERSION PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. DEAD-END SEARCH MEMORY (search-control only, never scientific authority)={json.dumps(dead_end_memory or {},ensure_ascii=False,separators=(',',':'))}. VERIFIED PRIMARY EVIDENCE={json.dumps(_evidence_payload(records),ensure_ascii=False,separators=(',',':'))}. "
+        f"Analogy priors={json.dumps(analogy,ensure_ascii=False)}. FIRST_PARTY_INVERSION_ASSETS={json.dumps(_evidence_payload(assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_ASSETS={json.dumps(_evidence_payload(positive_assets),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. CERTIFIED DEAD-END INVERSION PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. DEAD-END SEARCH MEMORY (search-control only, never scientific authority)={json.dumps(dead_end_memory or {},ensure_ascii=False,separators=(',',':'))}. VERIFIED PRIMARY EVIDENCE={json.dumps(_evidence_payload(records),ensure_ascii=False,separators=(',',':'))}. "
         f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 
@@ -235,15 +265,15 @@ def _formulation_prompt(branches,registry,dead_end_memory=None):
         "A mature theory can HARD-VETO only under the Reduction Falsifiability Contract: same observable information, an ex-ante exact candidate-level prediction, a testable distinguishing/reduction prediction, and explicit scope boundary. A generic label such as CATE, dynamical systems, transfer, continual learning, nonmonotonicity, or information theory is not itself a veto. "
         "Use matched_patterns ONLY for a proven exact hard reduction. Use pending_patterns only when an exact reduction test is genuinely unresolved AND the branch is otherwise complete enough for a concrete problem-falsifier preflight; never set all_exact_reduction_tests_resolved=true while any pending pattern or NEEDS_EXACT_REDUCTION_TEST baseline remains. Use rejected_patterns when a broad ledger pattern was considered and the supplied frozen evidence is sufficient to show it cannot exactly reduce the candidate. "
         "Do not manufacture a reduction resolution from absence of evidence. If an unresolved exact reduction is the only remaining blocker, keep the full problem object, exact prediction, strongest same-information baseline, and cheapest falsifier concrete; the deterministic compiler will route it to a zero-authority reduction-pending hold rather than semantic review. If the branch also lacks lane grounding, provenance, same-information nonreducibility, domain-transfer separation, or a concrete falsifier, return it in rejected. "
-        "Inspect branch-local closest_work_candidates. A duplicate/collision or VALID_HARD_VETO branch must be returned in rejected rather than silently omitted. If a branch follows a certified dead-end inversion prior, explicitly verify that fresh primary evidence grounds the opposite principle and that the formulation satisfies the recorded reopen condition; otherwise reject or hold it rather than rewarding inversion wording. When first-party code directly determines the dependency graph, the graph fact itself is not an identifiability contribution: require a downstream decision/utility/regret consequence and explicitly test generic distribution-shift, stale-supervisor, online-adaptation, or alternating-optimization reductions before keeping the branch. "
+        "Inspect branch-local closest_work_candidates. A duplicate/collision or VALID_HARD_VETO branch must be returned in rejected rather than silently omitted. If a branch follows a certified dead-end inversion prior, explicitly verify that fresh primary evidence grounds the opposite principle and that the formulation satisfies the recorded reopen condition; otherwise reject or hold it rather than rewarding inversion wording. When first-party code directly determines the dependency graph, the graph fact itself is not an identifiability contribution: require a downstream decision/utility/regret consequence and explicitly test generic distribution-shift, stale-supervisor, online-adaptation, or alternating-optimization reductions before keeping the branch. If a branch follows a POSITIVE_RESIDUAL_ASSET, require one prospective pre-outcome prediction that jointly explains the surviving phenomenon and every named failed mechanism; reject endpoint-leaking features, post-hoc full-trajectory geometry, or a renamed K-step mediator unless independent pre-outcome evidence distinguishes it from the failed first-action mechanism. "
         "Prefer a residual whose cheapest falsifier is an actual controlled comparison we can materialize quickly from released units, first-party code, or an existing provenance-audited substrate. Do not claim such support exists unless the supplied evidence establishes it; missing support should be an explicit preflight dependency, not a fabricated PASS. "
         "Preserve the inherited typed evidence/lane contract and source refs. "
-        f"BRANCHES={json.dumps(compact,ensure_ascii=False,separators=(',',':'))}. DEAD_END_MEMORY={json.dumps(dead_end_memory or {},ensure_ascii=False,separators=(',',':'))}. CERTIFIED_DEAD_END_INVERSION_PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. PRIMARY_EVIDENCE={json.dumps(evidence,ensure_ascii=False,separators=(',',':'))}. REDUCTION_LEDGER={json.dumps(reduction_pattern_audit(),ensure_ascii=False,separators=(',',':'))}. "
+        f"BRANCHES={json.dumps(compact,ensure_ascii=False,separators=(',',':'))}. DEAD_END_MEMORY={json.dumps(dead_end_memory or {},ensure_ascii=False,separators=(',',':'))}. CERTIFIED_DEAD_END_INVERSION_PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. PRIMARY_EVIDENCE={json.dumps(evidence,ensure_ascii=False,separators=(',',':'))}. REDUCTION_LEDGER={json.dumps(reduction_pattern_audit(),ensure_ascii=False,separators=(',',':'))}. "
         f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 
 def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,model:str,target_raw_seeds:int=DEFAULT_RAW_SEEDS,archive_capacity:int=DEFAULT_ARCHIVE_CAPACITY,evolution_parents:int=DEFAULT_EVOLUTION_PARENTS,second_generation:int=DEFAULT_SECOND_GENERATION,formulation_budget:int=DEFAULT_FORMULATION_BUDGET,max_parallel_calls:int=DEFAULT_MAX_PARALLEL_CALLS,dead_end_memory:dict[str,Any]|None=None)->dict[str,Any]:
-    effective_records=list(_inversion_asset_records(dead_end_memory))+list(records);reg={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};per_lane=max(1,int(math.ceil(target_raw_seeds/max(1,len(SEARCH_PORTFOLIO_PRIMITIVES)))))
+    effective_records=list(_search_asset_records(dead_end_memory))+list(records);reg={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};per_lane=max(1,int(math.ceil(target_raw_seeds/max(1,len(SEARCH_PORTFOLIO_PRIMITIVES)))))
     raw=[];errors=[];calls=0
     def expand_one(lane,part,count):
         res=call(role=f"expand-{lane.lower()}-p{part}",prompt=_expansion_prompt(lane,records,count,dead_end_memory),model=model,max_output_tokens=5200);payload=extract_json_object(str(res.get("text") or ""));seeds=payload.get("seeds") or []

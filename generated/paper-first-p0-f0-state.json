@@ -1,6 +1,6 @@
 {
-  "schema_version": "1.2",
-  "generated_at": "2026-08-16T10:39:45+00:00",
+  "schema_version": "1.3",
+  "generated_at": "2026-08-16T12:50:20+00:00",
   "run_root": "/data/wyt/agent-self-evolution-observatory/runs/paper-first-p0-20260812",
   "authority": {
     "promotion_authorized": false,
@@ -19,7 +19,9 @@
     "diagnostic_f0_cannot_create_p0_lifecycle_or_method_admission": true,
     "later_authority_cannot_retroactively_validate_this_run": true,
     "post_selected_outcome_cohorts_cannot_be_compared_to_full_baseline_for_causal_drop": true,
-    "paired_estimand_readjudication_dominates_historical_support_interpretation": true
+    "paired_estimand_readjudication_dominates_historical_support_interpretation": true,
+    "corrected_falsifier_qualification_failure_cannot_update_scientific_belief": true,
+    "failed_qualification_forbids_future_fault_phase": true
   },
   "summary": {
     "ideas": 4,
@@ -30,6 +32,7 @@
     "observed_support_pass": 2,
     "observed_support_hold": 2,
     "readjudicated_historical_support_invalidated": 1,
+    "corrected_bounded_falsifier_inconclusive": 1,
     "quarantined": 4,
     "scientifically_authorized": 0,
     "method_fail_authorized": 0
@@ -345,6 +348,52 @@
         "source_analysis_sha256": "9deeba9ef06c1f8621b853b96aa2802a37c22ae7301c050f3d6f75afbfe44795",
         "broader_principle_falsified": false,
         "scientific_update": "NO_BELIEF_UPDATE_ESTIMAND_AND_OPERATIONALIZATION_INVALID"
+      },
+      "corrected_bounded_falsifier": {
+        "status": "INCONCLUSIVE_FUNCTIONAL_EQUIVALENCE_QUALIFICATION_FAILED",
+        "diagnosis_layer": "operationalization/qualification",
+        "qualification_passed": false,
+        "checks": {
+          "repair_contract_compliance": false,
+          "baseline_noninferiority": false,
+          "behavioral_activity": true,
+          "utility_equivalence": true,
+          "identical_success_tasks": 5
+        },
+        "conditions": {
+          "none": {
+            "success_rate": 0.5,
+            "repeat_violation_rate": 0.2079646017699115,
+            "update_intervention_count": 0,
+            "raw_sha256": "6f7823b50d18ca6bded9ae86378aef6fb0789c03f70da657a92c4f66d76472f2"
+          },
+          "prompt": {
+            "success_rate": 0.3333333333333333,
+            "repeat_violation_rate": 0.13551401869158877,
+            "update_intervention_count": 0,
+            "raw_sha256": "7aa3583003149b8720575bc3e5fe3401b7fdd6d0dc8e091db7d9267d9b03a879"
+          },
+          "workflow": {
+            "success_rate": 0.16666666666666666,
+            "repeat_violation_rate": 0.0,
+            "update_intervention_count": 24,
+            "raw_sha256": "017a35e62ac6df900a56cdc104c78fcea2079885cf35223bd267bb9ae37760e4"
+          },
+          "tool": {
+            "success_rate": 0.16666666666666666,
+            "repeat_violation_rate": 0.0,
+            "update_intervention_count": 88,
+            "raw_sha256": "00b62508bbbe453d0bff9654a7a06aa328cd40ad77ab9d4cb84416d7b98a4274"
+          }
+        },
+        "fault_phase_executed": false,
+        "scientific_result_available": false,
+        "broader_principle_falsified": false,
+        "scientific_update": "NO_BELIEF_UPDATE_FUNCTIONAL_EQUIVALENCE_NOT_ESTABLISHED",
+        "receipt": "generated/pf4-functional-diagnostic-equivalence-qualification-readjudication-20260816.json",
+        "source_terminal_sha256": "a307d619a15b02237d10f80eae92c5446f03c487c7504639c4ff718612303f9a",
+        "contract_sha256": "551a7dd875bd0df2192ea9b8e1eff5a4c9fd7b6c8839dd448718127b63cdaeee",
+        "scientific_authority": false
       },
       "observed_f0_decision": "F0_SUPPORT_PASS",
       "authority_status": "NO_EXPLICIT_USER_P0_PROMOTION_AUTHORITY_AT_EXECUTION_TIME",

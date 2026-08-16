@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-16T12:17:00+00:00",
+  "experiment_id": "PF4-FUNCTIONAL-DIAGNOSTIC-EQUIVALENCE-P0-20260816",
+  "source_host": "10.42.8.52",
+  "source_terminal_path": "/data/wyt/agent-self-evolution-observatory/runs/pf4-functional-diagnostic-equivalence-p0-20260816/qualification-terminal.json",
+  "source_terminal_sha256": "a307d619a15b02237d10f80eae92c5446f03c487c7504639c4ff718612303f9a",
+  "contract_sha256": "551a7dd875bd0df2192ea9b8e1eff5a4c9fd7b6c8839dd448718127b63cdaeee",
+  "model_snapshot": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "terminal_status": "INCONCLUSIVE_FUNCTIONAL_EQUIVALENCE_QUALIFICATION_FAILED",
+  "diagnosis_layer": "operationalization/qualification",
+  "qualification": {
+    "passed": false,
+    "tasks": 6,
+    "conditions": {
+      "none": {
+        "success_rate": 0.5,
+        "repeat_violation_rate": 0.2079646017699115,
+        "update_intervention_count": 0,
+        "raw_sha256": "6f7823b50d18ca6bded9ae86378aef6fb0789c03f70da657a92c4f66d76472f2"
+      },
+      "prompt": {
+        "success_rate": 0.3333333333333333,
+        "repeat_violation_rate": 0.13551401869158877,
+        "update_intervention_count": 0,
+        "raw_sha256": "7aa3583003149b8720575bc3e5fe3401b7fdd6d0dc8e091db7d9267d9b03a879"
+      },
+      "workflow": {
+        "success_rate": 0.16666666666666666,
+        "repeat_violation_rate": 0.0,
+        "update_intervention_count": 24,
+        "raw_sha256": "017a35e62ac6df900a56cdc104c78fcea2079885cf35223bd267bb9ae37760e4"
+      },
+      "tool": {
+        "success_rate": 0.16666666666666666,
+        "repeat_violation_rate": 0.0,
+        "update_intervention_count": 88,
+        "raw_sha256": "00b62508bbbe453d0bff9654a7a06aa328cd40ad77ab9d4cb84416d7b98a4274"
+      }
+    },
+    "checks": {
+      "repair_contract_compliance": false,
+      "baseline_noninferiority": false,
+      "behavioral_activity": true,
+      "utility_equivalence": true,
+      "identical_success_tasks": 5
+    }
+  },
+  "fault_phase_executed": false,
+  "fault_phase_reason": "Frozen contract requires qualification PASS before sealed future-fault episodes; qualification failed.",
+  "scientific_result_available": false,
+  "protocol_valid_for_diagnostic_scientific_update": false,
+  "broader_principle_falsified": false,
+  "scientific_update": "NO_BELIEF_UPDATE_FUNCTIONAL_EQUIVALENCE_NOT_ESTABLISHED",
+  "interpretation": "The corrected PF-4 falsifier stopped before the future-fault phase because the proposed prompt/workflow/tool realizations did not establish the preregistered functional-equivalence prerequisite. This is an operationalization failure, not evidence for or against the broader diagnosability principle. Threshold tuning, within-experiment repair redesign, and continuation to the fault phase are forbidden.",
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "method": false,
+    "experiment_scale_up": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  }
+}

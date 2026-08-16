@@ -31,6 +31,13 @@ class PaperFirstP0F0StateTest(unittest.TestCase):
         by = {row["idea_id"]: row for row in state["cards"]}
         self.assertEqual(by["future-learnability-preserving-self-evolution"]["observed_f0_decision"], "F0_SUPPORT_PASS")
         self.assertEqual(by["diagnosability-preserving-self-evolution"]["observed_f0_decision"], "F0_SUPPORT_PASS")
+        corrected = by["diagnosability-preserving-self-evolution"].get("corrected_bounded_falsifier") or {}
+        self.assertEqual(corrected.get("status"), "INCONCLUSIVE_FUNCTIONAL_EQUIVALENCE_QUALIFICATION_FAILED")
+        self.assertFalse(corrected.get("qualification_passed"))
+        self.assertFalse(corrected.get("fault_phase_executed"))
+        self.assertFalse(corrected.get("broader_principle_falsified"))
+        self.assertEqual(corrected.get("scientific_update"), "NO_BELIEF_UPDATE_FUNCTIONAL_EQUIVALENCE_NOT_ESTABLISHED")
+        self.assertEqual(state["summary"].get("corrected_bounded_falsifier_inconclusive"), 1)
         self.assertEqual(by["cross-surface-repair-routing"]["observed_f0_decision"], "HOLD_F0_SUPPORT_INSUFFICIENT")
         self.assertEqual(by["failure-mode-transport-under-self-evolution"]["observed_f0_decision"], "HOLD_F0_SUPPORT_INSUFFICIENT")
         self.assertTrue(all(row["decision"] == "PREMATURE_UNAUTHORIZED_LOCAL_VALIDATION_DIAGNOSTIC" for row in state["cards"]))

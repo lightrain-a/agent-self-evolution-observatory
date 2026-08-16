@@ -5,7 +5,7 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
-DISCOVERY_OPERATOR_VERSION = "anomaly-first-asset-inversion-v5"
+DISCOVERY_OPERATOR_VERSION = "anomaly-first-positive-residual-v6"
 
 DISCOVERY_LANES: tuple[str, ...] = (
     "CONTRADICTION",
@@ -142,7 +142,7 @@ LANE_MACHINE_CONTRACTS: dict[str, str] = {
 }
 
 POLICY: dict[str, Any] = {
-    "schema_version": "2.1",
+    "schema_version": "2.2",
     "multi_lane_discovery_required": True,
     "contradiction_first_required": False,
     "contradiction_lane_retained": True,
@@ -180,6 +180,13 @@ POLICY: dict[str, Any] = {
     "observed_dependency_graph_is_not_an_identifiability_gap": True,
     "reciprocal_coupling_claim_requires_downstream_residual_beyond_distribution_shift": True,
     "feedback_mechanism_requires_causal_write_path_before_experiment": True,
+    "positive_residual_search_enabled": True,
+    "positive_residual_asset_requires_provenance_manifest": True,
+    "positive_residual_asset_is_zero_authority_search_evidence": True,
+    "positive_residual_requires_surviving_phenomenon_and_clean_mechanism_stop": True,
+    "positive_residual_requires_prospective_pre_outcome_prediction": True,
+    "positive_residual_outcome_leakage_forbidden": True,
+    "positive_residual_direct_seed_required_in_unexplained_boundary_shard": True,
     "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
     "shared_limitation_without_empirical_failure_forbidden": True,
     "pure_topic_brainstorm_forbidden": True,
@@ -640,7 +647,7 @@ def build_problem_discovery_contract_state() -> dict[str, Any]:
     audit_rows=reduction_pattern_audit()
     classes={name:sum(row["audit_class"]==name for row in audit_rows) for name in ("VALID_HARD_VETO","SOFT_COLLISION","NEEDS_EXACT_REDUCTION_TEST","TOO_GENERIC_TO_VETO")}
     return {
-        "schema_version":"2.1",
+        "schema_version":"2.2",
         "policy":POLICY,
         "candidate_schema":candidate_schema(),
         "reduction_falsifiability_contract":dict(REDUCTION_FALSIFIABILITY_CONTRACT),

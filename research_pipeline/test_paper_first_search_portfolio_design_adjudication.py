@@ -63,6 +63,14 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(len(autoskill_assets),1)
         self.assertEqual(autoskill_assets[0]["source_sha256"],"0d7553874390685344102cd9654a376a1f1e3e7d7490fa53b48f1f138f3f383b")
         self.assertFalse(autoskill_assets[0]["scientific_authority"])
+        self.assertEqual(memory.get("positive_residual_asset_evidence_count"),len(memory.get("positive_residual_asset_evidence") or []))
+        positive=[row for row in memory.get("positive_residual_asset_evidence") or [] if str(row.get("asset_ref") or "").startswith("positive-residual-asset:memory-effect-transport-b9-c2")]
+        self.assertEqual(len(positive),1)
+        self.assertEqual(positive[0]["phenomenon_status"],"SURVIVES_AS_ARCHIVED_PARENT_EVIDENCE")
+        self.assertEqual(positive[0]["mechanism_status"],"TWO_CLEAN_REALIZATIONS_STOPPED")
+        self.assertTrue((positive[0].get("search_contract") or {}).get("prospective_prediction_required"))
+        self.assertTrue((positive[0].get("search_contract") or {}).get("pre_outcome_information_only"))
+        self.assertFalse(positive[0]["scientific_authority"])
 
     def test_principle_readjudication_compiles_into_opposite_search_memory(self) -> None:
         payload={"candidate_id":"P06","title":"Coverage quantity","principle_dead_end_certified":True,"dead_end_scope":"coverage-only certificate","principle_diagnosis":{"counter_explanation":{"type":"IMPOSSIBILITY_OR_INVARIANCE","statement":"coverage quantity does not identify relevance","opposite_prediction":"generic uncertainty shift only","opposite_principle":"evidence sufficiency is relevance-conditioned","opposite_search_seed":"search relevance-conditioned evidence debt","scope":"coverage-only certificate","same_information_or_scope_matched":True,"proof_or_structural_witness":True,"evidence_refs":["arXiv:2608.07527"],"alternative_explanations_ruled_out":["execution"],"reopen_condition":"expose relevance-conditioned debt without hidden truth"}}}

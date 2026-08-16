@@ -10,6 +10,7 @@ from typing import Any
 from .config import PROJECT_ROOT
 from .paper_first_shadow_near_miss_preflight import build_shadow_near_miss_preflight, compile_shadow_dead_end_rows
 from .principle_adjudication import audit_dead_end_counter_explanation
+from .positive_residual_assets import build_positive_residual_asset_registry
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-adjudication.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-adjudication.js"
@@ -541,6 +542,11 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
             asset_by_ref[str(asset["asset_ref"])] = dict(asset)
     memory["inversion_asset_evidence"] = [asset_by_ref[key] for key in sorted(asset_by_ref)]
     memory["inversion_asset_evidence_count"] = len(asset_by_ref)
+    positive_registry = build_positive_residual_asset_registry()
+    positive_assets = [dict(row) for row in positive_registry.get("assets") or [] if isinstance(row, dict) and row.get("scientific_authority") is False]
+    memory["positive_residual_asset_evidence"] = positive_assets
+    memory["positive_residual_asset_evidence_count"] = len(positive_assets)
+    memory["positive_residual_asset_registry_id"] = positive_registry.get("registry_id")
     memory["hold_object_count"] = len(hold_rows)
     memory["current_source_hard_veto_count"] = len(hard_rows)
     memory["current_source_hard_veto_added_from_latest_run"] = added

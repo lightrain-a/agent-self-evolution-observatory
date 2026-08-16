@@ -28,7 +28,7 @@ from .problem_search_control_snapshot import STAGE_RUNNER_ARTIFACT_SCHEMA,valida
 from .paper_first_primary_evidence import parse_arxiv_page,extract_empirical_fact_candidates,extract_typed_evidence_candidates
 from .paper_first_problem_search_portfolio import (
     _archives,_assign_structural_clusters,_evolution_prompt,_expansion_prompt,_formulation_prompt,
-    _inversion_asset_records,_maxmin_select,_normalize_seed,_score,_semantic_dedup,_source_refs,_valid_seed,
+    _inversion_asset_records,_positive_residual_asset_records,_search_asset_records,_maxmin_select,_normalize_seed,_score,_semantic_dedup,_source_refs,_valid_seed,
 )
 
 
@@ -189,7 +189,7 @@ def expand(*,pool:Path|None,run_root:Path,lane:str,count:int=6,model:str="ark-co
     payload=json.loads(pool.read_text(encoding="utf-8"));records=payload.get("records") or []
     lane=lane.strip().upper()
     if lane not in SEARCH_PORTFOLIO_PRIMITIVES:raise ValueError(f"unknown search primitive {lane}")
-    memory=_shadow_dead_end_memory(memory_path);effective_records=list(_inversion_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};prompt=_expansion_prompt(lane,records,count,memory);res=_ark_with_provider_receipt(run_root=run_root,stem=f"expand-{lane}-p{part}",requested_model=model,context={"lane":lane,"part":part,"requested":count,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=.85);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);parsed,raw_sha=_parse_archived_json(run_root,f"expand-{lane}-p{part}",raw,resolved)
+    memory=_shadow_dead_end_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};prompt=_expansion_prompt(lane,records,count,memory);res=_ark_with_provider_receipt(run_root=run_root,stem=f"expand-{lane}-p{part}",requested_model=model,context={"lane":lane,"part":part,"requested":count,"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=.85);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);parsed,raw_sha=_parse_archived_json(run_root,f"expand-{lane}-p{part}",raw,resolved)
     pool_sha=str(payload.get("frozen_pool_sha256") or "").strip();seeds=[];dead_end_blocks=[]
     for i,item in enumerate(parsed.get("seeds") or [],1):
         if not isinstance(item,dict):continue
@@ -200,7 +200,8 @@ def expand(*,pool:Path|None,run_root:Path,lane:str,count:int=6,model:str="ark-co
             dead_end_blocks.append({"seed_id":row["seed_id"],**blocker});continue
         seeds.append(row)
     inversion_asset_refs={str(row.get("ref") or "") for row in _inversion_asset_records(memory)};inversion_asset_seed_count=sum(any(ref in inversion_asset_refs for ref in _source_refs(seed)) for seed in seeds)
-    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":lane,"part":part,"requested":count,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"valid_seeds":len(seeds),"inversion_asset_seed_count":inversion_asset_seed_count,"inversion_asset_requirement_satisfied":(not inversion_asset_refs or inversion_asset_seed_count>0),"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"seeds":seeds,"scientific_authority":False}
+    positive_asset_refs={str(row.get("ref") or "") for row in _positive_residual_asset_records(memory)};positive_residual_seed_count=sum(any(ref in positive_asset_refs for ref in _source_refs(seed)) for seed in seeds);positive_required=bool(lane=="UNEXPLAINED_BOUNDARY" and positive_asset_refs and count>=(2 if inversion_asset_refs else 1))
+    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":lane,"part":part,"requested":count,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"valid_seeds":len(seeds),"inversion_asset_seed_count":inversion_asset_seed_count,"inversion_asset_requirement_satisfied":(not inversion_asset_refs or inversion_asset_seed_count>0),"positive_residual_seed_count":positive_residual_seed_count,"positive_residual_requirement_satisfied":(not positive_required or positive_residual_seed_count>0),"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"seeds":seeds,"scientific_authority":False}
     run_root.mkdir(parents=True,exist_ok=True);(run_root/f"expand-{lane}-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {k:out[k] for k in ("lane","part","requested","resolved_model","raw_sha256","valid_seeds")}
 
@@ -219,7 +220,7 @@ def assemble(*,run_root:Path,archive_capacity:int=48,evolution_parents:int=24)->
 
 def evolve(*,pool:Path|None,run_root:Path,generation:int,part:int,batch_size:int=6,model:str="ark-code-latest",memory_path:Path|None=None)->dict:
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=_assert_run_control(run_root,pool,memory_path)
-    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_dead_end_memory(memory_path);effective_records=list(_inversion_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();base_path=run_root/"base.json";base=json.loads(base_path.read_text(encoding="utf-8"));_require_artifact_control(base,control_sha,base_path,"1.2")
+    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_dead_end_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();base_path=run_root/"base.json";base=json.loads(base_path.read_text(encoding="utf-8"));_require_artifact_control(base,control_sha,base_path,"1.2")
     if generation==1:parents=base.get("parents") or []
     elif generation==2:
         g1=[]
@@ -276,7 +277,7 @@ def _formulation_precheck(candidate:dict,registry:dict)->tuple[str,dict,dict]:
 
 def formulate(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,budget:int=24,model:str="ark-code-latest",memory_path:Path|None=None)->dict:
     pool=_require_resolved_pool(run_root,pool);memory_path=_resolve_run_memory(run_root,memory_path);control_sha=_assert_run_control(run_root,pool,memory_path)
-    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_dead_end_memory(memory_path);effective_records=list(_inversion_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget,control_sha);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
+    pool_payload=json.loads(pool.read_text(encoding="utf-8"));records=pool_payload.get("records") or [];memory=_shadow_dead_end_memory(memory_path);effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")};pool_sha=str(pool_payload.get("frozen_pool_sha256") or "").strip();branches=formulation_pool(run_root,budget,control_sha);start=(part-1)*batch_size;batch=branches[start:start+batch_size]
     if not batch:raise ValueError(f"empty formulation batch part={part}")
     prompt=_formulation_prompt(batch,registry,memory);res=_ark_with_provider_receipt(run_root=run_root,stem=f"formulate-p{part}",requested_model=model,context={"part":part,"branch_ids":[b["seed_id"] for b in batch],"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5600,temperature=.15);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,raw_sha=_parse_archived_json(run_root,f"formulate-p{part}",raw,resolved);live=[x for x in (payload.get("candidates") or []) if isinstance(x,dict)];dead=[x for x in (payload.get("rejected") or []) if isinstance(x,dict)]
     # Preserve branch provenance and typed evidence deterministically. The model
@@ -305,7 +306,7 @@ def formulate(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,budget:in
 
 def machine_audit(*,pool:Path|None,run_root:Path)->dict:
     pool=_require_resolved_pool(run_root,pool);control_sha=_assert_run_control(run_root,pool)
-    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_dead_end_memory(_resolve_run_memory(run_root,None));effective_records=list(_inversion_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
+    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_dead_end_memory(_resolve_run_memory(run_root,None));effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
     reviewable=[];reduction_pending=[];blocked=[];problem_falsifier_queue=[];formulated=0;machine_ready_input=0;pending_input=0
     def process(item:dict,path:Path,part:int,idx:int,route_origin:str)->None:
         nonlocal formulated,machine_ready_input,pending_input
@@ -407,7 +408,7 @@ def evidence_adjudicate(*,run_root:Path,receipt_path:Path)->dict:
 
 def review(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,model:str="glm-5.2")->dict:
     pool=_require_resolved_pool(run_root,pool);control_sha=_assert_run_control(run_root,pool)
-    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_dead_end_memory(_resolve_run_memory(run_root,None));effective_records=list(_inversion_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
+    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_dead_end_memory(_resolve_run_memory(run_root,None));effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
     audit_path=run_root/"machine-audit.json";audit=json.loads(audit_path.read_text(encoding="utf-8"));_require_artifact_control(audit,control_sha,audit_path,"1.3-shadow");rows=audit.get("reviewable") or [];start=(part-1)*batch_size;selected=rows[start:start+batch_size]
     if not selected:raise ValueError(f"empty review batch part={part}")
     candidates=[dict(row["candidate"]) for row in selected];prompt=reviewer_prompt(candidates,registry,shadow_mode=True);res=_ark_with_provider_receipt(run_root=run_root,stem=f"review-p{part}",requested_model=model,context={"part":part,"candidate_ids":[c["candidate_id"] for c in candidates],"control_snapshot_sha256":control_sha},prompt=prompt,max_output_tokens=5200,temperature=0.0);raw=str(res.get("text") or "");resolved=str(res.get("resolved_model") or model);payload,sha=_parse_archived_json(run_root,f"review-p{part}",raw,resolved)
@@ -419,7 +420,7 @@ def review(*,pool:Path|None,run_root:Path,part:int,batch_size:int=2,model:str="g
 
 def finalize(*,pool:Path|None,run_root:Path)->dict:
     pool=_require_resolved_pool(run_root,pool);control_sha=_assert_run_control(run_root,pool)
-    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_dead_end_memory(_resolve_run_memory(run_root,None));effective_records=list(_inversion_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
+    records=json.loads(pool.read_text(encoding="utf-8")).get("records") or [];memory=_shadow_dead_end_memory(_resolve_run_memory(run_root,None));effective_records=list(_search_asset_records(memory))+list(records);registry={str(r.get("ref")):r for r in effective_records if isinstance(r,dict) and r.get("ref")}
     machine_path=run_root/"machine-audit.json";machine=json.loads(machine_path.read_text(encoding="utf-8"));_require_artifact_control(machine,control_sha,machine_path,"1.3-shadow");reviewed=[]
     for path in sorted(run_root.glob("review-p*.json"),key=lambda value:int(value.stem.split("p")[-1])):
         payload=json.loads(path.read_text(encoding="utf-8"));_require_artifact_control(payload,control_sha,path,STAGE_RUNNER_ARTIFACT_SCHEMA);reviewed.extend([row for row in (payload.get("candidates") or []) if isinstance(row,dict)])
