@@ -127,6 +127,14 @@ Run only if P0-A GO. Reuse the identical frozen raw generation bank/SHA; zero ad
 
 **P0-B result:** [LOCKED PLACEHOLDER]
 
+### 6.3 Optional P0-C: frozen-solver one-step consequence
+
+Run only if P0-A GO and bind the exact P0-A raw SHA. Evaluate every contract-valid generated task once with the same frozen Qwen3-8B author-style solver, using 3 solver samples per task and the sample's frozen reference tool-call truth. No arm-specific solver evaluation and no new questioner generation are allowed.
+
+Compute each split/merge expected solver correctness by reweighting the same source-conditioned task/solver outcomes. For each merge, require the 95% task-bootstrap interval of the signed expected-correctness delta versus split to lie entirely above +0.05 or below -0.05. Both merges passing is STRONG_GO; exactly one is transformation-specific partial evidence; neither passing means no one-step utility consequence is established. P0-C does not unlock end-of-evolution C4 by itself.
+
+**P0-C result:** [LOCKED PLACEHOLDER]
+
 ## 7. Leakage-safe Full Experiment, only after P0-A + P0-B GO
 
 ### 7.1 Frozen split

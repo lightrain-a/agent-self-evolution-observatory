@@ -60,10 +60,11 @@ SQC changes the control object rather than claiming a new proposer or validator.
 
 1. Freeze U and V_u independently of method outcomes; mutable package statistics are not part of primitive identity.
 2. Construct C_U=X/~_U from equal primitive-support signatures.
-3. Allocate curriculum/control mass mu(c) on support cells under a frozen calibration prior, not on current package identities.
-4. Choose primitive implementation responsibility alpha(u|c) only for u in sigma_U(c), with total responsibility one.
-5. Map the chosen unchanged primitive through the current taxonomy representation. Use validator-gated rejection only as a **shared non-novel realization backend**; rejected candidates consume budget.
-6. Write verified feedback once to the semantic cell/primitive responsibility and conserve total credit before package-specific bookkeeping.
+3. Deterministically aggregate the same raw pre-task quality/exploration/decay evidence available to native baselines into content-addressed primitive/support-cell state theta. Duplicate package IDs may expose derived views but do not create independent scientific state or exploration counters.
+4. Allocate curriculum/control mass mu(c) on support cells under a frozen calibration prior, not on current package identities.
+5. Choose primitive implementation responsibility alpha(u|c,theta) only for u in sigma_U(c), using the conserved primitive state and the same pre-decision evidence as the matched baseline, with total responsibility one. Thus P(c,u)=mu(c)alpha(u|c,theta) is invariant to package regrouping even when package-label mass changes.
+6. Map the chosen unchanged primitive through the current taxonomy representation. Use validator-gated rejection only as a **shared non-novel realization backend**; rejected candidates consume budget.
+7. Write verified feedback once to the semantic cell/primitive responsibility and distribute it with weights summing to one before package-specific bookkeeping. Package duplication/grouping cannot multiply total semantic credit or create an independent future state update.
 
 Exact clone identities therefore do not create new primitive dimensions; macro grouping changes only the representation channel. C3 is not established until dynamic/heldout experiments show realized invariance without utility, coverage, or cost loss.
 
