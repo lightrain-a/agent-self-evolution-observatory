@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "experiment_id": "ASSET-FIRST-STRI-QWEN3-MERGE-SPLIT-P0A-20260816",
+  "requested_model": "glm-5.2",
+  "resolved_model": "glm-5.3",
+  "raw_sha256": "b1f022313d6ea735df9fb4cc24223d3432df2552628f9486d4a39658af71e2ee",
+  "review": {
+    "verdict": "CLEAR_FOR_EXECUTION",
+    "checks": {
+      "same_scientific_object": true,
+      "same_backbone_and_weights": true,
+      "same_prompts_decoding_counts_seed": true,
+      "same_treatments_truth_and_gates": true,
+      "runtime_change_is_operational_nuisance_not_scientific_treatment": true,
+      "author_runtime_support_is_sufficient": true,
+      "context_cap_is_nontruncating": true,
+      "no_outcome_adaptation_or_second_backbone_rescue": true
+    },
+    "reason": "Backbone identity is defined by weights, architecture, and tokenizer artifacts, all pinned by matching shard SHAs; the swap changes only sampler infrastructure (Python/torch/transformers/vLLM, CUDA12.8 vs 13.0 kernels), which is not a treatment. Frozen P0-A pins model, prompts, decoding, seed, counts, shared-bank reuse, truth pipeline, and gates; the proposed stack is the author-published runtime family from Skill-SP requirements.txt. The forcing event was technical and pre-outcome with zero generations, so there is no outcome exposure, selective rerouting, or second backbone. For this distributional estimand, bit-identical reproduction across kernel stacks is not scientifically required. max_model_len=6144 is nontruncating for all frozen prompts plus the full 4096-token output budget.",
+    "required_revision": "",
+    "execution_scope": "Rerun the full preflight on host52 before P0 generation; verify prompt token-ID equality against the frozen reference and perform runtime determinism checks without changing the frozen scientific bank. Then execute the single 72-generation shared source-conditioned bank on host52 only. Keep repo commit, prompts, decoding, seed, truth, thresholds, decision rule, budget, and no-second-backbone rule unchanged. Any runtime/preflight failure is technical-only and cannot update scientific belief.",
+    "scientific_authority": false
+  },
+  "raw_response_archive": "/data/wyt/agent-self-evolution-observatory/runs/asset-first-stri-p0a-host52-operationalization-review-20260816/raw.txt on host 69",
+  "scientific_authority": false
+}

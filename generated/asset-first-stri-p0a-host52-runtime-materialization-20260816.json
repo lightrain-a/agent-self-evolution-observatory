@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "experiment_id": "ASSET-FIRST-STRI-QWEN3-MERGE-SPLIT-P0A-20260816",
+  "artifact_kind": "host52-author-runtime-materialization",
+  "status": "SCIENTIFIC_CONTRACT_CLEAR_RUNTIME_READY_RESOURCE_NOT_RESERVED",
+  "parent_contract_sha256": "498fac1a2762aac9377bf39e8b258c0a6fe9e7a70815536c89750854fcfb92b2",
+  "host52_contract_sha256": "92018ff4ae4131d73adea64b8caaec060fc39f18772639ccc3336dd48b39dcc6",
+  "runner_sha256": "ea290b22b9d71fa77bbe2241d65f4e9b3c9d8da38ec738918d61b3352f0e888e",
+  "scientific_fields_identical_to_parent": {
+    "generation": true,
+    "representation_counterfactuals": true,
+    "independent_truth": true,
+    "frozen_p0b_support_prior": true,
+    "qualification_gate": true,
+    "per_witness_dynamic_gate": true,
+    "decision_rule": true,
+    "budget": true,
+    "next_actions": true
+  },
+  "author_repo": {
+    "path": "/data/wyt/skill-self-play-stri-p0-20260816",
+    "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "exact_author_commit": true
+  },
+  "model": {
+    "path": "/data/lry/models/Qwen3-8B",
+    "name": "Qwen/Qwen3-8B",
+    "same_weights_as_reviewed_host231": true,
+    "weight_sha256": {
+      "model-00001-of-00005.safetensors": "31d6a825ae35f11fb85b195b4c42c146c051e446433125a215336abdf95cbf5f",
+      "model-00002-of-00005.safetensors": "5991236cea6fe21f3d43cab0f0e84448734fbbe0789816202989f2ddc9d18282",
+      "model-00003-of-00005.safetensors": "c5185c4794be2d8a9784d5753c9922db38df478ce11f9ed0b415b7304d896836",
+      "model-00004-of-00005.safetensors": "b5ee7de71fbf17db3d5704e0c8f2bc7d005ca9e1d7ca2aeb19827b0cfcaa917a",
+      "model-00005-of-00005.safetensors": "20c2d6366ab85c90786ccdd829cd2b9e7d30ef3b2ebbb998280e7e4014b542ff"
+    },
+    "small_file_sha256": {
+      "config.json": "f7c4eadfbbf522470667b797a3c89be2524832d2d599797248dc304fff447c30",
+      "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "model.safetensors.index.json": "f9fdbcb91c23971c13ec5d5f2573d2349e8f61f2f049371ec699281748fdb1bc"
+    }
+  },
+  "runtime": {
+    "python": "3.11",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.5.4",
+    "vllm_import_version": "0.20.0",
+    "vllm_binary_build": "0.20.0+cu129",
+    "vllm_official_wheel_url_commit": "88d34c6409e9fb3c7b8ca0c04756f061d2099eb1",
+    "vllm_official_wheel_sha256": "a2509cc80424841beec098035eee3776240c0d67b1e06f9c131a4827fc6d15ab",
+    "torch_official_sha256": "c9a7ca4c74fae10a58e6175b4b2cea953f9322bb6562bbf339ad6a05f52190ad",
+    "torchvision_official_sha256": "8f2629d056570c929b0a1d5473d9cb0320b90bda1764bda353553a72cc6b2069",
+    "torchaudio_official_sha256": "c30e28573bbfe82b2e8b2168b8877bf978225ae23789a12631306bac65033e3a",
+    "cuda_gpu_smoke_pass": true,
+    "selected_gpu_type": "NVIDIA GeForce RTX 3090",
+    "author_supported_context_limit": 6144,
+    "context_limit_nontruncating": true
+  },
+  "preflight": {
+    "host52_author_runtime_checks_passed": "29/29",
+    "prompt_text_sha_equal_to_host231": true,
+    "prompt_token_id_sha_equal_to_host231": true,
+    "prompt_token_id_sha256": {
+      "skill_003": "8dc7a64ee31abdaf2b112a54fe04b8a1e77dfc9bd47de44b2877c888b0c6fc37",
+      "skill_004": "f49e3c85665cc7c2f8f88a36faa8b6bed71e2665304c9079fc6549b25c5fd54b",
+      "skill_015": "a9a406400452bfddd727762eb8b960276acf1acbf52843bbf1ece410b4f14e2c"
+    },
+    "prompt_plus_full_output_tokens": {
+      "skill_003": 5193,
+      "skill_004": 5234,
+      "skill_015": 5251
+    }
+  },
+  "independent_operationalization_review": {
+    "requested_model": "glm-5.2",
+    "resolved_model": "glm-5.3",
+    "verdict": "CLEAR_FOR_EXECUTION",
+    "checks_passed": "8/8",
+    "raw_sha256": "b1f022313d6ea735df9fb4cc24223d3432df2552628f9486d4a39658af71e2ee",
+    "budget_clarification": "A:CLEAR_WITHOUT_EXTRA_GENERATIONS",
+    "clarification_raw_sha256": "1fd3ec2dccc5fee23fc4519af03d9b355dbcac629bd75d8366c7f5415abfd693"
+  },
+  "authority": {
+    "bounded_p0a_contract_clear": true,
+    "current_resource_ready": false,
+    "scientific_claim_authority": false,
+    "paper_design_authorized_by_this_artifact": false,
+    "method_authorized_by_this_artifact": false,
+    "full_experiment_authorized": false,
+    "second_backbone_authorized": false
+  },
+  "next_action": "When one GPU has enough uncontested memory for Qwen3-8B, run the frozen host52 contract exactly once with the already-materialized runtime; no further downloads, runtime edits, extra probes, threshold changes, or second backbone."
+}

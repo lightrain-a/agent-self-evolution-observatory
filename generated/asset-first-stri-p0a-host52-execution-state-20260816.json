@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "experiment_id": "ASSET-FIRST-STRI-QWEN3-MERGE-SPLIT-P0A-20260816",
+  "artifact_kind": "bounded-p0-execution-state",
+  "status": "READY_SCIENTIFIC_CONTRACT_BLOCKED_ONLY_BY_CURRENT_GPU_CONTENTION",
+  "scientific_result_available": false,
+  "p0a_outcome_generations_completed": 0,
+  "scientific_belief_update_allowed_from_attempts": false,
+  "attempts": [
+    {
+      "attempt": 1,
+      "runtime": "reviewed host231 stack: vLLM0.19.1 / torch2.10+cu130",
+      "failure_stage": "vLLM architecture inspection before CUDA/model allocation",
+      "failure": "CUDA_VISIBLE_DEVICES UUID parsing unsupported by vLLM0.19.1 subprocess",
+      "generations": 0,
+      "scientific_update": false
+    },
+    {
+      "attempt": 2,
+      "runtime": "reviewed host231 stack with ordinal GPU binding",
+      "failure_stage": "torch.cuda_init before model allocation",
+      "failure": "host52 NVIDIA driver cannot initialize CUDA13 runtime",
+      "generations": 0,
+      "scientific_update": false
+    },
+    {
+      "attempt": 3,
+      "runtime": "author package versions with PyPI vLLM0.20 binary",
+      "failure_stage": "vLLM CUDA platform import before model allocation",
+      "failure": "PyPI vLLM0.20 wheel is CUDA13 native and requires libcudart.so.13",
+      "generations": 0,
+      "scientific_update": false
+    },
+    {
+      "attempt": 4,
+      "runtime": "cleared author runtime with official vLLM0.20+cu129 / torch2.11+cu128",
+      "failure_stage": "model loaded; Inductor autotune before task generation",
+      "failure": "external LLMPrint jobs entered selected GPU1 during initialization and consumed about 8.8 GiB; combined peak caused CUDA OOM",
+      "external_pids": [3677571, 3677573],
+      "external_process_family": "/data/wyt/llmprint52/ACL-LLMPrint-official/build_fingerprint.py",
+      "generations": 0,
+      "scientific_update": false,
+      "external_processes_preserved": true
+    },
+    {
+      "attempt": 5,
+      "runtime": "same cleared author runtime on GPU2",
+      "failure_stage": "resource gate before model generation",
+      "failure": "external LLMPrint jobs occupied GPU2 between resource scan and launch; own STRI process was terminated before model generation to avoid a second contention OOM",
+      "external_pids": [3679467, 3679469],
+      "generations": 0,
+      "scientific_update": false,
+      "external_processes_preserved": true
+    }
+  ],
+  "current_resource_snapshot": {
+    "host52": "all eight RTX3090 cards currently occupied by LLMPrint fingerprint workers at roughly 8-9 GiB/card; insufficient uncontested headroom for the Qwen3-8B single-GPU P0-A",
+    "host60": "all three RTX3090-class GPUs occupied; about 15-19 GiB used per card",
+    "host69": "A100-80GB occupied at 100% utilization with about 44.6 GiB used",
+    "host231": "A100-80GB occupied at 100% utilization with about 41.4 GiB used",
+    "host222": "unreachable from current execution routes"
+  },
+  "why_no_scientific_decision_yet": "The frozen P0-A has not produced a single task generation. Every attempted stop occurred before outcome acquisition and therefore cannot be counted as P0 STOP or negative evidence against STRI.",
+  "scientific_state": {
+    "C1_control_plane_representation_sensitivity": "SUPPORTED",
+    "C2_package_only_reduction_insufficiency": "SUPPORTED",
+    "P0A_dynamic_distribution_propagation": "PENDING_RESOURCE_ONLY",
+    "P0B_support_quotient_feasibility": "LOCKED_UNTIL_P0A_GO",
+    "P0C_solver_consequence": "LOCKED_UNTIL_P0A_GO",
+    "C3_method_superiority": "LOCKED",
+    "C4_dynamic_or_utility_propagation": "LOCKED"
+  },
+  "no_rescue_rules": [
+    "Do not change Qwen3-8B weights or run a second backbone.",
+    "Do not change 24x3 generation counts, prompts, decoding, seed, truth, gates, or decision thresholds.",
+    "Do not kill or preempt LLMPrint/other external GPU jobs.",
+    "Do not interpret technical/runtime/resource failures as scientific STOP.",
+    "Do not add determinism generations outside the frozen 72-call budget."
+  ],
+  "next_action": "Use the already-materialized host52 author runtime when one uncontested GPU becomes available; recheck external GPU PIDs immediately before engine load. On P0-A GO, freeze its raw bank and run P0-B with zero new questioner generations, then P0-C if its prerequisites remain satisfied.",
+  "authority": {
+    "current_p0a_execution_ready": false,
+    "p0a_scientific_contract_clear": true,
+    "paper_design_authority_from_attempts": false,
+    "method_authority_from_attempts": false,
+    "full_experiment_authorized": false,
+    "second_backbone_authorized": false
+  }
+}

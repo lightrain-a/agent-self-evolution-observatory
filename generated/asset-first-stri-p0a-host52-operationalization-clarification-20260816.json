@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "experiment_id": "ASSET-FIRST-STRI-QWEN3-MERGE-SPLIT-P0A-20260816",
+  "requested_model": "glm-5.2",
+  "resolved_model": "glm-5.3",
+  "parent_review_raw_sha256": "b1f022313d6ea735df9fb4cc24223d3432df2552628f9486d4a39658af71e2ee",
+  "raw_sha256": "1fd3ec2dccc5fee23fc4519af03d9b355dbcac629bd75d8366c7f5415abfd693",
+  "clarification": {
+    "decision": "A",
+    "execution_clear": true,
+    "frozen_72_and_one_load_must_remain_exact": true,
+    "extra_generation_probes_required": false,
+    "reason": "The determinism probe and same-seed double-run were advisory diagnostics and cannot override the exact one-load/72-generation frozen budget. Exact prompt text and token-ID equality for all three sources, 29/29 author-runtime preflight, and a real CUDA12.8 GPU smoke establish the execution invariants needed before launch. No extra generation probe may be relabeled outside budget or used to pre-observe outcomes."
+  },
+  "raw_response_archive": "/data/wyt/agent-self-evolution-observatory/runs/asset-first-stri-p0a-host52-operationalization-review-20260816/clarification-raw.txt on host 69",
+  "scientific_authority": false
+}
