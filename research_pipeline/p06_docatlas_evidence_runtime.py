@@ -6,14 +6,14 @@ from typing import Any
 
 CANDIDATE_ID='SHADOW-P06-C01'
 CONTRACT_SHA='abab137697817d2716bc2823e6bad7e3e0da16d8654d146dc775443c24f3cd47'
-PLAN_SHA='829601282dbf00f11f102a88d3bb64a2487b68c3270fc1c89f7259b671c4b9d2'
+PLAN_SHA='dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39'
 SOURCE_SHA='4ffadad60b18cd7ede864155f3e8a366fe4deec2189b3d0a25691b7df4b839e8'
 SOURCE_COMMIT='d73f0dc0be7e0a2ff6a403d5fe65fcd96461f384'
 RAW_ROOT=f'https://raw.githubusercontent.com/mayubo2333/MMLongBench-Doc/{SOURCE_COMMIT}/data/documents'
 DEFAULT_MODEL=Path('/root/.cache/huggingface/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28')
 POLICIES=('negative_evidence_baseline','naive_summary','evidence_gap_aware','coverage_certified')
 ACTIONS={'ANSWER','RETRIEVE_MORE','ABSTAIN','CONTINUE'}
-MAX_INPUT_TOKENS=4096; MAX_NEW_TOKENS=160; PAGE_CHARS=3600; NOTE_CHARS=1200
+MAX_INPUT_TOKENS=4096; MAX_NEW_TOKENS=160; PAGE_CHARS=3600; RAW_CONTEXT_CHARS=10800; NOTE_CHARS=1200
 
 def sha(path:Path)->str:return hashlib.sha256(path.read_bytes()).hexdigest()
 def htext(x:str)->str:return hashlib.sha256(x.encode()).hexdigest()
@@ -29,7 +29,8 @@ def validate(plan_path:Path,samples_path:Path):
     if sha(samples_path)!=SOURCE_SHA:raise ValueError('source-sha-mismatch')
     p,s=load(plan_path),load(samples_path)
     if p.get('candidate_id')!=CANDIDATE_ID or p.get('contract_sha256')!=CONTRACT_SHA:raise ValueError('contract-mismatch')
-    if len(p.get('units') or [])!=96 or not isinstance(s,list) or len(s)!=1082:raise ValueError('cardinality-mismatch')
+    expected=int((p.get('scope') or {}).get('units') or 0)
+    if expected!=128 or len(p.get('units') or [])!=expected or not isinstance(s,list) or len(s)!=1082:raise ValueError('cardinality-mismatch')
     seen=set()
     for u in p['units']:
         i=int(u['sample_index']);r=s[i]
@@ -87,8 +88,12 @@ def pages_of(pdf:Path,cache_dir:Path)->list[str]:
     if not pages:raise RuntimeError('empty-pdf-text:'+pdf.name)
     cache.write_text(json.dumps({'pdf_sha256':psha,'pages':pages},ensure_ascii=False)+'\n');return pages
 
+def raw_page_chars(ids:list[int])->int:
+    return min(PAGE_CHARS,max(1,RAW_CONTEXT_CHARS//max(1,len(ids))))
+
 def raw_block(pages:list[str],ids:list[int])->str:
-    return '\n\n'.join(f'[PAGE {i}]\n{pages[i-1][:PAGE_CHARS]}' for i in ids)
+    per_page=raw_page_chars(ids)
+    return '\n\n'.join(f'[PAGE {i}]\n{pages[i-1][:per_page]}' for i in ids)
 def extractive(pages:list[str],ids:list[int])->str:
     n=max(220,NOTE_CHARS//max(1,len(ids)))
     return ' | '.join(' '.join(pages[i-1].split())[:n] for i in ids)[:NOTE_CHARS]
@@ -156,6 +161,7 @@ def probe(plan_path:Path,samples_path:Path,model_path:Path):
         "source_hash":sha(samples_path)==SOURCE_SHA,
         "bm25_no_truth_dependency":ranking[0]==2,
         "raw_lock":len(set(raw_hashes))==1,
+        "fixed_raw_context_budget":raw_page_chars([1,2,3])*3==RAW_CONTEXT_CHARS and raw_page_chars([1,2,3,4,5,6])*6==RAW_CONTEXT_CHARS,
         "no_truth_literal_leak":not any(forbidden_hits.values()),
         "parser":all(case["valid"] for case in parser_cases),
         "model_snapshot":model_path.is_dir() and shards>=4 and (model_path/"config.json").is_file(),
@@ -180,17 +186,28 @@ def load_model(path:Path):
     tok=AutoTokenizer.from_pretrained(str(path),local_files_only=True,trust_remote_code=True);tok.pad_token_id=tok.pad_token_id or tok.eos_token_id;tok.padding_side='left'
     model=AutoModelForCausalLM.from_pretrained(str(path),local_files_only=True,trust_remote_code=True,torch_dtype=torch.bfloat16,low_cpu_mem_usage=True).cuda().eval();return torch,tok,model
 
+def render_chat(tok,prompts):
+    return [tok.apply_chat_template([{'role':'user','content':p}],tokenize=False,add_generation_prompt=True) for p in prompts]
+
 def gen(torch,tok,model,prompts):
-    enc=tok(prompts,return_tensors='pt',padding=True,truncation=True,max_length=MAX_INPUT_TOKENS);enc={k:v.cuda() for k,v in enc.items()};w=enc['input_ids'].shape[1]
+    rendered=render_chat(tok,prompts)
+    enc=tok(rendered,return_tensors='pt',padding=True,truncation=False)
+    w=int(enc['input_ids'].shape[1])
+    if w>MAX_INPUT_TOKENS:raise RuntimeError(f'input-token-budget-exceeded:{w}>{MAX_INPUT_TOKENS}')
+    enc={k:v.cuda() for k,v in enc.items()}
     with torch.inference_mode():out=model.generate(**enc,do_sample=False,max_new_tokens=MAX_NEW_TOKENS,use_cache=True,pad_token_id=tok.pad_token_id)
     return [tok.decode(x[w:],skip_special_tokens=True) for x in out]
 
-def run(plan_path:Path,samples_path:Path,pdf_dir:Path,cache_dir:Path,model_path:Path,out:Path,max_units:int|None=None):
-    plan,samples=validate(plan_path,samples_path);pdf_manifest=fetch_pdfs(plan,pdf_dir);torch,tok,model=load_model(model_path);start=time.monotonic();gpu=0.0;calls=0;rows=[];docs={};units=plan['units'][:max_units or len(plan['units'])];raw=out.with_suffix('.jsonl');out.parent.mkdir(parents=True,exist_ok=True)
-    maxwall=plan['budget']['max_wall_minutes']*60;maxgpu=plan['budget']['max_gpu_hours']*3600;maxcalls=plan['budget']['max_model_calls']
+def select_units(plan:dict,start_index:int=0,max_units:int|None=None)->list[dict]:
+    total=len(plan['units']);start=max(0,int(start_index));stop=total if max_units is None else min(total,start+max(0,int(max_units)))
+    return list(plan['units'][start:stop])
+
+def run(plan_path:Path,samples_path:Path,pdf_dir:Path,cache_dir:Path,model_path:Path,out:Path,max_units:int|None=None,start_index:int=0,gpu_allocation_cap_seconds:float|None=None):
+    plan,samples=validate(plan_path,samples_path);pdf_manifest=fetch_pdfs(plan,pdf_dir);allocation_start=time.monotonic();torch,tok,model=load_model(model_path);start=time.monotonic();gpu=0.0;calls=0;rows=[];docs={};units=select_units(plan,start_index,max_units);raw=out.with_suffix('.jsonl');out.parent.mkdir(parents=True,exist_ok=True)
+    maxwall=plan['budget']['max_wall_minutes']*60;maxgpu=plan['budget']['max_gpu_hours']*3600;maxcalls=plan['budget']['max_model_calls'];allocation_cap=float(gpu_allocation_cap_seconds) if gpu_allocation_cap_seconds is not None else maxgpu
     with raw.open('w',encoding='utf-8') as fh:
       for ordinal,u in enumerate(units,1):
-        if time.monotonic()-start>maxwall or gpu>=maxgpu or calls>=maxcalls:break
+        if time.monotonic()-start>maxwall or time.monotonic()-allocation_start>=allocation_cap or gpu>=maxgpu or calls>=maxcalls:break
         src=samples[u['sample_index']];doc=u['doc_id'];pages=docs.get(doc)
         if pages is None:pages=pages_of(pdf_dir/doc,cache_dir);docs[doc]=pages
         ranking=bm25(src['question'],pages);ids=ranking[:min(3,len(ranking))];prompts=[];rhs=[]
@@ -198,7 +215,7 @@ def run(plan_path:Path,samples_path:Path,pdf_dir:Path,cache_dir:Path,model_path:
         if len(set(rhs))!=1:raise RuntimeError('raw-lock-violation')
         t=time.monotonic();texts=gen(torch,tok,model,prompts);torch.cuda.synchronize();gpu+=time.monotonic()-t;calls+=1;first={p:parse(x) for p,x in zip(POLICIES,texts)}
         active=[p for p in POLICIES if first[p]['valid'] and first[p]['action'] in {'RETRIEVE_MORE','CONTINUE'}];second={}
-        if active and calls<maxcalls and gpu<maxgpu and time.monotonic()-start<=maxwall:
+        if active and calls<maxcalls and gpu<maxgpu and time.monotonic()-start<=maxwall and time.monotonic()-allocation_start<allocation_cap:
             ids2=ranking[:min(6,len(ranking))];p2=[prompt(src['question'],pages,ids2,p,2)[0] for p in active];t=time.monotonic();txt2=gen(torch,tok,model,p2);torch.cuda.synchronize();gpu+=time.monotonic()-t;calls+=1;second={p:parse(x) for p,x in zip(active,txt2)}
         ep=[int(x) for x in lit(src.get('evidence_pages')) if isinstance(x,int) or str(x).isdigit()];gap=u['class']=='answerable' and not set(ep).issubset(ids);covered=u['class']=='answerable' and set(ep).issubset(ids)
         for pol in POLICIES:
@@ -207,8 +224,30 @@ def run(plan_path:Path,samples_path:Path,pdf_dir:Path,cache_dir:Path,model_path:
             fh.write(json.dumps(row,ensure_ascii=False)+'\n');rows.append(row)
         fh.flush()
         if ordinal%8==0:print(json.dumps({'completed_units':ordinal,'batch_calls':calls,'gpu_seconds':round(gpu,2)}),flush=True)
-    cost={'planned_units':len(units),'completed_units':len({r['unit_id'] for r in rows}),'batch_calls':calls,'gpu_seconds':round(gpu,3),'gpu_hours':round(gpu/3600,6),'wall_seconds':round(time.monotonic()-start,3)};cost['within_budget']=calls<=maxcalls and gpu<=maxgpu and cost['wall_seconds']<=maxwall
-    result={'candidate_id':CANDIDATE_ID,'contract_sha256':CONTRACT_SHA,'plan_sha256':sha(plan_path),'pdf_manifest':pdf_manifest,'cost':cost,'raw_rows_path':str(raw),'scientific_authority':False};out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');return result
+    allocation_seconds=round(time.monotonic()-allocation_start,3)
+    cost={'planned_units':len(units),'completed_units':len({r['unit_id'] for r in rows}),'batch_calls':calls,'generation_gpu_seconds':round(gpu,3),'gpu_allocation_seconds':allocation_seconds,'gpu_hours':round(allocation_seconds/3600,6),'wall_seconds':round(time.monotonic()-start,3)};cost['within_budget']=calls<=maxcalls and allocation_seconds<=allocation_cap and cost['wall_seconds']<=maxwall
+    result={'candidate_id':CANDIDATE_ID,'contract_sha256':CONTRACT_SHA,'plan_sha256':sha(plan_path),'unit_start_index':int(start_index),'unit_stop_index':int(start_index)+len(units),'unit_ids':[u['unit_id'] for u in units],'pdf_manifest':pdf_manifest,'cost':cost,'raw_rows_path':str(raw),'scientific_authority':False};out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');return result
+
+def aggregate_shards(plan_path:Path,shard_paths:list[Path],out:Path):
+    plan=load(plan_path)
+    if sha(plan_path)!=PLAN_SHA:raise ValueError('plan-sha-mismatch')
+    if len(shard_paths)!=4:raise ValueError('expected-four-shards')
+    shards=[];all_rows=[];seen_ranges=[];policy_order={p:i for i,p in enumerate(POLICIES)};unit_order={u['unit_id']:i for i,u in enumerate(plan['units'])}
+    for path in shard_paths:
+        r=load(path)
+        if r.get('candidate_id')!=CANDIDATE_ID or r.get('contract_sha256')!=CONTRACT_SHA or r.get('plan_sha256')!=PLAN_SHA:raise ValueError('shard-contract-mismatch')
+        start=int(r.get('unit_start_index',-1));stop=int(r.get('unit_stop_index',-1));expected=[u['unit_id'] for u in plan['units'][start:stop]]
+        if start<0 or stop<=start or r.get('unit_ids')!=expected:raise ValueError('shard-unit-slice-mismatch')
+        seen_ranges.append((start,stop));raw=Path(r['raw_rows_path']);rows=[json.loads(x) for x in raw.read_text(encoding='utf-8').splitlines() if x.strip()]
+        if any(x.get('unit_id') not in set(expected) for x in rows):raise ValueError('shard-raw-unit-leak')
+        all_rows.extend(rows);shards.append({'path':str(path),'sha256':sha(path),'start':start,'stop':stop,'cost':r.get('cost') or {},'raw_sha256':sha(raw)})
+    ranges=sorted(seen_ranges);planned_ranges_exact=(ranges==[(0,32),(32,64),(64,96),(96,128)])
+    raw_out=out.with_suffix('.jsonl');raw_out.parent.mkdir(parents=True,exist_ok=True);all_rows.sort(key=lambda r:(unit_order.get(r.get('unit_id'),10**9),policy_order.get(r.get('policy'),10**9)))
+    with raw_out.open('w',encoding='utf-8') as fh:
+        for row in all_rows:fh.write(json.dumps(row,ensure_ascii=False)+'\n')
+    batch_calls=sum(int((s['cost'] or {}).get('batch_calls') or 0) for s in shards);allocation=sum(float((s['cost'] or {}).get('gpu_allocation_seconds') or 0.0) for s in shards);generation=sum(float((s['cost'] or {}).get('generation_gpu_seconds') or 0.0) for s in shards);completed=len({r.get('unit_id') for r in all_rows});local_ok=all((s['cost'] or {}).get('within_budget') is True for s in shards)
+    cost={'planned_units':128,'completed_units':completed,'batch_calls':batch_calls,'generation_gpu_seconds':round(generation,3),'gpu_allocation_seconds':round(allocation,3),'gpu_hours':round(allocation/3600,6),'wall_seconds':round(max(float((s['cost'] or {}).get('wall_seconds') or 0.0) for s in shards),3),'within_budget':bool(planned_ranges_exact and local_ok and batch_calls<=256 and allocation<=3600.0)}
+    result={'candidate_id':CANDIDATE_ID,'contract_sha256':CONTRACT_SHA,'plan_sha256':PLAN_SHA,'aggregation':'four-shard-data-parallel','planned_ranges_exact':planned_ranges_exact,'shards':shards,'cost':cost,'raw_rows_path':str(raw_out),'scientific_authority':False};out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');return result
 
 def rate(rows,key):return sum(bool(r[key]) for r in rows)/len(rows) if rows else float('nan')
 
@@ -221,7 +260,8 @@ def analyze(plan_path:Path,samples_path:Path,run_path:Path,out:Path):
     sg=rate(cg,'primary_state')-rate(bg,'primary_state') if gap else float('nan');sc=rate(cc,'primary_state')-rate(bc,'primary_state') if covered else float('nan');dd=sg-sc if gap and covered else float('nan')
     bm={r['unit_id']:r['primary_state'] for r in bg};cm={r['unit_id']:r['primary_state'] for r in cg};pair=[u for u in gap if u in bm and u in cm];pv,b01,b10=mcnemar([bm[u] for u in pair],[cm[u] for u in pair]) if pair else (1.0,0,0)
     false_gain=rate(bu,'false_answer_unanswerable')-rate(cu,'false_answer_unanswerable') if un else float('nan');acc_drop=rate(bc,'exact_correct')-rate(cc,'exact_correct') if covered else float('nan')
-    adequate=len(valid)>=96 and len(gap)>=15 and len(covered)>=15 and bool(runj['cost'].get('within_budget'));residual=bool(adequate and dd>=.10 and pv<.05 and false_gain>=.10 and acc_drop<=.05)
+    required_valid=int((load(plan_path).get('repair') or {}).get('post_repair_min_valid_units',96))
+    adequate=len(valid)>=required_valid and len(gap)>=15 and len(covered)>=15 and bool(runj['cost'].get('within_budget'));residual=bool(adequate and dd>=.10 and pv<.05 and false_gain>=.10 and acc_drop<=.05)
     rates={p:{'gap_primary_state':rate(sub(p,gap),'primary_state') if gap else None,'covered_primary_state':rate(sub(p,covered),'primary_state') if covered else None,'unanswerable_primary_state':rate(sub(p,un),'primary_state') if un else None,'unanswerable_false_answer':rate(sub(p,un),'false_answer_unanswerable') if un else None,'covered_exact_accuracy':rate(sub(p,covered),'exact_correct') if covered else None} for p in POLICIES}
     deltas=[]
     for ids in (gap,covered,un):
@@ -231,7 +271,8 @@ def analyze(plan_path:Path,samples_path:Path,run_path:Path,out:Path):
     result={'candidate_id':CANDIDATE_ID,'contract_sha256':CONTRACT_SHA,'outcome':outcome,'qualified_units':len(valid),'protocol_valid':bool(len(valid)>0 and runj['cost'].get('within_budget')),'metrics':metrics,'cost':runj['cost'],'evidence_manifest_sha256':msha,'decision_rule_frozen_before_execution':True,'scientific_authority':False};out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');return result
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('command',choices=('probe','manifest','prepare','run','analyze'));ap.add_argument('--plan',type=Path,required=True);ap.add_argument('--samples',type=Path,required=True);ap.add_argument('--model',type=Path,default=DEFAULT_MODEL);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--pdf-dir',type=Path);ap.add_argument('--page-cache',type=Path);ap.add_argument('--max-units',type=int);ap.add_argument('--run-json',type=Path);a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('command',choices=('probe','manifest','prepare','run','aggregate','analyze'));ap.add_argument('--plan',type=Path,required=True);ap.add_argument('--samples',type=Path);ap.add_argument('--model',type=Path,default=DEFAULT_MODEL);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--pdf-dir',type=Path);ap.add_argument('--page-cache',type=Path);ap.add_argument('--max-units',type=int);ap.add_argument('--start-index',type=int,default=0);ap.add_argument('--gpu-allocation-cap-seconds',type=float);ap.add_argument('--run-json',type=Path);ap.add_argument('--shard-run',type=Path,action='append',default=[]);a=ap.parse_args()
+    if a.command in {'probe','manifest','prepare','run','analyze'} and not a.samples:raise SystemExit('--samples required')
     if a.command=='probe':r=probe(a.plan,a.samples,a.model);a.output.write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n')
     elif a.command=='manifest':r=manifest(a.plan,a.samples,a.model,a.output)
     elif a.command=='prepare':
@@ -240,7 +281,9 @@ def main():
         r={'pdfs':fetch_pdfs(p,a.pdf_dir),'scientific_authority':False};a.output.write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n')
     elif a.command=='run':
         if not a.pdf_dir or not a.page_cache:raise SystemExit('--pdf-dir/--page-cache required')
-        r=run(a.plan,a.samples,a.pdf_dir,a.page_cache,a.model,a.output,a.max_units)
+        r=run(a.plan,a.samples,a.pdf_dir,a.page_cache,a.model,a.output,a.max_units,a.start_index,a.gpu_allocation_cap_seconds)
+    elif a.command=='aggregate':
+        r=aggregate_shards(a.plan,a.shard_run,a.output)
     else:
         if not a.run_json:raise SystemExit('--run-json required')
         r=analyze(a.plan,a.samples,a.run_json,a.output)
