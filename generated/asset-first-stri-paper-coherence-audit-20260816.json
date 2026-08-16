@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "stage": "PAPER_DRAFT_COHERENCE_AUDIT_PRE_P0",
+  "draft": "paper_drafts/stri-20260816-draft.md",
+  "status": "COHERENT_C1_C2_SUPPORTED_C3_C4_LOCKED",
+  "claims": {
+    "C1": {
+      "status": "SUPPORTED_CONTROL_PLANE",
+      "statement": "Released self-evolving skill controllers exhibit representation sensitivity under semantics-preserving identity/grouping changes.",
+      "evidence": [
+        "Skill-SP 348 covered / 183 multi-membership released-validator rows",
+        "SkillRL 12/12 exact-content clone admissions; 11/12 targets alter unique semantic retrieval set"
+      ],
+      "artifacts": [
+        "generated/asset-first-skillsp-semantic-multiplicity-contract.json",
+        "generated/asset-first-skillrl-representation-invariance-contract.json"
+      ],
+      "paper_slots": [
+        "Introduction",
+        "Sec.5",
+        "Table 1"
+      ],
+      "forbidden_upgrade": "Do not call this downstream utility harm."
+    },
+    "C2": {
+      "status": "SUPPORTED_STATIC_THEORY_REAL_GRAPH",
+      "statement": "Package-only fixes cannot remove the focal mandatory-overlap exposure residual.",
+      "evidence": [
+        "exact-coverage pruning leaves 71/348 overlaps",
+        "optimal global package weighting max/min=2.0",
+        "two real theorem witnesses",
+        "decision-time single-package controller class reduction"
+      ],
+      "artifacts": [
+        "generated/asset-first-stri-structural-witness-20260816.json",
+        "generated/asset-first-stri-decision-time-reduction-20260816.json",
+        "generated/asset-first-stri-theory-contract-20260816.json"
+      ],
+      "paper_slots": [
+        "Sec.3",
+        "Table 2",
+        "Fig.2",
+        "Fig.3"
+      ],
+      "forbidden_upgrade": "Do not infer STRI-Q/STRI-D or task utility from STRI-E theorem."
+    },
+    "C3": {
+      "status": "LOCKED_PENDING_P0_AND_FULL",
+      "statement": "SQC removes representation dependence without utility/coverage/resource loss.",
+      "required": [
+        "P0-A GO",
+        "P0-B GO",
+        "full 2x3 heldout invariance + 2pp utility noninferiority + 5/5 coverage + matched resources"
+      ],
+      "artifacts": [
+        "generated/asset-first-stri-method-design-20260816.json",
+        "generated/asset-first-stri-quotient-rejection-p0b-contract-20260816.json",
+        "generated/asset-first-stri-full-experiment-blueprint-20260816.json"
+      ],
+      "paper_slots": [
+        "Sec.4 as method hypothesis",
+        "Sec.7 preregistration",
+        "Table 4 only after results"
+      ],
+      "stop": [
+        "P0-B infeasible",
+        "SQC fails either merge equivalence",
+        "utility lower95 <= -0.02 in any taxonomy",
+        "atom loss",
+        "extra primary budget required"
+      ]
+    },
+    "C4": {
+      "status": "LOCKED_PENDING_FAITHFUL_DYNAMIC_EVIDENCE",
+      "statement": "Native representation sensitivity propagates to realized qualified tasks or evolution utility.",
+      "required": [
+        "qualified P0-A for STRI-Q",
+        "P0-C/full for stronger utility language"
+      ],
+      "artifacts": [
+        "generated/asset-first-stri-qwen3-merge-split-p0a-contract-20260816.json",
+        "generated/asset-first-stri-qwen3-solver-consequence-p0c-contract-20260816.json"
+      ],
+      "paper_slots": [
+        "Sec.7",
+        "Table 3/4"
+      ],
+      "stop": [
+        "P0-A qualified STOP kills dynamic propagation on preregistered backbone",
+        "P0-A qualification failure is INVALID not negative"
+      ]
+    }
+  },
+  "draft_checks": {
+    "explicit_tbd_placeholders": true,
+    "invalid_qwen25_excluded": true,
+    "no_c3_success_language": true,
+    "no_c4_success_language": true,
+    "second_backbone_rescue_forbidden": true,
+    "rejection_sampling_not_claimed_novel": true,
+    "decision_time_information_boundary_explicit": true
+  },
+  "current_execution_gate": "P0-A READY_EXCEPT_GPU_RESOURCE_BUSY on host 231",
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_C3": false,
+    "paper_claim_C4": false,
+    "p0": false,
+    "gpu": false
+  }
+}

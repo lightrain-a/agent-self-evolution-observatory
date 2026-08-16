@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "candidate_id": "skill-taxonomy-representation-invariance",
   "working_title": "Self-Evolution Should Not Depend on How Skills Are Split",
-  "status": "REPLICATED_MECHANISM_NOVELTY_UNRESOLVED",
+  "status": "SURVIVES_NARROWLY_PAPER_DESIGN_ACTIVE_DYNAMIC_P0_PENDING",
   "problem_statement": "Self-evolving skill systems use skill artifacts as control units for sampling, retrieval, feedback credit, refinement, and admission. If two taxonomies represent the same semantic capability/support set but differ only in how that set is split, cloned, or hierarchically overlapped across package identities, a representation-invariant evolution operator should not change its induced control distribution solely because the artifact parameterization changed.",
   "narrow_principle": {
     "name": "Skill-Taxonomy Representation Invariance (STRI)",
@@ -123,11 +123,23 @@
   "p0_authorized": false,
   "gpu_authorized": false,
   "scientific_belief_update_allowed": true,
-  "reason_paper_design_still_blocked": "Two independent first-party control-plane violations establish a real mechanism, but the strongest mature reduction has not yet been falsified: similarity-aware/overlap-aware fixed-library control or SkillsVote-style low-redundancy governance may absorb the effect. In addition, no dynamic end-task or future-learning outcome has yet shown that the representation violation changes a scientific decision beyond control-plane algebra.",
+  "reason_paper_design_still_blocked": "Static/control-plane reduction is no longer the blocker: current-source review is SURVIVES_NARROWLY; the mandatory-overlap theorem plus decision-time reduction closes the frozen-state pre-context single-package controller class on the released Skill-SP graph; SQC theory/method/full blueprint are frozen. The remaining blocker is qualified dynamic evidence: C3/C4 stay locked until faithful Qwen3 P0-A/P0-B and, if permitted, heldout confirmatory evaluation.",
   "next_decisive_steps": [
-    "Run a frozen same-information overlap-aware baseline on the Skill-SP released support matrix; kill the candidate if a standard similarity/overlap normalization makes the control law representation-invariant with no residual.",
-    "If a residual remains, design one bounded dynamic counterfactual with unchanged skill semantics and matched compute where taxonomy split/overlap alone changes verified future-task acquisition or retained performance; require an external verifier, not self-report.",
-    "Only after both tests pass, compile Problem -> Principle (STRI) -> Method -> decisive evidence and request Paper Design authority."
+    "Launch the exact frozen Qwen3-8B Skill-SP P0-A on host 231 only after the unrelated GPU resource gate clears; do not change backbone, prompts, decoding, source counts, truth, or thresholds.",
+    "If and only if P0-A GO, run P0-B on the exact same raw generation SHA with zero new model calls to test quotient/rejection feasibility at the frozen call budget; optional P0-C may reuse the same bank.",
+    "Only if P0-A and P0-B pass, execute the already frozen tool-disjoint full experiment blueprint. Keep idea search closed unless STRI is scientifically stopped."
   ],
-  "created_at": "2026-08-16"
+  "created_at": "2026-08-16",
+  "paper_design_stage": "PAPER_DESIGN_ACTIVE_ASSET_FIRST",
+  "post_reduction_receipts": {
+    "current_source_review": "generated/asset-first-stri-current-source-review-20260816.json",
+    "structural_witness": "generated/asset-first-stri-structural-witness-20260816.json",
+    "decision_time_reduction": "generated/asset-first-stri-decision-time-reduction-20260816.json",
+    "theory_contract": "generated/asset-first-stri-theory-contract-20260816.json",
+    "method_design": "generated/asset-first-stri-method-design-20260816.json",
+    "paper_design": "generated/asset-first-stri-paper-design-20260816.json",
+    "p0a": "generated/asset-first-stri-qwen3-merge-split-p0a-contract-20260816.json",
+    "p0b": "generated/asset-first-stri-quotient-rejection-p0b-contract-20260816.json",
+    "full_blueprint": "generated/asset-first-stri-full-experiment-blueprint-20260816.json"
+  }
 }
