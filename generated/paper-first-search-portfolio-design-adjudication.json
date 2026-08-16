@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T09:49:23+00:00",
+  "generated_at": "2026-08-16T10:03:44+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T09:49:23+00:00",
+    "generated_at": "2026-08-16T10:03:44+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -463,6 +463,72 @@
           "same_information_reduction_verified": true,
           "reopen_condition": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin."
         }
+      },
+      {
+        "source_candidate_id": "SHADOW-P01-C01",
+        "basin": "principle-readjudication-be427ffeba8d130f",
+        "search_primitive": "",
+        "title": "Frozen no-skill anchors make reciprocal metric-skill coevolution observationally indistinguishable from one-way metric-to-skill coupling",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Frozen no-skill anchors make reciprocal metric-skill coevolution observationally indistinguishable from one-way metric-to-skill coupling",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "Reciprocal coupling is not latent in the released Double Ratchet object. The first-party implementation constructs dev_items, locked, and train once before alternating phases and later metric phases reuse those same objects, while skill phases consume the current metric through make_expr_grader. Because skill-phase outputs are not inputs to the metric update operator, the released causal graph is directly one-way rather than observationally ambiguous.",
+        "current_source_refs": [
+          "arXiv:2607.12790"
+        ],
+        "evidence_basis": [
+          "arXiv:2607.12790",
+          "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
+          "generated/shadow-p01-first-party-inversion-asset-manifest-20260816.json"
+        ],
+        "problem_text": "The standalone identifiability claim that the released Double Ratchet implementation leaves reciprocal metric-skill coupling observationally ambiguous even though the first-party update graph explicitly omits any skill-output-to-metric-data edge.",
+        "reason": "The released Double Ratchet implementation has directly observable one-way metric-to-skill coupling at the data-update level. Treating that structural fact itself as an identifiability problem is a dead end; the scientifically meaningful follow-up is whether such one-way coupling causes a nontrivial consequence beyond generic distribution shift.",
+        "reopen_only_if": "Reopen only with a preregistered downstream consequence of the missing reciprocal edge, such as held-out evaluator selection/regret under actor-induced distribution shift, and require the effect to survive a same-information generic distribution-shift/online-adaptation baseline and a matched compute budget.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "IMPOSSIBILITY_OR_INVARIANCE",
+          "statement": "Reciprocal coupling is not latent in the released Double Ratchet object. The first-party implementation constructs dev_items, locked, and train once before alternating phases and later metric phases reuse those same objects, while skill phases consume the current metric through make_expr_grader. Because skill-phase outputs are not inputs to the metric update operator, the released causal graph is directly one-way rather than observationally ambiguous.",
+          "opposite_prediction": "For the released implementation, changing skill state or skill-phase outputs while holding the frozen metric-phase dev_items/train objects and metric random/model inputs fixed cannot alter a later metric update through a reciprocal data path, because no such input edge exists. Any measured metric change must flow through some other explicitly introduced state or instrumentation change.",
+          "opposite_principle": "Causal reciprocity is a structural property of update operators, not an identifiability problem when the implementation exposes the dependency graph. A missing reciprocal edge becomes scientifically interesting only through a downstream consequence that survives generic distribution-shift, stale-supervisor, or alternating-optimization reductions.",
+          "opposite_search_seed": "Search for self-evolving systems where actor updates materially shift the error/data distribution seen by a supervisor or evaluator, and test whether a frozen or one-way evaluator incurs held-out selection/regret consequences that cannot be explained by a same-information covariate-shift or online-adaptation baseline. Do not claim novelty from merely observing that one update operator omits the other component's outputs.",
+          "scope": "Double Ratchet first-party repository commit 0f14e910d361196422d9b938f45280919952d4fd, especially evalratchet/coevolve.py::_prepare, run_coevolution, run_adaptive_coevolution, make_real_skill_loop, and evalratchet/evolve.py::evolve_metric_expr.",
+          "same_information_or_scope_matched": true,
+          "proof_or_structural_witness": true,
+          "structural_witness": "run_coevolution/run_adaptive_coevolution call _prepare once before all alternating phases. _prepare materializes dev_items, locked, and train from frozen no-skill solver outputs. Every later metric phase passes those same objects to evolve_metric_expr. Skill phases instead receive state.metric_expr through make_expr_grader, and their outputs are returned only as phase reports/progress summaries; they are not inserted into dev_items or train for the next metric phase.",
+          "evidence_refs": [
+            "arXiv:2607.12790",
+            "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
+            "generated/shadow-p01-first-party-inversion-asset-manifest-20260816.json"
+          ],
+          "alternative_explanations_ruled_out": [
+            "Reciprocal data refresh through skill reports: phase reports update logging/progress summaries but are not assigned into dev_items or train used by evolve_metric_expr.",
+            "Hidden eval_locked feedback: eval_locked is report-only for the metric loop and does not create the missing skill-output-to-metric-data edge.",
+            "Warm skill-bank coupling: the skill bank persists across skill phases, but persistence changes the actor side only; the metric training examples remain the frozen no-skill objects prepared before alternation."
+          ],
+          "reopen_condition": "Reopen only with a preregistered downstream consequence of the missing reciprocal edge, such as held-out evaluator selection/regret under actor-induced distribution shift, and require the effect to survive a same-information generic distribution-shift/online-adaptation baseline and a matched compute budget."
+        },
+        "source_readjudication_artifact": "generated/shadow-v4-reciprocal-coupling-principle-readjudication-20260816.json",
+        "opposite_search_asset_evidence": {
+          "asset_ref": "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
+          "title": "Double Ratchet first-party metric/skill co-evolution implementation",
+          "primary_url": "https://github.com/amazon-science/Self-Evolving-Agents-Double-Ratchet",
+          "source_sha256": "2e996c0b543c03a1f6c68cb06aaa26498d52b36f0775b7b36cf2025783f68ab0",
+          "asset_manifest_artifact": "generated/shadow-p01-first-party-inversion-asset-manifest-20260816.json",
+          "asset_manifest_file_sha256": "cf8fd07c87f25ff00b281ed07145fddc93cc665dae3b7111ee98a0ddfc9be568",
+          "commit": "0f14e910d361196422d9b938f45280919952d4fd",
+          "empirical_facts": [
+            "run_coevolution calls _prepare once before alternating phases, and later metric phases reuse the same dev_items, locked, and train objects created from frozen no-skill outputs.",
+            "Skill phases consume the current metric through make_expr_grader and update the warm skill bank, but their outputs are not inserted into the metric-phase dev_items or train objects used by subsequent evolve_metric_expr calls.",
+            "The released adaptive controller gates on metric maturity and metric-graded skill train progress while eval_locked remains report-only for the metric side."
+          ],
+          "source_readjudication_artifact": "generated/shadow-v4-reciprocal-coupling-principle-readjudication-20260816.json",
+          "scientific_authority": false
+        },
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
       },
       {
         "source_candidate_id": "SHADOW-P06-C01",
@@ -1133,8 +1199,8 @@
         "scientific_authority": false
       }
     ],
-    "principle_dead_end_count": 8,
-    "principle_readjudication_dead_end_count": 2,
+    "principle_dead_end_count": 9,
+    "principle_readjudication_dead_end_count": 3,
     "inversion_asset_evidence": [
       {
         "asset_ref": "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
@@ -1221,8 +1287,8 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 8,
-    "principle_readjudication_dead_ends": 2,
+    "shadow_dead_end_objects": 9,
+    "principle_readjudication_dead_ends": 3,
     "shadow_hold_objects": 19,
     "current_source_hard_veto_dead_ends": 2,
     "current_source_hard_veto_added_from_latest_run": 0,
