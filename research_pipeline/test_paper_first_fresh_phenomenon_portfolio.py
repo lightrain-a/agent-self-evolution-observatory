@@ -117,9 +117,51 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
             "authority": {"experiment_alone_authorizes_dead_end": False},
         }
 
+    def echo_f0_stop_result(self) -> dict:
+        return {
+            "candidate_id": "PA-01-EVIDENCE-ECHO",
+            "execution_status": "AUTHORIZED_BOUNDED_F0_EXECUTION_COMPLETED",
+            "scientific_status": "STOP_GENERIC_PROMPT_REDUCTION_NOT_BEATEN",
+            "frozen_contract": {
+                "runtime_sha256": "f64ae7c42f5e02b2f18abd67e4a784e3790b3c75107a4140666d9faa1c39842e",
+                "operationalization_repair_sha256": "8965c54594356a87e642ebe3cc4cd76eb899ece5e6436eb96f097d09473aad30",
+                "analysis_sha256": "a" * 64,
+                "rows_sha256": "b" * 64,
+            },
+            "execution_integrity": {
+                "rc": 0,
+                "units": 96,
+                "rows": 480,
+                "unanswerable_units": 64,
+                "answerable_units": 32,
+                "unauthorized_prior_rows_reused": False,
+                "permit_status": "consumed-completed",
+                "experiment_authority_released": True,
+                "gpu_lease_released": True,
+            },
+            "false_answer_rate": {
+                "RAW_ONLY": 0.140625,
+                "ECHO_EXTRACTIVE": 0.171875,
+                "VERBATIM_DUPLICATE": 0.234375,
+                "TOKEN_MATCHED_NEUTRAL": 0.140625,
+                "DEDUP_WARNING": 0.28125,
+            },
+            "effects": {
+                "echo_minus_raw_false": 0.03125,
+                "verbatim_minus_raw_false": 0.09375,
+            },
+            "paired_tests": {"raw_to_echo": {"exact_two_sided_p": 0.6875}},
+            "preregistered_gate_diagnosis": {
+                "strongest_generic_reduction_beaten": False,
+                "echo_specific_effect_threshold_met": False,
+            },
+            "scientific_authority": False,
+        }
+
     def build(self, **overrides) -> dict:
         kwargs = {
             "evidence_echo": self.echo_receipt(),
+            "evidence_echo_f0_result": {},
             "primary_state": {"summary": {"verified": 32, "empirical_fact_candidates": 107}},
             "dead_end_memory": self.memory(),
             "defense_readjudication": self.defense_closure(),
@@ -155,18 +197,24 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertTrue(all(row["scientific_authority"] is False for row in state["candidates"]))
 
     def test_controller_verified_capability_consumes_single_active_f0_slot(self) -> None:
-        state = build_fresh_phenomenon_portfolio(
-            evidence_echo=self.echo_receipt(),
-            primary_state={"summary": {"verified": 32, "empirical_fact_candidates": 107}},
-            dead_end_memory=self.memory(),
-            execution_capability=self.execution_capability(),
-        )
+        state = self.build(execution_capability=self.execution_capability())
         self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
         self.assertEqual(ACTIVE_F0_LIMIT, state["summary"]["active_f0"])
         self.assertEqual(0, state["summary"]["hold_execution"])
         active = [row for row in state["candidates"] if row["status"] == "ACTIVE_F0"]
         self.assertEqual(["PA-01-EVIDENCE-ECHO"], [row["candidate_id"] for row in active])
         self.assertTrue(active[0]["execution_readiness"]["execution_ready"])
+
+    def test_authorized_negative_f0_releases_active_slot_and_stops_scout(self) -> None:
+        state = self.build(evidence_echo_f0_result=self.echo_f0_stop_result())
+        self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
+        self.assertEqual(0, state["summary"]["active_f0"])
+        self.assertEqual(3, state["summary"]["stop_reduction"])
+        echo = next(row for row in state["candidates"] if row["candidate_id"] == "PA-01-EVIDENCE-ECHO")
+        self.assertEqual("STOP_REDUCTION", echo["status"])
+        self.assertEqual("F0_REDUCED_BY_GENERIC_PROMPT_EFFECT", echo["support_status"])
+        self.assertEqual("STOP_GENERIC_PROMPT_REDUCTION_NOT_BEATEN", echo["evidence"]["f0_scientific_status"])
+        self.assertFalse(echo["authority"]["gpu"])
 
     def test_weak_retrospective_signal_does_not_consume_slot(self) -> None:
         receipt = self.echo_receipt()

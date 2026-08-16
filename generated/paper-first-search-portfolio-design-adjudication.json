@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T19:56:28+00:00",
+  "generated_at": "2026-08-16T20:12:28+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T19:56:28+00:00",
+    "generated_at": "2026-08-16T20:12:28+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -352,6 +352,57 @@
           "same_information_reduction_verified": true,
           "reopen_condition": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin."
         }
+      },
+      {
+        "source_candidate_id": "PA-01-EVIDENCE-ECHO",
+        "basin": "principle-readjudication-0d742d6ca4afe4d2",
+        "search_primitive": "UNEXPLAINED_BOUNDARY",
+        "title": "Evidence Echo does not survive a same-information redundant-context reduction",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Evidence Echo does not survive a same-information redundant-context reduction",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "Under the frozen five-arm same-information F0, ECHO_EXTRACTIVE increases unanswerable false answering by only 3.125 percentage points over both RAW_ONLY and TOKEN_MATCHED_NEUTRAL, with exact paired p=0.6875 in both comparisons. In contrast, VERBATIM_DUPLICATE increases false answering by 9.375 points over RAW_ONLY with exact paired p=0.03125. A DEDUP_WARNING does not selectively recover safety; it further increases false answering. These outcomes are sufficient to reject a unique extractive-echo mechanism because the preregistered distinguishing residual is absent while a simpler redundant-context repetition/prompt perturbation remains positively supported.",
+        "current_source_refs": [
+          "arXiv:2608.07527"
+        ],
+        "evidence_basis": [
+          "local-asset:paper-first-evidence-echo-f0-authorized-result-20260817#sha256=afecaf19d84572c51fc70cd0fb3ef264791be57167bc900b8d3a7fc4f20db3c9",
+          "arXiv:2608.07527"
+        ],
+        "problem_text": "The standalone claim that an extractive second presentation of already-visible negative evidence creates a distinct Evidence-Echo mechanism beyond ordinary redundant-context repetition/salience or generic prompt-intervention effects.",
+        "reason": "Under the frozen five-arm same-information F0, ECHO_EXTRACTIVE increases unanswerable false answering by only 3.125 percentage points over both RAW_ONLY and TOKEN_MATCHED_NEUTRAL, with exact paired p=0.6875 in both comparisons. In contrast, VERBATIM_DUPLICATE increases false answering by 9.375 points over RAW_ONLY with exact paired p=0.03125. A DEDUP_WARNING does not selectively recover safety; it further increases false answering. These outcomes are sufficient to reject a unique extractive-echo mechanism because the preregistered distinguishing residual is absent while a simpler redundant-context repetition/prompt perturbation remains positively supported.",
+        "reopen_only_if": "Reopen only with a preregistered matched intervention that holds evidence content, repetition count, token budget, ordering, and generic instruction/prompt perturbation fixed while changing only the hypothesized evidence representation, and shows a replicated decision residual plus a mechanism-specific recovery not reproduced by ordinary repetition/salience baselines.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "Under the frozen five-arm same-information F0, ECHO_EXTRACTIVE increases unanswerable false answering by only 3.125 percentage points over both RAW_ONLY and TOKEN_MATCHED_NEUTRAL, with exact paired p=0.6875 in both comparisons. In contrast, VERBATIM_DUPLICATE increases false answering by 9.375 points over RAW_ONLY with exact paired p=0.03125. A DEDUP_WARNING does not selectively recover safety; it further increases false answering. These outcomes are sufficient to reject a unique extractive-echo mechanism because the preregistered distinguishing residual is absent while a simpler redundant-context repetition/prompt perturbation remains positively supported.",
+          "opposite_prediction": "If the harmful effect is generic redundant-context repetition/salience rather than a distinct extractive-echo mechanism, exact duplication can equal or exceed the harm of an extractive echo, token-matched neutral context need not reproduce the effect, and adding a warning prompt need not selectively reverse it. The frozen F0 matches this pattern.",
+          "opposite_principle": "Repeated same-information evidence can change model decisions through ordinary prompt-level redundancy/salience without implying a new evidence-composition mechanism. A new mechanism requires a residual unique to the proposed representation after same-information repetition, token budget, and generic prompt controls.",
+          "opposite_search_seed": "Search only for a representation intervention that changes downstream decisions after matching exact evidence content, repetition count, token budget, ordering, and generic instruction effects, and that exhibits a preregistered recovery intervention specific to the proposed mechanism.",
+          "scope": "PA-01 Evidence Echo on the authorized 96-unit five-arm F0 only.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "local-asset:paper-first-evidence-echo-f0-authorized-result-20260817#sha256=afecaf19d84572c51fc70cd0fb3ef264791be57167bc900b8d3a7fc4f20db3c9",
+            "arXiv:2608.07527"
+          ],
+          "alternative_explanations_ruled_out": [
+            "Token-count alone: TOKEN_MATCHED_NEUTRAL exactly matches the RAW_ONLY false-answer rate at 0.140625 while ECHO_EXTRACTIVE is 0.171875.",
+            "A unique extractive-echo residual: ECHO_EXTRACTIVE differs from RAW_ONLY and TOKEN_MATCHED_NEUTRAL by only 0.03125 and both paired tests have p=0.6875.",
+            "Exact repetition is harmless: VERBATIM_DUPLICATE reaches 0.234375 false-answer rate, +0.09375 over RAW_ONLY, with paired p=0.03125.",
+            "A mechanism-specific dedup repair exists: DEDUP_WARNING reaches 0.28125 false-answer rate and therefore does not recover the proposed failure."
+          ],
+          "reopen_condition": "Reopen only with a preregistered matched intervention that holds evidence content, repetition count, token budget, ordering, and generic instruction/prompt perturbation fixed while changing only the hypothesized evidence representation, and shows a replicated decision residual plus a mechanism-specific recovery not reproduced by ordinary repetition/salience baselines."
+        },
+        "source_readjudication_artifact": "generated/evidence-echo-generic-repetition-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
       },
       {
         "source_candidate_id": "P03-AUTOSKILL-CONTEXT-UPTAKE",
@@ -1372,8 +1423,8 @@
         "scientific_authority": false
       }
     ],
-    "principle_dead_end_count": 19,
-    "principle_readjudication_dead_end_count": 15,
+    "principle_dead_end_count": 20,
+    "principle_readjudication_dead_end_count": 16,
     "fresh_phenomenon_closure_count": 6,
     "fresh_phenomenon_closed_evidence_count": 12,
     "inversion_asset_evidence": [
@@ -1598,8 +1649,8 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 19,
-    "principle_readjudication_dead_ends": 15,
+    "shadow_dead_end_objects": 20,
+    "principle_readjudication_dead_ends": 16,
     "shadow_hold_objects": 2,
     "current_source_hard_veto_dead_ends": 0,
     "current_source_hard_veto_added_from_latest_run": 0,

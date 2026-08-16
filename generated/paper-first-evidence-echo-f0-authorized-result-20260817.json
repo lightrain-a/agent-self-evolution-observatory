@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "PA-01-EVIDENCE-ECHO",
+  "experiment_id": "evidence-echo-f0-v2-authorized-20260817",
+  "host": "52",
+  "completed_at": "2026-08-16T20:04:38.205887+00:00",
+  "execution_status": "AUTHORIZED_BOUNDED_F0_EXECUTION_COMPLETED",
+  "scientific_status": "STOP_GENERIC_PROMPT_REDUCTION_NOT_BEATEN",
+  "frozen_contract": {
+    "contract_version": "evidence-echo-f0-v2-full-prompt-parity",
+    "plan_hash": "90ace1b50e92f0db8e5b6d543d41d980d6db8388469a4582995b2302152bdcaa",
+    "controller_sha256": "1a6cbfb98a3ecfefe25f714265a9df15044027fdd0770b3d8fb899ce9bbc390f",
+    "authority_code_sha256": "8e9293fb3af5572baa463f5d25c28d64b06b3724f47f7d75059b9e4aa1ef4e9d",
+    "runtime_sha256": "f64ae7c42f5e02b2f18abd67e4a784e3790b3c75107a4140666d9faa1c39842e",
+    "operationalization_repair_sha256": "8965c54594356a87e642ebe3cc4cd76eb899ece5e6436eb96f097d09473aad30",
+    "human_authority_artifact_sha256": "2782762e6687637775e07a8364176f48b9f23f7a0129a11eafb8de6ed552c65a",
+    "source_message_sha256": "6ee77a1f63ebb95c2a3fdf2395fc8392a312086eacc9ea5cb5b64ea527364918",
+    "parent_plan_sha256": "dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39",
+    "samples_sha256": "4ffadad60b18cd7ede864155f3e8a366fe4deec2189b3d0a25691b7df4b839e8",
+    "analysis_sha256": "afecaf19d84572c51fc70cd0fb3ef264791be57167bc900b8d3a7fc4f20db3c9",
+    "rows_sha256": "b3b20243cfee5af796e5254e92c295cb8a2888d4365b5a6ad74d6ecc08357f26"
+  },
+  "execution_integrity": {
+    "rc": 0,
+    "units": 96,
+    "rows": 480,
+    "unanswerable_units": 64,
+    "answerable_units": 32,
+    "unauthorized_prior_rows_reused": false,
+    "permit_status": "consumed-completed",
+    "experiment_authority_released": true,
+    "gpu_lease_released": true,
+    "gpu_devices": 1,
+    "generation_gpu_seconds": 473.192,
+    "wall_seconds": 550.668
+  },
+  "false_answer_rate": {
+    "RAW_ONLY": 0.140625,
+    "ECHO_EXTRACTIVE": 0.171875,
+    "VERBATIM_DUPLICATE": 0.234375,
+    "TOKEN_MATCHED_NEUTRAL": 0.140625,
+    "DEDUP_WARNING": 0.28125
+  },
+  "answerable_exact_rate": {
+    "RAW_ONLY": 0.15625,
+    "ECHO_EXTRACTIVE": 0.1875,
+    "VERBATIM_DUPLICATE": 0.15625,
+    "TOKEN_MATCHED_NEUTRAL": 0.15625,
+    "DEDUP_WARNING": 0.15625
+  },
+  "effects": {
+    "echo_minus_raw_false": 0.03125,
+    "echo_minus_neutral_false": 0.03125,
+    "verbatim_minus_raw_false": 0.09375,
+    "echo_minus_dedup_false_recovery": -0.109375,
+    "dedup_answerable_exact_loss_vs_echo": 0.03125
+  },
+  "paired_tests": {
+    "raw_to_echo": {
+      "discordant": 6,
+      "exact_two_sided_p": 0.6875
+    },
+    "neutral_to_echo": {
+      "discordant": 6,
+      "exact_two_sided_p": 0.6875
+    },
+    "raw_to_verbatim": {
+      "discordant": 6,
+      "exact_two_sided_p": 0.03125
+    },
+    "echo_to_dedup": {
+      "discordant": 7,
+      "exact_two_sided_p": 0.015625
+    }
+  },
+  "preregistered_gate_diagnosis": {
+    "echo_specific_effect_threshold_met": false,
+    "echo_vs_raw_significant": false,
+    "echo_vs_token_matched_neutral_significant": false,
+    "verbatim_duplicate_generic_repetition_effect_present": true,
+    "dedup_warning_selective_recovery_present": false,
+    "strongest_generic_reduction_beaten": false,
+    "interpretation": "The extractive echo arm does not produce the preregistered unique harmful residual. Exact verbatim duplication is more harmful than raw evidence while the token-matched neutral arm matches raw, and the dedup warning worsens rather than repairs false answering. The specific Evidence-Echo mechanism is therefore not supported beyond generic redundant-context repetition/salience and ordinary prompt-intervention effects."
+  },
+  "next_action": "STOP_THIS_SCOUT_AND_RELEASE_ACTIVE_F0_SLOT",
+  "paper_problem_authorized": false,
+  "paper_design_authorized": false,
+  "method_authorized": false,
+  "experiment_authorized": false,
+  "p0_authorized": false,
+  "gpu_authorized": false,
+  "full_experiment_authorized": false,
+  "scientific_authority": false
+}

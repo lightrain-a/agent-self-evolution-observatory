@@ -14,6 +14,8 @@ EVIDENCE_ECHO_JSON = PROJECT_ROOT / "generated" / "paper-first-evidence-echo-ret
 EVIDENCE_ECHO_F0 = PROJECT_ROOT / "research_pipeline" / "paper_first_evidence_echo_f0.py"
 EVIDENCE_ECHO_F0_REPAIR = PROJECT_ROOT / "generated" / "paper-first-evidence-echo-f0-operationalization-repair-20260817.json"
 EVIDENCE_ECHO_F0_GOVERNANCE_GUARD = PROJECT_ROOT / "generated" / "paper-first-evidence-echo-f0-governance-guard-20260817.json"
+EVIDENCE_ECHO_F0_RESULT = PROJECT_ROOT / "generated" / "paper-first-evidence-echo-f0-authorized-result-20260817.json"
+EXPECTED_EVIDENCE_ECHO_F0_RESULT_SHA256 = "274d6b12e321895e96c47324811e2c80b4c9b2e3a94d31a2a5942ae9ee68fafb"
 DEFENSE_RESTRICTIVENESS_READJUDICATION = PROJECT_ROOT / "generated" / "hard-security-utility-collapse-principle-readjudication-20260817.json"
 SPATIAL_MEMORY_READJUDICATION = PROJECT_ROOT / "generated" / "spatial-memory-high-trs-grounding-principle-readjudication-20260817.json"
 HARNESSBANK_SUPPORT_AUDIT = PROJECT_ROOT / "generated" / "harnessbank-support-audit-20260817.json"
@@ -108,6 +110,7 @@ def _memory_hold(memory: dict[str, Any], source_candidate_id: str) -> dict[str, 
 def build_fresh_phenomenon_portfolio(
     *,
     evidence_echo: dict[str, Any] | None = None,
+    evidence_echo_f0_result: dict[str, Any] | None = None,
     primary_state: dict[str, Any] | None = None,
     dead_end_memory: dict[str, Any] | None = None,
     execution_capability: dict[str, Any] | None = None,
@@ -127,6 +130,8 @@ def build_fresh_phenomenon_portfolio(
     """
 
     evidence_echo = evidence_echo or _load(EVIDENCE_ECHO_JSON)
+    if evidence_echo_f0_result is None:
+        evidence_echo_f0_result = _load(EVIDENCE_ECHO_F0_RESULT)
     primary_state = primary_state or _load(PRIMARY_STATE_JSON)
     dead_end_memory = dead_end_memory or _load(DEAD_END_MEMORY_JSON)
     execution_capability = execution_capability or {}
@@ -200,8 +205,32 @@ def build_fresh_phenomenon_portfolio(
         and echo_guard_rule.get("runner_can_acquire_authority") is False
         and echo_guard_rule.get("runner_can_acquire_gpu_lease") is False
     )
+    echo_result_integrity = evidence_echo_f0_result.get("execution_integrity") or {}
+    echo_result_binding = evidence_echo_f0_result.get("frozen_contract") or {}
+    echo_result_gate = evidence_echo_f0_result.get("preregistered_gate_diagnosis") or {}
+    echo_f0_reduced = bool(
+        evidence_echo_f0_result.get("candidate_id") == "PA-01-EVIDENCE-ECHO"
+        and evidence_echo_f0_result.get("execution_status") == "AUTHORIZED_BOUNDED_F0_EXECUTION_COMPLETED"
+        and evidence_echo_f0_result.get("scientific_status") == "STOP_GENERIC_PROMPT_REDUCTION_NOT_BEATEN"
+        and _sha(EVIDENCE_ECHO_F0_RESULT) == EXPECTED_EVIDENCE_ECHO_F0_RESULT_SHA256
+        and echo_result_binding.get("runtime_sha256") == EXPECTED_EVIDENCE_ECHO_F0_REVIEWED_SHA256
+        and echo_result_binding.get("operationalization_repair_sha256") == EXPECTED_EVIDENCE_ECHO_F0_REPAIR_SHA256
+        and int(echo_result_integrity.get("rc") if echo_result_integrity.get("rc") is not None else -1) == 0
+        and int(echo_result_integrity.get("units") or 0) == 96
+        and int(echo_result_integrity.get("rows") or 0) == 480
+        and int(echo_result_integrity.get("unanswerable_units") or 0) == 64
+        and int(echo_result_integrity.get("answerable_units") or 0) == 32
+        and echo_result_integrity.get("unauthorized_prior_rows_reused") is False
+        and echo_result_integrity.get("permit_status") == "consumed-completed"
+        and echo_result_integrity.get("experiment_authority_released") is True
+        and echo_result_integrity.get("gpu_lease_released") is True
+        and echo_result_gate.get("strongest_generic_reduction_beaten") is False
+        and echo_result_gate.get("echo_specific_effect_threshold_met") is False
+        and evidence_echo_f0_result.get("scientific_authority") is False
+    )
     echo_design_ready = bool(
-        evidence_echo.get("decision") == "KEEP_AS_ACTIVE_F0_NOT_PAPER_IDEA"
+        not echo_f0_reduced
+        and evidence_echo.get("decision") == "KEEP_AS_ACTIVE_F0_NOT_PAPER_IDEA"
         and int((evidence_echo.get("scope") or {}).get("units") or 0) >= 128
         and int(echo_signal.get("naive_summary_induced_false_answers") or 0) >= 7
         and int(echo_signal.get("naive_summary_fixed_false_answers") or 0) == 0
@@ -255,12 +284,23 @@ def build_fresh_phenomenon_portfolio(
                 "RAW_ONLY vs ECHO_EXTRACTIVE vs VERBATIM_DUPLICATE vs TOKEN_MATCHED_NEUTRAL vs DEDUP_WARNING "
                 "on the frozen unanswerable/answerable units."
             ),
-            support_status="PROVENANCE_AUDITED_LOCAL_SUBSTRATE" if echo_design_ready else "INCOMPLETE_RECEIPT",
-            status="ACTIVE_F0" if echo_execution_ready else ("HOLD_EXECUTION" if echo_design_ready else "HOLD_SUPPORT"),
+            support_status=(
+                "F0_REDUCED_BY_GENERIC_PROMPT_EFFECT"
+                if echo_f0_reduced
+                else ("PROVENANCE_AUDITED_LOCAL_SUBSTRATE" if echo_design_ready else "INCOMPLETE_RECEIPT")
+            ),
+            status=(
+                "STOP_REDUCTION"
+                if echo_f0_reduced
+                else ("ACTIVE_F0" if echo_execution_ready else ("HOLD_EXECUTION" if echo_design_ready else "HOLD_SUPPORT"))
+            ),
             priority=100,
             why_now=(
-                "This is the only current scout with a real matched substrate, a nonzero paired residual, "
-                "and a falsifier that changes one representation axis without requiring a new benchmark."
+                "The authorized five-arm F0 is complete and does not support a distinct Evidence-Echo mechanism: "
+                "ECHO_EXTRACTIVE is only +3.125pp over RAW_ONLY/TOKEN_MATCHED_NEUTRAL with paired p=0.6875, while "
+                "VERBATIM_DUPLICATE is +9.375pp with paired p=0.03125 and DEDUP_WARNING does not recover safety."
+                if echo_f0_reduced
+                else "This is the only current scout with a real matched substrate, a nonzero paired residual, and a falsifier that changes one representation axis without requiring a new benchmark."
             ),
             substrate={
                 "host": ((evidence_echo.get("source_substrate") or {}).get("host")),
@@ -269,18 +309,29 @@ def build_fresh_phenomenon_portfolio(
                 "raw_visible_pages_locked_across_policies": ((evidence_echo.get("source_substrate") or {}).get("raw_visible_pages_locked_across_policies")),
                 "second_retrieval_ranking_locked_across_active_policies": ((evidence_echo.get("source_substrate") or {}).get("second_retrieval_ranking_locked_across_active_policies")),
             },
-            evidence={
-                "baseline_false_answer_rate": echo_signal.get("negative_evidence_baseline_unanswerable_false_answer_rate"),
-                "naive_summary_false_answer_rate": echo_signal.get("naive_summary_unanswerable_false_answer_rate"),
-                "induced_false": echo_signal.get("naive_summary_induced_false_answers"),
-                "repaired_false": echo_signal.get("naive_summary_fixed_false_answers"),
-                "paired_p": echo_signal.get("naive_summary_exact_paired_p"),
-                "answerable_exact_net_delta": echo_signal.get("naive_summary_answerable_exact_net_delta"),
-            },
+            evidence=(
+                {
+                    "f0_scientific_status": evidence_echo_f0_result.get("scientific_status"),
+                    "false_answer_rate": evidence_echo_f0_result.get("false_answer_rate"),
+                    "effects": evidence_echo_f0_result.get("effects"),
+                    "paired_tests": evidence_echo_f0_result.get("paired_tests"),
+                    "analysis_sha256": echo_result_binding.get("analysis_sha256"),
+                    "rows_sha256": echo_result_binding.get("rows_sha256"),
+                }
+                if echo_f0_reduced
+                else {
+                    "baseline_false_answer_rate": echo_signal.get("negative_evidence_baseline_unanswerable_false_answer_rate"),
+                    "naive_summary_false_answer_rate": echo_signal.get("naive_summary_unanswerable_false_answer_rate"),
+                    "induced_false": echo_signal.get("naive_summary_induced_false_answers"),
+                    "repaired_false": echo_signal.get("naive_summary_fixed_false_answers"),
+                    "paired_p": echo_signal.get("naive_summary_exact_paired_p"),
+                    "answerable_exact_net_delta": echo_signal.get("naive_summary_answerable_exact_net_delta"),
+                }
+            ),
             reopen_only_if=(
-                "Execution requires a controller-verified experiment authority bound to the repaired F0 plan plus matching active GPU lease(s), "
-                "with CUDA-visible GPU UUIDs exactly covered by those leases. If the F0 is reduced by token-matched neutral padding or the paired effect disappears, archive. "
-                "If redundant evidence remains uniquely harmful and DEDUP_WARNING selectively recovers safety, then run current-source collision review before any Problem-Gate submission."
+                "Reopen only with a preregistered matched intervention that holds evidence content, repetition count, token budget, ordering, and generic instruction effects fixed while changing only the hypothesized representation, and shows a replicated residual plus mechanism-specific recovery."
+                if echo_f0_reduced
+                else "Execution requires a controller-verified experiment authority bound to the repaired F0 plan plus matching active GPU lease(s), with CUDA-visible GPU UUIDs exactly covered by those leases. If the F0 is reduced by token-matched neutral padding or the paired effect disappears, archive. If redundant evidence remains uniquely harmful and DEDUP_WARNING selectively recovers safety, then run current-source collision review before any Problem-Gate submission."
             ),
         ),
         _candidate(
@@ -466,6 +517,13 @@ def build_fresh_phenomenon_portfolio(
                 "status": echo_guard.get("status"),
                 "guarded_runtime_sha256": echo_guard_source.get("guarded_runtime_sha256"),
                 "repaired_plan_canonical_sha256": echo_guard_source.get("repaired_plan_canonical_sha256"),
+            },
+            "evidence_echo_f0_authorized_result": {
+                "path": str(EVIDENCE_ECHO_F0_RESULT.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(EVIDENCE_ECHO_F0_RESULT),
+                "scientific_status": evidence_echo_f0_result.get("scientific_status"),
+                "execution_complete": evidence_echo_f0_result.get("execution_status") == "AUTHORIZED_BOUNDED_F0_EXECUTION_COMPLETED",
+                "generic_reduction_beaten": echo_result_gate.get("strongest_generic_reduction_beaten"),
             },
             "defense_restrictiveness_principle_readjudication": {
                 "path": str(DEFENSE_RESTRICTIVENESS_READJUDICATION.relative_to(PROJECT_ROOT)),
