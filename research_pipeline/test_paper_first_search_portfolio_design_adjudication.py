@@ -67,7 +67,7 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         positive=[row for row in memory.get("positive_residual_asset_evidence") or [] if str(row.get("asset_ref") or "").startswith("positive-residual-asset:memory-effect-transport-b9-c2")]
         self.assertEqual(len(positive),1)
         self.assertEqual(positive[0]["phenomenon_status"],"SURVIVES_AS_ARCHIVED_PARENT_EVIDENCE")
-        self.assertEqual(positive[0]["mechanism_status"],"TWO_CLEAN_REALIZATIONS_STOPPED")
+        self.assertEqual(positive[0]["mechanism_status"],"FOUR_LOCAL_OR_REPRESENTATIONAL_EXPLANATIONS_STOPPED")
         self.assertTrue((positive[0].get("search_contract") or {}).get("prospective_prediction_required"))
         self.assertTrue((positive[0].get("search_contract") or {}).get("pre_outcome_information_only"))
         self.assertFalse(positive[0]["scientific_authority"])

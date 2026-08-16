@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "readjudication_id": "POSITIVE-RESIDUAL-MEMORY-LOCAL-MECHANISM-READJUDICATION-20260816",
+  "parent_asset_ref": "positive-residual-asset:memory-effect-transport-b9-c2-20260816",
+  "decision": "LOCAL_STATE_ACTION_APPLICABILITY_EXPLANATIONS_NOT_SUPPORTED_KEEP_BROAD_PHENOMENON_RESIDUAL",
+  "scientific_role": "provenance update for zero-authority positive-residual search control; not a new Problem-Gate or method result",
+  "surviving_parent_phenomenon": "The frozen memory-effect substrate contains a sparse controlled endpoint-effect phenomenon with 11 raw controlled-nonzero units and 10 strict route/effect-sign reproducible units. This readjudication does not broaden that phenomenon.",
+  "failed_or_insufficient_explanations": [
+    {
+      "name": "historical source-target transport representation",
+      "result": "METHOD_DEVELOPMENT_STOP",
+      "evidence": "Historical B-9 nonzero-sign AUC 0.3214 versus strongest simple same-information baseline 0.6429."
+    },
+    {
+      "name": "candidate-local applicability/scope and structural-cart predictors",
+      "result": "NO_R1_VOI_STOP_STANDALONE",
+      "decision_path": "/data/wyt/agent-self-evolution-observatory/runs/p0-mem-xfer-support-enriched-qwen-v1/applicability-falsifier-v1/decision.json",
+      "decision_sha256": "a4477356ebd19cb2278a3bb22440059336add05b069680c9040fd5e70d15bd37",
+      "manifest_sha256": "4d1799d5d339a193c80ee433fcc59a43690ed85366195aa8420a41a591feb24e",
+      "metrics": {
+        "candidate_local_scope_mse": 0.1882716049382716,
+        "zero_mse": 0.1388888888888889,
+        "best_candidate_free_baseline": "source-family-probe-mean",
+        "best_candidate_free_mse": 0.12654320987654322,
+        "future_nonzero_coverage": 0.2
+      }
+    },
+    {
+      "name": "earliest-divergent-action controlled mediator",
+      "result": "C2_STOP_CONTROLLED_ACTION_MECHANISM_NOT_SUPPORTED",
+      "evidence": "10 execution-valid strict units, only 2/10 nonzero controlled action contrasts, no preregistered same-memory cross-context sign reversal; decision-context validity passed 10/10."
+    },
+    {
+      "name": "pre-divergence symbolic memory-consistent admissible-option collapse",
+      "result": "STOP_CURRENT_ADMISSIBILITY_COLLAPSE_REDUCTION_NOT_BEATEN",
+      "contract_path": "generated/positive-residual-memory-admissibility-falsifier-contract-20260816.json",
+      "contract_sha256": "4e1b1f5de991ce6f656443a8e798880857faf4d0331fb32687ecc78995bb9eb9",
+      "decision_path": "/data/wyt/agent-self-evolution-observatory/runs/positive-residual-memory-admissibility-falsifier-20260816/decision.json",
+      "decision_sha256": "26f02f67e36736b5534c49c81ba3c2c31c0a6706f5d0d14b20b482f6f9550982",
+      "manifest_sha256": "e13e1cf0cb0b80177b07028bb02ffcf4cc1418b74a3a3bb17bc203cce1b91669",
+      "feature_sha256": "c638084b542c09ff7ed4cfc30e23b5378eace3f233ce973c51fd7424dfdb498a",
+      "support_pass": true,
+      "metrics": {
+        "future_units": 36,
+        "future_positive_units": 5,
+        "same_information_baseline_roc_auc": 0.5935483870967742,
+        "augmented_roc_auc": 0.5741935483870968,
+        "augmented_auc_advantage": -0.019354838709677358,
+        "same_information_baseline_brier": 0.2356426617521622,
+        "augmented_brier": 0.23606252378669057,
+        "inverse_overlap_univariate_auc": 0.5903225806451613
+      },
+      "all_preregistered_decision_gates_passed": false
+    }
+  ],
+  "counter_explanation_constraint": {
+    "statement": "On this frozen substrate, another static local applicability/state/action feature is not a justified rescue merely because the parent endpoint effect survives. A new branch must change the causal object and make a prospective prediction not expressible by source-target transport, static applicability, earliest-action mediation, or symbolic pre-divergence option overlap.",
+    "opposite_search_seed": "Test whether the persistent-memory treatment requires a temporally distributed exposure window across multiple downstream decisions, rather than being carried by one local state or one divergent action.",
+    "mandatory_reduction_before_experiment": [
+      "time-varying treatment effects / distributed-lag causal models",
+      "sequential mediation / longitudinal causal inference",
+      "ordinary repeated policy conditioning by a persistent prompt or memory",
+      "generic cumulative exposure or dose-response"
+    ],
+    "prohibited_rescues": [
+      "retuning the symbolic action-skeleton overlap on the same outcomes",
+      "another post hoc local state feature selected after seeing endpoint labels",
+      "K-step action mediation without an independently specified exposure intervention",
+      "trajectory length, terminal status, or other endpoint leakage",
+      "calling temporal persistence itself novel without a same-information distinguishing prediction"
+    ]
+  },
+  "authority": {
+    "scientific_authority": false,
+    "problem_gate_pass": false,
+    "paper_design": false,
+    "method_design": false,
+    "experiment_blueprint": false,
+    "local_validation": false,
+    "p0": false,
+    "gpu": false,
+    "full_experiment": false
+  }
+}

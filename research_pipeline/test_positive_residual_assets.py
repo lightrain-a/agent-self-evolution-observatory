@@ -15,7 +15,8 @@ class PositiveResidualAssetTest(unittest.TestCase):
         asset=registry["assets"][0]
         self.assertEqual(asset["asset_ref"],"positive-residual-asset:memory-effect-transport-b9-c2-20260816")
         self.assertEqual(asset["phenomenon_status"],"SURVIVES_AS_ARCHIVED_PARENT_EVIDENCE")
-        self.assertEqual(asset["mechanism_status"],"TWO_CLEAN_REALIZATIONS_STOPPED")
+        self.assertEqual(registry["registry_id"],"positive-residual-search-assets-v2")
+        self.assertEqual(asset["mechanism_status"],"FOUR_LOCAL_OR_REPRESENTATIONAL_EXPLANATIONS_STOPPED")
         self.assertTrue(re.fullmatch(r"[0-9a-f]{64}",asset["source_sha256"]))
         self.assertEqual(asset["provenance"]["frozen_raw_traces_sha256"],"45d9954a14f370936b5e1129f985130f4b9ef2b742e72a4c6e1e01bc068b1fbf")
         self.assertEqual(asset["provenance"]["frozen_main_table_sha256"],"eb861663351041e1f1a297b6791c7d31b4ba18285c3a13f0603d5d80c09b324f")
@@ -23,6 +24,10 @@ class PositiveResidualAssetTest(unittest.TestCase):
         self.assertTrue(contract["prospective_prediction_required"])
         self.assertTrue(contract["pre_outcome_information_only"])
         self.assertTrue(any("full-trajectory" in row for row in contract["prohibited_rescues"]))
+        self.assertIn("time-varying treatment effects / distributed-lag causal models",contract["mandatory_reduction_before_temporal_exposure_experiment"])
+        self.assertIn("temporally distributed exposure window",contract["opposite_search_seed"])
+        self.assertEqual(len(asset["failed_mechanisms"]),4)
+        self.assertEqual(asset["provenance"]["local_mechanism_readjudication"]["sha256"],"60a5f330049613f7163e2fee5bfa5f82e32283fed1951e32da83e9f11e712552")
         self.assertFalse(asset["scientific_authority"])
         self.assertTrue(all(value is False for value in asset["authority"].values()))
 
@@ -35,7 +40,7 @@ class PositiveResidualAssetTest(unittest.TestCase):
         self.assertTrue(record["primary_source_verified"])
         self.assertTrue(record["primary_url"].startswith("https://github.com/"))
         self.assertFalse(record["scientific_authority"])
-        self.assertGreaterEqual(len(record["empirical_facts"]),4)
+        self.assertGreaterEqual(len(record["empirical_facts"]),5)
 
     def test_unexplained_boundary_executes_positive_residual_prior_without_authority(self) -> None:
         registry=build_positive_residual_asset_registry();memory={"positive_residual_asset_evidence":registry["assets"],"blocked_objects":[]}
