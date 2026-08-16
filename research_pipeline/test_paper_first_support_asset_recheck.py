@@ -65,6 +65,24 @@ class SupportAssetRecheckQueueTest(unittest.TestCase):
             "scientific_authority": False,
         }
 
+    def test_split_hold_memory_routes_reused_candidate_id_by_source_ref(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            storage = self.storage(Path(td))
+            first = self.design("C1")["shadow_dead_end_memory"]["blocked_objects"][0]
+            first = {**first, "source_run_id": "shadow-r1", "dead_end_certified": False, "memory_class": "REOPENABLE_HOLD"}
+            second = {**first, "source_run_id": "shadow-r2", "basin": "near-miss-terminal-support-hold-cafebabe", "evidence_basis": ["arXiv:2608.00002"], "required_unit": "second matched released unit"}
+            design = {"shadow_dead_end_memory": {"scientific_authority": False, "blocked_objects": [], "hold_objects": [first, second]}, "scientific_authority": False}
+            watch = self.watch(); watch["rows"][0]["source_ref"] = "arXiv:2608.00002"
+            state = build_support_asset_recheck_queue(storage=storage, watch_state=watch, design_state=design, previous_state={}, now=datetime(2026, 8, 14, tzinfo=timezone.utc))
+        self.assertEqual(state["summary"]["support_holds"], 2)
+        self.assertEqual(state["summary"]["queued"], 1)
+        row = state["entries"][0]
+        self.assertEqual(row["candidate_id"], "C1")
+        self.assertEqual(row["source_run_id"], "shadow-r2")
+        self.assertEqual(row["source_refs"], ["arXiv:2608.00002"])
+        self.assertEqual(row["required_unit"], "second matched released unit")
+        self.assertEqual(len(row["support_hold_key"]), 64)
+
     def test_release_change_creates_zero_authority_asset_recheck_task(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             state = build_support_asset_recheck_queue(

@@ -39,9 +39,27 @@ def _sha(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 
+def _hold_source_refs(row: dict[str, Any]) -> tuple[str, ...]:
+    return tuple(sorted({
+        str(value) for value in (row.get("evidence_basis") or []) + (row.get("current_source_refs") or [])
+        if str(value).startswith("arXiv:")
+    }))
+
+
+def _support_hold_key(row: dict[str, Any]) -> str:
+    material = "\n".join((
+        str(row.get("source_candidate_id") or ""),
+        str(row.get("source_run_id") or ""),
+        str(row.get("basin") or ""),
+        "|".join(_hold_source_refs(row)),
+    ))
+    return _sha(material)
+
+
 def _current_holds(design_state: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """Return provenance-keyed unresolved support holds across memory schemas."""
     memory = design_state.get("shadow_dead_end_memory") or {}
-    rows = memory.get("blocked_objects") or []
+    rows = list(memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or [])
     out: dict[str, dict[str, Any]] = {}
     for row in rows:
         if not isinstance(row, dict):
@@ -51,8 +69,10 @@ def _current_holds(design_state: dict[str, Any]) -> dict[str, dict[str, Any]]:
             candidate_id
             and str(row.get("disposition") or "") == "HOLD_SUPPORT_UNAVAILABLE"
             and str(row.get("basin") or "").startswith("near-miss-terminal-support-hold-")
+            and row.get("dead_end_certified") is not True
         ):
-            out[candidate_id] = row
+            key = _support_hold_key(row)
+            out.setdefault(key, dict(row))
     return out
 
 
@@ -154,21 +174,52 @@ def build_support_asset_recheck_queue(
         if isinstance(row, dict) and str(row.get("candidate_id") or "")
     }
     holds = _current_holds(design_state)
-    prior_entries = {
-        str(row.get("candidate_id") or ""): dict(row)
-        for row in previous_state.get("entries") or []
-        if isinstance(row, dict)
-        and row.get("queue_status") == QUEUE_STATUS
-        and str(row.get("candidate_id") or "") in holds
-    }
+    prior_entries: dict[str, dict[str, Any]] = {}
+    for row in previous_state.get("entries") or []:
+        if not isinstance(row, dict) or row.get("queue_status") != QUEUE_STATUS:
+            continue
+        explicit_key = str(row.get("support_hold_key") or "")
+        if explicit_key in holds:
+            prior_entries[explicit_key] = dict(row)
+            continue
+        candidate_id = str(row.get("candidate_id") or "")
+        source_run_id = str(row.get("source_run_id") or "")
+        source_refs = {str(value) for value in row.get("source_refs") or [] if str(value)}
+        matches = [
+            key for key, hold in holds.items()
+            if str(hold.get("source_candidate_id") or "") == candidate_id
+            and (not source_run_id or str(hold.get("source_run_id") or "") == source_run_id)
+            and (not source_refs or source_refs == set(_hold_source_refs(hold)))
+        ]
+        if len(matches) == 1:
+            prior_entries[matches[0]] = dict(row)
     signals: dict[str, list[dict[str, Any]]] = {}
     for row in watch_state.get("rows") or []:
         if not isinstance(row, dict):
             continue
         status = str(row.get("status") or "")
+        if not status.startswith("RECHECK_REQUIRED_"):
+            continue
         candidate_id = str(row.get("candidate_id") or "")
-        if candidate_id in holds and status.startswith("RECHECK_REQUIRED_"):
-            signals.setdefault(candidate_id, []).append(row)
+        source_ref = str(row.get("source_ref") or "")
+        if source_ref:
+            matches = [
+                key for key, hold in holds.items()
+                if str(hold.get("source_candidate_id") or "") == candidate_id
+                and source_ref in _hold_source_refs(hold)
+            ]
+        else:
+            # Legacy watch rows did not publish source_ref.  Preserve them only
+            # when candidate_id identifies exactly one current hold; reused ids
+            # remain fail-closed until provenance is available.
+            matches = [
+                key for key, hold in holds.items()
+                if str(hold.get("source_candidate_id") or "") == candidate_id
+            ]
+        # Shadow candidate ids are reused across runs; an ambiguous trigger is
+        # safer to ignore than to attach to the wrong frozen support contract.
+        if len(matches) == 1:
+            signals.setdefault(matches[0], []).append(row)
 
     entries: list[dict[str, Any]] = []
     new_triggers = 0
@@ -176,10 +227,11 @@ def build_support_asset_recheck_queue(
     resolved = 0
     resolution_still_unavailable = 0
     resolution_irrelevant_release = 0
-    for candidate_id in sorted(set(prior_entries) | set(signals)):
-        hold = holds[candidate_id]
-        prior = prior_entries.get(candidate_id) or {}
-        rows = signals.get(candidate_id) or []
+    for hold_key in sorted(set(prior_entries) | set(signals)):
+        hold = holds[hold_key]
+        candidate_id = str(hold.get("source_candidate_id") or "")
+        prior = prior_entries.get(hold_key) or {}
+        rows = signals.get(hold_key) or []
         fingerprints = sorted({str(row.get("fingerprint") or "") for row in rows if len(str(row.get("fingerprint") or "")) == 64})
         trigger_material = "\n".join(
             sorted(
@@ -204,7 +256,8 @@ def build_support_asset_recheck_queue(
         first_queued_at = str(prior.get("first_queued_at") or _now(now))
         source_refs = sorted({str(x) for x in (hold.get("evidence_basis") or []) + (hold.get("current_source_refs") or []) if str(x)})
         entries.append({
-            "queue_id": _sha(f"{candidate_id}\n{first_queued_at}"),
+            "queue_id": _sha(f"{hold_key}\n{first_queued_at}"),
+            "support_hold_key": hold_key,
             "candidate_id": candidate_id,
             "queue_status": QUEUE_STATUS,
             "trigger_statuses": sorted({str(row.get("status") or "") for row in rows}) or list(prior.get("trigger_statuses") or []),

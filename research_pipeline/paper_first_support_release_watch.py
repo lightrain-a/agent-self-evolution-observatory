@@ -54,15 +54,33 @@ def _bounded(value: Any, limit: int = 1800) -> str:
 
 
 def _terminal_support_holds(design_state: dict[str, Any]) -> list[dict[str, Any]]:
+    """Return unresolved terminal support holds across legacy and split memory.
+
+    Support-unavailable rows became reopenable ``hold_objects`` when persistent
+    search memory split scientific dead ends from operational holds.  Older
+    states may still carry the same rows in ``blocked_objects``.  Read both,
+    reject any row certified as a scientific dead end, and deduplicate by its
+    provenance-bearing terminal-hold identity rather than candidate id alone
+    (shadow candidate ids are reused across runs).
+    """
     memory = design_state.get("shadow_dead_end_memory") or {}
-    rows = memory.get("blocked_objects") or []
-    return [
-        dict(row)
-        for row in rows
-        if isinstance(row, dict)
-        and str(row.get("disposition") or "") == "HOLD_SUPPORT_UNAVAILABLE"
-        and str(row.get("basin") or "").startswith("near-miss-terminal-support-hold-")
-    ]
+    rows = list(memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or [])
+    out: list[dict[str, Any]] = []
+    seen: set[tuple[str, str, str]] = set()
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        if str(row.get("disposition") or "") != "HOLD_SUPPORT_UNAVAILABLE":
+            continue
+        basin = str(row.get("basin") or "")
+        if not basin.startswith("near-miss-terminal-support-hold-") or row.get("dead_end_certified") is True:
+            continue
+        key = (str(row.get("source_candidate_id") or ""), str(row.get("source_run_id") or ""), basin)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(dict(row))
+    return out
 
 
 def _arxiv_ids(row: dict[str, Any]) -> list[str]:
@@ -157,9 +175,9 @@ def explicit_release_targets(
                         "reopen_only_if": _bounded(hold.get("reopen_only_if")),
                         "scientific_authority": False,
                     })
-        dedup: dict[tuple[str, str], dict[str, Any]] = {}
+        dedup: dict[tuple[str, str, str], dict[str, Any]] = {}
         for row in found:
-            dedup[(row["candidate_id"], row["url"])] = row
+            dedup[(row["candidate_id"], row["source_ref"], row["url"])] = row
         if dedup:
             targets.extend(dedup.values())
         else:
@@ -228,14 +246,14 @@ def validate_portable_release_target_manifest(state: dict[str, Any]) -> list[str
     material = json.dumps(rows, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     if str(state.get("manifest_sha256") or "") != _sha(material):
         errors.append("portable release-target manifest digest mismatch")
-    seen: set[tuple[str, str]] = set()
+    seen: set[tuple[str, str, str]] = set()
     for row in rows:
         candidate = str(row.get("candidate_id") or "")
         ref = str(row.get("source_ref") or "")
         url = str(row.get("url") or "")
         kind = str(row.get("declaration_kind") or "")
         cache_sha = str(row.get("primary_cache_sha256") or "")
-        key = (candidate, url)
+        key = (candidate, ref, url)
         if not candidate or not re.fullmatch(r"arXiv:\d{4}\.\d+", ref, flags=re.I) or not _acceptable_release_url(url) or kind not in {"FUTURE_CODE_RELEASE", "PROJECT_PAGE"} or not re.fullmatch(r"[0-9a-f]{64}", cache_sha) or row.get("scientific_authority") is not False:
             errors.append("portable release-target row invalid")
         if key in seen:
@@ -280,18 +298,23 @@ def _portable_targets_for_holds(
     design_state: dict[str, Any],
     manifest: dict[str, Any],
 ) -> list[dict[str, Any]]:
-    holds = {str(row.get("source_candidate_id") or ""): row for row in _terminal_support_holds(design_state)}
+    holds = _terminal_support_holds(design_state)
     out: list[dict[str, Any]] = []
     for row in manifest.get("targets") or []:
         if not isinstance(row, dict):
             continue
         candidate = str(row.get("candidate_id") or "")
-        hold = holds.get(candidate)
-        if not hold:
+        source_ref = str(row.get("source_ref") or "")
+        matches = [
+            hold for hold in holds
+            if str(hold.get("source_candidate_id") or "") == candidate
+            and source_ref in {f"arXiv:{value}" for value in _arxiv_ids(hold)}
+        ]
+        # Candidate ids are reused across shadow runs.  Source-ref matching is
+        # therefore mandatory, and any remaining ambiguity fails closed.
+        if len(matches) != 1:
             continue
-        allowed_refs = {f"arXiv:{value}" for value in _arxiv_ids(hold)}
-        if str(row.get("source_ref") or "") not in allowed_refs:
-            continue
+        hold = matches[0]
         out.append({
             "candidate_id": candidate,
             "source_ref": str(row.get("source_ref") or ""),
@@ -314,10 +337,10 @@ def _merge_portable_release_targets(
     manifest: dict[str, Any],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], int]:
     portable = _portable_targets_for_holds(design_state, manifest)
-    merged: dict[tuple[str, str], dict[str, Any]] = {}
+    merged: dict[tuple[str, str, str], dict[str, Any]] = {}
     for row in portable + local_targets:
-        merged[(str(row.get("candidate_id") or ""), str(row.get("url") or ""))] = row
-    targeted = {candidate for candidate, _ in merged}
+        merged[(str(row.get("candidate_id") or ""), str(row.get("source_ref") or ""), str(row.get("url") or ""))] = row
+    targeted = {candidate for candidate, _, _ in merged}
     remaining = [row for row in no_endpoint if str(row.get("candidate_id") or "") not in targeted]
     return list(merged.values()), remaining, sum(row.get("portable_target") is True for row in merged.values())
 

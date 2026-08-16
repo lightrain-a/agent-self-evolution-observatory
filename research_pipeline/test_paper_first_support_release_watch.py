@@ -54,6 +54,28 @@ class SupportReleaseWatchTest(unittest.TestCase):
         prefix = "arxiv-full" if full else "arxiv"
         (root / f"{prefix}-{arxiv_id}-test.html").write_text(text, encoding="utf-8")
 
+    def test_split_hold_memory_is_watched_and_reused_candidate_ids_join_by_source_ref(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            storage = self.storage(Path(td))
+            first = {**self.hold("A", "arXiv:2607.00001"), "source_run_id": "r1", "dead_end_certified": False, "memory_class": "REOPENABLE_HOLD"}
+            second = {**self.hold("A", "arXiv:2608.00002"), "source_run_id": "r2", "basin": "near-miss-terminal-support-hold-cafebabe", "dead_end_certified": False, "memory_class": "REOPENABLE_HOLD"}
+            dead = {**self.hold("D", "arXiv:2608.00003"), "source_run_id": "r3", "basin": "near-miss-terminal-support-hold-feedface", "dead_end_certified": True, "memory_class": "PRINCIPLE_DEAD_END"}
+            design = {"shadow_dead_end_memory": {"blocked_objects": [], "hold_objects": [first, second, dead], "scientific_authority": False}, "scientific_authority": False}
+            self.cache(storage, "2607.00001", 'Our code will be made publicly available soon at https://github.com/example/FirstRepo .')
+            self.cache(storage, "2608.00002", '<span>Project page: </span><a href="https://lab.github.io/SecondProject/">Project</a>', full=True)
+            self.cache(storage, "2608.00003", 'Our code will be made publicly available soon at https://github.com/example/DeadRepo .')
+            targets, missing = explicit_release_targets(design, storage=storage)
+            manifest = build_portable_release_target_manifest(design, storage=storage)
+            joined = watch._portable_targets_for_holds(design, manifest)
+        self.assertEqual(len(watch._terminal_support_holds(design)), 2)
+        self.assertEqual(len(targets), 2)
+        self.assertEqual(missing, [])
+        self.assertEqual({row["source_ref"] for row in targets}, {"arXiv:2607.00001", "arXiv:2608.00002"})
+        self.assertEqual(manifest["summary"]["support_holds"], 2)
+        self.assertEqual(len(joined), 2)
+        self.assertEqual({row["source_ref"] for row in joined}, {"arXiv:2607.00001", "arXiv:2608.00002"})
+        self.assertNotIn("D", {row["candidate_id"] for row in targets})
+
     def test_extracts_future_code_and_project_page_but_not_bibliography_repo(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             storage = self.storage(Path(td))
