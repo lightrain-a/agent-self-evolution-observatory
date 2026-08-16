@@ -35,8 +35,8 @@
     "claims_total": 3,
     "qa_passed": 60,
     "qa_total": 60,
-    "official_qa_passed": 50,
-    "official_qa_total": 50,
+    "official_qa_passed": 52,
+    "official_qa_total": 52,
     "main_text_pages": 9,
     "main_text_page_limit": 9,
     "supplement_ready": true,
@@ -74,8 +74,16 @@
     "prior_mechanical_submission_state": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
     "next_action": "Human authors review and accept responsibility for the final manuscript and AI-use disclosure, freeze the complete author list before the ICLR abstract deadline, complete the OpenReview signoff checklist, then submit the genuine abstract by 2026-09-18 AoE and the paper plus anonymous supplement by 2026-09-25 AoE. Do not reopen dynamic P0 or broaden N1-N3 unless independently qualified new evidence appears.",
     "claim_boundary": {
-      "dynamic_p0": "qualification failure is disclosed and excluded from narrow scientific evidence",
-      "downstream_utility": "not claimed or required for the frozen narrow submission scope",
+      "dynamic_p0": "Qwen3 qualification failure is excluded from narrow evidence; the separate SkillRL P0-E fixed-policy bridge is a qualified C4 realization STOP only",
+      "skillrl_p0e": {
+        "experimental_realization": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
+        "principle_disposition": "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED",
+        "persistent_principle_dead_end_certified": false,
+        "stage2_locked": true,
+        "new_gpu_authorized": false,
+        "broader_n1_n2_n3_unchanged": true
+      },
+      "downstream_utility": "not claimed for the frozen N1-N3 scope; the P0-E sample-level endpoint STOP is not a population-level no-effect theorem",
       "solver_novelty": "STRI-Cert is not claimed as a computationally novel LP solver",
       "repair_method": "no claim that Support-Quotient Control has been empirically validated"
     }
@@ -100,11 +108,51 @@
       "next_action": "Archive the 72-generation bank as a proposer-qualification failure asset; do not rerun the frozen P0-A. Preserve C1/C2 and seek a different faithful fixed-task/independent-truth dynamic substrate, or keep C3/C4 locked and narrow the paper claim."
     },
     "skillrl_p0d": {
-      "status": "CONTRACT_CLEARED_RESULT_NOT_ESTABLISHED",
-      "review_verdict": "CLEAR_FOR_BOUNDED_EXECUTION",
-      "scientific_authority": false,
-      "claim_if_go": "Supports only C4 fixed-policy downstream representation sensitivity on the SkillRL exact-clone subclass; does not establish SQC superiority or partial-overlap dynamic behavior, which remain locked to separate evidence.",
-      "claim_if_stop": "Rejects only this fixed-policy exact-clone downstream bridge; does not invalidate C1/C2 STRI or any other paper claims."
+      "status": "SUBSTRATE_SUPPORT_FAILURE",
+      "outcome": "INCONCLUSIVE",
+      "pristine_success": 1,
+      "role": "historical endpoint-support failure on the SFT warm-start; does not update STRI mechanism belief",
+      "scientific_authority": false
+    },
+    "skillrl_p0e": {
+      "status": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
+      "experimental_stop_valid": true,
+      "persistent_principle_dead_end_certified": false,
+      "principle_disposition": "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED",
+      "stage2_locked": true,
+      "new_gpu_authorized": false,
+      "calibration": {
+        "calibration_outcome": "GO_COMPETENT_POLICY_SUPPORT",
+        "calibration_pristine_success": 18,
+        "calibration_pristine_success_rate": 0.75,
+        "calibration_success_family_count": 5,
+        "causal_qualified": true,
+        "causal_qualification_errors": [],
+        "paired_units": 24,
+        "arm_episodes": 96,
+        "gpu_hours": 0.487879,
+        "within_budget": true
+      },
+      "endpoint_result": {
+        "formal_outcome": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
+        "success_rate": {
+          "A_pristine": 0.75,
+          "B_displacement_clone": 0.75,
+          "C_identity_placebo": 0.75,
+          "D_exact_quotient": 0.75
+        },
+        "B_vs_A_mcnemar_p": 1.0,
+        "paired_disagreement": {
+          "B_vs_A": 0.0,
+          "C_vs_A": 0.0,
+          "D_vs_A": 0.0
+        },
+        "B_vs_A_disagreement_minus_C_vs_A": 0.0,
+        "family_replicated_flip_count": 0,
+        "families_with_B_vs_A_flip": []
+      },
+      "role": "qualified optional C4 realization negative; does not expand or invalidate N1-N3",
+      "scientific_authority": false
     }
   },
   "shadow_search": {
