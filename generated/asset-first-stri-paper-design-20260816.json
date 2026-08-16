@@ -206,5 +206,5 @@
     "full_experiment": false,
     "gpu": false
   },
-  "next_action": "Independent current-source/method/P0 operationalization reviews are complete, and the faithful Qwen3-8B/vLLM P0-A substrate preflight is PASS. Keep idea search closed. Launch only the frozen merge-split P0-A on host 231 when the unrelated GPU workload releases the resource gate; if P0-A GO, reuse the same raw bank for zero-extra-GPU quotient feasibility. Do not claim C3/C4 before the qualified gates resolve."
+  "next_action": "Independent current-source/method/P0-A/P0-B reviews are complete. The faithful Qwen3-8B/vLLM P0-A substrate preflight is PASS, and P0-B's no-lookahead 5-atom rejection feasibility protocol is frozen before outcomes. Keep idea search closed. Launch only P0-A on host 231 when the unrelated GPU workload releases the resource gate; if and only if P0-A GO, run the already-frozen P0-B on the same raw SHA with zero extra model calls. Do not claim C3/C4 before the qualified gates resolve."
 }

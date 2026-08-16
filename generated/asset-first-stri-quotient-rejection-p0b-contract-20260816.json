@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-STRI-QUOTIENT-REJECTION-P0B-20260816",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "stage": "DECISIVE_P0_B_LOCAL_METHOD_FEASIBILITY",
+  "execution_dependency": "Execute only if P0-A decision is DYNAMIC_PARTIAL_OVERLAP_REPRESENTATION_SENSITIVITY_SUPPORTED. Reuse the exact P0-A raw-generations.jsonl; no additional model calls or generated samples are allowed.",
+  "purpose": "Test whether the support-quotient semantic target is operationally realizable on the same faithful Qwen3 source-conditioned candidate bank using only the shared non-novel author-validator rejection backend within the original 72 proposer-call budget.",
+  "claim_boundary": "P0-B is a local feasibility falsifier, not a downstream utility result and not evidence that rejection sampling is novel. GO permits a later evolution-utility experiment; it does not unlock C3 by itself.",
+  "semantic_projection": {
+    "relevant_skill_ids": ["skill_003", "skill_004", "skill_015"],
+    "projected_atoms": [
+      "skill_003",
+      "skill_004",
+      "skill_015",
+      "skill_003+skill_015",
+      "skill_004+skill_015"
+    ],
+    "atom_source": "Frozen released API-Bank validator-support audit before Qwen3 P0-A outcomes",
+    "semantic_prior_for_feasibility": "uniform over the five frozen atoms; this is a coverage-stress prior, not a claim about the optimal training curriculum",
+    "why_uniform": "Every unique and overlap support region must receive positive repeated realization opportunity so invariance is not obtained by dropping a hard/rare semantic region."
+  },
+  "online_rejection_protocol": {
+    "candidate_order": "Within each source skill, consume P0-A raw records in the exact recorded source_index order. A consumed invalid or mismatched record still spends one proposer call.",
+    "acceptance_rule": "Accept only a contract-valid record whose accepted_skill_ids projected onto {skill_003,skill_004,skill_015} exactly equals the target atom. No score, tool, text, or future record may affect acceptance.",
+    "source_responsibility": "Unique atoms use their unique source. For overlap atoms, responsibilities alternate across the three preregistered cycles: specific source, skill_015, specific source.",
+    "target_schedule": [
+      {"cycle": 1, "target_atom": "skill_003", "source_skill_id": "skill_003"},
+      {"cycle": 1, "target_atom": "skill_004", "source_skill_id": "skill_004"},
+      {"cycle": 1, "target_atom": "skill_015", "source_skill_id": "skill_015"},
+      {"cycle": 1, "target_atom": "skill_003+skill_015", "source_skill_id": "skill_003"},
+      {"cycle": 1, "target_atom": "skill_004+skill_015", "source_skill_id": "skill_004"},
+      {"cycle": 2, "target_atom": "skill_003", "source_skill_id": "skill_003"},
+      {"cycle": 2, "target_atom": "skill_004", "source_skill_id": "skill_004"},
+      {"cycle": 2, "target_atom": "skill_015", "source_skill_id": "skill_015"},
+      {"cycle": 2, "target_atom": "skill_003+skill_015", "source_skill_id": "skill_015"},
+      {"cycle": 2, "target_atom": "skill_004+skill_015", "source_skill_id": "skill_015"},
+      {"cycle": 3, "target_atom": "skill_003", "source_skill_id": "skill_003"},
+      {"cycle": 3, "target_atom": "skill_004", "source_skill_id": "skill_004"},
+      {"cycle": 3, "target_atom": "skill_015", "source_skill_id": "skill_015"},
+      {"cycle": 3, "target_atom": "skill_003+skill_015", "source_skill_id": "skill_003"},
+      {"cycle": 3, "target_atom": "skill_004+skill_015", "source_skill_id": "skill_004"}
+    ],
+    "target_accepts_total": 15,
+    "target_accepts_per_atom": 3,
+    "maximum_total_consumed_calls": 72,
+    "maximum_calls_per_source": 24,
+    "lookahead": "forbidden",
+    "replacement_or_resampling": "forbidden"
+  },
+  "decision_rule": {
+    "GO": "All 15 targets are accepted in schedule order using only their designated source streams before any source exceeds 24 consumed calls; all five atoms have exactly three accepted records; total consumed calls <=72.",
+    "STOP": "At least one target cannot be realized before its designated source stream exhausts the 24 P0-A calls. This means the current quotient+shared-rejection realization is not locally feasible at the frozen budget/coverage stress test.",
+    "INVALID": "P0-A is not GO, raw SHA does not match the P0-A result, raw shape is not exactly 72 with 24 records per source, or any contract/provenance binding is missing."
+  },
+  "secondary_metrics_not_used_for_gate": [
+    "accepted_tasks_per_consumed_call",
+    "calls_consumed_by_atom",
+    "calls_consumed_by_source",
+    "accepted tool diversity",
+    "rejection reasons: invalid contract vs wrong projected atom"
+  ],
+  "budget": {
+    "new_gpu_hours": 0,
+    "new_model_calls": 0,
+    "maximum_replayed_raw_calls": 72,
+    "wall_seconds_cap": 10
+  },
+  "next_if_go": "Design the smallest faithful evolution-utility P0/C3 experiment using the same quotient definition and shared rejection backend. Do not claim downstream method superiority from P0-B alone.",
+  "next_if_stop": "Stop the current SQC realization on Skill-SP; keep STRI C1/C2 and seek a different support-conditioned realization only through paper-design revision, not adaptive P0 repair.",
+  "authority": {
+    "execution_authorized_before_p0a_go": false,
+    "method_authorized": false,
+    "paper_design_authorized_by_this_contract": false,
+    "gpu_authorized": false,
+    "second_backbone_authorized": false
+  },
+  "scientific_authority": false
+}
