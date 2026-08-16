@@ -87,7 +87,8 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertFalse(positive[0]["scientific_authority"])
 
     def test_principle_readjudication_compiles_into_opposite_search_memory(self) -> None:
-        payload={"candidate_id":"P06","title":"Coverage quantity","principle_dead_end_certified":True,"dead_end_scope":"coverage-only certificate","principle_diagnosis":{"counter_explanation":{"type":"IMPOSSIBILITY_OR_INVARIANCE","statement":"coverage quantity does not identify relevance","opposite_prediction":"generic uncertainty shift only","opposite_principle":"evidence sufficiency is relevance-conditioned","opposite_search_seed":"search relevance-conditioned evidence debt","scope":"coverage-only certificate","same_information_or_scope_matched":True,"proof_or_structural_witness":True,"evidence_refs":["arXiv:2608.07527"],"alternative_explanations_ruled_out":["execution"],"reopen_condition":"expose relevance-conditioned debt without hidden truth"}}}
+        phenomenon_sha="a"*64
+        payload={"candidate_id":"P06","title":"Coverage quantity","principle_dead_end_certified":True,"dead_end_scope":"coverage-only certificate","fresh_phenomenon_closure":{"source_ref":"arXiv:2608.07527","closed_evidence_sha256":[phenomenon_sha],"closure_scope":"coverage-count boundary only","scientific_authority":False},"principle_diagnosis":{"counter_explanation":{"type":"IMPOSSIBILITY_OR_INVARIANCE","statement":"coverage quantity does not identify relevance","opposite_prediction":"generic uncertainty shift only","opposite_principle":"evidence sufficiency is relevance-conditioned","opposite_search_seed":"search relevance-conditioned evidence debt","scope":"coverage-only certificate","same_information_or_scope_matched":True,"proof_or_structural_witness":True,"evidence_refs":["arXiv:2608.07527"],"alternative_explanations_ruled_out":["execution"],"reopen_condition":"expose relevance-conditioned debt without hidden truth"}}}
         with tempfile.TemporaryDirectory() as td:
             p=Path(td)/"p06-principle-readjudication-test.json";p.write_text(json.dumps(payload),encoding="utf-8")
             rows=_principle_readjudication_rows([p])
@@ -97,7 +98,10 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(len(matches),1)
         self.assertEqual(matches[0]["counter_explanation"]["opposite_search_seed"],"search relevance-conditioned evidence debt")
         self.assertFalse(matches[0]["scientific_authority"])
+        self.assertEqual(matches[0]["fresh_phenomenon_closure"]["closed_evidence_sha256"],[phenomenon_sha])
         self.assertEqual(memory["principle_readjudication_dead_end_count"],1)
+        self.assertEqual(memory["fresh_phenomenon_closure_count"],1)
+        self.assertEqual(memory["fresh_phenomenon_closed_evidence_count"],1)
 
     def test_r2_near_miss_preflight_compiles_into_future_shadow_search_memory(self) -> None:
         memory=self.state["shadow_dead_end_memory"]

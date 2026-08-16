@@ -7,6 +7,15 @@
   "experiment_run_for_this_readjudication": false,
   "broader_defense_evolution_effect_falsified": false,
   "dead_end_scope": "The standalone claim that HARD's GPT-5.5 backbone result (lower attack success but utility-under-attack collapsing to 7.2%) identifies a new self-evolving-defense utility-collapse mechanism merely because failure-driven security refinement and task utility move in opposite directions.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2608.12977",
+    "closed_evidence_sha256": [
+      "cfdbe09702de11059185f4de82697418fcac8cd83c75edbd017c1462a0dce392",
+      "91d63905c50552497f265db3f06747a17d47ec78d3457910ecf5284927e8e273"
+    ],
+    "closure_scope": "backbone-dependent ASR/BU/UA overrestriction operating-point phenomenon only",
+    "scientific_authority": false
+  },
   "principle_diagnosis": {
     "status": "PRINCIPLE_DEAD_END_CERTIFIED",
     "counter_explanation_type": "SAME_INFORMATION_REDUCTION",

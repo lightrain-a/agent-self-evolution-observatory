@@ -371,6 +371,20 @@ def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict
             artifact_ref = str(path.relative_to(PROJECT_ROOT))
         except ValueError:
             artifact_ref = str(path)
+        closure = payload.get("fresh_phenomenon_closure") or {}
+        closure_row: dict[str, Any] = {}
+        if isinstance(closure, dict) and closure:
+            closure_ref = str(closure.get("source_ref") or "").strip()
+            closure_hashes = sorted({str(value).strip().lower() for value in closure.get("closed_evidence_sha256") or [] if re.fullmatch(r"[0-9a-f]{64}", str(value).strip().lower())})
+            closure_scope = " ".join(str(closure.get("closure_scope") or "").split())
+            if closure_ref.startswith("arXiv:") and closure_hashes and closure_scope and closure.get("scientific_authority") is False:
+                closure_row = {
+                    "source_ref": closure_ref,
+                    "closed_evidence_sha256": closure_hashes,
+                    "closure_scope": closure_scope[:1200],
+                    "source_readjudication_artifact": artifact_ref,
+                    "scientific_authority": False,
+                }
         asset = payload.get("opposite_search_asset_evidence") or {}
         asset_row: dict[str, Any] = {}
         if isinstance(asset, dict) and asset:
@@ -418,6 +432,7 @@ def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict
             "counter_explanation": dict(counter),
             "source_readjudication_artifact": artifact_ref,
             "opposite_search_asset_evidence": asset_row,
+            "fresh_phenomenon_closure": closure_row,
             "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
             "scientific_authority": False,
         })
@@ -621,6 +636,9 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     memory["memory_id"] = "shadow-paper-design-principle-dead-ends-and-holds-v2"
     memory["principle_dead_end_count"] = len(certified_rows)
     memory["principle_readjudication_dead_end_count"] = sum(str(row.get("basin") or "").startswith("principle-readjudication-") for row in certified_rows)
+    closure_rows=[row.get("fresh_phenomenon_closure") or {} for row in certified_rows if isinstance(row.get("fresh_phenomenon_closure"),dict) and row.get("fresh_phenomenon_closure")]
+    memory["fresh_phenomenon_closure_count"] = len(closure_rows)
+    memory["fresh_phenomenon_closed_evidence_count"] = sum(len(row.get("closed_evidence_sha256") or []) for row in closure_rows)
     asset_by_ref: dict[str, dict[str, Any]] = {}
     for row in certified_rows:
         asset = row.get("opposite_search_asset_evidence") or {}
@@ -1025,6 +1043,9 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
     readjudicated=[row for row in blocked_objects if str(row.get("basin") or "").startswith("principle-readjudication-")]
     if int(memory.get("principle_readjudication_dead_end_count") or 0)!=len(readjudicated) or any(not str(row.get("source_readjudication_artifact") or "").strip() or row.get("scientific_authority") is not False for row in readjudicated):
         errors.append("principle readjudications must enter persistent memory only as provenance-bound zero-authority opposite-search control")
+    closures=[row.get("fresh_phenomenon_closure") or {} for row in blocked_objects if isinstance(row.get("fresh_phenomenon_closure"),dict) and row.get("fresh_phenomenon_closure")]
+    if int(memory.get("fresh_phenomenon_closure_count") or 0)!=len(closures) or int(memory.get("fresh_phenomenon_closed_evidence_count") or 0)!=sum(len(row.get("closed_evidence_sha256") or []) for row in closures) or any(not str(row.get("source_ref") or "").startswith("arXiv:") or not row.get("closed_evidence_sha256") or row.get("scientific_authority") is not False or any(not re.fullmatch(r"[0-9a-f]{64}",str(value or "")) for value in row.get("closed_evidence_sha256") or []) for row in closures):
+        errors.append("fresh phenomenon closures must be exact evidence-SHA, source-bounded, provenance-preserving zero-authority search control")
     if any(row.get("dead_end_certified") is not False for row in hold_objects):
         errors.append("reopenable hold objects cannot be marked as dead ends")
     dynamic=[row for row in blocked_objects if str(row.get("basin") or "").startswith("current-source-hard-veto-")]

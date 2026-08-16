@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T18:34:48+00:00",
+  "generated_at": "2026-08-16T18:35:10+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T18:34:48+00:00",
+    "generated_at": "2026-08-16T18:35:10+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -427,6 +427,7 @@
           "search_closed_reason": "The preregistered outcome-blind held-out screen produced 9/9 execution-valid units, 0 harmful units, 0 same-uptake/different-harm pairs, and 0 harm-without-uptake units. This closes only the current matched-uptake inversion asset; the original P19 positive effect remains archived evidence.",
           "scientific_authority": false
         },
+        "fresh_phenomenon_closure": {},
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -480,6 +481,7 @@
         },
         "source_readjudication_artifact": "generated/p06-relevance-conditioned-evidence-debt-principle-readjudication-20260816.json",
         "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -547,6 +549,17 @@
         },
         "source_readjudication_artifact": "generated/mindmemos-skill-sign-reversal-principle-readjudication-20260817.json",
         "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {
+          "source_ref": "arXiv:2608.12428",
+          "closed_evidence_sha256": [
+            "49839a18c055f9c01c3fde110d15aea378c449ea13cdefd2b93663dc4191997d",
+            "ce227d474666943446da68f0120763d60cf3978db3ecd19af5da536d7643d920",
+            "f19a1910a6773bacce3f76cccf9bc1d74ea699157e13dbaafe5815fa2d60d858"
+          ],
+          "closure_scope": "initial-skill negative transfer and corrective skill-evolution sign reversal only",
+          "source_readjudication_artifact": "generated/mindmemos-skill-sign-reversal-principle-readjudication-20260817.json",
+          "scientific_authority": false
+        },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -605,6 +618,7 @@
         },
         "source_readjudication_artifact": "generated/autodesign-dev-acceptance-feedback-principle-readjudication-20260817.json",
         "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -662,6 +676,7 @@
         },
         "source_readjudication_artifact": "generated/positive-residual-memory-treatment-semantics-principle-readjudication-20260816.json",
         "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -711,6 +726,15 @@
         },
         "source_readjudication_artifact": "generated/autodesign-posterbench-causal-nopath-principle-readjudication-20260817.json",
         "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {
+          "source_ref": "arXiv:2608.13560",
+          "closed_evidence_sha256": [
+            "c8406fed7b91273f18fcc410a614c5100c7d9398bd718c3fda7bfd1fe5b2149e"
+          ],
+          "closure_scope": "PosterBench score-gap versus human-preference agreement calibration phenomenon only",
+          "source_readjudication_artifact": "generated/autodesign-posterbench-causal-nopath-principle-readjudication-20260817.json",
+          "scientific_authority": false
+        },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -789,6 +813,7 @@
           "search_closed_reason": "The only remaining v9 downstream-cliff seed is same-information reducible to nonstationary stale-supervisor/covariate-shift/online-adaptation models; no model run is required to certify this scoped reduction.",
           "scientific_authority": false
         },
+        "fresh_phenomenon_closure": {},
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -859,6 +884,7 @@
           "search_closed_reason": "",
           "scientific_authority": false
         },
+        "fresh_phenomenon_closure": {},
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -914,6 +940,7 @@
         },
         "source_readjudication_artifact": "generated/p06-coverage-starvation-principle-readjudication-20260816.json",
         "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -969,6 +996,7 @@
         },
         "source_readjudication_artifact": "generated/positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json",
         "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -1042,6 +1070,7 @@
           "search_closed_reason": "",
           "scientific_authority": false
         },
+        "fresh_phenomenon_closure": {},
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -1096,6 +1125,17 @@
         },
         "source_readjudication_artifact": "generated/geoforge-retrieval-redundancy-principle-readjudication-20260817.json",
         "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {
+          "source_ref": "arXiv:2608.10494",
+          "closed_evidence_sha256": [
+            "b5df526fa03415b713b12858c57b5503d0eb6fa3324a11dadca40c147ceca2cd",
+            "db9fdc7933b5629a50c0a95a245cd7cf65ff3a6ef8532bd61b7b5901cd8a29c6",
+            "f305512e03d39c9494532c57bc68497ea80f49fe082c6fcf77f5d4233367b724"
+          ],
+          "closure_scope": "retrieval-count/relevance-threshold quality-coverage trade-off only",
+          "source_readjudication_artifact": "generated/geoforge-retrieval-redundancy-principle-readjudication-20260817.json",
+          "scientific_authority": false
+        },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -1146,6 +1186,16 @@
         },
         "source_readjudication_artifact": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
         "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {
+          "source_ref": "arXiv:2608.12977",
+          "closed_evidence_sha256": [
+            "91d63905c50552497f265db3f06747a17d47ec78d3457910ecf5284927e8e273",
+            "cfdbe09702de11059185f4de82697418fcac8cd83c75edbd017c1462a0dce392"
+          ],
+          "closure_scope": "backbone-dependent ASR/BU/UA overrestriction operating-point phenomenon only",
+          "source_readjudication_artifact": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
+          "scientific_authority": false
+        },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       },
@@ -1210,6 +1260,16 @@
         },
         "source_readjudication_artifact": "generated/mindmemos-dreaming-compression-principle-readjudication-20260817.json",
         "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {
+          "source_ref": "arXiv:2608.12428",
+          "closed_evidence_sha256": [
+            "0e70938c7225ba7229c309f6849cdf7e593c661dace3c06261514130481f74d6",
+            "74cb6b7181d902c6d9456f3c1db6ac25b496f131df566c7764d3feb7d399a3e1"
+          ],
+          "closure_scope": "dreaming compression/accuracy co-movement and ~20% AMCR phenomenon only",
+          "source_readjudication_artifact": "generated/mindmemos-dreaming-compression-principle-readjudication-20260817.json",
+          "scientific_authority": false
+        },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
       }
@@ -1255,6 +1315,8 @@
     ],
     "principle_dead_end_count": 18,
     "principle_readjudication_dead_end_count": 14,
+    "fresh_phenomenon_closure_count": 5,
+    "fresh_phenomenon_closed_evidence_count": 11,
     "inversion_asset_evidence": [
       {
         "asset_ref": "first-party-asset:autoskill@94c47ca488d4ba4117d20272e66d49b9877e68cf",

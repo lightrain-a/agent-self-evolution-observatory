@@ -135,13 +135,40 @@ def _evidence_payload(records):
         "typed_evidence":{k:[str(f.get("text") or "")[:340] for f in ((r.get("typed_evidence") or {}).get(k) or [])[:2] if isinstance(f,dict)] for k in ("operational_assumptions","measured_failures","boundary_observations")},
     } for r in records[:32]]
 
-def _fresh_phenomenon_priors(records,limit=32,recent_days=45):
-    """Return recent primary records with explicit or quantitative anomalous facts.
+def _fresh_phenomenon_closed_keys(dead_end_memory):
+    """Return exact (primary ref, evidence-text SHA) pairs already principle-closed.
 
-    A latest-day-only scheduler starves scientifically useful sources one day older
-    than the newest arXiv batch. Keep a bounded recent window, then let source
-    targeting provide coverage. This remains search control only: recency and
-    support readiness never confer novelty or downstream scientific authority.
+    Closure is intentionally boundary-level rather than source-level: a paper can
+    carry several independent anomalies, and explaining one must not blacklist the
+    rest of the paper. Only provenance-bound principle certificates may close a
+    fresh target; ordinary negative experiments and reopenable holds cannot.
+    """
+    closed=set()
+    for row in (dead_end_memory or {}).get("blocked_objects") or []:
+        if not isinstance(row,dict) or row.get("dead_end_certified") is not True:continue
+        closure=row.get("fresh_phenomenon_closure") or {}
+        if not isinstance(closure,dict) or closure.get("scientific_authority") is not False:continue
+        ref=str(closure.get("source_ref") or "").strip()
+        if not ref.startswith("arXiv:"):continue
+        for value in closure.get("closed_evidence_sha256") or []:
+            sha=str(value or "").strip().lower()
+            if re.fullmatch(r"[0-9a-f]{64}",sha):closed.add((ref,sha))
+    return closed
+
+
+def _fresh_evidence_sha(item):
+    text=" ".join(str((item or {}).get("text") or "").split())
+    supplied=str((item or {}).get("text_sha256") or "").strip().lower()
+    return supplied if re.fullmatch(r"[0-9a-f]{64}",supplied) else hashlib.sha256(text.encode()).hexdigest()
+
+
+def _fresh_phenomenon_priors(records,limit=32,recent_days=45,dead_end_memory=None):
+    """Return recent *evidence-level* quantitative/failure boundaries for search.
+
+    v11 rotated at source granularity, so one already-explained anomaly could keep
+    consuming a paper's fresh slot or force us to suppress the whole paper. v12
+    assigns one content-addressed phenomenon_id per primary evidence item and drops
+    only those exact items carrying a principle-certified closure receipt.
     """
     parsed=[]
     for r in records:
@@ -153,27 +180,39 @@ def _fresh_phenomenon_priors(records,limit=32,recent_days=45):
     latest=max(day for day,_ in parsed);cutoff=latest-timedelta(days=max(0,int(recent_days)))
     contrast=re.compile(r"\b(?:from|to|vs\.?|versus|while|despite|drop|decreas|increas|improv|worse|better|plateau|reduc|compress|outperform|lower|higher|only)\w*\b",re.I)
     number=re.compile(r"(?:\b\d+(?:\.\d+)?\s*(?:%|points?|x)\b|\b0\.\d+\b)",re.I)
+    failure_cue=re.compile(r"(?:\bfail(?:s|ed|ing)?\s+(?:to|despite)\b|\bunderperform\w*\b|\bdegrad\w*\b|\bcollapse\w*\b|\boverly\s+restrict\w*\b|\bnegative\s+transfer\b|\bmislead\w*\b|\bcannot\b|\bunable\b|\binstab\w*\b|\bregress\w*\b|\bdrop\w*\b|\bworse\b|\blower\s+utility\b|\boverfit\w*\b|\bredundan\w*\b|\bconflict\w*\b|\bpoison\w*\b|\battack\s+success\b)",re.I)
+    closed=_fresh_phenomenon_closed_keys(dead_end_memory)
     priors=[]
+    kind_priority={"measured_failure":3,"boundary_observation":2,"quantitative_anomaly":1}
     for published,r in parsed:
         if published<cutoff:continue
-        typed=r.get("typed_evidence") or {}
-        failures=[str(x.get("text") or "").strip() for x in typed.get("measured_failures") or [] if isinstance(x,dict) and str(x.get("text") or "").strip()]
-        boundaries=[str(x.get("text") or "").strip() for x in typed.get("boundary_observations") or [] if isinstance(x,dict) and str(x.get("text") or "").strip()]
-        facts=[str(x.get("text") or "").strip() for x in r.get("empirical_facts") or [] if isinstance(x,dict) and str(x.get("text") or "").strip()]
-        quantitative=[fact for fact in facts if number.search(fact) and contrast.search(fact)]
-        if not failures and not boundaries and not quantitative:continue
-        priors.append({
-            "ref":str(r.get("ref") or ""),"publication_date":published.isoformat(),"title":str(r.get("title") or ""),
-            "measured_failures":failures[:2],"boundary_observations":boundaries[:2],"quantitative_anomalies":quantitative[:2],"empirical_facts":facts[:2],
-            "search_instruction":"target the measured/quantitative boundary itself; name the strongest mature reduction and cheapest independent-truth substrate before proposing a method",
-            "scientific_authority":False,
-        })
-    priors.sort(key=lambda row:(row["publication_date"],len(row["boundary_observations"]),len(row["measured_failures"]),len(row["quantitative_anomalies"]),row["ref"]),reverse=True)
+        ref=str(r.get("ref") or "");typed=r.get("typed_evidence") or {};facts=[x for x in r.get("empirical_facts") or [] if isinstance(x,dict) and str(x.get("text") or "").strip()]
+        items=[]
+        items.extend(("measured_failure",x) for x in typed.get("measured_failures") or [] if isinstance(x,dict) and str(x.get("text") or "").strip() and failure_cue.search(str(x.get("text") or "")))
+        items.extend(("boundary_observation",x) for x in typed.get("boundary_observations") or [] if isinstance(x,dict) and str(x.get("text") or "").strip())
+        items.extend(("quantitative_anomaly",x) for x in facts if number.search(str(x.get("text") or "")) and contrast.search(str(x.get("text") or "")))
+        seen=set()
+        for kind,item in items:
+            text=" ".join(str(item.get("text") or "").split());sha=_fresh_evidence_sha(item)
+            if not text or sha in seen:continue
+            seen.add(sha)
+            if (ref,sha) in closed:continue
+            priors.append({
+                "ref":ref,"publication_date":published.isoformat(),"title":str(r.get("title") or ""),
+                "phenomenon_id":sha,"phenomenon_kind":kind,"phenomenon_text":text,
+                "measured_failures":[text] if kind=="measured_failure" else [],
+                "boundary_observations":[text] if kind=="boundary_observation" else [],
+                "quantitative_anomalies":[text] if kind=="quantitative_anomaly" else [],
+                "empirical_facts":[" ".join(str(x.get("text") or "").split()) for x in facts[:2]],
+                "search_instruction":"target this exact measured/quantitative phenomenon; name the strongest mature reduction and cheapest independent-truth substrate before proposing a method",
+                "priority":kind_priority[kind],"scientific_authority":False,
+            })
+    priors.sort(key=lambda row:(row["publication_date"],row["priority"],row["ref"],row["phenomenon_id"]),reverse=True)
     return priors[:limit]
 
 
-def _fresh_phenomenon_target(records,part,limit=32):
-    priors=_fresh_phenomenon_priors(records,limit=limit)
+def _fresh_phenomenon_target(records,part,limit=32,dead_end_memory=None):
+    priors=_fresh_phenomenon_priors(records,limit=limit,dead_end_memory=dead_end_memory)
     if not priors:return {}
     index=max(0,int(part)-1)%len(priors)
     return priors[index]
@@ -277,15 +316,16 @@ def _opposite_search_priors(dead_end_memory,limit=8):
         if len(priors)>=limit:break
     return priors
 
-def _expansion_prompt(lane,records,count,dead_end_memory=None,fresh_target_ref=""):
+def _expansion_prompt(lane,records,count,dead_end_memory=None,fresh_target_ref="",fresh_target_phenomenon_id=""):
     assets=_inversion_asset_records(dead_end_memory);positive_assets=_positive_residual_asset_records(dead_end_memory);asset_refs={str(row.get("ref") or "") for row in assets+positive_assets};paper_records=[row for row in records if str(row.get("ref") or "") not in asset_refs]
-    fresh_priors=_fresh_phenomenon_priors(paper_records)
-    fresh_target=next((row for row in fresh_priors if str(row.get("ref") or "")==str(fresh_target_ref or "")),{})
+    fresh_priors=_fresh_phenomenon_priors(paper_records,dead_end_memory=dead_end_memory)
+    target_id=str(fresh_target_phenomenon_id or "").strip().lower()
+    fresh_target=next((row for row in fresh_priors if (target_id and str(row.get("phenomenon_id") or "").lower()==target_id) or (not target_id and str(row.get("ref") or "")==str(fresh_target_ref or ""))),{})
     records=(assets+positive_assets+_lane_records(lane,paper_records,max_records=max(1,20-len(assets)-len(positive_assets))))[:20]
     asset_requirement=("ASSET-INVERSION EXECUTION REQUIREMENT: provenance-bound first-party inversion assets are available. Seed 1 MUST directly execute one certified opposite-search prior by citing a FIRST_PARTY_INVERSION_ASSET ref in source_a; because this lane permits a single distinct source, source_b MAY cite the same asset ref for a second independently stated grounded fact. The seed must test the opposite principle/reopen boundary rather than restate the certified dead end. STRUCTURAL-GRAPH RULE: if the first-party implementation directly exposes whether a causal/update edge exists, do NOT formulate identifiability of that edge. Instead target a downstream consequence of that structure and state what ordinary distribution-shift, stale-supervisor, online-adaptation, or alternating-optimization explanation must be beaten. Remaining seeds may explore any grounded anomaly. " if assets and count>0 else "")
     positive_slot=2 if assets else 1
     positive_requirement=(f"POSITIVE-RESIDUAL EXECUTION REQUIREMENT: Seed {positive_slot} MUST cite a POSITIVE_RESIDUAL_ASSET ref in source_a (source_b MAY reuse the same ref because this lane permits one distinct source). It must propose a NEW scientific mechanism/problem that simultaneously explains the surviving phenomenon and the recorded failed/reduced mechanisms. It MUST make a prospective prediction from pre-outcome information, explicitly condition on or beat the recorded same-information baselines, and obey every prohibited_rescue in the asset. If the asset marks temporal_exposure_standalone_branch_closed, DO NOT propose K-step mediation, ON/OFF exposure windows, duration, cumulative dose, or repeated conditioning as the new mechanism. The only permitted next memory seed must change executable treatment semantics/version identity and must name the mandatory nonstationary/versioned-treatment reductions it must beat before any experiment. Do not use full-trajectory distance or endpoint length/success. This asset is search evidence only, never novelty or experiment authority. " if lane=="UNEXPLAINED_BOUNDARY" and positive_assets and count>=positive_slot else "")
-    fresh_requirement=(f"FRESH-PHENOMENON SOURCE-COVERAGE REQUIREMENT: no active inversion or positive-residual asset exists. For UNEXPLAINED_BOUNDARY, Seed 1 MUST cite the specifically assigned FRESH_PHENOMENON_TARGET ref={fresh_target.get('ref')} and target its explicit measured failure, quantitative contrast, nonmonotonicity, threshold, plateau, reversal, or adjacent-regime boundary. Do not substitute a more salient fresh source. The seed must name in scientific_tension the strongest mature reduction class it expects to face (for example information redundancy, rate-distortion, adaptive validation, distribution shift, or ceiling effects) and in agent_specific_constraint state what released/independent truth could falsify the residual. Missing released substrate is a HOLD, never evidence of novelty or scientific failure. Remaining seeds may explore other grounded sources. " if lane=="UNEXPLAINED_BOUNDARY" and not assets and not positive_assets and fresh_target and count>0 else "")
+    fresh_requirement=(f"FRESH-PHENOMENON BOUNDARY-COVERAGE REQUIREMENT: no active inversion or positive-residual asset exists. For UNEXPLAINED_BOUNDARY, Seed 1 MUST cite the specifically assigned FRESH_PHENOMENON_TARGET ref={fresh_target.get('ref')} AND directly target phenomenon_id={fresh_target.get('phenomenon_id')} with phenomenon_text={json.dumps(fresh_target.get('phenomenon_text'),ensure_ascii=False)}. Do not substitute another anomaly from the same paper or a more salient fresh source. The seed must name in scientific_tension the strongest mature reduction class it expects to face (for example information redundancy, rate-distortion, adaptive validation, distribution shift, or ceiling effects) and in agent_specific_constraint state what released/independent truth could falsify the residual. Missing released substrate is a HOLD, never evidence of novelty or scientific failure. Remaining seeds may explore other grounded phenomena. " if lane=="UNEXPLAINED_BOUNDARY" and not assets and not positive_assets and fresh_target and count>0 else "")
     contract={"source_roles":list(LANE_SOURCE_ROLES[lane]),"minimum_distinct_primary_sources":LANE_DISTINCT_SOURCE_MINIMUM[lane],"required_lane_evidence":list(LANE_EVIDENCE_REQUIRED[lane]),"machine_contract":LANE_MACHINE_CONTRACTS[lane]}
     analogy=list(CROSS_DOMAIN_STRUCTURES) if lane=="CROSS_DOMAIN_STRUCTURAL_ANALOGY" else []
     shape={"seeds":[{

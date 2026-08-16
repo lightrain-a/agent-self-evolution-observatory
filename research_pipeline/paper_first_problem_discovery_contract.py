@@ -5,7 +5,7 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
-DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-source-coverage-v11"
+DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-boundary-closure-v12"
 
 DISCOVERY_LANES: tuple[str, ...] = (
     "CONTRADICTION",
@@ -194,8 +194,14 @@ POLICY: dict[str, Any] = {
     "fresh_phenomenon_asset_readiness_is_priority_not_novelty_authority": True,
     "fresh_phenomenon_missing_substrate_is_hold_not_scientific_fail": True,
     "fresh_phenomenon_recent_window_source_coverage_required": True,
+    "fresh_phenomenon_target_is_evidence_level_not_source_level": True,
+    "fresh_phenomenon_principle_closure_is_exact_evidence_sha_only": True,
+    "fresh_phenomenon_closure_does_not_blacklist_source": True,
+    "fresh_phenomenon_measured_failure_requires_failure_cue": True,
     "fresh_phenomenon_shard_has_deterministic_target_ref": True,
+    "fresh_phenomenon_shard_has_deterministic_phenomenon_id": True,
     "fresh_phenomenon_seed1_must_match_target_ref": True,
+    "fresh_phenomenon_seed1_must_match_target_phenomenon": True,
     "temporal_exposure_relabeling_after_longitudinal_reduction_forbidden": True,
     "treatment_semantics_seed_requires_executable_version_change": True,
     "treatment_semantics_seed_requires_versioned_treatment_reduction_first": True,

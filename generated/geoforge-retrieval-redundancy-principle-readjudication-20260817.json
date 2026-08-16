@@ -7,6 +7,16 @@
   "experiment_run_for_this_readjudication": false,
   "broader_geoforge_effect_falsified": false,
   "dead_end_scope": "The standalone claim that GeoForge's slight trajectory-quality degradation under excessive skill retrieval and its optimum near Top-k=3 / Min-Retrieve-Score=0.6 identify a new agent-specific self-evolution mechanism merely from the nonmonotonic retrieval curve.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2608.10494",
+    "closed_evidence_sha256": [
+      "f305512e03d39c9494532c57bc68497ea80f49fe082c6fcf77f5d4233367b724",
+      "b5df526fa03415b713b12858c57b5503d0eb6fa3324a11dadca40c147ceca2cd",
+      "db9fdc7933b5629a50c0a95a245cd7cf65ff3a6ef8532bd61b7b5901cd8a29c6"
+    ],
+    "closure_scope": "retrieval-count/relevance-threshold quality-coverage trade-off only",
+    "scientific_authority": false
+  },
   "principle_diagnosis": {
     "status": "PRINCIPLE_DEAD_END_CERTIFIED",
     "counter_explanation_type": "SAME_INFORMATION_REDUCTION",

@@ -6,6 +6,14 @@
   "principle_dead_end_certified": true,
   "experiment_run_for_this_readjudication": false,
   "dead_end_scope": "The standalone claim that AutoDesign's recursive optimization can directly overfit or reward-hack PosterBench itself, causing PosterBench's human-preference calibration to drift during the released optimization loop.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2608.13560",
+    "closed_evidence_sha256": [
+      "c8406fed7b91273f18fcc410a614c5100c7d9398bd718c3fda7bfd1fe5b2149e"
+    ],
+    "closure_scope": "PosterBench score-gap versus human-preference agreement calibration phenomenon only",
+    "scientific_authority": false
+  },
   "principle_diagnosis": {
     "status": "PRINCIPLE_DEAD_END_CERTIFIED",
     "counter_explanation_type": "IMPOSSIBILITY_OR_INVARIANCE",

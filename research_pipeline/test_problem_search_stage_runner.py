@@ -91,23 +91,27 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
                     runner.expand(pool=None,run_root=run,lane="CONTRADICTION",count=1,model="test",part=1,memory_path=None)
             provider.assert_not_called()
 
-    def test_fresh_phenomenon_requirement_drops_valid_seed_that_ignores_latest_anomaly(self) -> None:
-        latest={"ref":"arXiv:new-boundary","publication_date":"2026-08-13","title":"Latest boundary","abstract":"latest","primary_source_verified":True,"empirical_facts":[{"text":"Reward jumps at K=32."}],"typed_evidence":{"operational_assumptions":[],"measured_failures":[],"boundary_observations":[{"text":"Reward jumps at K=32 and then plateaus."}]}}
-        older={"ref":"arXiv:older","publication_date":"2026-08-12","title":"Older result","abstract":"older","primary_source_verified":True,"empirical_facts":[{"text":"Older quantitative result."}],"typed_evidence":{"operational_assumptions":[],"measured_failures":[{"text":"Older failure."}],"boundary_observations":[]}}
-        seed={"title":"Older boundary rescue","problem_seed":"Why does the older regime fail?","scientific_tension":"ordinary saturation may explain the older failure","problem_family":"older-boundary","structural_signature":"older|failure|regime|outcome","agent_specific_constraint":"independent truth is available from the older benchmark","empirical_evidence":{"source_a":{"ref":"arXiv:older","claim":"Older quantitative result.","evidence_role":"EMPIRICAL_FACT"},"source_b":{"ref":"arXiv:older","claim":"Older failure.","evidence_role":"EMPIRICAL_FACT"},"relation":"same primary source establishes an older measured boundary"},"lane_evidence":{"shared_measurement":"older reward","boundary_observation":"older failure","adjacent_regime":"older adjacent regime","unexplained_transition":"older transition"},"scores":{"importance":80,"specificity":80,"seed_distance":80,"evidence_grounding":80}}
+    def test_fresh_phenomenon_requirement_rejects_wrong_anomaly_from_correct_source(self) -> None:
+        failure_sha="b"*64;boundary_sha="a"*64
+        latest={"ref":"arXiv:new-boundary","publication_date":"2026-08-13","title":"Latest boundary","abstract":"latest","primary_source_verified":True,"empirical_facts":[{"text":"Reward jumps at K=32."}],"typed_evidence":{"operational_assumptions":[],"measured_failures":[{"text":"Utility collapses after restrictive policy evolution.","text_sha256":failure_sha}],"boundary_observations":[{"text":"Reward jumps at K=32 and then plateaus.","text_sha256":boundary_sha}]}}
+        # Correct paper, wrong phenomenon: target part 1 is the measured utility failure,
+        # but this seed talks only about the K=32 reward plateau.
+        seed={"title":"Latent reward plateau","problem_seed":"Why does reward plateau after K=32?","scientific_tension":"ordinary information saturation may explain the K=32 reward plateau","problem_family":"capacity-boundary","structural_signature":"latent|capacity|plateau|reward","agent_specific_constraint":"independent truth is available from the same benchmark sensitivity sweep","empirical_evidence":{"source_a":{"ref":"arXiv:new-boundary","claim":"Reward jumps at K=32 and then plateaus.","evidence_role":"EMPIRICAL_FACT"},"source_b":{"ref":"arXiv:new-boundary","claim":"The same reward curve is measured under a fixed benchmark.","evidence_role":"EMPIRICAL_FACT"},"relation":"same primary source establishes a capacity boundary"},"lane_evidence":{"shared_measurement":"reward","boundary_observation":"K=32 plateau","adjacent_regime":"K<32","unexplained_transition":"capacity transition"},"scores":{"importance":80,"specificity":80,"seed_distance":80,"evidence_grounding":80}}
         memory={"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[],"inversion_asset_evidence":[],"positive_residual_asset_evidence":[]}
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);pool=root/"pool.json";mem=root/"memory.json";run=root/"run"
-            pool.write_text(json.dumps({"frozen_pool_sha256":"a"*64,"records":[latest,older]}),encoding="utf-8");mem.write_text(json.dumps(memory),encoding="utf-8")
-            response={"text":json.dumps({"seeds":[seed],"notes":"ignored fresh anomaly"}),"resolved_model":"test-model"}
+            pool.write_text(json.dumps({"frozen_pool_sha256":"a"*64,"records":[latest]}),encoding="utf-8");mem.write_text(json.dumps(memory),encoding="utf-8")
+            response={"text":json.dumps({"seeds":[seed],"notes":"right source wrong phenomenon"}),"resolved_model":"test-model"}
             with patch("research_pipeline.problem_search_stage_runner._ark",return_value=response),patch("research_pipeline.problem_search_stage_runner.validate_shadow_run_control",return_value={"control_snapshot_sha256":"f"*64}):
                 result=runner.expand(pool=pool,run_root=run,lane="UNEXPLAINED_BOUNDARY",count=1,model="test",part=1,memory_path=mem)
             artifact=json.loads((run/"expand-UNEXPLAINED_BOUNDARY-p1.json").read_text(encoding="utf-8"))
         self.assertEqual(result["valid_seeds"],0)
         self.assertEqual(artifact["fresh_phenomenon_seed_count"],1)
+        self.assertTrue(artifact["fresh_phenomenon_target_source_satisfied"])
+        self.assertFalse(artifact["fresh_phenomenon_target_exact_satisfied"])
         self.assertFalse(artifact["fresh_phenomenon_requirement_satisfied"])
         self.assertEqual(artifact["fresh_phenomenon_target_ref"],"arXiv:new-boundary")
-        self.assertEqual(artifact["fresh_phenomenon_refs"],["arXiv:new-boundary","arXiv:older"])
+        self.assertEqual(artifact["fresh_phenomenon_target_id"],failure_sha)
 
     def test_same_pool_certified_semantic_reduction_is_machine_filtered_after_model_output(self) -> None:
         pool_sha="a"*64

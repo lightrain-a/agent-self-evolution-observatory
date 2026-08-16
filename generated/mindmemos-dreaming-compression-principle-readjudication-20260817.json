@@ -9,6 +9,15 @@
   "principle_dead_end_certified": true,
   "experiment_run_for_this_readjudication": false,
   "broader_memory_consolidation_question_falsified": false,
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2608.12428",
+    "closed_evidence_sha256": [
+      "74cb6b7181d902c6d9456f3c1db6ac25b496f131df566c7764d3feb7d399a3e1",
+      "0e70938c7225ba7229c309f6849cdf7e593c661dace3c06261514130481f74d6"
+    ],
+    "closure_scope": "dreaming compression/accuracy co-movement and ~20% AMCR phenomenon only",
+    "scientific_authority": false
+  },
   "dead_end_scope": "The v11 MindMemOS formulation claiming that the reported ~19-23% active-memory archive ratio identifies a nonmonotone compression plateau/cliff whose location is a new causal object beyond conflict-aware selective forgetting, redundancy removal, and belief revision on MemoryAgentBench FactConsolidation.",
   "principle_diagnosis": {
     "status": "PRINCIPLE_DEAD_END_CERTIFIED",

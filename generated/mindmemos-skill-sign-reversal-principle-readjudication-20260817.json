@@ -7,6 +7,16 @@
   "experiment_run_for_this_readjudication": false,
   "broader_skill_evolution_effect_falsified": false,
   "dead_end_scope": "The standalone claim that MindMemOS's SpreadsheetBench transition from Init-skill below No-skill to evolved-skill above No-skill identifies a new agent-specific causal mechanism merely from the sign reversal or from supervised evolution adding more bounded rules.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2608.12428",
+    "closed_evidence_sha256": [
+      "ce227d474666943446da68f0120763d60cf3978db3ecd19af5da536d7643d920",
+      "49839a18c055f9c01c3fde110d15aea378c449ea13cdefd2b93663dc4191997d",
+      "f19a1910a6773bacce3f76cccf9bc1d74ea699157e13dbaafe5815fa2d60d858"
+    ],
+    "closure_scope": "initial-skill negative transfer and corrective skill-evolution sign reversal only",
+    "scientific_authority": false
+  },
   "principle_diagnosis": {
     "status": "PRINCIPLE_DEAD_END_CERTIFIED",
     "counter_explanation_type": "SAME_INFORMATION_REDUCTION",

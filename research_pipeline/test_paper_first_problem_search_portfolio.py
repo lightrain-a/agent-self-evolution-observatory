@@ -45,21 +45,28 @@ class SearchPortfolioTest(unittest.TestCase):
         self.assertGreater(state["summary"]["formulated_candidates"],0)
         self.assertFalse(state["scientific_authority"])
 
-    def test_fresh_phenomenon_prior_uses_recent_quantitative_sources_and_target_rotation(self):
+    def test_fresh_phenomenon_prior_uses_evidence_level_closure_without_blacklisting_source(self):
+        boundary_sha="a"*64;failure_sha="b"*64;older_sha="c"*64
         records=[
-            {"ref":"arXiv:new-boundary","publication_date":"2026-08-13","title":"New boundary","typed_evidence":{"measured_failures":[],"boundary_observations":[{"text":"Reward jumps at K=32 and then plateaus."}]},"empirical_facts":[{"text":"Quantitative sensitivity curve."}]},
+            {"ref":"arXiv:new-boundary","publication_date":"2026-08-13","title":"New boundary","typed_evidence":{"measured_failures":[{"text":"Utility collapses after a restrictive update.","text_sha256":failure_sha}],"boundary_observations":[{"text":"Reward jumps at K=32 and then plateaus.","text_sha256":boundary_sha}]},"empirical_facts":[{"text":"Quantitative sensitivity curve."}]},
             {"ref":"arXiv:new-no-anomaly","publication_date":"2026-08-13","title":"New but smooth","typed_evidence":{"measured_failures":[],"boundary_observations":[]},"empirical_facts":[{"text":"Performance improves."}]},
-            {"ref":"arXiv:older-boundary","publication_date":"2026-08-12","title":"Older boundary","typed_evidence":{"measured_failures":[{"text":"A prior failure."}],"boundary_observations":[]},"empirical_facts":[]},
+            {"ref":"arXiv:older-boundary","publication_date":"2026-08-12","title":"Older boundary","typed_evidence":{"measured_failures":[{"text":"A prior failure.","text_sha256":older_sha}],"boundary_observations":[]},"empirical_facts":[]},
         ]
         priors=_fresh_phenomenon_priors(records)
-        self.assertEqual([row["ref"] for row in priors],["arXiv:new-boundary","arXiv:older-boundary"])
-        self.assertIn("plateaus",priors[0]["boundary_observations"][0])
-        self.assertEqual(_fresh_phenomenon_target(records,1)["ref"],"arXiv:new-boundary")
-        self.assertEqual(_fresh_phenomenon_target(records,2)["ref"],"arXiv:older-boundary")
-        prompt=_expansion_prompt("UNEXPLAINED_BOUNDARY",records,2,{"blocked_objects":[],"inversion_asset_evidence":[],"positive_residual_asset_evidence":[]},fresh_target_ref="arXiv:new-boundary")
-        self.assertIn("FRESH-PHENOMENON SOURCE-COVERAGE REQUIREMENT",prompt)
+        self.assertEqual([row["phenomenon_id"] for row in priors],[failure_sha,boundary_sha,older_sha])
+        self.assertEqual(_fresh_phenomenon_target(records,1)["phenomenon_id"],failure_sha)
+        memory={"blocked_objects":[{"dead_end_certified":True,"fresh_phenomenon_closure":{"source_ref":"arXiv:new-boundary","closed_evidence_sha256":[failure_sha],"scientific_authority":False}}],"inversion_asset_evidence":[],"positive_residual_asset_evidence":[]}
+        open_priors=_fresh_phenomenon_priors(records,dead_end_memory=memory)
+        self.assertEqual([row["phenomenon_id"] for row in open_priors],[boundary_sha,older_sha])
+        self.assertEqual(open_priors[0]["ref"],"arXiv:new-boundary")
+        target=_fresh_phenomenon_target(records,1,dead_end_memory=memory)
+        self.assertEqual(target["phenomenon_id"],boundary_sha)
+        prompt=_expansion_prompt("UNEXPLAINED_BOUNDARY",records,2,memory,fresh_target_ref=target["ref"],fresh_target_phenomenon_id=target["phenomenon_id"])
+        self.assertIn("FRESH-PHENOMENON BOUNDARY-COVERAGE REQUIREMENT",prompt)
         self.assertIn("FRESH_PHENOMENON_TARGET",prompt)
-        self.assertIn("arXiv:new-boundary",prompt)
+        self.assertIn(boundary_sha,prompt)
+        self.assertIn("Reward jumps at K=32",prompt)
+        self.assertNotIn(failure_sha,prompt.split("FRESH_PHENOMENON_PRIORS=",1)[1].split(". CERTIFIED",1)[0])
         self.assertIn("strongest mature reduction",prompt)
         self.assertIn("independent truth",prompt)
 
