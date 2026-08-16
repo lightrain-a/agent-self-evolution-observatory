@@ -421,6 +421,20 @@ class ResearchSystemTest(unittest.TestCase):
         disabled = [item for item in self.state["components"] if item["status"] == "intentionally-disabled"]
         self.assertEqual(len(disabled), 1)
 
+    def test_asset_first_stri_paper_ready_is_separate_from_canonical_problem_gate(self) -> None:
+        stri=self.state["asset_first_stri_paper_ready"]
+        self.assertEqual(stri["status"],"READY_NARROW_ICLR")
+        self.assertEqual((stri.get("summary") or {}).get("paper_ready"),1)
+        self.assertEqual(((stri.get("summary") or {}).get("claims_supported"),(stri.get("summary") or {}).get("claims_total")),(3,3))
+        self.assertEqual((stri.get("summary") or {}).get("qa_checks_passed"),(stri.get("summary") or {}).get("qa_checks_total"))
+        self.assertEqual((stri.get("summary") or {}).get("canonical_problem_gate_pass_added"),0)
+        self.assertFalse(stri["scientific_authority"])
+        self.assertTrue(all(value is False for value in (stri.get("authority") or {}).values()))
+        self.assertEqual(self.state["summary"]["asset_first_stri_paper_ready"],1)
+        self.assertEqual(self.state["summary"]["asset_first_stri_canonical_problem_gate_added"],0)
+        broken=copy.deepcopy(self.state);broken["asset_first_stri_paper_ready"]["summary"]["canonical_problem_gate_pass_added"]=1
+        self.assertTrue(any("asset-first stri" in error.lower() for error in validate_state(broken)))
+
     def test_live_problem_discovery_rejects_shadow_portfolio_authority_leak(self) -> None:
         broken=copy.deepcopy(self.state)
         broken["paper_first_problem_discovery_contract"]["policy"]["search_portfolio_is_shadow_only"]=False

@@ -6346,7 +6346,14 @@
     "mem_xfer_support_analysis_status": "support_enriched_analysis_pending",
     "mem_xfer_second_model_status": "second_model_hold",
     "architecture_temporal_stages": 11,
-    "architecture_functional_layers": 6
+    "architecture_functional_layers": 6,
+    "asset_first_stri_status": "READY_NARROW_ICLR",
+    "asset_first_stri_paper_ready": 1,
+    "asset_first_stri_claims_supported": 3,
+    "asset_first_stri_claims_total": 3,
+    "asset_first_stri_qa_checks_passed": 59,
+    "asset_first_stri_qa_checks_total": 59,
+    "asset_first_stri_canonical_problem_gate_added": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -73372,5 +73379,114 @@
         }
       }
     ]
+  },
+  "asset_first_stri_paper_ready": {
+    "schema_version": "1.0",
+    "paper_id": "STRI",
+    "candidate_id": "skill-taxonomy-representation-invariance",
+    "title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
+    "status": "READY_NARROW_ICLR",
+    "track": "ASSET_FIRST_PAPER_READY",
+    "gates": {
+      "final_review": true,
+      "claim_coherence": true,
+      "submission_qa": true,
+      "current_source": true,
+      "superseding_reduction": true,
+      "paper_design": true
+    },
+    "claims": {
+      "N1": {
+        "status": "SUPPORTED",
+        "object": "released control-plane representation sensitivity",
+        "forbidden": "no downstream utility or harm inference"
+      },
+      "N2": {
+        "status": "SUPPORTED",
+        "object": "exact finite support equalizability R*(A)",
+        "forbidden": "no LP computational novelty claim"
+      },
+      "N3": {
+        "status": "SUPPORTED",
+        "object": "non-equalizable support geometry rather than overlap prevalence",
+        "forbidden": "do not generalize equalizability beyond audited support matrices"
+      }
+    },
+    "summary": {
+      "paper_ready": 1,
+      "claims_supported": 3,
+      "claims_total": 3,
+      "qa_checks_passed": 59,
+      "qa_checks_total": 59,
+      "final_review_confidence": 0.92,
+      "canonical_problem_gate_pass_added": 0,
+      "canonical_generator_candidates_added": 0,
+      "canonical_queue_candidates_added": 0,
+      "method_authorized": 0,
+      "experiment_authorized": 0,
+      "p0_authorized": 0,
+      "gpu_authorized": 0
+    },
+    "claim_boundary": {
+      "dynamic_p0": "qualification failure is disclosed and excluded from narrow scientific evidence",
+      "downstream_utility": "not claimed or required for the frozen narrow submission scope",
+      "solver_novelty": "STRI-Cert is not claimed as a computationally novel LP solver",
+      "repair_method": "no claim that Support-Quotient Control has been empirically validated"
+    },
+    "source_artifacts": {
+      "final_review": {
+        "path": "generated/asset-first-stri-narrow-final-review-20260816.json",
+        "sha256": "9af211d9482130f74c9bacf067b5bcf0d1fc3442e36d6488c31ccd3a5e1aa66d",
+        "present": true
+      },
+      "coherence": {
+        "path": "generated/asset-first-stri-narrow-paper-coherence-20260816.json",
+        "sha256": "676930281c919bcf937cdfca375a90f053c6216b474770e153ddc2a349b8cdef",
+        "present": true
+      },
+      "submission_qa": {
+        "path": "generated/asset-first-stri-submission-qa-20260816.json",
+        "sha256": "127e95b8d9260517bbff6ba9d7ed6b0cab389ef2d5692ddfd3268bffe38d5cd9",
+        "present": true
+      },
+      "reduction": {
+        "path": "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json",
+        "sha256": "94ebdfa6e970882744dc7d15c51e146157efac332526a710810345833e5ad2f0",
+        "present": true
+      },
+      "paper_design": {
+        "path": "generated/asset-first-stri-narrow-paper-design-20260816.json",
+        "sha256": "2f9c539b336e8d6f2098e40a3e4558e3653f6ffa29af156c6fc585537d81a301",
+        "present": true
+      },
+      "current_source_review": {
+        "path": "generated/asset-first-stri-current-source-review-20260816.json",
+        "sha256": "521acfdcc54e01ae1ee5407c9c5d63e3eec330e220bfa392d7a56c818b5d655a",
+        "present": true
+      }
+    },
+    "policy": {
+      "asset_first_track_is_separate_from_canonical_problem_gate": true,
+      "asset_first_ready_cannot_mutate_canonical_generator_or_queue": true,
+      "asset_first_ready_is_not_canonical_problem_gate_pass": true,
+      "paper_ready_requires_final_review": true,
+      "paper_ready_requires_claim_coherence": true,
+      "paper_ready_requires_submission_qa": true,
+      "paper_ready_requires_current_source_survival": true,
+      "paper_ready_requires_superseding_reduction_state": true,
+      "dynamic_p0_is_not_required_for_the_narrow_claim_scope": true,
+      "dynamic_qualification_failure_is_not_positive_or_negative_narrow_evidence": true,
+      "paper_ready_does_not_authorize_method_p0_or_gpu": true
+    },
+    "scientific_authority": false,
+    "authority": {
+      "canonical_problem_gate": false,
+      "canonical_generator": false,
+      "canonical_queue": false,
+      "method": false,
+      "experiment": false,
+      "p0": false,
+      "gpu": false
+    }
   }
 }

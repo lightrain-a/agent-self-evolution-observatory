@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import PROJECT_ROOT, StorageSettings, resolve_experiment_data_root
+from .asset_first_stri_public_status import build_asset_first_stri_public_status, validate_asset_first_stri_public_status
 from .ai_consultation_clinic import build_ai_consultation_clinic_state, write_ai_consultation_clinic_state
 from .ai_consultation_automation import DEFAULT_JSON as AI_CONSULTATION_AUTOMATION_JSON, PUBLIC_POLICY as AI_AUTOMATION_POLICY
 from .discussion_portfolio import build_discussion_portfolio
@@ -342,6 +343,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_global_relation_scan_admission = public_global_relation_scan_admission_summary(build_global_relation_scan_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,relation_state=paper_first_global_relation_recall,delta_state=paper_first_global_relation_delta_private))
     paper_first_problem_search_portfolio = _load_shadow_search_portfolio_public()
     paper_first_evidence_migration = load_public_migration()
+    asset_first_stri_paper_ready = build_asset_first_stri_public_status()
     paper_first_shadow_search_admission = public_shadow_search_admission_summary(build_shadow_search_admission(primary_state=paper_first_primary_evidence,generator_state=paper_first_problem_generator,queue_state=paper_first_problem_gate_queue,shadow_state=paper_first_problem_search_portfolio))
     paper_first_shadow_continuation_frontier = build_shadow_continuation_frontier(admission=paper_first_shadow_search_admission,support_watch=paper_first_support_release_watch,asset_queue=paper_first_support_asset_recheck,support_handoff=paper_first_support_asset_recheck_handoff)
     paper_first_discovery_frontier = build_paper_first_discovery_frontier(
@@ -620,6 +622,13 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_discovery_frontier_model_calls":int((paper_first_discovery_frontier.get("summary") or {}).get("automatic_model_calls_authorized") or 0),
             "paper_first_discovery_frontier_evidence_open":int((paper_first_discovery_frontier.get("summary") or {}).get("evidence_internal_open") or 0),
             "paper_first_evidence_migration_status":paper_first_evidence_migration.get("status","NOT_RUN"),
+            "asset_first_stri_status":asset_first_stri_paper_ready.get("status","HOLD_ASSET_FIRST_PAPER_NOT_READY"),
+            "asset_first_stri_paper_ready":int((asset_first_stri_paper_ready.get("summary") or {}).get("paper_ready") or 0),
+            "asset_first_stri_claims_supported":int((asset_first_stri_paper_ready.get("summary") or {}).get("claims_supported") or 0),
+            "asset_first_stri_claims_total":int((asset_first_stri_paper_ready.get("summary") or {}).get("claims_total") or 0),
+            "asset_first_stri_qa_checks_passed":int((asset_first_stri_paper_ready.get("summary") or {}).get("qa_checks_passed") or 0),
+            "asset_first_stri_qa_checks_total":int((asset_first_stri_paper_ready.get("summary") or {}).get("qa_checks_total") or 0),
+            "asset_first_stri_canonical_problem_gate_added":int((asset_first_stri_paper_ready.get("summary") or {}).get("canonical_problem_gate_pass_added") or 0),
             "paper_first_evidence_migration_pending":int((paper_first_evidence_migration.get("summary") or {}).get("current_reduction_pending") or 0),
             "paper_first_evidence_migration_design_pending":int((paper_first_evidence_migration.get("summary") or {}).get("evidence_design_pending") or 0),
             "paper_first_evidence_migration_recompile_pending":int((paper_first_evidence_migration.get("summary") or {}).get("evidence_operationalization_recompile_pending") or 0),
@@ -825,6 +834,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_support_asset_recheck_handoff":paper_first_support_asset_recheck_handoff,
         "paper_first_discovery_frontier":paper_first_discovery_frontier,
         "paper_first_evidence_migration":paper_first_evidence_migration,
+        "asset_first_stri_paper_ready":asset_first_stri_paper_ready,
         "paper_first_sp15_identifiability_support":paper_first_sp15_support,
         "paper_first_paper_design_backlog":paper_first_paper_design_backlog,
         "paper_first_global_relation_recall":paper_first_global_relation_recall,
@@ -1407,6 +1417,10 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if evidence_migration:
         errors.extend(f"Legacy evidence migration: {error}" for error in validate_public_migration(evidence_migration))
         if any(key in evidence_migration for key in ("machine_projection","evidence_plan","source_run_path","private_out")): errors.append("legacy evidence migration public state cannot expose private candidate or path material")
+    asset_first_stri=state.get("asset_first_stri_paper_ready") or {}
+    errors.extend(f"Asset-first STRI paper-ready: {error}" for error in validate_asset_first_stri_public_status(asset_first_stri))
+    if int((asset_first_stri.get("summary") or {}).get("canonical_problem_gate_pass_added") or 0)!=0 or int((asset_first_stri.get("summary") or {}).get("canonical_generator_candidates_added") or 0)!=0 or int((asset_first_stri.get("summary") or {}).get("canonical_queue_candidates_added") or 0)!=0:
+        errors.append("asset-first STRI paper-ready track cannot mutate canonical discovery accounting")
     discovery_frontier=state.get("paper_first_discovery_frontier") or {}
     if discovery_frontier:
         errors.extend(f"Paper-first discovery frontier: {error}" for error in validate_paper_first_discovery_frontier(discovery_frontier))
