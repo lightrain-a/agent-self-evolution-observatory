@@ -14,6 +14,17 @@ class SkillRLP0DTest(unittest.TestCase):
         self.assertEqual(a,p0d.step_seed(2026081601,'abc',2))
         self.assertNotEqual(a,p0d.step_seed(2026081601,'abc',3))
 
+    def test_exact_quotient_reuses_pristine_realized_response(self):
+        active=['A_pristine','B_displacement_clone','C_identity_placebo','D_exact_quotient']
+        prompts=['same','b','c','same'];texts=['a-realization','b-realization','c-realization','independent-draw']
+        got=p0d.couple_exact_quotient_response(active,prompts,texts)
+        self.assertEqual(got,['a-realization','b-realization','c-realization','a-realization'])
+        self.assertEqual(texts[-1],'independent-draw')
+
+    def test_exact_quotient_coupling_fails_closed_if_prompt_is_not_identical(self):
+        with self.assertRaisesRegex(RuntimeError,'A-D-prompt-divergence'):
+            p0d.couple_exact_quotient_response(['A_pristine','D_exact_quotient'],['a','d'],['x','y'])
+
     def _write_case(self,root:Path,kind:str,break_quotient:bool=False):
         families=['f0','f1','f2','f3','f4','f5'];rows=[]
         for i in range(24):

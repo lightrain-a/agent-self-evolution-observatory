@@ -83,6 +83,19 @@ def build_obs(prompts,mem_history,mem_skill,retrieved:dict,task:str,text_obs:str
 
 def step_seed(base:int,task_id:str,step:int)->int:return int(hashlib.sha256(f'{base}|{task_id}|{step}'.encode()).hexdigest()[:8],16)
 
+def couple_exact_quotient_response(active:list[str],prompts:list[str],texts:list[str])->list[str]:
+ out=list(texts)
+ if 'A_pristine' in active and 'D_exact_quotient' in active:
+  ia=active.index('A_pristine');id_=active.index('D_exact_quotient')
+  if prompts[ia]!=prompts[id_]:raise RuntimeError('A-D-prompt-divergence')
+  # A and D are the same represented state by construction. vLLM does not
+  # guarantee that two separate sampling requests with the same seed consume
+  # the same random stream, so use one realized response for both arms. This
+  # couples only the exact-quotient negative control; B/C remain independently
+  # sampled and the scientific treatment, tasks, thresholds, and model stay fixed.
+  out[id_]=out[ia]
+ return out
+
 MODEL_SHARDS={
  'model-00001-of-00009.safetensors':(1886423520,'c2474c3652851fb82b796b5ed8b2c1ac44308fd783ffe418a923d5e1f2ddf36f'),
  'model-00002-of-00009.safetensors':(1864467800,'a3664c32d79e954ba3e53999d932b4e75525e5918ae12b88f01d821180c61a21'),
@@ -213,9 +226,7 @@ def run_unit(runner,policy:VllmPolicy,SkillsOnlyMemory,SimpleMemory,prompts_mod,
     if prompts[ia]!=prompts[id_]:raise RuntimeError('A-D-prompt-divergence')
    texts,lens=policy.generate(prompts,step_seed(base_seed,task_row['selection_sha256'],step))
    if len(texts)!=len(active):raise RuntimeError('generation-count-mismatch')
-   if 'A_pristine' in active and 'D_exact_quotient' in active:
-    ia=active.index('A_pristine');id_=active.index('D_exact_quotient')
-    if texts[ia]!=texts[id_]:raise RuntimeError('A-D-response-divergence')
+   texts=couple_exact_quotient_response(active,prompts,texts)
    for arm,text,prompt_text in zip(active,texts,prompts):
     cmds=info_commands(info[arm]);projected,iv=projection_mod.alfworld_projection([text],[list(cmds)]);action=projected[0];before=obs[arm];o,r,d,i=envs[arm].step([action]);hist[arm].store({'text_obs':[before],'action':[action]});obs[arm]=str(o[0]);info[arm]=i;done[arm]=bool(d[0]);won[arm]=info_won(i);actions[arm].append(action);responses[arm].append(text);prompt_hashes[arm].append(htext(prompt_text));valids[arm].append(int(iv[0]))
    if actions['A_pristine']!=actions['D_exact_quotient'] or responses['A_pristine']!=responses['D_exact_quotient'] or obs['A_pristine']!=obs['D_exact_quotient']:raise RuntimeError('A-D-trajectory-divergence')
