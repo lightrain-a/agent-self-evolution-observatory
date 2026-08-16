@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0-senior-discussion",
+  "generated_at_date": "2026-08-16",
+  "scientific_authority": false,
+  "policy": {
+    "canonical_problem_gate_unchanged": true,
+    "shortlist_is_not_problem_gate_pass": true,
+    "paper_evidence_quality_not_experiment_count": true,
+    "completed_evidence_required_before_paper_ready": true,
+    "failed_or_inconclusive_runs_remain_visible": true
+  },
+  "recommended_order": [
+    "DR-FROZEN-ANCHOR-SELECTION-REGRET",
+    "DR-ONE-WAY-DELAYED-REGRET",
+    "AUTOSKILL-MATCHED-UPTAKE-RESIDUAL",
+    "PF4-FUNCTIONAL-DIAGNOSTIC-EQUIVALENCE"
+  ],
+  "candidates": [
+    {
+      "id": "DR-FROZEN-ANCHOR-SELECTION-REGRET",
+      "title": "Frozen evaluator anchors induce actor-shifted held-out selection regret",
+      "tier": "A",
+      "status": "CLEAR_FOR_SUBSTRATE_PREFLIGHT_QUALIFICATION_PENDING",
+      "source_candidate_id": "SHADOW-P01-C01",
+      "first_party_asset": "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
+      "problem_falsifier_eligible": true,
+      "independent_evidence_review": "CLEAR_FOR_SUBSTRATE_PREFLIGHT",
+      "substrate_qualification_status": "FROZEN_NOT_RUN_GPU_BUSY",
+      "strongest_reductions": [
+        "same-information covariate-shift / online adaptation",
+        "snapshot validity / adaptive validation"
+      ],
+      "ruling_out_test": "released frozen anchor vs same-information online refresh/reweight vs reciprocal skill-output-to-metric-data refresh, with identical candidate metrics, held-out set, model, and compute",
+      "authority": {"problem_gate": false, "method": false, "p0": false, "gpu": false}
+    },
+    {
+      "id": "DR-ONE-WAY-DELAYED-REGRET",
+      "title": "One-way metric-to-skill co-evolution produces delayed held-out regret",
+      "tier": "A",
+      "status": "CLEAR_FOR_SUBSTRATE_PREFLIGHT_QUALIFICATION_PENDING",
+      "source_candidate_id": "SHADOW-P03-C01",
+      "first_party_asset": "first-party-asset:double-ratchet@0f14e910d361196422d9b938f45280919952d4fd",
+      "problem_falsifier_eligible": true,
+      "independent_evidence_review": "CLEAR_FOR_SUBSTRATE_PREFLIGHT",
+      "substrate_qualification_status": "FROZEN_NOT_RUN_GPU_BUSY",
+      "strongest_reductions": [
+        "stale-supervisor / anchor-aging",
+        "non-stationary learning",
+        "alternating optimization"
+      ],
+      "ruling_out_test": "matched longitudinal released-one-way, stale-anchor control, and reciprocal-refresh histories with preregistered held-out reversal criterion",
+      "authority": {"problem_gate": false, "method": false, "p0": false, "gpu": false}
+    },
+    {
+      "id": "AUTOSKILL-MATCHED-UPTAKE-RESIDUAL",
+      "title": "Matched-uptake residual in persistent skill carryover",
+      "tier": "B",
+      "status": "ASSET_GROUNDED_OPPOSITE_SEARCH_SEED_NO_RESIDUAL_YET",
+      "source_candidate_id": "P03-AUTOSKILL-CONTEXT-UPTAKE",
+      "first_party_asset": "first-party-asset:autoskill@94c47ca488d4ba4117d20272e66d49b9877e68cf",
+      "problem_falsifier_eligible": false,
+      "current_reopen_condition_met": false,
+      "current_boundary": "Existing P19/P20/P21 probes do not provide a same-uptake different-harm pair; P19 has distinct observable hook-action uptake.",
+      "strongest_reductions": [
+        "retrieval-versus-utilization",
+        "instruction following",
+        "task-conditioned effect heterogeneity"
+      ],
+      "ruling_out_test": "hold frozen library, task-artifact compatibility, and selected/action-level uptake fixed; search for different fresh-session harm or harm without corresponding uptake",
+      "authority": {"problem_gate": false, "method": false, "p0": false, "gpu": false}
+    },
+    {
+      "id": "PF4-FUNCTIONAL-DIAGNOSTIC-EQUIVALENCE",
+      "title": "Functional equivalence does not imply diagnostic equivalence",
+      "tier": "B",
+      "status": "PAPER_PROBLEM_SURVIVES_CURRENT_REALIZATION_INCONCLUSIVE",
+      "problem_falsifier_eligible": false,
+      "latest_execution": "INCONCLUSIVE_FUNCTIONAL_EQUIVALENCE_QUALIFICATION_FAILED",
+      "single_realization_retry_authorized": false,
+      "strongest_reductions": [
+        "generic diagnosability / observability",
+        "repair complexity / logging richness"
+      ],
+      "ruling_out_test": "first qualify current-functionally-equivalent repair pairs, then expose matched future faults and test whether diagnostic distinguishability changes the preregistered tie-break commit decision",
+      "authority": {"problem_gate": false, "method": false, "p0": false, "gpu": false}
+    }
+  ],
+  "holds_or_dead_ends": [
+    {"id": "LOPD-SHARED-BUDGET", "status": "HOLD_SOURCE_SPECIFIC_ASSETS_UNAVAILABLE"},
+    {"id": "SHAPER-REPRESENTATION-SIGN-FLIP", "status": "HOLD_FIRST_PARTY_SUBSTRATE_UNAVAILABLE"},
+    {"id": "ROUTER-CAPACITY-SATURATION", "status": "HOLD_EVIDENCE_REVIEW_BLOCKED_BAKE_IN"},
+    {"id": "RELEVANCE-EVIDENCE-DEBT", "status": "PRINCIPLE_DEAD_END_SAME_INFORMATION_REDUCTION"}
+  ]
+}
