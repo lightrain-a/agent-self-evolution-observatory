@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-16T17:41:00+08:00",
+  "source_run_id": "shadow-20260816-v2-multiidea-r1",
+  "discovery_operator_version": "anomaly-first-deadend-inversion-v2",
+  "control_snapshot_sha256": "f07d7474d3bc69bda4d741a76e6bf20b57ba15e058ca53def14e819f8799e20f",
+  "purpose": "Senior-collaborator discussion shortlist; zero scientific authority.",
+  "search_accounting": {
+    "raw_seeds": 43,
+    "semantic_unique": 38,
+    "evolution_parents": 24,
+    "selectively_formulated_branches": 14,
+    "machine_reduction_pending": 2,
+    "machine_blocked_after_audit": 0
+  },
+  "writing_allocation": {
+    "paper_writing_tracks": 1,
+    "paper_writing_subject": "STRI",
+    "new_idea_tracks_are_discovery_only": true
+  },
+  "shortlist": [
+    {
+      "rank": 1,
+      "candidate_id": "SHADOW-P06-C01",
+      "title": "Router-Capacity Saturation in Co-Evolving Skill Libraries",
+      "status": "TOP_PRIORITY_REDUCTION_PENDING_EVIDENCE_REVIEW_REVISE",
+      "machine_reduction_pending": true,
+      "problem_falsifier_eligible": true,
+      "evidence_design_passed": true,
+      "independent_evidence_review": "REVISE",
+      "review_revision_scope": "Remove mandatory dependence on specific Skill-SP/ERSkill source code by compiling a self-contained first-party simulation without changing the frozen prediction or baseline.",
+      "budget": {"max_units": 128, "max_model_calls": 256, "max_gpu_hours": 1.0},
+      "scientific_authority": false
+    },
+    {
+      "rank": 2,
+      "candidate_id": "SHADOW-P04-C01",
+      "title": "Note-Conditioned Evidence Debt in Mutable Document Agents",
+      "status": "HIGH_POTENTIAL_REVISE_SCHEMA_AND_SUPPORT",
+      "principle_inversion": "Evidence sufficiency is relevance-conditioned, not coverage-conditioned.",
+      "machine_reduction_pending": false,
+      "problem_falsifier_eligible": false,
+      "scientific_authority": false
+    },
+    {
+      "rank": 3,
+      "candidate_id": "SHADOW-P03-C01",
+      "title": "Shared-Budget vs Fixed-Width Latent Retrieval in On-Policy Self-Distillation",
+      "status": "HIGH_POTENTIAL_REVISE_SCHEMA_EXACT_REDUCTION_PENDING",
+      "machine_reduction_pending": false,
+      "problem_falsifier_eligible": false,
+      "scientific_authority": false
+    },
+    {
+      "rank": 4,
+      "candidate_id": "SHADOW-P02-C01",
+      "title": "Test-Time Compute Sign Reversal: Raw VLA Trajectories vs Skill-Harness Units",
+      "status": "HIGH_POTENTIAL_REVISE_MATURE_BASELINES",
+      "machine_reduction_pending": false,
+      "problem_falsifier_eligible": false,
+      "scientific_authority": false
+    },
+    {
+      "rank": 5,
+      "candidate_id": "SHADOW-P11-C01",
+      "title": "Trace-Authored Defense Persistence as Local-Commit / Global-Block Inconsistency",
+      "status": "REDUCTION_PENDING_EVIDENCE_DESIGN_INVALID",
+      "machine_reduction_pending": true,
+      "problem_falsifier_eligible": true,
+      "evidence_design_passed": false,
+      "scientific_authority": false
+    },
+    {
+      "rank": 6,
+      "candidate_id": "SHADOW-P01-C01",
+      "title": "Dual-Use Skill Memory Under Fixed Retrieval Budget",
+      "status": "SECOND_WAVE_REVISE_SCHEMA_AND_PROCEDURAL_MEMORY_REDUCTION",
+      "machine_reduction_pending": false,
+      "problem_falsifier_eligible": false,
+      "scientific_authority": false
+    }
+  ],
+  "explicitly_rejected": [
+    "simple frozen-skill x frozen-router 2x2 interaction: standard co-evolution/component-interaction ablation",
+    "security-utility release from current ASR/UA alone: existing constrained-governance/restrictiveness basin",
+    "unsafe authorship inferred from later carryover harm: source already covers lifecycle attribution",
+    "harness small-n verification as standalone lineage mechanism: current evidence supports small-n noise only"
+  ],
+  "authority": {
+    "canonical_problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "scientific_authority": false
+}
