@@ -63,11 +63,11 @@ For a support cell `c`, define additive eligibility exposure
 
 This is a control-opportunity measure, not a probability distribution over tasks and not task utility.
 
-**Theorem 1 (mandatory-overlap additive-exposure lower bound).** Suppose two frozen primitives `u_a,u_b` each have an exclusive support cell and also share an overlap cell. Let `r=min_c E(c)>0` over the focal cells. Then every nonnegative normalized primitive-mass vector obeys
+**Theorem 1 (mandatory-overlap additive-exposure lower bound).** Suppose two frozen primitives `u_a,u_b` each have a globally singleton support cell—support signatures exactly `{u_a}` and `{u_b}` over the full frozen primitive universe—and also share an overlap cell containing both. Let `r=min_c E(c)>0` over the focal cells. Then every nonnegative normalized primitive-mass vector obeys
 
 `max_c E(c) / min_c E(c) >= 2`.
 
-**Proof.** The `u_a`-exclusive cell forces `m(u_a)>=r`; the `u_b`-exclusive cell forces `m(u_b)>=r`. Their shared cell has exposure at least `m(u_a)+m(u_b)>=2r`. Therefore the max/min ratio is at least two. □
+**Proof.** Because the singleton cells contain no other supported primitive, their exposures equal `m(u_a)` and `m(u_b)`; therefore `m(u_a)>=r` and `m(u_b)>=r`. Their shared cell has exposure at least `m(u_a)+m(u_b)>=2r`. Therefore the max/min ratio is at least two. □
 
 The released Skill-SP support graph supplies two independent witnesses: `(skill_003, skill_015)` and `(skill_004, skill_015)`. A linear program that may set redundant package weights to zero and freely reweight every remaining package attains ratio exactly `2.0`, so the bound is tight on the released graph.
 

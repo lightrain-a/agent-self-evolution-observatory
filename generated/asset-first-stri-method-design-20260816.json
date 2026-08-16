@@ -83,7 +83,7 @@
   ],
   "formal_targets": [
     "Content-addressed primitive-basis definition and representation channel: package selection p_T(s|z) plus within-package responsibility rho_T(u|s,z) induces normalized primitive mass m_T(u|z).",
-    "Tight mandatory-overlap lower bound on additive eligibility exposure E_T(c|z)=sum_{u in sigma_U(c)}m_T(u|z): two exclusive cells plus one shared cell force max/min >=2. The released Skill-SP graph supplies two witnesses and the LP optimum equals 2.",
+    "Tight mandatory-overlap lower bound on additive eligibility exposure E_T(c|z)=sum_{u in sigma_U(c)}m_T(u|z): two globally singleton support cells plus one shared cell force max/min >=2. The released Skill-SP graph supplies two witnesses and the LP optimum equals 2.",
     "Frozen-state decision-time reduction: every randomized same-information controller choosing exactly one package before task generation induces a categorical p_T(s|z) pointwise in z; this does not identify a whole longitudinal adaptive policy.",
     "Support-quotient invariance proposition on C_U=X/~_U, where equal frozen primitive support signatures define the equivalence relation. Exact clones/grouping cannot create new quotient cells.",
     "Credit conservation proposition: total semantic credit is invariant to package duplication/grouping when primitive responsibility weights sum to one."
@@ -97,6 +97,10 @@
     "contextual router matches the optional post-context retrieval/credit extension, in which case that extension is dropped"
   ],
   "scientific_authority": false,
-  "authority": {"method_execution": false, "p0": false, "gpu": false},
+  "authority": {
+    "method_execution": false,
+    "p0": false,
+    "gpu": false
+  },
   "next_action": "Freeze one faithful author-workflow P0 in which rejection/validator gating is a shared backend, not a competing claimed method. Test only native taxonomy sensitivity plus whether support-quotient control removes it within matched coverage/call/utility constraints. Do not train an upstream neural single-package baseline; that class is already analytically reduced."
 }

@@ -82,9 +82,9 @@
     },
     "theory_targets": [
       "Clone/refinement dependence lemma: any controller assigning positive additive mass directly to artifact IDs changes total semantic mass under an exact clone unless it explicitly quotients equivalent support.",
-      "Partial-overlap impossibility theorem: if two active packages each have an exclusive-support context and share any overlap context, every nonnegative context-independent package-weight controller has max/min semantic-context exposure ratio at least 2. The released Skill-SP graph has two independent witnesses and the LP optimum attains 2, making the bound tight.",
+      "Partial-overlap impossibility theorem: if two active primitives each have a true globally singleton support cell over the frozen support universe and share an overlap cell, every nonnegative context-independent package-weight controller has max/min semantic-context exposure ratio at least 2. The released Skill-SP graph has two independent witnesses and the LP optimum attains 2, making the bound tight.",
       "Decision-time controller-class reduction: because released Skill-SP samples exactly one package before the task exists, every same-information randomized pre-context controller collapses pointwise to a categorical package-weight vector; neural/bandit capacity cannot escape the global-weight lower bound without changing the action space or using post-decision information.",
-    "Quotient invariance proposition: a context/support-first controller whose control measure factors through semantic support atoms rather than artifact multiplicity is invariant to exact clones and support-preserving refinements under explicit support-equivalence assumptions."
+      "Quotient invariance proposition: a context/support-first controller whose control measure factors through semantic support atoms rather than artifact multiplicity is invariant to exact clones and support-preserving refinements under explicit support-equivalence assumptions."
     ]
   },
   "method_design": {

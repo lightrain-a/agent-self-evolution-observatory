@@ -44,7 +44,7 @@ E_T(c|z)=sum_{u in sigma_U(c)} m_T(u|z).
 E is a control-opportunity measure, not a probability distribution and not task utility. Separately, Q_T(c|z) denotes the actual qualified task distribution emitted by the proposer/realization pipeline. Static theory concerns E; P0-A tests whether representation changes propagate to Q; longitudinal utility is C4 and remains empirical.
 
 ## Theorem 1 — Mandatory-overlap lower bound
-Suppose frozen primitives u_a,u_b each have an exclusive support cell and share an overlap cell. Let m be the minimum positive additive eligibility exposure. Exclusive cells require primitive masses m(u_a) >= m and m(u_b) >= m; therefore the overlap cell has exposure at least m(u_a)+m(u_b) >= 2m. Hence every nonnegative primitive-mass vector induced by a pre-context single-package controller obeys
+Suppose frozen primitives u_a,u_b each have a globally singleton support cell, with support signatures exactly {u_a} and {u_b} over the full frozen primitive universe, and share an overlap cell containing both. Let m be the minimum positive additive eligibility exposure. The globally singleton cells have exposures exactly m(u_a) and m(u_b), so m(u_a) >= m and m(u_b) >= m; therefore the overlap cell has exposure at least m(u_a)+m(u_b) >= 2m. Hence every nonnegative primitive-mass vector induced by a pre-context single-package controller obeys
 
 max_x E(x) / min_x E(x) >= 2.
 

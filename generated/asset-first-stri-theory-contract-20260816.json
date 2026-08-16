@@ -72,11 +72,14 @@
     "assumptions": [
       "frozen primitive support basis U",
       "nonnegative normalized primitive mass vector m induced by any one-primitive/package-first control law",
-      "there exist support cells c_a,c_b,c_ab with u_a in c_a only among {u_a,u_b}, u_b in c_b only among {u_a,u_b}, and both u_a,u_b in c_ab",
+      "there exist support cells c_a,c_b,c_ab with sigma_U(c_a)={u_a}, sigma_U(c_b)={u_b}, and {u_a,u_b} subseteq sigma_U(c_ab); the exclusive cells are true singletons over the full frozen primitive/support universe, not only after projection or pruning",
       "positive exposure is retained on both exclusive cells"
     ],
-    "statement": "Let r=min_c E(c)>0 over the focal supported cells. Exclusive cells force m(u_a)>=r and m(u_b)>=r. The overlap cell has E(c_ab)>=m(u_a)+m(u_b)>=2r, hence max_c E(c)/min_c E(c)>=2.",
-    "empirical_witnesses": ["u_003 with u_015", "u_004 with u_015"],
+    "statement": "Let r=min_c E(c)>0 over the focal supported cells. Since sigma_U(c_a)={u_a} and sigma_U(c_b)={u_b}, E(c_a)=m(u_a)>=r and E(c_b)=m(u_b)>=r. The overlap cell has E(c_ab)>=m(u_a)+m(u_b)>=2r, hence max_c E(c)/min_c E(c)>=2.",
+    "empirical_witnesses": [
+      "released API-Bank row L1#44 has accepted_skill_ids exactly {skill_003}; L1#12 exactly {skill_015}; L1#0 exactly {skill_003,skill_015}",
+      "released API-Bank row L1#98 has accepted_skill_ids exactly {skill_004}; L1#12 exactly {skill_015}; L1#1 exactly {skill_004,skill_015}"
+    ],
     "tight_on_released_graph": true,
     "claim_boundary": "This theorem is only about additive eligibility exposure E. It does not imply lower task accuracy, regret or end-of-evolution utility."
   },

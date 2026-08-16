@@ -29,7 +29,7 @@
       "evidence": [
         "exact-coverage pruning leaves 71/348 overlaps",
         "optimal global package weighting max/min=2.0",
-        "two real theorem witnesses",
+        "two real theorem witnesses with globally singleton released-validator rows",
         "decision-time single-package controller class reduction"
       ],
       "artifacts": [
@@ -108,5 +108,11 @@
     "paper_claim_C4": false,
     "p0": false,
     "gpu": false
+  },
+  "theory_second_pass": {
+    "receipt": "generated/asset-first-stri-theory-second-pass-review-20260816.json",
+    "verdict": "CLEAR_THEOREM",
+    "confidence": 0.98,
+    "global_singleton_strengthening_verified": true
   }
 }

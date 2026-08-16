@@ -38,8 +38,13 @@ def structural_lower_bound(rows: Iterable[dict[str, Any]], selected_skills: set[
     pair_overlap: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
     for row in filtered:
         members = list(row["selected_skill_ids"])
-        if len(members) == 1:
-            unique[members[0]].append(row)
+        # The lower-bound proof requires a true singleton support cell over the
+        # full released validator universe, not merely uniqueness after pruning
+        # or projecting to selected_skills. Otherwise an unselected positive
+        # package could contribute to the purported exclusive cell.
+        all_members = [str(skill) for skill in row.get("accepted_skill_ids") or []]
+        if len(all_members) == 1 and all_members[0] in selected_skills:
+            unique[all_members[0]].append(row)
         for i, left in enumerate(members):
             for right in members[i + 1 :]:
                 pair_overlap[(left, right)].append(row)
@@ -66,12 +71,13 @@ def structural_lower_bound(rows: Iterable[dict[str, Any]], selected_skills: set[
         "covered_rows": len(filtered),
         "selected_skills": sorted(selected_skills),
         "unique_support_counts": {skill: len(unique[skill]) for skill in sorted(selected_skills)},
+        "unique_support_scope": "exact singleton accepted_skill_ids over the full released validator universe",
         "witness_count": len(witnesses),
         "witnesses": witnesses,
         "global_nonnegative_package_weight_exposure_ratio_lower_bound": 2.0 if witnesses else None,
         "proof": (
             "For any witness (a,b), let m be the minimum positive task exposure. "
-            "The a-only row implies w_a>=m and the b-only row implies w_b>=m. "
+            "The globally singleton a-only row implies w_a>=m and the globally singleton b-only row implies w_b>=m. "
             "Their overlap row has exposure at least w_a+w_b>=2m, so max/min>=2."
             if witnesses
             else "No mandatory-overlap witness was found."

@@ -16,6 +16,16 @@ class StructuralWitnessTest(unittest.TestCase):
         self.assertEqual(out["witness_count"], 1)
         self.assertEqual(out["global_nonnegative_package_weight_exposure_ratio_lower_bound"], 2.0)
 
+    def test_selected_only_uniqueness_is_not_enough(self) -> None:
+        rows = [
+            {"accepted_skill_ids": ["a", "c"], "level": 1, "index": 0, "tool": "ac"},
+            {"accepted_skill_ids": ["b"], "level": 1, "index": 1, "tool": "b"},
+            {"accepted_skill_ids": ["a", "b"], "level": 1, "index": 2, "tool": "ab"},
+        ]
+        out = structural_lower_bound(rows, {"a", "b"})
+        self.assertEqual(out["witness_count"], 0)
+        self.assertIsNone(out["global_nonnegative_package_weight_exposure_ratio_lower_bound"])
+
     def test_overlap_without_two_unique_regions_does_not_certify(self) -> None:
         rows = [
             {"accepted_skill_ids": ["a"], "level": 1, "index": 0, "tool": "ua"},

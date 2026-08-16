@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "review_kind": "independent-theory-second-pass-after-global-singleton-strengthening",
+  "first_attempt": {
+    "schema_version": "1.0",
+    "stage": "independent-theory-second-pass",
+    "status": "PROVIDER_INCOMPLETE_ZERO_AUTHORITY",
+    "requested_model": "doubao-seed-2.1-turbo",
+    "resolved_model": "doubao-seed-2-1-turbo-260628",
+    "reason": "length; all 3500 output tokens consumed as reasoning tokens before assistant output",
+    "scientific_authority": false
+  },
+  "review": {
+    "verdict": "CLEAR_THEOREM",
+    "mathematical_validity": "Both theorems are mathematically valid. Theorem 1's additive exposure argument holds under the stated assumptions: global singleton exclusive cells guarantee non-overlapping mass contributions, so overlap exposure is at least the sum of the two singleton masses, giving the bound >=2r even if extra primitives are present in the overlap cell. Theorem 2's pointwise reduction is logically sound with properly bounded scope.",
+    "empirical_witness_validity": "Valid. The two supplied witnesses meet the requirement of global singleton exclusive cells over the full released validator universe, matching Theorem 1's assumptions and achieving the stated 2.0 lower bound.",
+    "decision_time_reduction_validity": "Valid. Theorem 2 correctly reduces any pre-task frozen-state same-information single-package randomized controller to a categorical package distribution pointwise at fixed z, and explicitly does not imply whole longitudinal adaptive policies are static, adhering to its scope limits.",
+    "strongest_counterexample": "No counterexample identified under the stated problem assumptions.",
+    "required_revision": "No revisions required for the stated theorems and their bounded scope claims.",
+    "allowed_claim": "1. Additive exposure max/min ratio >= 2 for all valid nonnegative mass vectors under Theorem 1's mandatory overlap assumptions; 2. Pointwise pre-task frozen-state reduction of single-package controllers to categorical weight vectors falling under Theorem 1's constraints; 3. The provided empirical witnesses satisfy the global singleton requirement.",
+    "forbidden_claim": "1. Claims that Theorem 1 implies lower task accuracy, regret or end-of-evolution utility; 2. Claims that all longitudinal adaptive policies are equivalent to a single static categorical distribution; 3. Claims that this result proves dynamic or utility harm to adaptive methods.",
+    "confidence": 0.98,
+    "scientific_authority": false,
+    "requested_model": "doubao-seed-2.0-lite",
+    "resolved_model": "doubao-seed-2-0-lite-260215"
+  },
+  "verdict": "CLEAR_THEOREM",
+  "required_revision": "No revisions required for the stated theorems and their bounded scope claims.",
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_C2": false,
+    "p0": false,
+    "gpu": false
+  }
+}
