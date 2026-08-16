@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "experiment_id": "STRI-SKILLRL-FIXED-TASK-DYNAMIC-P0D-20260816",
+  "artifact_kind": "independent-scientific-contract-review",
+  "reviewed_contract_sha256": "1f40378349825557aa66bdcb01b98542ad396cbea449dd46cf7cfb76e541a718",
+  "verdict": "CLEAR_FOR_BOUNDED_EXECUTION",
+  "confidence": "high",
+  "checks": {
+    "independent_truth": true,
+    "treatment_placebo_identifiable": true,
+    "common_prefix_valid": true,
+    "sft_fixed_policy_valid": true,
+    "statistics_valid": true,
+    "novelty_boundary_valid": true,
+    "anti_bake_in": true
+  },
+  "reason": "The contract uses ALFWorld final success as independent task truth, with tasks pre-sealed and selection outcome-blind. The design cleanly separates semantic displacement (B) from fresh-ID/order perturbation (C) and restores pristine prompt (D), isolating the retrieval-budget displacement mechanism. The common prefix with replay preserves the scientific object since SkillRL injects memory only from step 2, and the SFT checkpoint is explicitly framed as a fixed warm-start policy, not the final RL model. The 12x2 paired design with preregistered McNemar/effect/placebo/quotient gates and headroom bounds is a valid bounded local falsifier. The contract explicitly states exact-clone is evidence-only and cannot support novelty or partial-overlap claims. The quotient arm's byte-identical restoration and the placebo arm's unchanged semantic set prevent tautology and false positives from generic perturbation.",
+  "required_revision": "",
+  "claim_if_go": "Supports only C4 fixed-policy downstream representation sensitivity on the SkillRL exact-clone subclass; does not establish SQC superiority or partial-overlap dynamic behavior, which remain locked to separate evidence.",
+  "claim_if_stop": "Rejects only this fixed-policy exact-clone downstream bridge; does not invalidate C1/C2 STRI or any other paper claims.",
+  "reviewer_model": "deepseek-v4-flash-ga-260731",
+  "scientific_authority": false,
+  "authority": {"paper_novelty": false, "method": false, "full_experiment": false, "gpu": false}
+}
