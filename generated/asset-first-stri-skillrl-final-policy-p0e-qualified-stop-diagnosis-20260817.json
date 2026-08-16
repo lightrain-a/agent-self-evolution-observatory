@@ -1,0 +1,350 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "experiment_id": "STRI-SKILLRL-FINAL-POLICY-COMPETENCY-P0E-20260816",
+  "artifact_kind": "qualified-true-negative-principled-dead-end-diagnosis",
+  "disposition": "QUALIFIED_TRUE_NEGATIVE_ENDPOINT_BRIDGE",
+  "diagnosis_layers": [
+    "semantic-specificity-collapse",
+    "endpoint-transport-failure"
+  ],
+  "scientific_belief_update_allowed": true,
+  "belief_update_scope": "Reject only C4 exact-clone downstream final-success transport under the single author final RL policy and frozen ALFWorld panel. N1/N2/N3 static STRI claims remain unchanged.",
+  "mechanism_rejected": false,
+  "c4_endpoint_bridge_rejected": true,
+  "stage2_confirmation_locked": true,
+  "scale_up_allowed": false,
+  "frozen_control_receipts": {
+    "pre_outcome_freeze_commit": "8b7714c719c6d6f4271ec8b588c1aca212c25099",
+    "contract_sha256": "4c507965d55158b65834e3ad486c3ea7d74e556c00bfc982e2dd4adad351d310",
+    "panel_sha256": "2713dd3c15aa8fd539526fd2960a45374cf28fc2b99a0e29b84c2b32d1592284",
+    "model_manifest_sha256": "1c592fa736ff64e9dfa30ba22caaf1d08d4f6355ddd801dac6102baf04ca473a",
+    "independent_pre_execution_review_sha256": "f486ee7af9c4d43da93cdf42fb5d8abfb1c1b269b3e92f02fd7f6213d6c083ff",
+    "p0d_dead_end_sha256": "5e0f5a781d5c05f14f22ace3d0a0f6f53155e59f7bebe98833e73f9c7cc40daa"
+  },
+  "evidence_receipts": {
+    "calibration_analysis_path": "/data/wyt/agent-self-evolution-observatory/runs/agent3-stri-skillrl-p0e-calibration-20260816/analysis.json",
+    "calibration_analysis_sha256": "8bd38d7c37a3594be93a7d82e915d90c4a9e3618e5bd99f91462170da244e47a",
+    "calibration_evidence_manifest_sha256": "9f3e47bd037280c829b71b16d7a22a46ea5af891d624cc799a410244e7a43ac5",
+    "causal_aggregate_path": "/data/wyt/agent-self-evolution-observatory/runs/agent3-stri-skillrl-p0e-causal-20260816/aggregate.json",
+    "causal_aggregate_sha256": "89a2e85cfe067cf519b163373204c13be0fce8d6e64d47f218cfb00b79ea145a",
+    "causal_raw_path": "/data/wyt/agent-self-evolution-observatory/runs/agent3-stri-skillrl-p0e-causal-20260816/aggregate.jsonl",
+    "causal_raw_sha256": "30aa3f7e5c97385e2f800280b0e792d1426aad6c3f2a838095bc1f63c649ff4f",
+    "causal_analysis_path": "/data/wyt/agent-self-evolution-observatory/runs/agent3-stri-skillrl-p0e-causal-20260816/analysis.json",
+    "causal_analysis_sha256": "1d8d56c343fa832bcdda5e52a4b7f8816710aca442b9937eeb1bf28e0743a560",
+    "causal_evidence_manifest_sha256": "d5cf6a1e0aaddac2022b08cc030585ede9066205457def9402c2e1d651ac05b1"
+  },
+  "qualification": {
+    "calibration_outcome": "GO_COMPETENT_POLICY_SUPPORT",
+    "calibration_pristine_success": 18,
+    "calibration_pristine_success_rate": 0.75,
+    "calibration_success_family_count": 5,
+    "causal_qualified": true,
+    "causal_qualification_errors": [],
+    "paired_units": 24,
+    "arm_episodes": 96,
+    "gpu_hours": 0.487879,
+    "within_budget": true
+  },
+  "endpoint_result": {
+    "formal_outcome": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
+    "success_rate": {
+      "A_pristine": 0.75,
+      "B_displacement_clone": 0.75,
+      "C_identity_placebo": 0.75,
+      "D_exact_quotient": 0.75
+    },
+    "B_vs_A_mcnemar_p": 1.0,
+    "paired_disagreement": {
+      "B_vs_A": 0.0,
+      "C_vs_A": 0.0,
+      "D_vs_A": 0.0
+    },
+    "B_vs_A_disagreement_minus_C_vs_A": 0.0,
+    "family_replicated_flip_count": 0,
+    "families_with_B_vs_A_flip": []
+  },
+  "trajectory_result": {
+    "B_displacement_clone_vs_A": {
+      "units": 24,
+      "response_sequence_disagreement": 23,
+      "response_sequence_disagreement_rate": 0.9583333333333334,
+      "projected_action_sequence_disagreement": 11,
+      "projected_action_sequence_disagreement_rate": 0.4583333333333333,
+      "step_count_difference_nonzero": 4,
+      "step_count_difference_nonzero_rate": 0.16666666666666666,
+      "mean_step_delta": -1.9583333333333333,
+      "step_delta_range": [
+        -37,
+        0
+      ],
+      "first_action_divergence_count": 11,
+      "first_action_divergence_median_step": 7,
+      "first_action_divergence_range": [
+        2,
+        21
+      ],
+      "endpoint_disagreement": 0,
+      "successful_stratum": {
+        "n": 18,
+        "action_sequence_disagreement": 5,
+        "response_sequence_disagreement": 17,
+        "endpoint_disagreement": 0,
+        "successful_outcome_equivalent_action_divergences": [
+          {
+            "unit_id": "look_at_obj_in_light|1c1143df90f2|2026081603",
+            "task_family": "look_at_obj_in_light",
+            "first_action_divergence_step": 3,
+            "A_steps": 14,
+            "arm_steps": 6
+          },
+          {
+            "unit_id": "pick_two_obj_and_place|1b41ce93c183|2026081603",
+            "task_family": "pick_two_obj_and_place",
+            "first_action_divergence_step": 13,
+            "A_steps": 36,
+            "arm_steps": 36
+          },
+          {
+            "unit_id": "pick_heat_then_place_in_recep|25419d792696|2026081604",
+            "task_family": "pick_heat_then_place_in_recep",
+            "first_action_divergence_step": 9,
+            "A_steps": 16,
+            "arm_steps": 15
+          },
+          {
+            "unit_id": "pick_two_obj_and_place|1b41ce93c183|2026081604",
+            "task_family": "pick_two_obj_and_place",
+            "first_action_divergence_step": 2,
+            "A_steps": 50,
+            "arm_steps": 13
+          },
+          {
+            "unit_id": "pick_two_obj_and_place|2be5d99cab49|2026081604",
+            "task_family": "pick_two_obj_and_place",
+            "first_action_divergence_step": 8,
+            "A_steps": 13,
+            "arm_steps": 12
+          }
+        ]
+      },
+      "failed_stratum": {
+        "n": 6,
+        "action_sequence_disagreement": 6,
+        "response_sequence_disagreement": 6,
+        "endpoint_disagreement": 0
+      }
+    },
+    "C_identity_placebo_vs_A": {
+      "units": 24,
+      "response_sequence_disagreement": 23,
+      "response_sequence_disagreement_rate": 0.9583333333333334,
+      "projected_action_sequence_disagreement": 15,
+      "projected_action_sequence_disagreement_rate": 0.625,
+      "step_count_difference_nonzero": 8,
+      "step_count_difference_nonzero_rate": 0.3333333333333333,
+      "mean_step_delta": -2.0416666666666665,
+      "step_delta_range": [
+        -36,
+        9
+      ],
+      "first_action_divergence_count": 15,
+      "first_action_divergence_median_step": 6,
+      "first_action_divergence_range": [
+        2,
+        8
+      ],
+      "endpoint_disagreement": 0,
+      "successful_stratum": {
+        "n": 18,
+        "action_sequence_disagreement": 9,
+        "response_sequence_disagreement": 17,
+        "endpoint_disagreement": 0,
+        "successful_outcome_equivalent_action_divergences": [
+          {
+            "unit_id": "pick_and_place_simple|2913a1c5e0e2|2026081603",
+            "task_family": "pick_and_place_simple",
+            "first_action_divergence_step": 4,
+            "A_steps": 8,
+            "arm_steps": 9
+          },
+          {
+            "unit_id": "look_at_obj_in_light|1c1143df90f2|2026081603",
+            "task_family": "look_at_obj_in_light",
+            "first_action_divergence_step": 8,
+            "A_steps": 14,
+            "arm_steps": 10
+          },
+          {
+            "unit_id": "pick_two_obj_and_place|1b41ce93c183|2026081603",
+            "task_family": "pick_two_obj_and_place",
+            "first_action_divergence_step": 4,
+            "A_steps": 36,
+            "arm_steps": 17
+          },
+          {
+            "unit_id": "pick_two_obj_and_place|2be5d99cab49|2026081603",
+            "task_family": "pick_two_obj_and_place",
+            "first_action_divergence_step": 7,
+            "A_steps": 13,
+            "arm_steps": 13
+          },
+          {
+            "unit_id": "look_at_obj_in_light|1c1143df90f2|2026081604",
+            "task_family": "look_at_obj_in_light",
+            "first_action_divergence_step": 3,
+            "A_steps": 6,
+            "arm_steps": 11
+          },
+          {
+            "unit_id": "pick_heat_then_place_in_recep|0b02618d699b|2026081604",
+            "task_family": "pick_heat_then_place_in_recep",
+            "first_action_divergence_step": 2,
+            "A_steps": 13,
+            "arm_steps": 22
+          },
+          {
+            "unit_id": "pick_heat_then_place_in_recep|25419d792696|2026081604",
+            "task_family": "pick_heat_then_place_in_recep",
+            "first_action_divergence_step": 8,
+            "A_steps": 16,
+            "arm_steps": 12
+          },
+          {
+            "unit_id": "pick_two_obj_and_place|1b41ce93c183|2026081604",
+            "task_family": "pick_two_obj_and_place",
+            "first_action_divergence_step": 2,
+            "A_steps": 50,
+            "arm_steps": 14
+          },
+          {
+            "unit_id": "pick_two_obj_and_place|2be5d99cab49|2026081604",
+            "task_family": "pick_two_obj_and_place",
+            "first_action_divergence_step": 6,
+            "A_steps": 13,
+            "arm_steps": 12
+          }
+        ]
+      },
+      "failed_stratum": {
+        "n": 6,
+        "action_sequence_disagreement": 6,
+        "response_sequence_disagreement": 6,
+        "endpoint_disagreement": 0
+      }
+    },
+    "D_exact_quotient_vs_A": {
+      "units": 24,
+      "response_sequence_disagreement": 0,
+      "response_sequence_disagreement_rate": 0.0,
+      "projected_action_sequence_disagreement": 0,
+      "projected_action_sequence_disagreement_rate": 0.0,
+      "step_count_difference_nonzero": 0,
+      "step_count_difference_nonzero_rate": 0.0,
+      "mean_step_delta": 0.0,
+      "step_delta_range": [
+        0,
+        0
+      ],
+      "first_action_divergence_count": 0,
+      "first_action_divergence_median_step": null,
+      "first_action_divergence_range": null,
+      "endpoint_disagreement": 0,
+      "successful_stratum": {
+        "n": 18,
+        "action_sequence_disagreement": 0,
+        "response_sequence_disagreement": 0,
+        "endpoint_disagreement": 0,
+        "successful_outcome_equivalent_action_divergences": []
+      },
+      "failed_stratum": {
+        "n": 6,
+        "action_sequence_disagreement": 0,
+        "response_sequence_disagreement": 0,
+        "endpoint_disagreement": 0
+      }
+    },
+    "B_vs_C": {
+      "projected_action_sequence_disagreement": 15,
+      "response_sequence_disagreement": 22,
+      "step_count_difference_nonzero": 7
+    },
+    "by_family": {
+      "look_at_obj_in_light": {
+        "units": 4,
+        "A_success": 4,
+        "B_action_diff": 1,
+        "C_action_diff": 2
+      },
+      "pick_and_place_simple": {
+        "units": 4,
+        "A_success": 2,
+        "B_action_diff": 2,
+        "C_action_diff": 3
+      },
+      "pick_clean_then_place_in_recep": {
+        "units": 4,
+        "A_success": 2,
+        "B_action_diff": 2,
+        "C_action_diff": 2
+      },
+      "pick_cool_then_place_in_recep": {
+        "units": 4,
+        "A_success": 2,
+        "B_action_diff": 2,
+        "C_action_diff": 2
+      },
+      "pick_heat_then_place_in_recep": {
+        "units": 4,
+        "A_success": 4,
+        "B_action_diff": 1,
+        "C_action_diff": 2
+      },
+      "pick_two_obj_and_place": {
+        "units": 4,
+        "A_success": 4,
+        "B_action_diff": 3,
+        "C_action_diff": 4
+      }
+    }
+  },
+  "principled_interpretation": {
+    "treatment_manipulation_reached_behavior": true,
+    "evidence": "B changes response sequences in 23/24 and projected action sequences in 11/24 units, with median first action divergence at step 7, while endpoint disagreement remains 0/24.",
+    "semantic_specificity_supported": false,
+    "semantic_specificity_reason": "Identity placebo C changes projected action sequences in 15/24 units, more often than B (11/24), yet also has 0/24 endpoint disagreement. Thus trajectory sensitivity is not specific to semantic displacement.",
+    "endpoint_transport_supported": false,
+    "endpoint_transport_reason": "A/B/C/D all achieve 18/24 final success with zero endpoint disagreement despite substantial B/C trajectory divergence. In successful A units, B has 5 and C has 9 action-trajectory divergences with the same successful endpoint. This identifies terminal paired equivalence under the perturbations, not a specific active-recovery mechanism.",
+    "exact_quotient_restoration_supported": true,
+    "exact_quotient_reason": "D has zero response, action, step-count, or endpoint disagreement with A on all 24 units.",
+    "strongest_opposite_cause": "The same-information identity placebo shows that generic fresh-identity/order/prompt perturbation is sufficient to induce trajectory variance at least as strongly as semantic displacement, while terminal outcomes remain paired-equivalent. The experiment does not distinguish whether that endpoint equivalence arises from prompt-conditioned policy sensitivity, multiple task-successful action paths, environmental redundancy, active recovery, or a mixture of these mechanisms."
+  },
+  "paper_scope_effect": {
+    "current_submission_claims": [
+      "N1",
+      "N2",
+      "N3"
+    ],
+    "current_submission_unchanged": true,
+    "reason": "The frozen narrow STRI design explicitly bounds N1-N3 to control-plane representation sensitivity and exact support geometry, lists C4 as optional/non-rescuing, and forbids downstream utility-harm claims.",
+    "current_final_state_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
+    "new_gpu_evidence_required_for_current_claim_scope": false
+  },
+  "forbidden_repairs": [
+    "run Stage-2 confirmation after local STOP",
+    "add seeds until B-vs-A becomes significant",
+    "select easier or more displacement-sensitive tasks after outcomes",
+    "switch to another policy/checkpoint after outcomes",
+    "relax the preregistered endpoint GO/STOP thresholds",
+    "replace final success with post-hoc trajectory divergence and call C4 rescued",
+    "reinterpret generic placebo-dominated trajectory sensitivity as semantic-displacement-specific evidence"
+  ],
+  "allowed_next_step": "Layered post-negative differential diagnosis and novelty/reduction review. Any surviving trajectory/equifinality question must be a new paper contract with a new scientific estimand, not a repair of C4.",
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_expansion": false,
+    "method": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}

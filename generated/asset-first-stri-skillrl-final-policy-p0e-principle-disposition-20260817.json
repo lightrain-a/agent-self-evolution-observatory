@@ -1,0 +1,334 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "post-negative-scoped-principle-disposition",
+  "principle_id": "stri-c4-exact-clone-final-success-transport-v1",
+  "principle_scope": "C4 exact-clone final-success transport only",
+  "experimental_realization_disposition": "STOP_FIXED_POLICY_DYNAMIC_BRIDGE",
+  "experimental_stop_valid": true,
+  "persistent_principle_dead_end_certified": false,
+  "principle_disposition": "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED",
+  "reason": "The frozen experiment validly STOPs this C4 realization and same-information trajectory residuals do not survive C placebo, but the design did not preregister statistical equivalence/power/cluster resolution sufficient for persistent population-level principle-dead-end certification.",
+  "broader_STRI_N1_N2_N3_unchanged": true,
+  "stage2_confirmation_locked": true,
+  "new_problem_disposition": "NO_NEW_PROBLEM_AFTER_CURRENT_SOURCE_AND_SAME_INFORMATION_REDUCTION",
+  "new_gpu_authorized": false,
+  "receipts": {
+    "diagnosis": {
+      "path": "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json",
+      "sha256": "5b5827579df4824dea0be8f62ff7c0e2a1757e1cb81c071006e127ef3ba8437a"
+    },
+    "same_information_screen": {
+      "path": "generated/asset-first-stri-skillrl-final-policy-p0e-same-information-screen-20260817.json",
+      "sha256": "6823a062ab98e329fc1d6ebd644ea569ad36ad2c391e3712d490fb665e32a5c2"
+    },
+    "statistical_resolution_audit": {
+      "path": "generated/asset-first-stri-skillrl-final-policy-p0e-statistical-resolution-audit-20260817.json",
+      "sha256": "5e35a298e5568e07a9f8f3ed9c8d8fb5ebecb17874263ffd71a56e7cec24645f"
+    },
+    "portable_five_role_review_panel": {
+      "path": "generated/asset-first-stri-skillrl-final-policy-p0e-postnegative-review-panel-20260817.json",
+      "sha256": "b1750edd9f765213f6ca20474bdcca5bb2f22ed0779a45ffa86aec3c8dd483db",
+      "role_policy": [
+        "design-critic",
+        "operationalization-critic",
+        "principle-advocate",
+        "principle-falsifier",
+        "meta-adjudicator"
+      ],
+      "consensus": {
+        "experimental_STOP_FIXED_POLICY_DYNAMIC_BRIDGE_valid": true,
+        "semantic_specificity_failure_layer_supported": true,
+        "endpoint_transport_failure_layer_supported_as_sample_level_STOP": true,
+        "active_recovery_mechanism_identified": false,
+        "same_information_trajectory_residual_survives": false,
+        "persistent_principle_dead_end_certified": false,
+        "principle_layer_disposition": "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED",
+        "reason_dead_end_not_certified": "No preregistered equivalence/effect-margin plus task-cluster power/inference plan establishes persistent population-level dead-end resolution.",
+        "broader_STRI_N1_N2_N3_unchanged": true,
+        "stage2_locked": true,
+        "new_gpu_authorized": false,
+        "new_problem_disposition": "NO_NEW_PROBLEM_AFTER_CURRENT_SOURCE_AND_SAME_INFORMATION_REDUCTION"
+      }
+    }
+  },
+  "principle_certificate_audit": {
+    "required": true,
+    "is_formal_gate": false,
+    "passed": true,
+    "status": "pass",
+    "principle_id": "stri-c4-exact-clone-final-success-transport-v1",
+    "blockers": [],
+    "summary": {
+      "primitives": 4,
+      "assumptions": 4,
+      "predictions": 2,
+      "registered_falsifiers": 1,
+      "operationalizations": 4
+    },
+    "contract": {
+      "principle_id": "stri-c4-exact-clone-final-success-transport-v1",
+      "primitives": [
+        "semantic-displacement treatment under fixed-budget SkillRL retrieval",
+        "same-information fresh-identity placebo",
+        "exact semantic quotient negative control",
+        "paired ALFWorld terminal success"
+      ],
+      "mechanism": "If the exact-clone semantic representation change has a semantic-specific downstream consequence under the fixed author final RL policy, B should alter paired terminal success beyond identity placebo C, while D should restore A.",
+      "scope_conditions": [
+        "Jianwen/Alfworld-7B-RL at revision 2ce16cb90e6357892dde201928279d4513d35c59",
+        "frozen P0-E local_causal valid_unseen panel: 12 tasks x 2 decode seeds",
+        "B exact-content fresh-ID displacement, C exact-content identity placebo, D exact semantic quotient",
+        "final ALFWorld won is the endpoint truth"
+      ],
+      "assumptions": [
+        {
+          "id": "A-support",
+          "statement": "The reference final RL policy supplies non-degenerate endpoint support.",
+          "observable_check": "Stage-0 competence calibration is GO with 18/24 success across >=3 families."
+        },
+        {
+          "id": "A-treatment",
+          "statement": "B changes semantic retrieval support while C changes prompt identity without changing the semantic set.",
+          "observable_check": "Representation replay and local-unit invariants validate B/C."
+        },
+        {
+          "id": "A-quotient",
+          "statement": "D restores A representation and stochastic realization.",
+          "observable_check": "A/D prompt identity plus response coupling yields 24/24 exact trajectories."
+        },
+        {
+          "id": "A-truth",
+          "statement": "ALFWorld won is independent endpoint truth.",
+          "observable_check": "Endpoint is environment info.won."
+        }
+      ],
+      "predictions": [
+        {
+          "id": "C4-ENDPOINT-TRANSPORT",
+          "role": "mechanism-test",
+          "statement": "On a qualified run, B should produce a semantic-specific terminal-success effect beyond C under the preregistered GO rule, while D remains A-equivalent.",
+          "observable": "Paired A/B/C/D ALFWorld won across 24 frozen local units."
+        },
+        {
+          "id": "C4-QUOTIENT-RESTORATION",
+          "role": "boundary-test",
+          "statement": "Exact quotienting D should restore A trajectory and endpoint.",
+          "observable": "A/D prompt-response-action-step-outcome equality."
+        }
+      ],
+      "operationalization": [
+        {
+          "concept": "semantic-specific treatment",
+          "measure": "B semantic-set displacement relative to A",
+          "validity_check": "B semantic set differs from A and C semantic set equals A on every unit."
+        },
+        {
+          "concept": "matched identity nuisance",
+          "measure": "C prompt/identity perturbation with unchanged semantic set",
+          "validity_check": "C changes prompt identity without semantic-set change."
+        },
+        {
+          "concept": "downstream transport",
+          "measure": "paired final-success disagreement and success-rate contrast",
+          "validity_check": "Stage-0 competence GO and environment won truth."
+        },
+        {
+          "concept": "exact restoration",
+          "measure": "D versus A full trajectory and endpoint equality",
+          "validity_check": "24/24 realized equality."
+        }
+      ],
+      "falsification": {
+        "prediction_ids": [
+          "C4-ENDPOINT-TRANSPORT"
+        ],
+        "requires": [
+          "assumptions_hold",
+          "experiment_identifiable",
+          "independent_truth",
+          "matched_baseline",
+          "operationalization_valid",
+          "optimization_adequate",
+          "protocol_validity",
+          "registered_prediction",
+          "scope_conditions_hold"
+        ],
+        "contradiction_rule": "A qualified run may STOP the registered experimental realization under the frozen STOP gate. Persistent principle-dead-end certification additionally requires preregistered statistical resolution/equivalence adequate for the population-level claim."
+      },
+      "failure_update_rules": {
+        "execution-invalid": "repair execution only; preserve the scientific contract and do not update principle belief",
+        "design-nonidentifiable": "repair substrate/task/variation so the principle becomes testable; do not register a principle negative",
+        "operationalization-failure": "repair the measurement, representation, or objective bridge before retesting the same principle",
+        "assumption-violation": "revise the omitted assumption or scope condition, derive a new prediction, and keep the core mechanism unresolved",
+        "matched-simplification": "weaken or merge the current method realization/novelty claim; do not automatically reject the broader principle",
+        "registered-prediction-contradicted": "only after all falsification preconditions hold may the registered prediction be rejected; persistent dead-end still requires a positive counter-explanation"
+      }
+    },
+    "policy": {
+      "schema_version": "1.0",
+      "principle_certificate_required_before_experiment_compile": true,
+      "principle_certificate_is_not_a_formal_experiment_gate": true,
+      "experiment_is_evidence_about_a_principle_not_a_vote_on_an_idea": true,
+      "negative_result_requires_layer_adjudication": true,
+      "design_failure_cannot_falsify_principle": true,
+      "operationalization_failure_cannot_falsify_principle": true,
+      "substrate_failure_cannot_falsify_broader_problem": true,
+      "true_negative_does_not_automatically_falsify_principle": true,
+      "principle_falsification_requires_registered_prediction": true,
+      "principle_falsification_requires_all_preconditions": true,
+      "registered_prediction_rejection_is_not_persistent_dead_end": true,
+      "persistent_dead_end_requires_positive_counter_explanation": true,
+      "counter_explanation_must_be_same_information_or_scope_matched": true,
+      "counter_explanation_must_name_reopen_condition": true,
+      "certified_dead_end_must_emit_opposite_principle_search_seed": true,
+      "omitted_condition_updates_assumption_or_scope_before_core_mechanism": true,
+      "positive_evidence_supports_but_does_not_prove_principle": true
+    }
+  },
+  "principle_evidence": {
+    "registered_prediction_id": "C4-ENDPOINT-TRANSPORT",
+    "assumptions_hold": true,
+    "scope_conditions_hold": true,
+    "operationalization_valid": true,
+    "experiment_identifiable": true,
+    "optimization_adequate": true,
+    "independent_truth": true,
+    "matched_baseline": true,
+    "protocol_validity": true,
+    "falsifier_triggered": false,
+    "statistical_resolution_precondition": false,
+    "omitted_condition_discovered": false,
+    "assumption_violation_discovered": false
+  },
+  "principle_adjudication": {
+    "diagnosis": "true-negative",
+    "principle_id": "stri-c4-exact-clone-final-success-transport-v1",
+    "registered_prediction_rejected": false,
+    "principle_falsified": false,
+    "core_mechanism_rejected": false,
+    "dead_end_certified": false,
+    "scientific_belief_target": "method-realization",
+    "requires_human_review": true,
+    "verdict": "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED",
+    "preconditions": {
+      "registered_prediction": true,
+      "assumptions_hold": true,
+      "scope_conditions_hold": true,
+      "operationalization_valid": true,
+      "experiment_identifiable": true,
+      "optimization_adequate": true,
+      "independent_truth": true,
+      "matched_baseline": true,
+      "protocol_validity": true
+    },
+    "missing_preconditions": [],
+    "reason": "A method-level negative exists, but the registered principle falsifier has not been established under every required condition."
+  },
+  "failure_asset_library_snapshot": {
+    "schema_version": "1.1",
+    "policy": {
+      "schema_version": "1.1",
+      "every_negative_or_blocked_run_yields_reusable_asset": true,
+      "failure_asset_is_not_dead_end": true,
+      "assets_are_retrieved_before_new_experiment_design": true,
+      "dead_end_registry_is_preserved_across_runs": true,
+      "persistent_dead_end_requires_principle_adjudication": true,
+      "persistent_dead_end_requires_positive_counter_explanation": true,
+      "economy_or_substrate_stop_is_not_persistent_dead_end": true,
+      "failure_asset_must_name_affected_scientific_layer": true,
+      "historical_failure_does_not_auto_block_new_scope": true,
+      "institutional_memory_requires_scope_and_effectiveness_tracking": true,
+      "stale_or_harmful_memory_can_be_superseded_not_deleted": true
+    },
+    "references": [
+      {
+        "system": "MLEvolve",
+        "adopted": "retrospective memory stores plans, code, metrics, and success/failure outcomes for future retrieval"
+      },
+      {
+        "system": "InternAgent-1.5",
+        "adopted": "persistent memory carries experiment outcomes across sessions"
+      },
+      {
+        "system": "AutoResearchClaw / MetaClaw",
+        "adopted": "pipeline failures become structured lessons and reusable safeguards across later runs"
+      },
+      {
+        "system": "AutoSci / EvoScientist",
+        "adopted": "separate project-active state from long-term reusable memory and track memory evolution rather than treating all historical lessons as timeless"
+      }
+    ],
+    "summary": {
+      "assets": 1,
+      "unique_signatures": 1,
+      "principle_dead_ends": 0,
+      "economy_dead_ends": 0,
+      "experimental_stops_not_dead_ends": 0
+    },
+    "assets": [
+      {
+        "signature": "method-realization:true-negative",
+        "idea_id": "skill-taxonomy-representation-invariance:C4-exact-clone-endpoint-transport",
+        "diagnosis": "true-negative",
+        "affected_layer": "method-realization",
+        "reusable_precheck": "route through principle adjudication before any core-principle stop",
+        "evidence_ref": "/data/wyt/agent-self-evolution-observatory/runs/agent3-stri-skillrl-p0e-causal-20260816",
+        "does_not_imply": "core-principle failure",
+        "memory_scope": "institutional-research-memory",
+        "reuse_scope": {
+          "diagnosis": "true-negative",
+          "affected_layer": "method-realization"
+        },
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "superseded_by": "",
+        "last_revalidated": ""
+      }
+    ],
+    "reusable_prechecks": [
+      {
+        "signature": "method-realization:true-negative",
+        "affected_layer": "method-realization",
+        "reusable_precheck": "route through principle adjudication before any core-principle stop",
+        "occurrences": 1,
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "revalidation_required_after_scope_change": true
+      }
+    ],
+    "dead_end_registry": {
+      "principle_dead_ends": 0,
+      "certified_principle_dead_ends": [],
+      "experimental_stops_not_dead_ends": {
+        "matched_simplification_stops": 0,
+        "substrate_stops": 0
+      },
+      "rule": "Negative experiments, Economy STOPs, support failures, and substrate failures are reusable failure assets, not persistent dead ends. A persistent dead end requires principle adjudication plus an affirmative counter-explanation and explicit reopen condition."
+    }
+  },
+  "reopen_condition": "Only a new predeclared paper contract with an explicit equivalence/effect margin, task-cluster inference/power plan, independent support qualification, and matched B/C/D controls could test a population-level endpoint-transport dead end. Do not add seeds to the current frozen P0-E run.",
+  "forbidden_repairs": [
+    "run Stage-2 confirmation after local STOP",
+    "add seeds until B-vs-A becomes significant",
+    "select easier or more displacement-sensitive tasks after outcomes",
+    "switch to another policy/checkpoint after outcomes",
+    "relax the preregistered endpoint GO/STOP thresholds",
+    "replace final success with post-hoc trajectory divergence and call C4 rescued",
+    "reinterpret generic placebo-dominated trajectory sensitivity as semantic-displacement-specific evidence"
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_expansion": false,
+    "method": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "post-negative-same-information-reduction-screen",
+  "experiment_id": "STRI-SKILLRL-FINAL-POLICY-COMPETENCY-P0E-20260816",
+  "input_raw_path": "/data/wyt/agent-self-evolution-observatory/runs/agent3-stri-skillrl-p0e-causal-20260816/aggregate.jsonl",
+  "input_raw_sha256": "30aa3f7e5c97385e2f800280b0e792d1426aad6c3f2a838095bc1f63c649ff4f",
+  "diagnosis_path": "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json",
+  "diagnosis_sha256": "5b5827579df4824dea0be8f62ff7c0e2a1757e1cb81c071006e127ef3ba8437a",
+  "screen_role": "Post-negative reduction only. Not preregistered evidence and cannot rescue C4 or authorize a new paper claim.",
+  "candidate_claim_screened": "Semantic displacement B has trajectory-level specificity beyond the same-information identity placebo C despite terminal endpoint equivalence.",
+  "metrics": {
+    "action_sequence_disagreement_indicator": {
+      "n": 24,
+      "B_mean": 0.4583333333333333,
+      "C_mean": 0.625,
+      "B_gt_C": 0,
+      "C_gt_B": 4,
+      "ties": 20,
+      "one_sided_sign_p_for_B_gt_C": 1.0,
+      "B_dominance_supported_at_0_05": false,
+      "higher_is_more_specific": true,
+      "B_only_disagreement": 0,
+      "C_only_disagreement": 4,
+      "paired_mcnemar_two_sided_p": 0.125
+    },
+    "normalized_action_levenshtein_distance_from_A": {
+      "n": 24,
+      "B_mean": 0.16940056471306472,
+      "C_mean": 0.2581091131091131,
+      "B_gt_C": 2,
+      "C_gt_B": 10,
+      "ties": 12,
+      "one_sided_sign_p_for_B_gt_C": 0.996826171875,
+      "B_dominance_supported_at_0_05": false,
+      "higher_is_more_specific": true
+    },
+    "absolute_step_count_delta_from_A": {
+      "n": 24,
+      "B_mean": 1.9583333333333333,
+      "C_mean": 3.2916666666666665,
+      "B_gt_C": 2,
+      "C_gt_B": 5,
+      "ties": 17,
+      "one_sided_sign_p_for_B_gt_C": 0.9375,
+      "B_dominance_supported_at_0_05": false,
+      "higher_is_more_specific": true
+    },
+    "early_action_divergence_sensitivity_1_over_step": {
+      "n": 24,
+      "B_mean": 0.104628589003589,
+      "C_mean": 0.14042658730158727,
+      "B_gt_C": 4,
+      "C_gt_B": 9,
+      "ties": 11,
+      "one_sided_sign_p_for_B_gt_C": 0.953857421875,
+      "B_dominance_supported_at_0_05": false,
+      "higher_is_more_specific": true
+    },
+    "response_sequence_disagreement_indicator": {
+      "n": 24,
+      "B_mean": 0.9583333333333334,
+      "C_mean": 0.9583333333333334,
+      "B_gt_C": 0,
+      "C_gt_B": 0,
+      "ties": 24,
+      "one_sided_sign_p_for_B_gt_C": 1.0,
+      "B_dominance_supported_at_0_05": false,
+      "higher_is_more_specific": true
+    }
+  },
+  "by_family": {
+    "look_at_obj_in_light": {
+      "units": 4,
+      "B_action_diff": 1,
+      "C_action_diff": 2
+    },
+    "pick_and_place_simple": {
+      "units": 4,
+      "B_action_diff": 2,
+      "C_action_diff": 3
+    },
+    "pick_clean_then_place_in_recep": {
+      "units": 4,
+      "B_action_diff": 2,
+      "C_action_diff": 2
+    },
+    "pick_cool_then_place_in_recep": {
+      "units": 4,
+      "B_action_diff": 2,
+      "C_action_diff": 2
+    },
+    "pick_heat_then_place_in_recep": {
+      "units": 4,
+      "B_action_diff": 1,
+      "C_action_diff": 2
+    },
+    "pick_two_obj_and_place": {
+      "units": 4,
+      "B_action_diff": 3,
+      "C_action_diff": 4
+    }
+  },
+  "any_simple_B_over_C_dominance_supported": false,
+  "verdict": "NO_SEMANTIC_SPECIFIC_TRAJECTORY_RESIDUAL_IN_SIMPLE_SAME_INFORMATION_SCREEN",
+  "interpretation": "Failure of B to dominate C on these simple paired trajectory summaries supports reduction to generic identity/order/prompt sensitivity. This is a screening result, not proof of equivalence.",
+  "new_gpu_authorized": false,
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_expansion": false,
+    "method": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}

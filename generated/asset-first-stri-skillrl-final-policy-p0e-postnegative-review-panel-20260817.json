@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "portable-five-role-post-negative-review-panel",
+  "experiment_id": "STRI-SKILLRL-FINAL-POLICY-COMPETENCY-P0E-20260816",
+  "inputs": {
+    "diagnosis_sha256": "5b5827579df4824dea0be8f62ff7c0e2a1757e1cb81c071006e127ef3ba8437a",
+    "same_information_screen_sha256": "6823a062ab98e329fc1d6ebd644ea569ad36ad2c391e3712d490fb665e32a5c2",
+    "statistical_resolution_audit_sha256": "5e35a298e5568e07a9f8f3ed9c8d8fb5ebecb17874263ffd71a56e7cec24645f"
+  },
+  "role_policy": [
+    "design-critic",
+    "operationalization-critic",
+    "principle-advocate",
+    "principle-falsifier",
+    "meta-adjudicator"
+  ],
+  "roles": {
+    "design_critic": {
+      "source_sha256": "a7dd4ccd8f8479feb2e91d9bdf7d48bf8e23133f03237a675f1c255b4464e4ca",
+      "verdict": "CONFIRM_QUALIFIED_STOP",
+      "confidence": "high",
+      "primary_failure_layer": "both",
+      "new_problem_verdict": "NOVELTY_SCREEN_ONLY",
+      "strongest_alternative_explanation": "Generic identity/prompt perturbation (C) induces at least as much trajectory divergence as semantic displacement (B) while all arms retain identical final success rates, meaning endpoint equivalence stems from task equifinality (multiple successful action paths, environmental redundancy, or generic policy sensitivity to fresh prompts) rather than a semantic-specific active recovery or transport mechanism.",
+      "strongest_reduction_of_candidate": "This is a well-studied question in equifinal motor control, reinforcement learning with redundant action spaces, and LLM policy trajectory variance under prompt perturbations. The observed pattern (high response/action divergence with identical endpoints) is a standard property of tasks with multiple valid solution paths, not a novel mechanism specific to skill taxonomy representation invariance.",
+      "reviewer_model": "doubao-seed-2-1-turbo-260628"
+    },
+    "operationalization_critic_current_source": {
+      "source_sha256": "7fd07aafe13a84aedae4bad76826ce01554544b6eaeb93a76fb9b45517fc0634",
+      "verdict": "REVISE_DIAGNOSIS",
+      "confidence": "high",
+      "primary_failure_layer": "both",
+      "new_problem_verdict": "NO_NEW_PROBLEM",
+      "strongest_alternative_explanation": "The strongest explanation is generic representation/prompt-context sensitivity of the fixed language-conditioned policy combined with a broad set of task-successful trajectories, rather than a semantic-displacement-specific causal effect. The critical evidence is that identity placebo C perturbs projected actions more often than semantic-displacement B while both preserve every paired terminal outcome. Meaning-preserving prompt variants and prompt-template changes are already known to produce substantial output changes in LLMs, including in current ACL work. ([ACL Anthology][1]) The present experiment therefore establishes behavioral sensitivity plus terminal equivalence, but it does not identify the stronger causal statement that ALFWorld dynamics actively 'recover from' or 'absorb' the perturbation.",
+      "strongest_reduction_of_candidate": "As presently evidenced, this reduces to the conjunction of mature phenomena: meaning-preserving prompt/context sensitivity, existence of multiple high-performing or near-optimal behavioral trajectories, and classical behavioral/value equivalence in sequential decision processes. ACL 2026 directly analyzes large output changes under meaning-preserving prompts. ([ACL Anthology][1]) RL literature explicitly formalizes diverse policies through differences in their induced trajectory distributions while retaining high performance, and recent robotics work deliberately generates many diverse successful trajectories for the same manipulation goal. ([IJCAI][2]) MDP equivalence/bisimulation is also a mature formal object rather than a new consequence of this experiment. ([SIAM Ebooks][3])",
+      "required_revision_to_diagnosis": "Retain 'semantic-specificity collapse' and 'endpoint-transport failure' as the two qualified failure layers. Replace the stronger statement that 'the final RL policy plus ALFWorld dynamics admit outcome-equivalent/recoverable trajectories that absorb these perturbations' with the identified statement: 'generic identity/order and semantic-displacement perturbations alter trajectories while terminal outcomes remain exactly paired-equivalent; the experiment does not distinguish prompt-conditioned policy sensitivity, multiple task-successful action paths, environmental redundancy, or active recovery as the mechanism producing that equivalence.' Exact D restoration remains a valid intervention/control receipt, not evidence selecting among those mechanisms.",
+      "revision_applied_in_current_diagnosis": true,
+      "collision_sources": [
+        {
+          "title": "Understanding the Prompt Sensitivity",
+          "source_type": "primary",
+          "why_relevant": "ACL 2026 studies output sensitivity to meaning-preserving prompt variants and reports that prompt templates can influence model logits strongly; this directly collides with interpreting B/C trajectory changes as a new phenomenon merely because semantics are intended to be preserved. ([ACL Anthology][1])"
+        },
+        {
+          "title": "Fantastically Ordered Prompts and Where to Find Them",
+          "source_type": "primary",
+          "why_relevant": "Shows that permutation/order changes in otherwise fixed in-context material can radically alter model behavior, making identity/order-induced behavioral divergence a mature prompt-sensitivity phenomenon. ([ACL Anthology][4])"
+        },
+        {
+          "title": "Diversity-Inducing Policy Gradient: Using Maximum Mean Discrepancy to Find a Set of Diverse Policies",
+          "source_type": "primary",
+          "why_relevant": "Explicitly starts from the existence of multiple near-optimal policies and defines behavioral diversity through differences in induced trajectory distributions, so different trajectories with comparable task performance are not themselves novel. ([IJCAI][2])"
+        },
+        {
+          "title": "QDTraj: Exploration of Diverse Trajectory Primitives for Articulated Objects Robotic Manipulation",
+          "source_type": "primary",
+          "why_relevant": "Recent robotics work explicitly treats diverse trajectories accomplishing the same task as a useful solution set and reports many distinct successful trajectories per task, directly colliding with novelty based only on trajectory divergence under equal terminal success. ([arXiv][5])"
+        },
+        {
+          "title": "Trajectory-Level Redirection Attacks on Vision-Language-Action Models",
+          "source_type": "primary",
+          "why_relevant": "Formalizes prompt-induced closed-loop trajectory redirection while holding policy and environment fixed. Its endpoint-changing attack is stronger than the present residual, demonstrating that prompt-conditioned trajectory sensitivity is already an explicit scientific object in embodied control. ([arXiv][6])"
+        },
+        {
+          "title": "Bisimulation Metrics for Continuous Markov Decision Processes",
+          "source_type": "primary",
+          "why_relevant": "Part of a mature literature on behavioral/state equivalence and MDP abstraction, with explicit antecedents on equivalence notions and model minimization. Thus equivalence under task-relevant outcomes is not by itself a new scientific object. ([SIAM Ebooks][3])"
+        }
+      ]
+    },
+    "principle_falsifier": {
+      "source_sha256": "5cd1a00463d65dcf73f69b5a64f7bbb3852b9133ad69968a9b442acc2e7a227a",
+      "verdict": "CONFIRM_QUALIFIED_STOP",
+      "confidence": "high",
+      "primary_failure_layer": "both",
+      "new_problem_verdict": "NOVELTY_SCREEN_ONLY",
+      "strongest_alternative_explanation": "The identity placebo C induces more action-trajectory divergence (15/24) than the semantic displacement B (11/24), yet both produce zero endpoint disagreement with A. This demonstrates that trajectory sensitivity is not specific to semantic displacement but is a generic response to prompt perturbation, while terminal outcomes are robustly paired-equivalent under the frozen policy. The experiment cannot distinguish whether this endpoint equivalence arises from multiple task-successful action paths, environmental redundancy, active recovery, or a mixture of these mechanisms.",
+      "strongest_reduction_of_candidate": "This is a well-studied question in robust reinforcement learning and policy invariance. The observation that different prompts produce different action trajectories with identical terminal success on a fixed task panel is a known property of stochastic or context-conditioned policies in deterministic environments with multiple solution paths. The mature reduction is that without a counterfactual distribution shift or a causal intervention on the trajectory itself, trajectory divergence under endpoint equivalence is not a scientific estimand for representation sensitivity.",
+      "reviewer_model": "deepseek-v4-pro-260425"
+    },
+    "principle_advocate": {
+      "source_sha256": "4c850d1408a5cc39398a26fc76812ec60b631e43fc0a30d5cb20c2f2e69b76b5",
+      "verdict": "REJECT_DEAD_END_CERTIFICATION",
+      "confidence": "medium",
+      "strongest_case_against_dead_end": "The zero endpoint disagreement is not a valid rejection of the registered endpoint-transport prediction because the experiment lacks the statistical power to detect a true semantic-specific effect on terminal success. With only 24 paired units and 18/24 baseline successes, the maximum possible number of discordant pairs is 6 (if all baseline failures become successes under B), and the McNemar test cannot reach significance at p<0.05 even in the most favorable outcome (exact binomial two-sided p=0.031 for 6/6 discordant pairs, but with 5/6 p=0.219). Thus the observed 0/24 disagreement is consistent with both a true null and a true but small-to-moderate effect that the design cannot resolve. The same-information placebo C also shows 0/24 endpoint disagreement, but this does not absorb semantic specificity because C's trajectory divergence is not a valid proxy for endpoint sensitivity; the prediction is specifically about terminal success, not trajectory. The exact quotient D restoring A is irrelevant to the B-vs-C contrast. Therefore, the scoped prediction remains unresolved: the evidence is insufficient to certify a dead end, and the correct disposition is 'not falsified due to underpowered design' rather than 'qualified true negative'.",
+      "is_that_case_supported_by_current_evidence": true,
+      "specific_missing_precondition_if_any": "A pre-registered minimum detectable effect size or a power analysis showing that 24 paired units with 18/24 baseline success can detect the predicted semantic-specific endpoint shift at the chosen alpha. Without this, zero disagreement cannot distinguish a true null from an undetectable effect.",
+      "does_same_information_placebo_absorb_semantic_specificity": false,
+      "does_zero_endpoint_disagreement_validly_reject_registered_endpoint_transport": false,
+      "is_any_allowed_non_rescue_explanation_sufficient_to_keep_the_scoped_prediction_unresolved": true,
+      "reviewer_model": "deepseek-v4-flash-ga-260731"
+    },
+    "meta_adjudicator": {
+      "source_sha256": "7b1ea5c328ea4856408d7e7e7b3ae7415cd53c4aad2ea2e12121325dac227c58",
+      "verdict": "KEEP_SCOPED_PRINCIPLE_UNRESOLVED",
+      "confidence": "high",
+      "checks": {
+        "experimental_stop_valid": true,
+        "persistent_dead_end_statistical_resolution_sufficient": false,
+        "same_information_trajectory_reduction_supported": true,
+        "principle_advocate_objection_resolved": false,
+        "current_paper_scope_protected": true,
+        "stage2_locked": true,
+        "new_problem_requires_no_gpu": true
+      },
+      "dead_end_scope": "Population-level endpoint-transport dead end (semantic-specific perturbations never affect terminal success) under the frozen ALFWorld panel and single final RL policy.",
+      "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+      "current_paper_effect": "The current paper can report a qualified true negative for the exact-clone downstream final-success transport under the frozen policy and panel, but must not claim a persistent dead end. The same-information screen closes the trajectory-only novelty claim.",
+      "new_problem_disposition": "NOVELTY_SCREEN_ONLY",
+      "required_revision": "Retain 'semantic-specificity collapse' and 'endpoint-transport failure' as qualified failure layers. Replace any stronger dead-end statement with: 'generic identity/order and semantic-displacement perturbations alter trajectories while terminal outcomes remain exactly paired-equivalent; the experiment does not distinguish prompt-conditioned policy sensitivity, multiple task-successful action paths, environmental redundancy, or active recovery as the mechanism producing that equivalence. The population-level endpoint-transport dead end remains unresolved due to insufficient statistical resolution.'",
+      "reviewer_model": "deepseek-v4-flash-ga-260731",
+      "numeric_reason_source_of_truth": "generated/asset-first-stri-skillrl-final-policy-p0e-statistical-resolution-audit-20260817.json",
+      "normalization_note": "The meta review repeated the advocate's imprecise phrase 'maximum possible discordant pairs is 6'. Canonical synthesis instead uses the deterministic audit: 6 is the minimum unidirectional discordance count needed for two-sided exact McNemar p<0.05; the 3/24=0.125 registered effect floor itself gives p=0.25 under best-case directionality."
+    }
+  },
+  "failed_or_nonvoting_attempts": [
+    {
+      "requested": "glm-5.2/glm-5.3 post-negative review",
+      "disposition": "NONVOTING_LENGTH_TRUNCATION"
+    },
+    {
+      "requested": "kimi-k3 large-context principle advocate",
+      "disposition": "NONVOTING_NETWORK_TIMEOUT"
+    },
+    {
+      "requested": "deepseek-v4-flash large-context principle advocate",
+      "disposition": "NONVOTING_REASONING_LENGTH_TRUNCATION"
+    },
+    {
+      "requested": "minimax-m3 large-context meta-adjudicator",
+      "disposition": "NONVOTING_REASONING_LENGTH_TRUNCATION"
+    }
+  ],
+  "consensus": {
+    "experimental_STOP_FIXED_POLICY_DYNAMIC_BRIDGE_valid": true,
+    "semantic_specificity_failure_layer_supported": true,
+    "endpoint_transport_failure_layer_supported_as_sample_level_STOP": true,
+    "active_recovery_mechanism_identified": false,
+    "same_information_trajectory_residual_survives": false,
+    "persistent_principle_dead_end_certified": false,
+    "principle_layer_disposition": "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED",
+    "reason_dead_end_not_certified": "No preregistered equivalence/effect-margin plus task-cluster power/inference plan establishes persistent population-level dead-end resolution.",
+    "broader_STRI_N1_N2_N3_unchanged": true,
+    "stage2_locked": true,
+    "new_gpu_authorized": false,
+    "new_problem_disposition": "NO_NEW_PROBLEM_AFTER_CURRENT_SOURCE_AND_SAME_INFORMATION_REDUCTION"
+  },
+  "scientific_authority": false,
+  "authority": {
+    "paper_claim_expansion": false,
+    "method": false,
+    "full_experiment": false,
+    "gpu": false
+  }
+}
