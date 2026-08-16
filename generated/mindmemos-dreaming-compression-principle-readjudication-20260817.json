@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "MINDMEMOS-DREAMING-COMPRESSION-PLATEAU",
+  "title": "The reported ~20% MindMemOS dreaming compression is not an independently identified compression plateau",
+  "adjudication_date": "2026-08-17",
+  "old_experiment_outcome": "NOT_RUN_PRINCIPLE_REDUCTION_PRECEDES_EXPERIMENT",
+  "old_outcome_may_directly_authorize_dead_end": false,
+  "registered_prediction_rejected": false,
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_memory_consolidation_question_falsified": false,
+  "dead_end_scope": "The v11 MindMemOS formulation claiming that the reported ~19-23% active-memory archive ratio identifies a nonmonotone compression plateau/cliff whose location is a new causal object beyond conflict-aware selective forgetting, redundancy removal, and belief revision on MemoryAgentBench FactConsolidation.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "On the released FactConsolidation object, the archive fraction is a post-action summary of targeted consolidation, not an independently varied treatment. The benchmark defines the later contradictory fact as the valid memory, while the first-party dreaming pipeline deterministically archives exact duplicates before LLM actions, can merge multiple source memories while archiving the sources, and represents directed conflict resolution with relations such as supersedes. Therefore simultaneously reducing active-memory volume and improving both single- and multi-hop accuracy is predicted by a same-information conflict-aware selective-forgetting/belief-revision account whenever removed memories are duplicate, stale, or contradictory. The paper reports one naturally induced archive fraction per model/hop regime rather than a controlled AMCR sweep, so the observed ~20% operating point does not identify a plateau or cliff in compression ratio.",
+      "opposite_prediction": "Under matched memory store, query set, temporal ordering, conflict graph, and dreaming action provenance, answer accuracy should track whether dreaming removes duplicate/stale/contradictory evidence and preserves the benchmark-valid newer evidence, not the archive fraction alone. Two runs with the same AMCR but different conflict-resolution quality can have different accuracy, while different AMCR values can have similar accuracy if they remove only irrelevant or superseded memories. A standalone compression-ratio threshold should disappear after conditioning on which answer-relevant conflict paths were preserved or resolved.",
+      "opposite_principle": "For FactConsolidation, conflict-aware selective forgetting is the causal object; active-memory compression ratio is an outcome summary unless it is independently manipulated under matched conflict-resolution semantics.",
+      "opposite_search_seed": "Reopen only with a preregistered intervention that independently varies archive/compression ratio while holding conflict-resolution semantics, answer-critical evidence retention, temporal ordering, retrieval policy, model, and query set fixed, or independently varies conflict-resolution quality at matched AMCR. The residual must beat a same-information conflict-aware selective-forgetting/rate-distortion baseline. A natural ~20% archive rate, a larger sweep created by deleting arbitrary memories, or a renamed consolidation cliff is insufficient.",
+      "scope": "MindMemOS first-party repository commit 90491828726e1540442b17cd445d0308d0b8093c; MemoryAgentBench FactConsolidation evaluation; shadow run shadow-20260817-source-coverage-v11-r1 candidate SHADOW-P01-C01.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.12428",
+        "first-party:https://github.com/mindscale-noah/MindMemOS@90491828726e1540442b17cd445d0308d0b8093c",
+        "repo:MindMemOS/README.md#sha256=16fc60fababb89b4866440ba15a568e4c736d639cd36cc7bcc69eae83810c399",
+        "repo:MindMemOS/src/mindmemos/mindmemos/pipelines/dreaming/default.py#sha256=6762ce312475c75caa4630521b931d12be2afc0a70f91aeefd910dc918709909",
+        "repo:MindMemOS/src/mindmemos/mindmemos/components/dreaming/action_planning.py#sha256=5541c07c386fff7cb9df6074d412d5be3463d7f68e45487fd7254411d08a9040",
+        "repo:MindMemOS/tests/pipelines/dreaming/test_default.py#sha256=6ab7fbfb4033db0f0fc051150812c1bd41f795b3a117519af62ebd708b91a71a",
+        "repo:MindMemOS/tests/components/dreaming/test_action_planning.py#sha256=893b26ebaa31e4bd023b5fe2486d89b359fb1433f7532c24f9c1464d020384ca",
+        "repo:MindMemOS/docs/eval/README_ZH.md#sha256=0dc912c7cb98070c607d1f438481f7291ffb2495ca8010706283eeff23b1047b",
+        "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260817-source-coverage-v11-r1/formulate-p1.json#sha256=daa18de25a298c67391053af6f6a9e2f779bf05f39fbefd7c5147ea4f409882e"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The ~20% value is a controlled compression treatment: not supported. The paper reports the archive fraction produced by dreaming for each evaluated condition, not an intervention sweep over AMCR.",
+        "Dreaming is generic random deletion: ruled out by the released implementation, which clusters entity-related memories, deterministically archives exact duplicates, detects relation/issues, and applies merge/create/link/delete-style consolidation actions with provenance.",
+        "Multi-hop improvement is incompatible with selective forgetting: no. On FactConsolidation, removing a stale contradictory fact can improve any query whose reasoning path otherwise includes that conflict; multi-hop reasoning does not require preserving contradictory superseded evidence.",
+        "The current release supports a faithful paper-table compression sweep anyway: the repository documentation explicitly notes that the current CLI does not expose the full Add -> Dreaming -> Answer/Search -> Score switch needed to reproduce the README Vanilla + Dreaming row from the configuration alone; this is an additional execution limitation but is not the reason for the principle reduction."
+      ],
+      "reopen_condition": "Reopen only when a source-faithful or independently validated substrate supports an intervention that separates compression quantity from conflict-resolution semantics: either vary AMCR while matching which answer-critical conflict paths are resolved/preserved, or vary conflict-resolution quality at matched AMCR. The strongest conflict-aware selective-forgetting/rate-distortion baseline must receive the same memory provenance, temporal order, retrieval state, and query information and still make a distinct ex-ante prediction."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "MindMemOS dreaming does not work",
+      "memory compression never improves accuracy",
+      "20% compression is universally optimal",
+      "multi-hop memory is insensitive to forgetting"
+    ],
+    "safe_claim": "The reported MindMemOS FactConsolidation result supports targeted consolidation/selective forgetting, but it does not identify a standalone ~20% compression plateau. The latter is reduced by benchmark semantics plus first-party conflict-aware dreaming behavior before any new experiment is run.",
+    "new_search_basin": "compression-quantity-vs-conflict-resolution-semantics"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

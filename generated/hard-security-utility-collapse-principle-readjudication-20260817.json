@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "HARD-SECURITY-UTILITY-COLLAPSE",
+  "title": "Backbone-dependent overrestriction is a security-utility operating point, not a new self-evolution cliff",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_defense_evolution_effect_falsified": false,
+  "dead_end_scope": "The standalone claim that HARD's GPT-5.5 backbone result (lower attack success but utility-under-attack collapsing to 7.2%) identifies a new self-evolving-defense utility-collapse mechanism merely because failure-driven security refinement and task utility move in opposite directions.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The reported GPT-5.5 behavior is already represented by the paper's own multiobjective runtime-defense formulation and by ordinary overblocking/conservative-policy trade-offs. HARD defines the defense objective in terms of security and utility, explicitly notes that overly restrictive interventions can improve security at the cost of legitimate capability, and interprets different HARD variants as different operating points on a security-utility frontier. In the backbone ablation the execution agent, judges, tasks, evolution rounds, and budget are fixed while the evolution backbone changes; the resulting policies occupy different ASR/BU/UA points. The GPT-5.5 point (ASR 20.3, BU 94.9, UA 7.2) therefore demonstrates a poor utility-conditioned operating point, not an additional causal primitive or an identified phase transition.",
+      "opposite_prediction": "Given the same attack/benign task distributions, execution agent, judges, update budget, and observable security and utility feedback, a generic multiobjective/constrained policy-optimization or overblocking model predicts that different proposal/evolution backbones can settle at different Pareto operating points. Strong attack correction need not imply utility preservation, and a conservative artifact can sharply reduce UA while retaining high BU if its restrictions are triggered primarily in attacked contexts. A single extreme point does not identify a cliff without an independently varied control parameter and a same-information baseline that fails to express the frontier.",
+      "opposite_principle": "Failure-driven defense evolution is multiobjective policy refinement: security gains and task utility are separate objectives, and overrestriction is an ordinary Pareto/overblocking failure unless a structural variable predicts a residual beyond a same-information security-utility model.",
+      "opposite_search_seed": "Search only for a preregistered structural variable that separates defense updates with matched pre-update ASR, BU, UA, attack/benign context features, update budget, execution model, evaluator information, and security-utility objective, yet yields a distinct ex-ante downstream safety/utility prediction that a same-information Pareto, constrained-optimization, calibration, or overblocking model cannot express. Do not reopen from another backbone with a different ASR/UA point, a tuned utility weight, or a visually sharp trade-off curve.",
+      "scope": "HARD / Beyond Handcrafted Security arXiv:2608.12977v1, especially the harness-optimization objective, the HARD-Policy/HARD-Gate/HARD-Both security-utility comparisons, and the evolution-backbone ablation on memory contamination.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.12977",
+        "primary-fulltext:arXiv:2608.12977#sha256=d810b39f050dd6d3330e08aade701b1325511e98a47cb009be1ca5d975172957"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The 7.2% UA point is a failure of the execution agent or evaluator rather than the evolved defense: the paper holds the execution agent, judges, benchmark tasks, and evaluation protocol fixed across the backbone ablation and varies only the evolution backbone.",
+        "Security and utility are intended to move monotonically together: contradicted by the paper's explicit multiobjective formulation and its statement that overly restrictive interventions can improve security while degrading legitimate capabilities.",
+        "The paper establishes a controlled utility-collapse threshold: it reports discrete backbone-dependent operating points under one five-round budget; no independently varied scalar control parameter or changepoint experiment identifies a threshold.",
+        "Joint defense artifacts uniformly dominate single-artifact evolution: the paper itself reports non-additive interactions and explicitly interprets HARD variants as different security-utility operating points."
+      ],
+      "reopen_condition": "Reopen only if a preregistered matched experiment holds the execution agent, attack/benign task mix, security and utility evaluators, pre-update performance, feedback information, update budget, and objective weights/information fixed, while a self-evolution-specific structural variable yields a different ex-ante security-utility outcome that the strongest same-information Pareto/constrained-optimization, calibration, and overblocking baselines cannot express. A different evolution backbone, another extreme UA value, or a new scalarization is insufficient."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "HARD does not improve security",
+      "self-evolving defenses cannot preserve utility",
+      "GPT-5.5 is intrinsically unsafe",
+      "security-utility trade-offs are unimportant"
+    ],
+    "safe_claim": "HARD provides strong evidence that defense-evolution backbones can land at very different security-utility operating points, including severe overrestriction. The extreme GPT-5.5 result is scientifically useful as a failure case but does not by itself identify a new utility-collapse mechanism beyond mature multiobjective/overblocking explanations.",
+    "new_search_basin": "same-information-structural-residual-beyond-security-utility-frontier"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

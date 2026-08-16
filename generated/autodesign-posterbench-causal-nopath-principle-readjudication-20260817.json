@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "AUTODESIGN-POSTERBENCH-OPTIMIZER-CALIBRATION",
+  "title": "PosterBench calibration cannot drift through an optimization loop that does not consume PosterBench",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "dead_end_scope": "The standalone claim that AutoDesign's recursive optimization can directly overfit or reward-hack PosterBench itself, causing PosterBench's human-preference calibration to drift during the released optimization loop.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "IMPOSSIBILITY_OR_INVARIANCE",
+    "counter_explanation": {
+      "type": "IMPOSSIBILITY_OR_INVARIANCE",
+      "statement": "AutoDesign explicitly separates the optimization-time evaluator R_meta from the frozen PosterBench protocol. R_meta is built before autonomous optimization and supplies rollout scores and train/dev acceptance feedback. PosterBench is a distinct frozen protocol used for completed-system comparison and the system-blind human-alignment study. Because PosterBench scores are not consumed by the released update proposal or acceptance transition, PosterBench itself has no causal write path into the optimization trajectory.",
+      "opposite_prediction": "Holding R_meta, train/dev tasks, optimizer inputs, proposed updates, and randomness fixed, changing only PosterBench scores or PosterBench membership cannot change the released AutoDesign harness-update trajectory. It can change only the final reported benchmark comparison. Any optimizer-induced validity failure must therefore occur in R_meta, the repeatedly reused dev gate, or another selection-facing signal, not in report-only PosterBench.",
+      "opposite_principle": "Evaluation can be adaptively overfit only through a selection-facing feedback path; a frozen report-only benchmark is trajectory-invariant by construction.",
+      "opposite_search_seed": "Search for optimization-time evaluator or validation signals that are actually consumed by update proposal, gating, rollback, or persistent optimization history. Do not use final report-only PosterBench calibration as evidence of optimizer feedback. A valid next object must identify the selection-facing signal and then survive adaptive-validation/reusable-holdout reductions.",
+      "scope": "AutoDesign arXiv:2608.13560v1, especially the outer-loop definition distinguishing fixed R_meta from the separate frozen PosterBench final evaluation protocol.",
+      "same_information_or_scope_matched": true,
+      "proof_or_structural_witness": true,
+      "structural_witness": "The paper states that R_meta remains fixed during autonomous optimization and is used to score rollouts; it separately states that this optimization-time evaluator is distinct from the frozen PosterBench protocol used for final system comparison. PosterBench therefore has no update-edge in the released outer-loop equations.",
+      "evidence_refs": [
+        "arXiv:2608.13560",
+        "primary-fulltext:arXiv:2608.13560#sha256=f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417"
+      ],
+      "alternative_explanations_ruled_out": [
+        "PosterBench is the optimization evaluator: contradicted by the paper's explicit R_meta-versus-PosterBench distinction.",
+        "PosterBench controls update acceptance: the released acceptance equation uses J_train and J_dev under R_meta, not PosterBench.",
+        "Human-blind preference enters the optimization loop: the human study is reported as final independent evaluation, not an update signal."
+      ],
+      "reopen_condition": "Reopen only if first-party evidence shows PosterBench or an equivalent frozen final benchmark score is actually consumed by a later AutoDesign update, gate, rollback, synthesis, or selection transition. Merely evaluating more checkpoints on PosterBench after optimization is insufficient."
+    }
+  },
+  "scientific_interpretation": {
+    "safe_claim": "PosterBench-human calibration is useful external evidence but cannot by itself diagnose optimizer-induced benchmark overfitting in AutoDesign because PosterBench is outside the released update path.",
+    "next_basin": "selection-facing-validation-feedback"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

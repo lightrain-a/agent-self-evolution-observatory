@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "AUTODESIGN-DEV-ACCEPTANCE-FEEDBACK",
+  "title": "Repeated accept/reject feedback from a fixed development split is adaptive validation, not a new self-evolution primitive",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "dead_end_scope": "The standalone claim that AutoDesign's hidden dev-score gate creates a novel self-evolving-agent information channel merely because raw dev trajectories/scores are withheld while the dev-dependent acceptance decision is stored and reused.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The released AutoDesign loop repeatedly evaluates candidate harnesses on a fixed development set, maps the result into an accept/reject decision, stores that acceptance decision in the persistent optimization record, and gives the updated record to the optimizer in the next iteration. Raw dev scores are hidden, but the acceptance bit is still an adaptive function of the fixed dev set. This is a direct instance of adaptive validation/reusable-held-out feedback rather than a new causal primitive. The same reduction also applies to recursive keep-better schemes such as RSEA, where successive candidate states are repeatedly selected using the same held-out validation split.",
+      "opposite_prediction": "Under the same query sequence and feedback transcript, a generic adaptive-validation/reusable-holdout model predicts that repeated dev-dependent accept/reject outcomes can convey information about the fixed validation sample and can eventually induce validation-specific selection even when raw dev scores are hidden. The risk is governed by the information released by the adaptive transcript, query/update capacity, validation sample size, and selection rule; renaming the queries as harness updates or context evolution does not change that prediction.",
+      "opposite_principle": "A held-out split stops being statistically independent of an adaptive search once functions of that split are repeatedly fed back into future proposals; hiding raw scores does not remove the feedback channel.",
+      "opposite_search_seed": "Search only for a self-evolution-specific structural constraint that changes fresh-test generalization after matching the complete validation-information budget/transcript, validation sample size, proposal capacity, update count, and compute. A promising residual must make a different ex-ante prediction from adaptive-data-analysis/reusable-holdout theory under identical feedback bits, rather than simply showing that repeated validation can overfit.",
+      "scope": "AutoDesign arXiv:2608.13560v1 outer-loop acceptance history and Recursive Self-Evolving Agents via Held-Out Selection arXiv:2606.28374v1 repeated held-out keep-better selection.",
+      "same_information_or_scope_matched": true,
+      "positive_support": true,
+      "same_information_reduction_verified": true,
+      "evidence_refs": [
+        "arXiv:2608.13560",
+        "primary-fulltext:arXiv:2608.13560#sha256=f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417",
+        "arXiv:2606.28374",
+        "primary-fulltext:arXiv:2606.28374#sha256=8a56dd24499a96b4897abfa77751385ebb0ec97f6912a64ea4f49318bab455eb",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#snapshot-validity-horizon",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#verifier-exogeneity"
+      ],
+      "alternative_explanations_ruled_out": [
+        "No dev information reaches future proposals: contradicted because AutoDesign stores each dev-dependent acceptance decision in the optimization record supplied to the next iteration.",
+        "The development split is queried only once: contradicted by the outer-loop algorithm, which evaluates every candidate on D_dev before acceptance.",
+        "This structure is unique to AutoDesign: RSEA independently uses repeated held-out keep-better selection across generations, demonstrating that the object is a generic adaptive-selection pattern rather than an AutoDesign-only mechanism."
+      ],
+      "reopen_condition": "Reopen only with a preregistered matched comparison that equalizes the full validation feedback transcript/information budget, dev sample size, proposal/update capacity, iteration count, and compute, yet two self-evolution structures make different fresh-test generalization predictions that a same-information adaptive-validation/reusable-holdout model cannot express. More iterations, a different score threshold, binary-versus-real-valued feedback, or a new agent domain alone is insufficient."
+    }
+  },
+  "scientific_interpretation": {
+    "safe_claim": "AutoDesign's dev gate is selection-facing despite hiding raw dev scores, but the resulting repeated feedback channel is already a mature adaptive-validation object. It is useful as a governance warning, not a standalone paper thesis.",
+    "new_search_basin": "validation-information-budget-matched-structural-residual"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T18:32:46+00:00",
+  "generated_at": "2026-08-16T18:34:48+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T18:32:46+00:00",
+    "generated_at": "2026-08-16T18:34:48+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -188,20 +188,9 @@
       "persistent_dead_end_requires_positive_counter_explanation": true,
       "canonical_generator_and_queue_untouched": true
     },
-    "last_ingested_run_id": "shadow-20260817-fresh-phenomenon-v10-r1",
-    "last_ingested_stage_manifest_sha256": "5f9d53572cc0bc1d4b76689aa69af1204ad9fd9b624a67b73c86f7f24c327f91",
-    "receipts": [
-      {
-        "run_id": "shadow-20260817-fresh-phenomenon-v10-r1",
-        "stage_manifest_sha256": "5f9d53572cc0bc1d4b76689aa69af1204ad9fd9b624a67b73c86f7f24c327f91",
-        "terminal_generated_at": "2026-08-16T17:27:22+00:00",
-        "hard_veto_added": 0,
-        "semantic_blocker_added": 0,
-        "semantic_hold_added": 0,
-        "support_hold_added": 1,
-        "scientific_authority": false
-      }
-    ],
+    "last_ingested_run_id": "",
+    "last_ingested_stage_manifest_sha256": "",
+    "receipts": [],
     "scientific_authority": false
   },
   "shadow_dead_end_memory": {
@@ -495,6 +484,131 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "MINDMEMOS-SKILL-SIGN-REVERSAL",
+        "basin": "principle-readjudication-4d80ae03a78e958a",
+        "search_primitive": "",
+        "title": "Initial-skill harm followed by evolved-skill gains is corrective adaptation, not a new self-evolution primitive",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Initial-skill harm followed by evolved-skill gains is corrective adaptation, not a new self-evolution primitive",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "The reported sign reversal is predicted by ordinary task-conditioned negative transfer followed by error-driven corrective skill optimization. MindMemOS's initial xlsx skill is a generic procedural artifact with sparse cautions and is worse than No-skill on SpreadsheetBench. Its unsupervised evolution turns recurring execution failures into concrete error-avoidance rules, while supervised evolution uses task scores to bound those rules and avoid overgeneralization, e.g. preserving requested formulas rather than hard-coding values merely to satisfy cached-value checks. SkillGrad independently reports the same qualitative object on SpreadsheetBench Verified across two backbones and two skill initializations: base xlsx skills can underperform No-skill, and failed plus contrastive-success trajectories are used as corrective evidence to patch the same skill into a higher-performing artifact. Therefore the negative-to-positive transition does not require an additional self-evolution primitive beyond skill-task misalignment, corrective learning, and rule specialization/applicability learning.",
+        "current_source_refs": [
+          "arXiv:2605.27760",
+          "arXiv:2608.12428"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.12428",
+          "primary-fulltext:arXiv:2608.12428#sha256=79a9c92991d928c4d8e4629a4a71ea8c92d2c56f8fe81e3a4a5ba6822f4b3a32",
+          "first-party:https://github.com/mindscale-noah/MindMemOS@90491828726e1540442b17cd445d0308d0b8093c",
+          "repo:MindMemOS/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+          "repo:MindMemOS/src/mindmemos/mindmemos/pipelines/skill/evolution.py",
+          "repo:MindMemOS/src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py",
+          "arXiv:2605.27760",
+          "primary-fulltext:arXiv:2605.27760#sha256=7265a9097cb273168256689ae6266254d1516cd7106d539cb65b11803afad7a1",
+          "repo:research_pipeline/paper_first_fresh_saturation.py#feedback-polarity-by-update-surface",
+          "repo:research_pipeline/paper_first_fresh_saturation.py#procedural-memory-nonmonotonicity"
+        ],
+        "problem_text": "The standalone claim that MindMemOS's SpreadsheetBench transition from Init-skill below No-skill to evolved-skill above No-skill identifies a new agent-specific causal mechanism merely from the sign reversal or from supervised evolution adding more bounded rules.",
+        "reason": "MindMemOS provides positive evidence that trajectory-driven skill refinement can turn a harmful generic skill into a useful task-aligned one, but the aggregate sign reversal and supervised boundary refinement are already explained by mature negative-transfer and corrective-learning objects.",
+        "reopen_only_if": "Reopen only if a preregistered matched comparison equalizes task-skill compatibility, initial skill content, executor, failed/successful trajectory evidence, task-score information, edit/token budget, update count, and held-out evaluation, yet a self-evolution-specific structural variable yields a distinct ex-ante task-level sign-flip prediction that generic prompt/skill optimization, corrective learning, rule specialization, and nonmonotonic rule revision cannot express. More iterations, a different skill seed, a larger skill, or another negative-to-positive aggregate result is insufficient.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "The reported sign reversal is predicted by ordinary task-conditioned negative transfer followed by error-driven corrective skill optimization. MindMemOS's initial xlsx skill is a generic procedural artifact with sparse cautions and is worse than No-skill on SpreadsheetBench. Its unsupervised evolution turns recurring execution failures into concrete error-avoidance rules, while supervised evolution uses task scores to bound those rules and avoid overgeneralization, e.g. preserving requested formulas rather than hard-coding values merely to satisfy cached-value checks. SkillGrad independently reports the same qualitative object on SpreadsheetBench Verified across two backbones and two skill initializations: base xlsx skills can underperform No-skill, and failed plus contrastive-success trajectories are used as corrective evidence to patch the same skill into a higher-performing artifact. Therefore the negative-to-positive transition does not require an additional self-evolution primitive beyond skill-task misalignment, corrective learning, and rule specialization/applicability learning.",
+          "opposite_prediction": "Under matched executor, task distribution, skill initialization, feedback budget, and update capacity, held-out improvement should track how well edits correct task-relevant failure modes and constrain over-broad rules. An initially harmful skill can become beneficial when corrective examples remove or specialize misleading guidance; supervised counterexamples can further improve performance by learning when a rule should not apply. A generic prompt/skill optimizer with the same failed/successful traces and scores can express the same sign reversal without any special lineage, memory, or self-evolution variable.",
+          "opposite_principle": "Skill utility is conditional on task-artifact alignment; negative transfer from an unoptimized procedural artifact and its reversal through corrective rule specialization are ordinary adaptation phenomena, not evidence of a new self-evolution mechanism by themselves.",
+          "opposite_search_seed": "Search only for a preregistered residual where two skill-update procedures receive the same task-skill compatibility information, failed/successful trajectory evidence, task scores, edit/token budget, and held-out split yet make different ex-ante predictions about which task outcomes will flip sign. The residual must beat generic prompt optimization, error-driven corrective learning, positive-versus-negative concept learning, and nonmonotonic rule-revision baselines. Do not reopen from another base-skill-below-no-skill result or from merely adding applicability conditions.",
+          "scope": "MindMemOS arXiv:2608.12428v1 MindSkillEvolve evaluation and first-party repository commit 90491828726e1540442b17cd445d0308d0b8093c; SkillGrad arXiv:2605.27760v1 SpreadsheetBench skill optimization evidence.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.12428",
+            "primary-fulltext:arXiv:2608.12428#sha256=79a9c92991d928c4d8e4629a4a71ea8c92d2c56f8fe81e3a4a5ba6822f4b3a32",
+            "first-party:https://github.com/mindscale-noah/MindMemOS@90491828726e1540442b17cd445d0308d0b8093c",
+            "repo:MindMemOS/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+            "repo:MindMemOS/src/mindmemos/mindmemos/pipelines/skill/evolution.py",
+            "repo:MindMemOS/src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py",
+            "arXiv:2605.27760",
+            "primary-fulltext:arXiv:2605.27760#sha256=7265a9097cb273168256689ae6266254d1516cd7106d539cb65b11803afad7a1",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#feedback-polarity-by-update-surface",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#procedural-memory-nonmonotonicity"
+          ],
+          "alternative_explanations_ruled_out": [
+            "The initial skill is simply neutral context: contradicted by both MindMemOS and SkillGrad, where base xlsx skills underperform No-skill on SpreadsheetBench.",
+            "MindMemOS evolution is only skill-length growth: contradicted by the first-party pipeline and Appendix B, which explicitly support add/revise/remove edits and show supervised boundary conditions that restrict over-broad rules.",
+            "The sign reversal is unique to MindMemOS: contradicted by SkillGrad's independent SpreadsheetBench results using two backbones and two skill initializations.",
+            "Task scores create an unidentified new mechanism: the supervised-only additions are applicability/exception boundaries and preservation constraints, directly expressible as counterexample-driven concept/rule specialization under the same feedback information."
+          ],
+          "reopen_condition": "Reopen only if a preregistered matched comparison equalizes task-skill compatibility, initial skill content, executor, failed/successful trajectory evidence, task-score information, edit/token budget, update count, and held-out evaluation, yet a self-evolution-specific structural variable yields a distinct ex-ante task-level sign-flip prediction that generic prompt/skill optimization, corrective learning, rule specialization, and nonmonotonic rule revision cannot express. More iterations, a different skill seed, a larger skill, or another negative-to-positive aggregate result is insufficient."
+        },
+        "source_readjudication_artifact": "generated/mindmemos-skill-sign-reversal-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "AUTODESIGN-DEV-ACCEPTANCE-FEEDBACK",
+        "basin": "principle-readjudication-5f9b40020b463e11",
+        "search_primitive": "",
+        "title": "Repeated accept/reject feedback from a fixed development split is adaptive validation, not a new self-evolution primitive",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Repeated accept/reject feedback from a fixed development split is adaptive validation, not a new self-evolution primitive",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "The released AutoDesign loop repeatedly evaluates candidate harnesses on a fixed development set, maps the result into an accept/reject decision, stores that acceptance decision in the persistent optimization record, and gives the updated record to the optimizer in the next iteration. Raw dev scores are hidden, but the acceptance bit is still an adaptive function of the fixed dev set. This is a direct instance of adaptive validation/reusable-held-out feedback rather than a new causal primitive. The same reduction also applies to recursive keep-better schemes such as RSEA, where successive candidate states are repeatedly selected using the same held-out validation split.",
+        "current_source_refs": [
+          "arXiv:2606.28374",
+          "arXiv:2608.13560"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.13560",
+          "primary-fulltext:arXiv:2608.13560#sha256=f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417",
+          "arXiv:2606.28374",
+          "primary-fulltext:arXiv:2606.28374#sha256=8a56dd24499a96b4897abfa77751385ebb0ec97f6912a64ea4f49318bab455eb",
+          "repo:research_pipeline/paper_first_fresh_saturation.py#snapshot-validity-horizon",
+          "repo:research_pipeline/paper_first_fresh_saturation.py#verifier-exogeneity"
+        ],
+        "problem_text": "The standalone claim that AutoDesign's hidden dev-score gate creates a novel self-evolving-agent information channel merely because raw dev trajectories/scores are withheld while the dev-dependent acceptance decision is stored and reused.",
+        "reason": "AutoDesign's dev gate is selection-facing despite hiding raw dev scores, but the resulting repeated feedback channel is already a mature adaptive-validation object. It is useful as a governance warning, not a standalone paper thesis.",
+        "reopen_only_if": "Reopen only with a preregistered matched comparison that equalizes the full validation feedback transcript/information budget, dev sample size, proposal/update capacity, iteration count, and compute, yet two self-evolution structures make different fresh-test generalization predictions that a same-information adaptive-validation/reusable-holdout model cannot express. More iterations, a different score threshold, binary-versus-real-valued feedback, or a new agent domain alone is insufficient.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "The released AutoDesign loop repeatedly evaluates candidate harnesses on a fixed development set, maps the result into an accept/reject decision, stores that acceptance decision in the persistent optimization record, and gives the updated record to the optimizer in the next iteration. Raw dev scores are hidden, but the acceptance bit is still an adaptive function of the fixed dev set. This is a direct instance of adaptive validation/reusable-held-out feedback rather than a new causal primitive. The same reduction also applies to recursive keep-better schemes such as RSEA, where successive candidate states are repeatedly selected using the same held-out validation split.",
+          "opposite_prediction": "Under the same query sequence and feedback transcript, a generic adaptive-validation/reusable-holdout model predicts that repeated dev-dependent accept/reject outcomes can convey information about the fixed validation sample and can eventually induce validation-specific selection even when raw dev scores are hidden. The risk is governed by the information released by the adaptive transcript, query/update capacity, validation sample size, and selection rule; renaming the queries as harness updates or context evolution does not change that prediction.",
+          "opposite_principle": "A held-out split stops being statistically independent of an adaptive search once functions of that split are repeatedly fed back into future proposals; hiding raw scores does not remove the feedback channel.",
+          "opposite_search_seed": "Search only for a self-evolution-specific structural constraint that changes fresh-test generalization after matching the complete validation-information budget/transcript, validation sample size, proposal capacity, update count, and compute. A promising residual must make a different ex-ante prediction from adaptive-data-analysis/reusable-holdout theory under identical feedback bits, rather than simply showing that repeated validation can overfit.",
+          "scope": "AutoDesign arXiv:2608.13560v1 outer-loop acceptance history and Recursive Self-Evolving Agents via Held-Out Selection arXiv:2606.28374v1 repeated held-out keep-better selection.",
+          "same_information_or_scope_matched": true,
+          "positive_support": true,
+          "same_information_reduction_verified": true,
+          "evidence_refs": [
+            "arXiv:2608.13560",
+            "primary-fulltext:arXiv:2608.13560#sha256=f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417",
+            "arXiv:2606.28374",
+            "primary-fulltext:arXiv:2606.28374#sha256=8a56dd24499a96b4897abfa77751385ebb0ec97f6912a64ea4f49318bab455eb",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#snapshot-validity-horizon",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#verifier-exogeneity"
+          ],
+          "alternative_explanations_ruled_out": [
+            "No dev information reaches future proposals: contradicted because AutoDesign stores each dev-dependent acceptance decision in the optimization record supplied to the next iteration.",
+            "The development split is queried only once: contradicted by the outer-loop algorithm, which evaluates every candidate on D_dev before acceptance.",
+            "This structure is unique to AutoDesign: RSEA independently uses repeated held-out keep-better selection across generations, demonstrating that the object is a generic adaptive-selection pattern rather than an AutoDesign-only mechanism."
+          ],
+          "reopen_condition": "Reopen only with a preregistered matched comparison that equalizes the full validation feedback transcript/information budget, dev sample size, proposal/update capacity, iteration count, and compute, yet two self-evolution structures make different fresh-test generalization predictions that a same-information adaptive-validation/reusable-holdout model cannot express. More iterations, a different score threshold, binary-versus-real-valued feedback, or a new agent domain alone is insufficient."
+        },
+        "source_readjudication_artifact": "generated/autodesign-dev-acceptance-feedback-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "POSITIVE-RESIDUAL-MEMORY-TREATMENT-SEMANTICS",
         "basin": "principle-readjudication-6685e63b4a8a895b",
         "search_primitive": "",
@@ -547,6 +661,55 @@
           "reopen_condition": "Reopen only if new primary evidence supports a preregistered structural constraint for self-modifying persistent treatments and, under identical pre-outcome information including the full executable treatment map/version state, a matched versioned/nonstationary treatment or dynamic policy-regime baseline makes a different ex-ante prediction and fails an exact reduction test. A renamed mapping feature, extra representation, new version label, new K-step/window schedule, or withholding information from the baseline is insufficient."
         },
         "source_readjudication_artifact": "generated/positive-residual-memory-treatment-semantics-principle-readjudication-20260816.json",
+        "opposite_search_asset_evidence": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "AUTODESIGN-POSTERBENCH-OPTIMIZER-CALIBRATION",
+        "basin": "principle-readjudication-7621dc2dd3cd8c90",
+        "search_primitive": "",
+        "title": "PosterBench calibration cannot drift through an optimization loop that does not consume PosterBench",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: PosterBench calibration cannot drift through an optimization loop that does not consume PosterBench",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "AutoDesign explicitly separates the optimization-time evaluator R_meta from the frozen PosterBench protocol. R_meta is built before autonomous optimization and supplies rollout scores and train/dev acceptance feedback. PosterBench is a distinct frozen protocol used for completed-system comparison and the system-blind human-alignment study. Because PosterBench scores are not consumed by the released update proposal or acceptance transition, PosterBench itself has no causal write path into the optimization trajectory.",
+        "current_source_refs": [
+          "arXiv:2608.13560"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.13560",
+          "primary-fulltext:arXiv:2608.13560#sha256=f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417"
+        ],
+        "problem_text": "The standalone claim that AutoDesign's recursive optimization can directly overfit or reward-hack PosterBench itself, causing PosterBench's human-preference calibration to drift during the released optimization loop.",
+        "reason": "PosterBench-human calibration is useful external evidence but cannot by itself diagnose optimizer-induced benchmark overfitting in AutoDesign because PosterBench is outside the released update path.",
+        "reopen_only_if": "Reopen only if first-party evidence shows PosterBench or an equivalent frozen final benchmark score is actually consumed by a later AutoDesign update, gate, rollback, synthesis, or selection transition. Merely evaluating more checkpoints on PosterBench after optimization is insufficient.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "IMPOSSIBILITY_OR_INVARIANCE",
+          "statement": "AutoDesign explicitly separates the optimization-time evaluator R_meta from the frozen PosterBench protocol. R_meta is built before autonomous optimization and supplies rollout scores and train/dev acceptance feedback. PosterBench is a distinct frozen protocol used for completed-system comparison and the system-blind human-alignment study. Because PosterBench scores are not consumed by the released update proposal or acceptance transition, PosterBench itself has no causal write path into the optimization trajectory.",
+          "opposite_prediction": "Holding R_meta, train/dev tasks, optimizer inputs, proposed updates, and randomness fixed, changing only PosterBench scores or PosterBench membership cannot change the released AutoDesign harness-update trajectory. It can change only the final reported benchmark comparison. Any optimizer-induced validity failure must therefore occur in R_meta, the repeatedly reused dev gate, or another selection-facing signal, not in report-only PosterBench.",
+          "opposite_principle": "Evaluation can be adaptively overfit only through a selection-facing feedback path; a frozen report-only benchmark is trajectory-invariant by construction.",
+          "opposite_search_seed": "Search for optimization-time evaluator or validation signals that are actually consumed by update proposal, gating, rollback, or persistent optimization history. Do not use final report-only PosterBench calibration as evidence of optimizer feedback. A valid next object must identify the selection-facing signal and then survive adaptive-validation/reusable-holdout reductions.",
+          "scope": "AutoDesign arXiv:2608.13560v1, especially the outer-loop definition distinguishing fixed R_meta from the separate frozen PosterBench final evaluation protocol.",
+          "same_information_or_scope_matched": true,
+          "proof_or_structural_witness": true,
+          "structural_witness": "The paper states that R_meta remains fixed during autonomous optimization and is used to score rollouts; it separately states that this optimization-time evaluator is distinct from the frozen PosterBench protocol used for final system comparison. PosterBench therefore has no update-edge in the released outer-loop equations.",
+          "evidence_refs": [
+            "arXiv:2608.13560",
+            "primary-fulltext:arXiv:2608.13560#sha256=f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417"
+          ],
+          "alternative_explanations_ruled_out": [
+            "PosterBench is the optimization evaluator: contradicted by the paper's explicit R_meta-versus-PosterBench distinction.",
+            "PosterBench controls update acceptance: the released acceptance equation uses J_train and J_dev under R_meta, not PosterBench.",
+            "Human-blind preference enters the optimization loop: the human study is reported as final independent evaluation, not an update signal."
+          ],
+          "reopen_condition": "Reopen only if first-party evidence shows PosterBench or an equivalent frozen final benchmark score is actually consumed by a later AutoDesign update, gate, rollback, synthesis, or selection transition. Merely evaluating more checkpoints on PosterBench after optimization is insufficient."
+        },
+        "source_readjudication_artifact": "generated/autodesign-posterbench-causal-nopath-principle-readjudication-20260817.json",
         "opposite_search_asset_evidence": {},
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
@@ -881,6 +1044,174 @@
         },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
         "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "GEOFORGE-RETRIEVAL-REDUNDANCY",
+        "basin": "principle-readjudication-ea20793051a9268c",
+        "search_primitive": "",
+        "title": "Top-k retrieval degradation is a marginal-information trade-off, not a new self-evolution primitive",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Top-k retrieval degradation is a marginal-information trade-off, not a new self-evolution primitive",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "GeoForge itself attributes the sensitivity curve to the ordinary quality-coverage trade-off of retrieved guidance: a small number of high-quality skills performs best, excessive retrieval slightly degrades trajectory quality because guidance becomes redundant, and an overly strict score threshold hurts Tool-Exact-Match by filtering useful experiences. This is exactly the prediction of marginal-information/complementarity-versus-redundancy models under a finite context/action-planning budget. The system's own mature reduction ledger likewise treats sharing-helpful versus sharing-collapse behavior as information redundancy/correlation or diversity-consensus trade-off unless a same-information residual survives.",
+        "current_source_refs": [
+          "arXiv:2608.10494"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.10494",
+          "primary-fulltext:arXiv:2608.10494#sha256=30c2a1deaceac1b3b20a79711ab05bc3344ff48762d4a149c3900f16c40d112a",
+          "repo:research_pipeline/paper_first_fresh_saturation.py#experience-sharing-sign-reversal",
+          "repo:research_pipeline/paper_first_fresh_saturation.py#artifact-uptake-after-retrieval"
+        ],
+        "problem_text": "The standalone claim that GeoForge's slight trajectory-quality degradation under excessive skill retrieval and its optimum near Top-k=3 / Min-Retrieve-Score=0.6 identify a new agent-specific self-evolution mechanism merely from the nonmonotonic retrieval curve.",
+        "reason": "GeoForge provides a clean quantitative example that retrieval quality is nonmonotonic in quantity, but its own explanation and same-information mature theory already identify the governing object as marginal useful information versus redundant guidance.",
+        "reopen_only_if": "Reopen only if a preregistered matched comparison equalizes retrieved-skill count, relevance/score profile, context/token budget, pairwise redundancy/complementarity, planner/backbone, and observable retrieval-utilization information, yet a self-evolution-specific structural variable produces a distinct ex-ante trajectory-quality or task-utility prediction that same-information redundancy/correlation, submodular-diversity, negative-transfer, and retrieval-utilization models cannot express. A new k, threshold, domain, or retrieval curve is insufficient.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "GeoForge itself attributes the sensitivity curve to the ordinary quality-coverage trade-off of retrieved guidance: a small number of high-quality skills performs best, excessive retrieval slightly degrades trajectory quality because guidance becomes redundant, and an overly strict score threshold hurts Tool-Exact-Match by filtering useful experiences. This is exactly the prediction of marginal-information/complementarity-versus-redundancy models under a finite context/action-planning budget. The system's own mature reduction ledger likewise treats sharing-helpful versus sharing-collapse behavior as information redundancy/correlation or diversity-consensus trade-off unless a same-information residual survives.",
+          "opposite_prediction": "With the retrieval scoring function, candidate skill pool, context/token budget, and downstream planner fixed, increasing k should initially add useful complementary information, then yield diminishing marginal value as lower-ranked skills become redundant, weakly relevant, or conflicting; raising the score threshold should remove noise until it begins discarding useful evidence. A nonmonotonic optimum in k or threshold is therefore expected without introducing a new self-evolution object.",
+          "opposite_principle": "Retrieval utility depends on marginal complementary information under a finite planning/context budget; more retrieved skills are not monotonically better when lower-ranked guidance is redundant or conflicting.",
+          "opposite_search_seed": "Search only for matched retrieval sets with the same relevance scores, token/context budget, redundancy/complementarity statistics, skill count, and planner information where an agent-specific structural variable still predicts a different ex-ante trajectory or task outcome. Require same-information redundancy/correlation, submodular-diversity, retrieval-utilization, and negative-transfer baselines to fail. Do not reopen from another Top-k optimum or another observation that more context can hurt.",
+          "scope": "GeoForge arXiv:2608.10494v1 sensitivity analysis over the number of retrieved skills and minimum retrieval-score threshold, including the reported Top-k=3 and Min-Retrieve-Score=0.6 operating point.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.10494",
+            "primary-fulltext:arXiv:2608.10494#sha256=30c2a1deaceac1b3b20a79711ab05bc3344ff48762d4a149c3900f16c40d112a",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#experience-sharing-sign-reversal",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#artifact-uptake-after-retrieval"
+          ],
+          "alternative_explanations_ruled_out": [
+            "The degradation reflects an unexplained optimizer instability: the paper explicitly attributes it to redundant guidance under excessive retrieval.",
+            "The optimum is caused only by a strict filtering failure: the two sweeps have opposite sides of the same quality-coverage trade-off—too much low-marginal-value guidance versus filtering useful experiences.",
+            "The effect requires a geospatial-specific causal object: the stated mechanism depends on relevance, redundancy, retrieval count, and planning quality, all directly expressible by generic marginal-information and negative-transfer models.",
+            "A new self-evolution mechanism follows because the retrieved objects are evolved skills: evolution determines the available artifacts, but the reported sensitivity experiment varies retrieval hyperparameters over the resulting library; the observed Top-k nonmonotonicity is a retrieval-selection phenomenon."
+          ],
+          "reopen_condition": "Reopen only if a preregistered matched comparison equalizes retrieved-skill count, relevance/score profile, context/token budget, pairwise redundancy/complementarity, planner/backbone, and observable retrieval-utilization information, yet a self-evolution-specific structural variable produces a distinct ex-ante trajectory-quality or task-utility prediction that same-information redundancy/correlation, submodular-diversity, negative-transfer, and retrieval-utilization models cannot express. A new k, threshold, domain, or retrieval curve is insufficient."
+        },
+        "source_readjudication_artifact": "generated/geoforge-retrieval-redundancy-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "HARD-SECURITY-UTILITY-COLLAPSE",
+        "basin": "principle-readjudication-f30978960c19222b",
+        "search_primitive": "",
+        "title": "Backbone-dependent overrestriction is a security-utility operating point, not a new self-evolution cliff",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Backbone-dependent overrestriction is a security-utility operating point, not a new self-evolution cliff",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "The reported GPT-5.5 behavior is already represented by the paper's own multiobjective runtime-defense formulation and by ordinary overblocking/conservative-policy trade-offs. HARD defines the defense objective in terms of security and utility, explicitly notes that overly restrictive interventions can improve security at the cost of legitimate capability, and interprets different HARD variants as different operating points on a security-utility frontier. In the backbone ablation the execution agent, judges, tasks, evolution rounds, and budget are fixed while the evolution backbone changes; the resulting policies occupy different ASR/BU/UA points. The GPT-5.5 point (ASR 20.3, BU 94.9, UA 7.2) therefore demonstrates a poor utility-conditioned operating point, not an additional causal primitive or an identified phase transition.",
+        "current_source_refs": [
+          "arXiv:2608.12977"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.12977",
+          "primary-fulltext:arXiv:2608.12977#sha256=d810b39f050dd6d3330e08aade701b1325511e98a47cb009be1ca5d975172957"
+        ],
+        "problem_text": "The standalone claim that HARD's GPT-5.5 backbone result (lower attack success but utility-under-attack collapsing to 7.2%) identifies a new self-evolving-defense utility-collapse mechanism merely because failure-driven security refinement and task utility move in opposite directions.",
+        "reason": "HARD provides strong evidence that defense-evolution backbones can land at very different security-utility operating points, including severe overrestriction. The extreme GPT-5.5 result is scientifically useful as a failure case but does not by itself identify a new utility-collapse mechanism beyond mature multiobjective/overblocking explanations.",
+        "reopen_only_if": "Reopen only if a preregistered matched experiment holds the execution agent, attack/benign task mix, security and utility evaluators, pre-update performance, feedback information, update budget, and objective weights/information fixed, while a self-evolution-specific structural variable yields a different ex-ante security-utility outcome that the strongest same-information Pareto/constrained-optimization, calibration, and overblocking baselines cannot express. A different evolution backbone, another extreme UA value, or a new scalarization is insufficient.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "The reported GPT-5.5 behavior is already represented by the paper's own multiobjective runtime-defense formulation and by ordinary overblocking/conservative-policy trade-offs. HARD defines the defense objective in terms of security and utility, explicitly notes that overly restrictive interventions can improve security at the cost of legitimate capability, and interprets different HARD variants as different operating points on a security-utility frontier. In the backbone ablation the execution agent, judges, tasks, evolution rounds, and budget are fixed while the evolution backbone changes; the resulting policies occupy different ASR/BU/UA points. The GPT-5.5 point (ASR 20.3, BU 94.9, UA 7.2) therefore demonstrates a poor utility-conditioned operating point, not an additional causal primitive or an identified phase transition.",
+          "opposite_prediction": "Given the same attack/benign task distributions, execution agent, judges, update budget, and observable security and utility feedback, a generic multiobjective/constrained policy-optimization or overblocking model predicts that different proposal/evolution backbones can settle at different Pareto operating points. Strong attack correction need not imply utility preservation, and a conservative artifact can sharply reduce UA while retaining high BU if its restrictions are triggered primarily in attacked contexts. A single extreme point does not identify a cliff without an independently varied control parameter and a same-information baseline that fails to express the frontier.",
+          "opposite_principle": "Failure-driven defense evolution is multiobjective policy refinement: security gains and task utility are separate objectives, and overrestriction is an ordinary Pareto/overblocking failure unless a structural variable predicts a residual beyond a same-information security-utility model.",
+          "opposite_search_seed": "Search only for a preregistered structural variable that separates defense updates with matched pre-update ASR, BU, UA, attack/benign context features, update budget, execution model, evaluator information, and security-utility objective, yet yields a distinct ex-ante downstream safety/utility prediction that a same-information Pareto, constrained-optimization, calibration, or overblocking model cannot express. Do not reopen from another backbone with a different ASR/UA point, a tuned utility weight, or a visually sharp trade-off curve.",
+          "scope": "HARD / Beyond Handcrafted Security arXiv:2608.12977v1, especially the harness-optimization objective, the HARD-Policy/HARD-Gate/HARD-Both security-utility comparisons, and the evolution-backbone ablation on memory contamination.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.12977",
+            "primary-fulltext:arXiv:2608.12977#sha256=d810b39f050dd6d3330e08aade701b1325511e98a47cb009be1ca5d975172957"
+          ],
+          "alternative_explanations_ruled_out": [
+            "The 7.2% UA point is a failure of the execution agent or evaluator rather than the evolved defense: the paper holds the execution agent, judges, benchmark tasks, and evaluation protocol fixed across the backbone ablation and varies only the evolution backbone.",
+            "Security and utility are intended to move monotonically together: contradicted by the paper's explicit multiobjective formulation and its statement that overly restrictive interventions can improve security while degrading legitimate capabilities.",
+            "The paper establishes a controlled utility-collapse threshold: it reports discrete backbone-dependent operating points under one five-round budget; no independently varied scalar control parameter or changepoint experiment identifies a threshold.",
+            "Joint defense artifacts uniformly dominate single-artifact evolution: the paper itself reports non-additive interactions and explicitly interprets HARD variants as different security-utility operating points."
+          ],
+          "reopen_condition": "Reopen only if a preregistered matched experiment holds the execution agent, attack/benign task mix, security and utility evaluators, pre-update performance, feedback information, update budget, and objective weights/information fixed, while a self-evolution-specific structural variable yields a different ex-ante security-utility outcome that the strongest same-information Pareto/constrained-optimization, calibration, and overblocking baselines cannot express. A different evolution backbone, another extreme UA value, or a new scalarization is insufficient."
+        },
+        "source_readjudication_artifact": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "MINDMEMOS-DREAMING-COMPRESSION-PLATEAU",
+        "basin": "principle-readjudication-fc9f8df4be78cc69",
+        "search_primitive": "",
+        "title": "The reported ~20% MindMemOS dreaming compression is not an independently identified compression plateau",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: The reported ~20% MindMemOS dreaming compression is not an independently identified compression plateau",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "On the released FactConsolidation object, the archive fraction is a post-action summary of targeted consolidation, not an independently varied treatment. The benchmark defines the later contradictory fact as the valid memory, while the first-party dreaming pipeline deterministically archives exact duplicates before LLM actions, can merge multiple source memories while archiving the sources, and represents directed conflict resolution with relations such as supersedes. Therefore simultaneously reducing active-memory volume and improving both single- and multi-hop accuracy is predicted by a same-information conflict-aware selective-forgetting/belief-revision account whenever removed memories are duplicate, stale, or contradictory. The paper reports one naturally induced archive fraction per model/hop regime rather than a controlled AMCR sweep, so the observed ~20% operating point does not identify a plateau or cliff in compression ratio.",
+        "current_source_refs": [
+          "arXiv:2608.12428"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.12428",
+          "first-party:https://github.com/mindscale-noah/MindMemOS@90491828726e1540442b17cd445d0308d0b8093c",
+          "repo:MindMemOS/README.md#sha256=16fc60fababb89b4866440ba15a568e4c736d639cd36cc7bcc69eae83810c399",
+          "repo:MindMemOS/src/mindmemos/mindmemos/pipelines/dreaming/default.py#sha256=6762ce312475c75caa4630521b931d12be2afc0a70f91aeefd910dc918709909",
+          "repo:MindMemOS/src/mindmemos/mindmemos/components/dreaming/action_planning.py#sha256=5541c07c386fff7cb9df6074d412d5be3463d7f68e45487fd7254411d08a9040",
+          "repo:MindMemOS/tests/pipelines/dreaming/test_default.py#sha256=6ab7fbfb4033db0f0fc051150812c1bd41f795b3a117519af62ebd708b91a71a",
+          "repo:MindMemOS/tests/components/dreaming/test_action_planning.py#sha256=893b26ebaa31e4bd023b5fe2486d89b359fb1433f7532c24f9c1464d020384ca",
+          "repo:MindMemOS/docs/eval/README_ZH.md#sha256=0dc912c7cb98070c607d1f438481f7291ffb2495ca8010706283eeff23b1047b",
+          "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260817-source-coverage-v11-r1/formulate-p1.json#sha256=daa18de25a298c67391053af6f6a9e2f779bf05f39fbefd7c5147ea4f409882e"
+        ],
+        "problem_text": "The v11 MindMemOS formulation claiming that the reported ~19-23% active-memory archive ratio identifies a nonmonotone compression plateau/cliff whose location is a new causal object beyond conflict-aware selective forgetting, redundancy removal, and belief revision on MemoryAgentBench FactConsolidation.",
+        "reason": "The reported MindMemOS FactConsolidation result supports targeted consolidation/selective forgetting, but it does not identify a standalone ~20% compression plateau. The latter is reduced by benchmark semantics plus first-party conflict-aware dreaming behavior before any new experiment is run.",
+        "reopen_only_if": "Reopen only when a source-faithful or independently validated substrate supports an intervention that separates compression quantity from conflict-resolution semantics: either vary AMCR while matching which answer-critical conflict paths are resolved/preserved, or vary conflict-resolution quality at matched AMCR. The strongest conflict-aware selective-forgetting/rate-distortion baseline must receive the same memory provenance, temporal order, retrieval state, and query information and still make a distinct ex-ante prediction.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "On the released FactConsolidation object, the archive fraction is a post-action summary of targeted consolidation, not an independently varied treatment. The benchmark defines the later contradictory fact as the valid memory, while the first-party dreaming pipeline deterministically archives exact duplicates before LLM actions, can merge multiple source memories while archiving the sources, and represents directed conflict resolution with relations such as supersedes. Therefore simultaneously reducing active-memory volume and improving both single- and multi-hop accuracy is predicted by a same-information conflict-aware selective-forgetting/belief-revision account whenever removed memories are duplicate, stale, or contradictory. The paper reports one naturally induced archive fraction per model/hop regime rather than a controlled AMCR sweep, so the observed ~20% operating point does not identify a plateau or cliff in compression ratio.",
+          "opposite_prediction": "Under matched memory store, query set, temporal ordering, conflict graph, and dreaming action provenance, answer accuracy should track whether dreaming removes duplicate/stale/contradictory evidence and preserves the benchmark-valid newer evidence, not the archive fraction alone. Two runs with the same AMCR but different conflict-resolution quality can have different accuracy, while different AMCR values can have similar accuracy if they remove only irrelevant or superseded memories. A standalone compression-ratio threshold should disappear after conditioning on which answer-relevant conflict paths were preserved or resolved.",
+          "opposite_principle": "For FactConsolidation, conflict-aware selective forgetting is the causal object; active-memory compression ratio is an outcome summary unless it is independently manipulated under matched conflict-resolution semantics.",
+          "opposite_search_seed": "Reopen only with a preregistered intervention that independently varies archive/compression ratio while holding conflict-resolution semantics, answer-critical evidence retention, temporal ordering, retrieval policy, model, and query set fixed, or independently varies conflict-resolution quality at matched AMCR. The residual must beat a same-information conflict-aware selective-forgetting/rate-distortion baseline. A natural ~20% archive rate, a larger sweep created by deleting arbitrary memories, or a renamed consolidation cliff is insufficient.",
+          "scope": "MindMemOS first-party repository commit 90491828726e1540442b17cd445d0308d0b8093c; MemoryAgentBench FactConsolidation evaluation; shadow run shadow-20260817-source-coverage-v11-r1 candidate SHADOW-P01-C01.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.12428",
+            "first-party:https://github.com/mindscale-noah/MindMemOS@90491828726e1540442b17cd445d0308d0b8093c",
+            "repo:MindMemOS/README.md#sha256=16fc60fababb89b4866440ba15a568e4c736d639cd36cc7bcc69eae83810c399",
+            "repo:MindMemOS/src/mindmemos/mindmemos/pipelines/dreaming/default.py#sha256=6762ce312475c75caa4630521b931d12be2afc0a70f91aeefd910dc918709909",
+            "repo:MindMemOS/src/mindmemos/mindmemos/components/dreaming/action_planning.py#sha256=5541c07c386fff7cb9df6074d412d5be3463d7f68e45487fd7254411d08a9040",
+            "repo:MindMemOS/tests/pipelines/dreaming/test_default.py#sha256=6ab7fbfb4033db0f0fc051150812c1bd41f795b3a117519af62ebd708b91a71a",
+            "repo:MindMemOS/tests/components/dreaming/test_action_planning.py#sha256=893b26ebaa31e4bd023b5fe2486d89b359fb1433f7532c24f9c1464d020384ca",
+            "repo:MindMemOS/docs/eval/README_ZH.md#sha256=0dc912c7cb98070c607d1f438481f7291ffb2495ca8010706283eeff23b1047b",
+            "run:/data/wyt/agent-self-evolution-observatory/runs/shadow-20260817-source-coverage-v11-r1/formulate-p1.json#sha256=daa18de25a298c67391053af6f6a9e2f779bf05f39fbefd7c5147ea4f409882e"
+          ],
+          "alternative_explanations_ruled_out": [
+            "The ~20% value is a controlled compression treatment: not supported. The paper reports the archive fraction produced by dreaming for each evaluated condition, not an intervention sweep over AMCR.",
+            "Dreaming is generic random deletion: ruled out by the released implementation, which clusters entity-related memories, deterministically archives exact duplicates, detects relation/issues, and applies merge/create/link/delete-style consolidation actions with provenance.",
+            "Multi-hop improvement is incompatible with selective forgetting: no. On FactConsolidation, removing a stale contradictory fact can improve any query whose reasoning path otherwise includes that conflict; multi-hop reasoning does not require preserving contradictory superseded evidence.",
+            "The current release supports a faithful paper-table compression sweep anyway: the repository documentation explicitly notes that the current CLI does not expose the full Add -> Dreaming -> Answer/Search -> Score switch needed to reproduce the README Vanilla + Dreaming row from the configuration alone; this is an additional execution limitation but is not the reason for the principle reduction."
+          ],
+          "reopen_condition": "Reopen only when a source-faithful or independently validated substrate supports an intervention that separates compression quantity from conflict-resolution semantics: either vary AMCR while matching which answer-critical conflict paths are resolved/preserved, or vary conflict-resolution quality at matched AMCR. The strongest conflict-aware selective-forgetting/rate-distortion baseline must receive the same memory provenance, temporal order, retrieval state, and query information and still make a distinct ex-ante prediction."
+        },
+        "source_readjudication_artifact": "generated/mindmemos-dreaming-compression-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
       }
     ],
     "hold_objects": [
@@ -906,36 +1237,6 @@
         "scientific_authority": false
       },
       {
-        "source_candidate_id": "SHADOW-P01-C01",
-        "basin": "near-miss-terminal-support-hold-834575272a040cca",
-        "title": "The 32-token experience cliff and post-threshold plateau in latent on-policy self-distillation",
-        "disposition": "HOLD_SUPPORT_UNAVAILABLE",
-        "support_status": "SOURCE_SPECIFIC_PRIMARY_ASSET_UNAVAILABLE",
-        "required_unit": "On the released LOPD/ACEBench configuration, run a preregistered tokens-per-experience sweep {8,16,32,64,128} crossed with retrieval counts {1,3,5} under fixed model, split, seeds, and rollout budget. Fit the strongest same-information capacity/redundancy model on one subset of regimes and test exact prediction of the 16→32 jump and 32→128 plateau in held-out regimes. The candidate is falsified if that model predicts the curve and there is no residual token×retrieval interaction.",
-        "evidence_basis": [
-          "arXiv:2608.13040"
-        ],
-        "strongest_reduction": "the proposed residual remains unresolved until the frozen same-information falsifier can be executed on source-faithful or independently equivalent assets",
-        "reason": "The preregistered scientific comparison requires faithful reproduction of the reported tokens-per-experience sensitivity. In the first-party LOPD release at commit 362d3742fc7b4dbbc0677b219990f2a4b4d0a90f, the README explicitly states that training code is not yet released, while the EnvScaler latent inference configuration requires a compressor checkpoint but contains the placeholder YOUR_COMPRESSOR_CHECKPOINT. The token budget K is the QFormer num_queries architecture parameter. Without the source-specific trained compressor/training artifacts for the sensitivity conditions, changing K in the released code would instantiate an untrained or incompatible compressor rather than reproduce the paper intervention. A locally trained substitute, random QFormer, different model, or retuned checkpoint would change the frozen scientific object.",
-        "avoid": [
-          "re-proposing the unsupported problem object without resolving its frozen asset dependency: The 32-token experience cliff and post-threshold plateau in latent on-policy self-distillation",
-          "substituting a locally invented, randomly initialized, differently trained, or outcome-tuned asset for the source-specific scientific object",
-          "treating missing source assets as scientific evidence for or against the proposed residual"
-        ],
-        "reopen_only_if": "Reopen only when the source-specific/released assets required by the frozen falsifier become available with provenance sufficient to execute the same scientific object, or when an independently reviewed operationalization proves equivalent without changing the frozen prediction, same-information baseline, or causal unit.",
-        "source_run_id": "shadow-20260817-fresh-phenomenon-v10-r1",
-        "source_stage_manifest_sha256": "5f9d53572cc0bc1d4b76689aa69af1204ad9fd9b624a67b73c86f7f24c327f91",
-        "hold_origin": "bounded-evidence-acquisition",
-        "dead_end_certified": false,
-        "memory_class": "REOPENABLE_HOLD",
-        "automatic_problem_gate_authority": false,
-        "automatic_method_authority": false,
-        "automatic_experiment_authority": false,
-        "automatic_p0_authority": false,
-        "automatic_gpu_authority": false,
-        "scientific_authority": false
-      },
-      {
         "source_candidate_id": "SP-15",
         "basin": "implicit-query-decomposition-skill-routing",
         "avoid": [
@@ -952,8 +1253,8 @@
         "scientific_authority": false
       }
     ],
-    "principle_dead_end_count": 12,
-    "principle_readjudication_dead_end_count": 8,
+    "principle_dead_end_count": 18,
+    "principle_readjudication_dead_end_count": 14,
     "inversion_asset_evidence": [
       {
         "asset_ref": "first-party-asset:autoskill@94c47ca488d4ba4117d20272e66d49b9877e68cf",
@@ -1109,7 +1410,7 @@
     "positive_residual_asset_evidence_count": 1,
     "positive_residual_search_active_count": 0,
     "positive_residual_asset_registry_id": "positive-residual-search-assets-v4",
-    "hold_object_count": 3,
+    "hold_object_count": 2,
     "current_source_hard_veto_count": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
@@ -1123,9 +1424,9 @@
     "semantic_hold_added_from_terminal_run": 0,
     "semantic_hold_inherited": 0,
     "near_miss_preflight_count": 3,
-    "near_miss_hold_count": 2,
+    "near_miss_hold_count": 1,
     "near_miss_base_preflight_count": 4,
-    "near_miss_terminal_support_hold_count": 1
+    "near_miss_terminal_support_hold_count": 0
   },
   "shadow_source": {
     "portfolio_status": "SHADOW_PORTFOLIO_IMPORTED_FROM_PRE_SPLIT_RUN",
@@ -1176,9 +1477,9 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 12,
-    "principle_readjudication_dead_ends": 8,
-    "shadow_hold_objects": 3,
+    "shadow_dead_end_objects": 18,
+    "principle_readjudication_dead_ends": 14,
+    "shadow_hold_objects": 2,
     "current_source_hard_veto_dead_ends": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
     "current_source_hard_veto_added_from_terminal_run": 0,
@@ -1189,8 +1490,8 @@
     "semantic_hold_added_from_terminal_run": 0,
     "semantic_hold_inherited": 0,
     "near_miss_preflight_dead_ends": 3,
-    "near_miss_holds": 2,
-    "near_miss_terminal_support_holds": 1,
+    "near_miss_holds": 1,
+    "near_miss_terminal_support_holds": 0,
     "near_miss_support_holds": 1,
     "near_miss_current_primary_stops": 2,
     "near_miss_mature_theory_stops": 1,

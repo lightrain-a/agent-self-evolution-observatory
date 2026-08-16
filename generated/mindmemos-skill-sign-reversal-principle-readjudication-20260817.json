@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "MINDMEMOS-SKILL-SIGN-REVERSAL",
+  "title": "Initial-skill harm followed by evolved-skill gains is corrective adaptation, not a new self-evolution primitive",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_skill_evolution_effect_falsified": false,
+  "dead_end_scope": "The standalone claim that MindMemOS's SpreadsheetBench transition from Init-skill below No-skill to evolved-skill above No-skill identifies a new agent-specific causal mechanism merely from the sign reversal or from supervised evolution adding more bounded rules.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The reported sign reversal is predicted by ordinary task-conditioned negative transfer followed by error-driven corrective skill optimization. MindMemOS's initial xlsx skill is a generic procedural artifact with sparse cautions and is worse than No-skill on SpreadsheetBench. Its unsupervised evolution turns recurring execution failures into concrete error-avoidance rules, while supervised evolution uses task scores to bound those rules and avoid overgeneralization, e.g. preserving requested formulas rather than hard-coding values merely to satisfy cached-value checks. SkillGrad independently reports the same qualitative object on SpreadsheetBench Verified across two backbones and two skill initializations: base xlsx skills can underperform No-skill, and failed plus contrastive-success trajectories are used as corrective evidence to patch the same skill into a higher-performing artifact. Therefore the negative-to-positive transition does not require an additional self-evolution primitive beyond skill-task misalignment, corrective learning, and rule specialization/applicability learning.",
+      "opposite_prediction": "Under matched executor, task distribution, skill initialization, feedback budget, and update capacity, held-out improvement should track how well edits correct task-relevant failure modes and constrain over-broad rules. An initially harmful skill can become beneficial when corrective examples remove or specialize misleading guidance; supervised counterexamples can further improve performance by learning when a rule should not apply. A generic prompt/skill optimizer with the same failed/successful traces and scores can express the same sign reversal without any special lineage, memory, or self-evolution variable.",
+      "opposite_principle": "Skill utility is conditional on task-artifact alignment; negative transfer from an unoptimized procedural artifact and its reversal through corrective rule specialization are ordinary adaptation phenomena, not evidence of a new self-evolution mechanism by themselves.",
+      "opposite_search_seed": "Search only for a preregistered residual where two skill-update procedures receive the same task-skill compatibility information, failed/successful trajectory evidence, task scores, edit/token budget, and held-out split yet make different ex-ante predictions about which task outcomes will flip sign. The residual must beat generic prompt optimization, error-driven corrective learning, positive-versus-negative concept learning, and nonmonotonic rule-revision baselines. Do not reopen from another base-skill-below-no-skill result or from merely adding applicability conditions.",
+      "scope": "MindMemOS arXiv:2608.12428v1 MindSkillEvolve evaluation and first-party repository commit 90491828726e1540442b17cd445d0308d0b8093c; SkillGrad arXiv:2605.27760v1 SpreadsheetBench skill optimization evidence.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.12428",
+        "primary-fulltext:arXiv:2608.12428#sha256=79a9c92991d928c4d8e4629a4a71ea8c92d2c56f8fe81e3a4a5ba6822f4b3a32",
+        "first-party:https://github.com/mindscale-noah/MindMemOS@90491828726e1540442b17cd445d0308d0b8093c",
+        "repo:MindMemOS/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+        "repo:MindMemOS/src/mindmemos/mindmemos/pipelines/skill/evolution.py",
+        "repo:MindMemOS/src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py",
+        "arXiv:2605.27760",
+        "primary-fulltext:arXiv:2605.27760#sha256=7265a9097cb273168256689ae6266254d1516cd7106d539cb65b11803afad7a1",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#feedback-polarity-by-update-surface",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#procedural-memory-nonmonotonicity"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The initial skill is simply neutral context: contradicted by both MindMemOS and SkillGrad, where base xlsx skills underperform No-skill on SpreadsheetBench.",
+        "MindMemOS evolution is only skill-length growth: contradicted by the first-party pipeline and Appendix B, which explicitly support add/revise/remove edits and show supervised boundary conditions that restrict over-broad rules.",
+        "The sign reversal is unique to MindMemOS: contradicted by SkillGrad's independent SpreadsheetBench results using two backbones and two skill initializations.",
+        "Task scores create an unidentified new mechanism: the supervised-only additions are applicability/exception boundaries and preservation constraints, directly expressible as counterexample-driven concept/rule specialization under the same feedback information."
+      ],
+      "reopen_condition": "Reopen only if a preregistered matched comparison equalizes task-skill compatibility, initial skill content, executor, failed/successful trajectory evidence, task-score information, edit/token budget, update count, and held-out evaluation, yet a self-evolution-specific structural variable yields a distinct ex-ante task-level sign-flip prediction that generic prompt/skill optimization, corrective learning, rule specialization, and nonmonotonic rule revision cannot express. More iterations, a different skill seed, a larger skill, or another negative-to-positive aggregate result is insufficient."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "MindSkillEvolve does not work",
+      "skills cannot cause harm",
+      "supervision does not improve skill evolution",
+      "all skill updates are equivalent"
+    ],
+    "safe_claim": "MindMemOS provides positive evidence that trajectory-driven skill refinement can turn a harmful generic skill into a useful task-aligned one, but the aggregate sign reversal and supervised boundary refinement are already explained by mature negative-transfer and corrective-learning objects.",
+    "new_search_basin": "same-feedback-structural-difference-in-task-level-sign-flips"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

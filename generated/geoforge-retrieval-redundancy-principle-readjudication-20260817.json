@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "GEOFORGE-RETRIEVAL-REDUNDANCY",
+  "title": "Top-k retrieval degradation is a marginal-information trade-off, not a new self-evolution primitive",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_geoforge_effect_falsified": false,
+  "dead_end_scope": "The standalone claim that GeoForge's slight trajectory-quality degradation under excessive skill retrieval and its optimum near Top-k=3 / Min-Retrieve-Score=0.6 identify a new agent-specific self-evolution mechanism merely from the nonmonotonic retrieval curve.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "GeoForge itself attributes the sensitivity curve to the ordinary quality-coverage trade-off of retrieved guidance: a small number of high-quality skills performs best, excessive retrieval slightly degrades trajectory quality because guidance becomes redundant, and an overly strict score threshold hurts Tool-Exact-Match by filtering useful experiences. This is exactly the prediction of marginal-information/complementarity-versus-redundancy models under a finite context/action-planning budget. The system's own mature reduction ledger likewise treats sharing-helpful versus sharing-collapse behavior as information redundancy/correlation or diversity-consensus trade-off unless a same-information residual survives.",
+      "opposite_prediction": "With the retrieval scoring function, candidate skill pool, context/token budget, and downstream planner fixed, increasing k should initially add useful complementary information, then yield diminishing marginal value as lower-ranked skills become redundant, weakly relevant, or conflicting; raising the score threshold should remove noise until it begins discarding useful evidence. A nonmonotonic optimum in k or threshold is therefore expected without introducing a new self-evolution object.",
+      "opposite_principle": "Retrieval utility depends on marginal complementary information under a finite planning/context budget; more retrieved skills are not monotonically better when lower-ranked guidance is redundant or conflicting.",
+      "opposite_search_seed": "Search only for matched retrieval sets with the same relevance scores, token/context budget, redundancy/complementarity statistics, skill count, and planner information where an agent-specific structural variable still predicts a different ex-ante trajectory or task outcome. Require same-information redundancy/correlation, submodular-diversity, retrieval-utilization, and negative-transfer baselines to fail. Do not reopen from another Top-k optimum or another observation that more context can hurt.",
+      "scope": "GeoForge arXiv:2608.10494v1 sensitivity analysis over the number of retrieved skills and minimum retrieval-score threshold, including the reported Top-k=3 and Min-Retrieve-Score=0.6 operating point.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.10494",
+        "primary-fulltext:arXiv:2608.10494#sha256=30c2a1deaceac1b3b20a79711ab05bc3344ff48762d4a149c3900f16c40d112a",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#experience-sharing-sign-reversal",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#artifact-uptake-after-retrieval"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The degradation reflects an unexplained optimizer instability: the paper explicitly attributes it to redundant guidance under excessive retrieval.",
+        "The optimum is caused only by a strict filtering failure: the two sweeps have opposite sides of the same quality-coverage trade-off—too much low-marginal-value guidance versus filtering useful experiences.",
+        "The effect requires a geospatial-specific causal object: the stated mechanism depends on relevance, redundancy, retrieval count, and planning quality, all directly expressible by generic marginal-information and negative-transfer models.",
+        "A new self-evolution mechanism follows because the retrieved objects are evolved skills: evolution determines the available artifacts, but the reported sensitivity experiment varies retrieval hyperparameters over the resulting library; the observed Top-k nonmonotonicity is a retrieval-selection phenomenon."
+      ],
+      "reopen_condition": "Reopen only if a preregistered matched comparison equalizes retrieved-skill count, relevance/score profile, context/token budget, pairwise redundancy/complementarity, planner/backbone, and observable retrieval-utilization information, yet a self-evolution-specific structural variable produces a distinct ex-ante trajectory-quality or task-utility prediction that same-information redundancy/correlation, submodular-diversity, negative-transfer, and retrieval-utilization models cannot express. A new k, threshold, domain, or retrieval curve is insufficient."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "GeoForge retrieval is ineffective",
+      "retrieving more skills always hurts",
+      "structured skill memory has no value",
+      "Top-k=3 is universally optimal"
+    ],
+    "safe_claim": "GeoForge provides a clean quantitative example that retrieval quality is nonmonotonic in quantity, but its own explanation and same-information mature theory already identify the governing object as marginal useful information versus redundant guidance.",
+    "new_search_basin": "matched-redundancy-residual-after-retrieval-utilization-control"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}
