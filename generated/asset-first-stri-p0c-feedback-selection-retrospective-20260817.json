@@ -39,7 +39,7 @@
       "preserve_initial_skills": true
     }
   },
-  "decision": "STOP_MISSING_AUDITABLE_P0C_RESULTS",
+  "decision": "HOLD_MISSING_AUDITABLE_P0C_RESULTS",
   "scientific_result_available": false,
   "empirical_no_reversal_established": false,
   "decision_reversal_evaluated": false,

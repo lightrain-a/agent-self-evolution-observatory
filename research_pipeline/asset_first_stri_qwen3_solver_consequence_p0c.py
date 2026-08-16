@@ -57,12 +57,15 @@ def preflight(contract:dict[str,Any],output_dir:Path)->dict[str,Any]:
     from tool_call.prompts import default_solver_system_prompt
     from tool_call.parsing import parse_task_sample
     from tool_call.contracts import check_task_sample_contract
+    grading_probe=summarize_tool_call_predictions([], {})
     checks=dict(review['checks'])
     checks.update({
       'vllm_version':str(vllm.__version__)==str(contract['execution_substrate']['vllm_version']),
       'torch_version':str(torch.__version__)==str(contract['execution_substrate']['torch_version']),
       'transformers_version':str(transformers.__version__)==str(contract['execution_substrate']['transformers_version']),
-      'grading_callable':callable(summarize_tool_call_predictions),'solver_prompt_callable':callable(default_solver_system_prompt),
+      'grading_callable':callable(summarize_tool_call_predictions),
+      'grading_summary_toolcallstats_shape':all(hasattr(grading_probe,name) for name in ('p_hat','consistency','valid_answer_count','total_samples')),
+      'solver_prompt_callable':callable(default_solver_system_prompt),
       'parser_callable':callable(parse_task_sample),'contract_callable':callable(check_task_sample_contract),
     })
     out={'schema_version':'1.0','pass':all(checks.values()),'checks':checks,'gpu_work_started':False,'scientific_authority':False}
@@ -103,6 +106,19 @@ def analyze(source_values:dict[str,list[float]],contract:dict[str,Any])->dict[st
     n=sum(int(v['pass']) for v in witness.values())
     decision='STRONG_ONE_STEP_SOLVER_CONSEQUENCE' if n==2 else 'PARTIAL_ONE_STEP_SOLVER_CONSEQUENCE' if n==1 else 'STOP_ONE_STEP_UTILITY_CONSEQUENCE'
     return {'decision':decision,'source_mean_p_hat':means,'expected_p_hat':expected,'witness_results':witness}
+
+
+def solver_result_receipt(row:dict[str,Any],summary:Any)->dict[str,Any]:
+    """Serialize the pinned author's ToolCallStats dataclass into replayable rows."""
+    p_hat=float(summary.p_hat);total_samples=int(summary.total_samples)
+    return {
+        'source_skill_id':str(row['source_skill_id']),
+        'source_index':int(row['source_index']),
+        'p_hat':p_hat,
+        'consistency':float(summary.consistency),
+        'candidate_count':int(summary.valid_answer_count),
+        'correct_count':int(round(p_hat*total_samples)),
+    }
 
 
 def run(contract:dict[str,Any],p0a_result_path:Path,raw_path:Path,output_dir:Path)->dict[str,Any]:
@@ -147,9 +163,9 @@ def run(contract:dict[str,Any],p0a_result_path:Path,raw_path:Path,output_dir:Pat
     completions=model.generate(prompts,sampling_params=params);gpu_hours=(time.monotonic()-started)/3600.0
     raw_solver=output_dir/'solver-results.jsonl';raw_solver.unlink(missing_ok=True);source_values={s:[] for s in source_counts}
     for (row,sample),completion in zip(valid,completions,strict=True):
-        predictions=[str(o.text) for o in completion.outputs];summary=summarize_tool_call_predictions(predictions,reference=sample.get('answer'))
-        source=str(row['source_skill_id']);p_hat=float(summary.get('p_hat') or 0.0);source_values[source].append(p_hat)
-        append_jsonl(raw_solver,{'source_skill_id':source,'source_index':int(row['source_index']),'p_hat':p_hat,'consistency':float(summary.get('consistency') or 0.0),'candidate_count':int(summary.get('candidate_count') or 0),'correct_count':int(summary.get('correct_count') or 0)})
+        predictions=[str(o.text) for o in completion.outputs];summary=summarize_tool_call_predictions(predictions,sample.get('answer'))
+        receipt=solver_result_receipt(row,summary);source=str(receipt['source_skill_id']);source_values[source].append(float(receipt['p_hat']))
+        append_jsonl(raw_solver,receipt)
     if gpu_hours>float(contract['budget']['gpu_hours_cap']):
         out={'schema_version':'1.0','experiment_id':contract['experiment_id'],'candidate_id':contract['candidate_id'],'decision':'INVALID_P0C_BUDGET_EXCEEDED','scientific_result_available':False,'gpu_hours':gpu_hours,'source_valid_counts':source_counts,'scientific_authority':False};atomic_json(output_dir/'result.json',out);return out
     analysis=analyze(source_values,contract);out={'schema_version':'1.0','experiment_id':contract['experiment_id'],'candidate_id':contract['candidate_id'],**analysis,'scientific_result_available':True,'protocol_valid_for_scientific_update':True,'source_valid_counts':source_counts,'evaluated_tasks':len(valid),'solver_sequences':len(valid)*int(contract['solver']['samples_per_task']),'gpu_hours':gpu_hours,'p0a_raw_sha256':binding['raw_sha256'],'solver_result_sha256':sha256(raw_solver),'new_questioner_generations':0,'training_steps':0,'second_backbone':0,'paper_claim_C4_end_of_evolution':False,'scientific_authority':False};atomic_json(output_dir/'result.json',out);return out

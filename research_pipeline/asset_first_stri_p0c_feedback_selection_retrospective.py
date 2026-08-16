@@ -361,7 +361,7 @@ def run(
     if p0c_result_path is None or solver_results_path is None or not p0c_result_path.is_file() or not solver_results_path.is_file():
         out = {
             **base,
-            "decision": "STOP_MISSING_AUDITABLE_P0C_RESULTS",
+            "decision": "HOLD_MISSING_AUDITABLE_P0C_RESULTS",
             "scientific_result_available": False,
             "empirical_no_reversal_established": False,
             "decision_reversal_evaluated": False,
@@ -392,7 +392,7 @@ def run(
     if errors:
         out = {
             **base,
-            "decision": "STOP_INVALID_P0C_RESULT_BINDING",
+            "decision": "HOLD_INVALID_P0C_RESULT_BINDING",
             "scientific_result_available": False,
             "empirical_no_reversal_established": False,
             "decision_reversal_evaluated": False,

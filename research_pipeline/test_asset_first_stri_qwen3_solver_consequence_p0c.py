@@ -4,9 +4,10 @@ import hashlib
 import json
 import tempfile
 import unittest
+from types import SimpleNamespace
 from pathlib import Path
 
-from .asset_first_stri_qwen3_solver_consequence_p0c import analyze, validate_p0a_inputs
+from .asset_first_stri_qwen3_solver_consequence_p0c import analyze, solver_result_receipt, validate_p0a_inputs
 
 
 class SolverConsequenceP0CTest(unittest.TestCase):
@@ -37,6 +38,12 @@ class SolverConsequenceP0CTest(unittest.TestCase):
         values={"skill_003":[2/3]*16,"skill_004":[2/3]*16,"skill_015":[2/3]*16}
         out=analyze(values,self.contract())
         self.assertEqual(out["decision"],"STOP_ONE_STEP_UTILITY_CONSEQUENCE")
+
+    def test_solver_result_receipt_matches_pinned_author_toolcallstats_fields(self):
+        row={"source_skill_id":"skill_003","source_index":7}
+        summary=SimpleNamespace(p_hat=2/3,consistency=True,valid_answer_count=3,total_samples=3)
+        receipt=solver_result_receipt(row,summary)
+        self.assertEqual(receipt,{"source_skill_id":"skill_003","source_index":7,"p_hat":2/3,"consistency":1.0,"candidate_count":3,"correct_count":2})
 
     def test_input_binding_requires_p0a_go_and_exact_raw_sha(self):
         with tempfile.TemporaryDirectory() as td:

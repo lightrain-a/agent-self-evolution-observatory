@@ -101,7 +101,7 @@ class P0CFeedbackSelectionRetrospectiveTests(unittest.TestCase):
             }), encoding="utf-8")
             out = run(contract_path=contract, p0c_result_path=None, solver_results_path=None, author_repo=root / "author", output_path=output)
             persisted = json.loads(output.read_text(encoding="utf-8"))
-        self.assertEqual(out["decision"], "STOP_MISSING_AUDITABLE_P0C_RESULTS")
+        self.assertEqual(out["decision"], "HOLD_MISSING_AUDITABLE_P0C_RESULTS")
         self.assertFalse(out["decision_reversal_evaluated"])
         self.assertFalse(out["empirical_no_reversal_established"])
         self.assertFalse(out["baseline_authorized"])
