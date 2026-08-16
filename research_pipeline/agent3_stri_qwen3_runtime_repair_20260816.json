@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "status": "ONE_OPERATIONAL_REPAIR_FROZEN_PRE_RERUN",
+  "failed_qualification_run": "/data/wyt/agent-self-evolution-observatory/runs/agent3-stri-qwen3-exploratory-qual-20260816/result.json",
+  "failed_qualification": {
+    "decision": "RUNTIME_QUALIFICATION_FAIL",
+    "scientific_result_available": false,
+    "generation_counts": {
+      "skill_003": {"generated": 2, "parsed": 2, "contract_valid": 1},
+      "skill_004": {"generated": 2, "parsed": 1, "contract_valid": 1},
+      "skill_015": {"generated": 2, "parsed": 2, "contract_valid": 0}
+    },
+    "dominant_contract_error": "system_missing_tool_call_output_contract"
+  },
+  "repair": {
+    "only_change": "set enable_thinking=false when rendering the Qwen3 generation prompt",
+    "author_intent_evidence": [
+      "train-tool-call-skill-qwen3-8b.sh@bb693c8: Qwen3-8B is launched without chain-of-thought reasoning in this setup",
+      "train-logical-skill-qwen3-8b.sh@bb693c8: same statement",
+      "vllm_service_init/qwen3.jinja@bb693c8: implements enable_thinking=false by injecting an empty think block"
+    ],
+    "implementation_gap": "question_generate/question_generate.py@bb693c8 does not pass enable_thinking to tokenizer.apply_chat_template",
+    "scientific_variables_changed": false,
+    "thresholds_changed": false,
+    "model_changed": false,
+    "source_skills_changed": false,
+    "seeds_changed": false,
+    "temperature_changed": false,
+    "top_p_changed": false,
+    "max_tokens_changed": false
+  },
+  "adjudication": "Run exactly one new 2-per-source qualification. If it fails, stop the 52 dynamic path. If it passes, allow the frozen 24-per-source exploratory dynamic contrast, still without paper authority."
+}

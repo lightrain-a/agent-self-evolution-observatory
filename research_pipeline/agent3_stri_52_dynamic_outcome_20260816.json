@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "status": "52_TRANSFORMERS_DYNAMIC_PATH_STOPPED_NO_SCIENTIFIC_UPDATE",
+  "preserved_positive_evidence": {
+    "C1_two_system_control_plane": true,
+    "C2_irreducible_global_weight_lower_bound": 2.0,
+    "C3_static_sqc_same_information_residual": true
+  },
+  "default_thinking_qualification": {
+    "run": "/data/wyt/agent-self-evolution-observatory/runs/agent3-stri-qwen3-exploratory-qual-20260816/result.json",
+    "decision": "RUNTIME_QUALIFICATION_FAIL",
+    "scientific_result_available": false,
+    "generation_counts": {
+      "skill_003": {"generated": 2, "parsed": 2, "contract_valid": 1},
+      "skill_004": {"generated": 2, "parsed": 1, "contract_valid": 1},
+      "skill_015": {"generated": 2, "parsed": 2, "contract_valid": 0}
+    }
+  },
+  "single_operational_repair": {
+    "change": "enable_thinking=false only, motivated by released Qwen3 launcher comments and shipped template support",
+    "run": "/data/wyt/agent-self-evolution-observatory/runs/agent3-stri-qwen3-nothink-qual-20260816/result.json",
+    "decision": "RUNTIME_QUALIFICATION_FAIL_EARLY",
+    "scientific_result_available": false,
+    "early_stop": "skill_003 was 0/2 contract-valid, making the frozen per-source qualification gate impossible",
+    "dominant_error": "system_missing_tool_call_output_contract"
+  },
+  "adjudication": {
+    "full_72_generation_exploratory_run_on_52_authorized": false,
+    "additional_operational_repair_on_52_authorized": false,
+    "STRI_principle_stopped": false,
+    "STRI_dynamic_claim_established": false,
+    "paper_convergence_go": false,
+    "current_classification": "MECHANISM-GO-METHOD-RESIDUAL-POSITIVE-C4-SUBSTRATE-BLOCKED"
+  },
+  "next_action": "Use a faithful author-vLLM Qwen3-8B substrate if one can be obtained without changing the scientific contrast. If no faithful substrate is available, keep STRI as a strong static/control-plane candidate but do not spend more 52 GPU on runtime repairs; pivot search for a candidate with already-qualified dynamic evidence."
+}

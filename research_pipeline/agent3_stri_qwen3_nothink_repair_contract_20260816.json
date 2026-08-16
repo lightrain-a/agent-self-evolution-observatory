@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "AG3-STRI-QWEN3-NOTHINK-REPAIR-DYNAMIC-20260816",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "purpose": "Exploratory Qwen3-8B test of whether a semantics-preserving multiplicity change in the irreducible Skill-SP partial-overlap core changes the realized future curriculum distribution produced by a frozen proposer, using matched source-conditional generations and external author validators.",
+  "scientific_claim_boundary": "Exploratory dynamic curriculum-distribution falsifier only. This 52-host Transformers execution is not the final faithful author-vLLM P0 and cannot by itself authorize paper-level claims.",
+  "runtime_authority": "EXPLORATORY_QWEN3_INTENDED_NO_THINKING_REPAIR_NOT_FAITHFUL_VLLM",
+  "author_asset": {
+    "repo": "/data/wyt/skill-self-play-agent3-20260816",
+    "remote": "https://github.com/Qwen-Applications/skill-self-play.git",
+    "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "paper": "arXiv:2607.22529",
+    "tool_prompts_sha256": "4180b75adad460c0dd9cdd915d5d5da63b900fcce051088c1dbf1a215823c738",
+    "tool_parsing_sha256": "289155f1740a33404ae82b9616c393f13461f5394f6dd9d98c6c32aaed14be69",
+    "tool_contracts_sha256": "4360a1f8cb30f1024dfd55b3bc5dc543fd659aae2c9e7e8555c8d05d5cbc304a",
+    "package_hashes": {
+      "skill_003": "e91e75f9326bf55ca2c285d5c8010403178d07bec920b63024fed7d3e0d5ee91",
+      "skill_004": "ac71fc3baaf9d51a286daeba345a616682c42d8c2d951b8f025427c7c427e7fd",
+      "skill_015": "069158b98e771864754cc1b4a829de9b035def722d865363266d9d6d05c72dc2"
+    }
+  },
+  "proposer": {
+    "model_name": "Qwen/Qwen3-8B",
+    "model_path": "/data/wyt/models/indept/Qwen3-8B-modelscope",
+    "transfer_mirror": "ModelScope Qwen/Qwen3-8B; accepted only because frozen metadata hashes match the independently recorded 231 checkpoint and LFS objects are verified against repository OIDs before execution.",
+    "model_config_sha256": "f7c4eadfbbf522470667b797a3c89be2524832d2d599797248dc304fff447c30",
+    "generation_config_sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    "tokenizer_config_sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "expected_lfs_sha256": {
+      "model-00001-of-00005.safetensors": "31d6a825ae35f11fb85b195b4c42c146c051e446433125a215336abdf95cbf5f",
+      "model-00002-of-00005.safetensors": "5991236cea6fe21f3d43cab0f0e84448734fbbe0789816202989f2ddc9d18282",
+      "model-00003-of-00005.safetensors": "c5185c4794be2d8a9784d5753c9922db38df478ce11f9ed0b415b7304d896836",
+      "model-00004-of-00005.safetensors": "b5ee7de71fbf17db3d5704e0c8f2bc7d005ca9e1d7ca2aeb19827b0cfcaa917a",
+      "model-00005-of-00005.safetensors": "20c2d6366ab85c90786ccdd829cd2b9e7d30ef3b2ebbb998280e7e4014b542ff",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+    },
+    "expected_total_safetensors_bytes": 16381516776,
+    "index_tensor_payload_bytes": 16381470720,
+    "frozen_backbone_only": true,
+    "training": false,
+    "disclosure_level": "full",
+    "qualification_samples_per_source_skill": 2,
+    "samples_per_source_skill": 24,
+    "source_skill_ids": ["skill_003", "skill_004", "skill_015"],
+    "batch_size": 1,
+    "max_new_tokens": 4096,
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "do_sample": true,
+    "enable_thinking": false,
+    "chat_template_contract": "single operational repair: enforce enable_thinking=false because both released Qwen3 launchers state that Qwen3-8B is launched without chain-of-thought and the shipped Qwen3 chat template implements this flag, while released question_generate.py omits the plumbing. All scientific contrast variables and gates remain unchanged.",
+    "seed_by_source": {
+      "skill_003": 2026081603,
+      "skill_004": 2026081604,
+      "skill_015": 2026081615
+    }
+  },
+  "matched_mixture_replay": {
+    "generation_rule": "Generate each source-skill conditional output bank exactly once. Both counterfactual arms reuse the same parsed/validated conditional banks; no arm-specific model generation is allowed.",
+    "arm_original": {
+      "representation": ["skill_003", "skill_004", "skill_015"],
+      "mixture_weights": {
+        "skill_003": 0.3333333333333333,
+        "skill_004": 0.3333333333333333,
+        "skill_015": 0.3333333333333333
+      }
+    },
+    "arm_semantic_split": {
+      "representation": ["skill_003", "skill_004", "skill_015", "skill_015_exact_control_copy"],
+      "semantic_change": "none; the fourth control entry uses the exact same skill_015 prompt/content/output bank",
+      "mixture_weights_after_quotienting_identical_015_entries": {
+        "skill_003": 0.25,
+        "skill_004": 0.25,
+        "skill_015": 0.5
+      }
+    },
+    "only_treatment": "mixture mass induced by representing the same skill_015 semantic control entry once versus twice"
+  },
+  "external_truth": {
+    "parser": "author tool_call.parsing.parse_task_sample",
+    "contract": "author tool_call.contracts.check_task_sample_contract",
+    "validators": "all 15 released tool_call package validators",
+    "semantic_pattern": "sorted tuple of validator skill IDs accepting a parsed contract-valid generated task",
+    "secondary_observable": "reference answer function/tool name from the generated task"
+  },
+  "frozen_gate": {
+    "contract_valid_per_source_min": 16,
+    "validator_pattern_tv_distance_min": 0.05,
+    "validator_pattern_tv_bootstrap_lower95_min": 0.025,
+    "max_single_pattern_probability_shift_min": 0.04,
+    "bootstrap_replicates": 2000
+  },
+  "strongest_reduction": {
+    "name": "representation perturbation does not propagate through the proposer",
+    "wins_if": "source-conditional generated semantic distributions are sufficiently similar that changing skill_015 control multiplicity leaves the matched replay validator-pattern distribution below the frozen TV/CI gates"
+  },
+  "budget": {
+    "gpu_count": 1,
+    "gpu_hours_soft_cap": 1.0,
+    "model_loads": 1,
+    "model_generations": 72,
+    "qualification_generations": 6,
+    "training_steps": 0,
+    "second_backbone": 0
+  },
+  "operational_repair": {
+    "repair_count": 1,
+    "trigger": "default-template 2-per-source qualification failed because skill_015 had 0/2 contract-valid generations; all its samples parsed but omitted the required tool-call output contract",
+    "author_intent_evidence": "train-tool-call-skill-qwen3-8b.sh and train-logical-skill-qwen3-8b.sh at bb693c8 both state Qwen3-8B is launched without chain-of-thought reasoning",
+    "implementation_gap": "question_generate/question_generate.py calls apply_chat_template without enable_thinking; shipped vllm_service_init/qwen3.jinja explicitly supports enable_thinking=false",
+    "forbidden_repairs_after_this": ["threshold relaxation", "prompt rewriting", "parser weakening", "extra backbone", "post-outcome seed search"]
+  },
+  "authority": {
+    "paper_design_authorized_before_result": false,
+    "paper_claim_authorized": false,
+    "faithful_p0_authorized_by_this_run": false,
+    "second_backbone_authorized": false
+  },
+  "next_if_positive": "Treat as PAPER-CONVERGENCE-GO-CANDIDATE evidence only: freeze the STRI paper skeleton and obtain one faithful author-vLLM confirmation before upgrading C4 to a paper claim.",
+  "next_if_negative": "If proposer qualification passes but the frozen dynamic gate fails, downgrade standalone STRI dynamic-paper confidence and do not rescue by threshold tuning, extra generations, or a second backbone."
+}
