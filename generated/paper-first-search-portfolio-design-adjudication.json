@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T08:23:25+00:00",
+  "generated_at": "2026-08-16T08:33:32+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -16,6 +16,7 @@
     "semantic_lane_or_pending_reduction_is_not_a_dead_end": true,
     "semantic_soft_collision_alone_is_not_a_dead_end": true,
     "persistent_dead_end_requires_positive_counter_explanation": true,
+    "principle_readjudications_feed_opposite_search_control_only": true,
     "current_primary_source_collision_review_required": true,
     "same_information_reduction_required_before_method_design": true,
     "failed_or_missing_ai_reviewer_is_not_pass": true,
@@ -46,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-16T08:23:25+00:00",
+    "generated_at": "2026-08-16T08:33:32+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -449,6 +450,60 @@
           "same_information_reduction_verified": true,
           "reopen_condition": "A new agent-specific primary phenomenon yields an ex-ante prediction under identical treatment, monitoring, state, task-distribution, and trace-availability information that cannot be expressed by treatment-induced confounding, joint treatment-monitoring interventions, informative monitoring/missingness, or performative/adaptive data-collection models; textual-policy terminology alone does not reopen the basin."
         }
+      },
+      {
+        "source_candidate_id": "SHADOW-P06-C01",
+        "basin": "principle-readjudication-c315702a6e98e993",
+        "search_primitive": "",
+        "title": "Coverage-note starvation under selective evidence access in document agents",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Coverage-note starvation under selective evidence access in document agents",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "Page coverage is not answer-evidence sufficiency. A coverage certificate that reveals only retrieved page ids, total pages, coverage ratio, unchecked-page count, and FULL/PARTIAL status does not reveal whether any unread page contains answer-relevant evidence. The target gap/covered distinction is defined post hoc with hidden benchmark evidence_pages, so the P06 treatment does not expose the latent variable that distinguishes the two strata.",
+        "current_source_refs": [
+          "arXiv:2608.07527"
+        ],
+        "evidence_basis": [
+          "arXiv:2608.07527",
+          "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/plan.json#sha256=dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39",
+          "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/analysis.json#sha256=2b5ca3000d2c491ff2df6a1126667edd6fb59dfa7ec8fc446c9a6b30da959a16",
+          "host52:/home/wyt/code/agent-self-evolution-observatory-automation/generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P06-C01"
+        ],
+        "problem_text": "The standalone P06 mechanism claiming that page-coverage certification, with no answer-relevance information beyond the same retrieved snippets/question, selectively exposes hidden answer-evidence gaps relative to covered-answerable cases.",
+        "reason": "The frozen P06 realization is a dead end because relevance-agnostic page-coverage quantity cannot identify the hidden answer-evidence gap it is supposed to selectively repair. The experiment supplies compatible behavioral evidence, but the dead-end decision is authorized by the stronger information-structure witness, not by the negative metric alone.",
+        "reopen_only_if": "Reopen only with a preregistered treatment that exposes or preserves relevance-conditioned evidence debt without using benchmark answer/evidence truth at decision time, and show a selective held-out gap effect beyond the strongest same-information uncertainty/conservatism baseline under matched retrieval and context budget.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "IMPOSSIBILITY_OR_INVARIANCE",
+          "statement": "Page coverage is not answer-evidence sufficiency. A coverage certificate that reveals only retrieved page ids, total pages, coverage ratio, unchecked-page count, and FULL/PARTIAL status does not reveal whether any unread page contains answer-relevant evidence. The target gap/covered distinction is defined post hoc with hidden benchmark evidence_pages, so the P06 treatment does not expose the latent variable that distinguishes the two strata.",
+          "opposite_prediction": "Under matched question, retrieved snippets, and inference budget, adding relevance-agnostic page-coverage metadata can at most induce a generic uncertainty/conservatism shift. It has no information-theoretic basis for selectively increasing RETRIEVE_MORE/ABSTAIN on hidden answer-evidence-gap units more than on covered-answerable units. A selective residual requires an observable relevance-conditioned evidence-debt signal, not coverage quantity alone.",
+          "opposite_principle": "Evidence sufficiency is relevance-conditioned, not coverage-conditioned.",
+          "opposite_search_seed": "Search for an observable relevance-conditioned evidence-debt state: a state that predicts whether unread evidence can change the answer, is invariant to adding irrelevant unread pages, and beats a same-information generic uncertainty/conservatism baseline under matched retrieval and context budget.",
+          "scope": "Frozen P06-COVERAGE-STARVATION-V2 information set: same question and raw retrieved pages across policies; coverage_certified adds only retrieved ids, total pages, coverage ratio, unchecked-page count and FULL/PARTIAL certificate; benchmark evidence_pages remain forbidden from retrieval/prompt and are used only for posthoc stratification/evaluation.",
+          "same_information_or_scope_matched": true,
+          "proof_or_structural_witness": true,
+          "structural_witness": "Construct two latent document worlds with the same observed question, same retrieved snippets, same retrieved page ids, same total page count and therefore the same coverage certificate, but place the decisive answer evidence on an unread page in one world and no decisive answer evidence on unread pages in the other. The coverage-certified policy receives identical coverage information in both worlds while the posthoc gap label differs. Therefore coverage quantity alone cannot identify answer-relevant omission.",
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2608.07527",
+            "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/plan.json#sha256=dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39",
+            "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/analysis.json#sha256=2b5ca3000d2c491ff2df6a1126667edd6fb59dfa7ec8fc446c9a6b30da959a16",
+            "host52:/home/wyt/code/agent-self-evolution-observatory-automation/generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P06-C01"
+          ],
+          "alternative_explanations_ruled_out": [
+            "support insufficiency: the repaired run had 128 valid units, including 47 gap-answerable and 17 covered-answerable units",
+            "protocol invalidity: the final analysis marked protocol_valid=true",
+            "simple lack of behavioral response: the coverage-certified policy shifted the primary state on covered-answerable units by +0.11765, so the intervention was behaviorally active",
+            "selective gap benefit hidden by noise: the observed gap shift was only +0.02128, the gap-vs-covered difference-in-differences was -0.09637, and the paired gap McNemar p-value was 1.0"
+          ],
+          "reopen_condition": "Reopen only with a preregistered treatment that exposes or preserves relevance-conditioned evidence debt without using benchmark answer/evidence truth at decision time, and show a selective held-out gap effect beyond the strongest same-information uncertainty/conservatism baseline under matched retrieval and context budget."
+        },
+        "source_readjudication_artifact": "generated/p06-coverage-starvation-principle-readjudication-20260816.json",
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
       }
     ],
     "hold_objects": [
@@ -995,7 +1050,8 @@
         "scientific_authority": false
       }
     ],
-    "principle_dead_end_count": 6,
+    "principle_dead_end_count": 7,
+    "principle_readjudication_dead_end_count": 1,
     "hold_object_count": 19,
     "current_source_hard_veto_count": 2,
     "current_source_hard_veto_added_from_latest_run": 0,
@@ -1063,7 +1119,8 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 6,
+    "shadow_dead_end_objects": 7,
+    "principle_readjudication_dead_ends": 1,
     "shadow_hold_objects": 19,
     "current_source_hard_veto_dead_ends": 2,
     "current_source_hard_veto_added_from_latest_run": 0,

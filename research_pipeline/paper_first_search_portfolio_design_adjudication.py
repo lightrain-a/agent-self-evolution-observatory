@@ -8,11 +8,13 @@ from typing import Any
 
 from .config import PROJECT_ROOT
 from .paper_first_shadow_near_miss_preflight import build_shadow_near_miss_preflight, compile_shadow_dead_end_rows
+from .principle_adjudication import audit_dead_end_counter_explanation
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-adjudication.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-adjudication.js"
 SHADOW_PORTFOLIO_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-search-portfolio-state.json"
 SHADOW_QUEUE_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-search-portfolio-queue-shadow.json"
+PRINCIPLE_READJUDICATION_GLOB = "*principle-readjudication-*.json"
 
 PRIMARY_SOURCES: dict[str, list[dict[str, str]]] = {
     "SP-09": [
@@ -260,7 +262,58 @@ def _terminal_support_hold_rows(preflight: dict[str, Any] | None, *, run_id: str
     return rows
 
 
-def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None, prior_hard_veto_rows: list[dict[str, Any]] | None = None, prior_semantic_rows: list[dict[str, Any]] | None = None, prior_near_miss_rows: list[dict[str, Any]] | None = None, extra_near_miss_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict[str, Any]]:
+    candidates = paths if paths is not None else sorted((PROJECT_ROOT / "generated").glob(PRINCIPLE_READJUDICATION_GLOB))
+    rows: list[dict[str, Any]] = []
+    for path in candidates:
+        payload = _load_json(path)
+        if payload.get("principle_dead_end_certified") is not True:
+            continue
+        diagnosis = payload.get("principle_diagnosis") or {}
+        counter = diagnosis.get("counter_explanation") or {}
+        audit = audit_dead_end_counter_explanation(counter)
+        if audit.get("passed") is not True:
+            continue
+        candidate_id = str(payload.get("candidate_id") or "").strip()
+        title = str(payload.get("title") or "").strip()
+        scope = str(payload.get("dead_end_scope") or counter.get("scope") or "").strip()
+        if not candidate_id or not scope:
+            continue
+        signature = hashlib.sha256(json.dumps({"candidate_id": candidate_id, "scope": scope, "statement": counter.get("statement")}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
+        evidence_refs = [str(ref) for ref in counter.get("evidence_refs") or [] if str(ref)]
+        primary_refs = sorted({ref for ref in evidence_refs if ref.startswith("arXiv:")})
+        reopen = str(counter.get("reopen_condition") or "").strip()
+        try:
+            artifact_ref = str(path.relative_to(PROJECT_ROOT))
+        except ValueError:
+            artifact_ref = str(path)
+        rows.append({
+            "source_candidate_id": candidate_id,
+            "basin": f"principle-readjudication-{signature}",
+            "search_primitive": str(payload.get("search_primitive") or ""),
+            "title": title,
+            "avoid": [
+                f"re-proposing the certified-dead-end mechanism without satisfying its reopen condition: {title}",
+                "using the negative experiment metric alone as the reason for the dead end",
+                "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary",
+            ],
+            "strongest_reduction": str(counter.get("statement") or ""),
+            "current_source_refs": primary_refs,
+            "evidence_basis": evidence_refs,
+            "problem_text": scope,
+            "reason": str((payload.get("scientific_interpretation") or {}).get("safe_claim") or counter.get("statement") or ""),
+            "reopen_only_if": reopen,
+            "dead_end_certified": True,
+            "memory_class": "PRINCIPLE_DEAD_END",
+            "counter_explanation": dict(counter),
+            "source_readjudication_artifact": artifact_ref,
+            "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+            "scientific_authority": False,
+        })
+    return rows
+
+
+def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None, prior_hard_veto_rows: list[dict[str, Any]] | None = None, prior_semantic_rows: list[dict[str, Any]] | None = None, prior_near_miss_rows: list[dict[str, Any]] | None = None, extra_near_miss_rows: list[dict[str, Any]] | None = None, principle_readjudication_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     memory = json.loads(json.dumps(BASE_SHADOW_DEAD_END_MEMORY, ensure_ascii=False))
     latest = portfolio.get("latest_run") or {}
     inherited = _prior_current_source_hard_veto_rows() if prior_hard_veto_rows is None else [dict(row) for row in prior_hard_veto_rows if isinstance(row, dict)]
@@ -403,6 +456,9 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
             near_by_key[near_key(row)] = dict(row)
     near_miss_rows = [near_by_key[key] for key in sorted(near_by_key)]
     memory["blocked_objects"].extend(near_miss_rows)
+    readjudication_rows = [dict(row) for row in (principle_readjudication_rows or []) if isinstance(row, dict) and row.get("dead_end_certified") is True]
+    readjudication_by_basin = {str(row.get("basin") or ""): row for row in readjudication_rows if str(row.get("basin") or "")}
+    memory["blocked_objects"].extend(readjudication_by_basin[key] for key in sorted(readjudication_by_basin))
 
     # Migrate legacy memory into the stricter epistemic split. Only rows with an
     # affirmative reduction/collision explanation become persistent dead ends.
@@ -453,6 +509,7 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     memory["hold_objects"] = hold_rows
     memory["memory_id"] = "shadow-paper-design-principle-dead-ends-and-holds-v2"
     memory["principle_dead_end_count"] = len(certified_rows)
+    memory["principle_readjudication_dead_end_count"] = sum(str(row.get("basin") or "").startswith("principle-readjudication-") for row in certified_rows)
     memory["hold_object_count"] = len(hold_rows)
     memory["current_source_hard_veto_count"] = len(hard_rows)
     memory["current_source_hard_veto_added_from_latest_run"] = added
@@ -493,6 +550,9 @@ def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[s
     prior_hard = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith("current-source-hard-veto-")]
     prior_semantic = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-"))]
     prior_near = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith("near-miss-")]
+    prior_principle = [dict(row) for row in prior_rows if str(row.get("basin") or "").startswith("principle-readjudication-")]
+    current_principle = _principle_readjudication_rows()
+    principle_by_basin = {str(row.get("basin") or ""): row for row in prior_principle + current_principle if str(row.get("basin") or "")}
     extra_near = _terminal_support_hold_rows(preflight, run_id=run_id, stage_manifest_sha256=stage_manifest_sha256)
 
     memory = _shadow_dead_end_memory(
@@ -502,11 +562,13 @@ def merge_shadow_terminal_run_memory(state: dict[str, Any], terminal_run: dict[s
         prior_semantic_rows=prior_semantic,
         prior_near_miss_rows=prior_near,
         extra_near_miss_rows=extra_near,
+        principle_readjudication_rows=[principle_by_basin[key] for key in sorted(principle_by_basin)],
     )
     merged["shadow_dead_end_memory"] = memory
     summary = merged.setdefault("summary", {})
     summary.update({
         "shadow_dead_end_objects": len(memory.get("blocked_objects") or []),
+        "principle_readjudication_dead_ends": int(memory.get("principle_readjudication_dead_end_count") or 0),
         "shadow_hold_objects": len(memory.get("hold_objects") or []),
         "current_source_hard_veto_dead_ends": int(memory.get("current_source_hard_veto_count") or 0),
         "current_source_hard_veto_added_from_latest_run": 0,
@@ -707,7 +769,7 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
     for row in rows:
         counts[row["verdict"]] = counts.get(row["verdict"], 0) + 1
     near_miss_preflight = build_shadow_near_miss_preflight()
-    dead_end_memory = _shadow_dead_end_memory(portfolio, near_miss_preflight)
+    dead_end_memory = _shadow_dead_end_memory(portfolio, near_miss_preflight, principle_readjudication_rows=_principle_readjudication_rows())
     prior_maintenance = prior_state.get("shadow_memory_maintenance") or {}
     maintenance = json.loads(json.dumps(prior_maintenance, ensure_ascii=False)) if prior_maintenance else {
         "policy": dict(SHADOW_MEMORY_MAINTENANCE_POLICY),
@@ -734,6 +796,7 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "semantic_lane_or_pending_reduction_is_not_a_dead_end": True,
             "semantic_soft_collision_alone_is_not_a_dead_end": True,
             "persistent_dead_end_requires_positive_counter_explanation": True,
+            "principle_readjudications_feed_opposite_search_control_only": True,
             "current_primary_source_collision_review_required": True,
             "same_information_reduction_required_before_method_design": True,
             "failed_or_missing_ai_reviewer_is_not_pass": True,
@@ -764,6 +827,7 @@ def build_search_portfolio_design_adjudication() -> dict[str, Any]:
             "stop_standalone": counts.get("STOP_STANDALONE_COLLISION_KEEP_CONTEXT_RISK_AXIS", 0),
             "support_inventory_required": counts.get("REVISE_PAPER_PROBLEM_SUPPORT_INVENTORY_REQUIRED", 0),
             "shadow_dead_end_objects": len(dead_end_memory.get("blocked_objects") or []),
+            "principle_readjudication_dead_ends": int(dead_end_memory.get("principle_readjudication_dead_end_count") or 0),
             "shadow_hold_objects": len(dead_end_memory.get("hold_objects") or []),
             "current_source_hard_veto_dead_ends": int(dead_end_memory.get("current_source_hard_veto_count") or 0),
             "current_source_hard_veto_added_from_latest_run": int(dead_end_memory.get("current_source_hard_veto_added_from_latest_run") or 0),
@@ -806,7 +870,7 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
         errors.append("SP design adjudication cannot authorize downstream work")
     if policy.get("this_is_a_substate_not_a_new_backend_component") is not True or policy.get("paper_problem_support_inventory_precedes_method_design_when_identifiability_is_claimed") is not True:
         errors.append("SP design must remain a Paper Design substate and gate identifiability on support inventory")
-    if policy.get("source_is_shadow_search_portfolio") is not True or policy.get("shadow_queue_has_zero_paper_design_authority") is not True or policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True or policy.get("current_source_hard_veto_memory_persists_across_shadow_runs") is not True or policy.get("semantic_hold_memory_persists_across_shadow_runs") is not True or policy.get("semantic_lane_or_pending_reduction_is_not_a_dead_end") is not True or policy.get("persistent_dead_end_requires_positive_counter_explanation") is not True or policy.get("semantic_soft_collision_alone_is_not_a_dead_end") is not True:
+    if policy.get("source_is_shadow_search_portfolio") is not True or policy.get("shadow_queue_has_zero_paper_design_authority") is not True or policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True or policy.get("current_source_hard_veto_memory_persists_across_shadow_runs") is not True or policy.get("semantic_hold_memory_persists_across_shadow_runs") is not True or policy.get("semantic_lane_or_pending_reduction_is_not_a_dead_end") is not True or policy.get("persistent_dead_end_requires_positive_counter_explanation") is not True or policy.get("principle_readjudications_feed_opposite_search_control_only") is not True or policy.get("semantic_soft_collision_alone_is_not_a_dead_end") is not True:
         errors.append("SP design audit must remain retrospective shadow feedback with zero live Paper Design authority and principle-certified dead-end semantics")
     if (state.get("advisory_consultation") or {}).get("scientific_authority") is not False or (state.get("advisory_consultation") or {}).get("failed_or_missing_review_is_not_pass") is not True:
         errors.append("unavailable AI premortem reviewers must remain zero-authority and cannot count as PASS")
@@ -815,6 +879,9 @@ def validate_search_portfolio_design_adjudication(state: dict[str, Any]) -> list
         errors.append("Paper Design memory must retain SP-09 as a principle-certified dead end and SP-15 only as a reopenable hold")
     if any(row.get("dead_end_certified") is not True or row.get("memory_class") != "PRINCIPLE_DEAD_END" or not isinstance(row.get("counter_explanation"),dict) or not str((row.get("counter_explanation") or {}).get("statement") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_principle") or "").strip() or not str((row.get("counter_explanation") or {}).get("opposite_search_seed") or "").strip() or not (row.get("counter_explanation") or {}).get("evidence_refs") or not str(row.get("reopen_only_if") or "").strip() for row in blocked_objects):
         errors.append("every persistent blocked object must carry an affirmative counter-explanation, opposite-principle search seed, and reopen condition")
+    readjudicated=[row for row in blocked_objects if str(row.get("basin") or "").startswith("principle-readjudication-")]
+    if int(memory.get("principle_readjudication_dead_end_count") or 0)!=len(readjudicated) or any(not str(row.get("source_readjudication_artifact") or "").strip() or row.get("scientific_authority") is not False for row in readjudicated):
+        errors.append("principle readjudications must enter persistent memory only as provenance-bound zero-authority opposite-search control")
     if any(row.get("dead_end_certified") is not False for row in hold_objects):
         errors.append("reopenable hold objects cannot be marked as dead ends")
     dynamic=[row for row in blocked_objects if str(row.get("basin") or "").startswith("current-source-hard-veto-")]

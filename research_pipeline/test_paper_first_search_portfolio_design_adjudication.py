@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from .paper_first_search_portfolio_design_adjudication import (
+    _principle_readjudication_rows,
     _shadow_dead_end_memory,
     _terminal_support_hold_rows,
     build_search_portfolio_design_adjudication,
@@ -50,6 +54,19 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertNotIn("SP-15", {row["source_candidate_id"] for row in memory["blocked_objects"]})
         self.assertIn("SP-15", {row["source_candidate_id"] for row in memory["hold_objects"]})
         self.assertTrue(all(row["dead_end_certified"] is True and row.get("counter_explanation") for row in memory["blocked_objects"]))
+
+    def test_principle_readjudication_compiles_into_opposite_search_memory(self) -> None:
+        payload={"candidate_id":"P06","title":"Coverage quantity","principle_dead_end_certified":True,"dead_end_scope":"coverage-only certificate","principle_diagnosis":{"counter_explanation":{"type":"IMPOSSIBILITY_OR_INVARIANCE","statement":"coverage quantity does not identify relevance","opposite_prediction":"generic uncertainty shift only","opposite_principle":"evidence sufficiency is relevance-conditioned","opposite_search_seed":"search relevance-conditioned evidence debt","scope":"coverage-only certificate","same_information_or_scope_matched":True,"proof_or_structural_witness":True,"evidence_refs":["arXiv:2608.07527"],"alternative_explanations_ruled_out":["execution"],"reopen_condition":"expose relevance-conditioned debt without hidden truth"}}}
+        with tempfile.TemporaryDirectory() as td:
+            p=Path(td)/"p06-principle-readjudication-test.json";p.write_text(json.dumps(payload),encoding="utf-8")
+            rows=_principle_readjudication_rows([p])
+        self.assertEqual(len(rows),1)
+        memory=_shadow_dead_end_memory({"latest_run":{"candidates":[]}},prior_hard_veto_rows=[],prior_semantic_rows=[],prior_near_miss_rows=[],principle_readjudication_rows=rows)
+        matches=[row for row in memory["blocked_objects"] if str(row.get("basin") or "").startswith("principle-readjudication-")]
+        self.assertEqual(len(matches),1)
+        self.assertEqual(matches[0]["counter_explanation"]["opposite_search_seed"],"search relevance-conditioned evidence debt")
+        self.assertFalse(matches[0]["scientific_authority"])
+        self.assertEqual(memory["principle_readjudication_dead_end_count"],1)
 
     def test_r2_near_miss_preflight_compiles_into_future_shadow_search_memory(self) -> None:
         memory=self.state["shadow_dead_end_memory"]

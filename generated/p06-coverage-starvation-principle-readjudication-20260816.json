@@ -23,6 +23,7 @@
       "structural_witness": "Construct two latent document worlds with the same observed question, same retrieved snippets, same retrieved page ids, same total page count and therefore the same coverage certificate, but place the decisive answer evidence on an unread page in one world and no decisive answer evidence on unread pages in the other. The coverage-certified policy receives identical coverage information in both worlds while the posthoc gap label differs. Therefore coverage quantity alone cannot identify answer-relevant omission.",
       "positive_support": true,
       "evidence_refs": [
+        "arXiv:2608.07527",
         "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/plan.json#sha256=dd3d915cb9f16291f171b36d111ba3b2df60bddbb399b26e52a61bbda7657e39",
         "host52:/data/wyt/agent-self-evolution-p0-52-data/runs/p06-coverage-starvation-v2-exec-20260816/analysis.json#sha256=2b5ca3000d2c491ff2df6a1126667edd6fb59dfa7ec8fc446c9a6b30da959a16",
         "host52:/home/wyt/code/agent-self-evolution-observatory-automation/generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P06-C01"
