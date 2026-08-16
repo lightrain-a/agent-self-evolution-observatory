@@ -57,6 +57,7 @@ class SearchPortfolioTest(unittest.TestCase):
         prompt=_expansion_prompt(lane,self.records(),1,memory)
         self.assertIn(rows[0]["ref"],prompt)
         self.assertIn("Author implementation",prompt)
+        self.assertIn("Seed 1 MUST directly execute one certified opposite-search prior",prompt)
 
     def test_certified_dead_end_emits_opposite_search_prior_without_authority(self):
         memory={"blocked_objects":[{"source_candidate_id":"D1","basin":"principle-dead-end-x","dead_end_certified":True,"counter_explanation":{"type":"IMPOSSIBILITY_OR_INVARIANCE","opposite_principle":"Evidence sufficiency is relevance-conditioned, not coverage-conditioned.","opposite_search_seed":"Search for relevance-conditioned evidence debt.","reopen_condition":"Fresh evidence must expose a same-information residual.","evidence_refs":["artifact:x"]}}],"hold_objects":[{"source_candidate_id":"H1","dead_end_certified":False,"counter_explanation":{"opposite_principle":"must not appear","opposite_search_seed":"must not appear"}}]}

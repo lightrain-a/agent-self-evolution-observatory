@@ -28,7 +28,7 @@ from .problem_search_control_snapshot import STAGE_RUNNER_ARTIFACT_SCHEMA,valida
 from .paper_first_primary_evidence import parse_arxiv_page,extract_empirical_fact_candidates,extract_typed_evidence_candidates
 from .paper_first_problem_search_portfolio import (
     _archives,_assign_structural_clusters,_evolution_prompt,_expansion_prompt,_formulation_prompt,
-    _inversion_asset_records,_maxmin_select,_normalize_seed,_score,_semantic_dedup,_valid_seed,
+    _inversion_asset_records,_maxmin_select,_normalize_seed,_score,_semantic_dedup,_source_refs,_valid_seed,
 )
 
 
@@ -199,7 +199,8 @@ def expand(*,pool:Path|None,run_root:Path,lane:str,count:int=6,model:str="ark-co
         if blocker:
             dead_end_blocks.append({"seed_id":row["seed_id"],**blocker});continue
         seeds.append(row)
-    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":lane,"part":part,"requested":count,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"valid_seeds":len(seeds),"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"seeds":seeds,"scientific_authority":False}
+    inversion_asset_refs={str(row.get("ref") or "") for row in _inversion_asset_records(memory)};inversion_asset_seed_count=sum(any(ref in inversion_asset_refs for ref in _source_refs(seed)) for seed in seeds)
+    out={"schema_version":STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":lane,"part":part,"requested":count,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,"shadow_dead_end_memory_sha256":hashlib.sha256(json.dumps(memory,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest() if memory else "","frozen_pool_sha256":pool_sha,"valid_seeds":len(seeds),"inversion_asset_seed_count":inversion_asset_seed_count,"inversion_asset_requirement_satisfied":(not inversion_asset_refs or inversion_asset_seed_count>0),"semantic_dead_end_blocks":dead_end_blocks,"semantic_dead_end_block_count":len(dead_end_blocks),"seeds":seeds,"scientific_authority":False}
     run_root.mkdir(parents=True,exist_ok=True);(run_root/f"expand-{lane}-p{part}.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return {k:out[k] for k in ("lane","part","requested","resolved_model","raw_sha256","valid_seeds")}
 
