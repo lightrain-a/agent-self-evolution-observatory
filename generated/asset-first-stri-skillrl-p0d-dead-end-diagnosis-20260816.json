@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "skill-taxonomy-representation-invariance",
+  "parent_experiment_id": "STRI-SKILLRL-FIXED-TASK-DYNAMIC-P0D-20260816",
+  "artifact_kind": "principled-dead-end-diagnosis",
+  "disposition": "SUBSTRATE_SUPPORT_FAILURE",
+  "scientific_belief_update_allowed": false,
+  "mechanism_rejected": false,
+  "reason": "The final-success observable is support-degenerate under the author SFT warm-start: A_pristine succeeds on only 1/24 paired units, below the preregistered 4/24 floor. With Y nearly always zero, B=0/24 cannot distinguish representation-induced harm from baseline policy incompetence. The experiment therefore cannot identify the downstream treatment effect.",
+  "evidence": {
+    "outcome": "INCONCLUSIVE",
+    "qualified": false,
+    "pristine_success_count": 1,
+    "pristine_success_rate": 0.041666666666666664,
+    "B_success_rate": 0.0,
+    "C_success_rate": 0.125,
+    "D_success_rate": 0.041666666666666664,
+    "D_vs_A_disagreement": 0.0,
+    "original_evidence_manifest_sha256": "ea8dfea6fc3834eab3c9e46f0309b0430dd3564dd419b5a1dd68976d5ad09a1d",
+    "diagnosed_analysis_path": "/data/wyt/agent-self-evolution-observatory/runs/agent3-stri-skillrl-p0d-shadow-20260816/analysis-headroom-diagnosed-v2.json",
+    "diagnosed_analysis_sha256": "fc9356958dd585aeee2c6ee447060f967e8c122d991dc3a8f6f207564611ca57",
+    "diagnosed_evidence_manifest_sha256": "69b1e55135c60832c3450f4303b3c36d3a22c149f5f7e9bb5d72ff411916c6a7",
+    "diagnosed_qualification_errors": ["pristine-success-headroom:1"]
+  },
+  "principle": "A causal/paired endpoint contrast requires non-degenerate support in the reference policy on the endpoint. Representation integrity and exact negative-control restoration are insufficient when the endpoint has a floor/ceiling.",
+  "opposite_cause": "The author-released SFT checkpoint is explicitly a warm start for RL and is not the final policy. SkillRL also releases Jianwen/Alfworld-7B-RL, the policy artifact produced by the same ALFWorld/SkillBank training line. Testing a competent final policy is a substrate change justified by the failed support assumption, not a threshold/task rescue.",
+  "forbidden_repairs": [
+    "relax pristine-success floor",
+    "select easier tasks after outcomes",
+    "drop failed families",
+    "add seeds until significance",
+    "replace won with invalid-action proxy",
+    "reinterpret P0-D as STOP"
+  ],
+  "allowed_next_step": "New contract with exactly one predeclared author final RL policy, outcome-blind disjoint competence calibration, then causal intervention only if competence support passes.",
+  "scientific_authority": false
+}

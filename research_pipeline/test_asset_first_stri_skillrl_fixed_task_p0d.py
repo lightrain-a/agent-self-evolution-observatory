@@ -58,4 +58,19 @@ class SkillRLP0DTest(unittest.TestCase):
             root=Path(td);agg=self._write_case(root,'go',True);out=root/'analysis.json';r=p0d.analyze(root,agg,out)
             self.assertFalse(r['qualified']);self.assertEqual(r['outcome'],'INCONCLUSIVE');self.assertTrue(any('A-D-trajectory-not-identical' in x for x in r['qualification_errors']))
 
+    def test_analyzer_reports_pristine_headroom_failure_explicitly(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);agg=self._write_case(root,'stop')
+            raw=Path(json.loads(agg.read_text())['raw_rows_path'])
+            rows=[json.loads(x) for x in raw.read_text().splitlines() if x.strip()]
+            for r in rows:
+                if r['arm'] in {'A_pristine','B_displacement_clone','C_identity_placebo','D_exact_quotient'}:
+                    r['won']=0
+            rows[0]['won']=1
+            rows[3]['won']=1
+            raw.write_text(''.join(json.dumps(r)+'\n' for r in rows))
+            out=root/'analysis.json';r=p0d.analyze(root,agg,out)
+            self.assertFalse(r['qualified']);self.assertEqual(r['outcome'],'INCONCLUSIVE')
+            self.assertIn('pristine-success-headroom:1',r['qualification_errors'])
+
 if __name__=='__main__':unittest.main()
