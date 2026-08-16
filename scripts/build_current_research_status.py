@@ -4,10 +4,16 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from research_pipeline.asset_first_stri_public_status import build_asset_first_stri_public_status, validate_asset_first_stri_public_status
+
 GEN = ROOT / "generated"
 
 
@@ -46,7 +52,13 @@ positive_local = load("positive-residual-memory-local-mechanism-readjudication-2
 positive_temporal = load("positive-residual-memory-temporal-exposure-principle-readjudication-20260816.json")
 positive_treatment = load("positive-residual-memory-treatment-semantics-principle-readjudication-20260816.json")
 
-sys_stri = system.get("asset_first_stri_paper_ready", {})
+# STRI is a selected-paper/publication projection with its own content-addressed
+# source chain. Do not source it from the broader research-system snapshot: that
+# snapshot can intentionally lag unrelated live discovery-control changes.
+sys_stri = build_asset_first_stri_public_status()
+stri_errors = validate_asset_first_stri_public_status(sys_stri)
+if stri_errors:
+    raise RuntimeError("invalid STRI public status:\n- " + "\n- ".join(stri_errors))
 stri_summary = sys_stri.get("summary", {})
 queue_summary = problem_queue.get("summary", {})
 backlog_summary = paper_backlog.get("summary", {})

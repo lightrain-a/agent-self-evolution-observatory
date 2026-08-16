@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T16:19:47+00:00",
-  "source_revision": "c0f11e82565161fc9918c10eda086cf4f1efc404",
+  "generated_at": "2026-08-16T18:09:50+00:00",
+  "source_revision": "1ad7760da1e506dd5a35c25c0125eb57179c4a54",
   "as_of_date": "2026-08-16",
   "headline": {
     "paper_ready": 1,
@@ -17,7 +17,7 @@
     "legacy_p0_method_stop": 1,
     "launchable_formal_experiments": 0,
     "shadow_dead_ends": 12,
-    "shadow_holds": 2,
+    "shadow_holds": 3,
     "shadow_method_ready": 0,
     "shadow_qualification_ready": 0,
     "method_authorized": 0,
@@ -89,9 +89,9 @@
     }
   },
   "canonical_live": {
-    "generator_status": "SKIPPED_SOURCE_COVERAGE_SATURATED",
-    "generated": 0,
-    "queue_submitted": 0,
+    "generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
+    "generated": 1,
+    "queue_submitted": 1,
     "problem_gate_pass": 0,
     "paper_design_eligible": 0,
     "paper_design_backlog": 0,
@@ -162,9 +162,9 @@
     "stop_standalone": 1,
     "dead_end_objects": 12,
     "principle_readjudication_dead_ends": 8,
-    "hold_objects": 2,
+    "hold_objects": 3,
     "semantic_holds": 0,
-    "near_miss_holds": 1,
+    "near_miss_holds": 2,
     "support_release_holds": 4,
     "explicit_release_targets": 2,
     "scientific_authority": false,
