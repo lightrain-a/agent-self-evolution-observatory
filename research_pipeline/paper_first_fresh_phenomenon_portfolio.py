@@ -136,7 +136,8 @@ def build_fresh_phenomenon_portfolio(
     canonical Problem Queue. A candidate can occupy the single ACTIVE_F0 slot only when
     a provenance-audited substrate, a frozen same-information falsifier, and a separate
     controller-verified execution capability already exist. Design-ready candidates that
-    lack experiment authority/GPU leases remain HOLD_EXECUTION. A positive F0 does not
+    lack matching experiment authority (and GPU leases only for GPU-backed execution) remain
+    HOLD_EXECUTION. A positive F0 does not
     grant Problem-Gate or Paper-Design authority; it merely moves the candidate to
     READY_FOR_PROBLEM_REVIEW on the next explicit adjudication pass.
     """
@@ -283,6 +284,11 @@ def build_fresh_phenomenon_portfolio(
         and int(skill_f0.get("model_calls_executed") or 0) == 0
         and int(skill_f0.get("task_trials_executed") or 0) == 0
     )
+    # PA-05's frozen execution substrate is API + Docker. It does not load a local
+    # model or consume CUDA, so a GPU lease would be an unrelated capability. The
+    # controller-issued experiment authority remains mandatory, while vague generic
+    # resource_lease_ids are deliberately rejected rather than accepted as unverifiable
+    # strings. Any later GPU-backed revision is a new execution contract.
     skill_execution_ready = bool(
         skill_design_ready
         and skill_env.get("execution_ready") is True
@@ -290,10 +296,13 @@ def build_fresh_phenomenon_portfolio(
         and skill_execution_capability.get("valid") is True
         and skill_execution_capability.get("idea_id") == "PA-05-SKILL-VALIDATION-TRANSFER"
         and skill_execution_capability.get("plan_hash") == skill_f0.get("plan_sha256")
+        and skill_execution_capability.get("execution_kind") == "api_docker"
+        and skill_execution_capability.get("requires_gpu") is False
+        and not list(skill_execution_capability.get("gpu_lease_ids") or [])
+        and not list(skill_execution_capability.get("resource_lease_ids") or [])
         and str(skill_execution_capability.get("authority_id") or "")
         and str(skill_execution_capability.get("run_id") or "")
         and str(skill_execution_capability.get("server_id") or "")
-        and len(list(skill_execution_capability.get("resource_lease_ids") or [])) > 0
     )
 
     harness_hold = _memory_hold(dead_end_memory, "SHADOW-P07-C01")
@@ -425,9 +434,9 @@ def build_fresh_phenomenon_portfolio(
                 "task_trials_executed": skill_f0.get("task_trials_executed"),
             },
             reopen_only_if=(
-                "Provision the benchmark runtime (Harbor + agent-runtime image + agent and SkillAuthor credentials), then obtain a separate "
-                "controller-issued execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus current-source review; "
-                "it never authorizes Problem Gate, method design, or full experiments by itself."
+                "Provision the benchmark runtime (Harbor + agent-runtime image + the Gemini credential shared by the frozen agent and host-side SkillAuthor route), "
+                "then obtain a separate controller-issued execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus "
+                "current-source review; it never authorizes Problem Gate, method design, or full experiments by itself."
             ),
         ),
         _candidate(
@@ -549,7 +558,10 @@ def build_fresh_phenomenon_portfolio(
         "execution_ready": skill_execution_ready,
         "required_plan_sha256": skill_f0.get("plan_sha256"),
         "active_experiment_authority_required": True,
-        "matching_resource_leases_required": True,
+        "execution_kind": "api_docker",
+        "requires_gpu": False,
+        "matching_gpu_leases_required": False,
+        "generic_resource_lease_ids_accepted": False,
         "unauthorized_partial_run_ingestable": False,
         "status": (
             "EXECUTION_READY"
@@ -599,6 +611,8 @@ def build_fresh_phenomenon_portfolio(
             "active_f0_requires_frozen_same_information_falsifier": True,
             "active_f0_requires_controller_verified_execution_capability": True,
             "direct_gpu_execution_without_experiment_authority_and_matching_leases_is_forbidden": True,
+            "non_gpu_api_docker_f0_requires_experiment_authority_but_not_gpu_lease": True,
+            "unverifiable_generic_resource_lease_ids_are_not_execution_authority": True,
             "unauthorized_partial_runs_cannot_be_ingested_as_f0_evidence": True,
             "preexecution_operationalization_repair_requires_hash_chain_and_independent_review": True,
             "source_only_candidates_cannot_consume_experiment_slot": True,
@@ -701,6 +715,10 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
         errors.append("active F0 must require controller-verified execution capability")
     if policy.get("direct_gpu_execution_without_experiment_authority_and_matching_leases_is_forbidden") is not True:
         errors.append("direct GPU execution must remain behind experiment authority and resource leases")
+    if policy.get("non_gpu_api_docker_f0_requires_experiment_authority_but_not_gpu_lease") is not True:
+        errors.append("non-GPU API/Docker F0 must require experiment authority without inventing a GPU lease")
+    if policy.get("unverifiable_generic_resource_lease_ids_are_not_execution_authority") is not True:
+        errors.append("generic resource lease ids cannot substitute for verified execution authority")
     if policy.get("unauthorized_partial_runs_cannot_be_ingested_as_f0_evidence") is not True:
         errors.append("unauthorized partial runs must remain non-ingestable")
     if policy.get("preexecution_operationalization_repair_requires_hash_chain_and_independent_review") is not True:
@@ -769,6 +787,13 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
             readiness = row.get("execution_readiness") or {}
             if readiness.get("controller_verified_capability_present") is not True or readiness.get("execution_ready") is not True:
                 errors.append(f"ACTIVE_F0 lacks controller-verified execution capability:{row.get('candidate_id')}")
+            if row.get("candidate_id") == "PA-05-SKILL-VALIDATION-TRANSFER" and (
+                readiness.get("execution_kind") != "api_docker"
+                or readiness.get("requires_gpu") is not False
+                or readiness.get("matching_gpu_leases_required") is not False
+                or readiness.get("generic_resource_lease_ids_accepted") is not False
+            ):
+                errors.append("Skill Validation Transfer execution contract drift")
         if row.get("status") == "HOLD_EXECUTION":
             readiness = row.get("execution_readiness") or {}
             if readiness.get("execution_ready") is not False or readiness.get("unauthorized_partial_run_ingestable") is not False:

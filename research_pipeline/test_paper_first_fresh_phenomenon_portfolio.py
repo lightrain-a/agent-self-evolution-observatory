@@ -7,6 +7,7 @@ from research_pipeline.paper_first_fresh_phenomenon_portfolio import (
     build_fresh_phenomenon_portfolio,
     validate_fresh_phenomenon_portfolio,
 )
+from research_pipeline.paper_first_skill_validation_transfer_scout import build_skill_validation_transfer_scout
 
 
 class FreshPhenomenonPortfolioTest(unittest.TestCase):
@@ -21,6 +22,31 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
             "server_id": "52",
             "gpu_lease_ids": ["lease-demo"],
         }
+
+    def skill_scout_runtime_ready(self) -> dict:
+        return build_skill_validation_transfer_scout(
+            harbor_importable=True,
+            runtime_image_present=True,
+            gemini_credential_present=True,
+            bedrock_credential_present=False,
+        )
+
+    def skill_execution_capability(self, **overrides) -> dict:
+        row = {
+            "controller_verified": True,
+            "valid": True,
+            "idea_id": "PA-05-SKILL-VALIDATION-TRANSFER",
+            "plan_hash": self.skill_scout_runtime_ready()["f0"]["plan_sha256"],
+            "authority_id": "authority-skill-demo",
+            "run_id": "skill-run-demo",
+            "server_id": "69",
+            "execution_kind": "api_docker",
+            "requires_gpu": False,
+            "gpu_lease_ids": [],
+            "resource_lease_ids": [],
+        }
+        row.update(overrides)
+        return row
 
     def echo_receipt(self) -> dict:
         return {
@@ -260,10 +286,44 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertEqual("PROVENANCE_AUDITED_FIRST_PARTY_EXECUTABLE_SUBSTRATE", row["support_status"])
         self.assertTrue(row["f0_design_ready"])
         self.assertFalse(row["execution_readiness"]["execution_ready"])
+        self.assertEqual("api_docker", row["execution_readiness"]["execution_kind"])
+        self.assertFalse(row["execution_readiness"]["requires_gpu"])
+        self.assertFalse(row["execution_readiness"]["matching_gpu_leases_required"])
+        self.assertFalse(row["execution_readiness"]["generic_resource_lease_ids_accepted"])
         self.assertFalse(row["paper_problem_claimed"])
         self.assertFalse(row["scientific_authority"])
         self.assertTrue(all(v is False for v in row["authority"].values()))
         self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
+
+    def test_skill_api_docker_capability_does_not_require_fake_gpu_or_generic_lease(self) -> None:
+        state = self.build(
+            skill_validation_scout=self.skill_scout_runtime_ready(),
+            skill_execution_capability=self.skill_execution_capability(),
+        )
+        row = next(row for row in state["candidates"] if row["candidate_id"] == "PA-05-SKILL-VALIDATION-TRANSFER")
+        self.assertEqual("ACTIVE_F0", row["status"])
+        self.assertTrue(row["execution_readiness"]["execution_ready"])
+        self.assertFalse(row["execution_readiness"]["requires_gpu"])
+        self.assertEqual(1, state["summary"]["active_f0"])
+        self.assertFalse(row["authority"]["gpu"])
+
+    def test_skill_capability_rejects_unverifiable_generic_resource_lease(self) -> None:
+        state = self.build(
+            skill_validation_scout=self.skill_scout_runtime_ready(),
+            skill_execution_capability=self.skill_execution_capability(resource_lease_ids=["fake-generic-lease"]),
+        )
+        row = next(row for row in state["candidates"] if row["candidate_id"] == "PA-05-SKILL-VALIDATION-TRANSFER")
+        self.assertEqual("HOLD_EXECUTION", row["status"])
+        self.assertFalse(row["execution_readiness"]["execution_ready"])
+
+    def test_skill_capability_rejects_gpu_contract_drift(self) -> None:
+        state = self.build(
+            skill_validation_scout=self.skill_scout_runtime_ready(),
+            skill_execution_capability=self.skill_execution_capability(requires_gpu=True, gpu_lease_ids=["gpu-lease"]),
+        )
+        row = next(row for row in state["candidates"] if row["candidate_id"] == "PA-05-SKILL-VALIDATION-TRANSFER")
+        self.assertEqual("HOLD_EXECUTION", row["status"])
+        self.assertFalse(row["execution_readiness"]["execution_ready"])
 
     def test_active_f0_has_no_scientific_or_gpu_authority(self) -> None:
         state = self.build(execution_capability=self.execution_capability())

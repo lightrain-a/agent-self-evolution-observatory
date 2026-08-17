@@ -40,11 +40,14 @@ def build_skill_validation_transfer_scout(
     bedrock_credential_present: bool = False,
 ) -> dict[str, Any]:
     plan = build_plan()
+    # The frozen gemini-3-flash model preset routes both the Harbor agent and
+    # host-side LiteLLM components (including SkillAuthor) through Gemini.
+    # Bedrock presence is therefore informational for this F0, not a launch
+    # requirement. This is bound to the exact audited SkillEvolBench commit.
     execution_ready = bool(
         harbor_importable
         and runtime_image_present
         and gemini_credential_present
-        and bedrock_credential_present
     )
     return {
         "schema_version": "1.0",
@@ -134,14 +137,24 @@ def build_skill_validation_transfer_scout(
             "runtime_image_present": runtime_image_present,
             "gemini_credential_present": gemini_credential_present,
             "bedrock_credential_present": bedrock_credential_present,
+            "bedrock_required_for_f0": False,
+            "provider_routing": {
+                "model_preset": "gemini-3-flash",
+                "agent_provider": "gemini",
+                "agent_model": "google/gemini-3-flash-preview",
+                "host_litellm_model": "gemini/gemini-3-flash-preview",
+                "host_litellm_api_key_env": "GEMINI_API_KEY",
+                "skill_author_uses_run_model_when_model_yaml_active": True,
+                "model_preset_sha256": "103f7608956b8b5d27251b87b08ebaa2503f1be039204beac8fbc26e0811fbd1",
+                "runtime_routing_sha256": "239040f5009fd7e551020c1ea82460a7d3aa4d656eaf752cb867d516802599f2",
+            },
             "execution_ready": execution_ready,
             "hold_reason": [] if execution_ready else [
                 name
                 for name, ok in (
                     ("Harbor SDK", harbor_importable),
                     ("agent-runtime:latest", runtime_image_present),
-                    ("Gemini agent credential", gemini_credential_present),
-                    ("Bedrock SkillAuthor credential", bedrock_credential_present),
+                    ("Gemini credential for agent + host-side SkillAuthor", gemini_credential_present),
                 )
                 if not ok
             ],
@@ -204,6 +217,18 @@ def validate_skill_validation_transfer_scout(state: dict[str, Any]) -> list[str]
     env = state.get("execution_environment") or {}
     if env.get("direct_execution_authorized") is not False or env.get("controller_capability_required") is not True:
         errors.append("execution environment cannot self-authorize")
+    routing = env.get("provider_routing") or {}
+    if env.get("bedrock_required_for_f0") is not False:
+        errors.append("Bedrock must not be required by the frozen Gemini F0 route")
+    if (
+        routing.get("model_preset") != "gemini-3-flash"
+        or routing.get("agent_provider") != "gemini"
+        or routing.get("host_litellm_api_key_env") != "GEMINI_API_KEY"
+        or routing.get("skill_author_uses_run_model_when_model_yaml_active") is not True
+        or routing.get("model_preset_sha256") != "103f7608956b8b5d27251b87b08ebaa2503f1be039204beac8fbc26e0811fbd1"
+        or routing.get("runtime_routing_sha256") != "239040f5009fd7e551020c1ea82460a7d3aa4d656eaf752cb867d516802599f2"
+    ):
+        errors.append("frozen Gemini agent/SkillAuthor routing drift")
     authority = state.get("authority") or {}
     if any(bool(authority.get(k)) for k in ("problem_gate", "paper_design", "method", "experiment", "p0", "gpu", "full_experiment")):
         errors.append("scout illegally carries downstream authority")
