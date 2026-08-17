@@ -195,7 +195,7 @@ def main() -> None:
             };""",
         )
         require(system_overview["chapters"] == 7 and system_overview["readerChapters"] == 7 and system_overview["readerPhases"] == 6 and system_overview["deepDives"] == 4 and system_overview["authorityCards"] == 3, f"system overview reading framework is incomplete: chapters={system_overview['chapters']} roadmap={system_overview['readerChapters']} phases={system_overview['readerPhases']} deep={system_overview['deepDives']} authority={system_overview['authorityCards']}")
-        require(system_overview["toc2"] == 8 and system_overview["toc3"] == 0 and system_overview["toc4"] == 0, f"system overview TOC must stay chapter-only: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
+        require(system_overview["toc2"] == 8 and system_overview["toc3"] >= 10 and system_overview["toc4"] == 0, f"system overview TOC must expose chapter + section hierarchy without machine-level h4 noise: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
         require(system_overview["stats"] == 6, f"research-system hero statistics are incomplete: {system_overview['stats']}")
         require(system_overview["readerChapters"] == 7 and system_overview["responsibilityLayers"] == 6 and system_overview["lifecycleSteps"] == 11 and system_overview["componentLayerHeaders"] == 6, f"canonical architecture is incomplete: reader={system_overview['readerChapters']} layers={system_overview['responsibilityLayers']} stages={system_overview['lifecycleSteps']} component-groups={system_overview['componentLayerHeaders']}")
         require((system_overview["architectureSummary"].get("temporal_stages"),system_overview["architectureSummary"].get("reader_chapters"),system_overview["architectureSummary"].get("reader_stage_coverage"),system_overview["architectureSummary"].get("reader_stage_missing"),system_overview["architectureSummary"].get("reader_stage_duplicates"),system_overview["architectureSummary"].get("reader_stage_extra"),system_overview["architectureSummary"].get("functional_layers"),system_overview["architectureSummary"].get("assigned_components"),system_overview["architectureSummary"].get("unassigned_components"),system_overview["architectureSummary"].get("cross_cutting_controls"),system_overview["architectureSummary"].get("orphan_cross_cutting_controls")) == (11,7,11,0,0,0,6,27,0,3,0), f"backend architecture manifest is stale in browser state: {system_overview['architectureSummary']}")
@@ -217,6 +217,10 @@ def main() -> None:
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
         zh_system = execute(session_id, """return {
+          readerText: [...document.querySelectorAll('.reader-roadmap,.reader-phase,.reader-authority')].map(x=>x.textContent||'').join(' '),
+          toc2: document.querySelectorAll('.toc-level-2').length,
+          toc3: document.querySelectorAll('.toc-level-3').length,
+          toc4: document.querySelectorAll('.toc-level-4').length,
           automationText: document.querySelector('.system-automation-panel')?.textContent || '',
           preflightText: [...document.querySelectorAll('.preflight-compiler')].find(x=>x.querySelector('.preflight-gate[data-preflight-key]'))?.textContent || '',
           semanticsText: document.querySelector('.system-semantics')?.textContent || '',
@@ -224,6 +228,8 @@ def main() -> None:
           cards: [...document.querySelectorAll('.system-boundary-card,.preflight-gate,.system-failure-layer')].map(x=>({client:x.clientWidth,scroll:x.scrollWidth,text:x.textContent})),
           pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2
         };""")
+        require((zh_system["toc2"], zh_system["toc4"]) == (8,0) and zh_system["toc3"] >= 10, f"Chinese system TOC must expose second/third-level headings: {zh_system['toc2']}/{zh_system['toc3']}/{zh_system['toc4']}")
+        require(all(marker in zh_system["readerText"] for marker in ("输入","核心判断","阶段产出","第一手证据","成熟归约","资源经济 5/5","协议有效性","方法冻结","主文证据图","系统回放","统一权限模型")), "Chinese reader flow still exposes too much untranslated UI terminology")
         require("自动执行" in zh_system["automationText"] and "条件自动" in zh_system["automationText"] and "人工控制" in zh_system["automationText"], "Chinese automation boundary headings are incomplete")
         require("主张与训练目标对齐" in zh_system["preflightText"] and "方法与最强简化会做出不同决策" in zh_system["preflightText"] and "小样本可拟合性" in zh_system["preflightText"], "Chinese Pre-P0 hard gates are incomplete")
         require("先定位失败发生在哪一层" in zh_system["semanticsText"] and "核心原理层" in zh_system["semanticsText"], "Chinese failure-layer semantics are incomplete")
