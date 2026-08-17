@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T09:05:50+00:00",
-  "source_revision": "70ba34424ac28dcec4468178d7a1b95ef5359365",
+  "generated_at": "2026-08-17T11:03:04+00:00",
+  "source_revision": "937f91237a161b623a81205bbf8d81b7d72b6044",
   "as_of_date": "2026-08-17",
   "headline": {
     "paper_ready": 1,
@@ -16,14 +16,14 @@
     "legacy_p0_upstream_hold": 1,
     "legacy_p0_method_stop": 1,
     "launchable_formal_experiments": 0,
-    "shadow_dead_ends": 30,
+    "shadow_dead_ends": 31,
     "shadow_holds": 3,
     "shadow_method_ready": 0,
     "shadow_qualification_ready": 0,
     "fresh_active_f0": 0,
-    "fresh_design_ready_f0": 1,
+    "fresh_design_ready_f0": 0,
     "fresh_support_holds": 1,
-    "fresh_execution_holds": 1,
+    "fresh_execution_holds": 0,
     "fresh_ready_problem_review": 0,
     "method_authorized": 0,
     "gpu_authorized": 0
@@ -117,11 +117,11 @@
     "note": "The canonical live generator/queue remains empty; asset-first STRI is a separate paper track and does not mutate canonical authority."
   },
   "fresh_phenomenon_portfolio": {
-    "status": "F0_EXECUTION_HOLD",
+    "status": "NO_ACTIVE_F0",
     "active_f0": 0,
-    "design_ready_f0": 1,
+    "design_ready_f0": 0,
     "support_holds": 1,
-    "execution_holds": 1,
+    "execution_holds": 0,
     "ready_for_problem_review": 0,
     "canonical_problem_gate_added": 0,
     "scientific_authority": false,
@@ -152,15 +152,16 @@
       {
         "candidate_id": "PA-05-SKILL-VALIDATION-TRANSFER",
         "title": "Does Local Skill Validation Identify Deployment-Time Procedural Transfer?",
-        "status": "HOLD_EXECUTION",
-        "support_status": "PROVENANCE_AUDITED_FIRST_PARTY_EXECUTABLE_SUBSTRATE",
+        "status": "STOP_REDUCTION",
+        "support_status": "PRINCIPLE_CLOSED_DISTRIBUTION_SHIFT_REDUCTION",
         "phenomenon": "SkillEvolBench supplies 30 matched latent families with T1-T3 acquisition/replay and frozen T4 context-shift, T5 adversarial, and T6 composition deployment. Current skill-evolution systems commonly use local/held-out validation or related probe utility to accept/select skill edits, while SkillEvolBench reports that raw trajectory reuse can outperform distilled skills and that skill gains are unstable under frozen deployment. The unresolved object is whether local validation is an identifying selection statistic for which persistent representation actually transfers.",
-        "strongest_reduction": "one representation globally dominates; ordinary family difficulty; raw trajectories are simply globally stronger; local replay already predicts deployment; or one-seed model variance explains apparent inversions",
-        "cheapest_falsifier": "On the exact SkillEvolBench commit, run only raw_trajectory_rag and selfgen_experience_always with one model and seed A. For each of 30 families, compare frozen T1-T3 within-env replay preference with T4-T6 deployment preference. Require both arms to win nontrivial family subsets, >=10 joint-decisive families, >=40% preference inversions, and a bootstrap-positive oracle-vs-local selection regret while local selection fails to beat the best global arm by >0.03.",
-        "why_now": "Unlike source-only scouts, this direction has an exact first-party benchmark commit, 180 validated tasks, two matched canonical arms, a 270-task dry-run for each arm, per-family replay/deployment truth, and a frozen analyzer. It is held only by execution environment/authority.",
-        "f0_design_ready": true,
+        "strongest_reduction": "same-information source-to-target model selection under distribution shift / domain generalization: the T1-T3 local arm effect and T4-T6 shifted-deployment arm effect are allowed to differ by family/role, so ranking inversion and selector regret are already expressible as ordinary transport/invariance failure without a skill-specific structural variable",
+        "cheapest_falsifier": "The frozen seed-A inversion/regret F0 is no longer decisive for novelty and must not be executed as the current claim test. Reuse the SkillEvolBench substrate only after preregistering a skill-specific structural variable and a same-information distribution-shift selector that receives identical T1-T3 outcomes, family/role observables, representation metadata, pre-outcome shift descriptors, and compute; the two models must make different ex-ante T4-T6 arm-selection predictions before any deployment outcomes are opened.",
+        "why_now": "The 30-family/180-task first-party substrate remains reusable, but the current PA-05 success criterion is principle-closed before execution: T1-T3 validation/deployment ranking inversion and oracle regret under deliberately shifted T4-T6 roles are predictions of generic model selection under distribution shift. Running 540 model tasks cannot distinguish a skill-evolution mechanism without an additional same-information structural residual.",
+        "f0_design_ready": false,
         "execution_readiness": {
-          "operationalization_ready": true,
+          "operationalization_ready": false,
+          "preclosure_f0_operationalization_ready": true,
           "runtime_host": "52",
           "runtime_environment_ready": true,
           "runtime_infrastructure_ready": true,
@@ -175,11 +176,8 @@
           "matching_gpu_leases_required": false,
           "generic_resource_lease_ids_accepted": false,
           "unauthorized_partial_run_ingestable": false,
-          "status": "HOLD_PROVIDER_CREDENTIAL_AND_AUTHORITY_REQUIRED",
-          "hold_reason": [
-            "GEMINI_API_KEY not loaded in the current execution environment",
-            "external human single-attempt F0 permit and live controller experiment authority not present"
-          ]
+          "status": "STOP_PRINCIPLE_REDUCTION_NO_EXECUTION",
+          "hold_reason": []
         },
         "paper_problem_claimed": false
       },
@@ -283,8 +281,8 @@
     "method_ready": 0,
     "revise_hold": 1,
     "stop_standalone": 1,
-    "dead_end_objects": 30,
-    "principle_readjudication_dead_ends": 26,
+    "dead_end_objects": 31,
+    "principle_readjudication_dead_ends": 27,
     "hold_objects": 3,
     "semantic_holds": 0,
     "near_miss_holds": 1,
