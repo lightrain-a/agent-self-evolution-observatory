@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T11:04:19+00:00",
+  "generated_at": "2026-08-17T11:57:17+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -33863,7 +33863,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T11:02:43+00:00",
+    "generated_at": "2026-08-17T11:45:12+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -33910,7 +33910,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-17T11:02:43+00:00",
+      "generated_at": "2026-08-17T11:45:12+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -34387,6 +34387,73 @@
             "source_readjudication_artifact": "generated/lopd-latent-retrieval-plateau-principle-readjudication-20260817.json",
             "scientific_authority": false
           },
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "AUTO-1-RELEVANT-SKILL-MISEXECUTION",
+          "basin": "principle-readjudication-25c45cb16b3663d1",
+          "search_primitive": "CONVERGENT_FAILURE",
+          "title": "High topical relevance plus skill-induced implementation faults does not identify a new over-utilization primitive",
+          "avoid": [
+            "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: High topical relevance plus skill-induced implementation faults does not identify a new over-utilization primitive",
+            "using the negative experiment metric alone as the reason for the dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "AUTO-1 does not establish the claimed cross-source convergent failure. In arXiv:2608.14036 RQ4, parsed actual-use precision falls sharply as the candidate pool grows while downstream task success stays roughly flat or increases; the paper explicitly treats retrieval/identification and downstream execution as separate measurements and states that exact annotated ground-truth skill invocation is neither sufficient nor necessary for success. That observation is therefore a retrieval/use decoupling, not a quantitative functional failure matching arXiv:2608.11888. The latter paper does establish causal skill-induced functional failures using paired target/reference executions, but its dominant Task-Implementation Fault account is already a task-artifact alignment and instruction-following explanation: agents over-trust topically matched reusable defaults, examples, or templates as task-specific requirements, producing incorrect fills or omissions. Topical or 'seemingly relevant' status does not establish task-requirement-level conflict freedom; the paper's own representative RRO example is caused by a partial reusable example that omits a task-required model parameter, and its discussion explicitly proposes skill-task compatibility checks for conflicting defaults, examples, templates, paths, and environment assumptions. Once task requirements, skill content, applicability, and realized uptake are available, ordinary task-conditioned negative transfer / compatibility plus instruction-following overgeneralization expresses the same failure prediction without a new over-utilization primitive.",
+          "current_source_refs": [
+            "arXiv:2608.11888",
+            "arXiv:2608.14036"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.14036",
+            "primary-fulltext:arXiv:2608.14036#sha256=e963536344b67399b064ca9c53f952f177a783cc1c1c3ccf41bc1d39a45b945f",
+            "arXiv:2608.11888",
+            "primary-fulltext:arXiv:2608.11888#sha256=b59fdd9d3b2baaa6d8b453661dd29445ecddb555b13452489a815171a3b42dc9",
+            "aborted-generator-raw:sha256=70800be8d3fd9eb5910b233924b6f429d805c229ebbb868522f814b2615d4f08",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#artifact-uptake-after-retrieval",
+            "repo:research_pipeline/paper_first_fresh_saturation.py#procedural-memory-nonmonotonicity",
+            "repo:generated/p03-autoskill-context-conditioned-uptake-principle-readjudication-20260816.json",
+            "repo:generated/spatial-memory-high-trs-grounding-principle-readjudication-20260817.json"
+          ],
+          "problem_text": "The aborted AUTO-1 proposal that combines arXiv:2608.14036 retrieval/use precision decoupling with arXiv:2608.11888 skill-induced Task-Implementation Faults to claim a shared convergent-failure object in which a semantically relevant, conflict-free skill causes a new over-utilization or mis-execution mechanism beyond retrieval, task-skill compatibility, negative transfer, and ordinary instruction-following.",
+          "reason": "The cited papers support two real but different observations: annotated-skill use precision can decouple from endpoint success, and loaded on-topic skills can causally induce implementation faults. They do not establish one shared convergent functional-failure object, and the TIF evidence already supports a same-information task-artifact alignment / negative-transfer explanation rather than a new over-utilization primitive.",
+          "reopen_only_if": "Reopen only with provenance-audited matched units that oracle-load the same candidate skill, independently verify task-requirement-level compatibility and absence of conflicting/missing skill guidance, match executor, budget, generic instruction-following difficulty, and observable action-level uptake, and still expose a preregistered procedural-structure variable that predicts functional failure beyond same-information compatibility, negative-transfer, retrieval-utilization, and instruction-following baselines. A topical-relevance score, ground-truth skill label, aggregate TIF count, or retrieval-precision/success decoupling is insufficient.",
+          "dead_end_certified": true,
+          "memory_class": "PRINCIPLE_DEAD_END",
+          "counter_explanation": {
+            "type": "SAME_INFORMATION_REDUCTION",
+            "statement": "AUTO-1 does not establish the claimed cross-source convergent failure. In arXiv:2608.14036 RQ4, parsed actual-use precision falls sharply as the candidate pool grows while downstream task success stays roughly flat or increases; the paper explicitly treats retrieval/identification and downstream execution as separate measurements and states that exact annotated ground-truth skill invocation is neither sufficient nor necessary for success. That observation is therefore a retrieval/use decoupling, not a quantitative functional failure matching arXiv:2608.11888. The latter paper does establish causal skill-induced functional failures using paired target/reference executions, but its dominant Task-Implementation Fault account is already a task-artifact alignment and instruction-following explanation: agents over-trust topically matched reusable defaults, examples, or templates as task-specific requirements, producing incorrect fills or omissions. Topical or 'seemingly relevant' status does not establish task-requirement-level conflict freedom; the paper's own representative RRO example is caused by a partial reusable example that omits a task-required model parameter, and its discussion explicitly proposes skill-task compatibility checks for conflicting defaults, examples, templates, paths, and environment assumptions. Once task requirements, skill content, applicability, and realized uptake are available, ordinary task-conditioned negative transfer / compatibility plus instruction-following overgeneralization expresses the same failure prediction without a new over-utilization primitive.",
+            "opposite_prediction": "For a loaded skill whose content and uptake are observed, skill-induced implementation faults should concentrate where reusable defaults, examples, templates, paths, environment assumptions, or workflow depth fail to cover or conflict with concrete task requirements. High topical or embedding relevance alone should not remove this dependence. After matching task-requirement-level compatibility, skill content, executor, action-level uptake, and generic instruction-following difficulty, a standalone 'relevant-skill mis-execution' variable has no additional predicted effect unless an independently defined procedural structure still separates outcomes. Separately, a fall in annotated-skill use precision can coexist with stable success when several candidates are usable or the annotation is not a necessary execution path, so that retrieval curve alone should not be interpreted as functional harm.",
+            "opposite_principle": "Semantic topical relevance is not procedural compatibility. Skill harm after successful loading is predicted by task-artifact alignment, negative transfer, and instruction-following overgeneralization unless task-requirement-level compatibility and realized uptake are matched; retrieval/use precision can vary independently of endpoint success and therefore cannot supply a second convergent functional-failure source by itself.",
+            "opposite_search_seed": "Search only for provenance-audited matched units in which the exact candidate skill is oracle-loaded, task-requirement-level compatibility/conflict is independently verified, the same executor and budget are used, and observable action-level uptake is matched. Require a preregistered procedural-structure variable to predict IRF/RRO or another functional failure after same-information task-skill compatibility, negative-transfer, retrieval-utilization, and instruction-following baselines receive the same task requirements, skill content, trajectory evidence, and verifier truth. Do not reopen from high embedding/topical relevance, another low retrieval-precision curve with stable success, or another aggregate count of skill-induced implementation faults.",
+            "scope": "arXiv:2608.14036v1 RQ4 retrieval/use-versus-success observations together with arXiv:2608.11888v1 Task-Implementation Fault / IRF / RRO evidence, restricted to the aborted AUTO-1 inference that these constitute one shared convergent-failure object and identify a new relevant-skill over-utilization or mis-execution primitive.",
+            "same_information_or_scope_matched": true,
+            "same_information_reduction_verified": true,
+            "positive_support": true,
+            "evidence_refs": [
+              "arXiv:2608.14036",
+              "primary-fulltext:arXiv:2608.14036#sha256=e963536344b67399b064ca9c53f952f177a783cc1c1c3ccf41bc1d39a45b945f",
+              "arXiv:2608.11888",
+              "primary-fulltext:arXiv:2608.11888#sha256=b59fdd9d3b2baaa6d8b453661dd29445ecddb555b13452489a815171a3b42dc9",
+              "aborted-generator-raw:sha256=70800be8d3fd9eb5910b233924b6f429d805c229ebbb868522f814b2615d4f08",
+              "repo:research_pipeline/paper_first_fresh_saturation.py#artifact-uptake-after-retrieval",
+              "repo:research_pipeline/paper_first_fresh_saturation.py#procedural-memory-nonmonotonicity",
+              "repo:generated/p03-autoskill-context-conditioned-uptake-principle-readjudication-20260816.json",
+              "repo:generated/spatial-memory-high-trs-grounding-principle-readjudication-20260817.json"
+            ],
+            "alternative_explanations_ruled_out": [
+              "arXiv:2608.14036 supplies a second functional-failure measurement under the same condition: false. Its RQ4 result is that actual-use precision decreases while downstream success remains comparatively stable or increases, and the offline diagnostics are explicitly independent measurements whose outputs are not passed to execution.",
+              "'Seemingly relevant' in arXiv:2608.11888 establishes a conflict-free skill: false. The paper uses topical/applicability language, and its TIF explanation says agents over-trust reusable defaults, examples, and templates as task-specific requirements; its representative omission case follows a partial example that does not cover a required model parameter.",
+              "The skill-induced failures are merely ordinary baseline task failures: ruled out for the 2608.11888 dataset by its paired target versus no-skill or semantically matched reference design; the skill treatment is real, but that does not make the governing mechanism novel.",
+              "The remaining object is simply failed skill uptake: not for the cited TIF cases. The relevant guidance changes the run, but the observed direction is already expressible as task-conditioned compatibility/negative transfer and instruction-following overgeneralization once skill content and task requirements are observed.",
+              "Nonmonotonic reasoning alone is the only mature reduction: unnecessary. The stronger same-information reduction here is direct task-artifact compatibility plus negative transfer/instruction-following; no logical contradiction formalism is needed to explain a partial template omitting a required field or a reusable default being mistaken for a task-specific obligation."
+            ],
+            "reopen_condition": "Reopen only with provenance-audited matched units that oracle-load the same candidate skill, independently verify task-requirement-level compatibility and absence of conflicting/missing skill guidance, match executor, budget, generic instruction-following difficulty, and observable action-level uptake, and still expose a preregistered procedural-structure variable that predicts functional failure beyond same-information compatibility, negative-transfer, retrieval-utilization, and instruction-following baselines. A topical-relevance score, ground-truth skill label, aggregate TIF count, or retrieval-precision/success decoupling is insufficient."
+          },
+          "source_readjudication_artifact": "generated/auto1-relevant-skill-misexecution-principle-readjudication-20260817.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {},
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
           "scientific_authority": false
         },
@@ -36053,8 +36120,8 @@
           "scientific_authority": false
         }
       ],
-      "principle_dead_end_count": 31,
-      "principle_readjudication_dead_end_count": 27,
+      "principle_dead_end_count": 32,
+      "principle_readjudication_dead_end_count": 28,
       "fresh_phenomenon_closure_count": 16,
       "fresh_phenomenon_closed_evidence_count": 30,
       "inversion_asset_evidence": [
@@ -36279,8 +36346,8 @@
       "revise_paper_problem": 1,
       "stop_standalone": 1,
       "support_inventory_required": 1,
-      "shadow_dead_end_objects": 31,
-      "principle_readjudication_dead_ends": 27,
+      "shadow_dead_end_objects": 32,
+      "principle_readjudication_dead_ends": 28,
       "shadow_hold_objects": 3,
       "current_source_hard_veto_dead_ends": 0,
       "current_source_hard_veto_added_from_latest_run": 0,
@@ -75641,8 +75708,8 @@
           "revise_paper_problem": 1,
           "stop_standalone": 1,
           "support_inventory_required": 1,
-          "shadow_dead_end_objects": 31,
-          "principle_readjudication_dead_ends": 27,
+          "shadow_dead_end_objects": 32,
+          "principle_readjudication_dead_ends": 28,
           "shadow_hold_objects": 3,
           "current_source_hard_veto_dead_ends": 0,
           "current_source_hard_veto_added_from_latest_run": 0,
@@ -76338,7 +76405,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T11:02:17+00:00",
+    "generated_at": "2026-08-17T11:56:38+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -76470,15 +76537,16 @@
           "arXiv:2603.25158",
           "arXiv:2605.23904",
           "arXiv:2605.08693",
-          "arXiv:2603.02766"
+          "arXiv:2603.02766",
+          "arXiv:2608.14036"
         ],
-        "phenomenon": "SkillEvolBench supplies 30 matched latent families with T1-T3 acquisition/replay and frozen T4 context-shift, T5 adversarial, and T6 composition deployment. Current skill-evolution systems commonly use local/held-out validation or related probe utility to accept/select skill edits, while SkillEvolBench reports that raw trajectory reuse can outperform distilled skills and that skill gains are unstable under frozen deployment. The unresolved object is whether local validation is an identifying selection statistic for which persistent representation actually transfers.",
-        "strongest_reduction": "same-information source-to-target model selection under distribution shift / domain generalization: the T1-T3 local arm effect and T4-T6 shifted-deployment arm effect are allowed to differ by family/role, so ranking inversion and selector regret are already expressible as ordinary transport/invariance failure without a skill-specific structural variable",
+        "phenomenon": "SkillEvolBench supplies 30 matched latent families with T1-T3 acquisition/replay and frozen T4 context-shift, T5 adversarial, and T6 composition deployment. Current skill-evolution systems commonly use local/held-out validation or related probe utility to accept/select skill edits, while SkillEvolBench reports that raw trajectory reuse can outperform distilled skills and that skill gains are unstable under frozen deployment. Demystifying Agent Skills (arXiv:2608.14036) now directly studies fixed Codex-derived procedural artifacts under a Gemini framework shift, so generic cross-framework portability is not available as novelty either. The narrower local-validation/deployment ranking object is principle-closed below as ordinary source-to-target model selection under deliberate distribution shift unless a skill-specific structural residual survives.",
+        "strongest_reduction": "same-information source-to-target model selection under distribution shift / domain generalization: the T1-T3 local arm effect and T4-T6 shifted-deployment arm effect are allowed to differ by family/role, so ranking inversion and selector regret are already expressible as ordinary transport/invariance failure without a skill-specific structural variable; independently, arXiv:2608.14036 already covers generic cross-framework portability of fixed procedural artifacts",
         "cheapest_falsifier": "The frozen seed-A inversion/regret F0 is no longer decisive for novelty and must not be executed as the current claim test. Reuse the SkillEvolBench substrate only after preregistering a skill-specific structural variable and a same-information distribution-shift selector that receives identical T1-T3 outcomes, family/role observables, representation metadata, pre-outcome shift descriptors, and compute; the two models must make different ex-ante T4-T6 arm-selection predictions before any deployment outcomes are opened.",
         "support_status": "PRINCIPLE_CLOSED_DISTRIBUTION_SHIFT_REDUCTION",
         "status": "STOP_REDUCTION",
         "priority": 90,
-        "why_now": "The 30-family/180-task first-party substrate remains reusable, but the current PA-05 success criterion is principle-closed before execution: T1-T3 validation/deployment ranking inversion and oracle regret under deliberately shifted T4-T6 roles are predictions of generic model selection under distribution shift. Running 540 model tasks cannot distinguish a skill-evolution mechanism without an additional same-information structural residual.",
+        "why_now": "The 30-family/180-task first-party substrate remains reusable, but the current PA-05 success criterion is principle-closed before execution: T1-T3 validation/deployment ranking inversion and oracle regret under deliberately shifted T4-T6 roles are predictions of generic model selection under distribution shift. arXiv:2608.14036 additionally removes generic cross-framework portability as a novelty fallback. Running 540 model tasks cannot distinguish a skill-evolution mechanism without an additional same-information structural residual.",
         "substrate": {
           "repository": "AIoT-MLSys-Lab/SkillEvolBench",
           "commit_sha": "9e3daa339987c3cfa624121e1be442593a53d43c",
@@ -76673,7 +76741,7 @@
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-        "sha256": "389d701d9382883a89f15cb0af0bc0010002a713f1829b5ed1362ac49f80f432"
+        "sha256": "de93e583547cd9b699f8a77411cacfa229656d38bdf6b7d25945fc14941db253"
       },
       "defense_principle_reduction": {
         "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
@@ -76682,7 +76750,7 @@
       },
       "skill_validation_transfer_scout": {
         "path": "generated/paper-first-skill-validation-transfer-scout-20260817.json",
-        "sha256": "20c9d66770dfc105b0d834404d85010ae4fc7394de58a1118465b7a8770cb010",
+        "sha256": "54a73537862e2ace66c09a8d0c71d5646a9d4eefbd0ad155a9fb32218df289e9",
         "status": "DESIGN_READY_EXECUTION_ENV_HOLD",
         "plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c"
       },
