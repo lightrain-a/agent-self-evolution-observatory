@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
-from .ark_provider import ArkResponsesClient, ArkSettings, extract_json_object
+from .ark_provider import ArkResponseStateError, ArkResponsesClient, ArkSettings, extract_json_object
 from .config import PROJECT_ROOT, StorageSettings
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS
 from .paper_first_primary_evidence import load_primary_evidence_state
@@ -65,6 +66,18 @@ def _write_raw(storage: StorageSettings, run_id: str, role: str, model: str, tex
     digest = hashlib.sha256(text.encode("utf-8")).hexdigest(); path = root / f"{run_id}-{role}-{model.replace('/', '-')}-{digest[:12]}.txt"
     path.write_text(text, encoding="utf-8")
     return {"path": str(path), "sha256": digest, "requested_model": model}
+
+
+def _provider_error_text(error: Exception) -> str:
+    """Return a bounded public-safe provider error without response identifiers."""
+    if isinstance(error, ArkResponseStateError):
+        return (
+            "ArkResponseStateError:incomplete-before-assistant-output;"
+            f"reason={error.incomplete_reason or 'unknown'};"
+            f"requested_model={error.requested_model};resolved_model={error.resolved_model}"
+        )[:500]
+    text=f"{type(error).__name__}:{str(error)[:500]}"
+    return re.sub(r"response_id=[^;\s]+[;\s]*", "", text)[:500]
 
 
 def _receipts(generator: dict[str, Any]) -> list[dict[str, Any]]:
@@ -242,7 +255,7 @@ def run_global_relation_recall(*,storage:StorageSettings|None=None,primary_state
     try:
         response=call(prompt=relation_prompt(cards,required_touch_refs=required_touch_refs),model=RELATION_MODEL,max_output_tokens=5200);raw=str(response.get("text") or "");artifact=_write_raw(storage,run_id,"relation",RELATION_MODEL,raw);artifact["resolved_model"]=str(response.get("resolved_model") or RELATION_MODEL);state["raw_artifacts"]["relation"]=artifact;proposals=_normalize_proposals(extract_json_object(raw),registry,_coobserved(receipts),required_touch_refs=required_touch_refs)
     except Exception as error:
-        state["status"]="RELATION_PROVIDER_ERROR_ZERO_AUTHORITY";state["error"]=f"{type(error).__name__}:{str(error)[:500]}";state["summary"]=_summary(coverage,target,cached,[]);return state
+        state["status"]="RELATION_PROVIDER_ERROR_ZERO_AUTHORITY";state["error"]=_provider_error_text(error);state["summary"]=_summary(coverage,target,cached,[]);return state
     if proposals:
         refs=sorted({ref for x in proposals for ref in x["source_refs"]});cards2=[_card(registry[ref]) for ref in refs];call=lane_responder or _ark
         try:
@@ -251,7 +264,7 @@ def run_global_relation_recall(*,storage:StorageSettings|None=None,primary_state
             reviews=_normalize_lane_reviews(extract_json_object(raw),proposals)
             for x in proposals:x["lane_review"]=reviews[x["proposal_id"]]
         except Exception as error:
-            state["status"]="LANE_REVIEW_ERROR_ZERO_AUTHORITY";state["error"]=f"{type(error).__name__}:{str(error)[:500]}";state["proposals"]=proposals;state["summary"]=_summary(coverage,target,cached,proposals);return state
+            state["status"]="LANE_REVIEW_ERROR_ZERO_AUTHORITY";state["error"]=_provider_error_text(error);state["proposals"]=proposals;state["summary"]=_summary(coverage,target,cached,proposals);return state
     passed=[x for x in proposals if (x.get("lane_review") or {}).get("verdict")=="PASS"]
     if passed:
         refs=sorted({ref for x in passed for ref in x["source_refs"]});cards3=[_card(registry[ref]) for ref in refs];call=reduction_responder or _ark
@@ -261,9 +274,188 @@ def run_global_relation_recall(*,storage:StorageSettings|None=None,primary_state
             reviews=_normalize_reductions(extract_json_object(raw),passed)
             for x in passed:x["reduction_review"]=reviews[x["proposal_id"]]
         except Exception as error:
-            state["status"]="REDUCTION_REVIEW_ERROR_ZERO_AUTHORITY";state["error"]=f"{type(error).__name__}:{str(error)[:500]}";state["proposals"]=proposals;state["summary"]=_summary(coverage,target,cached,proposals);return state
+            state["status"]="REDUCTION_REVIEW_ERROR_ZERO_AUTHORITY";state["error"]=_provider_error_text(error);state["proposals"]=proposals;state["summary"]=_summary(coverage,target,cached,proposals);return state
     state["proposals"]=proposals;state["summary"]=_summary(coverage,target,cached,proposals);state["status"]="GLOBAL_RELATION_RECALL_COMPLETE"
     state["last_completed_scan"]={"run_id":run_id,"mode":"delta_only_new_endpoint" if required_touch_refs else "full_relation_universe","prior_scan_run_id":str(prior_scan.get("run_id") or "") if required_touch_refs else "","required_new_endpoint_count":len(required_touch_refs),"relation_universe_digest":str(coverage.get("relation_universe_digest") or ""),"relation_coverage":{"reviewed_receipt_sources":coverage.get("reviewed_receipt_sources",0),"possible_source_pairs":coverage.get("possible_source_pairs",0),"coobserved_source_pairs":coverage.get("coobserved_source_pairs",0),"pair_coverage_fraction":coverage.get("pair_coverage_fraction",0.0)},"summary":dict(state["summary"]),"models":dict(state["models"]),"scientific_authority":False}
+    return state
+
+
+def resume_global_relation_recall_from_relation_raw(
+    *,
+    raw_input: Path,
+    expected_raw_sha256: str,
+    relation_requested_model: str = RELATION_MODEL,
+    relation_resolved_model: str = RELATION_MODEL,
+    raw_origin_run_id: str = "",
+    storage: StorageSettings | None = None,
+    primary_state: dict[str, Any] | None = None,
+    generator_state: dict[str, Any] | None = None,
+    cache_records: list[dict[str, Any]] | None = None,
+    previous_state: dict[str, Any] | None = None,
+    lane_responder: Responder | None = None,
+    reduction_responder: Responder | None = None,
+    now: datetime | None = None,
+) -> dict[str, Any]:
+    """Resume lane/reduction review from an exact archived relation-miner response.
+
+    This path never calls the relation miner.  It revalidates the current source
+    universe, the prior completed-scan boundary, cache completeness, and every
+    delta-only proposal before spending one lane-review call.  A failed lane or
+    reduction review preserves the prior completed scan exactly.
+    """
+    storage=storage or StorageSettings.from_env()
+    primary_state=primary_state if primary_state is not None else load_primary_evidence_state()
+    generator_state=generator_state if generator_state is not None else load_problem_generator_state()
+    previous_state=previous_state if previous_state is not None else load_global_relation_recall_state()
+    if not raw_input.is_file():
+        raise ValueError(f"relation replay input unavailable: {raw_input}")
+    expected=str(expected_raw_sha256 or "").strip().lower()
+    if not re.fullmatch(r"[0-9a-f]{64}",expected):
+        raise ValueError("relation replay requires exact 64-hex raw sha256")
+    raw=raw_input.read_text(encoding="utf-8")
+    actual=hashlib.sha256(raw.encode("utf-8")).hexdigest()
+    if actual!=expected:
+        raise ValueError(f"relation replay digest mismatch expected={expected} actual={actual}")
+    requested=str(relation_requested_model or "").strip();resolved=str(relation_resolved_model or "").strip()
+    if not requested or not resolved:
+        raise ValueError("relation replay requires requested and resolved model identities")
+
+    run_id=(now or datetime.now(timezone.utc)).astimezone(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    receipts=_receipts(generator_state);coverage=source_pair_coverage(receipts);target=_target_refs(receipts)
+    cache_rows=cache_records if cache_records is not None else reviewed_primary_cache_records(storage,reviewed_refs=target)
+    registry={str(x.get("ref")):x for x in cache_rows if x.get("ref")};cached=set(registry)
+    state={
+        "schema_version":"1.3",
+        "generated_at":_now(),
+        "run_id":run_id,
+        "status":"NOT_RUN",
+        "scientific_authority":False,
+        "policy":{
+            "scientific_authority":False,
+            "source_coverage_exhaustion_is_not_relation_exhaustion":True,
+            "full_reviewed_receipt_cache_required_before_global_scan":True,
+            "relation_miner_is_search_control_only":True,
+            "cross_source_recall_supplements_but_does_not_replace_search_portfolio":True,
+            "single_source_lane_search_remains_search_portfolio_responsibility":True,
+            "independent_lane_reviewer_required":True,
+            "independent_reduction_reviewer_required":True,
+            "all_lane_pass_proposals_require_reduction_review":True,
+            "relation_universe_digest_prevents_repeat_model_calls":True,
+            "same_relation_universe_reuses_portable_completed_scan":True,
+            "stale_completed_scan_uses_delta_only_new_endpoint_pairs":True,
+            "delta_only_scan_forbids_old_old_pairs":True,
+            "relation_raw_replay_requires_exact_sha256":True,
+            "relation_raw_replay_executes_zero_relation_miner_calls":True,
+            "relation_raw_replay_revalidates_delta_boundary":True,
+            "pair_relation_budgets":dict(PAIR_RELATION_BUDGETS),
+            "max_total_relation_proposals":MAX_TOTAL_PROPOSALS,
+            "zero_proposals_is_valid":True,
+            "not_reduced_only_reopens_focused_problem_generator":True,
+            "automatic_problem_gate_authority":False,
+            "automatic_method_authority":False,
+            "automatic_experiment_authority":False,
+            "automatic_p0_authority":False,
+        },
+        "models":{"relation":requested,"lane_review":LANE_REVIEW_MODEL,"reduction":REDUCTION_MODEL},
+        "relation_coverage":coverage,
+        "delta_scan":{"enabled":False,"required_new_endpoint_count":0,"required_new_endpoint_digest":"","scientific_authority":False},
+        "raw_artifacts":{},
+        "proposals":[],
+        "last_completed_scan":{},
+    }
+    prior_scan=(previous_state.get("last_completed_scan") or {}) if isinstance(previous_state,dict) else {}
+    state["last_completed_scan"]=dict(prior_scan)
+    prior_digest=str(prior_scan.get("relation_universe_digest") or "")
+    current_digest=str(coverage.get("relation_universe_digest") or "")
+    if prior_digest and prior_digest==current_digest:
+        prior_summary=dict(previous_state.get("summary") or {});prior_summary.update({"reviewed_receipt_sources":int(coverage.get("reviewed_receipt_sources") or len(target)),"cached_reviewed_sources":len(cached & target),"cache_completeness_fraction":round(len(cached & target)/len(target),4) if target else 0.0,"possible_source_pairs":int(coverage.get("possible_source_pairs") or 0),"coobserved_source_pairs":int(coverage.get("coobserved_source_pairs") or 0),"pair_coverage_fraction":float(coverage.get("pair_coverage_fraction") or 0.0)})
+        state.update({"status":"SKIPPED_RELATION_UNIVERSE_UNCHANGED","summary":prior_summary,"proposals":[dict(row) for row in previous_state.get("proposals") or [] if isinstance(row,dict)],"last_completed_scan":dict(prior_scan)})
+        return state
+    required_touch_refs:set[str]=set()
+    if prior_digest:
+        required_touch_refs,reconstructable=_delta_scan_required_refs(receipts,prior_scan)
+        if not reconstructable:
+            state["status"]="HOLD_RELATION_DELTA_BOUNDARY_UNRECONSTRUCTABLE";state["summary"]=_summary(coverage,target,cached,[]);return state
+        if not required_touch_refs:
+            state["status"]="SKIPPED_RELATION_NO_NEW_SOURCE_ENDPOINTS";state["summary"]=_summary(coverage,target,cached,[]);return state
+        digest=hashlib.sha256("\n".join(sorted(required_touch_refs)).encode()).hexdigest()
+        state["delta_scan"]={"enabled":True,"required_new_endpoint_count":len(required_touch_refs),"required_new_endpoint_digest":digest,"prior_scan_run_id":str(prior_scan.get("run_id") or ""),"scientific_authority":False}
+    ps=primary_state.get("summary") or {}
+    if ps.get("source_coverage_exhausted") is not True:
+        state["status"]="SKIPPED_SOURCE_COVERAGE_OPEN";state["summary"]=_summary(coverage,target,cached,[]);return state
+    if not coverage.get("relation_blind_spot_detected"):
+        state["status"]="SKIPPED_PAIR_COVERAGE_COMPLETE";state["summary"]=_summary(coverage,target,cached,[]);return state
+    missing=sorted(target-cached)
+    if missing:
+        state["status"]="HOLD_RELATION_CACHE_INCOMPLETE";state["cache_missing_count"]=len(missing);state["cache_missing_ref_digest"]=hashlib.sha256("\n".join(missing).encode()).hexdigest();state["summary"]=_summary(coverage,target,cached,[]);return state
+
+    artifact=_write_raw(storage,run_id,"relation-replay",requested,raw)
+    artifact.update({"resolved_model":resolved,"raw_replayed_without_provider":True,"provider_calls_executed":0,"origin_run_id":str(raw_origin_run_id or ""),"origin_raw_sha256":expected})
+    state["raw_artifacts"]["relation"]=artifact
+    try:
+        proposals=_normalize_proposals(extract_json_object(raw),registry,_coobserved(receipts),required_touch_refs=required_touch_refs)
+    except Exception as error:
+        state["status"]="RELATION_REPLAY_PARSE_ERROR_ZERO_AUTHORITY";state["error"]=_provider_error_text(error);state["summary"]=_summary(coverage,target,cached,[]);return state
+
+    if proposals:
+        refs=sorted({ref for x in proposals for ref in x["source_refs"]});cards2=[_card(registry[ref]) for ref in refs];call=lane_responder or _ark
+        try:
+            response=call(prompt=lane_prompt(proposals,cards2),model=LANE_REVIEW_MODEL,max_output_tokens=6500);lane_raw=str(response.get("text") or "");lane_artifact=_write_raw(storage,run_id,"lane-review",LANE_REVIEW_MODEL,lane_raw);lane_artifact["resolved_model"]=str(response.get("resolved_model") or LANE_REVIEW_MODEL);state["raw_artifacts"]["lane_review"]=lane_artifact
+            if lane_artifact["resolved_model"]==resolved: raise RuntimeError("relation-lane-reviewer-not-independent")
+            reviews=_normalize_lane_reviews(extract_json_object(lane_raw),proposals)
+            for x in proposals:x["lane_review"]=reviews[x["proposal_id"]]
+        except Exception as error:
+            state["status"]="LANE_REVIEW_ERROR_ZERO_AUTHORITY";state["error"]=_provider_error_text(error);state["proposals"]=proposals;state["summary"]=_summary(coverage,target,cached,proposals);return state
+    passed=[x for x in proposals if (x.get("lane_review") or {}).get("verdict")=="PASS"]
+    if passed:
+        refs=sorted({ref for x in passed for ref in x["source_refs"]});cards3=[_card(registry[ref]) for ref in refs];call=reduction_responder or _ark
+        try:
+            response=call(prompt=reduction_prompt(passed,cards3),model=REDUCTION_MODEL,max_output_tokens=6000);reduction_raw=str(response.get("text") or "");red_artifact=_write_raw(storage,run_id,"reduction-review",REDUCTION_MODEL,reduction_raw);red_artifact["resolved_model"]=str(response.get("resolved_model") or REDUCTION_MODEL);state["raw_artifacts"]["reduction_review"]=red_artifact
+            if red_artifact["resolved_model"]==str((state["raw_artifacts"].get("lane_review") or {}).get("resolved_model") or ""): raise RuntimeError("lane-reduction-reviewer-not-independent")
+            reviews=_normalize_reductions(extract_json_object(reduction_raw),passed)
+            for x in passed:x["reduction_review"]=reviews[x["proposal_id"]]
+        except Exception as error:
+            state["status"]="REDUCTION_REVIEW_ERROR_ZERO_AUTHORITY";state["error"]=_provider_error_text(error);state["proposals"]=proposals;state["summary"]=_summary(coverage,target,cached,proposals);return state
+    state["proposals"]=proposals;state["summary"]=_summary(coverage,target,cached,proposals);state["status"]="GLOBAL_RELATION_RECALL_COMPLETE"
+    state["last_completed_scan"]={"run_id":run_id,"mode":"delta_only_new_endpoint" if required_touch_refs else "full_relation_universe","prior_scan_run_id":str(prior_scan.get("run_id") or "") if required_touch_refs else "","required_new_endpoint_count":len(required_touch_refs),"relation_universe_digest":current_digest,"relation_coverage":{"reviewed_receipt_sources":coverage.get("reviewed_receipt_sources",0),"possible_source_pairs":coverage.get("possible_source_pairs",0),"coobserved_source_pairs":coverage.get("coobserved_source_pairs",0),"pair_coverage_fraction":coverage.get("pair_coverage_fraction",0.0)},"summary":dict(state["summary"]),"models":dict(state["models"]),"scientific_authority":False}
+    return state
+
+
+def write_resumed_global_relation_recall_state(
+    json_path: Path = DEFAULT_JSON,
+    js_path: Path = DEFAULT_JS,
+    *,
+    storage: StorageSettings | None = None,
+    raw_input: Path,
+    expected_raw_sha256: str,
+    relation_requested_model: str = RELATION_MODEL,
+    relation_resolved_model: str = RELATION_MODEL,
+    raw_origin_run_id: str = "",
+    explicit_manual_scan_intent: bool = False,
+    admission_builder: Callable[...,dict[str,Any]] | None = None,
+    **kwargs: Any,
+) -> dict[str, Any]:
+    """Explicit-manual writer for a zero-relation-call resume transaction."""
+    storage=storage or StorageSettings.from_env()
+    if explicit_manual_scan_intent is not True:
+        raise RuntimeError("global relation resume writer requires explicit manual scan intent")
+    if admission_builder is None:
+        from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission
+        admission_builder=build_global_relation_scan_admission
+    from .paper_first_relation_delta_preflight import load_private_relation_delta_preflight
+    primary_state=kwargs.get("primary_state") if "primary_state" in kwargs else load_primary_evidence_state()
+    generator_state=kwargs.get("generator_state") if "generator_state" in kwargs else load_problem_generator_state()
+    previous_state=kwargs.get("previous_state") if "previous_state" in kwargs else load_global_relation_recall_state()
+    admission=admission_builder(primary_state=primary_state,generator_state=generator_state,relation_state=previous_state,delta_state=load_private_relation_delta_preflight(storage=storage))
+    if (admission.get("summary") or {}).get("manual_scan_eligible") is not True:
+        raise RuntimeError("global relation resume admission blocked: "+",".join(str(x) for x in admission.get("failed_checks") or []))
+    call_kwargs=dict(kwargs);call_kwargs.update({"storage":storage,"primary_state":primary_state,"generator_state":generator_state,"previous_state":previous_state})
+    state=resume_global_relation_recall_from_relation_raw(raw_input=raw_input,expected_raw_sha256=expected_raw_sha256,relation_requested_model=relation_requested_model,relation_resolved_model=relation_resolved_model,raw_origin_run_id=raw_origin_run_id,**call_kwargs)
+    from .paper_first_global_relation_scan_admission import public_global_relation_scan_admission_summary
+    state["writer_admission"]=public_global_relation_scan_admission_summary(admission)
+    state.setdefault("policy",{})["explicit_manual_writer_admission_required"]=True
+    private=_root(storage);private.mkdir(parents=True,exist_ok=True);(private/"latest.json").write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    public=public_relation_recall_state(state,storage);json_path.parent.mkdir(parents=True,exist_ok=True);json_path.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");js_path.write_text("window.PAPER_FIRST_GLOBAL_RELATION_RECALL = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
     return state
 
 

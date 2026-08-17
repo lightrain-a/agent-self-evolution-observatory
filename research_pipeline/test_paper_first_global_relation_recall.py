@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import tempfile
 import unittest
@@ -7,7 +8,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .config import StorageSettings
-from .paper_first_global_relation_recall import _card, run_global_relation_recall, write_global_relation_recall_state
+from .ark_provider import ArkResponseStateError
+from .paper_first_global_relation_recall import _card, resume_global_relation_recall_from_relation_raw, run_global_relation_recall, write_global_relation_recall_state
 from .paper_first_relation_coverage import relation_universe_digest
 
 
@@ -117,6 +119,64 @@ class GlobalRelationRecallTest(unittest.TestCase):
         self.assertEqual(calls,[])
         self.assertEqual(second["last_completed_scan"]["run_id"],first["run_id"])
         self.assertEqual(second["summary"]["lane_pass"],1)
+
+    def test_relation_raw_resume_skips_relation_miner_and_completes_when_lane_reviewer_fails_all(self) -> None:
+        raw=json.dumps({"lanes":{"CONTRADICTION":[{"source_a":"arXiv:1","source_b":"arXiv:3","relation":"The observations appear incompatible under a shared measurement.","why_lane":"Both are empirical and require operational alignment.","missing_piece":"shared operationalization"}]},"diagnosis":"bounded delta recall"})
+        raw_sha=hashlib.sha256(raw.encode()).hexdigest();calls=[]
+        def lane_fail(**kwargs):
+            calls.append(("lane",kwargs["model"]));return {"text":json.dumps({"reviews":[{"proposal_id":"REL-CONTRADICTION-1","verdict":"FAIL","reason":"measurement differs","missing":"shared operationalization"}],"diagnosis":"strict review"}),"resolved_model":"glm-5.3"}
+        def reduction_forbidden(**kwargs):calls.append(("reduction",kwargs["model"]));raise AssertionError("reduction must not run")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);raw_path=root/"relation.txt";raw_path.write_text(raw,encoding="utf-8")
+            previous=self.previous_scan_for_first_receipt()
+            state=resume_global_relation_recall_from_relation_raw(storage=self.storage(root),raw_input=raw_path,expected_raw_sha256=raw_sha,relation_requested_model="kimi-k3",relation_resolved_model="kimi-k3",raw_origin_run_id="old-relation-run",primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state=previous,lane_responder=lane_fail,reduction_responder=reduction_forbidden,now=datetime(2026,8,15,tzinfo=timezone.utc))
+        self.assertEqual(calls,[("lane","glm-5.3")])
+        self.assertEqual(state["status"],"GLOBAL_RELATION_RECALL_COMPLETE")
+        self.assertEqual(state["summary"]["relation_proposals"],1)
+        self.assertEqual(state["summary"]["lane_pass"],0)
+        self.assertEqual(state["delta_scan"]["required_new_endpoint_count"],2)
+        self.assertTrue(state["raw_artifacts"]["relation"]["raw_replayed_without_provider"])
+        self.assertEqual(state["raw_artifacts"]["relation"]["provider_calls_executed"],0)
+        self.assertEqual(state["raw_artifacts"]["relation"]["sha256"],raw_sha)
+        self.assertEqual(state["last_completed_scan"]["relation_universe_digest"],relation_universe_digest(self.generator()["saturation_memory"]["portable_review_receipts"]))
+        self.assertFalse(state["scientific_authority"])
+
+    def test_relation_raw_resume_calls_reduction_only_for_lane_passes(self) -> None:
+        raw=json.dumps({"lanes":{"CONTRADICTION":[{"source_a":"arXiv:1","source_b":"arXiv:3","relation":"The observations appear incompatible under a shared measurement.","why_lane":"Both are empirical and require operational alignment.","missing_piece":""}]},"diagnosis":"bounded delta recall"})
+        raw_sha=hashlib.sha256(raw.encode()).hexdigest();calls=[]
+        def lane_pass(**kwargs):
+            calls.append(("lane",kwargs["model"]));return {"text":json.dumps({"reviews":[{"proposal_id":"REL-CONTRADICTION-1","verdict":"PASS","reason":"shared measurement verified","missing":""}],"diagnosis":"strict review"}),"resolved_model":"glm-5.3"}
+        def reduction(**kwargs):
+            calls.append(("reduction",kwargs["model"]));return {"text":json.dumps({"reviews":[{"proposal_id":"REL-CONTRADICTION-1","verdict":"NOT_REDUCED","exact_prediction":"Matched-information outcome flips.","matched_patterns":[],"strongest_reduction":"none","residual_prediction":"A concrete matched residual remains."}],"diagnosis":"residual"}),"resolved_model":"deepseek-v4-pro"}
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);raw_path=root/"relation.txt";raw_path.write_text(raw,encoding="utf-8")
+            state=resume_global_relation_recall_from_relation_raw(storage=self.storage(root),raw_input=raw_path,expected_raw_sha256=raw_sha,relation_requested_model="kimi-k3",relation_resolved_model="kimi-k3",primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state=self.previous_scan_for_first_receipt(),lane_responder=lane_pass,reduction_responder=reduction,now=datetime(2026,8,15,tzinfo=timezone.utc))
+        self.assertEqual(calls,[("lane","glm-5.3"),("reduction","deepseek-v4-pro")])
+        self.assertEqual(state["status"],"GLOBAL_RELATION_RECALL_COMPLETE")
+        self.assertEqual((state["summary"]["lane_pass"],state["summary"]["reduction_reviewed"],state["summary"]["not_reduced"]),(1,1,1))
+        self.assertTrue(state["summary"]["focused_problem_generator_reopen_required"])
+
+    def test_relation_raw_resume_bad_digest_fails_before_any_reviewer(self) -> None:
+        raw='{"lanes":{},"diagnosis":"x"}';calls=[]
+        def forbidden(**kwargs):calls.append(1);raise AssertionError("provider must not run")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);raw_path=root/"relation.txt";raw_path.write_text(raw,encoding="utf-8")
+            with self.assertRaisesRegex(ValueError,"digest mismatch"):
+                resume_global_relation_recall_from_relation_raw(storage=self.storage(root),raw_input=raw_path,expected_raw_sha256="0"*64,relation_requested_model="kimi-k3",relation_resolved_model="kimi-k3",primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state=self.previous_scan_for_first_receipt(),lane_responder=forbidden,reduction_responder=forbidden)
+        self.assertEqual(calls,[])
+
+    def test_relation_raw_resume_lane_failure_preserves_prior_completed_boundary_and_redacts_response_id(self) -> None:
+        raw=json.dumps({"lanes":{"CONTRADICTION":[{"source_a":"arXiv:1","source_b":"arXiv:3","relation":"The observations appear incompatible.","why_lane":"Empirical mismatch.","missing_piece":""}]},"diagnosis":"delta"});raw_sha=hashlib.sha256(raw.encode()).hexdigest();previous=self.previous_scan_for_first_receipt()
+        def incomplete(**kwargs):
+            raise ArkResponseStateError("incomplete",{"id":"resp-secret-123","status":"incomplete","model":"glm-5.3","incomplete_details":{"reason":"length"}},"glm-5.3")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);raw_path=root/"relation.txt";raw_path.write_text(raw,encoding="utf-8")
+            state=resume_global_relation_recall_from_relation_raw(storage=self.storage(root),raw_input=raw_path,expected_raw_sha256=raw_sha,relation_requested_model="kimi-k3",relation_resolved_model="kimi-k3",primary_state=self.primary(),generator_state=self.generator(),cache_records=self.records(),previous_state=previous,lane_responder=incomplete,reduction_responder=self.reduction(),now=datetime(2026,8,15,tzinfo=timezone.utc))
+        self.assertEqual(state["status"],"LANE_REVIEW_ERROR_ZERO_AUTHORITY")
+        self.assertEqual(state["last_completed_scan"],previous["last_completed_scan"])
+        self.assertNotIn("resp-secret-123",state["error"])
+        self.assertIn("reason=length",state["error"])
+        self.assertEqual(state["raw_artifacts"]["relation"]["provider_calls_executed"],0)
 
     def test_provider_error_preserves_last_completed_scan_boundary(self) -> None:
         previous=self.previous_scan_for_first_receipt()
