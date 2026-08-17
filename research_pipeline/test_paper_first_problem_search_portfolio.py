@@ -76,13 +76,57 @@ class SearchPortfolioTest(unittest.TestCase):
                 {"text":"For batches of at least 20 readable posters, a blinded check may only reduce the score; it is not applied to the mini benchmark.","text_sha256":"a"*64},
                 {"text":"All components use temperature 0, and we set the security threshold to 0.5.","text_sha256":"b"*64},
                 {"text":"The box below illustrates one representative failure trace from the first evolution round.","text_sha256":"c"*64},
+                {"text":"For efficiency regressions, we run the tool on all 182 high-confidence regressions at the primary T=2.0 threshold.","text_sha256":"f"*64},
             ]},"empirical_facts":[]},
             {"ref":"arXiv:empirical","publication_date":"2026-08-13","title":"Empirical","typed_evidence":{"measured_failures":[],"boundary_observations":[
                 {"text":"Reward rises from 0.56 at 16 tokens to 0.637 at 32 tokens and then plateaus.","text_sha256":"d"*64},
+                {"text":"Full skill evolution further raises success to 34.5%, 6.25 points above the seed.","text_sha256":"e"*64},
             ]},"empirical_facts":[]},
         ]
         priors=_fresh_phenomenon_priors(records)
         self.assertEqual([row["phenomenon_id"] for row in priors],["d"*64])
+
+    def test_measured_failure_requires_directional_degradation_not_domain_noun(self):
+        records=[
+            {"ref":"arXiv:positive","publication_date":"2026-08-13","title":"Positive restoration","typed_evidence":{"measured_failures":[
+                {"text":"Restoration agents consistently outperform model-based methods across most degradation types.","text_sha256":"a"*64},
+                {"text":"The collaborative system increases success from 0.82 to 0.88 on mixed degradation types.","text_sha256":"b"*64},
+                {"text":"Retrieval robustness is evaluated using Attack Success Rate (ASR), nDCG@5, and malicious-skill count.","text_sha256":"e"*64},
+            ],"boundary_observations":[]},"empirical_facts":[]},
+            {"ref":"arXiv:negative","publication_date":"2026-08-13","title":"Negative boundary","typed_evidence":{"measured_failures":[
+                {"text":"Held-out accuracy degrades from 0.82 to 0.61 after the persistent update.","text_sha256":"c"*64},
+                {"text":"The update degrades task success by 12 points under context shift.","text_sha256":"d"*64},
+            ],"boundary_observations":[]},"empirical_facts":[]},
+        ]
+        priors=_fresh_phenomenon_priors(records)
+        self.assertEqual({row["phenomenon_id"] for row in priors},{"c"*64,"d"*64})
+        self.assertTrue(all(row["ref"]=="arXiv:negative" for row in priors))
+
+    def test_quantitative_anomaly_requires_actual_boundary_not_ordinary_positive_gain(self):
+        records=[
+            {"ref":"arXiv:positive","publication_date":"2026-08-13","title":"Ordinary gain","typed_evidence":{"measured_failures":[],"boundary_observations":[]},"empirical_facts":[
+                {"text":"The method improves over the strongest baseline by 6.5 points.","text_sha256":"a"*64},
+                {"text":"Success increases from 0.72 to 0.81 on held-out tasks.","text_sha256":"b"*64},
+            ]},
+            {"ref":"arXiv:boundary","publication_date":"2026-08-13","title":"Nonmonotonic boundary","typed_evidence":{"measured_failures":[],"boundary_observations":[]},"empirical_facts":[
+                {"text":"Reward rises from 0.56 at 16 tokens to 0.637 at 32 tokens and then plateaus at larger budgets.","text_sha256":"c"*64},
+                {"text":"Performance improves from 0.60 with one retrieval to 0.64 with three, but additional retrievals yield no consistent gain.","text_sha256":"d"*64},
+            ]},
+        ]
+        priors=_fresh_phenomenon_priors(records)
+        self.assertEqual({row["phenomenon_id"] for row in priors},{"c"*64,"d"*64})
+        self.assertTrue(all(row["ref"]=="arXiv:boundary" for row in priors))
+
+    def test_exact_support_hold_pauses_only_one_evidence_object(self):
+        held_sha="a"*64; open_sha="b"*64
+        records=[{"ref":"arXiv:held","publication_date":"2026-08-13","title":"Two boundaries","typed_evidence":{"measured_failures":[
+            {"text":"Held-out accuracy drops by 7 points when the unavailable lineage is required.","text_sha256":held_sha},
+            {"text":"Task success drops by 4 points under a separate context shift.","text_sha256":open_sha},
+        ],"boundary_observations":[]},"empirical_facts":[]}]
+        memory={"hold_objects":[{"dead_end_certified":False,"fresh_phenomenon_hold":{"source_ref":"arXiv:held","evidence_sha256":held_sha,"scientific_authority":False}}]}
+        priors=_fresh_phenomenon_priors(records,dead_end_memory=memory)
+        self.assertEqual({row["phenomenon_id"] for row in priors},{open_sha})
+        self.assertEqual(priors[0]["ref"],"arXiv:held")
 
     def test_provenance_bound_inversion_asset_becomes_primary_search_registry_record(self):
         memory={"inversion_asset_evidence":[{"asset_ref":"first-party-asset:demo@"+"a"*40,"title":"Author implementation","primary_url":"https://github.com/example/repo","source_sha256":"b"*64,"asset_manifest_artifact":"generated/demo.json","asset_manifest_file_sha256":"c"*64,"commit":"a"*40,"empirical_facts":["The released controller reuses the same evaluation signal in every selection round."],"scientific_authority":False}]}

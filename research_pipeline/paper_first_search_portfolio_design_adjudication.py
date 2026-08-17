@@ -17,6 +17,7 @@ DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-search-portfolio-design-a
 SHADOW_PORTFOLIO_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-search-portfolio-state.json"
 SHADOW_QUEUE_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-search-portfolio-queue-shadow.json"
 PRINCIPLE_READJUDICATION_GLOB = "*principle-readjudication-*.json"
+FRESH_PHENOMENON_SUPPORT_HOLD_GLOB = "*fresh-phenomenon-support-hold-*.json"
 
 PRIMARY_SOURCES: dict[str, list[dict[str, str]]] = {
     "SP-09": [
@@ -439,7 +440,67 @@ def _principle_readjudication_rows(paths: list[Path] | None = None) -> list[dict
     return rows
 
 
-def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None, prior_hard_veto_rows: list[dict[str, Any]] | None = None, prior_semantic_rows: list[dict[str, Any]] | None = None, prior_near_miss_rows: list[dict[str, Any]] | None = None, extra_near_miss_rows: list[dict[str, Any]] | None = None, principle_readjudication_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+def _fresh_phenomenon_support_hold_rows(paths: list[Path] | None = None) -> list[dict[str, Any]]:
+    """Compile provenance-bound evidence-level support holds into reopenable memory.
+
+    These rows are operational search control only. They pause one exact primary
+    evidence object while required first-party support is unavailable; they are
+    never scientific dead ends and cannot authorize a Problem/Method/P0/GPU step.
+    The existing support-release watch may later request a re-audit, but release
+    discovery alone never clears the hold automatically.
+    """
+    candidates = paths if paths is not None else sorted((PROJECT_ROOT / "generated").glob(FRESH_PHENOMENON_SUPPORT_HOLD_GLOB))
+    rows: list[dict[str, Any]] = []
+    for path in candidates:
+        payload = _load_json(path)
+        if str(payload.get("status") or "") not in {"HOLD_SUPPORT", "HOLD_SUPPORT_UNAVAILABLE", "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT"}:
+            continue
+        if payload.get("scientific_authority") is not False:
+            continue
+        ref = str(payload.get("source_ref") or "").strip()
+        sha = str(payload.get("phenomenon_id") or payload.get("evidence_sha256") or "").strip().lower()
+        required = " ".join(str(payload.get("required_unit") or "").split())
+        reopen = " ".join(str(payload.get("reopen_only_if") or "").split())
+        audit_artifact = str(payload.get("support_audit_artifact") or "").strip()
+        audit_sha = str(payload.get("support_audit_sha256") or "").strip().lower()
+        if not ref.startswith("arXiv:") or not re.fullmatch(r"[0-9a-f]{64}", sha) or not required or not reopen:
+            continue
+        if not audit_artifact.startswith("generated/") or not re.fullmatch(r"[0-9a-f]{64}", audit_sha):
+            continue
+        audit_path = PROJECT_ROOT / audit_artifact
+        if not audit_path.exists() or hashlib.sha256(audit_path.read_bytes()).hexdigest() != audit_sha:
+            continue
+        try:
+            artifact_ref = str(path.relative_to(PROJECT_ROOT))
+        except ValueError:
+            artifact_ref = str(path)
+        signature = hashlib.sha256(json.dumps({"ref": ref, "sha": sha, "required": required}, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[:16]
+        rows.append({
+            "source_candidate_id": str(payload.get("candidate_id") or "").strip() or f"fresh-hold-{sha[:12]}",
+            "basin": f"fresh-phenomenon-support-hold-{signature}",
+            "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+            "memory_class": "REOPENABLE_HOLD",
+            "dead_end_certified": False,
+            "strongest_reduction": "support unavailable; no scientific reduction authorized",
+            "current_source_refs": [ref],
+            "evidence_basis": [ref, f"repo:{audit_artifact}#sha256={audit_sha}"],
+            "reason": " ".join(str(payload.get("reason") or payload.get("why_hold") or required).split())[:1600],
+            "reopen_only_if": reopen[:1600],
+            "required_unit": required[:1600],
+            "fresh_phenomenon_hold": {
+                "source_ref": ref,
+                "evidence_sha256": sha,
+                "support_audit_artifact": audit_artifact,
+                "support_audit_sha256": audit_sha,
+                "scientific_authority": False,
+            },
+            "source_hold_artifact": artifact_ref,
+            "scientific_authority": False,
+        })
+    return rows
+
+
+def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str, Any] | None = None, prior_hard_veto_rows: list[dict[str, Any]] | None = None, prior_semantic_rows: list[dict[str, Any]] | None = None, prior_near_miss_rows: list[dict[str, Any]] | None = None, extra_near_miss_rows: list[dict[str, Any]] | None = None, principle_readjudication_rows: list[dict[str, Any]] | None = None, fresh_phenomenon_support_hold_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     memory = json.loads(json.dumps(BASE_SHADOW_DEAD_END_MEMORY, ensure_ascii=False))
     latest = portfolio.get("latest_run") or {}
     inherited = _prior_current_source_hard_veto_rows() if prior_hard_veto_rows is None else [dict(row) for row in prior_hard_veto_rows if isinstance(row, dict)]
@@ -585,6 +646,16 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     readjudication_rows = [dict(row) for row in (principle_readjudication_rows or []) if isinstance(row, dict) and row.get("dead_end_certified") is True]
     readjudication_by_basin = {str(row.get("basin") or ""): row for row in readjudication_rows if str(row.get("basin") or "")}
     memory["blocked_objects"].extend(readjudication_by_basin[key] for key in sorted(readjudication_by_basin))
+    exact_support_holds = fresh_phenomenon_support_hold_rows if fresh_phenomenon_support_hold_rows is not None else _fresh_phenomenon_support_hold_rows()
+    hold_by_basin = {
+        str(row.get("basin") or ""): dict(row)
+        for row in exact_support_holds
+        if isinstance(row, dict)
+        and str(row.get("basin") or "").startswith("fresh-phenomenon-support-hold-")
+        and row.get("scientific_authority") is False
+        and row.get("dead_end_certified") is False
+    }
+    memory["hold_objects"].extend(hold_by_basin[key] for key in sorted(hold_by_basin))
 
     # Migrate legacy memory into the stricter epistemic split. Only rows with an
     # affirmative reduction/collision explanation become persistent dead ends.

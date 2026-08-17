@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "EVODRC-BLOCK7-STALL",
+  "title": "Block7 rule persistence does not identify failed skill transfer when repair feasibility changes with geometry and coupled constraints",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_evodrc_effect_falsified": false,
+  "dead_end_scope": "The standalone claim that M1.S.2 and V1.M1.EN.1 clearing rapidly on Block3/Block5 but persisting on Block7 establishes a new self-evolution or skill-transfer failure merely because the DRC rule identifier is the same across blocks.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2607.20019",
+    "closed_evidence_sha256": [
+      "54661276749c97ebe2983af7c7b538c03d26437132754304095a64db48afdbb1"
+    ],
+    "closure_scope": "the reported cross-block persistence of M1.S.2 and V1.M1.EN.1 violations only",
+    "scientific_authority": false
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "IMPOSSIBILITY_OR_INVARIANCE",
+    "counter_explanation": {
+      "type": "IMPOSSIBILITY_OR_INVARIANCE",
+      "statement": "A DRC rule label is not a matched repair state. EvoDRC's released Block7 traces show that the residual occurs despite continuing knowledge updates and despite the violations being included in repair units. More importantly, the first-party proposals expose direct feasibility and constraint-coupling witnesses. In iter4, an M1.S.2 case has a 252-dbu notch while the via M1 land plus two required 100-dbu clearances needs 272 dbu, so a simple placement satisfying both sides is geometrically impossible without merging geometry or creating another violation. In iter5, one V1/M1 repair explicitly accepts a declared-debt M1.S.2 violation, another plan that would clear 117 target violations is deferred because it would introduce more than 110 new violations, and the contested-unit DRC gate rejects a candidate with delta_total=+64. Thus the cross-block persistence is positively explained by changed feasible-action support and coupled-constraint repair debt rather than by evidence that the same executable skill failed to transfer to an otherwise matched state.",
+      "opposite_prediction": "Conditioned on the same named DRC rule, residual repair probability should depend on local geometry, available edit slack, coupling to neighboring rule constraints, and the existence of a legal operation with nonpositive global violation debt. Knowledge may continue to improve while residual violations persist when the feasible intervention set shrinks or every local repair creates compensating violations elsewhere.",
+      "opposite_principle": "Self-evolution cannot repair states whose feasible intervention set does not contain a globally acceptable action; rule identity or accumulated procedural knowledge does not equal repairability.",
+      "opposite_search_seed": "Search only for matched violations with the same rule, comparable local geometry/constraint neighborhood, the same observable repair information and candidate operation support, and an independently verified feasible repair. Then ask whether differing evolved knowledge or policy state predicts success after feasibility, repair debt, crop coverage, and constraint coupling are matched. Do not reopen from another larger block or from another same-rule count plateau without a feasibility-matched witness.",
+      "scope": "EvoDRC arXiv:2607.20019 and first-party repository commit 0a9b4c732cadce7a0718467aa10ef8a741da369a, restricted to the Block3/5 versus Block7 M1.S.2 and V1.M1.EN.1 persistence claim.",
+      "same_information_or_scope_matched": true,
+      "proof_or_structural_witness": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2607.20019",
+        "primary-fulltext:arXiv:2607.20019#sha256=145c5a5b4fb6faa1662661eadf998ddd65d394a0650f316cb508af533df578c5",
+        "first-party-repo:EvoDRC@0a9b4c732cadce7a0718467aa10ef8a741da369a",
+        "generated/evodrc-block7-repairability-first-party-manifest-20260817.json#sha256=730e612ab66036ee23212604b4a284cf4ffe51116704dd49b308f648126284e5"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The Block7 residual is simply never presented to repair units: false; the released iter4/iter5 decomposition includes the persistent M1/V1 violations in gated repair units.",
+        "The knowledge base stops evolving before the plateau: false; M1/V1 knowledge updates and new records continue through the late iterations.",
+        "A same rule identifier implies the same feasible repair action across blocks: false; the released proposal gives an explicit 252-dbu versus 272-dbu infeasibility witness and multiple repair-debt tradeoffs.",
+        "The remaining repair proposals are harmless but ignored: false; first-party gates record candidates that introduce large numbers of compensating violations and reject at least one net-positive violation change."
+      ],
+      "reopen_condition": "Reopen only with provenance-audited matched units where rule identity, local geometry and neighboring-constraint context, crop/decomposition coverage, observable repair information, candidate operation support, and independent feasibility are comparable, and where a legal repair with nonpositive global violation debt exists. Require a repeatable held-out difference attributable to evolved skill/policy state beyond constrained optimization, geometric feasibility, and repair-debt baselines."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "EvoDRC does not learn useful skills",
+      "Block7 cannot be improved",
+      "all persistent DRCs are geometrically impossible",
+      "skill transfer is irrelevant to physical design repair"
+    ],
+    "safe_claim": "EvoDRC's released traces show that some large-block residual violations persist even while knowledge evolves and repair units are attempted, but the cited cross-block count difference does not identify failed skill transfer because first-party proposals directly expose geometry-dependent infeasibility and cross-rule repair debt.",
+    "new_search_basin": "feasibility-matched-knowledge-repairability-gap"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

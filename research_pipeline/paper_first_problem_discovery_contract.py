@@ -5,7 +5,7 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
-DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-boundary-closure-v12"
+DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-anomaly-precision-v13"
 
 DISCOVERY_LANES: tuple[str, ...] = (
     "CONTRADICTION",

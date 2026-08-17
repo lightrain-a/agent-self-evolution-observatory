@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "SKILLSP-ROUTING-FROZEN-SKILLS-ABLATION",
+  "title": "Uniform-routing and frozen-skill drops do not identify a new co-evolution interaction",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_skillsp_effect_falsified": false,
+  "dead_end_scope": "The standalone claim that Skill Self-Play's Uniform routing and Frozen skills ablation drops identify a new nonseparable skill-router or skill-curriculum co-evolution mechanism merely because each ablation reduces final accuracy.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2607.22529",
+    "closed_evidence_sha256": [
+      "4a13422adf4cd9b36d595706c8f492fe6fe477564ea0c293e4a4f027a3a17493"
+    ],
+    "closure_scope": "the reported Uniform routing and Frozen skills accuracy drops only",
+    "scientific_authority": false
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The two ablations remove different ordinary resources. Uniform routing weakens query/task-conditioned curriculum allocation while retaining the evolving skill mechanism; Frozen skills holds the available skill library fixed while retaining skill-guided generation. Large marginal drops from weakening allocation and from weakening the available expert/curriculum set are both predicted by standard expert-set quality plus gating/allocation decompositions and do not identify an interaction term. The same paper's policy co-evolution ablation is consistent with this interpretation: Frozen proposer causes a 2.1-point drop, Frozen feedback solver a 3.0-point drop, and Frozen both a 3.2-point drop, which is not evidence of a super-additive co-evolution cliff and is compatible with overlapping/complementary resources.",
+      "opposite_prediction": "With task information and training budget fixed, final utility can fall either because the evolving skill/curriculum set contains worse or less diverse training opportunities, or because the allocation policy selects those opportunities poorly. Both marginal effects can be substantial without a new nonseparable self-evolution primitive. A genuine interaction requires a matched factorial contrast that cannot be represented by skill-set quality plus allocation/selector regret under the same information.",
+      "opposite_principle": "Skill-set quality and curriculum/routing quality are separable resources until a matched same-information factorial demonstrates a residual interaction; separate component ablations do not establish co-evolutionary nonseparability.",
+      "opposite_search_seed": "Search only for a preregistered matched 2x2 design that independently varies library evolution and routing/allocation while holding backbone, task distribution, candidate skill contents where required, proposer/solver information, training tokens, and evaluation budget comparable. Require a repeatable held-out non-additive interaction beyond same-information expert-set quality, contextual routing, mixture-of-experts gating, curriculum allocation, and selector-regret baselines. Do not reopen from another pair of large marginal ablation drops.",
+      "scope": "Skill Self-Play arXiv:2607.22529, especially Table 3 Static skill orchestration and Table 4 Co-evolutionary updates.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2607.22529",
+        "primary-fulltext:arXiv:2607.22529#sha256=9f4aa516220cb30d62990d63398ad3c5c28aea3633a6b1b374eb980eedc309ab"
+      ],
+      "alternative_explanations_ruled_out": [
+        "Uniform routing and Frozen skills are symmetric interventions on one variable: false; one changes allocation and the other changes the available/evolving skill set.",
+        "The two Table 3 drops estimate a factorial interaction: false; they are separate one-factor ablations.",
+        "The policy co-evolution ablation demonstrates super-additivity: the reported Frozen both drop is 3.2 points versus 2.1 and 3.0 points for the individual policy freezes, which does not establish a super-additive interaction.",
+        "The closure implies dynamic skills or routing are unnecessary: false; both can be useful while the standalone interaction claim remains unidentified."
+      ],
+      "reopen_condition": "Reopen only with a preregistered matched factorial comparison that independently varies skill/library evolution and routing/allocation under comparable task distribution, backbone, candidate-set information, training/evaluation budget, and supervision, and shows a repeatable non-additive held-out interaction that same-information expert-set quality, contextual routing, mixture-of-experts gating, curriculum allocation, and selector-regret models cannot express."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "Skill Self-Play does not work",
+      "online skill evolution is unnecessary",
+      "routing is unnecessary",
+      "skill-policy co-evolution can never interact"
+    ],
+    "safe_claim": "Skill Self-Play provides evidence that both dynamic skill evolution and non-uniform curriculum allocation contribute to performance. The cited pair of marginal ablations does not by itself establish a new nonseparable co-evolution mechanism.",
+    "new_search_basin": "same-information-factorial-skill-curriculum-interaction"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "DOUBLE-RATCHET-WEAK-METRIC-VALIDITY",
+  "title": "Double Ratchet weak-metric robustness and locked-reference validity are already explained by richer feedback and the source paper's own validity distinction",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_double_ratchet_effect_falsified": false,
+  "dead_end_scope": "Standalone new-paper claims inferred from (i) weak-metric Spider 2.0 seeds reaching the same peak as the two-op metric sibling, or (ii) the observation that task score cannot certify an evolved metric and validity must be assessed against a locked reference unseen by metric evolution.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2607.12790",
+    "closed_evidence_sha256": [
+      "9de90c921d6bbda7941592e6da40c20e3e5f8e3dc0c0974505635cf65fcbb166",
+      "1106cfcbe46d1a63785121459c7959895fdf05ba86370721bf777329f06a9bb9"
+    ],
+    "closure_scope": "the weak-metric Spider robustness statement and the locked-reference metric-validity statement only",
+    "scientific_authority": false
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The weak-metric observation does not isolate invariance to evaluator quality because the binary pass/fail metric is not the only training signal. The source explicitly states that a failed attempt still contributes concrete error text to skill synthesis, so label degradation is compensated by a richer feedback channel. This is ordinary information redundancy/multi-channel supervision: corrupting one channel need not reduce learning when another channel preserves error-localizing information. Separately, the distinction between task score and metric validity is already the source paper's central evaluation claim and protocol: metric validity is measured against a locked reference that metric evolution never reads, while task score is used only for downstream sufficiency. Recasting that same distinction as a new problem would be a direct current-source collision rather than unexplained negative space.",
+      "opposite_prediction": "When skill synthesis receives concrete error text or other high-information failure feedback, weakening a coarse binary metric can have little endpoint effect until the richer channel is also removed or made uninformative. Metric validity and downstream task utility can also diverge because utility is not an independent ground-truth measure of evaluator agreement; a locked external reference is required if the scientific object is evaluator validity itself.",
+      "opposite_principle": "Robustness to a noisy coarse metric is expected when richer redundant feedback remains, and task utility cannot identify evaluator validity without independent truth; neither fact constitutes a new self-evolution mechanism when those information channels and the validity distinction are already explicit in the source system.",
+      "opposite_search_seed": "For weak-metric robustness, reopen only with a same-information factorial that independently varies coarse metric quality and rich error-feedback availability, and require a residual interaction beyond multi-channel information redundancy and supervision sufficiency. For evaluator validity, reopen only under a new bounded operational condition not already covered by Double Ratchet's locked-reference validity setup, with independent truth and a prediction distinct from task-score/validity separation.",
+      "scope": "Double Ratchet arXiv:2607.12790, restricted to the cited Spider weak-metric robustness statement and the paper's locked-reference metric-validity distinction.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2607.12790",
+        "primary-fulltext:arXiv:2607.12790#sha256=a10f0a0904a31cd3e4f5810216c0fb398758f5a3c26ac0a86a60dc28492481ff",
+        "repo:generated/double-ratchet-heldout-cliff-principle-readjudication-20260817.json"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The weak metric is the only feedback available to skill synthesis: false; the source explicitly identifies concrete error text from failed attempts as retained training information.",
+        "Equal endpoint peaks prove evaluator quality is irrelevant: false; redundant richer feedback can mask degradation of the coarse metric channel.",
+        "The task-score versus locked-validity distinction is an unclaimed residual left by the source: false; it is the paper's stated two-axis evaluation design and central validity claim.",
+        "The closure says metric quality never matters: false; it closes only novelty claims that ignore the retained richer feedback channel or duplicate the source's own validity distinction."
+      ],
+      "reopen_condition": "Reopen the weak-metric object only with coarse-metric quality and rich error-feedback availability independently varied under matched tasks, skill synthesis budget, and information, with a residual beyond multi-channel redundancy. Reopen evaluator-validity only with a genuinely new operational condition and independent truth that makes a distinct ex-ante prediction from Double Ratchet's locked-reference validity framework."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "metric quality never matters",
+      "Double Ratchet's validity evaluation is unnecessary",
+      "task score always equals metric quality",
+      "weak metrics are universally harmless"
+    ],
+    "safe_claim": "Double Ratchet's weak-metric robustness is consistent with redundant rich error feedback, while its task-score/locked-reference distinction is already an explicit source-paper claim. Neither cited statement supplies a new standalone paper problem.",
+    "new_search_basin": "factorial-coarse-metric-vs-rich-feedback"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

@@ -157,6 +157,24 @@ def _fresh_phenomenon_closed_keys(dead_end_memory):
     return closed
 
 
+def _fresh_phenomenon_held_keys(dead_end_memory):
+    """Return exact evidence objects paused by provenance-bound support holds.
+
+    Holds are operational only: unlike principle closures they say nothing about
+    the mechanism's truth. They merely keep an unreplayable phenomenon from
+    consuming fresh-search slots until a separate release re-audit clears the
+    hold artifact.
+    """
+    held=set()
+    for row in (dead_end_memory or {}).get("hold_objects") or []:
+        if not isinstance(row,dict) or row.get("dead_end_certified") is True:continue
+        hold=row.get("fresh_phenomenon_hold") or {}
+        if not isinstance(hold,dict) or hold.get("scientific_authority") is not False:continue
+        ref=str(hold.get("source_ref") or "").strip();sha=str(hold.get("evidence_sha256") or "").strip().lower()
+        if ref.startswith("arXiv:") and re.fullmatch(r"[0-9a-f]{64}",sha):held.add((ref,sha))
+    return held
+
+
 def _fresh_evidence_sha(item):
     text=" ".join(str((item or {}).get("text") or "").split())
     supplied=str((item or {}).get("text_sha256") or "").strip().lower()
@@ -181,8 +199,26 @@ def _fresh_phenomenon_priors(records,limit=32,recent_days=45,dead_end_memory=Non
     latest=max(day for day,_ in parsed);cutoff=latest-timedelta(days=max(0,int(recent_days)))
     contrast=re.compile(r"\b(?:from|to|vs\.?|versus|while|despite|drop|decreas|increas|improv|worse|better|plateau|reduc|compress|outperform|lower|higher|only)\w*\b",re.I)
     number=re.compile(r"(?:\b\d+(?:\.\d+)?\s*(?:%|points?|x)\b|\b0\.\d+\b)",re.I)
-    failure_cue=re.compile(r"(?:\bfail(?:s|ed|ing)?\s+(?:to|despite)\b|\bunderperform\w*\b|\bdegrad\w*\b|\bcollapse\w*\b|\boverly\s+restrict\w*\b|\bnegative\s+transfer\b|\bmislead\w*\b|\bcannot\b|\bunable\b|\binstab\w*\b|\bregress\w*\b|\bdrop\w*\b|\bworse\b|\blower\s+utility\b|\boverfit\w*\b|\bredundan\w*\b|\bconflict\w*\b|\bpoison\w*\b|\battack\s+success\b)",re.I)
+    anomaly_cue=re.compile(
+        r"(?:\bplateau\w*\b|\bfluctuat\w*\b|\bnon[- ]?monotonic\w*\b|\bnot\s+monotonic\b|"
+        r"\bwithout\s+(?:a\s+)?consistent\s+gain\b|\bsame\s+peak\b|\brevers\w*\b|\binversion\b|"
+        r"\bcliff\b|\bthreshold\b|\bceiling\b|\bsaturat\w*\b|\bdespite\b|\bbut\s+additional\b|"
+        r"\bunderperform\w*\b|\bcollapse\w*\b|\bnegative\s+transfer\b|\bworse\b)",
+        re.I,
+    )
+    failure_cue=re.compile(
+        r"(?:\bfail(?:s|ed|ing)?\s+(?:to|despite)\b|"
+        r"\bunderperform\w*\b|"
+        r"\b(?:performance|accuracy|reward|success|utility|quality)\s+(?:degrad\w*|declin\w*|drop\w*)\b|"
+        r"\bdegrad(?:es|ed|ing)?\b.{0,48}\b(?:performance|accuracy|reward|success|utility|quality)\b|"
+        r"\bcollapse\w*\b|\boverly\s+restrict\w*\b|\bnegative\s+transfer\b|\bmislead\w*\b|"
+        r"\bcannot\b|\bunable\b|\binstab\w*\b|\bregress\w*\b|\bdrop\w*\b|\bworse\b|"
+        r"\blower\s+utility\b|\boverfit\w*\b|\bredundan\w*\b|\bconflict\w*\b|\bpoison\w*\b|"
+        r"\battack\s+success(?:\s+rate)?\b.{0,32}\b(?:increas\w*|ris\w*|remain\w*\s+high|worsen\w*)\b)",
+        re.I,
+    )
     closed=_fresh_phenomenon_closed_keys(dead_end_memory)
+    held=_fresh_phenomenon_held_keys(dead_end_memory)
     priors=[]
     kind_priority={"measured_failure":3,"boundary_observation":2,"quantitative_anomaly":1}
     for published,r in parsed:
@@ -192,6 +228,7 @@ def _fresh_phenomenon_priors(records,limit=32,recent_days=45,dead_end_memory=Non
         items.extend(("measured_failure",x) for x in typed.get("measured_failures") or [] if isinstance(x,dict) and str(x.get("text") or "").strip() and failure_cue.search(str(x.get("text") or "")))
         boundary_protocol_only=re.compile(
             r"(?:\bwe\s+(?:set|use)\b.{0,80}\b(?:threshold|temperature)\b|"
+            r"\bwe\s+run\b.{0,100}\bon\s+all\s+\d+\b.{0,120}\bthreshold\b|"
             r"\bnot\s+applied\s+to\b.{0,80}\b(?:mini|benchmark|batch)\b|"
             r"\billustrates?\s+(?:one\s+)?representative\s+failure\s+trace\b|"
             r"\bcrosses?\s+the\s+evidence\s+threshold\s+on\s+its\s+second\b)",re.I)
@@ -203,16 +240,26 @@ def _fresh_phenomenon_priors(records,limit=32,recent_days=45,dead_end_memory=Non
             and not boundary_protocol_only.search(str(x.get("text") or ""))
             and (
                 failure_cue.search(str(x.get("text") or ""))
-                or (number.search(str(x.get("text") or "")) and contrast.search(str(x.get("text") or "")))
+                or (
+                    number.search(str(x.get("text") or ""))
+                    and contrast.search(str(x.get("text") or ""))
+                    and anomaly_cue.search(str(x.get("text") or ""))
+                )
             )
         )
-        items.extend(("quantitative_anomaly",x) for x in facts if number.search(str(x.get("text") or "")) and contrast.search(str(x.get("text") or "")))
+        items.extend(
+            ("quantitative_anomaly",x)
+            for x in facts
+            if number.search(str(x.get("text") or ""))
+            and contrast.search(str(x.get("text") or ""))
+            and (anomaly_cue.search(str(x.get("text") or "")) or failure_cue.search(str(x.get("text") or "")))
+        )
         seen=set()
         for kind,item in items:
             text=" ".join(str(item.get("text") or "").split());sha=_fresh_evidence_sha(item)
             if not text or sha in seen:continue
             seen.add(sha)
-            if (ref,sha) in closed:continue
+            if (ref,sha) in closed or (ref,sha) in held:continue
             priors.append({
                 "ref":ref,"publication_date":published.isoformat(),"title":str(r.get("title") or ""),
                 "phenomenon_id":sha,"phenomenon_kind":kind,"phenomenon_text":text,

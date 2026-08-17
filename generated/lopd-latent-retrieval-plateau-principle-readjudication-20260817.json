@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "LOPD-LATENT-RETRIEVAL-PLATEAU",
+  "title": "LOPD latent-token and retrieval-count plateaus reduce to capacity saturation and marginal-information redundancy",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_lopd_effect_falsified": false,
+  "dead_end_scope": "The standalone claim that LOPD's reward jump around 32 latent tokens and its lack of monotonic benefit beyond three retrieved experiences identify a new agent self-evolution threshold or retrieval-dose mechanism merely from the reported sensitivity curves.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2608.13040",
+    "closed_evidence_sha256": [
+      "b5057e11b858c2cfd1a28a311248b27cd9e698c56586b89264a4401be50d9cd1",
+      "35344d8632103dc760d58176a749b31ce6392a8d1af21206c8ef130d6db6670e"
+    ],
+    "closure_scope": "the reported latent-token capacity plateau and retrieval-count plateau only",
+    "scientific_authority": false
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "LOPD's own construction makes both sensitivity curves direct instances of mature capacity and marginal-information effects. The latent composer compresses variable-length task-experience representations into a fixed number of learned latent tokens, so increasing that token count increases representation capacity and a rise followed by saturation is predicted by information-bottleneck/rate-distortion behavior. Separately, retrieval is exact cosine-similarity top-n over a frozen successful-trajectory bank. Increasing n_ret therefore nests lower-ranked experiences into the retrieved set; each additional item is separately encoded/compressed and then contributes additional latent context. A gain from the first few nearest experiences followed by a plateau or fluctuation is predicted by diminishing marginal relevance, correlated/redundant evidence, and context-capacity tradeoffs. The reported curves do not hold total latent budget fixed while independently varying number of experiences versus tokens per experience, so they cannot identify a new decomposition-specific mechanism.",
+      "opposite_prediction": "Under the same frozen bank, similarity ranking, composer family, task distribution, and training objective, performance should improve while additional representation capacity or additional high-ranked experience contributes useful information, then saturate or fluctuate as marginal information falls or redundant context accumulates. The location of the empirical optimum can move with task/model/bank statistics without constituting a new causal primitive.",
+      "opposite_principle": "Latent-context utility is governed first by information capacity and marginal nonredundant evidence; a plateau in token count or nested top-k retrieval is not a new self-evolution mechanism unless a matched information-budget decomposition leaves a residual.",
+      "opposite_search_seed": "Reopen only with a preregistered same-information experiment that fixes total latent-token/context budget and the frozen experience bank while independently varying experience count and tokens per experience (or an equivalent decomposition), matches training/update compute, and shows a held-out difference that rate-distortion, marginal-information, redundancy/correlation, retrieval-rank, and context-budget baselines cannot express. Do not reopen from another unbudgeted K or top-n sensitivity curve.",
+      "scope": "LOPD arXiv:2608.13040, especially the learnable latent context construction, Appendix retrieval definition, and EnvScaler sensitivity analysis.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.13040",
+        "primary-fulltext:arXiv:2608.13040#sha256=149cbbd1fc5ae506dd1189936968a671a347e412689510f4c42c37b33134fcf8"
+      ],
+      "alternative_explanations_ruled_out": [
+        "n_ret changes only the number of independent trials while information is fixed: false; the released method retrieves a nested top-n set and adds lower-ranked experience content.",
+        "latent-token K is unrelated to representation capacity: false; K is the number of learned latent tokens produced by the compressor and used as privileged context.",
+        "The published curves isolate experience count from total latent-context budget: false; increasing retrieved items while per-item compression is fixed also changes total composed latent context.",
+        "The closure says LOPD's learned context is ineffective: false; it closes only a standalone novelty claim based on the two sensitivity plateaus."
+      ],
+      "reopen_condition": "Reopen only if a source-faithful or independently reviewed experiment fixes total latent information/context budget and frozen retrieval support, independently changes the experience-count versus per-experience-capacity decomposition, matches compute and update information, and yields a repeatable held-out residual beyond rate-distortion, marginal-information, redundancy/correlation, retrieval-rank, and context-budget baselines."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "LOPD does not work",
+      "32 latent tokens is universally optimal",
+      "three retrievals is universally optimal",
+      "retrieval redundancy never matters"
+    ],
+    "safe_claim": "LOPD reports useful sensitivity curves, but the current token-count and retrieval-count plateaus are already predicted by mature representation-capacity and diminishing-marginal-information principles. A new mechanism would require a matched fixed-budget decomposition residual.",
+    "new_search_basin": "fixed-budget-latent-experience-decomposition"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

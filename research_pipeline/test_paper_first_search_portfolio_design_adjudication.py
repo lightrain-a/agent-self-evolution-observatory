@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from .paper_first_search_portfolio_design_adjudication import (
+    _fresh_phenomenon_support_hold_rows,
     _principle_readjudication_rows,
     _shadow_dead_end_memory,
     _terminal_evidence_hold_rows,
@@ -20,6 +21,20 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.state = build_search_portfolio_design_adjudication()
+
+    def test_exact_fresh_support_hold_is_reopenable_not_dead_end(self) -> None:
+        path=Path(__file__).resolve().parents[1]/"generated"/"harnessbank-fresh-phenomenon-support-hold-20260817.json"
+        rows=_fresh_phenomenon_support_hold_rows([path])
+        self.assertEqual(len(rows),1)
+        row=rows[0]
+        self.assertEqual(row["disposition"],"HOLD_SUPPORT_UNAVAILABLE")
+        self.assertEqual(row["memory_class"],"REOPENABLE_HOLD")
+        self.assertFalse(row["dead_end_certified"])
+        self.assertFalse(row["scientific_authority"])
+        hold=row["fresh_phenomenon_hold"]
+        self.assertEqual(hold["source_ref"],"arXiv:2607.13683")
+        self.assertEqual(hold["evidence_sha256"],"03bd345821be718b2b342e2348ab18c44a91146219bdde5db2d909336cb8ce52")
+        self.assertFalse(hold["scientific_authority"])
 
     def test_shadow_counterfactual_survivors_are_conservatively_routed(self) -> None:
         self.assertEqual(validate_search_portfolio_design_adjudication(self.state), [])

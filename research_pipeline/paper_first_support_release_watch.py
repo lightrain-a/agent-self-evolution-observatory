@@ -73,7 +73,7 @@ def _terminal_support_holds(design_state: dict[str, Any]) -> list[dict[str, Any]
         if str(row.get("disposition") or "") != "HOLD_SUPPORT_UNAVAILABLE":
             continue
         basin = str(row.get("basin") or "")
-        if not basin.startswith("near-miss-terminal-support-hold-") or row.get("dead_end_certified") is True:
+        if not basin.startswith(("near-miss-terminal-support-hold-", "fresh-phenomenon-support-hold-")) or row.get("dead_end_certified") is True:
             continue
         key = (str(row.get("source_candidate_id") or ""), str(row.get("source_run_id") or ""), basin)
         if key in seen:

@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "SEED-ONPOLICY-SFT-ABLATIONS",
+  "title": "SEED on-policy and hindsight-SFT ablation drops reduce to occupancy matching and cold-start capability",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_seed_effect_falsified": false,
+  "dead_end_scope": "The standalone claim that SEED's 7.4-point drop with a static offline skill library or 5.8-point drop without hindsight-skill SFT identifies a new self-evolution mechanism merely from those component ablations.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2607.14777",
+    "closed_evidence_sha256": [
+      "e58496693d03bc97f5545712cb64433fc5114364fc1562aa3d36e01dcf55527c",
+      "3674c02b73dc04c9cf6c654315e9d5df4ae73557e4cce9bb46fc6a7fa056d7f2"
+    ],
+    "closure_scope": "the static-offline-skill and no-hindsight-skill-SFT ablation drops only",
+    "scientific_authority": false
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "SEED's own theory and ablation interpretation supply mature explanations for both drops. Appendix A.1 explicitly motivates on-policy hindsight as an occupancy-matched adaptive target: skills extracted from the current policy's own trajectories track its current state-action occupancy and failure modes, whereas a static offline library can be distribution-mismatched as the policy evolves. The 7.4-point static-library drop is therefore directly expressible by ordinary distribution/occupancy shift and stale-supervision principles. Separately, hindsight-skill SFT is the initialization that teaches the actor/analyzer to perform trajectory analysis before the self-evolving RL stage. Removing it changes cold-start representation/competence, so the 5.8-point drop is predicted by initialization and prerequisite-capability effects unless initial analyzer competence and supervised information are matched. Neither one-factor ablation by itself identifies a new causal primitive of self-evolution.",
+      "opposite_prediction": "Holding policy occupancy fixed, guidance derived from a mismatched offline distribution can underperform guidance aligned to current trajectories even without a new mechanism; holding downstream RL fixed, weakening the initial analyzer/actor competence can lower later performance through ordinary initialization and optimization path dependence. Both effects should shrink when occupancy/support and initial competence/supervised information are matched.",
+      "opposite_principle": "On-policy skill benefit is first an occupancy-matching problem, while hindsight-SFT benefit is first a cold-start capability problem; component ablation drops are not new self-evolution mechanisms unless those mature sources of advantage are matched and a residual remains.",
+      "opposite_search_seed": "For the on-policy claim, compare libraries with matched task/trajectory support, skill quality, size, recency information, and policy occupancy while varying only the mechanism of skill generation; require a held-out residual beyond distribution shift, stale supervision, and support mismatch. For the SFT claim, match initial analyzer/actor trajectory-analysis competence, supervised token/information budget, and downstream RL budget while varying the initialization path; require a residual beyond initialization and optimization-path baselines. Do not reopen from another unmatched static-vs-on-policy or with-vs-without-pretraining ablation.",
+      "scope": "SEED arXiv:2607.14777, especially Section 4.6 ablations and Appendix A.1/A.3 on occupancy-matched hindsight and analyzer synchronization.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2607.14777",
+        "primary-fulltext:arXiv:2607.14777#sha256=31bf76e8aa8dbcb587b48ceb3a96fb64e26315ad4e6424459c1604df783c7cda",
+        "first-party-repo:SEED@2cf2fadca3c5aba28da68e8e1405182ba8d90e6c"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The static offline library and on-policy library are distribution-matched treatments: false; the paper explicitly motivates current-policy trajectories as better reflecting evolving behavior/failure modes and develops occupancy-matching theory.",
+        "Removing hindsight-skill SFT changes only a label while preserving initial analyzer competence: false; the paper states that SFT equips actor/analyzer with trajectory-analysis capability before subsequent self-evolution.",
+        "The ablation drops estimate an interaction unique to self-evolution: false; they are one-factor removals without same-information matching of occupancy or initial capability.",
+        "The closure implies SEED is ineffective: false; it closes only standalone novelty claims inferred from these two ablation drops."
+      ],
+      "reopen_condition": "Reopen the on-policy residual only with occupancy/support/skill-quality/size and information matched between on-policy and offline libraries; reopen the SFT residual only with initial trajectory-analysis competence, supervised information budget, and downstream optimization budget matched. In either case require a repeatable held-out difference beyond distribution shift, stale supervision, cold-start initialization, and optimization-path dependence."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "SEED does not work",
+      "on-policy skills are unnecessary",
+      "hindsight-skill SFT is unnecessary",
+      "policy-skill co-evolution has no value"
+    ],
+    "safe_claim": "SEED provides evidence that current-policy skills and hindsight-SFT are useful. The cited ablation drops are already predicted by occupancy matching and cold-start capability principles and therefore do not by themselves establish a new self-evolution mechanism.",
+    "new_search_basin": "occupancy-and-competence-matched-self-evolving-skill-residual"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "title": "EvoDRC Block7 repairability first-party evidence manifest",
+  "source_ref": "arXiv:2607.20019",
+  "primary_repository": "https://github.com/ASU-VDA-Lab/EvoDRC",
+  "commit": "0a9b4c732cadce7a0718467aa10ef8a741da369a",
+  "scientific_authority": false,
+  "files": {
+    "data/evodrc/Block7/claude-sonnet-4-6/iter4/leaf/leaf_0006/patch.json": "74a395a152221d65926f0dc9e191335a0824b6b04784c02a9b1721e335c18662",
+    "data/evodrc/Block7/claude-sonnet-4-6/iter5/leaf/leaf_0004/patch.json": "6dc7877641a72df4295455a6ab8816f94e9e5cd621faf7ddffb187fe26ca9181",
+    "data/evodrc/Block7/claude-sonnet-4-6/iter5/leaf/leaf_0005/patch.json": "308e8da84f24c71f5b6016408278e7d08c1805d6ad19a0294de72b3a56acfeb9",
+    "data/evodrc/Block7/claude-sonnet-4-6/iter5/cu_verdicts.json": "57ca66ebb17d66d6f5a855160e0c3fc8926858e332b4d1f6997de4634b769629",
+    "data/evodrc/Block7/claude-sonnet-4-6/iter5/input/Block7.drc.json": "6c660b7ea6ceb57bff75bc55953c93179e716bd514ea6232b2eb79dcce5bc6db"
+  },
+  "verified_facts": [
+    "Block7 M1.S.2 residual violations persist while the M1 knowledge base continues to receive new records and updates.",
+    "The iter4 leaf_0006 proposal explicitly states that one M1.S.2 local notch is 252 dbu wide while the via land plus two required clearances needs 272 dbu, so a simple legal placement is locally infeasible without merging geometry or creating another violation.",
+    "The iter5 leaf_0004 proposal explicitly trades clearing V1.M1.EN.1/M1.S.2-related violations for one declared-debt M1.S.2 violation.",
+    "The iter5 leaf_0005 proposal defers a plan that would clear 117 V1.M2.AUX.2 violations because it would introduce more than 110 new violations including M1.S.2-related debt.",
+    "The iter5 contested-unit DRC verdict records a candidate with delta_total=64 and decision=rejected_net_positive, demonstrating that proposed repairs can be rejected because global violation count worsens even when connectivity is preserved."
+  ],
+  "purpose": "Bind the first-party structural witnesses used for principle adjudication. This manifest does not authorize a new experiment, method, Problem-Gate transition, P0, or GPU use."
+}

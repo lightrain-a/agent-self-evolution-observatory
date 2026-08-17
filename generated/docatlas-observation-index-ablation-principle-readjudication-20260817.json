@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "DOCATLAS-OBSERVATION-INDEX-ABLATIONS",
+  "title": "DocAtlas image and tree ablation drops identify information availability and indexing value, not a new self-evolution mechanism",
+  "adjudication_date": "2026-08-17",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "broader_docatlas_effect_falsified": false,
+  "dead_end_scope": "The standalone claim that DocAtlas's performance drops after removing layout/cropped images or tree annotations establish a new memory/self-evolution mechanism merely because the mutable system outperforms these component ablations.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2608.07527",
+    "closed_evidence_sha256": [
+      "770cfb54e13f752e2a7cef4fd797db61e4d7aae4a576197ef228302938f06f20",
+      "0871ff366adf0adb721059c08f1cc1b6b98146d2180ff3b4b60f601498f39156"
+    ],
+    "closure_scope": "the layout/cropped-image removal and tree-annotation removal ablation drops only",
+    "scientific_authority": false
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The two ablations remove ordinary information resources rather than isolating a new self-evolution primitive. Layout images and cropped sub-images supply task-relevant visual evidence for figures, charts, and spatial document structure; removing them directly reduces observability/evidence sufficiency. Tree annotations are part of DocAtlas's mutable search/index representation and alter the information available to later retrieval; removing them degrades All-Hit and page-F1 as expected when an index/search state loses structured navigation signals. These effects are fully expressible by information availability, retrieval/index quality, and observability baselines unless information content and query budget are matched while only the evolving representation changes.",
+      "opposite_prediction": "With model and query fixed, removing task-relevant visual evidence should reduce performance most on visually grounded questions, and removing structured index/navigation state should reduce retrieval recall/precision. Both effects can be large without implying a distinct self-evolution mechanism.",
+      "opposite_principle": "A component that exposes additional task evidence or improves search/index state can improve an agent through ordinary observability and retrieval quality; component-removal drops are not evidence of a new evolving-memory mechanism unless the same information and search budget are preserved.",
+      "opposite_search_seed": "Reopen only with a preregistered same-information comparison that preserves the same visual/document evidence, query budget, and candidate pages while changing only the mutable memory/index representation, and shows a held-out decision or retrieval residual beyond information sufficiency, observability, indexing/search quality, and ordinary active-retrieval baselines. Do not reopen from another missing-modality or missing-index ablation.",
+      "scope": "DocAtlas arXiv:2608.07527, especially the layout-image/crop and mutable-tree ablations.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2608.07527",
+        "primary-fulltext:arXiv:2608.07527#sha256=dff07ace568986e957e6eb2d2f995938fd20dedc6d052d0eaa7e1f6813ca09d2"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The image ablation preserves all task evidence and only changes memory formatting: false; it removes layout images/cropped visual evidence used by figure/chart questions.",
+        "The tree ablation changes only a cosmetic note format: false; the reported raw-search All-Hit and page-F1 changes show that it changes later retrieval/index behavior.",
+        "Large component ablation drops identify a self-evolution interaction: false; the cited ablations do not match information content or estimate a factorial interaction.",
+        "The closure says mutable document memory is useless: false; it closes only a standalone novelty claim from these information-removal ablations."
+      ],
+      "reopen_condition": "Reopen only with a same-information, matched-search-budget comparison that holds document/visual evidence and candidate support fixed while varying the evolving memory/index representation, and yields a repeatable held-out residual beyond information sufficiency, observability, retrieval/index quality, and active-search baselines."
+    }
+  },
+  "scientific_interpretation": {
+    "do_not_say": [
+      "DocAtlas does not work",
+      "layout images are unnecessary",
+      "tree annotations are unnecessary",
+      "mutable memory cannot improve retrieval"
+    ],
+    "safe_claim": "DocAtlas's ablations show that visual evidence and structured mutable indexing are useful. Those drops are already predicted by ordinary information-availability and search-quality principles and do not by themselves identify a new self-evolution mechanism.",
+    "new_search_basin": "same-information-mutable-index-representation"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}
