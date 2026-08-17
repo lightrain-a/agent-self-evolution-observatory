@@ -450,6 +450,21 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
             self.assertEqual(receipt["branch_ids"],["B1","B2"])
             self.assertEqual(receipt["raw_sha256"],"")
 
+    def test_assemble_preserves_fresh_target_anchor_through_dedup_and_formulation_budget(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            run=Path(td)/"run";run.mkdir();control_sha="f"*64
+            target={"seed_id":"UNEXPLAINED_BOUNDARY-P1-001","discovery_lane":"UNEXPLAINED_BOUNDARY","title":"Target inversion","problem_seed":"Why does the target model invert?","scientific_tension":"target tension","problem_family":"target","structural_signature":"shared|signature","agent_specific_constraint":"target constraint","empirical_evidence":{},"lane_evidence":{},"scores":{"importance":20,"specificity":20,"seed_distance":20,"evidence_grounding":20},"scientific_authority":False}
+            higher=json.loads(json.dumps(target));higher.update({"seed_id":"UNEXPLAINED_BOUNDARY-P1-002","title":"Higher scoring duplicate","scores":{"importance":100,"specificity":100,"seed_distance":100,"evidence_grounding":100}})
+            artifact={"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":"UNEXPLAINED_BOUNDARY","part":1,"requested":2,"valid_seeds":2,"semantic_dead_end_block_count":0,"raw_sha256":"a"*64,"resolved_model":"kimi-k3","fresh_phenomenon_requirement_satisfied":True,"fresh_phenomenon_target_source_satisfied":True,"fresh_phenomenon_target_exact_satisfied":True,"fresh_phenomenon_target_ref":"arXiv:2608.14270","fresh_phenomenon_target_id":"b"*64,"seeds":[target,higher]}
+            (run/"expand-UNEXPLAINED_BOUNDARY-p1.json").write_text(json.dumps(artifact),encoding="utf-8")
+            with patch("research_pipeline.problem_search_stage_runner._assert_run_control",return_value=control_sha):
+                summary=runner.assemble(run_root=run,archive_capacity=1,evolution_parents=1)
+                formulation=runner.formulation_pool(run,budget=1,control_sha=control_sha)
+            base=json.loads((run/"base.json").read_text(encoding="utf-8"))
+        self.assertEqual(summary["fresh_target_anchors"],1);self.assertEqual(summary["fresh_target_anchors_preserved"],1)
+        self.assertEqual(base["fresh_target_anchor_ids"],[target["seed_id"]]);self.assertEqual(base["unique_seeds"][0]["seed_id"],target["seed_id"]);self.assertTrue(base["unique_seeds"][0]["fresh_target_anchor"])
+        self.assertEqual(base["parents"][0]["seed_id"],target["seed_id"]);self.assertEqual(formulation[0]["seed_id"],target["seed_id"]);self.assertEqual(base["duplicates"][0]["seed_id"],higher["seed_id"])
+
     def test_mixed_control_snapshot_artifact_is_rejected_before_downstream_stage(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             run=Path(td)/"run";run.mkdir()

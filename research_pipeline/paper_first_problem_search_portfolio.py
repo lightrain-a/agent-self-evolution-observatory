@@ -69,9 +69,10 @@ def _valid_seed(r,reg):
         and all(str(lane_evidence.get(k) or "").strip() for k in LANE_EVIDENCE_REQUIRED[lane])
     )
 
-def _semantic_dedup(rows,threshold=.78):
-    kept=[];dropped=[];exact=defaultdict(set)
-    for r in sorted(rows,key=_score,reverse=True):
+def _semantic_dedup(rows,threshold=.78,protected_ids=None):
+    protected={str(value) for value in (protected_ids or []) if str(value)};kept=[];dropped=[];exact=defaultdict(set)
+    ordered=sorted(rows,key=lambda r:(str(r.get("seed_id") or "") in protected,_score(r)),reverse=True)
+    for r in ordered:
         lane=r["discovery_lane"];key=_seed_key(r);same=[p for p in kept if p["discovery_lane"]==lane];closest=max((_jaccard(r,p) for p in same),default=0.)
         if key in exact[lane]:dropped.append({"seed_id":r["seed_id"],"lane":lane,"reason":"exact-within-lane-duplicate"});continue
         if closest>=threshold:dropped.append({"seed_id":r["seed_id"],"lane":lane,"reason":"semantic-within-lane-near-duplicate","similarity":round(closest,4)});continue
@@ -87,12 +88,16 @@ def _assign_structural_clusters(rows,threshold=.82):
         r["structural_cluster_id"]=cluster
     return rows,len(reps)
 
-def _maxmin_select(rows,capacity):
-    if len(rows)<=capacity:return list(rows)
-    selected=[];by_lane=defaultdict(list)
+def _maxmin_select(rows,capacity,required_ids=None):
+    if capacity<=0:return []
+    required={str(value) for value in (required_ids or []) if str(value)}
+    selected=sorted([r for r in rows if str(r.get("seed_id") or "") in required],key=_score,reverse=True)[:capacity]
+    if len(rows)<=capacity:return selected+[r for r in rows if r not in selected]
+    by_lane=defaultdict(list)
     for r in rows:by_lane[r["discovery_lane"]].append(r)
     for lane in SEARCH_PORTFOLIO_PRIMITIVES:
-        if by_lane[lane] and len(selected)<capacity:selected.append(max(by_lane[lane],key=_score))
+        candidates=[r for r in by_lane[lane] if r not in selected]
+        if candidates and len(selected)<capacity:selected.append(max(candidates,key=_score))
     remain=[r for r in rows if r not in selected]
     while remain and len(selected)<capacity:
         seen={r.get("structural_cluster_id") for r in selected}
@@ -102,8 +107,8 @@ def _maxmin_select(rows,capacity):
         chosen=max(remain,key=utility);selected.append(chosen);remain.remove(chosen)
     return selected
 
-def _archives(rows,capacity):
-    breadth=_maxmin_select(rows,capacity);novelty=sorted(rows,key=lambda r:(float((r.get("scores") or {}).get("seed_distance",0)),_score(r)),reverse=True)[:max(8,capacity//3)]
+def _archives(rows,capacity,required_ids=None):
+    breadth=_maxmin_select(rows,capacity,required_ids=required_ids);novelty=sorted(rows,key=lambda r:(float((r.get("scores") or {}).get("seed_distance",0)),_score(r)),reverse=True)[:max(8,capacity//3)]
     anomaly={"CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY","LONGITUDINAL_EMERGENCE"}
     return {
         "breadth":[r["seed_id"] for r in breadth],"novelty":[r["seed_id"] for r in novelty],

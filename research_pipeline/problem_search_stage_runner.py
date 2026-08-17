@@ -342,12 +342,23 @@ def replay_expand(*,pool:Path|None,run_root:Path,lane:str,count:int,part:int,mem
 
 def assemble(*,run_root:Path,archive_capacity:int=48,evolution_parents:int=24)->dict:
     control_sha=_assert_run_control(run_root)
-    raw=[];shards=[]
+    raw=[];shards=[];fresh_anchor_ids=set()
     for path in sorted(run_root.glob("expand-*.json")):
-        payload=json.loads(path.read_text(encoding="utf-8"));_require_artifact_control(payload,control_sha,path,STAGE_RUNNER_ARTIFACT_SCHEMA);rows=[row for row in (payload.get("seeds") or []) if isinstance(row,dict)];raw.extend(rows);shards.append({"path":path.name,"lane":payload.get("lane"),"part":payload.get("part","legacy"),"requested":payload.get("requested"),"valid_seeds":len(rows),"semantic_dead_end_blocks":int(payload.get("semantic_dead_end_block_count") or 0),"raw_sha256":payload.get("raw_sha256"),"resolved_model":payload.get("resolved_model")})
-    unique,dups=_semantic_dedup(raw);unique,clusters=_assign_structural_clusters(unique);archives=_archives(unique,archive_capacity);by_id={row["seed_id"]:row for row in unique};breadth=[by_id[sid] for sid in archives["breadth"] if sid in by_id];parents=_maxmin_select(breadth,min(evolution_parents,len(breadth)))
+        payload=json.loads(path.read_text(encoding="utf-8"));_require_artifact_control(payload,control_sha,path,STAGE_RUNNER_ARTIFACT_SCHEMA);rows=[dict(row) for row in (payload.get("seeds") or []) if isinstance(row,dict)]
+        target_bound=bool(payload.get("fresh_phenomenon_requirement_satisfied") is True and payload.get("fresh_phenomenon_target_source_satisfied") is True and payload.get("fresh_phenomenon_target_exact_satisfied") is True and rows)
+        if target_bound:
+            anchor=rows[0];anchor_id=str(anchor.get("seed_id") or "");
+            if not anchor_id:raise ValueError(f"fresh target shard lacks Seed 1 identity: {path.name}")
+            anchor["fresh_target_anchor"]=True;anchor["fresh_target_ref"]=str(payload.get("fresh_phenomenon_target_ref") or "");anchor["fresh_target_id"]=str(payload.get("fresh_phenomenon_target_id") or "");fresh_anchor_ids.add(anchor_id)
+        raw.extend(rows);shards.append({"path":path.name,"lane":payload.get("lane"),"part":payload.get("part","legacy"),"requested":payload.get("requested"),"valid_seeds":len(rows),"semantic_dead_end_blocks":int(payload.get("semantic_dead_end_block_count") or 0),"raw_sha256":payload.get("raw_sha256"),"resolved_model":payload.get("resolved_model"),"fresh_target_anchor_id":str(rows[0].get("seed_id") or "") if target_bound else ""})
+    unique,dups=_semantic_dedup(raw,protected_ids=fresh_anchor_ids);unique_ids={str(row.get("seed_id") or "") for row in unique}
+    if not fresh_anchor_ids.issubset(unique_ids):raise ValueError("fresh target anchor lost during semantic dedup")
+    unique,clusters=_assign_structural_clusters(unique);archives=_archives(unique,archive_capacity,required_ids=fresh_anchor_ids);by_id={row["seed_id"]:row for row in unique};breadth=[by_id[sid] for sid in archives["breadth"] if sid in by_id]
+    if not fresh_anchor_ids.issubset({str(row.get("seed_id") or "") for row in breadth}):raise ValueError("fresh target anchor lost from breadth archive")
+    parents=_maxmin_select(breadth,min(evolution_parents,len(breadth)),required_ids=fresh_anchor_ids)
+    if not fresh_anchor_ids.issubset({str(row.get("seed_id") or "") for row in parents}):raise ValueError("fresh target anchor lost from evolution parents")
     lane_counts={lane:sum(row.get("discovery_lane")==lane for row in raw) for lane in SEARCH_PORTFOLIO_PRIMITIVES};archive_lanes={lane:sum(by_id[sid].get("discovery_lane")==lane for sid in archives["breadth"] if sid in by_id) for lane in SEARCH_PORTFOLIO_PRIMITIVES}
-    out={"schema_version":"1.2","control_snapshot_sha256":control_sha,"shards":shards,"summary":{"raw_seeds":len(raw),"semantic_dead_end_blocks":sum(int(shard.get("semantic_dead_end_blocks") or 0) for shard in shards),"semantic_unique":len(unique),"semantic_duplicates":len(dups),"structural_clusters":clusters,"breadth_archive":len(archives["breadth"]),"evolution_parents":len(parents),"lane_coverage":sum(value>0 for value in lane_counts.values()),"archive_lane_coverage":sum(value>0 for value in archive_lanes.values())},"lane_counts":lane_counts,"archive_lane_counts":archive_lanes,"archives":archives,"duplicates":dups,"unique_seeds":unique,"parents":parents,"scientific_authority":False}
+    out={"schema_version":"1.2","control_snapshot_sha256":control_sha,"shards":shards,"summary":{"raw_seeds":len(raw),"semantic_dead_end_blocks":sum(int(shard.get("semantic_dead_end_blocks") or 0) for shard in shards),"semantic_unique":len(unique),"semantic_duplicates":len(dups),"structural_clusters":clusters,"breadth_archive":len(archives["breadth"]),"evolution_parents":len(parents),"fresh_target_anchors":len(fresh_anchor_ids),"fresh_target_anchors_preserved":sum(str(row.get("seed_id") or "") in fresh_anchor_ids for row in parents),"lane_coverage":sum(value>0 for value in lane_counts.values()),"archive_lane_coverage":sum(value>0 for value in archive_lanes.values())},"policy":{"fresh_target_anchor_survives_semantic_dedup":True,"fresh_target_anchor_survives_breadth_archive":True,"fresh_target_anchor_survives_evolution_parent_selection":True,"fresh_target_anchor_is_prioritized_in_formulation_budget":True},"fresh_target_anchor_ids":sorted(fresh_anchor_ids),"lane_counts":lane_counts,"archive_lane_counts":archive_lanes,"archives":archives,"duplicates":dups,"unique_seeds":unique,"parents":parents,"scientific_authority":False}
     (run_root/"base.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     return out["summary"]
 
@@ -382,13 +393,13 @@ def evolve(*,pool:Path|None,run_root:Path,generation:int,part:int,batch_size:int
 
 
 def formulation_pool(run_root:Path,budget:int=24,control_sha:str="")->list[dict]:
-    base_path=run_root/"base.json";base=json.loads(base_path.read_text(encoding="utf-8"));_require_artifact_control(base,control_sha,base_path,"1.2");rows=list(base.get("parents") or [])
+    base_path=run_root/"base.json";base=json.loads(base_path.read_text(encoding="utf-8"));_require_artifact_control(base,control_sha,base_path,"1.2");rows=list(base.get("parents") or []);required_ids={str(value) for value in base.get("fresh_target_anchor_ids") or [] if str(value)}
     for path in sorted(run_root.glob("evolve-g1-p*.json")):
         payload=json.loads(path.read_text(encoding="utf-8"));_require_artifact_control(payload,control_sha,path,STAGE_RUNNER_ARTIFACT_SCHEMA);rows.extend(payload.get("children") or [])
     for path in sorted(run_root.glob("evolve-g2-p*.json")):
         payload=json.loads(path.read_text(encoding="utf-8"));_require_artifact_control(payload,control_sha,path,STAGE_RUNNER_ARTIFACT_SCHEMA);rows.extend(payload.get("children") or [])
     rows,_=_assign_structural_clusters(rows)
-    return _maxmin_select(rows,min(budget,len(rows)))
+    return _maxmin_select(rows,min(budget,len(rows)),required_ids=required_ids)
 
 
 _PROBLEM_FALSIFIER_ONLY_BLOCKERS=("reduction-falsifiability-contract-incomplete","saturation-exact-reduction-pending:","unresolved-exact-reduction-test:")
