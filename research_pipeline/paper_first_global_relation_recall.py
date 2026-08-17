@@ -29,8 +29,9 @@ DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-global-relation-recall.js
 RELATION_MODEL = preferred_model("relation_mining")
 LANE_REVIEW_MODEL = preferred_model("relation_lane_review")
 REDUCTION_MODEL = preferred_model("relation_reduction_review")
-LANE_REVIEW_EXECUTION_CONTRACT_VERSION = "relation-lane-review-sharded-v2"
+LANE_REVIEW_EXECUTION_CONTRACT_VERSION = "relation-lane-review-sharded-glm-compatible-v3"
 LANE_REVIEW_BATCH_SIZE = 6
+LANE_REVIEW_MAX_OUTPUT_TOKENS = 15000
 PAIR_RELATION_BUDGETS = {
     "CONTRADICTION": 5,
     "CONVERGENT_FAILURE": 5,
@@ -59,8 +60,13 @@ def _ark(*, prompt: str, model: str, max_output_tokens: int) -> dict[str, Any]:
     settings = ArkSettings.from_env(required=False)
     if not settings.api_key:
         raise RuntimeError("ARK_API_KEY_NOT_CONFIGURED")
-    settings = ArkSettings(api_key=settings.api_key, base_url=settings.base_url, default_model=settings.default_model, timeout_seconds=min(max(settings.timeout_seconds, 90.0), 180.0), max_retries=0)
-    return ArkResponsesClient(settings).respond(prompt, model=model, max_output_tokens=max_output_tokens, temperature=0.0, thinking="disabled")
+    settings = ArkSettings(api_key=settings.api_key, base_url=settings.base_url, default_model=settings.default_model, timeout_seconds=min(max(settings.timeout_seconds,90.0),180.0), max_retries=0)
+    # GLM's Responses endpoint is provider-compatible only when the thinking profile
+    # is left at provider default; forcing thinking=disabled can consume the whole
+    # output budget without an auditable assistant message. Other premium families
+    # keep deterministic disabled thinking for this reviewer pipeline.
+    thinking=None if str(model).lower().startswith("glm") else "disabled"
+    return ArkResponsesClient(settings).respond(prompt,model=model,max_output_tokens=max_output_tokens,temperature=0.0,thinking=thinking,allow_thinking_compatibility_fallback=True)
 
 
 def _write_raw(storage: StorageSettings, run_id: str, role: str, model: str, text: str) -> dict[str, Any]:
@@ -156,8 +162,8 @@ def lane_review_execution_contract_sha256() -> str:
     material={
         "version":LANE_REVIEW_EXECUTION_CONTRACT_VERSION,
         "model":LANE_REVIEW_MODEL,
-        "max_output_tokens":6500,
-        "thinking":"disabled",
+        "max_output_tokens":LANE_REVIEW_MAX_OUTPUT_TOKENS,
+        "thinking":"provider-default" if str(LANE_REVIEW_MODEL).lower().startswith("glm") else "disabled",
         "temperature":0.0,
         "batch_size":LANE_REVIEW_BATCH_SIZE,
         "cards_scoped_to_batch_source_refs":True,
@@ -223,7 +229,7 @@ def _review_lane_proposals(
     for index,batch in enumerate(batches,1):
         refs=sorted({ref for proposal in batch for ref in proposal.get("source_refs") or []})
         cards=[_card(registry[ref]) for ref in refs]
-        response=call(prompt=lane_prompt(batch,cards),model=LANE_REVIEW_MODEL,max_output_tokens=6500)
+        response=call(prompt=lane_prompt(batch,cards),model=LANE_REVIEW_MODEL,max_output_tokens=LANE_REVIEW_MAX_OUTPUT_TOKENS)
         raw=str(response.get("text") or "")
         artifact=_write_raw(storage,run_id,f"lane-review-p{index}",LANE_REVIEW_MODEL,raw)
         artifact.update({

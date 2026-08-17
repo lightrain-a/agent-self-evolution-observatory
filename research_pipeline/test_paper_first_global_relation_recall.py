@@ -6,10 +6,11 @@ import tempfile
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
+from unittest.mock import patch
 
 from .config import StorageSettings
-from .ark_provider import ArkResponseStateError
-from .paper_first_global_relation_recall import LANE_REVIEW_BATCH_SIZE, _card, _review_lane_proposals, lane_review_execution_contract_sha256, mark_lane_review_retry_exhausted, resume_global_relation_recall_from_relation_raw, run_global_relation_recall, write_global_relation_recall_state
+from .ark_provider import ArkResponseStateError, ArkSettings
+from .paper_first_global_relation_recall import LANE_REVIEW_BATCH_SIZE, LANE_REVIEW_MAX_OUTPUT_TOKENS, _ark, _card, _review_lane_proposals, lane_review_execution_contract_sha256, mark_lane_review_retry_exhausted, resume_global_relation_recall_from_relation_raw, run_global_relation_recall, write_global_relation_recall_state
 from .paper_first_relation_coverage import relation_universe_digest
 
 
@@ -44,6 +45,23 @@ class GlobalRelationRecallTest(unittest.TestCase):
         for i in range(1,5):
             rows.append({"ref":f"arXiv:{i}","title":f"Paper {i}","abstract":f"Agent evidence {i}","primary_source_verified":True,"lane_keys":["skill_harness"],"empirical_facts":[{"text":f"Observed metric {i} changes by {10+i} percent."}],"typed_evidence":{"operational_assumptions":[],"measured_failures":[],"boundary_observations":[]}})
         return rows
+
+    def test_glm_lane_transport_uses_provider_default_thinking_and_large_budget(self) -> None:
+        settings=ArkSettings(api_key="test",base_url="https://example.invalid",default_model="x",timeout_seconds=120,max_retries=0)
+        result={"text":"{}","resolved_model":"glm-5.3"}
+        with patch("research_pipeline.paper_first_global_relation_recall.ArkSettings.from_env",return_value=settings), patch("research_pipeline.paper_first_global_relation_recall.ArkResponsesClient.respond",return_value=result) as respond:
+            actual=_ark(prompt="p",model="glm-5.3",max_output_tokens=LANE_REVIEW_MAX_OUTPUT_TOKENS)
+        self.assertEqual(actual,result)
+        kwargs=respond.call_args.kwargs
+        self.assertIsNone(kwargs["thinking"])
+        self.assertEqual(kwargs["max_output_tokens"],15000)
+        self.assertTrue(kwargs["allow_thinking_compatibility_fallback"])
+
+    def test_non_glm_relation_transport_keeps_disabled_thinking(self) -> None:
+        settings=ArkSettings(api_key="test",base_url="https://example.invalid",default_model="x",timeout_seconds=120,max_retries=0)
+        with patch("research_pipeline.paper_first_global_relation_recall.ArkSettings.from_env",return_value=settings), patch("research_pipeline.paper_first_global_relation_recall.ArkResponsesClient.respond",return_value={"text":"{}","resolved_model":"kimi-k3"}) as respond:
+            _ark(prompt="p",model="kimi-k3",max_output_tokens=5200)
+        self.assertEqual(respond.call_args.kwargs["thinking"],"disabled")
 
     def test_primary_abstract_is_preserved_when_fulltext_evidence_is_absent(self) -> None:
         record={"ref":"arXiv:1","title":"Paper 1","abstract":"Primary abstract carries the bounded empirical relation evidence.","lane_keys":["skill_harness"],"empirical_facts":[],"typed_evidence":{"operational_assumptions":[],"measured_failures":[],"boundary_observations":[]}}
