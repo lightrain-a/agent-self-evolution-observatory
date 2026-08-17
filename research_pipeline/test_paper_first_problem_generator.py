@@ -165,6 +165,8 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             self.assertIn(lane, prompt)
         self.assertIn("lane_evidence", prompt)
         self.assertIn("OPERATIONAL_ASSUMPTION", prompt)
+        for field in ("ex_ante_prediction","distinguishing_prediction","cannot_express","reduction_class","exact_reduction_test","reduction_falsifiability_contract","same_observable_information_checked","ex_ante_exact_prediction_checked","distinguishing_prediction_checked","scope_boundary_checked","all_exact_reduction_tests_resolved"):
+            self.assertIn(field,prompt)
 
     def test_explicit_portfolio_mode_is_not_a_live_generator_path(self) -> None:
         with tempfile.TemporaryDirectory() as td:

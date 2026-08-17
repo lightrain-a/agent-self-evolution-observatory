@@ -72,9 +72,10 @@ def generator_prompt(records: list[dict[str, Any]], dead_end_memory: dict[str, A
                 "lane_evidence": {"lane-specific-required-field": "..."},
                 "irreducible_object": "formal/scientific object, not an algorithm",
                 "mature_theory_baselines": [
-                    {"name": "theory 1", "same_information_projection": "...", "reduction_test": "..."},
-                    {"name": "theory 2", "same_information_projection": "...", "reduction_test": "..."},
+                    {"name": "theory 1", "same_information_projection": "...", "ex_ante_prediction": "...", "distinguishing_prediction": "...", "cannot_express": "...", "reduction_class": "SOFT_COLLISION|NEEDS_EXACT_REDUCTION_TEST|TOO_GENERIC_TO_VETO|VALID_HARD_VETO", "exact_reduction_test": "..."},
+                    {"name": "theory 2", "same_information_projection": "...", "ex_ante_prediction": "...", "distinguishing_prediction": "...", "cannot_express": "...", "reduction_class": "SOFT_COLLISION|NEEDS_EXACT_REDUCTION_TEST|TOO_GENERIC_TO_VETO|VALID_HARD_VETO", "exact_reduction_test": "..."},
                 ],
+                "reduction_falsifiability_contract": {"same_observable_information_checked": True, "ex_ante_exact_prediction_checked": True, "distinguishing_prediction_checked": True, "scope_boundary_checked": True, "all_exact_reduction_tests_resolved": True},
                 "same_information_nonreducibility": {"claim": "...", "why_each_baseline_cannot_express_prediction": "..."},
                 "exact_prediction": "...",
                 "strongest_same_information_baseline": "...",
@@ -102,7 +103,7 @@ def generator_prompt(records: list[dict[str, Any]], dead_end_memory: dict[str, A
         "Future-work statements, author wishes, keyword absence, and a missing literature cell are not admissible evidence. "
         "Empirical-fact candidates are discovery evidence, not automatic ground truth, and will be independently grounded before Problem Gate eligibility.\n\n"
         "ANOMALY-FIRST DISCOVERY OPERATOR: do NOT require the literature to have already assembled a cross-paper tension for us. First scan each primary paper for a quantitative sign reversal, nonmonotonicity, threshold, plateau, history dependence, composition effect, or surprising failure boundary. Then identify the smallest operational core and an adjacent/control regime. Ask what decisive comparison we can materialize ourselves from released units, first-party code, or an existing provenance-audited substrate. Only after that project identical observable information into at least two mature theories. "
-        "If either mature theory expresses the exact ex-ante prediction under the same information, discard the candidate. If the anomaly is real but the reduction is unresolved, freeze the cheapest distinguishing falsifier instead of inventing novelty. Domain transfer, mathematical renaming, another benchmark/metric/taxonomy/test-generator, or combining occupied atoms is not novelty.\n\n"
+        "If either mature theory expresses the exact ex-ante prediction under the same information, discard the candidate. If the anomaly is real but the reduction is unresolved, freeze the cheapest distinguishing falsifier instead of inventing novelty. Domain transfer, mathematical renaming, another benchmark/metric/taxonomy/test-generator, or combining occupied atoms is not novelty. Every mature_theory_baselines item MUST include name, same_information_projection, ex_ante_prediction, distinguishing_prediction, cannot_express, reduction_class, and exact_reduction_test. Every emitted candidate MUST include reduction_falsifiability_contract with all five *_checked/all_exact_reduction_tests_resolved booleans true; if you cannot truthfully set them true, do not emit the candidate.\n\n"
         "HARD NEGATIVE-SPACE VETO:\n"
         + json.dumps(reductions, ensure_ascii=False, separators=(",", ":"))
         + "\nSATURATION FIELD CONTRACT: matched_patterns may contain ONLY exact known ledger keys that actually apply; any exact match hard-blocks the candidate. If you explicitly considered a known key and argue it does NOT apply, put {key:<exact known key>, reason:<why>} in rejected_patterns instead. Never append explanatory prose to matched_patterns.\n"
