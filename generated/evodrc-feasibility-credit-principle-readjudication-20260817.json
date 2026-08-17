@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "EVODRC-FEASIBILITY-CREDIT",
+  "title": "Connectivity-admissible repair history is not a new persistent-credit primitive",
+  "adjudication_date": "2026-08-17",
+  "search_primitive": "UNEXPLAINED_BOUNDARY",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "dead_end_scope": "The standalone claim that EvoDRC's connectivity-gated repair history defines a novel credit semantics for persistent skill evolution because accepted repair records can coexist with locally harmful DRC outcomes.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "EvoDRC's released logs show a real label mismatch, but the mismatch is already explained by the distinction between feasibility/admissibility and causal utility credit. Across 24 released units with both an independent local DRC score and a gate verdict, all 24 pass the connectivity gate while 10/24 are locally net worse; seven of those locally harmful units occur in globally improving iterations. The gate therefore cannot identify positive local utility. Existing causal-utility admission principles already require persistent artifacts to be credited from matched downstream effect rather than feasibility, acceptance, or shared aggregate success.",
+      "opposite_prediction": "If gated_in is only an admissibility predicate, then connectivity-preserved repairs may have positive, zero, or negative local DRC utility, and a globally improving iteration can contain locally harmful accepted actions. A same-information utility/effect credit baseline would distinguish those cases using local or matched causal outcome polarity without introducing a new EvoDRC-specific credit primitive.",
+      "opposite_principle": "Feasibility or admissibility is not causal credit. Persistent self-evolution should assign positive credit only from a utility/effect label at the causal unit whose behavior is being persisted, or from a same-information estimator of that local effect.",
+      "opposite_search_seed": "Search only for a persistent-skill failure that remains after local causal utility/effect polarity is explicitly available and matched at the repair unit: for example, two records with the same local causal utility and admissibility but different later persistent-skill consequences that a same-information causal-utility baseline cannot express.",
+      "scope": "EvoDRC released unit-gate repair histories and persistent skill evolution at first-party commit 0a9b4c732cadce7a0718467aa10ef8a741da369a.",
+      "same_information_or_scope_matched": true,
+      "same_information_reduction_verified": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2607.20019",
+        "first-party-asset:ASU-VDA-Lab/EvoDRC@0a9b4c732cadce7a0718467aa10ef8a741da369a",
+        "local-asset:generated/evodrc-feasibility-credit-audit-20260817.json",
+        "project-principle:B-8-replicated-effect-memory-gate",
+        "project-principle:B-4-causally-verified-experience-admission"
+      ],
+      "alternative_explanations_ruled_out": [
+        "Wrong-layer bookkeeping alone: each repair record is copied to all touched-layer histories in the released implementation.",
+        "All admitted repairs have positive local effect: 10/24 independently scored gated-in units have positive drc_delta, i.e. locally worse DRC utility.",
+        "Only globally bad iterations create the mismatch: seven locally harmful gated-in units occur while the corresponding whole-block iteration improves.",
+        "Skill evolution is globally harmful: first-party Ablation 2 (fixed skills) is generally worse than full EvoDRC, including Block7 final 358 versus 275, so the audit does not support that broader claim."
+      ],
+      "reopen_condition": "Reopen only on a preregistered unit-matched substrate where feasibility/admissibility, local causal utility polarity, and the persisted semantic record are all independently observed; require a later persistent-skill harm/benefit residual among units matched on local causal utility and admissibility that survives a same-information causal-utility/difference-reward baseline."
+    }
+  },
+  "execution_binding": {
+    "audit_artifact": "generated/evodrc-feasibility-credit-audit-20260817.json",
+    "first_party_commit": "0a9b4c732cadce7a0718467aa10ef8a741da369a",
+    "model_calls": 0,
+    "eda_toolchain_runs": 0
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "evodrc-feasibility-credit-audit-20260817",
+  "source_ref": "arXiv:2607.20019",
+  "first_party_repository": "ASU-VDA-Lab/EvoDRC",
+  "first_party_commit": "0a9b4c732cadce7a0718467aa10ef8a741da369a",
+  "scientific_authority": false,
+  "model_calls": 0,
+  "toolchain_runs": 0,
+  "object": "Whether EvoDRC connectivity/admissibility gate status identifies positive local DRC utility for records persisted into skill-evolution history.",
+  "first_party_code_bindings": {
+    "agent/src/iter/evolve.py": "5b62313ecbb8482cd575fd0d01916622749c3dcd52cfe8da1d530cbbcb9462e9",
+    "agent/src/iter/layerdb.py": "c7637c1997772417fa73e1442f7b9f8e44694cf92f812292ed5d78cc240b4c3c"
+  },
+  "released_unit_audit": {
+    "independently_scored_units_with_gate_verdict": 24,
+    "gated_in": 24,
+    "local_net_better": 8,
+    "local_tie": 6,
+    "local_net_worse": 10,
+    "gated_in_local_worse_rate": 0.4166666666666667,
+    "global_iteration_improves_but_local_unit_worsens": 7,
+    "mixed_local_sign_iterations": [
+      {"block": "Block5", "iteration": 2, "global_drv_delta": -29, "local_better": 1, "local_worse": 1},
+      {"block": "Block7", "iteration": 1, "global_drv_delta": -371, "local_better": 2, "local_worse": 3}
+    ]
+  },
+  "structural_findings": [
+    "EvoDRC copies one repair record into every touched-layer history, so the simpler explanation 'credit is written only to the wrong target layer' is ruled out.",
+    "For unit_gate records, connectivity/admissibility can be accepted while local DRC utility is absent from the persisted record; the record instead carries shared block-level start/end outcome context.",
+    "The same history.jsonl records are fed to later skill generation/judging as measured evidence.",
+    "Therefore gated_in is a feasibility/admissibility predicate, not an identified positive-utility label."
+  ],
+  "first_party_witnesses": [
+    {
+      "block": "Block7",
+      "iteration": 1,
+      "unit": "leaf_0103",
+      "local_drc_delta": 4,
+      "global_block_delta": -371,
+      "score_sha256": "fd03b19ad227909136bc6eb4aeb885ce1a26ccbeb022ada60e4510e2eb9ee1ad",
+      "gate_sha256": "7c9e9b708829701677f83b0d365ff58a7eb817099c5762d7573a4c91eb41b107"
+    },
+    {
+      "block": "Block7",
+      "iteration": 4,
+      "trial_id": "i04.ug.leaf_0006.05",
+      "local_drc_delta": 161,
+      "global_block_delta": -69,
+      "final_skill_example": "skill/M1.md",
+      "final_skill_sha256": "e2aae369c44612d882ae0b8e89702e6a811cae2ec88735df5a4de62f7a7432d4",
+      "interpretation": "The record survives into persistent skill material, but released skill text can use such evidence both as caution and as an operational example; the audit therefore does not claim blind promotion of every locally harmful record."
+    }
+  ],
+  "safe_conclusion": "The released EvoDRC substrate directly demonstrates that connectivity/admissibility and local causal/utility polarity are different labels. This is evidence for a credit-semantics mismatch, not evidence that the mismatch is novel or that it dominates EvoDRC's final performance.",
+  "not_claimed": [
+    "EvoDRC skill evolution is harmful overall",
+    "layout decomposition is harmful overall",
+    "locally harmful trials are always promoted as successful skill rules",
+    "the observed credit ambiguity is a new causal primitive"
+  ]
+}
