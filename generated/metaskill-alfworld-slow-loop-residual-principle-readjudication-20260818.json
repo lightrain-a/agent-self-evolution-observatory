@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "METASKILL-ALFWORLD-SLOW-LOOP-RESIDUAL",
+  "title": "MetaSkill ALFWorld +1.92 residual is already explained by the source's own component ablations",
+  "adjudication_date": "2026-08-18",
+  "search_primitive": "UNEXPLAINED_BOUNDARY",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "source_ai_formulation_has_scientific_authority": false,
+  "broader_two_timescale_meta_skill_value_falsified": false,
+  "dead_end_scope": "MetaSkill-Evolve arXiv:2607.05297, restricted to the ALFWorld evidence-level claim that the slow meta-skill loop's +1.92-point gain over the 92.31 Single-Level/task-skill-saturated baseline is an unexplained residual that could define a new self-evolution mechanism after ordinary ceiling, finite-sample, or reweighting explanations are considered.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2607.05297",
+    "closed_evidence_sha256": [
+      "c28f8e64348e3cdb498f08606d3ce0d849710e2c9707b7ba9a6b65d9e39ef6d0"
+    ],
+    "closure_scope": "the ALFWorld +1.92 slow-loop residual over the 92.31 Single-Level/task-skill-saturated baseline only",
+    "scientific_authority": false
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "COUNTER_MECHANISM_SUPPORTED",
+    "counter_explanation": {
+      "type": "COUNTER_MECHANISM_SUPPORTED",
+      "statement": "The scoped +1.92 ALFWorld residual is already decomposed by the same primary source. Appendix E reports that the full two-timescale system reaches 94.23, while removing only cross-branch retrieval returns accuracy to 92.31, exactly the Single-Level baseline; the authors explicitly state that cross-branch transfer of reusable sub-routines accounts for the whole +1.92 improvement. Freezing the slow loop (no meta-updates) also returns to 92.31 exactly, while removing the edit-proposal policy drops performance from 94.23 to 86.54. Thus the observed aggregate residual is not unexplained negative space: source-internal component interventions positively identify the operative cross-branch/meta-update pathway and leave no reported residual requiring a new standalone mechanism.",
+      "opposite_prediction": "If the ALFWorld +1.92 gain is carried by the source's cross-branch slow-loop mechanism rather than by an additional unmodeled residual, then disabling cross-branch retrieval or disabling meta-updates should erase that gain and return the system to the Single-Level operating point. The reported ablations do exactly this: both no-cross-branch and no-meta-updates are 92.31 versus 94.23 for the full system; removing the edit-proposal policy is even more damaging at 86.54.",
+      "opposite_principle": "An aggregate improvement is not an unexplained self-evolution residual when the source's own matched component interventions already remove the entire gain. Source-internal causal/component decomposition must be exhausted before promoting that same gain into a new paper problem.",
+      "opposite_search_seed": "Search for a different evidence-level phenomenon, or reopen this one only if new primary/first-party evidence under the same frozen executor and ALFWorld protocol shows a reproducible residual after cross-branch transfer, slow-loop meta-updates, and edit-proposal-policy effects are explicitly matched or intervened on. Do not reopen from the same +1.92 aggregate row, another wording of task-skill saturation, or an unablated two-timescale comparison.",
+      "scope": "MetaSkill-Evolve arXiv:2607.05297, restricted to the ALFWorld evidence-level claim that the slow meta-skill loop's +1.92-point gain over the 92.31 Single-Level/task-skill-saturated baseline is an unexplained residual that could define a new self-evolution mechanism after ordinary ceiling, finite-sample, or reweighting explanations are considered.",
+      "same_information_or_scope_matched": true,
+      "counter_prediction_observed": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2607.05297",
+        "primary-fulltext:arXiv:2607.05297#sha256=84e40d16a13395870ca336bd8999e727d20aacc134f1fb821292a7452bc6fb8a",
+        "primary-fulltext-evidence:arXiv:2607.05297#sha256=ce524eda4377e0a18709b37e600f9388731c94baa1d81a07eb2abef5e3344dd4",
+        "fresh-primary-evidence:arXiv:2607.05297#sha256=c28f8e64348e3cdb498f08606d3ce0d849710e2c9707b7ba9a6b65d9e39ef6d0"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The +1.92 gain remains after removing cross-branch transfer: false; no-cross-branch is 92.31, exactly the Single-Level baseline.",
+        "The slow loop is unnecessary and the +1.92 is merely task-skill evolution: false; no-meta-updates is also 92.31, exactly the Single-Level row.",
+        "The source offers only an aggregate correlation with no mechanism intervention: false; Appendix E separately ablates cross-branch retrieval, meta-updates, and the edit-proposal policy on ALFWorld.",
+        "Closing this residual means MetaSkill-Evolve has no useful mechanism or that all MetaSkill evidence is closed: false; the closure is restricted to the exact +1.92 ALFWorld residual evidence item and leaves adjacent source phenomena eligible."
+      ],
+      "reopen_condition": "Reopen only with new primary or provenance-audited first-party evidence that holds the frozen Gemma executor, ALFWorld task/evaluation protocol, task-skill state, rollout budget, and evaluation information comparable while independently matching or intervening on cross-branch retrieval, slow-loop meta-updates, and edit-proposal-policy behavior, and still finds a replicated held-out gain or sign change not expressed by those source-identified components or ordinary ceiling/finite-sample effects."
+    },
+    "audit": {
+      "passed": true,
+      "status": "pass",
+      "type": "COUNTER_MECHANISM_SUPPORTED",
+      "blockers": [],
+      "statement": "The scoped +1.92 ALFWorld residual is already decomposed by the same primary source. Appendix E reports that the full two-timescale system reaches 94.23, while removing only cross-branch retrieval returns accuracy to 92.31, exactly the Single-Level baseline; the authors explicitly state that cross-branch transfer of reusable sub-routines accounts for the whole +1.92 improvement. Freezing the slow loop (no meta-updates) also returns to 92.31 exactly, while removing the edit-proposal policy drops performance from 94.23 to 86.54. Thus the observed aggregate residual is not unexplained negative space: source-internal component interventions positively identify the operative cross-branch/meta-update pathway and leave no reported residual requiring a new standalone mechanism.",
+      "opposite_prediction": "If the ALFWorld +1.92 gain is carried by the source's cross-branch slow-loop mechanism rather than by an additional unmodeled residual, then disabling cross-branch retrieval or disabling meta-updates should erase that gain and return the system to the Single-Level operating point. The reported ablations do exactly this: both no-cross-branch and no-meta-updates are 92.31 versus 94.23 for the full system; removing the edit-proposal policy is even more damaging at 86.54.",
+      "opposite_principle": "An aggregate improvement is not an unexplained self-evolution residual when the source's own matched component interventions already remove the entire gain. Source-internal causal/component decomposition must be exhausted before promoting that same gain into a new paper problem.",
+      "opposite_search_seed": "Search for a different evidence-level phenomenon, or reopen this one only if new primary/first-party evidence under the same frozen executor and ALFWorld protocol shows a reproducible residual after cross-branch transfer, slow-loop meta-updates, and edit-proposal-policy effects are explicitly matched or intervened on. Do not reopen from the same +1.92 aggregate row, another wording of task-skill saturation, or an unablated two-timescale comparison.",
+      "scope": "MetaSkill-Evolve arXiv:2607.05297, restricted to the ALFWorld evidence-level claim that the slow meta-skill loop's +1.92-point gain over the 92.31 Single-Level/task-skill-saturated baseline is an unexplained residual that could define a new self-evolution mechanism after ordinary ceiling, finite-sample, or reweighting explanations are considered.",
+      "evidence_refs": [
+        "arXiv:2607.05297",
+        "primary-fulltext:arXiv:2607.05297#sha256=84e40d16a13395870ca336bd8999e727d20aacc134f1fb821292a7452bc6fb8a",
+        "primary-fulltext-evidence:arXiv:2607.05297#sha256=ce524eda4377e0a18709b37e600f9388731c94baa1d81a07eb2abef5e3344dd4",
+        "fresh-primary-evidence:arXiv:2607.05297#sha256=c28f8e64348e3cdb498f08606d3ce0d849710e2c9707b7ba9a6b65d9e39ef6d0"
+      ],
+      "reopen_condition": "Reopen only with new primary or provenance-audited first-party evidence that holds the frozen Gemma executor, ALFWorld task/evaluation protocol, task-skill state, rollout budget, and evaluation information comparable while independently matching or intervening on cross-branch retrieval, slow-loop meta-updates, and edit-proposal-policy behavior, and still finds a replicated held-out gain or sign change not expressed by those source-identified components or ordinary ceiling/finite-sample effects."
+    }
+  },
+  "scientific_interpretation": {
+    "safe_claim": "The ALFWorld +1.92 observation is real, but it is not unexplained: MetaSkill-Evolve's own ablations return no-cross-branch and no-meta-updates to the 92.31 Single-Level baseline and explicitly attribute the full residual to cross-branch transfer within the slow loop.",
+    "do_not_say": [
+      "two-timescale meta-skill evolution is useless",
+      "cross-branch transfer can never produce a novel phenomenon",
+      "all evidence in arXiv:2607.05297 is closed",
+      "the +1.92 gain is statistically false"
+    ],
+    "new_search_basin": "residual-beyond-source-component-ablation"
+  },
+  "authority": {
+    "ai_review_authorizes_dead_end": false,
+    "source_internal_component_ablation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  },
+  "source_artifact_sha256": {
+    "primary_state": "bbd9d224f8305b90405ab1228f7f08e58002b10477296b9ffdc2c40b3ecb2646",
+    "primary_fulltext": "84e40d16a13395870ca336bd8999e727d20aacc134f1fb821292a7452bc6fb8a",
+    "appendix_component_ablation_evidence": "ce524eda4377e0a18709b37e600f9388731c94baa1d81a07eb2abef5e3344dd4",
+    "closed_fresh_evidence": "c28f8e64348e3cdb498f08606d3ce0d849710e2c9707b7ba9a6b65d9e39ef6d0"
+  }
+}
