@@ -1607,8 +1607,12 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         if execution:
             if execution.get("scientific_authority") is not False or execution.get("status")!="LANE_REVIEW_EXACT_RETRY_EXHAUSTED" or execution.get("stage")!="lane_review" or execution.get("retry_budget_exhausted") is not True or int(execution.get("provider_attempts") or 0)!=int(execution.get("exact_retry_limit") or 0)+1 or len(str(execution.get("relation_universe_digest") or ""))!=64 or len(str(execution.get("relation_raw_sha256") or ""))!=64:
                 errors.append("Global Relation Recall execution-retry exhaustion receipt invalid")
-            if str(execution.get("lane_review_execution_contract_sha256") or "")!=lane_review_execution_contract_sha256():
-                errors.append("Global Relation Recall exhausted lane-review contract must match current execution contract until explicitly upgraded")
+            contract_sha=str(execution.get("lane_review_execution_contract_sha256") or "")
+            if len(contract_sha)!=64 or any(ch not in "0123456789abcdef" for ch in contract_sha):
+                errors.append("Global Relation Recall exhausted lane-review execution-contract digest invalid")
+            # A receipt for an older versioned execution contract remains valid history.
+            # Retry exhaustion applies only when admission compares that digest to the
+            # current contract; a changed digest neither blocks nor authorizes a scan.
             if relation_status!="LANE_REVIEW_ERROR_ZERO_AUTHORITY":
                 errors.append("Global Relation Recall retry exhaustion requires a lane-review execution error state")
         if int(relation_summary.get("reduction_reviewed") or 0)!=int(relation_summary.get("lane_pass") or 0): errors.append("every lane-PASS global relation proposal must receive reduction review")

@@ -9,7 +9,7 @@ from pathlib import Path
 
 from .config import StorageSettings
 from .ark_provider import ArkResponseStateError
-from .paper_first_global_relation_recall import _card, mark_lane_review_retry_exhausted, resume_global_relation_recall_from_relation_raw, run_global_relation_recall, write_global_relation_recall_state
+from .paper_first_global_relation_recall import LANE_REVIEW_BATCH_SIZE, _card, _review_lane_proposals, lane_review_execution_contract_sha256, mark_lane_review_retry_exhausted, resume_global_relation_recall_from_relation_raw, run_global_relation_recall, write_global_relation_recall_state
 from .paper_first_relation_coverage import relation_universe_digest
 
 
@@ -71,6 +71,57 @@ class GlobalRelationRecallTest(unittest.TestCase):
             item={"proposal_id":"REL-CONTRADICTION-1","verdict":verdict,"exact_prediction":"Prediction under matched information.","matched_patterns":[],"strongest_reduction":"mature object" if verdict=="REDUCIBLE" else "none","residual_prediction":residual}
             return {"text":json.dumps({"reviews":[item],"diagnosis":"reduction review"}),"resolved_model":resolved}
         return responder
+
+    def test_lane_review_execution_contract_shards_and_scopes_primary_cards(self) -> None:
+        proposals=[];registry={}
+        for i in range(13):
+            a=f"arXiv:{100+i}";b=f"arXiv:{200+i}"
+            for ref in (a,b):
+                registry.setdefault(ref,{"ref":ref,"title":ref,"abstract":f"Evidence for {ref}","lane_keys":["skill_harness"],"empirical_facts":[],"typed_evidence":{"operational_assumptions":[],"measured_failures":[],"boundary_observations":[]}})
+            proposals.append({"proposal_id":f"REL-CONTRADICTION-{i+1}","lane":"CONTRADICTION","source_refs":[a,b]})
+        calls=[]
+        def responder(**kwargs):
+            prompt=kwargs["prompt"]
+            batch=json.loads(prompt.split(" PROPOSALS=",1)[1].split(" CARDS=",1)[0])
+            cards=json.loads(prompt.split(" CARDS=",1)[1])
+            calls.append((len(batch),sorted(card["ref"] for card in cards)))
+            expected_refs=sorted({ref for proposal in batch for ref in proposal["source_refs"]})
+            self.assertEqual(sorted(card["ref"] for card in cards),expected_refs)
+            reviews=[{"proposal_id":proposal["proposal_id"],"verdict":"FAIL","reason":"strict batch review","missing":"matched operationalization"} for proposal in batch]
+            return {"text":json.dumps({"reviews":reviews,"diagnosis":"batch"}),"resolved_model":"glm-5.3"}
+        with tempfile.TemporaryDirectory() as td:
+            state={"raw_artifacts":{}}
+            reviews=_review_lane_proposals(proposals=proposals,registry=registry,storage=self.storage(Path(td)),run_id="batch-test",relation_resolved_model="kimi-k3",state=state,responder=responder)
+        self.assertEqual([size for size,_ in calls],[LANE_REVIEW_BATCH_SIZE,LANE_REVIEW_BATCH_SIZE,1])
+        self.assertEqual(set(reviews),{proposal["proposal_id"] for proposal in proposals})
+        self.assertEqual(state["lane_review_execution"]["batches_total"],3)
+        self.assertEqual(state["lane_review_execution"]["batches_completed"],3)
+        self.assertTrue(state["lane_review_execution"]["partial_batch_reviews_have_zero_lane_authority"])
+        self.assertEqual(state["raw_artifacts"]["lane_review"]["provider_calls_executed"],3)
+        self.assertEqual(state["raw_artifacts"]["lane_review"]["execution_contract_sha256"],lane_review_execution_contract_sha256())
+
+    def test_lane_review_partial_batch_failure_never_returns_partial_reviews(self) -> None:
+        proposals=[];registry={}
+        for i in range(LANE_REVIEW_BATCH_SIZE+1):
+            a=f"arXiv:{300+i}";b=f"arXiv:{400+i}"
+            for ref in (a,b):
+                registry.setdefault(ref,{"ref":ref,"title":ref,"abstract":"evidence","lane_keys":["skill_harness"],"empirical_facts":[],"typed_evidence":{"operational_assumptions":[],"measured_failures":[],"boundary_observations":[]}})
+            proposals.append({"proposal_id":f"REL-UNEXPLAINED_BOUNDARY-{i+1}","lane":"UNEXPLAINED_BOUNDARY","source_refs":[a,b]})
+        calls=0
+        def responder(**kwargs):
+            nonlocal calls;calls+=1
+            if calls==2: raise RuntimeError("second batch transport failure")
+            batch=json.loads(kwargs["prompt"].split(" PROPOSALS=",1)[1].split(" CARDS=",1)[0])
+            return {"text":json.dumps({"reviews":[{"proposal_id":proposal["proposal_id"],"verdict":"FAIL","reason":"batch one","missing":"x"} for proposal in batch],"diagnosis":"partial"}),"resolved_model":"glm-5.3"}
+        with tempfile.TemporaryDirectory() as td:
+            state={"raw_artifacts":{}}
+            with self.assertRaisesRegex(RuntimeError,"second batch"):
+                _review_lane_proposals(proposals=proposals,registry=registry,storage=self.storage(Path(td)),run_id="partial-test",relation_resolved_model="kimi-k3",state=state,responder=responder)
+        self.assertEqual(state["lane_review_execution"]["batches_completed"],1)
+        self.assertEqual(state["lane_review_execution"]["batches_total"],2)
+        self.assertIn("lane_review_p1",state["raw_artifacts"])
+        self.assertNotIn("lane_review",state["raw_artifacts"])
+        self.assertTrue(all("lane_review" not in proposal for proposal in proposals))
 
     def test_incomplete_cache_holds_with_zero_model_calls(self) -> None:
         calls=[]

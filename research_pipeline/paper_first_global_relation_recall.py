@@ -29,7 +29,8 @@ DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-global-relation-recall.js
 RELATION_MODEL = preferred_model("relation_mining")
 LANE_REVIEW_MODEL = preferred_model("relation_lane_review")
 REDUCTION_MODEL = preferred_model("relation_reduction_review")
-LANE_REVIEW_EXECUTION_CONTRACT_VERSION = "relation-lane-review-v1"
+LANE_REVIEW_EXECUTION_CONTRACT_VERSION = "relation-lane-review-sharded-v2"
+LANE_REVIEW_BATCH_SIZE = 6
 PAIR_RELATION_BUDGETS = {
     "CONTRADICTION": 5,
     "CONVERGENT_FAILURE": 5,
@@ -152,7 +153,17 @@ def relation_prompt(cards: list[dict[str, Any]], required_touch_refs: set[str] |
 
 
 def lane_review_execution_contract_sha256() -> str:
-    material={"version":LANE_REVIEW_EXECUTION_CONTRACT_VERSION,"model":LANE_REVIEW_MODEL,"max_output_tokens":6500,"thinking":"disabled","temperature":0.0,"review_contract":"all proposals exactly once; PASS only on supplied primary evidence and frozen lane contract"}
+    material={
+        "version":LANE_REVIEW_EXECUTION_CONTRACT_VERSION,
+        "model":LANE_REVIEW_MODEL,
+        "max_output_tokens":6500,
+        "thinking":"disabled",
+        "temperature":0.0,
+        "batch_size":LANE_REVIEW_BATCH_SIZE,
+        "cards_scoped_to_batch_source_refs":True,
+        "partial_batch_reviews_have_zero_lane_authority":True,
+        "review_contract":"all proposals exactly once; PASS only on supplied primary evidence and frozen lane contract",
+    }
     return hashlib.sha256(json.dumps(material,sort_keys=True,separators=(",",":")).encode()).hexdigest()
 
 
@@ -166,6 +177,82 @@ def lane_prompt(proposals: list[dict[str, Any]], cards: list[dict[str, Any]]) ->
         " PROPOSALS="+json.dumps(proposals,ensure_ascii=False,separators=(",",":"))+
         " CARDS="+json.dumps(cards,ensure_ascii=False,separators=(",",":"))
     )
+
+
+def _lane_review_batches(proposals: list[dict[str, Any]], batch_size: int = LANE_REVIEW_BATCH_SIZE) -> list[list[dict[str, Any]]]:
+    size=max(1,int(batch_size))
+    return [proposals[start:start+size] for start in range(0,len(proposals),size)]
+
+
+def _lane_review_resolved_models(state: dict[str, Any]) -> set[str]:
+    summary=((state.get("raw_artifacts") or {}).get("lane_review") or {})
+    values=summary.get("resolved_models") or []
+    return {str(value).strip() for value in values if str(value).strip()}
+
+
+def _review_lane_proposals(
+    *,
+    proposals: list[dict[str, Any]],
+    registry: dict[str, dict[str, Any]],
+    storage: StorageSettings,
+    run_id: str,
+    relation_resolved_model: str,
+    state: dict[str, Any],
+    responder: Responder | None = None,
+) -> dict[str, dict[str, Any]]:
+    """Review lane contracts in bounded batches without partial scientific credit.
+
+    Each batch sees only the primary cards referenced by that batch. Raw responses
+    are persisted batch-by-batch for execution recovery, but proposal lane_review
+    fields are assigned only after every batch returns a complete normalized review.
+    """
+    batches=_lane_review_batches(proposals)
+    call=responder or _ark
+    combined:dict[str,dict[str,Any]]={}
+    resolved_models:set[str]=set()
+    state["lane_review_execution"]={
+        "version":LANE_REVIEW_EXECUTION_CONTRACT_VERSION,
+        "execution_contract_sha256":lane_review_execution_contract_sha256(),
+        "batch_size":LANE_REVIEW_BATCH_SIZE,
+        "batches_total":len(batches),
+        "batches_completed":0,
+        "partial_batch_reviews_have_zero_lane_authority":True,
+        "cards_scoped_to_batch_source_refs":True,
+        "scientific_authority":False,
+    }
+    for index,batch in enumerate(batches,1):
+        refs=sorted({ref for proposal in batch for ref in proposal.get("source_refs") or []})
+        cards=[_card(registry[ref]) for ref in refs]
+        response=call(prompt=lane_prompt(batch,cards),model=LANE_REVIEW_MODEL,max_output_tokens=6500)
+        raw=str(response.get("text") or "")
+        artifact=_write_raw(storage,run_id,f"lane-review-p{index}",LANE_REVIEW_MODEL,raw)
+        artifact.update({
+            "resolved_model":str(response.get("resolved_model") or LANE_REVIEW_MODEL),
+            "batch_index":index,
+            "proposal_ids":[str(proposal.get("proposal_id") or "") for proposal in batch],
+            "execution_contract_sha256":lane_review_execution_contract_sha256(),
+        })
+        state["raw_artifacts"][f"lane_review_p{index}"]=artifact
+        resolved_models.add(artifact["resolved_model"])
+        if artifact["resolved_model"]==str(relation_resolved_model or ""):
+            raise RuntimeError("relation-lane-reviewer-not-independent")
+        batch_reviews=_normalize_lane_reviews(extract_json_object(raw),batch)
+        combined.update(batch_reviews)
+        state["lane_review_execution"]["batches_completed"]=index
+    expected={str(proposal.get("proposal_id") or "") for proposal in proposals}
+    if set(combined)!=expected:
+        raise ValueError("lane-review-batch-aggregation-incomplete")
+    state["raw_artifacts"]["lane_review"]={
+        "requested_model":LANE_REVIEW_MODEL,
+        "resolved_models":sorted(resolved_models),
+        "resolved_model":"|".join(sorted(resolved_models)),
+        "provider_calls_executed":len(batches),
+        "batches":len(batches),
+        "batch_size":LANE_REVIEW_BATCH_SIZE,
+        "execution_contract_sha256":lane_review_execution_contract_sha256(),
+        "scientific_authority":False,
+    }
+    return combined
 
 
 def reduction_prompt(proposals: list[dict[str, Any]], cards: list[dict[str, Any]]) -> str:
@@ -263,11 +350,9 @@ def run_global_relation_recall(*,storage:StorageSettings|None=None,primary_state
     except Exception as error:
         state["status"]="RELATION_PROVIDER_ERROR_ZERO_AUTHORITY";state["error"]=_provider_error_text(error);state["summary"]=_summary(coverage,target,cached,[]);return state
     if proposals:
-        refs=sorted({ref for x in proposals for ref in x["source_refs"]});cards2=[_card(registry[ref]) for ref in refs];call=lane_responder or _ark
         try:
-            response=call(prompt=lane_prompt(proposals,cards2),model=LANE_REVIEW_MODEL,max_output_tokens=6500);raw=str(response.get("text") or "");artifact=_write_raw(storage,run_id,"lane-review",LANE_REVIEW_MODEL,raw);artifact["resolved_model"]=str(response.get("resolved_model") or LANE_REVIEW_MODEL);state["raw_artifacts"]["lane_review"]=artifact
-            if artifact["resolved_model"]==str((state["raw_artifacts"].get("relation") or {}).get("resolved_model") or ""): raise RuntimeError("relation-lane-reviewer-not-independent")
-            reviews=_normalize_lane_reviews(extract_json_object(raw),proposals)
+            relation_resolved=str((state["raw_artifacts"].get("relation") or {}).get("resolved_model") or "")
+            reviews=_review_lane_proposals(proposals=proposals,registry=registry,storage=storage,run_id=run_id,relation_resolved_model=relation_resolved,state=state,responder=lane_responder)
             for x in proposals:x["lane_review"]=reviews[x["proposal_id"]]
         except Exception as error:
             state["status"]="LANE_REVIEW_ERROR_ZERO_AUTHORITY";state["error"]=_provider_error_text(error);state["proposals"]=proposals;state["summary"]=_summary(coverage,target,cached,proposals);return state
@@ -276,7 +361,7 @@ def run_global_relation_recall(*,storage:StorageSettings|None=None,primary_state
         refs=sorted({ref for x in passed for ref in x["source_refs"]});cards3=[_card(registry[ref]) for ref in refs];call=reduction_responder or _ark
         try:
             response=call(prompt=reduction_prompt(passed,cards3),model=REDUCTION_MODEL,max_output_tokens=6000);raw=str(response.get("text") or "");artifact=_write_raw(storage,run_id,"reduction-review",REDUCTION_MODEL,raw);artifact["resolved_model"]=str(response.get("resolved_model") or REDUCTION_MODEL);state["raw_artifacts"]["reduction_review"]=artifact
-            if artifact["resolved_model"]==str((state["raw_artifacts"].get("lane_review") or {}).get("resolved_model") or ""): raise RuntimeError("lane-reduction-reviewer-not-independent")
+            if artifact["resolved_model"] in _lane_review_resolved_models(state): raise RuntimeError("lane-reduction-reviewer-not-independent")
             reviews=_normalize_reductions(extract_json_object(raw),passed)
             for x in passed:x["reduction_review"]=reviews[x["proposal_id"]]
         except Exception as error:
@@ -404,11 +489,8 @@ def resume_global_relation_recall_from_relation_raw(
         state["status"]="RELATION_REPLAY_PARSE_ERROR_ZERO_AUTHORITY";state["error"]=_provider_error_text(error);state["summary"]=_summary(coverage,target,cached,[]);return state
 
     if proposals:
-        refs=sorted({ref for x in proposals for ref in x["source_refs"]});cards2=[_card(registry[ref]) for ref in refs];call=lane_responder or _ark
         try:
-            response=call(prompt=lane_prompt(proposals,cards2),model=LANE_REVIEW_MODEL,max_output_tokens=6500);lane_raw=str(response.get("text") or "");lane_artifact=_write_raw(storage,run_id,"lane-review",LANE_REVIEW_MODEL,lane_raw);lane_artifact["resolved_model"]=str(response.get("resolved_model") or LANE_REVIEW_MODEL);state["raw_artifacts"]["lane_review"]=lane_artifact
-            if lane_artifact["resolved_model"]==resolved: raise RuntimeError("relation-lane-reviewer-not-independent")
-            reviews=_normalize_lane_reviews(extract_json_object(lane_raw),proposals)
+            reviews=_review_lane_proposals(proposals=proposals,registry=registry,storage=storage,run_id=run_id,relation_resolved_model=resolved,state=state,responder=lane_responder)
             for x in proposals:x["lane_review"]=reviews[x["proposal_id"]]
         except Exception as error:
             state["status"]="LANE_REVIEW_ERROR_ZERO_AUTHORITY";state["error"]=_provider_error_text(error);state["proposals"]=proposals;state["summary"]=_summary(coverage,target,cached,proposals);return state
@@ -417,7 +499,7 @@ def resume_global_relation_recall_from_relation_raw(
         refs=sorted({ref for x in passed for ref in x["source_refs"]});cards3=[_card(registry[ref]) for ref in refs];call=reduction_responder or _ark
         try:
             response=call(prompt=reduction_prompt(passed,cards3),model=REDUCTION_MODEL,max_output_tokens=6000);reduction_raw=str(response.get("text") or "");red_artifact=_write_raw(storage,run_id,"reduction-review",REDUCTION_MODEL,reduction_raw);red_artifact["resolved_model"]=str(response.get("resolved_model") or REDUCTION_MODEL);state["raw_artifacts"]["reduction_review"]=red_artifact
-            if red_artifact["resolved_model"]==str((state["raw_artifacts"].get("lane_review") or {}).get("resolved_model") or ""): raise RuntimeError("lane-reduction-reviewer-not-independent")
+            if red_artifact["resolved_model"] in _lane_review_resolved_models(state): raise RuntimeError("lane-reduction-reviewer-not-independent")
             reviews=_normalize_reductions(extract_json_object(reduction_raw),passed)
             for x in passed:x["reduction_review"]=reviews[x["proposal_id"]]
         except Exception as error:
@@ -477,7 +559,7 @@ def mark_lane_review_retry_exhausted(state:dict[str,Any], *, attempt_run_ids:lis
     delta=out.get("delta_scan") or {};relation_digest=str((out.get("summary") or {}).get("relation_universe_digest") or "")
     if not re.fullmatch(r"[0-9a-f]{64}",relation_digest):raise ValueError("lane retry exhaustion requires current relation universe digest")
     out.setdefault("policy",{}).update({"same_relation_universe_lane_review_retry_budget_bounded":True,"lane_review_retry_exhaustion_is_execution_control_not_scientific_negative":True,"lane_review_retry_reopens_only_on_new_relation_universe_or_execution_contract":True})
-    out["execution_control"]={"status":"LANE_REVIEW_EXACT_RETRY_EXHAUSTED","stage":"lane_review","relation_universe_digest":relation_digest,"required_new_endpoint_digest":str(delta.get("required_new_endpoint_digest") or ""),"relation_raw_sha256":raw_sha,"lane_review_model":LANE_REVIEW_MODEL,"lane_review_execution_contract_sha256":lane_review_execution_contract_sha256(),"attempt_run_ids":attempts,"provider_attempts":len(attempts),"exact_retry_limit":int(exact_retry_limit),"retry_budget_exhausted":True,"scientific_authority":False,"reopen_only_if":"A new relation source universe is frozen, or the versioned lane-review execution contract changes before a new explicit-manual attempt. The same 233-source universe and same GLM-5.3/6500-token lane contract must not be retried again."}
+    out["execution_control"]={"status":"LANE_REVIEW_EXACT_RETRY_EXHAUSTED","stage":"lane_review","relation_universe_digest":relation_digest,"required_new_endpoint_digest":str(delta.get("required_new_endpoint_digest") or ""),"relation_raw_sha256":raw_sha,"lane_review_model":LANE_REVIEW_MODEL,"lane_review_execution_contract_version":LANE_REVIEW_EXECUTION_CONTRACT_VERSION,"lane_review_batch_size":LANE_REVIEW_BATCH_SIZE,"lane_review_execution_contract_sha256":lane_review_execution_contract_sha256(),"attempt_run_ids":attempts,"provider_attempts":len(attempts),"exact_retry_limit":int(exact_retry_limit),"retry_budget_exhausted":True,"scientific_authority":False,"reopen_only_if":f"A new relation source universe is frozen, or the versioned lane-review execution contract changes before a new explicit-manual attempt. Do not retry the same universe under {LANE_REVIEW_EXECUTION_CONTRACT_VERSION} (batch_size={LANE_REVIEW_BATCH_SIZE}) after this receipt."}
     return out
 
 
