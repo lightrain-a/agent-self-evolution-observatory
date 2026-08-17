@@ -29,6 +29,7 @@ DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-global-relation-recall.js
 RELATION_MODEL = preferred_model("relation_mining")
 LANE_REVIEW_MODEL = preferred_model("relation_lane_review")
 REDUCTION_MODEL = preferred_model("relation_reduction_review")
+LANE_REVIEW_EXECUTION_CONTRACT_VERSION = "relation-lane-review-v1"
 PAIR_RELATION_BUDGETS = {
     "CONTRADICTION": 5,
     "CONVERGENT_FAILURE": 5,
@@ -148,6 +149,11 @@ def relation_prompt(cards: list[dict[str, Any]], required_touch_refs: set[str] |
         " RETURN JSON ONLY="+json.dumps(shape,ensure_ascii=False,separators=(",",":"))+
         " CARDS="+json.dumps(cards,ensure_ascii=False,separators=(",",":"))
     )
+
+
+def lane_review_execution_contract_sha256() -> str:
+    material={"version":LANE_REVIEW_EXECUTION_CONTRACT_VERSION,"model":LANE_REVIEW_MODEL,"max_output_tokens":6500,"thinking":"disabled","temperature":0.0,"review_contract":"all proposals exactly once; PASS only on supplied primary evidence and frozen lane contract"}
+    return hashlib.sha256(json.dumps(material,sort_keys=True,separators=(",",":")).encode()).hexdigest()
 
 
 def lane_prompt(proposals: list[dict[str, Any]], cards: list[dict[str, Any]]) -> str:
@@ -457,6 +463,22 @@ def write_resumed_global_relation_recall_state(
     private=_root(storage);private.mkdir(parents=True,exist_ok=True);(private/"latest.json").write_text(json.dumps(state,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     public=public_relation_recall_state(state,storage);json_path.parent.mkdir(parents=True,exist_ok=True);json_path.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");js_path.write_text("window.PAPER_FIRST_GLOBAL_RELATION_RECALL = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
     return state
+
+
+def mark_lane_review_retry_exhausted(state:dict[str,Any], *, attempt_run_ids:list[str], exact_retry_limit:int=1)->dict[str,Any]:
+    """Mark a same-universe lane-review execution path terminal after its exact retry."""
+    out=json.loads(json.dumps(state,ensure_ascii=False))
+    if out.get("status")!="LANE_REVIEW_ERROR_ZERO_AUTHORITY":raise ValueError("lane retry exhaustion requires LANE_REVIEW_ERROR_ZERO_AUTHORITY")
+    relation_artifact=(out.get("raw_artifacts") or {}).get("relation") or {};raw_sha=str(relation_artifact.get("sha256") or "")
+    if not re.fullmatch(r"[0-9a-f]{64}",raw_sha):raise ValueError("lane retry exhaustion requires exact archived relation raw")
+    attempts=[str(value).strip() for value in attempt_run_ids if str(value).strip()]
+    expected_attempts=max(1,int(exact_retry_limit)+1)
+    if len(attempts)!=expected_attempts or len(set(attempts))!=len(attempts):raise ValueError("lane retry exhaustion attempt accounting invalid")
+    delta=out.get("delta_scan") or {};relation_digest=str((out.get("summary") or {}).get("relation_universe_digest") or "")
+    if not re.fullmatch(r"[0-9a-f]{64}",relation_digest):raise ValueError("lane retry exhaustion requires current relation universe digest")
+    out.setdefault("policy",{}).update({"same_relation_universe_lane_review_retry_budget_bounded":True,"lane_review_retry_exhaustion_is_execution_control_not_scientific_negative":True,"lane_review_retry_reopens_only_on_new_relation_universe_or_execution_contract":True})
+    out["execution_control"]={"status":"LANE_REVIEW_EXACT_RETRY_EXHAUSTED","stage":"lane_review","relation_universe_digest":relation_digest,"required_new_endpoint_digest":str(delta.get("required_new_endpoint_digest") or ""),"relation_raw_sha256":raw_sha,"lane_review_model":LANE_REVIEW_MODEL,"lane_review_execution_contract_sha256":lane_review_execution_contract_sha256(),"attempt_run_ids":attempts,"provider_attempts":len(attempts),"exact_retry_limit":int(exact_retry_limit),"retry_budget_exhausted":True,"scientific_authority":False,"reopen_only_if":"A new relation source universe is frozen, or the versioned lane-review execution contract changes before a new explicit-manual attempt. The same 233-source universe and same GLM-5.3/6500-token lane contract must not be retried again."}
+    return out
 
 
 def public_relation_recall_state(state:dict[str,Any],storage:StorageSettings|None=None)->dict[str,Any]:

@@ -59,7 +59,7 @@ from .paper_first_shadow_search_admission import DEFAULT_JSON as SHADOW_SEARCH_A
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier, validate_shadow_continuation_frontier
 from .paper_first_search_portfolio_design_adjudication import DEFAULT_JSON as SEARCH_PORTFOLIO_DESIGN_JSON, build_search_portfolio_design_adjudication, validate_search_portfolio_design_adjudication, write_search_portfolio_design_adjudication
 from .paper_first_sp15_identifiability_support import build_sp15_identifiability_support, write_sp15_identifiability_support
-from .paper_first_global_relation_recall import load_global_relation_recall_state
+from .paper_first_global_relation_recall import lane_review_execution_contract_sha256, load_global_relation_recall_state
 from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission, public_global_relation_scan_admission_summary
 from .paper_first_relation_coverage import relation_recall_freshness
 from .paper_first_relation_delta_preflight import load_private_relation_delta_preflight, public_relation_delta_preflight_summary
@@ -1603,6 +1603,14 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         if relation_policy.get("source_coverage_exhaustion_is_not_relation_exhaustion") is not True or relation_policy.get("relation_miner_is_search_control_only") is not True or relation_policy.get("cross_source_recall_supplements_but_does_not_replace_search_portfolio") is not True or relation_policy.get("all_lane_pass_proposals_require_reduction_review") is not True or relation_policy.get("not_reduced_only_reopens_focused_problem_generator") is not True: errors.append("Global Relation Recall must remain a zero-authority cross-source supplement after Search Portfolio")
         if any(relation_policy.get(key) is not False for key in ("automatic_problem_gate_authority","automatic_method_authority","automatic_experiment_authority","automatic_p0_authority")): errors.append("Global Relation Recall cannot authorize Problem Gate, method, experiment, or P0")
         if relation_coverage.get("scientific_authority") is not False or relation.get("scientific_authority") is not False: errors.append("Global relation coverage/recall cannot carry scientific authority")
+        execution=relation.get("execution_control") or {}
+        if execution:
+            if execution.get("scientific_authority") is not False or execution.get("status")!="LANE_REVIEW_EXACT_RETRY_EXHAUSTED" or execution.get("stage")!="lane_review" or execution.get("retry_budget_exhausted") is not True or int(execution.get("provider_attempts") or 0)!=int(execution.get("exact_retry_limit") or 0)+1 or len(str(execution.get("relation_universe_digest") or ""))!=64 or len(str(execution.get("relation_raw_sha256") or ""))!=64:
+                errors.append("Global Relation Recall execution-retry exhaustion receipt invalid")
+            if str(execution.get("lane_review_execution_contract_sha256") or "")!=lane_review_execution_contract_sha256():
+                errors.append("Global Relation Recall exhausted lane-review contract must match current execution contract until explicitly upgraded")
+            if relation_status!="LANE_REVIEW_ERROR_ZERO_AUTHORITY":
+                errors.append("Global Relation Recall retry exhaustion requires a lane-review execution error state")
         if int(relation_summary.get("reduction_reviewed") or 0)!=int(relation_summary.get("lane_pass") or 0): errors.append("every lane-PASS global relation proposal must receive reduction review")
         if bool(relation_summary.get("focused_problem_generator_reopen_required"))!=(int(relation_summary.get("not_reduced") or 0)>0): errors.append("focused problem-generator reopen must be equivalent to a NOT_REDUCED global relation residual")
         if relation_status in {"GLOBAL_RELATION_RECALL_COMPLETE","SKIPPED_RELATION_UNIVERSE_UNCHANGED"}:
@@ -1659,14 +1667,17 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             errors.append("relation delta preflight must remain deterministic zero-authority search control")
         if delta_summary.get("model_scan_authorized") is True or delta_summary.get("focused_generator_reopen_authorized") is True:
             errors.append("relation delta preflight cannot authorize model scan or focused generator reopen")
-    relation_admission=state.get("paper_first_global_relation_scan_admission") or {};admission_policy=relation_admission.get("policy") or {};admission_summary=relation_admission.get("summary") or {};admission_status=str(relation_admission.get("status") or "HOLD_MANUAL_RELATION_SCAN")
+    relation_admission=state.get("paper_first_global_relation_scan_admission") or {};admission_policy=relation_admission.get("policy") or {};admission_summary=relation_admission.get("summary") or {};admission_status=str(relation_admission.get("status") or "HOLD_MANUAL_RELATION_SCAN");admission_schema=str(relation_admission.get("schema_version") or "0")
     if relation_admission:
-        if relation_admission.get("scientific_authority") is not False or admission_policy.get("automatic_model_scan_authority") is not False or admission_policy.get("manual_execution_requires_explicit_operator_flag") is not True or admission_policy.get("manual_eligibility_is_not_scientific_authority") is not True or admission_policy.get("relation_scan_cannot_authorize_problem_gate") is not True or admission_policy.get("relation_scan_cannot_authorize_method_experiment_p0_gpu") is not True or admission_policy.get("preconditions_are_deterministic_search_control_only") is not True:
+        new_retry_policy_ok=admission_schema<"1.1" or admission_policy.get("same_relation_universe_lane_review_retry_exhaustion_blocks_repeat_scan") is True
+        if relation_admission.get("scientific_authority") is not False or admission_policy.get("automatic_model_scan_authority") is not False or admission_policy.get("manual_execution_requires_explicit_operator_flag") is not True or admission_policy.get("manual_eligibility_is_not_scientific_authority") is not True or admission_policy.get("relation_scan_cannot_authorize_problem_gate") is not True or admission_policy.get("relation_scan_cannot_authorize_method_experiment_p0_gpu") is not True or admission_policy.get("preconditions_are_deterministic_search_control_only") is not True or not new_retry_policy_ok:
             errors.append("manual relation-scan admission must remain deterministic zero-authority execution precondition")
         if admission_summary.get("automatic_model_scan_authorized") is not False:
             errors.append("manual relation-scan admission cannot authorize model calls automatically")
         if (admission_status=="ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN") != (admission_summary.get("manual_scan_eligible") is True):
             errors.append("manual relation-scan eligibility status/accounting mismatch")
+        if admission_status=="HOLD_RELATION_REVIEW_RETRY_EXHAUSTED" and (admission_summary.get("relation_lane_review_retry_exhausted") is not True or admission_summary.get("manual_scan_eligible") is not False):
+            errors.append("exhausted relation lane-review retry must block repeat manual scan")
     if (pf357_summary.get("reviewed"),pf357_summary.get("stopped_standalone"),pf357_summary.get("paper_design_authorized"),pf357_summary.get("local_validation_authorized")) != (3,3,0,0): errors.append("PF-3/PF-5/PF-7 must all terminate standalone before Paper Design/local validation")
     post_c2 = state.get("paper_first_post_c2") or {}; post_c2_auth = post_c2.get("authority") or {}
     if post_c2.get("decision") != "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM" or post_c2_auth.get("clean_mechanism_stop") is not True: errors.append("post-C2 paper mechanism terminal adjudication must preserve the clean local falsifier STOP")

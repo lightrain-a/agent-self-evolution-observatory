@@ -9,7 +9,7 @@ from pathlib import Path
 
 from .config import StorageSettings
 from .ark_provider import ArkResponseStateError
-from .paper_first_global_relation_recall import _card, resume_global_relation_recall_from_relation_raw, run_global_relation_recall, write_global_relation_recall_state
+from .paper_first_global_relation_recall import _card, mark_lane_review_retry_exhausted, resume_global_relation_recall_from_relation_raw, run_global_relation_recall, write_global_relation_recall_state
 from .paper_first_relation_coverage import relation_universe_digest
 
 
@@ -177,6 +177,13 @@ class GlobalRelationRecallTest(unittest.TestCase):
         self.assertNotIn("resp-secret-123",state["error"])
         self.assertIn("reason=length",state["error"])
         self.assertEqual(state["raw_artifacts"]["relation"]["provider_calls_executed"],0)
+        exhausted=mark_lane_review_retry_exhausted(state,attempt_run_ids=["first-attempt","exact-retry"],exact_retry_limit=1)
+        execution=exhausted["execution_control"]
+        self.assertEqual(execution["status"],"LANE_REVIEW_EXACT_RETRY_EXHAUSTED")
+        self.assertEqual(execution["provider_attempts"],2)
+        self.assertTrue(execution["retry_budget_exhausted"])
+        self.assertEqual(execution["relation_raw_sha256"],raw_sha)
+        self.assertTrue(exhausted["policy"]["lane_review_retry_exhaustion_is_execution_control_not_scientific_negative"])
 
     def test_provider_error_preserves_last_completed_scan_boundary(self) -> None:
         previous=self.previous_scan_for_first_receipt()

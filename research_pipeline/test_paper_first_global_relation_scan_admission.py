@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import unittest
 
+from .paper_first_global_relation_recall import lane_review_execution_contract_sha256
 from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission, public_global_relation_scan_admission_summary
 
 
@@ -41,7 +42,7 @@ class GlobalRelationScanAdmissionTest(unittest.TestCase):
     def test_public_summary_exposes_gate_counts_without_check_details(self) -> None:
         state=self.build();public=public_global_relation_scan_admission_summary(state);encoded=str(public)
         self.assertEqual(public["status"],"ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN")
-        self.assertEqual((public["summary"]["checks"],public["summary"]["passed"],public["summary"]["failed"]),(15,15,0))
+        self.assertEqual((public["summary"]["checks"],public["summary"]["passed"],public["summary"]["failed"]),(16,16,0))
         self.assertTrue(public["summary"]["manual_scan_eligible"])
         self.assertFalse(public["summary"]["automatic_model_scan_authorized"])
         self.assertNotIn("checks",public)
@@ -90,6 +91,28 @@ class GlobalRelationScanAdmissionTest(unittest.TestCase):
         queue["summary"].update({"audited":1,"blocked_problem_gate":0,"passed_problem_gate":1,"paper_design_eligible":1})
         state=self.build(generator=generator,queue=queue)
         self.assertIn("canonical-live-discovery-terminal-no-survivor",state["failed_checks"])
+
+    def test_same_universe_lane_review_retry_exhaustion_blocks_repeat_manual_scan(self) -> None:
+        _,generator,_,relation,_=self.states();relation=copy.deepcopy(relation)
+        from .paper_first_relation_coverage import relation_universe_digest
+        current_digest=relation_universe_digest(generator["saturation_memory"]["portable_review_receipts"])
+        relation["execution_control"]={
+            "status":"LANE_REVIEW_EXACT_RETRY_EXHAUSTED","stage":"lane_review","retry_budget_exhausted":True,
+            "relation_universe_digest":current_digest,
+            "lane_review_execution_contract_sha256":lane_review_execution_contract_sha256(),
+            "scientific_authority":False,
+        }
+        state=self.build(relation=relation)
+        self.assertEqual(state["status"],"HOLD_RELATION_REVIEW_RETRY_EXHAUSTED")
+        self.assertFalse(state["summary"]["manual_scan_eligible"])
+        self.assertTrue(state["summary"]["relation_lane_review_retry_exhausted"])
+        self.assertIn("relation-lane-review-retry-budget-open",state["failed_checks"])
+        public=public_global_relation_scan_admission_summary(state)
+        self.assertTrue(public["summary"]["relation_lane_review_retry_exhausted"])
+        self.assertTrue(public["policy"]["same_relation_universe_lane_review_retry_exhaustion_blocks_repeat_scan"])
+        changed=copy.deepcopy(relation);changed["execution_control"]["lane_review_execution_contract_sha256"]="0"*64
+        reopened=self.build(relation=changed)
+        self.assertEqual(reopened["status"],"ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN")
 
     def test_transaction_mismatch_blocks_relation_scan(self) -> None:
         primary,_,queue,_,_=self.states();queue=copy.deepcopy(queue);queue["discovery_transaction_id"]="b"*64

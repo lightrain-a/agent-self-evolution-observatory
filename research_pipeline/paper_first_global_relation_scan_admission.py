@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .paper_first_global_relation_recall import load_global_relation_recall_state
+from .paper_first_global_relation_recall import lane_review_execution_contract_sha256, load_global_relation_recall_state
 from .paper_first_primary_evidence import load_primary_evidence_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
@@ -50,6 +50,14 @@ def build_global_relation_scan_admission(
         live_discovery_terminal=bool(transaction_match and generated==0 and written==0 and submitted==0 and queue_closed_no_survivor)
     else:
         live_discovery_terminal=False
+    execution=relation.get("execution_control") or {}
+    execution_retry_exhausted=bool(
+        execution.get("status")=="LANE_REVIEW_EXACT_RETRY_EXHAUSTED"
+        and execution.get("stage")=="lane_review"
+        and execution.get("retry_budget_exhausted") is True
+        and str(execution.get("relation_universe_digest") or "")==str(freshness.get("current_relation_universe_digest") or "")
+        and str(execution.get("lane_review_execution_contract_sha256") or "")==lane_review_execution_contract_sha256()
+    )
     typed_delta = sum(int(ds.get(key) or 0) for key in (
         "new_empirical_sources",
         "new_assumption_sources",
@@ -72,12 +80,14 @@ def build_global_relation_scan_admission(
         {"key":"new-typed-evidence-delta-nonzero","pass":typed_delta>0},
         {"key":"delta-has-zero-model-authority","pass":ds.get("model_scan_authorized") is False},
         {"key":"delta-has-zero-reopen-authority","pass":ds.get("focused_generator_reopen_authorized") is False},
+        {"key":"relation-lane-review-retry-budget-open","pass":not execution_retry_exhausted},
     ]
     failed = [row["key"] for row in checks if row["pass"] is not True]
     eligible = not failed
+    status=("ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN" if eligible else ("HOLD_RELATION_REVIEW_RETRY_EXHAUSTED" if execution_retry_exhausted else "HOLD_MANUAL_RELATION_SCAN"))
     return {
-        "schema_version":"1.0",
-        "status":"ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN" if eligible else "HOLD_MANUAL_RELATION_SCAN",
+        "schema_version":"1.1",
+        "status":status,
         "policy":{
             "scientific_authority":False,
             "automatic_model_scan_authority":False,
@@ -86,6 +96,7 @@ def build_global_relation_scan_admission(
             "relation_scan_cannot_authorize_problem_gate":True,
             "relation_scan_cannot_authorize_method_experiment_p0_gpu":True,
             "preconditions_are_deterministic_search_control_only":True,
+            "same_relation_universe_lane_review_retry_exhaustion_blocks_repeat_scan":True,
         },
         "summary":{
             "checks":len(checks),
@@ -100,6 +111,7 @@ def build_global_relation_scan_admission(
             "new_boundary_sources":int(ds.get("new_boundary_sources") or 0),
             "current_reviewed_sources":int(fs.get("current_reviewed_sources") or 0),
             "last_scanned_sources":int(fs.get("last_scanned_sources") or 0),
+            "relation_lane_review_retry_exhausted":execution_retry_exhausted,
         },
         "checks":checks,
         "failed_checks":failed,
@@ -115,10 +127,10 @@ def public_global_relation_scan_admission_summary(state: dict[str, Any]) -> dict
     allowed_summary={
         "checks","passed","failed","manual_scan_eligible","automatic_model_scan_authorized",
         "new_reviewed_sources","new_empirical_sources","new_assumption_sources","new_failure_sources","new_boundary_sources",
-        "current_reviewed_sources","last_scanned_sources",
+        "current_reviewed_sources","last_scanned_sources","relation_lane_review_retry_exhausted",
     }
     return {
-        "schema_version":"1.0",
+        "schema_version":"1.1",
         "status":str(state.get("status") or "HOLD_MANUAL_RELATION_SCAN"),
         "policy":{
             "scientific_authority":False,
@@ -128,6 +140,7 @@ def public_global_relation_scan_admission_summary(state: dict[str, Any]) -> dict
             "relation_scan_cannot_authorize_problem_gate":policy.get("relation_scan_cannot_authorize_problem_gate") is True,
             "relation_scan_cannot_authorize_method_experiment_p0_gpu":policy.get("relation_scan_cannot_authorize_method_experiment_p0_gpu") is True,
             "preconditions_are_deterministic_search_control_only":policy.get("preconditions_are_deterministic_search_control_only") is True,
+            "same_relation_universe_lane_review_retry_exhaustion_blocks_repeat_scan":policy.get("same_relation_universe_lane_review_retry_exhaustion_blocks_repeat_scan") is True,
         },
         "summary":{key:summary[key] for key in allowed_summary if key in summary},
         "failed_check_count":len(state.get("failed_checks") or []),
