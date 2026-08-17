@@ -1,22 +1,59 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "candidate_id": "PA-03-HARNESS-SELECTION-INVERSION",
   "source_ref": "arXiv:2607.13683",
-  "audited_at": "2026-08-17T03:36:00+08:00",
+  "audited_at": "2026-08-17T08:58:51+00:00",
   "status": "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT",
   "required_unit": "paired per-gene harness evolution histories and downstream outcomes under the frozen verification rule, with enough lineage to reconstruct selected-versus-rejected verification decisions",
   "primary_source": {
-    "fulltext_sha256": "74082edc56e911da43e9b70b8eeaf4d6552b8fea7e15b7a0ab00d4c20aff2997",
+    "checked_at": "2026-08-17T08:58:49+00:00",
+    "arxiv_api_http_status": 200,
+    "probe_complete": true,
+    "arxiv_version": "v2",
+    "last_revised": "2026-07-30",
+    "updated_at": "2026-07-30T08:41:14Z",
+    "title": "HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution",
     "code_disclosure": "Our code will be publicly available upon acceptance.",
-    "release_interpretation": "The primary paper itself describes code release as future/conditional rather than an already available replay substrate."
+    "code_release_is_future_conditional": true,
+    "primary_source_changed": false,
+    "source_tree_sha256": "ac8407da37a4eb28e3911b3bd3a0c135e4c07243fef57ef018a619b70ce05438",
+    "paper_pdf_sha256": "360efedc16753f6bfe062cd58b1e2f7e9984bbdd36a8cc79ed363af686aeaeb2",
+    "paper_text_sha256": "4c689e2712a1bbf64fb1ab59f389988ea4312d10224a05fab2f061f264e377e9",
+    "release_interpretation": "The probed current primary source still describes code release as future/conditional rather than documenting an already public replay substrate."
   },
   "current_release_surface_audit": {
-    "github_repository_search_query": "HarnessBank agent harness self evolution",
-    "github_repository_search_total_count": 0,
-    "discovery_only": true,
+    "checked_at": "2026-08-17T08:58:51+00:00",
+    "candidate_repository_endpoint": "https://github.com/GAIR-NLP/HarnessBank",
+    "candidate_repository_endpoint_is_primary_source_established": false,
+    "candidate_repository_api_http_status": 404,
+    "candidate_repository_public": false,
+    "github_public_repository_searches": [
+      {
+        "query": "HarnessBank in:name",
+        "http_status": 200,
+        "total_count": 0,
+        "public_matches": []
+      },
+      {
+        "query": "HarnessBank GAIR-NLP",
+        "http_status": 200,
+        "total_count": 0,
+        "public_matches": []
+      },
+      {
+        "query": "2607.13683",
+        "http_status": 200,
+        "total_count": 0,
+        "public_matches": []
+      }
+    ],
+    "probe_complete": true,
+    "release_surface_changed": false,
+    "required_unit_release_confirmed": false,
     "scientific_evidence": false,
-    "interpretation": "No publicly discoverable repository matching the paper/system name was found in the bounded current search. This is only a release-surface check; it is not evidence that no repository can ever exist."
+    "interpretation": "A public repository/search hit changes only the release-review surface; paired histories/outcomes and verification lineage must still be inspected before the support gate can reopen."
   },
+  "released_required_unit_present": false,
   "why_hold": "The paper-level aggregate result is insufficient for the frozen inversion falsifier. Without auditable gene-level selection histories and downstream outcomes, selected-harness survivorship cannot be separated from a genuine verification-selection inversion mechanism.",
   "reopen_only_if": "A first-party release exposes replayable paired gene histories/outcomes and verification lineage sufficient to reconstruct the frozen selected-versus-rejected decision unit without substituting synthetic or inferred histories.",
   "authority": {
@@ -28,5 +65,6 @@
     "p0_authority": false,
     "gpu_authority": false,
     "automatic_release_polling_authority": false
-  }
+  },
+  "audit_sha256": "65f81ca420443e9c05c25690f6bb2516b0756e0bd3fd37acde361c6e888e9c09"
 }

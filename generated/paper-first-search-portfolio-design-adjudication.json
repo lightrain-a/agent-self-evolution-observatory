@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T07:42:00+00:00",
+  "generated_at": "2026-08-17T08:59:38+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T07:42:00+00:00",
+    "generated_at": "2026-08-17T08:59:38+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -2048,16 +2048,16 @@
         ],
         "evidence_basis": [
           "arXiv:2607.13683",
-          "repo:generated/harnessbank-support-audit-20260817.json#sha256=a00b2b9c7e3778c6974f996c7fb7d3af7d9a5d141862563d1a486ba047a3bafc"
+          "repo:generated/harnessbank-support-audit-20260817.json#sha256=75e5ef08685c7f041ab0449711779f1f2543d0c704adf99b470cb33013203377"
         ],
-        "reason": "The aggregate SWE-bench train/test uplift is insufficient to distinguish verification-selection inversion from small-n ranking noise, winner's curse, survivorship, or ordinary adaptive selection. The primary paper declares code release as future/conditional and the bounded release audit found no replayable first-party gene histories.",
-        "reopen_only_if": "A first-party release exposes replayable paired gene histories/outcomes and verification lineage sufficient to reconstruct the frozen selected-versus-rejected decision unit without substituting synthetic or inferred histories. A release-surface change requests re-audit only and does not automatically clear this hold or authorize scientific progression.",
+        "reason": "The aggregate train/test result is insufficient to distinguish verification-selection inversion from small-n ranking noise, winner's curse, survivorship, or ordinary adaptive selection. The bound current-source audit has not confirmed a replayable first-party corpus exposing paired gene histories, outcomes, and verification lineage.",
+        "reopen_only_if": "A first-party release exposes replayable paired gene histories/outcomes and verification lineage sufficient to reconstruct the frozen selected-versus-rejected decision unit without substituting synthetic or inferred histories. A release-surface or primary-source change requests re-audit only and does not automatically clear this hold or authorize scientific progression.",
         "required_unit": "paired per-gene harness evolution histories and downstream outcomes under the frozen verification rule, with enough lineage to reconstruct selected-versus-rejected verification decisions",
         "fresh_phenomenon_hold": {
           "source_ref": "arXiv:2607.13683",
           "evidence_sha256": "03bd345821be718b2b342e2348ab18c44a91146219bdde5db2d909336cb8ce52",
           "support_audit_artifact": "generated/harnessbank-support-audit-20260817.json",
-          "support_audit_sha256": "a00b2b9c7e3778c6974f996c7fb7d3af7d9a5d141862563d1a486ba047a3bafc",
+          "support_audit_sha256": "75e5ef08685c7f041ab0449711779f1f2543d0c704adf99b470cb33013203377",
           "scientific_authority": false
         },
         "source_hold_artifact": "generated/harnessbank-fresh-phenomenon-support-hold-20260817.json",

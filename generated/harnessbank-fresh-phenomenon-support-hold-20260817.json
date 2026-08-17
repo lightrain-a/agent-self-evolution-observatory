@@ -1,16 +1,18 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "candidate_id": "PA-03-HARNESS-SELECTION-INVERSION",
   "title": "HarnessBank selection-inversion phenomenon support hold",
   "source_ref": "arXiv:2607.13683",
   "phenomenon_id": "03bd345821be718b2b342e2348ab18c44a91146219bdde5db2d909336cb8ce52",
-  "status": "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT",
+  "status": "HOLD_SUPPORT",
+  "support_status": "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT",
   "scientific_authority": false,
   "required_unit": "paired per-gene harness evolution histories and downstream outcomes under the frozen verification rule, with enough lineage to reconstruct selected-versus-rejected verification decisions",
-  "reason": "The aggregate SWE-bench train/test uplift is insufficient to distinguish verification-selection inversion from small-n ranking noise, winner's curse, survivorship, or ordinary adaptive selection. The primary paper declares code release as future/conditional and the bounded release audit found no replayable first-party gene histories.",
+  "reason": "The aggregate train/test result is insufficient to distinguish verification-selection inversion from small-n ranking noise, winner's curse, survivorship, or ordinary adaptive selection. The bound current-source audit has not confirmed a replayable first-party corpus exposing paired gene histories, outcomes, and verification lineage.",
   "support_audit_artifact": "generated/harnessbank-support-audit-20260817.json",
-  "support_audit_sha256": "a00b2b9c7e3778c6974f996c7fb7d3af7d9a5d141862563d1a486ba047a3bafc",
-  "reopen_only_if": "A first-party release exposes replayable paired gene histories/outcomes and verification lineage sufficient to reconstruct the frozen selected-versus-rejected decision unit without substituting synthetic or inferred histories. A release-surface change requests re-audit only and does not automatically clear this hold or authorize scientific progression.",
+  "support_audit_sha256": "75e5ef08685c7f041ab0449711779f1f2543d0c704adf99b470cb33013203377",
+  "support_audit_internal_sha256": "65f81ca420443e9c05c25690f6bb2516b0756e0bd3fd37acde361c6e888e9c09",
+  "reopen_only_if": "A first-party release exposes replayable paired gene histories/outcomes and verification lineage sufficient to reconstruct the frozen selected-versus-rejected decision unit without substituting synthetic or inferred histories. A release-surface or primary-source change requests re-audit only and does not automatically clear this hold or authorize scientific progression.",
   "authority": {
     "dead_end": false,
     "problem_gate": false,
@@ -20,5 +22,6 @@
     "p0": false,
     "gpu": false,
     "automatic_release_reopen": false
-  }
+  },
+  "hold_sha256": "65d4a5ed3007bdb7a27d9d6fd47206743301562960f982bb1709623908091cdd"
 }

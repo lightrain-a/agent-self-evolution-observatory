@@ -325,6 +325,23 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertEqual("HOLD_EXECUTION", row["status"])
         self.assertFalse(row["execution_readiness"]["execution_ready"])
 
+    def test_pa03_harnessbank_support_binding_tamper_fails_closed(self) -> None:
+        state = self.build()
+        state["source_bindings"]["harnessbank_support_audit"]["audit_sha256"] = "0" * 64
+        self.assertIn(
+            "PA-03 lacks a valid bound current-release HarnessBank support audit",
+            validate_fresh_phenomenon_portfolio(state),
+        )
+
+    def test_pa03_release_audit_cannot_auto_promote_to_f0(self) -> None:
+        state = self.build()
+        row = next(row for row in state["candidates"] if row["candidate_id"] == "PA-03-HARNESS-SELECTION-INVERSION")
+        row["status"] = "ACTIVE_F0"
+        self.assertIn(
+            "PA-03 release-surface audit cannot auto-promote support or execution status",
+            validate_fresh_phenomenon_portfolio(state),
+        )
+
     def test_active_f0_has_no_scientific_or_gpu_authority(self) -> None:
         state = self.build(execution_capability=self.execution_capability())
         echo = next(row for row in state["candidates"] if row["candidate_id"] == "PA-01-EVIDENCE-ECHO")
