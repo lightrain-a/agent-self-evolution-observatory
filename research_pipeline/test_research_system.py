@@ -589,6 +589,17 @@ class ResearchSystemTest(unittest.TestCase):
         broken=copy.deepcopy(self.state);broken["paper_first_shadow_search_admission"]["summary"]["automatic_provider_calls_authorized"]=1
         self.assertTrue(any("Shadow Search admission" in error for error in validate_state(broken)))
 
+    def test_embedded_shadow_admission_must_match_current_durable_artifact(self) -> None:
+        stale=copy.deepcopy(self.state)
+        admission=stale["paper_first_shadow_search_admission"]
+        admission["summary"]["current_discovery_operator_version"]="fresh-phenomenon-boundary-closure-v12"
+        admission["source_identity"]["current_discovery_operator_version"]="fresh-phenomenon-boundary-closure-v12"
+        errors=validate_state(stale)
+        self.assertIn(
+            "research-system embedded Shadow Search admission is stale versus current durable artifact",
+            errors,
+        )
+
     def test_shadow_continuation_frontier_is_deterministic_zero_authority_wait_or_control(self) -> None:
         frontier=self.state["paper_first_shadow_continuation_frontier"]
         self.assertFalse(frontier["scientific_authority"])

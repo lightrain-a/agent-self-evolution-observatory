@@ -55,7 +55,7 @@ from .paper_first_legacy_reduction_migration import load_public_migration, valid
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
 from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
-from .paper_first_shadow_search_admission import build_shadow_search_admission, public_shadow_search_admission_summary, validate_shadow_search_admission
+from .paper_first_shadow_search_admission import DEFAULT_JSON as SHADOW_SEARCH_ADMISSION_JSON, build_shadow_search_admission, public_shadow_search_admission_summary, validate_shadow_search_admission, write_shadow_search_admission
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier, validate_shadow_continuation_frontier
 from .paper_first_search_portfolio_design_adjudication import DEFAULT_JSON as SEARCH_PORTFOLIO_DESIGN_JSON, build_search_portfolio_design_adjudication, validate_search_portfolio_design_adjudication, write_search_portfolio_design_adjudication
 from .paper_first_sp15_identifiability_support import build_sp15_identifiability_support, write_sp15_identifiability_support
@@ -1494,6 +1494,16 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             errors.append("support asset handoff public state cannot expose private queue/provenance/support-contract material")
     shadow_search_admission=state.get("paper_first_shadow_search_admission") or {}
     errors.extend(f"Shadow Search admission: {error}" for error in validate_shadow_search_admission(shadow_search_admission))
+    try:
+        persisted_shadow_admission = json.loads(SHADOW_SEARCH_ADMISSION_JSON.read_text(encoding="utf-8"))
+    except Exception:
+        errors.append("research-system embedded Shadow Search admission cannot verify current durable artifact")
+    else:
+        if any(
+            shadow_search_admission.get(key) != persisted_shadow_admission.get(key)
+            for key in ("status","reason","policy","summary","source_identity","scientific_authority")
+        ):
+            errors.append("research-system embedded Shadow Search admission is stale versus current durable artifact")
     shadow_continuation=state.get("paper_first_shadow_continuation_frontier") or {}
     if shadow_continuation:
         errors.extend(f"Shadow continuation frontier: {error}" for error in validate_shadow_continuation_frontier(shadow_continuation))
@@ -1770,6 +1780,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     # is compiled during the same release.
     write_search_portfolio_design_adjudication()
     write_fresh_phenomenon_portfolio()
+    write_shadow_search_admission()
     write_sp15_identifiability_support()
     # Problem-gate Queue is a frozen output of the Primary -> Generator -> Queue
     # transaction. Rebuilding it here would couple research-system projection to

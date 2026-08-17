@@ -82,6 +82,29 @@ def main() -> None:
         if not (ROOT / name).exists():
             fail(f"missing required file {name}")
 
+    current_status = json.loads((ROOT / "generated" / "current-research-status.json").read_text(encoding="utf-8"))
+    research_system = json.loads((ROOT / "generated" / "research-system-state.json").read_text(encoding="utf-8"))
+    durable_shadow_admission = json.loads((ROOT / "generated" / "paper-first-shadow-search-admission.json").read_text(encoding="utf-8"))
+    embedded_shadow_admission = research_system.get("paper_first_shadow_search_admission") or {}
+    durable_summary = durable_shadow_admission.get("summary") or {}
+    embedded_summary = embedded_shadow_admission.get("summary") or {}
+    for key in ("status", "reason", "policy", "summary", "source_identity", "scientific_authority"):
+        if embedded_shadow_admission.get(key) != durable_shadow_admission.get(key):
+            fail(f"research-system Shadow Search admission is stale at {key}")
+    qualification_ready = int(bool(durable_summary.get("qualification_allowed")))
+    if int((current_status.get("headline") or {}).get("shadow_qualification_ready") or 0) != qualification_ready:
+        fail("current-research-status global shadow qualification does not match durable admission")
+    global_qualification = ((current_status.get("shadow_search") or {}).get("qualification") or {})
+    if bool(global_qualification.get("qualification_allowed")) != bool(durable_summary.get("qualification_allowed")):
+        fail("current-research-status global qualification is stale versus durable admission")
+    if int(global_qualification.get("automatic_provider_calls_authorized") or 0) != 0 or int(durable_summary.get("automatic_provider_calls_authorized") or 0) != 0:
+        fail("shadow qualification cannot authorize provider calls")
+    residual = current_status.get("positive_residual") or {}
+    if residual.get("active_mechanism_seed") is False and residual.get("shadow_qualification_allowed") is not False:
+        fail("archived positive residual cannot be reactivated by global operator-upgrade qualification")
+    if qualification_ready and residual.get("active_mechanism_seed") is False and global_qualification.get("scope") != "global-v13-shadow-control; does not reactivate archived positive-residual assets":
+        fail("global v13 shadow qualification must explicitly remain separate from the archived positive residual")
+
     if (ROOT / ".nojekyll").exists():
         fail(".nojekyll must stay absent so the branch-mode Pages fallback honors _config.yml exclusions")
     pages_config = (ROOT / "_config.yml").read_text(encoding="utf-8")
