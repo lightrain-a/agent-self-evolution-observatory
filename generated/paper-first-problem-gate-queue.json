@@ -1,12 +1,12 @@
 {
   "schema_version": "2.0",
-  "generated_at": "2026-08-17T15:45:24+00:00",
+  "generated_at": "2026-08-17T14:00:36+00:00",
   "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
   "source_inboxes": [
     "private-data://paper-first-problem-discovery/candidate-inbox.json",
-    "repo://generated/.paper-first-txn-qhwioye_/auto-candidate-inbox.json"
+    "repo://generated/.paper-first-txn-fdfb_dnl/auto-candidate-inbox.json"
   ],
-  "primary_evidence_pool": "repo://generated/.paper-first-txn-qhwioye_/primary-private.json",
+  "primary_evidence_pool": "repo://generated/.paper-first-txn-fdfb_dnl/primary-private.json",
   "primary_evidence_records": 32,
   "source_exists": true,
   "policy": {
@@ -26,16 +26,16 @@
     "automatic_p0_authority": false
   },
   "summary": {
-    "submitted": 1,
-    "audited": 1,
+    "submitted": 0,
+    "audited": 0,
     "passed_problem_gate": 0,
-    "blocked_problem_gate": 1,
+    "blocked_problem_gate": 0,
     "paper_design_eligible": 0,
     "inbox_errors": 0,
     "primary_evidence_records": 32,
     "submitted_by_lane": {
       "CONTRADICTION": 0,
-      "CONVERGENT_FAILURE": 1,
+      "CONVERGENT_FAILURE": 0,
       "ASSUMPTION_BREAK": 0,
       "UNEXPLAINED_BOUNDARY": 0,
       "OTHER": 0
@@ -49,7 +49,7 @@
     },
     "blocked_by_lane": {
       "CONTRADICTION": 0,
-      "CONVERGENT_FAILURE": 1,
+      "CONVERGENT_FAILURE": 0,
       "ASSUMPTION_BREAK": 0,
       "UNEXPLAINED_BOUNDARY": 0,
       "OTHER": 0
@@ -60,366 +60,9 @@
   },
   "inbox_errors": [],
   "passed": [],
-  "blocked": [
-    {
-      "candidate_id": "AUTO-1",
-      "title": "When does verified relevant procedural content fail to change agent behavior despite correct retrieval and demonstrated content validity?",
-      "discovery_lane": "CONVERGENT_FAILURE",
-      "status": "PROBLEM_GATE_BLOCKED",
-      "source_inbox": "repo://generated/.paper-first-txn-qhwioye_/auto-candidate-inbox.json",
-      "blockers": [
-        "semantic-reduction-review-missing",
-        "unresolved-exact-reduction-test:1",
-        "unresolved-exact-reduction-test:2"
-      ]
-    }
-  ],
-  "audited": [
-    {
-      "candidate_id": "AUTO-1",
-      "title": "When does verified relevant procedural content fail to change agent behavior despite correct retrieval and demonstrated content validity?",
-      "discovery_lane": "CONVERGENT_FAILURE",
-      "source_inbox": "repo://generated/.paper-first-txn-qhwioye_/auto-candidate-inbox.json",
-      "candidate": {
-        "candidate_id": "AUTO-1",
-        "title": "When does verified relevant procedural content fail to change agent behavior despite correct retrieval and demonstrated content validity?",
-        "discovery_lane": "CONVERGENT_FAILURE",
-        "source_branch_id": "",
-        "branch_depth": 0,
-        "empirical_evidence": {
-          "source_a": {
-            "ref": "arXiv:2608.14036",
-            "title": "Demystifying Agent Skills: Why They Work-Until They Don't",
-            "claim": "Across 8,135 normalized trial records, exact ground-truth skill invocation is neither sufficient nor necessary for task success; confusable distractors impair offline skill identification yet downstream success remains stable; retrieval actual-use precision falls from 29.6% to 3.3% as pools grow from 5 to 100 while the procedural-anchoring benefit (65.7% of cases) is orthogonal to retrieval accuracy.",
-            "evidence_role": "EMPIRICAL_FACT",
-            "primary_source": true,
-            "primary_url": "https://arxiv.org/abs/2608.14036",
-            "source_sha256": "6f71684ea5bab7dd19b9c1b4fe13fb8e8af7211317ee3a8fe4bd2314586520d5"
-          },
-          "source_b": {
-            "ref": "arXiv:2607.05202",
-            "title": "EvoAgentBench: Benchmarking Agent Self-Evolution via Ability Transfer",
-            "claim": "Every test task is backed by verified training-side Ability support via Ability Graphs, yet no current automatic method sustains positive transfer gain in all scaffold-backbone-domain settings; every automatic method exhibits negative transfer in at least one setting, while only the curated diagnostic Anchor achieves uniformly positive cell-level transfer.",
-            "evidence_role": "EMPIRICAL_FACT",
-            "primary_source": true,
-            "primary_url": "https://arxiv.org/abs/2607.05202",
-            "source_sha256": "23e4ca083733da9c02e1088d73dfdbd60db79f9f053113ed291e67326fb28aa8"
-          },
-          "relation": "Two independent method families (inference-time skill injection vs trace-grounded ability-graph transfer) share the same bounded condition: procedural content that is verified relevant/correct is made available to the agent, yet downstream task success is not determined by that availability. In source_a, correct invocation is not sufficient (and not necessary); in source_b, verified ability support does not prevent negative transfer. Both decouple content validity/relevance from behavioral uptake."
-        },
-        "lane_evidence": {
-          "shared_condition": "Agent is provided procedural content (skill or ability) that is verified relevant to the current task, under controlled comparison with the content absent.",
-          "method_a": "Inference-time skill injection with procedural anchoring (Demystifying Agent Skills, controlled experiments across benchmarks/harnesses/LLMs).",
-          "method_b": "Ability-graph-guided transfer with canonicalized operational units (EvoAgentBench, 528/267 train/test split across two scaffolds and three backbones).",
-          "failure_a": "Exact ground-truth invocation is neither sufficient nor necessary for success; retrieval precision collapses (29.6%→3.3%) without corresponding success collapse, implying the success-relevant variable is not retrieval accuracy.",
-          "failure_b": "All automatic methods show negative transfer in at least one scaffold-backbone-domain cell despite verified ability support for every test task.",
-          "independence_basis": "Different content units (skills vs abilities), different construction pipelines (trajectory distillation vs ability-graph canonicalization), different benchmarks, different backbones, and no shared authors or code."
-        },
-        "irreducible_object": "A utilization operator U mapping (verified relevant procedural content, task context, executor state) to behavioral change, whose output is not determined by content relevance, content validity, or retrieval accuracy alone. The problem is to identify the minimal additional variable(s) that determine when U produces behavioral uptake versus when the same verified content leaves behavior unchanged or harms it.",
-        "novelty_category": "",
-        "closest_work": {},
-        "closest_work_distance": null,
-        "mature_theory_baselines": [
-          {
-            "name": "Retrieval-uptake decomposition (artifact-uptake-after-retrieval)",
-            "same_information_projection": "Given the same retrieved/provided content and task, decompose the pipeline into retrieval quality and instruction-following/utilization quality; failure is attributed to whichever stage degrades.",
-            "ex_ante_prediction": "If retrieval precision is low but success is stable, utilization of correctly retrieved items must be high; failures occur only when retrieval fails or the executor cannot follow instructions.",
-            "distinguishing_prediction": "The utilization operator U exhibits cases where retrieval is exact (ground-truth invocation) yet behavior does not change, AND cases where retrieval fails yet behavior improves (invocation not necessary); the decomposition predicts a monotone relationship between retrieval correctness and uptake probability, which the evidence contradicts.",
-            "cannot_express": "The decomposition assumes retrieval correctness and utilization are separable stages with a monotone causal chain; it cannot express why identical verified content produces uptake in one executor/task and not another when both stages are individually verified.",
-            "reduction_class": "NEEDS_EXACT_REDUCTION_TEST",
-            "exact_reduction_test": "Construct task-executor pairs where the same verified skill/ability is retrieved with certainty; measure behavioral uptake (trajectory divergence from no-content baseline). If uptake varies across executor/task pairs while retrieval and instruction-following are held constant and verified, the decomposition is insufficient."
-          },
-          {
-            "name": "Complementarity/redundancy under matched budget (experience-sharing-sign-reversal)",
-            "same_information_projection": "Content helps when it is complementary to what the executor already knows and harms when redundant or conflicting; the sign of the effect is predicted by the information overlap between content and executor prior under matched token/compute budget.",
-            "ex_ante_prediction": "Verified relevant content helps iff it adds information the executor lacks; negative transfer occurs when content is redundant or when the executor's prior already covers it, creating interference.",
-            "distinguishing_prediction": "The evidence shows cases where content is verified relevant and non-redundant (ability graphs are built from procedural overlap, skills are procedural anchors for noisy trajectories) yet still produces negative transfer; complementarity predicts non-negative transfer for verified non-redundant content.",
-            "cannot_express": "Complementarity predicts the sign from information overlap alone; it cannot express why two executors with the same information overlap with the same content show opposite uptake signs.",
-            "reduction_class": "NEEDS_EXACT_REDUCTION_TEST",
-            "exact_reduction_test": "Measure information overlap (e.g., by ablating content components and measuring executor prior coverage) for each negative-transfer cell in EvoAgentBench and each sufficient-but-unnecessary case in Demystifying Agent Skills; if overlap is low (content is complementary) yet transfer is negative, complementarity is falsified as the sole determinant."
-          }
-        ],
-        "reduction_falsifiability_contract": {
-          "same_observable_information_checked": true,
-          "ex_ante_exact_prediction_checked": true,
-          "distinguishing_prediction_checked": true,
-          "scope_boundary_checked": true,
-          "all_exact_reduction_tests_resolved": true
-        },
-        "same_information_nonreducibility": {
-          "claim": "The utilization operator U is not reducible to retrieval quality, instruction-following, or information complementarity under the same observable information, because both source_a and source_b contain cases where all three are verified/favorable yet behavioral uptake fails or reverses.",
-          "why_each_baseline_cannot_express_prediction": "Retrieval-uptake decomposition assumes a monotone causal chain from retrieval to utilization, contradicted by non-sufficiency of exact invocation. Complementarity predicts sign from information overlap, contradicted by negative transfer under verified non-redundant content. Both require an unmeasured executor-content interaction variable."
-        },
-        "exact_prediction": "There exist task-executor pairs where verified relevant procedural content is retrieved with certainty, confirmed non-redundant, and the executor can follow the instructions, yet behavioral uptake (measured as trajectory divergence toward task success) does not occur; and the identity of these pairs is stable across repeated runs but not predictable from content features, retrieval scores, or executor capability alone.",
-        "strongest_same_information_baseline": "Retrieval-uptake decomposition with complementarity gating: retrieve, verify relevance, check redundancy, then follow instructions.",
-        "domain_transfer_audit": {
-          "mature_source_domain": "Information retrieval and instruction-following in NLP",
-          "mature_object": "Retrieval precision/recall and instruction-following accuracy as pipeline stages",
-          "why_not_domain_transfer": "The object is not a pipeline stage but an interaction operator whose output is undetermined by any stage-wise measurement; the evidence explicitly shows stage-wise sufficiency without outcome sufficiency."
-        },
-        "saturation_scan": {
-          "checked": true,
-          "matched_patterns": [],
-          "pending_patterns": [],
-          "rejected_patterns": [
-            {
-              "key": "artifact-uptake-after-retrieval",
-              "reason": "The veto applies when retrieved experience fails to change behavior and the candidate is merely a utilization/uptake bottleneck decomposable into retrieval and instruction-following. Here the evidence shows the decomposition itself fails: exact retrieval is not sufficient (source_a) and verified support does not prevent negative transfer (source_b), and the distinguishing prediction is that uptake varies when both stages are held constant and verified. The exact reduction test (hold retrieval and instruction-following constant, measure uptake variance) is specified and not yet resolved by the ledger."
-            },
-            {
-              "key": "experience-sharing-sign-reversal",
-              "reason": "The veto applies when sharing-helpful vs sharing-collapse is predicted by complementarity/redundancy under matched budget. Here the evidence includes cases where content is verified non-redundant (ability graphs built from procedural overlap) yet transfer is negative, contradicting the complementarity sign prediction. The exact reduction test measures overlap directly."
-            },
-            {
-              "key": "model-scaffold-enactability",
-              "reason": "The veto applies when a valid harness/skill is not activated or faithfully followed. Here the issue is not activation or faithful following but behavioral uptake conditional on both; source_a shows invocation is not sufficient even when the skill is followed (procedural anchoring works in 65.7% of cases but invocation correctness is orthogonal)."
-            }
-          ],
-          "invalid_entries": []
-        },
-        "semantic_reduction_review": {
-          "reviewed": false,
-          "block_only": true,
-          "verdict": "BLOCK",
-          "reviewer_model": "",
-          "raw_sha256": "",
-          "source_claims_grounded": false,
-          "source_claim_grounding": {},
-          "lane_contract_verified": false,
-          "lane_contract_reason": "structural-or-provenance-gate-failed",
-          "matched_patterns": [],
-          "strongest_reduction": "structural-or-provenance-gate-failed"
-        },
-        "cheapest_problem_falsifier": "Take the EvoAgentBench negative-transfer cells and the Demystifying Agent Skills sufficient-but-unnecessary cases; for each, verify retrieval correctness, content relevance, and executor instruction-following capability independently; if behavioral uptake still varies across executors/tasks with all three held constant, the utilization operator U requires a new explanatory variable.",
-        "endpoint_headroom_requirement": "The problem is falsified if all variance in behavioral uptake is explained by retrieval accuracy, content-executor information overlap, and instruction-following capability; it is confirmed if residual uptake variance remains significant after controlling for all three.",
-        "importance": "",
-        "likely_iclr_story": ""
-      },
-      "audit": {
-        "schema_version": "2.0",
-        "candidate_id": "AUTO-1",
-        "discovery_lane": "CONVERGENT_FAILURE",
-        "passed": false,
-        "status": "PROBLEM_GATE_BLOCKED",
-        "blockers": [
-          "semantic-reduction-review-missing",
-          "unresolved-exact-reduction-test:1",
-          "unresolved-exact-reduction-test:2"
-        ],
-        "checks": [
-          {
-            "key": "field:candidate_id",
-            "pass": true
-          },
-          {
-            "key": "field:title",
-            "pass": true
-          },
-          {
-            "key": "field:discovery_lane",
-            "pass": true
-          },
-          {
-            "key": "field:empirical_evidence",
-            "pass": true
-          },
-          {
-            "key": "field:lane_evidence",
-            "pass": true
-          },
-          {
-            "key": "field:irreducible_object",
-            "pass": true
-          },
-          {
-            "key": "field:mature_theory_baselines",
-            "pass": true
-          },
-          {
-            "key": "field:reduction_falsifiability_contract",
-            "pass": true
-          },
-          {
-            "key": "field:same_information_nonreducibility",
-            "pass": true
-          },
-          {
-            "key": "field:exact_prediction",
-            "pass": true
-          },
-          {
-            "key": "field:strongest_same_information_baseline",
-            "pass": true
-          },
-          {
-            "key": "field:domain_transfer_audit",
-            "pass": true
-          },
-          {
-            "key": "field:saturation_scan",
-            "pass": true
-          },
-          {
-            "key": "field:cheapest_problem_falsifier",
-            "pass": true
-          },
-          {
-            "key": "field:endpoint_headroom_requirement",
-            "pass": true
-          },
-          {
-            "key": "field:semantic_reduction_review",
-            "pass": true
-          },
-          {
-            "key": "field:authority",
-            "pass": true
-          },
-          {
-            "key": "discovery-lane-contract",
-            "pass": true,
-            "lane": "CONVERGENT_FAILURE"
-          },
-          {
-            "key": "primary-source-1",
-            "pass": true,
-            "role": "EMPIRICAL_FACT"
-          },
-          {
-            "key": "primary-source-2",
-            "pass": true,
-            "role": "EMPIRICAL_FACT"
-          }
-        ],
-        "policy": {
-          "schema_version": "2.2",
-          "multi_lane_discovery_required": true,
-          "contradiction_first_required": false,
-          "contradiction_lane_retained": true,
-          "allowed_discovery_lanes": [
-            "CONTRADICTION",
-            "CONVERGENT_FAILURE",
-            "ASSUMPTION_BREAK",
-            "UNEXPLAINED_BOUNDARY"
-          ],
-          "search_portfolio_primitives": [
-            "CONTRADICTION",
-            "CONVERGENT_FAILURE",
-            "ASSUMPTION_BREAK",
-            "UNEXPLAINED_BOUNDARY",
-            "IDENTIFIABILITY_GAP",
-            "MISSING_DECISION_OBJECT",
-            "COMPOSITION_INTERACTION",
-            "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
-            "NEW_CAPABILITY_QUESTION",
-            "LONGITUDINAL_EMERGENCE"
-          ],
-          "forbidden_discovery_lanes": [
-            "MISSING_CELL",
-            "SHARED_LIMITATION",
-            "PURE_TOPIC_BRAINSTORM"
-          ],
-          "lane_specific_machine_evidence_contract_required": true,
-          "search_portfolio_required": false,
-          "search_portfolio_is_shadow_only": true,
-          "search_portfolio_cannot_publish_canonical_generator_or_queue": true,
-          "one_content_addressed_pool_allows_at_most_one_live_generator_call": true,
-          "one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator": true,
-          "source_coverage_saturation_reopens_once_on_operator_change": true,
-          "expansion_reduction_separated": true,
-          "mature_theory_veto_delayed_until_formulated_branch": true,
-          "diversity_archives_required": true,
-          "branch_lineage_required": true,
-          "reduction_falsifiability_contract_required": true,
-          "generic_theory_label_cannot_veto": true,
-          "two_grounded_evidence_items_required": true,
-          "same_primary_source_can_supply_multiple_evidence_items_when_lane_minimum_is_one": true,
-          "distinct_primary_source_minimum_is_lane_specific": true,
-          "single_source_anomaly_first_search_enabled": true,
-          "primary_anomaly_can_trigger_controlled_residual_search_without_cross_paper_metric_match": true,
-          "support_feasibility_is_search_priority_not_novelty_authority": true,
-          "principle_dead_end_inversion_search_enabled": true,
-          "dead_end_inversion_requires_certified_counter_explanation": true,
-          "dead_end_inversion_is_search_prior_not_scientific_authority": true,
-          "dead_end_inversion_requires_fresh_primary_grounding": true,
-          "dead_end_inversion_must_satisfy_recorded_reopen_condition": true,
-          "first_party_inversion_asset_grounding_enabled": true,
-          "first_party_inversion_asset_requires_provenance_manifest": true,
-          "first_party_inversion_asset_is_zero_authority_search_evidence": true,
-          "first_party_inversion_asset_requires_one_direct_seed_per_shard": true,
-          "observed_dependency_graph_is_not_an_identifiability_gap": true,
-          "reciprocal_coupling_claim_requires_downstream_residual_beyond_distribution_shift": true,
-          "feedback_mechanism_requires_causal_write_path_before_experiment": true,
-          "positive_residual_search_enabled": true,
-          "positive_residual_asset_requires_provenance_manifest": true,
-          "positive_residual_asset_is_zero_authority_search_evidence": true,
-          "positive_residual_requires_surviving_phenomenon_and_clean_mechanism_stop": true,
-          "positive_residual_requires_prospective_pre_outcome_prediction": true,
-          "positive_residual_outcome_leakage_forbidden": true,
-          "positive_residual_direct_seed_required_in_unexplained_boundary_shard": true,
-          "inactive_search_assets_hidden_from_generator": true,
-          "inactive_search_assets_remain_provenance_archived": true,
-          "no_active_asset_fallback_requires_latest_primary_quantitative_anomaly": true,
-          "fresh_phenomenon_seed_must_name_measured_boundary_or_failure": true,
-          "fresh_phenomenon_asset_readiness_is_priority_not_novelty_authority": true,
-          "fresh_phenomenon_missing_substrate_is_hold_not_scientific_fail": true,
-          "fresh_phenomenon_recent_window_source_coverage_required": true,
-          "fresh_phenomenon_target_is_evidence_level_not_source_level": true,
-          "fresh_phenomenon_principle_closure_is_exact_evidence_sha_only": true,
-          "fresh_phenomenon_closure_does_not_blacklist_source": true,
-          "fresh_phenomenon_measured_failure_requires_failure_cue": true,
-          "fresh_phenomenon_shard_has_deterministic_target_ref": true,
-          "fresh_phenomenon_shard_has_deterministic_phenomenon_id": true,
-          "fresh_phenomenon_seed1_must_match_target_ref": true,
-          "fresh_phenomenon_seed1_must_match_target_phenomenon": true,
-          "temporal_exposure_relabeling_after_longitudinal_reduction_forbidden": true,
-          "treatment_semantics_seed_requires_executable_version_change": true,
-          "treatment_semantics_seed_requires_versioned_treatment_reduction_first": true,
-          "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
-          "shared_limitation_without_empirical_failure_forbidden": true,
-          "pure_topic_brainstorm_forbidden": true,
-          "open_world_missing_cell_claim_forbidden": true,
-          "two_mature_theory_baselines_required": true,
-          "same_information_nonreducibility_required": true,
-          "domain_transfer_veto_required": true,
-          "saturation_map_check_required": true,
-          "problem_falsifier_required_before_method_design": true,
-          "reduction_pending_is_provisional_not_failed": true,
-          "bounded_first_party_evidence_acquisition_allowed_before_problem_gate_pass": true,
-          "support_inventory_is_one_evidence_route_not_global_prerequisite": true,
-          "first_party_evidence_cannot_auto_certify_novelty": true,
-          "endpoint_headroom_required_before_terminal_interpretation": true,
-          "independent_reviewer_must_verify_lane_contract": true,
-          "no_lane_specific_downstream_relaxation": true,
-          "ai_generation_is_advisory_only": true,
-          "zero_survivors_is_valid": true,
-          "method_design_authorized_by_problem_gate": false,
-          "local_validation_authorized_by_problem_gate": false,
-          "p0_authorized_by_problem_gate": false,
-          "gpu_authorized_by_problem_gate": false
-        },
-        "authority": {
-          "paper_design_eligible_for_human_review": false,
-          "method_design": false,
-          "experiment_blueprint": false,
-          "local_validation": false,
-          "p0": false,
-          "gpu": false,
-          "full_experiment": false
-        }
-      },
-      "paper_design_eligible": false,
-      "authority": {
-        "method_design": false,
-        "experiment_blueprint": false,
-        "local_validation": false,
-        "p0": false,
-        "gpu": false,
-        "full_experiment": false
-      }
-    }
-  ],
+  "blocked": [],
+  "audited": [],
   "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry.",
-  "discovery_transaction_id": "949755f164b2e84acde2188dd41e12742db06a55f1309be70dd4f7703a280f6e",
+  "discovery_transaction_id": "be6336c483b63efeef3d0693e5d6586c5c7d2743a142aba7af51ce79105548e9",
   "discovery_transaction_role": "queue"
 }
