@@ -188,6 +188,20 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"evidence-tuple-invalid"):
             _normalize_lane_search(bad,registry,list(DISCOVERY_LANES))
 
+    def test_complete_lane_audit_is_canonicalized_to_dynamic_priority(self) -> None:
+        registry={f"arXiv:2608.0000{i}":{} for i in range(1,5)}
+        expected=["CONTRADICTION","CONVERGENT_FAILURE","UNEXPLAINED_BOUNDARY","ASSUMPTION_BREAK"]
+        returned=["CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","UNEXPLAINED_BOUNDARY"]
+        rows=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No evidence tuple survives."} for lane in returned]
+        normalized=_normalize_lane_search(rows,registry,expected)
+        self.assertEqual([row["lane"] for row in normalized],expected)
+
+    def test_lane_audit_priority_must_itself_cover_exact_live_lanes(self) -> None:
+        registry={f"arXiv:2608.0000{i}":{} for i in range(1,5)}
+        rows=[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No evidence tuple survives."} for lane in DISCOVERY_LANES]
+        with self.assertRaisesRegex(ValueError,"priority-invalid"):
+            _normalize_lane_search(rows,registry,["CONTRADICTION","CONVERGENT_FAILURE","ASSUMPTION_BREAK","ASSUMPTION_BREAK"])
+
     def test_saturated_pool_without_current_operator_receipt_recompiles_once(self) -> None:
         calls=[]
         generator=self.gen([],notes="Anomaly-first recompilation found no surviving residual.")
