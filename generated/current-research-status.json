@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T07:55:15+00:00",
-  "source_revision": "622cea5a7fdb90d2ce29e4fb17b5d34f07706142",
+  "generated_at": "2026-08-17T08:33:40+00:00",
+  "source_revision": "c46a4c26c39a120540658166e360663202a21624",
   "as_of_date": "2026-08-17",
   "headline": {
     "paper_ready": 1,
@@ -177,7 +177,8 @@
           "unauthorized_partial_run_ingestable": false,
           "status": "HOLD_PROVIDER_CREDENTIAL_AND_AUTHORITY_REQUIRED",
           "hold_reason": [
-            "GEMINI_API_KEY not loaded in the current execution environment"
+            "GEMINI_API_KEY not loaded in the current execution environment",
+            "external human single-attempt F0 permit and live controller experiment authority not present"
           ]
         },
         "paper_problem_claimed": false
