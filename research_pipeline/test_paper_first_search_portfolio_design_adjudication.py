@@ -72,6 +72,20 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         ])
         self.assertFalse(closure.get("scientific_authority"))
 
+    def test_aborted_auto1_relevant_skill_misexecution_is_scoped_principle_dead_end(self) -> None:
+        memory=self.state["shadow_dead_end_memory"]
+        hits=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="AUTO-1-RELEVANT-SKILL-MISEXECUTION"]
+        self.assertEqual(len(hits),1)
+        row=hits[0]
+        self.assertEqual(row["memory_class"],"PRINCIPLE_DEAD_END")
+        self.assertTrue(row["dead_end_certified"]);self.assertFalse(row["scientific_authority"])
+        self.assertEqual(row["search_primitive"],"CONVERGENT_FAILURE")
+        self.assertEqual(row["source_readjudication_artifact"],"generated/auto1-relevant-skill-misexecution-principle-readjudication-20260817.json")
+        self.assertEqual(row["current_source_refs"],["arXiv:2608.11888","arXiv:2608.14036"])
+        self.assertIn("task-artifact alignment",row["strongest_reduction"])
+        self.assertIn("oracle-load",row["reopen_only_if"])
+        self.assertEqual(row.get("fresh_phenomenon_closure"),{})
+
     def test_shadow_counterfactual_survivors_are_conservatively_routed(self) -> None:
         self.assertEqual(validate_search_portfolio_design_adjudication(self.state), [])
         summary = self.state["summary"]
