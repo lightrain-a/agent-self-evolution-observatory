@@ -198,10 +198,448 @@ function normalizeTitle(value = "") {
 function slugify(value = "section") {
   return value.toLowerCase().replace(/<[^>]+>/g, "").replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-").replace(/^-|-$/g, "") || "section";
 }
+const ZH_INLINE_TEXT = [
+  [/Evaluation and Benchmarks/g,"评测与基准"],
+  [/Evidence and execution provenance/g,"证据与执行溯源"],
+  [/Memory and Context Management/g,"记忆与上下文管理"],
+  [/2\.2\.1 Memory Object/g,"2.2.1 记忆对象"],
+  [/2\.2\.2 Memory Structure/g,"2.2.2 记忆结构"],
+  [/2\.2\.3 Memory Processing/g,"2.2.3 记忆处理"],
+  [/Versioned evolution protocol/g,"版本化进化协议"],
+  [/Memory-driven exploration/g,"记忆驱动探索"],
+  [/Paper Design/g,"论文设计"],
+  [/Method Design/g,"方法设计"],
+  [/Problem Gate/g,"问题门"],
+  [/same-information reducibility/g,"同信息可归约性"],
+  [/support-pass/g,"支持通过"],
+  [/support-hold/g,"支持暂缓"],
+  [/scientific authority/g,"科学权限"],
+  [/collision memory/g,"碰撞记忆"],
+  [/qualification receipt/g,"资格凭据"],
+  [/Paper-first/g,"论文优先"],
+  [/\bIdea\b/g,"研究方向"],
+  [/\bFresh\b/g,"新现象"],
+  [/\bShadow\b/g,"影子搜索"],
+  [/\bMemory\b/g,"记忆"],
+  [/\bWorkflow\b/g,"工作流"],
+  [/\bBaseline\b/g,"对照基线"],
+  [/\bPilot\b/g,"局部试验"],
+  [/\bstandalone\b/g,"独立论文"],
+  [/\bthesis\b/g,"主张"],
+  [/\bprovider\b/g,"模型服务"],
+  [/\boperator\b/g,"控制器"],
+  [/\bPortfolio\b/g,"组合"],
+  [/\bMethod\b/g,"方法"],
+  [/\bProblem\b/g,"问题"],
+  [/\bSupport\b/g,"支持"],
+  [/\bauthority\b/g,"权限"],
+  [/\bqualification\b/g,"资格验证"],
+  [/diagnostic artifact/g,"诊断工件"],
+  [/\bartifact\b/g,"工件"],
+  [/\blifecycle\b/g,"生命周期"],
+  [/\badmission\b/g,"准入"],
+  [/\bexecution\b/g,"执行"],
+  [/local-validation/g,"局部验证"],
+  [/local validation/g,"局部验证"],
+  [/\bbackbone\b/g,"主干模型"],
+  [/\bcandidate\b/g,"候选"],
+  [/\bprobe\b/g,"探针"],
+  [/simple baseline/g,"简单对照"],
+  [/\bdesign\b/g,"设计"],
+  [/\bhidden\b/g,"隐藏"],
+  [/\blive\b/g,"实时"],
+  [/\bcompleted\b/g,"已完成"],
+  [/same-information/g,"同信息"],
+  [/\breducibility\b/g,"可归约性"],
+  [/matched-simplification/g,"匹配简化对照"],
+  [/matched baseline/g,"匹配对照"],
+  [/\bformulation\b/g,"表述方案"],
+  [/\bdead-end\b/g,"死路"],
+  [/\bfeedback\b/g,"反馈"],
+  [/\bbaseline\b/g,"对照"],
+  [/\bpilot\b/g,"局部试验"],
+  [/\bcontribution\b/g,"贡献"],
+  [/\bablation\b/g,"消融"],
+  [/\breplication\b/g,"复现"],
+  [/\befficiency\b/g,"效率"],
+  [/\bgenerality\b/g,"泛化"],
+  [/\bfailure\b/g,"失败"],
+  [/\bsensitivity\b/g,"敏感性"],
+  [/\brobustness\b/g,"稳健性"],
+  [/\buncertainty\b/g,"不确定性"],
+  [/supplement reproduction/g,"补充材料复现"],
+  [/\bcontext\b/g,"上下文"],
+  [/\breplay\b/g,"回放"],
+  [/\bretrieval\b/g,"检索"],
+  [/\binteraction\b/g,"交互"],
+  [/\blesson\b/g,"经验"],
+  [/\bepisodes\b/g,"回合"],
+  [/\bepisode\b/g,"回合"],
+  [/\bconsolidation\b/g,"整合"],
+  [/support set/g,"支持集合"],
+  [/contradiction core/g,"反证核心"],
+  [/\btool task\b/g,"工具任务"],
+  [/\badapter\b/g,"适配器"],
+  [/\brollback\b/g,"回滚"],
+  [/\bedge\b/g,"边"],
+  [/\bgraph\b/g,"图"],
+  [/\bpair\b/g,"配对"],
+  [/\bpairs\b/g,"配对"],
+  [/\btask\b/g,"任务"],
+  [/\btasks\b/g,"任务"],
+  [/\btrajectory pool\b/g,"轨迹池"],
+  [/\bconsensus\b/g,"共识"],
+  [/utility-only/g,"仅效用"],
+  [/process family/g,"过程族"],
+  [/fresh collision/g,"最新碰撞"],
+  [/fresh audit/g,"最新审计"],
+  [/\bheldout\b/g,"留出"],
+  [/\bheld-out\b/g,"留出"],
+  [/\bquery\b/g,"查询"],
+  [/\bselector\b/g,"选择器"],
+  [/\bstatus\b/g,"状态"],
+  [/source transaction/g,"来源事务"],
+  [/\bterminal\b/g,"终态"],
+  [/external-wait/g,"外部等待"],
+  [/\bwatch\b/g,"监控"],
+  [/\bqueue\b/g,"队列"],
+  [/\bhandoff\b/g,"交接"],
+  [/\bcontroller\b/g,"控制器"],
+  [/\bevidence\b/g,"证据"],
+  [/anomaly-first/g,"异常优先"],
+  [/\bstale\b/g,"过期"],
+  [/\bmalformed\b/g,"格式错误"],
+  [/\breviewer\b/g,"审稿者"],
+  [/reduction basin/g,"归约盆地"],
+  [/\bnovelty\b/g,"新颖性"],
+  [/\bmemory\b/g,"记忆"],
+  [/\btool\b/g,"工具"],
+  [/restoration clause/g,"恢复条款"],
+  [/workflow edit/g,"工作流编辑"],
+  [/\bcheckpoint\b/g,"检查点"],
+  [/\bstorage\b/g,"存储"],
+  [/\bsnapshot\b/g,"快照"],
+  [/\bcore\b/g,"核心"],
+  [/episodic-only/g,"仅情景记忆"],
+  [/consolidated memory/g,"整合记忆"],
+  [/utility\/refinement/g,"效用/修订"],
+  [/\braw\b/g,"原始"],
+  [/conclusion-changing/g,"结论改变"],
+  [/\bprevalence\b/g,"出现率"],
+  [/pairwise residual/g,"成对残余"],
+  [/\bselection\b/g,"选择"],
+  [/\bintervention\b/g,"干预"],
+  [/per-item/g,"单条目"],
+  [/\bscore\b/g,"分数"],
+  [/\bexclusion\b/g,"排斥"],
+  [/\bprecedence\b/g,"优先级"],
+  [/co-retrieval/g,"共检索"],
+  [/\bharmful\b/g,"有害"],
+  [/\bcausal\b/g,"因果"],
+  [/\butility\b/g,"效用"],
+  [/\bpool\b/g,"池"],
+  [/\bsuccess\b/g,"成功"],
+  [/\brate\b/g,"比例"],
+  [/\bprecision\b/g,"精确率"],
+  [/\bmatched\b/g,"匹配"],
+  [/\baudit\b/g,"审计"],
+  [/\bcost\b/g,"成本"],
+  [/repair action set/g,"修复动作集合"],
+  [/procedural memory/g,"程序记忆"],
+  [/counterexample-driven/g,"反例驱动"],
+  [/skill refinement/g,"技能修订"],
+  [/skill body/g,"技能主体"],
+  [/external applicability gate/g,"外部适用性门"],
+  [/half-life/g,"半衰期"],
+  [/\bactivation\b/g,"激活"],
+  [/local utility drift/g,"局部效用漂移"],
+  [/utility-hazard model/g,"效用风险模型"],
+  [/audit fraction/g,"审计比例"],
+  [/recency\/frequency/g,"最近性/频率"],
+  [/\bschema\b/g,"接口模式"],
+  [/local-state/g,"局部状态"],
+  [/cheap trigger\/ranking/g,"低成本触发/排序"],
+  [/pruning\/quarantine/g,"剪枝/隔离"],
+  [/\bshift\b/g,"分布偏移"],
+  [/utility-based/g,"基于效用"],
+  [/\bdependency\b/g,"依赖"],
+  [/learned hazard/g,"学习型风险模型"],
+  [/\bextractor\b/g,"抽取器"],
+  [/worst-process/g,"最差过程"],
+  [/\bvariance\b/g,"方差"],
+  [/\bmean\b/g,"均值"],
+  [/\boutcome\b/g,"结果"],
+  [/contrastive extraction/g,"对比抽取"],
+  [/cross-trajectory abstraction/g,"跨轨迹抽象"],
+  [/influence scope/g,"影响范围"],
+  [/\ballocator\b/g,"分配器"],
+  [/scope routing/g,"范围路由"],
+  [/\bcritic\b/g,"评价器"],
+  [/\btruth\b/g,"真值"],
+  [/effective candidates/g,"有效候选"],
+  [/reserve pool/g,"预留池"],
+  [/target variation/g,"目标变化"],
+  [/\bExperiment\b/g,"实验"],
+  [/full experiment/g,"全量实验"],
+  [/sign reversal/g,"符号反转"],
+  [/decision context/g,"决策上下文"],
+  [/intended-effect realization/g,"预期效应实现"],
+  [/parent evidence/g,"父级证据"],
+  [/prompt-patch substrate/g,"提示词补丁底座"],
+  [/target gain/g,"目标增益"],
+  [/effective fraction/g,"有效比例"],
+  [/mastered panel/g,"已掌握任务面板"],
+  [/\boriginal\b/g,"原任务"],
+  [/source scenarios/g,"源场景"],
+  [/target scenarios/g,"目标场景"],
+  [/\bworkflows\b/g,"工作流"],
+  [/\bedits\b/g,"编辑"],
+  [/fresh pair-target scenarios/g,"全新配对目标场景"],
+  [/\bfidelity\b/g,"保真度"],
+  [/\bUpdater\b/g,"更新器"],
+  [/discovery episode/g,"发现回合"],
+  [/\bPrompt\b/g,"提示词"],
+  [/\bProbe\b/g,"探针"],
+  [/before\/after/g,"前后对照"],
+  [/\bfresh\b/g,"全新"],
+  [/\bworkflow\b/g,"工作流"],
+  [/\bedit\b/g,"编辑"],
+  [/\bcommit\b/g,"提交"],
+  [/\btrials\b/g,"试验"],
+  [/\bsearch\b/g,"搜索"],
+  [/\bsource\b/g,"源"],
+  [/\bprogrammatic\b/g,"程序化"],
+  [/post-commit/g,"提交后"],
+  [/\bconditional\b/g,"条件化"],
+  [/\branking\b/g,"排序"],
+  [/global-best/g,"全局最优"],
+  [/nearest-neighbor/g,"最近邻"],
+  [/\bpairwise\b/g,"成对"],
+  [/\blistwise\b/g,"列表式"],
+  [/\branker\b/g,"排序器"],
+  [/\bcalibration\b/g,"校准"],
+  [/\bpredictor\b/g,"预测器"],
+  [/\btyped\b/g,"类型化"],
+  [/\blibrary\b/g,"库"],
+  [/\beditor\b/g,"编辑器"],
+  [/\bpolicy\b/g,"策略"],
+  [/\bbudget\b/g,"预算"],
+  [/\bmotif\b/g,"模式"],
+  [/\bgroup\b/g,"组"],
+  [/\bsubgraph\b/g,"子图"],
+  [/\bgrammar\b/g,"语法"],
+  [/\brewrite\b/g,"重写"],
+  [/\btransfer\b/g,"迁移"],
+  [/\bsignature\b/g,"签名"],
+  [/\bdiagnosis\b/g,"诊断"],
+  [/\bgate\b/g,"门"],
+  [/\bretrieved\b/g,"已检索"],
+  [/\bplacebo\b/g,"安慰剂"],
+  [/first-divergence/g,"首次分叉"],
+  [/nonzero effect/g,"非零效应"],
+  [/\bregeneration\b/g,"再生成"],
+  [/state-signature localization/g,"状态签名定位"],
+  [/task baseline/g,"任务对照"],
+  [/benefit\/harm sign/g,"收益/伤害符号"],
+  [/downstream context/g,"下游上下文"],
+  [/formal-method/g,"正式方法"],
+  [/soft audit-priority signal/g,"软审计优先级信号"],
+  [/paired-rollout/g,"配对运行"],
+  [/\brecall\b/g,"召回率"],
+  [/hard gate/g,"硬门"],
+  [/confirmatory cases/g,"确认性案例"],
+  [/\bprompt\b/g,"提示词"],
+  [/\bskill\b/g,"技能"],
+  [/\bcode\b/g,"代码"],
+  [/\bweights\b/g,"参数"],
+  [/repair ownership/g,"修复归属"],
+  [/persistent surface/g,"持久更新表面"],
+  [/source-level/g,"源级"],
+  [/\bregistry\b/g,"注册表"],
+  [/\bthreshold\b/g,"阈值"],
+  [/\bheuristic\b/g,"启发式"],
+  [/\bsurvey\b/g,"综述"],
+  [/\brun\b/g,"运行"],
+  [/\btarget\b/g,"目标"],
+  [/\bobjects\b/g,"对象"],
+  [/\bobject\b/g,"对象"],
+  [/\bproperty\b/g,"属性"],
+  [/\bdiscovery\b/g,"发现"],
+  [/\bshadow\b/g,"影子搜索"],
+  [/\bprimary\b/g,"一手"],
+  [/\bcanonical\b/g,"正式"],
+  [/\bsupport\b/g,"支持"],
+  [/\bverified\b/g,"已验证"],
+  [/\brelease\b/g,"发布"],
+  [/PAPER-FIRST/g,"论文优先"],
+  [/paper-first/g,"论文优先"],
+  [/main visuals/g,"主图"],
+  [/reviewer question/g,"审稿问题"],
+  [/\bclaim\b/g,"主张"],
+  [/data\/script\/caption/g,"数据/脚本/图注"],
+  [/main comparison/g,"主比较"],
+  [/\bmechanism\b/g,"机制"],
+  [/negative\/inconclusive/g,"负向/不确定"],
+  [/post-C2/g,"C2 后"],
+  [/Dead-End/g,"原理死路"],
+  [/Pre-check/g,"前置检查"],
+  [/\brepair\b/g,"修复"],
+  [/clean R1/g,"独立 R1"],
+  [/CPU-only/g,"仅 CPU"],
+  [/token-matched/g,"Token 匹配"],
+  [/nonzero units?/g,"非零单元"],
+  [/nonzero effects/g,"非零效应"],
+  [/\baction\b/g,"动作"],
+  [/state-signature localization/g,"状态签名定位"],
+  [/permutation p/g,"置换检验 p"],
+  [/trajectory branch/g,"轨迹分支"],
+  [/candidate-global replicated-effect/g,"候选级全局可复现效应"],
+  [/soft 审计-priority signal/g,"软审计优先级信号"],
+  [/hard 门/g,"硬门"],
+  [/archived secondary diagnostic/g,"归档次级诊断"],
+  [/\beffect sign\b/g,"效应符号"],
+  [/\beffect\b/g,"效应"],
+  [/local state/g,"局部状态"],
+  [/task-level/g,"任务级"],
+  [/\btransport\b/g,"迁移"],
+  [/\bidea\b/g,"研究方向"],
+  [/1-step/g,"一步"],
+  [/5-step/g,"五步"],
+  [/\bsignal\b/g,"信号"],
+];
+const ZH_PURE_TEXT = new Map([
+  ["CANONICAL TEMPORAL FLOW","统一时间主流程"],
+  ["SCOPE","范围界定"],
+  ["EVIDENCE","证据"],
+  ["NOVELTY","新颖性"],
+  ["METHOD","方法"],
+  ["EXPERIMENT BLUEPRINT","实验蓝图"],
+  ["ECONOMY COMPILE","资源经济编译"],
+  ["LOCAL VALIDATION","局部验证"],
+  ["METHOD FREEZE","方法冻结"],
+  ["FULL EXPERIMENT","全量实验"],
+  ["PAPER EVIDENCE","论文证据"],
+  ["LEARN","系统学习"],
+  ["Current Research State","当前科研状态"],
+  ["CURRENT","当前"],
+  ["PIPELINE","流程"],
+  ["JUDGE","裁决"],
+  ["BACKEND ARCHITECTURE MANIFEST","后端架构清单"],
+  ["CROSS-CUTTING METHODOLOGY CONTROLS","跨模块方法学控制"],
+  ["Content-addressed trigger","内容寻址触发器"],
+  ["P0 ECONOMY · BEFORE EXPERIMENT COMPILE","P0 资源经济 · 实验编译前"],
+  ["Matched-Simplification Tournament","匹配简化对照赛"],
+  ["ASSET-FIRST ICLR 2027 · PAPER QUALITY V2.1","工件优先 · ICLR 2027 · 论文证据质量 V2.1"],
+  ["closest-work table + provenance + evidence/collision graph","最近工作表 + 溯源 + 证据/碰撞图"],
+  ["gap + closest work + novelty axis + contribution claim + irreducible difference","问题缺口 + 最近工作 + 新颖性轴 + 贡献主张 + 不可约差异"],
+  ["Economy 5/5 + Protocol Validity + REP + Pre-Experiment Card + 8 Gate","资源经济 5/5 + 协议有效性 + REP + 实验前卡片 + 8 道门"],
+  ["F0 + P0-Support + minimal P0-Method evidence","F0 + P0 支持验证 + 最小 P0 方法证据"],
+  ["method hash + blueprint hash + local-validation decision","方法哈希 + 蓝图哈希 + 局部验证裁决"],
+  ["full-scale result package + replication + ablations + efficiency","全量结果包 + 复现 + 消融 + 效率"],
+  ["Evidence Integrity / Chain-of-Evidence + paper-ready tables/figures","证据完整性 / 证据链 + 论文就绪表格/图"],
+  ["rules/tests/config + Failure Assets + Meta-Trace + public snapshot","规则/测试/配置 + 失败资产 + 科学元轨迹 + 公开快照"],
+  ["Retain zero-reward blast-radius only as a diagnostic under cross-task effect transport; no standalone GPU.","零奖励爆炸半径只保留为跨任务效应迁移下的诊断项；不再作为独立 GPU 方向。"],
+  ["Keep the sequential-control problem; do not train a controller until a materially new persistent updater/admission stream passes qualification.","保留序列控制这一科学问题；只有实质全新的持久更新器/准入流通过资格验证后，才允许训练控制器。"],
+  ["Stop GPU work on this prompt-patch P0 instance. Reopen A-3 only with a newly qualified update substrate/action stream and a newly frozen fresh-candidate validation; otherwise send the direction to human pivot/drop review.","停止当前提示词补丁 P0 实例的 GPU 工作。只有新的更新底座/动作流通过资格验证，并重新冻结全新候选验证后，才允许重开 A-3；否则转人工决定转向或放弃。"],
+  ["Merge A-4 into a direct ordered-composition risk/repair baseline; the typed registry adds no held-out prediction or repair value.","把 A-4 并入直接的有序组合风险/修复对照；类型化注册表没有带来额外的留出预测或修复价值。"],
+  ["Merge A-5 into generic version/history infrastructure; do not spend GPU on a standalone semantic-compaction method.","把 A-5 并入通用版本/历史基础设施；不要为独立的语义压缩方法继续消耗 GPU。"],
+  ["Do not open hidden E_orig or train a B-2 selector on this table. Reopen only with a fresh dedicated deletion-sensitivity collection that independently supplies >=30 reproducible conclusion-change cases; otherwise send B-2 to human pivot/drop review.","不要打开隐藏 E_orig，也不要在当前表上训练 B-2 选择器。只有新的专用删除敏感性数据能够独立提供至少 30 个可复现的结论改变案例时才重开；否则转人工决定转向或放弃 B-2。"],
+  ["Stop the current ALFWorld B-3 instance and send it to human pivot/drop review; reopen only on a fresh co-retrieval substrate with at least six independent unseen pair-target units.","停止当前 ALFWorld B-3 实例并转人工决定转向或放弃；只有新的共检索底座拥有至少 6 个独立、未见的配对目标单元时才允许重开。"],
+  ["Merge B-5 into a standard compact precondition/ILP learner; monotone counterexample specialization adds no independent boundary-generalization value.","把 B-5 并入标准的紧凑前置条件/ILP 学习器；单调反例专化没有带来独立的边界泛化价值。"],
+  ["Retain only a simple cache/revalidation policy; the learned utility-hazard model adds no future-reuse decision value.","只保留简单缓存/重验证策略；学习型效用风险模型没有增加未来复用的决策价值。"],
+  ["Respect the typed F0 stop/hold; no GPU method expansion.","遵守类型化 F0 的停止/暂缓结论；不扩展 GPU 方法实验。"],
+  ["Keep cross-version matrices only as diagnostics; merge evaluator repair into simple frozen-anchor calibration and do not spend GPU on standalone C-2.","跨版本矩阵只保留为诊断证据；把评价器修复并入简单的冻结锚点校准，不再为独立 C-2 消耗 GPU。"],
+  ["Keep verifier counterexamples but drop per-example 1-minimality as a standalone curriculum variable; merge into generic counterexample learning.","保留验证器反例，但放弃把逐样本 1-minimality 作为独立课程变量；并入通用反例学习。"],
+  ["Cross-version trend selection collapses to same-information direct yield prediction.","跨版本趋势选择可归约为同信息条件下的直接收益预测。"],
+  ["Merge D-2 into direct mutation-yield prediction; retain versioned ranking as a diagnostic.","把 D-2 并入直接的变异收益预测；版本化排序只保留为诊断。"],
+  ["Do not open hidden workflows or train the E-1 ranker on this table. Reopen only after a newly frozen paired intervention table has genuine non-tied edit effects at the preregistered source gate; otherwise send E-1 to human pivot/drop review.","不要打开隐藏工作流，也不要在当前表上训练 E-1 排序器。只有新冻结的配对干预表在预注册源域门上出现真实、非并列的编辑效应时才允许重开；否则转人工决定转向或放弃 E-1。"],
+  ["Merge E-2 motif context into E-1/CE-Graph-style editing; do not spend GPU on a standalone causal-rewrite paper.","把 E-2 的模式上下文并入 E-1/CE-Graph 风格编辑；不再为独立的因果重写论文消耗 GPU。"],
+  ["Direct action disagreement exactly reproduces the selector.","直接动作分歧可以精确复现该选择器。"],
+  ["Keep decision-changing residuals as a data-selection diagnostic; drop standalone selector mechanism.","把会改变决策的残余保留为数据选择诊断；放弃独立选择器机制。"],
+  ["Equal-capacity direct shield is exactly equivalent.","同容量直接安全屏障完全等效。"],
+  ["Retain predecessor rules as shield explanations; no standalone GPU run.","把前驱规则保留为安全屏障解释；不再进行独立 GPU 实验。"],
+  ["Direct residual-conditioned recovery policy is exactly equivalent.","直接的残余条件恢复策略完全等效。"],
+  ["Retain recurrence audit and direct recovery policy; no standalone GPU run.","保留重现性审计和直接恢复策略；不再进行独立 GPU 实验。"],
+  ["Stop standalone A-6; the current active query policy is exactly reproduced by non-learning binary group testing under the same sparse-fault prior.","停止独立 A-6；在相同稀疏故障先验下，非学习型二元组测试可以精确复现当前主动查询策略。"],
+  ["Merge A-7 into A-2 as a simple same-state counterfactual decision rule; do not spend GPU on a standalone learned-controller paper.","把 A-7 并入 A-2，作为简单的同状态反事实决策规则；不再为独立的学习型控制器论文消耗 GPU。"],
+  ["Human authors must verify the live ICLR/OpenReview deadline because official ICLR pages currently conflict. Until resolved, operate against the earlier published dates: genuine abstract and frozen author membership by 2026-09-11 AoE; full paper and anonymous supplement by 2026-09-16 AoE. Complete profile/quota/reviewer/dual-submission/ethics/AI-use signoff; do not reopen dynamic P0 or broaden N1-N3.","作者必须在提交前人工核验实时 ICLR/OpenReview 截止日期，因为官方页面目前存在冲突。在冲突解决前，按更早的公开日期执行：2026-09-11 AoE 前完成真实摘要并冻结作者成员；2026-09-16 AoE 前提交全文与匿名补充材料。同时完成账号资料、名额、审稿人、双重投稿、伦理与 AI 使用声明确认；不要重开动态 P0，也不要扩大 N1–N3 的主张范围。"],
+  ["Stop standalone replication-gate escalation on this memory substrate; retain replication quality only as a diagnostic under B-9. Reopen only for a materially different update substrate.","停止在当前记忆底座上继续把复现门升级为独立方向；复现质量只作为 B-9 下的诊断保留。只有出现实质不同的更新底座时才重开。"],
+  ["Archive the current transport-method line for this substrate/cycle. Support phenomenon remains valid, but no current representation beats simple baselines; no fresh-heldout GPU or second backbone.","归档当前底座/周期上的迁移方法路线。现象支持仍然有效，但当前表示均未超过简单对照；不启动新的留出 GPU，也不启用第二主干模型。"],
+  ["Stop standalone B-10 and do not spend GPU; retain this P0 as the matched-simplification falsifier and return the drop/merge decision to human review.","停止独立 B-10，不再消耗 GPU；把该 P0 保留为匹配简化证伪器，并把放弃/合并决定交回人工审查。"],
+  ["Return E-3 to human DROP/merge review; deterministic isomorphic P/E/X matches hidden state-changing effects and recovery under the same six-probe budget.","把 E-3 交回人工放弃/合并审查；在相同六探针预算下，确定性的同构 P/E/X 已匹配隐藏状态变化效应与恢复表现。"],
+  ["Return E-4 to human DROP/merge review; the matched non-learning Boolean rule is equivalent or the safe-workload gate failed.","把 E-4 交回人工放弃/合并审查；匹配的非学习型布尔规则已经等效，或安全工作负载门未通过。"],
+  ["Current prompt-patch substrate fails the block-only updater gate: 1/8 positive target-gain candidates and effective fraction 0.125 < required 0.400. Fresh A-3 collection is forbidden.","当前提示词补丁底座未通过仅阻断式更新器门：正目标增益候选为 1/8，有效比例 0.125 < 要求的 0.400；禁止采集新的 A-3 数据。"],
+  ["ECONOMY + COMPILE","资源经济 + 编译"],
+  ["EVIDENCE-KNOWLEDGE","证据与知识"],
+  ["PAPER-DESIGN","论文设计"],
+  ["EXPERIMENT-DESIGN","实验设计"],
+  ["SCIENTIFIC-VALIDATION","科学验证"],
+  ["RUNTIME-AUTHORITY","运行权限"],
+  ["MEMORY-PUBLICATION","记忆与发布"],
+  ["Owner","负责人"],
+  ["AI CLINIC","AI 会诊"],
+  ["SIMPLIFY","简化对照"],
+  ["SUBSTRATE","实验底座"],
+  ["Substrate Inventory","底座清单"],
+  ["CAUSAL","因果"],
+  ["Causal Unit / Observable","因果单元 / 可观测量"],
+  ["Decision-Changing VOI","改变决策的信息价值"],
+  ["AUTH","权限"],
+  ["Single-Writer Authority","单写入者权限"],
+  ["READY","就绪"],
+  ["Paper Quality v2.1","论文证据质量 v2.1"],
+  ["Visual Evidence","可视化证据"],
+  ["Canonical Fresh Discovery","正式新现象发现"],
+  ["PROBLEM DISCOVERY · BEFORE PAPER DESIGN","问题发现 · 论文设计前"],
+  ["1 · PRIMARY EVIDENCE","1 · 一手证据"],
+  ["1B · LANE COVERAGE","1B · 搜索通道覆盖"],
+  ["1B2 · SCIENTIFIC OBJECT AXIS","1B2 · 科学对象轴"],
+  ["1B3 · OBJECT RETRIEVAL GAP AUDIT","1B3 · 对象检索缺口审计"],
+  ["1B4 · OBJECT CANDIDATE PRIMARY VERIFY","1B4 · 对象候选一手验证"],
+  ["1B5 · SUPPORT RELEASE WATCH","1B5 · 支持证据发布监控"],
+  ["1B6 · SUPPORT ASSET RECHECK QUEUE","1B6 · 支持资产复查队列"],
+  ["1B7 · SUPPORT INVENTORY HANDOFF","1B7 · 支持库存交接"],
+  ["1B8 · DISCOVERY FRONTIER","1B8 · 发现前沿"],
+  ["1B9 · FRESH PHENOMENON PORTFOLIO","1B9 · 新现象组合"],
+  ["1C · SOURCE TRANCHE","1C · 来源批次"],
+  ["1C2 · NO-LANE CARRIER PROBE","1C2 · 无通道载体探针"],
+  ["1D · DISCOVERY CONTRACT","1D · 发现合同"],
+  ["1E · SHADOW SEARCH LAB","1E · 影子搜索实验室"],
+  ["1F · SHADOW RUN ADMISSION","1F · 影子运行准入"],
+  ["1G · SHADOW CONTINUATION FRONTIER","1G · 影子搜索继续边界"],
+  ["2 · 4-LANE PROBLEM GENERATOR","2 · 四通道问题生成器"],
+  ["2B · SATURATION / DEAD-END MEMORY","2B · 饱和 / 死路记忆"],
+  ["2C · 4-LANE SEARCH AUDIT","2C · 四通道搜索审计"],
+  ["2D · GLOBAL RELATION RECALL","2D · 全局关系召回"],
+  ["2E · RELATION DELTA PREFLIGHT","2E · 关系增量前置检查"],
+  ["2F · MANUAL RELATION SCAN ADMISSION","2F · 人工关系扫描准入"],
+  ["3 · SEMANTIC BLOCKER","3 · 语义阻断器"],
+  ["4 · GATED INBOX","4 · 门控收件箱"],
+]);
+function localizeZhInline(value = "") {
+  let text = String(value || "");
+  if (!/[\u3400-\u9fff]/.test(text)) return text;
+  const protectedTokens = [];
+  const protect = (match) => {
+    const index = protectedTokens.push(match) - 1;
+    return `⟦M${index}⟧`;
+  };
+  // Display localization must never mutate auditable machine identities. Protect
+  // typed enums, PA/PF/SP/STRI IDs, content-addressed hashes, and multi-hyphen
+  // run/method identifiers before translating surrounding explanatory prose.
+  text = text
+    .replace(/\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\b/g, protect)
+    .replace(/\b(?:PA|PF|SP|STRI)(?:-[A-Za-z0-9]+)+\b/g, protect)
+    .replace(/\b[a-z0-9]+(?:-[a-z0-9]+){2,}\b/g, protect)
+    .replace(/\b[a-f0-9]{12,64}\b/g, protect);
+  ZH_INLINE_TEXT.forEach(([pattern,replacement]) => { text = text.replace(pattern,replacement); });
+  return text.replace(/⟦M(\d+)⟧/g, (_, index) => protectedTokens[Number(index)] || _);
+}
 function textOf(value) {
   if (typeof value === "string") return value;
   if (!value) return "";
-  return value[language] || value.en || value.zh || "";
+  const selected = value[language] || value.en || value.zh || "";
+  return language === "zh" && value.zh ? localizeZhInline(selected) : selected;
 }
 function resetPaperIdeasAfterReload() {
   if (pageId !== "paper-ideas" || NAVIGATION_TYPE !== "reload") return;
@@ -421,6 +859,25 @@ const ZH_CATEGORY = {
   "Live literature":"动态文献", "GUI & Web":"GUI / Web", "Web Navigation":"网页导航", "Embodied AI":"具身智能",
   "General Computer Control":"通用计算机控制", "Scaffold-Level":"脚手架级", "Foundation-Model-Level":"基础模型级"
 };
+const ZH_TAXONOMY = {
+  "Evaluation and Benchmarks":"评测与基准",
+  "Evidence and execution provenance":"证据与执行溯源",
+  "Memory and Context Management":"记忆与上下文管理",
+  "2.2.1 Memory Object":"2.2.1 记忆对象",
+  "2.2.2 Memory Structure":"2.2.2 记忆结构",
+  "2.2.3 Memory Processing":"2.2.3 记忆处理",
+  "Versioned evolution protocol":"版本化进化协议",
+  "Memory-driven exploration":"记忆驱动探索",
+  "Self-evolving memory benchmark":"自进化记忆基准",
+  "Visual memory benchmark":"视觉记忆基准",
+  "Multi-session memory":"多会话记忆",
+  "Action-world memory lifecycle":"动作—世界记忆生命周期",
+  "Adaptive multimodal memory":"自适应多模态记忆",
+  "Grow-and-refine semantic memory":"生长—修订式语义记忆",
+  "Hierarchical video memory":"层级视频记忆",
+};
+function localizedTaxonomy(value){ const raw=String(value || ""); return language === "zh" ? (ZH_TAXONOMY[raw] || localizedCategory(raw)) : raw; }
+function localizedVenue(value){ const raw=String(value || "Unknown venue"); if(language!=="zh") return raw; if(raw==="Paper / technical report") return "论文 / 技术报告"; if(raw==="Repository") return "代码仓库"; return raw; }
 function localizedUpdateTarget(value){ const raw=String(value || "agent component"); return language === "zh" ? (ZH_UPDATE_TARGET[raw] || raw) : raw; }
 function localizedPublicationType(value){ const raw=String(value || "Other"); return language === "zh" ? (ZH_PUBLICATION_TYPE[raw] || raw) : raw; }
 function localizedSignal(value){ const raw=String(value || "feedback"); return language === "zh" ? (ZH_SIGNAL[raw] || raw) : raw; }
@@ -2188,7 +2645,7 @@ function paperAnalysis(record) {
       importance:textOf(topAnalysis.problem)
     };
   }
-  const topic = record.subcategory || record.category || record.title;
+  const topic = localizedTaxonomy(record.subcategory || record.category || record.title);
   const familyText = {
     parameter:{
       rationale:{en:"When feedback captures a stable and recurring pattern, parameter updates can amortize the improvement across many future tasks.",zh:"当反馈反映稳定且会重复出现的规律时，参数更新可以把一次学习成本摊销到大量后续任务。"},
@@ -2288,7 +2745,7 @@ function paperCard(p, priorityRank = null) {
   const role = readingRoleInfo(p);
   const requested = new URLSearchParams(location.search).get("paper") === slug;
   const analysisSearch = [analysis.purpose,analysis.advantage,analysis.core,analysis.rationale,analysis.logic,analysis.validation,analysis.importance].join(" ");
-  return `<article class="card reference-card" id="ref-${slug}" data-reading-role="${esc(role.id)}" data-role-rank="${readingRoleRank(p)}" data-tier="${publicationTier(p)}" data-citations="${citations === null ? -1 : citations}" data-year="${p.year || 0}" data-priority-rank="${priorityRank || ""}" data-search="${esc([p.title,p.venue,p.category,p.subcategory,p.updateTarget,p.signal,type,analysisSearch].join(" ").toLowerCase())}"><div class="card-top"><div>${priorityRank ? `<div class="paper-priority-rank">${language === "zh" ? "推荐序号" : "reading order"} #${priorityRank}</div>` : ""}<h3 data-toc="false"><a class="ref-number" href="#ref-${slug}">[${refNo}]</a> ${esc(p.title)}</h3><div class="meta">${esc(String(p.year || ""))} · ${esc(p.venue || "Unknown venue")} · ${esc(localizedCategory(p.category || "Unclassified"))}</div></div><div class="badges"><span class="badge reading-role">${esc(textOf(role.title))}</span><span class="badge ranking-tier">${esc(tierLabel)}</span><span class="badge citation-count ${citations === null ? "citation-pending" : ""}">${citations === null ? (language === "zh" ? "引用量待匹配" : "citations pending") : `${citations.toLocaleString(language === "zh" ? "zh-CN" : "en-US")} ${language === "zh" ? "次引用" : "citations"}`}</span><span class="badge publication-type">${esc(localizedPublicationType(type))}</span><span class="badge ${p.vision ? "vision" : ""}">${p.vision ? (language === "zh" ? "视觉/多模态" : "vision/multimodal") : (language === "zh" ? "通用" : "general")}</span><span class="badge ${p.updateTarget === "model parameters" ? "model" : "scaffold"}">${esc(localizedUpdateTarget(p.updateTarget || "agent component"))}</span><span class="badge">${esc(localizedSignal(p.signal || "feedback"))}</span></div></div>${citationMeta ? `<div class="citation-source-note">${language === "zh" ? "引用数据" : "Citation data"}: ${esc(CITATION_CONFIG.sourceName || "OpenAlex")} · ${language === "zh" ? "匹配" : "match"} ${Math.round((citationMeta.matchScore || 0) * 100)}%</div>` : ""}${summary ? `<p>${esc(summary)}</p>` : ""}<details class="paper-analysis" ${requested || (priorityRank !== null && priorityRank <= 12 && analysis.basis === "curated-full") ? "open" : ""}><summary><span>${language === "zh" ? "六项论文梳理" : "Six-part paper analysis"}</span><small>${paperAnalysisLabel(analysis)}</small></summary><div class="paper-analysis-disclaimer">${analysis.basis === "curated-full" ? (language === "zh" ? "六项内容已针对该论文单独整理；仍建议在正式引用具体实验数字前回看原文。" : "All six fields are paper-specific; consult the original paper before citing exact experimental numbers.") : analysis.basis === "curated" ? (language === "zh" ? "核心方法描述已针对该论文单独整理；其余字段仍是面向快速阅读的压缩解释。" : "The core method description is paper-specific; the other fields remain compressed reading aids.") : (language === "zh" ? "该概览依据标题、目录分类、更新对象、反馈信号和已有摘要自动归纳；准确引用方法细节时仍应回看原文。" : "This overview is derived from the title, catalog taxonomy, update surface, feedback signal, and available summary. Consult the paper before citing method details.")}</div><div class="paper-analysis-grid"><div><b>${language === "zh" ? "问题动机（含重要性）" : "Problem motivation"}</b><p>${esc(analysis.purpose)}</p>${analysis.basis === "curated-full" ? "" : `<small>${esc(analysis.importance || "")}</small>`}</div><div><b>${language === "zh" ? "相对优势" : "Comparative advantage"}</b><p>${esc(analysis.advantage)}</p></div><div><b>${language === "zh" ? "核心直觉" : "Core intuition"}</b><p>${esc(analysis.core)}</p></div><div><b>${language === "zh" ? "成立依据" : "Why it should work"}</b><p>${esc(analysis.rationale)}</p></div><div><b>${language === "zh" ? "方法流程" : "Method flow"}</b><p>${esc(analysis.logic)}</p></div><div><b>${language === "zh" ? "实验验证" : "Experimental validation"}</b><p>${esc(analysis.validation || "")}</p></div></div></details><div class="links"><a class="link-btn" href="${esc(p.url)}" target="_blank" rel="noopener">${language === "zh" ? "论文" : "Paper"}</a>${p.repo ? `<a class="link-btn repo" href="${esc(p.repo)}" target="_blank" rel="noopener">${language === "zh" ? "代码" : "Code"}</a>` : ""}<button class="link-btn copy-citation" type="button" data-record="${encodeURIComponent(slug)}">${language === "zh" ? "复制引用" : "Copy citation"}</button><a class="link-btn cite-link" href="bibliography.html?paper=${encodeURIComponent(slug)}#ref-${slug}">${language === "zh" ? "引用定位" : "Reference"}</a></div></article>`;
+  return `<article class="card reference-card" id="ref-${slug}" data-reading-role="${esc(role.id)}" data-role-rank="${readingRoleRank(p)}" data-tier="${publicationTier(p)}" data-citations="${citations === null ? -1 : citations}" data-year="${p.year || 0}" data-priority-rank="${priorityRank || ""}" data-search="${esc([p.title,p.venue,p.category,p.subcategory,p.updateTarget,p.signal,type,analysisSearch].join(" ").toLowerCase())}"><div class="card-top"><div>${priorityRank ? `<div class="paper-priority-rank">${language === "zh" ? "推荐序号" : "reading order"} #${priorityRank}</div>` : ""}<h3 data-toc="false"><a class="ref-number" href="#ref-${slug}">[${refNo}]</a> ${esc(p.title)}</h3><div class="meta">${esc(String(p.year || ""))} · ${esc(localizedVenue(p.venue || "Unknown venue"))} · ${esc(localizedCategory(p.category || "Unclassified"))}</div></div><div class="badges"><span class="badge reading-role">${esc(textOf(role.title))}</span><span class="badge ranking-tier">${esc(tierLabel)}</span><span class="badge citation-count ${citations === null ? "citation-pending" : ""}">${citations === null ? (language === "zh" ? "引用量待匹配" : "citations pending") : `${citations.toLocaleString(language === "zh" ? "zh-CN" : "en-US")} ${language === "zh" ? "次引用" : "citations"}`}</span><span class="badge publication-type">${esc(localizedPublicationType(type))}</span><span class="badge ${p.vision ? "vision" : ""}">${p.vision ? (language === "zh" ? "视觉/多模态" : "vision/multimodal") : (language === "zh" ? "通用" : "general")}</span><span class="badge ${p.updateTarget === "model parameters" ? "model" : "scaffold"}">${esc(localizedUpdateTarget(p.updateTarget || "agent component"))}</span><span class="badge">${esc(localizedSignal(p.signal || "feedback"))}</span></div></div>${citationMeta ? `<div class="citation-source-note">${language === "zh" ? "引用数据" : "Citation data"}: ${esc(CITATION_CONFIG.sourceName || "OpenAlex")} · ${language === "zh" ? "匹配" : "match"} ${Math.round((citationMeta.matchScore || 0) * 100)}%</div>` : ""}${summary ? `<p>${esc(summary)}</p>` : ""}<details class="paper-analysis" ${requested || (priorityRank !== null && priorityRank <= 12 && analysis.basis === "curated-full") ? "open" : ""}><summary><span>${language === "zh" ? "六项论文梳理" : "Six-part paper analysis"}</span><small>${paperAnalysisLabel(analysis)}</small></summary><div class="paper-analysis-disclaimer">${analysis.basis === "curated-full" ? (language === "zh" ? "六项内容已针对该论文单独整理；仍建议在正式引用具体实验数字前回看原文。" : "All six fields are paper-specific; consult the original paper before citing exact experimental numbers.") : analysis.basis === "curated" ? (language === "zh" ? "核心方法描述已针对该论文单独整理；其余字段仍是面向快速阅读的压缩解释。" : "The core method description is paper-specific; the other fields remain compressed reading aids.") : (language === "zh" ? "该概览依据标题、目录分类、更新对象、反馈信号和已有摘要自动归纳；准确引用方法细节时仍应回看原文。" : "This overview is derived from the title, catalog taxonomy, update surface, feedback signal, and available summary. Consult the paper before citing method details.")}</div><div class="paper-analysis-grid"><div><b>${language === "zh" ? "问题动机（含重要性）" : "Problem motivation"}</b><p>${esc(analysis.purpose)}</p>${analysis.basis === "curated-full" ? "" : `<small>${esc(analysis.importance || "")}</small>`}</div><div><b>${language === "zh" ? "相对优势" : "Comparative advantage"}</b><p>${esc(analysis.advantage)}</p></div><div><b>${language === "zh" ? "核心直觉" : "Core intuition"}</b><p>${esc(analysis.core)}</p></div><div><b>${language === "zh" ? "成立依据" : "Why it should work"}</b><p>${esc(analysis.rationale)}</p></div><div><b>${language === "zh" ? "方法流程" : "Method flow"}</b><p>${esc(analysis.logic)}</p></div><div><b>${language === "zh" ? "实验验证" : "Experimental validation"}</b><p>${esc(analysis.validation || "")}</p></div></div></details><div class="links"><a class="link-btn" href="${esc(p.url)}" target="_blank" rel="noopener">${language === "zh" ? "论文" : "Paper"}</a>${p.repo ? `<a class="link-btn repo" href="${esc(p.repo)}" target="_blank" rel="noopener">${language === "zh" ? "代码" : "Code"}</a>` : ""}<button class="link-btn copy-citation" type="button" data-record="${encodeURIComponent(slug)}">${language === "zh" ? "复制引用" : "Copy citation"}</button><a class="link-btn cite-link" href="bibliography.html?paper=${encodeURIComponent(slug)}#ref-${slug}">${language === "zh" ? "引用定位" : "Reference"}</a></div></article>`;
 }
 function bindPaperCardEvents() {
   document.querySelectorAll(".copy-citation").forEach((button) => button.addEventListener("click", async () => {
@@ -2340,6 +2797,8 @@ function renderPaperList(query = "") {
   const cards = bibliographySort === "priority" ? renderRecommendedPaperGroups(visible, filtered) : visible.map((paper, index) => paperCard(paper, index + 1)).join("");
   list.innerHTML = filtered.length ? `${cards}${remaining ? `<button id="load-more-papers" class="load-more">${language === "zh" ? `继续加载 ${Math.min(80, remaining)} 篇（剩余 ${remaining}）` : `Load ${Math.min(80, remaining)} more (${remaining} remaining)`}</button>` : ""}` : `<div class="empty">${language === "zh" ? "没有匹配条目。" : "No matching records."}</div>`;
   bindPaperCardEvents();
+  localizeRenderedChinese(list);
+  requestAnimationFrame(() => applyReadabilityFloor(list));
   document.getElementById("load-more-papers")?.addEventListener("click", () => { bibliographyLimit += 80; renderPaperList(query); });
   updateCounter(filtered.length === catalog.length ? (language === "zh" ? ` · 已加载 ${visible.length}` : ` · loaded ${visible.length}`) : (language === "zh" ? ` · 匹配 ${filtered.length}，已加载 ${visible.length}` : ` · ${filtered.length} matches, ${visible.length} loaded`));
   if (requested) requestAnimationFrame(() => document.getElementById(`ref-${requested}`)?.scrollIntoView({ block: "center" }));
@@ -2359,6 +2818,8 @@ function renderGlobalSearch(query) {
   const ideasHtml = ideaMatches.length ? `<h3>${language === "zh" ? "论文 Idea" : "Paper ideas"}</h3><div class="framework-grid">${ideaMatches.map((idea) => { const direction = directionById(idea.directionId); return `<a class="framework-card paper-card" href="paper-ideas.html#${ideaAnchor(idea.name)}"><b>#${idea.rank} · ${esc(idea.name)}</b><span>${direction ? `${esc(direction.code)} · ${textOf(direction.title)}` : ""}</span></a>`; }).join("")}</div>` : "";
   const papersHtml = paperMatches.length ? `<h3>${language === "zh" ? "文献" : "Literature"}</h3><div class="resource-list">${paperMatches.map(paperCard).join("")}</div>` : "";
   box.innerHTML = `<h2>${language === "zh" ? "全站检索" : "Global search"}</h2>${directionsHtml}${ideasHtml}${papersHtml}${!directionMatches.length && !ideaMatches.length && !paperMatches.length ? `<div class="empty">${language === "zh" ? "没有匹配条目。" : "No matching records."}</div>` : ""}`;
+  localizeRenderedChinese(box);
+  requestAnimationFrame(() => applyReadabilityFloor(box));
   bindPaperCardEvents();
 }
 function findCitation(title) {
@@ -2401,7 +2862,7 @@ function syncFilterUrl() {
 function buildToc() {
   const container = document.getElementById("page-toc");
   if (!container) return;
-  const tocSelector = pageId === "system-overview" ? "#dynamic-page h2, #dynamic-page h3" : "#dynamic-page h2, #dynamic-page h3, #dynamic-page h4";
+  const tocSelector = "#dynamic-page h2, #dynamic-page h3";
   const headings = [...document.querySelectorAll(tocSelector)].filter((heading) => heading.dataset.toc !== "false" && !heading.closest(".review-trace-fold,.review-archive-fold,.system-deep-dive") && (heading.id || heading.closest(".panel, .page-chapter, .merged-group, .direction-cluster, .idea-macro-cluster")));
   headings.forEach((heading, index) => { if (!heading.id) heading.id = `${slugify(heading.textContent)}-${index + 1}`; });
   const root = [];
@@ -2416,6 +2877,42 @@ function buildToc() {
   const renderNodes = (nodes) => `<ul>${nodes.map((node) => `<li class="toc-node toc-level-${node.level}"><a href="#${esc(node.id)}">${esc(node.label)}</a>${node.children.length ? renderNodes(node.children) : ""}</li>`).join("")}</ul>`;
   container.innerHTML = headings.length ? `<div class="toc-title">${language === "zh" ? "本页多级目录" : "Page hierarchy"}</div><nav class="toc-tree" aria-label="${language === "zh" ? "页内多级目录" : "Hierarchical page contents"}">${renderNodes(root)}</nav>` : "";
 }
+function localizeRenderedChinese(root = document) {
+  if (language !== "zh") return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach((node) => {
+    const value = node.nodeValue || "";
+    const trimmed = value.trim();
+    if (ZH_PURE_TEXT.has(trimmed)) {
+      node.nodeValue = value.replace(trimmed, ZH_PURE_TEXT.get(trimmed));
+      return;
+    }
+    if (!/[\u3400-\u9fff]/.test(value) || !/[A-Za-z]{3}/.test(value)) return;
+    const localized = localizeZhInline(value);
+    if (localized !== value) node.nodeValue = localized;
+  });
+}
+function applyReadabilityFloor(root = document) {
+  const bodyTags = new Set(["P","LI","TD","DD"]);
+  const mobile = window.matchMedia("(max-width: 820px)").matches;
+  root.querySelectorAll(".layout *").forEach((node) => {
+    if (![...node.childNodes].some((child) => child.nodeType === Node.TEXT_NODE && child.textContent.trim())) return;
+    const size = Number.parseFloat(getComputedStyle(node).fontSize || "0");
+    if (!Number.isFinite(size) || size <= 0) return;
+    const floor = bodyTags.has(node.tagName) ? (mobile ? 12.5 : 12) : 11.5;
+    if (size < floor) {
+      node.classList.add(bodyTags.has(node.tagName) ? "readability-body-floor" : "readability-floor");
+      node.style.setProperty("font-size", `${floor}px`, "important");
+    }
+  });
+}
+let readabilityResizeTimer = 0;
+window.addEventListener("resize", () => {
+  clearTimeout(readabilityResizeTimer);
+  readabilityResizeTimer = window.setTimeout(() => applyReadabilityFloor(), 80);
+}, { passive:true });
 function bindPageEvents() {
   const applyCvprFilters = () => {
     const track = document.querySelector('.cvpr-filter-btn.active[data-cvpr-filter-type="track"]')?.dataset.cvprFilterValue || "all";
@@ -2614,7 +3111,9 @@ function renderPage() {
   bindPaperCardEvents();
   hydrateCitations(root);
   updateCitationStatus();
+  localizeRenderedChinese(root);
   buildToc();
+  requestAnimationFrame(() => applyReadabilityFloor());
 }
 
 function bindSearch() {

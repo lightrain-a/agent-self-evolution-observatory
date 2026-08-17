@@ -227,7 +227,7 @@ def main() -> None:
         execute(session_id, "document.querySelector('.language-toggle')?.click();")
         time.sleep(1)
         zh = execute(session_id, "return {text:document.body.textContent||'', outer:document.querySelectorAll('.preflight-outer-gate').length, gates:document.querySelectorAll('.preflight-gate').length, failures:document.querySelectorAll('.system-failure-layer').length};")
-        require(zh["outer"] == 8 and zh["gates"] == 10 and zh["failures"] == 6 and "P0 ECONOMY" in zh["text"] and "PROTOCOL VALIDITY" in zh["text"] and "SCIENTIFIC META-TRACE" in zh["text"] and "PRINCIPLE" in zh["text"], "research-system Economy / Principle / Protocol Validity / learning-loop visualization is incomplete")
+        require(zh["outer"] == 8 and zh["gates"] == 10 and zh["failures"] == 6 and "P0 资源经济" in zh["text"] and "协议有效性" in zh["text"] and "科学元轨迹" in zh["text"] and "原理" in zh["text"], "research-system Economy / Principle / Protocol Validity / learning-loop visualization is incomplete")
         request("POST", f"/session/{session_id}/window/rect", {"width": 390, "height": 844})
         time.sleep(1)
         system_mobile = execute(session_id, """const gate=document.querySelector('.preflight-gate-grid'); const failure=document.querySelector('.system-failure-layers'); return {inner:window.innerWidth,scroll:document.documentElement.scrollWidth,gateCols:gate?getComputedStyle(gate).gridTemplateColumns:'',failureCols:failure?getComputedStyle(failure).gridTemplateColumns:'',maxCard:Math.max(0,...[...document.querySelectorAll('.preflight-gate,.system-failure-layer,.methodology-control-card')].map(x=>x.getBoundingClientRect().width))};""")
@@ -268,7 +268,7 @@ def main() -> None:
           canonicalReviewCount: Object.keys(window.HUMAN_REVIEW_CANONICAL_20260810?.ideas || {}).length,
           originalIdeaLabels: [...document.querySelectorAll('.human-idea-title small')].map(x=>(x.textContent||'').trim()),
           concreteExamples: [...document.querySelectorAll('.human-review-idea-card h4')].filter(x=>/举个具体例子|Concrete example/.test(x.textContent||'')).length,
-          parentMergeRules: [...document.querySelectorAll('.human-review-idea-card h4')].filter(x=>/必须并回父 Idea|must merge into its parent/.test(x.textContent||'')).length,
+          parentMergeRules: [...document.querySelectorAll('.human-review-idea-card h4')].filter(x=>/必须并回父(?: Idea| 研究方向)|must merge into its parent/.test(x.textContent||'')).length,
           openDiscussedCards: document.querySelectorAll('.human-review-idea-card[open]').length,
           codes: [...document.querySelectorAll('.human-idea-code')].map(x=>(x.textContent||'').trim()),
           newGroups: document.querySelectorAll('.supplemental-group').length,
@@ -334,7 +334,7 @@ def main() -> None:
         require(ideas["methodologyPanels"] == 1 and ideas["originalEvalGuides"] == 1, f"human-opinion audit/original-eval methodology panels are missing: {ideas['methodologyPanels']}/{ideas['originalEvalGuides']}")
         require(ideas["canonicalReviewCount"] == 26, f"canonical human-review map must cover all 26 ideas, got {ideas['canonicalReviewCount']}")
         require(ideas["humanRecommendationStats"] == [4,14,7,1], f"canonical human recommendation counts are wrong: {ideas['humanRecommendationStats']}")
-        require(any('Original Idea 4' in label or '原讨论 Idea 4' in label for label in ideas["originalIdeaLabels"]), f"original discussion numbering is not visible: {ideas['originalIdeaLabels'][:5]}")
+        require(any('Original Idea 4' in label or '原讨论 Idea 4' in label or '原讨论 研究方向 4' in label for label in ideas["originalIdeaLabels"]), f"original discussion numbering is not visible: {ideas['originalIdeaLabels'][:5]}")
         require(ideas["concreteExamples"] == 26 and ideas["parentMergeRules"] >= 1, f"intuition/example or parent-merge UI gate is missing: {ideas['concreteExamples']}/{ideas['parentMergeRules']}")
         require(ideas["openDiscussedCards"] == 0 and ideas["openNewCards"] == 0, f"all idea cards must be collapsed by default, got {ideas['openDiscussedCards']}/{ideas['openNewCards']}")
         require(len(ideas["codes"]) == 26 and len(set(ideas["codes"])) == 26, f"group codes are missing or duplicated: {ideas['codes']}")

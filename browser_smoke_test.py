@@ -509,7 +509,7 @@ def main() -> None:
 
         navigate("/experiments.html", 4)
         experiments_zh = execute(session_id, "return document.body.textContent || ''")
-        require(all(marker in experiments_zh for marker in ("当前论文 / 残余证据","STRI · P0-A 动态证据","STRI · P0-E 最终策略","Memory · 已归档正向残余","0 个正式实验可启动")), "Experiments Chinese-first current-evidence UI is incomplete")
+        require(all(marker in experiments_zh for marker in ("当前论文 / 残余证据","STRI · P0-A 动态证据","STRI · P0-E 最终策略","记忆 · 已归档正向残余","0 个正式实验可启动")), "Experiments Chinese-first current-evidence UI is incomplete")
 
         navigate("/bibliography.html", 8)
         bibliography_zh = execute(session_id, "return document.body.textContent || ''")
@@ -518,6 +518,42 @@ def main() -> None:
         navigate("/evaluation.html", 4)
         evaluation_zh = execute(session_id, "return document.body.textContent || ''")
         require(all(marker in evaluation_zh for marker in ("初始化","提出更新","部署使用","运行脚手架（Harness）基线","谱系组合遗憾（regret）")), "Evaluation lifecycle terminology is not Chinese-first")
+
+        # Site-wide Chinese/readability contract: all 11 canonical pages use an H2/H3-only
+        # sidebar hierarchy, readable direct text, and no ordinary English prose mixed into
+        # Chinese explanatory nodes. Machine IDs, paper/model names, metrics, and status enums
+        # remain intentionally untouched.
+        canonical_frontend_pages = (
+            "/index.html", "/foundations.html", "/mechanisms.html", "/domains.html", "/evaluation.html",
+            "/system-overview.html", "/research-directions.html", "/paper-ideas.html", "/experiments.html",
+            "/selected-paper.html", "/bibliography.html",
+        )
+        request("POST", f"/session/{session_id}/window/rect", {"width": 1440, "height": 1000, "x": 0, "y": 0})
+        for frontend_page in canonical_frontend_pages:
+            navigate(frontend_page, 2)
+            site_readability = execute(session_id, """document.querySelectorAll('#dynamic-page details').forEach(x=>x.open=true);
+              const visible=e=>{const s=getComputedStyle(e),r=e.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&Number(s.opacity)>0&&r.width>0&&r.height>0};
+              const own=e=>[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent.trim()).filter(Boolean).join(' ');
+              const rows=[...document.querySelectorAll('.layout *')].filter(visible).map(e=>({e,t:own(e)})).filter(x=>x.t);
+              const withoutMachineIds=t=>t
+                .replace(/\\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\\b/g,'')
+                .replace(/\\b(?:PA|PF|SP|STRI)(?:-[A-Za-z0-9]+)+\\b/g,'')
+                .replace(/\\b[a-z0-9]+(?:-[a-z0-9]+){2,}\\b/g,'')
+                .replace(/\\b[a-f0-9]{12,64}\\b/g,'');
+              const mixed=rows.filter(x=>{const t=withoutMachineIds(x.t);return /[\\u3400-\\u9fff]/.test(t)&&/\\b(?:Idea|Fresh|Shadow|Paper-first|Paper Design|Method Design|Memory|Workflow|Baseline|Pilot|standalone|thesis|support-pass|support-hold|scientific authority|qualification|provider|operator|formulation|matched baseline|dead-end|Evaluation and Benchmarks|Paper \\/ technical report)\\b/i.test(t)}).map(x=>x.t);
+              const tiny=rows.map(x=>({tag:x.e.tagName,px:parseFloat(getComputedStyle(x.e).fontSize)||99,t:x.t})).filter(x=>x.px<11.49);
+              const prose=rows.map(x=>({tag:x.e.tagName,px:parseFloat(getComputedStyle(x.e).fontSize)||99,t:x.t})).filter(x=>['P','LI','TD','DD'].includes(x.tag)&&x.px<11.99);
+              return {lang:document.documentElement.lang,mixed,tiny,prose,toc4:document.querySelectorAll('#page-toc .toc-level-4').length};""")
+            require(site_readability["lang"] == "zh-CN", f"{frontend_page} did not remain in Chinese mode: {site_readability}")
+            require(not site_readability["mixed"], f"{frontend_page} regressed to mixed English explanatory prose: {site_readability['mixed'][:4]}")
+            require(not site_readability["tiny"] and not site_readability["prose"], f"{frontend_page} violates the site-wide font floor: tiny={site_readability['tiny'][:3]} prose={site_readability['prose'][:3]}")
+            require(site_readability["toc4"] == 0, f"{frontend_page} sidebar TOC must stop at H3, got H4 entries")
+
+        request("POST", f"/session/{session_id}/window/rect", {"width": 500, "height": 844, "x": 0, "y": 0})
+        for frontend_page in canonical_frontend_pages:
+            navigate(frontend_page, 1)
+            mobile_width = execute(session_id, "return {inner:window.innerWidth,scroll:document.documentElement.scrollWidth};")
+            require(mobile_width["scroll"] <= mobile_width["inner"] + 2, f"{frontend_page} has page-level horizontal overflow on mobile-width viewport: {mobile_width}")
 
         redirect_checks = {
             "/memory-evolution.html": "mechanisms.html#group-memory-evolution",

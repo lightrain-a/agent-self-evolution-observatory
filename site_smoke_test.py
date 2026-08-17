@@ -216,9 +216,11 @@ def main() -> None:
             if architecture_text.count(f'id:"{chapter_id}"') != 1:
                 fail(f"page architecture {page_id} is missing unique chapter {chapter_id}")
     app_text = (ROOT / "app.js").read_text(encoding="utf-8")
-    for marker in ["renderArchitectureOverview", "renderCustomChapter", "#dynamic-page h4", "toc-level-${node.level}"]:
+    for marker in ["renderArchitectureOverview", "renderCustomChapter", 'const tocSelector = "#dynamic-page h2, #dynamic-page h3"', "toc-level-${node.level}"]:
         if marker not in app_text:
             fail(f"hierarchical renderer is missing {marker}")
+    if 'const tocSelector = "#dynamic-page h2, #dynamic-page h3, #dynamic-page h4"' in app_text:
+        fail("canonical sidebar TOCs must stop at H3")
     for page_id in CANONICAL_PAGES.values():
         if page_id != "home" and f'"{page_id}"' not in combined and f'.{page_id}' not in combined:
             fail(f"no content configuration found for canonical page {page_id}")

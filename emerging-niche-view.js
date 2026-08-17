@@ -9,7 +9,7 @@
     if (!root || !policy || document.getElementById("emerging-niche-score")) return;
     const zh = (document.documentElement.lang || "").toLowerCase().startsWith("zh") || localStorage.getItem("agent-evolution-language") === "zh";
     const labels = zh ? {
-      kicker:"IDEA 准入 · ENS 0–100", title:"新兴小众方向评分（Emerging-Niche Score）",
+      kicker:"研究方向准入 · ENS 0–100", title:"新兴小众方向评分（Emerging-Niche Score）",
       intro:"用于决定哪些新候选优先接受最新文献碰撞审计和低成本 P0；它不是“通过分”，也不会推翻真实实验或人工终态。",
       weight:"权重", hard:"硬规则", bands:"解释", rule:"单纯冷门不加分：必须同时有新兴邻域、真实重要性和决定性 P0。",
       override:"直接碰撞、等信息简化、真实 P0 停止（STOP）和人工并入/弃掉（MERGE/DROP）永远覆盖 ENS。"
@@ -29,6 +29,8 @@
     const architecture = root.querySelector(".page-architecture");
     if (architecture) architecture.insertAdjacentElement("afterend", panel);
     else root.prepend(panel);
+    if (typeof localizeRenderedChinese === "function") localizeRenderedChinese(panel);
+    if (typeof applyReadabilityFloor === "function") requestAnimationFrame(() => applyReadabilityFloor(panel));
   }
 
   const root = document.getElementById("dynamic-page");

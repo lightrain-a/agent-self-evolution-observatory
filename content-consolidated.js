@@ -70,7 +70,7 @@
   if (sources["research-directions"]) {
     pages["research-directions"] = Object.assign({}, sources["research-directions"], {
       title:{en:"Research directions and long-term agenda",zh:"研究方向地图与长期议程"},
-      lead:{en:"Ten stable scientific directions organize the field. Historical idea lineages explain how the search evolved; the current STRI paper, zero-authority positive-residual search, canonical/shadow discovery state, and terminal experiment ledger are synchronized on Paper Ideas and Experiments.",zh:"十个稳定科学方向组织领域结构。历史 Idea 谱系用于解释搜索如何演化；当前 STRI 论文、零权限正向残余搜索、正式/Shadow 问题发现状态与终态实验账本，统一同步到“论文 Idea”和“实验决策”页面。"},
+      lead:{en:"Ten stable scientific directions organize the field. Historical idea lineages explain how the search evolved; the current STRI paper, zero-authority positive-residual search, canonical/shadow discovery state, and terminal experiment ledger are synchronized on Paper Ideas and Experiments.",zh:"十个稳定科学方向组织领域结构。历史研究方案谱系用于解释搜索如何演化；当前 STRI 论文、零权限正向残余搜索、正式/影子搜索问题发现状态与终态实验账本，统一同步到“论文研究方案”和“实验决策”页面。"},
       groupsAfter:[group("research-agenda")]
     });
   }
