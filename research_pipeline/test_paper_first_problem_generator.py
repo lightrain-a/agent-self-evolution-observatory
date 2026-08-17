@@ -866,7 +866,7 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             self.assertEqual(queue["passed"][0]["discovery_lane"], lane)
             self.assertEqual((queue["summary"]["method_authorized"], queue["summary"]["p0_authorized"]), (0, 0))
 
-    def test_pending_exact_reduction_reaches_reviewer_and_clear_closes_contract(self) -> None:
+    def test_pending_exact_reduction_reaches_reviewer_but_clear_cannot_close_falsifier(self) -> None:
         candidate=self.raw_candidate("ASSUMPTION_BREAK")
         candidate["mature_theory_baselines"][1]["reduction_class"]="NEEDS_EXACT_REDUCTION_TEST"
         candidate["reduction_falsifiability_contract"]["all_exact_reduction_tests_resolved"]=False
@@ -876,10 +876,11 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             inbox=json.loads(auto.read_text());queue=build_problem_gate_queue(root/"manual.json",auto_inbox_path=auto,primary_pool_path=pool,storage=self.storage(root))
         self.assertEqual(state["summary"]["structurally_reviewable"],1)
         self.assertEqual(state["summary"]["semantic_clear"],1)
-        self.assertTrue(inbox["candidates"][0]["reduction_falsifiability_contract"]["all_exact_reduction_tests_resolved"])
-        self.assertEqual(queue["summary"]["passed_problem_gate"],1)
+        self.assertFalse(inbox["candidates"][0]["reduction_falsifiability_contract"]["all_exact_reduction_tests_resolved"])
+        self.assertEqual(queue["summary"]["passed_problem_gate"],0)
+        self.assertIn("unresolved-exact-reduction-test:2",queue["blocked"][0]["blockers"])
 
-    def test_reviewer_only_resume_never_reruns_generator_and_can_close_pending_reduction(self) -> None:
+    def test_reviewer_only_resume_never_reruns_generator_and_preserves_pending_falsifier(self) -> None:
         candidate=self.raw_candidate("ASSUMPTION_BREAK")
         candidate["mature_theory_baselines"][1]["reduction_class"]="NEEDS_EXACT_REDUCTION_TEST"
         candidate["reduction_falsifiability_contract"]["all_exact_reduction_tests_resolved"]=False
@@ -890,12 +891,15 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now);raw_path=root/"generator.txt";raw=generator(prompt="unused",model="kimi-k3",max_output_tokens=10)["text"];raw_path.write_text(raw,encoding="utf-8");raw_sha=hashlib.sha256(raw.encode()).hexdigest();auto=root/"review-auto.json"
             state=resume_semantic_reviewer(storage=storage,primary_pool_path=pool,generator_raw_path=raw_path,generator_raw_sha256=raw_sha,generator_requested_model="kimi-k3",generator_resolved_model="kimi-k3",source_generator_run_id="GEN-1",reviewer_model="deepseek-v4-pro",auto_inbox_path=auto,reviewer_responder=counted_reviewer,expected_pool_sha256="",now=now)
             queue=build_problem_gate_queue(root/"manual.json",auto_inbox_path=auto,primary_pool_path=pool,storage=storage)
+            review_inbox=json.loads(auto.read_text())
         self.assertEqual(reviewer_calls,[1])
         self.assertTrue(state["policy"]["reviewer_only_resume"])
         self.assertEqual(state["policy"]["generator_calls_authorized"],0)
         self.assertEqual(state["status"],"GENERATED_AWAIT_PROBLEM_GATE")
         self.assertEqual(state["summary"]["semantic_clear"],1)
-        self.assertEqual(queue["summary"]["passed_problem_gate"],1)
+        self.assertFalse(review_inbox["candidates"][0]["reduction_falsifiability_contract"]["all_exact_reduction_tests_resolved"])
+        self.assertEqual(queue["summary"]["passed_problem_gate"],0)
+        self.assertIn("unresolved-exact-reduction-test:2",queue["blocked"][0]["blockers"])
 
     def test_reviewer_only_resume_bad_generator_sha_makes_zero_reviewer_calls(self) -> None:
         reviewer_calls=[]

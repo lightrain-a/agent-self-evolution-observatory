@@ -27,7 +27,7 @@ def _lane_evidence(lane: str) -> dict:
             "comparator_match": True,
             "endpoint_match": True,
             "timing_match": True,
-            "treatment_equivalence_argument": "Both sources intervene on the identical inference-time artifact while keeping executor parameters, comparator construction, endpoint, and timing fixed."
+            "treatment_equivalence_argument": "Both sources intervene on the identical inference-time artifact while keeping executor parameters, comparator construction, endpoint, and timing fixed.",
             "incompatibility": "The two grounded facts require opposite outcomes under that shared operationalization.",
         }
     if lane == "CONVERGENT_FAILURE":

@@ -484,8 +484,9 @@ def _apply_reviews(cands,payload,requested,resolved,generator_resolved,raw_sha,r
         contract=dict(c.get("reduction_falsifiability_contract") or {})
         if reduction_class in {"VALID_HARD_VETO","NEEDS_EXACT_REDUCTION_TEST"}:
             contract["all_exact_reduction_tests_resolved"]=False
-        elif final_clear and reduction_class in {"NONE","SOFT_COLLISION","TOO_GENERIC_TO_VETO",""}:
-            contract["all_exact_reduction_tests_resolved"]=True
+        # A block-only AI reviewer may add blockers, but CLEAR cannot by itself
+        # resolve a generator-declared exact-reduction falsifier.  Pending status
+        # must remain pending until non-AI evidence closes the registered test.
         c["reduction_falsifiability_contract"]=contract
         scan=dict(c.get("saturation_scan") or {});scan["checked"]=True
         if matched and reduction_class=="VALID_HARD_VETO":scan["matched_patterns"]=sorted(set(list(scan.get("matched_patterns") or [])+matched))
