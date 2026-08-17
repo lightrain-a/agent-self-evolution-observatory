@@ -10,7 +10,7 @@ from pathlib import Path
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _ark, _normalize_lane_search, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _ark, _normalize_lane_search, _provider_request_audit, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -336,6 +336,32 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertFalse(respond.call_args.kwargs.get("allow_thinking_compatibility_fallback"))
         self.assertEqual(len(caught.exception.transport_attempts),1)
         self.assertEqual(caught.exception.transport_attempts[0]["provider_receipt"]["response_id"],"resp_glm_strict")
+
+    def test_no_receipt_timeout_is_archived_and_blocks_automatic_replay(self) -> None:
+        calls=[]
+        def timeout_responder(**kwargs):
+            calls.append(1)
+            audit=_provider_request_audit(stage="problem_generation",prompt=kwargs["prompt"],model=kwargs["model"],max_output_tokens=kwargs["max_output_tokens"],temperature=0.0)
+            error=RuntimeError("provider connection timed out after POST")
+            error.transport_attempts=[{**audit,"requested_model":kwargs["model"],"status":"error-no-output","error_kind":"transport-timeout-or-connection","assistant_output_present":False,"provider_error_audit":{"exception_type":"Timeout","http_status":None,"detail_sha256":"d"*64,"scientific_authority":False}}]
+            raise error
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,17,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now)
+            first=run_problem_generator(storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto1.json",generator_model="glm-5.3",generator_responder=timeout_responder,now=now,strict_provider=True,defer_reviewer=True)
+            orphan_files=list((root/"paper-first-problem-discovery"/"provider-orphans").glob("*.json"))
+            with patch("research_pipeline.paper_first_problem_generator._ark",side_effect=AssertionError("automatic replay must be blocked")) as ark:
+                second=run_problem_generator(storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto2.json",generator_model="glm-5.3",now=now+timedelta(minutes=1),strict_provider=True,defer_reviewer=True)
+            orphan=json.loads(orphan_files[0].read_text())
+        self.assertEqual(calls,[1])
+        self.assertEqual(first["status"],"GENERATOR_ERROR_ZERO_AUTHORITY")
+        self.assertEqual(len(orphan_files),1)
+        self.assertEqual(orphan["status"],"ORPHANED_POST_NO_RECEIPT")
+        self.assertEqual(orphan["replay_policy"],"BLOCK_AUTOMATIC_REPLAY_UNTIL_EXPLICIT_OPERATOR_OVERRIDE")
+        self.assertFalse(orphan["scientific_authority"])
+        self.assertEqual(second["status"],"SKIPPED_ORPHANED_PROVIDER_REQUEST")
+        self.assertEqual(ark.call_count,0)
+        self.assertIn("provider acceptance is ambiguous",second["coverage_skip_reason"])
+        self.assertTrue(second["policy"]["provider_orphan_replay_forbidden"])
 
     def test_pending_provider_receipt_does_not_fallback_or_repost(self) -> None:
         from .ark_provider import ArkResponseStateError,ArkSettings

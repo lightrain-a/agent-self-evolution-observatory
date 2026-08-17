@@ -34,6 +34,30 @@ def _parse_iso(v):
 
 def _root(s:StorageSettings): return s.data_root/"paper-first-problem-discovery"
 def _sha(text:str): return hashlib.sha256(text.encode()).hexdigest()
+def _provider_request_audit(*,stage:str,prompt:str,model:str,max_output_tokens:int,temperature:float)->dict[str,Any]:
+    thinking_profile="provider-default" if str(model).lower().startswith("glm") else "disabled"
+    material={"stage":stage,"prompt_sha256":_sha(prompt),"requested_model":str(model),"max_output_tokens":int(max_output_tokens),"temperature":float(temperature),"thinking_profile":thinking_profile}
+    return {**material,"request_fingerprint":_sha(json.dumps(material,sort_keys=True,separators=(",",":"),ensure_ascii=False)),"scientific_authority":False}
+def _provider_error_audit(error:Exception)->dict[str,Any]:
+    text=str(error or "");match=re.search(r"Ark HTTP\s+(\d{3})",text,re.IGNORECASE)
+    return {"exception_type":type(error).__name__,"http_status":int(match.group(1)) if match else None,"detail_sha256":_sha(text),"scientific_authority":False}
+def _provider_orphan_path(storage:StorageSettings,request_fingerprint:str)->Path:
+    return _root(storage)/"provider-orphans"/f"{request_fingerprint}.json"
+def _provider_orphan_exists(storage:StorageSettings,request_fingerprint:str)->bool:
+    return _provider_orphan_path(storage,request_fingerprint).exists()
+def _archive_provider_orphans(storage:StorageSettings,run_id:str,stage:str,attempts:list[dict[str,Any]]|None)->list[dict[str,Any]]:
+    audits=[]
+    for row in attempts or []:
+        if not isinstance(row,dict) or row.get("error_kind")!="transport-timeout-or-connection" or row.get("provider_receipt"): continue
+        fingerprint=str(row.get("request_fingerprint") or "").strip()
+        if len(fingerprint)!=64: continue
+        audit={"request_fingerprint":fingerprint,"status":"ORPHANED_POST_NO_RECEIPT","requested_model":str(row.get("requested_model") or ""),"stage":stage,"scientific_authority":False}
+        path=_provider_orphan_path(storage,fingerprint);path.parent.mkdir(parents=True,exist_ok=True)
+        if not path.exists():
+            payload={"schema_version":"1.0","generated_at":_now(),"run_id":run_id,"stage":stage,"status":"ORPHANED_POST_NO_RECEIPT","request_audit":{key:row.get(key) for key in ("request_fingerprint","prompt_sha256","requested_model","max_output_tokens","temperature","thinking_profile")},"provider_error_audit":row.get("provider_error_audit") or {},"replay_policy":"BLOCK_AUTOMATIC_REPLAY_UNTIL_EXPLICIT_OPERATOR_OVERRIDE","scientific_authority":False,"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+            path.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        audits.append(audit)
+    return audits
 def _pool_sha(pool):
     rows=[]
     for r in pool.get("records") or []:
@@ -257,10 +281,11 @@ def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generat
     candidates=[model] if not allow_transport_fallback else [model]+[candidate for candidate in priorities if candidate!=model][:1]
     attempts=[]
     for index,candidate in enumerate(candidates):
+        request_audit=_provider_request_audit(stage=stage,prompt=prompt,model=candidate,max_output_tokens=max_output_tokens,temperature=temperature)
         try:
             thinking=None if str(candidate).lower().startswith("glm") else "disabled"
             result=ArkResponsesClient(settings).respond(prompt,model=candidate,max_output_tokens=max_output_tokens,temperature=temperature,thinking=thinking,store=True,allow_thinking_compatibility_fallback=allow_transport_fallback)
-            attempts.append({"requested_model":candidate,"status":"success","resolved_model":str(result.get("resolved_model") or candidate),"assistant_output_present":True})
+            attempts.append({**request_audit,"requested_model":candidate,"status":"success","resolved_model":str(result.get("resolved_model") or candidate),"assistant_output_present":True})
             return {**result,"logical_requested_model":model,"transport_attempts":attempts,"transport_fallback_used":index>0,"transport_fallback_stage":stage}
         except Exception as error:
             kind=_transport_no_output_error(error)
@@ -273,7 +298,7 @@ def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generat
                 "resolved_model":str(getattr(error,"resolved_model",candidate) or candidate),
                 "incomplete_reason":str(getattr(error,"incomplete_reason","") or ""),
             } if response_id else None
-            attempt={"requested_model":candidate,"status":"error-no-output","error_kind":kind or "non-retryable-provider-error","assistant_output_present":False}
+            attempt={**request_audit,"requested_model":candidate,"status":"error-no-output","error_kind":kind or "non-retryable-provider-error","assistant_output_present":False,"provider_error_audit":_provider_error_audit(error)}
             if receipt is not None:
                 attempt["provider_receipt"]=receipt
             attempts.append(attempt)
@@ -447,7 +472,7 @@ def _empty_summary(primary_evidence_records=0):
     return {"primary_evidence_records":primary_evidence_records,"raw_seeds":0,"semantic_unique_seeds":0,"unique_problem_families":0,"breadth_archive":0,"archive_pairwise_distance":0.0,"evolved_branches":0,"max_branch_depth":0,"portfolio_calls":0,"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0,"generated_by_lane":dict(lanes),"structurally_reviewable_by_lane":dict(lanes),"semantic_clear_by_lane":dict(lanes),"semantic_blocked_by_lane":dict(lanes)}
 
 
-def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=None,saturation_ledger_path=None,generator_model=None,reviewer_model=None,generator_responder:Responder|None=None,reviewer_responder:Responder|None=None,now=None,pool_max_age_hours=MAX_POOL_AGE_HOURS,max_candidates=MAX_CANDIDATES,blocked_problem_memory:dict[str,Any]|None=None,portfolio_mode:bool|None=None,target_raw_seeds:int=DEFAULT_RAW_SEEDS,strict_provider:bool=False,defer_reviewer:bool=False):
+def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=None,saturation_ledger_path=None,generator_model=None,reviewer_model=None,generator_responder:Responder|None=None,reviewer_responder:Responder|None=None,now=None,pool_max_age_hours=MAX_POOL_AGE_HOURS,max_candidates=MAX_CANDIDATES,blocked_problem_memory:dict[str,Any]|None=None,portfolio_mode:bool|None=None,target_raw_seeds:int=DEFAULT_RAW_SEEDS,strict_provider:bool=False,defer_reviewer:bool=False,allow_orphan_replay:bool=False):
     storage=storage or StorageSettings.from_env();primary_pool_path=primary_pool_path or private_primary_pool_path(storage);auto_inbox_path=auto_inbox_path or default_auto_inbox_path(storage)
     generator_model=generator_model or os.getenv("PAPER_FIRST_PROBLEM_GENERATOR_MODEL",GENERATOR_MODEL);reviewer_model=reviewer_model or os.getenv("PAPER_FIRST_PROBLEM_REVIEW_MODEL",REVIEWER_MODEL);current=(now or _now_dt()).astimezone(timezone.utc);run_id=current.strftime("%Y%m%dT%H%M%SZ");portfolio_mode=False if portfolio_mode is None else bool(portfolio_mode)
     if portfolio_mode:
@@ -460,6 +485,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     generator_is_glm=str(generator_model).lower().startswith("glm");generator_max_output_tokens=15000 if generator_is_glm else 6500
     policy["strict_provider_transport"]=bool(strict_provider);policy["semantic_reviewer_deferred"]=bool(defer_reviewer);policy["thinking_compatibility_repost_allowed"]=not bool(strict_provider)
     policy["thinking_disabled"]=not generator_is_glm;policy["generator_thinking_profile"]="provider-default" if generator_is_glm else "disabled";policy["generator_max_output_tokens"]=generator_max_output_tokens
+    policy["provider_orphan_replay_forbidden"]=not bool(allow_orphan_replay);policy["provider_orphan_override_requires_explicit_operator_action"]=True
     if strict_provider:
         policy["transport_only_no_output_fallback_allowed"]=False;policy["transport_fallback_max_additional_provider_attempts"]=0
     state={"schema_version":"2.5","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":policy,"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","search_diagnostics":{"lane_search_priority":list(dead_end_prompt_memory.get("lane_search_priority") or DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"last_completed_lane_search":{},"scientific_authority":False},"saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage,saturation_ledger_path)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},"candidates":[]}
@@ -480,6 +506,13 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
             state["coverage_skip_reason"]="No unreviewed freshness/relevance-qualified source remains and this exact evidence pool has already completed the current discovery operator; generation resumes when evidence, the mature-reduction ledger, or the discovery operator changes."
             return finish("SKIPPED_SOURCE_COVERAGE_SATURATED")
         state["operator_recompile_reason"]="Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged."
+    generator_prompt_text=generator_prompt(list(reg.values()),dead_end_memory=dead_end_prompt_memory)
+    generator_request_audit=_provider_request_audit(stage="problem_generation",prompt=generator_prompt_text,model=generator_model,max_output_tokens=generator_max_output_tokens,temperature=0.0)
+    state["generator_request_audit"]=generator_request_audit
+    if generator_responder is None and not allow_orphan_replay and _provider_orphan_exists(storage,generator_request_audit["request_fingerprint"]):
+        state["provider_orphan_audits"]=[{"request_fingerprint":generator_request_audit["request_fingerprint"],"status":"ORPHANED_POST_NO_RECEIPT","requested_model":generator_model,"stage":"problem_generation","scientific_authority":False}]
+        state["coverage_skip_reason"]="An identical provider request previously timed out without a response receipt. Automatic replay is blocked because provider acceptance is ambiguous; explicit operator override is required."
+        return finish("SKIPPED_ORPHANED_PROVIDER_REQUEST")
     call=generator_responder or (lambda **kwargs:_ark(stage="problem_generation",allow_transport_fallback=not strict_provider,**kwargs));rows=[];generator_resolved_models=[]
     if portfolio_mode:
         provenance=[]
@@ -504,14 +537,16 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
         except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";state["portfolio_provenance"]=provenance;return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
     else:
         try:
-            res=call(prompt=generator_prompt(list(reg.values()),dead_end_memory=dead_end_prompt_memory),model=generator_model,max_output_tokens=generator_max_output_tokens);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);generator_resolved_models=[resolved];safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"generator",list(res.get("transport_attempts") or []));state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved,"transport_attempts":safe_attempts,"transport_fallback_used":bool(res.get("transport_fallback_used"))};
+            res=call(prompt=generator_prompt_text,model=generator_model,max_output_tokens=generator_max_output_tokens);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);generator_resolved_models=[resolved];transport_attempts=list(res.get("transport_attempts") or []);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"generator",transport_attempts);orphan_audits=_archive_provider_orphans(storage,run_id,"problem_generation",transport_attempts);state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved,"transport_attempts":safe_attempts,"transport_fallback_used":bool(res.get("transport_fallback_used"))};
             if receipt_audits:state["raw_artifacts"]["generator"]["provider_receipt_audits"]=receipt_audits
+            if orphan_audits:state["provider_orphan_audits"]=orphan_audits
             payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"]);rows=payload.get("candidates") or []
             if not isinstance(rows,list) or len(rows)>max_candidates or any(not isinstance(r,dict) for r in rows):raise ValueError("generator-candidate-array-invalid")
             if not rows and not state["generation_notes"]:raise ValueError("zero-candidate-generation-notes-required")
         except Exception as e:
-            safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"generator",list(getattr(e,"transport_attempts",[]) or []));state["error"]=f"{type(e).__name__}:{str(e)[:300]}";state["provider_transport_attempts"]=safe_attempts
+            transport_attempts=list(getattr(e,"transport_attempts",[]) or []);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"generator",transport_attempts);orphan_audits=_archive_provider_orphans(storage,run_id,"problem_generation",transport_attempts);state["error"]=f"{type(e).__name__}:{str(e)[:300]}";state["provider_transport_attempts"]=safe_attempts
             if receipt_audits:state["provider_receipt_audits"]=receipt_audits
+            if orphan_audits:state["provider_orphan_audits"]=orphan_audits
             return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
         cands=[_normalize(r,reg) for r in rows]
         try:_validate_lane_search_candidates(lane_search,cands)
