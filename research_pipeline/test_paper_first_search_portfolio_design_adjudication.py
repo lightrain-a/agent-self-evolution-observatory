@@ -48,6 +48,30 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertTrue(row.get("reopen_only_if"))
         self.assertEqual(row.get("current_source_refs"),["arXiv:2607.20019"])
 
+    def test_pa05_skill_validation_transfer_is_in_persistent_principle_memory(self) -> None:
+        memory=self.state["shadow_dead_end_memory"]
+        hits=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="PA-05-SKILL-VALIDATION-TRANSFER"]
+        self.assertEqual(len(hits),1)
+        row=hits[0]
+        self.assertEqual(row["memory_class"],"PRINCIPLE_DEAD_END")
+        self.assertTrue(row["dead_end_certified"]);self.assertFalse(row["scientific_authority"])
+        self.assertEqual(row["search_primitive"],"UNEXPLAINED_BOUNDARY")
+        self.assertEqual(row["source_readjudication_artifact"],"generated/skill-validation-transfer-distribution-shift-principle-readjudication-20260817.json")
+        self.assertTrue(row.get("reopen_only_if"))
+        counter=row.get("counter_explanation") or {}
+        self.assertTrue(counter.get("same_information_reduction_verified"))
+        witness=counter.get("exact_reduction_witness") or {}
+        self.assertEqual(witness.get("witness_type"),"ALGEBRAIC_REPARAMETERIZATION")
+        self.assertFalse(witness.get("requires_experiment_outcome"))
+        closure=row.get("fresh_phenomenon_closure") or {}
+        self.assertEqual(closure.get("source_ref"),"arXiv:2605.24117")
+        self.assertEqual(closure.get("closed_evidence_sha256"),[
+            "2892e337780746e547a748c947b379b3c55af09eea1d273ace383b80d2e569ee",
+            "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c",
+            "daaad83e507806a66c1c4dd5911c40b8db5781df4cd22b8f44916e228d4e224c",
+        ])
+        self.assertFalse(closure.get("scientific_authority"))
+
     def test_shadow_counterfactual_survivors_are_conservatively_routed(self) -> None:
         self.assertEqual(validate_search_portfolio_design_adjudication(self.state), [])
         summary = self.state["summary"]
