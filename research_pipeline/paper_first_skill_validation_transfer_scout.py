@@ -77,27 +77,28 @@ def build_skill_validation_transfer_scout(
         audit_python = runtime_audit.get("python") or {}
         audit_image = runtime_audit.get("runtime_image") or {}
         audit_credentials = runtime_audit.get("credentials") or {}
+        runtime_host = str(runtime_audit.get("host") or "69")
         harbor_importable = bool(audit_python.get("harbor_importable"))
         benchmark_python_ready = bool(audit_python.get("benchmark_dependencies_present"))
         runtime_image_present = audit_image.get("status") == "PRESENT"
         runtime_image_status = str(audit_image.get("status") or "UNVERIFIED")
         runtime_image_observable = bool(audit_image.get("observable"))
         gemini_credential_present = bool(audit_credentials.get("GEMINI_API_KEY_present"))
+        runtime_infrastructure_ready = bool(runtime_audit.get("runtime_infrastructure_ready"))
+        provider_credential_ready = bool(runtime_audit.get("provider_credential_ready"))
         execution_ready = bool(runtime_audit.get("execution_ready"))
         hold_reason = list(runtime_audit.get("hold_reason") or [])
     else:
+        runtime_host = "69"
         harbor_importable = bool(harbor_importable)
         runtime_image_present = bool(runtime_image_present)
         gemini_credential_present = bool(gemini_credential_present)
         benchmark_python_ready = True if benchmark_python_ready is None else bool(benchmark_python_ready)
         runtime_image_status = "PRESENT" if runtime_image_present else "UNVERIFIED"
         runtime_image_observable = bool(runtime_image_present)
-        execution_ready = bool(
-            benchmark_python_ready
-            and harbor_importable
-            and runtime_image_present
-            and gemini_credential_present
-        )
+        runtime_infrastructure_ready = bool(benchmark_python_ready and harbor_importable and runtime_image_present)
+        provider_credential_ready = bool(gemini_credential_present)
+        execution_ready = bool(runtime_infrastructure_ready and provider_credential_ready)
         hold_reason = [] if execution_ready else [
             name
             for name, ok in (
@@ -190,7 +191,7 @@ def build_skill_validation_transfer_scout(
             ],
         },
         "execution_environment": {
-            "host": "69",
+            "host": runtime_host,
             "asset_and_config_pass": True,
             "benchmark_python_ready": benchmark_python_ready,
             "harbor_importable": harbor_importable,
@@ -198,6 +199,8 @@ def build_skill_validation_transfer_scout(
             "runtime_image_status": runtime_image_status,
             "runtime_image_observable": runtime_image_observable,
             "gemini_credential_present": gemini_credential_present,
+            "runtime_infrastructure_ready": runtime_infrastructure_ready,
+            "provider_credential_ready": provider_credential_ready,
             "bedrock_credential_present": bedrock_credential_present,
             "bedrock_required_for_f0": False,
             "required_provider_credentials": ["GEMINI_API_KEY"],
@@ -274,6 +277,8 @@ def validate_skill_validation_transfer_scout(state: dict[str, Any]) -> list[str]
     if boundary.get("status") != "SURVIVES_ONLY_AS_FALSIFIABLE_SELECTION_VALIDITY_PROBLEM_NOT_PAPER_CLAIM":
         errors.append("current-source claim boundary drift")
     env = state.get("execution_environment") or {}
+    if not str(env.get("host") or "").strip():
+        errors.append("execution environment host is required")
     if env.get("direct_execution_authorized") is not False or env.get("controller_capability_required") is not True:
         errors.append("execution environment cannot self-authorize")
     routing = env.get("provider_routing") or {}
@@ -292,11 +297,18 @@ def validate_skill_validation_transfer_scout(state: dict[str, Any]) -> list[str]
         errors.append("frozen Gemini agent/SkillAuthor routing drift")
     if env.get("runtime_image_status") == "UNOBSERVABLE_PERMISSION_DENIED" and env.get("runtime_image_observable") is not False:
         errors.append("permission-denied runtime image probe cannot be marked observable")
-    if env.get("execution_ready") is True and not all(
+    if env.get("runtime_infrastructure_ready") is True and not all(
         bool(env.get(k))
-        for k in ("benchmark_python_ready", "harbor_importable", "runtime_image_present", "gemini_credential_present")
+        for k in ("benchmark_python_ready", "harbor_importable", "runtime_image_present")
     ):
-        errors.append("execution-ready state is inconsistent with runtime requirements")
+        errors.append("runtime-infrastructure-ready state exceeds observed runtime requirements")
+    if env.get("provider_credential_ready") is not bool(env.get("gemini_credential_present")):
+        errors.append("provider credential readiness drift")
+    if env.get("execution_ready") is True and not (
+        env.get("runtime_infrastructure_ready") is True
+        and env.get("provider_credential_ready") is True
+    ):
+        errors.append("execution-ready state is inconsistent with runtime/credential requirements")
     authority = state.get("authority") or {}
     if any(bool(authority.get(k)) for k in ("problem_gate", "paper_design", "method", "experiment", "p0", "gpu", "full_experiment")):
         errors.append("scout illegally carries downstream authority")

@@ -62,10 +62,19 @@ def probe_runtime_image(tag: str = RUNTIME_IMAGE) -> dict[str, Any]:
     )
     diagnostic = ((proc.stderr or "") + "\n" + (proc.stdout or "")).strip()
     folded = diagnostic.lower()
+    image_id = ""
+    repo_tags: list[str] = []
     if proc.returncode == 0:
         status = "PRESENT"
         observable = True
         present = True
+        try:
+            rows = json.loads(proc.stdout or "[]")
+            row = rows[0] if isinstance(rows, list) and rows and isinstance(rows[0], dict) else {}
+            image_id = str(row.get("Id") or "")
+            repo_tags = [str(v) for v in (row.get("RepoTags") or []) if str(v)]
+        except (json.JSONDecodeError, TypeError, ValueError):
+            pass
     elif "permission denied" in folded or "permission" in folded and "docker.sock" in folded:
         status = "UNOBSERVABLE_PERMISSION_DENIED"
         observable = False
@@ -79,7 +88,7 @@ def probe_runtime_image(tag: str = RUNTIME_IMAGE) -> dict[str, Any]:
         observable = False
         present = False
 
-    # Preserve only a bounded diagnostic category/text; never include credentials.
+    # Never persist raw docker-inspect output: image metadata may contain Env.
     return {
         "tag": tag,
         "builder": Path(builder).name,
@@ -87,7 +96,61 @@ def probe_runtime_image(tag: str = RUNTIME_IMAGE) -> dict[str, Any]:
         "observable": observable,
         "present": present,
         "probe_returncode": proc.returncode,
-        "diagnostic": diagnostic[:800],
+        "image_id": image_id,
+        "repo_tags": repo_tags,
+    }
+
+
+def probe_exact_first_party_preflight(source_root: Path | None) -> dict[str, Any]:
+    if source_root is None:
+        return {
+            "status": "NOT_RUN",
+            "source_commit": SOURCE_COMMIT,
+            "strict_exit_code": None,
+        }
+    root = Path(source_root)
+    if not root.is_dir():
+        return {
+            "status": "SOURCE_ROOT_MISSING",
+            "source_commit": SOURCE_COMMIT,
+            "strict_exit_code": None,
+        }
+    try:
+        proc = subprocess.run(
+            [sys.executable, "-m", "scripts.preflight", "--strict", "--json"],
+            cwd=root,
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=120,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return {
+            "status": "PROBE_ERROR",
+            "source_commit": SOURCE_COMMIT,
+            "strict_exit_code": None,
+        }
+    try:
+        report = json.loads(proc.stdout or "{}")
+    except json.JSONDecodeError:
+        report = {}
+    passed = bool(
+        proc.returncode == 0
+        and report.get("asset_pass") is True
+        and report.get("config_pass") is True
+        and report.get("harbor_importable") is True
+        and report.get("runtime_image_present") is True
+    )
+    return {
+        "status": "PASS" if passed else "FAIL",
+        "source_commit": SOURCE_COMMIT,
+        "strict_exit_code": proc.returncode,
+        "asset_pass": report.get("asset_pass") is True,
+        "config_pass": report.get("config_pass") is True,
+        "harbor_importable": report.get("harbor_importable") is True,
+        "runtime_image_present": report.get("runtime_image_present") is True,
+        "n_asset_errors": int(report.get("n_asset_errors") or 0),
+        "n_config_errors": int(report.get("n_config_errors") or 0),
     }
 
 
@@ -98,6 +161,8 @@ def build_runtime_audit(
     harbor_importable: bool | None = None,
     benchmark_python_ready: bool | None = None,
     runtime_image_probe: dict[str, Any] | None = None,
+    exact_source_root: Path | None = None,
+    exact_preflight_probe: dict[str, Any] | None = None,
     gemini_credential_present: bool | None = None,
 ) -> dict[str, Any]:
     env = os.environ if env is None else env
@@ -107,16 +172,21 @@ def build_runtime_audit(
         benchmark_python_ready = all(_importable(name) for name in ("pydantic", "yaml", "click"))
     if runtime_image_probe is None:
         runtime_image_probe = probe_runtime_image()
+    if exact_preflight_probe is None:
+        exact_preflight_probe = probe_exact_first_party_preflight(exact_source_root)
     if gemini_credential_present is None:
         gemini_credential_present = bool(env.get("GEMINI_API_KEY"))
 
     image_present = runtime_image_probe.get("status") == "PRESENT"
-    execution_ready = bool(
+    exact_preflight_pass = exact_preflight_probe.get("status") == "PASS"
+    runtime_infrastructure_ready = bool(
         benchmark_python_ready
         and harbor_importable
         and image_present
-        and gemini_credential_present
+        and exact_preflight_pass
     )
+    provider_credential_ready = bool(gemini_credential_present)
+    execution_ready = bool(runtime_infrastructure_ready and provider_credential_ready)
 
     hold_reason: list[str] = []
     if not benchmark_python_ready:
@@ -126,6 +196,11 @@ def build_runtime_audit(
     if not image_present:
         image_status = str(runtime_image_probe.get("status") or "UNVERIFIED")
         hold_reason.append(f"{RUNTIME_IMAGE}:{image_status}")
+    if benchmark_python_ready and harbor_importable and image_present and not exact_preflight_pass:
+        hold_reason.append(
+            "exact first-party strict preflight not passed:"
+            + str(exact_preflight_probe.get("status") or "UNVERIFIED")
+        )
     if not gemini_credential_present:
         hold_reason.append("GEMINI_API_KEY not loaded in the current execution environment")
 
@@ -155,10 +230,13 @@ def build_runtime_audit(
             "harbor_importable": bool(harbor_importable),
         },
         "runtime_image": runtime_image_probe,
+        "exact_first_party_preflight": exact_preflight_probe,
         "credentials": {
             "GEMINI_API_KEY_present": bool(gemini_credential_present),
             "secret_values_recorded": False,
         },
+        "runtime_infrastructure_ready": runtime_infrastructure_ready,
+        "provider_credential_ready": provider_credential_ready,
         "execution_ready": execution_ready,
         "hold_reason": hold_reason,
         "scientific_authority": False,
@@ -179,14 +257,41 @@ def validate_runtime_audit(state: dict[str, Any]) -> list[str]:
         errors.append("runtime audit source identity drift")
     if source.get("plan_sha256") != build_plan()["plan_sha256"]:
         errors.append("runtime audit plan binding drift")
+    if not str(state.get("host") or "").strip():
+        errors.append("runtime audit host is required")
     contract = state.get("provider_contract") or {}
     if contract.get("required_credentials") != ["GEMINI_API_KEY"]:
         errors.append("Gemini F0 credential contract drift")
     if contract.get("bedrock_credential_required") is not False:
         errors.append("Bedrock credential must not gate the Gemini F0")
+    image = state.get("runtime_image") or {}
+    if image.get("status") == "PRESENT" and str(image.get("diagnostic") or ""):
+        errors.append("present runtime image receipt must not persist raw docker-inspect diagnostics")
     credentials = state.get("credentials") or {}
     if credentials.get("secret_values_recorded") is not False:
         errors.append("runtime audit must never record secret values")
+    preflight = state.get("exact_first_party_preflight") or {}
+    infrastructure_ready = state.get("runtime_infrastructure_ready") is True
+    if infrastructure_ready and not (
+        preflight.get("status") == "PASS"
+        and preflight.get("source_commit") == SOURCE_COMMIT
+        and int(preflight.get("strict_exit_code") or 0) == 0
+        and preflight.get("asset_pass") is True
+        and preflight.get("config_pass") is True
+        and preflight.get("harbor_importable") is True
+        and preflight.get("runtime_image_present") is True
+        and (state.get("python") or {}).get("benchmark_dependencies_present") is True
+        and (state.get("python") or {}).get("harbor_importable") is True
+        and image.get("status") == "PRESENT"
+    ):
+        errors.append("runtime infrastructure readiness lacks exact first-party strict-preflight evidence")
+    if state.get("provider_credential_ready") is not bool(credentials.get("GEMINI_API_KEY_present")):
+        errors.append("provider credential readiness drift")
+    if state.get("execution_ready") is True and not (
+        state.get("runtime_infrastructure_ready") is True
+        and state.get("provider_credential_ready") is True
+    ):
+        errors.append("execution readiness exceeds runtime/credential readiness")
     if int(state.get("model_calls_executed") or 0) != 0 or int(state.get("task_trials_executed") or 0) != 0:
         errors.append("runtime audit must remain pre-model and pre-trial")
     if state.get("scientific_authority") is not False or state.get("experiment_authority") is not False:

@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import unittest
 
+from .paper_first_skill_validation_transfer_runtime_audit import build_runtime_audit
 from .paper_first_skill_validation_transfer_scout import (
     build_skill_validation_transfer_scout,
     validate_skill_validation_transfer_scout,
@@ -49,6 +50,46 @@ class SkillValidationTransferScoutTest(unittest.TestCase):
         self.assertFalse(state["execution_environment"]["execution_ready"])
         self.assertIn("Gemini credential for agent + host-side SkillAuthor", state["execution_environment"]["hold_reason"])
         self.assertFalse(any("Bedrock" in reason for reason in state["execution_environment"]["hold_reason"]))
+
+    def test_host_specific_runtime_receipt_can_move_execution_host_without_changing_f0(self) -> None:
+        runtime = build_runtime_audit(
+            host="52",
+            harbor_importable=True,
+            benchmark_python_ready=True,
+            runtime_image_probe={
+                "tag": "agent-runtime:latest",
+                "builder": "docker",
+                "status": "PRESENT",
+                "observable": True,
+                "present": True,
+                "probe_returncode": 0,
+                "image_id": "sha256:test",
+                "repo_tags": ["agent-runtime:latest"],
+            },
+            exact_preflight_probe={
+                "status": "PASS",
+                "source_commit": "9e3daa339987c3cfa624121e1be442593a53d43c",
+                "strict_exit_code": 0,
+                "asset_pass": True,
+                "config_pass": True,
+                "harbor_importable": True,
+                "runtime_image_present": True,
+                "n_asset_errors": 0,
+                "n_config_errors": 0,
+            },
+            gemini_credential_present=False,
+        )
+        state = build_skill_validation_transfer_scout(runtime_audit=runtime)
+        self.assertEqual([], validate_skill_validation_transfer_scout(state))
+        env = state["execution_environment"]
+        self.assertEqual("52", env["host"])
+        self.assertTrue(env["runtime_infrastructure_ready"])
+        self.assertFalse(env["provider_credential_ready"])
+        self.assertFalse(env["execution_ready"])
+        self.assertEqual(
+            "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c",
+            state["f0"]["plan_sha256"],
+        )
 
     def test_source_drift_fails_closed(self) -> None:
         state = build_skill_validation_transfer_scout()

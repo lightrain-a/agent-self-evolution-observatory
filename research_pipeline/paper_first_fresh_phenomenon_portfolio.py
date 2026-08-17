@@ -434,9 +434,17 @@ def build_fresh_phenomenon_portfolio(
                 "task_trials_executed": skill_f0.get("task_trials_executed"),
             },
             reopen_only_if=(
-                "Provision the benchmark runtime (Harbor + agent-runtime image + the Gemini credential shared by the frozen agent and host-side SkillAuthor route), "
-                "then obtain a separate controller-issued execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus "
-                "current-source review; it never authorizes Problem Gate, method design, or full experiments by itself."
+                (
+                    f"On audited runtime host {skill_env.get('host')}, load the frozen Gemini credential shared by the agent and host-side SkillAuthor route, "
+                    "then obtain a separate controller-issued execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus "
+                    "current-source review; it never authorizes Problem Gate, method design, or full experiments by itself."
+                )
+                if skill_env.get("runtime_infrastructure_ready") is True
+                else (
+                    "Provision an exact first-party benchmark runtime (Harbor + agent-runtime image + strict preflight), then load the frozen Gemini credential "
+                    "and obtain a separate controller-issued execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus "
+                    "current-source review; it never authorizes Problem Gate, method design, or full experiments by itself."
+                )
             ),
         ),
         _candidate(
@@ -553,7 +561,11 @@ def build_fresh_phenomenon_portfolio(
     skill_row["f0_design_ready"] = skill_design_ready
     skill_row["execution_readiness"] = {
         "operationalization_ready": skill_design_ready,
-        "runtime_environment_ready": bool(skill_env.get("execution_ready")),
+        "runtime_host": skill_env.get("host"),
+        "runtime_environment_ready": bool(skill_env.get("runtime_infrastructure_ready")),
+        "runtime_infrastructure_ready": bool(skill_env.get("runtime_infrastructure_ready")),
+        "provider_credential_ready": bool(skill_env.get("provider_credential_ready")),
+        "runtime_image_status": skill_env.get("runtime_image_status"),
         "controller_verified_capability_present": skill_execution_ready,
         "execution_ready": skill_execution_ready,
         "required_plan_sha256": skill_f0.get("plan_sha256"),
@@ -566,7 +578,16 @@ def build_fresh_phenomenon_portfolio(
         "status": (
             "EXECUTION_READY"
             if skill_execution_ready
-            else ("HOLD_CONTROLLER_AUTHORITY_REQUIRED" if skill_env.get("execution_ready") else "HOLD_EXECUTION_ENV_AND_AUTHORITY_REQUIRED")
+            else (
+                "HOLD_CONTROLLER_AUTHORITY_REQUIRED"
+                if skill_env.get("execution_ready") is True
+                else (
+                    "HOLD_PROVIDER_CREDENTIAL_AND_AUTHORITY_REQUIRED"
+                    if skill_env.get("runtime_infrastructure_ready") is True
+                    and skill_env.get("provider_credential_ready") is not True
+                    else "HOLD_RUNTIME_INFRASTRUCTURE_AND_AUTHORITY_REQUIRED"
+                )
+            )
         ),
         "hold_reason": list(skill_env.get("hold_reason") or []),
     }
@@ -770,6 +791,18 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
             errors.append("design-ready Skill Validation Transfer F0 lacks the bound analyzer")
         if (skill_rows[0].get("evidence") or {}).get("plan_sha256") != skill_f0.get("plan_sha256"):
             errors.append("Skill Validation Transfer candidate plan binding drift")
+        skill_readiness = skill_rows[0].get("execution_readiness") or {}
+        if not str(skill_readiness.get("runtime_host") or "").strip():
+            errors.append("Skill Validation Transfer runtime host is missing")
+        if skill_readiness.get("runtime_environment_ready") is not skill_readiness.get("runtime_infrastructure_ready"):
+            errors.append("Skill Validation Transfer runtime environment/infrastructure readiness drift")
+        if skill_readiness.get("runtime_infrastructure_ready") is True and skill_readiness.get("runtime_image_status") != "PRESENT":
+            errors.append("Skill Validation Transfer infrastructure-ready state lacks a present runtime image")
+        if skill_readiness.get("status") == "HOLD_PROVIDER_CREDENTIAL_AND_AUTHORITY_REQUIRED" and not (
+            skill_readiness.get("runtime_infrastructure_ready") is True
+            and skill_readiness.get("provider_credential_ready") is False
+        ):
+            errors.append("Skill Validation Transfer provider-credential hold is inconsistent")
     for row in rows:
         if row.get("status") not in ALLOWED_STATUSES:
             errors.append(f"invalid status:{row.get('candidate_id')}")

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T07:03:00+00:00",
+  "generated_at": "2026-08-17T07:51:42+00:00",
   "candidate_id": "PA-05-SKILL-VALIDATION-TRANSFER",
   "status": "DESIGN_READY_EXECUTION_ENV_HOLD",
   "scientific_authority": false,
@@ -87,14 +87,16 @@
     ]
   },
   "execution_environment": {
-    "host": "69",
+    "host": "52",
     "asset_and_config_pass": true,
-    "benchmark_python_ready": false,
-    "harbor_importable": false,
-    "runtime_image_present": false,
-    "runtime_image_status": "UNOBSERVABLE_PERMISSION_DENIED",
-    "runtime_image_observable": false,
+    "benchmark_python_ready": true,
+    "harbor_importable": true,
+    "runtime_image_present": true,
+    "runtime_image_status": "PRESENT",
+    "runtime_image_observable": true,
     "gemini_credential_present": false,
+    "runtime_infrastructure_ready": true,
+    "provider_credential_ready": false,
     "bedrock_credential_present": false,
     "bedrock_required_for_f0": false,
     "required_provider_credentials": [
@@ -112,9 +114,6 @@
     },
     "execution_ready": false,
     "hold_reason": [
-      "benchmark Python dependencies not present in the current execution Python",
-      "Harbor SDK not importable in the current execution Python",
-      "agent-runtime:latest:UNOBSERVABLE_PERMISSION_DENIED",
       "GEMINI_API_KEY not loaded in the current execution environment"
     ],
     "direct_execution_authorized": false,
@@ -144,7 +143,7 @@
     },
     "runtime_audit": {
       "path": "generated/paper-first-skill-validation-transfer-runtime-audit-20260817.json",
-      "sha256": "8c05c540c94e7be9a6f3ddb5067ce6d410d0b90debb65be6f67c2ec6e9c687eb"
+      "sha256": "1001d9edbaa7979304412332ede33e7e8a35ea7244b0b3e5be872f84bacbfd92"
     },
     "plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c"
   }

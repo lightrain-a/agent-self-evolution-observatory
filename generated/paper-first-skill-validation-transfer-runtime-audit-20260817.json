@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T06:39:22+00:00",
+  "generated_at": "2026-08-17T07:50:55+00:00",
   "candidate_id": "PA-05-SKILL-VALIDATION-TRANSFER",
   "audit_scope": "ENGINEERING_RUNTIME_AVAILABILITY_ONLY_NO_MODEL_CALLS",
-  "host": "69",
+  "host": "52",
   "source": {
     "repository": "AIoT-MLSys-Lab/SkillEvolBench",
     "commit_sha": "9e3daa339987c3cfa624121e1be442593a53d43c",
@@ -20,19 +20,23 @@
     "bedrock_credential_required": false
   },
   "python": {
-    "executable": "/usr/bin/python",
-    "version": "3.12.3",
-    "benchmark_dependencies_present": false,
-    "harbor_importable": false
+    "executable": "/tmp/pa05-52-py312-venv/bin/python",
+    "version": "3.12.14",
+    "benchmark_dependencies_present": true,
+    "harbor_importable": true
   },
   "runtime_image": {
     "tag": "agent-runtime:latest",
     "builder": "docker",
-    "status": "UNOBSERVABLE_PERMISSION_DENIED",
-    "observable": false,
-    "present": false,
-    "probe_returncode": 1,
-    "diagnostic": "permission denied while trying to connect to the docker API at unix:///var/run/docker.sock\n\n[]"
+    "status": "PRESENT",
+    "observable": true,
+    "present": true,
+    "probe_returncode": 0,
+    "image_id": "sha256:b62fe9b5a23c347b7771e1ce58884f75aee56a300d0b0432dc4ae10802ab8805",
+    "repo_tags": [
+      "agent-runtime:latest",
+      "agent-runtime:node-22-claude-latest-gemini-latest-codex-latest-kimi-latest-openclaw-latest"
+    ]
   },
   "credentials": {
     "GEMINI_API_KEY_present": false,
@@ -40,14 +44,24 @@
   },
   "execution_ready": false,
   "hold_reason": [
-    "benchmark Python dependencies not present in the current execution Python",
-    "Harbor SDK not importable in the current execution Python",
-    "agent-runtime:latest:UNOBSERVABLE_PERMISSION_DENIED",
     "GEMINI_API_KEY not loaded in the current execution environment"
   ],
   "scientific_authority": false,
   "experiment_authority": false,
   "model_calls_executed": 0,
   "task_trials_executed": 0,
-  "audit_sha256": "6fcbfa989ff4446c3c798e7c5374e43a97e9cf3bb1dc16122665a6e46a079474"
+  "exact_first_party_preflight": {
+    "status": "PASS",
+    "source_commit": "9e3daa339987c3cfa624121e1be442593a53d43c",
+    "strict_exit_code": 0,
+    "asset_pass": true,
+    "config_pass": true,
+    "harbor_importable": true,
+    "runtime_image_present": true,
+    "n_asset_errors": 0,
+    "n_config_errors": 0
+  },
+  "runtime_infrastructure_ready": true,
+  "provider_credential_ready": false,
+  "audit_sha256": "a5e9a1b3e7fd2e46ce791cf108f4f68113a80710de65d001a6117fd2e91d3a76"
 }
