@@ -414,7 +414,7 @@ def _pre_review_blockers(c,reg):
     return sorted(set(hard))
 
 def _reviewable(c,reg):
-    return not _pre_review_blockers(c,reg)
+    return bool(audit_problem_candidate(c,primary_evidence_by_ref=reg,require_primary_registry=True,require_semantic_review=False,allow_pending_reduction_for_semantic_review=True).get("passed"))
 def _norm_text(value:str)->str:
     return " ".join(str(value or "").lower().split())
 
@@ -450,7 +450,14 @@ def _apply_reviews(cands,payload,requested,resolved,generator_resolved,raw_sha,r
         r=by.get(c["candidate_id"]) or {};v=str(r.get("verdict") or "BLOCK").upper();matched=sorted({str(x) for x in r.get("matched_patterns") or [] if str(x) in known});grounding,grounded=_source_grounding(r,c,registry);lane_verified=r.get("lane_contract_verified") is True;reduction_class=str(r.get("reduction_class") or "").strip().upper();exact_test=str(r.get("exact_reduction_test") or "").strip()
         if reduction_class in {"VALID_HARD_VETO","NEEDS_EXACT_REDUCTION_TEST"}:v="BLOCK"
         if not ind or not grounded or not lane_verified:v="BLOCK"
-        c["semantic_reduction_review"]={"reviewed":bool(r) and bool(raw_sha),"block_only":True,"verdict":"CLEAR" if v=="CLEAR" and ind and grounded and lane_verified else "BLOCK","reviewer_model":resolved or requested,"reviewer_requested_model":requested,"generator_resolved_model":generator_resolved,"independent_resolved_model":ind,"raw_sha256":raw_sha,"source_claims_grounded":grounded,"source_claim_grounding":grounding,"lane_contract_verified":lane_verified,"lane_contract_reason":str(r.get("lane_contract_reason") or ""),"matched_patterns":matched,"reduction_class":reduction_class,"exact_reduction_test":exact_test,"strongest_reduction":str(r.get("strongest_reduction") or ("reviewer-not-independent" if not ind else ("source-claim-grounding-failed" if not grounded else ("lane-contract-review-failed" if not lane_verified else "review-unavailable")))),"reason":str(r.get("reason") or ""),"authority":False}
+        final_clear=bool(v=="CLEAR" and ind and grounded and lane_verified)
+        c["semantic_reduction_review"]={"reviewed":bool(r) and bool(raw_sha),"block_only":True,"verdict":"CLEAR" if final_clear else "BLOCK","reviewer_model":resolved or requested,"reviewer_requested_model":requested,"generator_resolved_model":generator_resolved,"independent_resolved_model":ind,"raw_sha256":raw_sha,"source_claims_grounded":grounded,"source_claim_grounding":grounding,"lane_contract_verified":lane_verified,"lane_contract_reason":str(r.get("lane_contract_reason") or ""),"matched_patterns":matched,"reduction_class":reduction_class,"exact_reduction_test":exact_test,"strongest_reduction":str(r.get("strongest_reduction") or ("reviewer-not-independent" if not ind else ("source-claim-grounding-failed" if not grounded else ("lane-contract-review-failed" if not lane_verified else "review-unavailable")))),"reason":str(r.get("reason") or ""),"authority":False}
+        contract=dict(c.get("reduction_falsifiability_contract") or {})
+        if reduction_class in {"VALID_HARD_VETO","NEEDS_EXACT_REDUCTION_TEST"}:
+            contract["all_exact_reduction_tests_resolved"]=False
+        elif final_clear and reduction_class in {"NONE","SOFT_COLLISION","TOO_GENERIC_TO_VETO",""}:
+            contract["all_exact_reduction_tests_resolved"]=True
+        c["reduction_falsifiability_contract"]=contract
         scan=dict(c.get("saturation_scan") or {});scan["checked"]=True
         if matched and reduction_class=="VALID_HARD_VETO":scan["matched_patterns"]=sorted(set(list(scan.get("matched_patterns") or [])+matched))
         elif matched and reduction_class=="NEEDS_EXACT_REDUCTION_TEST":

@@ -5,7 +5,7 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
-DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-treatment-aligned-v14"
+DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-treatment-aligned-review-split-v15"
 
 DISCOVERY_LANES: tuple[str, ...] = (
     "CONTRADICTION",
@@ -219,6 +219,10 @@ POLICY: dict[str, Any] = {
     "contradiction_requires_executor_state_alignment": True,
     "contradiction_requires_comparator_endpoint_timing_alignment": True,
     "cross_treatment_sign_difference_is_reducible_not_contradiction": True,
+    "generator_pre_review_allows_pending_exact_reduction": True,
+    "generator_pre_review_still_blocks_proven_hard_reduction": True,
+    "semantic_reviewer_owns_pending_exact_reduction_adjudication": True,
+    "final_problem_gate_still_requires_all_reductions_resolved": True,
     "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
     "shared_limitation_without_empirical_failure_forbidden": True,
     "pure_topic_brainstorm_forbidden": True,
@@ -448,6 +452,7 @@ def audit_problem_candidate(
     primary_evidence_by_ref: dict[str, dict[str, Any]] | None = None,
     require_primary_registry: bool = False,
     require_semantic_review: bool = True,
+    allow_pending_reduction_for_semantic_review: bool = False,
 ) -> dict[str, Any]:
     blockers: list[str] = []
     checks: list[dict[str, Any]] = []
@@ -497,6 +502,17 @@ def audit_problem_candidate(
     if not _nonempty(evidence.get("relation")):
         blockers.append("empirical-evidence-relation-missing")
 
+    semantic_snapshot=candidate.get("semantic_reduction_review") or {}
+    reviewer_resolved_pending=bool(
+        require_semantic_review
+        and isinstance(semantic_snapshot,dict)
+        and semantic_snapshot.get("reviewed") is True
+        and str(semantic_snapshot.get("verdict") or "").upper()=="CLEAR"
+        and semantic_snapshot.get("independent_resolved_model") is True
+        and semantic_snapshot.get("lane_contract_verified") is True
+        and semantic_snapshot.get("source_claims_grounded") is True
+        and str(semantic_snapshot.get("reduction_class") or "").strip().upper() in {"","NONE","SOFT_COLLISION","TOO_GENERIC_TO_VETO"}
+    )
     baselines = candidate.get("mature_theory_baselines") or []
     allowed_reduction_classes={"VALID_HARD_VETO","SOFT_COLLISION","NEEDS_EXACT_REDUCTION_TEST","TOO_GENERIC_TO_VETO"}
     if not isinstance(baselines, list) or len(baselines) < 2:
@@ -512,12 +528,17 @@ def audit_problem_candidate(
                 blockers.append(f"invalid-reduction-class:{idx}")
             elif reduction_class == "VALID_HARD_VETO":
                 blockers.append(f"mature-theory-valid-hard-veto:{idx}")
-            elif reduction_class == "NEEDS_EXACT_REDUCTION_TEST":
+            elif reduction_class == "NEEDS_EXACT_REDUCTION_TEST" and not allow_pending_reduction_for_semantic_review and not reviewer_resolved_pending:
                 blockers.append(f"unresolved-exact-reduction-test:{idx}")
 
     reduction_contract=candidate.get("reduction_falsifiability_contract") or {}
-    required_contract=("same_observable_information_checked","ex_ante_exact_prediction_checked","distinguishing_prediction_checked","scope_boundary_checked","all_exact_reduction_tests_resolved")
-    if not isinstance(reduction_contract,dict) or any(reduction_contract.get(key) is not True for key in required_contract):
+    required_contract=("same_observable_information_checked","ex_ante_exact_prediction_checked","distinguishing_prediction_checked","scope_boundary_checked")
+    contract_ok=isinstance(reduction_contract,dict) and all(reduction_contract.get(key) is True for key in required_contract)
+    if allow_pending_reduction_for_semantic_review:
+        contract_ok=contract_ok and isinstance(reduction_contract.get("all_exact_reduction_tests_resolved"),bool)
+    else:
+        contract_ok=contract_ok and reduction_contract.get("all_exact_reduction_tests_resolved") is True
+    if not contract_ok:
         blockers.append("reduction-falsifiability-contract-incomplete")
 
     nonred = candidate.get("same_information_nonreducibility") or {}
@@ -547,7 +568,7 @@ def audit_problem_candidate(
     for row in pending:
         if not isinstance(row,dict) or str(row.get("key") or "").strip() not in known or not (_nonempty(row.get("exact_reduction_test")) or _nonempty(row.get("reason"))):
             blockers.append("invalid-pending-saturation-pattern")
-        else:
+        elif not allow_pending_reduction_for_semantic_review and not reviewer_resolved_pending:
             blockers.append("saturation-exact-reduction-pending:"+str(row.get("key")))
     for row in rejected:
         if not isinstance(row,dict) or str(row.get("key") or "").strip() not in known or not _nonempty(row.get("reason")):
@@ -718,6 +739,7 @@ def build_problem_discovery_contract_state() -> dict[str, Any]:
             "DETECT a grounded anomaly, sign reversal, threshold, nonmonotonic regime, or assumption violation; UNEXPLAINED_BOUNDARY may begin from one primary paper when it contains both required evidence items",
             "ALIGN treatment semantics before CONTRADICTION: intervention surface, executor/parameter state, comparator, endpoint, and timing must match; otherwise record REDUCIBLE cross-treatment contrast",
             "OPERATIONALIZE the smallest shared observable and adjacent/control regime without requiring a second paper to have used the same metric",
+            "SEPARATE generator from reviewer: pending exact mature reductions may reach independent semantic review, but proven hard reductions never do",
             "MATERIALIZE a cheapest independent-truth falsifier from released units, first-party code, or an existing provenance-audited substrate whenever possible",
             "REDUCE using closest work + mature theories under the same-information Reduction Falsifiability Contract",
             "retain only a residual with an ex-ante distinguishing prediction over the strongest reduction",

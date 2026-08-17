@@ -184,6 +184,8 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             self.assertIn(field,prompt)
         self.assertIn("cross-treatment",prompt.lower())
         self.assertIn("MUST use status=REDUCIBLE",prompt)
+        self.assertIn("GENERATOR/REVIEWER REDUCTION SPLIT",prompt)
+        self.assertIn("NEEDS_EXACT_REDUCTION_TEST",prompt)
         for field in ("ex_ante_prediction","distinguishing_prediction","cannot_express","reduction_class","exact_reduction_test","reduction_falsifiability_contract","same_observable_information_checked","ex_ante_exact_prediction_checked","distinguishing_prediction_checked","scope_boundary_checked","all_exact_reduction_tests_resolved"):
             self.assertIn(field,prompt)
         self.assertIn("full-parameter SFT are distinct interventions",prompt)
@@ -836,6 +838,19 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             self.assertEqual((queue["summary"]["passed_problem_gate"], queue["summary"]["paper_design_eligible"]), (1, 1))
             self.assertEqual(queue["passed"][0]["discovery_lane"], lane)
             self.assertEqual((queue["summary"]["method_authorized"], queue["summary"]["p0_authorized"]), (0, 0))
+
+    def test_pending_exact_reduction_reaches_reviewer_and_clear_closes_contract(self) -> None:
+        candidate=self.raw_candidate("ASSUMPTION_BREAK")
+        candidate["mature_theory_baselines"][1]["reduction_class"]="NEEDS_EXACT_REDUCTION_TEST"
+        candidate["reduction_falsifiability_contract"]["all_exact_reduction_tests_resolved"]=False
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);auto=root/"auto.json";pool=self.pool(root,now)
+            state=run_problem_generator(storage=self.storage(root),primary_pool_path=pool,auto_inbox_path=auto,generator_responder=self.gen([candidate]),reviewer_responder=self.review("CLEAR",lane="ASSUMPTION_BREAK"),now=now)
+            inbox=json.loads(auto.read_text());queue=build_problem_gate_queue(root/"manual.json",auto_inbox_path=auto,primary_pool_path=pool,storage=self.storage(root))
+        self.assertEqual(state["summary"]["structurally_reviewable"],1)
+        self.assertEqual(state["summary"]["semantic_clear"],1)
+        self.assertTrue(inbox["candidates"][0]["reduction_falsifiability_contract"]["all_exact_reduction_tests_resolved"])
+        self.assertEqual(queue["summary"]["passed_problem_gate"],1)
 
     def test_reviewer_clear_without_lane_verification_is_forced_block(self) -> None:
         with tempfile.TemporaryDirectory() as td:

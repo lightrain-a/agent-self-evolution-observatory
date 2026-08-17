@@ -193,6 +193,10 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertTrue(policy["contradiction_requires_executor_state_alignment"])
         self.assertTrue(policy["contradiction_requires_comparator_endpoint_timing_alignment"])
         self.assertTrue(policy["cross_treatment_sign_difference_is_reducible_not_contradiction"])
+        self.assertTrue(policy["generator_pre_review_allows_pending_exact_reduction"])
+        self.assertTrue(policy["generator_pre_review_still_blocks_proven_hard_reduction"])
+        self.assertTrue(policy["semantic_reviewer_owns_pending_exact_reduction_adjudication"])
+        self.assertTrue(policy["final_problem_gate_still_requires_all_reductions_resolved"])
         self.assertTrue(policy["saturation_map_check_required"])
         self.assertTrue(state["candidate_schema"]["semantic_reduction_review"]["both_source_claims_require_exact_primary_evidence_grounding"])
         self.assertTrue(state["candidate_schema"]["semantic_reduction_review"]["lane_contract_must_be_independently_verified"])
@@ -211,6 +215,23 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
                 self.assertTrue(audit["authority"]["paper_design_eligible_for_human_review"])
                 for key in ("method_design", "experiment_blueprint", "local_validation", "p0", "gpu", "full_experiment"):
                     self.assertFalse(audit["authority"][key])
+
+    def test_pending_exact_reduction_can_reach_semantic_review_but_not_final_problem_gate(self) -> None:
+        candidate = valid_candidate("ASSUMPTION_BREAK")
+        candidate["mature_theory_baselines"][1]["reduction_class"]="NEEDS_EXACT_REDUCTION_TEST"
+        candidate["reduction_falsifiability_contract"]["all_exact_reduction_tests_resolved"]=False
+        strict=audit_problem_candidate(candidate,require_semantic_review=False)
+        pre_review=audit_problem_candidate(candidate,require_semantic_review=False,allow_pending_reduction_for_semantic_review=True)
+        self.assertFalse(strict["passed"])
+        self.assertIn("unresolved-exact-reduction-test:2",strict["blockers"])
+        self.assertTrue(pre_review["passed"],pre_review["blockers"])
+
+    def test_proven_hard_reduction_still_blocks_semantic_review_pre_gate(self) -> None:
+        candidate = valid_candidate("ASSUMPTION_BREAK")
+        candidate["saturation_scan"]["matched_patterns"]=[REDUCTION_PATTERNS[0]["key"]]
+        pre_review=audit_problem_candidate(candidate,require_semantic_review=False,allow_pending_reduction_for_semantic_review=True)
+        self.assertFalse(pre_review["passed"])
+        self.assertTrue(any(x.startswith("saturation-proven-hard-reduction:") for x in pre_review["blockers"]))
 
     def test_contradiction_blocks_cross_treatment_sign_contrast_before_semantic_review(self) -> None:
         candidate = valid_candidate("CONTRADICTION")
