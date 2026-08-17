@@ -11,6 +11,22 @@ from . import paper_first_problem_search_portfolio_publish as publisher
 
 
 class SearchPortfolioPublishTest(unittest.TestCase):
+    def test_formulation_exact_retry_counts_one_terminal_shard_and_actual_branch(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            base={"parents":[{"seed_id":"B1"}]}
+            (root/"error-formulate-p1-provider-a.json").write_text(json.dumps({"status":"PROVIDER_ERROR_ZERO_AUTHORITY","branch_ids":["B1"],"scientific_authority":False}),encoding="utf-8")
+            (root/"error-formulate-p1-b.json").write_text(json.dumps({"status":"PARSE_ERROR_ZERO_AUTHORITY","raw_sha256":"f"*64,"scientific_authority":False}),encoding="utf-8")
+            accounting=publisher._formulation_execution_accounting(root,base,[])
+        self.assertEqual(accounting["requested_shards"],1)
+        self.assertEqual(accounting["successful_shards"],0)
+        self.assertEqual(accounting["provider_failures"],0)
+        self.assertEqual(accounting["parse_failures"],1)
+        self.assertEqual(accounting["requested_branches"],1)
+        self.assertEqual(accounting["successful_branches"],0)
+        self.assertEqual(accounting["censored_branches"],1)
+        self.assertEqual(accounting["attempt_calls"],2)
+
     def test_model_identity_uses_real_provider_receipts_and_review_generator_binding(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)

@@ -86,6 +86,54 @@ def manifest_sha(root):
         for path in sorted(root.glob(pattern)): pairs.append((path.name,hashlib.sha256(path.read_bytes()).hexdigest()))
     return hashlib.sha256(json.dumps(pairs,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
+def _formulation_execution_accounting(root:Path,base:dict,evolved:list[dict])->dict:
+    """Count requested formulation shards/branches once despite exact retries.
+
+    Every provider/parse receipt remains on disk and every attempt still contributes
+    to model-call accounting.  Scientific execution accounting, however, is per
+    requested part: a provider failure followed by an exact-retry parse failure is
+    one censored shard, not two.  Branch count comes from observed branch_ids when
+    any attempt recorded them; otherwise it is inferred from the frozen formulation
+    pool and the stage runner's fixed batch size of two.
+    """
+    success_paths=list(root.glob('formulate-p*.json'))
+    error_paths=list(root.glob('error-formulate-*.json'))
+    by_part:dict[int,dict]={}
+    for path in success_paths:
+        match=re.search(r'formulate-p(\d+)',path.name)
+        if not match:continue
+        part=int(match.group(1));payload=load(path);slot=by_part.setdefault(part,{'success':None,'errors':[],'branch_counts':[]})
+        slot['success']=payload
+        if payload.get('branch_ids'):slot['branch_counts'].append(len(payload.get('branch_ids') or []))
+    for path in error_paths:
+        match=re.search(r'formulate-p(\d+)',path.name)
+        if not match:continue
+        part=int(match.group(1));payload=load(path);slot=by_part.setdefault(part,{'success':None,'errors':[],'branch_counts':[]})
+        slot['errors'].append(payload)
+        if payload.get('branch_ids'):slot['branch_counts'].append(len(payload.get('branch_ids') or []))
+    pool_size=min(24,len(base.get('parents') or [])+len(evolved))
+    requested_branches=successful_branches=censored_branches=provider_failures=parse_failures=0
+    for part in sorted(by_part):
+        slot=by_part[part];observed=max(slot['branch_counts'] or [0]);inferred=max(0,min(2,pool_size-(part-1)*2));branch_count=observed or inferred
+        requested_branches+=branch_count
+        if slot['success'] is not None:
+            successful_branches+=len(slot['success'].get('branch_ids') or []) or branch_count
+            continue
+        censored_branches+=branch_count
+        statuses={str(row.get('status') or '') for row in slot['errors']}
+        # A parse failure means an attempt reached a complete raw response, so it is
+        # the most informative terminal execution class for this unresolved part.
+        if 'PARSE_ERROR_ZERO_AUTHORITY' in statuses:parse_failures+=1
+        elif any(status.startswith('PROVIDER_') for status in statuses):provider_failures+=1
+    return {
+        'success_paths':success_paths,'error_paths':error_paths,'requested_shards':len(by_part),
+        'successful_shards':sum(slot['success'] is not None for slot in by_part.values()),
+        'provider_failures':provider_failures,'parse_failures':parse_failures,
+        'requested_branches':requested_branches,'successful_branches':successful_branches,
+        'censored_branches':censored_branches,'attempt_calls':len(success_paths)+len(error_paths),
+    }
+
+
 def _evidence_unresolved_count(summary:dict)->int:
     terminal_keys=(
         'evidence_reduction_supported',
@@ -102,26 +150,13 @@ def _latest_shadow_run(root:Path)->dict:
     base=load(root/'base.json'); frozen=load(root/'frozen-primary-evidence-pool.json'); machine=load(root/'machine-audit.json')
     final=load(root/'shadow-final-audit.json'); terminal=load(root/'shadow-terminal-current-source-gate.json');qualification=load(root/'shadow-run-qualification.json') if (root/'shadow-run-qualification.json').exists() else {}
     reviewed=rows(root,'review-p*.json','candidates'); evolved=rows(root,'evolve-*.json','children')
-    formulated=reduction_pending=rejected=successful_formulation_branches=0
-    formulation_paths=list(root.glob('formulate-p*.json'))
-    formulation_error_paths=list(root.glob('error-formulate-*.json'))
+    formulated=reduction_pending=rejected=0
+    formulation_accounting=_formulation_execution_accounting(root,base,evolved)
+    formulation_paths=formulation_accounting['success_paths'];formulation_error_paths=formulation_accounting['error_paths']
     for path in formulation_paths:
-        payload=load(path);formulated+=len(payload.get('candidates') or []);reduction_pending+=len(payload.get('reduction_pending') or []);rejected+=len(payload.get('rejected') or []);successful_formulation_branches+=len(payload.get('branch_ids') or [])
-    successful_formulation_parts={int(match.group(1)) for path in formulation_paths if (match:=re.search(r'formulate-p(\d+)',path.name))}
-    unresolved_formulation_error_paths=[]
-    for path in formulation_error_paths:
-        match=re.search(r'formulate-p(\d+)',path.name)
-        if not match or int(match.group(1)) not in successful_formulation_parts:unresolved_formulation_error_paths.append(path)
-    formulation_errors=[load(path) for path in unresolved_formulation_error_paths]
-    formulation_provider_failures=sum(str(row.get('status') or '').startswith('PROVIDER_') for row in formulation_errors)
-    formulation_parse_failures=sum(str(row.get('status') or '')=='PARSE_ERROR_ZERO_AUTHORITY' for row in formulation_errors)
-    formulation_parts=[]
-    for path in formulation_paths+formulation_error_paths:
-        match=re.search(r'formulate-p(\d+)',path.name)
-        if match:formulation_parts.append(int(match.group(1)))
-    formulation_requested_shards=max(formulation_parts or [0])
-    formulation_requested_branches=formulation_requested_shards*2
-    formulation_censored_branches=max(sum(len(row.get('branch_ids') or []) for row in formulation_errors),formulation_requested_branches-successful_formulation_branches)
+        payload=load(path);formulated+=len(payload.get('candidates') or []);reduction_pending+=len(payload.get('reduction_pending') or []);rejected+=len(payload.get('rejected') or [])
+    formulation_provider_failures=formulation_accounting['provider_failures'];formulation_parse_failures=formulation_accounting['parse_failures']
+    formulation_requested_shards=formulation_accounting['requested_shards'];formulation_requested_branches=formulation_accounting['requested_branches'];successful_formulation_branches=formulation_accounting['successful_branches'];formulation_censored_branches=formulation_accounting['censored_branches']
     falsifier_request=load(root/'problem-falsifier-support-inventory-request.json') if (root/'problem-falsifier-support-inventory-request.json').exists() else {}
     falsifier_request_summary=falsifier_request.get('summary') or {}
     falsifier_preflight=load(root/'problem-falsifier-preflight.json') if (root/'problem-falsifier-preflight.json').exists() else {}
@@ -160,7 +195,7 @@ def _latest_shadow_run(root:Path)->dict:
         parent_ids=[value for value in payload.get('parent_ids') or [] if value]
         stats['requested']+=int(payload.get('requested_children') or len(parent_ids) or len(children))
         stats['valid']+=int(payload.get('valid_children') or len(children))
-    formulation_calls=len(formulation_paths)+len(formulation_error_paths)
+    formulation_calls=formulation_accounting['attempt_calls']
     generator_calls=expansion_successful+expansion_errors+evolution_calls+formulation_calls
     reviewer_calls=len(list(root.glob('review-p*.json')))+len(list(root.glob('error-review-*.json')))
     summary={
@@ -185,7 +220,7 @@ def _latest_shadow_run(root:Path)->dict:
         'evolution_g2_valid':int((evolution_by_generation.get(2) or {}).get('valid') or 0),
         'max_branch_depth':max([int(x.get('branch_depth') or 0) for x in evolved] or [0]),
         'formulation_requested_shards':formulation_requested_shards,
-        'formulation_successful_shards':len(formulation_paths),
+        'formulation_successful_shards':formulation_accounting['successful_shards'],
         'formulation_provider_failures':formulation_provider_failures,
         'formulation_parse_failures':formulation_parse_failures,
         'formulation_requested_branches':formulation_requested_branches,
