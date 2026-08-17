@@ -31578,7 +31578,17 @@
       "temporal_exposure_relabeling_after_longitudinal_reduction_forbidden": true,
       "treatment_semantics_seed_requires_executable_version_change": true,
       "treatment_semantics_seed_requires_versioned_treatment_reduction_first": true,
-      "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v14",
+      "contradiction_requires_treatment_surface_alignment": true,
+      "contradiction_requires_executor_state_alignment": true,
+      "contradiction_requires_comparator_endpoint_timing_alignment": true,
+      "cross_treatment_sign_difference_is_reducible_not_contradiction": true,
+      "generator_pre_review_allows_pending_exact_reduction": true,
+      "generator_pre_review_still_blocks_proven_hard_reduction": true,
+      "semantic_reviewer_owns_pending_exact_reduction_adjudication": true,
+      "final_problem_gate_still_requires_all_reductions_resolved": true,
+      "principle_dead_end_exact_source_reentry_forbidden": true,
+      "principle_dead_end_reopen_requires_new_evidence": true,
+      "discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
       "shared_limitation_without_empirical_failure_forbidden": true,
       "pure_topic_brainstorm_forbidden": true,
       "open_world_missing_cell_claim_forbidden": true,
@@ -31670,6 +31680,14 @@
             "shared_operationalization",
             "shared_intervention_semantics",
             "shared_adaptation_stage",
+            "source_a_intervention",
+            "source_b_intervention",
+            "intervention_surface_match",
+            "executor_state_match",
+            "comparator_match",
+            "endpoint_match",
+            "timing_match",
+            "treatment_equivalence_argument",
             "incompatibility"
           ],
           "CONVERGENT_FAILURE": [
@@ -31730,7 +31748,7 @@
           ]
         },
         "machine_contracts": {
-          "CONTRADICTION": "Two independently grounded empirical facts are incompatible under an explicitly shared operationalization, including the same intervention/treatment surface and adaptation stage; inference-time context, retrieval/filtering, parameter updates, and full-parameter training are not interchangeable treatments.",
+          "CONTRADICTION": "Two independently grounded empirical facts are incompatible only after a shared operationalization aligns intervention/treatment surface, adaptation stage, executor/parameter state, comparator, endpoint, and intervention timing; inference-time context, retrieval/filtering, parameter updates, and full-parameter training are not interchangeable treatments, and cross-treatment sign differences are REDUCIBLE rather than contradictions.",
           "CONVERGENT_FAILURE": "Two independent method families show quantitative failure under the same bounded operational condition; the candidate names a common failure object rather than a better-method claim.",
           "ASSUMPTION_BREAK": "Source A contains an explicit operational assumption and independent source B contains empirical evidence that violates it in a scope-linked setting.",
           "UNEXPLAINED_BOUNDARY": "Primary evidence quantitatively establishes an anomalous boundary/regime and an adjacent expected regime for the same measured phenomenon; the candidate targets the unexplained transition.",
@@ -32282,9 +32300,17 @@
           "shared_operationalization",
           "shared_intervention_semantics",
           "shared_adaptation_stage",
+          "source_a_intervention",
+          "source_b_intervention",
+          "intervention_surface_match",
+          "executor_state_match",
+          "comparator_match",
+          "endpoint_match",
+          "timing_match",
+          "treatment_equivalence_argument",
           "incompatibility"
         ],
-        "machine_contract": "Two independently grounded empirical facts are incompatible under an explicitly shared operationalization, including the same intervention/treatment surface and adaptation stage; inference-time context, retrieval/filtering, parameter updates, and full-parameter training are not interchangeable treatments."
+        "machine_contract": "Two independently grounded empirical facts are incompatible only after a shared operationalization aligns intervention/treatment surface, adaptation stage, executor/parameter state, comparator, endpoint, and intervention timing; inference-time context, retrieval/filtering, parameter updates, and full-parameter training are not interchangeable treatments, and cross-treatment sign differences are REDUCIBLE rather than contradictions."
       },
       {
         "lane": "CONVERGENT_FAILURE",
@@ -32337,7 +32363,10 @@
       "INVERT principle-certified dead ends only as zero-authority search priors: extract the opposite principle/search seed, then require fresh primary grounding and the recorded reopen condition before retaining a branch",
       "VERIFY any proposed feedback mechanism has a causal write path into selection, gating, rollback, synthesis, memory admission, artifact promotion, or another state transition; report-only measurements cannot justify feedback-effect experiments",
       "DETECT a grounded anomaly, sign reversal, threshold, nonmonotonic regime, or assumption violation; UNEXPLAINED_BOUNDARY may begin from one primary paper when it contains both required evidence items",
+      "ALIGN treatment semantics before CONTRADICTION: intervention surface, executor/parameter state, comparator, endpoint, and timing must match; otherwise record REDUCIBLE cross-treatment contrast",
       "OPERATIONALIZE the smallest shared observable and adjacent/control regime without requiring a second paper to have used the same metric",
+      "SEPARATE generator from reviewer: pending exact mature reductions may reach independent semantic review, but proven hard reductions never do",
+      "BLOCK exact principle-dead-end re-entry when the same live lane reuses the identical primary source set; reopening requires new evidence that can satisfy the recorded reopen condition",
       "MATERIALIZE a cheapest independent-truth falsifier from released units, first-party code, or an existing provenance-audited substrate whenever possible",
       "REDUCE using closest work + mature theories under the same-information Reduction Falsifiability Contract",
       "retain only a residual with an ex-ante distinguishing prediction over the strongest reduction",
@@ -34389,7 +34418,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T17:14:20+00:00",
+    "generated_at": "2026-08-17T19:01:02+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -34436,7 +34465,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-17T17:14:20+00:00",
+      "generated_at": "2026-08-17T19:01:02+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -34978,6 +35007,72 @@
             "reopen_condition": "Reopen only with provenance-audited matched units that oracle-load the same candidate skill, independently verify task-requirement-level compatibility and absence of conflicting/missing skill guidance, match executor, budget, generic instruction-following difficulty, and observable action-level uptake, and still expose a preregistered procedural-structure variable that predicts functional failure beyond same-information compatibility, negative-transfer, retrieval-utilization, and instruction-following baselines. A topical-relevance score, ground-truth skill label, aggregate TIF count, or retrieval-precision/success decoupling is insufficient."
           },
           "source_readjudication_artifact": "generated/auto1-relevant-skill-misexecution-principle-readjudication-20260817.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {},
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "AUTO-1-MEMORY-MONOTONICITY-CONSOLIDATION",
+          "basin": "principle-readjudication-27d3aab2967cefd5",
+          "search_primitive": "ASSUMPTION_BREAK",
+          "title": "Memory-monotonicity assumption break collapses under the source framework's own conflict limitation",
+          "avoid": [
+            "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Memory-monotonicity assumption break collapses under the source framework's own conflict limitation",
+            "using the negative experiment metric alone as the reason for the dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "The proposed assumption break is absorbed before a new experiment is needed. The formal memory paper's monotonicity/self-containment assumptions are idealized properties of its generation operator, and the same paper explicitly records the relevant limitation: real extraction is at best locally monotone and a conflicting claim can overturn earlier conclusions. MindMemOS dreaming does not supply a semantics-blind deletion treatment; it merges redundant records and resolves conflicts, while the observed roughly 20% active-memory reduction is a post-consolidation outcome. The existing principle-certified MindMemOS closure independently verifies that, on FactConsolidation, accuracy gains with lower active-memory volume are predicted by conflict-aware selective forgetting/belief revision when duplicate, stale, or contradictory evidence is consolidated. Therefore the two primary results do not identify an independent ASSUMPTION_BREAK or a new capacity-utility primitive under the same information.",
+          "current_source_refs": [
+            "arXiv:2608.11654",
+            "arXiv:2608.12428"
+          ],
+          "evidence_basis": [
+            "arXiv:2608.11654",
+            "primary-fulltext:arXiv:2608.11654#sha256=aad633809bf2bd92f2fc9c6c63e693050a7bad5ae09808418e8374a056ea13dd",
+            "primary-fulltext-evidence:arXiv:2608.11654#sha256=cf48ea56e9679e686974771a4bfb51f666f97827c115e11dee32f1bb68bf20c7",
+            "primary-fulltext-evidence:arXiv:2608.11654#sha256=645dfe25fefa911e0c8cb6b03a6afc02ecf5339e1693cf8c36dd79fac51715a1",
+            "arXiv:2608.12428",
+            "primary-fulltext:arXiv:2608.12428#sha256=79a9c92991d928c4d8e4629a4a71ea8c92d2c56f8fe81e3a4a5ba6822f4b3a32",
+            "primary-fulltext-evidence:arXiv:2608.12428#sha256=0e70938c7225ba7229c309f6849cdf7e593c661dace3c06261514130481f74d6",
+            "primary-fulltext-evidence:arXiv:2608.12428#sha256=74cb6b7181d902c6d9456f3c1db6ac25b496f131df566c7764d3feb7d399a3e1",
+            "repo:generated/mindmemos-dreaming-compression-principle-readjudication-20260817.json#sha256=5d4c97a8758521a713e84d8cd5a8217b86ecb1ed378e04d028e2b445056026d3"
+          ],
+          "problem_text": "The scoped AUTO-1 ASSUMPTION_BREAK claim that the idealized self-containment/monotonicity assumptions in arXiv:2608.11654 are independently falsified by arXiv:2608.12428 because MindMemOS dreaming compresses roughly one fifth of active memory while improving accuracy, thereby requiring a new capacity-constrained non-monotonic memory-utility object beyond conflict-aware selective forgetting, belief revision, and the formal paper's own acknowledged non-monotonic conflict limitation.",
+          "reason": "The two source observations are real, but they do not establish an independent assumption-break object: the formal framework already acknowledges conflict-driven non-monotonicity, and MindMemOS dreaming is a targeted conflict/redundancy consolidation process whose compression ratio is not an independently varied treatment.",
+          "reopen_only_if": "Reopen only with primary or first-party evidence that independently manipulates retention/compression quantity while matching conflict-resolution semantics, answer-critical evidence identity, temporal order, provenance, retrieval state, model, query set, and budget, or independently manipulates conflict-resolution quality at matched retained volume. The resulting ex-ante utility prediction must survive a same-information conflict-aware selective-forgetting, belief-revision, and rate-distortion baseline; a natural consolidation ratio or another duplicate/conflict merge is insufficient.",
+          "dead_end_certified": true,
+          "memory_class": "PRINCIPLE_DEAD_END",
+          "counter_explanation": {
+            "type": "SAME_INFORMATION_REDUCTION",
+            "statement": "The proposed assumption break is absorbed before a new experiment is needed. The formal memory paper's monotonicity/self-containment assumptions are idealized properties of its generation operator, and the same paper explicitly records the relevant limitation: real extraction is at best locally monotone and a conflicting claim can overturn earlier conclusions. MindMemOS dreaming does not supply a semantics-blind deletion treatment; it merges redundant records and resolves conflicts, while the observed roughly 20% active-memory reduction is a post-consolidation outcome. The existing principle-certified MindMemOS closure independently verifies that, on FactConsolidation, accuracy gains with lower active-memory volume are predicted by conflict-aware selective forgetting/belief revision when duplicate, stale, or contradictory evidence is consolidated. Therefore the two primary results do not identify an independent ASSUMPTION_BREAK or a new capacity-utility primitive under the same information.",
+            "opposite_prediction": "Under a fixed memory store, query set, temporal order, provenance, and conflict graph, downstream accuracy should track which duplicate/stale/contradictory evidence is consolidated and whether answer-critical valid evidence is preserved, not raw retained-memory count or the resulting compression fraction alone. Different compression ratios can have the same utility when they preserve the same answer-relevant conflict resolution, while the same ratio can have different utility when it removes different evidence. A standalone non-monotonic capacity curve should vanish after conflict-resolution semantics and answer-relevant retention are matched.",
+            "opposite_principle": "Representation size is not the causal treatment when consolidation changes redundancy and conflict semantics. Idealized set-inclusion monotonicity cannot be declared independently falsified by a representation-changing selective-consolidation operator that the formal framework already flags as a non-monotonic conflict case; conflict-aware selective forgetting/belief revision must be reduced first.",
+            "opposite_search_seed": "Search only for a provenance-audited intervention that separates retention/compression quantity from conflict-resolution semantics. Either independently vary retained volume while holding the exact answer-critical evidence, conflict graph, consolidation decisions, retrieval state, model, queries, and budget fixed, or vary conflict-resolution quality at matched retained volume. Require a preregistered held-out residual beyond a same-information conflict-aware selective-forgetting/belief-revision/rate-distortion baseline. Do not reopen from another natural compression ratio or from merging duplicates/superseded facts.",
+            "scope": "The scoped AUTO-1 ASSUMPTION_BREAK claim that the idealized self-containment/monotonicity assumptions in arXiv:2608.11654 are independently falsified by arXiv:2608.12428 because MindMemOS dreaming compresses roughly one fifth of active memory while improving accuracy, thereby requiring a new capacity-constrained non-monotonic memory-utility object beyond conflict-aware selective forgetting, belief revision, and the formal paper's own acknowledged non-monotonic conflict limitation.",
+            "same_information_or_scope_matched": true,
+            "same_information_reduction_verified": true,
+            "positive_support": true,
+            "evidence_refs": [
+              "arXiv:2608.11654",
+              "primary-fulltext:arXiv:2608.11654#sha256=aad633809bf2bd92f2fc9c6c63e693050a7bad5ae09808418e8374a056ea13dd",
+              "primary-fulltext-evidence:arXiv:2608.11654#sha256=cf48ea56e9679e686974771a4bfb51f666f97827c115e11dee32f1bb68bf20c7",
+              "primary-fulltext-evidence:arXiv:2608.11654#sha256=645dfe25fefa911e0c8cb6b03a6afc02ecf5339e1693cf8c36dd79fac51715a1",
+              "arXiv:2608.12428",
+              "primary-fulltext:arXiv:2608.12428#sha256=79a9c92991d928c4d8e4629a4a71ea8c92d2c56f8fe81e3a4a5ba6822f4b3a32",
+              "primary-fulltext-evidence:arXiv:2608.12428#sha256=0e70938c7225ba7229c309f6849cdf7e593c661dace3c06261514130481f74d6",
+              "primary-fulltext-evidence:arXiv:2608.12428#sha256=74cb6b7181d902c6d9456f3c1db6ac25b496f131df566c7764d3feb7d399a3e1",
+              "repo:generated/mindmemos-dreaming-compression-principle-readjudication-20260817.json#sha256=5d4c97a8758521a713e84d8cd5a8217b86ecb1ed378e04d028e2b445056026d3"
+            ],
+            "alternative_explanations_ruled_out": [
+              "The formal paper states monotonicity as an unqualified empirical law over real consolidation systems: false; the paper itself records locally non-monotone extraction and conflict-driven overturning as a limitation/research problem.",
+              "MindMemOS dreaming is random or semantics-blind deletion: false; its primary description states that dreaming merges redundant records and resolves conflicts, and the existing first-party closure verifies targeted consolidation semantics.",
+              "The roughly 20% archive ratio is an independently manipulated capacity treatment: false; the principle-certified MindMemOS closure establishes that AMCR is a post-action summary of targeted consolidation rather than a controlled compression sweep.",
+              "Reversing the sign from 'adding memory can hurt' to 'removing memory can help' creates a new causal primitive: false under the current evidence, because both are expressible through conflict-aware non-monotonic belief change once the same conflict information is available."
+            ],
+            "reopen_condition": "Reopen only with primary or first-party evidence that independently manipulates retention/compression quantity while matching conflict-resolution semantics, answer-critical evidence identity, temporal order, provenance, retrieval state, model, query set, and budget, or independently manipulates conflict-resolution quality at matched retained volume. The resulting ex-ante utility prediction must survive a same-information conflict-aware selective-forgetting, belief-revision, and rate-distortion baseline; a natural consolidation ratio or another duplicate/conflict merge is insufficient."
+          },
+          "source_readjudication_artifact": "generated/memory-monotonicity-consolidation-principle-readjudication-20260818.json",
           "opposite_search_asset_evidence": {},
           "fresh_phenomenon_closure": {},
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
@@ -36747,8 +36842,8 @@
           "scientific_authority": false
         }
       ],
-      "principle_dead_end_count": 34,
-      "principle_readjudication_dead_end_count": 30,
+      "principle_dead_end_count": 35,
+      "principle_readjudication_dead_end_count": 31,
       "fresh_phenomenon_closure_count": 17,
       "fresh_phenomenon_closed_evidence_count": 31,
       "inversion_asset_evidence": [
@@ -36973,8 +37068,8 @@
       "revise_paper_problem": 1,
       "stop_standalone": 1,
       "support_inventory_required": 1,
-      "shadow_dead_end_objects": 34,
-      "principle_readjudication_dead_ends": 30,
+      "shadow_dead_end_objects": 35,
+      "principle_readjudication_dead_ends": 31,
       "shadow_hold_objects": 2,
       "current_source_hard_veto_dead_ends": 0,
       "current_source_hard_veto_added_from_latest_run": 0,
@@ -38379,7 +38474,7 @@
       "latest_shadow_present": true,
       "latest_shadow_terminal": true,
       "same_source_transaction": true,
-      "current_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v14",
+      "current_discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
       "latest_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
       "same_discovery_operator_version": false,
       "operator_upgrade_recompile": true,
@@ -38400,7 +38495,7 @@
       "latest_source_set_sha256": "60b9c55d7ca585bd8590a6d7c69e9587fc0ab211ec24d80c3ba3c4651481ff56",
       "latest_primary_content_sha256": "0df29b9cbd111a85eb5caece3c5fd2ce148ebb587fae140c3de4ce58a7d05e9c",
       "latest_source_pool_sha256": "c4a42abe9f66a2ceafdb673f4e7778632406aaa65c9ca21c081221b22d36c2f6",
-      "current_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v14",
+      "current_discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
       "latest_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13"
     },
     "scientific_authority": false
@@ -77463,7 +77558,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T17:14:20+00:00",
+    "generated_at": "2026-08-17T19:03:49+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -77805,7 +77900,7 @@
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-        "sha256": "a51fe0f085f3ff4ee399d6cc5dad11ba6a6fe7277a8d4e81819f76bd27dffb4f"
+        "sha256": "fa12b0319bc11b45862b00125391a94c6b89376949bbb22c47537a45bb1d672f"
       },
       "defense_principle_reduction": {
         "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",

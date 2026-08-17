@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T18:35:41+00:00",
-  "source_revision": "d93e36d5b744c2c2f393d7b1427da53e3ab37d59",
+  "generated_at": "2026-08-17T19:03:11+00:00",
+  "source_revision": "051461ec337bde0a3862e2851a5c09c5fce757ea",
   "as_of_date": "2026-08-17",
   "headline": {
     "paper_ready": 1,
@@ -16,7 +16,7 @@
     "legacy_p0_upstream_hold": 1,
     "legacy_p0_method_stop": 1,
     "launchable_formal_experiments": 0,
-    "shadow_dead_ends": 34,
+    "shadow_dead_ends": 35,
     "shadow_holds": 2,
     "shadow_method_ready": 0,
     "shadow_qualification_ready": 1,
@@ -281,8 +281,8 @@
     "method_ready": 0,
     "revise_hold": 1,
     "stop_standalone": 1,
-    "dead_end_objects": 34,
-    "principle_readjudication_dead_ends": 30,
+    "dead_end_objects": 35,
+    "principle_readjudication_dead_ends": 31,
     "hold_objects": 2,
     "semantic_holds": 0,
     "near_miss_holds": 1,
@@ -318,7 +318,7 @@
     },
     "qualification": {
       "status": "READY_FOR_SHADOW_QUALIFICATION",
-      "operator_version": "fresh-phenomenon-anomaly-precision-v14",
+      "operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
       "operator_upgrade_recompile": true,
       "qualification_allowed": true,
       "automatic_provider_calls_authorized": 0,
