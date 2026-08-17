@@ -1,7 +1,7 @@
 {
   "schema_version": "2.5",
-  "generated_at": "2026-08-17T13:58:47+00:00",
-  "run_id": "20260817T135847Z",
+  "generated_at": "2026-08-17T16:18:13+00:00",
+  "run_id": "20260817T161813Z",
   "generator_model": "glm-5.3",
   "reviewer_model": "deepseek-v4-pro",
   "policy": {
@@ -101,13 +101,13 @@
     "evolved_branches": 0,
     "max_branch_depth": 0,
     "portfolio_calls": 0,
-    "generated": 0,
+    "generated": 1,
     "structurally_reviewable": 0,
     "semantic_clear": 0,
-    "semantic_blocked": 0,
-    "written_to_auto_inbox": 0,
+    "semantic_blocked": 1,
+    "written_to_auto_inbox": 1,
     "generated_by_lane": {
-      "CONTRADICTION": 0,
+      "CONTRADICTION": 1,
       "CONVERGENT_FAILURE": 0,
       "ASSUMPTION_BREAK": 0,
       "UNEXPLAINED_BOUNDARY": 0,
@@ -128,7 +128,7 @@
       "OTHER": 0
     },
     "semantic_blocked_by_lane": {
-      "CONTRADICTION": 0,
+      "CONTRADICTION": 1,
       "CONVERGENT_FAILURE": 0,
       "ASSUMPTION_BREAK": 0,
       "UNEXPLAINED_BOUNDARY": 0,
@@ -137,7 +137,7 @@
   },
   "raw_artifacts": {
     "generator": {
-      "sha256": "e02bd64e1265704b00bb73522f0522edb9634b6cfdbd111bb7b36618e3870d74",
+      "sha256": "b921767ef4674142af7d6b3124786e2f71dd9cabcee0eac31bd8eb088f578deb",
       "requested_model": "glm-5.3",
       "resolved_model": "kimi-k3",
       "transport_attempts": [
@@ -145,7 +145,15 @@
           "requested_model": "glm-5.3",
           "status": "error-no-output",
           "error_kind": "provider-incomplete-before-output",
-          "assistant_output_present": false
+          "assistant_output_present": false,
+          "provider_receipt_audit": {
+            "provider_receipt_sha256": "ab8e8528ce8be3c64d58dee977d5730c583d8edfed64c615a8b991d8c46418ee",
+            "status": "incomplete",
+            "requested_model": "glm-5.3",
+            "resolved_model": "glm-5.3",
+            "incomplete_reason": "length",
+            "scientific_authority": false
+          }
         },
         {
           "requested_model": "kimi-k3",
@@ -154,10 +162,20 @@
           "assistant_output_present": true
         }
       ],
-      "transport_fallback_used": true
+      "transport_fallback_used": true,
+      "provider_receipt_audits": [
+        {
+          "provider_receipt_sha256": "ab8e8528ce8be3c64d58dee977d5730c583d8edfed64c615a8b991d8c46418ee",
+          "status": "incomplete",
+          "requested_model": "glm-5.3",
+          "resolved_model": "glm-5.3",
+          "incomplete_reason": "length",
+          "scientific_authority": false
+        }
+      ]
     }
   },
-  "generation_notes": "Zero candidates survive. The evidence registry was audited across all four allowed discovery lanes in the specified priority order. While several sources contain quantitative anomalies, thresholds, or failure boundaries (e.g., retrieval precision collapse in arXiv:2608.14036, nonmonotonic reward plateaus in arXiv:2608.13040, and boundary observations in arXiv:2608.14270), none satisfied the strict lane contracts without being reducible to mature theories or falling into forbidden negative-space patterns. Specifically, no contradiction between independently grounded empirical facts under shared operationalization was identified; no convergent failure of independent method families under identical bounded conditions with a common failure object was established; no operational assumption was directly violated by independent empirical evidence in a scope-linked setting; and no unexplained boundary with an adjacent expected regime was found that could not be expressed by existing same-information theories. The repeated reduction basin of procedural-memory-nonmonotonicity was actively avoided, and no new concrete observables were found to defeat recorded strongest reductions.",
+  "generation_notes": "One candidate survives. CONVERGENT_FAILURE and ASSUMPTION_BREAK both ground to real tuples but land in the procedural-memory-nonmonotonicity / applicability-decomposition basin that accounts for 50% of prior blocks, with no new observable defeating the recorded reductions; UNEXPLAINED_BOUNDARY (LOPD plateau, TimeSage easy-tier saturation, retrieval-precision collapse) reduces to capacity/saturation under same information. The emitted CONTRADICTION candidate is kept only because its distinguishing test (matched-base opposite-sign cell, trace-free certificate) is concrete and not yet executed by either source.",
   "search_diagnostics": {
     "lane_search_priority": [
       "CONTRADICTION",
@@ -169,33 +187,44 @@
     "lane_search": [
       {
         "lane": "CONTRADICTION",
-        "status": "NO_PAIR",
-        "source_refs": [],
-        "reason": "No two independently grounded empirical facts were found that are incompatible under an explicitly shared operationalization."
+        "status": "CANDIDATE",
+        "source_refs": [
+          "arXiv:2607.05297",
+          "arXiv:2607.01874"
+        ],
+        "reason": "Grounded quantitative sign reversal on the same operationalization (frozen-backbone skill evolution, held-out task success): MetaSkill-Evolve's static skill regresses −1.93 on ALFWorld while SkillCoach's initial-rubric filtering gains +8/+14 points, and neither paper's mechanism (saturation headroom vs rubric quality) expresses the sign under matched information."
       },
       {
         "lane": "CONVERGENT_FAILURE",
-        "status": "NO_PAIR",
-        "source_refs": [],
-        "reason": "No two independent method families were found to show quantitative failure under the same bounded operational condition with a common failure object."
+        "status": "REDUCIBLE",
+        "source_refs": [
+          "arXiv:2608.14036",
+          "arXiv:2608.11888"
+        ],
+        "reason": "Both papers quantitatively show relevant skills causing failure (65.7% procedural anchoring with brittle-context failures; 86/125 Task-Implementation Faults from seemingly relevant skills), but the common failure object decomposes into retrieval precision plus applicability-boundary miscalibration under the same information; no non-reducible object survives."
       },
       {
         "lane": "UNEXPLAINED_BOUNDARY",
-        "status": "NO_PAIR",
-        "source_refs": [],
-        "reason": "No single or paired source quantitatively established both an anomalous boundary/regime and an adjacent expected regime for the same measured phenomenon without being reducible to mature theories."
+        "status": "REDUCIBLE",
+        "source_refs": [
+          "arXiv:2608.13040"
+        ],
+        "reason": "LOPD shows a real plateau at 32 latent tokens (0.56→0.637→fluctuation) and retrieval-count nonmonotonicity, but under the same information this is expressible as capacity/saturation of a fixed-budget conditioning channel; rate-distortion and diminishing-returns baselines give the same ex-ante prediction."
       },
       {
         "lane": "ASSUMPTION_BREAK",
-        "status": "NO_PAIR",
-        "source_refs": [],
-        "reason": "No explicit operational assumption in one source was found to be directly violated by empirical evidence in an independent source in a scope-linked setting."
+        "status": "REDUCIBLE",
+        "source_refs": [
+          "arXiv:2608.11654",
+          "arXiv:2608.11888"
+        ],
+        "reason": "The formal monotonicity/self-containment assumption (more memory never worse) is empirically violated by skill-induced regressions, but this exact tuple is the procedural-memory-nonmonotonicity basin (6 prior blocks, 50% of dead ends); belief-revision/nonmonotonic-logic reductions remain unresolved by the current evidence."
       }
     ],
     "last_completed_lane_search": {
-      "run_id": "20260817T135847Z",
-      "generator_status": "GENERATED_ZERO_CANDIDATES",
-      "generated_at": "2026-08-17T13:58:47+00:00",
+      "run_id": "20260817T161813Z",
+      "generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
+      "generated_at": "2026-08-17T16:18:13+00:00",
       "mode": "anomaly_first_evidence_tuple_audit",
       "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
       "lane_search_priority": [
@@ -207,60 +236,71 @@
       "lane_search": [
         {
           "lane": "CONTRADICTION",
-          "status": "NO_PAIR",
-          "source_refs": [],
-          "reason": "No two independently grounded empirical facts were found that are incompatible under an explicitly shared operationalization."
+          "status": "CANDIDATE",
+          "source_refs": [
+            "arXiv:2607.05297",
+            "arXiv:2607.01874"
+          ],
+          "reason": "Grounded quantitative sign reversal on the same operationalization (frozen-backbone skill evolution, held-out task success): MetaSkill-Evolve's static skill regresses −1.93 on ALFWorld while SkillCoach's initial-rubric filtering gains +8/+14 points, and neither paper's mechanism (saturation headroom vs rubric quality) expresses the sign under matched information."
         },
         {
           "lane": "CONVERGENT_FAILURE",
-          "status": "NO_PAIR",
-          "source_refs": [],
-          "reason": "No two independent method families were found to show quantitative failure under the same bounded operational condition with a common failure object."
+          "status": "REDUCIBLE",
+          "source_refs": [
+            "arXiv:2608.14036",
+            "arXiv:2608.11888"
+          ],
+          "reason": "Both papers quantitatively show relevant skills causing failure (65.7% procedural anchoring with brittle-context failures; 86/125 Task-Implementation Faults from seemingly relevant skills), but the common failure object decomposes into retrieval precision plus applicability-boundary miscalibration under the same information; no non-reducible object survives."
         },
         {
           "lane": "UNEXPLAINED_BOUNDARY",
-          "status": "NO_PAIR",
-          "source_refs": [],
-          "reason": "No single or paired source quantitatively established both an anomalous boundary/regime and an adjacent expected regime for the same measured phenomenon without being reducible to mature theories."
+          "status": "REDUCIBLE",
+          "source_refs": [
+            "arXiv:2608.13040"
+          ],
+          "reason": "LOPD shows a real plateau at 32 latent tokens (0.56→0.637→fluctuation) and retrieval-count nonmonotonicity, but under the same information this is expressible as capacity/saturation of a fixed-budget conditioning channel; rate-distortion and diminishing-returns baselines give the same ex-ante prediction."
         },
         {
           "lane": "ASSUMPTION_BREAK",
-          "status": "NO_PAIR",
-          "source_refs": [],
-          "reason": "No explicit operational assumption in one source was found to be directly violated by empirical evidence in an independent source in a scope-linked setting."
+          "status": "REDUCIBLE",
+          "source_refs": [
+            "arXiv:2608.11654",
+            "arXiv:2608.11888"
+          ],
+          "reason": "The formal monotonicity/self-containment assumption (more memory never worse) is empirically violated by skill-induced regressions, but this exact tuple is the procedural-memory-nonmonotonicity basin (6 prior blocks, 50% of dead ends); belief-revision/nonmonotonic-logic reductions remain unresolved by the current evidence."
         }
       ],
-      "generation_notes": "Zero candidates survive. The evidence registry was audited across all four allowed discovery lanes in the specified priority order. While several sources contain quantitative anomalies, thresholds, or failure boundaries (e.g., retrieval precision collapse in arXiv:2608.14036, nonmonotonic reward plateaus in arXiv:2608.13040, and boundary observations in arXiv:2608.14270), none satisfied the strict lane contracts without being reducible to mature theories or falling into forbidden negative-space patterns. Specifically, no contradiction between independently grounded empirical facts under shared operationalization was identified; no convergent failure of independent method families under identical bounded conditions with a common failure object was established; no operational assumption was ",
+      "generation_notes": "One candidate survives. CONVERGENT_FAILURE and ASSUMPTION_BREAK both ground to real tuples but land in the procedural-memory-nonmonotonicity / applicability-decomposition basin that accounts for 50% of prior blocks, with no new observable defeating the recorded reductions; UNEXPLAINED_BOUNDARY (LOPD plateau, TimeSage easy-tier saturation, retrieval-precision collapse) reduces to capacity/saturation under same information. The emitted CONTRADICTION candidate is kept only because its distinguishing test (matched-base opposite-sign cell, trace-free certificate) is concrete and not yet executed by either source.",
       "scientific_authority": false
     },
     "scientific_authority": false
   },
   "saturation_memory": {
-    "ledger_entries": 20,
+    "ledger_entries": 1,
     "prior_identical_zero_runs": 0,
     "current_run_recorded": true,
     "current_review_receipt": {
-      "run_id": "20260817T135847Z",
-      "pool_sha256": "f0ae22bea534738466f2feed86bc870b7a1ff97407d20b17863593ebf2c3a1ef",
+      "run_id": "20260817T161813Z",
+      "pool_sha256": "c4a42abe9f66a2ceafdb673f4e7778632406aaa65c9ca21c081221b22d36c2f6",
       "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
       "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
       "source_refs": [
-        "arXiv:2607.07436",
-        "arXiv:2607.08124",
-        "arXiv:2607.09065",
-        "arXiv:2607.09521",
-        "arXiv:2607.10350",
-        "arXiv:2607.11019",
-        "arXiv:2607.11689",
-        "arXiv:2607.12042",
-        "arXiv:2607.12227",
-        "arXiv:2607.12254",
-        "arXiv:2607.12397",
-        "arXiv:2607.12625",
-        "arXiv:2607.13070",
-        "arXiv:2607.13083",
-        "arXiv:2607.13104",
-        "arXiv:2607.13285",
+        "arXiv:2607.00457",
+        "arXiv:2607.00871",
+        "arXiv:2607.00911",
+        "arXiv:2607.01071",
+        "arXiv:2607.01120",
+        "arXiv:2607.01709",
+        "arXiv:2607.01874",
+        "arXiv:2607.02440",
+        "arXiv:2607.03238",
+        "arXiv:2607.03451",
+        "arXiv:2607.03691",
+        "arXiv:2607.03935",
+        "arXiv:2607.05202",
+        "arXiv:2607.05297",
+        "arXiv:2607.05382",
+        "arXiv:2607.07820",
         "arXiv:2608.11596",
         "arXiv:2608.11654",
         "arXiv:2608.11888",
@@ -278,10 +318,10 @@
         "arXiv:2608.14270",
         "arXiv:2608.14441"
       ],
-      "status": "GENERATED_ZERO_CANDIDATES",
+      "status": "GENERATED_AWAIT_PROBLEM_GATE",
       "requested_model": "glm-5.3",
       "resolved_model": "kimi-k3",
-      "raw_sha256": "e02bd64e1265704b00bb73522f0522edb9634b6cfdbd111bb7b36618e3870d74",
+      "raw_sha256": "b921767ef4674142af7d6b3124786e2f71dd9cabcee0eac31bd8eb088f578deb",
       "scientific_authority": false
     },
     "portable_review_receipts": [
@@ -1301,6 +1341,51 @@
         "resolved_model": "kimi-k3",
         "raw_sha256": "e02bd64e1265704b00bb73522f0522edb9634b6cfdbd111bb7b36618e3870d74",
         "scientific_authority": false
+      },
+      {
+        "run_id": "20260817T161813Z",
+        "pool_sha256": "c4a42abe9f66a2ceafdb673f4e7778632406aaa65c9ca21c081221b22d36c2f6",
+        "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
+        "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
+        "source_refs": [
+          "arXiv:2607.00457",
+          "arXiv:2607.00871",
+          "arXiv:2607.00911",
+          "arXiv:2607.01071",
+          "arXiv:2607.01120",
+          "arXiv:2607.01709",
+          "arXiv:2607.01874",
+          "arXiv:2607.02440",
+          "arXiv:2607.03238",
+          "arXiv:2607.03451",
+          "arXiv:2607.03691",
+          "arXiv:2607.03935",
+          "arXiv:2607.05202",
+          "arXiv:2607.05297",
+          "arXiv:2607.05382",
+          "arXiv:2607.07820",
+          "arXiv:2608.11596",
+          "arXiv:2608.11654",
+          "arXiv:2608.11888",
+          "arXiv:2608.12428",
+          "arXiv:2608.12720",
+          "arXiv:2608.12743",
+          "arXiv:2608.12841",
+          "arXiv:2608.12851",
+          "arXiv:2608.12977",
+          "arXiv:2608.13040",
+          "arXiv:2608.13560",
+          "arXiv:2608.13833",
+          "arXiv:2608.13951",
+          "arXiv:2608.14036",
+          "arXiv:2608.14270",
+          "arXiv:2608.14441"
+        ],
+        "status": "GENERATED_AWAIT_PROBLEM_GATE",
+        "requested_model": "glm-5.3",
+        "resolved_model": "kimi-k3",
+        "raw_sha256": "b921767ef4674142af7d6b3124786e2f71dd9cabcee0eac31bd8eb088f578deb",
+        "scientific_authority": false
       }
     ],
     "blocked_problem_memory": {
@@ -1485,23 +1570,38 @@
       "scientific_authority": false
     },
     "scientific_authority": false,
-    "portable_review_receipt_count": 23
+    "portable_review_receipt_count": 24
   },
-  "candidates": [],
-  "primary_pool_age_hours": 0.0144,
+  "candidates": [
+    {
+      "candidate_id": "AUTO-1",
+      "title": "Static procedural priors flip sign across task regimes while evolved procedural priors do not: the missing object is a regime-conditioned sign certificate for frozen procedural context",
+      "discovery_lane": "CONTRADICTION",
+      "source_branch_id": "",
+      "source_refs": [
+        "arXiv:2607.05297",
+        "arXiv:2607.01874"
+      ],
+      "semantic_verdict": "BLOCK",
+      "lane_contract_verified": false,
+      "matched_patterns": []
+    }
+  ],
+  "primary_pool_age_hours": 0.0165,
   "source_coverage": {
-    "coverage_exhausted": false,
+    "coverage_exhausted": true,
     "source_retrieval_complete": true,
     "eligible_lane_linked_sources": 215,
-    "reviewed_lane_linked_sources": 211,
-    "unreviewed_lane_linked_sources": 4,
-    "unreviewed_no_lane_sources": 5,
-    "carrier_probe_required": false,
+    "reviewed_lane_linked_sources": 215,
+    "unreviewed_lane_linked_sources": 0,
+    "unreviewed_no_lane_sources": 4,
+    "carrier_probe_required": true,
     "carrier_probe_pending": 0,
     "carrier_probe_complete": true,
     "scientific_authority": false
   },
-  "status": "GENERATED_ZERO_CANDIDATES",
-  "discovery_transaction_id": "be6336c483b63efeef3d0693e5d6586c5c7d2743a142aba7af51ce79105548e9",
+  "operator_recompile_reason": "Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged.",
+  "status": "GENERATED_AWAIT_PROBLEM_GATE",
+  "discovery_transaction_id": "2975a3f837b4577abf958e5e021c4f85f7f097c36f4d7563f29353529f84fdf5",
   "discovery_transaction_role": "generator"
 }
