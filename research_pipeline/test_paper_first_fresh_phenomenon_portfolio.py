@@ -338,6 +338,14 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertEqual("HOLD_EXECUTION", row["status"])
         self.assertFalse(row["execution_readiness"]["execution_ready"])
 
+    def test_dead_end_memory_binding_tamper_fails_closed(self) -> None:
+        state = self.build()
+        state["source_bindings"]["dead_end_memory"]["sha256"] = "0" * 64
+        self.assertIn(
+            "fresh phenomenon portfolio dead-end-memory binding is stale",
+            validate_fresh_phenomenon_portfolio(state),
+        )
+
     def test_pa03_harnessbank_support_binding_tamper_fails_closed(self) -> None:
         state = self.build()
         state["source_bindings"]["harnessbank_support_audit"]["audit_sha256"] = "0" * 64

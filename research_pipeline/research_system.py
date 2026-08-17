@@ -49,7 +49,7 @@ from .paper_first_support_release_watch import load_private_support_release_watc
 from .paper_first_support_asset_recheck import load_private_support_asset_recheck_queue, public_support_asset_recheck_summary
 from .paper_first_support_asset_recheck_handoff import load_private_support_asset_recheck_handoff, public_support_asset_recheck_handoff_summary
 from .paper_first_discovery_frontier import build_paper_first_discovery_frontier, validate_paper_first_discovery_frontier
-from .paper_first_fresh_phenomenon_portfolio import build_fresh_phenomenon_portfolio, validate_fresh_phenomenon_portfolio, write_fresh_phenomenon_portfolio
+from .paper_first_fresh_phenomenon_portfolio import DEFAULT_JSON as FRESH_PHENOMENON_PORTFOLIO_JSON, build_fresh_phenomenon_portfolio, validate_fresh_phenomenon_portfolio, write_fresh_phenomenon_portfolio
 from .paper_first_skill_validation_transfer_scout import write_skill_validation_transfer_scout
 from .paper_first_legacy_reduction_migration import load_public_migration, validate_public_migration
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, build_problem_discovery_contract_state
@@ -57,7 +57,7 @@ from .paper_first_problem_generator import load_problem_generator_state
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_shadow_search_admission import build_shadow_search_admission, public_shadow_search_admission_summary, validate_shadow_search_admission
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier, validate_shadow_continuation_frontier
-from .paper_first_search_portfolio_design_adjudication import build_search_portfolio_design_adjudication, validate_search_portfolio_design_adjudication, write_search_portfolio_design_adjudication
+from .paper_first_search_portfolio_design_adjudication import DEFAULT_JSON as SEARCH_PORTFOLIO_DESIGN_JSON, build_search_portfolio_design_adjudication, validate_search_portfolio_design_adjudication, write_search_portfolio_design_adjudication
 from .paper_first_sp15_identifiability_support import build_sp15_identifiability_support, write_sp15_identifiability_support
 from .paper_first_global_relation_recall import load_global_relation_recall_state
 from .paper_first_global_relation_scan_admission import build_global_relation_scan_admission, public_global_relation_scan_admission_summary
@@ -1442,6 +1442,17 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     sp_design = state.get("paper_first_search_portfolio_design_adjudication") or {}; sp_design_summary = sp_design.get("summary") or {}; sp_design_policy = sp_design.get("policy") or {}
     if (sp_design_summary.get("reviewed"),sp_design_summary.get("advance_to_method_design"),sp_design_summary.get("revise_paper_problem"),sp_design_summary.get("stop_standalone")) != (2,0,1,1) or any(int(sp_design_summary.get(key) or 0) != 0 for key in ("method_design_authorized","experiment_blueprint_authorized","local_validation_authorized","p0_authorized","gpu_authorized")) or sp_design_policy.get("source_is_shadow_search_portfolio") is not True or sp_design_policy.get("shadow_queue_has_zero_paper_design_authority") is not True or sp_design_policy.get("cannot_grant_or_revoke_live_paper_design_authority") is not True: errors.append("Search Portfolio retrospective design audit must route SP-09/SP-15 as 0 method advance / 1 revise / 1 stop while remaining shadow-only and zero-authority")
     errors.extend(f"Search Portfolio design adjudication: {error}" for error in validate_search_portfolio_design_adjudication(sp_design))
+    try:
+        persisted_sp_design = json.loads(SEARCH_PORTFOLIO_DESIGN_JSON.read_text(encoding="utf-8"))
+    except Exception:
+        errors.append("research-system embedded Search Portfolio state cannot verify current durable artifact")
+    else:
+        if (
+            sp_design.get("shadow_dead_end_memory") != persisted_sp_design.get("shadow_dead_end_memory")
+            or sp_design_summary != (persisted_sp_design.get("summary") or {})
+            or sp_design.get("rows") != persisted_sp_design.get("rows")
+        ):
+            errors.append("research-system embedded Search Portfolio state is stale versus current durable artifact")
     sp15_support = state.get("paper_first_sp15_identifiability_support") or {}; sp15_summary = sp15_support.get("summary") or {}; sp15_policy = sp15_support.get("policy") or {}
     if sp15_summary.get("query_level_identifiability_units") != 0 or sp15_summary.get("support_status") != "INSUFFICIENT_FOR_IDENTIFIABILITY_CLAIM" or sp15_support.get("decision") != "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT" or sp15_policy.get("phenomenon_support_is_not_identifiability_support") is not True or any(int(sp15_summary.get(key) or 0) != 0 for key in ("method_design_authorized","experiment_blueprint_authorized","local_validation_authorized","p0_authorized","gpu_authorized")): errors.append("SP-15 revised identifiability problem must remain HOLD until nonzero matched query-level support exists")
     support_release_watch=state.get("paper_first_support_release_watch") or {};support_release_policy=support_release_watch.get("policy") or {};support_release_summary=support_release_watch.get("summary") or {};support_release_status=str(support_release_watch.get("status") or "NOT_RUN")
@@ -1521,6 +1532,16 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         fresh_summary=fresh_phenomenon_portfolio.get("summary") or {}
         if int(fresh_summary.get("canonical_problem_gate_added") or 0)!=0 or any(int(fresh_summary.get(key) or 0)!=0 for key in ("method_authorized","experiment_authorized","p0_authorized","gpu_authorized")):
             errors.append("fresh phenomenon portfolio cannot mutate canonical or downstream scientific authority")
+        try:
+            persisted_fresh = json.loads(FRESH_PHENOMENON_PORTFOLIO_JSON.read_text(encoding="utf-8"))
+        except Exception:
+            errors.append("research-system embedded Fresh Phenomenon Portfolio cannot verify current durable artifact")
+        else:
+            if any(
+                fresh_phenomenon_portfolio.get(key) != persisted_fresh.get(key)
+                for key in ("status","policy","summary","candidates","source_bindings","scientific_authority")
+            ):
+                errors.append("research-system embedded Fresh Phenomenon Portfolio is stale versus current durable artifact")
     shadow_portfolio=state.get("paper_first_problem_search_portfolio") or {};shadow_latest=shadow_portfolio.get("latest_run") or {}
     if shadow_latest:
         latest_policy=shadow_latest.get("policy") or {};latest_summary=shadow_latest.get("summary") or {};latest_authority=shadow_latest.get("authority") or {}
@@ -1743,8 +1764,12 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_pf357_problem_adjudication()
     write_fresh_saturation_state()
     write_skill_validation_transfer_scout()
-    write_fresh_phenomenon_portfolio()
+    # Persistent search memory must be rebuilt before the fresh portfolio because
+    # the latter content-addresses the former. Reversing this order guarantees a
+    # one-generation stale dead-end-memory binding whenever a new principle closure
+    # is compiled during the same release.
     write_search_portfolio_design_adjudication()
+    write_fresh_phenomenon_portfolio()
     write_sp15_identifiability_support()
     # Problem-gate Queue is a frozen output of the Primary -> Generator -> Queue
     # transaction. Rebuilding it here would couple research-system projection to

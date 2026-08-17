@@ -59,6 +59,33 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["final_block"], 0)
         self.assertTrue(self.state["summary"]["final_ready"])
 
+    def test_embedded_fresh_portfolio_must_match_current_durable_artifact(self) -> None:
+        stale=copy.deepcopy(self.state)
+        stale["paper_first_fresh_phenomenon_portfolio"]["source_bindings"]["dead_end_memory"]["sha256"]="0"*64
+        errors=validate_state(stale)
+        self.assertIn(
+            "research-system embedded Fresh Phenomenon Portfolio is stale versus current durable artifact",
+            errors,
+        )
+
+    def test_embedded_search_portfolio_must_match_current_durable_artifact(self) -> None:
+        stale=copy.deepcopy(self.state)
+        sp=stale["paper_first_search_portfolio_design_adjudication"]
+        memory=sp["shadow_dead_end_memory"]
+        memory["blocked_objects"]=[
+            row for row in memory["blocked_objects"]
+            if row.get("source_candidate_id")!="AUTO-1-RELEVANT-SKILL-MISEXECUTION"
+        ]
+        memory["principle_dead_end_count"]-=1
+        memory["principle_readjudication_dead_end_count"]-=1
+        sp["summary"]["shadow_dead_end_objects"]-=1
+        sp["summary"]["principle_readjudication_dead_ends"]-=1
+        errors=validate_state(stale)
+        self.assertIn(
+            "research-system embedded Search Portfolio state is stale versus current durable artifact",
+            errors,
+        )
+
     def test_fresh_phenomenon_portfolio_separates_f0_from_problem_authority(self) -> None:
         portfolio=self.state["paper_first_fresh_phenomenon_portfolio"]
         summary=portfolio["summary"]

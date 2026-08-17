@@ -840,6 +840,9 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
     if int(summary.get("candidates") or 0) != len(rows):
         errors.append("candidate summary mismatch")
     bindings = state.get("source_bindings") or {}
+    dead_end_binding = bindings.get("dead_end_memory") or {}
+    if dead_end_binding.get("sha256") != _sha(DEAD_END_MEMORY_JSON):
+        errors.append("fresh phenomenon portfolio dead-end-memory binding is stale")
     harness_binding = bindings.get("harnessbank_support_audit") or {}
     harness_rows = [row for row in rows if row.get("candidate_id") == "PA-03-HARNESS-SELECTION-INVERSION"]
     if harness_rows:
