@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "PA-05-SKILL-VALIDATION-TRANSFER",
+  "title": "Local skill-validation ranking versus shifted deployment is a model-selection-under-distribution-shift object unless a skill-specific structural residual survives",
+  "adjudication_date": "2026-08-17",
+  "search_primitive": "UNEXPLAINED_BOUNDARY",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "dead_end_scope": "The standalone PA-05 claim that a high rate of family-level ranking inversion or deployment regret between SkillEvolBench T1-T3 local replay validation and T4-T6 shifted deployment identifies a new skill-evolution selection-validity problem merely because the compared persistent representations are distilled skills versus raw trajectory reuse.",
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "SAME_INFORMATION_REDUCTION",
+    "counter_explanation": {
+      "type": "SAME_INFORMATION_REDUCTION",
+      "statement": "The frozen PA-05 statistic is exactly a source-to-target model-selection comparison under deliberate distribution shift. Its local selector observes the T1-T3 within-environment performance difference between two representations, while its oracle is defined by the T4 context-shift, T5 adversarial, and T6 composition performance difference. Ranking reversal and oracle-versus-local regret are therefore direct predictions of ordinary validation/deployment mismatch, domain shift, and conditional treatment-effect heterogeneity whenever source-domain performance is not invariant for the target roles. Matching the latent family and comparing the same two arms removes family difficulty and global-arm confounding, but it does not change this statistical object: the remaining representation-by-role interaction is precisely the effect modification a generic distribution-shift or domain-generalization model is allowed to express. Naming the two arms raw trajectory reuse and distilled skill memory does not create a distinct selection principle.",
+      "opposite_prediction": "With the same T1-T3 outcomes, family identity/features, role definitions, and any other pre-deployment observables, a generic source-to-target model-selection or conditional-domain-shift model predicts that local ranking is reliable only to the extent that the arm effect is invariant or predictably transports to T4-T6. It permits arbitrary family-conditioned ranking reversals and positive selector regret when that invariance fails. Replicating the reversal on seed B reduces execution-noise uncertainty but still does not distinguish a skill-evolution mechanism from this mature reduction. If additional pre-deployment shift or representation features predict the reversal, the same-information generic conditional selector can use them as effect modifiers unless a structural restriction makes a different ex-ante prediction.",
+      "opposite_principle": "Validation performance identifies deployment-optimal selection only under an appropriate transport/invariance relation between the validation and deployment distributions; a ranking reversal across deliberately shifted task roles is a model-selection-under-distribution-shift phenomenon unless an additional structural constraint yields a prediction that the same-information shift model cannot represent.",
+      "opposite_search_seed": "Reuse SkillEvolBench only to search for a preregistered representation-specific structural variable that remains decision-relevant after matching all T1-T3 local outcomes, family/role observables, target-shift descriptors, model, token/call budget, and execution order. The next candidate must state an ex-ante pairwise prediction that a same-information distribution-shift/domain-generalization selector cannot express—for example an independently measured information-loss or executable-constraint property of the persistent artifact whose intervention changes T4-T6 transfer while local evidence and generic shift features remain matched. Do not reopen from another validation/deployment ranking inversion, larger selector regret, a different seed, or another model alone.",
+      "scope": "PA-05-SKILL-VALIDATION-TRANSFER on SkillEvolBench arXiv:2605.24117 / first-party repository commit 9e3daa339987c3cfa624121e1be442593a53d43c, specifically the preregistered T1-T3 local-selector versus T4-T6 deployment-oracle inversion/regret F0. This adjudication does not claim that SkillEvolBench lacks useful mechanistic phenomena; it closes only ranking inversion/regret as the standalone scientific novelty.",
+      "same_information_or_scope_matched": true,
+      "positive_support": true,
+      "same_information_reduction_verified": true,
+      "evidence_refs": [
+        "arXiv:2605.24117",
+        "arXiv:2603.25158",
+        "arXiv:2605.23904",
+        "arXiv:2605.08693",
+        "arXiv:2603.02766",
+        "first-party-repo:AIoT-MLSys-Lab/SkillEvolBench@9e3daa339987c3cfa624121e1be442593a53d43c",
+        "repo:generated/paper-first-skill-validation-transfer-scout-20260817.json#sha256=e323d989c8f866df4756b0606b2d71a5a655418861bee73843366430a20285b2",
+        "repo:research_pipeline/paper_first_skill_validation_transfer_f0.py#sha256=daaad83e507806a66c1c4dd5911c40b8db5781df4cd22b8f44916e228d4e224c",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#feedback-view-intransitivity",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#harness-update-scope-heterogeneity",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#externalization-internalization-portability"
+      ],
+      "alternative_explanations_ruled_out": [
+        "Family difficulty is the only explanation: the F0 matches both arms within each latent family, but a within-family representation-by-role interaction remains exactly a conditional/domain-shift effect and therefore does not escape the mature reduction.",
+        "A best-global-arm baseline closes the reduction: beating or tying a single global arm only measures whether one fixed decision is adequate; it does not distinguish the local selector from generic conditional model selection under shift.",
+        "Seed noise is the scientific mechanism: seed-B replication can establish that a ranking reversal is reproducible, but reproducibility does not make validation/deployment mismatch a new causal object.",
+        "Persistent skills make the selection problem intrinsically new: persistence changes the candidate representations being selected, but the frozen PA-05 statistic contains no additional lineage, update, or artifact variable that makes a different ex-ante prediction from source-to-target model selection.",
+        "T4-T6 are merely more difficult versions of T1-T3: the benchmark explicitly changes context, adversarial pressure, and composition role; whether this is called difficulty or shift, the F0's scientific endpoint is still cross-role transport of relative performance, which generic conditional shift models express."
+      ],
+      "reopen_condition": "Reopen only with a preregistered same-information residual in which the candidate and the strongest distribution-shift/domain-generalization selector receive identical T1-T3 outcomes, family and role observables, representation metadata, target-shift descriptors available before T4-T6 outcomes, model, execution order, calls/tokens, and compute, yet a skill-specific structural variable forces different ex-ante arm-selection predictions and the difference is validated by an intervention or independent executable truth. Ranking inversion, selector regret, seed replication, global-arm controls, or changing the backbone without such a structural residual is insufficient."
+    }
+  },
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2605.24117",
+    "closed_evidence_sha256": [
+      "2892e337780746e547a748c947b379b3c55af09eea1d273ace383b80d2e569ee",
+      "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c",
+      "daaad83e507806a66c1c4dd5911c40b8db5781df4cd22b8f44916e228d4e224c"
+    ],
+    "closure_scope": "T1-T3 local-validation versus T4-T6 shifted-deployment ranking inversion and selector regret as standalone novelty only",
+    "scientific_authority": false
+  },
+  "scientific_interpretation": {
+    "safe_claim": "SkillEvolBench remains a strong first-party executable substrate for studying procedural representation transfer, but the current PA-05 success criterion would only establish a reproducible local-validation/deployment ranking failure under deliberate shift. That is useful diagnostic evidence, not a standalone new self-evolution principle.",
+    "new_search_basin": "representation-specific-transfer-residual-after-distribution-shift-information-parity"
+  },
+  "authority": {
+    "experiment_alone_authorizes_dead_end": false,
+    "counter_explanation_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  }
+}

@@ -201,10 +201,10 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
         self.assertEqual("F0_EXECUTION_HOLD", state["status"])
         self.assertEqual(0, state["summary"]["active_f0"])
-        self.assertEqual(2, state["summary"]["design_ready_f0"])
-        self.assertEqual(2, state["summary"]["hold_execution"])
+        self.assertEqual(1, state["summary"]["design_ready_f0"])
+        self.assertEqual(1, state["summary"]["hold_execution"])
         self.assertEqual(1, state["summary"]["hold_support"])
-        self.assertEqual(2, state["summary"]["stop_reduction"])
+        self.assertEqual(3, state["summary"]["stop_reduction"])
         echo = next(row for row in state["candidates"] if row["candidate_id"] == "PA-01-EVIDENCE-ECHO")
         self.assertEqual("HOLD_EXECUTION", echo["status"])
         self.assertFalse(echo["execution_readiness"]["execution_ready"])
@@ -221,10 +221,13 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertEqual("reopen only for matched compatibility residual after grounding control", spatial["reopen_only_if"])
 
         skill = next(row for row in state["candidates"] if row["candidate_id"] == "PA-05-SKILL-VALIDATION-TRANSFER")
-        self.assertEqual("HOLD_EXECUTION", skill["status"])
-        self.assertEqual("PROVENANCE_AUDITED_FIRST_PARTY_EXECUTABLE_SUBSTRATE", skill["support_status"])
-        self.assertTrue(skill["f0_design_ready"])
+        self.assertEqual("STOP_REDUCTION", skill["status"])
+        self.assertEqual("PRINCIPLE_CLOSED_DISTRIBUTION_SHIFT_REDUCTION", skill["support_status"])
+        self.assertFalse(skill["f0_design_ready"])
+        self.assertTrue(skill["evidence"]["preclosure_f0_design_ready"])
+        self.assertTrue(skill["evidence"]["principle_dead_end_certified"])
         self.assertFalse(skill["execution_readiness"]["execution_ready"])
+        self.assertEqual("STOP_PRINCIPLE_REDUCTION_NO_EXECUTION", skill["execution_readiness"]["status"])
         self.assertEqual(0, state["summary"]["canonical_problem_gate_added"])
         self.assertTrue(all(row["scientific_authority"] is False for row in state["candidates"]))
 
@@ -232,8 +235,8 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         state = self.build(execution_capability=self.execution_capability())
         self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
         self.assertEqual(ACTIVE_F0_LIMIT, state["summary"]["active_f0"])
-        self.assertEqual(2, state["summary"]["design_ready_f0"])
-        self.assertEqual(1, state["summary"]["hold_execution"])
+        self.assertEqual(1, state["summary"]["design_ready_f0"])
+        self.assertEqual(0, state["summary"]["hold_execution"])
         active = [row for row in state["candidates"] if row["status"] == "ACTIVE_F0"]
         self.assertEqual(["PA-01-EVIDENCE-ECHO"], [row["candidate_id"] for row in active])
         self.assertTrue(active[0]["execution_readiness"]["execution_ready"])
@@ -242,7 +245,7 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         state = self.build(evidence_echo_f0_result=self.echo_f0_stop_result())
         self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
         self.assertEqual(0, state["summary"]["active_f0"])
-        self.assertEqual(3, state["summary"]["stop_reduction"])
+        self.assertEqual(4, state["summary"]["stop_reduction"])
         echo = next(row for row in state["candidates"] if row["candidate_id"] == "PA-01-EVIDENCE-ECHO")
         self.assertEqual("STOP_REDUCTION", echo["status"])
         self.assertEqual("F0_REDUCED_BY_GENERIC_PROMPT_EFFECT", echo["support_status"])
@@ -254,10 +257,10 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         receipt["observed_signal"]["naive_summary_exact_paired_p"] = 0.2
         state = self.build(evidence_echo=receipt)
         self.assertEqual(0, state["summary"]["active_f0"])
-        self.assertEqual(1, state["summary"]["design_ready_f0"])
-        self.assertEqual(1, state["summary"]["hold_execution"])
+        self.assertEqual(0, state["summary"]["design_ready_f0"])
+        self.assertEqual(0, state["summary"]["hold_execution"])
         self.assertEqual(2, state["summary"]["hold_support"])
-        self.assertEqual(2, state["summary"]["stop_reduction"])
+        self.assertEqual(3, state["summary"]["stop_reduction"])
         echo = next(row for row in state["candidates"] if row["candidate_id"] == "PA-01-EVIDENCE-ECHO")
         self.assertEqual("HOLD_SUPPORT", echo["status"])
         self.assertEqual("INCOMPLETE_RECEIPT", echo["support_status"])
@@ -275,17 +278,21 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertFalse(row["scientific_authority"])
         self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
 
-    def test_skill_validation_transfer_is_design_ready_and_zero_authority(self) -> None:
+    def test_skill_validation_transfer_is_principle_closed_but_substrate_preserved(self) -> None:
         state = build_fresh_phenomenon_portfolio(
             evidence_echo=self.echo_receipt(),
             primary_state={"summary": {}},
             dead_end_memory=self.memory(),
         )
         row = next(row for row in state["candidates"] if row["candidate_id"] == "PA-05-SKILL-VALIDATION-TRANSFER")
-        self.assertEqual("HOLD_EXECUTION", row["status"])
-        self.assertEqual("PROVENANCE_AUDITED_FIRST_PARTY_EXECUTABLE_SUBSTRATE", row["support_status"])
-        self.assertTrue(row["f0_design_ready"])
+        self.assertEqual("STOP_REDUCTION", row["status"])
+        self.assertEqual("PRINCIPLE_CLOSED_DISTRIBUTION_SHIFT_REDUCTION", row["support_status"])
+        self.assertFalse(row["f0_design_ready"])
+        self.assertTrue(row["evidence"]["preclosure_f0_design_ready"])
+        self.assertTrue(row["evidence"]["principle_dead_end_certified"])
+        self.assertEqual("AIoT-MLSys-Lab/SkillEvolBench", row["substrate"]["repository"])
         self.assertFalse(row["execution_readiness"]["execution_ready"])
+        self.assertEqual("STOP_PRINCIPLE_REDUCTION_NO_EXECUTION", row["execution_readiness"]["status"])
         self.assertEqual("api_docker", row["execution_readiness"]["execution_kind"])
         self.assertFalse(row["execution_readiness"]["requires_gpu"])
         self.assertFalse(row["execution_readiness"]["matching_gpu_leases_required"])
@@ -298,6 +305,7 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
     def test_skill_api_docker_capability_does_not_require_fake_gpu_or_generic_lease(self) -> None:
         state = self.build(
             skill_validation_scout=self.skill_scout_runtime_ready(),
+            skill_validation_readjudication={},
             skill_execution_capability=self.skill_execution_capability(),
         )
         row = next(row for row in state["candidates"] if row["candidate_id"] == "PA-05-SKILL-VALIDATION-TRANSFER")
@@ -310,6 +318,7 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
     def test_skill_capability_rejects_unverifiable_generic_resource_lease(self) -> None:
         state = self.build(
             skill_validation_scout=self.skill_scout_runtime_ready(),
+            skill_validation_readjudication={},
             skill_execution_capability=self.skill_execution_capability(resource_lease_ids=["fake-generic-lease"]),
         )
         row = next(row for row in state["candidates"] if row["candidate_id"] == "PA-05-SKILL-VALIDATION-TRANSFER")
@@ -319,6 +328,7 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
     def test_skill_capability_rejects_gpu_contract_drift(self) -> None:
         state = self.build(
             skill_validation_scout=self.skill_scout_runtime_ready(),
+            skill_validation_readjudication={},
             skill_execution_capability=self.skill_execution_capability(requires_gpu=True, gpu_lease_ids=["gpu-lease"]),
         )
         row = next(row for row in state["candidates"] if row["candidate_id"] == "PA-05-SKILL-VALIDATION-TRANSFER")

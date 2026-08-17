@@ -28,6 +28,7 @@ EVIDENCE_ECHO_F0_RESULT = PROJECT_ROOT / "generated" / "paper-first-evidence-ech
 EXPECTED_EVIDENCE_ECHO_F0_RESULT_SHA256 = "274d6b12e321895e96c47324811e2c80b4c9b2e3a94d31a2a5942ae9ee68fafb"
 DEFENSE_RESTRICTIVENESS_READJUDICATION = PROJECT_ROOT / "generated" / "hard-security-utility-collapse-principle-readjudication-20260817.json"
 SPATIAL_MEMORY_READJUDICATION = PROJECT_ROOT / "generated" / "spatial-memory-high-trs-grounding-principle-readjudication-20260817.json"
+SKILL_VALIDATION_TRANSFER_READJUDICATION = PROJECT_ROOT / "generated" / "skill-validation-transfer-distribution-shift-principle-readjudication-20260817.json"
 EXPECTED_EVIDENCE_ECHO_F0_ORIGINAL_SHA256 = "8f3b04d09c4101335434fa7a8a50bba965ab95ce244cf24c5fe9e53ba6feadf6"
 EXPECTED_EVIDENCE_ECHO_F0_REVIEWED_SHA256 = "f64ae7c42f5e02b2f18abd67e4a784e3790b3c75107a4140666d9faa1c39842e"
 EXPECTED_EVIDENCE_ECHO_F0_GUARDED_SHA256 = "5c5e25957388b723a301cac7e78c81d972b77eb0dc62b8bb53343318c6ea6ab3"
@@ -132,6 +133,7 @@ def build_fresh_phenomenon_portfolio(
     spatial_readjudication: dict[str, Any] | None = None,
     harnessbank_support_audit: dict[str, Any] | None = None,
     skill_validation_scout: dict[str, Any] | None = None,
+    skill_validation_readjudication: dict[str, Any] | None = None,
     skill_execution_capability: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compile multiple paper scouts without letting unsupported ideas consume experiment slots.
@@ -157,6 +159,7 @@ def build_fresh_phenomenon_portfolio(
     harnessbank_support_audit = harnessbank_support_audit or _load(HARNESSBANK_SUPPORT_AUDIT)
     harnessbank_support_errors = validate_harnessbank_support_audit(harnessbank_support_audit)
     skill_validation_scout = _load(SKILL_VALIDATION_SCOUT_JSON) if skill_validation_scout is None else skill_validation_scout
+    skill_validation_readjudication = _load(SKILL_VALIDATION_TRANSFER_READJUDICATION) if skill_validation_readjudication is None else skill_validation_readjudication
     if skill_execution_capability is None:
         skill_execution_capability = load_execution_capability()
     else:
@@ -192,6 +195,19 @@ def build_fresh_phenomenon_portfolio(
         and spatial_diagnosis.get("same_information_reduction_verified") is True
         and spatial_diagnosis.get("positive_support") is True
         and ((spatial_readjudication.get("authority") or {}).get("experiment_alone_authorizes_dead_end") is False)
+    )
+    skill_closure = skill_validation_readjudication.get("fresh_phenomenon_closure") or {}
+    skill_diagnosis = ((skill_validation_readjudication.get("principle_diagnosis") or {}).get("counter_explanation") or {})
+    skill_principle_closed = bool(
+        skill_validation_readjudication.get("candidate_id") == "PA-05-SKILL-VALIDATION-TRANSFER"
+        and skill_validation_readjudication.get("principle_dead_end_certified") is True
+        and skill_validation_readjudication.get("experiment_run_for_this_readjudication") is False
+        and skill_closure.get("source_ref") == "arXiv:2605.24117"
+        and str(skill_closure.get("closure_scope") or "").strip()
+        and skill_diagnosis.get("same_information_or_scope_matched") is True
+        and skill_diagnosis.get("same_information_reduction_verified") is True
+        and skill_diagnosis.get("positive_support") is True
+        and ((skill_validation_readjudication.get("authority") or {}).get("experiment_alone_authorizes_dead_end") is False)
     )
 
     echo_signal = evidence_echo.get("observed_signal") or {}
@@ -284,7 +300,7 @@ def build_fresh_phenomenon_portfolio(
     skill_scout_errors = validate_skill_validation_transfer_scout(skill_validation_scout) if skill_validation_scout else ["missing-scout-receipt"]
     skill_f0 = skill_validation_scout.get("f0") or {}
     skill_env = skill_validation_scout.get("execution_environment") or {}
-    skill_design_ready = bool(
+    skill_preclosure_design_ready = bool(
         not skill_scout_errors
         and skill_f0.get("design_ready") is True
         and int(skill_f0.get("families") or 0) == 30
@@ -292,6 +308,7 @@ def build_fresh_phenomenon_portfolio(
         and int(skill_f0.get("model_calls_executed") or 0) == 0
         and int(skill_f0.get("task_trials_executed") or 0) == 0
     )
+    skill_design_ready = bool(skill_preclosure_design_ready and not skill_principle_closed)
     # PA-05's frozen execution substrate is API + Docker. It does not load a local
     # model or consume CUDA, so a GPU lease would be an unrelated capability. The
     # controller-issued experiment authority remains mandatory, while vague generic
@@ -407,21 +424,35 @@ def build_fresh_phenomenon_portfolio(
                 "is an identifying selection statistic for which persistent representation actually transfers."
             ),
             strongest_reduction=(
-                "one representation globally dominates; ordinary family difficulty; raw trajectories are simply globally stronger; "
-                "local replay already predicts deployment; or one-seed model variance explains apparent inversions"
+                "same-information source-to-target model selection under distribution shift / domain generalization: the T1-T3 local arm effect and "
+                "T4-T6 shifted-deployment arm effect are allowed to differ by family/role, so ranking inversion and selector regret are already "
+                "expressible as ordinary transport/invariance failure without a skill-specific structural variable"
             ),
             cheapest_falsifier=(
-                "On the exact SkillEvolBench commit, run only raw_trajectory_rag and selfgen_experience_always with one model and seed A. "
-                "For each of 30 families, compare frozen T1-T3 within-env replay preference with T4-T6 deployment preference. Require both arms "
-                "to win nontrivial family subsets, >=10 joint-decisive families, >=40% preference inversions, and a bootstrap-positive oracle-vs-local "
-                "selection regret while local selection fails to beat the best global arm by >0.03."
+                "The frozen seed-A inversion/regret F0 is no longer decisive for novelty and must not be executed as the current claim test. "
+                "Reuse the SkillEvolBench substrate only after preregistering a skill-specific structural variable and a same-information distribution-shift "
+                "selector that receives identical T1-T3 outcomes, family/role observables, representation metadata, pre-outcome shift descriptors, and compute; "
+                "the two models must make different ex-ante T4-T6 arm-selection predictions before any deployment outcomes are opened."
             ),
-            support_status="PROVENANCE_AUDITED_FIRST_PARTY_EXECUTABLE_SUBSTRATE" if skill_design_ready else "INCOMPLETE_RECEIPT",
-            status="ACTIVE_F0" if skill_execution_ready else ("HOLD_EXECUTION" if skill_design_ready else "HOLD_SUPPORT"),
+            support_status=(
+                "PRINCIPLE_CLOSED_DISTRIBUTION_SHIFT_REDUCTION"
+                if skill_principle_closed
+                else ("PROVENANCE_AUDITED_FIRST_PARTY_EXECUTABLE_SUBSTRATE" if skill_design_ready else "INCOMPLETE_RECEIPT")
+            ),
+            status=(
+                "STOP_REDUCTION"
+                if skill_principle_closed
+                else ("ACTIVE_F0" if skill_execution_ready else ("HOLD_EXECUTION" if skill_design_ready else "HOLD_SUPPORT"))
+            ),
             priority=90,
             why_now=(
-                "Unlike source-only scouts, this direction has an exact first-party benchmark commit, 180 validated tasks, two matched canonical arms, "
-                "a 270-task dry-run for each arm, per-family replay/deployment truth, and a frozen analyzer. It is held only by execution environment/authority."
+                "The 30-family/180-task first-party substrate remains reusable, but the current PA-05 success criterion is principle-closed before execution: "
+                "T1-T3 validation/deployment ranking inversion and oracle regret under deliberately shifted T4-T6 roles are predictions of generic "
+                "model selection under distribution shift. Running 540 model tasks cannot distinguish a skill-evolution mechanism without an additional "
+                "same-information structural residual."
+                if skill_principle_closed
+                else "Unlike source-only scouts, this direction has an exact first-party benchmark commit, 180 validated tasks, two matched canonical arms, "
+                "a 270-task dry-run for each arm, per-family replay/deployment truth, and a frozen analyzer."
             ),
             substrate={
                 "repository": ((skill_validation_scout.get("source") or {}).get("repository")),
@@ -435,25 +466,31 @@ def build_fresh_phenomenon_portfolio(
             },
             evidence={
                 "design_ready": skill_design_ready,
+                "preclosure_f0_design_ready": skill_preclosure_design_ready,
                 "plan_sha256": skill_f0.get("plan_sha256"),
                 "harness_sha256": skill_f0.get("harness_sha256"),
                 "current_source_boundary": ((skill_validation_scout.get("current_source_boundary") or {}).get("status")),
+                "principle_dead_end_certified": skill_principle_closed,
                 "model_calls_executed": skill_f0.get("model_calls_executed"),
                 "task_trials_executed": skill_f0.get("task_trials_executed"),
             },
             reopen_only_if=(
-                (
-                    f"On audited runtime host {skill_env.get('host')}, load the frozen Gemini credential shared by the agent and host-side SkillAuthor route, "
-                    "then supply an external human single-attempt F0 permit that records the launch-time provider-price recheck; the controller may only then issue "
-                    "a live execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus "
-                    "current-source review; it never authorizes Problem Gate, method design, or full experiments by itself."
-                )
-                if skill_env.get("runtime_infrastructure_ready") is True
+                str(skill_diagnosis.get("reopen_condition") or "")
+                if skill_principle_closed
                 else (
-                    "Provision an exact first-party benchmark runtime (Harbor + agent-runtime image + strict preflight), then load the frozen Gemini credential, "
-                    "supply an external human single-attempt F0 permit with a launch-time provider-price recheck, and only then allow the controller to issue a live "
-                    "execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus "
-                    "current-source review; it never authorizes Problem Gate, method design, or full experiments by itself."
+                    (
+                        f"On audited runtime host {skill_env.get('host')}, load the frozen Gemini credential shared by the agent and host-side SkillAuthor route, "
+                        "then supply an external human single-attempt F0 permit that records the launch-time provider-price recheck; the controller may only then issue "
+                        "a live execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus "
+                        "current-source review; it never authorizes Problem Gate, method design, or full experiments by itself."
+                    )
+                    if skill_env.get("runtime_infrastructure_ready") is True
+                    else (
+                        "Provision an exact first-party benchmark runtime (Harbor + agent-runtime image + strict preflight), then load the frozen Gemini credential, "
+                        "supply an external human single-attempt F0 permit with a launch-time provider-price recheck, and only then allow the controller to issue a live "
+                        "execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus "
+                        "current-source review; it never authorizes Problem Gate, method design, or full experiments by itself."
+                    )
                 )
             ),
         ),
@@ -583,6 +620,7 @@ def build_fresh_phenomenon_portfolio(
     skill_row["f0_design_ready"] = skill_design_ready
     skill_row["execution_readiness"] = {
         "operationalization_ready": skill_design_ready,
+        "preclosure_f0_operationalization_ready": skill_preclosure_design_ready,
         "runtime_host": skill_env.get("host"),
         "runtime_environment_ready": bool(skill_env.get("runtime_infrastructure_ready")),
         "runtime_infrastructure_ready": bool(skill_env.get("runtime_infrastructure_ready")),
@@ -598,21 +636,27 @@ def build_fresh_phenomenon_portfolio(
         "generic_resource_lease_ids_accepted": False,
         "unauthorized_partial_run_ingestable": False,
         "status": (
-            "EXECUTION_READY"
-            if skill_execution_ready
+            "STOP_PRINCIPLE_REDUCTION_NO_EXECUTION"
+            if skill_principle_closed
             else (
-                "HOLD_CONTROLLER_AUTHORITY_REQUIRED"
-                if skill_env.get("execution_ready") is True
+                "EXECUTION_READY"
+                if skill_execution_ready
                 else (
-                    "HOLD_PROVIDER_CREDENTIAL_AND_AUTHORITY_REQUIRED"
-                    if skill_env.get("runtime_infrastructure_ready") is True
-                    and skill_env.get("provider_credential_ready") is not True
-                    else "HOLD_RUNTIME_INFRASTRUCTURE_AND_AUTHORITY_REQUIRED"
+                    "HOLD_CONTROLLER_AUTHORITY_REQUIRED"
+                    if skill_env.get("execution_ready") is True
+                    else (
+                        "HOLD_PROVIDER_CREDENTIAL_AND_AUTHORITY_REQUIRED"
+                        if skill_env.get("runtime_infrastructure_ready") is True
+                        and skill_env.get("provider_credential_ready") is not True
+                        else "HOLD_RUNTIME_INFRASTRUCTURE_AND_AUTHORITY_REQUIRED"
+                    )
                 )
             )
         ),
-        "hold_reason": list(skill_env.get("hold_reason") or [])
-        + ([] if skill_execution_ready else ["external human single-attempt F0 permit and live controller experiment authority not present"]),
+        "hold_reason": [] if skill_principle_closed else (
+            list(skill_env.get("hold_reason") or [])
+            + ([] if skill_execution_ready else ["external human single-attempt F0 permit and live controller experiment authority not present"])
+        ),
     }
 
     active = [row for row in candidates if row["status"] == "ACTIVE_F0"]
@@ -741,6 +785,12 @@ def build_fresh_phenomenon_portfolio(
             "skill_validation_transfer_f0_harness": {
                 "path": str(SKILL_VALIDATION_F0_HARNESS.relative_to(PROJECT_ROOT)),
                 "sha256": _sha(SKILL_VALIDATION_F0_HARNESS),
+            },
+            "skill_validation_transfer_principle_readjudication": {
+                "path": str(SKILL_VALIDATION_TRANSFER_READJUDICATION.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(SKILL_VALIDATION_TRANSFER_READJUDICATION),
+                "principle_dead_end_certified": skill_principle_closed,
+                "same_information_reduction_verified": skill_diagnosis.get("same_information_reduction_verified") is True,
             },
         },
         "scientific_authority": False,
