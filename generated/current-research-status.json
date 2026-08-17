@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T05:19:22+00:00",
-  "source_revision": "ec1e62b55786dfd38f14760292b748faa17eb1c0",
+  "generated_at": "2026-08-17T05:27:15+00:00",
+  "source_revision": "6141dc086c1d4dcc6cc828a6126058673f2e88c8",
   "as_of_date": "2026-08-17",
   "headline": {
     "paper_ready": 1,
@@ -21,9 +21,9 @@
     "shadow_method_ready": 0,
     "shadow_qualification_ready": 0,
     "fresh_active_f0": 0,
-    "fresh_design_ready_f0": 0,
+    "fresh_design_ready_f0": 1,
     "fresh_support_holds": 1,
-    "fresh_execution_holds": 0,
+    "fresh_execution_holds": 1,
     "fresh_ready_problem_review": 0,
     "method_authorized": 0,
     "gpu_authorized": 0
@@ -117,11 +117,11 @@
     "note": "The canonical live generator/queue remains empty; asset-first STRI is a separate paper track and does not mutate canonical authority."
   },
   "fresh_phenomenon_portfolio": {
-    "status": "NO_ACTIVE_F0",
+    "status": "F0_EXECUTION_HOLD",
     "active_f0": 0,
-    "design_ready_f0": 0,
+    "design_ready_f0": 1,
     "support_holds": 1,
-    "execution_holds": 0,
+    "execution_holds": 1,
     "ready_for_problem_review": 0,
     "canonical_problem_gate_added": 0,
     "scientific_authority": false,
@@ -146,6 +146,35 @@
           "visible_gpu_uuid_set_must_equal_leased_gpu_uuid_set": true,
           "unauthorized_partial_run_ingestable": false,
           "status": "HOLD_EXECUTION_AUTHORITY_REQUIRED"
+        },
+        "paper_problem_claimed": false
+      },
+      {
+        "candidate_id": "PA-05-SKILL-VALIDATION-TRANSFER",
+        "title": "Does Local Skill Validation Identify Deployment-Time Procedural Transfer?",
+        "status": "HOLD_EXECUTION",
+        "support_status": "PROVENANCE_AUDITED_FIRST_PARTY_EXECUTABLE_SUBSTRATE",
+        "phenomenon": "SkillEvolBench supplies 30 matched latent families with T1-T3 acquisition/replay and frozen T4 context-shift, T5 adversarial, and T6 composition deployment. Current skill-evolution systems commonly use local/held-out validation or related probe utility to accept/select skill edits, while SkillEvolBench reports that raw trajectory reuse can outperform distilled skills and that skill gains are unstable under frozen deployment. The unresolved object is whether local validation is an identifying selection statistic for which persistent representation actually transfers.",
+        "strongest_reduction": "one representation globally dominates; ordinary family difficulty; raw trajectories are simply globally stronger; local replay already predicts deployment; or one-seed model variance explains apparent inversions",
+        "cheapest_falsifier": "On the exact SkillEvolBench commit, run only raw_trajectory_rag and selfgen_experience_always with one model and seed A. For each of 30 families, compare frozen T1-T3 within-env replay preference with T4-T6 deployment preference. Require both arms to win nontrivial family subsets, >=10 joint-decisive families, >=40% preference inversions, and a bootstrap-positive oracle-vs-local selection regret while local selection fails to beat the best global arm by >0.03.",
+        "why_now": "Unlike source-only scouts, this direction has an exact first-party benchmark commit, 180 validated tasks, two matched canonical arms, a 270-task dry-run for each arm, per-family replay/deployment truth, and a frozen analyzer. It is held only by execution environment/authority.",
+        "f0_design_ready": true,
+        "execution_readiness": {
+          "operationalization_ready": true,
+          "runtime_environment_ready": false,
+          "controller_verified_capability_present": false,
+          "execution_ready": false,
+          "required_plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c",
+          "active_experiment_authority_required": true,
+          "matching_resource_leases_required": true,
+          "unauthorized_partial_run_ingestable": false,
+          "status": "HOLD_EXECUTION_ENV_AND_AUTHORITY_REQUIRED",
+          "hold_reason": [
+            "Harbor SDK",
+            "agent-runtime:latest",
+            "Gemini agent credential",
+            "Bedrock SkillAuthor credential"
+          ]
         },
         "paper_problem_claimed": false
       },
