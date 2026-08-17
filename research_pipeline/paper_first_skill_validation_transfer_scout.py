@@ -18,6 +18,10 @@ from .paper_first_skill_validation_transfer_f0 import (
     SOURCE_TASKS,
     build_plan,
 )
+from .paper_first_skill_validation_transfer_runtime_audit import (
+    DEFAULT_JSON as RUNTIME_AUDIT_JSON,
+    validate_runtime_audit,
+)
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-skill-validation-transfer-scout-20260817.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-skill-validation-transfer-scout-20260817.js"
@@ -32,23 +36,78 @@ def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else ""
 
 
+def _load_runtime_audit() -> dict[str, Any] | None:
+    if not RUNTIME_AUDIT_JSON.exists():
+        return None
+    state = json.loads(RUNTIME_AUDIT_JSON.read_text(encoding="utf-8"))
+    errors = validate_runtime_audit(state)
+    if errors:
+        raise ValueError("invalid PA-05 runtime audit receipt: " + "; ".join(errors))
+    return state
+
+
 def build_skill_validation_transfer_scout(
     *,
-    harbor_importable: bool = False,
-    runtime_image_present: bool = False,
-    gemini_credential_present: bool = False,
+    runtime_audit: dict[str, Any] | None = None,
+    harbor_importable: bool | None = None,
+    runtime_image_present: bool | None = None,
+    gemini_credential_present: bool | None = None,
+    benchmark_python_ready: bool | None = None,
     bedrock_credential_present: bool = False,
 ) -> dict[str, Any]:
     plan = build_plan()
-    # The frozen gemini-3-flash model preset routes both the Harbor agent and
+    # The frozen gemini-3-flash preset routes both the Harbor agent and the
     # host-side LiteLLM components (including SkillAuthor) through Gemini.
-    # Bedrock presence is therefore informational for this F0, not a launch
-    # requirement. This is bound to the exact audited SkillEvolBench commit.
-    execution_ready = bool(
-        harbor_importable
-        and runtime_image_present
-        and gemini_credential_present
-    )
+    # Bedrock is informational only. Runtime readiness comes from a machine
+    # audit receipt when present; explicit arguments remain available for tests.
+    if runtime_audit is None and all(
+        value is None
+        for value in (
+            harbor_importable,
+            runtime_image_present,
+            gemini_credential_present,
+            benchmark_python_ready,
+        )
+    ):
+        runtime_audit = _load_runtime_audit()
+    if runtime_audit is not None:
+        audit_errors = validate_runtime_audit(runtime_audit)
+        if audit_errors:
+            raise ValueError("invalid PA-05 runtime audit receipt: " + "; ".join(audit_errors))
+        audit_python = runtime_audit.get("python") or {}
+        audit_image = runtime_audit.get("runtime_image") or {}
+        audit_credentials = runtime_audit.get("credentials") or {}
+        harbor_importable = bool(audit_python.get("harbor_importable"))
+        benchmark_python_ready = bool(audit_python.get("benchmark_dependencies_present"))
+        runtime_image_present = audit_image.get("status") == "PRESENT"
+        runtime_image_status = str(audit_image.get("status") or "UNVERIFIED")
+        runtime_image_observable = bool(audit_image.get("observable"))
+        gemini_credential_present = bool(audit_credentials.get("GEMINI_API_KEY_present"))
+        execution_ready = bool(runtime_audit.get("execution_ready"))
+        hold_reason = list(runtime_audit.get("hold_reason") or [])
+    else:
+        harbor_importable = bool(harbor_importable)
+        runtime_image_present = bool(runtime_image_present)
+        gemini_credential_present = bool(gemini_credential_present)
+        benchmark_python_ready = True if benchmark_python_ready is None else bool(benchmark_python_ready)
+        runtime_image_status = "PRESENT" if runtime_image_present else "UNVERIFIED"
+        runtime_image_observable = bool(runtime_image_present)
+        execution_ready = bool(
+            benchmark_python_ready
+            and harbor_importable
+            and runtime_image_present
+            and gemini_credential_present
+        )
+        hold_reason = [] if execution_ready else [
+            name
+            for name, ok in (
+                ("benchmark Python dependencies", benchmark_python_ready),
+                ("Harbor SDK", harbor_importable),
+                ("agent-runtime:latest", runtime_image_present),
+                ("Gemini credential for agent + host-side SkillAuthor", gemini_credential_present),
+            )
+            if not ok
+        ]
     return {
         "schema_version": "1.0",
         "generated_at": _now(),
@@ -133,11 +192,15 @@ def build_skill_validation_transfer_scout(
         "execution_environment": {
             "host": "69",
             "asset_and_config_pass": True,
+            "benchmark_python_ready": benchmark_python_ready,
             "harbor_importable": harbor_importable,
             "runtime_image_present": runtime_image_present,
+            "runtime_image_status": runtime_image_status,
+            "runtime_image_observable": runtime_image_observable,
             "gemini_credential_present": gemini_credential_present,
             "bedrock_credential_present": bedrock_credential_present,
             "bedrock_required_for_f0": False,
+            "required_provider_credentials": ["GEMINI_API_KEY"],
             "provider_routing": {
                 "model_preset": "gemini-3-flash",
                 "agent_provider": "gemini",
@@ -149,15 +212,7 @@ def build_skill_validation_transfer_scout(
                 "runtime_routing_sha256": "239040f5009fd7e551020c1ea82460a7d3aa4d656eaf752cb867d516802599f2",
             },
             "execution_ready": execution_ready,
-            "hold_reason": [] if execution_ready else [
-                name
-                for name, ok in (
-                    ("Harbor SDK", harbor_importable),
-                    ("agent-runtime:latest", runtime_image_present),
-                    ("Gemini credential for agent + host-side SkillAuthor", gemini_credential_present),
-                )
-                if not ok
-            ],
+            "hold_reason": hold_reason,
             "direct_execution_authorized": False,
             "controller_capability_required": True,
         },
@@ -183,6 +238,10 @@ def build_skill_validation_transfer_scout(
                 "path": str(F0_HARNESS.relative_to(PROJECT_ROOT)),
                 "sha256": _sha(F0_HARNESS),
             },
+            "runtime_audit": {
+                "path": str(RUNTIME_AUDIT_JSON.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(RUNTIME_AUDIT_JSON),
+            } if RUNTIME_AUDIT_JSON.exists() else None,
             "plan_sha256": plan["plan_sha256"],
         },
     }
@@ -220,6 +279,8 @@ def validate_skill_validation_transfer_scout(state: dict[str, Any]) -> list[str]
     routing = env.get("provider_routing") or {}
     if env.get("bedrock_required_for_f0") is not False:
         errors.append("Bedrock must not be required by the frozen Gemini F0 route")
+    if env.get("required_provider_credentials") != ["GEMINI_API_KEY"]:
+        errors.append("Gemini F0 credential contract drift")
     if (
         routing.get("model_preset") != "gemini-3-flash"
         or routing.get("agent_provider") != "gemini"
@@ -229,6 +290,13 @@ def validate_skill_validation_transfer_scout(state: dict[str, Any]) -> list[str]
         or routing.get("runtime_routing_sha256") != "239040f5009fd7e551020c1ea82460a7d3aa4d656eaf752cb867d516802599f2"
     ):
         errors.append("frozen Gemini agent/SkillAuthor routing drift")
+    if env.get("runtime_image_status") == "UNOBSERVABLE_PERMISSION_DENIED" and env.get("runtime_image_observable") is not False:
+        errors.append("permission-denied runtime image probe cannot be marked observable")
+    if env.get("execution_ready") is True and not all(
+        bool(env.get(k))
+        for k in ("benchmark_python_ready", "harbor_importable", "runtime_image_present", "gemini_credential_present")
+    ):
+        errors.append("execution-ready state is inconsistent with runtime requirements")
     authority = state.get("authority") or {}
     if any(bool(authority.get(k)) for k in ("problem_gate", "paper_design", "method", "experiment", "p0", "gpu", "full_experiment")):
         errors.append("scout illegally carries downstream authority")
@@ -237,6 +305,12 @@ def validate_skill_validation_transfer_scout(state: dict[str, Any]) -> list[str]
         errors.append("F0 harness source binding is stale")
     if (state.get("source_bindings") or {}).get("plan_sha256") != build_plan()["plan_sha256"]:
         errors.append("F0 plan source binding is stale")
+    runtime_binding = (state.get("source_bindings") or {}).get("runtime_audit")
+    if RUNTIME_AUDIT_JSON.exists():
+        if not runtime_binding or runtime_binding.get("sha256") != _sha(RUNTIME_AUDIT_JSON):
+            errors.append("PA-05 runtime audit source binding is stale")
+    elif runtime_binding is not None:
+        errors.append("PA-05 runtime audit binding exists without receipt")
     return errors
 
 

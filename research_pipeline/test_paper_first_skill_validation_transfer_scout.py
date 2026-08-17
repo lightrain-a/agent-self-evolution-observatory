@@ -25,12 +25,14 @@ class SkillValidationTransferScoutTest(unittest.TestCase):
             harbor_importable=True,
             runtime_image_present=True,
             gemini_credential_present=True,
+            benchmark_python_ready=True,
             bedrock_credential_present=False,
         )
         self.assertEqual([], validate_skill_validation_transfer_scout(state))
         self.assertEqual("DESIGN_READY_EXECUTION_ENV_PRESENT", state["status"])
         self.assertTrue(state["execution_environment"]["execution_ready"])
         self.assertFalse(state["execution_environment"]["bedrock_required_for_f0"])
+        self.assertEqual(["GEMINI_API_KEY"], state["execution_environment"]["required_provider_credentials"])
         self.assertEqual("GEMINI_API_KEY", state["execution_environment"]["provider_routing"]["host_litellm_api_key_env"])
         self.assertTrue(state["execution_environment"]["provider_routing"]["skill_author_uses_run_model_when_model_yaml_active"])
         self.assertFalse(state["execution_environment"]["direct_execution_authorized"])

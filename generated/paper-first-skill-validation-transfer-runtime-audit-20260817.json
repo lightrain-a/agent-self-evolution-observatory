@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-17T06:39:22+00:00",
+  "candidate_id": "PA-05-SKILL-VALIDATION-TRANSFER",
+  "audit_scope": "ENGINEERING_RUNTIME_AVAILABILITY_ONLY_NO_MODEL_CALLS",
+  "host": "69",
+  "source": {
+    "repository": "AIoT-MLSys-Lab/SkillEvolBench",
+    "commit_sha": "9e3daa339987c3cfa624121e1be442593a53d43c",
+    "plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c",
+    "model_preset": "gemini-3-flash"
+  },
+  "provider_contract": {
+    "agent_provider": "gemini",
+    "host_skill_author_provider": "gemini",
+    "host_skill_author_uses_run_model_preset": true,
+    "required_credentials": [
+      "GEMINI_API_KEY"
+    ],
+    "bedrock_credential_required": false
+  },
+  "python": {
+    "executable": "/usr/bin/python",
+    "version": "3.12.3",
+    "benchmark_dependencies_present": false,
+    "harbor_importable": false
+  },
+  "runtime_image": {
+    "tag": "agent-runtime:latest",
+    "builder": "docker",
+    "status": "UNOBSERVABLE_PERMISSION_DENIED",
+    "observable": false,
+    "present": false,
+    "probe_returncode": 1,
+    "diagnostic": "permission denied while trying to connect to the docker API at unix:///var/run/docker.sock\n\n[]"
+  },
+  "credentials": {
+    "GEMINI_API_KEY_present": false,
+    "secret_values_recorded": false
+  },
+  "execution_ready": false,
+  "hold_reason": [
+    "benchmark Python dependencies not present in the current execution Python",
+    "Harbor SDK not importable in the current execution Python",
+    "agent-runtime:latest:UNOBSERVABLE_PERMISSION_DENIED",
+    "GEMINI_API_KEY not loaded in the current execution environment"
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "model_calls_executed": 0,
+  "task_trials_executed": 0,
+  "audit_sha256": "6fcbfa989ff4446c3c798e7c5374e43a97e9cf3bb1dc16122665a6e46a079474"
+}
