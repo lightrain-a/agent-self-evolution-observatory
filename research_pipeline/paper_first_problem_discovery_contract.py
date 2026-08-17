@@ -5,7 +5,7 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
-DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-treatment-aligned-review-split-v15"
+DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-treatment-aligned-deadend-aware-v16"
 
 DISCOVERY_LANES: tuple[str, ...] = (
     "CONTRADICTION",
@@ -223,6 +223,8 @@ POLICY: dict[str, Any] = {
     "generator_pre_review_still_blocks_proven_hard_reduction": True,
     "semantic_reviewer_owns_pending_exact_reduction_adjudication": True,
     "final_problem_gate_still_requires_all_reductions_resolved": True,
+    "principle_dead_end_exact_source_reentry_forbidden": True,
+    "principle_dead_end_reopen_requires_new_evidence": True,
     "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
     "shared_limitation_without_empirical_failure_forbidden": True,
     "pure_topic_brainstorm_forbidden": True,
@@ -549,6 +551,11 @@ def audit_problem_candidate(
     if not isinstance(domain, dict) or not all(_nonempty(domain.get(key)) for key in ("mature_source_domain", "mature_object", "why_not_domain_transfer")):
         blockers.append("domain-transfer-audit-incomplete")
 
+    principle_reentry = candidate.get("principle_dead_end_reentry_audit") or {}
+    if isinstance(principle_reentry,dict) and principle_reentry.get("blocked") is True:
+        matches=[str(x) for x in (principle_reentry.get("matched_source_candidate_ids") or []) if str(x)]
+        blockers.append("principle-dead-end-exact-source-reentry:" + ",".join(sorted(matches or ["unknown"])))
+
     saturation = candidate.get("saturation_scan") or {}
     matched = list(saturation.get("matched_patterns") or []) if isinstance(saturation, dict) else []
     pending = list(saturation.get("pending_patterns") or []) if isinstance(saturation, dict) else []
@@ -740,6 +747,7 @@ def build_problem_discovery_contract_state() -> dict[str, Any]:
             "ALIGN treatment semantics before CONTRADICTION: intervention surface, executor/parameter state, comparator, endpoint, and timing must match; otherwise record REDUCIBLE cross-treatment contrast",
             "OPERATIONALIZE the smallest shared observable and adjacent/control regime without requiring a second paper to have used the same metric",
             "SEPARATE generator from reviewer: pending exact mature reductions may reach independent semantic review, but proven hard reductions never do",
+            "BLOCK exact principle-dead-end re-entry when the same live lane reuses the identical primary source set; reopening requires new evidence that can satisfy the recorded reopen condition",
             "MATERIALIZE a cheapest independent-truth falsifier from released units, first-party code, or an existing provenance-audited substrate whenever possible",
             "REDUCE using closest work + mature theories under the same-information Reduction Falsifiability Contract",
             "retain only a residual with an ex-ante distinguishing prediction over the strongest reduction",

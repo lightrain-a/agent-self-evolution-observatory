@@ -208,36 +208,59 @@ def _public_blocked_problem_memory(storage:StorageSettings,previous_public_state
     }
 
 
-def _durable_principle_dead_end_examples(path:Path=DURABLE_PRINCIPLE_DEAD_END_JSON,limit:int=12)->list[dict[str,Any]]:
+def _durable_principle_dead_end_examples(path:Path=DURABLE_PRINCIPLE_DEAD_END_JSON,limit:int=12,current_refs:set[str]|None=None)->list[dict[str,Any]]:
     try: payload=json.loads(Path(path).read_text(encoding="utf-8"))
     except (OSError,json.JSONDecodeError): return []
     memory=payload.get("shadow_dead_end_memory") or {};rows=memory.get("blocked_objects") or []
     examples=[]
-    for row in rows:
+    for order,row in enumerate(rows):
         if not isinstance(row,dict) or row.get("dead_end_certified") is not True: continue
         counter=row.get("counter_explanation") or {}
         if not isinstance(counter,dict): counter={}
+        refs=[str(ref) for ref in (row.get("current_source_refs") or []) if str(ref)][:4]
         examples.append({
             "source_candidate_id":str(row.get("source_candidate_id") or ""),
             "title":str(row.get("title") or "")[:280],
             "search_primitive":str(row.get("search_primitive") or ""),
-            "source_refs":[str(ref) for ref in (row.get("current_source_refs") or []) if str(ref)][:4],
+            "source_refs":refs,
             "strongest_reduction":str(row.get("strongest_reduction") or "")[:700],
             "opposite_principle":str(counter.get("opposite_principle") or "")[:500],
             "opposite_search_seed":str(counter.get("opposite_search_seed") or "")[:700],
             "reopen_condition":str(counter.get("reopen_condition") or row.get("reopen_only_if") or "")[:700],
             "dead_end_certified":True,
             "scientific_authority":False,
+            "_order":order,
         })
-    return examples[-max(1,int(limit)):]
+    limit=max(1,int(limit));current={str(ref) for ref in (current_refs or set()) if str(ref)}
+    if current:
+        examples.sort(key=lambda row:(len(set(row.get("source_refs") or []) & current),row.get("_order",0)),reverse=True)
+        chosen=examples[:limit]
+    else:
+        chosen=examples[-limit:]
+    for row in chosen: row.pop("_order",None)
+    return chosen
 
 
-def _private_dead_end_prompt_memory(storage:StorageSettings,public_memory:dict[str,Any])->dict[str,Any]:
+def _principle_dead_end_reentry_audit(candidate:dict[str,Any],path:Path=DURABLE_PRINCIPLE_DEAD_END_JSON)->dict[str,Any]:
+    lane=str(candidate.get("discovery_lane") or "").strip().upper();evidence=candidate.get("empirical_evidence") or {}
+    refs={str((evidence.get(key) or {}).get("ref") or "").strip() for key in ("source_a","source_b") if str((evidence.get(key) or {}).get("ref") or "").strip()}
+    try: payload=json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError): payload={}
+    matches=[]
+    for row in ((payload.get("shadow_dead_end_memory") or {}).get("blocked_objects") or []):
+        if not isinstance(row,dict) or row.get("dead_end_certified") is not True: continue
+        primitive=str(row.get("search_primitive") or "").strip().upper();dead_refs={str(ref).strip() for ref in (row.get("current_source_refs") or []) if str(ref).strip()}
+        if lane and primitive==lane and refs and dead_refs==refs:
+            matches.append({"source_candidate_id":str(row.get("source_candidate_id") or ""),"reopen_condition":str(((row.get("counter_explanation") or {}).get("reopen_condition")) or row.get("reopen_only_if") or "")[:700],"source_refs":sorted(dead_refs)})
+    return {"checked":True,"blocked":bool(matches),"matched_source_candidate_ids":[row["source_candidate_id"] for row in matches if row["source_candidate_id"]],"matches":matches,"reopen_requires_new_evidence":True,"scientific_authority":False}
+
+
+def _private_dead_end_prompt_memory(storage:StorageSettings,public_memory:dict[str,Any],current_refs:set[str]|None=None)->dict[str,Any]:
     local=_local_blocked_problem_rows(storage)
     examples=[]
     for row in local[-12:]:
         examples.append({key:row.get(key) for key in ("title","discovery_lane","source_refs","matched_patterns","strongest_reduction","reason","lane_contract_verified","source_claims_grounded")})
-    principle_examples=_durable_principle_dead_end_examples()
+    principle_examples=_durable_principle_dead_end_examples(current_refs=current_refs)
     blocked_by_lane={str(key):int(value or 0) for key,value in (public_memory.get("blocked_by_lane") or {}).items()}
     lane_search_priority=sorted(DISCOVERY_LANES,key=lambda lane:(blocked_by_lane.get(lane,0),DISCOVERY_LANES.index(lane)))
     return {
@@ -413,6 +436,12 @@ def _pre_review_blockers(c,reg):
         hard.append(blocker)
     return sorted(set(hard))
 
+def _annotate_principle_dead_end_reentry(cands:list[dict[str,Any]])->list[dict[str,Any]]:
+    for candidate in cands:
+        candidate["principle_dead_end_reentry_audit"]=_principle_dead_end_reentry_audit(candidate)
+    return cands
+
+
 def _reviewable(c,reg):
     return bool(audit_problem_candidate(c,primary_evidence_by_ref=reg,require_primary_registry=True,require_semantic_review=False,allow_pending_reduction_for_semantic_review=True).get("passed"))
 def _norm_text(value:str)->str:
@@ -533,7 +562,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     archived=_archive_previous(storage,auto_inbox_path);pool=load_private_primary_pool(primary_pool_path) or {};reg=_registry(pool);psha=_pool_sha(pool) if pool else "";d=_parse_iso(pool.get("generated_at"));age=None if d is None else max(0.0,(current-d).total_seconds()/3600)
     inherited_receipts=[dict(row) for row in ((pool.get("source_coverage") or {}).get("portable_review_receipts") or []) if isinstance(row,dict)]
     blocked_problem_memory=blocked_problem_memory or _public_blocked_problem_memory(storage)
-    dead_end_prompt_memory=_private_dead_end_prompt_memory(storage,blocked_problem_memory)
+    dead_end_prompt_memory=_private_dead_end_prompt_memory(storage,blocked_problem_memory,current_refs=set(reg))
     policy=_base_policy(portfolio=False)
     generator_is_glm=str(generator_model).lower().startswith("glm");generator_max_output_tokens=15000 if generator_is_glm else 6500
     policy["strict_provider_transport"]=bool(strict_provider);policy["semantic_reviewer_deferred"]=bool(defer_reviewer);policy["thinking_compatibility_repost_allowed"]=not bool(strict_provider)
@@ -601,12 +630,12 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
             if receipt_audits:state["provider_receipt_audits"]=receipt_audits
             if orphan_audits:state["provider_orphan_audits"]=orphan_audits
             return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
-        cands=[_normalize(r,reg) for r in rows]
+        cands=_annotate_principle_dead_end_reentry([_normalize(r,reg) for r in rows])
         try:_validate_lane_search_candidates(lane_search,cands)
         except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
         state["search_diagnostics"].update({"lane_search_complete":True,"lane_search":lane_search});reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
     if portfolio_mode:
-        cands=[_normalize(r,reg) for r in rows];reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
+        cands=_annotate_principle_dead_end_reentry([_normalize(r,reg) for r in rows]);reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
     if reviewable and defer_reviewer:
         state["summary"].update({"semantic_clear":0,"semantic_blocked":0,"semantic_review_unavailable":len(reviewable),"written_to_auto_inbox":0,"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane([]),"semantic_review_unavailable_by_lane":_count_by_lane(reviewable)})
         state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"source_branch_id":c.get("source_branch_id") or "","source_refs":[c["empirical_evidence"]["source_a"]["ref"],c["empirical_evidence"]["source_b"]["ref"]],"semantic_verdict":"UNREVIEWED","lane_contract_verified":False,"matched_patterns":[]} for c in cands]

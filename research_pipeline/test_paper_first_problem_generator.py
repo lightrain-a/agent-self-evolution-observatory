@@ -10,7 +10,7 @@ from pathlib import Path
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _normalize_lane_search, _provider_request_audit, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _normalize_lane_search, _principle_dead_end_reentry_audit, _provider_request_audit, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -144,6 +144,32 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
                 "resolved_model": resolved,
             }
         return responder
+
+    def test_durable_principle_dead_end_memory_prioritizes_current_source_overlap(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)/"memory.json"
+            rows=[{"source_candidate_id":f"RECENT-{i}","title":f"recent {i}","search_primitive":"CONTRADICTION","current_source_refs":[f"arXiv:other{i}"],"dead_end_certified":True,"counter_explanation":{"reopen_condition":"new evidence"}} for i in range(14)]
+            rows.insert(0,{"source_candidate_id":"OLD-DIRECT-MATCH","title":"direct match","search_primitive":"CONVERGENT_FAILURE","current_source_refs":["arXiv:target-a","arXiv:target-b"],"dead_end_certified":True,"counter_explanation":{"reopen_condition":"new matched evidence"}})
+            path.write_text(json.dumps({"shadow_dead_end_memory":{"blocked_objects":rows}}),encoding="utf-8")
+            selected=_durable_principle_dead_end_examples(path,limit=12,current_refs={"arXiv:target-a","arXiv:target-b"})
+        self.assertEqual(len(selected),12)
+        self.assertEqual(selected[0]["source_candidate_id"],"OLD-DIRECT-MATCH")
+        self.assertIn("OLD-DIRECT-MATCH",[row["source_candidate_id"] for row in selected])
+
+    def test_exact_source_lane_principle_dead_end_reentry_is_machine_blocked(self) -> None:
+        candidate=self.raw_candidate("CONVERGENT_FAILURE")
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)/"memory.json"
+            refs=[candidate["empirical_evidence"]["source_a"]["ref"],candidate["empirical_evidence"]["source_b"]["ref"]]
+            path.write_text(json.dumps({"shadow_dead_end_memory":{"blocked_objects":[{"source_candidate_id":"OLD-BASIN","search_primitive":"CONVERGENT_FAILURE","current_source_refs":refs,"dead_end_certified":True,"counter_explanation":{"reopen_condition":"reopen only with new evidence"}}]}}),encoding="utf-8")
+            audit=_principle_dead_end_reentry_audit(candidate,path)
+        self.assertTrue(audit["blocked"])
+        self.assertEqual(audit["matched_source_candidate_ids"],["OLD-BASIN"])
+        candidate["principle_dead_end_reentry_audit"]=audit
+        from .paper_first_problem_discovery_contract import audit_problem_candidate
+        result=audit_problem_candidate(candidate,require_semantic_review=False,allow_pending_reduction_for_semantic_review=True)
+        self.assertFalse(result["passed"])
+        self.assertIn("principle-dead-end-exact-source-reentry:OLD-BASIN",result["blockers"])
 
     def test_durable_principle_dead_end_memory_preserves_reopen_contract(self) -> None:
         with tempfile.TemporaryDirectory() as td:

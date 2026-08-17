@@ -197,6 +197,8 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertTrue(policy["generator_pre_review_still_blocks_proven_hard_reduction"])
         self.assertTrue(policy["semantic_reviewer_owns_pending_exact_reduction_adjudication"])
         self.assertTrue(policy["final_problem_gate_still_requires_all_reductions_resolved"])
+        self.assertTrue(policy["principle_dead_end_exact_source_reentry_forbidden"])
+        self.assertTrue(policy["principle_dead_end_reopen_requires_new_evidence"])
         self.assertTrue(policy["saturation_map_check_required"])
         self.assertTrue(state["candidate_schema"]["semantic_reduction_review"]["both_source_claims_require_exact_primary_evidence_grounding"])
         self.assertTrue(state["candidate_schema"]["semantic_reduction_review"]["lane_contract_must_be_independently_verified"])
