@@ -36,6 +36,18 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(hold["evidence_sha256"],"03bd345821be718b2b342e2348ab18c44a91146219bdde5db2d909336cb8ce52")
         self.assertFalse(hold["scientific_authority"])
 
+    def test_evodrc_feasibility_credit_is_in_persistent_principle_memory(self) -> None:
+        memory=self.state["shadow_dead_end_memory"]
+        hits=[row for row in memory.get("blocked_objects") or [] if row.get("source_candidate_id")=="EVODRC-FEASIBILITY-CREDIT"]
+        self.assertEqual(len(hits),1)
+        row=hits[0]
+        self.assertEqual(row["memory_class"],"PRINCIPLE_DEAD_END")
+        self.assertTrue(row["dead_end_certified"]);self.assertFalse(row["scientific_authority"])
+        self.assertEqual(row["search_primitive"],"UNEXPLAINED_BOUNDARY")
+        self.assertEqual(row["source_readjudication_artifact"],"generated/evodrc-feasibility-credit-principle-readjudication-20260817.json")
+        self.assertTrue(row.get("reopen_only_if"))
+        self.assertEqual(row.get("current_source_refs"),["arXiv:2607.20019"])
+
     def test_shadow_counterfactual_survivors_are_conservatively_routed(self) -> None:
         self.assertEqual(validate_search_portfolio_design_adjudication(self.state), [])
         summary = self.state["summary"]

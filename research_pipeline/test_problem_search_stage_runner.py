@@ -140,6 +140,21 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         self.assertIsNotNone(runner._semantic_dead_end_seed_blocker(seed,memory,"a"*64))
         self.assertIsNone(runner._semantic_dead_end_seed_blocker(seed,memory,"b"*64))
 
+    def test_principle_readjudication_machine_filter_persists_but_reopens_on_new_primary_evidence(self) -> None:
+        scope="The standalone claim that EvoDRC connectivity gated repair history defines a novel credit semantics for persistent skill evolution because accepted repair records can coexist with locally harmful DRC outcomes."
+        seed={"discovery_lane":"UNEXPLAINED_BOUNDARY","title":"Connectivity-admissible repair history as persistent skill credit","problem_seed":scope,"scientific_tension":"accepted connectivity-preserving repairs can still have locally harmful DRC utility","structural_signature":"feasibility|credit|persistent-skill|local-utility","empirical_evidence":{"source_a":{"ref":"arXiv:2607.20019","claim":"connectivity-gated repair records can be locally harmful"},"source_b":{"ref":"arXiv:2607.20019","claim":"accepted repairs are persisted into skill history"}}}
+        memory={"blocked_objects":[{"source_candidate_id":"EVODRC-FEASIBILITY-CREDIT","basin":"principle-readjudication-c644ce58af18f624","search_primitive":"UNEXPLAINED_BOUNDARY","current_source_refs":["arXiv:2607.20019"],"title":"Connectivity-admissible repair history is not a new persistent-credit primitive","problem_text":scope,"dead_end_certified":True,"memory_class":"PRINCIPLE_DEAD_END","scientific_authority":False}]}
+        first=runner._semantic_dead_end_seed_blocker(seed,memory,"a"*64)
+        second=runner._semantic_dead_end_seed_blocker(seed,memory,"b"*64)
+        self.assertIsNotNone(first);self.assertIsNotNone(second)
+        self.assertEqual(first["source_candidate_id"],"EVODRC-FEASIBILITY-CREDIT")
+        self.assertIn("persisted principle dead-end",first["reason"])
+        new_evidence=json.loads(json.dumps(seed));new_evidence["empirical_evidence"]["source_b"]["ref"]="arXiv:2608.99999"
+        self.assertIsNone(runner._semantic_dead_end_seed_blocker(new_evidence,memory,"b"*64))
+        different=json.loads(json.dumps(seed));different.update({"title":"Wall-clock scheduling overhead in DRC search","problem_seed":"How does batch size change runtime and memory use?","scientific_tension":"runtime grows with larger search batches","structural_signature":"runtime|batch-size|memory"})
+        different["empirical_evidence"]["source_a"]["claim"]="runtime grows with larger batches";different["empirical_evidence"]["source_b"]["claim"]="memory use grows with larger batches"
+        self.assertIsNone(runner._semantic_dead_end_seed_blocker(different,memory,"b"*64))
+
     def test_lane_contract_hold_cannot_machine_block_search(self) -> None:
         seed={"discovery_lane":"CONVERGENT_FAILURE","title":"optimizer capability threshold","problem_seed":"same object","scientific_tension":"same tension","structural_signature":"same signature","empirical_evidence":{"source_a":{"ref":"arXiv:1","claim":"weak optimizer cannot operate interface"},"source_b":{"ref":"arXiv:2","claim":"weak agent fails to converge"}}}
         memory={"blocked_objects":[{"source_candidate_id":"OLD-HOLD","basin":"semantic-lane-contract-x","search_primitive":"CONVERGENT_FAILURE","current_source_refs":["arXiv:1","arXiv:2"],"evidence_claims":["weak optimizer cannot operate interface","weak agent fails to converge"],"problem_text":"optimizer capability threshold","frozen_pool_sha256":"a"*64,"dead_end_certified":False,"scientific_authority":False}]}

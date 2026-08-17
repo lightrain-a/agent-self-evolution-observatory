@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T06:35:22+00:00",
+  "generated_at": "2026-08-17T07:42:00+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T06:35:22+00:00",
+    "generated_at": "2026-08-17T07:42:00+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -1429,6 +1429,63 @@
         "scientific_authority": false
       },
       {
+        "source_candidate_id": "EVODRC-FEASIBILITY-CREDIT",
+        "basin": "principle-readjudication-c644ce58af18f624",
+        "search_primitive": "UNEXPLAINED_BOUNDARY",
+        "title": "Connectivity-admissible repair history is not a new persistent-credit primitive",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Connectivity-admissible repair history is not a new persistent-credit primitive",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "EvoDRC's released logs show a real label mismatch, but the mismatch is already explained by the distinction between feasibility/admissibility and causal utility credit. Across 24 released units with both an independent local DRC score and a gate verdict, all 24 pass the connectivity gate while 10/24 are locally net worse; seven of those locally harmful units occur in globally improving iterations. The gate therefore cannot identify positive local utility. Existing causal-utility admission principles already require persistent artifacts to be credited from matched downstream effect rather than feasibility, acceptance, or shared aggregate success.",
+        "current_source_refs": [
+          "arXiv:2607.20019"
+        ],
+        "evidence_basis": [
+          "arXiv:2607.20019",
+          "first-party-asset:ASU-VDA-Lab/EvoDRC@0a9b4c732cadce7a0718467aa10ef8a741da369a",
+          "local-asset:generated/evodrc-feasibility-credit-audit-20260817.json",
+          "project-principle:B-8-replicated-effect-memory-gate",
+          "project-principle:B-4-causally-verified-experience-admission"
+        ],
+        "problem_text": "The standalone claim that EvoDRC's connectivity-gated repair history defines a novel credit semantics for persistent skill evolution because accepted repair records can coexist with locally harmful DRC outcomes.",
+        "reason": "EvoDRC's released logs show a real label mismatch, but the mismatch is already explained by the distinction between feasibility/admissibility and causal utility credit. Across 24 released units with both an independent local DRC score and a gate verdict, all 24 pass the connectivity gate while 10/24 are locally net worse; seven of those locally harmful units occur in globally improving iterations. The gate therefore cannot identify positive local utility. Existing causal-utility admission principles already require persistent artifacts to be credited from matched downstream effect rather than feasibility, acceptance, or shared aggregate success.",
+        "reopen_only_if": "Reopen only on a preregistered unit-matched substrate where feasibility/admissibility, local causal utility polarity, and the persisted semantic record are all independently observed; require a later persistent-skill harm/benefit residual among units matched on local causal utility and admissibility that survives a same-information causal-utility/difference-reward baseline.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "SAME_INFORMATION_REDUCTION",
+          "statement": "EvoDRC's released logs show a real label mismatch, but the mismatch is already explained by the distinction between feasibility/admissibility and causal utility credit. Across 24 released units with both an independent local DRC score and a gate verdict, all 24 pass the connectivity gate while 10/24 are locally net worse; seven of those locally harmful units occur in globally improving iterations. The gate therefore cannot identify positive local utility. Existing causal-utility admission principles already require persistent artifacts to be credited from matched downstream effect rather than feasibility, acceptance, or shared aggregate success.",
+          "opposite_prediction": "If gated_in is only an admissibility predicate, then connectivity-preserved repairs may have positive, zero, or negative local DRC utility, and a globally improving iteration can contain locally harmful accepted actions. A same-information utility/effect credit baseline would distinguish those cases using local or matched causal outcome polarity without introducing a new EvoDRC-specific credit primitive.",
+          "opposite_principle": "Feasibility or admissibility is not causal credit. Persistent self-evolution should assign positive credit only from a utility/effect label at the causal unit whose behavior is being persisted, or from a same-information estimator of that local effect.",
+          "opposite_search_seed": "Search only for a persistent-skill failure that remains after local causal utility/effect polarity is explicitly available and matched at the repair unit: for example, two records with the same local causal utility and admissibility but different later persistent-skill consequences that a same-information causal-utility baseline cannot express.",
+          "scope": "EvoDRC released unit-gate repair histories and persistent skill evolution at first-party commit 0a9b4c732cadce7a0718467aa10ef8a741da369a.",
+          "same_information_or_scope_matched": true,
+          "same_information_reduction_verified": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2607.20019",
+            "first-party-asset:ASU-VDA-Lab/EvoDRC@0a9b4c732cadce7a0718467aa10ef8a741da369a",
+            "local-asset:generated/evodrc-feasibility-credit-audit-20260817.json",
+            "project-principle:B-8-replicated-effect-memory-gate",
+            "project-principle:B-4-causally-verified-experience-admission"
+          ],
+          "alternative_explanations_ruled_out": [
+            "Wrong-layer bookkeeping alone: each repair record is copied to all touched-layer histories in the released implementation.",
+            "All admitted repairs have positive local effect: 10/24 independently scored gated-in units have positive drc_delta, i.e. locally worse DRC utility.",
+            "Only globally bad iterations create the mismatch: seven locally harmful gated-in units occur while the corresponding whole-block iteration improves.",
+            "Skill evolution is globally harmful: first-party Ablation 2 (fixed skills) is generally worse than full EvoDRC, including Block7 final 358 versus 275, so the audit does not support that broader claim."
+          ],
+          "reopen_condition": "Reopen only on a preregistered unit-matched substrate where feasibility/admissibility, local causal utility polarity, and the persisted semantic record are all independently observed; require a later persistent-skill harm/benefit residual among units matched on local causal utility and admissibility that survives a same-information causal-utility/difference-reward baseline."
+        },
+        "source_readjudication_artifact": "generated/evodrc-feasibility-credit-principle-readjudication-20260817.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {},
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
         "source_candidate_id": "PA-04-SPATIAL-MEMORY-CONFLICT",
         "basin": "principle-readjudication-caf50f74cf2b4072",
         "search_primitive": "UNEXPLAINED_BOUNDARY",
@@ -2007,8 +2064,8 @@
         "scientific_authority": false
       }
     ],
-    "principle_dead_end_count": 29,
-    "principle_readjudication_dead_end_count": 25,
+    "principle_dead_end_count": 30,
+    "principle_readjudication_dead_end_count": 26,
     "fresh_phenomenon_closure_count": 15,
     "fresh_phenomenon_closed_evidence_count": 27,
     "inversion_asset_evidence": [
@@ -2233,8 +2290,8 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 29,
-    "principle_readjudication_dead_ends": 25,
+    "shadow_dead_end_objects": 30,
+    "principle_readjudication_dead_ends": 26,
     "shadow_hold_objects": 3,
     "current_source_hard_veto_dead_ends": 0,
     "current_source_hard_veto_added_from_latest_run": 0,

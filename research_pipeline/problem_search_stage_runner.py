@@ -215,15 +215,27 @@ def _semantic_dead_end_seed_blocker(seed:dict,memory:dict,pool_sha:str)->dict|No
     for row in memory.get("blocked_objects") or []:
         if not isinstance(row,dict) or row.get("dead_end_certified") is not True:continue
         basin=str(row.get("basin") or "")
-        if not basin.startswith(("semantic-exact-reduction-","semantic-lane-contract-")):continue
-        if str(row.get("frozen_pool_sha256") or "")!=str(pool_sha or ""):continue
-        if str(row.get("search_primitive") or "").strip().upper()!=lane:continue
+        row_lane=str(row.get("search_primitive") or "").strip().upper()
         memory_refs=sorted({str(ref) for ref in row.get("current_source_refs") or [] if str(ref)})
-        if refs!=memory_refs:continue
-        claim_sim=_text_jaccard(claims," ".join(str(value) for value in row.get("evidence_claims") or []))
-        problem_sim=_text_jaccard(problem,str(row.get("problem_text") or ""))
-        if claim_sim<0.55 and problem_sim<0.35:continue
-        return {"basin":basin,"source_candidate_id":str(row.get("source_candidate_id") or ""),"search_primitive":lane,"source_refs":refs,"claim_similarity":round(claim_sim,4),"problem_similarity":round(problem_sim,4),"reason":"same frozen evidence pool re-entered a persisted semantic dead-end without new evidence","scientific_authority":False}
+        if basin.startswith(("semantic-exact-reduction-","semantic-lane-contract-")):
+            if str(row.get("frozen_pool_sha256") or "")!=str(pool_sha or ""):continue
+            if row_lane!=lane or refs!=memory_refs:continue
+            claim_sim=_text_jaccard(claims," ".join(str(value) for value in row.get("evidence_claims") or []))
+            problem_sim=_text_jaccard(problem,str(row.get("problem_text") or ""))
+            if claim_sim<0.55 and problem_sim<0.35:continue
+            return {"basin":basin,"source_candidate_id":str(row.get("source_candidate_id") or ""),"search_primitive":lane,"source_refs":refs,"claim_similarity":round(claim_sim,4),"problem_similarity":round(problem_sim,4),"reason":"same frozen evidence pool re-entered a persisted semantic dead-end without new evidence","scientific_authority":False}
+        if basin.startswith("principle-readjudication-"):
+            # Principle-certified dead ends persist across shadow pools.  Keep the
+            # machine veto deliberately narrow: the typed primitive and exact
+            # primary-source set must be unchanged, and the proposed problem must
+            # still be semantically close to the certified scope.  Adding new
+            # primary evidence or moving to a materially different problem object
+            # therefore remains a valid reopen path.
+            if not row_lane or row_lane!=lane or not memory_refs or refs!=memory_refs:continue
+            memory_problem=" ".join(str(row.get(key) or "") for key in ("title","problem_text"))
+            problem_sim=max(_text_jaccard(problem,str(row.get("problem_text") or "")),_text_jaccard(problem+" "+claims,memory_problem))
+            if problem_sim<0.28:continue
+            return {"basin":basin,"source_candidate_id":str(row.get("source_candidate_id") or ""),"search_primitive":lane,"source_refs":refs,"claim_similarity":0.0,"problem_similarity":round(problem_sim,4),"reason":"same typed primary-source problem re-entered a persisted principle dead-end without new evidence satisfying its reopen boundary","scientific_authority":False}
     return None
 
 
