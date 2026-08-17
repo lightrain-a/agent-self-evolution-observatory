@@ -48,6 +48,16 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
             "control_snapshot_sha256":control_sha,
         }
 
+    def target_inventory(self, *, fresh=1, inversion=0, positive=0):
+        return {
+            "active_inversion_asset_count":inversion,
+            "active_positive_residual_asset_count":positive,
+            "fresh_phenomenon_target_count":fresh,
+            "fresh_fallback_required":not inversion and not positive,
+            "provider_calls_executed":0,
+            "scientific_authority":False,
+        }
+
     def test_wait_frontier_creates_nothing(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);state_path=root/"state.json";_,frontier=self.write_state(state_path,same_source=True);calls=[]
@@ -57,6 +67,18 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
         self.assertEqual(calls,[])
         self.assertEqual(result["summary"]["model_calls_executed"],0)
         self.assertEqual(result["summary"]["expansion_started"],0)
+
+    def test_zero_fresh_target_holds_before_worktree_creation(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);state_path=root/"state.json";self.write_state(state_path,same_source=False);pool=root/"primary.json";pool.write_text("{}",encoding="utf-8");created=[]
+            result=consume_shadow_qualification_handoff(
+                public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=root/"worktrees",
+                create_worktree=lambda *args:created.append(args),target_preflight=lambda **kwargs:self.target_inventory(fresh=0),
+            )
+        self.assertEqual(result["status"],"HOLD_SHADOW_NO_ELIGIBLE_FRESH_PHENOMENON")
+        self.assertEqual(created,[])
+        self.assertEqual(result["summary"]["fresh_phenomenon_target_count"],0)
+        self.assertTrue(result["summary"]["fresh_fallback_required"]);self.assertEqual(result["summary"]["model_calls_executed"],0)
 
     def test_ready_frontier_prepares_one_pinned_zero_provider_qualification(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -71,7 +93,7 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
                 receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.4","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
                 (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
                 return {"status":"READY_FOR_SHADOW_EXPANSION_ZERO_PROVIDER_HANDOFF","summary":{"model_calls_executed":0}}
-            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=create,qualifier=qualify,identity_builder=lambda **kwargs:identity)
+            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=create,qualifier=qualify,identity_builder=lambda **kwargs:identity,target_preflight=lambda **kwargs:self.target_inventory())
         self.assertEqual(result["status"],"SHADOW_QUALIFICATION_PREPARED_ZERO_PROVIDER")
         self.assertEqual(len(created),1)
         self.assertEqual(result["summary"]["qualification_prepared"],1)
@@ -87,7 +109,7 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
             worktree=parent/f"agent-self-evolution-shadow-qual-{request}";run=worktree/"generated"/"research-data"/"paper-first-problem-discovery"/"search-portfolios"/f"shadow-auto-{request}";run.mkdir(parents=True)
             receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.4","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
             (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
-            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=lambda *args:self.fail("must not recreate worktree"),qualifier=lambda **kwargs:self.fail("must not requalify"),identity_builder=lambda **kwargs:identity)
+            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=lambda *args:self.fail("must not recreate worktree"),qualifier=lambda **kwargs:self.fail("must not requalify"),identity_builder=lambda **kwargs:identity,target_preflight=lambda **kwargs:self.target_inventory())
         self.assertEqual(result["status"],"SHADOW_QUALIFICATION_ALREADY_PREPARED")
         self.assertEqual(result["summary"]["worktree_created"],0)
         self.assertEqual(result["summary"]["model_calls_executed"],0)
@@ -109,7 +131,7 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
                 receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.4","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
                 (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
                 return {"status":"READY_FOR_SHADOW_EXPANSION_ZERO_PROVIDER_HANDOFF","summary":{"model_calls_executed":0}}
-            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=create,qualifier=qualify,identity_builder=lambda **kwargs:identity)
+            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=create,qualifier=qualify,identity_builder=lambda **kwargs:identity,target_preflight=lambda **kwargs:self.target_inventory())
         self.assertEqual(result["status"],"SHADOW_QUALIFICATION_PREPARED_ZERO_PROVIDER")
         self.assertEqual(len(created),1)
         self.assertNotEqual(created[0],legacy_worktree)
@@ -119,7 +141,7 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);state_path=root/"state.json";admission,_=self.write_state(state_path,same_source=False);pool=root/"primary.json";pool.write_text("{}",encoding="utf-8");parent=root/"worktrees";identity=self.qualification_identity(admission)
             (parent/f"agent-self-evolution-shadow-qual-{identity['request_id']}").mkdir(parents=True)
-            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=lambda *args:self.fail("must not overwrite partial state"),identity_builder=lambda **kwargs:identity)
+            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=lambda *args:self.fail("must not overwrite partial state"),identity_builder=lambda **kwargs:identity,target_preflight=lambda **kwargs:self.target_inventory())
         self.assertEqual(result["status"],"HOLD_EXISTING_SHADOW_QUALIFICATION_WORKTREE_INVALID")
         self.assertEqual(result["summary"]["model_calls_executed"],0)
 

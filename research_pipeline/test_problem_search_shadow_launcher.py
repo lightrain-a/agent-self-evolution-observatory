@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import tempfile
 import unittest
@@ -8,14 +9,15 @@ from pathlib import Path
 from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION
 from .paper_first_shadow_search_admission import build_shadow_search_admission, primary_content_sha256, source_set_sha256
 from .problem_search_control_snapshot import validate_shadow_run_control
-from .problem_search_shadow_launcher import HANDOFF_STATUS, prepare_shadow_run
+from .problem_search_shadow_launcher import HANDOFF_STATUS, NO_FRESH_TARGET_STATUS, prepare_shadow_run
 
 
 class ProblemSearchShadowLauncherTest(unittest.TestCase):
     def canonical(self, *, latest: bool = False, changed: bool = False):
+        anomaly_text="Reward improves from 0.50 to 0.63 at 32 tokens but plateaus at 64 tokens."
         records=[
-            {"ref":"arXiv:2608.00001","source_sha256":"1"*64,"fulltext_sha256":"3"*64,"primary_source_verified":True,"abstract":"a"},
-            {"ref":"arXiv:2608.00002","source_sha256":"2"*64,"fulltext_sha256":"4"*64,"primary_source_verified":True,"abstract":"b"},
+            {"ref":"arXiv:2608.00001","source_sha256":"1"*64,"fulltext_sha256":"3"*64,"primary_source_verified":True,"abstract":"a","publication_date":"2026-08-14","empirical_facts":[{"text":anomaly_text}],"typed_evidence":{"operational_assumptions":[],"measured_failures":[],"boundary_observations":[]}},
+            {"ref":"arXiv:2608.00002","source_sha256":"2"*64,"fulltext_sha256":"4"*64,"primary_source_verified":True,"abstract":"b","publication_date":"2026-08-14","empirical_facts":[],"typed_evidence":{"operational_assumptions":[],"measured_failures":[],"boundary_observations":[]}},
         ]
         generated_at="2026-08-14T00:00:00+00:00"
         tx="a"*64
@@ -49,6 +51,7 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
             self.assertEqual(state["status"],HANDOFF_STATUS)
             self.assertTrue(state["summary"]["frozen_pool_created"]);self.assertTrue(state["summary"]["frozen_memory_created"]);self.assertTrue(state["summary"]["qualification_created"])
             self.assertEqual(state["summary"]["automatic_provider_calls_authorized"],0);self.assertEqual(state["summary"]["model_calls_executed"],0)
+            self.assertTrue(state["summary"]["fresh_fallback_required"]);self.assertEqual(state["summary"]["fresh_phenomenon_target_count"],1)
             self.assertEqual(frozen["source_primary_content_sha256"],admission["source_identity"]["current_primary_content_sha256"])
             self.assertEqual(receipt["source_primary_content_sha256"],frozen["source_primary_content_sha256"])
             self.assertEqual(receipt["stage_runner_required_schema"],"1.4")
@@ -59,6 +62,23 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"memory digest drift"):
                 validate_shadow_run_control(run_root=run,pool_path=run/"frozen-primary-evidence-pool.json",memory_path=memory,project_root=project,control_files=files)
             self.assertFalse(state["scientific_authority"]);self.assertTrue(all(value is False for value in state["authority"].values()))
+
+    def test_no_active_asset_and_all_fresh_anomalies_closed_holds_before_qualification(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);admission,private_pool,memory,project,files=self.fixture(root);run=root/"shadow-no-target"
+            pool=json.loads(private_pool.read_text());text=pool["records"][0]["empirical_facts"][0]["text"];sha=hashlib.sha256(" ".join(text.split()).encode()).hexdigest()
+            memory_payload=json.loads(memory.read_text());memory_payload["blocked_objects"]=[{
+                "source_candidate_id":"CLOSED-ANOMALY",
+                "dead_end_certified":True,
+                "scientific_authority":False,
+                "fresh_phenomenon_closure":{"source_ref":"arXiv:2608.00001","closed_evidence_sha256":[sha],"scientific_authority":False},
+            }];memory.write_text(json.dumps(memory_payload),encoding="utf-8")
+            state=prepare_shadow_run(run_root=run,private_pool_path=private_pool,memory_path=memory,project_root=project,admission_state=admission,require_clean_control=False,control_files=files)
+            self.assertFalse(run.exists())
+        self.assertEqual(state["status"],NO_FRESH_TARGET_STATUS)
+        self.assertTrue(state["summary"]["fresh_fallback_required"]);self.assertEqual(state["summary"]["fresh_phenomenon_target_count"],0)
+        self.assertEqual(state["summary"]["model_calls_executed"],0);self.assertFalse(state["summary"]["qualification_created"])
+        self.assertFalse(state["scientific_authority"]);self.assertTrue(all(value is False for value in state["authority"].values()))
 
     def test_same_source_terminal_skip_creates_no_run_root(self) -> None:
         with tempfile.TemporaryDirectory() as td:

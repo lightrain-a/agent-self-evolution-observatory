@@ -10,6 +10,7 @@ from .config import PROJECT_ROOT, StorageSettings
 from .paper_first_primary_evidence import load_private_primary_pool, private_primary_pool_path
 from .paper_first_problem_generator import _pool_sha
 from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION
+from .paper_first_problem_search_portfolio import _fresh_phenomenon_priors, _inversion_asset_records, _positive_residual_asset_records
 from .paper_first_search_portfolio_design_adjudication import DEFAULT_JSON as DEFAULT_SHADOW_MEMORY_PATH
 from .paper_first_shadow_search_admission import (
     build_shadow_search_admission,
@@ -21,6 +22,7 @@ from .problem_search_control_snapshot import CONTROL_FILES, write_shadow_run_qua
 
 READY_STATUS = "READY_FOR_SHADOW_QUALIFICATION"
 HANDOFF_STATUS = "READY_FOR_SHADOW_EXPANSION_ZERO_PROVIDER_HANDOFF"
+NO_FRESH_TARGET_STATUS = "HOLD_SHADOW_NO_ELIGIBLE_FRESH_PHENOMENON"
 AUTHORITY = {
     "canonical_generator": False,
     "canonical_queue": False,
@@ -47,6 +49,10 @@ def _bounded_result(status: str, *, admission: dict[str, Any], reason: str, run_
             "frozen_pool_created": bool(summary.get("frozen_pool_created", False)),
             "frozen_memory_created": bool(summary.get("frozen_memory_created", False)),
             "qualification_created": bool(summary.get("qualification_created", False)),
+            "active_inversion_asset_count": int(summary.get("active_inversion_asset_count", 0) or 0),
+            "active_positive_residual_asset_count": int(summary.get("active_positive_residual_asset_count", 0) or 0),
+            "fresh_phenomenon_target_count": int(summary.get("fresh_phenomenon_target_count", 0) or 0),
+            "fresh_fallback_required": bool(summary.get("fresh_fallback_required", False)),
             "automatic_provider_calls_authorized": 0,
             "model_calls_executed": 0,
         },
@@ -70,6 +76,7 @@ def _bounded_result(status: str, *, admission: dict[str, Any], reason: str, run_
             "canonical_main_private_pool_is_required": True,
             "private_pool_identity_must_match_current_admitted_primary": True,
             "launcher_can_only_freeze_pool_memory_and_qualification": True,
+            "no_active_asset_requires_nonempty_fresh_phenomenon_target_before_qualification": True,
             "run_local_memory_is_frozen_before_qualification": True,
             "launcher_never_calls_model_provider": True,
             "stage_runner_still_requires_qualification_receipt": True,
@@ -150,6 +157,38 @@ def _frozen_pool_payload(private_pool: dict[str, Any], admission: dict[str, Any]
     return payload
 
 
+def shadow_search_target_inventory(*, private_pool_path: Path, memory_path: Path, admission_state: dict[str, Any]) -> dict[str, Any]:
+    """Zero-provider preflight for the next search object.
+
+    A v13 operator-upgrade receipt may reopen qualification on an unchanged source
+    transaction, but it may not silently degrade to open-ended brainstorming. When
+    all provenance-bound search assets are inactive, at least one evidence-level
+    fresh phenomenon must remain outside certified dead ends and support holds.
+    """
+    if not memory_path.is_file():
+        raise ValueError(f"shadow dead-end memory unavailable: {memory_path}")
+    if not private_pool_path.is_file():
+        raise ValueError(f"canonical private primary pool unavailable: {private_pool_path}")
+    frozen_memory = _frozen_memory_payload(memory_path)
+    private_pool = load_private_primary_pool(private_pool_path) or {}
+    frozen_pool = _frozen_pool_payload(private_pool, admission_state)
+    records = list(frozen_pool.get("records") or [])
+    inversion_assets = _inversion_asset_records(frozen_memory)
+    positive_assets = _positive_residual_asset_records(frozen_memory)
+    fresh_targets = _fresh_phenomenon_priors(records, limit=32, dead_end_memory=frozen_memory)
+    fallback_required = not inversion_assets and not positive_assets
+    return {
+        "active_inversion_asset_count": len(inversion_assets),
+        "active_positive_residual_asset_count": len(positive_assets),
+        "fresh_phenomenon_target_count": len(fresh_targets),
+        "fresh_fallback_required": fallback_required,
+        "first_fresh_target_ref": str((fresh_targets[0] if fresh_targets else {}).get("ref") or ""),
+        "first_fresh_target_id": str((fresh_targets[0] if fresh_targets else {}).get("phenomenon_id") or ""),
+        "provider_calls_executed": 0,
+        "scientific_authority": False,
+    }
+
+
 def prepare_shadow_run(
     *,
     run_root: Path,
@@ -189,6 +228,21 @@ def prepare_shadow_run(
         frozen = _frozen_pool_payload(private_pool, admission)
     except ValueError as error:
         return _bounded_result("HOLD_CANONICAL_PRIVATE_POOL_IDENTITY_MISMATCH", admission=admission, reason=str(error), run_root=run_root)
+    inventory = {
+        "active_inversion_asset_count": len(_inversion_asset_records(frozen_memory)),
+        "active_positive_residual_asset_count": len(_positive_residual_asset_records(frozen_memory)),
+    }
+    fresh_targets = _fresh_phenomenon_priors(frozen.get("records") or [], limit=32, dead_end_memory=frozen_memory)
+    inventory["fresh_phenomenon_target_count"] = len(fresh_targets)
+    inventory["fresh_fallback_required"] = not inventory["active_inversion_asset_count"] and not inventory["active_positive_residual_asset_count"]
+    if inventory["fresh_fallback_required"] and not fresh_targets:
+        return _bounded_result(
+            NO_FRESH_TARGET_STATUS,
+            admission=admission,
+            reason="No active first-party inversion or positive-residual search asset remains, and every v13-eligible fresh evidence-level phenomenon is already principle-closed or support-held. Open-ended provider expansion is therefore forbidden until new primary evidence or a recorded reopen condition creates a target.",
+            run_root=run_root,
+            **inventory,
+        )
     if not run_root.exists():
         run_root.mkdir(parents=True, exist_ok=False)
     frozen_path = run_root / "frozen-primary-evidence-pool.json"
@@ -229,6 +283,7 @@ def prepare_shadow_run(
         control_snapshot_sha256=qualification.get("control_snapshot_sha256"),
         stage_runner_required_schema=qualification.get("stage_runner_required_schema"),
         main_commit=qualification.get("main_commit"),
+        **inventory,
     )
 
 

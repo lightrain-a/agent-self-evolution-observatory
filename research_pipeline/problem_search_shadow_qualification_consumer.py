@@ -13,7 +13,7 @@ from .paper_first_shadow_continuation_frontier import validate_shadow_continuati
 from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION
 from .paper_first_shadow_search_admission import validate_shadow_search_admission
 from .problem_search_control_snapshot import compute_control_snapshot, memory_sha256
-from .problem_search_shadow_launcher import prepare_shadow_run
+from .problem_search_shadow_launcher import NO_FRESH_TARGET_STATUS, prepare_shadow_run, shadow_search_target_inventory
 
 READY_FRONTIER = "READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION"
 QUALIFIED_STATUS = "READY_FOR_SHADOW_EXPANSION_ZERO_PROVIDER_HANDOFF"
@@ -92,8 +92,9 @@ def _qualification_identity(
     }
 
 
-def _bounded_result(status: str, *, reason: str, request_id: str = "", worktree: Path | None = None, run_root: Path | None = None, commit: str = "", qualification: dict[str, Any] | None = None) -> dict[str, Any]:
+def _bounded_result(status: str, *, reason: str, request_id: str = "", worktree: Path | None = None, run_root: Path | None = None, commit: str = "", qualification: dict[str, Any] | None = None, target_inventory: dict[str, Any] | None = None) -> dict[str, Any]:
     qualification = qualification or {}
+    target_inventory = target_inventory or {}
     prepared = status in {"SHADOW_QUALIFICATION_PREPARED_ZERO_PROVIDER", "SHADOW_QUALIFICATION_ALREADY_PREPARED"}
     return {
         "schema_version": "1.0",
@@ -106,6 +107,10 @@ def _bounded_result(status: str, *, reason: str, request_id: str = "", worktree:
             "model_calls_executed": 0,
             "automatic_provider_calls_authorized": 0,
             "expansion_started": 0,
+            "active_inversion_asset_count": int(target_inventory.get("active_inversion_asset_count", 0) or 0),
+            "active_positive_residual_asset_count": int(target_inventory.get("active_positive_residual_asset_count", 0) or 0),
+            "fresh_phenomenon_target_count": int(target_inventory.get("fresh_phenomenon_target_count", 0) or 0),
+            "fresh_fallback_required": bool(target_inventory.get("fresh_fallback_required", False)),
             "scientific_authority": 0,
             "generator_reopen_authorized": 0,
             "problem_gate_authorized": 0,
@@ -132,6 +137,7 @@ def _bounded_result(status: str, *, reason: str, request_id: str = "", worktree:
             "consumer_creates_pinned_worktree_before_qualification": True,
             "consumer_uses_canonical_private_primary_pool": True,
             "consumer_can_only_prepare_zero_provider_qualification": True,
+            "consumer_requires_nonempty_target_inventory_before_worktree_creation": True,
             "consumer_cannot_start_expansion_or_model_provider": True,
             "consumer_cannot_qualify_support_or_reopen_problem_gate": True,
             "consumer_cannot_authorize_method_experiment_p0_gpu": True,
@@ -171,6 +177,7 @@ def consume_shadow_qualification_handoff(
     create_worktree: Callable[[Path, Path, str], None] = _create_pinned_worktree,
     qualifier: Callable[..., dict[str, Any]] = prepare_shadow_run,
     identity_builder: Callable[..., dict[str, str]] = _qualification_identity,
+    target_preflight: Callable[..., dict[str, Any]] = shadow_search_target_inventory,
 ) -> dict[str, Any]:
     state = _load(public_state_path)
     if not state:
@@ -199,6 +206,20 @@ def consume_shadow_qualification_handoff(
     if not canonical_private_pool.is_file():
         return _bounded_result("HOLD_CANONICAL_PRIVATE_POOL_UNAVAILABLE", reason=f"Canonical private primary pool unavailable: {canonical_private_pool}")
     try:
+        target_inventory = target_preflight(
+            private_pool_path=canonical_private_pool,
+            memory_path=source_repo / SHADOW_MEMORY_RELATIVE,
+            admission_state=admission,
+        )
+    except Exception as error:
+        return _bounded_result("HOLD_SHADOW_QUALIFICATION_TARGET_PREFLIGHT_INVALID", reason=f"{type(error).__name__}:{str(error)[:900]}")
+    if target_inventory.get("fresh_fallback_required") is True and int(target_inventory.get("fresh_phenomenon_target_count") or 0) == 0:
+        return _bounded_result(
+            NO_FRESH_TARGET_STATUS,
+            reason="No active search asset remains and the current private Primary plus persistent memory contains zero eligible v13 fresh phenomena. Qualification stops before worktree creation and provider expansion remains forbidden.",
+            target_inventory=target_inventory,
+        )
+    try:
         identity = identity_builder(
             source_repo=source_repo,
             source_set_sha256=source_set,
@@ -217,7 +238,7 @@ def consume_shadow_qualification_handoff(
     if worktree.exists():
         receipt = _existing_qualification(run_root, source_set, source_content, identity)
         if receipt:
-            return _bounded_result("SHADOW_QUALIFICATION_ALREADY_PREPARED", reason="A matching pinned qualification already exists; no duplicate worktree or provider call is created.", request_id=request_id, worktree=worktree, run_root=run_root, commit=str(receipt.get("main_commit") or ""), qualification=receipt)
+            return _bounded_result("SHADOW_QUALIFICATION_ALREADY_PREPARED", reason="A matching pinned qualification already exists; no duplicate worktree or provider call is created.", request_id=request_id, worktree=worktree, run_root=run_root, commit=str(receipt.get("main_commit") or ""), qualification=receipt, target_inventory=target_inventory)
         return _bounded_result("HOLD_EXISTING_SHADOW_QUALIFICATION_WORKTREE_INVALID", reason=f"Deterministic worktree already exists without a matching READY qualification: {worktree}", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit)
     create_worktree(source_repo, worktree, commit)
     memory_path = worktree / "generated" / "paper-first-search-portfolio-design-adjudication.json"
@@ -236,7 +257,7 @@ def consume_shadow_qualification_handoff(
     receipt = _existing_qualification(run_root, source_set, source_content, identity)
     if not receipt:
         return _bounded_result("HOLD_SHADOW_QUALIFICATION_RECEIPT_INVALID", reason="Launcher completed but a matching schema-1.4 qualification receipt was not found.", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit)
-    return _bounded_result("SHADOW_QUALIFICATION_PREPARED_ZERO_PROVIDER", reason="Git-mediated handoff created one pinned worktree and one zero-provider schema-1.4 qualification. Expansion remains unstarted and unauthorized by this consumer.", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit, qualification=receipt)
+    return _bounded_result("SHADOW_QUALIFICATION_PREPARED_ZERO_PROVIDER", reason="Git-mediated handoff created one pinned worktree and one zero-provider schema-1.4 qualification. Expansion remains unstarted and unauthorized by this consumer.", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit, qualification=receipt, target_inventory=target_inventory)
 
 
 def main() -> None:
