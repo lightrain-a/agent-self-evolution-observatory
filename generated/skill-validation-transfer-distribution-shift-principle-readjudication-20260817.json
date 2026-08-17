@@ -29,9 +29,10 @@
         "first-party-repo:AIoT-MLSys-Lab/SkillEvolBench@9e3daa339987c3cfa624121e1be442593a53d43c",
         "repo:generated/paper-first-skill-validation-transfer-scout-20260817.json#sha256=e323d989c8f866df4756b0606b2d71a5a655418861bee73843366430a20285b2",
         "repo:research_pipeline/paper_first_skill_validation_transfer_f0.py#sha256=daaad83e507806a66c1c4dd5911c40b8db5781df4cd22b8f44916e228d4e224c",
-        "repo:research_pipeline/paper_first_fresh_saturation.py#feedback-view-intransitivity",
-        "repo:research_pipeline/paper_first_fresh_saturation.py#harness-update-scope-heterogeneity",
-        "repo:research_pipeline/paper_first_fresh_saturation.py#externalization-internalization-portability"
+        "arXiv:2409.19774",
+        "arXiv:2209.00652",
+        "arXiv:2007.03511",
+        "repo:generated/paper-first-search-portfolio-design-adjudication.json#same-information-covariate-shift-precedent"
       ],
       "alternative_explanations_ruled_out": [
         "Family difficulty is the only explanation: the F0 matches both arms within each latent family, but a within-family representation-by-role interaction remains exactly a conditional/domain-shift effect and therefore does not escape the mature reduction.",
@@ -40,7 +41,44 @@
         "Persistent skills make the selection problem intrinsically new: persistence changes the candidate representations being selected, but the frozen PA-05 statistic contains no additional lineage, update, or artifact variable that makes a different ex-ante prediction from source-to-target model selection.",
         "T4-T6 are merely more difficult versions of T1-T3: the benchmark explicitly changes context, adversarial pressure, and composition role; whether this is called difficulty or shift, the F0's scientific endpoint is still cross-role transport of relative performance, which generic conditional shift models express."
       ],
-      "reopen_condition": "Reopen only with a preregistered same-information residual in which the candidate and the strongest distribution-shift/domain-generalization selector receive identical T1-T3 outcomes, family and role observables, representation metadata, target-shift descriptors available before T4-T6 outcomes, model, execution order, calls/tokens, and compute, yet a skill-specific structural variable forces different ex-ante arm-selection predictions and the difference is validated by an intervention or independent executable truth. Ranking inversion, selector regret, seed replication, global-arm controls, or changing the backbone without such a structural residual is insufficient."
+      "reopen_condition": "Reopen only with a preregistered same-information residual in which the candidate and the strongest distribution-shift/domain-generalization selector receive identical T1-T3 outcomes, family and role observables, representation metadata, target-shift descriptors available before T4-T6 outcomes, model, execution order, calls/tokens, and compute, yet a skill-specific structural variable forces different ex-ante arm-selection predictions and the difference is validated by an intervention or independent executable truth. Ranking inversion, selector regret, seed replication, global-arm controls, or changing the backbone without such a structural residual is insufficient.",
+      "exact_reduction_witness": {
+        "witness_type": "ALGEBRAIC_REPARAMETERIZATION",
+        "requires_experiment_outcome": false,
+        "depends_on_observed_inversion_rate": false,
+        "candidate_arms": [
+          "raw_trajectory_rag",
+          "selfgen_experience_always"
+        ],
+        "source_roles": [
+          "canonical",
+          "enriched",
+          "variant"
+        ],
+        "target_roles": [
+          "context-shift",
+          "adversarial",
+          "composition"
+        ],
+        "mapping": {
+          "source_score": "L_a(f) = mean success of arm a on frozen T1-T3 within-environment replay for family f",
+          "target_score": "D_a(f) = mean success of arm a on frozen T4-T6 primary deployment for family f",
+          "local_delta": "L_selfgen(f) - L_raw(f)",
+          "deployment_delta": "D_selfgen(f) - D_raw(f)",
+          "local_selector": "argmax_a L_a(f), with the frozen raw-arm tie rule",
+          "deployment_oracle": "argmax_a D_a(f)",
+          "ranking_inversion": "local_delta != 0 and deployment_delta != 0 and sign(local_delta) != sign(deployment_delta)",
+          "selector_regret": "D_deployment_oracle(f) - D_local_selector(f)"
+        },
+        "mature_object": "source-domain model selection evaluated under an unseen shifted target distribution",
+        "same_information_argument": "The mapping is a relabeling of the exact PA-05 arm-by-family source/target outcome table and decision rules; it adds no variable, label, target outcome, representation feature, or compute unavailable to the frozen F0. Therefore inversion and oracle-minus-local regret are statistics of source-to-target selection under shift before any skill-specific mechanism is posited.",
+        "novelty_residual_required": "A future skill-evolution claim must introduce a preregistered skill-specific structural variable that forces a different ex-ante arm-selection prediction than a same-information shift selector; the current F0 contains no such variable."
+      },
+      "non_authoritative_context_refs": [
+        "repo:research_pipeline/paper_first_fresh_saturation.py#feedback-view-intransitivity (TOO_GENERIC_TO_VETO)",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#harness-update-scope-heterogeneity (TOO_GENERIC_TO_VETO)",
+        "repo:research_pipeline/paper_first_fresh_saturation.py#externalization-internalization-portability (SOFT_COLLISION)"
+      ]
     }
   },
   "fresh_phenomenon_closure": {
@@ -55,7 +93,8 @@
   },
   "scientific_interpretation": {
     "safe_claim": "SkillEvolBench remains a strong first-party executable substrate for studying procedural representation transfer, but the current PA-05 success criterion would only establish a reproducible local-validation/deployment ranking failure under deliberate shift. That is useful diagnostic evidence, not a standalone new self-evolution principle.",
-    "new_search_basin": "representation-specific-transfer-residual-after-distribution-shift-information-parity"
+    "new_search_basin": "representation-specific-transfer-residual-after-distribution-shift-information-parity",
+    "reduction_basis": "Exact algebraic reparameterization of the frozen PA-05 F0 into source-domain model selection and shifted-target regret; generic saturation labels are contextual only and do not authorize the STOP."
   },
   "authority": {
     "experiment_alone_authorizes_dead_end": false,
