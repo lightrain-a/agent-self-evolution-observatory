@@ -258,7 +258,8 @@ def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generat
     attempts=[]
     for index,candidate in enumerate(candidates):
         try:
-            result=ArkResponsesClient(settings).respond(prompt,model=candidate,max_output_tokens=max_output_tokens,temperature=temperature,thinking="disabled",store=True)
+            thinking=None if str(candidate).lower().startswith("glm") else "disabled"
+            result=ArkResponsesClient(settings).respond(prompt,model=candidate,max_output_tokens=max_output_tokens,temperature=temperature,thinking=thinking,store=True,allow_thinking_compatibility_fallback=allow_transport_fallback)
             attempts.append({"requested_model":candidate,"status":"success","resolved_model":str(result.get("resolved_model") or candidate),"assistant_output_present":True})
             return {**result,"logical_requested_model":model,"transport_attempts":attempts,"transport_fallback_used":index>0,"transport_fallback_stage":stage}
         except Exception as error:
@@ -456,7 +457,9 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     blocked_problem_memory=blocked_problem_memory or _public_blocked_problem_memory(storage)
     dead_end_prompt_memory=_private_dead_end_prompt_memory(storage,blocked_problem_memory)
     policy=_base_policy(portfolio=False)
-    policy["strict_provider_transport"]=bool(strict_provider);policy["semantic_reviewer_deferred"]=bool(defer_reviewer)
+    generator_is_glm=str(generator_model).lower().startswith("glm");generator_max_output_tokens=15000 if generator_is_glm else 6500
+    policy["strict_provider_transport"]=bool(strict_provider);policy["semantic_reviewer_deferred"]=bool(defer_reviewer);policy["thinking_compatibility_repost_allowed"]=not bool(strict_provider)
+    policy["thinking_disabled"]=not generator_is_glm;policy["generator_thinking_profile"]="provider-default" if generator_is_glm else "disabled";policy["generator_max_output_tokens"]=generator_max_output_tokens
     if strict_provider:
         policy["transport_only_no_output_fallback_allowed"]=False;policy["transport_fallback_max_additional_provider_attempts"]=0
     state={"schema_version":"2.5","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":policy,"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","search_diagnostics":{"lane_search_priority":list(dead_end_prompt_memory.get("lane_search_priority") or DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"last_completed_lane_search":{},"scientific_authority":False},"saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage,saturation_ledger_path)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},"candidates":[]}
@@ -501,7 +504,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
         except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";state["portfolio_provenance"]=provenance;return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
     else:
         try:
-            res=call(prompt=generator_prompt(list(reg.values()),dead_end_memory=dead_end_prompt_memory),model=generator_model,max_output_tokens=6500);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);generator_resolved_models=[resolved];safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"generator",list(res.get("transport_attempts") or []));state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved,"transport_attempts":safe_attempts,"transport_fallback_used":bool(res.get("transport_fallback_used"))};
+            res=call(prompt=generator_prompt(list(reg.values()),dead_end_memory=dead_end_prompt_memory),model=generator_model,max_output_tokens=generator_max_output_tokens);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);generator_resolved_models=[resolved];safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"generator",list(res.get("transport_attempts") or []));state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved,"transport_attempts":safe_attempts,"transport_fallback_used":bool(res.get("transport_fallback_used"))};
             if receipt_audits:state["raw_artifacts"]["generator"]["provider_receipt_audits"]=receipt_audits
             payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"]);rows=payload.get("candidates") or []
             if not isinstance(rows,list) or len(rows)>max_candidates or any(not isinstance(r,dict) for r in rows):raise ValueError("generator-candidate-array-invalid")

@@ -272,6 +272,10 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertEqual(inbox["candidates"],[])
         self.assertTrue(state["policy"]["strict_provider_transport"])
         self.assertTrue(state["policy"]["semantic_reviewer_deferred"])
+        self.assertFalse(state["policy"]["thinking_compatibility_repost_allowed"])
+        self.assertFalse(state["policy"]["thinking_disabled"])
+        self.assertEqual(state["policy"]["generator_thinking_profile"],"provider-default")
+        self.assertEqual(state["policy"]["generator_max_output_tokens"],15000)
         self.assertFalse(state["policy"]["transport_only_no_output_fallback_allowed"])
         self.assertEqual(state["policy"]["transport_fallback_max_additional_provider_attempts"],0)
 
@@ -304,6 +308,8 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             result=_ark(prompt="test",model="glm-5.3",max_output_tokens=64,temperature=0.0,stage="problem_generation")
         self.assertEqual(respond.call_count,2)
         self.assertTrue(all(call.kwargs.get("store") is True for call in respond.call_args_list))
+        self.assertIsNone(respond.call_args_list[0].kwargs.get("thinking"))
+        self.assertEqual(respond.call_args_list[1].kwargs.get("thinking"),"disabled")
         self.assertTrue(result["transport_fallback_used"])
         self.assertEqual([row["requested_model"] for row in result["transport_attempts"]],["glm-5.3","kimi-k3"])
         self.assertEqual([row["assistant_output_present"] for row in result["transport_attempts"]],[False,True])
@@ -326,6 +332,8 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,"failed before an auditable assistant output") as caught:
                 _ark(prompt="test",model="glm-5.3",max_output_tokens=64,temperature=0.0,stage="problem_generation",allow_transport_fallback=False)
         self.assertEqual(respond.call_count,1)
+        self.assertIsNone(respond.call_args.kwargs.get("thinking"))
+        self.assertFalse(respond.call_args.kwargs.get("allow_thinking_compatibility_fallback"))
         self.assertEqual(len(caught.exception.transport_attempts),1)
         self.assertEqual(caught.exception.transport_attempts[0]["provider_receipt"]["response_id"],"resp_glm_strict")
 

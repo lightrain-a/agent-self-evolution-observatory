@@ -152,6 +152,17 @@ class ArkProviderTest(unittest.TestCase):
         self.assertIsNone(result["thinking_effective"])
         self.assertTrue(result["thinking_compatibility_fallback"])
 
+    def test_strict_mode_can_disable_thinking_compatibility_repost(self) -> None:
+        client = self.client()
+        calls = []
+        client.session.post = lambda *args, **kwargs: calls.append(dict(kwargs["json"])) or _Response(
+            {"error": {"code":"InvalidParameter","message":"thinking.type `disabled` is not supported by this model"}}, status_code=400
+        )
+        with self.assertRaisesRegex(RuntimeError, "thinking.type"):
+            client.respond("x", model="glm-5.3", thinking="disabled", allow_thinking_compatibility_fallback=False)
+        self.assertEqual(1, len(calls))
+        self.assertEqual({"type":"disabled"}, calls[0]["thinking"])
+
     def test_other_400_does_not_trigger_thinking_compatibility_retry(self) -> None:
         client = self.client()
         calls = []

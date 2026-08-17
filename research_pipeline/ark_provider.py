@@ -170,6 +170,7 @@ class ArkResponsesClient:
         tools: list[dict[str, Any]] | None = None,
         thinking: str | None = None,
         store: bool | None = None,
+        allow_thinking_compatibility_fallback: bool = True,
     ) -> dict[str, Any]:
         requested_model = model or self.settings.default_model
         body: dict[str, Any] = {
@@ -198,7 +199,8 @@ class ArkResponsesClient:
                         detail = response.text[:500]
                     detail_text = str(detail).lower()
                     unsupported_disabled_thinking = bool(
-                        response.status_code == 400
+                        allow_thinking_compatibility_fallback
+                        and response.status_code == 400
                         and body.get("thinking") == {"type": "disabled"}
                         and not thinking_compatibility_fallback
                         and "thinking.type" in detail_text
