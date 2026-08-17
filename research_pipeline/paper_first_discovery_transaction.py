@@ -56,16 +56,28 @@ def _load(path: Path) -> dict[str, Any]:
     return payload if isinstance(payload, dict) else {}
 
 
+def _transaction_lock_path(storage: StorageSettings) -> Path:
+    """Return one host-wide lock shared by all checkouts/worktrees of this research system."""
+    override = str(os.getenv("PAPER_FIRST_DISCOVERY_TRANSACTION_LOCK") or "").strip()
+    if override:
+        return Path(override).expanduser()
+    # storage.lock_dir is checkout-relative in isolated worktrees, so it cannot prevent two
+    # agents on the same host from entering Generator/Reviewer concurrently. Namespace by uid
+    # to avoid cross-user interference while keeping every checkout for this project single-flight.
+    return Path(tempfile.gettempdir()) / f".agent-self-evolution-observatory-paper-first-discovery-{os.getuid()}.lock"
+
+
 @contextmanager
 def _transaction_lock(storage: StorageSettings) -> Iterator[None]:
-    path = storage.lock_dir / ".paper-first-discovery-transaction.lock"
+    path = _transaction_lock_path(storage)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a+", encoding="utf-8") as handle:
         try:
             fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError as error:
-            raise RuntimeError(f"Another paper-first discovery transaction is active: {path}") from error
-        handle.seek(0); handle.truncate(); handle.write(json.dumps({"pid": os.getpid(), "started_at": _now()})); handle.flush()
+            handle.seek(0);owner=handle.read(800).strip()
+            raise RuntimeError(f"Another paper-first discovery transaction is active on this host: {path}; owner={owner or 'unknown'}") from error
+        handle.seek(0); handle.truncate(); handle.write(json.dumps({"pid": os.getpid(), "started_at": _now(), "cwd": str(Path.cwd())})); handle.flush()
         try:
             yield
         finally:

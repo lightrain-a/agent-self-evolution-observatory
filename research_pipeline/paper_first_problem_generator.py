@@ -61,6 +61,29 @@ def _archive_previous(storage,auto):
 def _write_raw(storage,run_id,role,model,text):
     d=_root(storage)/"raw-generations";d.mkdir(parents=True,exist_ok=True);sha=_sha(text);p=d/f"{run_id}-{role}-{model.replace('/','-')}-{sha[:12]}.txt";p.write_text(text,encoding="utf-8");return str(p),sha
 
+
+def _archive_provider_receipts(storage:StorageSettings,run_id:str,stage:str,attempts:list[dict[str,Any]]|None)->tuple[list[dict[str,Any]],list[dict[str,Any]]]:
+    """Persist exact provider response IDs privately and return public-safe transport attempts.
+
+    A provider response ID is operational recovery material, not public scientific state. The
+    returned attempts replace it with a content fingerprint so a disconnected run can be audited
+    without exposing or depending on the raw provider identifier.
+    """
+    sanitized=[];audits=[];private_dir=_root(storage)/"provider-receipts"
+    for row in attempts or []:
+        if not isinstance(row,dict): continue
+        public_row=dict(row);receipt=public_row.pop("provider_receipt",None)
+        if isinstance(receipt,dict) and str(receipt.get("response_id") or "").strip():
+            receipt=dict(receipt);receipt_text=json.dumps(receipt,sort_keys=True,separators=(",",":"),ensure_ascii=False);receipt_sha=_sha(receipt_text)
+            payload={"schema_version":"1.0","generated_at":_now(),"run_id":run_id,"stage":stage,"provider_receipt":receipt,"provider_receipt_sha256":receipt_sha,"scientific_authority":False,"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+            private_dir.mkdir(parents=True,exist_ok=True);path=private_dir/f"{run_id}-{stage}-{receipt_sha[:12]}.json"
+            if not path.exists(): path.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+            audit={"provider_receipt_sha256":receipt_sha,"status":str(receipt.get("status") or ""),"requested_model":str(receipt.get("requested_model") or public_row.get("requested_model") or ""),"resolved_model":str(receipt.get("resolved_model") or ""),"incomplete_reason":str(receipt.get("incomplete_reason") or ""),"scientific_authority":False}
+            public_row["provider_receipt_audit"]=audit;audits.append(audit)
+        sanitized.append(public_row)
+    return sanitized,audits
+
+
 def _write_inbox(path,run_id,status,candidates,pool_sha):
     path.parent.mkdir(parents=True,exist_ok=True)
     path.write_text(json.dumps({"schema_version":"2.0","generated_at":_now(),"generator_run_id":run_id,"status":status,"evidence_pool_sha256":pool_sha,"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False},"candidates":candidates},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
@@ -235,15 +258,39 @@ def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generat
     attempts=[]
     for index,candidate in enumerate(candidates):
         try:
-            result=ArkResponsesClient(settings).respond(prompt,model=candidate,max_output_tokens=max_output_tokens,temperature=temperature,thinking="disabled")
+            result=ArkResponsesClient(settings).respond(prompt,model=candidate,max_output_tokens=max_output_tokens,temperature=temperature,thinking="disabled",store=True)
             attempts.append({"requested_model":candidate,"status":"success","resolved_model":str(result.get("resolved_model") or candidate),"assistant_output_present":True})
             return {**result,"logical_requested_model":model,"transport_attempts":attempts,"transport_fallback_used":index>0,"transport_fallback_stage":stage}
         except Exception as error:
             kind=_transport_no_output_error(error)
-            attempts.append({"requested_model":candidate,"status":"error-no-output","error_kind":kind or "non-retryable-provider-error","assistant_output_present":False})
+            response_id=str(getattr(error,"response_id","") or "")
+            response_status=str(getattr(error,"response_status","") or "")
+            receipt={
+                "response_id":response_id,
+                "status":response_status,
+                "requested_model":str(getattr(error,"requested_model",candidate) or candidate),
+                "resolved_model":str(getattr(error,"resolved_model",candidate) or candidate),
+                "incomplete_reason":str(getattr(error,"incomplete_reason","") or ""),
+            } if response_id else None
+            attempt={"requested_model":candidate,"status":"error-no-output","error_kind":kind or "non-retryable-provider-error","assistant_output_present":False}
+            if receipt is not None:
+                attempt["provider_receipt"]=receipt
+            attempts.append(attempt)
+            if response_id and response_status in {"queued","in_progress"}:
+                pending=RuntimeError(
+                    "Ark provider response is pending; re-POST forbidden;"
+                    f" requested_model={candidate}; status={response_status}"
+                )
+                pending.provider_receipt=receipt
+                pending.transport_attempts=attempts
+                raise pending from error
             if not kind or index>=len(candidates)-1:
                 detail=";".join(f"{row['requested_model']}:{row.get('error_kind') or row['status']}" for row in attempts)
-                raise RuntimeError(f"Ark provider failed before an auditable assistant output; attempts={detail}") from error
+                final=RuntimeError(f"Ark provider failed before an auditable assistant output; attempts={detail}")
+                final.transport_attempts=attempts
+                if receipt is not None:
+                    final.provider_receipt=receipt
+                raise final from error
 
 def _source(raw,key,reg):
     src=(raw.get("empirical_evidence") or {}).get(key) or {};ref=str(src.get("ref") or "").strip();r=reg.get(ref) or {}
@@ -450,10 +497,15 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
         except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";state["portfolio_provenance"]=provenance;return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
     else:
         try:
-            res=call(prompt=generator_prompt(list(reg.values()),dead_end_memory=dead_end_prompt_memory),model=generator_model,max_output_tokens=6500);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);generator_resolved_models=[resolved];state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved,"transport_attempts":list(res.get("transport_attempts") or []),"transport_fallback_used":bool(res.get("transport_fallback_used"))};payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"]);rows=payload.get("candidates") or []
+            res=call(prompt=generator_prompt(list(reg.values()),dead_end_memory=dead_end_prompt_memory),model=generator_model,max_output_tokens=6500);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);generator_resolved_models=[resolved];safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"generator",list(res.get("transport_attempts") or []));state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved,"transport_attempts":safe_attempts,"transport_fallback_used":bool(res.get("transport_fallback_used"))};
+            if receipt_audits:state["raw_artifacts"]["generator"]["provider_receipt_audits"]=receipt_audits
+            payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"]);rows=payload.get("candidates") or []
             if not isinstance(rows,list) or len(rows)>max_candidates or any(not isinstance(r,dict) for r in rows):raise ValueError("generator-candidate-array-invalid")
             if not rows and not state["generation_notes"]:raise ValueError("zero-candidate-generation-notes-required")
-        except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
+        except Exception as e:
+            safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"generator",list(getattr(e,"transport_attempts",[]) or []));state["error"]=f"{type(e).__name__}:{str(e)[:300]}";state["provider_transport_attempts"]=safe_attempts
+            if receipt_audits:state["provider_receipt_audits"]=receipt_audits
+            return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
         cands=[_normalize(r,reg) for r in rows]
         try:_validate_lane_search_candidates(lane_search,cands)
         except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
@@ -465,12 +517,23 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
         for start in range(0,len(reviewable),batch_size):
             batch=reviewable[start:start+batch_size]
             try:
-                res=call2(prompt=reviewer_prompt(batch,reg),model=reviewer_model,max_output_tokens=5200 if portfolio_mode else 4200);raw=str(res.get("text") or "");role=f"semantic-review-{start//batch_size+1}" if portfolio_mode else "semantic-review";p,sha=_write_raw(storage,run_id,role,reviewer_model,raw);rresolved=str(res.get("resolved_model") or reviewer_model);review_receipts.append({"sha256":sha,"requested_model":reviewer_model,"resolved_model":rresolved,"transport_attempts":list(res.get("transport_attempts") or []),"transport_fallback_used":bool(res.get("transport_fallback_used"))});_apply_reviews(batch,extract_json_object(raw),reviewer_model,rresolved,gen_resolved,sha,reg)
-            except Exception as e:state.setdefault("semantic_review_errors",[]).append(f"batch-{start//batch_size+1}:{type(e).__name__}:{str(e)[:240]}");_apply_reviews(batch,None,reviewer_model,"",gen_resolved,"",reg)
+                res=call2(prompt=reviewer_prompt(batch,reg),model=reviewer_model,max_output_tokens=5200 if portfolio_mode else 4200);raw=str(res.get("text") or "");role=f"semantic-review-{start//batch_size+1}" if portfolio_mode else "semantic-review";p,sha=_write_raw(storage,run_id,role,reviewer_model,raw);rresolved=str(res.get("resolved_model") or reviewer_model);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,role,list(res.get("transport_attempts") or []));review_receipt={"sha256":sha,"requested_model":reviewer_model,"resolved_model":rresolved,"transport_attempts":safe_attempts,"transport_fallback_used":bool(res.get("transport_fallback_used"))};
+                if receipt_audits:review_receipt["provider_receipt_audits"]=receipt_audits
+                review_receipts.append(review_receipt);_apply_reviews(batch,extract_json_object(raw),reviewer_model,rresolved,gen_resolved,sha,reg)
+            except Exception as e:
+                role=f"semantic-review-{start//batch_size+1}" if portfolio_mode else "semantic-review";safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,role,list(getattr(e,"transport_attempts",[]) or []));state.setdefault("semantic_review_errors",[]).append(f"batch-{start//batch_size+1}:{type(e).__name__}:{str(e)[:240]}")
+                if safe_attempts:state.setdefault("semantic_review_transport_attempts",[]).append({"batch":start//batch_size+1,"attempts":safe_attempts})
+                if receipt_audits:state.setdefault("provider_receipt_audits",[]).extend(receipt_audits)
+                _apply_reviews(batch,None,reviewer_model,"",gen_resolved,"",reg)
         if portfolio_mode:
             state["semantic_reviewer_batches"]=review_receipts
             if review_receipts:state["raw_artifacts"]["semantic_reviewer"]={"sha256":_sha("|".join(str(row.get("sha256") or "") for row in review_receipts)),"requested_model":reviewer_model,"resolved_model":"|".join(sorted({str(row.get('resolved_model') or '') for row in review_receipts if row.get('resolved_model')})),"calls":len(review_receipts)}
         elif review_receipts:state["raw_artifacts"]["semantic_reviewer"]={**review_receipts[0]}
+        if state.get("semantic_review_errors"):
+            unavailable=[c for c in reviewable if not (c.get("semantic_reduction_review") or {}).get("reviewed")];reviewed=[c for c in reviewable if c not in unavailable];clear_reviewed=[c for c in reviewed if (c.get("semantic_reduction_review") or {}).get("verdict")=="CLEAR"];blocked_reviewed=[c for c in reviewed if c not in clear_reviewed]
+            state["summary"].update({"semantic_clear":len(clear_reviewed),"semantic_blocked":len(blocked_reviewed),"semantic_review_unavailable":len(unavailable),"written_to_auto_inbox":0,"semantic_clear_by_lane":_count_by_lane(clear_reviewed),"semantic_blocked_by_lane":_count_by_lane(blocked_reviewed),"semantic_review_unavailable_by_lane":_count_by_lane(unavailable)})
+            state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"source_branch_id":c.get("source_branch_id") or "","source_refs":[c["empirical_evidence"]["source_a"]["ref"],c["empirical_evidence"]["source_b"]["ref"]],"semantic_verdict":(c.get("semantic_reduction_review") or {}).get("verdict") if (c.get("semantic_reduction_review") or {}).get("reviewed") else "UNREVIEWED","lane_contract_verified":(c.get("semantic_reduction_review") or {}).get("lane_contract_verified") is True,"matched_patterns":(c.get("semantic_reduction_review") or {}).get("matched_patterns") or []} for c in cands]
+            return finish("REVIEWER_ERROR_ZERO_AUTHORITY",[])
     for c in cands:
         if c not in reviewable:c["semantic_reduction_review"].update({"reviewed":False,"verdict":"BLOCK","lane_contract_verified":False,"lane_contract_reason":"structural-or-provenance-gate-failed","strongest_reduction":"structural-or-provenance-gate-failed"})
     clear_rows=[c for c in cands if (c.get("semantic_reduction_review") or {}).get("verdict")=="CLEAR"];blocked_rows=[c for c in cands if c not in clear_rows]

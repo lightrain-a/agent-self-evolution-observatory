@@ -35,9 +35,62 @@ class ArkProviderTest(unittest.TestCase):
         })
         with self.assertRaisesRegex(
             RuntimeError,
-            r"Ark response incomplete before assistant output; reason=length; requested_model=deepseek-v4-pro; resolved_model=deepseek-v4-pro-260425; output_tokens=1200; reasoning_tokens=1200",
-        ):
+            r"Ark response incomplete before assistant output; response_id=resp_test; reason=length; requested_model=deepseek-v4-pro; resolved_model=deepseek-v4-pro-260425; output_tokens=1200; reasoning_tokens=1200",
+        ) as caught:
             client.respond("x", model="deepseek-v4-pro", max_output_tokens=1200, thinking="enabled")
+        self.assertEqual("resp_test", caught.exception.response_id)
+        self.assertEqual("incomplete", caught.exception.response_status)
+
+    def test_incomplete_response_is_not_reposted_when_client_retries_are_enabled(self) -> None:
+        client = ArkResponsesClient(ArkSettings(api_key="test", max_retries=2))
+        calls = []
+
+        def post(*args, **kwargs):
+            calls.append(kwargs["json"])
+            return _Response({
+                "id": "resp_once",
+                "status": "incomplete",
+                "model": "glm-5.3-260817",
+                "incomplete_details": {"reason": "length"},
+                "output": [],
+                "usage": {"output_tokens": 4096},
+            })
+
+        client.session.post = post
+        with self.assertRaisesRegex(RuntimeError, "response_id=resp_once"):
+            client.respond("x", model="glm-5.3")
+        self.assertEqual(1, len(calls))
+
+    def test_retrieve_response_uses_get_only(self) -> None:
+        client = self.client()
+        gets = []
+        client.session.post = lambda *args, **kwargs: self.fail("retrieve must not POST")
+        client.session.get = lambda url, **kwargs: gets.append(url) or _Response({
+            "id": "resp_existing",
+            "status": "completed",
+            "model": "glm-5.3-260817",
+            "output": [{"type": "message", "content": [{"type": "output_text", "text": "done"}]}],
+            "usage": {"output_tokens": 3},
+        })
+        result = client.retrieve_response("resp_existing")
+        self.assertEqual([client.endpoint + "/resp_existing"], gets)
+        self.assertEqual("completed", result["status"])
+        self.assertEqual("done", result["text"])
+
+    def test_poll_response_reuses_same_receipt_until_terminal(self) -> None:
+        client = self.client()
+        gets = []
+        payloads = [
+            {"id": "resp_existing", "status": "in_progress", "model": "glm-5.3-260817", "output": []},
+            {"id": "resp_existing", "status": "completed", "model": "glm-5.3-260817", "output": [{"type": "message", "content": [{"type": "output_text", "text": "done"}]}]},
+        ]
+        client.session.post = lambda *args, **kwargs: self.fail("poll must not POST")
+        client.session.get = lambda url, **kwargs: gets.append(url) or _Response(payloads.pop(0))
+        result = client.poll_response("resp_existing", max_polls=2)
+        self.assertEqual(2, len(gets))
+        self.assertEqual("completed", result["status"])
+        self.assertEqual(2, result["poll_count"])
+        self.assertEqual("done", result["text"])
 
     def test_completed_response_without_assistant_output_is_not_mislabeled_as_length(self) -> None:
         client = self.client()
@@ -50,7 +103,7 @@ class ArkProviderTest(unittest.TestCase):
         })
         with self.assertRaisesRegex(
             RuntimeError,
-            r"contained neither assistant output_text nor function_call; status=completed",
+            r"contained neither assistant output_text nor function_call; response_id=resp_test; status=completed",
         ):
             client.respond("x", model="deepseek-v4-pro")
 

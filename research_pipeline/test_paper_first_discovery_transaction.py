@@ -1,14 +1,16 @@
 from __future__ import annotations
 
 import json
+import os
 import tempfile
 import unittest
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from .config import StorageSettings
-from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, _transaction_id, _validate, write_problem_discovery_transaction
+from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, _transaction_id, _transaction_lock, _transaction_lock_path, _validate, write_problem_discovery_transaction
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES
 
 
@@ -19,6 +21,16 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
             paper_dir=root/"data"/"papers", index_dir=root/"data"/"indexes", run_dir=root/"data"/"runs",
             cache_dir=root/"data"/"cache", lock_dir=root/"data"/"locks", site_artifact_dir=root/"site",
         )
+
+    def test_transaction_lock_is_host_shared_across_worktree_storage_dirs(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);left=self.storage(root/"left");right=self.storage(root/"right");shared=root/"host-paper-first.lock"
+            with patch.dict(os.environ,{"PAPER_FIRST_DISCOVERY_TRANSACTION_LOCK":str(shared)}):
+                self.assertEqual(_transaction_lock_path(left),_transaction_lock_path(right))
+                with _transaction_lock(left):
+                    with self.assertRaisesRegex(RuntimeError,"active on this host"):
+                        with _transaction_lock(right):
+                            self.fail("second worktree must not acquire the same transaction lock")
 
     def corpus(self, root: Path, now: datetime) -> Path:
         root.mkdir(parents=True,exist_ok=True);path=root/"corpus.json";papers=[]

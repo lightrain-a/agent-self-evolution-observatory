@@ -60,6 +60,28 @@ class ArkSettings:
         }
 
 
+class ArkResponseStateError(RuntimeError):
+    """A provider response object exists, but it has no auditable assistant output yet."""
+
+    def __init__(self, message: str, payload: dict[str, Any], requested_model: str) -> None:
+        super().__init__(message)
+        self.response_id = str(payload.get("id") or "")
+        self.response_status = str(payload.get("status") or "unknown")
+        self.requested_model = requested_model
+        self.resolved_model = str(payload.get("model") or requested_model)
+        incomplete = payload.get("incomplete_details") or {}
+        self.incomplete_reason = str(incomplete.get("reason") or "") if isinstance(incomplete, dict) else ""
+
+    def receipt(self) -> dict[str, Any]:
+        return {
+            "response_id": self.response_id,
+            "status": self.response_status,
+            "requested_model": self.requested_model,
+            "resolved_model": self.resolved_model,
+            "incomplete_reason": self.incomplete_reason,
+        }
+
+
 class ArkResponsesClient:
     def __init__(self, settings: ArkSettings | None = None) -> None:
         self.settings = settings or ArkSettings.from_env()
@@ -90,6 +112,54 @@ class ArkResponsesClient:
     def function_calls(payload: dict[str, Any]) -> list[dict[str, Any]]:
         return [item for item in payload.get("output") or [] if isinstance(item, dict) and item.get("type") == "function_call"]
 
+    def retrieve_response(self, response_id: str) -> dict[str, Any]:
+        """Retrieve one existing Responses API object without creating a new provider request."""
+        response_id = str(response_id or "").strip()
+        if not response_id:
+            raise ValueError("response_id is required")
+        response = self.session.get(
+            f"{self.endpoint}/{response_id}",
+            timeout=self.settings.timeout_seconds,
+        )
+        if response.status_code >= 400:
+            try:
+                detail = response.json()
+            except Exception:
+                detail = response.text[:500]
+            raise RuntimeError(f"Ark retrieve HTTP {response.status_code}: {detail}")
+        payload = response.json()
+        return {
+            "response_id": payload.get("id") or response_id,
+            "status": payload.get("status"),
+            "requested_model": None,
+            "resolved_model": payload.get("model"),
+            "text": self.output_text(payload),
+            "function_calls": self.function_calls(payload),
+            "usage": payload.get("usage") or {},
+            "incomplete_details": payload.get("incomplete_details") or {},
+        }
+
+    def poll_response(
+        self,
+        response_id: str,
+        *,
+        max_polls: int = 1,
+        interval_seconds: float = 0.0,
+    ) -> dict[str, Any]:
+        """Poll an existing response using GET only; never submits another generation POST."""
+        if max_polls < 1:
+            raise ValueError("max_polls must be >= 1")
+        result: dict[str, Any] = {}
+        for index in range(max_polls):
+            result = self.retrieve_response(response_id)
+            result["poll_count"] = index + 1
+            status = str(result.get("status") or "unknown")
+            if status not in {"queued", "in_progress"}:
+                return result
+            if index + 1 < max_polls and interval_seconds > 0:
+                time.sleep(interval_seconds)
+        return result
+
     def respond(
         self,
         prompt: str,
@@ -99,6 +169,7 @@ class ArkResponsesClient:
         temperature: float | None = None,
         tools: list[dict[str, Any]] | None = None,
         thinking: str | None = None,
+        store: bool | None = None,
     ) -> dict[str, Any]:
         requested_model = model or self.settings.default_model
         body: dict[str, Any] = {
@@ -108,6 +179,8 @@ class ArkResponsesClient:
         }
         if temperature is not None:
             body["temperature"] = temperature
+        if store is not None:
+            body["store"] = bool(store)
         if tools:
             body["tools"] = tools
         if thinking:
@@ -148,18 +221,25 @@ class ArkResponsesClient:
                     reasoning_tokens = output_details.get("reasoning_tokens") if isinstance(output_details, dict) else None
                     output_tokens = usage.get("output_tokens") if isinstance(usage, dict) else None
                     resolved_model = payload.get("model") or requested_model
+                    response_id = str(payload.get("id") or "")
                     if status == "incomplete":
-                        raise RuntimeError(
+                        raise ArkResponseStateError(
                             "Ark response incomplete before assistant output"
+                            f"; response_id={response_id or 'missing'}"
                             f"; reason={reason or 'unknown'}"
                             f"; requested_model={requested_model}"
                             f"; resolved_model={resolved_model}"
                             f"; output_tokens={output_tokens}"
-                            f"; reasoning_tokens={reasoning_tokens}"
+                            f"; reasoning_tokens={reasoning_tokens}",
+                            payload,
+                            requested_model,
                         )
-                    raise RuntimeError(
+                    raise ArkResponseStateError(
                         "Ark response contained neither assistant output_text nor function_call"
-                        f"; status={status}; requested_model={requested_model}; resolved_model={resolved_model}"
+                        f"; response_id={response_id or 'missing'}"
+                        f"; status={status}; requested_model={requested_model}; resolved_model={resolved_model}",
+                        payload,
+                        requested_model,
                     )
                 return {
                     "requested_model": requested_model,
@@ -173,6 +253,10 @@ class ArkResponsesClient:
                     "thinking_effective": None if thinking_compatibility_fallback else thinking,
                     "thinking_compatibility_fallback": thinking_compatibility_fallback,
                 }
+            except ArkResponseStateError:
+                # The provider already created a response object. Re-POSTing the prompt here would
+                # create a second generation request and destroy receipt-level auditability.
+                raise
             except Exception as error:
                 last_error = str(error)
                 if retry_attempt >= self.settings.max_retries:

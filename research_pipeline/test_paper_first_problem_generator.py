@@ -262,21 +262,49 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertFalse(second["policy"]["automatic_p0_authority"])
 
     def test_no_output_provider_failure_allows_one_transport_fallback(self) -> None:
-        from .ark_provider import ArkSettings
+        from .ark_provider import ArkResponseStateError,ArkSettings
         settings=ArkSettings(api_key="test-key",base_url="https://example.invalid",default_model="glm-5.3",timeout_seconds=120,max_retries=0)
+        incomplete=ArkResponseStateError(
+            "Ark response incomplete before assistant output; response_id=resp_glm; reason=length; requested_model=glm-5.3",
+            {"id":"resp_glm","status":"incomplete","model":"glm-5.3-260817","incomplete_details":{"reason":"length"}},
+            "glm-5.3",
+        )
         with patch("research_pipeline.paper_first_problem_generator.ArkSettings.from_env",return_value=settings), patch(
             "research_pipeline.paper_first_problem_generator.ArkResponsesClient.respond",
             side_effect=[
-                RuntimeError("Ark response incomplete before assistant output; reason=length; requested_model=glm-5.3"),
+                incomplete,
                 {"text":"OK","resolved_model":"kimi-k3"},
             ],
         ) as respond:
             result=_ark(prompt="test",model="glm-5.3",max_output_tokens=64,temperature=0.0,stage="problem_generation")
         self.assertEqual(respond.call_count,2)
+        self.assertTrue(all(call.kwargs.get("store") is True for call in respond.call_args_list))
         self.assertTrue(result["transport_fallback_used"])
         self.assertEqual([row["requested_model"] for row in result["transport_attempts"]],["glm-5.3","kimi-k3"])
         self.assertEqual([row["assistant_output_present"] for row in result["transport_attempts"]],[False,True])
+        self.assertEqual(result["transport_attempts"][0]["provider_receipt"]["response_id"],"resp_glm")
+        self.assertEqual(result["transport_attempts"][0]["provider_receipt"]["status"],"incomplete")
         self.assertEqual(result["resolved_model"],"kimi-k3")
+
+    def test_pending_provider_receipt_does_not_fallback_or_repost(self) -> None:
+        from .ark_provider import ArkResponseStateError,ArkSettings
+        settings=ArkSettings(api_key="test-key",base_url="https://example.invalid",default_model="glm-5.3",timeout_seconds=120,max_retries=0)
+        pending=ArkResponseStateError(
+            "Ark response contained neither assistant output_text nor function_call; response_id=resp_pending; status=in_progress; requested_model=glm-5.3; resolved_model=glm-5.3-260817",
+            {"id":"resp_pending","status":"in_progress","model":"glm-5.3-260817","output":[]},
+            "glm-5.3",
+        )
+        with patch("research_pipeline.paper_first_problem_generator.ArkSettings.from_env",return_value=settings), patch(
+            "research_pipeline.paper_first_problem_generator.ArkResponsesClient.respond",
+            side_effect=pending,
+        ) as respond:
+            with self.assertRaisesRegex(RuntimeError,"re-POST forbidden") as caught:
+                _ark(prompt="test",model="glm-5.3",max_output_tokens=64,temperature=0.0,stage="problem_generation")
+        self.assertEqual(respond.call_count,1)
+        self.assertTrue(respond.call_args.kwargs.get("store") is True)
+        self.assertEqual(caught.exception.provider_receipt["response_id"],"resp_pending")
+        self.assertEqual(caught.exception.provider_receipt["status"],"in_progress")
+        self.assertEqual(len(caught.exception.transport_attempts),1)
 
     def test_nontransport_provider_error_does_not_fallback(self) -> None:
         from .ark_provider import ArkSettings
@@ -310,6 +338,60 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertNotIn("archived_previous_auto_inbox", public)
         self.assertNotIn("path", public["raw_artifacts"]["generator"])
         self.assertEqual(public["raw_artifacts"]["generator"]["sha256"], internal["raw_artifacts"]["generator"]["sha256"])
+
+    def test_provider_response_id_is_private_and_public_state_keeps_only_audit_fingerprint(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,17,tzinfo=timezone.utc);storage=self.storage(root);json_path=root/"public.json";js_path=root/"public.js";base=self.gen([],resolved="kimi-k3",notes="All four lanes were audited; none survives.")
+            def responder(**kwargs):
+                result=base(**kwargs);result["transport_fallback_used"]=True;result["transport_attempts"]=[
+                    {"requested_model":"glm-5.3","status":"error-no-output","error_kind":"provider-incomplete-before-output","assistant_output_present":False,"provider_receipt":{"response_id":"resp_secret_glm","status":"incomplete","requested_model":"glm-5.3","resolved_model":"glm-5.3-260817","incomplete_reason":"length"}},
+                    {"requested_model":"kimi-k3","status":"success","resolved_model":"kimi-k3","assistant_output_present":True},
+                ];return result
+            internal=write_problem_generator_state(json_path=json_path,js_path=js_path,storage=storage,primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=responder,now=now)
+            public_text=json_path.read_text();private_files=list((root/"paper-first-problem-discovery"/"provider-receipts").glob("*.json"));private_payload=json.loads(private_files[0].read_text())
+        self.assertEqual(len(private_files),1)
+        self.assertEqual(private_payload["provider_receipt"]["response_id"],"resp_secret_glm")
+        self.assertNotIn("resp_secret_glm",public_text)
+        self.assertNotIn("provider_receipt",internal["raw_artifacts"]["generator"]["transport_attempts"][0])
+        audit=internal["raw_artifacts"]["generator"]["transport_attempts"][0]["provider_receipt_audit"]
+        self.assertEqual(audit["status"],"incomplete")
+        self.assertEqual(len(audit["provider_receipt_sha256"]),64)
+
+    def test_pending_provider_response_id_is_archived_before_generator_error_state(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,17,tzinfo=timezone.utc);storage=self.storage(root);json_path=root/"public.json";js_path=root/"public.js"
+            def pending(**kwargs):
+                error=RuntimeError("Ark provider response is pending; re-POST forbidden; requested_model=glm-5.3; status=in_progress")
+                receipt={"response_id":"resp_pending_secret","status":"in_progress","requested_model":"glm-5.3","resolved_model":"glm-5.3-260817","incomplete_reason":""}
+                error.provider_receipt=receipt;error.transport_attempts=[{"requested_model":"glm-5.3","status":"error-no-output","error_kind":"provider-empty-output","assistant_output_present":False,"provider_receipt":receipt}]
+                raise error
+            state=write_problem_generator_state(json_path=json_path,js_path=js_path,storage=storage,primary_pool_path=self.pool(root,now),auto_inbox_path=root/"auto.json",generator_responder=pending,now=now)
+            public_text=json_path.read_text();private_files=list((root/"paper-first-problem-discovery"/"provider-receipts").glob("*.json"));private_payload=json.loads(private_files[0].read_text())
+        self.assertEqual(state["status"],"GENERATOR_ERROR_ZERO_AUTHORITY")
+        self.assertEqual(len(private_files),1)
+        self.assertEqual(private_payload["provider_receipt"]["response_id"],"resp_pending_secret")
+        self.assertNotIn("resp_pending_secret",public_text)
+        self.assertEqual(state["provider_receipt_audits"][0]["status"],"in_progress")
+        self.assertEqual(state["provider_transport_attempts"][0]["provider_receipt_audit"]["status"],"in_progress")
+
+    def test_pending_reviewer_receipt_is_not_converted_into_scientific_block(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,17,tzinfo=timezone.utc);storage=self.storage(root);json_path=root/"public.json";js_path=root/"public.js";auto=root/"auto.json"
+            def pending_reviewer(**kwargs):
+                error=RuntimeError("Ark provider response is pending; re-POST forbidden; requested_model=deepseek-v4-pro; status=in_progress")
+                receipt={"response_id":"resp_reviewer_secret","status":"in_progress","requested_model":"deepseek-v4-pro","resolved_model":"deepseek-v4-pro-260817","incomplete_reason":""}
+                error.provider_receipt=receipt;error.transport_attempts=[{"requested_model":"deepseek-v4-pro","status":"error-no-output","error_kind":"provider-empty-output","assistant_output_present":False,"provider_receipt":receipt}]
+                raise error
+            state=write_problem_generator_state(json_path=json_path,js_path=js_path,storage=storage,primary_pool_path=self.pool(root,now),auto_inbox_path=auto,generator_responder=self.gen([self.raw_candidate()]),reviewer_responder=pending_reviewer,now=now)
+            public_text=json_path.read_text();public=json.loads(public_text);inbox=json.loads(auto.read_text());private_files=list((root/"paper-first-problem-discovery"/"provider-receipts").glob("*.json"))
+        self.assertEqual(state["status"],"REVIEWER_ERROR_ZERO_AUTHORITY")
+        self.assertEqual(state["summary"]["semantic_review_unavailable"],1)
+        self.assertEqual(state["summary"]["semantic_blocked"],0)
+        self.assertEqual(state["summary"]["written_to_auto_inbox"],0)
+        self.assertEqual(inbox["candidates"],[])
+        self.assertEqual(public["candidates"][0]["semantic_verdict"],"UNREVIEWED")
+        self.assertNotIn("resp_reviewer_secret",public_text)
+        self.assertEqual(len(private_files),1)
 
     def test_public_writer_carries_zero_authority_review_receipts_across_hosts(self) -> None:
         with tempfile.TemporaryDirectory() as td:
