@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T16:43:23+00:00",
-  "source_revision": "2316e4261c92702c027c159a0f44f83b9a2ba36c",
+  "generated_at": "2026-08-17T17:14:24+00:00",
+  "source_revision": "3a4dde800175b4aeb9246445c3b979a5c661d0a5",
   "as_of_date": "2026-08-17",
   "headline": {
     "paper_ready": 1,
@@ -19,7 +19,7 @@
     "shadow_dead_ends": 34,
     "shadow_holds": 2,
     "shadow_method_ready": 0,
-    "shadow_qualification_ready": 1,
+    "shadow_qualification_ready": 0,
     "fresh_active_f0": 0,
     "fresh_design_ready_f0": 0,
     "fresh_support_holds": 0,
@@ -317,12 +317,12 @@
       "method_design_authorized": 0
     },
     "qualification": {
-      "status": "READY_FOR_SHADOW_QUALIFICATION",
+      "status": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
       "operator_version": "fresh-phenomenon-anomaly-precision-v13",
       "operator_upgrade_recompile": false,
-      "qualification_allowed": true,
+      "qualification_allowed": false,
       "automatic_provider_calls_authorized": 0,
-      "reason": "Canonical discovery is closed and the current source transaction differs from the latest terminal shadow source identity.",
+      "reason": "The current canonical source transaction already has a terminal shadow search result under the current discovery operator; repeating model calls would be redundant.",
       "scope": "global-v13-shadow-control; does not reactivate archived positive-residual assets"
     }
   },
