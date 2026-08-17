@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T19:42:14+00:00",
+  "generated_at": "2026-08-17T19:55:56+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T19:42:14+00:00",
+    "generated_at": "2026-08-17T19:55:56+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -1041,6 +1041,77 @@
           ],
           "closure_scope": "the claimed cross-level sign-reversal interpretation of MG-Select/VOTE versus the appropriate local unscaled baselines",
           "source_readjudication_artifact": "generated/shaper-scaling-comparator-principle-readjudication-20260817.json",
+          "scientific_authority": false
+        },
+        "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+        "scientific_authority": false
+      },
+      {
+        "source_candidate_id": "SKILLCOACH-DISTRACTOR-SELECTION-BOUNDARY",
+        "basin": "principle-readjudication-3ec43f8a60b7c2b3",
+        "search_primitive": "UNEXPLAINED_BOUNDARY",
+        "title": "SkillCoach distractor boundaries reduce to frozen selector capacity under candidate-space confusability",
+        "avoid": [
+          "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: SkillCoach distractor boundaries reduce to frozen selector capacity under candidate-space confusability",
+          "using the negative experiment metric alone as the reason for the dead end",
+          "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+        ],
+        "strongest_reduction": "SkillCoach already provides a matched positive explanation for the scoped boundary. Section 4.4 freezes the agent and removes tool execution, environment failures, and verifier noise so the experiment is a pure candidate-selection stress test. At fixed library size (50 distractors), changing only distractor semantic type causes large F1 changes: high-similarity distractors are substantially more damaging than random unrelated distractors. Across the size sweep, stronger frozen selectors degrade later and may remain outside collapse through 50k, whereas weaker selectors cross collapse earlier. Thus the reported boundary is explained first by candidate-space semantic confusability interacting with frozen selector capability; it is a routing/retrieval robustness diagnostic, not evidence of an update or self-evolution mechanism.",
+        "current_source_refs": [
+          "arXiv:2607.01874"
+        ],
+        "evidence_basis": [
+          "arXiv:2607.01874",
+          "primary-fulltext:arXiv:2607.01874#sha256=98e09b6cf2748867e3843fe1ace5525225b0d87a2821316614b6942be12fd728",
+          "primary-fulltext-evidence:arXiv:2607.01874#sha256=5e625d0c123eee1c626e13100ec450df4e3d4e8f00e2deb0bd6dae6469109431",
+          "primary-fulltext-evidence:arXiv:2607.01874#sha256=b9f08e92fdd40183089fd41cb0c942443bdac8d9e36b4133161d79185e26d8f9",
+          "primary-fulltext-evidence:arXiv:2607.01874#sha256=26c4980a7d22ee8fd0efee1597f805576dd24cdb18fe305e53309734181eb12a",
+          "fresh-primary-evidence:arXiv:2607.01874#sha256=c263b77c4330f4f5ae08edaac22fd89c65f3cd721bdaae07996e6e1251b83be1",
+          "fresh-primary-evidence:arXiv:2607.01874#sha256=0c02eb569a20f741682b392eee38cbd4cfa070b854d215e8bd7dde2a9d1ddb92"
+        ],
+        "problem_text": "SkillCoach arXiv:2607.01874, restricted to the Section 4.4 evidence that selection F1 crosses a preregistered degradation threshold as frozen skill libraries grow and that GPT-5.5/Opus 4.7 remain outside the paper's collapse criterion at 50k distractors. The scoped claim to close is that these two observations by themselves identify an unexplained self-evolution mechanism or a new library-size phase transition.",
+        "reason": "SkillCoach's library-size boundary is a useful deployment diagnostic, but the source itself shows that its scale is governed by frozen selector capability and semantic candidate confusability; the reported threshold does not by itself establish a new self-evolution mechanism.",
+        "reopen_only_if": "Reopen only with new primary or provenance-audited first-party evidence that matches candidate count, semantic-overlap or confusability distribution, gold-skill support, query distribution, browser/search interface and budget, frozen model, and evaluation metric, yet shows a reproducible boundary shift attributable to an artifact-evolution or self-evolution state that remains unexplained by same-information retrieval/ranking margin, candidate-confusability, selector-capacity, or ordinary distribution-shift baselines.",
+        "dead_end_certified": true,
+        "memory_class": "PRINCIPLE_DEAD_END",
+        "counter_explanation": {
+          "type": "COUNTER_MECHANISM_SUPPORTED",
+          "statement": "SkillCoach already provides a matched positive explanation for the scoped boundary. Section 4.4 freezes the agent and removes tool execution, environment failures, and verifier noise so the experiment is a pure candidate-selection stress test. At fixed library size (50 distractors), changing only distractor semantic type causes large F1 changes: high-similarity distractors are substantially more damaging than random unrelated distractors. Across the size sweep, stronger frozen selectors degrade later and may remain outside collapse through 50k, whereas weaker selectors cross collapse earlier. Thus the reported boundary is explained first by candidate-space semantic confusability interacting with frozen selector capability; it is a routing/retrieval robustness diagnostic, not evidence of an update or self-evolution mechanism.",
+          "opposite_prediction": "If candidate-space confusability and frozen selector capability explain the boundary, then at the same distractor count more semantically similar candidates should lower selection F1, and stronger frozen selectors should tolerate larger libraries before degradation/collapse. SkillCoach reports both predictions: at 50 distractors high-similarity candidates lower F1 relative to random unrelated candidates for GPT-5.5, Opus 4.7, and DeepSeek V4 Flash, while model-specific degradation/collapse scales shift strongly with selector capability.",
+          "opposite_principle": "A frozen agent's failure to select the correct artifact from a growing, semantically overlapping candidate set is first a candidate-confusability and selector-capacity problem. A library-size threshold is not a new self-evolution primitive unless an evolution-specific residual survives matched candidate-count, semantic-overlap, search-interface, and frozen-selector controls.",
+          "opposite_search_seed": "Search for matched libraries with the same candidate count, semantic-confusability distribution, query/gold support, browser/search budget, and frozen selector, but different evolution histories or artifact-generation dynamics. Require a reproducible boundary shift that a same-information retrieval/ranking/confusability model cannot predict.",
+          "scope": "SkillCoach arXiv:2607.01874, restricted to the Section 4.4 evidence that selection F1 crosses a preregistered degradation threshold as frozen skill libraries grow and that GPT-5.5/Opus 4.7 remain outside the paper's collapse criterion at 50k distractors. The scoped claim to close is that these two observations by themselves identify an unexplained self-evolution mechanism or a new library-size phase transition.",
+          "same_information_or_scope_matched": true,
+          "counter_prediction_observed": true,
+          "positive_support": true,
+          "evidence_refs": [
+            "arXiv:2607.01874",
+            "primary-fulltext:arXiv:2607.01874#sha256=98e09b6cf2748867e3843fe1ace5525225b0d87a2821316614b6942be12fd728",
+            "primary-fulltext-evidence:arXiv:2607.01874#sha256=5e625d0c123eee1c626e13100ec450df4e3d4e8f00e2deb0bd6dae6469109431",
+            "primary-fulltext-evidence:arXiv:2607.01874#sha256=b9f08e92fdd40183089fd41cb0c942443bdac8d9e36b4133161d79185e26d8f9",
+            "primary-fulltext-evidence:arXiv:2607.01874#sha256=26c4980a7d22ee8fd0efee1597f805576dd24cdb18fe305e53309734181eb12a",
+            "fresh-primary-evidence:arXiv:2607.01874#sha256=c263b77c4330f4f5ae08edaac22fd89c65f3cd721bdaae07996e6e1251b83be1",
+            "fresh-primary-evidence:arXiv:2607.01874#sha256=0c02eb569a20f741682b392eee38cbd4cfa070b854d215e8bd7dde2a9d1ddb92"
+          ],
+          "alternative_explanations_ruled_out": [
+            "The boundary is caused by tool execution, environment failure, or verifier noise: Section 4.4 explicitly removes those factors and isolates skill selection through a constrained browser-style interface.",
+            "Library size alone is the identified mechanism: false; with the count fixed at 50, high-similarity distractors are substantially more harmful than random unrelated distractors.",
+            "All models share one count-only collapse threshold: false; degradation and collapse scales differ strongly by frozen model, and GPT-5.5/Opus 4.7 remain outside collapse at 50k.",
+            "The experiment observes a self-updating agent: false; the boundary sweep is a frozen-model selection stress test and does not manipulate an update/evolution process.",
+            "Closing these boundary observations closes SkillCoach's process-supervision or SFT results: false; the closure is limited to the two exact library-size degradation/non-collapse evidence items."
+          ],
+          "reopen_condition": "Reopen only with new primary or provenance-audited first-party evidence that matches candidate count, semantic-overlap or confusability distribution, gold-skill support, query distribution, browser/search interface and budget, frozen model, and evaluation metric, yet shows a reproducible boundary shift attributable to an artifact-evolution or self-evolution state that remains unexplained by same-information retrieval/ranking margin, candidate-confusability, selector-capacity, or ordinary distribution-shift baselines."
+        },
+        "source_readjudication_artifact": "generated/skillcoach-distractor-boundary-principle-readjudication-20260818.json",
+        "opposite_search_asset_evidence": {},
+        "fresh_phenomenon_closure": {
+          "source_ref": "arXiv:2607.01874",
+          "closed_evidence_sha256": [
+            "0c02eb569a20f741682b392eee38cbd4cfa070b854d215e8bd7dde2a9d1ddb92",
+            "c263b77c4330f4f5ae08edaac22fd89c65f3cd721bdaae07996e6e1251b83be1"
+          ],
+          "closure_scope": "Section 4.4 library-size degradation threshold and 50k non-collapse evidence only",
+          "source_readjudication_artifact": "generated/skillcoach-distractor-boundary-principle-readjudication-20260818.json",
           "scientific_authority": false
         },
         "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
@@ -2487,10 +2558,10 @@
         "scientific_authority": false
       }
     ],
-    "principle_dead_end_count": 36,
-    "principle_readjudication_dead_end_count": 32,
-    "fresh_phenomenon_closure_count": 18,
-    "fresh_phenomenon_closed_evidence_count": 32,
+    "principle_dead_end_count": 37,
+    "principle_readjudication_dead_end_count": 33,
+    "fresh_phenomenon_closure_count": 19,
+    "fresh_phenomenon_closed_evidence_count": 34,
     "inversion_asset_evidence": [
       {
         "asset_ref": "first-party-asset:autoskill@94c47ca488d4ba4117d20272e66d49b9877e68cf",
@@ -2713,8 +2784,8 @@
     "revise_paper_problem": 1,
     "stop_standalone": 1,
     "support_inventory_required": 1,
-    "shadow_dead_end_objects": 36,
-    "principle_readjudication_dead_ends": 32,
+    "shadow_dead_end_objects": 37,
+    "principle_readjudication_dead_ends": 33,
     "shadow_hold_objects": 2,
     "current_source_hard_veto_dead_ends": 0,
     "current_source_hard_veto_added_from_latest_run": 0,
