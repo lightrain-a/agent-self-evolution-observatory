@@ -6261,25 +6261,25 @@
     "paper_first_sp15_identifiability_units": 0,
     "paper_first_search_portfolio_method_design_authorized": 0,
     "paper_first_paper_design_backlog_pending": 0,
-    "paper_first_global_relation_status": "LANE_REVIEW_ERROR_ZERO_AUTHORITY",
+    "paper_first_global_relation_status": "GLOBAL_RELATION_RECALL_COMPLETE",
     "paper_first_global_relation_reviewed_sources": 233,
     "paper_first_global_relation_pair_coverage": 0.2505,
     "paper_first_global_relation_blind_spot": true,
     "paper_first_global_relation_cache_fraction": 1.0,
     "paper_first_global_relation_proposals": 17,
     "paper_first_global_relation_unseen_proposals": 14,
-    "paper_first_global_relation_lane_pass": 0,
-    "paper_first_global_relation_unseen_lane_pass": 0,
-    "paper_first_global_relation_reducible": 0,
+    "paper_first_global_relation_lane_pass": 3,
+    "paper_first_global_relation_unseen_lane_pass": 2,
+    "paper_first_global_relation_reducible": 3,
     "paper_first_global_relation_not_reduced": 0,
     "paper_first_global_relation_focused_reopen": false,
-    "paper_first_global_relation_freshness_status": "STALE_RELATION_UNIVERSE",
+    "paper_first_global_relation_freshness_status": "CURRENT_RELATION_UNIVERSE",
     "paper_first_global_relation_current_sources": 233,
-    "paper_first_global_relation_last_scanned_sources": 228,
+    "paper_first_global_relation_last_scanned_sources": 233,
     "paper_first_global_relation_current_pair_coverage": 0.2505,
-    "paper_first_global_relation_universe_stale": true,
-    "paper_first_global_relation_current_not_reduced_unknown": true,
-    "paper_first_global_relation_model_scan_deferred": true,
+    "paper_first_global_relation_universe_stale": false,
+    "paper_first_global_relation_current_not_reduced_unknown": false,
+    "paper_first_global_relation_model_scan_deferred": false,
     "paper_first_global_relation_focused_reopen_allowed": false,
     "paper_first_relation_delta_status": "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE",
     "paper_first_relation_delta_new_sources": 5,
@@ -6289,23 +6289,23 @@
     "paper_first_relation_delta_new_boundaries": 2,
     "paper_first_relation_delta_model_scan_authorized": false,
     "paper_first_relation_delta_focused_reopen_authorized": false,
-    "paper_first_relation_scan_admission_status": "HOLD_RELATION_REVIEW_RETRY_EXHAUSTED",
+    "paper_first_relation_scan_admission_status": "HOLD_MANUAL_RELATION_SCAN",
     "paper_first_relation_scan_admission_checks": 16,
-    "paper_first_relation_scan_admission_passed": 15,
-    "paper_first_relation_scan_admission_failed": 1,
+    "paper_first_relation_scan_admission_passed": 14,
+    "paper_first_relation_scan_admission_failed": 2,
     "paper_first_relation_scan_manual_eligible": false,
     "paper_first_relation_scan_automatic_authorized": false,
     "paper_first_shadow_search_admission_status": "READY_FOR_SHADOW_QUALIFICATION",
     "paper_first_shadow_search_same_source_transaction": true,
     "paper_first_shadow_search_qualification_allowed": true,
     "paper_first_shadow_search_automatic_provider_calls": 0,
-    "paper_first_shadow_continuation_status": "WAIT_EXTERNAL_PRIMARY_CONTENT_CHANGE",
-    "paper_first_shadow_continuation_next_action": "wait-external-change",
-    "paper_first_shadow_continuation_active_actions": 0,
-    "paper_first_shadow_continuation_external_wait": 1,
-    "paper_first_discovery_frontier_status": "WAIT_EXTERNAL_RELATION_EXECUTION_CHANGE",
-    "paper_first_discovery_frontier_open_internal": 0,
-    "paper_first_discovery_frontier_external_triggers": 6,
+    "paper_first_shadow_continuation_status": "READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION",
+    "paper_first_shadow_continuation_next_action": "canonical-private-pool-shadow-qualification",
+    "paper_first_shadow_continuation_active_actions": 1,
+    "paper_first_shadow_continuation_external_wait": 0,
+    "paper_first_discovery_frontier_status": "SHADOW_QUALIFICATION_PENDING",
+    "paper_first_discovery_frontier_open_internal": 1,
+    "paper_first_discovery_frontier_external_triggers": 5,
     "paper_first_discovery_frontier_model_calls": 0,
     "paper_first_discovery_frontier_evidence_open": 0,
     "paper_first_fresh_phenomenon_status": "NO_ACTIVE_F0",
@@ -37250,7 +37250,7 @@
   },
   "paper_first_discovery_frontier": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T18:01:24+00:00",
+    "generated_at": "2026-08-17T18:35:37+00:00",
     "status": "SHADOW_QUALIFICATION_PENDING",
     "policy": {
       "scientific_authority": false,
@@ -37268,8 +37268,8 @@
       "live_source_closed": true,
       "live_generator_closed": true,
       "live_queue_closed": true,
-      "relation_current_closed": false,
-      "relation_execution_censored": true,
+      "relation_current_closed": true,
+      "relation_execution_censored": false,
       "relation_control_closed_for_now": true,
       "shadow_closed": false,
       "scientific_object_closed": true,
@@ -37287,7 +37287,7 @@
       "evidence_residual_survives": 0,
       "evidence_branch_repair_ready": 0,
       "open_internal_frontiers": 1,
-      "external_triggers": 6,
+      "external_triggers": 5,
       "automatic_model_calls_authorized": 0,
       "automatic_problem_gate_authorized": 0,
       "automatic_method_authorized": 0,
@@ -37331,13 +37331,6 @@
         "trigger": "NEW_PRIMARY_VERIFIED_SUPPORT_FOR_SHADOW_SCIENTIFIC_OBJECT",
         "detector": "shadow-scientific-object-maintenance",
         "effect": "may-request-human-lane-preregistration-review-only-after-existing-support-purity-ownership-gates",
-        "automatic_model_call_authorized": false,
-        "scientific_authority": false
-      },
-      {
-        "trigger": "RELATION_LANE_REVIEW_EXECUTION_CONTRACT_CHANGE",
-        "detector": "global-relation-scan-admission",
-        "effect": "may-reopen-one-explicit-manual-relation-review-only-after-versioned-execution-contract-change",
         "automatic_model_call_authorized": false,
         "scientific_authority": false
       }
@@ -37765,9 +37758,9 @@
   },
   "paper_first_global_relation_recall": {
     "schema_version": "1.3",
-    "generated_at": "2026-08-17T17:45:58+00:00",
-    "run_id": "20260817T174534Z",
-    "status": "LANE_REVIEW_ERROR_ZERO_AUTHORITY",
+    "generated_at": "2026-08-17T18:20:53+00:00",
+    "run_id": "20260817T182029Z",
+    "status": "GLOBAL_RELATION_RECALL_COMPLETE",
     "scientific_authority": false,
     "policy": {
       "scientific_authority": false,
@@ -37805,10 +37798,7 @@
       "automatic_method_authority": false,
       "automatic_experiment_authority": false,
       "automatic_p0_authority": false,
-      "explicit_manual_writer_admission_required": true,
-      "same_relation_universe_lane_review_retry_budget_bounded": true,
-      "lane_review_retry_exhaustion_is_execution_control_not_scientific_negative": true,
-      "lane_review_retry_reopens_only_on_new_relation_universe_or_execution_contract": true
+      "explicit_manual_writer_admission_required": true
     },
     "models": {
       "relation": "kimi-k3",
@@ -37847,6 +37837,67 @@
         "provider_calls_executed": 0,
         "origin_run_id": "20260817T173440Z",
         "origin_raw_sha256": "e0bdc50bb72166bffadbb6518cd68fa64d88d8b8c598786314bb0a2926c78a10"
+      },
+      "lane_review_p1": {
+        "sha256": "4de4c781488d49fcae9f3415e9336dcbf77e98e16852fc103a2d5b359cc494a7",
+        "requested_model": "glm-5.3",
+        "resolved_model": "glm-5.3",
+        "batch_index": 1,
+        "proposal_ids": [
+          "REL-CONTRADICTION-1",
+          "REL-CONTRADICTION-2",
+          "REL-CONTRADICTION-3",
+          "REL-CONVERGENT_FAILURE-1",
+          "REL-CONVERGENT_FAILURE-2",
+          "REL-CONVERGENT_FAILURE-3"
+        ],
+        "execution_contract_sha256": "22a1fd4dec9fba116dc0e24544cecd242db97dabad53e83d7eacc597666726f2"
+      },
+      "lane_review_p2": {
+        "sha256": "0bb5b9c75095080611bb1a00136ec66b290a8d1a2a592a1c25ec98361c128fea",
+        "requested_model": "glm-5.3",
+        "resolved_model": "glm-5.3",
+        "batch_index": 2,
+        "proposal_ids": [
+          "REL-CONVERGENT_FAILURE-4",
+          "REL-ASSUMPTION_BREAK-1",
+          "REL-ASSUMPTION_BREAK-2",
+          "REL-ASSUMPTION_BREAK-3",
+          "REL-ASSUMPTION_BREAK-4",
+          "REL-ASSUMPTION_BREAK-5"
+        ],
+        "execution_contract_sha256": "22a1fd4dec9fba116dc0e24544cecd242db97dabad53e83d7eacc597666726f2"
+      },
+      "lane_review_p3": {
+        "sha256": "f8042de699206c17c71f74983ef217a106602d2e209b7f911ef18ca7d7c604f8",
+        "requested_model": "glm-5.3",
+        "resolved_model": "glm-5.3",
+        "batch_index": 3,
+        "proposal_ids": [
+          "REL-UNEXPLAINED_BOUNDARY-1",
+          "REL-UNEXPLAINED_BOUNDARY-2",
+          "REL-UNEXPLAINED_BOUNDARY-3",
+          "REL-UNEXPLAINED_BOUNDARY-4",
+          "REL-UNEXPLAINED_BOUNDARY-5"
+        ],
+        "execution_contract_sha256": "22a1fd4dec9fba116dc0e24544cecd242db97dabad53e83d7eacc597666726f2"
+      },
+      "lane_review": {
+        "requested_model": "glm-5.3",
+        "resolved_models": [
+          "glm-5.3"
+        ],
+        "resolved_model": "glm-5.3",
+        "provider_calls_executed": 3,
+        "batches": 3,
+        "batch_size": 6,
+        "execution_contract_sha256": "22a1fd4dec9fba116dc0e24544cecd242db97dabad53e83d7eacc597666726f2",
+        "scientific_authority": false
+      },
+      "reduction_review": {
+        "sha256": "1af6fcd7ccfc052a4c43c0c843b666497c872c5dd5ea00c848416dfb7c9343bf",
+        "requested_model": "deepseek-v4-pro",
+        "resolved_model": "deepseek-v4-pro-260425"
       }
     },
     "proposals": [
@@ -37858,7 +37909,7 @@
           "arXiv:2608.11888"
         ],
         "previously_coobserved": true,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -37872,7 +37923,7 @@
           "arXiv:2608.05810"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -37886,7 +37937,7 @@
           "arXiv:2608.09044"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -37900,9 +37951,12 @@
           "arXiv:2607.12227"
         ],
         "previously_coobserved": true,
-        "lane_verdict": "",
-        "reduction_verdict": "",
-        "matched_patterns": [],
+        "lane_verdict": "PASS",
+        "reduction_verdict": "REDUCIBLE",
+        "matched_patterns": [
+          "persistent-update-vs-test-time-compute",
+          "self-generated-supervision-information-limit"
+        ],
         "focused_problem_generator_reopen_required": false,
         "scientific_authority": false
       },
@@ -37914,7 +37968,7 @@
           "arXiv:2608.00155"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -37928,9 +37982,12 @@
           "arXiv:2608.04828"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
-        "reduction_verdict": "",
-        "matched_patterns": [],
+        "lane_verdict": "PASS",
+        "reduction_verdict": "REDUCIBLE",
+        "matched_patterns": [
+          "artifact-uptake-after-retrieval",
+          "model-scaffold-enactability"
+        ],
         "focused_problem_generator_reopen_required": false,
         "scientific_authority": false
       },
@@ -37942,7 +37999,7 @@
           "arXiv:2607.24300"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -37956,9 +38013,11 @@
           "arXiv:2608.03509"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
-        "reduction_verdict": "",
-        "matched_patterns": [],
+        "lane_verdict": "PASS",
+        "reduction_verdict": "REDUCIBLE",
+        "matched_patterns": [
+          "cross-layer-behavior-persistence"
+        ],
         "focused_problem_generator_reopen_required": false,
         "scientific_authority": false
       },
@@ -37970,7 +38029,7 @@
           "arXiv:2608.07622"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -37984,7 +38043,7 @@
           "arXiv:2608.00017"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -37998,7 +38057,7 @@
           "arXiv:2607.13083"
         ],
         "previously_coobserved": true,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -38012,7 +38071,7 @@
           "arXiv:2608.05810"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -38026,7 +38085,7 @@
           "arXiv:2608.11350"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -38040,7 +38099,7 @@
           "arXiv:2608.04746"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -38054,7 +38113,7 @@
           "arXiv:2608.08453"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -38068,7 +38127,7 @@
           "arXiv:2608.10178"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -38082,7 +38141,7 @@
           "arXiv:2608.09044"
         ],
         "previously_coobserved": false,
-        "lane_verdict": "",
+        "lane_verdict": "FAIL",
         "reduction_verdict": "",
         "matched_patterns": [],
         "focused_problem_generator_reopen_required": false,
@@ -38090,44 +38149,53 @@
       }
     ],
     "last_completed_scan": {
-      "run_id": "20260814T114756Z",
+      "run_id": "20260817T182029Z",
       "mode": "delta_only_new_endpoint",
-      "prior_scan_run_id": "20260814T070455Z",
-      "required_new_endpoint_count": 2,
-      "relation_universe_digest": "37385777d0b81d808603c387dc8f30f5b374701ac53fd4a0de2903cf32301914",
+      "prior_scan_run_id": "20260814T114756Z",
+      "required_new_endpoint_count": 5,
+      "relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
       "relation_coverage": {
-        "reviewed_receipt_sources": 228,
-        "possible_source_pairs": 25878,
-        "coobserved_source_pairs": 5952,
-        "pair_coverage_fraction": 0.23
+        "reviewed_receipt_sources": 233,
+        "possible_source_pairs": 27028,
+        "coobserved_source_pairs": 6770,
+        "pair_coverage_fraction": 0.2505
       },
       "summary": {
-        "reviewed_receipt_sources": 228,
-        "cached_reviewed_sources": 228,
+        "reviewed_receipt_sources": 233,
+        "cached_reviewed_sources": 233,
         "cache_completeness_fraction": 1.0,
-        "possible_source_pairs": 25878,
-        "coobserved_source_pairs": 5952,
-        "pair_coverage_fraction": 0.23,
+        "possible_source_pairs": 27028,
+        "coobserved_source_pairs": 6770,
+        "pair_coverage_fraction": 0.2505,
         "relation_blind_spot_detected": true,
-        "relation_universe_digest": "37385777d0b81d808603c387dc8f30f5b374701ac53fd4a0de2903cf32301914",
-        "relation_proposals": 0,
-        "unseen_relation_proposals": 0,
-        "lane_pass": 0,
-        "unseen_lane_pass": 0,
-        "reduction_reviewed": 0,
-        "reducible": 0,
+        "relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
+        "relation_proposals": 17,
+        "unseen_relation_proposals": 14,
+        "lane_pass": 3,
+        "unseen_lane_pass": 2,
+        "reduction_reviewed": 3,
+        "reducible": 3,
         "not_reduced": 0,
         "focused_problem_generator_reopen_required": false,
         "scientifically_authorized": 0
       },
       "models": {
-        "relation": "ark-code-latest",
-        "lane_review": "glm-5.2",
-        "reduction": "deepseek-v4-flash"
+        "relation": "kimi-k3",
+        "lane_review": "glm-5.3",
+        "reduction": "deepseek-v4-pro"
       },
       "scientific_authority": false
     },
-    "error": "ArkResponseStateError:incomplete-before-assistant-output;reason=length;requested_model=glm-5.3;resolved_model=glm-5.3",
+    "lane_review_execution": {
+      "version": "relation-lane-review-sharded-glm-compatible-v3",
+      "execution_contract_sha256": "22a1fd4dec9fba116dc0e24544cecd242db97dabad53e83d7eacc597666726f2",
+      "batch_size": 6,
+      "batches_total": 3,
+      "batches_completed": 3,
+      "partial_batch_reviews_have_zero_lane_authority": true,
+      "cards_scoped_to_batch_source_refs": true,
+      "scientific_authority": false
+    },
     "summary": {
       "reviewed_receipt_sources": 233,
       "cached_reviewed_sources": 233,
@@ -38139,16 +38207,16 @@
       "relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
       "relation_proposals": 17,
       "unseen_relation_proposals": 14,
-      "lane_pass": 0,
-      "unseen_lane_pass": 0,
-      "reduction_reviewed": 0,
-      "reducible": 0,
+      "lane_pass": 3,
+      "unseen_lane_pass": 2,
+      "reduction_reviewed": 3,
+      "reducible": 3,
       "not_reduced": 0,
       "focused_problem_generator_reopen_required": false,
       "scientifically_authorized": 0
     },
     "writer_admission": {
-      "schema_version": "1.0",
+      "schema_version": "1.1",
       "status": "ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN",
       "policy": {
         "scientific_authority": false,
@@ -38157,49 +38225,33 @@
         "manual_eligibility_is_not_scientific_authority": true,
         "relation_scan_cannot_authorize_problem_gate": true,
         "relation_scan_cannot_authorize_method_experiment_p0_gpu": true,
-        "preconditions_are_deterministic_search_control_only": true
+        "preconditions_are_deterministic_search_control_only": true,
+        "same_relation_universe_lane_review_retry_exhaustion_blocks_repeat_scan": true
       },
       "summary": {
-        "passed": 15,
         "last_scanned_sources": 228,
-        "failed": 0,
-        "new_reviewed_sources": 5,
-        "new_assumption_sources": 1,
-        "current_reviewed_sources": 233,
+        "relation_lane_review_retry_exhausted": false,
         "new_failure_sources": 5,
-        "new_empirical_sources": 5,
-        "new_boundary_sources": 2,
-        "checks": 15,
+        "checks": 16,
+        "current_reviewed_sources": 233,
+        "passed": 16,
         "manual_scan_eligible": true,
-        "automatic_model_scan_authorized": false
+        "new_boundary_sources": 2,
+        "new_reviewed_sources": 5,
+        "automatic_model_scan_authorized": false,
+        "new_empirical_sources": 5,
+        "new_assumption_sources": 1,
+        "failed": 0
       },
       "failed_check_count": 0,
       "freshness_status": "STALE_RELATION_UNIVERSE",
       "delta_status": "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE",
       "scientific_authority": false
-    },
-    "execution_control": {
-      "status": "LANE_REVIEW_EXACT_RETRY_EXHAUSTED",
-      "stage": "lane_review",
-      "relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
-      "required_new_endpoint_digest": "f13432699ce9445a70db9d7e4b26d27b2d83d348c0bdc879899b11dbb1b61c77",
-      "relation_raw_sha256": "e0bdc50bb72166bffadbb6518cd68fa64d88d8b8c598786314bb0a2926c78a10",
-      "lane_review_model": "glm-5.3",
-      "lane_review_execution_contract_sha256": "f8fc8a03ea40724c6def511dc99e2c59d91c872fc79a5888c02a249c9388dd76",
-      "attempt_run_ids": [
-        "20260817T173440Z",
-        "20260817T174534Z"
-      ],
-      "provider_attempts": 2,
-      "exact_retry_limit": 1,
-      "retry_budget_exhausted": true,
-      "scientific_authority": false,
-      "reopen_only_if": "A new relation source universe is frozen, or the versioned lane-review execution contract changes before a new explicit-manual attempt. The same 233-source universe and same GLM-5.3/6500-token lane contract must not be retried again."
     }
   },
   "paper_first_global_relation_freshness": {
     "schema_version": "1.1",
-    "status": "STALE_RELATION_UNIVERSE",
+    "status": "CURRENT_RELATION_UNIVERSE",
     "policy": {
       "scientific_authority": false,
       "deterministic_digest_comparison_only": true,
@@ -38212,24 +38264,24 @@
     },
     "summary": {
       "current_reviewed_sources": 233,
-      "last_scanned_sources": 228,
+      "last_scanned_sources": 233,
       "current_possible_pairs": 27028,
       "current_coobserved_pairs": 6770,
       "current_pair_coverage_fraction": 0.2505,
-      "last_pair_coverage_fraction": 0.23,
+      "last_pair_coverage_fraction": 0.2505,
       "current_relation_blind_spot": true,
-      "raw_topology_digest_changed": true,
+      "raw_topology_digest_changed": false,
       "source_boundary_reconstructable": true,
       "scheduler_topology_only_drift": false,
-      "universe_stale": true,
-      "current_not_reduced_unknown": true,
-      "model_scan_deferred": true,
+      "universe_stale": false,
+      "current_not_reduced_unknown": false,
+      "model_scan_deferred": false,
       "focused_problem_generator_reopen_allowed": false
     },
     "current_relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
-    "last_scanned_relation_universe_digest": "37385777d0b81d808603c387dc8f30f5b374701ac53fd4a0de2903cf32301914",
+    "last_scanned_relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
     "current_source_universe_digest": "bba92c46a2ee0e75333cb8d29f9eb5f271374f4867698c76cbb5cb629771ce1a",
-    "last_scanned_source_universe_digest": "bfea8ff5d698792059967199359808f17da551cd2f1d6c56fd1e502852f355c8",
+    "last_scanned_source_universe_digest": "bba92c46a2ee0e75333cb8d29f9eb5f271374f4867698c76cbb5cb629771ce1a",
     "scientific_authority": false
   },
   "paper_first_global_relation_delta_preflight": {
@@ -38277,7 +38329,7 @@
   },
   "paper_first_global_relation_scan_admission": {
     "schema_version": "1.1",
-    "status": "HOLD_RELATION_REVIEW_RETRY_EXHAUSTED",
+    "status": "HOLD_MANUAL_RELATION_SCAN",
     "policy": {
       "scientific_authority": false,
       "automatic_model_scan_authority": false,
@@ -38289,22 +38341,22 @@
       "same_relation_universe_lane_review_retry_exhaustion_blocks_repeat_scan": true
     },
     "summary": {
-      "failed": 1,
-      "manual_scan_eligible": false,
-      "new_reviewed_sources": 5,
-      "new_assumption_sources": 1,
-      "relation_lane_review_retry_exhausted": true,
-      "checks": 16,
-      "new_boundary_sources": 2,
-      "new_failure_sources": 5,
-      "passed": 15,
-      "last_scanned_sources": 228,
       "automatic_model_scan_authorized": false,
+      "relation_lane_review_retry_exhausted": false,
       "new_empirical_sources": 5,
-      "current_reviewed_sources": 233
+      "new_boundary_sources": 2,
+      "current_reviewed_sources": 233,
+      "new_failure_sources": 5,
+      "passed": 14,
+      "last_scanned_sources": 233,
+      "manual_scan_eligible": false,
+      "checks": 16,
+      "failed": 2,
+      "new_assumption_sources": 1,
+      "new_reviewed_sources": 5
     },
-    "failed_check_count": 1,
-    "freshness_status": "STALE_RELATION_UNIVERSE",
+    "failed_check_count": 2,
+    "freshness_status": "CURRENT_RELATION_UNIVERSE",
     "delta_status": "RELATION_DELTA_TYPED_PREFLIGHT_COMPLETE",
     "scientific_authority": false
   },
@@ -76413,16 +76465,16 @@
         "key": "paper-first-shadow-continuation-frontier",
         "pass": true,
         "detail": {
-          "status": "WAIT_EXTERNAL_PRIMARY_CONTENT_CHANGE",
+          "status": "READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION",
           "summary": {
-            "shadow_qualification_ready": 0,
+            "shadow_qualification_ready": 1,
             "release_recheck_required": 0,
             "asset_recheck_queued": 0,
             "support_inventory_handoff_ready": 0,
             "support_handoff_provenance_hold": 0,
             "support_holds": 0,
-            "active_control_actions": 0,
-            "external_wait": 1,
+            "active_control_actions": 1,
+            "external_wait": 0,
             "automatic_provider_calls_authorized": 0,
             "scientific_authority": 0,
             "generator_reopen_authorized": 0,
@@ -76438,15 +76490,15 @@
         "key": "paper-first-discovery-frontier",
         "pass": true,
         "detail": {
-          "status": "WAIT_EXTERNAL_RELATION_EXECUTION_CHANGE",
+          "status": "SHADOW_QUALIFICATION_PENDING",
           "summary": {
             "live_source_closed": true,
             "live_generator_closed": true,
             "live_queue_closed": true,
-            "relation_current_closed": false,
-            "relation_execution_censored": true,
+            "relation_current_closed": true,
+            "relation_execution_censored": false,
             "relation_control_closed_for_now": true,
-            "shadow_closed": true,
+            "shadow_closed": false,
             "scientific_object_closed": true,
             "support_release_closed": true,
             "evidence_acquisition_closed": true,
@@ -76461,8 +76513,8 @@
             "evidence_execution_ready": 0,
             "evidence_residual_survives": 0,
             "evidence_branch_repair_ready": 0,
-            "open_internal_frontiers": 0,
-            "external_triggers": 6,
+            "open_internal_frontiers": 1,
+            "external_triggers": 5,
             "automatic_model_calls_authorized": 0,
             "automatic_problem_gate_authorized": 0,
             "automatic_method_authorized": 0,
@@ -76470,28 +76522,30 @@
             "automatic_p0_authorized": 0,
             "automatic_gpu_authorized": 0
           },
-          "blockers": []
+          "blockers": [
+            "shadow-qualification-or-search-open"
+          ]
         }
       },
       {
         "key": "paper-first-global-relation-freshness",
         "pass": true,
         "detail": {
-          "status": "STALE_RELATION_UNIVERSE",
+          "status": "CURRENT_RELATION_UNIVERSE",
           "summary": {
             "current_reviewed_sources": 233,
-            "last_scanned_sources": 228,
+            "last_scanned_sources": 233,
             "current_possible_pairs": 27028,
             "current_coobserved_pairs": 6770,
             "current_pair_coverage_fraction": 0.2505,
-            "last_pair_coverage_fraction": 0.23,
+            "last_pair_coverage_fraction": 0.2505,
             "current_relation_blind_spot": true,
-            "raw_topology_digest_changed": true,
+            "raw_topology_digest_changed": false,
             "source_boundary_reconstructable": true,
             "scheduler_topology_only_drift": false,
-            "universe_stale": true,
-            "current_not_reduced_unknown": true,
-            "model_scan_deferred": true,
+            "universe_stale": false,
+            "current_not_reduced_unknown": false,
+            "model_scan_deferred": false,
             "focused_problem_generator_reopen_allowed": false
           }
         }
@@ -76537,21 +76591,21 @@
         "key": "paper-first-global-relation-scan-admission",
         "pass": true,
         "detail": {
-          "status": "HOLD_RELATION_REVIEW_RETRY_EXHAUSTED",
+          "status": "HOLD_MANUAL_RELATION_SCAN",
           "summary": {
-            "failed": 1,
-            "manual_scan_eligible": false,
-            "new_reviewed_sources": 5,
-            "new_assumption_sources": 1,
-            "relation_lane_review_retry_exhausted": true,
-            "checks": 16,
-            "new_boundary_sources": 2,
-            "new_failure_sources": 5,
-            "passed": 15,
-            "last_scanned_sources": 228,
             "automatic_model_scan_authorized": false,
+            "relation_lane_review_retry_exhausted": false,
             "new_empirical_sources": 5,
-            "current_reviewed_sources": 233
+            "new_boundary_sources": 2,
+            "current_reviewed_sources": 233,
+            "new_failure_sources": 5,
+            "passed": 14,
+            "last_scanned_sources": 233,
+            "manual_scan_eligible": false,
+            "checks": 16,
+            "failed": 2,
+            "new_assumption_sources": 1,
+            "new_reviewed_sources": 5
           }
         }
       },
