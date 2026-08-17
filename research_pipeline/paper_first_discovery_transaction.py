@@ -57,6 +57,54 @@ def _load(path: Path) -> dict[str, Any]:
     return payload if isinstance(payload, dict) else {}
 
 
+def _generator_operator_version(generator: dict[str, Any]) -> str:
+    return str((generator.get("policy") or {}).get("discovery_operator_version") or "").strip()
+
+
+def _generator_receipt(generator: dict[str, Any]) -> dict[str, Any]:
+    receipt = (generator.get("saturation_memory") or {}).get("current_review_receipt") or {}
+    return dict(receipt) if isinstance(receipt, dict) else {}
+
+
+def _receipt_material(receipt: dict[str, Any]) -> dict[str, Any]:
+    if not isinstance(receipt, dict) or not receipt:
+        return {}
+    return {
+        "run_id": str(receipt.get("run_id") or ""),
+        "pool_sha256": str(receipt.get("pool_sha256") or ""),
+        "negative_space_sha256": str(receipt.get("negative_space_sha256") or ""),
+        "discovery_operator_version": str(receipt.get("discovery_operator_version") or ""),
+        "source_refs": sorted(str(ref) for ref in receipt.get("source_refs") or [] if str(ref)),
+        "status": str(receipt.get("status") or ""),
+        "requested_model": str(receipt.get("requested_model") or ""),
+        "resolved_model": str(receipt.get("resolved_model") or ""),
+        "raw_sha256": str(receipt.get("raw_sha256") or ""),
+        "scientific_authority": receipt.get("scientific_authority"),
+    }
+
+
+def _receipt_sha256(receipt: dict[str, Any]) -> str:
+    material = _receipt_material(receipt)
+    if not material:
+        return ""
+    return hashlib.sha256(json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def _provider_call_accounting(generator_internal: dict[str, Any] | None) -> tuple[int, int]:
+    artifacts = (generator_internal or {}).get("raw_artifacts") or {}
+    raw = artifacts.get("generator") or {}
+    generator_calls = int(raw.get("provider_calls_executed") or 0) if isinstance(raw, dict) else 0
+    if not generator_calls and isinstance(raw, dict):
+        generator_calls = len(raw.get("transport_attempts") or [])
+        if not generator_calls and raw.get("sha256") and raw.get("raw_replayed_without_provider") is not True:
+            generator_calls = 1
+    semantic = artifacts.get("semantic_reviewer") or {}
+    semantic_calls = int(semantic.get("provider_calls_executed") or semantic.get("calls") or 0) if isinstance(semantic, dict) else 0
+    if not semantic_calls and isinstance(semantic, dict) and semantic.get("sha256") and semantic.get("raw_replayed_without_provider") is not True:
+        semantic_calls = 1
+    return generator_calls, semantic_calls
+
+
 def _transaction_lock_path(storage: StorageSettings) -> Path:
     """Return one host-wide lock shared by all checkouts/worktrees of this research system."""
     override = str(os.getenv("PAPER_FIRST_DISCOVERY_TRANSACTION_LOCK") or "").strip()
@@ -123,6 +171,8 @@ def _transaction_material(primary: dict[str, Any], generator: dict[str, Any], qu
         "carrier_probe_pending": int(((primary.get("carrier_probe") or {}).get("pending") or 0)),
         "generator_run_id": generator.get("run_id"),
         "generator_status": generator.get("status"),
+        "generator_discovery_operator_version": _generator_operator_version(generator),
+        "generator_review_receipt": _receipt_material(_generator_receipt(generator)),
         "generator_raw_sha256": (generator_raw.get("generator") or {}).get("sha256"),
         "semantic_review_raw_sha256": (generator_raw.get("semantic_reviewer") or {}).get("sha256"),
         "queue_audited": audited,
@@ -345,20 +395,30 @@ def close_existing_problem_discovery_transaction(
     generator_raw_sha = str(generator_raw.get("sha256") or "")
     generator_run_id = str(generator.get("run_id") or "")
     generator_status = str(generator.get("status") or "")
+    generator_operator = _generator_operator_version(generator)
+    generator_receipt = _generator_receipt(generator)
+    generator_receipt_material = _receipt_material(generator_receipt)
+    if not generator_operator:
+        raise RuntimeError("existing Generator does not declare its discovery operator")
+    expected_receipt = {
+        "run_id": generator_run_id,
+        "pool_sha256": source_pool_sha,
+        "discovery_operator_version": generator_operator,
+        "status": generator_status,
+        "raw_sha256": generator_raw_sha,
+        "scientific_authority": False,
+    }
+    if any(generator_receipt_material.get(key) != value for key, value in expected_receipt.items()):
+        raise RuntimeError("existing Generator current review receipt does not bind its exact frozen Primary, raw output, status, and operator")
+    if generator_receipt_material.get("source_refs") != sorted(ref for ref, _, _ in public_manifest):
+        raise RuntimeError("existing Generator current review receipt does not bind the exact public Primary refs")
     receipts = [row for row in _load_saturation_ledger(storage) if isinstance(row, dict)]
     receipt = next((
         row for row in reversed(receipts)
-        if row.get("scientific_authority") is False
-        and str(row.get("discovery_operator_version") or "") == DISCOVERY_OPERATOR_VERSION
-        and str(row.get("pool_sha256") or "") == source_pool_sha
-        and str(row.get("run_id") or "") == generator_run_id
-        and str(row.get("status") or "") == generator_status
-        and str(row.get("raw_sha256") or "") == generator_raw_sha
-        and len(list(row.get("source_refs") or [])) == len(public_manifest)
-        and set(str(ref) for ref in row.get("source_refs") or []) == {ref for ref, _, _ in public_manifest}
+        if all(_receipt_material(row).get(key) == value for key, value in generator_receipt_material.items())
     ), None)
     if receipt is None:
-        raise RuntimeError("no exact current-operator generator receipt binds the existing Primary and Generator state")
+        raise RuntimeError("no exact generator receipt binds the existing Primary and Generator state")
 
     txn_id = _transaction_id(primary, generator, queue)
     target_private = private_primary_pool_path(storage)
@@ -369,12 +429,15 @@ def close_existing_problem_discovery_transaction(
         "source_generated_at": str(source_pool.get("generated_at") or ""),
         "source_pool_sha256": source_pool_sha,
         "generator_receipt_run_id": generator_run_id,
-        "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
+        "generator_receipt_sha256": _receipt_sha256(generator_receipt),
+        "discovery_operator_version": generator_operator,
+        "runtime_discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
+        "operator_version_replayed_without_provider": generator_operator != DISCOVERY_OPERATOR_VERSION,
         "scientific_authority": False,
     }
     coverage = replay_pool.setdefault("source_coverage", {})
     portable = [dict(row) for row in coverage.get("portable_review_receipts") or [] if isinstance(row, dict)]
-    key = (generator_run_id, source_pool_sha, DISCOVERY_OPERATOR_VERSION)
+    key = (generator_run_id, source_pool_sha, generator_operator)
     by_key = {
         (str(row.get("run_id") or ""), str(row.get("pool_sha256") or ""), str(row.get("discovery_operator_version") or "")): row
         for row in portable
@@ -383,7 +446,7 @@ def close_existing_problem_discovery_transaction(
         "run_id": generator_run_id,
         "pool_sha256": source_pool_sha,
         "negative_space_sha256": receipt.get("negative_space_sha256"),
-        "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
+        "discovery_operator_version": generator_operator,
         "source_refs": [ref for ref, _, _ in public_manifest],
         "status": generator_status,
         "requested_model": receipt.get("requested_model"),
@@ -428,7 +491,11 @@ def close_existing_problem_discovery_transaction(
         "transaction_id": txn_id,
         "source_pool_sha256": source_pool_sha,
         "generator_receipt_run_id": generator_run_id,
-        "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
+        "generator_receipt_sha256": _receipt_sha256(generator_receipt),
+        "generator_receipt_raw_sha256": generator_raw_sha,
+        "discovery_operator_version": generator_operator,
+        "runtime_discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
+        "operator_version_replayed_without_provider": generator_operator != DISCOVERY_OPERATOR_VERSION,
         "provider_calls_executed": 0,
         "source_scheduler_runs_executed": 0,
         "scientific_authority": False,
@@ -530,8 +597,19 @@ def recompile_existing_problem_discovery_transaction(
             primary_public=_load(p_json);generator_public=_load(g_json);queue_public=_load(q_json)
             validation=_validate(primary_public,generator_public,queue_public)
             if validation:raise RuntimeError("paper-first operator recompile transaction invalid: "+",".join(validation))
-            if str((generator_public.get("policy") or {}).get("discovery_operator_version") or "")!=DISCOVERY_OPERATOR_VERSION:
+            transaction_operator=_generator_operator_version(generator_public)
+            if transaction_operator!=DISCOVERY_OPERATOR_VERSION:
                 raise RuntimeError("operator recompile Generator did not bind the current discovery operator")
+            transaction_receipt=_generator_receipt(generator_public)
+            transaction_receipt_material=_receipt_material(transaction_receipt)
+            if transaction_receipt_material and (
+                transaction_receipt_material.get("pool_sha256")!=source_pool_sha
+                or transaction_receipt_material.get("discovery_operator_version")!=transaction_operator
+                or transaction_receipt_material.get("run_id")!=str(generator_public.get("run_id") or "")
+                or transaction_receipt_material.get("status")!=str(generator_public.get("status") or "")
+                or transaction_receipt_material.get("scientific_authority") is not False
+            ):
+                raise RuntimeError("operator recompile Generator receipt does not bind the committed operator transaction")
             txn_id=_transaction_id(primary_public,generator_public,queue_public)
             primary_public=_stamp(p_json,p_js,"PAPER_FIRST_PRIMARY_EVIDENCE",txn_id,"primary")
             generator_public=_stamp(g_json,g_js,"PAPER_FIRST_PROBLEM_GENERATOR",txn_id,"generator")
@@ -539,13 +617,13 @@ def recompile_existing_problem_discovery_transaction(
             private_targets=[(staged_private,target_private),(staged_auto,target_auto)]
             if staged_ledger.exists():private_targets.append((staged_ledger,target_ledger))
             _commit_files([(p_json,primary_json),(p_js,primary_js),(g_json,generator_json),(g_js,generator_js),(q_json,queue_json),(q_js,queue_js),*private_targets])
-            raw=(generator_internal.get("raw_artifacts") or {}).get("generator") or {}
-            generator_calls=len(raw.get("transport_attempts") or []) if isinstance(raw,dict) else 0
-            if not generator_calls and isinstance(raw,dict) and raw.get("sha256"):generator_calls=1
-            semantic=(generator_internal.get("raw_artifacts") or {}).get("semantic_reviewer") or {}
-            semantic_calls=int(semantic.get("calls") or (1 if isinstance(semantic,dict) and semantic.get("sha256") else 0))
+            generator_calls,semantic_calls=_provider_call_accounting(generator_internal)
             record.update({
                 "status":"COMMITTED_OPERATOR_RECOMPILE","completed_at":_now(),"transaction_id":txn_id,"source_pool_sha256":source_pool_sha,
+                "discovery_operator_version":transaction_operator,
+                "generator_receipt_run_id":str(transaction_receipt_material.get("run_id") or ""),
+                "generator_receipt_sha256":_receipt_sha256(transaction_receipt),
+                "generator_receipt_raw_sha256":str(transaction_receipt_material.get("raw_sha256") or ""),
                 "provider_calls_executed":generator_calls+semantic_calls,"generator_provider_calls_executed":generator_calls,"semantic_reviewer_calls_executed":semantic_calls,
                 "summary":{"primary_status":primary_public.get("status"),"verified":(primary_public.get("summary") or {}).get("verified",0),"generator_status":generator_public.get("status"),"generated":(generator_public.get("summary") or {}).get("generated",0),"semantic_clear":(generator_public.get("summary") or {}).get("semantic_clear",0),"semantic_blocked":(generator_public.get("summary") or {}).get("semantic_blocked",0),"queue_submitted":(queue_public.get("summary") or {}).get("submitted",0),"queue_passed":(queue_public.get("summary") or {}).get("passed_problem_gate",0),"queue_blocked":(queue_public.get("summary") or {}).get("blocked_problem_gate",0)},
                 "authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False},
@@ -600,6 +678,20 @@ def write_problem_discovery_transaction(
             errors=_validate(primary_public,generator_public,queue_public)
             if errors:
                 raise RuntimeError("paper-first discovery transaction invalid: " + ",".join(errors))
+            transaction_operator=_generator_operator_version(generator_public)
+            transaction_receipt=_generator_receipt(generator_public)
+            transaction_receipt_material=_receipt_material(transaction_receipt)
+            staged_pool=load_private_primary_pool(staged_private) or {}
+            source_pool_sha=_pool_sha(staged_pool) if staged_pool else ""
+            if transaction_receipt_material and (
+                transaction_receipt_material.get("pool_sha256")!=source_pool_sha
+                or transaction_receipt_material.get("discovery_operator_version")!=transaction_operator
+                or transaction_receipt_material.get("run_id")!=str(generator_public.get("run_id") or "")
+                or transaction_receipt_material.get("status")!=str(generator_public.get("status") or "")
+                or transaction_receipt_material.get("scientific_authority") is not False
+            ):
+                raise RuntimeError("Generator receipt does not bind the full discovery transaction")
+            generator_calls,semantic_calls=_provider_call_accounting(generator_internal)
             txn_id=_transaction_id(primary_public,generator_public,queue_public)
             primary_public=_stamp(p_json,p_js,"PAPER_FIRST_PRIMARY_EVIDENCE",txn_id,"primary")
             generator_public=_stamp(g_json,g_js,"PAPER_FIRST_PROBLEM_GENERATOR",txn_id,"generator")
@@ -609,6 +701,14 @@ def write_problem_discovery_transaction(
             _commit_files([(p_json,primary_json),(p_js,primary_js),(g_json,generator_json),(g_js,generator_js),(q_json,queue_json),(q_js,queue_js),*private_targets])
             record.update({
                 "status":"COMMITTED","completed_at":_now(),"transaction_id":txn_id,
+                "source_pool_sha256":source_pool_sha,
+                "discovery_operator_version":transaction_operator,
+                "generator_receipt_run_id":str(transaction_receipt_material.get("run_id") or ""),
+                "generator_receipt_sha256":_receipt_sha256(transaction_receipt),
+                "generator_receipt_raw_sha256":str(transaction_receipt_material.get("raw_sha256") or ""),
+                "provider_calls_executed":generator_calls+semantic_calls,
+                "generator_provider_calls_executed":generator_calls,
+                "semantic_reviewer_calls_executed":semantic_calls,
                 "summary":{
                     "primary_status":primary_public.get("status"),"verified":(primary_public.get("summary") or {}).get("verified",0),
                     "eligible_unreviewed":(primary_public.get("summary") or {}).get("eligible_unreviewed",0),

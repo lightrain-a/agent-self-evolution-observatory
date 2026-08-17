@@ -1,12 +1,12 @@
 {
   "schema_version": "2.0",
-  "generated_at": "2026-08-17T16:21:10+00:00",
+  "generated_at": "2026-08-17T19:31:51+00:00",
   "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
   "source_inboxes": [
     "private-data://paper-first-problem-discovery/candidate-inbox.json",
-    "repo://generated/.paper-first-txn-71mj02h5/auto-candidate-inbox.json"
+    "private-data://paper-first-problem-discovery/auto-candidate-inbox.json"
   ],
-  "primary_evidence_pool": "repo://generated/.paper-first-txn-71mj02h5/primary-private.json",
+  "primary_evidence_pool": "private-data://paper-first-problem-discovery/primary-evidence-pool.json",
   "primary_evidence_records": 32,
   "source_exists": true,
   "policy": {
@@ -34,9 +34,9 @@
     "inbox_errors": 0,
     "primary_evidence_records": 32,
     "submitted_by_lane": {
-      "CONTRADICTION": 1,
+      "CONTRADICTION": 0,
       "CONVERGENT_FAILURE": 0,
-      "ASSUMPTION_BREAK": 0,
+      "ASSUMPTION_BREAK": 1,
       "UNEXPLAINED_BOUNDARY": 0,
       "OTHER": 0
     },
@@ -48,9 +48,9 @@
       "OTHER": 0
     },
     "blocked_by_lane": {
-      "CONTRADICTION": 1,
+      "CONTRADICTION": 0,
       "CONVERGENT_FAILURE": 0,
-      "ASSUMPTION_BREAK": 0,
+      "ASSUMPTION_BREAK": 1,
       "UNEXPLAINED_BOUNDARY": 0,
       "OTHER": 0
     },
@@ -63,13 +63,13 @@
   "blocked": [
     {
       "candidate_id": "AUTO-1",
-      "title": "Static procedural priors flip sign across task regimes while evolved procedural priors do not: the missing object is a regime-conditioned sign certificate for frozen procedural context",
-      "discovery_lane": "CONTRADICTION",
+      "title": "When does adding a relevant procedural memory retract an otherwise correct action under a frozen executor?",
+      "discovery_lane": "ASSUMPTION_BREAK",
       "status": "PROBLEM_GATE_BLOCKED",
-      "source_inbox": "repo://generated/.paper-first-txn-71mj02h5/auto-candidate-inbox.json",
+      "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
       "blockers": [
+        "saturation-proven-hard-reduction:procedural-memory-nonmonotonicity",
         "semantic-reduction-review-missing",
-        "unresolved-exact-reduction-test:1",
         "unresolved-exact-reduction-test:2"
       ]
     }
@@ -77,62 +77,63 @@
   "audited": [
     {
       "candidate_id": "AUTO-1",
-      "title": "Static procedural priors flip sign across task regimes while evolved procedural priors do not: the missing object is a regime-conditioned sign certificate for frozen procedural context",
-      "discovery_lane": "CONTRADICTION",
-      "source_inbox": "repo://generated/.paper-first-txn-71mj02h5/auto-candidate-inbox.json",
+      "title": "When does adding a relevant procedural memory retract an otherwise correct action under a frozen executor?",
+      "discovery_lane": "ASSUMPTION_BREAK",
+      "source_inbox": "private-data://paper-first-problem-discovery/auto-candidate-inbox.json",
       "candidate": {
         "candidate_id": "AUTO-1",
-        "title": "Static procedural priors flip sign across task regimes while evolved procedural priors do not: the missing object is a regime-conditioned sign certificate for frozen procedural context",
-        "discovery_lane": "CONTRADICTION",
+        "title": "When does adding a relevant procedural memory retract an otherwise correct action under a frozen executor?",
+        "discovery_lane": "ASSUMPTION_BREAK",
         "source_branch_id": "",
         "branch_depth": 0,
         "empirical_evidence": {
           "source_a": {
-            "ref": "arXiv:2607.05297",
-            "title": "MetaSkill-Evolve: Recursive Self-Improvement of LLM Agents via Two-Timescale Meta-Skill Evolution",
-            "claim": "On ALFWorld with a frozen backbone already at 92.31%, the static skill regresses held-out accuracy by −1.93 points and single-level evolution only recovers to the no-skill baseline (92.31%), while on OfficeQA/SealQA the same static-to-evolved progression is strictly monotonic (+23.54/+16.09 end-to-end).",
-            "evidence_role": "EMPIRICAL_FACT",
+            "ref": "arXiv:2608.11654",
+            "title": "Towards a Formal Definition of Agent Memory: Basis, Span, Optimality, and the Sequential Memory Problem",
+            "claim": "The formal memory framework explicitly assumes self-containment ('storing an event never throws it away') and monotonicity ('more memory is never worse, so coverage is non-decreasing in the stored set').",
+            "evidence_role": "OPERATIONAL_ASSUMPTION",
             "primary_source": true,
-            "primary_url": "https://arxiv.org/abs/2607.05297",
-            "source_sha256": "c9209013bf5b06ea05a59cbf7b0d2697e18a10e8d1fbc9140a8b18f4e77e1ac5"
+            "primary_url": "https://arxiv.org/abs/2608.11654",
+            "source_sha256": "aa1d1d148bbd18b7a163315b870e74499a27878bdaf3c49fbad3d312827c140a"
           },
           "source_b": {
-            "ref": "arXiv:2607.01874",
-            "title": "SkillCoach: Self-Evolving Rubrics for Evaluating and Enhancing Agentic Skill-Use",
-            "claim": "Filtering training trajectories with the initial, unevolved rubric R0 raises held-out performance from 8.0 to 16.0 (Qwen3.5-4B) and from 14.0 to 28.0 (Qwen3.5-9B), and the evolved rubric Rbest further improves to 24.0 and 32.0; the initial static prior is strictly positive in this regime.",
+            "ref": "arXiv:2608.11888",
+            "title": "Agent Skills Can Be Harmful: An Empirical Study of Skill-Induced Failures in LLM Agents",
+            "claim": "Differential attribution on SkillsBench and SWE-Skills-Bench identifies 307 skill-induced failures, including 125 functional failures and 182 efficiency regressions; Task-Implementation Fault accounts for 86 of 125 functional failures, and seemingly relevant skills often make agents incorrectly implement or omit task-required elements.",
             "evidence_role": "EMPIRICAL_FACT",
             "primary_source": true,
-            "primary_url": "https://arxiv.org/abs/2607.01874",
-            "source_sha256": "59d1223dec4152c616b68ed69a4a8e76f251940eb4eb2eab7c3ce9022543b2f4"
+            "primary_url": "https://arxiv.org/abs/2608.11888",
+            "source_sha256": "abed7c204486ec65621599cdfd583133c78249304f76643e1fb03ac10b681357"
           },
-          "relation": "Under a shared operationalization (frozen backbone, fixed task distribution, procedural context authored before or without adaptation to the target regime, held-out success measured against the no-context control), source_a's static procedural prior has negative sign and source_b's static procedural prior has positive sign; the two facts are incompatible with any theory that assigns a single sign to static procedural priors, and each paper's own account (saturation vs rubric quality) is post-hoc relative to the other's regime."
+          "relation": "Source A supplies an explicit operational monotonicity assumption for stored memory. Source B supplies scope-linked empirical violations in which an added procedural memory/skill, compared against a no-skill or semantically matched reference run on the same task, causes functional failure or cost regression under a frozen inference-time executor."
         },
         "lane_evidence": {
-          "shared_operationalization": "Frozen backbone LLM + fixed benchmark task distribution + a static procedural artifact (skill file / process rubric) injected as context or filter + held-out task success measured against the identical no-artifact control; sign of the static-artifact treatment effect is the shared observable.",
-          "incompatibility": "Source_a: static artifact sign is negative (−1.93) in a near-saturated embodied regime and zero-net after non-meta evolution. Source_b: static artifact sign is strongly positive (+8.0/+14.0) in a low-base QA regime. No single-signed theory of static procedural priors predicts both; the sign flips across regimes while the artifact type, backbone-frozenness, and measurement contract are held constant."
+          "assumption": "For an agent memory system, storing an additional event or memory item should not remove it and should not make coverage/answerability worse: more memory is never worse.",
+          "violation": "Loaded skills are persistent procedural memory items supplied at inference time, yet paired differential runs attribute 125 functional failures and 182 efficiency regressions to those added skills; 68.8% of functional failures are Task-Implementation Faults where seemingly relevant skills induce incorrect implementation or omission of required elements.",
+          "scope_link": "The violated scope is bounded to frozen-executor, inference-time procedural memory use on the same task, where the paired reference run solves the task or solves it more cheaply. This does not claim a violation for parameter training, semantic factual coverage alone, or unmatched tasks."
         },
-        "irreducible_object": "A regime-conditioned sign certificate for frozen procedural context: a formal object that, given only pre-deployment observable information (base-policy success distribution, artifact provenance, and task-regime statistics), determines the sign of the static-artifact treatment effect before any target-regime adaptation is run.",
+        "irreducible_object": "A retraction boundary for procedural memory admission: the conditions under which an added, seemingly relevant procedure changes the executor's action selection so that a previously correct required element is omitted or incorrectly implemented, despite the stored item remaining available and semantically relevant.",
         "novelty_category": "",
         "closest_work": {},
         "closest_work_distance": null,
         "mature_theory_baselines": [
           {
-            "name": "Ceiling/headroom saturation theory",
-            "same_information_projection": "Sign of the static-artifact effect is a monotone function of base-policy headroom: positive when base accuracy is low, negative near saturation.",
-            "ex_ante_prediction": "Given base success p0, predict sign(Δ) = positive iff p0 < threshold τ, negative above τ.",
-            "distinguishing_prediction": "The certificate object predicts sign from the interaction of base distribution with artifact-regime mismatch, not from p0 alone; two regimes with identical p0 but different artifact-provenance alignment can have opposite signs.",
-            "cannot_express": "Headroom theory is a scalar function of p0; it cannot express opposite signs at equal p0, and it gives no prediction for which artifact property flips the sign.",
-            "reduction_class": "NEEDS_EXACT_REDUCTION_TEST",
-            "exact_reduction_test": "Construct two task regimes with matched base accuracy p0 (within sampling error) but opposite measured static-artifact signs; if headroom theory is the full reduction, no such pair exists. MetaSkill-Evolve's own ALFWorld (92.31%, negative) vs its OfficeQA progression (positive at lower base) is consistent with headroom, so the test requires a cross-paper matched-p0 cell: SkillCoach's 9B setting (base 14.0, positive) vs a MetaSkill-style regime at comparable low base with a negative static sign, or ALFWorld-matched high-base SkillCoach cell."
+            "name": "Coverage-monotonic memory theory",
+            "same_information_projection": "Represent each loaded skill as an additional event/procedure in the stored set and project task success into answerability/coverage of required task elements.",
+            "ex_ante_prediction": "Adding a skill cannot reduce the set of covered required elements; any observed failure must come from an item that was absent, irrelevant, or outside the memory span.",
+            "distinguishing_prediction": "A paired same-task run can identify cases where the no-skill executor includes the required element, the skill-guided executor omits or incorrectly implements it, and the added skill is semantically relevant rather than obviously unrelated.",
+            "cannot_express": "It cannot express nonmonotonic retraction of an already-executed required element because its operational assumption makes coverage non-decreasing in the stored set.",
+            "reduction_class": "SOFT_COLLISION",
+            "exact_reduction_test": "Use paired frozen-executor runs with identical task, tools, budget, and scoring; vary only whether the attributed procedural skill is loaded. If the no-skill run satisfies the required element and the skill run omits or incorrectly implements it while provenance shows the skill was invoked, coverage-monotonic memory theory fails the exact cell."
           },
           {
-            "name": "Distribution-mismatch / applicability-boundary theory",
-            "same_information_projection": "Sign is determined by whether the static artifact's applicability conditions cover the target regime; mismatch yields negative sign, coverage yields positive sign.",
-            "ex_ante_prediction": "Given an applicability-coverage measure c(artifact, regime), predict sign(Δ) = positive iff c exceeds a coverage threshold.",
-            "distinguishing_prediction": "The certificate object must be computable before target-regime rollouts; applicability theory as instantiated requires target-regime execution traces to estimate coverage, which is post-deployment information.",
-            "cannot_express": "If coverage is estimated from target-regime traces, the theory uses strictly more information than the certificate is allowed; if coverage is estimated without traces, it reduces to the certificate and the test is whether such a trace-free coverage estimator exists.",
+            "name": "Nonmonotonic belief revision / default logic",
+            "same_information_projection": "Treat the skill as a default rule or conditional procedure that can override prior behavior when its trigger conditions match the task context.",
+            "ex_ante_prediction": "A newly added rule can retract a prior conclusion or action when the rule's applicability condition is triggered and has priority over the old default.",
+            "distinguishing_prediction": "The empirical object should expose a procedural applicability-boundary variable: not merely semantic relevance, but whether the skill's trigger/preconditions license replacing or omitting a task-required step.",
+            "cannot_express": "Generic belief revision can say that retraction happened, but it does not by itself identify which observable procedural-boundary features distinguish harmful overriding from benign specialization in agent skill execution.",
             "reduction_class": "NEEDS_EXACT_REDUCTION_TEST",
-            "exact_reduction_test": "Freeze the information set to pre-deployment observables (artifact text, source-regime provenance, base-policy statistics on source-like probes). If any trace-free coverage estimator reproduces the observed signs in both papers' regimes, the object reduces to applicability theory; the current evidence contains no such estimator, and both papers measure mismatch only after target-regime execution."
+            "exact_reduction_test": "Encode the paired skill/no-skill traces as defaults with explicit trigger, priority, and conflict information. If the same observable trigger/priority information predicts exactly which added skills retract required steps, the case reduces to nonmonotonic belief revision; if paired traces with matched trigger/conflict information still split by an independently measured procedural applicability-boundary feature, the reduction fails."
           }
         ],
         "reduction_falsifiability_contract": {
@@ -143,44 +144,34 @@
           "all_exact_reduction_tests_resolved": true
         },
         "same_information_nonreducibility": {
-          "claim": "Under the pre-deployment information set (frozen backbone identity, base success distribution on source-like probes, static artifact text and provenance), no mature theory in the stack expresses the ex-ante sign of the static-artifact treatment effect across the two observed regimes.",
-          "why_each_baseline_cannot_express_prediction": "Headroom theory is a scalar function of base accuracy and cannot produce opposite signs at matched base accuracy; applicability-boundary theory requires target-regime execution traces to estimate coverage, which is strictly more information than the pre-deployment set, and its trace-free version is precisely the missing certificate rather than an existing reduction."
+          "claim": "The surviving problem is not 'skills can hurt' but the missing operational boundary at which an added relevant procedure licenses suppression of a task-required action in a frozen executor.",
+          "why_each_baseline_cannot_express_prediction": "Coverage-monotonic memory theory predicts the wrong sign for the paired skill-induced omission cases. Generic nonmonotonic reasoning can represent retraction after the fact, but the supplied evidence does not yet provide an observable applicability-boundary variable that predicts when relevant procedural memory will retract required behavior; therefore it cannot be accepted as a complete same-information reduction without the exact trace-encoding test."
         },
-        "exact_prediction": "There exist pairs of task regimes with matched frozen-backbone base accuracy (within sampling error) in which the same static-procedural-artifact contract yields opposite signed treatment effects on held-out success, and the sign is decidable from pre-deployment observables alone; the candidate problem is to characterize the certificate, and it is falsified if no matched-base opposite-sign pair materializes or if a trace-free applicability estimator reproduces all signs.",
-        "strongest_same_information_baseline": "Ceiling/headroom saturation theory, because it is the only baseline that uses strictly pre-deployment information and gives a sign prediction; it fails exactly on the matched-base opposite-sign cell.",
+        "exact_prediction": "Under a frozen executor, identical task statement, tool set, scoring contract, and budget, loading a semantically relevant procedural skill will sometimes cause the agent to omit or incorrectly implement an element that the paired no-skill run correctly includes; the harmful cases should be predictable from a procedural applicability-boundary feature rather than from relevance, prompt length, or task difficulty alone.",
+        "strongest_same_information_baseline": "Nonmonotonic belief revision/default-rule priority, given the same trace, skill text, trigger conditions, and task-required-element labels.",
         "domain_transfer_audit": {
-          "mature_source_domain": "Domain adaptation / transfer learning",
-          "mature_object": "Negative transfer under distribution shift",
-          "why_not_domain_transfer": "Classical negative transfer predicts sign from source-target divergence measured on target data or from target sample complexity; the object here is a pre-deployment sign certificate for a procedural artifact (not a parameter vector) under a frozen policy, where the artifact's effect is mediated by retrieval and instruction-following, and the divergence must be computable without target-regime rollouts. The negative-transfer reduction is exactly the applicability-boundary baseline above and is unresolved by current evidence."
+          "mature_source_domain": "Formal agent memory and nonmonotonic reasoning",
+          "mature_object": "Coverage monotonicity and default-rule retraction",
+          "why_not_domain_transfer": "The target object is not a rename of belief revision. It concerns executable procedural memory in agent trajectories, where the disputed event is an action-sequence change: a required implementation element present under no-skill disappears or is incorrectly implemented after a relevant skill is loaded. The empirical attribution is paired and executor-frozen, making the causal surface narrower than generic nonmonotonic reasoning."
         },
         "saturation_scan": {
           "checked": true,
-          "matched_patterns": [],
+          "matched_patterns": [
+            "procedural-memory-nonmonotonicity"
+          ],
           "pending_patterns": [],
           "rejected_patterns": [
             {
-              "key": "procedural-memory-nonmonotonicity",
-              "reason": "That veto covers adding a relevant memory/skill that retracts previously correct behavior being reducible to belief revision; here the object is not retraction under conflict information but the ex-ante sign of a static artifact across regimes, and belief revision gives no sign prediction from pre-deployment observables."
-            },
-            {
-              "key": "harness-update-scope-heterogeneity",
-              "reason": "That veto covers task-/trace-conditioned harness validity reducible to CATE/ICP effect modification; the candidate is not a CATE over observed covariates but a certificate computable before target-regime deployment, and ICP/IRM require target-environment data the certificate is forbidden to use."
-            },
-            {
               "key": "artifact-uptake-after-retrieval",
-              "reason": "That veto covers retrieved experience failing to change behavior as a utilization bottleneck; both source artifacts here demonstrably change behavior (negative and positive), so the object is the sign of the change, not uptake failure."
+              "reason": "The source evidence is not merely retrieved experience failing to change behavior; it is paired evidence that an added procedural artifact changes behavior enough to cause attributed functional failure or efficiency regression."
+            },
+            {
+              "key": "validation-filter-information-loss",
+              "reason": "The object is not a sparse validation/filtering tradeoff; the compared runs differ by loaded procedural memory, not by validation-set size or filter selectivity."
             },
             {
               "key": "model-scaffold-enactability",
-              "reason": "That veto covers valid-but-unfollowed scaffolds; in both sources the artifact is followed and the effect is measured, so enactability is not the operative object."
-            },
-            {
-              "key": "snapshot-validity-horizon",
-              "reason": "No time-varying checkpoint or half-life is involved; the contrast is across task regimes at fixed time."
-            },
-            {
-              "key": "experience-sharing-sign-reversal",
-              "reason": "That veto covers sharing-helpful vs sharing-collapse being predicted by complementarity/redundancy under matched budget; the sign flip here is across task regimes for a single agent's static artifact, not across sharing conditions, and matched-budget complementarity gives no ex-ante sign prediction from pre-deployment observables."
+              "reason": "The issue is not a valid scaffold that remains inactive. The attributed failures involve skill-guided runs where the skill causally shapes execution relative to a no-skill or matched-skill reference."
             }
           ],
           "invalid_entries": []
@@ -198,20 +189,20 @@
           "matched_patterns": [],
           "strongest_reduction": "structural-or-provenance-gate-failed"
         },
-        "cheapest_problem_falsifier": "A single controlled cell: take SkillCoach's 9B low-base regime and a MetaSkill-Evolve-style embodied regime matched to the same base accuracy by subsampling task difficulty, inject the same contract of static procedural artifact, and measure signs; if signs agree at matched base accuracy, or if a trace-free applicability estimator computed from artifact text plus source-provenance statistics predicts both source papers' signs, the problem collapses into an existing baseline.",
-        "endpoint_headroom_requirement": "The matched-base opposite-sign cell must be statistically resolvable: each arm needs enough held-out items that a 2-point sign difference is detectable at the papers' own reported effect sizes (≥1.9 points), and the base-accuracy matching must hold within the benchmarks' standard errors.",
+        "cheapest_problem_falsifier": "Materialize paired frozen-executor cells from the released skill-failure attribution setting: same task, tools, budget, scorer, and base model, with only skill presence varied. If all harmful cases are explained by obvious irrelevance, prompt length, task difficulty, or an explicit default-rule trigger/priority encoding with no residual applicability-boundary variable, the proposed problem is falsified.",
+        "endpoint_headroom_requirement": "The no-skill or matched-skill reference must solve the task or solve it more cheaply, and the skill-guided run must have enough headroom to fail or regress on the same endpoint; aggregate-only improvements without paired harmful cells do not qualify.",
         "importance": "",
         "likely_iclr_story": ""
       },
       "audit": {
         "schema_version": "2.0",
         "candidate_id": "AUTO-1",
-        "discovery_lane": "CONTRADICTION",
+        "discovery_lane": "ASSUMPTION_BREAK",
         "passed": false,
         "status": "PROBLEM_GATE_BLOCKED",
         "blockers": [
+          "saturation-proven-hard-reduction:procedural-memory-nonmonotonicity",
           "semantic-reduction-review-missing",
-          "unresolved-exact-reduction-test:1",
           "unresolved-exact-reduction-test:2"
         ],
         "checks": [
@@ -286,12 +277,12 @@
           {
             "key": "discovery-lane-contract",
             "pass": true,
-            "lane": "CONTRADICTION"
+            "lane": "ASSUMPTION_BREAK"
           },
           {
             "key": "primary-source-1",
             "pass": true,
-            "role": "EMPIRICAL_FACT"
+            "role": "OPERATIONAL_ASSUMPTION"
           },
           {
             "key": "primary-source-2",
@@ -383,7 +374,17 @@
           "temporal_exposure_relabeling_after_longitudinal_reduction_forbidden": true,
           "treatment_semantics_seed_requires_executable_version_change": true,
           "treatment_semantics_seed_requires_versioned_treatment_reduction_first": true,
-          "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
+          "contradiction_requires_treatment_surface_alignment": true,
+          "contradiction_requires_executor_state_alignment": true,
+          "contradiction_requires_comparator_endpoint_timing_alignment": true,
+          "cross_treatment_sign_difference_is_reducible_not_contradiction": true,
+          "generator_pre_review_allows_pending_exact_reduction": true,
+          "generator_pre_review_still_blocks_proven_hard_reduction": true,
+          "semantic_reviewer_owns_pending_exact_reduction_adjudication": true,
+          "final_problem_gate_still_requires_all_reductions_resolved": true,
+          "principle_dead_end_exact_source_reentry_forbidden": true,
+          "principle_dead_end_reopen_requires_new_evidence": true,
+          "discovery_operator_version": "fresh-phenomenon-treatment-aligned-deadend-aware-v16",
           "shared_limitation_without_empirical_failure_forbidden": true,
           "pure_topic_brainstorm_forbidden": true,
           "open_world_missing_cell_claim_forbidden": true,
@@ -393,6 +394,10 @@
           "saturation_map_check_required": true,
           "problem_falsifier_required_before_method_design": true,
           "reduction_pending_is_provisional_not_failed": true,
+          "reduction_pending_may_reach_block_only_semantic_review": true,
+          "reduction_pending_cannot_pass_problem_gate": true,
+          "contradiction_requires_matched_intervention_semantics": true,
+          "contradiction_requires_matched_adaptation_stage": true,
           "bounded_first_party_evidence_acquisition_allowed_before_problem_gate_pass": true,
           "support_inventory_is_one_evidence_route_not_global_prerequisite": true,
           "first_party_evidence_cannot_auto_certify_novelty": true,
@@ -428,6 +433,6 @@
     }
   ],
   "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry.",
-  "discovery_transaction_id": "2975a3f837b4577abf958e5e021c4f85f7f097c36f4d7563f29353529f84fdf5",
+  "discovery_transaction_id": "1e841d1f5c312812ab40d779251786192c8016edcf9a193a15e1be6aa37daaa9",
   "discovery_transaction_role": "queue"
 }

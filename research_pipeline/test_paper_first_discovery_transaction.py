@@ -99,6 +99,12 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual(auto_inbox["status"],payloads[1]["status"])
         self.assertEqual(saturation["runs"][-1]["run_id"],payloads[1]["run_id"])
         self.assertEqual(saturation["runs"][-1]["status"],payloads[1]["status"])
+        self.assertEqual(result["discovery_operator_version"],DISCOVERY_OPERATOR_VERSION)
+        self.assertEqual(result["generator_receipt_run_id"],payloads[1]["run_id"])
+        self.assertEqual(len(result["generator_receipt_sha256"]),64)
+        self.assertEqual(result["generator_receipt_raw_sha256"],payloads[1]["raw_artifacts"]["generator"]["sha256"])
+        self.assertEqual((result["generator_provider_calls_executed"],result["semantic_reviewer_calls_executed"]),(1,0))
+        self.assertEqual(result["provider_calls_executed"],1)
         self.assertEqual(result["authority"],{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False})
 
     def test_close_existing_transaction_replays_exact_private_pool_without_rerunning_scheduler(self) -> None:
@@ -123,6 +129,51 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual([row["ref"] for row in rebound["records"]],[row["ref"] for row in payloads[0]["records"]])
         self.assertEqual(rebound["generated_at"],payloads[0]["generated_at"])
         self.assertEqual((rebound.get("transaction_replay") or {}).get("mode"),"existing-closed-state-envelope")
+
+    def test_close_existing_transaction_preserves_historical_operator_receipt_after_runtime_upgrade(self) -> None:
+        historical_operator="fresh-phenomenon-treatment-aligned-v14"
+        self.assertNotEqual(historical_operator,DISCOVERY_OPERATOR_VERSION)
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
+            first=self.run_txn(root,storage,targets,now)
+            generator=json.loads(targets["generator_json"].read_text());generator["policy"]["discovery_operator_version"]=historical_operator
+            receipt=generator["saturation_memory"]["current_review_receipt"];receipt["discovery_operator_version"]=historical_operator
+            targets["generator_json"].write_text(json.dumps(generator),encoding="utf-8")
+            targets["generator_js"].write_text("window.PAPER_FIRST_PROBLEM_GENERATOR = "+json.dumps(generator,separators=(",",":"))+";\n",encoding="utf-8")
+            ledger_path=storage.data_root/"paper-first-problem-discovery"/"discovery-saturation-ledger.json"
+            ledger=json.loads(ledger_path.read_text())
+            for row in ledger.get("runs") or []:
+                if row.get("run_id")==generator["run_id"]:row["discovery_operator_version"]=historical_operator
+            ledger_path.write_text(json.dumps(ledger),encoding="utf-8")
+            for key in ("primary_json","generator_json","queue_json"):
+                payload=json.loads(targets[key].read_text());payload.pop("discovery_transaction_id",None);payload.pop("discovery_transaction_role",None);targets[key].write_text(json.dumps(payload),encoding="utf-8")
+            source=storage.data_root/"paper-first-problem-discovery"/"primary-evidence-pool.json"
+            result=close_existing_problem_discovery_transaction(storage=storage,**targets,private_pool_source=source)
+            rebound=json.loads(source.read_text());closed_generator=json.loads(targets["generator_json"].read_text())
+        self.assertEqual(first["status"],"COMMITTED")
+        self.assertEqual(result["status"],"COMMITTED_EXISTING_CLOSED_STATE")
+        self.assertEqual(result["provider_calls_executed"],0)
+        self.assertEqual(result["source_scheduler_runs_executed"],0)
+        self.assertEqual(result["discovery_operator_version"],historical_operator)
+        self.assertEqual(result["runtime_discovery_operator_version"],DISCOVERY_OPERATOR_VERSION)
+        self.assertTrue(result["operator_version_replayed_without_provider"])
+        self.assertEqual(result["generator_receipt_run_id"],closed_generator["run_id"])
+        self.assertEqual(len(result["generator_receipt_sha256"]),64)
+        replay=rebound["transaction_replay"]
+        self.assertEqual(replay["discovery_operator_version"],historical_operator)
+        self.assertEqual(replay["runtime_discovery_operator_version"],DISCOVERY_OPERATOR_VERSION)
+        self.assertTrue(replay["operator_version_replayed_without_provider"])
+
+    def test_transaction_id_binds_generator_operator_and_review_receipt(self) -> None:
+        primary={"status":"READY","records":[{"ref":"arXiv:1","source_sha256":"a"*64,"fulltext_sha256":"b"*64}],"carrier_probe":{"pending":0,"portable_receipts":[]}}
+        receipt={"run_id":"run-a","pool_sha256":"c"*64,"negative_space_sha256":"d"*64,"discovery_operator_version":"operator-v1","source_refs":["arXiv:1"],"status":"GENERATED_ZERO_CANDIDATES","requested_model":"model-a","resolved_model":"model-a","raw_sha256":"e"*64,"scientific_authority":False}
+        generator={"run_id":"run-a","status":"GENERATED_ZERO_CANDIDATES","policy":{"discovery_operator_version":"operator-v1"},"saturation_memory":{"current_review_receipt":receipt},"raw_artifacts":{"generator":{"sha256":"e"*64}}}
+        queue={"audited":[]}
+        original=_transaction_id(primary,generator,queue)
+        changed_operator=json.loads(json.dumps(generator));changed_operator["policy"]["discovery_operator_version"]="operator-v2"
+        changed_receipt=json.loads(json.dumps(generator));changed_receipt["saturation_memory"]["current_review_receipt"]["raw_sha256"]="f"*64
+        self.assertNotEqual(original,_transaction_id(primary,changed_operator,queue))
+        self.assertNotEqual(original,_transaction_id(primary,changed_receipt,queue))
 
     def _downgrade_committed_operator_fixture(self, storage: StorageSettings, targets: dict[str,Path], *, old_operator: str = "fresh-phenomenon-anomaly-precision-v13") -> Path:
         generator=json.loads(targets["generator_json"].read_text());generator["policy"]["discovery_operator_version"]=old_operator
@@ -172,6 +223,10 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual({primary["discovery_transaction_id"],new_generator["discovery_transaction_id"],queue["discovery_transaction_id"]},{result["transaction_id"]})
         self.assertEqual((private.get("operator_recompile") or {}).get("source_scheduler_runs_executed"),0)
         self.assertEqual((private.get("operator_recompile") or {}).get("discovery_operator_version"),DISCOVERY_OPERATOR_VERSION)
+        self.assertEqual(result["discovery_operator_version"],DISCOVERY_OPERATOR_VERSION)
+        self.assertEqual(result["generator_receipt_run_id"],new_generator["run_id"])
+        self.assertEqual(len(result["generator_receipt_sha256"]),64)
+        self.assertEqual(result["generator_receipt_raw_sha256"],new_generator["raw_artifacts"]["generator"]["sha256"])
 
     def test_operator_recompile_refuses_same_operator_transaction(self) -> None:
         with tempfile.TemporaryDirectory() as td:
