@@ -86,6 +86,13 @@ def build_paper_first_discovery_frontier(
         and ra.get("manual_scan_eligible") is False
         and ra.get("automatic_model_scan_authorized") is False
     )
+    relation_execution_censored = bool(
+        relation_admission_state.get("status") == "HOLD_RELATION_REVIEW_RETRY_EXHAUSTED"
+        and ra.get("relation_lane_review_retry_exhausted") is True
+        and ra.get("manual_scan_eligible") is False
+        and ra.get("automatic_model_scan_authorized") is False
+    )
+    relation_control_closed_for_now = relation_current_closed or relation_execution_censored
     shadow_closed = bool(
         shadow_admission_state.get("status") == "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL"
         and sa.get("same_source_transaction") is True
@@ -152,6 +159,14 @@ def build_paper_first_discovery_frontier(
             "scientific_authority": False,
         },
     ]
+    if relation_execution_censored:
+        triggers.append({
+            "trigger":"RELATION_LANE_REVIEW_EXECUTION_CONTRACT_CHANGE",
+            "detector":"global-relation-scan-admission",
+            "effect":"may-reopen-one-explicit-manual-relation-review-only-after-versioned-execution-contract-change",
+            "automatic_model_call_authorized":False,
+            "scientific_authority":False,
+        })
 
     blockers: list[str] = []
     if not live_source_closed:
@@ -160,7 +175,7 @@ def build_paper_first_discovery_frontier(
         blockers.append("live-generator-frontier-open")
     if not live_queue_closed:
         blockers.append("live-problem-queue-open")
-    if not relation_current_closed:
+    if not relation_control_closed_for_now:
         blockers.append("relation-frontier-open-or-stale")
     if not shadow_closed:
         blockers.append("shadow-qualification-or-search-open")
@@ -181,6 +196,8 @@ def build_paper_first_discovery_frontier(
         status = "SUPPORT_ASSET_RECHECK_PENDING"
     elif not shadow_closed:
         status = "SHADOW_QUALIFICATION_PENDING"
+    elif relation_execution_censored:
+        status = "WAIT_EXTERNAL_RELATION_EXECUTION_CHANGE"
     elif not relation_current_closed:
         status = "RELATION_CONTROL_PENDING"
     elif not object_closed:
@@ -193,6 +210,8 @@ def build_paper_first_discovery_frontier(
         "live_generator_closed": live_generator_closed,
         "live_queue_closed": live_queue_closed,
         "relation_current_closed": relation_current_closed,
+        "relation_execution_censored": relation_execution_censored,
+        "relation_control_closed_for_now": relation_control_closed_for_now,
         "shadow_closed": shadow_closed,
         "scientific_object_closed": object_closed,
         "support_release_closed": support_closed,
@@ -231,6 +250,7 @@ def build_paper_first_discovery_frontier(
             "external_trigger_detection_may_use_existing_bounded_source_release_checks": True,
             "trigger_detection_never_counts_as_trigger_satisfaction": True,
             "trigger_satisfaction_must_reenter_original_control_plane": True,
+            "execution_censored_relation_is_external_wait_not_scientific_negative": True,
         },
         "summary": summary,
         "blockers": blockers,
@@ -251,6 +271,7 @@ def validate_paper_first_discovery_frontier(state: dict[str, Any]) -> list[str]:
         "EVIDENCE_ACQUISITION_PENDING",
         "SHADOW_QUALIFICATION_PENDING",
         "RELATION_CONTROL_PENDING",
+        "WAIT_EXTERNAL_RELATION_EXECUTION_CHANGE",
         "SCIENTIFIC_OBJECT_REVIEW_PENDING",
     }
     if state.get("scientific_authority") is not False:
@@ -266,6 +287,7 @@ def validate_paper_first_discovery_frontier(state: dict[str, Any]) -> list[str]:
         or policy.get("wait_external_status_is_not_scientific_exhaustion") is not True
         or policy.get("trigger_detection_never_counts_as_trigger_satisfaction") is not True
         or policy.get("trigger_satisfaction_must_reenter_original_control_plane") is not True
+        or policy.get("execution_censored_relation_is_external_wait_not_scientific_negative") is not True
     ):
         errors.append("discovery frontier policy must remain deterministic zero-authority orchestration")
     for key in (
@@ -287,4 +309,9 @@ def validate_paper_first_discovery_frontier(state: dict[str, Any]) -> list[str]:
             "live_source_closed", "live_generator_closed", "live_queue_closed", "relation_current_closed", "shadow_closed", "scientific_object_closed", "support_release_closed", "evidence_acquisition_closed"
         )):
             errors.append("wait-external frontier requires every internal discovery frontier to be closed")
+    if state.get("status") == "WAIT_EXTERNAL_RELATION_EXECUTION_CHANGE":
+        if _int(summary,"open_internal_frontiers")!=0 or summary.get("relation_execution_censored") is not True or summary.get("relation_control_closed_for_now") is not True or summary.get("relation_current_closed") is not False or not all(summary.get(key) is True for key in ("live_source_closed","live_generator_closed","live_queue_closed","shadow_closed","scientific_object_closed","support_release_closed","evidence_acquisition_closed")):
+            errors.append("relation execution-censored wait requires all other internal frontiers closed and zero retry authority")
+        if not any(str(row.get("trigger") or "")=="RELATION_LANE_REVIEW_EXECUTION_CONTRACT_CHANGE" for row in triggers):
+            errors.append("relation execution-censored wait requires a versioned execution-contract external trigger")
     return sorted(set(errors))

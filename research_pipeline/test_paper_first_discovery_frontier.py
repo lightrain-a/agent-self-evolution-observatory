@@ -91,6 +91,20 @@ class PaperFirstDiscoveryFrontierTest(unittest.TestCase):
         self.assertEqual(state["status"],"SHADOW_QUALIFICATION_PENDING")
         self.assertEqual(state["summary"]["automatic_model_calls_authorized"],0)
 
+    def test_exhausted_relation_lane_review_is_external_wait_not_internal_retry(self) -> None:
+        states=self.states();states["relation_freshness_state"]={"status":"STALE_RELATION_UNIVERSE","summary":{"universe_stale":True,"current_not_reduced_unknown":True,"focused_problem_generator_reopen_allowed":False}};states["relation_admission_state"]={"status":"HOLD_RELATION_REVIEW_RETRY_EXHAUSTED","summary":{"manual_scan_eligible":False,"automatic_model_scan_authorized":False,"relation_lane_review_retry_exhausted":True}}
+        state=self.build(states)
+        self.assertEqual(state["status"],"WAIT_EXTERNAL_RELATION_EXECUTION_CHANGE")
+        self.assertEqual(state["summary"]["open_internal_frontiers"],0)
+        self.assertFalse(state["summary"]["relation_current_closed"])
+        self.assertTrue(state["summary"]["relation_execution_censored"])
+        self.assertTrue(state["summary"]["relation_control_closed_for_now"])
+        self.assertEqual(state["summary"]["external_triggers"],6)
+        self.assertNotIn("relation-frontier-open-or-stale",state["blockers"])
+        self.assertTrue(any(row["trigger"]=="RELATION_LANE_REVIEW_EXECUTION_CONTRACT_CHANGE" for row in state["triggers"]))
+        self.assertEqual(state["summary"]["automatic_model_calls_authorized"],0)
+        self.assertEqual(validate_paper_first_discovery_frontier(state),[])
+
     def test_stale_relation_is_pending_but_does_not_authorize_scan(self) -> None:
         states=self.states();states["relation_freshness_state"]={"status":"STALE_RELATION_UNIVERSE","summary":{"universe_stale":True,"current_not_reduced_unknown":True,"focused_problem_generator_reopen_allowed":False}};states["relation_admission_state"]={"status":"ELIGIBLE_FOR_EXPLICIT_MANUAL_RELATION_SCAN","summary":{"manual_scan_eligible":True,"automatic_model_scan_authorized":False}}
         state=self.build(states)
