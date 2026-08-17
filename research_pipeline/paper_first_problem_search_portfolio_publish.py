@@ -28,6 +28,16 @@ def rows(root,pattern,key):
 def _joined(values)->str:
     return "|".join(sorted({str(value).strip() for value in values if str(value).strip()}))
 
+def _artifact_provider_calls(payload:dict)->int:
+    """Count provider execution for one successful stage artifact.
+
+    Legacy artifacts predate explicit accounting and therefore represent one call.
+    Replayed artifacts explicitly record zero so raw reuse never inflates API cost.
+    """
+    if "provider_calls_executed" not in payload:return 1
+    return max(0,int(payload.get("provider_calls_executed") or 0))
+
+
 def _model_identity_receipts(root:Path)->dict:
     """Project provider-resolved model identities without inventing legacy aliases.
 
@@ -43,7 +53,7 @@ def _model_identity_receipts(root:Path)->dict:
             if requested:generator_requested.append(requested)
             if resolved:generator_resolved.append(resolved)
             if resolved:
-                generator_receipts.append({"source_artifact":path.name,"requested_model":requested,"resolved_model":resolved,"raw_sha256":raw_sha})
+                generator_receipts.append({"source_artifact":path.name,"requested_model":requested,"resolved_model":resolved,"raw_sha256":raw_sha,"provider_calls_executed":_artifact_provider_calls(payload),"raw_replayed_without_provider":payload.get("raw_replayed_without_provider") is True,"raw_origin_control_snapshot_sha256":str(payload.get("raw_origin_control_snapshot_sha256") or "")})
     reviewer_requested=[];reviewer_resolved=[];review_generator_resolved=[];review_receipts=[];independence=[]
     for path in sorted(root.glob("review-p*.json")):
         payload=load(path);requested=str(payload.get("requested_model") or "").strip();resolved=str(payload.get("resolved_model") or "").strip()
@@ -85,6 +95,35 @@ def manifest_sha(root):
     for pattern in ('shadow-run-qualification.json','expand-*.json','error-expand-*.json','evolve-*.json','error-evolve-*.json','formulate-p*.json','error-formulate-*.json','review-p*.json','error-review-*.json','machine-audit.json','evidence-acquisition-plan.json','evidence-design-p*.json','evidence-recompile-p*.json','evidence-review-p*.json','evidence-substrate-preflight-request.json','evidence-substrate-preflight.json','evidence-harness-implementation.json','evidence-acquisition-adjudication.json','shadow-final-audit.json','shadow-terminal-current-source-gate.json','post-review-current-source-audit.json','current-source-receipt-*.json','problem-falsifier-support-inventory-request.json','problem-falsifier-support-inventory.json','problem-falsifier-preflight.json','frozen-primary-evidence-pool.json'):
         for path in sorted(root.glob(pattern)): pairs.append((path.name,hashlib.sha256(path.read_bytes()).hexdigest()))
     return hashlib.sha256(json.dumps(pairs,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+
+def _expansion_execution_accounting(root:Path)->dict:
+    """Count expansion transactions once while preserving retry API cost."""
+    slots={}
+    success_paths=list(root.glob('expand-*-p*.json'));error_paths=list(root.glob('error-expand-*.json'))
+    def key(path:Path):
+        match=re.search(r'(?:error-)?expand-(.+)-p(\d+)',path.name)
+        return (match.group(1),int(match.group(2))) if match else None
+    for path in success_paths:
+        k=key(path)
+        if not k:continue
+        payload=load(path);slot=slots.setdefault(k,{'success':None,'errors':[],'requested':[]});slot['success']=payload
+        if payload.get('requested') is not None:slot['requested'].append(int(payload.get('requested') or 0))
+    for path in error_paths:
+        k=key(path)
+        if not k:continue
+        payload=load(path);slot=slots.setdefault(k,{'success':None,'errors':[],'requested':[]});slot['errors'].append(payload)
+        if payload.get('requested') is not None:slot['requested'].append(int(payload.get('requested') or 0))
+    provider_failures=parse_failures=execution_failures=successful_shards=requested_raw_seeds=provider_calls=0
+    for slot in slots.values():
+        requested_raw_seeds+=max(slot['requested'] or [0])
+        provider_calls+=sum(_artifact_provider_calls(slot['success']) for _ in [0] if slot['success'] is not None)+len(slot['errors'])
+        if slot['success'] is not None:
+            successful_shards+=1;continue
+        execution_failures+=1;statuses={str(row.get('status') or '') for row in slot['errors']}
+        if 'PARSE_ERROR_ZERO_AUTHORITY' in statuses:parse_failures+=1
+        elif any(status.startswith('PROVIDER_') for status in statuses):provider_failures+=1
+    return {'success_paths':success_paths,'error_paths':error_paths,'requested_shards':len(slots),'successful_shards':successful_shards,'execution_failures':execution_failures,'provider_failures':provider_failures,'parse_failures':parse_failures,'requested_raw_seeds':requested_raw_seeds,'provider_calls':provider_calls}
+
 
 def _formulation_execution_accounting(root:Path,base:dict,evolved:list[dict])->dict:
     """Count requested formulation shards/branches once despite exact retries.
@@ -130,7 +169,7 @@ def _formulation_execution_accounting(root:Path,base:dict,evolved:list[dict])->d
         'successful_shards':sum(slot['success'] is not None for slot in by_part.values()),
         'provider_failures':provider_failures,'parse_failures':parse_failures,
         'requested_branches':requested_branches,'successful_branches':successful_branches,
-        'censored_branches':censored_branches,'attempt_calls':len(success_paths)+len(error_paths),
+        'censored_branches':censored_branches,'attempt_calls':sum(_artifact_provider_calls(load(path)) for path in success_paths)+len(error_paths),
     }
 
 
@@ -181,11 +220,10 @@ def _latest_shadow_run(root:Path)->dict:
         evidence_refs=sorted({str((candidate.get('empirical_evidence') or {}).get(key,{}).get('ref') or '') for key in ('source_a','source_b') if str((candidate.get('empirical_evidence') or {}).get(key,{}).get('ref') or '').startswith('arXiv:')})
         candidate_rows.append({'candidate_id':cid,'title':str(row.get('title') or ''),'search_primitive':str(row.get('search_primitive') or ''),'semantic_shadow_clear':row.get('shadow_clear') is True,'semantic_verdict':str(semantic.get('verdict') or ''),'semantic_reduction_class':str(semantic.get('reduction_class') or ''),'semantic_matched_patterns':sorted({str(value) for value in semantic.get('matched_patterns') or [] if str(value)}),'semantic_strongest_reduction':' '.join(str(semantic.get('strongest_reduction') or '').split())[:800],'semantic_exact_reduction_test':' '.join(str(semantic.get('exact_reduction_test') or '').split())[:1200],'semantic_reason':' '.join(str(semantic.get('reason') or '').split())[:1200],'semantic_lane_contract_verified':semantic.get('lane_contract_verified') is True,'semantic_lane_contract_reason':' '.join(str(semantic.get('lane_contract_reason') or '').split())[:1000],'semantic_source_refs':evidence_refs,'semantic_source_claims':[str(((candidate.get('empirical_evidence') or {}).get(key) or {}).get('claim') or '')[:1200] for key in ('source_a','source_b')],'semantic_problem_text':' '.join(str(candidate.get(key) or '') for key in ('title','irreducible_object','exact_prediction'))[:2400],'current_source_status':str(current.get('status') or ''),'current_source_verdict':str(current.get('verdict') or ''),'current_source_reduction_class':str(current.get('reduction_class') or ''),'current_source_strongest_reduction':' '.join(str(current.get('strongest_reduction') or '').split())[:800],'current_source_reason':' '.join(str(current.get('reason') or '').split())[:1200],'current_source_source_refs':current_sources,'terminal_shadow_clear':term.get('terminal_shadow_clear') is True,'live_problem_gate_compatible':term.get('live_problem_gate_compatible') is True,'paper_design_eligible':False,'scientific_authority':False,'authority':{'method':False,'experiment':False,'p0':False,'gpu':False}})
     t=terminal.get('summary') or {};m=machine.get('summary') or {};run_id=root.name
-    expansion_successful=len(list(root.glob('expand-*-p*.json')));expansion_error_rows=[load(path) for path in root.glob('error-expand-*.json')];expansion_errors=len(expansion_error_rows);expansion_requested_shards=expansion_successful+expansion_errors
-    expansion_parse_failures=sum(str(row.get('status') or '')=='PARSE_ERROR_ZERO_AUTHORITY' for row in expansion_error_rows)
-    expansion_provider_failures=sum(str(row.get('status') or '').startswith('PROVIDER_') for row in expansion_error_rows)
+    expansion_accounting=_expansion_execution_accounting(root);expansion_successful=expansion_accounting['successful_shards'];expansion_errors=expansion_accounting['execution_failures'];expansion_requested_shards=expansion_accounting['requested_shards']
+    expansion_parse_failures=expansion_accounting['parse_failures'];expansion_provider_failures=expansion_accounting['provider_failures']
     evolution_paths=list(root.glob('evolve-*.json'));evolution_error_paths=list(root.glob('error-evolve-*.json'))
-    evolution_calls=len(evolution_paths)+len(evolution_error_paths)
+    evolution_calls=sum(_artifact_provider_calls(load(path)) for path in evolution_paths)+len(evolution_error_paths)
     evolution_by_generation={1:{'requested':0,'valid':0},2:{'requested':0,'valid':0}}
     for path in evolution_paths:
         payload=load(path);match=re.search(r'evolve-g(\d+)-p\d+',path.name)
@@ -196,10 +234,11 @@ def _latest_shadow_run(root:Path)->dict:
         stats['requested']+=int(payload.get('requested_children') or len(parent_ids) or len(children))
         stats['valid']+=int(payload.get('valid_children') or len(children))
     formulation_calls=formulation_accounting['attempt_calls']
-    generator_calls=expansion_successful+expansion_errors+evolution_calls+formulation_calls
+    expansion_calls=expansion_accounting['provider_calls']
+    generator_calls=expansion_calls+evolution_calls+formulation_calls
     reviewer_calls=len(list(root.glob('review-p*.json')))+len(list(root.glob('error-review-*.json')))
     summary={
-        'requested_raw_seeds':120,
+        'requested_raw_seeds':expansion_accounting['requested_raw_seeds'],
         'expansion_requested_shards':expansion_requested_shards,
         'expansion_successful_shards':expansion_successful,
         'expansion_execution_failures':expansion_errors,

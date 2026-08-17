@@ -11,6 +11,25 @@ from . import paper_first_problem_search_portfolio_publish as publisher
 
 
 class SearchPortfolioPublishTest(unittest.TestCase):
+    def test_expansion_exact_retry_counts_one_shard_and_real_seed_budget(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/"error-expand-UNEXPLAINED_BOUNDARY-p1-provider-a.json").write_text(json.dumps({"status":"PROVIDER_TIMEOUT_ZERO_AUTHORITY","requested":2,"scientific_authority":False}),encoding="utf-8")
+            (root/"expand-UNEXPLAINED_BOUNDARY-p1.json").write_text(json.dumps({"requested":2,"provider_calls_executed":0,"raw_replayed_without_provider":True}),encoding="utf-8")
+            accounting=publisher._expansion_execution_accounting(root)
+        self.assertEqual(accounting["requested_shards"],1)
+        self.assertEqual(accounting["successful_shards"],1)
+        self.assertEqual(accounting["execution_failures"],0)
+        self.assertEqual(accounting["provider_failures"],0)
+        self.assertEqual(accounting["parse_failures"],0)
+        self.assertEqual(accounting["requested_raw_seeds"],2)
+        self.assertEqual(accounting["provider_calls"],1)
+
+    def test_zero_provider_replay_does_not_increment_provider_call_count(self) -> None:
+        self.assertEqual(publisher._artifact_provider_calls({"provider_calls_executed":0,"raw_replayed_without_provider":True}),0)
+        self.assertEqual(publisher._artifact_provider_calls({"provider_calls_executed":1}),1)
+        self.assertEqual(publisher._artifact_provider_calls({}),1)
+
     def test_formulation_exact_retry_counts_one_terminal_shard_and_actual_branch(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)
