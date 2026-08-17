@@ -26,6 +26,17 @@ from .paper_first_skill_validation_transfer_runtime_audit import (
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-skill-validation-transfer-scout-20260817.json"
 DEFAULT_JS = PROJECT_ROOT / "generated" / "paper-first-skill-validation-transfer-scout-20260817.js"
 F0_HARNESS = PROJECT_ROOT / "research_pipeline" / "paper_first_skill_validation_transfer_f0.py"
+CURRENT_SOURCE_DELTA_REF = "arXiv:2608.14036"
+CURRENT_SOURCE_DELTA_PRIMARY_SHA256 = "6f71684ea5bab7dd19b9c1b4fe13fb8e8af7211317ee3a8fe4bd2314586520d5"
+CURRENT_SOURCE_DELTA_FULLTEXT_SHA256 = "e963536344b67399b064ca9c53f952f177a783cc1c1c3ccf41bc1d39a45b945f"
+CURRENT_SOURCE_DELTA_EPRINT_SHA256 = "49c4b7c4472196f0254e574f1e5e7c5eaac2e9f099de6ebbb0fb4b77dfd88006"
+CURRENT_SOURCE_DELTA_TRANSFER_FIGURE_SHA256 = "04d0df4fa7655481dcbda786dbb0ab110eb43999e3627360bc107dbedce2043f"
+CURRENT_SOURCE_DELTA_TRANSFER_VALUES = {
+    "raw_baseline_percent": 56,
+    "workflow_memory_percent_by_mix": [60, 58, 60, 56, 70, 54],
+    "skill_percent_by_mix": [62, 76, 76, 76, 74, 84],
+    "trajectory_mixes": ["0s5f", "1s4f", "2s3f", "3s2f", "4s1f", "5s0f"],
+}
 
 
 def _now() -> str:
@@ -179,13 +190,38 @@ def build_skill_validation_transfer_scout(
                     "ref": "arXiv:2603.02766",
                     "role": "EvoSkill retains skills that improve held-out validation and reports transfer; it does not isolate local validation versus deployment-optimal representation on matched family units.",
                 },
+                {
+                    "ref": CURRENT_SOURCE_DELTA_REF,
+                    "role": "Demystifying Agent Skills directly tests cross-framework transfer by constructing Workflow Memory and Skill artifacts from fixed Codex trajectories and evaluating those fixed artifacts in Gemini CLI. Its RQ3 establishes that procedural representation can remain portable across a framework shift, but it does not compare raw-trajectory RAG against distilled skills, does not expose the SkillEvolBench T1-T3 versus T4-T6 family schedule, and does not test whether a local validation preference identifies the deployment-optimal arm.",
+                },
             ],
+            "delta_review": {
+                "status": "NARROW_NOT_SUBSUMED",
+                "primary_ref": CURRENT_SOURCE_DELTA_REF,
+                "publication_date": "2026-08-14",
+                "primary_source_sha256": CURRENT_SOURCE_DELTA_PRIMARY_SHA256,
+                "fulltext_sha256": CURRENT_SOURCE_DELTA_FULLTEXT_SHA256,
+                "eprint_sha256": CURRENT_SOURCE_DELTA_EPRINT_SHA256,
+                "cross_framework_figure_sha256": CURRENT_SOURCE_DELTA_TRANSFER_FIGURE_SHA256,
+                "cross_framework_result": CURRENT_SOURCE_DELTA_TRANSFER_VALUES,
+                "collision": (
+                    "Cross-framework portability itself is no longer available as PA-05 novelty: the source holds Codex experience fixed, changes the target framework to Gemini CLI, and reports Skill >= Workflow Memory in all six shown trajectory-mixture conditions."
+                ),
+                "remaining_estimand": (
+                    "Prospective selection validity: whether family-local T1-T3 replay preference between raw_trajectory_rag and distilled self-generated experience identifies which arm wins on frozen T4 context-shift, T5 adversarial, and T6 composition deployment, measured by family-level preference inversion and selection regret."
+                ),
+                "exact_arm_overlap": False,
+                "exact_family_schedule_overlap": False,
+                "selection_regret_tested_by_source": False,
+                "scientific_authority": False,
+            },
             "surviving_problem": (
-                "Under a frozen skill library and matched family schedule, does local T1-T3 replay preference between distilled skills and raw trajectory reuse identify the arm that actually wins on T4 context shift, T5 adversarial, and T6 composition?"
+                "Not whether skills transfer across frameworks, which current work now directly studies. The surviving falsifiable object is whether, under a frozen skill library and matched family schedule, local T1-T3 replay preference between distilled skills and raw trajectory reuse identifies the arm that actually wins on T4 context shift, T5 adversarial, and T6 composition."
             ),
             "not_claimed": [
                 "a new skill generator",
                 "that skills generally fail to transfer",
+                "cross-framework transfer existence or generic skill portability",
                 "that raw trajectories globally dominate skills",
                 "a method improvement before the selection-validity F0 passes",
             ],
@@ -276,6 +312,21 @@ def validate_skill_validation_transfer_scout(state: dict[str, Any]) -> list[str]
     boundary = state.get("current_source_boundary") or {}
     if boundary.get("status") != "SURVIVES_ONLY_AS_FALSIFIABLE_SELECTION_VALIDITY_PROBLEM_NOT_PAPER_CLAIM":
         errors.append("current-source claim boundary drift")
+    delta = boundary.get("delta_review") or {}
+    if (
+        delta.get("status") != "NARROW_NOT_SUBSUMED"
+        or delta.get("primary_ref") != CURRENT_SOURCE_DELTA_REF
+        or delta.get("primary_source_sha256") != CURRENT_SOURCE_DELTA_PRIMARY_SHA256
+        or delta.get("fulltext_sha256") != CURRENT_SOURCE_DELTA_FULLTEXT_SHA256
+        or delta.get("eprint_sha256") != CURRENT_SOURCE_DELTA_EPRINT_SHA256
+        or delta.get("cross_framework_figure_sha256") != CURRENT_SOURCE_DELTA_TRANSFER_FIGURE_SHA256
+        or delta.get("cross_framework_result") != CURRENT_SOURCE_DELTA_TRANSFER_VALUES
+        or delta.get("exact_arm_overlap") is not False
+        or delta.get("exact_family_schedule_overlap") is not False
+        or delta.get("selection_regret_tested_by_source") is not False
+        or delta.get("scientific_authority") is not False
+    ):
+        errors.append("current-source 2608.14036 delta binding/decision drift")
     env = state.get("execution_environment") or {}
     if not str(env.get("host") or "").strip():
         errors.append("execution environment host is required")

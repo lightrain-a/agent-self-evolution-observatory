@@ -97,6 +97,24 @@ class SkillValidationTransferScoutTest(unittest.TestCase):
         broken["source"]["commit_sha"] = "0" * 40
         self.assertTrue(any("source identity" in e for e in validate_skill_validation_transfer_scout(broken)))
 
+    def test_current_source_delta_narrows_but_does_not_subsume_selection_validity(self) -> None:
+        state = build_skill_validation_transfer_scout()
+        delta = state["current_source_boundary"]["delta_review"]
+        self.assertEqual("NARROW_NOT_SUBSUMED", delta["status"])
+        self.assertEqual("arXiv:2608.14036", delta["primary_ref"])
+        self.assertFalse(delta["exact_arm_overlap"])
+        self.assertFalse(delta["exact_family_schedule_overlap"])
+        self.assertFalse(delta["selection_regret_tested_by_source"])
+        self.assertEqual([62, 76, 76, 76, 74, 84], delta["cross_framework_result"]["skill_percent_by_mix"])
+        self.assertIn("Not whether skills transfer across frameworks", state["current_source_boundary"]["surviving_problem"])
+        self.assertEqual([], validate_skill_validation_transfer_scout(state))
+
+    def test_current_source_delta_binding_tamper_fails_closed(self) -> None:
+        state = build_skill_validation_transfer_scout()
+        broken = copy.deepcopy(state)
+        broken["current_source_boundary"]["delta_review"]["fulltext_sha256"] = "0" * 64
+        self.assertTrue(any("2608.14036" in e for e in validate_skill_validation_transfer_scout(broken)))
+
 
 if __name__ == "__main__":
     unittest.main()

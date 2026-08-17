@@ -415,18 +415,21 @@ def build_fresh_phenomenon_portfolio(
         _candidate(
             candidate_id="PA-05-SKILL-VALIDATION-TRANSFER",
             title="Does Local Skill Validation Identify Deployment-Time Procedural Transfer?",
-            source_refs=["arXiv:2605.24117", "arXiv:2603.25158", "arXiv:2605.23904", "arXiv:2605.08693", "arXiv:2603.02766"],
+            source_refs=["arXiv:2605.24117", "arXiv:2603.25158", "arXiv:2605.23904", "arXiv:2605.08693", "arXiv:2603.02766", "arXiv:2608.14036"],
             phenomenon=(
                 "SkillEvolBench supplies 30 matched latent families with T1-T3 acquisition/replay and frozen T4 context-shift, "
                 "T5 adversarial, and T6 composition deployment. Current skill-evolution systems commonly use local/held-out validation "
                 "or related probe utility to accept/select skill edits, while SkillEvolBench reports that raw trajectory reuse can outperform "
-                "distilled skills and that skill gains are unstable under frozen deployment. The unresolved object is whether local validation "
-                "is an identifying selection statistic for which persistent representation actually transfers."
+                "distilled skills and that skill gains are unstable under frozen deployment. Demystifying Agent Skills (arXiv:2608.14036) now "
+                "directly studies fixed Codex-derived procedural artifacts under a Gemini framework shift, so generic cross-framework portability is "
+                "not available as novelty either. The narrower local-validation/deployment ranking object is principle-closed below as ordinary "
+                "source-to-target model selection under deliberate distribution shift unless a skill-specific structural residual survives."
             ),
             strongest_reduction=(
                 "same-information source-to-target model selection under distribution shift / domain generalization: the T1-T3 local arm effect and "
                 "T4-T6 shifted-deployment arm effect are allowed to differ by family/role, so ranking inversion and selector regret are already "
-                "expressible as ordinary transport/invariance failure without a skill-specific structural variable"
+                "expressible as ordinary transport/invariance failure without a skill-specific structural variable; independently, arXiv:2608.14036 "
+                "already covers generic cross-framework portability of fixed procedural artifacts"
             ),
             cheapest_falsifier=(
                 "The frozen seed-A inversion/regret F0 is no longer decisive for novelty and must not be executed as the current claim test. "
@@ -448,8 +451,8 @@ def build_fresh_phenomenon_portfolio(
             why_now=(
                 "The 30-family/180-task first-party substrate remains reusable, but the current PA-05 success criterion is principle-closed before execution: "
                 "T1-T3 validation/deployment ranking inversion and oracle regret under deliberately shifted T4-T6 roles are predictions of generic "
-                "model selection under distribution shift. Running 540 model tasks cannot distinguish a skill-evolution mechanism without an additional "
-                "same-information structural residual."
+                "model selection under distribution shift. arXiv:2608.14036 additionally removes generic cross-framework portability as a novelty fallback. "
+                "Running 540 model tasks cannot distinguish a skill-evolution mechanism without an additional same-information structural residual."
                 if skill_principle_closed
                 else "Unlike source-only scouts, this direction has an exact first-party benchmark commit, 180 validated tasks, two matched canonical arms, "
                 "a 270-task dry-run for each arm, per-family replay/deployment truth, and a frozen analyzer."

@@ -300,6 +300,9 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertFalse(row["paper_problem_claimed"])
         self.assertFalse(row["scientific_authority"])
         self.assertTrue(all(v is False for v in row["authority"].values()))
+        self.assertIn("arXiv:2608.14036", row["source_refs"])
+        self.assertIn("arXiv:2608.14036", row["why_now"])
+        self.assertIn("generic cross-framework portability", row["strongest_reduction"])
         self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
 
     def test_skill_api_docker_capability_does_not_require_fake_gpu_or_generic_lease(self) -> None:

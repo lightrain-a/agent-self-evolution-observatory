@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T11:02:17+00:00",
+  "generated_at": "2026-08-17T11:10:45+00:00",
   "status": "NO_ACTIVE_F0",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -132,15 +132,16 @@
         "arXiv:2603.25158",
         "arXiv:2605.23904",
         "arXiv:2605.08693",
-        "arXiv:2603.02766"
+        "arXiv:2603.02766",
+        "arXiv:2608.14036"
       ],
-      "phenomenon": "SkillEvolBench supplies 30 matched latent families with T1-T3 acquisition/replay and frozen T4 context-shift, T5 adversarial, and T6 composition deployment. Current skill-evolution systems commonly use local/held-out validation or related probe utility to accept/select skill edits, while SkillEvolBench reports that raw trajectory reuse can outperform distilled skills and that skill gains are unstable under frozen deployment. The unresolved object is whether local validation is an identifying selection statistic for which persistent representation actually transfers.",
-      "strongest_reduction": "same-information source-to-target model selection under distribution shift / domain generalization: the T1-T3 local arm effect and T4-T6 shifted-deployment arm effect are allowed to differ by family/role, so ranking inversion and selector regret are already expressible as ordinary transport/invariance failure without a skill-specific structural variable",
+      "phenomenon": "SkillEvolBench supplies 30 matched latent families with T1-T3 acquisition/replay and frozen T4 context-shift, T5 adversarial, and T6 composition deployment. Current skill-evolution systems commonly use local/held-out validation or related probe utility to accept/select skill edits, while SkillEvolBench reports that raw trajectory reuse can outperform distilled skills and that skill gains are unstable under frozen deployment. Demystifying Agent Skills (arXiv:2608.14036) now directly studies fixed Codex-derived procedural artifacts under a Gemini framework shift, so generic cross-framework portability is not available as novelty either. The narrower local-validation/deployment ranking object is principle-closed below as ordinary source-to-target model selection under deliberate distribution shift unless a skill-specific structural residual survives.",
+      "strongest_reduction": "same-information source-to-target model selection under distribution shift / domain generalization: the T1-T3 local arm effect and T4-T6 shifted-deployment arm effect are allowed to differ by family/role, so ranking inversion and selector regret are already expressible as ordinary transport/invariance failure without a skill-specific structural variable; independently, arXiv:2608.14036 already covers generic cross-framework portability of fixed procedural artifacts",
       "cheapest_falsifier": "The frozen seed-A inversion/regret F0 is no longer decisive for novelty and must not be executed as the current claim test. Reuse the SkillEvolBench substrate only after preregistering a skill-specific structural variable and a same-information distribution-shift selector that receives identical T1-T3 outcomes, family/role observables, representation metadata, pre-outcome shift descriptors, and compute; the two models must make different ex-ante T4-T6 arm-selection predictions before any deployment outcomes are opened.",
       "support_status": "PRINCIPLE_CLOSED_DISTRIBUTION_SHIFT_REDUCTION",
       "status": "STOP_REDUCTION",
       "priority": 90,
-      "why_now": "The 30-family/180-task first-party substrate remains reusable, but the current PA-05 success criterion is principle-closed before execution: T1-T3 validation/deployment ranking inversion and oracle regret under deliberately shifted T4-T6 roles are predictions of generic model selection under distribution shift. Running 540 model tasks cannot distinguish a skill-evolution mechanism without an additional same-information structural residual.",
+      "why_now": "The 30-family/180-task first-party substrate remains reusable, but the current PA-05 success criterion is principle-closed before execution: T1-T3 validation/deployment ranking inversion and oracle regret under deliberately shifted T4-T6 roles are predictions of generic model selection under distribution shift. arXiv:2608.14036 additionally removes generic cross-framework portability as a novelty fallback. Running 540 model tasks cannot distinguish a skill-evolution mechanism without an additional same-information structural residual.",
       "substrate": {
         "repository": "AIoT-MLSys-Lab/SkillEvolBench",
         "commit_sha": "9e3daa339987c3cfa624121e1be442593a53d43c",
@@ -335,7 +336,7 @@
     },
     "dead_end_memory": {
       "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-      "sha256": "389d701d9382883a89f15cb0af0bc0010002a713f1829b5ed1362ac49f80f432"
+      "sha256": "6fa1deccbb1be391f34b0ec17bab8efb56a90aac2b2a82788c17e86c4d0a563c"
     },
     "defense_principle_reduction": {
       "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
@@ -344,7 +345,7 @@
     },
     "skill_validation_transfer_scout": {
       "path": "generated/paper-first-skill-validation-transfer-scout-20260817.json",
-      "sha256": "20c9d66770dfc105b0d834404d85010ae4fc7394de58a1118465b7a8770cb010",
+      "sha256": "54a73537862e2ace66c09a8d0c71d5646a9d4eefbd0ad155a9fb32218df289e9",
       "status": "DESIGN_READY_EXECUTION_ENV_HOLD",
       "plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c"
     },
