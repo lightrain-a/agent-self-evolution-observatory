@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import tempfile
 import unittest
@@ -10,7 +11,7 @@ from pathlib import Path
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _normalize_lane_search, _principle_dead_end_reentry_audit, _provider_request_audit, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _normalize_lane_search, _principle_dead_end_reentry_audit, _provider_request_audit, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -877,6 +878,34 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertEqual(state["summary"]["semantic_clear"],1)
         self.assertTrue(inbox["candidates"][0]["reduction_falsifiability_contract"]["all_exact_reduction_tests_resolved"])
         self.assertEqual(queue["summary"]["passed_problem_gate"],1)
+
+    def test_reviewer_only_resume_never_reruns_generator_and_can_close_pending_reduction(self) -> None:
+        candidate=self.raw_candidate("ASSUMPTION_BREAK")
+        candidate["mature_theory_baselines"][1]["reduction_class"]="NEEDS_EXACT_REDUCTION_TEST"
+        candidate["reduction_falsifiability_contract"]["all_exact_reduction_tests_resolved"]=False
+        generator=self.gen([candidate],resolved="kimi-k3",notes="One reviewable candidate survives.")
+        reviewer_calls=[];reviewer=self.review("CLEAR",resolved="deepseek-v4-pro",lane="ASSUMPTION_BREAK")
+        def counted_reviewer(**kwargs): reviewer_calls.append(1); return reviewer(**kwargs)
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now);raw_path=root/"generator.txt";raw=generator(prompt="unused",model="kimi-k3",max_output_tokens=10)["text"];raw_path.write_text(raw,encoding="utf-8");raw_sha=hashlib.sha256(raw.encode()).hexdigest();auto=root/"review-auto.json"
+            state=resume_semantic_reviewer(storage=storage,primary_pool_path=pool,generator_raw_path=raw_path,generator_raw_sha256=raw_sha,generator_requested_model="kimi-k3",generator_resolved_model="kimi-k3",source_generator_run_id="GEN-1",reviewer_model="deepseek-v4-pro",auto_inbox_path=auto,reviewer_responder=counted_reviewer,expected_pool_sha256="",now=now)
+            queue=build_problem_gate_queue(root/"manual.json",auto_inbox_path=auto,primary_pool_path=pool,storage=storage)
+        self.assertEqual(reviewer_calls,[1])
+        self.assertTrue(state["policy"]["reviewer_only_resume"])
+        self.assertEqual(state["policy"]["generator_calls_authorized"],0)
+        self.assertEqual(state["status"],"GENERATED_AWAIT_PROBLEM_GATE")
+        self.assertEqual(state["summary"]["semantic_clear"],1)
+        self.assertEqual(queue["summary"]["passed_problem_gate"],1)
+
+    def test_reviewer_only_resume_bad_generator_sha_makes_zero_reviewer_calls(self) -> None:
+        reviewer_calls=[]
+        def reviewer(**kwargs): reviewer_calls.append(1); raise AssertionError
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now);raw=root/"generator.txt";raw.write_text(self.gen([],notes="zero")(prompt="x",model="kimi-k3",max_output_tokens=10)["text"],encoding="utf-8")
+            state=resume_semantic_reviewer(storage=storage,primary_pool_path=pool,generator_raw_path=raw,generator_raw_sha256="0"*64,generator_requested_model="kimi-k3",generator_resolved_model="kimi-k3",source_generator_run_id="GEN-1",reviewer_responder=reviewer,now=now)
+        self.assertEqual(reviewer_calls,[])
+        self.assertEqual(state["status"],"REVIEWER_RESUME_INPUT_INVALID")
+        self.assertEqual(state["error"],"generator-raw-sha-mismatch")
 
     def test_reviewer_clear_without_lane_verification_is_forced_block(self) -> None:
         with tempfile.TemporaryDirectory() as td:

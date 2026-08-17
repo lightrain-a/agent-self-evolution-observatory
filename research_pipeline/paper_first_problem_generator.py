@@ -670,6 +670,55 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     return finish("GENERATED_ZERO_CANDIDATES" if not cands else "GENERATED_AWAIT_PROBLEM_GATE",cands)
 
 
+def resume_semantic_reviewer(*,storage=None,primary_pool_path:Path,generator_raw_path:Path,generator_raw_sha256:str,generator_requested_model:str,generator_resolved_model:str,source_generator_run_id:str,reviewer_model:str|None=None,auto_inbox_path:Path|None=None,reviewer_responder:Responder|None=None,strict_provider:bool=True,expected_pool_sha256:str="",now=None)->dict[str,Any]:
+    """Resume only the independent semantic reviewer from archived Generator output.
+
+    This path never invokes the Generator. It reconstructs machine-reviewable candidates from the
+    archived raw Generator artifact, verifies the frozen Primary pool and raw SHA, then performs at
+    most one reviewer call. Provider failure leaves candidates unreviewed with zero authority.
+    """
+    storage=storage or StorageSettings.from_env();reviewer_model=reviewer_model or os.getenv("PAPER_FIRST_PROBLEM_REVIEW_MODEL",REVIEWER_MODEL);current=(now or _now_dt()).astimezone(timezone.utc);run_id=current.strftime("%Y%m%dT%H%M%SZ")
+    primary_pool_path=Path(primary_pool_path);generator_raw_path=Path(generator_raw_path);auto_inbox_path=Path(auto_inbox_path) if auto_inbox_path is not None else _root(storage)/"semantic-review-resume-inbox.json"
+    pool=load_private_primary_pool(primary_pool_path) or {};reg=_registry(pool);psha=_pool_sha(pool) if pool else ""
+    state={"schema_version":"1.0","generated_at":_now(),"run_id":run_id,"source_generator_run_id":str(source_generator_run_id or ""),"source_generator_raw_sha256":str(generator_raw_sha256 or ""),"generator_requested_model":str(generator_requested_model or ""),"generator_resolved_model":str(generator_resolved_model or ""),"reviewer_model":reviewer_model,"primary_pool_sha256":psha,"policy":{"reviewer_only_resume":True,"generator_calls_authorized":0,"one_semantic_reviewer_call_max":True,"strict_provider_transport":bool(strict_provider),"same_resolved_model_cannot_count_as_independent_review":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False,"automatic_gpu_authority":False},"summary":_empty_summary(len(reg)),"raw_artifacts":{},"candidates":[],"scientific_authority":False}
+    def finish(status,cands=[]):
+        state["status"]=status;_write_inbox(auto_inbox_path,source_generator_run_id or run_id,status,cands,psha);return state
+    if pool.get("status")!="READY" or len(reg)<4:return finish("SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE")
+    if expected_pool_sha256 and psha!=expected_pool_sha256:state["error"]="primary-pool-sha-mismatch";return finish("REVIEWER_RESUME_INPUT_INVALID")
+    try: raw=generator_raw_path.read_text(encoding="utf-8")
+    except OSError as e:state["error"]=f"generator-raw-read-error:{type(e).__name__}";return finish("REVIEWER_RESUME_INPUT_INVALID")
+    actual_raw_sha=_sha(raw)
+    if not generator_raw_sha256 or actual_raw_sha!=str(generator_raw_sha256):state["error"]="generator-raw-sha-mismatch";return finish("REVIEWER_RESUME_INPUT_INVALID")
+    try:
+        payload=extract_json_object(raw);rows=payload.get("candidates") or []
+        if not isinstance(rows,list) or len(rows)>MAX_CANDIDATES or any(not isinstance(row,dict) for row in rows):raise ValueError("generator-candidate-array-invalid")
+        cands=_annotate_principle_dead_end_reentry([_normalize(row,reg) for row in rows]);reviewable=[c for c in cands if _reviewable(c,reg)]
+    except Exception as e:state["error"]=f"generator-raw-parse-error:{type(e).__name__}:{str(e)[:240]}";return finish("REVIEWER_RESUME_INPUT_INVALID")
+    state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
+    if not reviewable:
+        state["summary"].update({"semantic_clear":0,"semantic_blocked":len(cands),"written_to_auto_inbox":0,"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane(cands)})
+        state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"semantic_verdict":"BLOCK_PRE_REVIEW","principle_dead_end_reentry_audit":c.get("principle_dead_end_reentry_audit") or {}} for c in cands]
+        return finish("SKIPPED_NO_STRUCTURALLY_REVIEWABLE_CANDIDATES")
+    call=reviewer_responder or (lambda **kwargs:_ark(stage="semantic_review",allow_transport_fallback=not strict_provider,**kwargs))
+    try:
+        res=call(prompt=reviewer_prompt(reviewable,reg),model=reviewer_model,max_output_tokens=4200);review_raw=str(res.get("text") or "");path,sha=_write_raw(storage,run_id,"semantic-review-resume",reviewer_model,review_raw);resolved=str(res.get("resolved_model") or reviewer_model);transport_attempts=list(res.get("transport_attempts") or []);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"semantic-review-resume",transport_attempts);orphan_audits=_archive_provider_orphans(storage,run_id,"semantic_review",transport_attempts);state["raw_artifacts"]["semantic_reviewer"]={"path":path,"sha256":sha,"requested_model":reviewer_model,"resolved_model":resolved,"transport_attempts":safe_attempts,"transport_fallback_used":bool(res.get("transport_fallback_used"))};
+        if receipt_audits:state["raw_artifacts"]["semantic_reviewer"]["provider_receipt_audits"]=receipt_audits
+        if orphan_audits:state["provider_orphan_audits"]=orphan_audits
+        _apply_reviews(reviewable,extract_json_object(review_raw),reviewer_model,resolved,generator_resolved_model,sha,reg)
+    except Exception as e:
+        transport_attempts=list(getattr(e,"transport_attempts",[]) or []);safe_attempts,receipt_audits=_archive_provider_receipts(storage,run_id,"semantic-review-resume",transport_attempts);orphan_audits=_archive_provider_orphans(storage,run_id,"semantic_review",transport_attempts);state["error"]=f"{type(e).__name__}:{str(e)[:300]}";state["semantic_review_transport_attempts"]=safe_attempts
+        if receipt_audits:state["provider_receipt_audits"]=receipt_audits
+        if orphan_audits:state["provider_orphan_audits"]=orphan_audits
+        _apply_reviews(reviewable,None,reviewer_model,"",generator_resolved_model,"",reg)
+        state["summary"].update({"semantic_clear":0,"semantic_blocked":0,"semantic_review_unavailable":len(reviewable),"written_to_auto_inbox":0,"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane([]),"semantic_review_unavailable_by_lane":_count_by_lane(reviewable)})
+        state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"semantic_verdict":"UNREVIEWED"} for c in reviewable]
+        return finish("REVIEWER_ERROR_ZERO_AUTHORITY")
+    clear_rows=[c for c in reviewable if (c.get("semantic_reduction_review") or {}).get("verdict")=="CLEAR"];blocked_rows=[c for c in reviewable if c not in clear_rows]
+    state["summary"].update({"semantic_clear":len(clear_rows),"semantic_blocked":len(blocked_rows),"written_to_auto_inbox":len(reviewable),"semantic_clear_by_lane":_count_by_lane(clear_rows),"semantic_blocked_by_lane":_count_by_lane(blocked_rows)})
+    state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"source_refs":[c["empirical_evidence"]["source_a"]["ref"],c["empirical_evidence"]["source_b"]["ref"]],"semantic_verdict":(c.get("semantic_reduction_review") or {}).get("verdict"),"lane_contract_verified":(c.get("semantic_reduction_review") or {}).get("lane_contract_verified") is True,"matched_patterns":(c.get("semantic_reduction_review") or {}).get("matched_patterns") or []} for c in reviewable]
+    return finish("GENERATED_AWAIT_PROBLEM_GATE",reviewable)
+
+
 def public_problem_generator_state(state:dict[str,Any],storage:StorageSettings|None=None)->dict[str,Any]:
     public=json.loads(json.dumps(state,ensure_ascii=False))
     for key in ("primary_pool_path","auto_inbox_path","archived_previous_auto_inbox","search_portfolio_private_path"):
