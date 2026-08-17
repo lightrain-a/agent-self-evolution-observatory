@@ -5,7 +5,7 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
-DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-anomaly-precision-v13"
+DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-anomaly-precision-v14"
 
 DISCOVERY_LANES: tuple[str, ...] = (
     "CONTRADICTION",
@@ -68,6 +68,8 @@ LANE_DISTINCT_SOURCE_MINIMUM: dict[str, int] = {
 LANE_EVIDENCE_REQUIRED: dict[str, tuple[str, ...]] = {
     "CONTRADICTION": (
         "shared_operationalization",
+        "shared_intervention_semantics",
+        "shared_adaptation_stage",
         "incompatibility",
     ),
     "CONVERGENT_FAILURE": (
@@ -129,7 +131,7 @@ LANE_EVIDENCE_REQUIRED: dict[str, tuple[str, ...]] = {
 }
 
 LANE_MACHINE_CONTRACTS: dict[str, str] = {
-    "CONTRADICTION": "Two independently grounded empirical facts are incompatible under an explicitly shared operationalization.",
+    "CONTRADICTION": "Two independently grounded empirical facts are incompatible under an explicitly shared operationalization, including the same intervention/treatment surface and adaptation stage; inference-time context, retrieval/filtering, parameter updates, and full-parameter training are not interchangeable treatments.",
     "CONVERGENT_FAILURE": "Two independent method families show quantitative failure under the same bounded operational condition; the candidate names a common failure object rather than a better-method claim.",
     "ASSUMPTION_BREAK": "Source A contains an explicit operational assumption and independent source B contains empirical evidence that violates it in a scope-linked setting.",
     "UNEXPLAINED_BOUNDARY": "Primary evidence quantitatively establishes an anomalous boundary/regime and an adjacent expected regime for the same measured phenomenon; the candidate targets the unexplained transition.",
@@ -215,6 +217,10 @@ POLICY: dict[str, Any] = {
     "saturation_map_check_required": True,
     "problem_falsifier_required_before_method_design": True,
     "reduction_pending_is_provisional_not_failed": True,
+    "reduction_pending_may_reach_block_only_semantic_review": True,
+    "reduction_pending_cannot_pass_problem_gate": True,
+    "contradiction_requires_matched_intervention_semantics": True,
+    "contradiction_requires_matched_adaptation_stage": True,
     "bounded_first_party_evidence_acquisition_allowed_before_problem_gate_pass": True,
     "support_inventory_is_one_evidence_route_not_global_prerequisite": True,
     "first_party_evidence_cannot_auto_certify_novelty": True,

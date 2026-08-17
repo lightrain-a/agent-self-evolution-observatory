@@ -11,7 +11,7 @@ from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
 from .paper_first_problem_generator import _ark, _normalize_lane_search, _provider_request_audit, run_problem_generator, write_problem_generator_state
-from .paper_first_problem_generator_prompts import generator_prompt
+from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
 
@@ -165,8 +165,60 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             self.assertIn(lane, prompt)
         self.assertIn("lane_evidence", prompt)
         self.assertIn("OPERATIONAL_ASSUMPTION", prompt)
-        for field in ("ex_ante_prediction","distinguishing_prediction","cannot_express","reduction_class","exact_reduction_test","reduction_falsifiability_contract","same_observable_information_checked","ex_ante_exact_prediction_checked","distinguishing_prediction_checked","scope_boundary_checked","all_exact_reduction_tests_resolved"):
+        for field in ("ex_ante_prediction","distinguishing_prediction","cannot_express","reduction_class","exact_reduction_test","reduction_falsifiability_contract","same_observable_information_checked","ex_ante_exact_prediction_checked","distinguishing_prediction_checked","scope_boundary_checked","all_exact_reduction_tests_resolved","shared_intervention_semantics","shared_adaptation_stage"):
             self.assertIn(field,prompt)
+        self.assertIn("full-parameter SFT are distinct interventions",prompt)
+
+
+    def test_reviewer_prompt_requires_matched_contradiction_treatment_semantics(self) -> None:
+        candidate=self.raw_candidate("CONTRADICTION")
+        evidence={
+            "arXiv:2608.00001":{"ref":"arXiv:2608.00001","title":"A","source_sha256":"1"*64,"abstract":"Primary abstract fact 1 about self-evolving agents and bounded deployment evidence."},
+            "arXiv:2608.00002":{"ref":"arXiv:2608.00002","title":"B","source_sha256":"2"*64,"abstract":"Primary abstract fact 2 about self-evolving agents and bounded deployment evidence."},
+        }
+        prompt=reviewer_prompt([candidate],evidence)
+        self.assertIn("shared intervention semantics and adaptation stage",prompt)
+        self.assertIn("full-parameter training are different treatment surfaces",prompt)
+
+    def test_reduction_pending_candidate_reaches_lane_reviewer_before_falsifier(self) -> None:
+        candidate=self.raw_candidate("CONTRADICTION")
+        candidate["mature_theory_baselines"][0]["reduction_class"]="NEEDS_EXACT_REDUCTION_TEST"
+        candidate["reduction_falsifiability_contract"]["all_exact_reduction_tests_resolved"]=False
+        calls=[]
+        base=self.review("CLEAR",lane_verified=False)
+        def reviewer(**kwargs):
+            calls.append(kwargs.get("prompt",""))
+            result=base(**kwargs)
+            payload=json.loads(result["text"]);payload["reviews"][0]["lane_contract_reason"]="treatment-surface mismatch: inference-time context is not full-parameter training"
+            result["text"]=json.dumps(payload)
+            return result
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);auto=root/"auto.json";pool=self.pool(root,now)
+            state=run_problem_generator(storage=self.storage(root),primary_pool_path=pool,auto_inbox_path=auto,generator_responder=self.gen([candidate]),reviewer_responder=reviewer,now=now)
+            queue=build_problem_gate_queue(root/"manual.json",auto_inbox_path=auto,primary_pool_path=pool,storage=self.storage(root))
+            inbox=json.loads(auto.read_text())
+        self.assertEqual(len(calls),1)
+        self.assertEqual(state["summary"]["structurally_reviewable"],1)
+        review=inbox["candidates"][0]["semantic_reduction_review"]
+        self.assertTrue(review["reviewed"]);self.assertFalse(review["lane_contract_verified"]);self.assertEqual(review["verdict"],"BLOCK")
+        self.assertIn("treatment-surface mismatch",review["lane_contract_reason"])
+        self.assertEqual(queue["summary"]["passed_problem_gate"],0)
+        blockers=queue["blocked"][0]["blockers"]
+        self.assertIn("unresolved-exact-reduction-test:1",blockers)
+        self.assertIn("reduction-falsifiability-contract-incomplete",blockers)
+        self.assertIn("semantic-reduction-review-block",blockers)
+
+    def test_reduction_pending_never_passes_problem_gate_even_if_reviewer_clears(self) -> None:
+        candidate=self.raw_candidate("CONTRADICTION")
+        candidate["mature_theory_baselines"][0]["reduction_class"]="NEEDS_EXACT_REDUCTION_TEST"
+        candidate["reduction_falsifiability_contract"]["all_exact_reduction_tests_resolved"]=False
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);auto=root/"auto.json";pool=self.pool(root,now)
+            state=run_problem_generator(storage=self.storage(root),primary_pool_path=pool,auto_inbox_path=auto,generator_responder=self.gen([candidate]),reviewer_responder=self.review("CLEAR",lane_verified=True),now=now)
+            queue=build_problem_gate_queue(root/"manual.json",auto_inbox_path=auto,primary_pool_path=pool,storage=self.storage(root))
+        self.assertEqual(state["summary"]["structurally_reviewable"],1)
+        self.assertEqual(queue["summary"]["passed_problem_gate"],0)
+        self.assertTrue(any(x.startswith("unresolved-exact-reduction-test:") for x in queue["blocked"][0]["blockers"]))
 
     def test_explicit_portfolio_mode_is_not_a_live_generator_path(self) -> None:
         with tempfile.TemporaryDirectory() as td:

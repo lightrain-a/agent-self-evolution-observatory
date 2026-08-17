@@ -18,6 +18,8 @@ def _lane_evidence(lane: str) -> dict:
     if lane == "CONTRADICTION":
         return {
             "shared_operationalization": "Both sources evaluate the same measured behavior under the same bounded setting.",
+            "shared_intervention_semantics": "Both sources apply the same frozen inference-time context treatment to an unchanged policy.",
+            "shared_adaptation_stage": "Both treatments occur at inference time with no parameter update or training-data selection stage.",
             "incompatibility": "The two grounded facts require opposite outcomes under that shared operationalization.",
         }
     if lane == "CONVERGENT_FAILURE":
@@ -150,6 +152,10 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertTrue(policy["two_mature_theory_baselines_required"])
         self.assertTrue(policy["same_information_nonreducibility_required"])
         self.assertTrue(policy["domain_transfer_veto_required"])
+        self.assertTrue(policy["reduction_pending_may_reach_block_only_semantic_review"])
+        self.assertTrue(policy["reduction_pending_cannot_pass_problem_gate"])
+        self.assertTrue(policy["contradiction_requires_matched_intervention_semantics"])
+        self.assertTrue(policy["contradiction_requires_matched_adaptation_stage"])
         self.assertTrue(policy["positive_residual_search_enabled"])
         self.assertTrue(policy["positive_residual_asset_requires_provenance_manifest"])
         self.assertTrue(policy["positive_residual_asset_is_zero_authority_search_evidence"])
