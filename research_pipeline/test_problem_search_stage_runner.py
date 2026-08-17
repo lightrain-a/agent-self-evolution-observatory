@@ -510,6 +510,22 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
                 with self.assertRaisesRegex(SystemExit,"STOP_BEFORE_ASSEMBLE_CONTROL_SNAPSHOT_SUPERSEDED"):
                     runner.main()
 
+    def test_formulation_parser_salvages_only_truncated_optional_notes(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);raw='```json\n{"candidates":[],"rejected":[{"source_branch_id":"B1","reason":"complete scientific rejection","reduction_class":"UNDERFORMED"}],\n  "notes": "optional metadata was cut'
+            payload,sha=runner._parse_archived_json(root,"formulate-p1",raw,"glm-5.3")
+            receipt=json.loads(next(root.glob("repair-formulate-p1-*.json")).read_text(encoding="utf-8"))
+        self.assertEqual(payload["candidates"],[]);self.assertEqual(payload["rejected"][0]["reason"],"complete scientific rejection")
+        self.assertEqual(receipt["raw_sha256"],sha);self.assertEqual(receipt["repair_type"],"TRUNCATED_OPTIONAL_TRAILING_NOTES");self.assertEqual(receipt["scientific_fields_preserved"],["candidates","rejected"]);self.assertFalse(receipt["scientific_array_bytes_mutated"]);self.assertFalse(receipt["string_content_mutation_allowed"])
+
+    def test_formulation_parser_does_not_salvage_truncated_scientific_array(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);raw='{"candidates":[],"rejected":[{"source_branch_id":"B1","reason":"cut'
+            with self.assertRaises((ValueError,json.JSONDecodeError)):runner._parse_archived_json(root,"formulate-p1",raw,"glm-5.3")
+            self.assertEqual(list(root.glob("repair-formulate-p1-*.json")),[])
+            error=json.loads(next(root.glob("error-formulate-p1-*.json")).read_text(encoding="utf-8"))
+        self.assertEqual(error["status"],"PARSE_ERROR_ZERO_AUTHORITY")
+
     def test_evidence_design_parser_repairs_only_impossible_array_colon_delimiter(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);raw='{"designs":[{"anti_bake_in_controls":["first":"second"],"decision_rule":{"INCONCLUSIVE":"hold"}}]}'

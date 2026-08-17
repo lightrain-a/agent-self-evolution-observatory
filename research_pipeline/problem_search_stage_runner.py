@@ -99,10 +99,40 @@ def _archive_raw_before_parse(run_root:Path,stem:str,raw:str,resolved_model:str)
     sha=hashlib.sha256(raw.encode()).hexdigest();raw_root=run_root/"raw";raw_root.mkdir(parents=True,exist_ok=True);path=raw_root/f"{stem}-{sha[:12]}.txt";path.write_text(raw,encoding="utf-8");return sha,path
 
 
+def _repair_truncated_formulation_notes(raw:str)->tuple[dict|None,str,int]:
+    """Recover only fully closed scientific arrays followed by truncated optional notes.
+
+    The bytes that encode `candidates` and `rejected` are never edited.  We discard only
+    an incomplete top-level `notes` suffix and close the already-complete root object.
+    Any truncation inside the scientific arrays remains a hard parse failure.
+    """
+    text=str(raw or "").strip()
+    if text.startswith("```"):
+        lines=text.splitlines()
+        if lines and lines[0].startswith("```"):text="\n".join(lines[1:])
+    marker='\n  "notes":'
+    split=text.rfind(marker)
+    if split<0:return None,"",0
+    suffix=text[split:]
+    prefix=text[:split].rstrip()
+    if not prefix.endswith(','):return None,"",0
+    repaired=prefix[:-1].rstrip()+"\n}"
+    try:payload=json.loads(repaired)
+    except Exception:return None,"",0
+    if not isinstance(payload,dict) or not isinstance(payload.get("candidates"),list) or not isinstance(payload.get("rejected"),list):return None,"",0
+    if set(payload)-{"candidates","rejected"}:return None,"",0
+    return payload,repaired,len(suffix)
+
+
 def _parse_archived_json(run_root:Path,stem:str,raw:str,resolved_model:str)->tuple[dict,str]:
     sha,_=_archive_raw_before_parse(run_root,stem,raw,resolved_model)
     try:return extract_json_object(raw),sha
     except Exception as error:
+        if stem.startswith("formulate-"):
+            payload,repaired,discarded=_repair_truncated_formulation_notes(raw)
+            if payload is not None:
+                repaired_sha=hashlib.sha256(repaired.encode()).hexdigest();receipt={"schema_version":"1.0","stage":stem,"status":"PARSE_REPAIRED_TRAILING_METADATA_ONLY_ZERO_AUTHORITY","resolved_model":resolved_model,"raw_sha256":sha,"repaired_sha256":repaired_sha,"repair_type":"TRUNCATED_OPTIONAL_TRAILING_NOTES","discarded_field":"notes","discarded_suffix_chars":discarded,"scientific_fields_preserved":["candidates","rejected"],"scientific_array_bytes_mutated":False,"string_content_mutation_allowed":False,"scientific_authority":False,"authority":{"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False}}
+                (run_root/f"repair-{stem}-{sha[:12]}.json").write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return payload,sha
         err={"schema_version":"1.0","stage":stem,"status":"PARSE_ERROR_ZERO_AUTHORITY","resolved_model":resolved_model,"raw_sha256":sha,"error":f"{type(error).__name__}:{str(error)[:1200]}","scientific_authority":False}
         (run_root/f"error-{stem}-{sha[:12]}.json").write_text(json.dumps(err,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise
 
