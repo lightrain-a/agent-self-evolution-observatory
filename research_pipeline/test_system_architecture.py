@@ -6,6 +6,7 @@ from .methodology_controls import build_methodology_controls_state
 from .system_architecture import (
     COMPONENT_BINDINGS,
     FUNCTIONAL_LAYERS,
+    READING_GROUPS,
     TEMPORAL_FLOW,
     annotate_components,
     build_system_architecture,
@@ -20,6 +21,14 @@ class SystemArchitectureTest(unittest.TestCase):
         self.assertEqual(keys[5:9], ["economy-compile", "local-validation", "method-freeze", "full-experiment"])
         self.assertEqual(keys[-2:], ["paper-evidence", "learn"])
         self.assertEqual([row["index"] for row in TEMPORAL_FLOW], list(range(1, 12)))
+
+    def test_reading_groups_cover_the_temporal_flow_without_creating_new_gates(self) -> None:
+        self.assertEqual(len(READING_GROUPS), 7)
+        self.assertEqual(READING_GROUPS[0]["key"], "overview")
+        self.assertTrue(READING_GROUPS[0]["orientation_only"])
+        grouped = [stage for row in READING_GROUPS[1:] for stage in row["stage_keys"]]
+        self.assertEqual(grouped, [row["key"] for row in TEMPORAL_FLOW])
+        self.assertEqual(len(grouped), len(set(grouped)))
 
     def test_functional_layers_are_distinct_from_temporal_flow(self) -> None:
         keys = [row["key"] for row in FUNCTIONAL_LAYERS]
@@ -49,6 +58,12 @@ class SystemArchitectureTest(unittest.TestCase):
             {"component":{"en":"Literature retrieval + Evidence Integrity layer"},"status":"running"},
         ])
         architecture = build_system_architecture(items, build_methodology_controls_state())
+        self.assertEqual(architecture["summary"]["reader_chapters"], 7)
+        self.assertEqual(architecture["summary"]["reader_stage_coverage"], 11)
+        self.assertEqual(architecture["summary"]["reader_stage_missing"], 0)
+        self.assertEqual(architecture["summary"]["reader_stage_duplicates"], 0)
+        self.assertEqual(architecture["summary"]["reader_stage_extra"], 0)
+        self.assertEqual(set(architecture["stage_group_map"]), {row["key"] for row in TEMPORAL_FLOW})
         self.assertEqual(architecture["summary"]["cross_cutting_controls"], 3)
         self.assertEqual(architecture["summary"]["orphan_cross_cutting_controls"], 0)
         self.assertEqual(architecture["summary"]["functional_layers"], 6)

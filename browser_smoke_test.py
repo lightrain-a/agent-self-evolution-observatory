@@ -151,6 +151,10 @@ def main() -> None:
               toc4: document.querySelectorAll('.toc-level-4').length,
               stats: document.querySelectorAll('.system-stat').length,
               mapMetrics: document.querySelectorAll('.system-map-metrics > div').length,
+              readerChapters: document.querySelectorAll('.reader-roadmap-card').length,
+              readerPhases: document.querySelectorAll('.reader-phase').length,
+              deepDives: document.querySelectorAll('.system-deep-dive').length,
+              authorityCards: document.querySelectorAll('.reader-authority-grid article').length,
               responsibilityLayers: document.querySelectorAll('.system-layer-list article').length,
               componentLayerHeaders: document.querySelectorAll('.system-component-layer').length,
               methodologyControls: document.querySelectorAll('.methodology-control-card').length,
@@ -190,11 +194,11 @@ def main() -> None:
               text: document.body.textContent || ''
             };""",
         )
-        require(system_overview["chapters"] == 6, f"system overview must have six research-system chapters, got {system_overview['chapters']}")
-        require(system_overview["toc2"] >= 6 and system_overview["toc4"] == 0, f"system overview hierarchy is wrong: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
-        require(system_overview["stats"] == 8, f"research-system hero statistics are incomplete: {system_overview['stats']}")
-        require(system_overview["mapMetrics"] == 7 and system_overview["responsibilityLayers"] == 6 and system_overview["lifecycleSteps"] == 11 and system_overview["componentLayerHeaders"] == 6, f"canonical architecture is incomplete: metrics={system_overview['mapMetrics']} layers={system_overview['responsibilityLayers']} stages={system_overview['lifecycleSteps']} component-groups={system_overview['componentLayerHeaders']}")
-        require((system_overview["architectureSummary"].get("temporal_stages"),system_overview["architectureSummary"].get("functional_layers"),system_overview["architectureSummary"].get("assigned_components"),system_overview["architectureSummary"].get("unassigned_components"),system_overview["architectureSummary"].get("cross_cutting_controls"),system_overview["architectureSummary"].get("orphan_cross_cutting_controls")) == (11,6,27,0,3,0), f"backend architecture manifest is stale in browser state: {system_overview['architectureSummary']}")
+        require(system_overview["chapters"] == 7 and system_overview["readerChapters"] == 7 and system_overview["readerPhases"] == 6 and system_overview["deepDives"] == 4 and system_overview["authorityCards"] == 3, f"system overview reading framework is incomplete: chapters={system_overview['chapters']} roadmap={system_overview['readerChapters']} phases={system_overview['readerPhases']} deep={system_overview['deepDives']} authority={system_overview['authorityCards']}")
+        require(system_overview["toc2"] >= 7 and system_overview["toc4"] == 0, f"system overview hierarchy is wrong: {system_overview['toc2']}/{system_overview['toc3']}/{system_overview['toc4']}")
+        require(system_overview["stats"] == 6, f"research-system hero statistics are incomplete: {system_overview['stats']}")
+        require(system_overview["readerChapters"] == 7 and system_overview["responsibilityLayers"] == 6 and system_overview["lifecycleSteps"] == 11 and system_overview["componentLayerHeaders"] == 6, f"canonical architecture is incomplete: reader={system_overview['readerChapters']} layers={system_overview['responsibilityLayers']} stages={system_overview['lifecycleSteps']} component-groups={system_overview['componentLayerHeaders']}")
+        require((system_overview["architectureSummary"].get("temporal_stages"),system_overview["architectureSummary"].get("reader_chapters"),system_overview["architectureSummary"].get("reader_stage_coverage"),system_overview["architectureSummary"].get("reader_stage_missing"),system_overview["architectureSummary"].get("reader_stage_duplicates"),system_overview["architectureSummary"].get("reader_stage_extra"),system_overview["architectureSummary"].get("functional_layers"),system_overview["architectureSummary"].get("assigned_components"),system_overview["architectureSummary"].get("unassigned_components"),system_overview["architectureSummary"].get("cross_cutting_controls"),system_overview["architectureSummary"].get("orphan_cross_cutting_controls")) == (11,7,11,0,0,0,6,27,0,3,0), f"backend architecture manifest is stale in browser state: {system_overview['architectureSummary']}")
         require(system_overview["methodologyControls"] == 3 and "Exploration Frontier" in system_overview["text"] and "Search-Time Contamination" in system_overview["text"] and "Reproducibility Readiness" in system_overview["text"], f"cross-cutting methodology controls are missing: {system_overview['methodologyControls']}")
         require(system_overview["aiCheckpoints"] == 5, f"AI consultation checkpoint strip is incomplete: {system_overview['aiCheckpoints']}")
         require(system_overview["governanceStages"] == 7, f"P0-System v2 must expose seven scientific stages, got {system_overview['governanceStages']}")

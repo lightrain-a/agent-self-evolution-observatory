@@ -65,7 +65,7 @@ REQUIRED_STATIC = [
     "generated/idea-discovery-v4.json", "generated/idea-discovery-v4.js", "generated/idea-discovery-v4-external-reviews.json",
     "generated/idea-discovery-v3.json", "generated/idea-discovery-v3.js", "generated/idea-discovery-v3-external-reviews.json",
     "generated/idea-discovery-v31.json", "generated/idea-discovery-v31.js", "generated/idea-discovery-v31-external-reviews.json",
-    "content-system-overview.js", "system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
+    "content-system-overview.js", "system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-reader.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
     "idea-lab.css", "emerging-niche-view.js", "generated/emerging-niche-policy.json", "generated/emerging-niche-policy.js",
     "current-research-status-view.js", "generated/current-research-status.json", "generated/current-research-status.js",
     "generated/p0-experiment-plan.js", "generated/p0-collision-recheck.js", "generated/p0-runtime-readiness.js",
@@ -489,6 +489,7 @@ def main() -> None:
         "system-overview-core.js",
         "system-overview-methodology.js",
         "system-overview-lifecycle.js",
+        "system-overview-reader.js",
         "system-overview-preflight.js",
         "system-overview-operations.js",
         "system-overview-view.js",
@@ -500,9 +501,9 @@ def main() -> None:
     forbidden_system_scripts = ("generated/iclr-low-resource-ideas.js", "generated/machine-school-inspired-ideas.js", "generated/discussion-ready-ideas.js", "generated/idea-discovery-v5.js")
     if any(f'src="{name}"' in system_page for name in forbidden_system_scripts):
         fail("system overview must not load current idea-bank or discussion-pool artifacts")
-    system_files = ["system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-methodology.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-governance-v2.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js"]
+    system_files = ["system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-methodology.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-reader.js", "system-overview-governance-v2.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js"]
     system_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in system_files)
-    for marker in ("PAPER-FIRST RESEARCH OS", "CURRENT RESEARCH OS", "BACKEND ARCHITECTURE MANIFEST", "CROSS-CUTTING METHODOLOGY CONTROLS", "Exploration Frontier", "Search-Time Contamination", "Reproducibility Readiness", "CANONICAL TEMPORAL FLOW", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "GATE 3 · IDENTIFIABILITY SUB-AUDIT", "10 / 10", "SHADOW SEARCH LAB", "v2.9 · MACHINE-ENFORCED", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "MCP-Yu + Experiment Orchestrator", "DECISION → LEARN → PUBLISH"):
+    for marker in ("PAPER-FIRST RESEARCH OS", "READ THIS PAGE IN SEVEN CHAPTERS", "ONE AUTHORITY MODEL", "DISCOVER A REAL PROBLEM", "DESIGN THE PAPER BEFORE IMPLEMENTATION", "COMPILE BEFORE GPU", "EXECUTE, DIAGNOSE, FREEZE, THEN SCALE", "PAPER EVIDENCE → RELEASE", "LEARN WITHOUT REWRITING HISTORY", "BACKEND ARCHITECTURE MANIFEST", "CROSS-CUTTING METHODOLOGY CONTROLS", "Exploration Frontier", "Search-Time Contamination", "Reproducibility Readiness", "CANONICAL TEMPORAL FLOW", "system-layer-list", "P0 ECONOMY", "PRE-EXPERIMENT COMPILER", "8 / 8", "GATE 3 · IDENTIFIABILITY SUB-AUDIT", "10 / 10", "SHADOW SEARCH LAB", "v2.9 · MACHINE-ENFORCED", "LOCAL VALIDATION SUB-MACHINE · P0-SYSTEM v2", "system-failure-layer", "MCP-Yu + Experiment Orchestrator", "DECISION → LEARN → PUBLISH"):
         if marker not in system_text:
             fail(f"system overview implementation is missing {marker}")
     shadow_portfolio = json.loads((ROOT / "generated" / "paper-first-problem-search-portfolio-state.json").read_text(encoding="utf-8"))
@@ -552,7 +553,7 @@ def main() -> None:
     forbidden_idea_markers = ("主 ICLR Idea Bank", "最终师兄讨论门槛", "Main ICLR idea bank", "Final advisor gate", "paper-ideas.html#discussed-ideas")
     if any(marker in system_text or marker in system_content for marker in forbidden_idea_markers):
         fail("system overview must contain only the research system, not current idea decisions")
-    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "总体架构：一条主流程 + 六个后端职责层", "实验设计与启动准入", "科学验证、方法冻结与扩量", "SCIENTIFIC META-TRACE"):
+    for marker in ("自动执行", "条件自动", "人工控制", "8/8 Pre-Experiment", "10/10 identifiability", "从这里开始——一条科研主流程，三个系统视角", "发现真实科学问题", "实现之前先把论文设计完整", "编译最便宜的决定性实验", "执行、诊断、冻结，再扩量", "论文证据闭环与发布", "把科研结果沉淀成系统记忆", "SCIENTIFIC META-TRACE"):
         if marker not in system_text and marker not in system_content and marker not in (ROOT / "page-architecture-data.js").read_text(encoding="utf-8"):
             fail(f"Chinese research-system documentation is missing {marker}")
 

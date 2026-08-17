@@ -79,6 +79,10 @@ def main() -> None:
         require(wait_for("return (document.body.textContent||'').includes('SATURATION / DEAD-END MEMORY') && (document.body.textContent||'').includes('PAPER-FIRST');"), "research-system dynamic sections did not become ready")
         system = execute(session_id, """return {
           chapters: document.querySelectorAll('.page-chapter').length,
+          readerChapters: document.querySelectorAll('.reader-roadmap-card').length,
+          readerPhases: document.querySelectorAll('.reader-phase').length,
+          deepDives: document.querySelectorAll('.system-deep-dive').length,
+          authorityCards: document.querySelectorAll('.reader-authority-grid article').length,
           responsibilityLayers: document.querySelectorAll('.system-layer-list article').length,
           temporalStages: document.querySelectorAll('.system-lifecycle-step').length,
           componentLayerHeaders: document.querySelectorAll('.system-component-layer').length,
@@ -112,9 +116,9 @@ def main() -> None:
           discoveryFrontier: window.RESEARCH_SYSTEM_STATE?.paper_first_discovery_frontier || {},
           text: document.body.textContent || ''
         };""")
-        require(system["chapters"] == 6, f"research-system overview must have six chapters, got {system['chapters']}")
+        require(system["chapters"] == 7 and system["readerChapters"] == 7 and system["readerPhases"] == 6 and system["deepDives"] == 4 and system["authorityCards"] == 3, f"research-system reading framework is incomplete: chapters={system['chapters']} roadmap={system['readerChapters']} phases={system['readerPhases']} deep={system['deepDives']} authority={system['authorityCards']}")
         require(system["responsibilityLayers"] == 6 and system["temporalStages"] == 11 and system["componentLayerHeaders"] == 6 and system["aiCheckpoints"] == 5, f"research-system architecture/AI clinic is incomplete: layers={system['responsibilityLayers']} stages={system['temporalStages']} component-groups={system['componentLayerHeaders']} ai={system['aiCheckpoints']}")
-        require((system["architectureSummary"].get("temporal_stages"),system["architectureSummary"].get("functional_layers"),system["architectureSummary"].get("assigned_components"),system["architectureSummary"].get("unassigned_components"),system["architectureSummary"].get("cross_cutting_controls"),system["architectureSummary"].get("orphan_cross_cutting_controls")) == (11,6,27,0,3,0), f"backend architecture manifest is stale in browser state: {system['architectureSummary']}")
+        require((system["architectureSummary"].get("temporal_stages"),system["architectureSummary"].get("reader_chapters"),system["architectureSummary"].get("reader_stage_coverage"),system["architectureSummary"].get("reader_stage_missing"),system["architectureSummary"].get("reader_stage_duplicates"),system["architectureSummary"].get("reader_stage_extra"),system["architectureSummary"].get("functional_layers"),system["architectureSummary"].get("assigned_components"),system["architectureSummary"].get("unassigned_components"),system["architectureSummary"].get("cross_cutting_controls"),system["architectureSummary"].get("orphan_cross_cutting_controls")) == (11,7,11,0,0,0,6,27,0,3,0), f"backend architecture manifest is stale in browser state: {system['architectureSummary']}")
         require(system["methodologyControls"] == 3 and "Exploration Frontier" in system["text"] and "Reproducibility Readiness" in system["text"], f"cross-cutting methodology controls are missing: {system['methodologyControls']}")
         require(system["outerGates"] == 8 and system["preflightGates"] == 10 and system["quantWorksheets"] == 2, f"Pre-Experiment/identifiability compiler is incomplete: {system['outerGates']}/{system['preflightGates']}/{system['quantWorksheets']}")
         require(system["lessons"] == 6 and system["failureLayers"] == 6 and system["repairLoops"] == 1, f"learning/diagnosis visualization is incomplete: {system['lessons']}/{system['failureLayers']}/{system['repairLoops']}")

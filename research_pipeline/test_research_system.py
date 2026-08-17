@@ -241,6 +241,12 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(len(self.state["research_governance_v2"]["paper_first_macro_stages"]), 11)
         architecture = self.state["system_architecture"]
         self.assertEqual(architecture["summary"]["temporal_stages"], 11)
+        self.assertEqual(architecture["summary"]["reader_chapters"], 7)
+        self.assertEqual(architecture["summary"]["reader_stage_coverage"], 11)
+        self.assertEqual(architecture["summary"]["reader_stage_missing"], 0)
+        self.assertEqual(architecture["summary"]["reader_stage_duplicates"], 0)
+        self.assertEqual(architecture["summary"]["reader_stage_extra"], 0)
+        self.assertEqual(self.state["summary"]["architecture_reader_chapters"], 7)
         self.assertEqual(architecture["summary"]["functional_layers"], 6)
         self.assertEqual(architecture["summary"]["assigned_components"], 27)
         self.assertEqual(architecture["summary"]["unassigned_components"], 0)

@@ -8,22 +8,16 @@
 
   api.renderPurpose = function renderPurpose(state, s2) {
     const summary = state.summary || {};
-    const stats = s2.statistics || {};
-    const economy = state.p0_economy_gate?.summary || {};
-    const ledger = state.p0_decision_ledger?.summary || {};
-    const paper = state.paper_first_workflow?.summary || {};
     const architecture = state.system_architecture?.summary || {};
     const running = (state.components || []).filter((item) => item.status === "running").length;
     return `<section class="system-hero system-section">
       <div class="system-hero-copy"><span class="system-kicker">PAPER-FIRST RESEARCH OS</span><h3>${pick("后端只保留一个科研主逻辑：先设计一篇有 Novelty 的论文，再设计方法和实验，局部验证后冻结，最后做全量证据。","The backend now has one research logic: design a paper-worthy contribution first, then the method and experiments, validate locally, freeze, and only then collect full-scale evidence.")}</h3><p>${pick("Idea 生成、AI 会诊、P0、实验调度、失败诊断和系统记忆都不再是各自独立的流程，而是服务于同一条 Paper-first 生命周期。后端 Architecture Manifest 负责把每个组件归到唯一主责层，前端直接读取这份结构。","Idea generation, AI consultation, P0, experiment scheduling, failure diagnosis, and scientific memory are no longer separate workflows; each serves the same paper-first lifecycle. A backend Architecture Manifest assigns every component to one primary responsibility layer and the frontend reads that structure directly.")}</p></div>
       <div class="system-stat-grid system-hero-stats">
-        ${stat(get(architecture.temporal_stages,11),"步 Paper-first 生命周期","paper-first temporal stages")}
+        ${stat(get(architecture.reader_chapters,7),"个阅读章节","reader chapters")}
+        ${stat(get(architecture.temporal_stages,11),"个机器时间阶段","machine temporal stages")}
         ${stat(get(architecture.functional_layers,6),"个后端职责层","backend responsibility layers")}
         ${stat(get(architecture.assigned_components,running),"个已归责组件","assigned components",get(architecture.unassigned_components,0)?"warn":"good")}
-        ${stat(get(summary.papers,stats.paper_count),"篇去重文献","deduplicated papers")}
-        ${stat(get(paper.paper_design_passed,0),"份新版 Paper-first 卡","current paper-first cards")}
-        ${stat(get(economy.economy_ready,0),"个 Economy-ready","currently Economy-ready",get(economy.economy_ready,0)?"good":"warn")}
-        ${stat(get(ledger.launchable,0),"个当前可启动实验","currently launchable",get(ledger.launchable,0)?"good":"warn")}
+        ${stat(get(architecture.cross_cutting_controls,3),"个横向方法学控制","cross-cutting controls")}
         ${stat(get(architecture.unassigned_components,0),"个未归责组件","unassigned components",get(architecture.unassigned_components,0)?"warn":"good")}
       </div>
     </section>

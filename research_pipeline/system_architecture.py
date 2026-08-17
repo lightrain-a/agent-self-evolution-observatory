@@ -18,6 +18,55 @@ TEMPORAL_FLOW: tuple[dict[str, Any], ...] = (
 )
 
 
+# Reader groups are a presentation index over the canonical temporal flow, not new gates.
+# They make the public system overview readable without changing scientific authority or
+# duplicating the underlying 11-stage state machine.
+READING_GROUPS: tuple[dict[str, Any], ...] = (
+    {
+        "key":"overview","index":1,"stage_keys":[],"orientation_only":True,
+        "label":{"en":"Start here: one flow, three views","zh":"从这里开始：一条主流程，三个视角"},
+        "question":{"en":"How should the lifecycle, responsibility layers, and authority boundaries be read together?","zh":"11 步生命周期、六个职责层和权限边界应该如何一起理解？"},
+        "output":"shared mental model",
+    },
+    {
+        "key":"problem-discovery","index":2,"stage_keys":["scope","evidence"],
+        "label":{"en":"Discover a real problem","zh":"发现真实科学问题"},
+        "question":{"en":"What measured boundary survives closest-work and mature-reduction checks?","zh":"什么真实测量边界能够在最近邻工作和成熟 reduction 之后仍然成立？"},
+        "output":"problem-gate candidate or typed stop/hold",
+    },
+    {
+        "key":"paper-design","index":3,"stage_keys":["novelty","method","experiment-blueprint"],
+        "label":{"en":"Design the paper before implementation","zh":"实现前先把论文设计完整"},
+        "question":{"en":"What is novel, what mechanism carries it, and what evidence package would make the paper convincing?","zh":"Novelty 是什么、由什么机制承载、最终需要什么证据包才能把论文讲完整？"},
+        "output":"novelty + principle + method + claim/evidence blueprint",
+    },
+    {
+        "key":"experiment-compile","index":4,"stage_keys":["economy-compile"],
+        "label":{"en":"Compile the cheapest decisive experiment","zh":"编译最便宜的决定性实验"},
+        "question":{"en":"Is there an identifiable, economical, protocol-valid run worth launching?","zh":"是否存在一个可辨识、值得花资源且协议有效的实验值得启动？"},
+        "output":"launch contract or typed pre-GPU stop",
+    },
+    {
+        "key":"validation-scale","index":5,"stage_keys":["local-validation","method-freeze","full-experiment"],
+        "label":{"en":"Execute, diagnose, freeze, then scale","zh":"执行、诊断、冻结，再扩量"},
+        "question":{"en":"What did the evidence actually test, does the method survive, and is the design frozen enough to scale?","zh":"证据究竟打到了哪一层、方法是否存活、是否已经冻结到可以扩量？"},
+        "output":"typed scientific decision + frozen full evidence package",
+    },
+    {
+        "key":"paper-evidence","index":6,"stage_keys":["paper-evidence"],
+        "label":{"en":"Close paper evidence and release","zh":"论文证据闭环与发布"},
+        "question":{"en":"Do claims, baselines, ablations, analyses, figures, code, and reproducibility artifacts resolve to the exact frozen evidence?","zh":"主张、Baseline、消融、分析、图表、代码和复现工件是否都绑定到同一份冻结证据？"},
+        "output":"content-addressed paper-ready package",
+    },
+    {
+        "key":"system-learning","index":7,"stage_keys":["learn"],
+        "label":{"en":"Turn outcomes into system memory","zh":"把结果沉淀成系统记忆"},
+        "question":{"en":"Which lessons become reusable rules, dead-end memory, replay cases, and future search constraints?","zh":"哪些经验应该变成可复用规则、dead-end 记忆、回放 case 和下一轮搜索约束？"},
+        "output":"meta-trace + failure assets + replay-tested rules",
+    },
+)
+
+
 FUNCTIONAL_LAYERS: tuple[dict[str, Any], ...] = (
     {
         "key":"evidence-knowledge","index":1,
@@ -127,6 +176,16 @@ def build_system_architecture(components: list[dict[str, Any]], methodology_cont
     component_keys = {key for key in keys if key}
     cross_controls = [dict(row) for row in ((methodology_controls or {}).get("controls") or [])]
     orphan_controls = [str(row.get("key") or "") for row in cross_controls if str(row.get("owner_component") or "") not in component_keys]
+    temporal_keys = [str(row["key"]) for row in TEMPORAL_FLOW]
+    grouped_stage_keys = [str(stage) for group in READING_GROUPS if not group.get("orientation_only") for stage in group.get("stage_keys") or []]
+    reading_stage_duplicates = sorted({key for key in grouped_stage_keys if grouped_stage_keys.count(key) > 1})
+    reading_stage_missing = [key for key in temporal_keys if key not in grouped_stage_keys]
+    reading_stage_extra = sorted({key for key in grouped_stage_keys if key not in temporal_keys})
+    stage_group_map = {
+        str(stage): str(group["key"])
+        for group in READING_GROUPS if not group.get("orientation_only")
+        for stage in group.get("stage_keys") or []
+    }
     layers: list[dict[str, Any]] = []
     for spec in FUNCTIONAL_LAYERS:
         key = str(spec["key"])
@@ -139,13 +198,20 @@ def build_system_architecture(components: list[dict[str, Any]], methodology_cont
             "intentionally_disabled": sum(item.get("status") == "intentionally-disabled" for item in members),
         })
     return {
-        "schema_version":"1.0",
-        "model":"one temporal lifecycle + six functional responsibility layers",
+        "schema_version":"1.1",
+        "model":"one temporal lifecycle + seven reader groups + six functional responsibility layers",
         "temporal_flow":[dict(row) for row in TEMPORAL_FLOW],
+        "reading_groups":[dict(row) for row in READING_GROUPS],
+        "stage_group_map":stage_group_map,
         "functional_layers":layers,
         "authority_boundaries":[dict(row) for row in AUTHORITY_BOUNDARIES],
         "summary":{
             "temporal_stages":len(TEMPORAL_FLOW),
+            "reader_chapters":len(READING_GROUPS),
+            "reader_stage_coverage":len(stage_group_map),
+            "reader_stage_missing":len(reading_stage_missing),
+            "reader_stage_duplicates":len(reading_stage_duplicates),
+            "reader_stage_extra":len(reading_stage_extra),
             "functional_layers":len(FUNCTIONAL_LAYERS),
             "components":len(components),
             "assigned_components":len(components)-len(unassigned),
@@ -158,8 +224,12 @@ def build_system_architecture(components: list[dict[str, Any]], methodology_cont
         "unassigned_components":unassigned,
         "duplicate_component_keys":duplicates,
         "orphan_cross_cutting_controls":orphan_controls,
+        "reading_stage_missing":reading_stage_missing,
+        "reading_stage_duplicates":reading_stage_duplicates,
+        "reading_stage_extra":reading_stage_extra,
         "invariants":[
-            "Temporal stages answer WHEN work may advance; functional layers answer WHO owns each responsibility.",
+            "Temporal stages answer WHEN work may advance; reading groups only organize the public explanation and never create new gates.",
+            "Functional layers answer WHO owns each responsibility.",
             "A component has one primary responsibility layer even when its evidence is consumed elsewhere.",
             "No advisory component can grant scientific or GPU authority.",
             "The P0 seven-stage state machine is nested inside scientific validation; it is not a second paper lifecycle.",

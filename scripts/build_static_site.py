@@ -185,6 +185,7 @@ def build() -> Path:
         OUTPUT / "experiment-page-view.js",
         OUTPUT / "experiment-four-direction-view.js",
         OUTPUT / "system-overview-view.js",
+        OUTPUT / "system-overview-reader.js",
         OUTPUT / "system-overview-map.js",
         OUTPUT / "system-overview-layers.js",
         OUTPUT / "system-overview-intake.js",

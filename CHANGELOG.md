@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-08-17 · Readable research-system flow
+
+- Reorganized `system-overview.html` around seven reader chapters: start-here architecture → real-problem discovery → paper design → pre-experiment compile → execute/diagnose/freeze/scale → paper evidence/release → system learning/memory. The canonical 11-stage lifecycle and six backend responsibility layers remain unchanged scientific/runtime sources of truth.
+- Added backend `READING_GROUPS` with machine validation that the six advancing reader groups cover all 11 canonical temporal stages exactly once; missing, duplicated, or unknown stage mappings now fail the research-system architecture health check.
+- Replaced the module-history-heavy main narrative with compact phase cards using `Input → Decision → Output`, a short decision flow, current signals, and an explicit stop/reset rule. Architecture internals, full Pre-Experiment gates, runtime/artifact inventories, and methodology references remain available as four collapsed machine-detail sections.
+- Simplified the start page to six architecture statistics, six research invariants, a seven-chapter roadmap, and one three-level authority model. Headings inside collapsed machine details are excluded from the sidebar TOC so audit detail no longer overwhelms the reading path.
+- Preserved all existing machine-level content and selectors for auditability; focused and full-site real-browser smoke tests continue to pass, including mobile navigation.
+
 ## 2026-08-17 · Content-addressed manuscript evidence completion
 
 - Closed a generic Paper Quality loophole in which plausible-looking artifact path strings could satisfy manuscript completion without proving that the referenced files existed or still matched the frozen evidence receipt.

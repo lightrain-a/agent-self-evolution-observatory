@@ -6513,7 +6513,8 @@
     "paper_first_fresh_phenomenon_design_ready_f0": 1,
     "paper_first_fresh_phenomenon_execution_holds": 1,
     "asset_first_stri_paper_quality_content_addressed_completion": 1,
-    "asset_first_stri_paper_quality_content_addressed_files": 14
+    "asset_first_stri_paper_quality_content_addressed_files": 14,
+    "architecture_reader_chapters": 7
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -73540,8 +73541,8 @@
     }
   ],
   "system_architecture": {
-    "schema_version": "1.0",
-    "model": "one temporal lifecycle + six functional responsibility layers",
+    "schema_version": "1.1",
+    "model": "one temporal lifecycle + seven reader groups + six functional responsibility layers",
     "temporal_flow": [
       {
         "key": "scope",
@@ -73643,6 +73644,137 @@
         "output": "rules-tests-failure-assets"
       }
     ],
+    "reading_groups": [
+      {
+        "key": "overview",
+        "index": 1,
+        "stage_keys": [],
+        "orientation_only": true,
+        "label": {
+          "en": "Start here: one flow, three views",
+          "zh": "从这里开始：一条主流程，三个视角"
+        },
+        "question": {
+          "en": "How should the lifecycle, responsibility layers, and authority boundaries be read together?",
+          "zh": "11 步生命周期、六个职责层和权限边界应该如何一起理解？"
+        },
+        "output": "shared mental model"
+      },
+      {
+        "key": "problem-discovery",
+        "index": 2,
+        "stage_keys": [
+          "scope",
+          "evidence"
+        ],
+        "label": {
+          "en": "Discover a real problem",
+          "zh": "发现真实科学问题"
+        },
+        "question": {
+          "en": "What measured boundary survives closest-work and mature-reduction checks?",
+          "zh": "什么真实测量边界能够在最近邻工作和成熟 reduction 之后仍然成立？"
+        },
+        "output": "problem-gate candidate or typed stop/hold"
+      },
+      {
+        "key": "paper-design",
+        "index": 3,
+        "stage_keys": [
+          "novelty",
+          "method",
+          "experiment-blueprint"
+        ],
+        "label": {
+          "en": "Design the paper before implementation",
+          "zh": "实现前先把论文设计完整"
+        },
+        "question": {
+          "en": "What is novel, what mechanism carries it, and what evidence package would make the paper convincing?",
+          "zh": "Novelty 是什么、由什么机制承载、最终需要什么证据包才能把论文讲完整？"
+        },
+        "output": "novelty + principle + method + claim/evidence blueprint"
+      },
+      {
+        "key": "experiment-compile",
+        "index": 4,
+        "stage_keys": [
+          "economy-compile"
+        ],
+        "label": {
+          "en": "Compile the cheapest decisive experiment",
+          "zh": "编译最便宜的决定性实验"
+        },
+        "question": {
+          "en": "Is there an identifiable, economical, protocol-valid run worth launching?",
+          "zh": "是否存在一个可辨识、值得花资源且协议有效的实验值得启动？"
+        },
+        "output": "launch contract or typed pre-GPU stop"
+      },
+      {
+        "key": "validation-scale",
+        "index": 5,
+        "stage_keys": [
+          "local-validation",
+          "method-freeze",
+          "full-experiment"
+        ],
+        "label": {
+          "en": "Execute, diagnose, freeze, then scale",
+          "zh": "执行、诊断、冻结，再扩量"
+        },
+        "question": {
+          "en": "What did the evidence actually test, does the method survive, and is the design frozen enough to scale?",
+          "zh": "证据究竟打到了哪一层、方法是否存活、是否已经冻结到可以扩量？"
+        },
+        "output": "typed scientific decision + frozen full evidence package"
+      },
+      {
+        "key": "paper-evidence",
+        "index": 6,
+        "stage_keys": [
+          "paper-evidence"
+        ],
+        "label": {
+          "en": "Close paper evidence and release",
+          "zh": "论文证据闭环与发布"
+        },
+        "question": {
+          "en": "Do claims, baselines, ablations, analyses, figures, code, and reproducibility artifacts resolve to the exact frozen evidence?",
+          "zh": "主张、Baseline、消融、分析、图表、代码和复现工件是否都绑定到同一份冻结证据？"
+        },
+        "output": "content-addressed paper-ready package"
+      },
+      {
+        "key": "system-learning",
+        "index": 7,
+        "stage_keys": [
+          "learn"
+        ],
+        "label": {
+          "en": "Turn outcomes into system memory",
+          "zh": "把结果沉淀成系统记忆"
+        },
+        "question": {
+          "en": "Which lessons become reusable rules, dead-end memory, replay cases, and future search constraints?",
+          "zh": "哪些经验应该变成可复用规则、dead-end 记忆、回放 case 和下一轮搜索约束？"
+        },
+        "output": "meta-trace + failure assets + replay-tested rules"
+      }
+    ],
+    "stage_group_map": {
+      "scope": "problem-discovery",
+      "evidence": "problem-discovery",
+      "novelty": "paper-design",
+      "method": "paper-design",
+      "experiment-blueprint": "paper-design",
+      "economy-compile": "experiment-compile",
+      "local-validation": "validation-scale",
+      "method-freeze": "validation-scale",
+      "full-experiment": "validation-scale",
+      "paper-evidence": "paper-evidence",
+      "learn": "system-learning"
+    },
     "functional_layers": [
       {
         "key": "evidence-knowledge",
@@ -73859,6 +73991,11 @@
     ],
     "summary": {
       "temporal_stages": 11,
+      "reader_chapters": 7,
+      "reader_stage_coverage": 11,
+      "reader_stage_missing": 0,
+      "reader_stage_duplicates": 0,
+      "reader_stage_extra": 0,
       "functional_layers": 6,
       "components": 27,
       "assigned_components": 27,
@@ -73986,8 +74123,12 @@
     "unassigned_components": [],
     "duplicate_component_keys": [],
     "orphan_cross_cutting_controls": [],
+    "reading_stage_missing": [],
+    "reading_stage_duplicates": [],
+    "reading_stage_extra": [],
     "invariants": [
-      "Temporal stages answer WHEN work may advance; functional layers answer WHO owns each responsibility.",
+      "Temporal stages answer WHEN work may advance; reading groups only organize the public explanation and never create new gates.",
+      "Functional layers answer WHO owns each responsibility.",
       "A component has one primary responsibility layer even when its evidence is consumed elsewhere.",
       "No advisory component can grant scientific or GPU authority.",
       "The P0 seven-stage state machine is nested inside scientific validation; it is not a second paper lifecycle.",
