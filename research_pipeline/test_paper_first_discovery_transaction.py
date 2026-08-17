@@ -134,7 +134,20 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
                     generator_kwargs={"generator_responder":bad_generator,"now":now},
                 )
             after={key:path.read_bytes() for key,path in {**targets,**private_paths}.items()}
+            aborted=sorted((storage.run_dir/"paper-first-discovery-transactions").glob("aborted-*.json"),key=lambda path:path.stat().st_mtime,reverse=True)
+            self.assertTrue(aborted)
+            receipt=json.loads(aborted[0].read_text())
         self.assertEqual(after,before)
+        diagnostics=receipt["stage_diagnostics"]
+        self.assertEqual(diagnostics["primary_status"],"READY")
+        self.assertEqual(diagnostics["primary_verified"],4)
+        self.assertEqual(diagnostics["generator_status"],"GENERATOR_ERROR_ZERO_AUTHORITY")
+        self.assertIn("provider-down",diagnostics["generator_error"])
+        self.assertFalse(diagnostics["generator_raw_output_present"])
+        self.assertEqual(diagnostics["generator_transport_attempts"],[])
+        self.assertTrue(diagnostics["queue_reached"])
+        self.assertEqual(diagnostics["queue_audited"],0)
+        self.assertFalse(diagnostics["scientific_authority"])
 
     def test_source_coverage_saturation_commits_zero_call_transaction_atomically(self) -> None:
         calls=[]

@@ -14,7 +14,7 @@ from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_O
 from .paper_first_problem_gate_queue import default_auto_inbox_path
 from .paper_first_problem_generator_prompts import generator_prompt,reviewer_prompt
 from .paper_first_problem_search_portfolio import DEFAULT_RAW_SEEDS, run_search_portfolio
-from .premium_model_policy import preferred_model
+from .premium_model_policy import preferred_model, stage_model_priority
 from .public_state_redaction import redact_private_paths
 
 DEFAULT_JSON=PROJECT_ROOT/"generated"/"paper-first-problem-generator-state.json"
@@ -217,11 +217,33 @@ def _record_saturation_run(storage:StorageSettings,state:dict[str,Any],pool_sha:
     state["saturation_memory"]={"ledger_entries":len(ledger),"prior_identical_zero_runs":prior_identical,"current_run_recorded":True,"current_review_receipt":receipt,"portable_review_receipts":inherited[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":prior_saturation.get("blocked_problem_memory") or {"blocked_candidate_attempts":0,"portable_blocked_problem_memory":[],"scientific_authority":False},"scientific_authority":False}
 
 
-def _ark(*,prompt,model,max_output_tokens,temperature=0.0):
-    s=ArkSettings.from_env(required=False)
-    if not s.api_key: raise RuntimeError("ARK_API_KEY_NOT_CONFIGURED")
-    s=ArkSettings(api_key=s.api_key,base_url=s.base_url,default_model=s.default_model,timeout_seconds=min(max(s.timeout_seconds,90.0),180.0),max_retries=0)
-    return ArkResponsesClient(s).respond(prompt,model=model,max_output_tokens=max_output_tokens,temperature=temperature,thinking="disabled")
+def _transport_no_output_error(error: Exception) -> str:
+    text=str(error or "").lower()
+    if "response incomplete before assistant output" in text: return "provider-incomplete-before-output"
+    if "neither assistant output_text nor function_call" in text: return "provider-empty-output"
+    if any(token in text for token in ("timed out","timeout","connectionerror","connection error","remote disconnected","connection reset")): return "transport-timeout-or-connection"
+    if any(token in text for token in ("ark http 408","ark http 429","ark http 500","ark http 502","ark http 503","ark http 504")): return "provider-retryable-http"
+    return ""
+
+
+def _ark(*,prompt,model,max_output_tokens,temperature=0.0,stage="problem_generation"):
+    base=ArkSettings.from_env(required=False)
+    if not base.api_key: raise RuntimeError("ARK_API_KEY_NOT_CONFIGURED")
+    settings=ArkSettings(api_key=base.api_key,base_url=base.base_url,default_model=base.default_model,timeout_seconds=min(max(base.timeout_seconds,90.0),180.0),max_retries=0)
+    priorities=list(stage_model_priority(stage))
+    candidates=[model]+[candidate for candidate in priorities if candidate!=model][:1]
+    attempts=[]
+    for index,candidate in enumerate(candidates):
+        try:
+            result=ArkResponsesClient(settings).respond(prompt,model=candidate,max_output_tokens=max_output_tokens,temperature=temperature,thinking="disabled")
+            attempts.append({"requested_model":candidate,"status":"success","resolved_model":str(result.get("resolved_model") or candidate),"assistant_output_present":True})
+            return {**result,"logical_requested_model":model,"transport_attempts":attempts,"transport_fallback_used":index>0,"transport_fallback_stage":stage}
+        except Exception as error:
+            kind=_transport_no_output_error(error)
+            attempts.append({"requested_model":candidate,"status":"error-no-output","error_kind":kind or "non-retryable-provider-error","assistant_output_present":False})
+            if not kind or index>=len(candidates)-1:
+                detail=";".join(f"{row['requested_model']}:{row.get('error_kind') or row['status']}" for row in attempts)
+                raise RuntimeError(f"Ark provider failed before an auditable assistant output; attempts={detail}") from error
 
 def _source(raw,key,reg):
     src=(raw.get("empirical_evidence") or {}).get(key) or {};ref=str(src.get("ref") or "").strip();r=reg.get(ref) or {}
@@ -368,7 +390,7 @@ def _validate_lane_search_candidates(lane_search:list[dict[str,Any]],candidates:
 
 
 def _base_policy(*,portfolio:bool=False):
-    return {"zero_candidates_is_valid":True,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"single_source_anomaly_first_enabled":True,"source_coverage_saturation_reopens_once_on_operator_change":True,"search_portfolio_enabled":portfolio,"search_portfolio_is_shadow_only":True,"search_portfolio_primitives":list(SEARCH_PORTFOLIO_PRIMITIVES),"canonical_transaction_forbids_search_portfolio":True,"one_content_addressed_pool_allows_at_most_one_live_generator_call":True,"one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator":True,"one_generator_call_max":not portfolio,"one_semantic_reviewer_call_max":not portfolio,"expansion_precedes_reduction":portfolio,"mature_theory_veto_delayed_until_formulation":portfolio,"diversity_archives_required":portfolio,"branch_lineage_required":portfolio,"reduction_falsifiability_contract_required":portfolio,"generic_theory_label_cannot_veto":portfolio,"format_retry_forbidden":True,"thinking_disabled":True,"multi_lane_discovery_enabled":True,"allowed_discovery_lanes":list(DISCOVERY_LANES),"forbidden_discovery_lanes":list(FORBIDDEN_DISCOVERY_LANES),"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"independent_reviewer_must_verify_lane_contract":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"one_generator_call_must_audit_all_discovery_lanes":not portfolio,"portfolio_expansion_must_audit_all_discovery_lanes":portfolio,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"last_completed_lane_search_is_portable_zero_authority_receipt":True,"terminal_zero_call_skip_preserves_last_completed_lane_search":True,"portable_review_receipts_are_scheduler_metadata_only":True,"portable_review_receipts_have_zero_scientific_authority":True,"primary_source_coverage_receipts_are_inherited_transactionally":True,"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_skips_model_call_after_current_operator_receipt":True,"source_coverage_saturation_operator_upgrade_recompile_is_explicit_exception":True,"incomplete_retrieval_without_new_lane_source_skips_model_call":True,"retrieval_incomplete_is_compute_control_not_scientific_negative":True,"carrier_probe_pending_skips_model_call":True,"carrier_probe_pending_is_compute_control_not_scientific_negative":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False}
+    return {"zero_candidates_is_valid":True,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"single_source_anomaly_first_enabled":True,"source_coverage_saturation_reopens_once_on_operator_change":True,"search_portfolio_enabled":portfolio,"search_portfolio_is_shadow_only":True,"search_portfolio_primitives":list(SEARCH_PORTFOLIO_PRIMITIVES),"canonical_transaction_forbids_search_portfolio":True,"one_content_addressed_pool_allows_at_most_one_live_generator_call":True,"one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator":True,"one_generator_call_max":not portfolio,"one_semantic_reviewer_call_max":not portfolio,"expansion_precedes_reduction":portfolio,"mature_theory_veto_delayed_until_formulation":portfolio,"diversity_archives_required":portfolio,"branch_lineage_required":portfolio,"reduction_falsifiability_contract_required":portfolio,"generic_theory_label_cannot_veto":portfolio,"format_retry_forbidden":True,"transport_only_no_output_fallback_allowed":True,"transport_fallback_max_additional_provider_attempts":1,"transport_fallback_requires_zero_auditable_assistant_output":True,"transport_fallback_is_single_logical_generator_call":True,"thinking_disabled":True,"multi_lane_discovery_enabled":True,"allowed_discovery_lanes":list(DISCOVERY_LANES),"forbidden_discovery_lanes":list(FORBIDDEN_DISCOVERY_LANES),"verified_primary_registry_required":True,"semantic_reviewer_is_block_only":True,"independent_reviewer_must_ground_both_source_claims_to_exact_primary_evidence_excerpts":True,"reviewer_declared_excerpt_source_is_audit_metadata_not_grounding_authority":True,"exact_excerpt_location_is_machine_inferred":True,"independent_reviewer_must_verify_lane_contract":True,"same_resolved_model_cannot_count_as_independent_review":True,"raw_model_output_archived_before_parsing":True,"generation_notes_are_advisory_not_scientific_authority":True,"zero_candidate_rationale_required":True,"discovery_saturation_memory_has_zero_scientific_authority":True,"reviewer_blocked_problem_memory_has_zero_scientific_authority":True,"repeated_reduction_basin_requires_search_escape":True,"portable_blocked_problem_memory_is_search_control_only":True,"one_generator_call_must_audit_all_discovery_lanes":not portfolio,"portfolio_expansion_must_audit_all_discovery_lanes":portfolio,"lane_search_diagnostics_have_zero_scientific_authority":True,"historically_underexplored_lanes_are_searched_first":True,"lane_search_never_requires_candidate":True,"last_completed_lane_search_is_portable_zero_authority_receipt":True,"terminal_zero_call_skip_preserves_last_completed_lane_search":True,"portable_review_receipts_are_scheduler_metadata_only":True,"portable_review_receipts_have_zero_scientific_authority":True,"primary_source_coverage_receipts_are_inherited_transactionally":True,"source_coverage_saturation_skips_model_call":True,"source_coverage_saturation_skips_model_call_after_current_operator_receipt":True,"source_coverage_saturation_operator_upgrade_recompile_is_explicit_exception":True,"incomplete_retrieval_without_new_lane_source_skips_model_call":True,"retrieval_incomplete_is_compute_control_not_scientific_negative":True,"carrier_probe_pending_skips_model_call":True,"carrier_probe_pending_is_compute_control_not_scientific_negative":True,"source_coverage_saturation_is_compute_control_not_scientific_negative":True,"new_lane_grounded_primary_source_reopens_generation":True,"candidate_inbox_has_zero_scientific_authority":True,"automatic_method_authority":False,"automatic_experiment_authority":False,"automatic_p0_authority":False}
 
 
 def _empty_summary(primary_evidence_records=0):
@@ -403,7 +425,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
             state["coverage_skip_reason"]="No unreviewed freshness/relevance-qualified source remains and this exact evidence pool has already completed the current discovery operator; generation resumes when evidence, the mature-reduction ledger, or the discovery operator changes."
             return finish("SKIPPED_SOURCE_COVERAGE_SATURATED")
         state["operator_recompile_reason"]="Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged."
-    call=generator_responder or _ark;rows=[];generator_resolved_models=[]
+    call=generator_responder or (lambda **kwargs:_ark(stage="problem_generation",**kwargs));rows=[];generator_resolved_models=[]
     if portfolio_mode:
         provenance=[]
         def portfolio_call(*,role,prompt,model,max_output_tokens):
@@ -427,7 +449,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
         except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";state["portfolio_provenance"]=provenance;return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
     else:
         try:
-            res=call(prompt=generator_prompt(list(reg.values()),dead_end_memory=dead_end_prompt_memory),model=generator_model,max_output_tokens=6500);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);generator_resolved_models=[resolved];state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved};payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"]);rows=payload.get("candidates") or []
+            res=call(prompt=generator_prompt(list(reg.values()),dead_end_memory=dead_end_prompt_memory),model=generator_model,max_output_tokens=6500);raw=str(res.get("text") or "");p,sha=_write_raw(storage,run_id,"generator",generator_model,raw);resolved=str(res.get("resolved_model") or generator_model);generator_resolved_models=[resolved];state["raw_artifacts"]["generator"]={"path":p,"sha256":sha,"requested_model":generator_model,"resolved_model":resolved,"transport_attempts":list(res.get("transport_attempts") or []),"transport_fallback_used":bool(res.get("transport_fallback_used"))};payload=extract_json_object(raw);state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip();lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"]);rows=payload.get("candidates") or []
             if not isinstance(rows,list) or len(rows)>max_candidates or any(not isinstance(r,dict) for r in rows):raise ValueError("generator-candidate-array-invalid")
             if not rows and not state["generation_notes"]:raise ValueError("zero-candidate-generation-notes-required")
         except Exception as e:state["error"]=f"{type(e).__name__}:{str(e)[:300]}";return finish("GENERATOR_ERROR_ZERO_AUTHORITY")
@@ -438,11 +460,11 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     if portfolio_mode:
         cands=[_normalize(r,reg) for r in rows];reviewable=[c for c in cands if _reviewable(c,reg)];state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
     if reviewable:
-        call2=reviewer_responder or _ark;batch_size=6 if portfolio_mode else max(1,len(reviewable));review_receipts=[];gen_resolved="|".join(sorted(set(generator_resolved_models))) or generator_model
+        call2=reviewer_responder or (lambda **kwargs:_ark(stage="semantic_review",**kwargs));batch_size=6 if portfolio_mode else max(1,len(reviewable));review_receipts=[];gen_resolved="|".join(sorted(set(generator_resolved_models))) or generator_model
         for start in range(0,len(reviewable),batch_size):
             batch=reviewable[start:start+batch_size]
             try:
-                res=call2(prompt=reviewer_prompt(batch,reg),model=reviewer_model,max_output_tokens=5200 if portfolio_mode else 4200);raw=str(res.get("text") or "");role=f"semantic-review-{start//batch_size+1}" if portfolio_mode else "semantic-review";p,sha=_write_raw(storage,run_id,role,reviewer_model,raw);rresolved=str(res.get("resolved_model") or reviewer_model);review_receipts.append({"sha256":sha,"requested_model":reviewer_model,"resolved_model":rresolved});_apply_reviews(batch,extract_json_object(raw),reviewer_model,rresolved,gen_resolved,sha,reg)
+                res=call2(prompt=reviewer_prompt(batch,reg),model=reviewer_model,max_output_tokens=5200 if portfolio_mode else 4200);raw=str(res.get("text") or "");role=f"semantic-review-{start//batch_size+1}" if portfolio_mode else "semantic-review";p,sha=_write_raw(storage,run_id,role,reviewer_model,raw);rresolved=str(res.get("resolved_model") or reviewer_model);review_receipts.append({"sha256":sha,"requested_model":reviewer_model,"resolved_model":rresolved,"transport_attempts":list(res.get("transport_attempts") or []),"transport_fallback_used":bool(res.get("transport_fallback_used"))});_apply_reviews(batch,extract_json_object(raw),reviewer_model,rresolved,gen_resolved,sha,reg)
             except Exception as e:state.setdefault("semantic_review_errors",[]).append(f"batch-{start//batch_size+1}:{type(e).__name__}:{str(e)[:240]}");_apply_reviews(batch,None,reviewer_model,"",gen_resolved,"",reg)
         if portfolio_mode:
             state["semantic_reviewer_batches"]=review_receipts

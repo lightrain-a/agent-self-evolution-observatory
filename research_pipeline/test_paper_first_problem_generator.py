@@ -3,13 +3,14 @@ from __future__ import annotations
 import json
 import tempfile
 import unittest
+from unittest.mock import patch
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _normalize_lane_search, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _ark, _normalize_lane_search, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -243,6 +244,34 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertFalse(second["saturation_memory"]["scientific_authority"])
         self.assertFalse(second["policy"]["automatic_method_authority"])
         self.assertFalse(second["policy"]["automatic_p0_authority"])
+
+    def test_no_output_provider_failure_allows_one_transport_fallback(self) -> None:
+        from .ark_provider import ArkSettings
+        settings=ArkSettings(api_key="test-key",base_url="https://example.invalid",default_model="glm-5.3",timeout_seconds=120,max_retries=0)
+        with patch("research_pipeline.paper_first_problem_generator.ArkSettings.from_env",return_value=settings), patch(
+            "research_pipeline.paper_first_problem_generator.ArkResponsesClient.respond",
+            side_effect=[
+                RuntimeError("Ark response incomplete before assistant output; reason=length; requested_model=glm-5.3"),
+                {"text":"OK","resolved_model":"kimi-k3"},
+            ],
+        ) as respond:
+            result=_ark(prompt="test",model="glm-5.3",max_output_tokens=64,temperature=0.0,stage="problem_generation")
+        self.assertEqual(respond.call_count,2)
+        self.assertTrue(result["transport_fallback_used"])
+        self.assertEqual([row["requested_model"] for row in result["transport_attempts"]],["glm-5.3","kimi-k3"])
+        self.assertEqual([row["assistant_output_present"] for row in result["transport_attempts"]],[False,True])
+        self.assertEqual(result["resolved_model"],"kimi-k3")
+
+    def test_nontransport_provider_error_does_not_fallback(self) -> None:
+        from .ark_provider import ArkSettings
+        settings=ArkSettings(api_key="test-key",base_url="https://example.invalid",default_model="glm-5.3",timeout_seconds=120,max_retries=0)
+        with patch("research_pipeline.paper_first_problem_generator.ArkSettings.from_env",return_value=settings), patch(
+            "research_pipeline.paper_first_problem_generator.ArkResponsesClient.respond",
+            side_effect=RuntimeError("schema-invalid-after-output"),
+        ) as respond:
+            with self.assertRaisesRegex(RuntimeError,"Ark provider failed before an auditable assistant output"):
+                _ark(prompt="test",model="glm-5.3",max_output_tokens=64,temperature=0.0,stage="problem_generation")
+        self.assertEqual(respond.call_count,1)
 
     def test_zero_candidates_without_rationale_is_generator_error_not_scientific_saturation(self) -> None:
         with tempfile.TemporaryDirectory() as td:

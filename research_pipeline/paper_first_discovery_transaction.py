@@ -451,6 +451,9 @@ def write_problem_discovery_transaction(
         if target_auto.exists(): shutil.copyfile(target_auto,staged_auto)
         if target_ledger.exists(): shutil.copyfile(target_ledger,staged_ledger)
         record: dict[str, Any] = {"schema_version":"1.0","started_at":started,"status":"running","scientific_authority":False}
+        primary_internal: dict[str, Any] | None = None
+        generator_internal: dict[str, Any] | None = None
+        queue_internal: dict[str, Any] | None = None
         try:
             pkw=dict(primary_kwargs or {});pkw.update({"storage":storage,"json_path":p_json,"js_path":p_js,"portable_generator_state_path":generator_json,"portable_primary_state_path":primary_json,"private_pool_output_path":staged_private})
             primary_internal=write_primary_evidence_pool(**pkw)
@@ -492,7 +495,30 @@ def write_problem_discovery_transaction(
             (run_root/f"{txn_id}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
             return record
         except Exception as error:
-            record.update({"status":"ABORTED_PUBLIC_STATE_PRESERVED","completed_at":_now(),"error":f"{type(error).__name__}: {error}","authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}})
+            primary_summary=(primary_internal or {}).get("summary") or {}
+            generator_artifacts=(generator_internal or {}).get("raw_artifacts") or {}
+            generator_raw=generator_artifacts.get("generator") or {}
+            transport_attempts=list(generator_raw.get("transport_attempts") or []) if isinstance(generator_raw,dict) else []
+            record.update({
+                "status":"ABORTED_PUBLIC_STATE_PRESERVED",
+                "completed_at":_now(),
+                "error":f"{type(error).__name__}: {error}",
+                "stage_diagnostics":{
+                    "primary_status":str((primary_internal or {}).get("status") or "NOT_REACHED"),
+                    "primary_verified":int(primary_summary.get("verified") or 0),
+                    "primary_selected_unreviewed":int(primary_summary.get("selected_unreviewed") or 0),
+                    "primary_unreviewed_lane_linked_sources":int(primary_summary.get("unreviewed_lane_linked_sources") or 0),
+                    "generator_status":str((generator_internal or {}).get("status") or "NOT_REACHED"),
+                    "generator_run_id":str((generator_internal or {}).get("run_id") or ""),
+                    "generator_error":" ".join(str((generator_internal or {}).get("error") or "").split())[:500],
+                    "generator_raw_output_present":bool(isinstance(generator_raw,dict) and generator_raw.get("sha256")),
+                    "generator_transport_attempts":transport_attempts[:2],
+                    "queue_reached":queue_internal is not None,
+                    "queue_audited":int((((queue_internal or {}).get("summary") or {}).get("audited")) or 0),
+                    "scientific_authority":False,
+                },
+                "authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            })
             stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
             (run_root/f"aborted-{stamp}-{os.getpid()}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
             raise
