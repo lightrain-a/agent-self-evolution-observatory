@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T07:03:00+00:00",
+  "generated_at": "2026-08-17T07:55:07+00:00",
   "status": "F0_EXECUTION_HOLD",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -159,7 +159,7 @@
         "model_calls_executed": 0,
         "task_trials_executed": 0
       },
-      "reopen_only_if": "Provision the benchmark runtime (Harbor + agent-runtime image + the Gemini credential shared by the frozen agent and host-side SkillAuthor route), then obtain a separate controller-issued execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus current-source review; it never authorizes Problem Gate, method design, or full experiments by itself.",
+      "reopen_only_if": "On audited runtime host 52, load the frozen Gemini credential shared by the agent and host-side SkillAuthor route, then obtain a separate controller-issued execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus current-source review; it never authorizes Problem Gate, method design, or full experiments by itself.",
       "paper_problem_claimed": false,
       "scientific_authority": false,
       "authority": {
@@ -174,7 +174,11 @@
       "f0_design_ready": true,
       "execution_readiness": {
         "operationalization_ready": true,
-        "runtime_environment_ready": false,
+        "runtime_host": "52",
+        "runtime_environment_ready": true,
+        "runtime_infrastructure_ready": true,
+        "provider_credential_ready": false,
+        "runtime_image_status": "PRESENT",
         "controller_verified_capability_present": false,
         "execution_ready": false,
         "required_plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c",
@@ -184,11 +188,8 @@
         "matching_gpu_leases_required": false,
         "generic_resource_lease_ids_accepted": false,
         "unauthorized_partial_run_ingestable": false,
-        "status": "HOLD_EXECUTION_ENV_AND_AUTHORITY_REQUIRED",
+        "status": "HOLD_PROVIDER_CREDENTIAL_AND_AUTHORITY_REQUIRED",
         "hold_reason": [
-          "benchmark Python dependencies not present in the current execution Python",
-          "Harbor SDK not importable in the current execution Python",
-          "agent-runtime:latest:UNOBSERVABLE_PERMISSION_DENIED",
           "GEMINI_API_KEY not loaded in the current execution environment"
         ]
       }
@@ -330,7 +331,7 @@
     },
     "dead_end_memory": {
       "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-      "sha256": "ab5c0739900ef6d690c842195c96e79dfd6ee8947b8460ab36f409e4e32481b2"
+      "sha256": "55d6e8c032982b8249bc1a7842729c3fdc7b830cf235303005133b3af392c2ee"
     },
     "defense_principle_reduction": {
       "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
@@ -339,7 +340,7 @@
     },
     "skill_validation_transfer_scout": {
       "path": "generated/paper-first-skill-validation-transfer-scout-20260817.json",
-      "sha256": "4a7c2a9ce1e908380cd2c4676b5aabc3d502a643ac13a0489508c130f2840633",
+      "sha256": "5548d8e9373fe3ae535f52ca71133aea1bcb84490d598fbfb821d02e4bcf11da",
       "status": "DESIGN_READY_EXECUTION_ENV_HOLD",
       "plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c"
     },

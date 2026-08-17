@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T07:50:43+00:00",
-  "source_revision": "c8a01aeea936dad7d667682647b6a09a2b4b2057",
+  "generated_at": "2026-08-17T07:55:15+00:00",
+  "source_revision": "622cea5a7fdb90d2ce29e4fb17b5d34f07706142",
   "as_of_date": "2026-08-17",
   "headline": {
     "paper_ready": 1,
@@ -161,7 +161,11 @@
         "f0_design_ready": true,
         "execution_readiness": {
           "operationalization_ready": true,
-          "runtime_environment_ready": false,
+          "runtime_host": "52",
+          "runtime_environment_ready": true,
+          "runtime_infrastructure_ready": true,
+          "provider_credential_ready": false,
+          "runtime_image_status": "PRESENT",
           "controller_verified_capability_present": false,
           "execution_ready": false,
           "required_plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c",
@@ -171,11 +175,8 @@
           "matching_gpu_leases_required": false,
           "generic_resource_lease_ids_accepted": false,
           "unauthorized_partial_run_ingestable": false,
-          "status": "HOLD_EXECUTION_ENV_AND_AUTHORITY_REQUIRED",
+          "status": "HOLD_PROVIDER_CREDENTIAL_AND_AUTHORITY_REQUIRED",
           "hold_reason": [
-            "benchmark Python dependencies not present in the current execution Python",
-            "Harbor SDK not importable in the current execution Python",
-            "agent-runtime:latest:UNOBSERVABLE_PERMISSION_DENIED",
             "GEMINI_API_KEY not loaded in the current execution environment"
           ]
         },
