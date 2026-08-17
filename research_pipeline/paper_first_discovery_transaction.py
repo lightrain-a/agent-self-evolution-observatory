@@ -18,6 +18,8 @@ from .paper_first_primary_evidence import (
     DEFAULT_JS as PRIMARY_JS,
     load_private_primary_pool,
     private_primary_pool_path,
+    project_recompiled_primary_public_state,
+    recompile_frozen_primary_typed_evidence,
     write_primary_evidence_pool,
 )
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION
@@ -29,6 +31,7 @@ from .paper_first_problem_generator import (
     _pool_sha,
     _saturation_ledger_path,
     write_problem_generator_state,
+    write_replayed_problem_generator_state,
 )
 from .paper_first_problem_gate_queue import (
     DEFAULT_JSON as QUEUE_JSON,
@@ -167,6 +170,8 @@ def _transaction_material(primary: dict[str, Any], generator: dict[str, Any], qu
     ]
     return {
         "primary_records": primary_records,
+        "primary_typed_evidence_extraction_version": str((primary.get("policy") or {}).get("typed_evidence_extraction_version") or ""),
+        "primary_typed_evidence_counts": dict((primary.get("summary") or {}).get("typed_evidence_candidates") or {}),
         "carrier_probe_receipts": carrier_receipts,
         "carrier_probe_pending": int(((primary.get("carrier_probe") or {}).get("pending") or 0)),
         "generator_run_id": generator.get("run_id"),
@@ -634,6 +639,98 @@ def recompile_existing_problem_discovery_transaction(
             record.update({"status":"ABORTED_OPERATOR_RECOMPILE_PUBLIC_STATE_PRESERVED","completed_at":_now(),"error":f"{type(error).__name__}: {error}","stage_diagnostics":{"generator_status":str((generator_internal or {}).get("status") or "NOT_REACHED"),"generator_run_id":str((generator_internal or {}).get("run_id") or ""),"generator_error":" ".join(str((generator_internal or {}).get("error") or "").split())[:500],"queue_reached":queue_internal is not None,"queue_audited":int((((queue_internal or {}).get("summary") or {}).get("audited")) or 0),"scientific_authority":False},"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}})
             stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ");(run_root/f"aborted-recompile-{stamp}-{os.getpid()}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
             raise
+        finally:
+            shutil.rmtree(temp_root,ignore_errors=True)
+
+
+def recompile_primary_typed_evidence_with_generator_replay_transaction(
+    *,
+    storage: StorageSettings | None = None,
+    primary_json: Path = PRIMARY_JSON,
+    primary_js: Path = PRIMARY_JS,
+    generator_json: Path = GENERATOR_JSON,
+    generator_js: Path = GENERATOR_JS,
+    queue_json: Path = QUEUE_JSON,
+    queue_js: Path = QUEUE_JS,
+    private_pool_source: Path | None = None,
+    private_pool_target: Path | None = None,
+    fulltext_cache_dir: Path | None = None,
+    generator_raw_path: Path,
+    queue_kwargs: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Atomically re-derive typed evidence and replay an archived Generator with zero provider calls.
+
+    This path is for monotone evidence correction: source/fulltext bytes and selected refs are frozen,
+    while deterministic derived typed evidence is recompiled under the current extractor. The exact
+    prior Generator raw is then parsed under the current discovery operator and corrected pool. If a
+    semantic reviewer would still be required, the transaction aborts rather than making a model call.
+    """
+    storage = storage or StorageSettings.from_env(); storage.ensure()
+    primary=_load(primary_json);previous_generator=_load(generator_json);previous_queue=_load(queue_json)
+    errors=_validate(primary,previous_generator,previous_queue)
+    if errors:raise RuntimeError("existing paper-first discovery state invalid: "+",".join(errors))
+    primary_tx=str(primary.get("discovery_transaction_id") or "").strip();generator_tx=str(previous_generator.get("discovery_transaction_id") or "").strip();queue_tx=str(previous_queue.get("discovery_transaction_id") or "").strip()
+    if not re.fullmatch(r"[0-9a-f]{64}",primary_tx) or primary_tx!=generator_tx or primary_tx!=queue_tx:raise RuntimeError("existing paper-first discovery transaction identity mismatch")
+    previous_qs=previous_queue.get("summary") or {}
+    if int(previous_qs.get("passed_problem_gate") or 0)!=0 or int(previous_qs.get("paper_design_eligible") or 0)!=0:raise RuntimeError("derived-evidence recompile cannot supersede a transaction with a Problem-Gate survivor")
+    previous_operator=_generator_operator_version(previous_generator)
+    prior_receipt=_generator_receipt(previous_generator);prior_material=_receipt_material(prior_receipt)
+    if not previous_operator or not prior_material:raise RuntimeError("derived-evidence recompile requires a provenance-bound prior Generator receipt")
+
+    public_records=[row for row in primary.get("records") or [] if isinstance(row,dict)]
+    public_manifest=[(str(row.get("ref") or ""),str(row.get("source_sha256") or ""),str(row.get("fulltext_sha256") or "")) for row in public_records]
+    if not public_manifest or any(not ref or len(source_sha)!=64 or len(fulltext_sha)!=64 for ref,source_sha,fulltext_sha in public_manifest):raise RuntimeError("existing Primary manifest is incomplete")
+    source_path=Path(private_pool_source) if private_pool_source is not None else private_primary_pool_path(storage);source_pool=load_private_primary_pool(source_path) or {}
+    source_records=[row for row in source_pool.get("records") or [] if isinstance(row,dict)];source_manifest=[(str(row.get("ref") or ""),str(row.get("source_sha256") or ""),str(row.get("fulltext_sha256") or "")) for row in source_records]
+    if source_pool.get("status")!="READY" or source_manifest!=public_manifest:raise RuntimeError("private Primary recompile source does not exactly match current public Primary records")
+    old_pool_sha=_pool_sha(source_pool)
+    if prior_material.get("pool_sha256")!=old_pool_sha or prior_material.get("discovery_operator_version")!=previous_operator or prior_material.get("scientific_authority") is not False:raise RuntimeError("prior Generator receipt does not bind the exact old frozen Primary and operator")
+    raw_path=Path(generator_raw_path)
+    try: raw_bytes=raw_path.read_bytes()
+    except OSError as error:raise RuntimeError(f"archived Generator raw unavailable: {type(error).__name__}") from error
+    raw_sha=hashlib.sha256(raw_bytes).hexdigest()
+    if raw_sha!=str(prior_material.get("raw_sha256") or ""):raise RuntimeError("archived Generator raw SHA does not match prior receipt")
+    cache_dir=Path(fulltext_cache_dir) if fulltext_cache_dir is not None else (source_path.parent/"primary-sources")
+    recompiled_pool=recompile_frozen_primary_typed_evidence(source_pool,cache_dir=cache_dir)
+    new_pool_sha=_pool_sha(recompiled_pool)
+    if new_pool_sha==old_pool_sha and str((primary.get("policy") or {}).get("typed_evidence_extraction_version") or "")==str(recompiled_pool.get("typed_evidence_extraction_version") or ""):
+        raise RuntimeError("derived-evidence recompile produced no pool or extractor change")
+    recompiled_public=project_recompiled_primary_public_state(primary,recompiled_pool)
+    recompiled_public.pop("discovery_transaction_id",None);recompiled_public.pop("discovery_transaction_role",None)
+    recompiled_pool["generated_at"]=str(primary.get("generated_at") or recompiled_pool.get("generated_at") or "")
+    recompiled_pool.setdefault("derived_evidence_recompile",{}).update({"prior_transaction_id":primary_tx,"prior_pool_sha256":old_pool_sha,"recompiled_pool_sha256":new_pool_sha,"source_discovery_operator_version":previous_operator,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"generator_raw_replay_required":True,"scientific_authority":False})
+
+    run_root=storage.run_dir/"paper-first-discovery-transactions";run_root.mkdir(parents=True,exist_ok=True);started=_now()
+    with _transaction_lock(storage):
+        temp_root=Path(tempfile.mkdtemp(prefix=".paper-first-typed-recompile-",dir=str(primary_json.parent)))
+        p_json=temp_root/"primary.json";p_js=temp_root/"primary.js";g_json=temp_root/"generator.json";g_js=temp_root/"generator.js";q_json=temp_root/"queue.json";q_js=temp_root/"queue.js"
+        staged_private=temp_root/"primary-private.json";staged_auto=temp_root/"auto-candidate-inbox.json";staged_ledger=temp_root/"discovery-saturation-ledger.json"
+        target_private=Path(private_pool_target) if private_pool_target is not None else private_primary_pool_path(storage);target_auto=default_auto_inbox_path(storage);target_ledger=_saturation_ledger_path(storage)
+        if target_auto.exists():shutil.copyfile(target_auto,staged_auto)
+        if target_ledger.exists():shutil.copyfile(target_ledger,staged_ledger)
+        staged_private.write_text(json.dumps(recompiled_pool,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        p_json.write_text(json.dumps(recompiled_public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");p_js.write_text("window.PAPER_FIRST_PRIMARY_EVIDENCE = "+json.dumps(recompiled_public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
+        generator_internal:dict[str,Any]|None=None;queue_internal:dict[str,Any]|None=None
+        record={"schema_version":"1.0","started_at":started,"status":"running","prior_transaction_id":primary_tx,"prior_pool_sha256":old_pool_sha,"recompiled_pool_sha256":new_pool_sha,"prior_discovery_operator_version":previous_operator,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"source_scheduler_runs_executed":0,"primary_network_fetches_executed":0,"provider_calls_authorized":0,"scientific_authority":False}
+        try:
+            generator_internal=write_replayed_problem_generator_state(storage=storage,json_path=g_json,js_path=g_js,previous_public_state_path=generator_json,primary_pool_path=staged_private,generator_raw_path=raw_path,generator_raw_sha256=raw_sha,generator_requested_model=str(prior_material.get("requested_model") or ""),generator_resolved_model=str(prior_material.get("resolved_model") or ""),source_generator_run_id=str(prior_material.get("run_id") or ""),source_discovery_operator_version=previous_operator,auto_inbox_path=staged_auto,saturation_ledger_path=staged_ledger)
+            generator_calls,semantic_calls=_provider_call_accounting(generator_internal)
+            if generator_calls or semantic_calls or int((generator_internal or {}).get("provider_calls_executed") or 0)!=0 or int((generator_internal or {}).get("semantic_reviewer_calls_executed") or 0)!=0:raise RuntimeError("derived-evidence Generator replay attempted provider execution")
+            if generator_internal.get("status") in {"REPLAY_REQUIRES_SEMANTIC_REVIEW","REPLAY_INPUT_INVALID","REPLAY_INSUFFICIENT_PRIMARY_EVIDENCE"}:raise RuntimeError(f"derived-evidence Generator replay did not close deterministically: {generator_internal.get('status')}")
+            qkw=dict(queue_kwargs or {});qkw.update({"storage":storage,"json_path":q_json,"js_path":q_js,"primary_pool_path":staged_private,"auto_inbox_path":staged_auto});queue_internal=write_problem_gate_queue(**qkw)
+            primary_public=_load(p_json);generator_public=_load(g_json);queue_public=_load(q_json);validation=_validate(primary_public,generator_public,queue_public)
+            if validation:raise RuntimeError("paper-first derived-evidence replay transaction invalid: "+",".join(validation))
+            if _generator_operator_version(generator_public)!=DISCOVERY_OPERATOR_VERSION:raise RuntimeError("derived-evidence replay did not bind current discovery operator")
+            receipt=_generator_receipt(generator_public);material=_receipt_material(receipt)
+            if not material or material.get("pool_sha256")!=new_pool_sha or material.get("discovery_operator_version")!=DISCOVERY_OPERATOR_VERSION or material.get("raw_sha256")!=raw_sha or material.get("scientific_authority") is not False:raise RuntimeError("derived-evidence replay receipt does not bind corrected pool/raw/operator")
+            txn_id=_transaction_id(primary_public,generator_public,queue_public);primary_public=_stamp(p_json,p_js,"PAPER_FIRST_PRIMARY_EVIDENCE",txn_id,"primary");generator_public=_stamp(g_json,g_js,"PAPER_FIRST_PROBLEM_GENERATOR",txn_id,"generator");queue_public=_stamp(q_json,q_js,"PAPER_FIRST_PROBLEM_GATE_QUEUE",txn_id,"queue")
+            private_targets=[(staged_private,target_private),(staged_auto,target_auto)];
+            if staged_ledger.exists():private_targets.append((staged_ledger,target_ledger))
+            _commit_files([(p_json,primary_json),(p_js,primary_js),(g_json,generator_json),(g_js,generator_js),(q_json,queue_json),(q_js,queue_js),*private_targets])
+            record.update({"status":"COMMITTED_TYPED_EVIDENCE_RECOMPILE_ZERO_PROVIDER_REPLAY","completed_at":_now(),"transaction_id":txn_id,"generator_receipt_sha256":_receipt_sha256(receipt),"generator_receipt_raw_sha256":raw_sha,"provider_calls_executed":0,"generator_provider_calls_executed":0,"semantic_reviewer_calls_executed":0,"derived_evidence_recompile":dict(recompiled_pool.get("derived_evidence_recompile") or {}),"summary":{"primary_status":primary_public.get("status"),"typed_evidence_candidates":(primary_public.get("summary") or {}).get("typed_evidence_candidates",{}),"generator_status":generator_public.get("status"),"generated":(generator_public.get("summary") or {}).get("generated",0),"semantic_clear":(generator_public.get("summary") or {}).get("semantic_clear",0),"semantic_blocked":(generator_public.get("summary") or {}).get("semantic_blocked",0),"queue_submitted":(queue_public.get("summary") or {}).get("submitted",0),"queue_passed":(queue_public.get("summary") or {}).get("passed_problem_gate",0),"queue_blocked":(queue_public.get("summary") or {}).get("blocked_problem_gate",0)},"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}})
+            (run_root/f"{txn_id}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return record
+        except Exception as error:
+            record.update({"status":"ABORTED_TYPED_EVIDENCE_RECOMPILE_PUBLIC_STATE_PRESERVED","completed_at":_now(),"error":f"{type(error).__name__}: {error}","stage_diagnostics":{"generator_status":str((generator_internal or {}).get("status") or "NOT_REACHED"),"generator_run_id":str((generator_internal or {}).get("run_id") or ""),"queue_reached":queue_internal is not None,"queue_audited":int((((queue_internal or {}).get("summary") or {}).get("audited")) or 0),"scientific_authority":False},"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}});stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ");(run_root/f"aborted-typed-recompile-{stamp}-{os.getpid()}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise
         finally:
             shutil.rmtree(temp_root,ignore_errors=True)
 

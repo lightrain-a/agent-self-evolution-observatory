@@ -11,7 +11,7 @@ from unittest.mock import patch
 import requests
 
 from .config import StorageSettings
-from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, _paper_lane_keys, _paper_object_lane_keys, _source_exposure_state, build_primary_evidence_pool, discover_arxiv_fallback, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, select_primary_candidates
+from .paper_first_primary_evidence import DEFAULT_ARXIV_QUERIES, EMPIRICAL_FACT_EXTRACTION_VERSION, TYPED_EVIDENCE_EXTRACTION_VERSION, _default_requester, _paper_lane_keys, _paper_object_lane_keys, _source_exposure_state, build_primary_evidence_pool, discover_arxiv_fallback, extract_empirical_fact_candidates, extract_typed_evidence_candidates, parse_arxiv_atom, parse_arxiv_page, project_recompiled_primary_public_state, recompile_frozen_primary_typed_evidence, select_primary_candidates
 
 
 class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
@@ -130,6 +130,48 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertIn("threshold regime",typed["boundary_observations"][0]["text"])
         self.assertTrue(all(row["extraction_version"]==TYPED_EVIDENCE_EXTRACTION_VERSION for rows in typed.values() for row in rows))
         self.assertTrue(all(len(row["text_sha256"])==64 for rows in typed.values() for row in rows))
+
+    def test_typed_evidence_rejects_literature_failure_summaries_even_when_subsection_name_contains_evaluation(self) -> None:
+        page='''<html><body><section><h2>Related Work</h2><section><h3>From static patches to long-horizon coding-agent evaluation.</h3><p>Long-horizon benchmarks therefore move beyond single-edit success to study software evolution under repeated modifications, revealing issues such as quality degradation, multi-file consistency challenges, and mismatches between visible validation and hidden behavioral tests (17; 3; 10; 28; 7).</p></section><section><h3>Bounded optimization and trajectory-level analysis for agents.</h3><p>Prior work has shown that aggregate success rates can obscure intermediate behaviors such as retry patterns, failure recovery loops, and verification-related issues (12; 15; 1; 20).</p></section></section></body></html>'''
+        typed=extract_typed_evidence_candidates(page,max_per_type=8)
+        self.assertEqual(typed["measured_failures"],[])
+        self.assertEqual(typed["boundary_observations"],[])
+
+    def test_typed_evidence_keeps_first_party_results_even_when_the_sentence_contains_a_citation(self) -> None:
+        page='''<html><body><section><h2>Experimental Evaluation</h2><p>We find that our system's failure rate drops from 12.0% to 3.0% under the same held-out protocol, outperforming the prior baseline (12).</p><p>Results show a threshold regime: our agent's success drops below 40.0% only when the evidence budget falls below 2.0 units (7).</p></section></body></html>'''
+        typed=extract_typed_evidence_candidates(page,max_per_type=8)
+        self.assertTrue(any("12.0%" in row["text"] and "3.0%" in row["text"] for row in typed["measured_failures"]))
+        self.assertTrue(any("threshold regime" in row["text"] for row in typed["boundary_observations"]))
+        self.assertTrue(all(row["extraction_version"]=="typed-v2" for rows in typed.values() for row in rows))
+
+    def test_frozen_typed_evidence_recompile_uses_exact_fulltext_bytes_without_changing_source_manifest(self) -> None:
+        import hashlib
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);cache=root/"primary-sources";cache.mkdir();ref="arXiv:2608.77777"
+            page='''<html><body><section><h2>Related Work</h2><section><h3>Long-horizon coding-agent evaluation</h3><p>Long-horizon benchmarks reveal quality degradation and hidden-test failures across prior systems (17; 3; 10).</p></section></section><section><h2>Experimental Results</h2><p>We find that our agent's failure rate drops from 12.0% to 3.0% under the same held-out protocol.</p></section></body></html>'''
+            raw=page.encode();full_sha=hashlib.sha256(raw).hexdigest();path=cache/f"arxiv-full-2608.77777-{full_sha[:12]}.html";path.write_bytes(raw)
+            old_false={"section":"Long-horizon coding-agent evaluation","text":"Long-horizon benchmarks reveal quality degradation and hidden-test failures across prior systems (17; 3; 10).","text_sha256":"a"*64,"extraction_version":"typed-v1"}
+            pool={"status":"READY","typed_evidence_extraction_version":"typed-v1","records":[{"ref":ref,"source_sha256":"1"*64,"fulltext_sha256":full_sha,"fulltext_cache_path":str(root/"missing.html"),"primary_source_verified":True,"typed_evidence_extraction_version":"typed-v1","typed_evidence":{"operational_assumptions":[],"measured_failures":[old_false],"boundary_observations":[]},"empirical_facts":[]}]}
+            compiled=recompile_frozen_primary_typed_evidence(pool,cache_dir=cache)
+        self.assertEqual(compiled["typed_evidence_extraction_version"],TYPED_EVIDENCE_EXTRACTION_VERSION)
+        self.assertEqual(compiled["records"][0]["source_sha256"],"1"*64)
+        self.assertEqual(compiled["records"][0]["fulltext_sha256"],full_sha)
+        failures=compiled["records"][0]["typed_evidence"]["measured_failures"]
+        self.assertEqual(len(failures),1);self.assertIn("12.0%",failures[0]["text"]);self.assertNotIn("Long-horizon benchmarks",failures[0]["text"])
+        self.assertEqual(compiled["derived_evidence_recompile"]["source_scheduler_runs_executed"],0)
+        self.assertEqual(compiled["derived_evidence_recompile"]["network_fetches_executed"],0)
+        self.assertFalse(compiled["derived_evidence_recompile"]["source_manifest_changed"])
+
+    def test_public_projection_updates_typed_counts_but_preserves_primary_manifest(self) -> None:
+        private={"derived_evidence_recompile":{"prior_typed_evidence_extraction_version":"typed-v1","records_recompiled":1,"records_changed":1},"records":[{"ref":"arXiv:1","source_sha256":"1"*64,"fulltext_sha256":"2"*64,"typed_evidence":{"operational_assumptions":[],"measured_failures":[{"text":"owned failure"}],"boundary_observations":[]}}]}
+        public={"status":"READY","policy":{"typed_evidence_extraction_version":"typed-v1"},"summary":{"typed_evidence_candidates":{"operational_assumptions":0,"measured_failures":2,"boundary_observations":0}},"records":[{"ref":"arXiv:1","source_sha256":"1"*64,"fulltext_sha256":"2"*64,"typed_evidence_counts":{"operational_assumptions":0,"measured_failures":2,"boundary_observations":0}}]}
+        projected=project_recompiled_primary_public_state(public,private)
+        self.assertEqual(projected["policy"]["typed_evidence_extraction_version"],TYPED_EVIDENCE_EXTRACTION_VERSION)
+        self.assertTrue(projected["policy"]["typed_evidence_requires_first_party_ownership_or_nonliterature_attribution"])
+        self.assertEqual(projected["summary"]["typed_evidence_candidates"],{"operational_assumptions":0,"measured_failures":1,"boundary_observations":0})
+        self.assertEqual(projected["records"][0]["source_sha256"],"1"*64);self.assertEqual(projected["records"][0]["fulltext_sha256"],"2"*64)
+        self.assertEqual(projected["records"][0]["typed_evidence_counts"]["measured_failures"],1)
+        self.assertEqual(projected["derived_evidence_recompile"]["network_fetches_executed"],0)
 
     def test_empirical_fact_extraction_rejects_metric_protocol_and_related_work_sentences(self) -> None:
         page='''<html><body><section><h2>Evaluation</h2><p>We report three metrics: attack success rate, clean utility, and false positive rate for every run.</p><p>Three gates: validity gate, activation gate, and significance gate are applied before scoring failures.</p><p>Recent work has highlighted the difficulty of evaluating self-improving agents and attribution failures.</p><p>Our method improves held-out success from 41.0% to 58.5% across 120 tasks under the same budget.</p></section></body></html>'''

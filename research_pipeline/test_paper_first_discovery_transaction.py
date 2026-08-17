@@ -10,8 +10,9 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from .config import StorageSettings
-from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, recompile_existing_problem_discovery_transaction, _transaction_id, _transaction_lock, _transaction_lock_path, _validate, write_problem_discovery_transaction
+from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, recompile_existing_problem_discovery_transaction, recompile_primary_typed_evidence_with_generator_replay_transaction, _transaction_id, _transaction_lock, _transaction_lock_path, _validate, write_problem_discovery_transaction
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION
+from .paper_first_problem_generator import _pool_sha
 
 
 class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
@@ -174,6 +175,61 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         changed_receipt=json.loads(json.dumps(generator));changed_receipt["saturation_memory"]["current_review_receipt"]["raw_sha256"]="f"*64
         self.assertNotEqual(original,_transaction_id(primary,changed_operator,queue))
         self.assertNotEqual(original,_transaction_id(primary,changed_receipt,queue))
+
+    def _downgrade_typed_evidence_fixture(self, storage: StorageSettings, targets: dict[str,Path]) -> tuple[Path,Path,int]:
+        private=storage.data_root/"paper-first-problem-discovery"/"primary-evidence-pool.json"
+        pool=json.loads(private.read_text());before_count=sum(len(((row.get("typed_evidence") or {}).get("measured_failures") or [])) for row in pool.get("records") or [])
+        false_text="Long-horizon benchmarks reveal quality degradation and hidden-test failures across prior systems (17; 3; 10)."
+        false_item={"section":"Long-horizon coding-agent evaluation","text":false_text,"text_sha256":__import__('hashlib').sha256(false_text.encode()).hexdigest(),"extraction_version":"typed-v1"}
+        pool["typed_evidence_extraction_version"]="typed-v1"
+        for row in pool.get("records") or []:row["typed_evidence_extraction_version"]="typed-v1"
+        pool["records"][0].setdefault("typed_evidence",{}).setdefault("measured_failures",[]).append(false_item)
+        private.write_text(json.dumps(pool),encoding="utf-8");old_pool_sha=_pool_sha(pool)
+        primary=json.loads(targets["primary_json"].read_text());primary["policy"]["typed_evidence_extraction_version"]="typed-v1";primary["policy"].pop("typed_evidence_requires_first_party_ownership_or_nonliterature_attribution",None);primary["summary"]["typed_evidence_candidates"]["measured_failures"]+=1;primary["records"][0]["typed_evidence_counts"]["measured_failures"]+=1
+        targets["primary_json"].write_text(json.dumps(primary),encoding="utf-8")
+        generator=json.loads(targets["generator_json"].read_text());receipt=generator["saturation_memory"]["current_review_receipt"];receipt["pool_sha256"]=old_pool_sha
+        for row in generator["saturation_memory"].get("portable_review_receipts") or []:
+            if isinstance(row,dict) and row.get("run_id")==generator.get("run_id"):row["pool_sha256"]=old_pool_sha
+        targets["generator_json"].write_text(json.dumps(generator),encoding="utf-8")
+        ledger=storage.data_root/"paper-first-problem-discovery"/"discovery-saturation-ledger.json"
+        if ledger.exists():
+            payload=json.loads(ledger.read_text())
+            for row in payload.get("runs") or []:
+                if isinstance(row,dict) and row.get("run_id")==generator.get("run_id"):row["pool_sha256"]=old_pool_sha
+            ledger.write_text(json.dumps(payload),encoding="utf-8")
+        for key in ("primary_json","generator_json","queue_json"):
+            payload=json.loads(targets[key].read_text());payload.pop("discovery_transaction_id",None);payload.pop("discovery_transaction_role",None);targets[key].write_text(json.dumps(payload),encoding="utf-8")
+        close_existing_problem_discovery_transaction(storage=storage,**targets,private_pool_source=private)
+        raw_sha=generator["raw_artifacts"]["generator"]["sha256"];raw_files=list((storage.data_root/"paper-first-problem-discovery"/"raw-generations").glob(f"*{raw_sha[:12]}*.txt"))
+        if len(raw_files)!=1:raise AssertionError(f"expected one archived generator raw, found {raw_files}")
+        return private,raw_files[0],before_count
+
+    def test_typed_evidence_recompile_replays_archived_generator_with_zero_provider_calls(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
+            first=self.run_txn(root,storage,targets,now);private,raw_path,before_count=self._downgrade_typed_evidence_fixture(storage,targets);old_tx=json.loads(targets["primary_json"].read_text())["discovery_transaction_id"]
+            result=recompile_primary_typed_evidence_with_generator_replay_transaction(storage=storage,**targets,private_pool_source=private,private_pool_target=private,fulltext_cache_dir=storage.data_root/"paper-first-problem-discovery"/"primary-sources",generator_raw_path=raw_path)
+            primary=json.loads(targets["primary_json"].read_text());generator=json.loads(targets["generator_json"].read_text());queue=json.loads(targets["queue_json"].read_text());recompiled=json.loads(private.read_text())
+        self.assertEqual(first["status"],"COMMITTED")
+        self.assertEqual(result["status"],"COMMITTED_TYPED_EVIDENCE_RECOMPILE_ZERO_PROVIDER_REPLAY")
+        self.assertEqual(result["provider_calls_executed"],0);self.assertEqual(result["generator_provider_calls_executed"],0);self.assertEqual(result["semantic_reviewer_calls_executed"],0)
+        self.assertNotEqual(result["transaction_id"],old_tx)
+        self.assertEqual(primary["policy"]["typed_evidence_extraction_version"],"typed-v2");self.assertTrue(primary["policy"]["typed_evidence_requires_first_party_ownership_or_nonliterature_attribution"])
+        self.assertEqual(primary["summary"]["typed_evidence_candidates"]["measured_failures"],before_count)
+        self.assertEqual(recompiled["typed_evidence_extraction_version"],"typed-v2");self.assertEqual((recompiled.get("derived_evidence_recompile") or {}).get("network_fetches_executed"),0)
+        self.assertTrue(generator["policy"]["generator_replayed_without_provider"]);self.assertEqual(generator["status"],"GENERATED_ZERO_CANDIDATES")
+        self.assertEqual(queue["summary"]["submitted"],0);self.assertEqual(queue["summary"]["passed_problem_gate"],0)
+        self.assertEqual({primary["discovery_transaction_id"],generator["discovery_transaction_id"],queue["discovery_transaction_id"]},{result["transaction_id"]})
+
+    def test_typed_evidence_recompile_replay_failure_preserves_previous_public_and_private_state(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
+            self.run_txn(root,storage,targets,now);private,raw_path,_=self._downgrade_typed_evidence_fixture(storage,targets);discovery=storage.data_root/"paper-first-problem-discovery";tracked={**targets,"private":private,"auto":discovery/"auto-candidate-inbox.json","ledger":discovery/"discovery-saturation-ledger.json"};before={key:path.read_bytes() for key,path in tracked.items() if path.exists()}
+            with patch("research_pipeline.paper_first_discovery_transaction.write_replayed_problem_generator_state",side_effect=RuntimeError("replay-broken")):
+                with self.assertRaisesRegex(RuntimeError,"replay-broken"):
+                    recompile_primary_typed_evidence_with_generator_replay_transaction(storage=storage,**targets,private_pool_source=private,private_pool_target=private,fulltext_cache_dir=discovery/"primary-sources",generator_raw_path=raw_path)
+            after={key:path.read_bytes() for key,path in tracked.items() if path.exists()};aborted=list((storage.run_dir/"paper-first-discovery-transactions").glob("aborted-typed-recompile-*.json"))
+        self.assertEqual(after,before);self.assertTrue(aborted)
 
     def _downgrade_committed_operator_fixture(self, storage: StorageSettings, targets: dict[str,Path], *, old_operator: str = "fresh-phenomenon-anomaly-precision-v13") -> Path:
         generator=json.loads(targets["generator_json"].read_text());generator["policy"]["discovery_operator_version"]=old_operator

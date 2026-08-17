@@ -816,6 +816,92 @@ def _merge_last_completed_lane_search(state:dict[str,Any],previous:dict[str,Any]
     return state
 
 
+def replay_problem_generator_raw(
+    *,
+    storage: StorageSettings | None = None,
+    primary_pool_path: Path,
+    generator_raw_path: Path,
+    generator_raw_sha256: str,
+    generator_requested_model: str,
+    generator_resolved_model: str,
+    source_generator_run_id: str,
+    source_discovery_operator_version: str,
+    auto_inbox_path: Path | None = None,
+    saturation_ledger_path: Path | None = None,
+    blocked_problem_memory: dict[str, Any] | None = None,
+    now=None,
+    max_candidates: int = MAX_CANDIDATES,
+) -> dict[str, Any]:
+    """Recompile archived Generator raw under the current pool/operator with zero provider calls.
+
+    This is valid only when the archived assistant output is already complete and content-addressed.
+    It re-runs all deterministic source/lane/dead-end/reduction checks. Any candidate that would
+    require a current semantic reviewer causes a fail-closed replay status rather than a provider call.
+    """
+    storage = storage or StorageSettings.from_env()
+    primary_pool_path = Path(primary_pool_path); generator_raw_path = Path(generator_raw_path)
+    auto_inbox_path = Path(auto_inbox_path) if auto_inbox_path is not None else default_auto_inbox_path(storage)
+    current = (now or _now_dt()).astimezone(timezone.utc); run_id = current.strftime("%Y%m%dT%H%M%SZ") + "-replay"
+    pool = load_private_primary_pool(primary_pool_path) or {}; reg = _registry(pool); psha = _pool_sha(pool) if pool else ""
+    blocked_problem_memory = blocked_problem_memory or _public_blocked_problem_memory(storage)
+    dead_end_prompt_memory = _private_dead_end_prompt_memory(storage, blocked_problem_memory, current_refs=set(reg))
+    inherited_receipts=[dict(row) for row in ((pool.get("source_coverage") or {}).get("portable_review_receipts") or []) if isinstance(row,dict)]
+    policy = _base_policy(portfolio=False)
+    policy.update({
+        "generator_replayed_without_provider": True,
+        "generator_replay_requires_exact_raw_sha256": True,
+        "generator_replay_rechecks_current_machine_contract": True,
+        "generator_replay_cannot_invoke_semantic_reviewer": True,
+        "automatic_provider_calls_authorized": 0,
+    })
+    state={
+        "schema_version":"2.5","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),
+        "auto_inbox_path":str(auto_inbox_path),"generator_model":str(generator_requested_model or ""),"reviewer_model":"",
+        "policy":policy,"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"",
+        "search_diagnostics":{"lane_search_priority":list(dead_end_prompt_memory.get("lane_search_priority") or DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"last_completed_lane_search":{},"scientific_authority":False},
+        "saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage,saturation_ledger_path)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},
+        "source_generator_run_id":str(source_generator_run_id or ""),"source_discovery_operator_version":str(source_discovery_operator_version or ""),
+        "provider_calls_executed":0,"semantic_reviewer_calls_executed":0,"candidates":[],
+    }
+    def finish(status:str,cands:list[dict[str,Any]]|None=None):
+        cands=cands or []; state["status"]=status; _write_inbox(auto_inbox_path,run_id,status,cands,psha); _record_saturation_run(storage,state,psha,reg,saturation_ledger_path); return state
+    if pool.get("status")!="READY" or len(reg)<4:return finish("REPLAY_INSUFFICIENT_PRIMARY_EVIDENCE")
+    try: raw=generator_raw_path.read_text(encoding="utf-8")
+    except OSError as error: state["error"]=f"raw-read-error:{type(error).__name__}";return finish("REPLAY_INPUT_INVALID")
+    actual_sha=_sha(raw)
+    if not re.fullmatch(r"[0-9a-f]{64}",str(generator_raw_sha256 or "")) or actual_sha!=str(generator_raw_sha256):state["error"]="raw-sha-mismatch";return finish("REPLAY_INPUT_INVALID")
+    try:
+        payload=extract_json_object(raw); rows=payload.get("candidates") or []
+        if not isinstance(rows,list) or len(rows)>max_candidates or any(not isinstance(row,dict) for row in rows):raise ValueError("generator-candidate-array-invalid")
+        state["generation_notes"]=str(payload.get("generation_notes") or "")[:2400].strip()
+        lane_search=_normalize_lane_search(payload.get("lane_search"),reg,state["search_diagnostics"]["lane_search_priority"])
+        cands=_annotate_principle_dead_end_reentry([_normalize(row,reg) for row in rows]);_validate_lane_search_candidates(lane_search,cands)
+    except Exception as error:
+        state["error"]=f"raw-recompile-error:{type(error).__name__}:{str(error)[:300]}";return finish("REPLAY_INPUT_INVALID")
+    reviewable=[candidate for candidate in cands if _reviewable(candidate,reg)]
+    state["search_diagnostics"].update({"lane_search_complete":True,"lane_search":lane_search})
+    state["summary"].update({"generated":len(cands),"structurally_reviewable":len(reviewable),"generated_by_lane":_count_by_lane(cands),"structurally_reviewable_by_lane":_count_by_lane(reviewable)})
+    archived_path,archived_sha=_write_raw(storage,run_id,"generator-replay",str(generator_requested_model or "unknown"),raw)
+    state["raw_artifacts"]["generator"]={"path":archived_path,"sha256":archived_sha,"requested_model":str(generator_requested_model or ""),"resolved_model":str(generator_resolved_model or generator_requested_model or ""),"raw_replayed_without_provider":True,"raw_origin_path":str(generator_raw_path),"raw_origin_run_id":str(source_generator_run_id or ""),"raw_origin_discovery_operator_version":str(source_discovery_operator_version or ""),"provider_calls_executed":0}
+    if reviewable:
+        state["summary"].update({"semantic_clear":0,"semantic_blocked":0,"semantic_review_unavailable":len(reviewable),"written_to_auto_inbox":0,"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane([]),"semantic_review_unavailable_by_lane":_count_by_lane(reviewable)})
+        state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"semantic_verdict":"UNREVIEWED_REPLAY_REQUIRES_REVIEWER","lane_contract_verified":False,"matched_patterns":[]} for c in cands]
+        return finish("REPLAY_REQUIRES_SEMANTIC_REVIEW",[])
+    for candidate in cands:
+        candidate["semantic_reduction_review"].update({"reviewed":False,"verdict":"BLOCK","lane_contract_verified":False,"lane_contract_reason":"current-machine-contract-blocked-before-review","strongest_reduction":"current-machine-contract-blocked-before-review"})
+    state["summary"].update({"semantic_clear":0,"semantic_blocked":len(cands),"written_to_auto_inbox":len(cands),"semantic_clear_by_lane":_count_by_lane([]),"semantic_blocked_by_lane":_count_by_lane(cands)})
+    state["candidates"]=[{"candidate_id":c["candidate_id"],"title":c["title"],"discovery_lane":c["discovery_lane"],"source_refs":[c["empirical_evidence"]["source_a"]["ref"],c["empirical_evidence"]["source_b"]["ref"]],"semantic_verdict":"BLOCK_PRE_REVIEW_REPLAY","lane_contract_verified":False,"matched_patterns":[],"principle_dead_end_reentry_audit":c.get("principle_dead_end_reentry_audit") or {}} for c in cands]
+    return finish("GENERATED_ZERO_CANDIDATES" if not cands else "GENERATED_AWAIT_PROBLEM_GATE",cands)
+
+
+def write_replayed_problem_generator_state(json_path=DEFAULT_JSON,js_path=DEFAULT_JS,previous_public_state_path=None,last_completed_lane_search_seed=None,**kwargs):
+    previous_path=Path(previous_public_state_path) if previous_public_state_path is not None else json_path
+    previous=load_problem_generator_state(previous_path);storage=kwargs.get("storage") or StorageSettings.from_env();blocked_problem_memory=_public_blocked_problem_memory(storage,previous_path)
+    state=replay_problem_generator_raw(**kwargs,blocked_problem_memory=blocked_problem_memory)
+    _merge_portable_review_receipts(state,previous);_merge_last_completed_lane_search(state,previous,last_completed_lane_search_seed)
+    public=public_problem_generator_state(state,storage=storage);json_path.parent.mkdir(parents=True,exist_ok=True);json_path.write_text(json.dumps(public,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");js_path.write_text("window.PAPER_FIRST_PROBLEM_GENERATOR = "+json.dumps(public,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8");return state
+
+
 def write_problem_generator_state(json_path=DEFAULT_JSON,js_path=DEFAULT_JS,previous_public_state_path=None,last_completed_lane_search_seed=None,**kwargs):
     previous_path=Path(previous_public_state_path) if previous_public_state_path is not None else json_path
     previous=load_problem_generator_state(previous_path)

@@ -57,7 +57,7 @@ DEFAULT_ARXIV_MAX_PAGES = 4
 DEFAULT_ARXIV_RATE_LIMIT_COOLDOWN_SECONDS = 1800
 DEFAULT_ARXIV_RATE_LIMIT_MAX_COOLDOWN_SECONDS = 21600
 EMPIRICAL_FACT_EXTRACTION_VERSION = "precision-v2"
-TYPED_EVIDENCE_EXTRACTION_VERSION = "typed-v1"
+TYPED_EVIDENCE_EXTRACTION_VERSION = "typed-v2"
 DEFAULT_ARXIV_QUERIES = (
     'all:"self-evolving" AND all:agent',
     'all:"self-improving" AND all:agent',
@@ -287,6 +287,22 @@ _ASSUMPTION_CUE_RE = re.compile(r"\b(we assume|assume that|assumes that|under th
 _FAILURE_CUE_RE = re.compile(r"\b(fail(?:s|ed|ure|ures)?|degrad(?:e|es|ed|ation)|drop(?:s|ped)?|harm(?:s|ed|ful)?|worse than|underperform(?:s|ed)?|error rate|attack success rate|cannot|unable to)\b", flags=re.I)
 _BOUNDARY_CUE_RE = re.compile(r"\b(only when|only if|threshold|regime|above|below|with increasing|with decreasing|gap between|saturat(?:e|es|ed|ion)|plateau|cross-over|crossover)\b", flags=re.I)
 _TYPED_NUMERIC_CUE_RE = re.compile(r"\b\d+(?:\.\d+)?\s*%|\b\d+\.\d+\b|\b\d+\s*/\s*\d+\b")
+_FIRST_PARTY_TYPED_EVIDENCE_RE = re.compile(
+    r"\b(?:we\s+(?:find|found|observe|observed|show|demonstrate|report|measure|evaluate|test)|"
+    r"our\s+(?:results?|experiments?|evaluation|analysis|measurements?|method|approach|system|agent|model|framework)|"
+    r"in\s+our\s+(?:experiments?|evaluation|study|setting)|"
+    r"results?\s+(?:show|shows|indicate|indicates|demonstrate|demonstrates|reveal|reveals)|"
+    r"(?:table|figure)\s+\d+[a-z]?\s+(?:shows|demonstrates|summarizes|establishes))\b",
+    flags=re.I,
+)
+_LITERATURE_ATTRIBUTION_RE = re.compile(
+    r"\b(?:prior|previous|earlier|existing|recent)\s+(?:work|studies|research)\b|"
+    r"\b(?:prior|previous|existing)\s+(?:benchmarks?|systems?|methods?)\b|"
+    r"\b(?:benchmarks?|systems?|methods?)\b[^.!?]{0,180}\b(?:reveal(?:s|ed|ing)?|show(?:s|ed|ing)?|"
+    r"demonstrat(?:e|es|ed|ing)|report(?:s|ed|ing)|find(?:s|ings)?|emphasiz(?:e|es|ed|ing)|"
+    r"highlight(?:s|ed|ing)|study(?:ies|ied|ing))\b",
+    flags=re.I,
+)
 
 
 def extract_typed_evidence_candidates(page: str, *, max_per_type: int = 2) -> dict[str, list[dict[str, str]]]:
@@ -312,16 +328,19 @@ def extract_typed_evidence_candidates(page: str, *, max_per_type: int = 2) -> di
             if not normalized:
                 continue
             item = {"section": section or "unnamed", "text": sentence, "text_sha256": hashlib.sha256(sentence.encode("utf-8")).hexdigest(), "extraction_version": TYPED_EVIDENCE_EXTRACTION_VERSION}
+            first_party_typed = bool(_FIRST_PARTY_TYPED_EVIDENCE_RE.search(sentence))
+            literature_attributed = bool(_LITERATURE_ATTRIBUTION_RE.search(sentence))
+            typed_empirical_eligible = not literature_attributed or first_party_typed
             if any(term in section_low for term in _ASSUMPTION_SECTION_TERMS) and _ASSUMPTION_CUE_RE.search(sentence) and normalized not in seen["operational_assumptions"]:
                 seen["operational_assumptions"].add(normalized)
                 score = 3 + (2 if "assumption" in section_low else 0) + (1 if re.search(r"\bwe assume\b|\bunder the assumption\b", sentence, flags=re.I) else 0)
                 buckets["operational_assumptions"].append((score, -order, item))
             measured_section = any(term in section_low for term in _MEASURED_SECTION_TERMS)
-            if measured_section and _FAILURE_CUE_RE.search(sentence) and (_STRONG_EMPIRICAL_CUE_RE.search(sentence) or _DIRECTIONAL_RESULT_RE.search(sentence) or _TYPED_NUMERIC_CUE_RE.search(sentence)) and normalized not in seen["measured_failures"]:
+            if measured_section and typed_empirical_eligible and _FAILURE_CUE_RE.search(sentence) and (_STRONG_EMPIRICAL_CUE_RE.search(sentence) or _DIRECTIONAL_RESULT_RE.search(sentence) or _TYPED_NUMERIC_CUE_RE.search(sentence)) and normalized not in seen["measured_failures"]:
                 seen["measured_failures"].add(normalized)
                 score = 3 + (2 if _TYPED_NUMERIC_CUE_RE.search(sentence) else 0) + (1 if _STRONG_EMPIRICAL_CUE_RE.search(sentence) else 0)
                 buckets["measured_failures"].append((score, -order, item))
-            if measured_section and _BOUNDARY_CUE_RE.search(sentence) and (_STRONG_EMPIRICAL_CUE_RE.search(sentence) or _DIRECTIONAL_RESULT_RE.search(sentence) or _TYPED_NUMERIC_CUE_RE.search(sentence)) and normalized not in seen["boundary_observations"]:
+            if measured_section and typed_empirical_eligible and _BOUNDARY_CUE_RE.search(sentence) and (_STRONG_EMPIRICAL_CUE_RE.search(sentence) or _DIRECTIONAL_RESULT_RE.search(sentence) or _TYPED_NUMERIC_CUE_RE.search(sentence)) and normalized not in seen["boundary_observations"]:
                 seen["boundary_observations"].add(normalized)
                 score = 3 + (2 if _TYPED_NUMERIC_CUE_RE.search(sentence) else 0) + (1 if _STRONG_EMPIRICAL_CUE_RE.search(sentence) else 0)
                 buckets["boundary_observations"].append((score, -order, item))
@@ -915,6 +934,121 @@ def load_private_primary_pool(path: Path | None = None, *, storage: StorageSetti
     return payload
 
 
+def _exact_frozen_fulltext_path(record: dict[str, Any], cache_dir: Path) -> Path:
+    ref = str(record.get("ref") or "").strip()
+    fulltext_sha = str(record.get("fulltext_sha256") or "").strip().lower()
+    if not ref.startswith("arXiv:") or not re.fullmatch(r"[0-9a-f]{64}", fulltext_sha):
+        raise ValueError(f"frozen Primary record lacks exact fulltext identity: {ref or 'missing-ref'}")
+    arxiv_id = ref.removeprefix("arXiv:")
+    safe_id = re.sub(r"[^0-9A-Za-z._-]+", "_", arxiv_id)
+    candidates: list[Path] = []
+    declared = Path(str(record.get("fulltext_cache_path") or ""))
+    if str(declared):
+        candidates.append(declared)
+    candidates.append(cache_dir / f"arxiv-full-{safe_id}-{fulltext_sha[:12]}.html")
+    seen: set[str] = set()
+    for path in candidates:
+        key = str(path)
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        if not path.is_file():
+            continue
+        raw = path.read_bytes()
+        if not raw or len(raw) > DEFAULT_MAX_PRIMARY_RESPONSE_BYTES:
+            continue
+        if hashlib.sha256(raw).hexdigest() != fulltext_sha:
+            continue
+        if b"<section" not in raw.lower():
+            continue
+        return path
+    raise ValueError(f"exact frozen fulltext bytes unavailable for {ref} sha256={fulltext_sha}")
+
+
+def recompile_frozen_primary_typed_evidence(
+    pool: dict[str, Any],
+    *,
+    cache_dir: Path | None = None,
+    storage: StorageSettings | None = None,
+) -> dict[str, Any]:
+    """Re-derive typed evidence from an exact frozen Primary without retrieval.
+
+    Source refs, primary/fulltext content digests, empirical facts, coverage receipts,
+    and selection order are immutable. Only typed evidence and its extractor version
+    may change. Every fulltext byte sequence is reverified against the frozen SHA.
+    """
+    if pool.get("status") != "READY" or not isinstance(pool.get("records"), list) or not pool.get("records"):
+        raise ValueError("frozen Primary typed-evidence recompile requires a nonempty READY pool")
+    if cache_dir is None:
+        storage = storage or StorageSettings.from_env()
+        _, cache_dir = _private_paths(storage)
+    source = json.loads(json.dumps(pool, ensure_ascii=False))
+    prior_version = str(source.get("typed_evidence_extraction_version") or "")
+    changed = 0
+    for record in source.get("records") or []:
+        if not isinstance(record, dict) or record.get("primary_source_verified") is not True:
+            raise ValueError("frozen Primary typed-evidence recompile requires verified records only")
+        path = _exact_frozen_fulltext_path(record, Path(cache_dir))
+        raw_text = path.read_text(encoding="utf-8", errors="replace")
+        previous = record.get("typed_evidence") or {}
+        typed = extract_typed_evidence_candidates(raw_text, max_per_type=2)
+        if previous != typed or str(record.get("typed_evidence_extraction_version") or "") != TYPED_EVIDENCE_EXTRACTION_VERSION:
+            changed += 1
+        record["typed_evidence"] = typed
+        record["typed_evidence_extraction_version"] = TYPED_EVIDENCE_EXTRACTION_VERSION
+        record["fulltext_cache_path"] = str(path)
+    source["typed_evidence_extraction_version"] = TYPED_EVIDENCE_EXTRACTION_VERSION
+    source["derived_evidence_recompile"] = {
+        "kind": "typed-evidence-first-party-ownership-recompile",
+        "prior_typed_evidence_extraction_version": prior_version,
+        "typed_evidence_extraction_version": TYPED_EVIDENCE_EXTRACTION_VERSION,
+        "records_recompiled": len(source.get("records") or []),
+        "records_changed": changed,
+        "source_scheduler_runs_executed": 0,
+        "network_fetches_executed": 0,
+        "source_manifest_changed": False,
+        "scientific_authority": False,
+    }
+    return source
+
+
+def project_recompiled_primary_public_state(public_state: dict[str, Any], private_pool: dict[str, Any]) -> dict[str, Any]:
+    """Project a frozen typed-evidence recompile into the public Primary receipt."""
+    public = json.loads(json.dumps(public_state, ensure_ascii=False))
+    private_records = [row for row in private_pool.get("records") or [] if isinstance(row, dict)]
+    public_records = [row for row in public.get("records") or [] if isinstance(row, dict)]
+    private_manifest = [(str(row.get("ref") or ""), str(row.get("source_sha256") or ""), str(row.get("fulltext_sha256") or "")) for row in private_records]
+    public_manifest = [(str(row.get("ref") or ""), str(row.get("source_sha256") or ""), str(row.get("fulltext_sha256") or "")) for row in public_records]
+    if not private_manifest or private_manifest != public_manifest:
+        raise ValueError("recompiled private Primary manifest does not match public Primary receipt")
+    by_ref = {str(row.get("ref") or ""): row for row in private_records}
+    total = {key: 0 for key in ("operational_assumptions", "measured_failures", "boundary_observations")}
+    for row in public_records:
+        private = by_ref[str(row.get("ref") or "")]
+        counts = {key: len((private.get("typed_evidence") or {}).get(key) or []) for key in total}
+        row["typed_evidence_counts"] = counts
+        for key, value in counts.items():
+            total[key] += int(value)
+    policy = public.setdefault("policy", {})
+    policy["typed_evidence_extraction_version"] = TYPED_EVIDENCE_EXTRACTION_VERSION
+    policy["typed_evidence_requires_first_party_ownership_or_nonliterature_attribution"] = True
+    policy["derived_typed_evidence_reused_only_when_extractor_version_matches"] = True
+    public.setdefault("summary", {})["typed_evidence_candidates"] = total
+    metadata = private_pool.get("derived_evidence_recompile") or {}
+    public["derived_evidence_recompile"] = {
+        "kind": str(metadata.get("kind") or "typed-evidence-recompile"),
+        "prior_typed_evidence_extraction_version": str(metadata.get("prior_typed_evidence_extraction_version") or ""),
+        "typed_evidence_extraction_version": TYPED_EVIDENCE_EXTRACTION_VERSION,
+        "records_recompiled": int(metadata.get("records_recompiled") or len(private_records)),
+        "records_changed": int(metadata.get("records_changed") or 0),
+        "source_scheduler_runs_executed": 0,
+        "network_fetches_executed": 0,
+        "source_manifest_changed": False,
+        "scientific_authority": False,
+    }
+    return public
+
+
 def _reusable_verified_record(
     record: dict[str, Any],
     paper: dict[str, Any],
@@ -1285,6 +1419,7 @@ def build_primary_evidence_pool(
             "empirical_fact_evidence_tiers": ["strong-observation", "quantitative-directional", "owned-directional", "result-section-directional"],
             "typed_evidence_candidates_are_not_ground_truth": True,
             "typed_evidence_is_deterministic_and_bounded": True,
+            "typed_evidence_requires_first_party_ownership_or_nonliterature_attribution": True,
             "typed_evidence_extraction_version": TYPED_EVIDENCE_EXTRACTION_VERSION,
             "pre_registered_lane_coverage_floor": True,
             "lane_coverage_is_discovery_breadth_not_scientific_authority": True,

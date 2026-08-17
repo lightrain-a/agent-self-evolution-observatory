@@ -11,7 +11,7 @@ from pathlib import Path
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _normalize_lane_search, _principle_dead_end_reentry_audit, _provider_request_audit, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _normalize_lane_search, _principle_dead_end_reentry_audit, _provider_request_audit, replay_problem_generator_raw, resume_semantic_reviewer, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -990,6 +990,34 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertFalse(review["independent_resolved_model"])
         self.assertEqual(review["verdict"], "BLOCK")
         self.assertEqual(state["summary"]["semantic_clear"], 0)
+
+    def test_generator_raw_replay_is_zero_provider_and_recompiles_lane_search_against_current_pool(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);pool=self.pool(root,now);raw_path=root/"generator-raw.json"
+            payload={"lane_search":[{"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No current pair survives this lane search."} for lane in DISCOVERY_LANES],"candidates":[],"generation_notes":"Archived generator found no surviving candidate."}
+            raw=json.dumps(payload);raw_path.write_text(raw);sha=hashlib.sha256(raw.encode()).hexdigest();auto=root/"auto.json"
+            state=replay_problem_generator_raw(storage=self.storage(root),primary_pool_path=pool,generator_raw_path=raw_path,generator_raw_sha256=sha,generator_requested_model="kimi-k3",generator_resolved_model="kimi-k3",source_generator_run_id="old-run",source_discovery_operator_version="old-op",auto_inbox_path=auto,now=now)
+            inbox=json.loads(auto.read_text())
+        self.assertEqual(state["status"],"GENERATED_ZERO_CANDIDATES")
+        self.assertEqual(state["provider_calls_executed"],0);self.assertEqual(state["semantic_reviewer_calls_executed"],0)
+        self.assertTrue(state["policy"]["generator_replayed_without_provider"]);self.assertEqual(state["policy"]["automatic_provider_calls_authorized"],0)
+        self.assertTrue(state["search_diagnostics"]["lane_search_complete"]);self.assertEqual(len(state["search_diagnostics"]["lane_search"]),len(DISCOVERY_LANES))
+        self.assertTrue(state["raw_artifacts"]["generator"]["raw_replayed_without_provider"]);self.assertEqual(state["raw_artifacts"]["generator"]["sha256"],sha)
+        self.assertEqual(inbox["candidates"],[])
+
+    def test_generator_raw_replay_fails_closed_if_current_contract_still_requires_semantic_review(self) -> None:
+        candidate=self.raw_candidate("CONTRADICTION")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);pool=self.pool(root,now);raw_path=root/"generator-raw.json"
+            lane_search=[]
+            for lane in DISCOVERY_LANES:
+                if lane=="CONTRADICTION": lane_search.append({"lane":lane,"status":"CANDIDATE","source_refs":["arXiv:2608.00001","arXiv:2608.00002"],"reason":"A grounded candidate survives."})
+                else: lane_search.append({"lane":lane,"status":"NO_PAIR","source_refs":[],"reason":"No current pair survives."})
+            raw=json.dumps({"lane_search":lane_search,"candidates":[candidate],"generation_notes":"one candidate"});raw_path.write_text(raw);sha=hashlib.sha256(raw.encode()).hexdigest()
+            state=replay_problem_generator_raw(storage=self.storage(root),primary_pool_path=pool,generator_raw_path=raw_path,generator_raw_sha256=sha,generator_requested_model="kimi-k3",generator_resolved_model="kimi-k3",source_generator_run_id="old-run",source_discovery_operator_version="old-op",auto_inbox_path=root/"auto.json",now=now)
+        self.assertEqual(state["status"],"REPLAY_REQUIRES_SEMANTIC_REVIEW")
+        self.assertGreater(state["summary"]["structurally_reviewable"],0)
+        self.assertEqual(state["provider_calls_executed"],0);self.assertEqual(state["semantic_reviewer_calls_executed"],0)
 
     def test_reviewer_clear_cannot_pass_if_source_excerpt_is_not_primary_evidence(self) -> None:
         with tempfile.TemporaryDirectory() as td:
