@@ -132,11 +132,12 @@ def _run_global_relation_control(
 ) -> dict[str, Any]:
     primary_state = load_primary_evidence_state()
     generator_state = load_problem_generator_state()
+    queue_state = load_problem_gate_queue_state()
     relation_state = load_global_relation_recall_state()
     freshness = relation_recall_freshness(generator_state, relation_state)
     delta_private = delta_writer(storage=storage)
     delta = public_relation_delta_preflight_summary(delta_private)
-    admission = admission_builder(primary_state=primary_state,generator_state=generator_state,relation_state=relation_state,delta_state=delta_private)
+    admission = admission_builder(primary_state=primary_state,generator_state=generator_state,queue_state=queue_state,relation_state=relation_state,delta_state=delta_private)
     if not allow_model_scan:
         return {
             "schema_version": "1.0",
@@ -216,6 +217,7 @@ def _run_discovery_frontier_control(storage: StorageSettings) -> dict[str, Any]:
         build_global_relation_scan_admission(
             primary_state=primary,
             generator_state=generator,
+            queue_state=queue,
             relation_state=relation,
             delta_state=delta_private,
         )
