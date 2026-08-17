@@ -4,6 +4,7 @@ import fcntl
 import hashlib
 import json
 import os
+import re
 import shutil
 import tempfile
 from contextlib import contextmanager
@@ -435,6 +436,128 @@ def close_existing_problem_discovery_transaction(
     }
     (run_root / f"{txn_id}.json").write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return record
+
+
+def recompile_existing_problem_discovery_transaction(
+    *,
+    storage: StorageSettings | None = None,
+    primary_json: Path = PRIMARY_JSON,
+    primary_js: Path = PRIMARY_JS,
+    generator_json: Path = GENERATOR_JSON,
+    generator_js: Path = GENERATOR_JS,
+    queue_json: Path = QUEUE_JSON,
+    queue_js: Path = QUEUE_JS,
+    private_pool_source: Path | None = None,
+    generator_kwargs: dict[str, Any] | None = None,
+    queue_kwargs: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Recompile Generator -> Queue on one already-certified Primary transaction.
+
+    This is the only live operator-upgrade path that is allowed to reuse an unchanged
+    Primary without rerunning retrieval, the source-coverage scheduler, or carrier
+    probing. The prior public Primary/Generator/Queue must be one closed zero-survivor
+    transaction, the prior Generator must have been produced by an older discovery
+    operator, and the supplied private Primary must match the public Primary manifest
+    exactly. All outputs are staged under the host-wide transaction lock and committed
+    atomically; any provider/reviewer/queue failure preserves every prior public/private
+    control file.
+    """
+    storage = storage or StorageSettings.from_env(); storage.ensure()
+    primary = _load(primary_json); previous_generator = _load(generator_json); previous_queue = _load(queue_json)
+    errors = _validate(primary, previous_generator, previous_queue)
+    if errors:
+        raise RuntimeError("existing paper-first discovery state invalid: " + ",".join(errors))
+    primary_tx=str(primary.get("discovery_transaction_id") or "").strip()
+    generator_tx=str(previous_generator.get("discovery_transaction_id") or "").strip()
+    queue_tx=str(previous_queue.get("discovery_transaction_id") or "").strip()
+    if not re.fullmatch(r"[0-9a-f]{64}",primary_tx) or primary_tx!=generator_tx or primary_tx!=queue_tx:
+        raise RuntimeError("existing paper-first discovery transaction identity mismatch")
+    previous_operator=str((previous_generator.get("policy") or {}).get("discovery_operator_version") or "")
+    if not previous_operator or previous_operator==DISCOVERY_OPERATOR_VERSION:
+        raise RuntimeError("operator recompile requires a closed transaction from an older discovery operator")
+    previous_qs=previous_queue.get("summary") or {}
+    if int(previous_qs.get("passed_problem_gate") or 0)!=0 or int(previous_qs.get("paper_design_eligible") or 0)!=0:
+        raise RuntimeError("operator recompile cannot supersede a transaction with a Problem-Gate survivor")
+
+    public_records=[row for row in primary.get("records") or [] if isinstance(row,dict)]
+    public_manifest=[
+        (str(row.get("ref") or ""),str(row.get("source_sha256") or ""),str(row.get("fulltext_sha256") or ""))
+        for row in public_records
+    ]
+    if not public_manifest or any(not ref or len(source_sha)!=64 for ref,source_sha,_ in public_manifest):
+        raise RuntimeError("existing Primary manifest is incomplete")
+    source_path=Path(private_pool_source) if private_pool_source is not None else private_primary_pool_path(storage)
+    source_pool=load_private_primary_pool(source_path) or {}
+    source_records=[row for row in source_pool.get("records") or [] if isinstance(row,dict)]
+    source_manifest=[
+        (str(row.get("ref") or ""),str(row.get("source_sha256") or ""),str(row.get("fulltext_sha256") or ""))
+        for row in source_records
+    ]
+    if source_pool.get("status")!="READY" or source_manifest!=public_manifest:
+        raise RuntimeError("private Primary recompile source does not exactly match current public Primary records")
+    source_pool_sha=_pool_sha(source_pool)
+    prior_receipt=(previous_generator.get("saturation_memory") or {}).get("current_review_receipt") or {}
+    if (
+        str(prior_receipt.get("pool_sha256") or "")!=source_pool_sha
+        or str(prior_receipt.get("discovery_operator_version") or "")!=previous_operator
+        or prior_receipt.get("scientific_authority") is not False
+    ):
+        raise RuntimeError("prior Generator receipt does not bind the exact frozen Primary and prior operator")
+
+    run_root=storage.run_dir/"paper-first-discovery-transactions";run_root.mkdir(parents=True,exist_ok=True)
+    started=_now()
+    with _transaction_lock(storage):
+        temp_root=Path(tempfile.mkdtemp(prefix=".paper-first-recompile-",dir=str(primary_json.parent)))
+        p_json=temp_root/"primary.json";p_js=temp_root/"primary.js";g_json=temp_root/"generator.json";g_js=temp_root/"generator.js";q_json=temp_root/"queue.json";q_js=temp_root/"queue.js"
+        staged_private=temp_root/"primary-private.json";staged_auto=temp_root/"auto-candidate-inbox.json";staged_ledger=temp_root/"discovery-saturation-ledger.json"
+        target_private=private_primary_pool_path(storage);target_auto=default_auto_inbox_path(storage);target_ledger=_saturation_ledger_path(storage)
+        if target_auto.exists():shutil.copyfile(target_auto,staged_auto)
+        if target_ledger.exists():shutil.copyfile(target_ledger,staged_ledger)
+        staged_pool=json.loads(json.dumps(source_pool,ensure_ascii=False));staged_pool["generated_at"]=str(primary.get("generated_at") or staged_pool.get("generated_at") or "")
+        staged_pool["operator_recompile"]={"prior_transaction_id":primary_tx,"prior_discovery_operator_version":previous_operator,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"source_scheduler_runs_executed":0,"scientific_authority":False}
+        if _pool_sha(staged_pool)!=source_pool_sha:raise RuntimeError("operator recompile changed the content-addressed Primary pool")
+        staged_private.write_text(json.dumps(staged_pool,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        clean_primary=dict(primary);clean_primary.pop("discovery_transaction_id",None);clean_primary.pop("discovery_transaction_role",None)
+        p_json.write_text(json.dumps(clean_primary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        p_js.write_text("window.PAPER_FIRST_PRIMARY_EVIDENCE = "+json.dumps(clean_primary,ensure_ascii=False,separators=(",",":"))+";\n",encoding="utf-8")
+        generator_internal:dict[str,Any]|None=None;queue_internal:dict[str,Any]|None=None
+        record={"schema_version":"1.0","started_at":started,"status":"running","prior_transaction_id":primary_tx,"prior_discovery_operator_version":previous_operator,"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"source_scheduler_runs_executed":0,"scientific_authority":False}
+        try:
+            gkw=dict(generator_kwargs or {});gkw.update({"storage":storage,"json_path":g_json,"js_path":g_js,"previous_public_state_path":generator_json,"primary_pool_path":staged_private,"auto_inbox_path":staged_auto,"saturation_ledger_path":staged_ledger})
+            generator_internal=write_problem_generator_state(**gkw)
+            qkw=dict(queue_kwargs or {});qkw.update({"storage":storage,"json_path":q_json,"js_path":q_js,"primary_pool_path":staged_private,"auto_inbox_path":staged_auto})
+            queue_internal=write_problem_gate_queue(**qkw)
+            primary_public=_load(p_json);generator_public=_load(g_json);queue_public=_load(q_json)
+            validation=_validate(primary_public,generator_public,queue_public)
+            if validation:raise RuntimeError("paper-first operator recompile transaction invalid: "+",".join(validation))
+            if str((generator_public.get("policy") or {}).get("discovery_operator_version") or "")!=DISCOVERY_OPERATOR_VERSION:
+                raise RuntimeError("operator recompile Generator did not bind the current discovery operator")
+            txn_id=_transaction_id(primary_public,generator_public,queue_public)
+            primary_public=_stamp(p_json,p_js,"PAPER_FIRST_PRIMARY_EVIDENCE",txn_id,"primary")
+            generator_public=_stamp(g_json,g_js,"PAPER_FIRST_PROBLEM_GENERATOR",txn_id,"generator")
+            queue_public=_stamp(q_json,q_js,"PAPER_FIRST_PROBLEM_GATE_QUEUE",txn_id,"queue")
+            private_targets=[(staged_private,target_private),(staged_auto,target_auto)]
+            if staged_ledger.exists():private_targets.append((staged_ledger,target_ledger))
+            _commit_files([(p_json,primary_json),(p_js,primary_js),(g_json,generator_json),(g_js,generator_js),(q_json,queue_json),(q_js,queue_js),*private_targets])
+            raw=(generator_internal.get("raw_artifacts") or {}).get("generator") or {}
+            generator_calls=len(raw.get("transport_attempts") or []) if isinstance(raw,dict) else 0
+            if not generator_calls and isinstance(raw,dict) and raw.get("sha256"):generator_calls=1
+            semantic=(generator_internal.get("raw_artifacts") or {}).get("semantic_reviewer") or {}
+            semantic_calls=int(semantic.get("calls") or (1 if isinstance(semantic,dict) and semantic.get("sha256") else 0))
+            record.update({
+                "status":"COMMITTED_OPERATOR_RECOMPILE","completed_at":_now(),"transaction_id":txn_id,"source_pool_sha256":source_pool_sha,
+                "provider_calls_executed":generator_calls+semantic_calls,"generator_provider_calls_executed":generator_calls,"semantic_reviewer_calls_executed":semantic_calls,
+                "summary":{"primary_status":primary_public.get("status"),"verified":(primary_public.get("summary") or {}).get("verified",0),"generator_status":generator_public.get("status"),"generated":(generator_public.get("summary") or {}).get("generated",0),"semantic_clear":(generator_public.get("summary") or {}).get("semantic_clear",0),"semantic_blocked":(generator_public.get("summary") or {}).get("semantic_blocked",0),"queue_submitted":(queue_public.get("summary") or {}).get("submitted",0),"queue_passed":(queue_public.get("summary") or {}).get("passed_problem_gate",0),"queue_blocked":(queue_public.get("summary") or {}).get("blocked_problem_gate",0)},
+                "authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            })
+            (run_root/f"{txn_id}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+            return record
+        except Exception as error:
+            record.update({"status":"ABORTED_OPERATOR_RECOMPILE_PUBLIC_STATE_PRESERVED","completed_at":_now(),"error":f"{type(error).__name__}: {error}","stage_diagnostics":{"generator_status":str((generator_internal or {}).get("status") or "NOT_REACHED"),"generator_run_id":str((generator_internal or {}).get("run_id") or ""),"generator_error":" ".join(str((generator_internal or {}).get("error") or "").split())[:500],"queue_reached":queue_internal is not None,"queue_audited":int((((queue_internal or {}).get("summary") or {}).get("audited")) or 0),"scientific_authority":False},"authority":{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False}})
+            stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ");(run_root/f"aborted-recompile-{stamp}-{os.getpid()}.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+            raise
+        finally:
+            shutil.rmtree(temp_root,ignore_errors=True)
 
 
 def write_problem_discovery_transaction(

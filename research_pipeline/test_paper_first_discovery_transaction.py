@@ -10,8 +10,8 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from .config import StorageSettings
-from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, _transaction_id, _transaction_lock, _transaction_lock_path, _validate, write_problem_discovery_transaction
-from .paper_first_problem_discovery_contract import DISCOVERY_LANES
+from .paper_first_discovery_transaction import close_existing_problem_discovery_transaction, recompile_existing_problem_discovery_transaction, _transaction_id, _transaction_lock, _transaction_lock_path, _validate, write_problem_discovery_transaction
+from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION
 
 
 class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
@@ -123,6 +123,78 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual([row["ref"] for row in rebound["records"]],[row["ref"] for row in payloads[0]["records"]])
         self.assertEqual(rebound["generated_at"],payloads[0]["generated_at"])
         self.assertEqual((rebound.get("transaction_replay") or {}).get("mode"),"existing-closed-state-envelope")
+
+    def _downgrade_committed_operator_fixture(self, storage: StorageSettings, targets: dict[str,Path], *, old_operator: str = "fresh-phenomenon-anomaly-precision-v13") -> Path:
+        generator=json.loads(targets["generator_json"].read_text());generator["policy"]["discovery_operator_version"]=old_operator
+        saturation=generator.get("saturation_memory") or {}
+        if isinstance(saturation.get("current_review_receipt"),dict):saturation["current_review_receipt"]["discovery_operator_version"]=old_operator
+        for row in saturation.get("portable_review_receipts") or []:
+            if isinstance(row,dict):row["discovery_operator_version"]=old_operator
+        targets["generator_json"].write_text(json.dumps(generator),encoding="utf-8")
+        targets["generator_js"].write_text("window.PAPER_FIRST_PROBLEM_GENERATOR = "+json.dumps(generator,separators=(",",":"))+";\n",encoding="utf-8")
+        private=storage.data_root/"paper-first-problem-discovery"/"primary-evidence-pool.json"
+        pool=json.loads(private.read_text())
+        for row in (pool.get("source_coverage") or {}).get("portable_review_receipts") or []:
+            if isinstance(row,dict):row["discovery_operator_version"]=old_operator
+        private.write_text(json.dumps(pool),encoding="utf-8")
+        ledger=storage.data_root/"paper-first-problem-discovery"/"discovery-saturation-ledger.json"
+        if ledger.exists():
+            payload=json.loads(ledger.read_text())
+            for row in payload.get("runs") or []:
+                if isinstance(row,dict):row["discovery_operator_version"]=old_operator
+            ledger.write_text(json.dumps(payload),encoding="utf-8")
+        return private
+
+    def test_operator_recompile_reuses_exact_primary_without_source_scheduler(self) -> None:
+        calls=[]
+        def generator(**kwargs):
+            calls.append("generator")
+            return self.generator(**kwargs)
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
+            first=self.run_txn(root,storage,targets,now)
+            source=self._downgrade_committed_operator_fixture(storage,targets)
+            before_primary=json.loads(targets["primary_json"].read_text())
+            result=recompile_existing_problem_discovery_transaction(storage=storage,**targets,private_pool_source=source,generator_kwargs={"generator_responder":generator,"now":now+timedelta(hours=1)})
+            primary=json.loads(targets["primary_json"].read_text());new_generator=json.loads(targets["generator_json"].read_text());queue=json.loads(targets["queue_json"].read_text());private=json.loads(source.read_text())
+        self.assertEqual(first["status"],"COMMITTED")
+        self.assertEqual(result["status"],"COMMITTED_OPERATOR_RECOMPILE")
+        self.assertEqual(result["source_scheduler_runs_executed"],0)
+        self.assertEqual(result["generator_provider_calls_executed"],1)
+        self.assertEqual(result["semantic_reviewer_calls_executed"],0)
+        self.assertEqual(calls,["generator"])
+        self.assertNotEqual(result["transaction_id"],first["transaction_id"])
+        self.assertEqual([row["ref"] for row in primary["records"]],[row["ref"] for row in before_primary["records"]])
+        self.assertEqual([row["source_sha256"] for row in primary["records"]],[row["source_sha256"] for row in before_primary["records"]])
+        self.assertEqual((new_generator.get("policy") or {}).get("discovery_operator_version"),DISCOVERY_OPERATOR_VERSION)
+        self.assertEqual(new_generator["status"],"GENERATED_ZERO_CANDIDATES")
+        self.assertEqual(queue["summary"]["submitted"],0)
+        self.assertEqual({primary["discovery_transaction_id"],new_generator["discovery_transaction_id"],queue["discovery_transaction_id"]},{result["transaction_id"]})
+        self.assertEqual((private.get("operator_recompile") or {}).get("source_scheduler_runs_executed"),0)
+        self.assertEqual((private.get("operator_recompile") or {}).get("discovery_operator_version"),DISCOVERY_OPERATOR_VERSION)
+
+    def test_operator_recompile_refuses_same_operator_transaction(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
+            self.run_txn(root,storage,targets,now)
+            source=storage.data_root/"paper-first-problem-discovery"/"primary-evidence-pool.json"
+            with self.assertRaisesRegex(RuntimeError,"older discovery operator"):
+                recompile_existing_problem_discovery_transaction(storage=storage,**targets,private_pool_source=source,generator_kwargs={"generator_responder":self.generator,"now":now+timedelta(hours=1)})
+
+    def test_operator_recompile_failure_preserves_previous_public_and_private_state(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
+            self.run_txn(root,storage,targets,now);source=self._downgrade_committed_operator_fixture(storage,targets)
+            discovery=storage.data_root/"paper-first-problem-discovery"
+            tracked={**targets,"private":source,"auto":discovery/"auto-candidate-inbox.json","ledger":discovery/"discovery-saturation-ledger.json"}
+            before={key:path.read_bytes() for key,path in tracked.items() if path.exists()}
+            def broken(**kwargs):raise RuntimeError("operator-provider-down")
+            with self.assertRaisesRegex(RuntimeError,"operator recompile transaction invalid"):
+                recompile_existing_problem_discovery_transaction(storage=storage,**targets,private_pool_source=source,generator_kwargs={"generator_responder":broken,"now":now+timedelta(hours=1)})
+            after={key:path.read_bytes() for key,path in tracked.items() if path.exists()}
+            aborted=list((storage.run_dir/"paper-first-discovery-transactions").glob("aborted-recompile-*.json"))
+        self.assertEqual(after,before)
+        self.assertTrue(aborted)
 
     def test_generator_error_aborts_without_changing_public_or_private_control_state(self) -> None:
         with tempfile.TemporaryDirectory() as td:
