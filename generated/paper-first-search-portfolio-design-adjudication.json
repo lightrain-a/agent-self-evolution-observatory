@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T12:06:58+00:00",
+  "generated_at": "2026-08-17T13:15:36+00:00",
   "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
   "target_venue": "ICLR",
   "component_owner": "paper-design-contract",
@@ -47,7 +47,7 @@
   },
   "shadow_near_miss_preflight": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T12:06:58+00:00",
+    "generated_at": "2026-08-17T13:15:36+00:00",
     "audit_id": "shadow-r2-near-miss-preflight-20260814",
     "policy": {
       "shadow_search_control_only": true,
@@ -1112,8 +1112,7 @@
         "fresh_phenomenon_closure": {
           "source_ref": "arXiv:2607.13683",
           "closed_evidence_sha256": [
-            "74082edc56e911da43e9b70b8eeaf4d6552b8fea7e15b7a0ab00d4c20aff2997",
-            "75e5ef08685c7f041ab0449711779f1f2543d0c704adf99b470cb33013203377"
+            "faf94010c18b42621b5d62229c148b4c9c07cb0de9a8c6c0218cedb954397558"
           ],
           "closure_scope": "current standalone PA-03 inference from one aggregate GDPval train/test rank reversal plus the TB2 neutral-candidate phantom-progress ablation",
           "source_readjudication_artifact": "generated/harnessbank-selection-principle-readjudication-20260817.json",
@@ -2301,7 +2300,7 @@
     "principle_dead_end_count": 33,
     "principle_readjudication_dead_end_count": 29,
     "fresh_phenomenon_closure_count": 17,
-    "fresh_phenomenon_closed_evidence_count": 32,
+    "fresh_phenomenon_closed_evidence_count": 31,
     "inversion_asset_evidence": [
       {
         "asset_ref": "first-party-asset:autoskill@94c47ca488d4ba4117d20272e66d49b9877e68cf",

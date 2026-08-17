@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T12:06:58+00:00",
+  "generated_at": "2026-08-17T13:20:18+00:00",
   "status": "NO_ACTIVE_F0",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -332,7 +332,7 @@
     },
     "harnessbank_selection_principle_readjudication": {
       "path": "generated/harnessbank-selection-principle-readjudication-20260817.json",
-      "sha256": "4914b41bf47e576d7ffd5d9cf32ba1582ad3a94924d2ac86bceb9743d28711f2",
+      "sha256": "d636d635575ed6d9efb6fcb11ac216e2679507166bf96645fe25bd2d98a3431b",
       "principle_dead_end_certified": true,
       "same_information_reduction_verified": true
     },
@@ -342,7 +342,7 @@
     },
     "dead_end_memory": {
       "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-      "sha256": "05983bd4556489dc0820d4c53ff1785c73afe195d01b396d9d72ee632e9a6098"
+      "sha256": "fd75ee9745f534663b5ff94122f08653c5908e2efed56459be620a0f2fcc75be"
     },
     "defense_principle_reduction": {
       "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",

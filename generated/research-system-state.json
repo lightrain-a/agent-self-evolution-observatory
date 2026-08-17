@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T12:07:19+00:00",
+  "generated_at": "2026-08-17T13:21:39+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6311,7 +6311,7 @@
     "paper_first_fresh_phenomenon_status": "NO_ACTIVE_F0",
     "paper_first_fresh_phenomenon_candidates": 5,
     "paper_first_fresh_phenomenon_active_f0": 0,
-    "paper_first_fresh_phenomenon_support_holds": 1,
+    "paper_first_fresh_phenomenon_support_holds": 0,
     "paper_first_fresh_phenomenon_ready_problem_review": 0,
     "paper_first_evidence_migration_status": "NOT_RUN",
     "asset_first_stri_status": "READY_NARROW_ICLR",
@@ -33863,7 +33863,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T12:06:58+00:00",
+    "generated_at": "2026-08-17T13:15:36+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -33910,7 +33910,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-17T12:06:58+00:00",
+      "generated_at": "2026-08-17T13:15:36+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -34975,8 +34975,7 @@
           "fresh_phenomenon_closure": {
             "source_ref": "arXiv:2607.13683",
             "closed_evidence_sha256": [
-              "74082edc56e911da43e9b70b8eeaf4d6552b8fea7e15b7a0ab00d4c20aff2997",
-              "75e5ef08685c7f041ab0449711779f1f2543d0c704adf99b470cb33013203377"
+              "faf94010c18b42621b5d62229c148b4c9c07cb0de9a8c6c0218cedb954397558"
             ],
             "closure_scope": "current standalone PA-03 inference from one aggregate GDPval train/test rank reversal plus the TB2 neutral-candidate phantom-progress ablation",
             "source_readjudication_artifact": "generated/harnessbank-selection-principle-readjudication-20260817.json",
@@ -36164,7 +36163,7 @@
       "principle_dead_end_count": 33,
       "principle_readjudication_dead_end_count": 29,
       "fresh_phenomenon_closure_count": 17,
-      "fresh_phenomenon_closed_evidence_count": 32,
+      "fresh_phenomenon_closed_evidence_count": 31,
       "inversion_asset_evidence": [
         {
           "asset_ref": "first-party-asset:autoskill@94c47ca488d4ba4117d20272e66d49b9877e68cf",
@@ -75749,9 +75748,9 @@
           "revise_paper_problem": 1,
           "stop_standalone": 1,
           "support_inventory_required": 1,
-          "shadow_dead_end_objects": 32,
-          "principle_readjudication_dead_ends": 28,
-          "shadow_hold_objects": 3,
+          "shadow_dead_end_objects": 33,
+          "principle_readjudication_dead_ends": 29,
+          "shadow_hold_objects": 2,
           "current_source_hard_veto_dead_ends": 0,
           "current_source_hard_veto_added_from_latest_run": 0,
           "current_source_hard_veto_added_from_terminal_run": 0,
@@ -76446,7 +76445,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T12:06:58+00:00",
+    "generated_at": "2026-08-17T13:20:18+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -76778,7 +76777,7 @@
       },
       "harnessbank_selection_principle_readjudication": {
         "path": "generated/harnessbank-selection-principle-readjudication-20260817.json",
-        "sha256": "4914b41bf47e576d7ffd5d9cf32ba1582ad3a94924d2ac86bceb9743d28711f2",
+        "sha256": "d636d635575ed6d9efb6fcb11ac216e2679507166bf96645fe25bd2d98a3431b",
         "principle_dead_end_certified": true,
         "same_information_reduction_verified": true
       },
@@ -76788,7 +76787,7 @@
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-        "sha256": "05983bd4556489dc0820d4c53ff1785c73afe195d01b396d9d72ee632e9a6098"
+        "sha256": "fd75ee9745f534663b5ff94122f08653c5908e2efed56459be620a0f2fcc75be"
       },
       "defense_principle_reduction": {
         "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
