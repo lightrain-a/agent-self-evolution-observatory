@@ -75,8 +75,8 @@ def _negative_space_sha()->str:
     return hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()).hexdigest()
 
 
-def _load_saturation_ledger(storage:StorageSettings)->list[dict[str,Any]]:
-    path=_saturation_ledger_path(storage)
+def _load_saturation_ledger(storage:StorageSettings,path:Path|None=None)->list[dict[str,Any]]:
+    path=Path(path) if path is not None else _saturation_ledger_path(storage)
     try: payload=json.loads(path.read_text(encoding="utf-8"))
     except (OSError,json.JSONDecodeError): return []
     rows=payload.get("runs") if isinstance(payload,dict) else None
@@ -185,21 +185,21 @@ def _is_current_operator_receipt(row:dict[str,Any],pool_sha:str,negative_space_s
     )
 
 
-def _has_current_operator_receipt(storage:StorageSettings,pool_sha:str,portable_receipts:list[dict[str,Any]]|None=None)->bool:
+def _has_current_operator_receipt(storage:StorageSettings,pool_sha:str,portable_receipts:list[dict[str,Any]]|None=None,saturation_ledger_path:Path|None=None)->bool:
     negative_space_sha=_negative_space_sha()
-    rows=[*_load_saturation_ledger(storage),*[row for row in (portable_receipts or []) if isinstance(row,dict)]]
+    rows=[*_load_saturation_ledger(storage,saturation_ledger_path),*[row for row in (portable_receipts or []) if isinstance(row,dict)]]
     return any(_is_current_operator_receipt(row,pool_sha,negative_space_sha) for row in rows)
 
 
-def _record_saturation_run(storage:StorageSettings,state:dict[str,Any],pool_sha:str,registry:dict[str,dict[str,Any]])->None:
+def _record_saturation_run(storage:StorageSettings,state:dict[str,Any],pool_sha:str,registry:dict[str,dict[str,Any]],saturation_ledger_path:Path|None=None)->None:
     if state.get("status") not in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}: return
-    ledger=_load_saturation_ledger(storage)
+    ledger=_load_saturation_ledger(storage,saturation_ledger_path)
     raw=(state.get("raw_artifacts") or {}).get("generator") or {}
     key={"pool_sha256":pool_sha,"negative_space_sha256":_negative_space_sha(),"discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"requested_model":state.get("generator_model"),"resolved_model":raw.get("resolved_model")}
     prior_identical=sum(row.get("status")=="GENERATED_ZERO_CANDIDATES" and all(row.get(k)==v for k,v in key.items()) for row in ledger)
     entry={"run_id":state.get("run_id"),"generated_at":state.get("generated_at"),**key,"primary_evidence_records":len(registry),"source_refs":sorted(registry),"status":state.get("status"),"generated":(state.get("summary") or {}).get("generated",0),"semantic_clear":(state.get("summary") or {}).get("semantic_clear",0),"raw_sha256":raw.get("sha256"),"generation_notes":str(state.get("generation_notes") or "")[:2400],"scientific_authority":False}
     ledger.append(entry);ledger=ledger[-200:]
-    path=_saturation_ledger_path(storage);path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps({"schema_version":"1.0","runs":ledger},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    path=Path(saturation_ledger_path) if saturation_ledger_path is not None else _saturation_ledger_path(storage);path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps({"schema_version":"1.0","runs":ledger},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     receipt={
         "run_id":str(state.get("run_id") or ""),
         "pool_sha256":pool_sha,
@@ -376,7 +376,7 @@ def _empty_summary(primary_evidence_records=0):
     return {"primary_evidence_records":primary_evidence_records,"raw_seeds":0,"semantic_unique_seeds":0,"unique_problem_families":0,"breadth_archive":0,"archive_pairwise_distance":0.0,"evolved_branches":0,"max_branch_depth":0,"portfolio_calls":0,"generated":0,"structurally_reviewable":0,"semantic_clear":0,"semantic_blocked":0,"written_to_auto_inbox":0,"generated_by_lane":dict(lanes),"structurally_reviewable_by_lane":dict(lanes),"semantic_clear_by_lane":dict(lanes),"semantic_blocked_by_lane":dict(lanes)}
 
 
-def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=None,generator_model=None,reviewer_model=None,generator_responder:Responder|None=None,reviewer_responder:Responder|None=None,now=None,pool_max_age_hours=MAX_POOL_AGE_HOURS,max_candidates=MAX_CANDIDATES,blocked_problem_memory:dict[str,Any]|None=None,portfolio_mode:bool|None=None,target_raw_seeds:int=DEFAULT_RAW_SEEDS):
+def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=None,saturation_ledger_path=None,generator_model=None,reviewer_model=None,generator_responder:Responder|None=None,reviewer_responder:Responder|None=None,now=None,pool_max_age_hours=MAX_POOL_AGE_HOURS,max_candidates=MAX_CANDIDATES,blocked_problem_memory:dict[str,Any]|None=None,portfolio_mode:bool|None=None,target_raw_seeds:int=DEFAULT_RAW_SEEDS):
     storage=storage or StorageSettings.from_env();primary_pool_path=primary_pool_path or private_primary_pool_path(storage);auto_inbox_path=auto_inbox_path or default_auto_inbox_path(storage)
     generator_model=generator_model or os.getenv("PAPER_FIRST_PROBLEM_GENERATOR_MODEL",GENERATOR_MODEL);reviewer_model=reviewer_model or os.getenv("PAPER_FIRST_PROBLEM_REVIEW_MODEL",REVIEWER_MODEL);current=(now or _now_dt()).astimezone(timezone.utc);run_id=current.strftime("%Y%m%dT%H%M%SZ");portfolio_mode=False if portfolio_mode is None else bool(portfolio_mode)
     if portfolio_mode:
@@ -385,8 +385,8 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
     inherited_receipts=[dict(row) for row in ((pool.get("source_coverage") or {}).get("portable_review_receipts") or []) if isinstance(row,dict)]
     blocked_problem_memory=blocked_problem_memory or _public_blocked_problem_memory(storage)
     dead_end_prompt_memory=_private_dead_end_prompt_memory(storage,blocked_problem_memory)
-    state={"schema_version":"2.5","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":_base_policy(portfolio=False),"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","search_diagnostics":{"lane_search_priority":list(dead_end_prompt_memory.get("lane_search_priority") or DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"last_completed_lane_search":{},"scientific_authority":False},"saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},"candidates":[]}
-    def finish(status,cands=[]): state["status"]=status;_write_inbox(auto_inbox_path,run_id,status,cands,psha);_record_saturation_run(storage,state,psha,reg);return state
+    state={"schema_version":"2.5","generated_at":_now(),"run_id":run_id,"primary_pool_path":str(primary_pool_path),"auto_inbox_path":str(auto_inbox_path),"archived_previous_auto_inbox":archived,"generator_model":generator_model,"reviewer_model":reviewer_model,"policy":_base_policy(portfolio=False),"summary":_empty_summary(len(reg)),"raw_artifacts":{},"generation_notes":"","search_diagnostics":{"lane_search_priority":list(dead_end_prompt_memory.get("lane_search_priority") or DISCOVERY_LANES),"lane_search_complete":False,"lane_search":[],"last_completed_lane_search":{},"scientific_authority":False},"saturation_memory":{"ledger_entries":len(_load_saturation_ledger(storage,saturation_ledger_path)),"prior_identical_zero_runs":0,"current_run_recorded":False,"portable_review_receipts":inherited_receipts[-PORTABLE_REVIEW_RECEIPT_LIMIT:],"blocked_problem_memory":blocked_problem_memory,"scientific_authority":False},"candidates":[]}
+    def finish(status,cands=[]): state["status"]=status;_write_inbox(auto_inbox_path,run_id,status,cands,psha);_record_saturation_run(storage,state,psha,reg,saturation_ledger_path);return state
     if pool.get("status")!="READY" or len(reg)<4:return finish("SKIPPED_INSUFFICIENT_PRIMARY_EVIDENCE")
     if age is None or age>pool_max_age_hours:state["primary_pool_age_hours"]=age;return finish("SKIPPED_STALE_PRIMARY_EVIDENCE")
     state["primary_pool_age_hours"]=round(age,4)
@@ -399,7 +399,7 @@ def run_problem_generator(*,storage=None,primary_pool_path=None,auto_inbox_path=
         state["coverage_skip_reason"]="No newly rescued lane-grounded source is ready yet; bounded no-lane carrier probing still has pending sources, so the existing content-addressed pool cannot trigger another live generator call."
         return finish("SKIPPED_SOURCE_CARRIER_PROBE_PENDING")
     if state["source_coverage"]["coverage_exhausted"] and state["source_coverage"]["unreviewed_lane_linked_sources"]==0:
-        if _has_current_operator_receipt(storage,psha,inherited_receipts):
+        if _has_current_operator_receipt(storage,psha,inherited_receipts,saturation_ledger_path):
             state["coverage_skip_reason"]="No unreviewed freshness/relevance-qualified source remains and this exact evidence pool has already completed the current discovery operator; generation resumes when evidence, the mature-reduction ledger, or the discovery operator changes."
             return finish("SKIPPED_SOURCE_COVERAGE_SATURATED")
         state["operator_recompile_reason"]="Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged."

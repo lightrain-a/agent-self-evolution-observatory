@@ -72,12 +72,21 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
             root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
             result=self.run_txn(root,storage,targets,now)
             payloads=[json.loads(targets[key].read_text()) for key in ("primary_json","generator_json","queue_json")]
+            discovery=storage.data_root/"paper-first-problem-discovery"
+            private_pool=json.loads((discovery/"primary-evidence-pool.json").read_text())
+            auto_inbox=json.loads((discovery/"auto-candidate-inbox.json").read_text())
+            saturation=json.loads((discovery/"discovery-saturation-ledger.json").read_text())
         self.assertEqual(result["status"],"COMMITTED")
         ids={row["discovery_transaction_id"] for row in payloads};self.assertEqual(ids,{result["transaction_id"]})
         self.assertEqual([row["discovery_transaction_role"] for row in payloads],["primary","generator","queue"])
         self.assertEqual(payloads[0]["status"],"READY");self.assertEqual(payloads[0]["summary"]["verified"],4)
         self.assertEqual(payloads[1]["status"],"GENERATED_ZERO_CANDIDATES");self.assertEqual(payloads[1]["summary"]["generated"],0)
         self.assertEqual(payloads[2]["summary"]["submitted"],0)
+        self.assertEqual([row["ref"] for row in private_pool["records"]],[row["ref"] for row in payloads[0]["records"]])
+        self.assertEqual(auto_inbox["generator_run_id"],payloads[1]["run_id"])
+        self.assertEqual(auto_inbox["status"],payloads[1]["status"])
+        self.assertEqual(saturation["runs"][-1]["run_id"],payloads[1]["run_id"])
+        self.assertEqual(saturation["runs"][-1]["status"],payloads[1]["status"])
         self.assertEqual(result["authority"],{"paper":False,"method":False,"experiment":False,"p0":False,"gpu":False})
 
     def test_close_existing_transaction_replays_exact_private_pool_without_rerunning_scheduler(self) -> None:
@@ -103,11 +112,20 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
         self.assertEqual(rebound["generated_at"],payloads[0]["generated_at"])
         self.assertEqual((rebound.get("transaction_replay") or {}).get("mode"),"existing-closed-state-envelope")
 
-    def test_generator_error_aborts_without_changing_any_public_file(self) -> None:
+    def test_generator_error_aborts_without_changing_public_or_private_control_state(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);storage=self.storage(root);targets=self.targets(root);now=datetime(2026,8,13,12,0,tzinfo=timezone.utc)
             for key,path in targets.items(): path.write_text(f"OLD-{key}\n",encoding="utf-8")
-            before={key:path.read_bytes() for key,path in targets.items()}
+            discovery=storage.data_root/"paper-first-problem-discovery";discovery.mkdir(parents=True,exist_ok=True)
+            private_paths={
+                "private_pool":discovery/"primary-evidence-pool.json",
+                "auto_inbox":discovery/"auto-candidate-inbox.json",
+                "saturation_ledger":discovery/"discovery-saturation-ledger.json",
+            }
+            private_paths["private_pool"].write_text(json.dumps({"schema_version":"1.1","generated_at":"2026-08-12T00:00:00+00:00","status":"READY","records":[],"source_coverage":{"portable_review_receipts":[]}}),encoding="utf-8")
+            private_paths["auto_inbox"].write_text(json.dumps({"schema_version":"2.0","generator_run_id":"committed-old-run","status":"GENERATED_ZERO_CANDIDATES","candidates":[]}),encoding="utf-8")
+            private_paths["saturation_ledger"].write_text(json.dumps({"schema_version":"1.0","runs":[]}),encoding="utf-8")
+            before={key:path.read_bytes() for key,path in {**targets,**private_paths}.items()}
             def bad_generator(**kwargs): raise RuntimeError("provider-down")
             with self.assertRaisesRegex(RuntimeError,"generator-did-not-complete-discovery-transaction"):
                 write_problem_discovery_transaction(
@@ -115,7 +133,7 @@ class PaperFirstDiscoveryTransactionTest(unittest.TestCase):
                     primary_kwargs={"corpus_path":self.corpus(root,now),"requester":self.requester,"augment_fresh_corpus_with_arxiv":False,"max_papers":4,"lane_floor":0,"coverage_anchor_count":0,"now":now,"min_interval_seconds":0},
                     generator_kwargs={"generator_responder":bad_generator,"now":now},
                 )
-            after={key:path.read_bytes() for key,path in targets.items()}
+            after={key:path.read_bytes() for key,path in {**targets,**private_paths}.items()}
         self.assertEqual(after,before)
 
     def test_source_coverage_saturation_commits_zero_call_transaction_atomically(self) -> None:

@@ -1860,6 +1860,7 @@ def write_primary_evidence_pool(
     recent_fulltext_failure_cooldown_hours: float = DEFAULT_RECENT_FULLTEXT_FAILURE_COOLDOWN_HOURS,
     portable_generator_state_path: Path | None = DEFAULT_PORTABLE_REVIEW_STATE,
     portable_primary_state_path: Path | None = None,
+    private_pool_output_path: Path | None = None,
 ) -> dict[str, Any]:
     storage = storage or StorageSettings.from_env()
     state, private = build_primary_evidence_pool(
@@ -1885,7 +1886,7 @@ def write_primary_evidence_pool(
         portable_generator_state_path=portable_generator_state_path,
         portable_primary_state_path=portable_primary_state_path if portable_primary_state_path is not None else json_path,
     )
-    private_pool_path, _ = _private_paths(storage)
+    private_pool_path = Path(private_pool_output_path) if private_pool_output_path is not None else private_primary_pool_path(storage)
     private_pool_path.parent.mkdir(parents=True, exist_ok=True)
     private_pool_path.write_text(json.dumps(private, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     public_state = redact_private_paths(state, storage=storage)

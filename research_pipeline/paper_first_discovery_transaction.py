@@ -26,11 +26,13 @@ from .paper_first_problem_generator import (
     _load_saturation_ledger,
     _normalize_last_completed_lane_search_receipt,
     _pool_sha,
+    _saturation_ledger_path,
     write_problem_generator_state,
 )
 from .paper_first_problem_gate_queue import (
     DEFAULT_JSON as QUEUE_JSON,
     DEFAULT_JS as QUEUE_JS,
+    default_auto_inbox_path,
     write_problem_gate_queue,
 )
 
@@ -444,13 +446,17 @@ def write_problem_discovery_transaction(
         primary_json.parent.mkdir(parents=True,exist_ok=True)
         temp_root = Path(tempfile.mkdtemp(prefix=".paper-first-txn-", dir=str(primary_json.parent)))
         p_json=temp_root/"primary.json";p_js=temp_root/"primary.js";g_json=temp_root/"generator.json";g_js=temp_root/"generator.js";q_json=temp_root/"queue.json";q_js=temp_root/"queue.js"
+        staged_private=temp_root/"primary-private.json";staged_auto=temp_root/"auto-candidate-inbox.json";staged_ledger=temp_root/"discovery-saturation-ledger.json"
+        target_private=private_primary_pool_path(storage);target_auto=default_auto_inbox_path(storage);target_ledger=_saturation_ledger_path(storage)
+        if target_auto.exists(): shutil.copyfile(target_auto,staged_auto)
+        if target_ledger.exists(): shutil.copyfile(target_ledger,staged_ledger)
         record: dict[str, Any] = {"schema_version":"1.0","started_at":started,"status":"running","scientific_authority":False}
         try:
-            pkw=dict(primary_kwargs or {});pkw.update({"storage":storage,"json_path":p_json,"js_path":p_js,"portable_generator_state_path":generator_json,"portable_primary_state_path":primary_json})
+            pkw=dict(primary_kwargs or {});pkw.update({"storage":storage,"json_path":p_json,"js_path":p_js,"portable_generator_state_path":generator_json,"portable_primary_state_path":primary_json,"private_pool_output_path":staged_private})
             primary_internal=write_primary_evidence_pool(**pkw)
-            gkw=dict(generator_kwargs or {});gkw.update({"storage":storage,"json_path":g_json,"js_path":g_js,"previous_public_state_path":generator_json})
+            gkw=dict(generator_kwargs or {});gkw.update({"storage":storage,"json_path":g_json,"js_path":g_js,"previous_public_state_path":generator_json,"primary_pool_path":staged_private,"auto_inbox_path":staged_auto,"saturation_ledger_path":staged_ledger})
             generator_internal=write_problem_generator_state(**gkw)
-            qkw=dict(queue_kwargs or {});qkw.update({"storage":storage,"json_path":q_json,"js_path":q_js})
+            qkw=dict(queue_kwargs or {});qkw.update({"storage":storage,"json_path":q_json,"js_path":q_js,"primary_pool_path":staged_private,"auto_inbox_path":staged_auto})
             queue_internal=write_problem_gate_queue(**qkw)
             primary_public=_load(p_json);generator_public=_load(g_json);queue_public=_load(q_json)
             errors=_validate(primary_public,generator_public,queue_public)
@@ -460,7 +466,9 @@ def write_problem_discovery_transaction(
             primary_public=_stamp(p_json,p_js,"PAPER_FIRST_PRIMARY_EVIDENCE",txn_id,"primary")
             generator_public=_stamp(g_json,g_js,"PAPER_FIRST_PROBLEM_GENERATOR",txn_id,"generator")
             queue_public=_stamp(q_json,q_js,"PAPER_FIRST_PROBLEM_GATE_QUEUE",txn_id,"queue")
-            _commit_files([(p_json,primary_json),(p_js,primary_js),(g_json,generator_json),(g_js,generator_js),(q_json,queue_json),(q_js,queue_js)])
+            private_targets=[(staged_private,target_private),(staged_auto,target_auto)]
+            if staged_ledger.exists(): private_targets.append((staged_ledger,target_ledger))
+            _commit_files([(p_json,primary_json),(p_js,primary_js),(g_json,generator_json),(g_js,generator_js),(q_json,queue_json),(q_js,queue_js),*private_targets])
             record.update({
                 "status":"COMMITTED","completed_at":_now(),"transaction_id":txn_id,
                 "summary":{
