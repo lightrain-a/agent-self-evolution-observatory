@@ -231,6 +231,8 @@ function syncShellLanguage() {
   if (brandSpan) brandSpan.textContent = language === "zh" ? "科研观测站" : "Research Observatory";
   const searchInput = document.getElementById("site-search");
   if (searchInput) searchInput.placeholder = language === "zh" ? "搜索研究站内容…" : "Search the observatory…";
+  const resultCount = document.getElementById("result-count");
+  if (resultCount && pageId === "paper-ideas") resultCount.textContent = language === "zh" ? "当前研究方向账本" : "Current idea ledger";
   const languageToggle = document.querySelector(".language-toggle");
   if (languageToggle) languageToggle.textContent = language === "en" ? "中文" : "English";
   const skipLink = document.querySelector(".skip-link");
@@ -765,10 +767,10 @@ function renderProjectStatusStrip(){
   if(!Object.keys(h).length) return "";
   const selectedPaper=pageId==="selected-paper";
   const message=selectedPaper
-    ? (language==="zh"?"当前选中论文是 STRI：论文证据质量（Paper Quality v2）已通过，证据欠账为 0，论文已就绪；现在只剩作者责任确认与 OpenReview 提交交接。旧 Regression-Gated 方案已下沉为历史归档。":"The current selected paper is STRI: Paper Quality v2 passes with evidence debt=0 and paper-ready=1; only human author signoff and OpenReview handoff remain. The former Regression-Gated formulation is retained below as a historical archive.")
-    : (language==="zh"?`截至 2026-08-17：STRI 的论文证据质量（Paper Quality v2）已通过，证据欠账=${h.paper_quality_evidence_debt||0}，论文就绪=${h.paper_ready||0}；正式活跃 Idea=${h.canonical_live_ideas||0}。Fresh 现象组合中有 ${h.fresh_active_f0||0} 条 ACTIVE_F0、${h.fresh_support_holds||0} 条证据支持不足 HOLD；ACTIVE_F0 只做“成熟归约能否解释”的证伪实验，尚未进入正式问题门。Memory 正向残余现象已归档，Shadow 可资格化=${h.shadow_qualification_ready||0}。`:`As of 2026-08-17: STRI passes Paper Quality v2 with evidence debt=${h.paper_quality_evidence_debt||0} and paper-ready=${h.paper_ready||0}; canonical live ideas=${h.canonical_live_ideas||0}. The fresh-phenomenon portfolio has ${h.fresh_active_f0||0} ACTIVE_F0 and ${h.fresh_support_holds||0} support holds; ACTIVE_F0 is only a generic-reduction falsifier and has not entered Problem Gate. The memory positive residual is archived; shadow qualification=${h.shadow_qualification_ready||0}.`);
+    ? (language==="zh"?"当前选中论文是 STRI：论文证据质量 v2 已通过，证据欠账为 0，论文已就绪；现在只剩作者责任确认与 OpenReview 提交交接。旧 Regression-Gated 方案已下沉为历史归档。":"The current selected paper is STRI: Paper Quality v2 passes with evidence debt=0 and paper-ready=1; only human author signoff and OpenReview handoff remain. The former Regression-Gated formulation is retained below as a historical archive.")
+    : (language==="zh"?`截至 2026-08-17：STRI 的论文证据质量 v2 已通过，证据欠账=${h.paper_quality_evidence_debt||0}，论文就绪=${h.paper_ready||0}；正式活跃方向=${h.canonical_live_ideas||0}。新现象组合中有 ${h.fresh_active_f0||0} 条活跃 F0（ACTIVE_F0）、${h.fresh_support_holds||0} 条证据支持不足暂缓（HOLD）；活跃 F0 只做“成熟归约能否解释”的证伪实验，尚未进入正式问题门。记忆正向残余现象已归档，影子搜索可资格化=${h.shadow_qualification_ready||0}。`:`As of 2026-08-17: STRI passes Paper Quality v2 with evidence debt=${h.paper_quality_evidence_debt||0} and paper-ready=${h.paper_ready||0}; canonical live ideas=${h.canonical_live_ideas||0}. The fresh-phenomenon portfolio has ${h.fresh_active_f0||0} ACTIVE_F0 and ${h.fresh_support_holds||0} support holds; ACTIVE_F0 is only a generic-reduction falsifier and has not entered Problem Gate. The memory positive residual is archived; shadow qualification=${h.shadow_qualification_ready||0}.`);
   const statusLabels = language === "zh"
-    ? [["论文就绪",h.paper_ready||0],["证据欠账",h.paper_quality_evidence_debt||0],["正式活跃 Idea",h.canonical_live_ideas||0],["Fresh 活跃 F0",h.fresh_active_f0||0],["Fresh 暂缓",h.fresh_support_holds||0],["正式实验可启动",h.launchable_formal_experiments||0],["Shadow 死路",h.shadow_dead_ends||0],["Shadow 暂缓",h.shadow_holds||0]]
+    ? [["论文就绪",h.paper_ready||0],["证据欠账",h.paper_quality_evidence_debt||0],["正式活跃方向",h.canonical_live_ideas||0],["新现象活跃 F0",h.fresh_active_f0||0],["新现象暂缓",h.fresh_support_holds||0],["正式实验可启动",h.launchable_formal_experiments||0],["影子搜索死路",h.shadow_dead_ends||0],["影子搜索暂缓",h.shadow_holds||0]]
     : [["paper-ready",h.paper_ready||0],["evidence debt",h.paper_quality_evidence_debt||0],["canonical live",h.canonical_live_ideas||0],["fresh ACTIVE_F0",h.fresh_active_f0||0],["fresh HOLD",h.fresh_support_holds||0],["formal launchable",h.launchable_formal_experiments||0],["shadow dead-end",h.shadow_dead_ends||0],["shadow HOLD",h.shadow_holds||0]];
   return `<section class="project-status-strip current"><div><b>${selectedPaper?(language==="zh"?"当前选中论文 · STRI":"Current selected paper · STRI"):(language==="zh"?"当前科研状态 · 2026-08-17":"Current research state · 2026-08-17")}</b><span>${message}</span></div><dl>${statusLabels.map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl></section>`;
 }
@@ -1260,6 +1262,7 @@ const PAPER_IDEA_ZH_METHOD_ASSET = {
   "compiler-residual-contract-editor-v53":"编译器残余合同编辑器 v5.3",
   "correction-action-causal-compiler":"纠错动作因果编译器",
   "failure-localization-before-reflection":"反思前失败定位",
+  "local-counterexample-memory-repair":"局部反例记忆修复",
   "filtered-chronological-evaluator-state-v53":"过滤式时序评价器状态 v5.3",
   "heterogeneous-critic-disagreement":"异构 Critic 分歧",
   "memory-interaction-clause-learner":"记忆交互条款学习器",
@@ -1435,7 +1438,7 @@ function renderTerminalDecision(ideaId) {
   if (!terminal) return "";
   const absorbed = terminal.absorbed_children || [];
   const zhOverride = language === "zh" ? (PAPER_IDEA_ZH_TERMINAL[ideaId] || {}) : {};
-  const mergeTarget = terminal.merge_into ? `<span><b>${language === "zh" ? "并入" : "Merge into"}</b>${esc(terminal.merge_into)}</span>` : "";
+  const mergeTarget = terminal.merge_into ? `<span><b>${language === "zh" ? "并入" : "Merge into"}</b><span title="${esc(terminal.merge_into)}">${esc(language === "zh" ? localizedPaperIdeaMethodAsset(terminal.merge_into) : terminal.merge_into)}</span></span>` : "";
   const mechanism = zhOverride.mechanism || textOf(terminal.final_parent_mechanism || {});
   const gate = zhOverride.gate || textOf(terminal.pre_p0_gate || {});
   const baseline = zhOverride.baseline || textOf(terminal.strongest_baseline || {});

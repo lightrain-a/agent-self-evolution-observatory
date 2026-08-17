@@ -78,7 +78,7 @@
   if (sources["paper-ideas"]) {
     pages["paper-ideas"] = Object.assign({}, sources["paper-ideas"], {
       title:{en:"ICLR-first current research contracts and terminal decisions",zh:"ICLR 优先：当前研究合同与终态决策"},
-      lead:{en:"The canonical page starts from one current-status ledger: STRI is paper-ready after Paper Quality v2 closes with zero evidence debt; canonical live ideas remain zero; the memory positive residual is shadow-only; shadow holds/dead ends and the 27 legacy P0 lifecycle records are shown as separate authority layers. Older candidate banks remain provenance only.",zh:"本页先看统一的“当前状态账本”：STRI 的论文证据质量（Paper Quality v2）已经闭环、证据欠账清零并达到论文就绪；正式活跃 Idea 仍为 0；Memory 正向残余只保留在 Shadow 搜索层；Shadow 暂缓/死路与 27 个历史 P0 生命周期按权限层分开显示。更早候选池仅作溯源。"},
+      lead:{en:"The canonical page starts from one current-status ledger: STRI is paper-ready after Paper Quality v2 closes with zero evidence debt; canonical live ideas remain zero; the memory positive residual is shadow-only; shadow holds/dead ends and the 27 legacy P0 lifecycle records are shown as separate authority layers. Older candidate banks remain provenance only.",zh:"本页先看统一的“当前状态账本”：STRI 的论文证据质量 v2 已经闭环、证据欠账清零并达到论文就绪；正式活跃研究方向仍为 0；记忆正向残余只保留在影子搜索层；影子搜索暂缓/死路与 27 个历史 P0 生命周期按权限层分开显示。更早候选池仅作溯源。"},
       includeRanking:true
     });
   }

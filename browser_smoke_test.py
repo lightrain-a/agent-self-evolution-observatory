@@ -446,7 +446,7 @@ def main() -> None:
         require("代表论文" in zh_state["text"] and "方向关联" in zh_state["text"], "Chinese direction literature did not switch")
         shell_zh = execute(session_id, """return {brand:[document.querySelector('.brand strong')?.textContent||'',document.querySelector('.brand span')?.textContent||''],nav:[...document.querySelectorAll('.nav-level1 span:first-child,.nav-level2')].map(x=>x.textContent.trim()),placeholder:document.querySelector('#site-search')?.getAttribute('placeholder')||'',status:document.querySelector('.project-status-strip')?.textContent||''};""")
         require(shell_zh["brand"] == ["Agent 自进化","科研观测站"] and "开始阅读" in shell_zh["nav"] and "领域图谱" in shell_zh["nav"] and "研究规划" in shell_zh["nav"] and "文献" in shell_zh["nav"] and "Start Here" not in shell_zh["nav"] and shell_zh["placeholder"] == "搜索研究站内容…", f"shared shell did not fully switch to Chinese: {shell_zh}")
-        require(all(marker in shell_zh["status"] for marker in ("论文就绪","证据欠账","正式活跃 Idea","Fresh 暂缓","Shadow 死路")), f"shared current-status strip is not Chinese-first: {shell_zh['status']}")
+        require(all(marker in shell_zh["status"] for marker in ("论文就绪","证据欠账","正式活跃方向","新现象暂缓","影子搜索死路")), f"shared current-status strip is not Chinese-first: {shell_zh['status']}")
 
         navigate("/paper-ideas.html", 7)
         idea_portfolio = execute(
@@ -485,7 +485,7 @@ def main() -> None:
         require(idea_portfolio["legacyFinalPass"] == 20 and idea_portfolio["experimentStops"] >= 16, f"historical lineage state is unexpectedly missing: {idea_portfolio}")
         require("Historical ICLR Paper Workspace" not in idea_portfolio["text"] and "Selected ICLR Paper Workspace" not in idea_portfolio["text"], "historical paper workspace content leaked into Paper Ideas")
         require((("当前科研状态" in idea_portfolio["text"] and "正向残余现象的当前边界" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "Positive-residual boundary" in idea_portfolio["text"])) and "20 个当前 FINAL-PASS" not in idea_portfolio["text"], "Paper Ideas current-state labels are incomplete or stale FINAL-PASS framing leaked into the current view")
-        require(all(marker in idea_portfolio["text"] for marker in ("论文就绪","证据欠账","正式活跃 Idea","Fresh F0 设计就绪","Shadow 暂缓","问题稀疏度","新兴信号","碰撞余量")), "Paper Ideas Chinese-first status/ENS labels are incomplete")
+        require(all(marker in idea_portfolio["text"] for marker in ("论文就绪","证据欠账","正式活跃方向","新现象 F0 设计就绪","影子搜索暂缓","问题稀疏度","新兴信号","碰撞余量")), "Paper Ideas Chinese-first status/ENS labels are incomplete")
 
         navigate("/selected-paper.html", 4)
         selected = execute(session_id, """return {
