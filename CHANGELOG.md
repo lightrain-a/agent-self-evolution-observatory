@@ -6,6 +6,7 @@
 - Made the Chinese current-state views Chinese-first across Paper Ideas, Experiments, and Selected Paper: paper-ready/evidence-debt/canonical/shadow labels, STRI evidence blocks, claim/exclusion text, handoff text, historical ledger headings, ENS components, and common paper-first terminology now use Chinese descriptions while exact machine IDs and typed terminal enums remain unchanged.
 - Localized bibliography/evaluation display taxonomies without changing internal filter keys: update surfaces, publication types, feedback signals, live-literature categories, maps, filter controls, and resource-index summaries now render Chinese labels while preserving stable URLs/data values.
 - Added real-browser Chinese assertions for the shared shell plus Paper Ideas, Experiments, Selected Paper, Bibliography, and Evaluation. Final full-site browser/mobile and focused system/idea suites both pass; remaining pure-English leaf text is intentionally dominated by paper/model/benchmark names and exact machine status identifiers.
+- Deepened the Paper Ideas Chinese layer after a DOM-level audit: matched-budget/resource constraints, historical pilot explanations, final routing, revived terminal contracts, Paper-first/Shadow summaries, closest-work labels, SP-15 support inventory, ENS, and absorbed internal method assets now render Chinese-first. Exact PA/PF/SP IDs, typed `STOP_*` codes, model names, and official paper titles remain available for auditability.
 
 ## 2026-08-17 · Readable research-system flow
 

@@ -25,7 +25,7 @@
     const panel = document.createElement("section");
     panel.id = "emerging-niche-score";
     panel.className = "panel emerging-niche-panel";
-    panel.innerHTML = `<div class="idea-panel-heading"><div><div class="eyebrow">${labels.kicker}</div><h2 data-toc="false">${labels.title}</h2><p class="section-intro">${labels.intro}</p></div><strong>ENS</strong></div><div class="reviewer-gate-grid">${components}</div><div class="idea-board-warning"><b>${labels.hard}:</b> ${labels.rule}</div><div class="idea-board-warning"><b>${labels.hard}:</b> ${labels.override}</div><div class="idea-board-filters"><b>${labels.bands}</b>${bands}</div>`;
+    panel.innerHTML = `<div class="idea-panel-heading"><div><div class="eyebrow">${labels.kicker}</div><h2 data-toc="false">${labels.title}</h2><p class="section-intro">${labels.intro}</p></div><strong>${zh ? "新兴小众评分 ENS" : "ENS"}</strong></div><div class="reviewer-gate-grid">${components}</div><div class="idea-board-warning"><b>${labels.hard}:</b> ${labels.rule}</div><div class="idea-board-warning"><b>${labels.hard}:</b> ${labels.override}</div><div class="idea-board-filters"><b>${labels.bands}</b>${bands}</div>`;
     const architecture = root.querySelector(".page-architecture");
     if (architecture) architecture.insertAdjacentElement("afterend", panel);
     else root.prepend(panel);

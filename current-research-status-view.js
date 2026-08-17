@@ -10,7 +10,27 @@
     if (s.includes("STOP") || s.includes("TERMINATED") || s.includes("BLOCK") || s.includes("DEAD_END") || s.includes("LOCKED")) return "fail";
     return "planned";
   };
-  const badge = (value, label = value) => `<span class="experiment-status-badge status-${tone(value)}">${esc(raw(label))}</span>`;
+  const statusZh = (value) => {
+    const s = raw(value), u = s.toUpperCase();
+    if (u === "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW") return "论文就绪，待作者签字与 OpenReview 提交";
+    if (u === "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED") return "提案器资格验证未通过";
+    if (u === "SURVIVES_AS_ARCHIVED_PARENT_EVIDENCE") return "保留为归档父现象证据";
+    if (u === "ZERO_LIVE_IDEAS") return "当前无正式活跃 Idea";
+    if (u === "STOP_REDUCTION") return "成熟归约停止";
+    if (u === "HOLD_EXECUTION") return "执行条件暂缓";
+    if (u === "HOLD_SUPPORT") return "证据支持不足，暂缓";
+    if (u.includes("HOLD")) return "暂缓";
+    if (u.includes("STOP") || u.includes("BLOCK") || u.includes("DEAD_END")) return "停止";
+    if (u.includes("PASS") || u.includes("SUPPORTED") || u.includes("READY")) return "通过／就绪";
+    if (u.includes("PENDING")) return "待处理";
+    if (u.includes("LOCKED")) return "已锁定";
+    return "";
+  };
+  const badge = (value, label = value) => {
+    const rendered = raw(label);
+    const zh = language === "zh" && rendered === raw(value) ? statusZh(value) : "";
+    return `<span class="experiment-status-badge status-${tone(value)}">${esc(zh ? `${zh}（${rendered}）` : rendered)}</span>`;
+  };
   const downloads = (paper) => {
     const d = paper.downloads || {};
     if (!(d.pdf && d.tex && d.source_zip)) return "";

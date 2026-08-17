@@ -1127,9 +1127,192 @@ function experimentStateCopy(status) {
     ? {title:"怎么验证这个 Idea（待讨论）",note:"下面只回答实验上最重要的几个问题，方便先判断这个方向值不值得继续。"}
     : {title:"How to test this idea (for review)",note:"The section answers only the experiment questions needed to decide whether this direction is worth pursuing."};
 }
+const PAPER_IDEA_ZH_RESOURCE = {
+  "same candidate update pool":"相同候选更新池",
+  "same frozen probe suite":"相同冻结探针套件",
+  "same number of probe-task executions for estimation":"用于估计的探针任务执行次数相同",
+  "same held-out evaluation tasks":"相同留出评测任务",
+  "same model capacity and architecture":"模型容量与架构相同",
+  "same total agent calls":"Agent 总调用次数相同",
+  "same historical execution outcomes and training windows":"相同历史执行结果与训练窗口",
+  "same probe pool and probe-lineage/update-diff features":"相同探针池，以及相同探针谱系/更新差分特征",
+  "same total probe budget k per version":"每个版本使用相同的总探针预算 k",
+  "same execution-cost budget per version":"每个版本使用相同执行成本预算",
+  "same selector architecture, capacity, and parameter count":"选择器架构、容量与参数量相同",
+  "same optimizer, minibatches, and training steps":"优化器、小批量与训练步数相同",
+  "same atomic-update pool and held-out compositions":"相同原子更新池与留出组合",
+  "same execution labels":"相同执行标签",
+  "same calls/tokens per composition":"每个组合的调用数与 Token 预算相同",
+  "matched predictor capacity":"预测器容量匹配",
+  "same repair/search budget":"修复/搜索预算相同",
+  "identical version-history sequences and update dependency/timestamp annotations":"版本历史序列、更新依赖与时间戳标注完全相同",
+  "identical counterfactual replay probe set and replay outcomes":"反事实回放探针集与回放结果完全相同",
+  "identical rollback metadata format and rollback-target probes":"回滚元数据格式与回滚目标探针完全相同",
+  "identical verifier access and number of verifier queries":"验证器访问权限与查询次数完全相同",
+  "identical fixed canonical-state compression budget (token count)":"固定规范状态的压缩预算（Token 数）完全相同",
+  "identical base model, capacity, decoding settings, llm calls, and token budget":"基础模型、容量、解码设置、LLM 调用和 Token 预算完全相同",
+  "identical memory capacity k":"记忆容量 K 完全相同",
+  "identical retrieval top-m and retrieval interface":"检索 top-M 与检索接口完全相同",
+  "identical observation streams and candidate memory entries":"观测流与候选记忆条目完全相同",
+  "identical probe/query sets and gold labels":"探针/查询集合与金标标签完全相同",
+  "identical downstream task calls and tokens per query":"下游任务调用数与每次查询 Token 数完全相同",
+  "identical frozen agent model and decoding configuration per condition":"每个条件下的冻结 Agent 模型与解码配置完全相同",
+  "same top-m memories":"相同 top-M 记忆",
+  "same nested interventions and labels":"相同嵌套干预与标签",
+  "same repair actions":"相同修复动作集合",
+  "same calls/tokens/intervention budget":"调用数、Token 与干预预算相同",
+  "same frozen future-reuse evaluation":"相同的冻结未来复用评测",
+  "same frozen predicate vocabulary for all arms":"所有实验臂使用相同冻结谓词词表",
+  "same training counterexample sets":"训练反例集合相同",
+  "same positive-state sets":"正例状态集合相同",
+  "same constraint-deletion traces":"约束删除轨迹相同",
+  "same rule-complexity budget (number of rules, clauses, or tree nodes)":"规则复杂度预算相同（规则、子句或树节点数量）",
+  "same model calls and token budget":"模型调用数与 Token 预算相同",
+  "same frozen response pool":"相同冻结响应池",
+  "same independent anchors/labels":"相同独立锚点/标签",
+  "same evaluator calls/tokens":"评价器调用数与 Token 预算相同",
+  "same rubric atoms/interventions":"相同 Rubric 原子与干预",
+  "matched gate capacity and training steps":"门控容量与训练步数匹配",
+  "actor frozen during evaluator repair":"评价器修复期间 Actor 保持冻结",
+  "same workflow pool and traces":"工作流池与轨迹相同",
+  "same candidate edit space":"候选编辑空间相同",
+  "same programmatic verifier":"相同程序化验证器",
+  "same real-intervention budget":"真实干预预算相同",
+  "same llm/tool calls and tokens":"LLM/工具调用数与 Token 预算相同",
+  "same api/motif holdout and second-model transfer":"相同 API/模体留出与第二模型迁移设置",
+  "identical predefined memory types and provenance/function definitions":"预定义记忆类型及来源/功能定义完全相同",
+  "identical training and held-out co-retrieved complete typed sets":"训练与留出的共同检索完整类型集合完全相同",
+  "identical randomized/enumerated permutation-outcome data and evaluation-feedback counts":"随机化/枚举的排列结果数据与评测反馈计数完全相同",
+  "matched parameter/clause capacity and regularization/mdl budget":"参数/子句容量以及正则化/MDL 预算匹配",
+  "identical number of training permutations and optimizer steps/minibatches where applicable":"训练排列数量以及适用时的优化步数/小批量完全相同",
+  "identical exact solver with identical candidate budget for solver cells":"求解器单元使用完全相同的精确求解器与候选预算",
+  "identical source/target documentation and schemas":"源/目标文档与模式完全相同",
+  "identical n actively selected target probes (same probe selection policy inputs)":"主动选择的 N 个目标探针完全相同（探针选择策略输入相同）",
+  "identical p/e/x representational capacity and operator-graph compilation pipeline":"P/E/X 表征容量与算子图编译流水线完全相同",
+  "identical tokens and model calls for any llm components":"所有 LLM 组件的 Token 与模型调用完全相同",
+  "identical model capacity, optimizer, minibatches, and training steps for the learned arm's fitting budget accounted against the baseline's instantiation budget":"学习臂的模型容量、优化器、小批量与训练步数完全匹配，并将拟合预算计入基线实例化预算",
+  "identical frozen-after-n-probes protocol with no test-time relearning":"N 次探针后冻结的协议完全相同，测试时均不再学习",
+  "identical structured diffs over prompt, memory, skills, workflows, and dependencies":"Prompt、记忆、技能、工作流与依赖的结构化差分完全相同",
+  "identical canary library and scoring":"金丝雀测试库与评分方式完全相同",
+  "identical intervention-derived labels and environment logs":"干预得到的标签与环境日志完全相同",
+  "identical llm calls, tokens, and wall-clock":"LLM 调用、Token 与墙钟预算完全相同",
+  "identical reauthorization budget":"重授权预算完全相同",
+  "identical independent safety harness":"独立安全测试框架完全相同"
+};
+const PAPER_IDEA_ZH_TECH = {
+  "Frozen heterogeneous open-weight critic plus environment/tool ground truth whenever available.":"冻结的异构开放权重 Critic，并在可用时结合环境/工具独立真值。"
+};
+const PAPER_IDEA_ZH_TERMINAL = {
+  "self-label-confidence-flow":{
+    mechanism:"维护冻结的标签谱系图与有效证据权重；每个伪标签在后续轮次中获得持久的接纳、隔离或降权动作。",
+    gate:"要求同祖先错误富集显著超过置信度匹配的独立来源，并且相对最强直接基线在留出决策上至少有 20% 分歧。",
+    baseline:"相同特征、容量匹配的直接历史分类器，并比较置信度、EMA 教师和简单来源折扣规则。",
+    minimum:"冻结 4–6 轮、至少 200 个带谱系的标签决策；留出祖先与后续轮次，在接纳数量匹配下比较错误接纳、干净标签保持和下一轮效用。",
+    stop:"若没有谱系错误富集，或同信息直接分类/简单来源折扣基线等效，则停止或并入普通伪标签过滤。"
+  },
+  "self-correction-collapse-detector":{
+    mechanism:"根据失败签名、上一纠错模式与验证器增量，冻结一个在重新规划、检索、改写、回滚和停止之间选择的模式转移策略；测试时不再训练。",
+    gate:"要求至少 3 种纠错模式、存在非平凡顺序效应，并且相对最强浅层规则在留出决策上至少有 20% 分歧；否则并入 A-2/A-3。",
+    baseline:"相同状态信息下的深度 3 CART/有限状态规则、固定顺序、重复上限、熵启发式与 A-2 风格停止规则，调用量完全匹配。",
+    minimum:"使用至少 30 个失败案例、每例最多 3 轮纠错；冻结候选轨迹，按失败族留出，在调用数匹配下评估恢复和回退。",
+    stop:"若重复上限、浅层 CART 或 A-2 风格规则在相同状态信息与调用预算下追平，则停止或合并。"
+  },
+  "intervention-validated-self-correction":{
+    mechanism:"共享纠错生成器；计算删除/插入的必要性—充分性签名，并在打开隐藏未来任务之前冻结提交/拒绝门。",
+    gate:"要求相对 A-3/简单阈值至少有 20% 的提交决策分歧，并且现有轨迹上还能看到额外的未来收益/伤害信号。",
+    baseline:"A-3 回归面板、当前收益、仅成功准入，以及使用相同必要性/充分性特征、相同调用量和相同接纳数量的简单阈值。",
+    minimum:"冻结至少 24 个候选、8 个探针和 24 个隐藏任务；拉平干预预算，在接纳数量匹配下比较有害提交与保留收益。",
+    stop:"若 A-3 或相同特征简单阈值等效，则并入 A-3；若干预签名不能预测未来提交效用，则停止。"
+  },
+  "failure-frontier-curriculum":{
+    mechanism:"冻结类型化任务变异库与选择器；每个版本根据当前失败签名选择变异算子来生成后续训练任务，不进行目标奖励搜索。",
+    gate:"要求至少 3 类变异算子的效用排序会随版本改变，并且相对直接收益/失败频率基线在留出版本上存在非零 regret 差异。",
+    baseline:"均匀 fuzzing、失败频率、uncertainty sampling、D-1 的 verifier-filtered generation，以及使用相同特征的直接变异收益预测器。",
+    minimum:"使用至少 3 个连续 Agent 版本和 30 个类型化变异算子，固定训练 Token；留出最终版本/任务族，测边界覆盖与下一版本效用。",
+    stop:"若没有跨版本排序变化，或最强直接/简单选择器等效，则并入普通课程或停止。"
+  },
+  "world-model-error-gated-learning":{
+    mechanism:"使用独立真实转移；只有会改变决策的残差才允许更新世界模型残差适配器，策略始终冻结。",
+    gate:"在精确动力学 MDP/Gridworld 中，decision-changing 标签不得退化为误差幅度或 value-aware 打分，并且相对最强基线至少有 20% 候选决策分歧。",
+    baseline:"全量学习、残差幅度 top-k、等数量随机、value-aware/CVAML 风格加权，以及同数据的直接动作分歧选择。",
+    minimum:"冻结一个小型世界模型与策略，收集至少 100 个转移误差并留出状态区域；只更新残差适配器，使用的转移不超过 learn-all 的 50%。",
+    stop:"若 value-aware/CVAML 或直接动作分歧等效，或真正会改变决策的案例过少，则停止。"
+  },
+  "irreversible-action-counterfactuals":{
+    mechanism:"对失败反事实做前驱删除/替换，归纳“状态谓词 → 禁止动作/必需检查点”条款，并由外部执行器强制执行。",
+    gate:"有限状态穷举真值必须出现风险相近、但最小前驱约束不同的案例，并在留出拓扑上与 direct shield 产生决策差异。",
+    baseline:"同标签、容量匹配的直接风险分类器/Shield、人工不可逆动作掩码，以及相同 simulator 调用和运行检查预算下的最近失败轨迹记忆。",
+    minimum:"使用至少 40 个不可逆失败和 20 个匹配安全案例，按拓扑留出；冻结条款后关闭 simulator，测危险进入、误阻塞、成功率与成本。",
+    stop:"若相同容量 direct shield 在留出安全—误阻塞前沿上追平，或条款需要更强运行时 Oracle，则停止或并入通用 Shield。"
+  },
+  "recovery-conditioned-experience":{
+    mechanism:"从同一起点的正常/扰动成功轨迹对中提取最早恢复状态—动作残差；只有在至少两个上下文中复现后，才写入恢复算子及其适用谓词。",
+    gate:"先满足至少 100 对同起点成功轨迹、直接状态残差与 success-only writer 审计；至少 20% 的轨迹对应支持可跨身份/上下文复用的恢复残差算子。",
+    baseline:"完整恢复 episode 记忆、最近轨迹检索、同轨迹对直接条件恢复策略，以及在记忆/Token/调用匹配下的 success-only writer。",
+    minimum:"现象门通过后冻结 10–20 个算子，在留出扰动类型/场景上关闭 simulator，评估恢复、额外步数、干净任务干扰与记忆成本。",
+    stop:"若恢复残差不能稳定复现，或同数据 direct recovery/完整轨迹记忆在匹配预算下等效，则停止。"
+  }
+};
+const PAPER_IDEA_ZH_METHOD_ASSET = {
+  "api-error-semantic-adapter":"API 错误语义适配器",
+  "applicability-bounded-lessons":"适用性有界经验",
+  "certified-out-of-span-interaction-inverter-v53":"认证跨度外交互逆转器 v5.3",
+  "compiler-residual-contract-editor-v53":"编译器残余合同编辑器 v5.3",
+  "correction-action-causal-compiler":"纠错动作因果编译器",
+  "failure-localization-before-reflection":"反思前失败定位",
+  "filtered-chronological-evaluator-state-v53":"过滤式时序评价器状态 v5.3",
+  "heterogeneous-critic-disagreement":"异构 Critic 分歧",
+  "memory-interaction-clause-learner":"记忆交互条款学习器",
+  "monotone-applicability-specializer-v4":"单调适用性专化器 v4",
+  "nested-pathway-memory-repair":"嵌套路径记忆修复",
+  "probe-mutation-retirement-policy":"探针变异退役策略",
+  "restoration-clause-induction-v5":"恢复条款归纳 v5",
+  "rubric-intervention-sparse-solver":"Rubric 干预稀疏求解器",
+  "update-composition-repair-compiler":"更新组合修复编译器",
+  "update-history-semantic-compactor":"更新历史语义压缩器",
+  "workflow-repair-grammar-v5":"工作流修复语法 v5",
+  "update-trust-region":"更新信任域",
+  "compositional-update-compatibility":"组合更新兼容性",
+  "contradiction-preserving-consolidation":"矛盾保持式巩固"
+};
+const PAPER_IDEA_ZH_REFINEMENT = {
+  "advance-to-pre-p0-offline-gate":"推进至 GPU 前离线门",
+  "hold-after-fresh-collision":"最新碰撞审查后暂缓",
+  "phenomenon-gate-before-standalone":"独立推进前先通过现象门",
+  "merge-unless-disagreement-found":"若找不到稳定分歧则合并",
+  "merge-into-A3":"并入 A-3",
+  "hold-reality-check":"等待现实性检查",
+  "advance-to-pre-p0-reality-gate":"推进至 GPU 前现实性门",
+  "advance-to-pre-p0-objective-gate":"推进至 GPU 前目标门",
+  "merge-into-E1":"并入 E-1",
+  "hold-scenario-check":"等待场景核验",
+  "hold-reality-and-collision-check":"等待现实性与碰撞核验",
+  "phenomenon-gate-before-learning":"学习前先通过现象门"
+};
+function localizedPaperIdeaTechnical(value) {
+  const raw = String(value || "");
+  if (language !== "zh" || !raw) return raw;
+  return PAPER_IDEA_ZH_TECH[raw] || raw;
+}
+function localizedMatchedResource(value) {
+  const raw = String(value || "");
+  if (language !== "zh" || !raw) return raw;
+  return PAPER_IDEA_ZH_RESOURCE[raw.toLowerCase()] || raw;
+}
+function localizedPaperIdeaMethodAsset(value) {
+  const raw = String(value || "");
+  if (language !== "zh" || !raw) return raw;
+  return PAPER_IDEA_ZH_METHOD_ASSET[raw] || raw;
+}
+function localizedRefinementRecommendation(value) {
+  const raw = String(value || "");
+  if (language !== "zh" || !raw) return raw;
+  const zh = PAPER_IDEA_ZH_REFINEMENT[raw];
+  return zh ? `${zh}（${raw}）` : raw;
+}
 function renderMatchedResourceList(items) {
   if (!Array.isArray(items) || !items.length) return "";
-  const visible = items.slice(0,6).map((item) => `<li>${esc(item)}</li>`).join("");
+  const visible = items.slice(0,6).map((item) => `<li>${esc(localizedMatchedResource(item))}</li>`).join("");
   const remainder = items.length > 6 ? `<li class="human-resource-more">+${items.length - 6} ${language === "zh" ? "项匹配约束" : "more matched constraints"}</li>` : "";
   return `<ul class="human-resource-list">${visible}${remainder}</ul>`;
 }
@@ -1140,7 +1323,19 @@ function humanPilotSummary(idea, fallback = "") {
     "budgeted-evolution-controller":"让同一批任务分别使用“固定更新轮数”和“学会自己决定继续 / 回滚 / 停止”的控制器。在最终成功率接近的前提下比较调用数和回退；如果控制器省不下明显调用，或者省调用会伤害任务表现，就停止。",
     "outcome-equivalent-trajectory-contrast":"固定同一成功终点的不同有效过程，用同一个抽取器提候选 lesson。不是做文字共识，而是对每条 lesson 做 memory OFF/ON 干预，并 leave-one-process-family-out 验证；只有平均效用为正、最差过程也不有害的经验才写入。和 consensus、单轨迹、utility-only 在同 replay 预算下比较。",
     "workflow-generalization-certificate":"把旧 certificate 彻底换成 paired edit-effect editor：在 source workflows 上记录同一个局部 edit 前后的真实执行增量，学习一个冻结编辑策略；到未见 API/任务图时禁止试跑候选，只允许直接选择并提交一个 edit，再和 Agentic Predictor、最近邻 edit reuse、failure heuristic 比较。",
-    "world-model-error-gated-learning":"固定能进入更新的 transition 数量。对每条真实 transition，把 world-model 预测单独替换成真值，检查冻结 policy 的动作 / 风险 / 恢复决策是否会翻转；只优先学习真正会改变决策的 transition，再和 uniform、最大误差、uncertainty、AAWM-style 选样比较。"
+    "world-model-error-gated-learning":"固定能进入更新的 transition 数量。对每条真实 transition，把 world-model 预测单独替换成真值，检查冻结 policy 的动作 / 风险 / 恢复决策是否会翻转；只优先学习真正会改变决策的 transition，再和 uniform、最大误差、uncertainty、AAWM-style 选样比较。",
+    "memory-half-life":"在分段平稳的 ALFWorld 或 AndroidWorld 任务流中，在记忆容量、检索调用、复验调用和任务顺序完全一致的条件下，对比效用复验策略、SF-AMS、净价值筛选、固定衰减和 FIFO。重点不是时间久不久，而是复用机会出现时记忆的真实效用是否已经漂移。",
+    "self-label-confidence-flow":"在同一偏好数据集上运行 4 轮自标注，并使用两个开放模型族；固定生成样本与 Judge 调用，只更新同一个小于 50M 参数的 Reward Head。比较无权重标签、当前轮置信度、CREAM 一致性和谱系置信度，评估留出人工标签错误 AUROC、校准误差、外部偏好准确率和逐轮退化。",
+    "self-correction-collapse-detector":"在 GSM8K 与 HumanEval 上，使用完全相同的基础答案和纠错轨迹，比较三分量模式转移策略、纠错率、破坏率、置信度变化和任务难度，预测“再做一轮纠错是否真正有帮助”；重点检验浅层规则是否已经足够。",
+    "intervention-validated-self-correction":"收集匹配的 GSM8K 与 ALFWorld 失败案例，在相同候选干预与 rollout 预算下比较自由文本 critique、CRITIC、InT、REFLECT replay 与本文的必要性/充分性干预门；将接纳的纠错写入相同记忆或小于 50M 参数适配器，并在留出任务模板上测试迁移。",
+    "irreversible-action-counterfactuals":"在一个具有精确不可逆转移标记的沙箱中，给所有方法相同的 simulator discovery 预算来建立风险记忆；随后冻结记忆并在测试时关闭 simulator，比较条款库、在线世界模型规划、已执行危险事件记忆、语言反思和无记忆基线在未见任务上的安全进入、误阻塞、成功率与调用成本。",
+    "recovery-conditioned-experience":"在最终都成功的 LIBERO 扰动 episode 中，用独立计算的持续重汇合与残余状态探针划分轨迹；在固定记忆容量下写入相同数量的经验，并在第二个 VLA 上比较未来复用伤害、恢复成功与额外步数，对照 endpoint-only Dejavu、PEAM-style 准入和直接恢复策略。",
+    "contradiction-preserving-consolidation":"在具有程序化成功谓词的 ALFWorld 中，固定 Actor 与更新内容，只改变针对有状态违规的合并规则；与安全 Shield、知识编辑一致性约束和回归门控做预算匹配对照，并在隐藏谓词组合、第二个 LLM 脚手架和回滚有效性上评测。",
+    "counterexample-generating-curriculum":"先生成一个所有实验臂共享的候选任务池。比较包装器、结果验证器、D-2 的现有失败前沿，以及学习型边界不确定性 + 反事实干预选择器；固定候选池、执行预算和 Agent，评测边界覆盖、错误接纳、训练效率、后续任务收益，以及学习型方法相对简单未见性指标的额外价值。"
+  };
+  const fallbackZh = {
+    "In ALFWorld with programmatic success predicates, keep the actor and update fixed; change only the consolidation rule for stateful violations. Compare with safety shields, knowledge-editing consistency constraints, and regression gating under matched budgets. Evaluate hidden predicate compositions, a second LLM scaffold, and rollback validity.":"在具有程序化成功谓词的 ALFWorld 中，固定 Actor 与更新内容，只改变针对有状态违规的合并规则；与安全 Shield、知识编辑一致性约束和回归门控做预算匹配对照，并在隐藏谓词组合、第二个 LLM 脚手架和回滚有效性上评测。",
+    "Generate one common candidate-task pool, score every task by adjacent-checkpoint discrimination, current success probability, failure provenance, and validation-gradient alignment; compare wrappers, outcome verifiers, D-2's existing failure frontier, and a learned boundary-uncertainty + counterfactual-intervention selector. Freeze pool, execution budget, and agent; evaluate boundary coverage, false admission, training efficiency, future-task gain, and learned-vs-simple novelty delta.":"先生成一个所有实验臂共享的候选任务池。按相邻检查点区分度、当前成功概率、失败来源和验证梯度一致性为任务打分；比较包装器、结果验证器、D-2 的现有失败前沿，以及学习型边界不确定性 + 反事实干预选择器。冻结候选池、执行预算和 Agent，评估边界覆盖、错误接纳、训练效率、后续任务收益，以及学习型方法相对简单未见性指标的额外价值。"
   };
   const en = {
     "update-trust-region":"Take a batch of candidate updates, measure how behavior changes on fixed probes, then use hidden original tasks to see which updates actually cause regressions. Compare admission by current gain, edit size, and behavioral shift. Continue only if behavioral shift blocks harmful updates more accurately without rejecting too many useful ones.",
@@ -1149,7 +1344,10 @@ function humanPilotSummary(idea, fallback = "") {
     "workflow-generalization-certificate":"Replace the old certificate with a paired edit-effect editor: learn from true before/after execution deltas of typed local edits on source workflows, freeze the editor, and on unseen APIs/task graphs forbid candidate trials and allow exactly one direct edit commit. Compare with Agentic Predictor, nearest-neighbor edit reuse, and failure heuristics.",
     "world-model-error-gated-learning":"Fix the number of transitions allowed into updates. For each true transition, replace only the world-model prediction with truth and test whether the frozen policy changes its action, risk, or recovery decision. Prioritize decision-switch transitions and compare with uniform, largest-error, uncertainty, and AAWM-style selection."
   };
-  return (language === "zh" ? zh[id] : en[id]) || fallback;
+  const fuzzyFallbackZh = fallbackZh[fallback]
+    || (String(fallback).startsWith("Generate one common candidate-task pool") ? "先生成一个所有实验臂共享的候选任务池。按相邻检查点区分度、当前成功概率、失败来源和验证梯度一致性为任务打分；比较包装器、结果验证器、D-2 的现有失败前沿，以及学习型边界不确定性 + 反事实干预选择器。冻结候选池、执行预算和 Agent，评估边界覆盖、错误接纳、训练效率、后续任务收益，以及学习型方法相对简单未见性指标的额外价值。" : "")
+    || (String(fallback).startsWith("In ALFWorld with programmatic success predicates") ? "在具有程序化成功谓词的 ALFWorld 中，固定 Actor 与更新内容，只改变针对有状态违规的合并规则；与安全 Shield、知识编辑一致性约束和回归门控做预算匹配对照，并在隐藏谓词组合、第二个 LLM 脚手架和回滚有效性上评测。" : "");
+  return language === "zh" ? (zh[id] || fuzzyFallbackZh || fallback) : (en[id] || fallback);
 }
 function humanMetricSummary(idea, fallback = "") {
   const id = idea.id || idea.idea_id || "";
@@ -1158,7 +1356,15 @@ function humanMetricSummary(idea, fallback = "") {
     "budgeted-evolution-controller":"重点看同等任务成功率下节省了多少调用、是否减少无效更新轮次，以及跨任务后还能不能保持这种节省。",
     "outcome-equivalent-trajectory-contrast":"重点看同 replay 预算下 future-task success、负迁移率和 worst-process effect；utility-only 若等效就停止 process-invariance 主张。",
     "workflow-generalization-certificate":"重点看 hidden workflow 零搜索直接 edit 后的真实成功增量、坏 edit 率和执行数；absolute predictor 若等效就停止。",
-    "world-model-error-gated-learning":"重点看相同 transition-update 数下的任务成功、action regret、风险 / 恢复错误，以及 decision-switch 选样是否比误差大小更省更新。"
+    "world-model-error-gated-learning":"重点看相同 transition-update 数下的任务成功、action regret、风险 / 恢复错误，以及 decision-switch 选样是否比误差大小更省更新。",
+    "memory-half-life":"重点看相同审计比例下未来复用的有害保留、正向记忆误隔离、保留收益与审计成本；若简单 recency/frequency 规则更好，就停止学习型 hazard。",
+    "self-label-confidence-flow":"重点看后续轮错误接纳率、干净标签保持、下一轮效用，以及谱系信息相对相同特征直接分类器是否提供稳定增益。",
+    "self-correction-collapse-detector":"重点看留出失败族上的恢复率、回退率、调用数和模式选择分歧；若 depth-3 CART/有限状态规则等效，就停止学习型控制器。",
+    "intervention-validated-self-correction":"重点看相同接纳数量下的有害持久提交、保留收益和未来任务效用；若 A-3 或相同特征简单阈值等效，就并回 A-3。",
+    "irreversible-action-counterfactuals":"重点看 simulator 关闭后的不可逆失败率、误阻塞、任务成功与运行成本；同容量 direct shield 若等效就停止条款机制。",
+    "recovery-conditioned-experience":"重点看留出扰动类型/场景上的恢复成功、额外步数、干净任务干扰与记忆成本；若直接恢复策略或完整轨迹记忆等效就停止。",
+    "contradiction-preserving-consolidation":"重点看隐藏谓词组合上的成功保持、违规率、回滚有效性，以及第二个 LLM 脚手架上的迁移；若简单安全 Shield 或一致性约束等效，就停止独立方法主张。",
+    "counterexample-generating-curriculum":"重点看边界覆盖、错误接纳率、相同执行预算下的训练效率与后续任务收益；若简单未见性/失败频率选择器等效，就停止学习型课程选择器。"
   };
   const en = {
     "update-trust-region":"Focus on harmful-update detection, worst hidden-task regression, and how many useful updates are falsely rejected.",
@@ -1194,7 +1400,7 @@ function renderIdeaExperimentSection(idea, meta = {}, sourceIdeas = []) {
   const experimentTone = meta.status === "new-review" ? "review" : humanReviewStatusTone(meta.status);
   const actor = protocol.actor || "";
   const crossModel = protocol.cross_model || "";
-  const verifier = protocol.critic_or_verifier || "";
+  const verifier = localizedPaperIdeaTechnical(protocol.critic_or_verifier || "");
   const apiRole = textOf(protocol.commercial_api_role || {});
   const parameterUpdates = textOf(protocol.parameter_updates || {});
   const discovery = textOf(data.discovery || {});
@@ -1228,13 +1434,15 @@ function renderTerminalDecision(ideaId) {
   const terminal = terminalParentState(ideaId);
   if (!terminal) return "";
   const absorbed = terminal.absorbed_children || [];
+  const zhOverride = language === "zh" ? (PAPER_IDEA_ZH_TERMINAL[ideaId] || {}) : {};
   const mergeTarget = terminal.merge_into ? `<span><b>${language === "zh" ? "并入" : "Merge into"}</b>${esc(terminal.merge_into)}</span>` : "";
-  const gate = textOf(terminal.pre_p0_gate || {});
-  const baseline = textOf(terminal.strongest_baseline || {});
-  const minimum = textOf(terminal.minimum_p0 || {});
-  const stop = textOf(terminal.exact_stop || {});
-  const children = absorbed.length ? `<div class="terminal-child-list"><b>${language === "zh" ? "已吸收 child" : "Absorbed children"}</b>${absorbed.map((id) => `<span>${esc(id)}</span>`).join("")}</div>` : "";
-  return `<section class="terminal-decision terminal-${esc(terminal.terminal_state || "")}"><header><div><b>${textOf(terminal.final_parent_mechanism || {})}</b><p>${textOf(terminal.terminal_reason || {})}</p></div><strong>${esc(humanReviewStatusLabel(terminal.terminal_state || ""))}</strong></header><div class="terminal-decision-grid">${mergeTarget}${gate ? `<span><b>${language === "zh" ? "Pre-P0 / 前置门" : "Pre-P0 gate"}</b>${gate}</span>` : ""}${baseline ? `<span><b>${language === "zh" ? "最强对照" : "Strongest baseline"}</b>${baseline}</span>` : ""}${minimum ? `<span><b>${language === "zh" ? "最小 P0" : "Minimum P0"}</b>${minimum}</span>` : ""}${stop ? `<span><b>${language === "zh" ? "精确终止条件" : "Exact stop"}</b>${stop}</span>` : ""}</div>${children}</section>`;
+  const mechanism = zhOverride.mechanism || textOf(terminal.final_parent_mechanism || {});
+  const gate = zhOverride.gate || textOf(terminal.pre_p0_gate || {});
+  const baseline = zhOverride.baseline || textOf(terminal.strongest_baseline || {});
+  const minimum = zhOverride.minimum || textOf(terminal.minimum_p0 || {});
+  const stop = zhOverride.stop || textOf(terminal.exact_stop || {});
+  const children = absorbed.length ? `<div class="terminal-child-list"><b>${language === "zh" ? "已吸收子方法" : "Absorbed children"}</b>${absorbed.map((id) => `<span title="${esc(id)}">${esc(localizedPaperIdeaMethodAsset(id))}</span>`).join("")}</div>` : "";
+  return `<section class="terminal-decision terminal-${esc(terminal.terminal_state || "")}"><header><div><b>${mechanism}</b><p>${textOf(terminal.terminal_reason || {})}</p></div><strong>${esc(humanReviewStatusLabel(terminal.terminal_state || ""))}</strong></header><div class="terminal-decision-grid">${mergeTarget}${gate ? `<span><b>${language === "zh" ? "Pre-P0 / 前置门" : "Pre-P0 gate"}</b>${gate}</span>` : ""}${baseline ? `<span><b>${language === "zh" ? "最强对照" : "Strongest baseline"}</b>${baseline}</span>` : ""}${minimum ? `<span><b>${language === "zh" ? "最小 P0" : "Minimum P0"}</b>${minimum}</span>` : ""}${stop ? `<span><b>${language === "zh" ? "精确终止条件" : "Exact stop"}</b>${stop}</span>` : ""}</div>${children}</section>`;
 }
 function renderHumanReviewedIdeaCard(idea, meta, index) {
   const overlay = (window.FINAL20_MERGE_OVERRIDES || {})[idea.id] || {};
@@ -1257,19 +1465,20 @@ function renderHumanReviewedIdeaCard(idea, meta, index) {
   const iterationSummary = textOf(iteration.summary || {});
   const finalRefinement = current.final_refinement || {};
   const finalRecommendation = String(finalRefinement.recommendation || "");
+  const finalRecommendationDisplay = localizedRefinementRecommendation(finalRecommendation);
   const finalOfflineGate = textOf(finalRefinement.offline_pre_p0_gate || {});
   const absorbed = [...new Set([...(terminal?.absorbed_children || []),...(overlay.absorbed_from || current.absorbed_from || [])])];
   const absorbedIdeas = absorbed.map(currentFinalIdeaById).filter(Boolean);
-  const absorbedNote = absorbed.length ? `<div class="human-absorbed-methods"><b>${language === "zh" ? "已吸收 FINAL 方法资产" : "Absorbed FINAL method assets"}</b>${absorbed.map((id)=>`<span>${esc(id)}</span>`).join("")}</div>` : "";
+  const absorbedNote = absorbed.length ? `<div class="human-absorbed-methods"><b>${language === "zh" ? "已吸收终态方法资产" : "Absorbed FINAL method assets"}</b>${absorbed.map((id)=>`<span title="${esc(id)}">${esc(localizedPaperIdeaMethodAsset(id))}</span>`).join("")}</div>` : "";
   const freshCheck = current.fresh_reducibility_check || {};
   const freshSources = (freshCheck.sources || []).map((source) => `<a href="${esc(source.url)}" target="_blank" rel="noopener">${esc(source.title)}</a>`).join("");
-  const freshBlock = freshSources ? `<section class="human-fresh-collision"><h4 data-toc="false">${language === "zh" ? `Fresh reducibility · ${esc(freshCheck.review_date || "")}` : `Fresh reducibility · ${esc(freshCheck.review_date || "")}`}</h4><p>${language === "zh" ? "以下是一手来源；上面的“最近工作与真正边界”已经按这些工作收窄，不把已有人做过的部分继续当贡献。" : "Primary sources below support the narrowed boundary above; already-covered mechanisms are not counted as the contribution."}</p><nav>${freshSources}</nav></section>` : "";
+  const freshBlock = freshSources ? `<section class="human-fresh-collision"><h4 data-toc="false">${language === "zh" ? `最新可归约性审查 · ${esc(freshCheck.review_date || "")}` : `Fresh reducibility · ${esc(freshCheck.review_date || "")}`}</h4><p>${language === "zh" ? "以下是一手来源；上面的“最近工作与真正边界”已经按这些工作收窄，不把已有人做过的部分继续当贡献。" : "Primary sources below support the narrowed boundary above; already-covered mechanisms are not counted as the contribution."}</p><nav>${freshSources}</nav></section>` : "";
   return `<details class="human-review-idea-card human-tone-${tone}" id="idea-${esc(code.toLowerCase())}" data-terminal-status="${esc(currentStatus)}">
     <summary><div class="human-idea-title"><span class="human-idea-code">${esc(code)}</span><div><b>${textOf(current.title)}</b><small>${originalNumber ? `${language === "zh" ? "原讨论" : "Original"} Idea ${originalNumber} · ` : ""}${textOf(idea.track)} · ${language === "zh" ? "历史自动二审" : "historical automated R2"} ${esc(historicalVerdict)}</small></div></div><div class="human-idea-summary"><span class="human-status-badge human-status-${tone}">${esc(humanReviewStatusLabel(currentStatus))}</span><p>${esc(textOf(terminal?.terminal_reason || {}) || iterationSummary || humanOpinion)}</p></div></summary>
     <div class="human-idea-body">
       <div class="human-review-history">
         <section class="human-opinion-box"><h4 data-toc="false">${language === "zh" ? `人工意见 · 2026-08-10（原讨论 Idea ${originalNumber || "?"}）` : `Human opinion · 2026-08-10 (original Idea ${originalNumber || "?"})`}</h4><p>${esc(humanOpinion || "—")}</p><small class="human-recommendation-label tone-${humanRecommendationTone(humanRecommendation)}">${esc(humanRecommendationLabel(humanRecommendation))}</small></section>
-        ${iterationSummary ? `<section class="human-iteration-box"><h4 data-toc="false">${language === "zh" ? `本轮方法迭代 · ${esc(iteration.round || "2026-08-10")}` : `Current method iteration · ${esc(iteration.round || "2026-08-10")}`}</h4><p>${esc(iterationSummary)}</p>${iteration.verdict ? `<small>${language === "zh" ? "当前门禁" : "Current gate"}: ${esc(iteration.verdict)}</small>` : ""}${finalRecommendation ? `<div class="human-final-refinement"><b>${language === "zh" ? "最终分流" : "Final recommendation"}</b><span>${esc(finalRecommendation)}</span>${finalOfflineGate ? `<p>${language === "zh" ? "GPU 前先做：" : "Before GPU: "}${esc(finalOfflineGate)}</p>` : ""}</div>` : ""}</section>` : ""}
+        ${iterationSummary ? `<section class="human-iteration-box"><h4 data-toc="false">${language === "zh" ? `本轮方法迭代 · ${esc(iteration.round || "2026-08-10")}` : `Current method iteration · ${esc(iteration.round || "2026-08-10")}`}</h4><p>${esc(iterationSummary)}</p>${iteration.verdict ? `<small>${language === "zh" ? "当前门禁" : "Current gate"}: ${esc(iteration.verdict)}</small>` : ""}${finalRecommendation ? `<div class="human-final-refinement"><b>${language === "zh" ? "最终分流" : "Final recommendation"}</b><span>${esc(finalRecommendationDisplay)}</span>${finalOfflineGate ? `<p>${language === "zh" ? "GPU 前先做：" : "Before GPU: "}${esc(finalOfflineGate)}</p>` : ""}</div>` : ""}</section>` : ""}
       </div>
       ${renderTerminalDecision(idea.id)}
       <div class="human-core-grid human-reading-grid">

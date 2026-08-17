@@ -38,6 +38,8 @@ def require(value: bool, message: str) -> None:
 
 def main() -> None:
     expected_state = json.loads((ROOT / "generated" / "research-system-state.json").read_text(encoding="utf-8"))
+    expected_current_status = json.loads((ROOT / "generated" / "current-research-status.json").read_text(encoding="utf-8"))
+    expected_headline = expected_current_status.get("headline") or {}
     expected_shadow_latest = ((expected_state.get("paper_first_problem_search_portfolio") or {}).get("latest_run") or {})
     expected_shadow_summary = expected_shadow_latest.get("summary") or {}
     firefox, geckodriver = shutil.which("firefox"), shutil.which("geckodriver")
@@ -358,23 +360,49 @@ def main() -> None:
             require(shadow_admission.get("status") == "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL" and shadow_admission_summary.get("qualification_allowed") is False, f"same-source terminal shadow without an operator-upgrade receipt must skip: {shadow_admission}")
         require((ideas["sp15SupportSummary"].get("primary_or_author_releases_audited"),ideas["sp15SupportSummary"].get("query_level_identifiability_units"),ideas["sp15SupportSummary"].get("method_design_authorized")) == (5,0,0), f"SP-15 shadow identifiability support must remain 5 sources / 0 units / 0 method authority: {ideas['sp15SupportSummary']}")
         shadow_render_markers=(
+            "Shadow 搜索组合 · 回溯式论文设计审查",
+            "Shadow 搜索组合 · 最新当前来源终态",
+            "Shadow 搜索 · 下一轮准入",
+            f"运行={expected_shadow_latest.get('run_id')}",
+            f"控制快照={expected_shadow_latest.get('stage_runner_required_schema') or 'legacy'}/{str(expected_shadow_latest.get('control_snapshot_sha256') or '')[:12] or 'unbound'}",
+            f"执行截断={int(expected_shadow_summary.get('formulation_execution_censored_branches') or 0)}",
+            f"待归约={int(expected_shadow_summary.get('formulation_reduction_pending') or 0)}",
+            f"问题证伪器资格={int(expected_shadow_summary.get('problem_falsifier_eligible') or 0)}",
+            f"证据库存请求={int(expected_shadow_summary.get('problem_falsifier_inventory_requested') or 0)}",
+            f"证据合格={int(expected_shadow_summary.get('problem_falsifier_support_qualified') or 0)}",
+            f"暂缓={int(expected_shadow_summary.get('problem_falsifier_hold_support_unavailable') or 0)}",
+            f"已执行={int(expected_shadow_summary.get('problem_falsifier_executed') or 0)}",
+        )
+        require(all(marker in ideas["text"] for marker in shadow_render_markers), f"current shadow latest-run Chinese rendering is inconsistent; missing={[m for m in shadow_render_markers if m not in ideas['text']]}")
+        chinese_reader_markers=(
+            "相同候选更新池",
+            "最新可归约性审查",
+            "最近工作",
+            "正式问题发现 · 当前状态",
+            "Shadow 搜索组合 · 回溯式论文设计审查",
+            "Shadow 搜索组合 · 最新当前来源终态",
+            "Shadow 搜索 · 下一轮准入",
+            "SP-15 Shadow 修订 · 可辨识性证据库存",
+            "仅诊断（DIAGNOSTIC ONLY）",
+            "新兴小众评分 ENS",
+            "停止 PF-1 独立论文",
+        )
+        require(all(marker in ideas["text"] for marker in chinese_reader_markers), f"paper-ideas Chinese reader layer is incomplete; missing={[m for m in chinese_reader_markers if m not in ideas['text']]}")
+        english_reader_leaks=(
+            "same candidate update pool",
+            "same frozen probe suite",
+            "Frozen heterogeneous open-weight critic plus environment/tool ground truth",
+            "Fresh reducibility",
+            "Live canonical problem discovery",
             "Shadow Search Portfolio · retrospective Paper Design audit",
             "Shadow Search Portfolio · latest current-source terminal",
             "Shadow Search · next-run admission",
-            f"run={expected_shadow_latest.get('run_id')}",
-            f"control={expected_shadow_latest.get('stage_runner_required_schema') or 'legacy'}/{str(expected_shadow_latest.get('control_snapshot_sha256') or '')[:12] or 'unbound'}",
-            f"G1={int(expected_shadow_summary.get('evolution_g1_valid') or 0)}/{int(expected_shadow_summary.get('evolution_g1_requested') or 0)}",
-            f"G2={int(expected_shadow_summary.get('evolution_g2_valid') or 0)}/{int(expected_shadow_summary.get('evolution_g2_requested') or 0)}",
-            f"execution-censored={int(expected_shadow_summary.get('formulation_execution_censored_branches') or 0)}",
-            f"reduction-pending={int(expected_shadow_summary.get('formulation_reduction_pending') or 0)}",
-            f"machine-pending={int(expected_shadow_summary.get('machine_reduction_pending') or 0)}",
-            f"problem-falsifier={int(expected_shadow_summary.get('problem_falsifier_eligible') or 0)}",
-            f"inventory-request={int(expected_shadow_summary.get('problem_falsifier_inventory_requested') or 0)}",
-            f"support-qualified={int(expected_shadow_summary.get('problem_falsifier_support_qualified') or 0)}",
-            f"HOLD={int(expected_shadow_summary.get('problem_falsifier_hold_support_unavailable') or 0)}",
-            f"executed={int(expected_shadow_summary.get('problem_falsifier_executed') or 0)}",
+            "Revise and re-audit the paper problem",
+            "Archive PF-1 standalone",
+            "Generate one common candidate-task pool",
+            "terminal collision as standalone paper; integrate as protocol-validity control",
         )
-        require(all(marker in ideas["text"] for marker in shadow_render_markers), f"current shadow latest-run rendering is inconsistent; missing={[m for m in shadow_render_markers if m not in ideas['text']]}")
+        require(not any(marker in ideas["text"] for marker in english_reader_leaks), f"paper-ideas Chinese view regressed to English explanatory prose: {[m for m in english_reader_leaks if m in ideas['text']]}")
         require(all(marker in ideas["text"] for marker in ("PF-1","PF-2","PF-3","PF-4","PF-5","PF-6","PF-7","STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT","STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL","STOP_PF3_STANDALONE_MERGE_COMPRESSION_LIFECYCLE_CONTROL","STOP_PF5_STANDALONE_MERGE_DIFFERENTIAL_VERIFICATION_COMPONENT","STOP_PF7_STANDALONE_MERGE_EVIDENCE_IMPACT_REVALIDATION_COMPONENT")), "Paper-first terminal/fresh-saturation verdicts are not visible")
         pmd=ideas["prematureMethodSummary"]
         require((pmd.get("directions"),pmd.get("completed_diagnostics"),pmd.get("design_holds"),pmd.get("same_information_reducibility_findings"),pmd.get("hidden_executions"),pmd.get("scientifically_authorized")) == (2,2,1,2,0,0) and ideas["prematureMethodPanels"] == 2, f"premature Method diagnostics must be visible as two non-authoritative PF-1/PF-4 archives: {pmd}/{ideas['prematureMethodPanels']}")
@@ -518,7 +546,8 @@ def main() -> None:
         require((experiments["terminalPortfolio"],experiments["terminalRows"],experiments["terminalP0"],experiments["terminalP0Ready"]) == (1,27,27,0), f"terminal experiment portfolio is not aligned with validated Paper Ideas: {experiments}")
         require(experiments["currentPaperEvidence"] == 1, f"current STRI paper-evidence panel is missing: {experiments}")
         ecs=experiments["currentStatus"]; ep=experiments["currentPaperTrack"]
-        require((ecs.get("paper_ready"),ecs.get("paper_quality_hold"),ecs.get("paper_quality_evidence_debt"),ecs.get("canonical_live_ideas"),ecs.get("launchable_formal_experiments"),ecs.get("shadow_qualification_ready"),ecs.get("fresh_active_f0"),ecs.get("fresh_design_ready_f0"),ecs.get("fresh_execution_holds"),ecs.get("fresh_support_holds"),ecs.get("fresh_ready_problem_review"),ecs.get("method_authorized"),ecs.get("gpu_authorized")) == (1,0,0,0,0,0,0,1,1,1,0,0,0) and int(ecs.get("shadow_dead_ends") or 0)>=1 and int(ecs.get("shadow_holds") or 0)>=0, f"experiments current-status snapshot is stale: {ecs}")
+        current_keys=("paper_ready","paper_quality_hold","paper_quality_evidence_debt","canonical_live_ideas","launchable_formal_experiments","shadow_qualification_ready","fresh_active_f0","fresh_design_ready_f0","fresh_execution_holds","fresh_support_holds","fresh_ready_problem_review","method_authorized","gpu_authorized","shadow_dead_ends","shadow_holds")
+        require(all(ecs.get(key) == expected_headline.get(key) for key in current_keys), f"experiments current-status snapshot diverges from generated/current-research-status.json: rendered={ecs} expected={expected_headline}")
         require((ep.get("paper_id"),ep.get("status"),ep.get("submission_status"),ep.get("claims_supported"),ep.get("claims_total"),ep.get("paper_quality_v2_passed"),ep.get("paper_quality_content_addressed_completion"),ep.get("paper_quality_content_addressed_files"),ep.get("paper_quality_evidence_debt"),ep.get("new_gpu_evidence_required")) == ("STRI","READY_NARROW_ICLR","READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",3,3,True,True,14,0,False), f"STRI paper-quality projection is stale: {ep}")
         require((experiments["terminalStarted"],experiments["terminalPending"],experiments["auditQueue"],experiments["auditItems"]) == (27,0,0,0), f"historical execution-artifact split is wrong: {experiments}")
         require(experiments["batchPanel"] == 1 and (experiments["batchSummary"].get("parent_p0"),experiments["batchSummary"].get("reused_existing_p0"),experiments["batchSummary"].get("fresh_cpu_f0"),experiments["batchSummary"].get("fresh_matched_simplification_stop"),experiments["batchSummary"].get("fresh_upstream_hold"),experiments["batchSummary"].get("gpu_queue_candidates_before_economy")) == (20,13,7,7,0,0), f"20-Idea P0 batch is missing or stale: {experiments['batchSummary']}")
