@@ -353,6 +353,27 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         self.assertFalse(runner._problem_falsifier_eligible({"exact_prediction":"x","strongest_same_information_baseline":"y","cheapest_problem_falsifier":""},audit))
         self.assertFalse(runner._problem_falsifier_eligible({"exact_prediction":"x","strongest_same_information_baseline":"","cheapest_problem_falsifier":"z"},audit))
 
+    def test_success_transport_metadata_counts_fallback_posts_and_sanitizes_provider_receipt(self) -> None:
+        response={
+            "transport_fallback_used":True,
+            "thinking_compatibility_fallback":False,
+            "transport_attempts":[
+                {"requested_model":"glm-5.3","status":"error-no-output","provider_receipt":{"response_id":"resp-secret","status":"incomplete","requested_model":"glm-5.3","resolved_model":"glm-5.3","incomplete_reason":"max_output_tokens"}},
+                {"requested_model":"kimi-k3","status":"success","resolved_model":"kimi-k3","assistant_output_present":True},
+            ],
+        }
+        with tempfile.TemporaryDirectory() as td:
+            run=Path(td)/"run";run.mkdir();meta=runner._provider_success_metadata(run_root=run,stem="formulate-p1",response=response)
+            receipts=list((run/"provider-receipts").glob("*.json"))
+        self.assertEqual(meta["provider_calls_executed"],2)
+        self.assertTrue(meta["transport_fallback_used"])
+        self.assertEqual(len(meta["transport_attempts"]),2)
+        self.assertNotIn("provider_receipt",meta["transport_attempts"][0])
+        self.assertEqual(len(meta["transport_attempts"][0]["provider_receipt_audit"]["provider_receipt_sha256"]),64)
+        self.assertEqual(len(receipts),1)
+        compatibility=runner._provider_success_metadata(run_root=Path(tempfile.mkdtemp()),stem="expand-p1",response={"transport_attempts":[{"requested_model":"x","status":"success"}],"thinking_compatibility_fallback":True})
+        self.assertEqual(compatibility["provider_calls_executed"],2)
+
     def test_replay_expand_recompiles_archived_raw_without_provider_call(self) -> None:
         import hashlib
         raw=json.dumps({"seeds":[],"notes":"archived provider response"})
@@ -372,6 +393,30 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         self.assertEqual(artifact["provider_calls_executed"],0)
         self.assertEqual(artifact["control_snapshot_sha256"],"f"*64)
         self.assertEqual(artifact["resolved_model"],"kimi-k3")
+        self.assertFalse(artifact["scientific_authority"])
+
+    def test_replay_formulate_recompiles_archived_raw_without_provider_call(self) -> None:
+        import hashlib
+        parent={"seed_id":"PARENT","discovery_lane":"UNEXPLAINED_BOUNDARY","title":"parent","problem_seed":"question","scientific_tension":"tension","problem_family":"family","structural_signature":"sig","agent_specific_constraint":"constraint","empirical_evidence":{"source_a":{"ref":"arXiv:1","claim":"A","evidence_role":"EMPIRICAL_FACT"},"source_b":{"ref":"arXiv:1","claim":"B","evidence_role":"EMPIRICAL_FACT"},"relation":"relation"},"lane_evidence":{"shared_measurement":"m","boundary_observation":"b","adjacent_regime":"a","unexplained_transition":"u"},"scores":{"importance":80,"specificity":80,"seed_distance":80,"evidence_grounding":80}}
+        raw=json.dumps({"candidates":[],"rejected":[{"source_branch_id":"PARENT","reason":"mature reduction survives","matched_mature_theory":"ceiling effects","reduction_class":"REDUCIBLE","exact_reduction_test":"matched information budget"}]})
+        raw_sha=hashlib.sha256(raw.encode()).hexdigest()
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);pool=root/"pool.json";memory=root/"memory.json";raw_path=root/"prior-formulation.txt";run=root/"run";run.mkdir()
+            pool.write_text(json.dumps({"frozen_pool_sha256":"a"*64,"records":[{"ref":"arXiv:1"}]}),encoding="utf-8")
+            memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[]}),encoding="utf-8")
+            raw_path.write_text(raw,encoding="utf-8")
+            (run/"base.json").write_text(json.dumps({"schema_version":"1.2","control_snapshot_sha256":"f"*64,"parents":[parent]}),encoding="utf-8")
+            with patch("research_pipeline.problem_search_stage_runner._ark") as provider,patch("research_pipeline.problem_search_stage_runner.validate_shadow_run_control",return_value={"control_snapshot_sha256":"f"*64}) as validate:
+                result=runner.replay_formulate(pool=pool,run_root=run,part=1,batch_size=1,budget=1,memory_path=memory,raw_input=raw_path,expected_raw_sha256=raw_sha,requested_model="glm-5.3",resolved_model="kimi-k3",raw_origin_control_snapshot_sha256="e"*64)
+            provider.assert_not_called();self.assertGreaterEqual(validate.call_count,1)
+            artifact=json.loads((run/"formulate-p1.json").read_text(encoding="utf-8"))
+        self.assertEqual(result["raw_sha256"],raw_sha)
+        self.assertEqual(result["provider_calls_executed"],0)
+        self.assertTrue(artifact["raw_replayed_without_provider"])
+        self.assertEqual(artifact["raw_origin_control_snapshot_sha256"],"e"*64)
+        self.assertEqual(artifact["provider_calls_executed"],0)
+        self.assertEqual(artifact["resolved_model"],"kimi-k3")
+        self.assertEqual(len(artifact["rejected"]),1)
         self.assertFalse(artifact["scientific_authority"])
 
     def test_provider_timeout_is_recorded_without_inventing_raw_output(self) -> None:
