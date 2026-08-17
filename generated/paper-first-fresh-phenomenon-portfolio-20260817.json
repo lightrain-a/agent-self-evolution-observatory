@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T13:45:19+00:00",
+  "generated_at": "2026-08-17T16:30:44+00:00",
   "status": "NO_ACTIVE_F0",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -34,7 +34,7 @@
     "ready_for_problem_review": 0,
     "stop_reduction": 5,
     "primary_verified": 32,
-    "primary_empirical_fact_candidates": 107,
+    "primary_empirical_fact_candidates": 114,
     "canonical_problem_gate_added": 0,
     "method_authorized": 0,
     "experiment_authorized": 0,
@@ -338,11 +338,11 @@
     },
     "primary_state": {
       "path": "generated/paper-first-primary-evidence-state.json",
-      "sha256": "d61b944ab553d023fd4169a067121dda4ca1c45dad8234deafd5c1ed6b83d4d9"
+      "sha256": "7589610909fac77fcce9fe2dbeea714a921dc39270728a71d684bddea8502056"
     },
     "dead_end_memory": {
       "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-      "sha256": "d350468e43a859a196f313a31c9dcace2157286450e263d5fbb6b1a2c177ea8e"
+      "sha256": "4a985cf0f16528b56ad62487a1bcc80205af589861367b26a6926cd385ce6b53"
     },
     "defense_principle_reduction": {
       "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T15:32:15+00:00",
-  "source_revision": "8e169261224135d5e26756db1d228c420de7cebf",
+  "generated_at": "2026-08-17T16:43:23+00:00",
+  "source_revision": "2316e4261c92702c027c159a0f44f83b9a2ba36c",
   "as_of_date": "2026-08-17",
   "headline": {
     "paper_ready": 1,
@@ -16,10 +16,10 @@
     "legacy_p0_upstream_hold": 1,
     "legacy_p0_method_stop": 1,
     "launchable_formal_experiments": 0,
-    "shadow_dead_ends": 33,
+    "shadow_dead_ends": 34,
     "shadow_holds": 2,
     "shadow_method_ready": 0,
-    "shadow_qualification_ready": 0,
+    "shadow_qualification_ready": 1,
     "fresh_active_f0": 0,
     "fresh_design_ready_f0": 0,
     "fresh_support_holds": 0,
@@ -104,9 +104,9 @@
     }
   },
   "canonical_live": {
-    "generator_status": "GENERATED_ZERO_CANDIDATES",
-    "generated": 0,
-    "queue_submitted": 0,
+    "generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
+    "generated": 1,
+    "queue_submitted": 1,
     "problem_gate_pass": 0,
     "paper_design_eligible": 0,
     "paper_design_backlog": 0,
@@ -281,8 +281,8 @@
     "method_ready": 0,
     "revise_hold": 1,
     "stop_standalone": 1,
-    "dead_end_objects": 33,
-    "principle_readjudication_dead_ends": 29,
+    "dead_end_objects": 34,
+    "principle_readjudication_dead_ends": 30,
     "hold_objects": 2,
     "semantic_holds": 0,
     "near_miss_holds": 1,
@@ -317,12 +317,12 @@
       "method_design_authorized": 0
     },
     "qualification": {
-      "status": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
+      "status": "READY_FOR_SHADOW_QUALIFICATION",
       "operator_version": "fresh-phenomenon-anomaly-precision-v13",
       "operator_upgrade_recompile": false,
-      "qualification_allowed": false,
+      "qualification_allowed": true,
       "automatic_provider_calls_authorized": 0,
-      "reason": "The current canonical source transaction already has a terminal shadow search result under the current discovery operator; repeating model calls would be redundant.",
+      "reason": "Canonical discovery is closed and the current source transaction differs from the latest terminal shadow source identity.",
       "scope": "global-v13-shadow-control; does not reactivate archived positive-residual assets"
     }
   },

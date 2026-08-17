@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T15:32:15+00:00",
+  "generated_at": "2026-08-17T16:33:47+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6175,14 +6175,14 @@
     "paper_first_primary_fact_extraction_version": "precision-v2",
     "paper_first_primary_typed_extraction_version": "typed-v1",
     "paper_first_primary_source_scheduler_active": true,
-    "paper_first_primary_source_scheduler_prior_runs": 19,
+    "paper_first_primary_source_scheduler_prior_runs": 23,
     "paper_first_primary_selected_reviewed": 32,
     "paper_first_primary_selected_unreviewed": 0,
-    "paper_first_primary_lane_linked_reviewed": 213,
+    "paper_first_primary_lane_linked_reviewed": 215,
     "paper_first_primary_lane_linked_unreviewed": 0,
     "paper_first_primary_source_coverage_exhausted": true,
     "paper_first_primary_carrier_probe_required": true,
-    "paper_first_primary_carrier_probe_attempted": 1,
+    "paper_first_primary_carrier_probe_attempted": 2,
     "paper_first_primary_carrier_probe_rescued": 0,
     "paper_first_primary_carrier_probe_pending": 0,
     "paper_first_primary_carrier_probe_complete": true,
@@ -6199,11 +6199,11 @@
     "paper_first_object_candidate_activation_authorized": 0,
     "paper_first_problem_gate_fields": 17,
     "paper_first_problem_gate_saturation_patterns": 34,
-    "paper_first_problem_generator_status": "GENERATED_ZERO_CANDIDATES",
-    "paper_first_problem_generator_generated": 0,
+    "paper_first_problem_generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
+    "paper_first_problem_generator_generated": 1,
     "paper_first_problem_generator_semantic_clear": 0,
-    "paper_first_problem_generator_semantic_blocked": 0,
-    "paper_first_problem_generator_saturation_entries": 3,
+    "paper_first_problem_generator_semantic_blocked": 1,
+    "paper_first_problem_generator_saturation_entries": 1,
     "paper_first_problem_generator_prior_identical_zero": 0,
     "paper_first_problem_blocked_attempts": 12,
     "paper_first_problem_top_reduction_basin": "procedural-memory-nonmonotonicity",
@@ -6211,17 +6211,17 @@
     "paper_first_problem_repeated_reduction_basin": true,
     "paper_first_problem_search_escape_required": true,
     "paper_first_problem_lane_search_complete": true,
-    "paper_first_problem_lane_search_candidate_lanes": 0,
-    "paper_first_problem_lane_search_reducible_lanes": 1,
-    "paper_first_problem_lane_search_no_pair_lanes": 3,
+    "paper_first_problem_lane_search_candidate_lanes": 1,
+    "paper_first_problem_lane_search_reducible_lanes": 3,
+    "paper_first_problem_lane_search_no_pair_lanes": 0,
     "paper_first_problem_last_lane_search_available": true,
-    "paper_first_problem_last_lane_search_run_id": "20260816T182735Z",
-    "paper_first_problem_last_lane_search_candidate_lanes": 0,
-    "paper_first_problem_last_lane_search_reducible_lanes": 1,
-    "paper_first_problem_last_lane_search_no_pair_lanes": 3,
-    "paper_first_problem_queue_submitted": 0,
+    "paper_first_problem_last_lane_search_run_id": "20260817T161813Z",
+    "paper_first_problem_last_lane_search_candidate_lanes": 1,
+    "paper_first_problem_last_lane_search_reducible_lanes": 3,
+    "paper_first_problem_last_lane_search_no_pair_lanes": 0,
+    "paper_first_problem_queue_submitted": 1,
     "paper_first_problem_queue_passed": 0,
-    "paper_first_problem_queue_blocked": 0,
+    "paper_first_problem_queue_blocked": 1,
     "paper_first_search_portfolio_design_reviewed": 2,
     "paper_first_search_portfolio_design_advance_method": 0,
     "paper_first_search_portfolio_design_revise": 1,
@@ -6273,13 +6273,13 @@
     "paper_first_global_relation_reducible": 0,
     "paper_first_global_relation_not_reduced": 0,
     "paper_first_global_relation_focused_reopen": false,
-    "paper_first_global_relation_freshness_status": "CURRENT_RELATION_UNIVERSE",
-    "paper_first_global_relation_current_sources": 228,
+    "paper_first_global_relation_freshness_status": "STALE_RELATION_UNIVERSE",
+    "paper_first_global_relation_current_sources": 233,
     "paper_first_global_relation_last_scanned_sources": 228,
-    "paper_first_global_relation_current_pair_coverage": 0.2382,
-    "paper_first_global_relation_universe_stale": false,
-    "paper_first_global_relation_current_not_reduced_unknown": false,
-    "paper_first_global_relation_model_scan_deferred": false,
+    "paper_first_global_relation_current_pair_coverage": 0.2505,
+    "paper_first_global_relation_universe_stale": true,
+    "paper_first_global_relation_current_not_reduced_unknown": true,
+    "paper_first_global_relation_model_scan_deferred": true,
     "paper_first_global_relation_focused_reopen_allowed": false,
     "paper_first_relation_delta_status": "NOT_RUN",
     "paper_first_relation_delta_new_sources": 0,
@@ -6291,20 +6291,20 @@
     "paper_first_relation_delta_focused_reopen_authorized": false,
     "paper_first_relation_scan_admission_status": "HOLD_MANUAL_RELATION_SCAN",
     "paper_first_relation_scan_admission_checks": 15,
-    "paper_first_relation_scan_admission_passed": 7,
-    "paper_first_relation_scan_admission_failed": 8,
+    "paper_first_relation_scan_admission_passed": 9,
+    "paper_first_relation_scan_admission_failed": 6,
     "paper_first_relation_scan_manual_eligible": false,
     "paper_first_relation_scan_automatic_authorized": false,
-    "paper_first_shadow_search_admission_status": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
-    "paper_first_shadow_search_same_source_transaction": true,
-    "paper_first_shadow_search_qualification_allowed": false,
+    "paper_first_shadow_search_admission_status": "READY_FOR_SHADOW_QUALIFICATION",
+    "paper_first_shadow_search_same_source_transaction": false,
+    "paper_first_shadow_search_qualification_allowed": true,
     "paper_first_shadow_search_automatic_provider_calls": 0,
-    "paper_first_shadow_continuation_status": "WAIT_EXTERNAL_PRIMARY_CONTENT_CHANGE",
-    "paper_first_shadow_continuation_next_action": "wait-external-change",
-    "paper_first_shadow_continuation_active_actions": 0,
-    "paper_first_shadow_continuation_external_wait": 1,
-    "paper_first_discovery_frontier_status": "WAIT_EXTERNAL_EVIDENCE_TRIGGERS",
-    "paper_first_discovery_frontier_open_internal": 0,
+    "paper_first_shadow_continuation_status": "READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION",
+    "paper_first_shadow_continuation_next_action": "canonical-private-pool-shadow-qualification",
+    "paper_first_shadow_continuation_active_actions": 1,
+    "paper_first_shadow_continuation_external_wait": 0,
+    "paper_first_discovery_frontier_status": "SHADOW_QUALIFICATION_PENDING",
+    "paper_first_discovery_frontier_open_internal": 2,
     "paper_first_discovery_frontier_external_triggers": 5,
     "paper_first_discovery_frontier_model_calls": 0,
     "paper_first_discovery_frontier_evidence_open": 0,
@@ -30531,7 +30531,7 @@
   },
   "paper_first_primary_evidence": {
     "schema_version": "1.1",
-    "generated_at": "2026-08-16T16:24:29+00:00",
+    "generated_at": "2026-08-17T16:17:14+00:00",
     "policy": {
       "semantic_scholar_is_discovery_metadata_not_primary_evidence": true,
       "verified_primary_page_required": true,
@@ -30591,7 +30591,7 @@
       "source_coverage_scheduler_is_discovery_only": true,
       "source_coverage_exploration_prefers_scientific_objects": true,
       "no_lane_carrier_probe_enabled": true,
-      "no_lane_carrier_probe_limit": 4,
+      "no_lane_carrier_probe_limit": 3,
       "no_lane_carrier_probe_receipt_max_age_days": 7.0,
       "no_lane_carrier_probe_is_existing_object_rescue_only": true,
       "no_lane_carrier_probe_cannot_create_new_object": true,
@@ -30617,35 +30617,35 @@
       "corpus_available": true,
       "corpus_fresh": true,
       "discovery_mode": "semantic-scholar-plus-arxiv-augmentation",
-      "augmentation_discovered": 302,
-      "augmentation_added": 258,
+      "augmentation_discovered": 303,
+      "augmentation_added": 259,
       "selected": 32,
       "verified": 32,
       "fetch_errors": 0,
       "title_mismatches": 0,
-      "fulltext_verified": 31,
-      "fulltext_fetch_errors": 1,
-      "empirical_fact_candidates": 107,
+      "fulltext_verified": 32,
+      "fulltext_fetch_errors": 0,
+      "empirical_fact_candidates": 114,
       "empirical_fact_tier_counts": {
-        "result-section-directional": 13,
-        "strong-observation": 23,
-        "quantitative-directional": 58,
-        "owned-directional": 13
+        "quantitative-directional": 57,
+        "strong-observation": 31,
+        "result-section-directional": 24,
+        "owned-directional": 2
       },
       "typed_evidence_candidates": {
-        "operational_assumptions": 3,
-        "measured_failures": 41,
-        "boundary_observations": 15
+        "operational_assumptions": 6,
+        "measured_failures": 45,
+        "boundary_observations": 20
       },
-      "recent_verified_cache_reused": 31,
-      "recent_raw_primary_cache_reused": 1,
-      "recent_raw_fulltext_cache_reused": 0,
-      "recent_fulltext_failure_cooldown_skips": 1,
+      "recent_verified_cache_reused": 0,
+      "recent_raw_primary_cache_reused": 32,
+      "recent_raw_fulltext_cache_reused": 32,
+      "recent_fulltext_failure_cooldown_skips": 0,
       "lane_floor": 1,
       "source_coverage_scheduler_active": true,
-      "saturation_ledger_runs": 19,
-      "portable_review_receipts_merged": 19,
-      "prior_reviewed_sources": 228,
+      "saturation_ledger_runs": 23,
+      "portable_review_receipts_merged": 23,
+      "prior_reviewed_sources": 233,
       "eligible_unreviewed": 4,
       "eligible_lane_unreviewed": 0,
       "eligible_no_lane_unreviewed": 4,
@@ -30655,72 +30655,144 @@
       "selected_lane_unreviewed": 0,
       "selected_no_lane_unreviewed": 0,
       "carrier_probe_required": true,
-      "carrier_probe_attempted": 1,
-      "carrier_probe_reused": 3,
+      "carrier_probe_attempted": 2,
+      "carrier_probe_reused": 2,
       "carrier_probe_rescued": 0,
       "carrier_probe_pending": 0,
       "carrier_probe_errors": 0,
       "carrier_probe_complete": true,
-      "eligible_object_linked_sources": 177,
-      "reviewed_object_linked_sources": 177,
+      "eligible_object_linked_sources": 179,
+      "reviewed_object_linked_sources": 179,
       "unreviewed_object_linked_sources": 0,
-      "eligible_lane_linked_sources": 213,
-      "reviewed_lane_linked_sources": 213,
+      "eligible_lane_linked_sources": 215,
+      "reviewed_lane_linked_sources": 215,
       "unreviewed_lane_linked_sources": 0,
       "unreviewed_no_lane_sources": 4,
       "source_coverage_exhausted": true,
       "source_retrieval_complete": true,
       "coverage_anchor_count": 16,
       "eligible_object_lane_counts": {
-        "skill_harness": 127,
-        "memory_continual": 68,
+        "skill_harness": 128,
+        "memory_continual": 70,
         "world_model": 14,
         "parametric_model_state": 27
       },
       "selected_object_lane_counts": {
-        "skill_harness": 24,
-        "memory_continual": 12,
+        "skill_harness": 22,
+        "memory_continual": 9,
         "world_model": 1,
-        "parametric_model_state": 4
+        "parametric_model_state": 5
       },
       "eligible_lane_counts": {
-        "skill_harness": 127,
-        "memory_continual": 68,
+        "skill_harness": 128,
+        "memory_continual": 70,
         "world_model": 14,
         "parametric_model_state": 27,
-        "embodied": 28,
+        "embodied": 27,
         "collective": 17,
         "autonomous_science": 7,
         "runtime_deployment": 64,
         "safety_reliability": 91
       },
       "selected_lane_counts": {
-        "skill_harness": 24,
-        "memory_continual": 12,
+        "skill_harness": 22,
+        "memory_continual": 9,
         "world_model": 1,
-        "parametric_model_state": 4,
-        "embodied": 4,
-        "collective": 3,
+        "parametric_model_state": 5,
+        "embodied": 2,
+        "collective": 1,
         "autonomous_science": 1,
-        "runtime_deployment": 7,
-        "safety_reliability": 13
+        "runtime_deployment": 8,
+        "safety_reliability": 12
       },
       "verified_lane_counts": {
-        "skill_harness": 24,
-        "memory_continual": 12,
+        "skill_harness": 22,
+        "memory_continual": 9,
         "world_model": 1,
-        "parametric_model_state": 4,
-        "embodied": 4,
-        "collective": 3,
+        "parametric_model_state": 5,
+        "embodied": 2,
+        "collective": 1,
         "autonomous_science": 1,
-        "runtime_deployment": 7,
-        "safety_reliability": 13
+        "runtime_deployment": 8,
+        "safety_reliability": 12
       },
       "undercovered_lanes": [],
       "verified_undercovered_lanes": [],
       "candidate_generation_ready": true
     },
     "records": [
+      {
+        "evidence_id": "03ac33061e53e9276ee00d0585dd97dae0023c3fbb16368156bd96bfa377a8b5",
+        "ref": "arXiv:2608.14036",
+        "title": "Demystifying Agent Skills: Why They Work-Until They Don't",
+        "primary_url": "https://arxiv.org/abs/2608.14036",
+        "source_sha256": "6f71684ea5bab7dd19b9c1b4fe13fb8e8af7211317ee3a8fe4bd2314586520d5",
+        "abstract_sha256": "62f052398fec488262c9f076056b780be893cc18aebd6c32c5b097960c63ce31",
+        "year": 2026,
+        "publication_date": "2026-08-14",
+        "fetched_at": "2026-08-17T16:18:09+00:00",
+        "fulltext_sha256": "e963536344b67399b064ca9c53f952f177a783cc1c1c3ccf41bc1d39a45b945f",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 1,
+          "measured_failures": 2,
+          "boundary_observations": 0
+        }
+      },
+      {
+        "evidence_id": "d90a9f0ae767c923f0a50ebd04ea21eb868788969d5348267482b96c2c40acac",
+        "ref": "arXiv:2608.13951",
+        "title": "HELIX: Model-Harness Co-evolution for Recursive Self-Improvement",
+        "primary_url": "https://arxiv.org/abs/2608.13951",
+        "source_sha256": "edaa9ba8521693dece5095505dbd0468ad8d7ed89fb42d5b06f80570729943b5",
+        "abstract_sha256": "5b533ab6bc1be8cc6040f74d3bc995fbb8e5a349c116a86ccf5e61e206de5705",
+        "year": 2026,
+        "publication_date": "2026-08-14",
+        "fetched_at": "2026-08-17T16:18:09+00:00",
+        "fulltext_sha256": "85bee03889d0946a31cee8e00a5a6c41ba8d2e4a230d63fdf205341d74f94387",
+        "empirical_fact_count": 2,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 0
+        }
+      },
+      {
+        "evidence_id": "d1d2f0bc3731792a11b82400777b4a70ad877e122d1c3d2ed90a9fe4ff54dc1d",
+        "ref": "arXiv:2608.14270",
+        "title": "TimeSage-EV: A Live Benchmark for Agentic Time Series Analysis in Evolving Environments",
+        "primary_url": "https://arxiv.org/abs/2608.14270",
+        "source_sha256": "0d32c88410056207044bd421104a81c167f48e8ce88fe622219917ba68a3e068",
+        "abstract_sha256": "36eaec193de3aaed9020ea646e18a0de88c16e037b98984f253d7f44265345c9",
+        "year": 2026,
+        "publication_date": "2026-08-14",
+        "fetched_at": "2026-08-17T16:18:09+00:00",
+        "fulltext_sha256": "dfd1f750757e3f8523ba8afbb82962bd17101cfd8a45055865f9e49f30fce2e1",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 2
+        }
+      },
+      {
+        "evidence_id": "0d280bfd432b402cfe95cf60b956f4eb754c080e02f4fb7ca8cab641b3142323",
+        "ref": "arXiv:2608.14441",
+        "title": "PACE-Bench: Benchmarking Physics Adaptation via Code Evolution in Dynamic Environments",
+        "primary_url": "https://arxiv.org/abs/2608.14441",
+        "source_sha256": "8a6c4d92937a833efb0eb19671a1eeb84d2280c1e4b957b7e7f962bf7fe03054",
+        "abstract_sha256": "a00465db3e70ddc862816673bebe5760d65670ad449bbf481710a010a518d7c6",
+        "year": 2026,
+        "publication_date": "2026-08-14",
+        "fetched_at": "2026-08-17T16:18:09+00:00",
+        "fulltext_sha256": "ea6f892f46c8533001b7de87099b040b1305460e738bede7323f4476c5880ff6",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 0
+        }
+      },
       {
         "evidence_id": "915078e95c611fdd9ee2fe12739422854b8196c481e6d2b0e615bd7a93489cc0",
         "ref": "arXiv:2608.12851",
@@ -30730,7 +30802,7 @@
         "abstract_sha256": "fe19bdcba3556f0d3bda09731512dd1bbdc8a3074acfebe2eaba9dc810096a3b",
         "year": 2026,
         "publication_date": "2026-08-13",
-        "fetched_at": "2026-08-16T16:19:47+00:00",
+        "fetched_at": "2026-08-17T16:18:09+00:00",
         "fulltext_sha256": "88f6f8078cb227fda7846d509652891cf2aa397214cb7783bd24db5d264c134d",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
@@ -30748,7 +30820,7 @@
         "abstract_sha256": "0f98d4f523d8ddc6ea13b4f806d7f1e4eab8e5eb1436b50fd4d1fc306207a846",
         "year": 2026,
         "publication_date": "2026-08-13",
-        "fetched_at": "2026-08-16T16:19:49+00:00",
+        "fetched_at": "2026-08-17T16:18:10+00:00",
         "fulltext_sha256": "149cbbd1fc5ae506dd1189936968a671a347e412689510f4c42c37b33134fcf8",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
@@ -30766,7 +30838,7 @@
         "abstract_sha256": "9f6d925001cc85833b8014ca89bc01a8095465ce2b64e3e158b691e627e2a7b3",
         "year": 2026,
         "publication_date": "2026-08-13",
-        "fetched_at": "2026-08-16T16:19:50+00:00",
+        "fetched_at": "2026-08-17T16:18:10+00:00",
         "fulltext_sha256": "d810b39f050dd6d3330e08aade701b1325511e98a47cb009be1ca5d975172957",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
@@ -30784,12 +30856,30 @@
         "abstract_sha256": "4efb311c73d666c1021ade5276b6bc50a4b004f46050217520ffccffb4bab572",
         "year": 2026,
         "publication_date": "2026-08-13",
-        "fetched_at": "2026-08-16T16:19:52+00:00",
+        "fetched_at": "2026-08-17T16:18:10+00:00",
         "fulltext_sha256": "f4b3cddc07b0cd8605292c720793f533abf60f5ddb094f5597e120fc89bbe417",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
           "operational_assumptions": 0,
           "measured_failures": 2,
+          "boundary_observations": 1
+        }
+      },
+      {
+        "evidence_id": "89ef4e4c636cada206e74c632e846373c4fdc323f9c074558e77c5d07680399a",
+        "ref": "arXiv:2608.13833",
+        "title": "AdsWorldEngine: A Self-Evolving Conversational Advertising Agent through Orchestrator and Tool Coevolution",
+        "primary_url": "https://arxiv.org/abs/2608.13833",
+        "source_sha256": "1e680868cb7e0a35f048d19d5b6e94ef33eba03a8e295ed5b660ae19820c8f2c",
+        "abstract_sha256": "265f29c3bdda7a86d6408795b1d0b355009a5cffd107339ccd13f94ea3dce8b2",
+        "year": 2026,
+        "publication_date": "2026-08-13",
+        "fetched_at": "2026-08-17T16:18:10+00:00",
+        "fulltext_sha256": "9c8b47cf067268311a5a9480f71055a64fb3e0d35aa0204eaa1e162c8dbe29fb",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 1,
           "boundary_observations": 1
         }
       },
@@ -30802,7 +30892,7 @@
         "abstract_sha256": "97e73d63341bbf65af02a1ab466054af20fc6e92f83210321cc1e3f727773127",
         "year": 2026,
         "publication_date": "2026-08-13",
-        "fetched_at": "2026-08-16T16:19:54+00:00",
+        "fetched_at": "2026-08-17T16:18:10+00:00",
         "fulltext_sha256": "496c78e91a4649291fb57b46fbb9642f7cc73261ee1dbf91899e3920c6cc886b",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
@@ -30820,7 +30910,7 @@
         "abstract_sha256": "ee4303e1a697379201d16ba6e8584e6b156f2a3acebb0617487cb9c611edad71",
         "year": 2026,
         "publication_date": "2026-08-13",
-        "fetched_at": "2026-08-16T16:19:55+00:00",
+        "fetched_at": "2026-08-17T16:18:10+00:00",
         "fulltext_sha256": "018906026616cd95dfd028e348e45537d4a3f7a99d87b2ad56bde293ba05efb4",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
@@ -30838,7 +30928,7 @@
         "abstract_sha256": "7cf39a8c696bb0fa31288661bf427def4f194a018d84c8d11495428871e60f10",
         "year": 2026,
         "publication_date": "2026-08-13",
-        "fetched_at": "2026-08-16T16:19:56+00:00",
+        "fetched_at": "2026-08-17T16:18:11+00:00",
         "fulltext_sha256": "79d04f7e8519c8d1fbee6048734d9c3b770238a456972b6da1efbcc3c9a4a72f",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
@@ -30856,7 +30946,7 @@
         "abstract_sha256": "049516b7be4908b566e5df5af8e97d2431d1180cb1ec4bd26b62394dd7f628e0",
         "year": 2026,
         "publication_date": "2026-08-12",
-        "fetched_at": "2026-08-16T16:19:58+00:00",
+        "fetched_at": "2026-08-17T16:18:11+00:00",
         "fulltext_sha256": "aad633809bf2bd92f2fc9c6c63e693050a7bad5ae09808418e8374a056ea13dd",
         "empirical_fact_count": 1,
         "typed_evidence_counts": {
@@ -30874,7 +30964,7 @@
         "abstract_sha256": "e1814c0ab9c92752df16257d2cbf84fb3d86f0c735dd3eef5c9e9b967af8727f",
         "year": 2026,
         "publication_date": "2026-08-12",
-        "fetched_at": "2026-08-16T16:20:00+00:00",
+        "fetched_at": "2026-08-17T16:18:11+00:00",
         "fulltext_sha256": "b59fdd9d3b2baaa6d8b453661dd29445ecddb555b13452489a815171a3b42dc9",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
@@ -30892,7 +30982,7 @@
         "abstract_sha256": "5746f100275ead50da892bfc6de7b200da96a023894ee14ed2e33d0ee078e17d",
         "year": 2026,
         "publication_date": "2026-08-12",
-        "fetched_at": "2026-08-16T16:20:01+00:00",
+        "fetched_at": "2026-08-17T16:18:11+00:00",
         "fulltext_sha256": "05b2b269be16742d48de9a006f492a3c74e7070429bb1ee7f90f3a1e8f0c4e53",
         "empirical_fact_count": 3,
         "typed_evidence_counts": {
@@ -30910,7 +31000,7 @@
         "abstract_sha256": "3b4cd58130025f013050903c6fec7de433726cfafd135d41af047813e58647f1",
         "year": 2026,
         "publication_date": "2026-08-12",
-        "fetched_at": "2026-08-16T16:20:03+00:00",
+        "fetched_at": "2026-08-17T16:18:11+00:00",
         "fulltext_sha256": "79a9c92991d928c4d8e4629a4a71ea8c92d2c56f8fe81e3a4a5ba6822f4b3a32",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
@@ -30920,340 +31010,142 @@
         }
       },
       {
-        "evidence_id": "f42a70cb00f05d9738f9da7aa2e2e0ac4df5aa4bcca34f09206d6196a21ec47f",
-        "ref": "arXiv:2608.12629",
-        "title": "CAKE: Compiler-Agent Co-Design for Frontier Kernel Evolution",
-        "primary_url": "https://arxiv.org/abs/2608.12629",
-        "source_sha256": "2a03ea6e8e692ce671860ad14bda1687b5bdd0d8a0daee1c6707af6b0e2a4d06",
-        "abstract_sha256": "4e8379a9ec2268d4cf6d766ba49095a0ae7d1af3bfc0d688f0b420027c715b48",
+        "evidence_id": "c86e5aeb063b7c2780af3a1556f200a03591304ef7ef981425f922242980507d",
+        "ref": "arXiv:2607.07820",
+        "title": "DeepSearch-World: Self-Distillation for Deep Search Agents in a Verifiable Environment",
+        "primary_url": "https://arxiv.org/abs/2607.07820",
+        "source_sha256": "8a58ee89becc66f109f7e0fd34b08cd37cc95232392584be7b31b7e82475d05a",
+        "abstract_sha256": "ff02f4f78756087698329c631c0d3d186bebc418207c714d427c96985bdee356",
         "year": 2026,
-        "publication_date": "2026-08-12",
-        "fetched_at": "2026-08-16T16:20:04+00:00",
-        "fulltext_sha256": "f6b6d085f69714f646e5cd96c485b79b88290bbed113bdc787d1021214541257",
-        "empirical_fact_count": 0,
+        "publication_date": "2026-07-08",
+        "fetched_at": "2026-08-17T16:18:11+00:00",
+        "fulltext_sha256": "205de33f5cc46d88b5e535e39db1f69536e1708684748974c315d5be3b34fb9c",
+        "empirical_fact_count": 4,
         "typed_evidence_counts": {
           "operational_assumptions": 0,
-          "measured_failures": 1,
+          "measured_failures": 0,
           "boundary_observations": 0
         }
       },
       {
-        "evidence_id": "d8ded9b8bc61eeb709452c7f3ed9455931f9e7fc19d4bfb050b9d93f111f6ef8",
-        "ref": "arXiv:2608.11350",
-        "title": "Self-Evolving Embodied Agents via Skill-Harness Evolution",
-        "primary_url": "https://arxiv.org/abs/2608.11350",
-        "source_sha256": "858e0810d79e91e3ef88111353d0c217e0e9f2c520be3cc55d4d937678d65811",
-        "abstract_sha256": "7dd3981db368a0044b8ae1fa5a7db76c83d5c45ba6bab69199629084bea1ec98",
+        "evidence_id": "2df168f62c05a24230d90cf309bbf4c58bd5673a6172cc6033fb601e7123f752",
+        "ref": "arXiv:2607.05297",
+        "title": "MetaSkill-Evolve: Recursive Self-Improvement of LLM Agents via Two-Timescale Meta-Skill Evolution",
+        "primary_url": "https://arxiv.org/abs/2607.05297",
+        "source_sha256": "c9209013bf5b06ea05a59cbf7b0d2697e18a10e8d1fbc9140a8b18f4e77e1ac5",
+        "abstract_sha256": "5df28bdb6e6fe9aad856eef4caaac12016d66bc3b973ac22491a283fe3806436",
         "year": 2026,
-        "publication_date": "2026-08-11",
-        "fetched_at": "2026-08-16T16:20:06+00:00",
-        "fulltext_sha256": "b03c9040d0bcc6148ceb8e89a4a0c5a635e88700179eba8b3a238ce90d7e5011",
+        "publication_date": "2026-07-06",
+        "fetched_at": "2026-08-17T16:18:11+00:00",
+        "fulltext_sha256": "84e40d16a13395870ca336bd8999e727d20aacc134f1fb821292a7452bc6fb8a",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
           "operational_assumptions": 0,
-          "measured_failures": 1,
+          "measured_failures": 2,
           "boundary_observations": 2
         }
       },
       {
-        "evidence_id": "f34d726d8ee4878f2a54cab7c012b5c7b47ade9b175cd97b1168f5a2ae994e8d",
-        "ref": "arXiv:2608.11079",
-        "title": "SkillZip: Evaluation-Free Skill Compression for Self-Evolving Agents by Discovering Reusable Structure",
-        "primary_url": "https://arxiv.org/abs/2608.11079",
-        "source_sha256": "1585a3730b56976c65db8ad7a8f5921dce53e30a15453f1abe68a709aaae07b9",
-        "abstract_sha256": "9e9f98dfba76b56d25c36ff2953dfc32efb3bdcc19dde784128d641c8825e3e3",
+        "evidence_id": "967931b97f55685f869426f67f33ec180a721e58e2713c436f9492dbf252ff69",
+        "ref": "arXiv:2607.05382",
+        "title": "Search Beyond What Can Be Taught: Evolving the Knowledge Boundary in Agentic Visual Generation",
+        "primary_url": "https://arxiv.org/abs/2607.05382",
+        "source_sha256": "1e0dbdae4ffdddce9b938ccce0332c95de3e27e3cd655006944bea186d446b59",
+        "abstract_sha256": "88754a06ff76d54cba3711c8c62ede82b89c1d2a06b7f8404a8e552e08fc4f46",
         "year": 2026,
-        "publication_date": "2026-08-11",
-        "fetched_at": "2026-08-16T16:20:07+00:00",
-        "fulltext_sha256": "122fcfe29d190ca8766396065d2b87bdf3facd2a42bf56fe22016941ceaca19c",
-        "empirical_fact_count": 0,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 0,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "af0bf97424d80050529085cf57718d31051f92616d853e12035808634b77bbcf",
-        "ref": "arXiv:2608.10504",
-        "title": "MEGA: Self-Evolving Agent Optimization Infrastructure via Wisdom Graph",
-        "primary_url": "https://arxiv.org/abs/2608.10504",
-        "source_sha256": "89a54970620b020251c2517e32d1210af58e3c4709fc143ecd8db7f0e440a2f8",
-        "abstract_sha256": "c8a69484dcd81327d0d4d403524e625473d01ebb99b3de3bea2dcbaac0c6245f",
-        "year": 2026,
-        "publication_date": "2026-08-11",
-        "fetched_at": "2026-08-16T16:25:22+00:00",
-        "fulltext_sha256": "",
-        "empirical_fact_count": 0,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 0,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "76a6c23fdd8cc1fdb1e2da2c2a86fd51367056b4ac838e2395d7550cf85480ff",
-        "ref": "arXiv:2608.10494",
-        "title": "GeoForge: Non-Parametric Self-Evolving Agents for Earth-Observation Reasoning",
-        "primary_url": "https://arxiv.org/abs/2608.10494",
-        "source_sha256": "4deacf27a61f286ea2e3f3b40a44ce9a5bfb51b1f5db568f4f243b104213c595",
-        "abstract_sha256": "4c83f5a3fe60278f9090435d8f6b715ddd04e4445ab6c7f3493a880d128bd111",
-        "year": 2026,
-        "publication_date": "2026-08-11",
-        "fetched_at": "2026-08-16T16:20:10+00:00",
-        "fulltext_sha256": "30c2a1deaceac1b3b20a79711ab05bc3344ff48762d4a149c3900f16c40d112a",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 1
-        }
-      },
-      {
-        "evidence_id": "6bfc3693b680860015dff7e5fa48b7db8362c5e70e68d6d570025726fb12846b",
-        "ref": "arXiv:2608.11224",
-        "title": "Harnessing agent memory to build lifelong AI partners for materials scientists",
-        "primary_url": "https://arxiv.org/abs/2608.11224",
-        "source_sha256": "1bf07301b0d226fc3036ce12df25be1857edd1fef059d32664652929c5b1320e",
-        "abstract_sha256": "54a1dad122c5668263e5b9f9920d487b3a070b3695fbc7df33b240403f22d517",
-        "year": 2026,
-        "publication_date": "2026-07-25",
-        "fetched_at": "2026-08-16T16:20:12+00:00",
-        "fulltext_sha256": "2fcf6033d7316729bc83a1654ab840a6cc99e2498980d42167b41fb3d193477d",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "be0c0b73691a06f3f817f6f2529e0a2bcc50a545ee08b0d08f51bc44fa9d5e7a",
-        "ref": "arXiv:2607.22529",
-        "title": "Skill Self-Play: Pushing the Frontier of LLM Capability with Co-Evolving Skills",
-        "primary_url": "https://arxiv.org/abs/2607.22529",
-        "source_sha256": "897fbc5d2b3df5e9e03a4184e64923254fc9172dd7ee5a47d10631327f0c1454",
-        "abstract_sha256": "ec4c6fdf4614e41855aa29a35f8eeda718f845453400c81b0013fcb8c763242c",
-        "year": 2026,
-        "publication_date": "2026-07-24",
-        "fetched_at": "2026-08-16T16:20:13+00:00",
-        "fulltext_sha256": "9f4aa516220cb30d62990d63398ad3c5c28aea3633a6b1b374eb980eedc309ab",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "0870c07989d8d5187bfc68117a3a20ed4300c908bcf4a7cd8d41ceffe581eb60",
-        "ref": "arXiv:2607.21125",
-        "title": "Causal-AgentIR: Self-Evolving Causal Memory for Adaptive Image Restoration Agents",
-        "primary_url": "https://arxiv.org/abs/2607.21125",
-        "source_sha256": "b93664e6b2fe921d9ce4af4b1f37582d4cffd7e09cf882d2ad4dcc0356f9dbc3",
-        "abstract_sha256": "d69b51ebfaf13c620afacda44b123ec627e8f34a1bf27772f1ed1d4070cbd637",
-        "year": 2026,
-        "publication_date": "2026-07-23",
-        "fetched_at": "2026-08-16T16:20:15+00:00",
-        "fulltext_sha256": "9fd59103952a30b95882785fe720d385322a01010c86baa30b55c6c5edacb417",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "3e8f59f028597d1b42431125bc98e20287b50e977f3f9203fe0035db0419b93a",
-        "ref": "arXiv:2607.20019",
-        "title": "EvoDRC: A Self-Evolving Agentic Framework for Automated DRC Violation Repair",
-        "primary_url": "https://arxiv.org/abs/2607.20019",
-        "source_sha256": "9a9d4b159e5c0a0b21146de4b961d83f1e8fea1b71c9f973549b527204ade798",
-        "abstract_sha256": "332713eb08561fc52d25aa48fa132e28cedfd867fe7298a587a1c25aaa4959f3",
-        "year": 2026,
-        "publication_date": "2026-07-22",
-        "fetched_at": "2026-08-16T16:20:16+00:00",
-        "fulltext_sha256": "145c5a5b4fb6faa1662661eadf998ddd65d394a0650f316cb508af533df578c5",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 1,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "192a04dea93902c0880b91726b2eec14f0ad8c9dc251064c4ccf2cfb0d4c540d",
-        "ref": "arXiv:2607.19592",
-        "title": "Knowledge-Centric Self-Improvement",
-        "primary_url": "https://arxiv.org/abs/2607.19592",
-        "source_sha256": "cee97e49625c293e63ea53e5a3d2062269212c1655483d0b5853e6a8f0110042",
-        "abstract_sha256": "cfa9f406d651e3486a554836c3e45bdc01dcaa5e63df0e6c33e5c27793a69c49",
-        "year": 2026,
-        "publication_date": "2026-07-21",
-        "fetched_at": "2026-08-16T16:20:18+00:00",
-        "fulltext_sha256": "0ba302eb24f862155eb7d4884aeb3568dfb96b9f3f3da6482b32c51631e2f9e3",
-        "empirical_fact_count": 2,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 0,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "59b65398300cd2bb7be084e4b22bda902828a14000b05ad605b73b76f415917d",
-        "ref": "arXiv:2608.07527",
-        "title": "DocAtlas: Long-Document Understanding as Mutable-State Interaction",
-        "primary_url": "https://arxiv.org/abs/2608.07527",
-        "source_sha256": "1708a56e672064a0a9ff2d06026b68e248460adf3bfc3e3d149219f155128e5f",
-        "abstract_sha256": "6d6f9901813fcbef228aa552fc20d4b3a59b6b6190d8ebf44e167ca46ae29b05",
-        "year": 2026,
-        "publication_date": "2026-07-21",
-        "fetched_at": "2026-08-16T16:20:19+00:00",
-        "fulltext_sha256": "dff07ace568986e957e6eb2d2f995938fd20dedc6d052d0eaa7e1f6813ca09d2",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "62a8e99d2d518e5dac07ec8c72ad94d2fb667ffd623f327a1be59fe6ebc2ab98",
-        "ref": "arXiv:2607.17621",
-        "title": "Mechanistic Attention Guidance for Agent Memory Refinement",
-        "primary_url": "https://arxiv.org/abs/2607.17621",
-        "source_sha256": "d38b2ac9dc82f077855ad2a43d8c22f43c3352959379c9499cc664e00a64b801",
-        "abstract_sha256": "bf5c3db8e7c9e2e21168307302393bdab8f118864ad3fe28287e2ab3a7219daf",
-        "year": 2026,
-        "publication_date": "2026-07-20",
-        "fetched_at": "2026-08-16T16:20:21+00:00",
-        "fulltext_sha256": "a18b0aa7033f8022f90dd0896e73cf07c9c92a7a067a18478e6088cc3b25475c",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "463bd2878909b508b98be4b8e3a871e18059d58dec170becaf1c168b7ad7e4b3",
-        "ref": "arXiv:2607.17719",
-        "title": "SR-Agent: An Experience-Driven Agentic Framework for Post-Ranking Strategy Refinement in E-Commerce Recommendation",
-        "primary_url": "https://arxiv.org/abs/2607.17719",
-        "source_sha256": "140904d714fbb1c8874e62a8920a4e8190f48ce2d5724b6926824fb56351559d",
-        "abstract_sha256": "cfbc9c54b2b4d83ffc571a87db343bd42e9f9edf2b7b19e50af9bd864956dc15",
-        "year": 2026,
-        "publication_date": "2026-07-20",
-        "fetched_at": "2026-08-16T16:20:22+00:00",
-        "fulltext_sha256": "43e82314189963f04fc49440019bd95033ffb199a1320b679a40dc95b94cc9e5",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 1,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "80b605265443f585869700cd49a9cd3b5c80afaa4cce83685636cbbde86fd65c",
-        "ref": "arXiv:2607.16636",
-        "title": "PhyAgentOS: A Self-Evolving Operating System for Embodied Agents with Decoupled Cognitive Planning and Physical Execution",
-        "primary_url": "https://arxiv.org/abs/2607.16636",
-        "source_sha256": "8a843aead5f683181055f0bb811450cbf46f6abbafa39c34d7e69f04d37b6986",
-        "abstract_sha256": "374857ccba8c7594441b358fc50775c2d1d90dec7b49bf69aec9a157a834d9f5",
-        "year": 2026,
-        "publication_date": "2026-07-18",
-        "fetched_at": "2026-08-16T16:20:24+00:00",
-        "fulltext_sha256": "69f1188f7a6d04ab46ea7a55a15ffdc192637210117349014837785b5faf35e9",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 1
-        }
-      },
-      {
-        "evidence_id": "372a033afdd61196a30e954da8d052f791d5e71935af35f0d105fef0ecca89fa",
-        "ref": "arXiv:2607.15524",
-        "title": "Recursive Harness Self-Improvement",
-        "primary_url": "https://arxiv.org/abs/2607.15524",
-        "source_sha256": "52ce58911bfd8985dc8918ac6f480d173552a0447d600e01d63d48c25d71b4fa",
-        "abstract_sha256": "e1fe95b411295440a560e135b4d41685c4ffaccdf06234263042adb1019390df",
-        "year": 2026,
-        "publication_date": "2026-07-17",
-        "fetched_at": "2026-08-16T16:20:26+00:00",
-        "fulltext_sha256": "c1cbd334837bfe1cf4e74bb9a2de7ae1fb19c81f4164f9d347c11dd2fc39bc41",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 0,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "6491d7a80e6a3790b99119e10051d0d78539ba777277d2eb2ef56601aae1e391",
-        "ref": "arXiv:2607.14777",
-        "title": "SEED: Self-Evolving On-Policy Distillation for Agentic Reinforcement Learning",
-        "primary_url": "https://arxiv.org/abs/2607.14777",
-        "source_sha256": "14a61274db255c96192fcbd3d0df3aff334c8b1070a4662e789ff8d8ee3dce29",
-        "abstract_sha256": "a0de731fa48d02e4270688457333adbee2e0d69b50838521df006f4b62c3451e",
-        "year": 2026,
-        "publication_date": "2026-07-16",
-        "fetched_at": "2026-08-16T16:20:27+00:00",
-        "fulltext_sha256": "31bf76e8aa8dbcb587b48ceb3a96fb64e26315ad4e6424459c1604df783c7cda",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 2,
-          "boundary_observations": 0
-        }
-      },
-      {
-        "evidence_id": "020a1a988d9075c54550a680d612f43dacc12cf3a0c330139bf89b4a9bcd601c",
-        "ref": "arXiv:2607.13683",
-        "title": "HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution",
-        "primary_url": "https://arxiv.org/abs/2607.13683",
-        "source_sha256": "2672edf48bfc5a703fc463ce2d3e263437cc98c162bf93a7df34bff9900b9539",
-        "abstract_sha256": "7e2b51540f563cd2dd2e25039db5ab08c0c960b8e64d4e174059e6b40756efcb",
-        "year": 2026,
-        "publication_date": "2026-07-15",
-        "fetched_at": "2026-08-16T16:20:29+00:00",
-        "fulltext_sha256": "74082edc56e911da43e9b70b8eeaf4d6552b8fea7e15b7a0ab00d4c20aff2997",
-        "empirical_fact_count": 4,
-        "typed_evidence_counts": {
-          "operational_assumptions": 0,
-          "measured_failures": 1,
-          "boundary_observations": 2
-        }
-      },
-      {
-        "evidence_id": "898e9849686263730fab1620e3b38240340a127a79896d811274d993574e3a58",
-        "ref": "arXiv:2607.13940",
-        "title": "A Self-Evolving Agent for Longitudinal Personal Health Management",
-        "primary_url": "https://arxiv.org/abs/2607.13940",
-        "source_sha256": "b4dd75d89f397bfa9685eec2d8a443ccd0402e68d633aecb6d4266b95d5a92c1",
-        "abstract_sha256": "a6561b3470d6da46fad767a713cd99006a1432aa250ec041a644bb69726e16fc",
-        "year": 2026,
-        "publication_date": "2026-07-15",
-        "fetched_at": "2026-08-16T16:20:30+00:00",
-        "fulltext_sha256": "73e7ea117a91977c53a636074bc8e28c326a18a4f9ebc85db8f79e4d6f5c85f9",
+        "publication_date": "2026-07-06",
+        "fetched_at": "2026-08-17T16:18:11+00:00",
+        "fulltext_sha256": "6a82c7d5f777e3e4c79177d83237d82556137ee1a214d448b693e5199a9e8084",
         "empirical_fact_count": 3,
         "typed_evidence_counts": {
           "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 1
+        }
+      },
+      {
+        "evidence_id": "731388efa55f4ef698a1fdcdbc7ecccb06cb6ccd9f40d0d4eef6a0d48d50a2ce",
+        "ref": "arXiv:2607.05202",
+        "title": "EvoAgentBench: Benchmarking Agent Self-Evolution via Ability Transfer",
+        "primary_url": "https://arxiv.org/abs/2607.05202",
+        "source_sha256": "23e4ca083733da9c02e1088d73dfdbd60db79f9f053113ed291e67326fb28aa8",
+        "abstract_sha256": "d2d3b4f9225f3de907e9922d9bb762857dcc8fc253200ced2cdf7ab2df485d6d",
+        "year": 2026,
+        "publication_date": "2026-07-06",
+        "fetched_at": "2026-08-17T16:18:11+00:00",
+        "fulltext_sha256": "36905c9d144cc9963b84d5d3e139a5dc0efd07ed6fe8f30c32eeefcf88e4ca64",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 1,
+          "measured_failures": 0,
+          "boundary_observations": 0
+        }
+      },
+      {
+        "evidence_id": "cb3d45feca79c4fcb17337740784ab420bbe042e8d6f62cd9453d4b810b422d6",
+        "ref": "arXiv:2607.03935",
+        "title": "Harness-Aware Self-Evolving: Co-Evolving Model Weights, Harness, and Task Solutions",
+        "primary_url": "https://arxiv.org/abs/2607.03935",
+        "source_sha256": "17692f918c12f742bfb745b3b76bb23a0559e05c6e455947ce43c5ad2f3bae60",
+        "abstract_sha256": "d3360ff83a082b30c770b0a142c5ec79b2c84115b2d3ba9039838bc04acf3d86",
+        "year": 2026,
+        "publication_date": "2026-07-04",
+        "fetched_at": "2026-08-17T16:18:11+00:00",
+        "fulltext_sha256": "63b5a2bd28bcbbe921a8392862b2dd980d6276dc2a385c3019daea3ca6dd28f1",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 0,
+          "boundary_observations": 1
+        }
+      },
+      {
+        "evidence_id": "4995787519625e7adcb8bd5dea532786ac8eab16eb3fb52870d08cfbc6c28d32",
+        "ref": "arXiv:2607.03691",
+        "title": "Don't Blame the Large Language Model: How Agent Harness Evolution Shapes Coding Agent Quality",
+        "primary_url": "https://arxiv.org/abs/2607.03691",
+        "source_sha256": "bbb89027fc2ff124aff11938525f614a008c0fad76eb60e5fc24d51e30cae00f",
+        "abstract_sha256": "ff2cc0283725143e78bd672fa5f83b8ae33df3daa94b01b5cc2734e573b878e3",
+        "year": 2026,
+        "publication_date": "2026-07-04",
+        "fetched_at": "2026-08-17T16:18:11+00:00",
+        "fulltext_sha256": "0ddcd56681c80b1d0b483ca7581de85fd143625ad125ff1e9b727a27c3e8fb16",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 1,
+          "measured_failures": 2,
+          "boundary_observations": 2
+        }
+      },
+      {
+        "evidence_id": "206ddd68faa77378172a8416c12de53b935f5f1dcb629520c503ef42fc10bee2",
+        "ref": "arXiv:2607.03451",
+        "title": "SkillOpt-Lite: Better and Faster Agent Self-evolution via One Line of Vibe",
+        "primary_url": "https://arxiv.org/abs/2607.03451",
+        "source_sha256": "9ee72e2de4054f0fba937cdb32fbe22816d6a417add85ba2e9030f6b2fc1bf49",
+        "abstract_sha256": "875e13b0c9c7c5543cd222278ff4f8ba5a8476fccb425e7c1850d95403863906",
+        "year": 2026,
+        "publication_date": "2026-07-03",
+        "fetched_at": "2026-08-17T16:18:11+00:00",
+        "fulltext_sha256": "df5b8af96c3a3892b8d2245a520ba8b55f81a536f6609b6e9c5c3f0e74f09350",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
           "measured_failures": 1,
           "boundary_observations": 0
         }
       },
       {
-        "evidence_id": "c007f51d2ab47ab0afb986b6e554110044c40d71021af4177467c41daa585024",
-        "ref": "arXiv:2607.15314",
-        "title": "Cura 1T: Specialized Model for Agentic Healthcare",
-        "primary_url": "https://arxiv.org/abs/2607.15314",
-        "source_sha256": "3347e5a3379ed6ba9664936da1c62469dca6c07839209c40802a9adbe66df536",
-        "abstract_sha256": "c0c97f4d758b2979214ae6b17dec106aef78caca5e4636682fb79e558b97251a",
+        "evidence_id": "c7f58741f67f9eb7d5e4a9d420e4c89558c126c7d0c54041dcd070f2e4ba23be",
+        "ref": "arXiv:2607.03238",
+        "title": "An Empirical Study of Downstream Adaptation for Agent Skills",
+        "primary_url": "https://arxiv.org/abs/2607.03238",
+        "source_sha256": "41d408b4cae56c8a217ac3347173afb95029c5883cd0674306dd82d51b46da99",
+        "abstract_sha256": "e745168af95861fcaeb44d5c19be4c0e7bb88a5d334598fbff48e589a95553f0",
         "year": 2026,
-        "publication_date": "2026-07-15",
-        "fetched_at": "2026-08-16T16:20:32+00:00",
-        "fulltext_sha256": "87d776a234890dfb6e51098519de6f1f202abe743535940111c7345d79447cc5",
+        "publication_date": "2026-07-03",
+        "fetched_at": "2026-08-17T16:18:12+00:00",
+        "fulltext_sha256": "150b36534cc4e5130c6037f54d38ebced66d0f120b30187630731d76997f81c4",
         "empirical_fact_count": 2,
         "typed_evidence_counts": {
           "operational_assumptions": 0,
@@ -31262,16 +31154,88 @@
         }
       },
       {
-        "evidence_id": "534ca0c0ba33914b6534478176df99cc0f04c24c02b07ef5d73516712224eb59",
-        "ref": "arXiv:2607.13987",
-        "title": "Agent Skill Security: Threat Models, Attacks, Defenses, and Evaluation",
-        "primary_url": "https://arxiv.org/abs/2607.13987",
-        "source_sha256": "a1f2d6ed461b5a458d1c407a2024eedf53e23985c9c7cce5d66cb7f314f52a75",
-        "abstract_sha256": "d1959ecd767a0404b269ec892ad448bec233980ab12fb5985d61d64dfcca98a6",
+        "evidence_id": "84cd19fc4a74c00579a9b2cf98d7dde7175836177562853a9aa8d95e0905a729",
+        "ref": "arXiv:2607.01709",
+        "title": "COMFYCLAW: Self-Evolving Skill Harnesses for Image Generation Workflows",
+        "primary_url": "https://arxiv.org/abs/2607.01709",
+        "source_sha256": "623a2ad70becbae9d71b9360de643ee815221071c5a585f9726163333db36cbd",
+        "abstract_sha256": "842e686b3cf96f7ef4b688cc0de13e50796ab0197ec03c2a93dc3241358aa6a0",
         "year": 2026,
-        "publication_date": "2026-07-15",
-        "fetched_at": "2026-08-16T16:20:33+00:00",
-        "fulltext_sha256": "a897a97df33e1ba232d5358e28dfc587fca62cac76e8629a3cb012fe0737ed89",
+        "publication_date": "2026-07-02",
+        "fetched_at": "2026-08-17T16:18:12+00:00",
+        "fulltext_sha256": "18f97f89b8b61afc4c57f2141886d440f1e2998e47526d5a5cd9642e9479ffb5",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 0
+        }
+      },
+      {
+        "evidence_id": "67a1a8cf9149d88db6b4466f338dbb3f966775e0af6bc9a0e37f762ab398917a",
+        "ref": "arXiv:2607.01874",
+        "title": "SkillCoach: Self-Evolving Rubrics for Evaluating and Enhancing Agentic Skill-Use",
+        "primary_url": "https://arxiv.org/abs/2607.01874",
+        "source_sha256": "59d1223dec4152c616b68ed69a4a8e76f251940eb4eb2eab7c3ce9022543b2f4",
+        "abstract_sha256": "14482875e58ba1f365abe1e8bc5dc5d0b44296479a4483e2a393c798bb7ba0fb",
+        "year": 2026,
+        "publication_date": "2026-07-02",
+        "fetched_at": "2026-08-17T16:18:12+00:00",
+        "fulltext_sha256": "98e09b6cf2748867e3843fe1ace5525225b0d87a2821316614b6942be12fd728",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 1
+        }
+      },
+      {
+        "evidence_id": "e826d3838f17dde4750338fb15e5efa1ac5226a87899c01c44a935af074117e8",
+        "ref": "arXiv:2607.02440",
+        "title": "EvoPolicyGym: Evaluating Autonomous Policy Evolution in Interactive Environments",
+        "primary_url": "https://arxiv.org/abs/2607.02440",
+        "source_sha256": "d0faa3ce56ea91f7bd3e1e93c497c062d19557c726d1d4b6916b193b4efe571f",
+        "abstract_sha256": "cb7baca59e601cb132f0a20d5c1032a1858f2bce79af1680710645e0c6803e3b",
+        "year": 2026,
+        "publication_date": "2026-07-02",
+        "fetched_at": "2026-08-17T16:18:12+00:00",
+        "fulltext_sha256": "adaa2a239126bc039d3f371243dc22d346030bbd2b4de94620296658e9dc503a",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 0
+        }
+      },
+      {
+        "evidence_id": "b5f69854ca01b4739096a64cf9b2a2146c6d812ad69d56679946d4e41c17defe",
+        "ref": "arXiv:2607.01120",
+        "title": "Next-Generation Agentic Reinforcement Learning Systems Enable Self-Evolving Agents",
+        "primary_url": "https://arxiv.org/abs/2607.01120",
+        "source_sha256": "bfa08370a8a33d0e4e268a9ffab40c33e8cd374ae8da036c1e8ad340c7e4771d",
+        "abstract_sha256": "73df69043aef7e3ba9e6cb320fe0690e00f010cf890f5fbb9e74837b6e9d8a3e",
+        "year": 2026,
+        "publication_date": "2026-07-01",
+        "fetched_at": "2026-08-17T16:18:12+00:00",
+        "fulltext_sha256": "025c1aed153fe758e970de53ff298c8ba1abf18b7d9205071f15719069d8f3d7",
+        "empirical_fact_count": 0,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 0,
+          "boundary_observations": 0
+        }
+      },
+      {
+        "evidence_id": "38ee962acb1d5319394c80555147d6cc6e9caaafe5575e12ac0a98e91a948046",
+        "ref": "arXiv:2607.00871",
+        "title": "Self-Evolving Agents with Anytime-Valid Certificates",
+        "primary_url": "https://arxiv.org/abs/2607.00871",
+        "source_sha256": "6edcccca17f11eb18c0ccb9abe05a111275a8663092888ba32e2b64004f42275",
+        "abstract_sha256": "46f1b4b3f92cc476820e8e65a5b302663656ec435a4bbe92f7ad2ea1a2c96fb9",
+        "year": 2026,
+        "publication_date": "2026-07-01",
+        "fetched_at": "2026-08-17T16:18:12+00:00",
+        "fulltext_sha256": "b94d6e9f3644e9bfb70504035d34d0a6b03ce516ad25d9d3f09d3fe3bcf2c850",
         "empirical_fact_count": 4,
         "typed_evidence_counts": {
           "operational_assumptions": 0,
@@ -31280,17 +31244,53 @@
         }
       },
       {
-        "evidence_id": "198e5a65b42bbb0bc208b8d8a8935c7e06b813e6c2676e2c64908b2bf2bfab97",
-        "ref": "arXiv:2607.12790",
-        "title": "Who Grades the Grader? Co-Evolving Evaluation Metrics and Skills for Self-Improving LLM Agents",
-        "primary_url": "https://arxiv.org/abs/2607.12790",
-        "source_sha256": "6999e57ffd9b04d0c6f4c2fba24e8ffa7415f7c141ab4b10da2980291810c1af",
-        "abstract_sha256": "1aa511dbad98ad4252e74979c8ecd24482263a2efe6b15b04405beea3eaf3b6d",
+        "evidence_id": "be044a7ebb6877329954e331bce16c2ff6455fc93b05487a69fc874892ed7447",
+        "ref": "arXiv:2607.00457",
+        "title": "Multi-scale Mixture of World Models for Embodied Agents in Evolving Environments",
+        "primary_url": "https://arxiv.org/abs/2607.00457",
+        "source_sha256": "6769321704922da929075f57dbf22d96f472014e01282e65822aa5ceb8cbb489",
+        "abstract_sha256": "81241cae49d6f6316729a12bafa8a97a2606616052f2233de9e3ce03991ad2f0",
         "year": 2026,
-        "publication_date": "2026-07-14",
-        "fetched_at": "2026-08-16T16:20:35+00:00",
-        "fulltext_sha256": "a10f0a0904a31cd3e4f5810216c0fb398758f5a3c26ac0a86a60dc28492481ff",
+        "publication_date": "2026-07-01",
+        "fetched_at": "2026-08-17T16:18:12+00:00",
+        "fulltext_sha256": "6d60ef52fe50ac6a41fa9792dd2e9fcc564cd320bbd1097032bf998915297ac9",
         "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 0
+        }
+      },
+      {
+        "evidence_id": "d8ccd49c3ced5fb7d93c29aa12611748cb424916481c486a2a462a329cb7ab90",
+        "ref": "arXiv:2607.01071",
+        "title": "MemSyco-Bench: Benchmarking Sycophancy in Agent Memory",
+        "primary_url": "https://arxiv.org/abs/2607.01071",
+        "source_sha256": "0e3debc68403d9674a1b939070080cf268ef88168c41d6a62ad48db6f6136ba1",
+        "abstract_sha256": "5bac8d45b37b9249069a372b2ced75ca6c1ab94451f82232c7e41a8ddf10bcff",
+        "year": 2026,
+        "publication_date": "2026-07-01",
+        "fetched_at": "2026-08-17T16:18:13+00:00",
+        "fulltext_sha256": "7641c8fd5c903c3b1f3e6a80d0dd951410dcec8045e4a6a8255d62474824332a",
+        "empirical_fact_count": 4,
+        "typed_evidence_counts": {
+          "operational_assumptions": 0,
+          "measured_failures": 2,
+          "boundary_observations": 1
+        }
+      },
+      {
+        "evidence_id": "c0235ff8f38e1df1bae2bd9204ab0d9583661ad31c4b6be5f9e6eed9fa0fda9b",
+        "ref": "arXiv:2607.00911",
+        "title": "From Registry to Repository: How AI Agent Skills Are Written, Adapted, and Maintained",
+        "primary_url": "https://arxiv.org/abs/2607.00911",
+        "source_sha256": "563895632cdf84506e9510c397a321f752134dcd7ef598b23c35f3f2cddf5655",
+        "abstract_sha256": "97b082f8628cbf1ff4dcb421c82c41ca72f8139240330737de93eebf9725c58b",
+        "year": 2026,
+        "publication_date": "2026-07-01",
+        "fetched_at": "2026-08-17T16:18:13+00:00",
+        "fulltext_sha256": "8a9120da072b42cc2e0a5ecc2a02fe47896db0448eef0bdf3d4f443d46d99d38",
+        "empirical_fact_count": 3,
         "typed_evidence_counts": {
           "operational_assumptions": 0,
           "measured_failures": 2,
@@ -31301,14 +31301,14 @@
     "errors": [],
     "discovery_errors": [],
     "corpus_retrieved_at": "2026-08-13T07:06:23+00:00",
-    "corpus_age_days": 3.3875748827083334,
+    "corpus_age_days": 4.382540470023148,
     "carrier_probe": {
       "enabled": true,
       "required": true,
       "classifier_version": "existing-object-carrier-v1",
-      "probe_limit": 4,
-      "attempted": 1,
-      "reused": 3,
+      "probe_limit": 3,
+      "attempted": 2,
+      "reused": 2,
       "rescued": 0,
       "pending": 0,
       "complete": true,
@@ -31376,7 +31376,7 @@
         },
         {
           "ref": "arXiv:2607.14408",
-          "probed_at": "2026-08-16T16:18:50+00:00",
+          "probed_at": "2026-08-17T16:17:14+00:00",
           "title_fingerprint": "694774a91ece195df7804e18fad505513562192ad3175102565966f883998b27",
           "publication_date": "2026-07-15",
           "primary_sha256": "cd1960e907ae5df706ba1ba199aaf0a6568f7e2693eeddaa155f061397380b74",
@@ -31400,7 +31400,7 @@
         },
         {
           "ref": "arXiv:2607.03766",
-          "probed_at": "2026-08-16T16:24:29+00:00",
+          "probed_at": "2026-08-17T16:17:14+00:00",
           "title_fingerprint": "c09047514dc69d3b7498d61977a9250c40f0f9fbf481051880e30077d27cf30e",
           "publication_date": "2026-07-04",
           "primary_sha256": "9b65189075f272ec69303ddaf584198c74dd7e86dc7666801860e9e19751be65",
@@ -31439,14 +31439,9 @@
       ],
       "scientific_authority": false
     },
-    "fulltext_errors": [
-      {
-        "ref": "arXiv:2608.10504",
-        "error": "recent-fulltext-failure-cooldown"
-      }
-    ],
+    "fulltext_errors": [],
     "status": "READY",
-    "discovery_transaction_id": "c1b476ed37ad9149abe715b6c2eafc10c29587401c64662b765b9d2e09ce6d89",
+    "discovery_transaction_id": "2975a3f837b4577abf958e5e021c4f85f7f097c36f4d7563f29353529f84fdf5",
     "discovery_transaction_role": "primary"
   },
   "paper_first_scientific_object_retrieval_audit": {
@@ -32346,13 +32341,13 @@
   },
   "paper_first_problem_generator": {
     "schema_version": "2.5",
-    "generated_at": "2026-08-16T18:27:35+00:00",
-    "run_id": "20260816T182735Z",
-    "generator_model": "ark-code-latest",
-    "reviewer_model": "glm-5.2",
+    "generated_at": "2026-08-17T16:18:13+00:00",
+    "run_id": "20260817T161813Z",
+    "generator_model": "glm-5.3",
+    "reviewer_model": "deepseek-v4-pro",
     "policy": {
       "zero_candidates_is_valid": true,
-      "discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
+      "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
       "single_source_anomaly_first_enabled": true,
       "source_coverage_saturation_reopens_once_on_operator_change": true,
       "search_portfolio_enabled": false,
@@ -32381,6 +32376,10 @@
       "reduction_falsifiability_contract_required": false,
       "generic_theory_label_cannot_veto": false,
       "format_retry_forbidden": true,
+      "transport_only_no_output_fallback_allowed": true,
+      "transport_fallback_max_additional_provider_attempts": 1,
+      "transport_fallback_requires_zero_auditable_assistant_output": true,
+      "transport_fallback_is_single_logical_generator_call": true,
       "thinking_disabled": true,
       "multi_lane_discovery_enabled": true,
       "allowed_discovery_lanes": [
@@ -32411,6 +32410,7 @@
       "one_generator_call_must_audit_all_discovery_lanes": true,
       "portfolio_expansion_must_audit_all_discovery_lanes": false,
       "lane_search_diagnostics_have_zero_scientific_authority": true,
+      "lane_search_output_order_is_canonicalized_after_validation": true,
       "historically_underexplored_lanes_are_searched_first": true,
       "lane_search_never_requires_candidate": true,
       "last_completed_lane_search_is_portable_zero_authority_receipt": true,
@@ -32442,13 +32442,13 @@
       "evolved_branches": 0,
       "max_branch_depth": 0,
       "portfolio_calls": 0,
-      "generated": 0,
+      "generated": 1,
       "structurally_reviewable": 0,
       "semantic_clear": 0,
-      "semantic_blocked": 0,
-      "written_to_auto_inbox": 0,
+      "semantic_blocked": 1,
+      "written_to_auto_inbox": 1,
       "generated_by_lane": {
-        "CONTRADICTION": 0,
+        "CONTRADICTION": 1,
         "CONVERGENT_FAILURE": 0,
         "ASSUMPTION_BREAK": 0,
         "UNEXPLAINED_BOUNDARY": 0,
@@ -32469,7 +32469,7 @@
         "OTHER": 0
       },
       "semantic_blocked_by_lane": {
-        "CONTRADICTION": 0,
+        "CONTRADICTION": 1,
         "CONVERGENT_FAILURE": 0,
         "ASSUMPTION_BREAK": 0,
         "UNEXPLAINED_BOUNDARY": 0,
@@ -32478,12 +32478,45 @@
     },
     "raw_artifacts": {
       "generator": {
-        "sha256": "33bfa8d60cafc7f99ed7cbef6a2b3ab256c23d0f61e70e38ddc2231162a256ca",
-        "requested_model": "ark-code-latest",
-        "resolved_model": "doubao-seed-evolving"
+        "sha256": "b921767ef4674142af7d6b3124786e2f71dd9cabcee0eac31bd8eb088f578deb",
+        "requested_model": "glm-5.3",
+        "resolved_model": "kimi-k3",
+        "transport_attempts": [
+          {
+            "requested_model": "glm-5.3",
+            "status": "error-no-output",
+            "error_kind": "provider-incomplete-before-output",
+            "assistant_output_present": false,
+            "provider_receipt_audit": {
+              "provider_receipt_sha256": "ab8e8528ce8be3c64d58dee977d5730c583d8edfed64c615a8b991d8c46418ee",
+              "status": "incomplete",
+              "requested_model": "glm-5.3",
+              "resolved_model": "glm-5.3",
+              "incomplete_reason": "length",
+              "scientific_authority": false
+            }
+          },
+          {
+            "requested_model": "kimi-k3",
+            "status": "success",
+            "resolved_model": "kimi-k3",
+            "assistant_output_present": true
+          }
+        ],
+        "transport_fallback_used": true,
+        "provider_receipt_audits": [
+          {
+            "provider_receipt_sha256": "ab8e8528ce8be3c64d58dee977d5730c583d8edfed64c615a8b991d8c46418ee",
+            "status": "incomplete",
+            "requested_model": "glm-5.3",
+            "resolved_model": "glm-5.3",
+            "incomplete_reason": "length",
+            "scientific_authority": false
+          }
+        ]
       }
     },
-    "generation_notes": "Zero candidates survive. The only grounded lane-level tuple is an ASSUMPTION_BREAK between the memory-basis monotonicity assumption and empirical skill-induced failures, but it is blocked by the procedural-memory-nonmonotonicity saturation key.",
+    "generation_notes": "One candidate survives. CONVERGENT_FAILURE and ASSUMPTION_BREAK both ground to real tuples but land in the procedural-memory-nonmonotonicity / applicability-decomposition basin that accounts for 50% of prior blocks, with no new observable defeating the recorded reductions; UNEXPLAINED_BOUNDARY (LOPD plateau, TimeSage easy-tier saturation, retrieval-precision collapse) reduces to capacity/saturation under same information. The emitted CONTRADICTION candidate is kept only because its distinguishing test (matched-base opposite-sign cell, trace-free certificate) is concrete and not yet executed by either source.",
     "search_diagnostics": {
       "lane_search_priority": [
         "CONTRADICTION",
@@ -32495,21 +32528,29 @@
       "lane_search": [
         {
           "lane": "CONTRADICTION",
-          "status": "NO_PAIR",
-          "source_refs": [],
-          "reason": "No two independently grounded empirical facts were found under an explicitly shared operationalization that are incompatible rather than merely different tasks, metrics, or conditions."
+          "status": "CANDIDATE",
+          "source_refs": [
+            "arXiv:2607.05297",
+            "arXiv:2607.01874"
+          ],
+          "reason": "Grounded quantitative sign reversal on the same operationalization (frozen-backbone skill evolution, held-out task success): MetaSkill-Evolve's static skill regresses −1.93 on ALFWorld while SkillCoach's initial-rubric filtering gains +8/+14 points, and neither paper's mechanism (saturation headroom vs rubric quality) expresses the sign under matched information."
         },
         {
           "lane": "CONVERGENT_FAILURE",
-          "status": "NO_PAIR",
-          "source_refs": [],
-          "reason": "No pair of independent method families was found with quantitative failure under the same bounded operational condition and a common failure object; observed failures are task- or system-specific."
+          "status": "REDUCIBLE",
+          "source_refs": [
+            "arXiv:2608.14036",
+            "arXiv:2608.11888"
+          ],
+          "reason": "Both papers quantitatively show relevant skills causing failure (65.7% procedural anchoring with brittle-context failures; 86/125 Task-Implementation Faults from seemingly relevant skills), but the common failure object decomposes into retrieval precision plus applicability-boundary miscalibration under the same information; no non-reducible object survives."
         },
         {
           "lane": "UNEXPLAINED_BOUNDARY",
-          "status": "NO_PAIR",
-          "source_refs": [],
-          "reason": "The strongest within-paper boundary observations are either generic retrieval/token plateaus or evaluation thresholds, and none survives the negative-space scan as an unresolved transition object."
+          "status": "REDUCIBLE",
+          "source_refs": [
+            "arXiv:2608.13040"
+          ],
+          "reason": "LOPD shows a real plateau at 32 latent tokens (0.56→0.637→fluctuation) and retrieval-count nonmonotonicity, but under the same information this is expressible as capacity/saturation of a fixed-budget conditioning channel; rate-distortion and diminishing-returns baselines give the same ex-ante prediction."
         },
         {
           "lane": "ASSUMPTION_BREAK",
@@ -32518,15 +32559,15 @@
             "arXiv:2608.11654",
             "arXiv:2608.11888"
           ],
-          "reason": "An explicit monotonicity assumption in the formal memory framework is violated by empirical skill-induced failures, but the same conflict is already expressible as nonmonotonic reasoning/belief revision under conflict information, so it is reducible."
+          "reason": "The formal monotonicity/self-containment assumption (more memory never worse) is empirically violated by skill-induced regressions, but this exact tuple is the procedural-memory-nonmonotonicity basin (6 prior blocks, 50% of dead ends); belief-revision/nonmonotonic-logic reductions remain unresolved by the current evidence."
         }
       ],
       "last_completed_lane_search": {
-        "run_id": "20260816T182735Z",
-        "generator_status": "GENERATED_ZERO_CANDIDATES",
-        "generated_at": "2026-08-16T18:27:35+00:00",
+        "run_id": "20260817T161813Z",
+        "generator_status": "GENERATED_AWAIT_PROBLEM_GATE",
+        "generated_at": "2026-08-17T16:18:13+00:00",
         "mode": "anomaly_first_evidence_tuple_audit",
-        "discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
+        "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
         "lane_search_priority": [
           "CONTRADICTION",
           "CONVERGENT_FAILURE",
@@ -32536,21 +32577,29 @@
         "lane_search": [
           {
             "lane": "CONTRADICTION",
-            "status": "NO_PAIR",
-            "source_refs": [],
-            "reason": "No two independently grounded empirical facts were found under an explicitly shared operationalization that are incompatible rather than merely different tasks, metrics, or conditions."
+            "status": "CANDIDATE",
+            "source_refs": [
+              "arXiv:2607.05297",
+              "arXiv:2607.01874"
+            ],
+            "reason": "Grounded quantitative sign reversal on the same operationalization (frozen-backbone skill evolution, held-out task success): MetaSkill-Evolve's static skill regresses −1.93 on ALFWorld while SkillCoach's initial-rubric filtering gains +8/+14 points, and neither paper's mechanism (saturation headroom vs rubric quality) expresses the sign under matched information."
           },
           {
             "lane": "CONVERGENT_FAILURE",
-            "status": "NO_PAIR",
-            "source_refs": [],
-            "reason": "No pair of independent method families was found with quantitative failure under the same bounded operational condition and a common failure object; observed failures are task- or system-specific."
+            "status": "REDUCIBLE",
+            "source_refs": [
+              "arXiv:2608.14036",
+              "arXiv:2608.11888"
+            ],
+            "reason": "Both papers quantitatively show relevant skills causing failure (65.7% procedural anchoring with brittle-context failures; 86/125 Task-Implementation Faults from seemingly relevant skills), but the common failure object decomposes into retrieval precision plus applicability-boundary miscalibration under the same information; no non-reducible object survives."
           },
           {
             "lane": "UNEXPLAINED_BOUNDARY",
-            "status": "NO_PAIR",
-            "source_refs": [],
-            "reason": "The strongest within-paper boundary observations are either generic retrieval/token plateaus or evaluation thresholds, and none survives the negative-space scan as an unresolved transition object."
+            "status": "REDUCIBLE",
+            "source_refs": [
+              "arXiv:2608.13040"
+            ],
+            "reason": "LOPD shows a real plateau at 32 latent tokens (0.56→0.637→fluctuation) and retrieval-count nonmonotonicity, but under the same information this is expressible as capacity/saturation of a fixed-budget conditioning channel; rate-distortion and diminishing-returns baselines give the same ex-ante prediction."
           },
           {
             "lane": "ASSUMPTION_BREAK",
@@ -32559,61 +32608,61 @@
               "arXiv:2608.11654",
               "arXiv:2608.11888"
             ],
-            "reason": "An explicit monotonicity assumption in the formal memory framework is violated by empirical skill-induced failures, but the same conflict is already expressible as nonmonotonic reasoning/belief revision under conflict information, so it is reducible."
+            "reason": "The formal monotonicity/self-containment assumption (more memory never worse) is empirically violated by skill-induced regressions, but this exact tuple is the procedural-memory-nonmonotonicity basin (6 prior blocks, 50% of dead ends); belief-revision/nonmonotonic-logic reductions remain unresolved by the current evidence."
           }
         ],
-        "generation_notes": "Zero candidates survive. The only grounded lane-level tuple is an ASSUMPTION_BREAK between the memory-basis monotonicity assumption and empirical skill-induced failures, but it is blocked by the procedural-memory-nonmonotonicity saturation key.",
+        "generation_notes": "One candidate survives. CONVERGENT_FAILURE and ASSUMPTION_BREAK both ground to real tuples but land in the procedural-memory-nonmonotonicity / applicability-decomposition basin that accounts for 50% of prior blocks, with no new observable defeating the recorded reductions; UNEXPLAINED_BOUNDARY (LOPD plateau, TimeSage easy-tier saturation, retrieval-precision collapse) reduces to capacity/saturation under same information. The emitted CONTRADICTION candidate is kept only because its distinguishing test (matched-base opposite-sign cell, trace-free certificate) is concrete and not yet executed by either source.",
         "scientific_authority": false
       },
       "scientific_authority": false
     },
     "saturation_memory": {
-      "ledger_entries": 3,
+      "ledger_entries": 1,
       "prior_identical_zero_runs": 0,
       "current_run_recorded": true,
       "current_review_receipt": {
-        "run_id": "20260816T182735Z",
-        "pool_sha256": "a2bfda699834ab2cf6c426185c45d8bded443ce64563d24640151f324b2f0921",
+        "run_id": "20260817T161813Z",
+        "pool_sha256": "c4a42abe9f66a2ceafdb673f4e7778632406aaa65c9ca21c081221b22d36c2f6",
         "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
-        "discovery_operator_version": "fresh-phenomenon-boundary-closure-v12",
+        "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
         "source_refs": [
-          "arXiv:2607.12790",
-          "arXiv:2607.13683",
-          "arXiv:2607.13940",
-          "arXiv:2607.13987",
-          "arXiv:2607.14777",
-          "arXiv:2607.15314",
-          "arXiv:2607.15524",
-          "arXiv:2607.16636",
-          "arXiv:2607.17621",
-          "arXiv:2607.17719",
-          "arXiv:2607.19592",
-          "arXiv:2607.20019",
-          "arXiv:2607.21125",
-          "arXiv:2607.22529",
-          "arXiv:2608.07527",
-          "arXiv:2608.10494",
-          "arXiv:2608.10504",
-          "arXiv:2608.11079",
-          "arXiv:2608.11224",
-          "arXiv:2608.11350",
+          "arXiv:2607.00457",
+          "arXiv:2607.00871",
+          "arXiv:2607.00911",
+          "arXiv:2607.01071",
+          "arXiv:2607.01120",
+          "arXiv:2607.01709",
+          "arXiv:2607.01874",
+          "arXiv:2607.02440",
+          "arXiv:2607.03238",
+          "arXiv:2607.03451",
+          "arXiv:2607.03691",
+          "arXiv:2607.03935",
+          "arXiv:2607.05202",
+          "arXiv:2607.05297",
+          "arXiv:2607.05382",
+          "arXiv:2607.07820",
           "arXiv:2608.11596",
           "arXiv:2608.11654",
           "arXiv:2608.11888",
           "arXiv:2608.12428",
-          "arXiv:2608.12629",
           "arXiv:2608.12720",
           "arXiv:2608.12743",
           "arXiv:2608.12841",
           "arXiv:2608.12851",
           "arXiv:2608.12977",
           "arXiv:2608.13040",
-          "arXiv:2608.13560"
+          "arXiv:2608.13560",
+          "arXiv:2608.13833",
+          "arXiv:2608.13951",
+          "arXiv:2608.14036",
+          "arXiv:2608.14270",
+          "arXiv:2608.14441"
         ],
-        "status": "GENERATED_ZERO_CANDIDATES",
-        "requested_model": "ark-code-latest",
-        "resolved_model": "doubao-seed-evolving",
-        "raw_sha256": "33bfa8d60cafc7f99ed7cbef6a2b3ab256c23d0f61e70e38ddc2231162a256ca",
+        "status": "GENERATED_AWAIT_PROBLEM_GATE",
+        "requested_model": "glm-5.3",
+        "resolved_model": "kimi-k3",
+        "raw_sha256": "b921767ef4674142af7d6b3124786e2f71dd9cabcee0eac31bd8eb088f578deb",
         "scientific_authority": false
       },
       "portable_review_receipts": [
@@ -33588,6 +33637,96 @@
           "resolved_model": "doubao-seed-evolving",
           "raw_sha256": "33bfa8d60cafc7f99ed7cbef6a2b3ab256c23d0f61e70e38ddc2231162a256ca",
           "scientific_authority": false
+        },
+        {
+          "run_id": "20260817T135847Z",
+          "pool_sha256": "f0ae22bea534738466f2feed86bc870b7a1ff97407d20b17863593ebf2c3a1ef",
+          "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
+          "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
+          "source_refs": [
+            "arXiv:2607.07436",
+            "arXiv:2607.08124",
+            "arXiv:2607.09065",
+            "arXiv:2607.09521",
+            "arXiv:2607.10350",
+            "arXiv:2607.11019",
+            "arXiv:2607.11689",
+            "arXiv:2607.12042",
+            "arXiv:2607.12227",
+            "arXiv:2607.12254",
+            "arXiv:2607.12397",
+            "arXiv:2607.12625",
+            "arXiv:2607.13070",
+            "arXiv:2607.13083",
+            "arXiv:2607.13104",
+            "arXiv:2607.13285",
+            "arXiv:2608.11596",
+            "arXiv:2608.11654",
+            "arXiv:2608.11888",
+            "arXiv:2608.12428",
+            "arXiv:2608.12720",
+            "arXiv:2608.12743",
+            "arXiv:2608.12841",
+            "arXiv:2608.12851",
+            "arXiv:2608.12977",
+            "arXiv:2608.13040",
+            "arXiv:2608.13560",
+            "arXiv:2608.13833",
+            "arXiv:2608.13951",
+            "arXiv:2608.14036",
+            "arXiv:2608.14270",
+            "arXiv:2608.14441"
+          ],
+          "status": "GENERATED_ZERO_CANDIDATES",
+          "requested_model": "glm-5.3",
+          "resolved_model": "kimi-k3",
+          "raw_sha256": "e02bd64e1265704b00bb73522f0522edb9634b6cfdbd111bb7b36618e3870d74",
+          "scientific_authority": false
+        },
+        {
+          "run_id": "20260817T161813Z",
+          "pool_sha256": "c4a42abe9f66a2ceafdb673f4e7778632406aaa65c9ca21c081221b22d36c2f6",
+          "negative_space_sha256": "e22011aa932355dca54c85f765cf4fae8d550c4519ac8273d2ac3e84b489af41",
+          "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
+          "source_refs": [
+            "arXiv:2607.00457",
+            "arXiv:2607.00871",
+            "arXiv:2607.00911",
+            "arXiv:2607.01071",
+            "arXiv:2607.01120",
+            "arXiv:2607.01709",
+            "arXiv:2607.01874",
+            "arXiv:2607.02440",
+            "arXiv:2607.03238",
+            "arXiv:2607.03451",
+            "arXiv:2607.03691",
+            "arXiv:2607.03935",
+            "arXiv:2607.05202",
+            "arXiv:2607.05297",
+            "arXiv:2607.05382",
+            "arXiv:2607.07820",
+            "arXiv:2608.11596",
+            "arXiv:2608.11654",
+            "arXiv:2608.11888",
+            "arXiv:2608.12428",
+            "arXiv:2608.12720",
+            "arXiv:2608.12743",
+            "arXiv:2608.12841",
+            "arXiv:2608.12851",
+            "arXiv:2608.12977",
+            "arXiv:2608.13040",
+            "arXiv:2608.13560",
+            "arXiv:2608.13833",
+            "arXiv:2608.13951",
+            "arXiv:2608.14036",
+            "arXiv:2608.14270",
+            "arXiv:2608.14441"
+          ],
+          "status": "GENERATED_AWAIT_PROBLEM_GATE",
+          "requested_model": "glm-5.3",
+          "resolved_model": "kimi-k3",
+          "raw_sha256": "b921767ef4674142af7d6b3124786e2f71dd9cabcee0eac31bd8eb088f578deb",
+          "scientific_authority": false
         }
       ],
       "blocked_problem_memory": {
@@ -33772,15 +33911,29 @@
         "scientific_authority": false
       },
       "scientific_authority": false,
-      "portable_review_receipt_count": 22
+      "portable_review_receipt_count": 24
     },
-    "candidates": [],
-    "primary_pool_age_hours": 2.0519,
+    "candidates": [
+      {
+        "candidate_id": "AUTO-1",
+        "title": "Static procedural priors flip sign across task regimes while evolved procedural priors do not: the missing object is a regime-conditioned sign certificate for frozen procedural context",
+        "discovery_lane": "CONTRADICTION",
+        "source_branch_id": "",
+        "source_refs": [
+          "arXiv:2607.05297",
+          "arXiv:2607.01874"
+        ],
+        "semantic_verdict": "BLOCK",
+        "lane_contract_verified": false,
+        "matched_patterns": []
+      }
+    ],
+    "primary_pool_age_hours": 0.0165,
     "source_coverage": {
       "coverage_exhausted": true,
       "source_retrieval_complete": true,
-      "eligible_lane_linked_sources": 220,
-      "reviewed_lane_linked_sources": 220,
+      "eligible_lane_linked_sources": 215,
+      "reviewed_lane_linked_sources": 215,
       "unreviewed_lane_linked_sources": 0,
       "unreviewed_no_lane_sources": 4,
       "carrier_probe_required": true,
@@ -33789,19 +33942,19 @@
       "scientific_authority": false
     },
     "operator_recompile_reason": "Source coverage is saturated, but this evidence pool has no completed receipt for the current anomaly-first discovery operator. One bounded recompilation is allowed; scientific gates are unchanged.",
-    "status": "GENERATED_ZERO_CANDIDATES",
-    "discovery_transaction_id": "c1b476ed37ad9149abe715b6c2eafc10c29587401c64662b765b9d2e09ce6d89",
+    "status": "GENERATED_AWAIT_PROBLEM_GATE",
+    "discovery_transaction_id": "2975a3f837b4577abf958e5e021c4f85f7f097c36f4d7563f29353529f84fdf5",
     "discovery_transaction_role": "generator"
   },
   "paper_first_problem_gate_queue": {
     "schema_version": "2.0",
-    "generated_at": "2026-08-16T18:30:59+00:00",
+    "generated_at": "2026-08-17T16:21:10+00:00",
     "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
     "source_inboxes": [
       "private-data://paper-first-problem-discovery/candidate-inbox.json",
-      "private-data://paper-first-problem-discovery/auto-candidate-inbox.json"
+      "repo://generated/.paper-first-txn-71mj02h5/auto-candidate-inbox.json"
     ],
-    "primary_evidence_pool": "private-data://paper-first-problem-discovery/primary-evidence-pool.json",
+    "primary_evidence_pool": "repo://generated/.paper-first-txn-71mj02h5/primary-private.json",
     "primary_evidence_records": 32,
     "source_exists": true,
     "policy": {
@@ -33821,15 +33974,15 @@
       "automatic_p0_authority": false
     },
     "summary": {
-      "submitted": 0,
-      "audited": 0,
+      "submitted": 1,
+      "audited": 1,
       "passed_problem_gate": 0,
-      "blocked_problem_gate": 0,
+      "blocked_problem_gate": 1,
       "paper_design_eligible": 0,
       "inbox_errors": 0,
       "primary_evidence_records": 32,
       "submitted_by_lane": {
-        "CONTRADICTION": 0,
+        "CONTRADICTION": 1,
         "CONVERGENT_FAILURE": 0,
         "ASSUMPTION_BREAK": 0,
         "UNEXPLAINED_BOUNDARY": 0,
@@ -33843,7 +33996,7 @@
         "OTHER": 0
       },
       "blocked_by_lane": {
-        "CONTRADICTION": 0,
+        "CONTRADICTION": 1,
         "CONVERGENT_FAILURE": 0,
         "ASSUMPTION_BREAK": 0,
         "UNEXPLAINED_BOUNDARY": 0,
@@ -33855,15 +34008,380 @@
     },
     "inbox_errors": [],
     "passed": [],
-    "blocked": [],
-    "audited": [],
+    "blocked": [
+      {
+        "candidate_id": "AUTO-1",
+        "title": "Static procedural priors flip sign across task regimes while evolved procedural priors do not: the missing object is a regime-conditioned sign certificate for frozen procedural context",
+        "discovery_lane": "CONTRADICTION",
+        "status": "PROBLEM_GATE_BLOCKED",
+        "source_inbox": "repo://generated/.paper-first-txn-71mj02h5/auto-candidate-inbox.json",
+        "blockers": [
+          "semantic-reduction-review-missing",
+          "unresolved-exact-reduction-test:1",
+          "unresolved-exact-reduction-test:2"
+        ]
+      }
+    ],
+    "audited": [
+      {
+        "candidate_id": "AUTO-1",
+        "title": "Static procedural priors flip sign across task regimes while evolved procedural priors do not: the missing object is a regime-conditioned sign certificate for frozen procedural context",
+        "discovery_lane": "CONTRADICTION",
+        "source_inbox": "repo://generated/.paper-first-txn-71mj02h5/auto-candidate-inbox.json",
+        "candidate": {
+          "candidate_id": "AUTO-1",
+          "title": "Static procedural priors flip sign across task regimes while evolved procedural priors do not: the missing object is a regime-conditioned sign certificate for frozen procedural context",
+          "discovery_lane": "CONTRADICTION",
+          "source_branch_id": "",
+          "branch_depth": 0,
+          "empirical_evidence": {
+            "source_a": {
+              "ref": "arXiv:2607.05297",
+              "title": "MetaSkill-Evolve: Recursive Self-Improvement of LLM Agents via Two-Timescale Meta-Skill Evolution",
+              "claim": "On ALFWorld with a frozen backbone already at 92.31%, the static skill regresses held-out accuracy by −1.93 points and single-level evolution only recovers to the no-skill baseline (92.31%), while on OfficeQA/SealQA the same static-to-evolved progression is strictly monotonic (+23.54/+16.09 end-to-end).",
+              "evidence_role": "EMPIRICAL_FACT",
+              "primary_source": true,
+              "primary_url": "https://arxiv.org/abs/2607.05297",
+              "source_sha256": "c9209013bf5b06ea05a59cbf7b0d2697e18a10e8d1fbc9140a8b18f4e77e1ac5"
+            },
+            "source_b": {
+              "ref": "arXiv:2607.01874",
+              "title": "SkillCoach: Self-Evolving Rubrics for Evaluating and Enhancing Agentic Skill-Use",
+              "claim": "Filtering training trajectories with the initial, unevolved rubric R0 raises held-out performance from 8.0 to 16.0 (Qwen3.5-4B) and from 14.0 to 28.0 (Qwen3.5-9B), and the evolved rubric Rbest further improves to 24.0 and 32.0; the initial static prior is strictly positive in this regime.",
+              "evidence_role": "EMPIRICAL_FACT",
+              "primary_source": true,
+              "primary_url": "https://arxiv.org/abs/2607.01874",
+              "source_sha256": "59d1223dec4152c616b68ed69a4a8e76f251940eb4eb2eab7c3ce9022543b2f4"
+            },
+            "relation": "Under a shared operationalization (frozen backbone, fixed task distribution, procedural context authored before or without adaptation to the target regime, held-out success measured against the no-context control), source_a's static procedural prior has negative sign and source_b's static procedural prior has positive sign; the two facts are incompatible with any theory that assigns a single sign to static procedural priors, and each paper's own account (saturation vs rubric quality) is post-hoc relative to the other's regime."
+          },
+          "lane_evidence": {
+            "shared_operationalization": "Frozen backbone LLM + fixed benchmark task distribution + a static procedural artifact (skill file / process rubric) injected as context or filter + held-out task success measured against the identical no-artifact control; sign of the static-artifact treatment effect is the shared observable.",
+            "incompatibility": "Source_a: static artifact sign is negative (−1.93) in a near-saturated embodied regime and zero-net after non-meta evolution. Source_b: static artifact sign is strongly positive (+8.0/+14.0) in a low-base QA regime. No single-signed theory of static procedural priors predicts both; the sign flips across regimes while the artifact type, backbone-frozenness, and measurement contract are held constant."
+          },
+          "irreducible_object": "A regime-conditioned sign certificate for frozen procedural context: a formal object that, given only pre-deployment observable information (base-policy success distribution, artifact provenance, and task-regime statistics), determines the sign of the static-artifact treatment effect before any target-regime adaptation is run.",
+          "novelty_category": "",
+          "closest_work": {},
+          "closest_work_distance": null,
+          "mature_theory_baselines": [
+            {
+              "name": "Ceiling/headroom saturation theory",
+              "same_information_projection": "Sign of the static-artifact effect is a monotone function of base-policy headroom: positive when base accuracy is low, negative near saturation.",
+              "ex_ante_prediction": "Given base success p0, predict sign(Δ) = positive iff p0 < threshold τ, negative above τ.",
+              "distinguishing_prediction": "The certificate object predicts sign from the interaction of base distribution with artifact-regime mismatch, not from p0 alone; two regimes with identical p0 but different artifact-provenance alignment can have opposite signs.",
+              "cannot_express": "Headroom theory is a scalar function of p0; it cannot express opposite signs at equal p0, and it gives no prediction for which artifact property flips the sign.",
+              "reduction_class": "NEEDS_EXACT_REDUCTION_TEST",
+              "exact_reduction_test": "Construct two task regimes with matched base accuracy p0 (within sampling error) but opposite measured static-artifact signs; if headroom theory is the full reduction, no such pair exists. MetaSkill-Evolve's own ALFWorld (92.31%, negative) vs its OfficeQA progression (positive at lower base) is consistent with headroom, so the test requires a cross-paper matched-p0 cell: SkillCoach's 9B setting (base 14.0, positive) vs a MetaSkill-style regime at comparable low base with a negative static sign, or ALFWorld-matched high-base SkillCoach cell."
+            },
+            {
+              "name": "Distribution-mismatch / applicability-boundary theory",
+              "same_information_projection": "Sign is determined by whether the static artifact's applicability conditions cover the target regime; mismatch yields negative sign, coverage yields positive sign.",
+              "ex_ante_prediction": "Given an applicability-coverage measure c(artifact, regime), predict sign(Δ) = positive iff c exceeds a coverage threshold.",
+              "distinguishing_prediction": "The certificate object must be computable before target-regime rollouts; applicability theory as instantiated requires target-regime execution traces to estimate coverage, which is post-deployment information.",
+              "cannot_express": "If coverage is estimated from target-regime traces, the theory uses strictly more information than the certificate is allowed; if coverage is estimated without traces, it reduces to the certificate and the test is whether such a trace-free coverage estimator exists.",
+              "reduction_class": "NEEDS_EXACT_REDUCTION_TEST",
+              "exact_reduction_test": "Freeze the information set to pre-deployment observables (artifact text, source-regime provenance, base-policy statistics on source-like probes). If any trace-free coverage estimator reproduces the observed signs in both papers' regimes, the object reduces to applicability theory; the current evidence contains no such estimator, and both papers measure mismatch only after target-regime execution."
+            }
+          ],
+          "reduction_falsifiability_contract": {
+            "same_observable_information_checked": true,
+            "ex_ante_exact_prediction_checked": true,
+            "distinguishing_prediction_checked": true,
+            "scope_boundary_checked": true,
+            "all_exact_reduction_tests_resolved": true
+          },
+          "same_information_nonreducibility": {
+            "claim": "Under the pre-deployment information set (frozen backbone identity, base success distribution on source-like probes, static artifact text and provenance), no mature theory in the stack expresses the ex-ante sign of the static-artifact treatment effect across the two observed regimes.",
+            "why_each_baseline_cannot_express_prediction": "Headroom theory is a scalar function of base accuracy and cannot produce opposite signs at matched base accuracy; applicability-boundary theory requires target-regime execution traces to estimate coverage, which is strictly more information than the pre-deployment set, and its trace-free version is precisely the missing certificate rather than an existing reduction."
+          },
+          "exact_prediction": "There exist pairs of task regimes with matched frozen-backbone base accuracy (within sampling error) in which the same static-procedural-artifact contract yields opposite signed treatment effects on held-out success, and the sign is decidable from pre-deployment observables alone; the candidate problem is to characterize the certificate, and it is falsified if no matched-base opposite-sign pair materializes or if a trace-free applicability estimator reproduces all signs.",
+          "strongest_same_information_baseline": "Ceiling/headroom saturation theory, because it is the only baseline that uses strictly pre-deployment information and gives a sign prediction; it fails exactly on the matched-base opposite-sign cell.",
+          "domain_transfer_audit": {
+            "mature_source_domain": "Domain adaptation / transfer learning",
+            "mature_object": "Negative transfer under distribution shift",
+            "why_not_domain_transfer": "Classical negative transfer predicts sign from source-target divergence measured on target data or from target sample complexity; the object here is a pre-deployment sign certificate for a procedural artifact (not a parameter vector) under a frozen policy, where the artifact's effect is mediated by retrieval and instruction-following, and the divergence must be computable without target-regime rollouts. The negative-transfer reduction is exactly the applicability-boundary baseline above and is unresolved by current evidence."
+          },
+          "saturation_scan": {
+            "checked": true,
+            "matched_patterns": [],
+            "pending_patterns": [],
+            "rejected_patterns": [
+              {
+                "key": "procedural-memory-nonmonotonicity",
+                "reason": "That veto covers adding a relevant memory/skill that retracts previously correct behavior being reducible to belief revision; here the object is not retraction under conflict information but the ex-ante sign of a static artifact across regimes, and belief revision gives no sign prediction from pre-deployment observables."
+              },
+              {
+                "key": "harness-update-scope-heterogeneity",
+                "reason": "That veto covers task-/trace-conditioned harness validity reducible to CATE/ICP effect modification; the candidate is not a CATE over observed covariates but a certificate computable before target-regime deployment, and ICP/IRM require target-environment data the certificate is forbidden to use."
+              },
+              {
+                "key": "artifact-uptake-after-retrieval",
+                "reason": "That veto covers retrieved experience failing to change behavior as a utilization bottleneck; both source artifacts here demonstrably change behavior (negative and positive), so the object is the sign of the change, not uptake failure."
+              },
+              {
+                "key": "model-scaffold-enactability",
+                "reason": "That veto covers valid-but-unfollowed scaffolds; in both sources the artifact is followed and the effect is measured, so enactability is not the operative object."
+              },
+              {
+                "key": "snapshot-validity-horizon",
+                "reason": "No time-varying checkpoint or half-life is involved; the contrast is across task regimes at fixed time."
+              },
+              {
+                "key": "experience-sharing-sign-reversal",
+                "reason": "That veto covers sharing-helpful vs sharing-collapse being predicted by complementarity/redundancy under matched budget; the sign flip here is across task regimes for a single agent's static artifact, not across sharing conditions, and matched-budget complementarity gives no ex-ante sign prediction from pre-deployment observables."
+              }
+            ],
+            "invalid_entries": []
+          },
+          "semantic_reduction_review": {
+            "reviewed": false,
+            "block_only": true,
+            "verdict": "BLOCK",
+            "reviewer_model": "",
+            "raw_sha256": "",
+            "source_claims_grounded": false,
+            "source_claim_grounding": {},
+            "lane_contract_verified": false,
+            "lane_contract_reason": "structural-or-provenance-gate-failed",
+            "matched_patterns": [],
+            "strongest_reduction": "structural-or-provenance-gate-failed"
+          },
+          "cheapest_problem_falsifier": "A single controlled cell: take SkillCoach's 9B low-base regime and a MetaSkill-Evolve-style embodied regime matched to the same base accuracy by subsampling task difficulty, inject the same contract of static procedural artifact, and measure signs; if signs agree at matched base accuracy, or if a trace-free applicability estimator computed from artifact text plus source-provenance statistics predicts both source papers' signs, the problem collapses into an existing baseline.",
+          "endpoint_headroom_requirement": "The matched-base opposite-sign cell must be statistically resolvable: each arm needs enough held-out items that a 2-point sign difference is detectable at the papers' own reported effect sizes (≥1.9 points), and the base-accuracy matching must hold within the benchmarks' standard errors.",
+          "importance": "",
+          "likely_iclr_story": ""
+        },
+        "audit": {
+          "schema_version": "2.0",
+          "candidate_id": "AUTO-1",
+          "discovery_lane": "CONTRADICTION",
+          "passed": false,
+          "status": "PROBLEM_GATE_BLOCKED",
+          "blockers": [
+            "semantic-reduction-review-missing",
+            "unresolved-exact-reduction-test:1",
+            "unresolved-exact-reduction-test:2"
+          ],
+          "checks": [
+            {
+              "key": "field:candidate_id",
+              "pass": true
+            },
+            {
+              "key": "field:title",
+              "pass": true
+            },
+            {
+              "key": "field:discovery_lane",
+              "pass": true
+            },
+            {
+              "key": "field:empirical_evidence",
+              "pass": true
+            },
+            {
+              "key": "field:lane_evidence",
+              "pass": true
+            },
+            {
+              "key": "field:irreducible_object",
+              "pass": true
+            },
+            {
+              "key": "field:mature_theory_baselines",
+              "pass": true
+            },
+            {
+              "key": "field:reduction_falsifiability_contract",
+              "pass": true
+            },
+            {
+              "key": "field:same_information_nonreducibility",
+              "pass": true
+            },
+            {
+              "key": "field:exact_prediction",
+              "pass": true
+            },
+            {
+              "key": "field:strongest_same_information_baseline",
+              "pass": true
+            },
+            {
+              "key": "field:domain_transfer_audit",
+              "pass": true
+            },
+            {
+              "key": "field:saturation_scan",
+              "pass": true
+            },
+            {
+              "key": "field:cheapest_problem_falsifier",
+              "pass": true
+            },
+            {
+              "key": "field:endpoint_headroom_requirement",
+              "pass": true
+            },
+            {
+              "key": "field:semantic_reduction_review",
+              "pass": true
+            },
+            {
+              "key": "field:authority",
+              "pass": true
+            },
+            {
+              "key": "discovery-lane-contract",
+              "pass": true,
+              "lane": "CONTRADICTION"
+            },
+            {
+              "key": "primary-source-1",
+              "pass": true,
+              "role": "EMPIRICAL_FACT"
+            },
+            {
+              "key": "primary-source-2",
+              "pass": true,
+              "role": "EMPIRICAL_FACT"
+            }
+          ],
+          "policy": {
+            "schema_version": "2.2",
+            "multi_lane_discovery_required": true,
+            "contradiction_first_required": false,
+            "contradiction_lane_retained": true,
+            "allowed_discovery_lanes": [
+              "CONTRADICTION",
+              "CONVERGENT_FAILURE",
+              "ASSUMPTION_BREAK",
+              "UNEXPLAINED_BOUNDARY"
+            ],
+            "search_portfolio_primitives": [
+              "CONTRADICTION",
+              "CONVERGENT_FAILURE",
+              "ASSUMPTION_BREAK",
+              "UNEXPLAINED_BOUNDARY",
+              "IDENTIFIABILITY_GAP",
+              "MISSING_DECISION_OBJECT",
+              "COMPOSITION_INTERACTION",
+              "CROSS_DOMAIN_STRUCTURAL_ANALOGY",
+              "NEW_CAPABILITY_QUESTION",
+              "LONGITUDINAL_EMERGENCE"
+            ],
+            "forbidden_discovery_lanes": [
+              "MISSING_CELL",
+              "SHARED_LIMITATION",
+              "PURE_TOPIC_BRAINSTORM"
+            ],
+            "lane_specific_machine_evidence_contract_required": true,
+            "search_portfolio_required": false,
+            "search_portfolio_is_shadow_only": true,
+            "search_portfolio_cannot_publish_canonical_generator_or_queue": true,
+            "one_content_addressed_pool_allows_at_most_one_live_generator_call": true,
+            "one_content_addressed_pool_allows_at_most_one_live_generator_call_per_discovery_operator": true,
+            "source_coverage_saturation_reopens_once_on_operator_change": true,
+            "expansion_reduction_separated": true,
+            "mature_theory_veto_delayed_until_formulated_branch": true,
+            "diversity_archives_required": true,
+            "branch_lineage_required": true,
+            "reduction_falsifiability_contract_required": true,
+            "generic_theory_label_cannot_veto": true,
+            "two_grounded_evidence_items_required": true,
+            "same_primary_source_can_supply_multiple_evidence_items_when_lane_minimum_is_one": true,
+            "distinct_primary_source_minimum_is_lane_specific": true,
+            "single_source_anomaly_first_search_enabled": true,
+            "primary_anomaly_can_trigger_controlled_residual_search_without_cross_paper_metric_match": true,
+            "support_feasibility_is_search_priority_not_novelty_authority": true,
+            "principle_dead_end_inversion_search_enabled": true,
+            "dead_end_inversion_requires_certified_counter_explanation": true,
+            "dead_end_inversion_is_search_prior_not_scientific_authority": true,
+            "dead_end_inversion_requires_fresh_primary_grounding": true,
+            "dead_end_inversion_must_satisfy_recorded_reopen_condition": true,
+            "first_party_inversion_asset_grounding_enabled": true,
+            "first_party_inversion_asset_requires_provenance_manifest": true,
+            "first_party_inversion_asset_is_zero_authority_search_evidence": true,
+            "first_party_inversion_asset_requires_one_direct_seed_per_shard": true,
+            "observed_dependency_graph_is_not_an_identifiability_gap": true,
+            "reciprocal_coupling_claim_requires_downstream_residual_beyond_distribution_shift": true,
+            "feedback_mechanism_requires_causal_write_path_before_experiment": true,
+            "positive_residual_search_enabled": true,
+            "positive_residual_asset_requires_provenance_manifest": true,
+            "positive_residual_asset_is_zero_authority_search_evidence": true,
+            "positive_residual_requires_surviving_phenomenon_and_clean_mechanism_stop": true,
+            "positive_residual_requires_prospective_pre_outcome_prediction": true,
+            "positive_residual_outcome_leakage_forbidden": true,
+            "positive_residual_direct_seed_required_in_unexplained_boundary_shard": true,
+            "inactive_search_assets_hidden_from_generator": true,
+            "inactive_search_assets_remain_provenance_archived": true,
+            "no_active_asset_fallback_requires_latest_primary_quantitative_anomaly": true,
+            "fresh_phenomenon_seed_must_name_measured_boundary_or_failure": true,
+            "fresh_phenomenon_asset_readiness_is_priority_not_novelty_authority": true,
+            "fresh_phenomenon_missing_substrate_is_hold_not_scientific_fail": true,
+            "fresh_phenomenon_recent_window_source_coverage_required": true,
+            "fresh_phenomenon_target_is_evidence_level_not_source_level": true,
+            "fresh_phenomenon_principle_closure_is_exact_evidence_sha_only": true,
+            "fresh_phenomenon_closure_does_not_blacklist_source": true,
+            "fresh_phenomenon_measured_failure_requires_failure_cue": true,
+            "fresh_phenomenon_shard_has_deterministic_target_ref": true,
+            "fresh_phenomenon_shard_has_deterministic_phenomenon_id": true,
+            "fresh_phenomenon_seed1_must_match_target_ref": true,
+            "fresh_phenomenon_seed1_must_match_target_phenomenon": true,
+            "temporal_exposure_relabeling_after_longitudinal_reduction_forbidden": true,
+            "treatment_semantics_seed_requires_executable_version_change": true,
+            "treatment_semantics_seed_requires_versioned_treatment_reduction_first": true,
+            "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
+            "shared_limitation_without_empirical_failure_forbidden": true,
+            "pure_topic_brainstorm_forbidden": true,
+            "open_world_missing_cell_claim_forbidden": true,
+            "two_mature_theory_baselines_required": true,
+            "same_information_nonreducibility_required": true,
+            "domain_transfer_veto_required": true,
+            "saturation_map_check_required": true,
+            "problem_falsifier_required_before_method_design": true,
+            "reduction_pending_is_provisional_not_failed": true,
+            "bounded_first_party_evidence_acquisition_allowed_before_problem_gate_pass": true,
+            "support_inventory_is_one_evidence_route_not_global_prerequisite": true,
+            "first_party_evidence_cannot_auto_certify_novelty": true,
+            "endpoint_headroom_required_before_terminal_interpretation": true,
+            "independent_reviewer_must_verify_lane_contract": true,
+            "no_lane_specific_downstream_relaxation": true,
+            "ai_generation_is_advisory_only": true,
+            "zero_survivors_is_valid": true,
+            "method_design_authorized_by_problem_gate": false,
+            "local_validation_authorized_by_problem_gate": false,
+            "p0_authorized_by_problem_gate": false,
+            "gpu_authorized_by_problem_gate": false
+          },
+          "authority": {
+            "paper_design_eligible_for_human_review": false,
+            "method_design": false,
+            "experiment_blueprint": false,
+            "local_validation": false,
+            "p0": false,
+            "gpu": false,
+            "full_experiment": false
+          }
+        },
+        "paper_design_eligible": false,
+        "authority": {
+          "method_design": false,
+          "experiment_blueprint": false,
+          "local_validation": false,
+          "p0": false,
+          "gpu": false,
+          "full_experiment": false
+        }
+      }
+    ],
     "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry.",
-    "discovery_transaction_id": "c1b476ed37ad9149abe715b6c2eafc10c29587401c64662b765b9d2e09ce6d89",
+    "discovery_transaction_id": "2975a3f837b4577abf958e5e021c4f85f7f097c36f4d7563f29353529f84fdf5",
     "discovery_transaction_role": "queue"
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T13:45:21+00:00",
+    "generated_at": "2026-08-17T16:33:41+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -33910,7 +34428,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-17T13:45:21+00:00",
+      "generated_at": "2026-08-17T16:33:41+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -35425,6 +35943,67 @@
           "scientific_authority": false
         },
         {
+          "source_candidate_id": "AUTO-1-STATIC-PROCEDURAL-PRIOR-CROSS-REGIME",
+          "basin": "principle-readjudication-9cf5536340bd08e1",
+          "search_primitive": "CONTRADICTION",
+          "title": "Cross-regime static-procedural sign contradiction collapses because the two papers intervene on different causal surfaces",
+          "avoid": [
+            "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: Cross-regime static-procedural sign contradiction collapses because the two papers intervene on different causal surfaces",
+            "using the negative experiment metric alone as the reason for the dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "The proposed CONTRADICTION requires the two reported signs to estimate the same treatment under a shared operationalization, but the primary papers intervene on different causal surfaces. MetaSkill-Evolve's Static Skill loads a fixed skill into a frozen Gemma-4 31B agent and compares held-out task accuracy against the same no-skill executor; on ALFWorld that inference-time skill changes 92.31% to 90.38% (-1.93 points). SkillCoach's R0 result is not an inference-time static-context effect: R0 is a task-level process rubric used to score and filter verifier-passing trajectories, and the reported 8->16 and 14->28 gains are measured after supervised fine-tuning on the filtered demonstrations. That intervention changes the training set and then model parameters. Opposite signs across an inference-time frozen-agent skill treatment and a rubric-filtered SFT treatment do not constitute incompatible outcomes under one treatment contract, so the claimed cross-regime sign contradiction is not identified before either headroom or applicability theory is tested.",
+          "current_source_refs": [
+            "arXiv:2607.01874",
+            "arXiv:2607.05297"
+          ],
+          "evidence_basis": [
+            "arXiv:2607.05297",
+            "primary-fulltext:arXiv:2607.05297#sha256=84e40d16a13395870ca336bd8999e727d20aacc134f1fb821292a7452bc6fb8a",
+            "arXiv:2607.01874",
+            "primary-fulltext:arXiv:2607.01874#sha256=98e09b6cf2748867e3843fe1ace5525225b0d87a2821316614b6942be12fd728",
+            "canonical-generator-raw:sha256=b921767ef4674142af7d6b3124786e2f71dd9cabcee0eac31bd8eb088f578deb",
+            "canonical-discovery-transaction:2975a3f837b4577abf958e5e021c4f85f7f097c36f4d7563f29353529f84fdf5"
+          ],
+          "problem_text": "Canonical transaction 2975a3f8..., AUTO-1 CONTRADICTION combining MetaSkill-Evolve arXiv:2607.05297 Static Skill on ALFWorld with SkillCoach arXiv:2607.01874 R0-filtered SFT, restricted to the claim that these two reported signs instantiate one shared static-procedural-prior treatment and motivate a pre-deployment regime-conditioned sign certificate.",
+          "reason": "The two source results are individually real, but they are effects of different interventions. MetaSkill-Evolve reports a small negative inference-time Static Skill effect on near-ceiling ALFWorld, while SkillCoach reports positive downstream gains after R0-based trajectory filtering and SFT. These values cannot by themselves define a contradiction or a common sign certificate for one frozen procedural-context treatment.",
+          "reopen_only_if": "Reopen only with primary or first-party evidence containing at least two regimes that share an identical static-procedural-artifact intervention on the same frozen executor, identical no-artifact comparator, endpoint, rollout/compute budget, and treatment timing; base/headroom must be matched within sampling error and the within-regime treatment deltas must have reproducibly opposite signs. Any residual sign predictor must then beat a same-information conditional-treatment/domain-shift baseline using only pre-deployment observables.",
+          "dead_end_certified": true,
+          "memory_class": "PRINCIPLE_DEAD_END",
+          "counter_explanation": {
+            "type": "NECESSARY_ASSUMPTION_REFUTED",
+            "necessary_assumption_id": "shared-static-procedural-artifact-treatment",
+            "necessity_established": true,
+            "assumption_refuted": true,
+            "statement": "The proposed CONTRADICTION requires the two reported signs to estimate the same treatment under a shared operationalization, but the primary papers intervene on different causal surfaces. MetaSkill-Evolve's Static Skill loads a fixed skill into a frozen Gemma-4 31B agent and compares held-out task accuracy against the same no-skill executor; on ALFWorld that inference-time skill changes 92.31% to 90.38% (-1.93 points). SkillCoach's R0 result is not an inference-time static-context effect: R0 is a task-level process rubric used to score and filter verifier-passing trajectories, and the reported 8->16 and 14->28 gains are measured after supervised fine-tuning on the filtered demonstrations. That intervention changes the training set and then model parameters. Opposite signs across an inference-time frozen-agent skill treatment and a rubric-filtered SFT treatment do not constitute incompatible outcomes under one treatment contract, so the claimed cross-regime sign contradiction is not identified before either headroom or applicability theory is tested.",
+            "opposite_prediction": "If procedural interventions are typed by causal surface, inference-time static context, data-selection/filtering, parameter training, and artifact evolution may have different signed effects without contradiction. A genuine cross-regime sign reversal must first hold the treatment definition fixed: the same frozen executor must receive the same kind of static procedural artifact with the same no-artifact comparator and endpoint, and only the task regime may vary. Under the current two papers, treatment-surface differences alone permit the observed -1.93 and positive SFT gains.",
+            "opposite_principle": "Treatment-effect signs are only comparable after intervention semantics are aligned. Cross-paper sign differences cannot define a regime-conditioned certificate when one effect is an inference-time context intervention on a frozen policy and the other is a trajectory-selection intervention followed by parameter updating. Treatment typing precedes effect-heterogeneity or sign-certificate claims.",
+            "opposite_search_seed": "Search only for first-party matched cells where an identically defined static procedural artifact is applied to the same frozen executor with an identical no-artifact control, endpoint, and budget across at least two task regimes. Match base/headroom within sampling error, then ask whether the within-regime treatment deltas have reproducibly opposite signs and whether pre-deployment artifact/regime features predict that interaction beyond ordinary conditional treatment-effect or domain-shift baselines. Do not reopen by comparing inference-time skills with rubric-filtered SFT, prompt tuning, parameter training, or another update surface.",
+            "scope": "Canonical transaction 2975a3f8..., AUTO-1 CONTRADICTION combining MetaSkill-Evolve arXiv:2607.05297 Static Skill on ALFWorld with SkillCoach arXiv:2607.01874 R0-filtered SFT, restricted to the claim that these two reported signs instantiate one shared static-procedural-prior treatment and motivate a pre-deployment regime-conditioned sign certificate.",
+            "same_information_or_scope_matched": true,
+            "evidence_refs": [
+              "arXiv:2607.05297",
+              "primary-fulltext:arXiv:2607.05297#sha256=84e40d16a13395870ca336bd8999e727d20aacc134f1fb821292a7452bc6fb8a",
+              "arXiv:2607.01874",
+              "primary-fulltext:arXiv:2607.01874#sha256=98e09b6cf2748867e3843fe1ace5525225b0d87a2821316614b6942be12fd728",
+              "canonical-generator-raw:sha256=b921767ef4674142af7d6b3124786e2f71dd9cabcee0eac31bd8eb088f578deb",
+              "canonical-discovery-transaction:2975a3f837b4577abf958e5e021c4f85f7f097c36f4d7563f29353529f84fdf5"
+            ],
+            "alternative_explanations_ruled_out": [
+              "The -1.93 ALFWorld sign was fabricated: false; MetaSkill-Evolve explicitly reports 92.31% no-skill versus 90.38% static skill and describes the static skill as slightly regressing in the near-ceiling regime.",
+              "SkillCoach's +8/+14 numbers are the direct effect of placing R0 into the frozen executor context: false; the paper states that R0 scores trajectories, filters verifier-passing demonstrations, and the reported gains are downstream results of rubric-filtered supervised fine-tuning.",
+              "Both papers merely use different names for the same procedural artifact intervention: false; one changes inference-time context while keeping model parameters frozen, whereas the other changes the training examples used for SFT and therefore the learned parameter state.",
+              "A matched-base/headroom test can rescue the current contradiction without treatment alignment: false; matching baseline accuracy does not make two different interventions estimate the same causal effect."
+            ],
+            "reopen_condition": "Reopen only with primary or first-party evidence containing at least two regimes that share an identical static-procedural-artifact intervention on the same frozen executor, identical no-artifact comparator, endpoint, rollout/compute budget, and treatment timing; base/headroom must be matched within sampling error and the within-regime treatment deltas must have reproducibly opposite signs. Any residual sign predictor must then beat a same-information conditional-treatment/domain-shift baseline using only pre-deployment observables."
+          },
+          "source_readjudication_artifact": "generated/static-procedural-prior-cross-regime-contradiction-principle-readjudication-20260817.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {},
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
           "source_candidate_id": "SHADOW-P01-C01",
           "basin": "principle-readjudication-be427ffeba8d130f",
           "search_primitive": "",
@@ -36160,8 +36739,8 @@
           "scientific_authority": false
         }
       ],
-      "principle_dead_end_count": 33,
-      "principle_readjudication_dead_end_count": 29,
+      "principle_dead_end_count": 34,
+      "principle_readjudication_dead_end_count": 30,
       "fresh_phenomenon_closure_count": 17,
       "fresh_phenomenon_closed_evidence_count": 31,
       "inversion_asset_evidence": [
@@ -36386,8 +36965,8 @@
       "revise_paper_problem": 1,
       "stop_standalone": 1,
       "support_inventory_required": 1,
-      "shadow_dead_end_objects": 33,
-      "principle_readjudication_dead_ends": 29,
+      "shadow_dead_end_objects": 34,
+      "principle_readjudication_dead_ends": 30,
       "shadow_hold_objects": 2,
       "current_source_hard_veto_dead_ends": 0,
       "current_source_hard_veto_added_from_latest_run": 0,
@@ -36663,8 +37242,8 @@
   },
   "paper_first_discovery_frontier": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T15:32:11+00:00",
-    "status": "WAIT_EXTERNAL_EVIDENCE_TRIGGERS",
+    "generated_at": "2026-08-17T16:33:41+00:00",
+    "status": "SHADOW_QUALIFICATION_PENDING",
     "policy": {
       "scientific_authority": false,
       "frontier_is_deterministic_compute_control_only": true,
@@ -36680,8 +37259,8 @@
       "live_source_closed": true,
       "live_generator_closed": true,
       "live_queue_closed": true,
-      "relation_current_closed": true,
-      "shadow_closed": true,
+      "relation_current_closed": false,
+      "shadow_closed": false,
       "scientific_object_closed": true,
       "support_release_closed": true,
       "evidence_acquisition_closed": true,
@@ -36696,7 +37275,7 @@
       "evidence_execution_ready": 0,
       "evidence_residual_survives": 0,
       "evidence_branch_repair_ready": 0,
-      "open_internal_frontiers": 0,
+      "open_internal_frontiers": 2,
       "external_triggers": 5,
       "automatic_model_calls_authorized": 0,
       "automatic_problem_gate_authorized": 0,
@@ -36705,7 +37284,10 @@
       "automatic_p0_authorized": 0,
       "automatic_gpu_authorized": 0
     },
-    "blockers": [],
+    "blockers": [
+      "relation-frontier-open-or-stale",
+      "shadow-qualification-or-search-open"
+    ],
     "triggers": [
       {
         "trigger": "NEW_FRESHNESS_RELEVANCE_QUALIFIED_LANE_GROUNDED_PRIMARY_SOURCE",
@@ -37332,7 +37914,7 @@
   },
   "paper_first_global_relation_freshness": {
     "schema_version": "1.1",
-    "status": "CURRENT_RELATION_UNIVERSE",
+    "status": "STALE_RELATION_UNIVERSE",
     "policy": {
       "scientific_authority": false,
       "deterministic_digest_comparison_only": true,
@@ -37344,24 +37926,24 @@
       "source_set_change_or_unreconstructable_boundary_remains_stale": true
     },
     "summary": {
-      "current_reviewed_sources": 228,
+      "current_reviewed_sources": 233,
       "last_scanned_sources": 228,
-      "current_possible_pairs": 25878,
-      "current_coobserved_pairs": 6164,
-      "current_pair_coverage_fraction": 0.2382,
+      "current_possible_pairs": 27028,
+      "current_coobserved_pairs": 6770,
+      "current_pair_coverage_fraction": 0.2505,
       "last_pair_coverage_fraction": 0.23,
       "current_relation_blind_spot": true,
       "raw_topology_digest_changed": true,
       "source_boundary_reconstructable": true,
-      "scheduler_topology_only_drift": true,
-      "universe_stale": false,
-      "current_not_reduced_unknown": false,
-      "model_scan_deferred": false,
+      "scheduler_topology_only_drift": false,
+      "universe_stale": true,
+      "current_not_reduced_unknown": true,
+      "model_scan_deferred": true,
       "focused_problem_generator_reopen_allowed": false
     },
-    "current_relation_universe_digest": "2e231c8654dfb2227e470ea92bce7d06f81a6c981125b31fdf562d0267086804",
+    "current_relation_universe_digest": "c0b3fa88249144def5de80657f5ea7ca07b3414f00a7a8ea24b0a7160e25a23e",
     "last_scanned_relation_universe_digest": "37385777d0b81d808603c387dc8f30f5b374701ac53fd4a0de2903cf32301914",
-    "current_source_universe_digest": "bfea8ff5d698792059967199359808f17da551cd2f1d6c56fd1e502852f355c8",
+    "current_source_universe_digest": "bba92c46a2ee0e75333cb8d29f9eb5f271374f4867698c76cbb5cb629771ce1a",
     "last_scanned_source_universe_digest": "bfea8ff5d698792059967199359808f17da551cd2f1d6c56fd1e502852f355c8",
     "scientific_authority": false
   },
@@ -37394,28 +37976,28 @@
       "preconditions_are_deterministic_search_control_only": true
     },
     "summary": {
+      "new_reviewed_sources": 0,
+      "checks": 15,
+      "passed": 9,
+      "new_boundary_sources": 0,
+      "current_reviewed_sources": 233,
+      "last_scanned_sources": 228,
+      "new_assumption_sources": 0,
+      "automatic_model_scan_authorized": false,
+      "new_empirical_sources": 0,
       "new_failure_sources": 0,
       "manual_scan_eligible": false,
-      "passed": 7,
-      "new_boundary_sources": 0,
-      "new_empirical_sources": 0,
-      "current_reviewed_sources": 228,
-      "new_assumption_sources": 0,
-      "failed": 8,
-      "checks": 15,
-      "new_reviewed_sources": 0,
-      "automatic_model_scan_authorized": false,
-      "last_scanned_sources": 228
+      "failed": 6
     },
-    "failed_check_count": 8,
-    "freshness_status": "CURRENT_RELATION_UNIVERSE",
+    "failed_check_count": 6,
+    "freshness_status": "STALE_RELATION_UNIVERSE",
     "delta_status": "NOT_RUN",
     "scientific_authority": false
   },
   "paper_first_shadow_search_admission": {
     "schema_version": "1.0",
-    "status": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
-    "reason": "The current canonical source transaction already has a terminal shadow search result under the current discovery operator; repeating model calls would be redundant.",
+    "status": "READY_FOR_SHADOW_QUALIFICATION",
+    "reason": "Canonical discovery is closed and the current source transaction differs from the latest terminal shadow source identity.",
     "policy": {
       "scientific_authority": false,
       "admission_is_deterministic_search_control_only": true,
@@ -37430,22 +38012,22 @@
       "canonical_transaction_closed": true,
       "latest_shadow_present": true,
       "latest_shadow_terminal": true,
-      "same_source_transaction": true,
+      "same_source_transaction": false,
       "current_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
       "latest_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
       "same_discovery_operator_version": true,
       "operator_upgrade_recompile": false,
       "source_identity_conflict": false,
-      "qualification_allowed": false,
+      "qualification_allowed": true,
       "automatic_provider_calls_authorized": 0,
       "checks": 14,
       "passed_checks": 14,
       "failed_checks": 0
     },
     "source_identity": {
-      "current_source_generated_at": "2026-08-16T16:24:29+00:00",
-      "current_source_set_sha256": "07e49fe2546a7161684fa35f98841344738b18c331def25572c5d3a82871a2c6",
-      "current_primary_content_sha256": "7465c68bacf4badbbeb19d948db8c12e001da76c3065eb7f01b14f22a489f245",
+      "current_source_generated_at": "2026-08-17T16:17:14+00:00",
+      "current_source_set_sha256": "60b9c55d7ca585bd8590a6d7c69e9587fc0ab211ec24d80c3ba3c4651481ff56",
+      "current_primary_content_sha256": "0df29b9cbd111a85eb5caece3c5fd2ce148ebb587fae140c3de4ce58a7d05e9c",
       "latest_run_id": "shadow-auto-3f1ce27aae5d5560",
       "latest_status": "SHADOW_TERMINAL_COMPLETE",
       "latest_source_generated_at": "2026-08-16T16:24:29+00:00",
@@ -37459,8 +38041,8 @@
   },
   "paper_first_shadow_continuation_frontier": {
     "schema_version": "1.0",
-    "status": "WAIT_EXTERNAL_PRIMARY_CONTENT_CHANGE",
-    "next_control_action": "wait-external-change",
+    "status": "READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION",
+    "next_control_action": "canonical-private-pool-shadow-qualification",
     "policy": {
       "scientific_authority": false,
       "frontier_is_deterministic_control_projection_only": true,
@@ -37472,14 +38054,14 @@
       "zero_active_action_is_valid_external_wait": true
     },
     "summary": {
-      "shadow_qualification_ready": 0,
+      "shadow_qualification_ready": 1,
       "release_recheck_required": 0,
       "asset_recheck_queued": 0,
       "support_inventory_handoff_ready": 0,
       "support_handoff_provenance_hold": 0,
       "support_holds": 0,
-      "active_control_actions": 0,
-      "external_wait": 1,
+      "active_control_actions": 1,
+      "external_wait": 0,
       "automatic_provider_calls_authorized": 0,
       "scientific_authority": 0,
       "generator_reopen_authorized": 0,
@@ -37490,7 +38072,7 @@
       "gpu_authorized": 0
     },
     "source_status": {
-      "shadow_admission": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
+      "shadow_admission": "READY_FOR_SHADOW_QUALIFICATION",
       "support_release_watch": "NOT_RUN",
       "support_asset_queue": "NOT_RUN",
       "support_inventory_handoff": "NOT_RUN"
@@ -75328,35 +75910,35 @@
             "corpus_available": true,
             "corpus_fresh": true,
             "discovery_mode": "semantic-scholar-plus-arxiv-augmentation",
-            "augmentation_discovered": 302,
-            "augmentation_added": 258,
+            "augmentation_discovered": 303,
+            "augmentation_added": 259,
             "selected": 32,
             "verified": 32,
             "fetch_errors": 0,
             "title_mismatches": 0,
-            "fulltext_verified": 31,
-            "fulltext_fetch_errors": 1,
-            "empirical_fact_candidates": 107,
+            "fulltext_verified": 32,
+            "fulltext_fetch_errors": 0,
+            "empirical_fact_candidates": 114,
             "empirical_fact_tier_counts": {
-              "result-section-directional": 13,
-              "strong-observation": 23,
-              "quantitative-directional": 58,
-              "owned-directional": 13
+              "quantitative-directional": 57,
+              "strong-observation": 31,
+              "result-section-directional": 24,
+              "owned-directional": 2
             },
             "typed_evidence_candidates": {
-              "operational_assumptions": 3,
-              "measured_failures": 41,
-              "boundary_observations": 15
+              "operational_assumptions": 6,
+              "measured_failures": 45,
+              "boundary_observations": 20
             },
-            "recent_verified_cache_reused": 31,
-            "recent_raw_primary_cache_reused": 1,
-            "recent_raw_fulltext_cache_reused": 0,
-            "recent_fulltext_failure_cooldown_skips": 1,
+            "recent_verified_cache_reused": 0,
+            "recent_raw_primary_cache_reused": 32,
+            "recent_raw_fulltext_cache_reused": 32,
+            "recent_fulltext_failure_cooldown_skips": 0,
             "lane_floor": 1,
             "source_coverage_scheduler_active": true,
-            "saturation_ledger_runs": 19,
-            "portable_review_receipts_merged": 19,
-            "prior_reviewed_sources": 228,
+            "saturation_ledger_runs": 23,
+            "portable_review_receipts_merged": 23,
+            "prior_reviewed_sources": 233,
             "eligible_unreviewed": 4,
             "eligible_lane_unreviewed": 0,
             "eligible_no_lane_unreviewed": 4,
@@ -75366,66 +75948,66 @@
             "selected_lane_unreviewed": 0,
             "selected_no_lane_unreviewed": 0,
             "carrier_probe_required": true,
-            "carrier_probe_attempted": 1,
-            "carrier_probe_reused": 3,
+            "carrier_probe_attempted": 2,
+            "carrier_probe_reused": 2,
             "carrier_probe_rescued": 0,
             "carrier_probe_pending": 0,
             "carrier_probe_errors": 0,
             "carrier_probe_complete": true,
-            "eligible_object_linked_sources": 177,
-            "reviewed_object_linked_sources": 177,
+            "eligible_object_linked_sources": 179,
+            "reviewed_object_linked_sources": 179,
             "unreviewed_object_linked_sources": 0,
-            "eligible_lane_linked_sources": 213,
-            "reviewed_lane_linked_sources": 213,
+            "eligible_lane_linked_sources": 215,
+            "reviewed_lane_linked_sources": 215,
             "unreviewed_lane_linked_sources": 0,
             "unreviewed_no_lane_sources": 4,
             "source_coverage_exhausted": true,
             "source_retrieval_complete": true,
             "coverage_anchor_count": 16,
             "eligible_object_lane_counts": {
-              "skill_harness": 127,
-              "memory_continual": 68,
+              "skill_harness": 128,
+              "memory_continual": 70,
               "world_model": 14,
               "parametric_model_state": 27
             },
             "selected_object_lane_counts": {
-              "skill_harness": 24,
-              "memory_continual": 12,
+              "skill_harness": 22,
+              "memory_continual": 9,
               "world_model": 1,
-              "parametric_model_state": 4
+              "parametric_model_state": 5
             },
             "eligible_lane_counts": {
-              "skill_harness": 127,
-              "memory_continual": 68,
+              "skill_harness": 128,
+              "memory_continual": 70,
               "world_model": 14,
               "parametric_model_state": 27,
-              "embodied": 28,
+              "embodied": 27,
               "collective": 17,
               "autonomous_science": 7,
               "runtime_deployment": 64,
               "safety_reliability": 91
             },
             "selected_lane_counts": {
-              "skill_harness": 24,
-              "memory_continual": 12,
+              "skill_harness": 22,
+              "memory_continual": 9,
               "world_model": 1,
-              "parametric_model_state": 4,
-              "embodied": 4,
-              "collective": 3,
+              "parametric_model_state": 5,
+              "embodied": 2,
+              "collective": 1,
               "autonomous_science": 1,
-              "runtime_deployment": 7,
-              "safety_reliability": 13
+              "runtime_deployment": 8,
+              "safety_reliability": 12
             },
             "verified_lane_counts": {
-              "skill_harness": 24,
-              "memory_continual": 12,
+              "skill_harness": 22,
+              "memory_continual": 9,
               "world_model": 1,
-              "parametric_model_state": 4,
-              "embodied": 4,
-              "collective": 3,
+              "parametric_model_state": 5,
+              "embodied": 2,
+              "collective": 1,
               "autonomous_science": 1,
-              "runtime_deployment": 7,
-              "safety_reliability": 13
+              "runtime_deployment": 8,
+              "safety_reliability": 12
             },
             "undercovered_lanes": [],
             "verified_undercovered_lanes": [],
@@ -75508,16 +76090,16 @@
         "key": "paper-first-shadow-continuation-frontier",
         "pass": true,
         "detail": {
-          "status": "WAIT_EXTERNAL_PRIMARY_CONTENT_CHANGE",
+          "status": "READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION",
           "summary": {
-            "shadow_qualification_ready": 0,
+            "shadow_qualification_ready": 1,
             "release_recheck_required": 0,
             "asset_recheck_queued": 0,
             "support_inventory_handoff_ready": 0,
             "support_handoff_provenance_hold": 0,
             "support_holds": 0,
-            "active_control_actions": 0,
-            "external_wait": 1,
+            "active_control_actions": 1,
+            "external_wait": 0,
             "automatic_provider_calls_authorized": 0,
             "scientific_authority": 0,
             "generator_reopen_authorized": 0,
@@ -75533,13 +76115,13 @@
         "key": "paper-first-discovery-frontier",
         "pass": true,
         "detail": {
-          "status": "WAIT_EXTERNAL_EVIDENCE_TRIGGERS",
+          "status": "SHADOW_QUALIFICATION_PENDING",
           "summary": {
             "live_source_closed": true,
             "live_generator_closed": true,
             "live_queue_closed": true,
-            "relation_current_closed": true,
-            "shadow_closed": true,
+            "relation_current_closed": false,
+            "shadow_closed": false,
             "scientific_object_closed": true,
             "support_release_closed": true,
             "evidence_acquisition_closed": true,
@@ -75554,7 +76136,7 @@
             "evidence_execution_ready": 0,
             "evidence_residual_survives": 0,
             "evidence_branch_repair_ready": 0,
-            "open_internal_frontiers": 0,
+            "open_internal_frontiers": 2,
             "external_triggers": 5,
             "automatic_model_calls_authorized": 0,
             "automatic_problem_gate_authorized": 0,
@@ -75563,28 +76145,31 @@
             "automatic_p0_authorized": 0,
             "automatic_gpu_authorized": 0
           },
-          "blockers": []
+          "blockers": [
+            "relation-frontier-open-or-stale",
+            "shadow-qualification-or-search-open"
+          ]
         }
       },
       {
         "key": "paper-first-global-relation-freshness",
         "pass": true,
         "detail": {
-          "status": "CURRENT_RELATION_UNIVERSE",
+          "status": "STALE_RELATION_UNIVERSE",
           "summary": {
-            "current_reviewed_sources": 228,
+            "current_reviewed_sources": 233,
             "last_scanned_sources": 228,
-            "current_possible_pairs": 25878,
-            "current_coobserved_pairs": 6164,
-            "current_pair_coverage_fraction": 0.2382,
+            "current_possible_pairs": 27028,
+            "current_coobserved_pairs": 6770,
+            "current_pair_coverage_fraction": 0.2505,
             "last_pair_coverage_fraction": 0.23,
             "current_relation_blind_spot": true,
             "raw_topology_digest_changed": true,
             "source_boundary_reconstructable": true,
-            "scheduler_topology_only_drift": true,
-            "universe_stale": false,
-            "current_not_reduced_unknown": false,
-            "model_scan_deferred": false,
+            "scheduler_topology_only_drift": false,
+            "universe_stale": true,
+            "current_not_reduced_unknown": true,
+            "model_scan_deferred": true,
             "focused_problem_generator_reopen_allowed": false
           }
         }
@@ -75605,18 +76190,18 @@
         "detail": {
           "status": "HOLD_MANUAL_RELATION_SCAN",
           "summary": {
+            "new_reviewed_sources": 0,
+            "checks": 15,
+            "passed": 9,
+            "new_boundary_sources": 0,
+            "current_reviewed_sources": 233,
+            "last_scanned_sources": 228,
+            "new_assumption_sources": 0,
+            "automatic_model_scan_authorized": false,
+            "new_empirical_sources": 0,
             "new_failure_sources": 0,
             "manual_scan_eligible": false,
-            "passed": 7,
-            "new_boundary_sources": 0,
-            "new_empirical_sources": 0,
-            "current_reviewed_sources": 228,
-            "new_assumption_sources": 0,
-            "failed": 8,
-            "checks": 15,
-            "new_reviewed_sources": 0,
-            "automatic_model_scan_authorized": false,
-            "last_scanned_sources": 228
+            "failed": 6
           }
         }
       },
@@ -75684,7 +76269,7 @@
         "key": "paper-first-problem-generator",
         "pass": true,
         "detail": {
-          "status": "GENERATED_ZERO_CANDIDATES",
+          "status": "GENERATED_AWAIT_PROBLEM_GATE",
           "summary": {
             "primary_evidence_records": 32,
             "raw_seeds": 0,
@@ -75695,13 +76280,13 @@
             "evolved_branches": 0,
             "max_branch_depth": 0,
             "portfolio_calls": 0,
-            "generated": 0,
+            "generated": 1,
             "structurally_reviewable": 0,
             "semantic_clear": 0,
-            "semantic_blocked": 0,
-            "written_to_auto_inbox": 0,
+            "semantic_blocked": 1,
+            "written_to_auto_inbox": 1,
             "generated_by_lane": {
-              "CONTRADICTION": 0,
+              "CONTRADICTION": 1,
               "CONVERGENT_FAILURE": 0,
               "ASSUMPTION_BREAK": 0,
               "UNEXPLAINED_BOUNDARY": 0,
@@ -75722,7 +76307,7 @@
               "OTHER": 0
             },
             "semantic_blocked_by_lane": {
-              "CONTRADICTION": 0,
+              "CONTRADICTION": 1,
               "CONVERGENT_FAILURE": 0,
               "ASSUMPTION_BREAK": 0,
               "UNEXPLAINED_BOUNDARY": 0,
@@ -75735,15 +76320,15 @@
         "key": "paper-first-problem-gate-queue",
         "pass": true,
         "detail": {
-          "submitted": 0,
-          "audited": 0,
+          "submitted": 1,
+          "audited": 1,
           "passed_problem_gate": 0,
-          "blocked_problem_gate": 0,
+          "blocked_problem_gate": 1,
           "paper_design_eligible": 0,
           "inbox_errors": 0,
           "primary_evidence_records": 32,
           "submitted_by_lane": {
-            "CONTRADICTION": 0,
+            "CONTRADICTION": 1,
             "CONVERGENT_FAILURE": 0,
             "ASSUMPTION_BREAK": 0,
             "UNEXPLAINED_BOUNDARY": 0,
@@ -75757,7 +76342,7 @@
             "OTHER": 0
           },
           "blocked_by_lane": {
-            "CONTRADICTION": 0,
+            "CONTRADICTION": 1,
             "CONVERGENT_FAILURE": 0,
             "ASSUMPTION_BREAK": 0,
             "UNEXPLAINED_BOUNDARY": 0,
@@ -76474,7 +77059,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T13:45:21+00:00",
+    "generated_at": "2026-08-17T16:33:41+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -76508,7 +77093,7 @@
       "ready_for_problem_review": 0,
       "stop_reduction": 5,
       "primary_verified": 32,
-      "primary_empirical_fact_candidates": 107,
+      "primary_empirical_fact_candidates": 114,
       "canonical_problem_gate_added": 0,
       "method_authorized": 0,
       "experiment_authorized": 0,
@@ -76812,11 +77397,11 @@
       },
       "primary_state": {
         "path": "generated/paper-first-primary-evidence-state.json",
-        "sha256": "d61b944ab553d023fd4169a067121dda4ca1c45dad8234deafd5c1ed6b83d4d9"
+        "sha256": "7589610909fac77fcce9fe2dbeea714a921dc39270728a71d684bddea8502056"
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-        "sha256": "d350468e43a859a196f313a31c9dcace2157286450e263d5fbb6b1a2c177ea8e"
+        "sha256": "4a985cf0f16528b56ad62487a1bcc80205af589861367b26a6926cd385ce6b53"
       },
       "defense_principle_reduction": {
         "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
