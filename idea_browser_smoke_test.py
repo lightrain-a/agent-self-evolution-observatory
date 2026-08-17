@@ -379,7 +379,7 @@ def main() -> None:
         pmd=ideas["prematureMethodSummary"]
         require((pmd.get("directions"),pmd.get("completed_diagnostics"),pmd.get("design_holds"),pmd.get("same_information_reducibility_findings"),pmd.get("hidden_executions"),pmd.get("scientifically_authorized")) == (2,2,1,2,0,0) and ideas["prematureMethodPanels"] == 2, f"premature Method diagnostics must be visible as two non-authoritative PF-1/PF-4 archives: {pmd}/{ideas['prematureMethodPanels']}")
         require("STOP_MATCHED_POST_ONLY_EQUIVALENT" in ideas["text"] and "STOP_MATCHED_SOFT_SCALAR_EQUIVALENT" in ideas["text"] and "DIAGNOSTIC ONLY" in ideas["text"], "Paper-first diagnostic archive markers are not visible")
-        require("Human terminal ledger" in ideas["text"] and ideas["newCards"] == 7 and ideas["absorbedChildCount"] == 17, "terminal/current idea summary or standalone-method rendering is missing")
+        require(("Human terminal ledger" in ideas["text"] or "人工终态账本" in ideas["text"]) and ideas["newCards"] == 7 and ideas["absorbedChildCount"] == 17, "terminal/current idea summary or standalone-method rendering is missing")
 
         expanded_before_refresh = execute(session_id, """document.documentElement.style.scrollBehavior='auto'; const card=document.getElementById('idea-a-1'); if(!card) return null; card.open=true; card.querySelectorAll('details').forEach(x=>x.open=true); const top=card.getBoundingClientRect().top+window.scrollY; window.scrollTo(0, top+Math.min(900,Math.max(500,card.scrollHeight*.55))); return {y:window.scrollY,open:document.querySelectorAll('#dynamic-page details[open]').length};""")
         time.sleep(1)

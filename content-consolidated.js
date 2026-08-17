@@ -70,24 +70,24 @@
   if (sources["research-directions"]) {
     pages["research-directions"] = Object.assign({}, sources["research-directions"], {
       title:{en:"Research directions and long-term agenda",zh:"研究方向地图与长期议程"},
-      lead:{en:"Ten stable scientific directions organize the field. Historical idea lineages explain how the search evolved; the current STRI paper, zero-authority positive-residual search, canonical/shadow discovery state, and terminal experiment ledger are synchronized on Paper Ideas and Experiments.",zh:"十个稳定科学方向组织领域结构。历史 Idea 谱系解释搜索如何演化；当前 STRI 论文、零权限 positive-residual 搜索、canonical/shadow discovery 状态与终态实验账本统一同步到 Paper Ideas 和 Experiments。"},
+      lead:{en:"Ten stable scientific directions organize the field. Historical idea lineages explain how the search evolved; the current STRI paper, zero-authority positive-residual search, canonical/shadow discovery state, and terminal experiment ledger are synchronized on Paper Ideas and Experiments.",zh:"十个稳定科学方向组织领域结构。历史 Idea 谱系用于解释搜索如何演化；当前 STRI 论文、零权限正向残余搜索、正式/Shadow 问题发现状态与终态实验账本，统一同步到“论文 Idea”和“实验决策”页面。"},
       groupsAfter:[group("research-agenda")]
     });
   }
 
   if (sources["paper-ideas"]) {
     pages["paper-ideas"] = Object.assign({}, sources["paper-ideas"], {
-      title:{en:"ICLR-first current research contracts and terminal decisions",zh:"ICLR-first 当前研究合同与终态决策"},
-      lead:{en:"The canonical page starts from one current-status ledger: STRI is paper-ready after Paper Quality v2 closes with zero evidence debt; canonical live ideas remain zero; the memory positive residual is shadow-only; shadow holds/dead ends and the 27 legacy P0 lifecycle records are shown as separate authority layers. Older candidate banks remain provenance only.",zh:"规范页面先看一张 current-status ledger：STRI 在 Paper Quality v2 闭环且 evidence debt 清零后已 paper-ready；canonical live idea 仍为 0；memory positive residual 只在 shadow 搜索层；shadow HOLD/dead-end 与 27 个历史 P0 lifecycle 作为不同权限层分开显示。更早候选池仅作溯源。"},
+      title:{en:"ICLR-first current research contracts and terminal decisions",zh:"ICLR 优先：当前研究合同与终态决策"},
+      lead:{en:"The canonical page starts from one current-status ledger: STRI is paper-ready after Paper Quality v2 closes with zero evidence debt; canonical live ideas remain zero; the memory positive residual is shadow-only; shadow holds/dead ends and the 27 legacy P0 lifecycle records are shown as separate authority layers. Older candidate banks remain provenance only.",zh:"本页先看统一的“当前状态账本”：STRI 的论文证据质量（Paper Quality v2）已经闭环、证据欠账清零并达到论文就绪；正式活跃 Idea 仍为 0；Memory 正向残余只保留在 Shadow 搜索层；Shadow 暂缓/死路与 27 个历史 P0 生命周期按权限层分开显示。更早候选池仅作溯源。"},
       includeRanking:true
     });
   }
 
   pages["selected-paper"] = {
     eyebrow:{en:"Selected ICLR Paper · STRI",zh:"当前选中 ICLR 论文 · STRI"},
-    title:{en:"STRI: Self-Evolution Should Not Depend on How Skills Are Split",zh:"STRI：Self-Evolution Should Not Depend on How Skills Are Split"},
-    lead:{en:"The current selected paper is STRI. This page starts from its exact paper-ready state, claim boundary, evidence completeness, downloads, and human handoff. The former Regression-Gated Self-Evolution workspace is preserved below as a clearly separated historical archive.",zh:"当前选中论文是 STRI。本页首先展示它精确的 paper-ready 状态、主张边界、证据完整性、下载与人工提交交接；原 Regression-Gated Self-Evolution 工作区整体下沉为明确分隔的历史归档。"},
-    callout:{en:"Current state: READY_NARROW_ICLR · Paper Quality v2 PASS · N1–N3 3/3 supported · evidence debt 0 · 9/9 main-text pages · anonymous supplement ready. Only human author signoff and OpenReview handoff remain; this asset-first paper-ready state does not create canonical Problem-Gate, Method, P0, or GPU authority.",zh:"当前状态：READY_NARROW_ICLR · Paper Quality v2 PASS · N1–N3 3/3 supported · evidence debt 0 · 正文 9/9 页 · anonymous supplement ready。当前只剩 human author signoff 与 OpenReview handoff；该 asset-first paper-ready 状态不会创建 canonical Problem-Gate、Method、P0 或 GPU 权限。"},
+    title:{en:"STRI: Self-Evolution Should Not Depend on How Skills Are Split",zh:"STRI：技能如何拆分不应影响自进化（Self-Evolution Should Not Depend on How Skills Are Split）"},
+    lead:{en:"The current selected paper is STRI. This page starts from its exact paper-ready state, claim boundary, evidence completeness, downloads, and human handoff. The former Regression-Gated Self-Evolution workspace is preserved below as a clearly separated historical archive.",zh:"当前选中论文是 STRI。本页首先展示它精确的论文就绪状态、主张边界、证据完整性、下载与人工提交交接；旧 Regression-Gated Self-Evolution 工作区整体下沉为明确分隔的历史归档。"},
+    callout:{en:"Current state: READY_NARROW_ICLR · Paper Quality v2 PASS · N1–N3 3/3 supported · evidence debt 0 · 9/9 main-text pages · anonymous supplement ready. Only human author signoff and OpenReview handoff remain; this asset-first paper-ready state does not create canonical Problem-Gate, Method, P0, or GPU authority.",zh:"当前状态：READY_NARROW_ICLR · 论文证据质量 v2 通过 · N1–N3 3/3 已支持 · 证据欠账 0 · 正文 9/9 页 · 匿名补充材料就绪。当前只剩作者责任确认与 OpenReview 提交交接；该“工件优先（Asset-first）”论文就绪状态不会创建正式问题门、方法、P0 或 GPU 权限。"},
     renderMode:"selected-paper-current",
     chapters:chaptersFor("selected-paper")
   };

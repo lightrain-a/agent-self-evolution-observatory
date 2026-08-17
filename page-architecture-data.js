@@ -54,24 +54,24 @@ window.PAGE_ARCHITECTURES = {
   },
   "paper-ideas":{
     chapters:[
-      {id:"discussed-ideas",title:{en:"I · Discussed ideas",zh:"第一章 · 已讨论 Idea"},question:{en:"Which reviewed scientific directions have entered P0, and which parents are terminally merged or dropped?",zh:"哪些已审科学方向已经进入 P0，哪些 parent 已终态合并或弃掉？"}},
-      {id:"new-ideas",title:{en:"II · Standalone methods and paper-first new problems",zh:"第二章 · 独立方法与 Paper-first 新问题"},question:{en:"Which methods remain standalone, which paper-first problems advance only to Paper Design versus REVISE/BLOCK, and what external human authority would be required before any P0/local validation transition?",zh:"哪些方法仍保持独立身份，哪些 Paper-first 新问题仅推进到 Paper Design、哪些仍需 REVISE/BLOCK，以及任何 P0/local validation 转换前需要怎样的外部人工 authority？"}}
+      {id:"discussed-ideas",title:{en:"I · Discussed ideas",zh:"第一章 · 已讨论 Idea"},question:{en:"Which reviewed scientific directions have entered P0, and which parents are terminally merged or dropped?",zh:"哪些已审科学方向已经进入 P0，哪些父方向已经终态并入或弃掉？"}},
+      {id:"new-ideas",title:{en:"II · Standalone methods and paper-first new problems",zh:"第二章 · 独立方法与论文优先新问题"},question:{en:"Which methods remain standalone, which paper-first problems advance only to Paper Design versus REVISE/BLOCK, and what external human authority would be required before any P0/local validation transition?",zh:"哪些方法仍保持独立身份，哪些论文优先新问题只推进到论文设计、哪些仍需修改/阻断，以及任何 P0/局部验证转换前需要怎样的外部人工授权？"}}
     ]
   },
   experiments:{
     chapters:[
       {id:"experiment-queue",title:{en:"I · Current terminal decisions",zh:"第一章 · 当前终态决策"},question:{en:"What is the single current decision for each active P0 direction, and what evidence is decisive for that decision?",zh:"每个活跃 P0 方向现在唯一的终态结论是什么，哪条证据真正决定了这个结论？"}},
       {id:"experiment-evidence",title:{en:"II · Current evidence audit",zh:"第二章 · 当前证据审计"},question:{en:"When a row needs auditing, which frozen P0 contract and qualification evidence support it without restating the verdict?",zh:"当需要核查某一行时，应查看哪些冻结 P0 合同与资格证据，而不再重复终态结论？"}},
-      {id:"experiment-traceability",title:{en:"III · Historical traceability archive",zh:"第三章 · 历史追溯档案"},question:{en:"Which earlier Pre-GPU, runtime, pilot-registry, resource, and approval artifacts are retained for provenance without competing with the current decision table?",zh:"哪些旧 Pre-GPU、runtime、Pilot Registry、资源与审批工件需要保留追溯，但不能再与当前终态总表竞争主叙事？"}}
+      {id:"experiment-traceability",title:{en:"III · Historical traceability archive",zh:"第三章 · 历史追溯档案"},question:{en:"Which earlier Pre-GPU, runtime, pilot-registry, resource, and approval artifacts are retained for provenance without competing with the current decision table?",zh:"哪些旧的 GPU 前检查、运行时、Pilot 注册表、资源与审批工件需要保留追溯，但不能再与当前终态总表竞争主叙事？"}}
     ]
   },
   "selected-paper":{
     chapters:[
-      {id:"current-stri",title:{en:"I · Current selected paper — STRI",zh:"第一章 · 当前选中论文 — STRI"},question:{en:"What exactly is submission-ready, which claims are supported, what is explicitly excluded, and what human handoff remains?",zh:"STRI 当前究竟哪些内容已经 submission-ready、哪些主张得到支持、哪些内容明确不主张，以及还剩什么人工交接？"}},
-      {id:"problem-scope",title:{en:"II · Historical archive — Regression-Gated problem formulation",zh:"第二章 · 历史归档 — Regression-Gated 问题表述"},question:{en:"What scientific problem was the former Regression-Gated Self-Evolution formulation trying to isolate, and which assumptions did it add?",zh:"旧 Regression-Gated Self-Evolution formulation 当时试图隔离什么科学问题，又额外加入了哪些后来需要检验的假设？"},sourceIds:["paper-problem"]},
+      {id:"current-stri",title:{en:"I · Current selected paper — STRI",zh:"第一章 · 当前选中论文 — STRI"},question:{en:"What exactly is submission-ready, which claims are supported, what is explicitly excluded, and what human handoff remains?",zh:"STRI 当前究竟哪些内容已经达到投稿就绪、哪些主张得到支持、哪些内容明确不主张，以及还剩什么人工交接？"}},
+      {id:"problem-scope",title:{en:"II · Historical archive — Regression-Gated problem formulation",zh:"第二章 · 历史归档 — Regression-Gated 问题表述"},question:{en:"What scientific problem was the former Regression-Gated Self-Evolution formulation trying to isolate, and which assumptions did it add?",zh:"旧 Regression-Gated Self-Evolution 方案当时试图隔离什么科学问题，又额外加入了哪些后来需要检验的假设？"},sourceIds:["paper-problem"]},
       {id:"evidence-experiments",title:{en:"III · Historical proposed falsification protocol",zh:"第三章 · 历史拟定的可证伪实验协议"},question:{en:"What matched-budget experiment was proposed, and which parts were never authorized as a current paper experiment?",zh:"当时提出了怎样的等预算实验，哪些部分后来并没有获得当前论文实验授权？"},sourceIds:["paper-experiments"]},
       {id:"narrative-execution",title:{en:"IV · Historical superseded execution roadmap",zh:"第四章 · 历史归档的已取代执行路线"},question:{en:"What was the intended roadmap, and why is it now provenance rather than an active schedule?",zh:"当时计划怎样推进，为什么现在只能作为溯源档案而不是活跃日程？"},sourceIds:["paper-roadmap"]},
-      {id:"review-gates",title:{en:"V · Historical lessons from later evidence",zh:"第五章 · 历史 formulation 的后续证据教训"},question:{en:"Which later substrate, simplification, and falsification results stopped the former formulation and became system-level rules?",zh:"哪些后续底座、简化基线和 falsifier 结果停止了旧 formulation，并进一步沉淀成系统规则？"},sourceIds:["review-log"]}
+      {id:"review-gates",title:{en:"V · Historical lessons from later evidence",zh:"第五章 · 历史方案的后续证据教训"},question:{en:"Which later substrate, simplification, and falsification results stopped the former formulation and became system-level rules?",zh:"哪些后续底座、简化基线和证伪实验结果停止了旧方案，并进一步沉淀成系统规则？"},sourceIds:["review-log"]}
     ]
   },
   bibliography:{

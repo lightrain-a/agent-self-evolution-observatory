@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-17 · Site-wide Chinese-first frontend pass
+
+- Fixed language switching at the shared shell level: brand, sidebar navigation, search placeholder, sidebar note, footer, and the global current-research strip now rerender with the selected language instead of leaving an English shell around Chinese page content.
+- Made the Chinese current-state views Chinese-first across Paper Ideas, Experiments, and Selected Paper: paper-ready/evidence-debt/canonical/shadow labels, STRI evidence blocks, claim/exclusion text, handoff text, historical ledger headings, ENS components, and common paper-first terminology now use Chinese descriptions while exact machine IDs and typed terminal enums remain unchanged.
+- Localized bibliography/evaluation display taxonomies without changing internal filter keys: update surfaces, publication types, feedback signals, live-literature categories, maps, filter controls, and resource-index summaries now render Chinese labels while preserving stable URLs/data values.
+- Added real-browser Chinese assertions for the shared shell plus Paper Ideas, Experiments, Selected Paper, Bibliography, and Evaluation. Final full-site browser/mobile and focused system/idea suites both pass; remaining pure-English leaf text is intentionally dominated by paper/model/benchmark names and exact machine status identifiers.
+
 ## 2026-08-17 · Readable research-system flow
 
 - Reorganized `system-overview.html` around seven reader chapters: start-here architecture → real-problem discovery → paper design → pre-experiment compile → execute/diagnose/freeze/scale → paper evidence/release → system learning/memory. The canonical 11-stage lifecycle and six backend responsibility layers remain unchanged scientific/runtime sources of truth.
