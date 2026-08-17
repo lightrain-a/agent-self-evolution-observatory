@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T11:46:18+00:00",
-  "source_revision": "f3a678db320d8225212dd1d9d6aed9f551f87f24",
+  "generated_at": "2026-08-17T12:10:59+00:00",
+  "source_revision": "0b96fa050528d5afd31b4512f7a7bcf992543169",
   "as_of_date": "2026-08-17",
   "headline": {
     "paper_ready": 1,
@@ -19,7 +19,7 @@
     "shadow_dead_ends": 32,
     "shadow_holds": 3,
     "shadow_method_ready": 0,
-    "shadow_qualification_ready": 0,
+    "shadow_qualification_ready": 1,
     "fresh_active_f0": 0,
     "fresh_design_ready_f0": 0,
     "fresh_support_holds": 1,
@@ -317,12 +317,13 @@
       "method_design_authorized": 0
     },
     "qualification": {
-      "status": "TERMINAL_NO_ACTIVE_MECHANISM_SEED",
+      "status": "READY_FOR_SHADOW_QUALIFICATION",
       "operator_version": "fresh-phenomenon-anomaly-precision-v13",
       "operator_upgrade_recompile": true,
-      "qualification_allowed": false,
+      "qualification_allowed": true,
       "automatic_provider_calls_authorized": 0,
-      "reason": "The treatment-semantics branch is closed by information-parity and same-information reduction, not by a negative rollout. The v8 formulation's only claimed residual required giving the proposed predictor an executable mapping that its strongest versioned-treatment baseline did not receive. Once parity is restored, the mapping is simply part of treatment/state identity; if it is unobservable, the problem becomes identification rather than a new causal primitive. The sparse B-9/C2 memory-effect phenomenon remains archived evidence, but this substrate has no active mechanism seed after the current reductions."
+      "reason": "Canonical discovery is closed and the discovery operator changed since the latest terminal shadow run, so one new qualified shadow transaction is allowed on the same frozen evidence.",
+      "scope": "global-v13-shadow-control; does not reactivate archived positive-residual assets"
     }
   },
   "positive_residual": {
@@ -399,6 +400,7 @@
     "paper_quality_v2_required_for_submission_ready": true,
     "positive_residual_parent_is_not_new_problem_gate_pass": true,
     "archived_positive_residual_without_active_mechanism_seed_is_not_shadow_qualification": true,
+    "global_shadow_operator_upgrade_qualification_is_independent_of_archived_positive_residual_seed": true,
     "p0_lifecycle_is_not_active_execution": true,
     "shadow_hold_is_not_dead_end": true,
     "qualification_failure_is_not_scientific_negative": true,
