@@ -17,9 +17,17 @@ from .paper_first_problem_discovery_contract import (
 def _lane_evidence(lane: str) -> dict:
     if lane == "CONTRADICTION":
         return {
-            "shared_operationalization": "Both sources evaluate the same measured behavior under the same bounded setting.",
+            "shared_operationalization": "Both sources evaluate the same causal treatment under the same bounded setting.",
             "shared_intervention_semantics": "Both sources apply the same frozen inference-time context treatment to an unchanged policy.",
             "shared_adaptation_stage": "Both treatments occur at inference time with no parameter update or training-data selection stage.",
+            "source_a_intervention": "Apply the same inference-time procedural artifact to a frozen executor.",
+            "source_b_intervention": "Apply the same inference-time procedural artifact to a frozen executor.",
+            "intervention_surface_match": True,
+            "executor_state_match": True,
+            "comparator_match": True,
+            "endpoint_match": True,
+            "timing_match": True,
+            "treatment_equivalence_argument": "Both sources intervene on the identical inference-time artifact while keeping executor parameters, comparator construction, endpoint, and timing fixed."
             "incompatibility": "The two grounded facts require opposite outcomes under that shared operationalization.",
         }
     if lane == "CONVERGENT_FAILURE":
@@ -181,6 +189,10 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertTrue(policy["temporal_exposure_relabeling_after_longitudinal_reduction_forbidden"])
         self.assertTrue(policy["treatment_semantics_seed_requires_executable_version_change"])
         self.assertTrue(policy["treatment_semantics_seed_requires_versioned_treatment_reduction_first"])
+        self.assertTrue(policy["contradiction_requires_treatment_surface_alignment"])
+        self.assertTrue(policy["contradiction_requires_executor_state_alignment"])
+        self.assertTrue(policy["contradiction_requires_comparator_endpoint_timing_alignment"])
+        self.assertTrue(policy["cross_treatment_sign_difference_is_reducible_not_contradiction"])
         self.assertTrue(policy["saturation_map_check_required"])
         self.assertTrue(state["candidate_schema"]["semantic_reduction_review"]["both_source_claims_require_exact_primary_evidence_grounding"])
         self.assertTrue(state["candidate_schema"]["semantic_reduction_review"]["lane_contract_must_be_independently_verified"])
@@ -199,6 +211,20 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
                 self.assertTrue(audit["authority"]["paper_design_eligible_for_human_review"])
                 for key in ("method_design", "experiment_blueprint", "local_validation", "p0", "gpu", "full_experiment"):
                     self.assertFalse(audit["authority"][key])
+
+    def test_contradiction_blocks_cross_treatment_sign_contrast_before_semantic_review(self) -> None:
+        candidate = valid_candidate("CONTRADICTION")
+        candidate["lane_evidence"].update({
+            "source_a_intervention": "Inference-time static skill on a frozen executor.",
+            "source_b_intervention": "SFT parameter update followed by prompt-history ablation.",
+            "intervention_surface_match": False,
+            "executor_state_match": False,
+            "treatment_equivalence_argument": "Both use text, but the causal update surfaces differ.",
+        })
+        audit = audit_problem_candidate(candidate, require_semantic_review=False)
+        self.assertFalse(audit["passed"])
+        self.assertIn("contradiction-treatment-alignment-failed:intervention_surface_match", audit["blockers"])
+        self.assertIn("contradiction-treatment-alignment-failed:executor_state_match", audit["blockers"])
 
     def test_shadow_search_primitives_can_be_machine_audited(self) -> None:
         for primitive in SEARCH_PORTFOLIO_PRIMITIVES:

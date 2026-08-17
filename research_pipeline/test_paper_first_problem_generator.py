@@ -10,7 +10,7 @@ from pathlib import Path
 from .config import StorageSettings
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, FORBIDDEN_DISCOVERY_LANES
 from .paper_first_problem_gate_queue import build_problem_gate_queue
-from .paper_first_problem_generator import _ark, _normalize_lane_search, _provider_request_audit, run_problem_generator, write_problem_generator_state
+from .paper_first_problem_generator import _ark, _durable_principle_dead_end_examples, _normalize_lane_search, _provider_request_audit, run_problem_generator, write_problem_generator_state
 from .paper_first_problem_generator_prompts import generator_prompt, reviewer_prompt
 from .test_paper_first_problem_discovery_contract import valid_candidate
 
@@ -145,6 +145,21 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             }
         return responder
 
+    def test_durable_principle_dead_end_memory_preserves_reopen_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)/"memory.json"
+            path.write_text(json.dumps({"shadow_dead_end_memory":{"blocked_objects":[{
+                "source_candidate_id":"AUTO-X","title":"cross-treatment false contradiction","search_primitive":"CONTRADICTION","current_source_refs":["arXiv:1","arXiv:2"],"dead_end_certified":True,
+                "strongest_reduction":"the interventions use different causal surfaces",
+                "counter_explanation":{"opposite_principle":"align treatment semantics before comparing effects","opposite_search_seed":"search same frozen executor treatment","reopen_condition":"reopen only with identical intervention surface"}
+            }]}}),encoding="utf-8")
+            rows=_durable_principle_dead_end_examples(path)
+        self.assertEqual(len(rows),1)
+        self.assertEqual(rows[0]["source_candidate_id"],"AUTO-X")
+        self.assertTrue(rows[0]["dead_end_certified"])
+        self.assertIn("identical intervention surface",rows[0]["reopen_condition"])
+        self.assertFalse(rows[0]["scientific_authority"])
+
     def test_generator_prompt_exposes_four_live_and_three_forbidden_lanes(self) -> None:
         records = []
         for i in range(32):
@@ -165,7 +180,11 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
             self.assertIn(lane, prompt)
         self.assertIn("lane_evidence", prompt)
         self.assertIn("OPERATIONAL_ASSUMPTION", prompt)
-        for field in ("ex_ante_prediction","distinguishing_prediction","cannot_express","reduction_class","exact_reduction_test","reduction_falsifiability_contract","same_observable_information_checked","ex_ante_exact_prediction_checked","distinguishing_prediction_checked","scope_boundary_checked","all_exact_reduction_tests_resolved","shared_intervention_semantics","shared_adaptation_stage"):
+        for field in ("source_a_intervention","source_b_intervention","intervention_surface_match","executor_state_match","comparator_match","endpoint_match","timing_match","treatment_equivalence_argument","shared_intervention_semantics","shared_adaptation_stage"):
+            self.assertIn(field,prompt)
+        self.assertIn("cross-treatment",prompt.lower())
+        self.assertIn("MUST use status=REDUCIBLE",prompt)
+        for field in ("ex_ante_prediction","distinguishing_prediction","cannot_express","reduction_class","exact_reduction_test","reduction_falsifiability_contract","same_observable_information_checked","ex_ante_exact_prediction_checked","distinguishing_prediction_checked","scope_boundary_checked","all_exact_reduction_tests_resolved"):
             self.assertIn(field,prompt)
         self.assertIn("full-parameter SFT are distinct interventions",prompt)
 
@@ -219,6 +238,17 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertEqual(state["summary"]["structurally_reviewable"],1)
         self.assertEqual(queue["summary"]["passed_problem_gate"],0)
         self.assertTrue(any(x.startswith("unresolved-exact-reduction-test:") for x in queue["blocked"][0]["blockers"]))
+
+    def test_reviewer_prompt_blocks_cross_treatment_contradictions(self) -> None:
+        candidate=valid_candidate("CONTRADICTION")
+        evidence={
+            "arXiv:2608.00001":{"ref":"arXiv:2608.00001","title":"Primary A","source_sha256":"a"*64,"abstract":"Observed A under frozen setting."},
+            "arXiv:2608.00002":{"ref":"arXiv:2608.00002","title":"Primary B","source_sha256":"b"*64,"abstract":"Observed independent outcome B under the relevant setting."},
+        }
+        prompt=reviewer_prompt([candidate],evidence)
+        self.assertIn("same causal treatment surface",prompt)
+        self.assertIn("inference-time conditioning versus parameter-updated/SFT training",prompt)
+        self.assertIn("cross-treatment contrast",prompt)
 
     def test_explicit_portfolio_mode_is_not_a_live_generator_path(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -325,9 +355,9 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertTrue(state["policy"]["strict_provider_transport"])
         self.assertTrue(state["policy"]["semantic_reviewer_deferred"])
         self.assertFalse(state["policy"]["thinking_compatibility_repost_allowed"])
-        self.assertFalse(state["policy"]["thinking_disabled"])
-        self.assertEqual(state["policy"]["generator_thinking_profile"],"provider-default")
-        self.assertEqual(state["policy"]["generator_max_output_tokens"],15000)
+        self.assertTrue(state["policy"]["thinking_disabled"])
+        self.assertEqual(state["policy"]["generator_thinking_profile"],"disabled")
+        self.assertEqual(state["policy"]["generator_max_output_tokens"],6500)
         self.assertFalse(state["policy"]["transport_only_no_output_fallback_allowed"])
         self.assertEqual(state["policy"]["transport_fallback_max_additional_provider_attempts"],0)
 

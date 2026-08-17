@@ -17,7 +17,7 @@
     "latest_shadow_present": true,
     "latest_shadow_terminal": true,
     "same_source_transaction": true,
-    "current_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v14",
+    "current_discovery_operator_version": "fresh-phenomenon-treatment-aligned-v14",
     "latest_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
     "same_discovery_operator_version": false,
     "operator_upgrade_recompile": true,
@@ -38,7 +38,7 @@
     "latest_source_set_sha256": "60b9c55d7ca585bd8590a6d7c69e9587fc0ab211ec24d80c3ba3c4651481ff56",
     "latest_primary_content_sha256": "0df29b9cbd111a85eb5caece3c5fd2ce148ebb587fae140c3de4ce58a7d05e9c",
     "latest_source_pool_sha256": "c4a42abe9f66a2ceafdb673f4e7778632406aaa65c9ca21c081221b22d36c2f6",
-    "current_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v14",
+    "current_discovery_operator_version": "fresh-phenomenon-treatment-aligned-v14",
     "latest_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13"
   },
   "scientific_authority": false

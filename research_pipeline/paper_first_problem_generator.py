@@ -21,6 +21,7 @@ DEFAULT_JSON=PROJECT_ROOT/"generated"/"paper-first-problem-generator-state.json"
 DEFAULT_JS=PROJECT_ROOT/"generated"/"paper-first-problem-generator-state.js"
 PORTABLE_REVIEW_RECEIPT_LIMIT=64
 PORTABLE_BLOCKED_MEMORY_LIMIT=24
+DURABLE_PRINCIPLE_DEAD_END_JSON=PROJECT_ROOT/"generated"/"paper-first-search-portfolio-design-adjudication.json"
 GENERATOR_MODEL=preferred_model("problem_generation"); REVIEWER_MODEL=preferred_model("semantic_review"); MAX_CANDIDATES=5; MAX_POOL_AGE_HOURS=36.0
 Responder=Callable[...,dict[str,Any]]
 
@@ -207,17 +208,44 @@ def _public_blocked_problem_memory(storage:StorageSettings,previous_public_state
     }
 
 
+def _durable_principle_dead_end_examples(path:Path=DURABLE_PRINCIPLE_DEAD_END_JSON,limit:int=12)->list[dict[str,Any]]:
+    try: payload=json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError,json.JSONDecodeError): return []
+    memory=payload.get("shadow_dead_end_memory") or {};rows=memory.get("blocked_objects") or []
+    examples=[]
+    for row in rows:
+        if not isinstance(row,dict) or row.get("dead_end_certified") is not True: continue
+        counter=row.get("counter_explanation") or {}
+        if not isinstance(counter,dict): counter={}
+        examples.append({
+            "source_candidate_id":str(row.get("source_candidate_id") or ""),
+            "title":str(row.get("title") or "")[:280],
+            "search_primitive":str(row.get("search_primitive") or ""),
+            "source_refs":[str(ref) for ref in (row.get("current_source_refs") or []) if str(ref)][:4],
+            "strongest_reduction":str(row.get("strongest_reduction") or "")[:700],
+            "opposite_principle":str(counter.get("opposite_principle") or "")[:500],
+            "opposite_search_seed":str(counter.get("opposite_search_seed") or "")[:700],
+            "reopen_condition":str(counter.get("reopen_condition") or row.get("reopen_only_if") or "")[:700],
+            "dead_end_certified":True,
+            "scientific_authority":False,
+        })
+    return examples[-max(1,int(limit)):]
+
+
 def _private_dead_end_prompt_memory(storage:StorageSettings,public_memory:dict[str,Any])->dict[str,Any]:
     local=_local_blocked_problem_rows(storage)
     examples=[]
     for row in local[-12:]:
         examples.append({key:row.get(key) for key in ("title","discovery_lane","source_refs","matched_patterns","strongest_reduction","reason","lane_contract_verified","source_claims_grounded")})
+    principle_examples=_durable_principle_dead_end_examples()
     blocked_by_lane={str(key):int(value or 0) for key,value in (public_memory.get("blocked_by_lane") or {}).items()}
     lane_search_priority=sorted(DISCOVERY_LANES,key=lambda lane:(blocked_by_lane.get(lane,0),DISCOVERY_LANES.index(lane)))
     return {
         "summary":{key:public_memory.get(key) for key in ("blocked_candidate_attempts","blocked_by_lane","reduction_pattern_counts","top_reduction_basin","repeated_reduction_basin")},
         "lane_search_priority":lane_search_priority,
         "recent_blocked_examples":examples,
+        "principle_certified_dead_ends":principle_examples,
+        "principle_certified_dead_end_count":len(principle_examples),
         "scientific_authority":False,
     }
 

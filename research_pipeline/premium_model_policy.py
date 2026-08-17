@@ -18,19 +18,19 @@ MAX_PROVIDER_CONCURRENCY: Final[int] = 2
 # Different roles intentionally start from different model families so a designer does
 # not silently self-review.  Callers must still compare resolved_model receipts.
 _STAGE_PRIORITIES: Final[dict[str, tuple[str, ...]]] = {
-    "problem_generation": ("glm-5.3", "kimi-k3", "minimax-m3", "deepseek-v4-pro"),
+    "problem_generation": ("kimi-k3", "deepseek-v4-pro", "glm-5.3", "minimax-m3"),
     "portfolio_expand": ("kimi-k3", "glm-5.3", "minimax-m3", "deepseek-v4-pro"),
-    "portfolio_evolve": ("glm-5.3", "kimi-k3", "minimax-m3", "deepseek-v4-pro"),
-    "portfolio_formulate": ("glm-5.3", "kimi-k3", "minimax-m3", "deepseek-v4-pro"),
+    "portfolio_evolve": ("kimi-k3", "deepseek-v4-pro", "glm-5.3", "minimax-m3"),
+    "portfolio_formulate": ("kimi-k3", "deepseek-v4-pro", "glm-5.3", "minimax-m3"),
     "semantic_review": ("deepseek-v4-pro", "minimax-m3", "kimi-k3", "glm-5.3"),
-    "evidence_design": ("glm-5.3", "kimi-k3", "minimax-m3", "deepseek-v4-pro"),
+    "evidence_design": ("kimi-k3", "deepseek-v4-pro", "glm-5.3", "minimax-m3"),
     "evidence_recompile": ("kimi-k3", "glm-5.3", "minimax-m3", "deepseek-v4-pro"),
     "evidence_review": ("deepseek-v4-pro", "minimax-m3", "kimi-k3", "glm-5.3"),
     "relation_mining": ("kimi-k3", "glm-5.3", "minimax-m3", "deepseek-v4-pro"),
-    "relation_lane_review": ("glm-5.3", "minimax-m3", "deepseek-v4-pro", "kimi-k3"),
+    "relation_lane_review": ("deepseek-v4-pro", "kimi-k3", "glm-5.3", "minimax-m3"),
     "relation_reduction_review": ("deepseek-v4-pro", "minimax-m3", "kimi-k3", "glm-5.3"),
-    "paper_design": ("glm-5.3", "kimi-k3", "minimax-m3", "deepseek-v4-pro"),
-    "method_synthesis": ("glm-5.3", "kimi-k3", "minimax-m3", "deepseek-v4-pro"),
+    "paper_design": ("kimi-k3", "deepseek-v4-pro", "glm-5.3", "minimax-m3"),
+    "method_synthesis": ("kimi-k3", "deepseek-v4-pro", "glm-5.3", "minimax-m3"),
     "final_scientific_review": ("deepseek-v4-pro", "minimax-m3", "kimi-k3", "glm-5.3"),
 }
 

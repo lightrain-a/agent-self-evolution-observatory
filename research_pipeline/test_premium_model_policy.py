@@ -23,17 +23,20 @@ class PremiumModelPolicyTests(unittest.TestCase):
 
     def test_high_value_stage_defaults_use_premium_models(self) -> None:
         expected = {
-            "problem_generation": "glm-5.3",
+            "problem_generation": "kimi-k3",
             "portfolio_expand": "kimi-k3",
-            "portfolio_evolve": "glm-5.3",
-            "portfolio_formulate": "glm-5.3",
+            "portfolio_evolve": "kimi-k3",
+            "portfolio_formulate": "kimi-k3",
             "semantic_review": "deepseek-v4-pro",
-            "evidence_design": "glm-5.3",
+            "evidence_design": "kimi-k3",
             "evidence_recompile": "kimi-k3",
             "evidence_review": "deepseek-v4-pro",
             "relation_mining": "kimi-k3",
-            "relation_lane_review": "glm-5.3",
+            "relation_lane_review": "deepseek-v4-pro",
             "relation_reduction_review": "deepseek-v4-pro",
+            "paper_design": "kimi-k3",
+            "method_synthesis": "kimi-k3",
+            "final_scientific_review": "deepseek-v4-pro",
         }
         for stage, model in expected.items():
             self.assertEqual(preferred_model(stage, PREMIUM_AUTO), model)

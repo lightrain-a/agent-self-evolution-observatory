@@ -5,7 +5,7 @@ from typing import Any
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, REDUCTION_FALSIFIABILITY_CONTRACT, reduction_pattern_audit
 
 
-DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-anomaly-precision-v14"
+DISCOVERY_OPERATOR_VERSION = "fresh-phenomenon-treatment-aligned-v14"
 
 DISCOVERY_LANES: tuple[str, ...] = (
     "CONTRADICTION",
@@ -70,6 +70,14 @@ LANE_EVIDENCE_REQUIRED: dict[str, tuple[str, ...]] = {
         "shared_operationalization",
         "shared_intervention_semantics",
         "shared_adaptation_stage",
+        "source_a_intervention",
+        "source_b_intervention",
+        "intervention_surface_match",
+        "executor_state_match",
+        "comparator_match",
+        "endpoint_match",
+        "timing_match",
+        "treatment_equivalence_argument",
         "incompatibility",
     ),
     "CONVERGENT_FAILURE": (
@@ -131,7 +139,7 @@ LANE_EVIDENCE_REQUIRED: dict[str, tuple[str, ...]] = {
 }
 
 LANE_MACHINE_CONTRACTS: dict[str, str] = {
-    "CONTRADICTION": "Two independently grounded empirical facts are incompatible under an explicitly shared operationalization, including the same intervention/treatment surface and adaptation stage; inference-time context, retrieval/filtering, parameter updates, and full-parameter training are not interchangeable treatments.",
+    "CONTRADICTION": "Two independently grounded empirical facts are incompatible only after a shared operationalization aligns intervention/treatment surface, adaptation stage, executor/parameter state, comparator, endpoint, and intervention timing; inference-time context, retrieval/filtering, parameter updates, and full-parameter training are not interchangeable treatments, and cross-treatment sign differences are REDUCIBLE rather than contradictions.",
     "CONVERGENT_FAILURE": "Two independent method families show quantitative failure under the same bounded operational condition; the candidate names a common failure object rather than a better-method claim.",
     "ASSUMPTION_BREAK": "Source A contains an explicit operational assumption and independent source B contains empirical evidence that violates it in a scope-linked setting.",
     "UNEXPLAINED_BOUNDARY": "Primary evidence quantitatively establishes an anomalous boundary/regime and an adjacent expected regime for the same measured phenomenon; the candidate targets the unexplained transition.",
@@ -207,6 +215,10 @@ POLICY: dict[str, Any] = {
     "temporal_exposure_relabeling_after_longitudinal_reduction_forbidden": True,
     "treatment_semantics_seed_requires_executable_version_change": True,
     "treatment_semantics_seed_requires_versioned_treatment_reduction_first": True,
+    "contradiction_requires_treatment_surface_alignment": True,
+    "contradiction_requires_executor_state_alignment": True,
+    "contradiction_requires_comparator_endpoint_timing_alignment": True,
+    "cross_treatment_sign_difference_is_reducible_not_contradiction": True,
     "discovery_operator_version": DISCOVERY_OPERATOR_VERSION,
     "shared_limitation_without_empirical_failure_forbidden": True,
     "pure_topic_brainstorm_forbidden": True,
@@ -373,6 +385,12 @@ def _lane_contract_blockers(candidate: dict[str, Any]) -> list[str]:
 
     # These are structural anti-shortcut checks. Independent semantic review still
     # decides whether the grounded source claims really support the relation.
+    if lane == "CONTRADICTION":
+        for key in ("intervention_surface_match","executor_state_match","comparator_match","endpoint_match","timing_match"):
+            if lane_evidence.get(key) is not True:
+                blockers.append(f"contradiction-treatment-alignment-failed:{key}")
+        if _normalized_evidence_text(lane_evidence.get("source_a_intervention")) == _normalized_evidence_text(lane_evidence.get("source_b_intervention")) and len(str(lane_evidence.get("treatment_equivalence_argument") or "").split()) < 6:
+            blockers.append("contradiction-treatment-equivalence-argument-too-weak")
     if lane == "CONVERGENT_FAILURE":
         if _normalized_evidence_text(lane_evidence.get("method_a")) == _normalized_evidence_text(lane_evidence.get("method_b")):
             blockers.append("convergent-failure-requires-distinct-methods")
@@ -413,6 +431,10 @@ def _shadow_lane_contract_blockers(candidate: dict[str, Any]) -> list[str]:
     for key in LANE_EVIDENCE_REQUIRED[lane]:
         if not _nonempty(lane_evidence.get(key)):
             blockers.append(f"shadow-primitive-evidence-missing:{lane}:{key}")
+    if lane == "CONTRADICTION":
+        for key in ("intervention_surface_match","executor_state_match","comparator_match","endpoint_match","timing_match"):
+            if lane_evidence.get(key) is not True:
+                blockers.append(f"contradiction-treatment-alignment-failed:{key}")
     if lane == "CONVERGENT_FAILURE" and _normalized_evidence_text(lane_evidence.get("method_a")) == _normalized_evidence_text(lane_evidence.get("method_b")):
         blockers.append("convergent-failure-requires-distinct-methods")
     if lane == "ASSUMPTION_BREAK" and len(str(lane_evidence.get("assumption") or "").split()) < 4:
@@ -694,6 +716,7 @@ def build_problem_discovery_contract_state() -> dict[str, Any]:
             "INVERT principle-certified dead ends only as zero-authority search priors: extract the opposite principle/search seed, then require fresh primary grounding and the recorded reopen condition before retaining a branch",
             "VERIFY any proposed feedback mechanism has a causal write path into selection, gating, rollback, synthesis, memory admission, artifact promotion, or another state transition; report-only measurements cannot justify feedback-effect experiments",
             "DETECT a grounded anomaly, sign reversal, threshold, nonmonotonic regime, or assumption violation; UNEXPLAINED_BOUNDARY may begin from one primary paper when it contains both required evidence items",
+            "ALIGN treatment semantics before CONTRADICTION: intervention surface, executor/parameter state, comparator, endpoint, and timing must match; otherwise record REDUCIBLE cross-treatment contrast",
             "OPERATIONALIZE the smallest shared observable and adjacent/control regime without requiring a second paper to have used the same metric",
             "MATERIALIZE a cheapest independent-truth falsifier from released units, first-party code, or an existing provenance-audited substrate whenever possible",
             "REDUCE using closest work + mature theories under the same-information Reduction Falsifiability Contract",
