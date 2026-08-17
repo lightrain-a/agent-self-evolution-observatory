@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T05:27:15+00:00",
-  "source_revision": "6141dc086c1d4dcc6cc828a6126058673f2e88c8",
+  "generated_at": "2026-08-17T06:44:44+00:00",
+  "source_revision": "4c49b9d5558b195a2aeb91ad26c572aa2fafe797",
   "as_of_date": "2026-08-17",
   "headline": {
     "paper_ready": 1,
@@ -16,8 +16,8 @@
     "legacy_p0_upstream_hold": 1,
     "legacy_p0_method_stop": 1,
     "launchable_formal_experiments": 0,
-    "shadow_dead_ends": 23,
-    "shadow_holds": 2,
+    "shadow_dead_ends": 29,
+    "shadow_holds": 3,
     "shadow_method_ready": 0,
     "shadow_qualification_ready": 0,
     "fresh_active_f0": 0,
@@ -166,14 +166,16 @@
           "execution_ready": false,
           "required_plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c",
           "active_experiment_authority_required": true,
-          "matching_resource_leases_required": true,
+          "execution_kind": "api_docker",
+          "requires_gpu": false,
+          "matching_gpu_leases_required": false,
+          "generic_resource_lease_ids_accepted": false,
           "unauthorized_partial_run_ingestable": false,
           "status": "HOLD_EXECUTION_ENV_AND_AUTHORITY_REQUIRED",
           "hold_reason": [
             "Harbor SDK",
             "agent-runtime:latest",
-            "Gemini agent credential",
-            "Bedrock SkillAuthor credential"
+            "Gemini credential for agent + host-side SkillAuthor"
           ]
         },
         "paper_problem_claimed": false
@@ -278,9 +280,9 @@
     "method_ready": 0,
     "revise_hold": 1,
     "stop_standalone": 1,
-    "dead_end_objects": 23,
-    "principle_readjudication_dead_ends": 19,
-    "hold_objects": 2,
+    "dead_end_objects": 29,
+    "principle_readjudication_dead_ends": 25,
+    "hold_objects": 3,
     "semantic_holds": 0,
     "near_miss_holds": 1,
     "support_release_holds": 4,

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T05:27:08+00:00",
+  "generated_at": "2026-08-17T06:42:36+00:00",
   "status": "F0_EXECUTION_HOLD",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -10,6 +10,8 @@
     "active_f0_requires_frozen_same_information_falsifier": true,
     "active_f0_requires_controller_verified_execution_capability": true,
     "direct_gpu_execution_without_experiment_authority_and_matching_leases_is_forbidden": true,
+    "non_gpu_api_docker_f0_requires_experiment_authority_but_not_gpu_lease": true,
+    "unverifiable_generic_resource_lease_ids_are_not_execution_authority": true,
     "unauthorized_partial_runs_cannot_be_ingested_as_f0_evidence": true,
     "preexecution_operationalization_repair_requires_hash_chain_and_independent_review": true,
     "source_only_candidates_cannot_consume_experiment_slot": true,
@@ -157,7 +159,7 @@
         "model_calls_executed": 0,
         "task_trials_executed": 0
       },
-      "reopen_only_if": "Provision the benchmark runtime (Harbor + agent-runtime image + agent and SkillAuthor credentials), then obtain a separate controller-issued execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus current-source review; it never authorizes Problem Gate, method design, or full experiments by itself.",
+      "reopen_only_if": "Provision the benchmark runtime (Harbor + agent-runtime image + the Gemini credential shared by the frozen agent and host-side SkillAuthor route), then obtain a separate controller-issued execution capability bound to the frozen plan. A seed-A GO only authorizes seed-B replication plus current-source review; it never authorizes Problem Gate, method design, or full experiments by itself.",
       "paper_problem_claimed": false,
       "scientific_authority": false,
       "authority": {
@@ -177,14 +179,16 @@
         "execution_ready": false,
         "required_plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c",
         "active_experiment_authority_required": true,
-        "matching_resource_leases_required": true,
+        "execution_kind": "api_docker",
+        "requires_gpu": false,
+        "matching_gpu_leases_required": false,
+        "generic_resource_lease_ids_accepted": false,
         "unauthorized_partial_run_ingestable": false,
         "status": "HOLD_EXECUTION_ENV_AND_AUTHORITY_REQUIRED",
         "hold_reason": [
           "Harbor SDK",
           "agent-runtime:latest",
-          "Gemini agent credential",
-          "Bedrock SkillAuthor credential"
+          "Gemini credential for agent + host-side SkillAuthor"
         ]
       }
     },
@@ -325,7 +329,7 @@
     },
     "dead_end_memory": {
       "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-      "sha256": "2cf7a428422628fd598e6e3042f35e19f11a53ccd5cc0898216ee29f73705a57"
+      "sha256": "ab5c0739900ef6d690c842195c96e79dfd6ee8947b8460ab36f409e4e32481b2"
     },
     "defense_principle_reduction": {
       "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
@@ -334,7 +338,7 @@
     },
     "skill_validation_transfer_scout": {
       "path": "generated/paper-first-skill-validation-transfer-scout-20260817.json",
-      "sha256": "2e570196e35a9b678eacf62618bd58950d2e0246b084133adee47ac99709af92",
+      "sha256": "e7edde1f6eaa0449cb5fe74061501cb12d36306852a8ced2e2b9ecbae69ac2ac",
       "status": "DESIGN_READY_EXECUTION_ENV_HOLD",
       "plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c"
     },

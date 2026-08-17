@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-16T20:57:24+00:00",
+  "generated_at": "2026-08-17T06:42:36+00:00",
   "candidate_id": "PA-05-SKILL-VALIDATION-TRANSFER",
   "status": "DESIGN_READY_EXECUTION_ENV_HOLD",
   "scientific_authority": false,
@@ -93,12 +93,22 @@
     "runtime_image_present": false,
     "gemini_credential_present": false,
     "bedrock_credential_present": false,
+    "bedrock_required_for_f0": false,
+    "provider_routing": {
+      "model_preset": "gemini-3-flash",
+      "agent_provider": "gemini",
+      "agent_model": "google/gemini-3-flash-preview",
+      "host_litellm_model": "gemini/gemini-3-flash-preview",
+      "host_litellm_api_key_env": "GEMINI_API_KEY",
+      "skill_author_uses_run_model_when_model_yaml_active": true,
+      "model_preset_sha256": "103f7608956b8b5d27251b87b08ebaa2503f1be039204beac8fbc26e0811fbd1",
+      "runtime_routing_sha256": "239040f5009fd7e551020c1ea82460a7d3aa4d656eaf752cb867d516802599f2"
+    },
     "execution_ready": false,
     "hold_reason": [
       "Harbor SDK",
       "agent-runtime:latest",
-      "Gemini agent credential",
-      "Bedrock SkillAuthor credential"
+      "Gemini credential for agent + host-side SkillAuthor"
     ],
     "direct_execution_authorized": false,
     "controller_capability_required": true
