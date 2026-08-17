@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier
 from .paper_first_shadow_search_admission import DISCOVERY_OPERATOR_VERSION, build_shadow_search_admission, primary_content_sha256, source_set_sha256
-from .problem_search_shadow_qualification_consumer import consume_shadow_qualification_handoff
+from .problem_search_shadow_qualification_consumer import _request_id, consume_shadow_qualification_handoff
 
 
 class ShadowQualificationConsumerTest(unittest.TestCase):
@@ -37,6 +37,17 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
         path.write_text(json.dumps({"paper_first_shadow_search_admission":admission,"paper_first_shadow_continuation_frontier":frontier}),encoding="utf-8")
         return admission,frontier
 
+    def qualification_identity(self, admission, *, commit="c"*40, memory_sha="f"*64, control_sha="d"*64):
+        source=admission["source_identity"]
+        operator=admission["summary"]["current_discovery_operator_version"]
+        return {
+            "request_id":_request_id(source["current_source_set_sha256"],source["current_primary_content_sha256"],operator,memory_sha,control_sha,commit),
+            "main_commit":commit,
+            "discovery_operator_version":operator,
+            "memory_sha256":memory_sha,
+            "control_snapshot_sha256":control_sha,
+        }
+
     def test_wait_frontier_creates_nothing(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);state_path=root/"state.json";_,frontier=self.write_state(state_path,same_source=True);calls=[]
@@ -51,17 +62,16 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);state_path=root/"state.json";admission,frontier=self.write_state(state_path,same_source=False);pool=root/"primary.json";pool.write_text("{}",encoding="utf-8");parent=root/"worktrees";created=[]
             self.assertEqual(frontier["status"],"READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION")
-            source=admission["source_identity"]
+            source=admission["source_identity"];identity=self.qualification_identity(admission)
             def create(repo,target,commit):
                 created.append((repo,target,commit));target.mkdir(parents=True);(target/"generated").mkdir();(target/"generated"/"paper-first-search-portfolio-design-adjudication.json").write_text("{}",encoding="utf-8")
             def qualify(**kwargs):
                 self.assertEqual(kwargs["admission_state"],admission)
                 run=kwargs["run_root"];run.mkdir(parents=True)
-                receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":"c"*40,"stage_runner_required_schema":"1.4","control_snapshot_sha256":"d"*64,"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":"f"*64}
+                receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.4","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
                 (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
                 return {"status":"READY_FOR_SHADOW_EXPANSION_ZERO_PROVIDER_HANDOFF","summary":{"model_calls_executed":0}}
-            with patch("research_pipeline.problem_search_shadow_qualification_consumer._git_head",return_value="c"*40):
-                result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=create,qualifier=qualify)
+            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=create,qualifier=qualify,identity_builder=lambda **kwargs:identity)
         self.assertEqual(result["status"],"SHADOW_QUALIFICATION_PREPARED_ZERO_PROVIDER")
         self.assertEqual(len(created),1)
         self.assertEqual(result["summary"]["qualification_prepared"],1)
@@ -72,27 +82,44 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
 
     def test_existing_matching_qualification_is_idempotent(self) -> None:
         with tempfile.TemporaryDirectory() as td:
-            root=Path(td);state_path=root/"state.json";admission,_=self.write_state(state_path,same_source=False);pool=root/"primary.json";pool.write_text("{}",encoding="utf-8");parent=root/"worktrees";source=admission["source_identity"]
-            import hashlib
-            request=hashlib.sha256(f"{source['current_source_set_sha256']}\n{source['current_primary_content_sha256']}".encode()).hexdigest()[:16]
+            root=Path(td);state_path=root/"state.json";admission,_=self.write_state(state_path,same_source=False);pool=root/"primary.json";pool.write_text("{}",encoding="utf-8");parent=root/"worktrees";source=admission["source_identity"];identity=self.qualification_identity(admission)
+            request=identity["request_id"]
             worktree=parent/f"agent-self-evolution-shadow-qual-{request}";run=worktree/"generated"/"research-data"/"paper-first-problem-discovery"/"search-portfolios"/f"shadow-auto-{request}";run.mkdir(parents=True)
-            receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":"c"*40,"stage_runner_required_schema":"1.4","control_snapshot_sha256":"d"*64,"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":"f"*64}
+            receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.4","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
             (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
-            with patch("research_pipeline.problem_search_shadow_qualification_consumer._git_head",return_value="9"*40):
-                result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=lambda *args:self.fail("must not recreate worktree"),qualifier=lambda **kwargs:self.fail("must not requalify"))
+            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=lambda *args:self.fail("must not recreate worktree"),qualifier=lambda **kwargs:self.fail("must not requalify"),identity_builder=lambda **kwargs:identity)
         self.assertEqual(result["status"],"SHADOW_QUALIFICATION_ALREADY_PREPARED")
         self.assertEqual(result["summary"]["worktree_created"],0)
         self.assertEqual(result["summary"]["model_calls_executed"],0)
         self.assertEqual(result["provenance"]["qualified_commit"],"c"*40)
 
+    def test_legacy_source_only_qualification_does_not_consume_new_operator_memory_control_identity(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);state_path=root/"state.json";admission,_=self.write_state(state_path,same_source=False);pool=root/"primary.json";pool.write_text("{}",encoding="utf-8");parent=root/"worktrees";source=admission["source_identity"];identity=self.qualification_identity(admission)
+            import hashlib
+            legacy_request=hashlib.sha256(f"{source['current_source_set_sha256']}\n{source['current_primary_content_sha256']}".encode()).hexdigest()[:16]
+            legacy_worktree=parent/f"agent-self-evolution-shadow-qual-{legacy_request}";legacy_run=legacy_worktree/"generated"/"research-data"/"paper-first-problem-discovery"/"search-portfolios"/f"shadow-auto-{legacy_request}";legacy_run.mkdir(parents=True)
+            legacy_receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":"9"*40,"discovery_operator_version":"fresh-phenomenon-first-v10","stage_runner_required_schema":"1.4","control_snapshot_sha256":"8"*64,"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"7"*64,"memory_sha256":"6"*64}
+            (legacy_run/"shadow-run-qualification.json").write_text(json.dumps(legacy_receipt),encoding="utf-8")
+            created=[]
+            def create(repo,target,commit):
+                created.append(target);target.mkdir(parents=True);(target/"generated").mkdir();(target/"generated"/"paper-first-search-portfolio-design-adjudication.json").write_text("{}",encoding="utf-8")
+            def qualify(**kwargs):
+                run=kwargs["run_root"];run.mkdir(parents=True)
+                receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.4","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
+                (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
+                return {"status":"READY_FOR_SHADOW_EXPANSION_ZERO_PROVIDER_HANDOFF","summary":{"model_calls_executed":0}}
+            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=create,qualifier=qualify,identity_builder=lambda **kwargs:identity)
+        self.assertEqual(result["status"],"SHADOW_QUALIFICATION_PREPARED_ZERO_PROVIDER")
+        self.assertEqual(len(created),1)
+        self.assertNotEqual(created[0],legacy_worktree)
+        self.assertEqual(result["request_id"],identity["request_id"])
+
     def test_partial_existing_worktree_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as td:
-            root=Path(td);state_path=root/"state.json";admission,_=self.write_state(state_path,same_source=False);pool=root/"primary.json";pool.write_text("{}",encoding="utf-8");parent=root/"worktrees";source=admission["source_identity"]
-            import hashlib
-            request=hashlib.sha256(f"{source['current_source_set_sha256']}\n{source['current_primary_content_sha256']}".encode()).hexdigest()[:16]
-            (parent/f"agent-self-evolution-shadow-qual-{request}").mkdir(parents=True)
-            with patch("research_pipeline.problem_search_shadow_qualification_consumer._git_head",return_value="c"*40):
-                result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=lambda *args:self.fail("must not overwrite partial state"))
+            root=Path(td);state_path=root/"state.json";admission,_=self.write_state(state_path,same_source=False);pool=root/"primary.json";pool.write_text("{}",encoding="utf-8");parent=root/"worktrees";identity=self.qualification_identity(admission)
+            (parent/f"agent-self-evolution-shadow-qual-{identity['request_id']}").mkdir(parents=True)
+            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=pool,worktree_parent=parent,create_worktree=lambda *args:self.fail("must not overwrite partial state"),identity_builder=lambda **kwargs:identity)
         self.assertEqual(result["status"],"HOLD_EXISTING_SHADOW_QUALIFICATION_WORKTREE_INVALID")
         self.assertEqual(result["summary"]["model_calls_executed"],0)
 

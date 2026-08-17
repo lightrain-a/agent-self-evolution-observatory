@@ -10,7 +10,9 @@ from typing import Any, Callable
 
 from .config import PROJECT_ROOT
 from .paper_first_shadow_continuation_frontier import validate_shadow_continuation_frontier
+from .paper_first_problem_discovery_contract import DISCOVERY_OPERATOR_VERSION
 from .paper_first_shadow_search_admission import validate_shadow_search_admission
+from .problem_search_control_snapshot import compute_control_snapshot, memory_sha256
 from .problem_search_shadow_launcher import prepare_shadow_run
 
 READY_FRONTIER = "READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION"
@@ -18,6 +20,7 @@ QUALIFIED_STATUS = "READY_FOR_SHADOW_EXPANSION_ZERO_PROVIDER_HANDOFF"
 DEFAULT_PUBLIC_STATE = PROJECT_ROOT / "generated" / "research-system-state.json"
 DEFAULT_CANONICAL_PRIVATE_POOL = Path("/home/wyt/code/agent-self-evolution-observatory/generated/research-data/paper-first-problem-discovery/primary-evidence-pool.json")
 DEFAULT_WORKTREE_PARENT = Path("/home/wyt/code")
+SHADOW_MEMORY_RELATIVE = Path("generated/paper-first-search-portfolio-design-adjudication.json")
 
 
 def _load(path: Path) -> dict[str, Any]:
@@ -36,8 +39,57 @@ def _create_pinned_worktree(repo: Path, target: Path, commit: str) -> None:
     subprocess.check_call(["git", "worktree", "add", "--detach", str(target), commit], cwd=repo)
 
 
-def _request_id(source_set_sha256: str, primary_content_sha256: str) -> str:
-    return hashlib.sha256(f"{source_set_sha256}\n{primary_content_sha256}".encode()).hexdigest()[:16]
+def _request_id(
+    source_set_sha256: str,
+    primary_content_sha256: str,
+    discovery_operator_version: str,
+    memory_sha256_value: str,
+    control_snapshot_sha256: str,
+    main_commit: str,
+) -> str:
+    identity = "\n".join((
+        source_set_sha256,
+        primary_content_sha256,
+        discovery_operator_version,
+        memory_sha256_value,
+        control_snapshot_sha256,
+        main_commit,
+    ))
+    return hashlib.sha256(identity.encode()).hexdigest()[:16]
+
+
+def _qualification_identity(
+    *,
+    source_repo: Path,
+    source_set_sha256: str,
+    primary_content_sha256: str,
+    discovery_operator_version: str,
+) -> dict[str, str]:
+    commit = _git_head(source_repo)
+    memory_path = source_repo / SHADOW_MEMORY_RELATIVE
+    if not re.fullmatch(r"[0-9a-f]{40}", commit):
+        raise ValueError("shadow qualification source repository HEAD is unavailable")
+    if not memory_path.is_file():
+        raise ValueError(f"shadow qualification memory artifact unavailable: {memory_path}")
+    memory_sha = memory_sha256(memory_path)
+    control_sha = str(compute_control_snapshot(project_root=source_repo).get("control_snapshot_sha256") or "")
+    if not re.fullmatch(r"[0-9a-f]{64}", memory_sha) or not re.fullmatch(r"[0-9a-f]{64}", control_sha):
+        raise ValueError("shadow qualification control or memory identity is invalid")
+    request_id = _request_id(
+        source_set_sha256,
+        primary_content_sha256,
+        discovery_operator_version,
+        memory_sha,
+        control_sha,
+        commit,
+    )
+    return {
+        "request_id": request_id,
+        "main_commit": commit,
+        "discovery_operator_version": discovery_operator_version,
+        "memory_sha256": memory_sha,
+        "control_snapshot_sha256": control_sha,
+    }
 
 
 def _bounded_result(status: str, *, reason: str, request_id: str = "", worktree: Path | None = None, run_root: Path | None = None, commit: str = "", qualification: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -89,15 +141,23 @@ def _bounded_result(status: str, *, reason: str, request_id: str = "", worktree:
     }
 
 
-def _existing_qualification(run_root: Path, expected_set: str, expected_content: str) -> dict[str, Any] | None:
+def _existing_qualification(run_root: Path, expected_set: str, expected_content: str, identity: dict[str, str]) -> dict[str, Any] | None:
     receipt = _load(run_root / "shadow-run-qualification.json")
     if not receipt:
         return None
     if receipt.get("status") != "READY_FOR_SHADOW_EXPANSION" or receipt.get("scientific_authority") is not False:
         return None
-    if str(receipt.get("source_set_sha256") or "") != expected_set or str(receipt.get("source_primary_content_sha256") or "") != expected_content:
+    required = {
+        "source_set_sha256": expected_set,
+        "source_primary_content_sha256": expected_content,
+        "discovery_operator_version": str(identity.get("discovery_operator_version") or ""),
+        "memory_sha256": str(identity.get("memory_sha256") or ""),
+        "control_snapshot_sha256": str(identity.get("control_snapshot_sha256") or ""),
+        "main_commit": str(identity.get("main_commit") or ""),
+    }
+    if any(str(receipt.get(key) or "") != value for key, value in required.items()):
         return None
-    if str(receipt.get("stage_runner_required_schema") or "") != "1.4" or not re.fullmatch(r"[0-9a-f]{64}", str(receipt.get("control_snapshot_sha256") or "")):
+    if str(receipt.get("stage_runner_required_schema") or "") != "1.4":
         return None
     return receipt
 
@@ -110,6 +170,7 @@ def consume_shadow_qualification_handoff(
     worktree_parent: Path = DEFAULT_WORKTREE_PARENT,
     create_worktree: Callable[[Path, Path, str], None] = _create_pinned_worktree,
     qualifier: Callable[..., dict[str, Any]] = prepare_shadow_run,
+    identity_builder: Callable[..., dict[str, str]] = _qualification_identity,
 ) -> dict[str, Any]:
     state = _load(public_state_path)
     if not state:
@@ -130,17 +191,31 @@ def consume_shadow_qualification_handoff(
         return _bounded_result("HOLD_SHADOW_QUALIFICATION_ADMISSION_INCONSISTENT", reason="Frontier is READY but admission is not qualification-ready.")
     source_set = str(source.get("current_source_set_sha256") or "")
     source_content = str(source.get("current_primary_content_sha256") or "")
+    operator_version = str(admission_summary.get("current_discovery_operator_version") or "")
     if not re.fullmatch(r"[0-9a-f]{64}", source_set) or not re.fullmatch(r"[0-9a-f]{64}", source_content):
         return _bounded_result("HOLD_SHADOW_QUALIFICATION_SOURCE_IDENTITY_INVALID", reason="Qualification-ready admission lacks bounded source-set/content digests.")
+    if operator_version != DISCOVERY_OPERATOR_VERSION:
+        return _bounded_result("HOLD_SHADOW_QUALIFICATION_OPERATOR_IDENTITY_INVALID", reason=f"Qualification-ready admission operator {operator_version!r} does not match current control operator {DISCOVERY_OPERATOR_VERSION!r}.")
     if not canonical_private_pool.is_file():
         return _bounded_result("HOLD_CANONICAL_PRIVATE_POOL_UNAVAILABLE", reason=f"Canonical private primary pool unavailable: {canonical_private_pool}")
-    commit = _git_head(source_repo)
-    request_id = _request_id(source_set, source_content)
+    try:
+        identity = identity_builder(
+            source_repo=source_repo,
+            source_set_sha256=source_set,
+            primary_content_sha256=source_content,
+            discovery_operator_version=operator_version,
+        )
+    except Exception as error:
+        return _bounded_result("HOLD_SHADOW_QUALIFICATION_CONTROL_IDENTITY_INVALID", reason=f"{type(error).__name__}:{str(error)[:900]}")
+    commit = str(identity.get("main_commit") or "")
+    request_id = str(identity.get("request_id") or "")
+    if not re.fullmatch(r"[0-9a-f]{40}", commit) or not re.fullmatch(r"[0-9a-f]{16}", request_id):
+        return _bounded_result("HOLD_SHADOW_QUALIFICATION_CONTROL_IDENTITY_INVALID", reason="Qualification identity lacks a valid pinned commit or request digest.")
     worktree = worktree_parent / f"agent-self-evolution-shadow-qual-{request_id}"
     run_id = f"shadow-auto-{request_id}"
     run_root = worktree / "generated" / "research-data" / "paper-first-problem-discovery" / "search-portfolios" / run_id
     if worktree.exists():
-        receipt = _existing_qualification(run_root, source_set, source_content)
+        receipt = _existing_qualification(run_root, source_set, source_content, identity)
         if receipt:
             return _bounded_result("SHADOW_QUALIFICATION_ALREADY_PREPARED", reason="A matching pinned qualification already exists; no duplicate worktree or provider call is created.", request_id=request_id, worktree=worktree, run_root=run_root, commit=str(receipt.get("main_commit") or ""), qualification=receipt)
         return _bounded_result("HOLD_EXISTING_SHADOW_QUALIFICATION_WORKTREE_INVALID", reason=f"Deterministic worktree already exists without a matching READY qualification: {worktree}", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit)
@@ -158,7 +233,7 @@ def consume_shadow_qualification_handoff(
         return _bounded_result("HOLD_SHADOW_QUALIFICATION_PREPARE_ERROR", reason=f"{type(error).__name__}:{str(error)[:900]}", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit)
     if result.get("status") != QUALIFIED_STATUS or int((result.get("summary") or {}).get("model_calls_executed") or 0) != 0:
         return _bounded_result("HOLD_SHADOW_QUALIFICATION_LAUNCHER_RESULT_INVALID", reason=f"Zero-provider launcher returned unexpected state: {result.get('status')}", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit)
-    receipt = _existing_qualification(run_root, source_set, source_content)
+    receipt = _existing_qualification(run_root, source_set, source_content, identity)
     if not receipt:
         return _bounded_result("HOLD_SHADOW_QUALIFICATION_RECEIPT_INVALID", reason="Launcher completed but a matching schema-1.4 qualification receipt was not found.", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit)
     return _bounded_result("SHADOW_QUALIFICATION_PREPARED_ZERO_PROVIDER", reason="Git-mediated handoff created one pinned worktree and one zero-provider schema-1.4 qualification. Expansion remains unstarted and unauthorized by this consumer.", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit, qualification=receipt)
