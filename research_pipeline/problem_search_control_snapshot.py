@@ -161,6 +161,8 @@ def build_shadow_run_qualification(*, run_root: Path, pool_path: Path, memory_pa
     memory = _memory_payload(memory_path)
     control = compute_control_snapshot(project_root=project_root, control_files=control_files)
     semantic_dead_ends = sum(str(row.get("basin") or "").startswith(("semantic-exact-reduction-", "semantic-lane-contract-")) for row in memory.get("blocked_objects") or [] if isinstance(row, dict))
+    pool_policy = pool.get("policy") or {}
+    pool_source_kind = str(pool_policy.get("pool_source_kind") or ("canonical_private_pool" if pool_policy.get("canonical_private_pool_source") is True else ""))
     receipt = {
         "schema_version": QUALIFICATION_SCHEMA_VERSION,
         "generated_at": _now(),
@@ -173,6 +175,7 @@ def build_shadow_run_qualification(*, run_root: Path, pool_path: Path, memory_pa
         "source_set_sha256": pool.get("source_set_sha256"),
         "source_primary_content_sha256": primary_content_sha256([row for row in pool.get("records") or [] if isinstance(row,dict)]),
         "frozen_pool_sha256": pool.get("frozen_pool_sha256"),
+        "pool_source_kind": pool_source_kind,
         "records": len(pool.get("records") or []),
         "memory_sha256": memory_sha256(memory_path),
         "dead_end_objects": len(memory.get("blocked_objects") or []),
@@ -193,7 +196,7 @@ def write_shadow_run_qualification(*, run_root: Path, pool_path: Path, memory_pa
     if target.exists():
         existing = _load(target)
         current = build_shadow_run_qualification(run_root=run_root, pool_path=pool_path, memory_path=memory_path, project_root=project_root, require_clean_control=require_clean_control, control_files=control_files)
-        immutable = ("run_id", "discovery_operator_version", "source_set_sha256", "source_primary_content_sha256", "frozen_pool_sha256", "memory_sha256", "stage_runner_required_schema", "control_snapshot_sha256")
+        immutable = ("run_id", "discovery_operator_version", "source_set_sha256", "source_primary_content_sha256", "frozen_pool_sha256", "pool_source_kind", "memory_sha256", "stage_runner_required_schema", "control_snapshot_sha256")
         if all(existing.get(key) == current.get(key) for key in immutable) and existing.get("status") == "READY_FOR_SHADOW_EXPANSION":
             return existing
         raise ValueError("existing shadow qualification receipt does not match the current frozen transaction")
@@ -227,6 +230,10 @@ def validate_shadow_run_control(*, run_root: Path, pool_path: Path | None = None
                 raise ValueError(f"shadow source identity drift detected:{key}")
         if str(receipt.get("frozen_pool_sha256") or "") != str(pool.get("frozen_pool_sha256") or ""):
             raise ValueError("shadow frozen-pool digest drift detected")
+        pool_policy = pool.get("policy") or {}
+        expected_source_kind = str(pool_policy.get("pool_source_kind") or ("canonical_private_pool" if pool_policy.get("canonical_private_pool_source") is True else ""))
+        if receipt.get("pool_source_kind") is not None and str(receipt.get("pool_source_kind") or "") != expected_source_kind:
+            raise ValueError("shadow frozen-pool provenance-kind drift detected")
     if memory_path is not None:
         if str(receipt.get("memory_sha256") or "") != memory_sha256(memory_path):
             raise ValueError("shadow dead-end memory digest drift detected")

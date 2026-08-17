@@ -21,6 +21,7 @@ DEFAULT_PUBLIC_STATE = PROJECT_ROOT / "generated" / "research-system-state.json"
 DEFAULT_CANONICAL_PRIVATE_POOL = Path("/home/wyt/code/agent-self-evolution-observatory/generated/research-data/paper-first-problem-discovery/primary-evidence-pool.json")
 DEFAULT_WORKTREE_PARENT = Path("/home/wyt/code")
 SHADOW_MEMORY_RELATIVE = Path("generated/paper-first-search-portfolio-design-adjudication.json")
+SHADOW_RUNS_RELATIVE = Path("generated/research-data/paper-first-problem-discovery/search-portfolios")
 
 
 def _load(path: Path) -> dict[str, Any]:
@@ -135,7 +136,9 @@ def _bounded_result(status: str, *, reason: str, request_id: str = "", worktree:
             "git_handoff_is_control_plane_only": True,
             "consumer_requires_ready_shadow_continuation_frontier": True,
             "consumer_creates_pinned_worktree_before_qualification": True,
-            "consumer_uses_canonical_private_primary_pool": True,
+            "consumer_prefers_canonical_private_primary_pool": True,
+            "consumer_reuses_prior_terminal_frozen_pool_only_for_same_source_operator_upgrade": True,
+            "consumer_requires_prior_terminal_receipt_and_pool_identity_match": True,
             "consumer_can_only_prepare_zero_provider_qualification": True,
             "consumer_requires_nonempty_target_inventory_before_worktree_creation": True,
             "consumer_cannot_start_expansion_or_model_provider": True,
@@ -166,6 +169,81 @@ def _existing_qualification(run_root: Path, expected_set: str, expected_content:
     if str(receipt.get("stage_runner_required_schema") or "") != "1.4":
         return None
     return receipt
+
+
+def _is_pool_identity_error(error: Exception) -> bool:
+    text = str(error)
+    return any(
+        token in text
+        for token in (
+            "private pool generated_at does not match admitted Primary",
+            "private pool source-set digest does not match admitted Primary",
+            "private pool primary-content digest does not match admitted Primary",
+            "private pool digest invalid",
+        )
+    )
+
+
+def _prior_terminal_frozen_pool(admission: dict[str, Any], worktree_parent: Path) -> Path | None:
+    summary = admission.get("summary") or {}
+    source = admission.get("source_identity") or {}
+    if not (
+        summary.get("operator_upgrade_recompile") is True
+        and summary.get("same_source_transaction") is True
+        and summary.get("latest_shadow_terminal") is True
+    ):
+        return None
+    run_id = str(source.get("latest_run_id") or "")
+    match = re.fullmatch(r"shadow-auto-([0-9a-f]{16})", run_id)
+    if not match:
+        return None
+    request_id = match.group(1)
+    run_root = worktree_parent / f"agent-self-evolution-shadow-qual-{request_id}" / SHADOW_RUNS_RELATIVE / run_id
+    receipt = _load(run_root / "shadow-run-qualification.json")
+    pool_path = run_root / "frozen-primary-evidence-pool.json"
+    pool = _load(pool_path)
+    if not receipt or not pool:
+        return None
+    current_operator = str(summary.get("current_discovery_operator_version") or "")
+    latest_operator = str(summary.get("latest_discovery_operator_version") or "")
+    expected = {
+        "source_generated_at": str(source.get("current_source_generated_at") or ""),
+        "source_set_sha256": str(source.get("current_source_set_sha256") or ""),
+        "source_primary_content_sha256": str(source.get("current_primary_content_sha256") or ""),
+        "source_pool_sha256": str(source.get("latest_source_pool_sha256") or ""),
+        "discovery_operator_version": latest_operator,
+    }
+    if not latest_operator or latest_operator == current_operator:
+        return None
+    if str(source.get("latest_source_generated_at") or "") != expected["source_generated_at"]:
+        return None
+    if str(source.get("latest_source_set_sha256") or "") != expected["source_set_sha256"]:
+        return None
+    if str(source.get("latest_primary_content_sha256") or "") != expected["source_primary_content_sha256"]:
+        return None
+    if receipt.get("status") != "READY_FOR_SHADOW_EXPANSION" or receipt.get("scientific_authority") is not False:
+        return None
+    if str(receipt.get("stage_runner_required_schema") or "") != "1.4":
+        return None
+    if any(str(receipt.get(key) or "") != value for key, value in expected.items()):
+        return None
+    frozen_sha = str(receipt.get("frozen_pool_sha256") or "")
+    if not re.fullmatch(r"[0-9a-f]{64}", frozen_sha):
+        return None
+    pool_expected = {
+        "generated_at": expected["source_generated_at"],
+        "source_generated_at": expected["source_generated_at"],
+        "source_set_sha256": expected["source_set_sha256"],
+        "source_primary_content_sha256": expected["source_primary_content_sha256"],
+        "source_pool_sha256": expected["source_pool_sha256"],
+        "frozen_pool_sha256": frozen_sha,
+        "discovery_operator_version": latest_operator,
+    }
+    if pool.get("status") != "READY" or pool.get("scientific_authority") is not False:
+        return None
+    if any(str(pool.get(key) or "") != value for key, value in pool_expected.items()):
+        return None
+    return pool_path
 
 
 def consume_shadow_qualification_handoff(
@@ -203,16 +281,46 @@ def consume_shadow_qualification_handoff(
         return _bounded_result("HOLD_SHADOW_QUALIFICATION_SOURCE_IDENTITY_INVALID", reason="Qualification-ready admission lacks bounded source-set/content digests.")
     if operator_version != DISCOVERY_OPERATOR_VERSION:
         return _bounded_result("HOLD_SHADOW_QUALIFICATION_OPERATOR_IDENTITY_INVALID", reason=f"Qualification-ready admission operator {operator_version!r} does not match current control operator {DISCOVERY_OPERATOR_VERSION!r}.")
-    if not canonical_private_pool.is_file():
-        return _bounded_result("HOLD_CANONICAL_PRIVATE_POOL_UNAVAILABLE", reason=f"Canonical private primary pool unavailable: {canonical_private_pool}")
-    try:
-        target_inventory = target_preflight(
-            private_pool_path=canonical_private_pool,
-            memory_path=source_repo / SHADOW_MEMORY_RELATIVE,
-            admission_state=admission,
+    selected_pool = canonical_private_pool
+    pool_source_kind = "canonical_private_pool"
+    canonical_error: Exception | None = None
+    if canonical_private_pool.is_file():
+        try:
+            target_inventory = target_preflight(
+                private_pool_path=canonical_private_pool,
+                memory_path=source_repo / SHADOW_MEMORY_RELATIVE,
+                admission_state=admission,
+                pool_source_kind=pool_source_kind,
+            )
+        except Exception as error:
+            canonical_error = error
+    else:
+        canonical_error = FileNotFoundError(f"Canonical private primary pool unavailable: {canonical_private_pool}")
+    if canonical_error is not None:
+        pool_error = isinstance(canonical_error, FileNotFoundError) or _is_pool_identity_error(canonical_error)
+        prior_reuse_eligible = bool(
+            admission_summary.get("operator_upgrade_recompile") is True
+            and admission_summary.get("same_source_transaction") is True
+            and admission_summary.get("latest_shadow_terminal") is True
         )
-    except Exception as error:
-        return _bounded_result("HOLD_SHADOW_QUALIFICATION_TARGET_PREFLIGHT_INVALID", reason=f"{type(error).__name__}:{str(error)[:900]}")
+        prior_pool = _prior_terminal_frozen_pool(admission, worktree_parent) if pool_error else None
+        if prior_pool is None:
+            if pool_error and prior_reuse_eligible:
+                return _bounded_result("HOLD_PRIOR_TERMINAL_FROZEN_POOL_PROVENANCE_INVALID", reason="Same-source operator upgrade requires an exact prior terminal frozen pool and matching zero-authority qualification receipt; no valid provenance chain was found.")
+            if isinstance(canonical_error, FileNotFoundError):
+                return _bounded_result("HOLD_CANONICAL_PRIVATE_POOL_UNAVAILABLE", reason=str(canonical_error))
+            return _bounded_result("HOLD_SHADOW_QUALIFICATION_TARGET_PREFLIGHT_INVALID", reason=f"{type(canonical_error).__name__}:{str(canonical_error)[:900]}")
+        selected_pool = prior_pool
+        pool_source_kind = "prior_terminal_frozen_pool"
+        try:
+            target_inventory = target_preflight(
+                private_pool_path=selected_pool,
+                memory_path=source_repo / SHADOW_MEMORY_RELATIVE,
+                admission_state=admission,
+                pool_source_kind=pool_source_kind,
+            )
+        except Exception as error:
+            return _bounded_result("HOLD_PRIOR_TERMINAL_FROZEN_POOL_PREFLIGHT_INVALID", reason=f"{type(error).__name__}:{str(error)[:900]}")
     if target_inventory.get("fresh_fallback_required") is True and int(target_inventory.get("fresh_phenomenon_target_count") or 0) == 0:
         return _bounded_result(
             NO_FRESH_TARGET_STATUS,
@@ -245,10 +353,11 @@ def consume_shadow_qualification_handoff(
     try:
         result = qualifier(
             run_root=run_root,
-            private_pool_path=canonical_private_pool,
+            private_pool_path=selected_pool,
             memory_path=memory_path,
             project_root=worktree,
             admission_state=admission,
+            pool_source_kind=pool_source_kind,
         )
     except Exception as error:
         return _bounded_result("HOLD_SHADOW_QUALIFICATION_PREPARE_ERROR", reason=f"{type(error).__name__}:{str(error)[:900]}", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit)
@@ -257,7 +366,11 @@ def consume_shadow_qualification_handoff(
     receipt = _existing_qualification(run_root, source_set, source_content, identity)
     if not receipt:
         return _bounded_result("HOLD_SHADOW_QUALIFICATION_RECEIPT_INVALID", reason="Launcher completed but a matching schema-1.4 qualification receipt was not found.", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit)
-    return _bounded_result("SHADOW_QUALIFICATION_PREPARED_ZERO_PROVIDER", reason="Git-mediated handoff created one pinned worktree and one zero-provider schema-1.4 qualification. Expansion remains unstarted and unauthorized by this consumer.", request_id=request_id, worktree=worktree, run_root=run_root, commit=commit, qualification=receipt, target_inventory=target_inventory)
+    reason = "Git-mediated handoff created one pinned worktree and one zero-provider schema-1.4 qualification"
+    if pool_source_kind == "prior_terminal_frozen_pool":
+        reason += " by reusing the exact prior terminal frozen Primary after canonical private-pool path drift"
+    reason += ". Expansion remains unstarted and unauthorized by this consumer."
+    return _bounded_result("SHADOW_QUALIFICATION_PREPARED_ZERO_PROVIDER", reason=reason, request_id=request_id, worktree=worktree, run_root=run_root, commit=commit, qualification=receipt, target_inventory=target_inventory)
 
 
 def main() -> None:

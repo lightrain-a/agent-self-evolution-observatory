@@ -12,7 +12,7 @@ from .problem_search_shadow_qualification_consumer import _request_id, consume_s
 
 
 class ShadowQualificationConsumerTest(unittest.TestCase):
-    def control_states(self, *, same_source: bool):
+    def control_states(self, *, same_source: bool, operator_upgrade: bool = False):
         records=[
             {"ref":"arXiv:2608.00001","source_sha256":"1"*64,"fulltext_sha256":"3"*64},
             {"ref":"arXiv:2608.00002","source_sha256":"2"*64,"fulltext_sha256":"4"*64},
@@ -24,7 +24,10 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
         latest_records=json.loads(json.dumps(records))
         if not same_source:
             latest_records[0]["fulltext_sha256"]="9"*64
-        shadow={"latest_run_id":"shadow-old","latest_run":{"run_id":"shadow-old","status":"SHADOW_TERMINAL_COMPLETE","discovery_operator_version":DISCOVERY_OPERATOR_VERSION,"source_generated_at":"2026-08-13T00:00:00+00:00","source_set_sha256":source_set_sha256(latest_records),"source_primary_content_sha256":primary_content_sha256(latest_records),"source_pool_sha256":"b"*64,"scientific_authority":False},"scientific_authority":False,"policy":{"shadow_only":True}}
+        latest_run_id="shadow-auto-0123456789abcdef" if operator_upgrade else "shadow-old"
+        latest_operator="fresh-phenomenon-anomaly-precision-v13" if operator_upgrade else DISCOVERY_OPERATOR_VERSION
+        latest_generated_at=generated_at if operator_upgrade else "2026-08-13T00:00:00+00:00"
+        shadow={"latest_run_id":latest_run_id,"latest_run":{"run_id":latest_run_id,"status":"SHADOW_TERMINAL_COMPLETE","discovery_operator_version":latest_operator,"source_generated_at":latest_generated_at,"source_set_sha256":source_set_sha256(latest_records),"source_primary_content_sha256":primary_content_sha256(latest_records),"source_pool_sha256":"b"*64,"scientific_authority":False},"scientific_authority":False,"policy":{"shadow_only":True}}
         admission=build_shadow_search_admission(primary_state=primary,generator_state=generator,queue_state=queue,shadow_state=shadow)
         watch={"status":"SUPPORT_RELEASE_WATCH_COMPLETE","summary":{"support_holds":0,"recheck_required":0},"scientific_authority":False}
         asset={"status":"SUPPORT_ASSET_RECHECK_QUEUE_EMPTY","summary":{"support_holds":0,"queued":0},"scientific_authority":False}
@@ -32,8 +35,8 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
         frontier=build_shadow_continuation_frontier(admission=admission,support_watch=watch,asset_queue=asset,support_handoff=handoff)
         return admission,frontier
 
-    def write_state(self, path: Path, *, same_source: bool):
-        admission,frontier=self.control_states(same_source=same_source)
+    def write_state(self, path: Path, *, same_source: bool, operator_upgrade: bool = False):
+        admission,frontier=self.control_states(same_source=same_source,operator_upgrade=operator_upgrade)
         path.write_text(json.dumps({"paper_first_shadow_search_admission":admission,"paper_first_shadow_continuation_frontier":frontier}),encoding="utf-8")
         return admission,frontier
 
@@ -57,6 +60,28 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
             "provider_calls_executed":0,
             "scientific_authority":False,
         }
+
+
+    def write_prior_terminal_frozen(self, parent: Path, admission: dict, *, corrupt_receipt: bool = False) -> Path:
+        source=admission["source_identity"];run_id=source["latest_run_id"];request=run_id.removeprefix("shadow-auto-")
+        run=parent/f"agent-self-evolution-shadow-qual-{request}"/"generated"/"research-data"/"paper-first-problem-discovery"/"search-portfolios"/run_id
+        run.mkdir(parents=True)
+        frozen_sha="f"*64
+        pool={
+            "schema_version":"1.1-shadow-frozen-pool","status":"READY","generated_at":source["current_source_generated_at"],"source_generated_at":source["current_source_generated_at"],
+            "source_pool_sha256":source["latest_source_pool_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],
+            "frozen_pool_sha256":frozen_sha,"discovery_operator_version":source["latest_discovery_operator_version"],"scientific_authority":False,"records":[],
+        }
+        (run/"frozen-primary-evidence-pool.json").write_text(json.dumps(pool),encoding="utf-8")
+        receipt={
+            "status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"stage_runner_required_schema":"1.4",
+            "source_generated_at":source["current_source_generated_at"],"source_pool_sha256":source["latest_source_pool_sha256"],
+            "source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],
+            "frozen_pool_sha256":frozen_sha,"discovery_operator_version":source["latest_discovery_operator_version"],
+        }
+        if corrupt_receipt: receipt["source_set_sha256"]="0"*64
+        (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
+        return run/"frozen-primary-evidence-pool.json"
 
     def test_wait_frontier_creates_nothing(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -136,6 +161,42 @@ class ShadowQualificationConsumerTest(unittest.TestCase):
         self.assertEqual(len(created),1)
         self.assertNotEqual(created[0],legacy_worktree)
         self.assertEqual(result["request_id"],identity["request_id"])
+
+
+    def test_same_source_operator_upgrade_reuses_exact_prior_terminal_frozen_pool(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);state_path=root/"state.json";admission,frontier=self.write_state(state_path,same_source=True,operator_upgrade=True);parent=root/"worktrees"
+            self.assertEqual(frontier["status"],"READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION")
+            prior_pool=self.write_prior_terminal_frozen(parent,admission);canonical=root/"canonical.json";canonical.write_text("{}",encoding="utf-8")
+            identity=self.qualification_identity(admission);source=admission["source_identity"];calls=[];created=[]
+            def preflight(**kwargs):
+                calls.append((kwargs["private_pool_path"],kwargs["pool_source_kind"]))
+                if kwargs["pool_source_kind"]=="canonical_private_pool":
+                    raise ValueError("canonical private pool generated_at does not match admitted Primary")
+                self.assertEqual(kwargs["private_pool_path"],prior_pool)
+                return self.target_inventory()
+            def create(repo,target,commit):
+                created.append(target);target.mkdir(parents=True);(target/"generated").mkdir();(target/"generated"/"paper-first-search-portfolio-design-adjudication.json").write_text("{}",encoding="utf-8")
+            def qualify(**kwargs):
+                self.assertEqual(kwargs["private_pool_path"],prior_pool);self.assertEqual(kwargs["pool_source_kind"],"prior_terminal_frozen_pool")
+                run=kwargs["run_root"];run.mkdir(parents=True)
+                receipt={"status":"READY_FOR_SHADOW_EXPANSION","scientific_authority":False,"main_commit":identity["main_commit"],"discovery_operator_version":identity["discovery_operator_version"],"stage_runner_required_schema":"1.4","control_snapshot_sha256":identity["control_snapshot_sha256"],"source_set_sha256":source["current_source_set_sha256"],"source_primary_content_sha256":source["current_primary_content_sha256"],"frozen_pool_sha256":"e"*64,"memory_sha256":identity["memory_sha256"]}
+                (run/"shadow-run-qualification.json").write_text(json.dumps(receipt),encoding="utf-8")
+                return {"status":"READY_FOR_SHADOW_EXPANSION_ZERO_PROVIDER_HANDOFF","summary":{"model_calls_executed":0}}
+            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=canonical,worktree_parent=parent,create_worktree=create,qualifier=qualify,identity_builder=lambda **kwargs:identity,target_preflight=preflight)
+        self.assertEqual(result["status"],"SHADOW_QUALIFICATION_PREPARED_ZERO_PROVIDER")
+        self.assertEqual([kind for _,kind in calls],["canonical_private_pool","prior_terminal_frozen_pool"]);self.assertEqual(len(created),1)
+        self.assertIn("exact prior terminal frozen Primary",result["reason"]);self.assertEqual(result["summary"]["model_calls_executed"],0)
+
+    def test_same_source_operator_upgrade_rejects_corrupt_prior_terminal_receipt(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);state_path=root/"state.json";admission,_=self.write_state(state_path,same_source=True,operator_upgrade=True);parent=root/"worktrees"
+            self.write_prior_terminal_frozen(parent,admission,corrupt_receipt=True);canonical=root/"canonical.json";canonical.write_text("{}",encoding="utf-8");created=[]
+            def preflight(**kwargs):
+                raise ValueError("canonical private pool generated_at does not match admitted Primary")
+            result=consume_shadow_qualification_handoff(public_state_path=state_path,source_repo=root,canonical_private_pool=canonical,worktree_parent=parent,create_worktree=lambda *args:created.append(args),target_preflight=preflight)
+        self.assertEqual(result["status"],"HOLD_PRIOR_TERMINAL_FROZEN_POOL_PROVENANCE_INVALID")
+        self.assertEqual(created,[]);self.assertEqual(result["summary"]["model_calls_executed"],0)
 
     def test_partial_existing_worktree_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as td:

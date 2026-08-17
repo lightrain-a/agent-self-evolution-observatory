@@ -73,7 +73,8 @@ def _bounded_result(status: str, *, admission: dict[str, Any], reason: str, run_
         },
         "policy": {
             "launcher_runs_only_after_shadow_admission": True,
-            "canonical_main_private_pool_is_required": True,
+            "canonical_main_private_pool_is_preferred": True,
+            "prior_terminal_frozen_pool_allowed_only_for_same_source_operator_upgrade": True,
             "private_pool_identity_must_match_current_admitted_primary": True,
             "launcher_can_only_freeze_pool_memory_and_qualification": True,
             "no_active_asset_requires_nonempty_fresh_phenomenon_target_before_qualification": True,
@@ -103,7 +104,14 @@ def _frozen_memory_payload(memory_path: Path) -> dict[str, Any]:
     return json.loads(json.dumps(memory,ensure_ascii=False))
 
 
-def _frozen_pool_payload(private_pool: dict[str, Any], admission: dict[str, Any]) -> dict[str, Any]:
+def _frozen_pool_payload(
+    private_pool: dict[str, Any],
+    admission: dict[str, Any],
+    *,
+    pool_source_kind: str = "canonical_private_pool",
+) -> dict[str, Any]:
+    if pool_source_kind not in {"canonical_private_pool", "prior_terminal_frozen_pool"}:
+        raise ValueError(f"unsupported admitted primary pool source kind: {pool_source_kind}")
     records = [json.loads(json.dumps(row, ensure_ascii=False)) for row in private_pool.get("records") or [] if isinstance(row, dict)]
     source = admission.get("source_identity") or {}
     generated_at = str(private_pool.get("generated_at") or "").strip()
@@ -139,7 +147,9 @@ def _frozen_pool_payload(private_pool: dict[str, Any], admission: dict[str, Any]
             "candidate_generation_ready": bool(records),
         },
         "policy": {
-            "canonical_private_pool_source": True,
+            "pool_source_kind": pool_source_kind,
+            "canonical_private_pool_source": pool_source_kind == "canonical_private_pool",
+            "prior_terminal_frozen_pool_source": pool_source_kind == "prior_terminal_frozen_pool",
             "source_identity_bound_before_copy": True,
             "admission_precedes_freeze": True,
             "automatic_provider_authority": False,
@@ -157,7 +167,13 @@ def _frozen_pool_payload(private_pool: dict[str, Any], admission: dict[str, Any]
     return payload
 
 
-def shadow_search_target_inventory(*, private_pool_path: Path, memory_path: Path, admission_state: dict[str, Any]) -> dict[str, Any]:
+def shadow_search_target_inventory(
+    *,
+    private_pool_path: Path,
+    memory_path: Path,
+    admission_state: dict[str, Any],
+    pool_source_kind: str = "canonical_private_pool",
+) -> dict[str, Any]:
     """Zero-provider preflight for the next search object.
 
     A v13 operator-upgrade receipt may reopen qualification on an unchanged source
@@ -171,7 +187,7 @@ def shadow_search_target_inventory(*, private_pool_path: Path, memory_path: Path
         raise ValueError(f"canonical private primary pool unavailable: {private_pool_path}")
     frozen_memory = _frozen_memory_payload(memory_path)
     private_pool = load_private_primary_pool(private_pool_path) or {}
-    frozen_pool = _frozen_pool_payload(private_pool, admission_state)
+    frozen_pool = _frozen_pool_payload(private_pool, admission_state, pool_source_kind=pool_source_kind)
     records = list(frozen_pool.get("records") or [])
     inversion_assets = _inversion_asset_records(frozen_memory)
     positive_assets = _positive_residual_asset_records(frozen_memory)
@@ -196,6 +212,7 @@ def prepare_shadow_run(
     memory_path: Path = DEFAULT_SHADOW_MEMORY_PATH,
     project_root: Path = PROJECT_ROOT,
     admission_state: dict[str, Any] | None = None,
+    pool_source_kind: str = "canonical_private_pool",
     require_clean_control: bool = True,
     control_files: Iterable[str] = CONTROL_FILES,
 ) -> dict[str, Any]:
@@ -225,9 +242,10 @@ def prepare_shadow_run(
         return _bounded_result("HOLD_CANONICAL_PRIVATE_POOL_UNAVAILABLE", admission=admission, reason=f"Canonical private primary pool unavailable: {private_pool_path}", run_root=run_root)
     private_pool = load_private_primary_pool(private_pool_path) or {}
     try:
-        frozen = _frozen_pool_payload(private_pool, admission)
+        frozen = _frozen_pool_payload(private_pool, admission, pool_source_kind=pool_source_kind)
     except ValueError as error:
-        return _bounded_result("HOLD_CANONICAL_PRIVATE_POOL_IDENTITY_MISMATCH", admission=admission, reason=str(error), run_root=run_root)
+        status = "HOLD_CANONICAL_PRIVATE_POOL_IDENTITY_MISMATCH" if pool_source_kind == "canonical_private_pool" else "HOLD_PRIOR_TERMINAL_FROZEN_POOL_IDENTITY_MISMATCH"
+        return _bounded_result(status, admission=admission, reason=str(error), run_root=run_root)
     inventory = {
         "active_inversion_asset_count": len(_inversion_asset_records(frozen_memory)),
         "active_positive_residual_asset_count": len(_positive_residual_asset_records(frozen_memory)),
@@ -269,7 +287,7 @@ def prepare_shadow_run(
     return _bounded_result(
         HANDOFF_STATUS,
         admission=admission,
-        reason="Canonical private Primary and shadow dead-end memory were frozen into the run root and a schema-bound zero-authority qualification receipt was created. Provider execution remains unauthorized by this launcher.",
+        reason=("Canonical private Primary" if pool_source_kind == "canonical_private_pool" else "Prior terminal frozen Primary") + " and shadow dead-end memory were frozen into the run root and a schema-bound zero-authority qualification receipt was created. Provider execution remains unauthorized by this launcher.",
         run_root=run_root,
         frozen_pool_created=True,
         frozen_memory_created=True,

@@ -53,7 +53,8 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
             self.assertEqual(state["summary"]["automatic_provider_calls_authorized"],0);self.assertEqual(state["summary"]["model_calls_executed"],0)
             self.assertTrue(state["summary"]["fresh_fallback_required"]);self.assertEqual(state["summary"]["fresh_phenomenon_target_count"],1)
             self.assertEqual(frozen["source_primary_content_sha256"],admission["source_identity"]["current_primary_content_sha256"])
-            self.assertEqual(receipt["source_primary_content_sha256"],frozen["source_primary_content_sha256"])
+            self.assertEqual(frozen["policy"]["pool_source_kind"],"canonical_private_pool");self.assertTrue(frozen["policy"]["canonical_private_pool_source"]);self.assertFalse(frozen["policy"]["prior_terminal_frozen_pool_source"])
+            self.assertEqual(receipt["source_primary_content_sha256"],frozen["source_primary_content_sha256"]);self.assertEqual(receipt["pool_source_kind"],"canonical_private_pool")
             self.assertEqual(receipt["stage_runner_required_schema"],"1.4")
             self.assertFalse(frozen_memory["scientific_authority"]);self.assertFalse(frozen_memory["live_source_coverage_effect"]);self.assertTrue(frozen_memory["cannot_mutate_canonical_generator_or_queue"])
             source_memory=json.loads(memory.read_text());source_memory["blocked_objects"].append({"basin":"later-update","scientific_authority":False});memory.write_text(json.dumps(source_memory),encoding="utf-8")
@@ -62,6 +63,15 @@ class ProblemSearchShadowLauncherTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"memory digest drift"):
                 validate_shadow_run_control(run_root=run,pool_path=run/"frozen-primary-evidence-pool.json",memory_path=memory,project_root=project,control_files=files)
             self.assertFalse(state["scientific_authority"]);self.assertTrue(all(value is False for value in state["authority"].values()))
+
+
+    def test_prior_terminal_pool_source_kind_is_preserved_in_frozen_pool_and_receipt(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);admission,private_pool,memory,project,files=self.fixture(root);run=root/"shadow-prior-frozen"
+            state=prepare_shadow_run(run_root=run,private_pool_path=private_pool,memory_path=memory,project_root=project,admission_state=admission,pool_source_kind="prior_terminal_frozen_pool",require_clean_control=False,control_files=files)
+            frozen=json.loads((run/"frozen-primary-evidence-pool.json").read_text());receipt=json.loads((run/"shadow-run-qualification.json").read_text())
+        self.assertEqual(state["status"],HANDOFF_STATUS);self.assertEqual(frozen["policy"]["pool_source_kind"],"prior_terminal_frozen_pool")
+        self.assertFalse(frozen["policy"]["canonical_private_pool_source"]);self.assertTrue(frozen["policy"]["prior_terminal_frozen_pool_source"]);self.assertEqual(receipt["pool_source_kind"],"prior_terminal_frozen_pool")
 
     def test_no_active_asset_and_all_fresh_anomalies_closed_holds_before_qualification(self) -> None:
         with tempfile.TemporaryDirectory() as td:
