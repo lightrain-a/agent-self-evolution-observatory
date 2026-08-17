@@ -155,6 +155,42 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         different["empirical_evidence"]["source_a"]["claim"]="runtime grows with larger batches";different["empirical_evidence"]["source_b"]["claim"]="memory use grows with larger batches"
         self.assertIsNone(runner._semantic_dead_end_seed_blocker(different,memory,"b"*64))
 
+    def test_principle_exact_evidence_closure_blocks_rephrased_same_evidence_but_not_adjacent_boundary(self) -> None:
+        closed_text="Train selection is a lower bound on what generalizes: on GDPval a variant ranked below the winner on train scored highest on test (+11.5% vs. +9.2%)."
+        closed_sha=runner._fresh_evidence_sha({"text":closed_text})
+        memory={"blocked_objects":[{
+            "source_candidate_id":"PA-03-HARNESS-SELECTION-INVERSION",
+            "basin":"principle-readjudication-pa03",
+            "search_primitive":"UNEXPLAINED_BOUNDARY",
+            "current_source_refs":["arXiv:2607.13683"],
+            "problem_text":"aggregate GDPval train/test ranking reversal and phantom progress",
+            "dead_end_certified":True,
+            "memory_class":"PRINCIPLE_DEAD_END",
+            "fresh_phenomenon_closure":{"source_ref":"arXiv:2607.13683","closed_evidence_sha256":[closed_sha],"closure_scope":"GDPval aggregate ranking inversion only","scientific_authority":False},
+            "scientific_authority":False,
+        }]}
+        registry={"arXiv:2607.13683":{"ref":"arXiv:2607.13683","typed_evidence":{"boundary_observations":[{"text":closed_text,"text_sha256":closed_sha}]},"empirical_facts":[]}}
+        rephrased={
+            "discovery_lane":"UNEXPLAINED_BOUNDARY",
+            "title":"When does harness candidate-pool diversity invert train/test ranking?",
+            "problem_seed":"Characterize a candidate-pool boundary for ranking inversion rather than naming a new inversion mechanism.",
+            "scientific_tension":"Winner's curse is the strongest reduction to beat.",
+            "structural_signature":"regime",
+            "empirical_evidence":{"source_a":{"ref":"arXiv:2607.13683","claim":closed_text},"source_b":{"ref":"arXiv:2607.13683","claim":"The selected harness still improves over vanilla on held-out test."}},
+            "lane_evidence":{"boundary_observation":closed_text,"adjacent_regime":"other domains improve","unexplained_transition":"ranking may invert","shared_measurement":"train/test harness score"},
+        }
+        blocked=runner._semantic_dead_end_seed_blocker(rephrased,memory,"a"*64,registry)
+        self.assertIsNotNone(blocked)
+        self.assertTrue(blocked["closed_evidence_match"])
+        self.assertEqual("PA-03-HARNESS-SELECTION-INVERSION",blocked["source_candidate_id"])
+        adjacent=json.loads(json.dumps(rephrased))
+        adjacent["title"]="SWE-bench detectability boundary"
+        adjacent["problem_seed"]="At what deployment n does a positive harness effect clear paired significance?"
+        adjacent["empirical_evidence"]["source_a"]["claim"]="SWE-bench gains +5.1% on test at n=26 but remains below the paired-2sigma bar (z=0.78)."
+        adjacent["lane_evidence"]["boundary_observation"]=adjacent["empirical_evidence"]["source_a"]["claim"]
+        adjacent["lane_evidence"]["unexplained_transition"]="real positive effect versus statistical detectability at small n"
+        self.assertIsNone(runner._semantic_dead_end_seed_blocker(adjacent,memory,"a"*64,registry))
+
     def test_lane_contract_hold_cannot_machine_block_search(self) -> None:
         seed={"discovery_lane":"CONVERGENT_FAILURE","title":"optimizer capability threshold","problem_seed":"same object","scientific_tension":"same tension","structural_signature":"same signature","empirical_evidence":{"source_a":{"ref":"arXiv:1","claim":"weak optimizer cannot operate interface"},"source_b":{"ref":"arXiv:2","claim":"weak agent fails to converge"}}}
         memory={"blocked_objects":[{"source_candidate_id":"OLD-HOLD","basin":"semantic-lane-contract-x","search_primitive":"CONVERGENT_FAILURE","current_source_refs":["arXiv:1","arXiv:2"],"evidence_claims":["weak optimizer cannot operate interface","weak agent fails to converge"],"problem_text":"optimizer capability threshold","frozen_pool_sha256":"a"*64,"dead_end_certified":False,"scientific_authority":False}]}
@@ -276,6 +312,27 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         audit={"passed":False,"blockers":["reduction-falsifiability-contract-incomplete","unresolved-exact-reduction-test:1"]}
         self.assertFalse(runner._problem_falsifier_eligible({"exact_prediction":"x","strongest_same_information_baseline":"y","cheapest_problem_falsifier":""},audit))
         self.assertFalse(runner._problem_falsifier_eligible({"exact_prediction":"x","strongest_same_information_baseline":"","cheapest_problem_falsifier":"z"},audit))
+
+    def test_replay_expand_recompiles_archived_raw_without_provider_call(self) -> None:
+        import hashlib
+        raw=json.dumps({"seeds":[],"notes":"archived provider response"})
+        raw_sha=hashlib.sha256(raw.encode()).hexdigest()
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);pool=root/"pool.json";memory=root/"memory.json";raw_path=root/"prior-raw.txt";run=root/"run"
+            pool.write_text(json.dumps({"frozen_pool_sha256":"a"*64,"records":[]}),encoding="utf-8")
+            memory.write_text(json.dumps({"scientific_authority":False,"live_source_coverage_effect":False,"cannot_mutate_canonical_generator_or_queue":True,"blocked_objects":[]}),encoding="utf-8")
+            raw_path.write_text(raw,encoding="utf-8")
+            with patch("research_pipeline.problem_search_stage_runner._ark") as provider,patch("research_pipeline.problem_search_stage_runner.validate_shadow_run_control",return_value={"control_snapshot_sha256":"f"*64}) as validate:
+                result=runner.replay_expand(pool=pool,run_root=run,lane="CONTRADICTION",count=1,part=1,memory_path=memory,raw_input=raw_path,expected_raw_sha256=raw_sha,requested_model="kimi-k3",resolved_model="kimi-k3",raw_origin_control_snapshot_sha256="e"*64)
+            provider.assert_not_called();validate.assert_called_once()
+            artifact=json.loads((run/"expand-CONTRADICTION-p1.json").read_text(encoding="utf-8"))
+        self.assertEqual(result["raw_sha256"],raw_sha)
+        self.assertTrue(artifact["raw_replayed_without_provider"])
+        self.assertEqual(artifact["raw_origin_control_snapshot_sha256"],"e"*64)
+        self.assertEqual(artifact["provider_calls_executed"],0)
+        self.assertEqual(artifact["control_snapshot_sha256"],"f"*64)
+        self.assertEqual(artifact["resolved_model"],"kimi-k3")
+        self.assertFalse(artifact["scientific_authority"])
 
     def test_provider_timeout_is_recorded_without_inventing_raw_output(self) -> None:
         with tempfile.TemporaryDirectory() as td:

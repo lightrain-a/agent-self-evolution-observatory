@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from research_pipeline.harnessbank_selection_principle_readjudication import build_readjudication
+from research_pipeline.harnessbank_selection_principle_readjudication import GDPVAL_BOUNDARY_EVIDENCE_SHA256, EXPECTED_FULLTEXT_SHA256, build_readjudication
 from research_pipeline.principle_adjudication import audit_dead_end_counter_explanation
 
 
@@ -21,6 +21,12 @@ class HarnessBankSelectionPrincipleReadjudicationTest(unittest.TestCase):
         self.assertEqual([], audit_dead_end_counter_explanation(counter)["blockers"])
         self.assertFalse(state["authority"]["automatic_gpu_authority"])
         self.assertFalse(state["authority"]["automatic_problem_gate_authority"])
+        closure = state["fresh_phenomenon_closure"]
+        self.assertEqual([GDPVAL_BOUNDARY_EVIDENCE_SHA256], closure["closed_evidence_sha256"])
+        self.assertEqual(EXPECTED_FULLTEXT_SHA256, closure["primary_fulltext_sha256"])
+        self.assertNotIn(EXPECTED_FULLTEXT_SHA256, closure["closed_evidence_sha256"])
+        self.assertNotIn(closure["support_audit_sha256"], closure["closed_evidence_sha256"])
+        self.assertEqual(GDPVAL_BOUNDARY_EVIDENCE_SHA256, state["primary_observations"]["gdpval"]["evidence_sha256"])
 
     def test_reopen_requires_lineage_level_residual(self) -> None:
         state = build_readjudication()

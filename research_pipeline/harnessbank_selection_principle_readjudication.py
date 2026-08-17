@@ -14,6 +14,7 @@ PRIMARY_STATE = PROJECT_ROOT / "generated" / "paper-first-primary-evidence-state
 SUPPORT_AUDIT = PROJECT_ROOT / "generated" / "harnessbank-support-audit-20260817.json"
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "harnessbank-selection-principle-readjudication-20260817.json"
 EXPECTED_FULLTEXT_SHA256 = "74082edc56e911da43e9b70b8eeaf4d6552b8fea7e15b7a0ab00d4c20aff2997"
+GDPVAL_BOUNDARY_EVIDENCE_SHA256 = "faf94010c18b42621b5d62229c148b4c9c07cb0de9a8c6c0218cedb954397558"
 
 
 def _load(path: Path) -> dict[str, Any]:
@@ -121,7 +122,9 @@ def build_readjudication() -> dict[str, Any]:
         "experiment_run_for_this_readjudication": False,
         "fresh_phenomenon_closure": {
             "source_ref": SOURCE_REF,
-            "closed_evidence_sha256": [EXPECTED_FULLTEXT_SHA256, support_sha],
+            "closed_evidence_sha256": [GDPVAL_BOUNDARY_EVIDENCE_SHA256],
+            "primary_fulltext_sha256": EXPECTED_FULLTEXT_SHA256,
+            "support_audit_sha256": support_sha,
             "closure_scope": (
                 "current standalone PA-03 inference from one aggregate GDPval train/test rank reversal plus the TB2 neutral-candidate phantom-progress ablation"
             ),
@@ -132,6 +135,7 @@ def build_readjudication() -> dict[str, Any]:
                 "train_lower_variant_test_gain_pp": 11.5,
                 "train_selected_winner_test_gain_pp": 9.2,
                 "unit": "single aggregate ranking reversal reported in ablation text",
+                "evidence_sha256": GDPVAL_BOUNDARY_EVIDENCE_SHA256,
             },
             "phantom_progress": {
                 "context": "post-convergence rounds with neutral candidates",
