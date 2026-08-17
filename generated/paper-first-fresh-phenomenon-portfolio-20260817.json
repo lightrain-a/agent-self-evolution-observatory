@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T08:33:29+00:00",
+  "generated_at": "2026-08-17T09:05:39+00:00",
   "status": "F0_EXECUTION_HOLD",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -322,9 +322,12 @@
     },
     "harnessbank_support_audit": {
       "path": "generated/harnessbank-support-audit-20260817.json",
-      "sha256": "a00b2b9c7e3778c6974f996c7fb7d3af7d9a5d141862563d1a486ba047a3bafc",
+      "sha256": "75e5ef08685c7f041ab0449711779f1f2543d0c704adf99b470cb33013203377",
+      "audit_sha256": "65f81ca420443e9c05c25690f6bb2516b0756e0bd3fd37acde361c6e888e9c09",
       "status": "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT",
-      "required_unit": "paired per-gene harness evolution histories and downstream outcomes under the frozen verification rule, with enough lineage to reconstruct selected-versus-rejected verification decisions"
+      "required_unit": "paired per-gene harness evolution histories and downstream outcomes under the frozen verification rule, with enough lineage to reconstruct selected-versus-rejected verification decisions",
+      "valid": true,
+      "validation_errors": []
     },
     "primary_state": {
       "path": "generated/paper-first-primary-evidence-state.json",
@@ -332,7 +335,7 @@
     },
     "dead_end_memory": {
       "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-      "sha256": "55d6e8c032982b8249bc1a7842729c3fdc7b830cf235303005133b3af392c2ee"
+      "sha256": "389d701d9382883a89f15cb0af0bc0010002a713f1829b5ed1362ac49f80f432"
     },
     "defense_principle_reduction": {
       "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
