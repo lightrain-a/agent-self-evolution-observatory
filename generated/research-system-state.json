@@ -6295,9 +6295,9 @@
     "paper_first_relation_scan_admission_failed": 1,
     "paper_first_relation_scan_manual_eligible": false,
     "paper_first_relation_scan_automatic_authorized": false,
-    "paper_first_shadow_search_admission_status": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
+    "paper_first_shadow_search_admission_status": "READY_FOR_SHADOW_QUALIFICATION",
     "paper_first_shadow_search_same_source_transaction": true,
-    "paper_first_shadow_search_qualification_allowed": false,
+    "paper_first_shadow_search_qualification_allowed": true,
     "paper_first_shadow_search_automatic_provider_calls": 0,
     "paper_first_shadow_continuation_status": "WAIT_EXTERNAL_PRIMARY_CONTENT_CHANGE",
     "paper_first_shadow_continuation_next_action": "wait-external-change",
@@ -31578,7 +31578,7 @@
       "temporal_exposure_relabeling_after_longitudinal_reduction_forbidden": true,
       "treatment_semantics_seed_requires_executable_version_change": true,
       "treatment_semantics_seed_requires_versioned_treatment_reduction_first": true,
-      "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
+      "discovery_operator_version": "fresh-phenomenon-anomaly-precision-v14",
       "shared_limitation_without_empirical_failure_forbidden": true,
       "pure_topic_brainstorm_forbidden": true,
       "open_world_missing_cell_claim_forbidden": true,
@@ -31588,6 +31588,10 @@
       "saturation_map_check_required": true,
       "problem_falsifier_required_before_method_design": true,
       "reduction_pending_is_provisional_not_failed": true,
+      "reduction_pending_may_reach_block_only_semantic_review": true,
+      "reduction_pending_cannot_pass_problem_gate": true,
+      "contradiction_requires_matched_intervention_semantics": true,
+      "contradiction_requires_matched_adaptation_stage": true,
       "bounded_first_party_evidence_acquisition_allowed_before_problem_gate_pass": true,
       "support_inventory_is_one_evidence_route_not_global_prerequisite": true,
       "first_party_evidence_cannot_auto_certify_novelty": true,
@@ -31664,6 +31668,8 @@
         "required_by_lane": {
           "CONTRADICTION": [
             "shared_operationalization",
+            "shared_intervention_semantics",
+            "shared_adaptation_stage",
             "incompatibility"
           ],
           "CONVERGENT_FAILURE": [
@@ -31724,7 +31730,7 @@
           ]
         },
         "machine_contracts": {
-          "CONTRADICTION": "Two independently grounded empirical facts are incompatible under an explicitly shared operationalization.",
+          "CONTRADICTION": "Two independently grounded empirical facts are incompatible under an explicitly shared operationalization, including the same intervention/treatment surface and adaptation stage; inference-time context, retrieval/filtering, parameter updates, and full-parameter training are not interchangeable treatments.",
           "CONVERGENT_FAILURE": "Two independent method families show quantitative failure under the same bounded operational condition; the candidate names a common failure object rather than a better-method claim.",
           "ASSUMPTION_BREAK": "Source A contains an explicit operational assumption and independent source B contains empirical evidence that violates it in a scope-linked setting.",
           "UNEXPLAINED_BOUNDARY": "Primary evidence quantitatively establishes an anomalous boundary/regime and an adjacent expected regime for the same measured phenomenon; the candidate targets the unexplained transition.",
@@ -32274,9 +32280,11 @@
         "minimum_distinct_primary_sources": 2,
         "required_lane_evidence": [
           "shared_operationalization",
+          "shared_intervention_semantics",
+          "shared_adaptation_stage",
           "incompatibility"
         ],
-        "machine_contract": "Two independently grounded empirical facts are incompatible under an explicitly shared operationalization."
+        "machine_contract": "Two independently grounded empirical facts are incompatible under an explicitly shared operationalization, including the same intervention/treatment surface and adaptation stage; inference-time context, retrieval/filtering, parameter updates, and full-parameter training are not interchangeable treatments."
       },
       {
         "lane": "CONVERGENT_FAILURE",
@@ -37243,7 +37251,7 @@
   "paper_first_discovery_frontier": {
     "schema_version": "1.0",
     "generated_at": "2026-08-17T18:01:24+00:00",
-    "status": "WAIT_EXTERNAL_RELATION_EXECUTION_CHANGE",
+    "status": "SHADOW_QUALIFICATION_PENDING",
     "policy": {
       "scientific_authority": false,
       "frontier_is_deterministic_compute_control_only": true,
@@ -37263,7 +37271,7 @@
       "relation_current_closed": false,
       "relation_execution_censored": true,
       "relation_control_closed_for_now": true,
-      "shadow_closed": true,
+      "shadow_closed": false,
       "scientific_object_closed": true,
       "support_release_closed": true,
       "evidence_acquisition_closed": true,
@@ -37278,7 +37286,7 @@
       "evidence_execution_ready": 0,
       "evidence_residual_survives": 0,
       "evidence_branch_repair_ready": 0,
-      "open_internal_frontiers": 0,
+      "open_internal_frontiers": 1,
       "external_triggers": 6,
       "automatic_model_calls_authorized": 0,
       "automatic_problem_gate_authorized": 0,
@@ -37287,7 +37295,9 @@
       "automatic_p0_authorized": 0,
       "automatic_gpu_authorized": 0
     },
-    "blockers": [],
+    "blockers": [
+      "shadow-qualification-or-search-open"
+    ],
     "triggers": [
       {
         "trigger": "NEW_FRESHNESS_RELEVANCE_QUALIFIED_LANE_GROUNDED_PRIMARY_SOURCE",
@@ -38300,8 +38310,8 @@
   },
   "paper_first_shadow_search_admission": {
     "schema_version": "1.0",
-    "status": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
-    "reason": "The current canonical source transaction already has a terminal shadow search result under the current discovery operator; repeating model calls would be redundant.",
+    "status": "READY_FOR_SHADOW_QUALIFICATION",
+    "reason": "Canonical discovery is closed and the discovery operator changed since the latest terminal shadow run, so one new qualified shadow transaction is allowed on the same frozen evidence.",
     "policy": {
       "scientific_authority": false,
       "admission_is_deterministic_search_control_only": true,
@@ -38317,12 +38327,12 @@
       "latest_shadow_present": true,
       "latest_shadow_terminal": true,
       "same_source_transaction": true,
-      "current_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
+      "current_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v14",
       "latest_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
-      "same_discovery_operator_version": true,
-      "operator_upgrade_recompile": false,
+      "same_discovery_operator_version": false,
+      "operator_upgrade_recompile": true,
       "source_identity_conflict": false,
-      "qualification_allowed": false,
+      "qualification_allowed": true,
       "automatic_provider_calls_authorized": 0,
       "checks": 14,
       "passed_checks": 14,
@@ -38338,15 +38348,15 @@
       "latest_source_set_sha256": "60b9c55d7ca585bd8590a6d7c69e9587fc0ab211ec24d80c3ba3c4651481ff56",
       "latest_primary_content_sha256": "0df29b9cbd111a85eb5caece3c5fd2ce148ebb587fae140c3de4ce58a7d05e9c",
       "latest_source_pool_sha256": "c4a42abe9f66a2ceafdb673f4e7778632406aaa65c9ca21c081221b22d36c2f6",
-      "current_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13",
+      "current_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v14",
       "latest_discovery_operator_version": "fresh-phenomenon-anomaly-precision-v13"
     },
     "scientific_authority": false
   },
   "paper_first_shadow_continuation_frontier": {
     "schema_version": "1.0",
-    "status": "WAIT_EXTERNAL_PRIMARY_CONTENT_CHANGE",
-    "next_control_action": "wait-external-change",
+    "status": "READY_FOR_ZERO_PROVIDER_SHADOW_QUALIFICATION",
+    "next_control_action": "canonical-private-pool-shadow-qualification",
     "policy": {
       "scientific_authority": false,
       "frontier_is_deterministic_control_projection_only": true,
@@ -38358,14 +38368,14 @@
       "zero_active_action_is_valid_external_wait": true
     },
     "summary": {
-      "shadow_qualification_ready": 0,
+      "shadow_qualification_ready": 1,
       "release_recheck_required": 0,
       "asset_recheck_queued": 0,
       "support_inventory_handoff_ready": 0,
       "support_handoff_provenance_hold": 0,
       "support_holds": 0,
-      "active_control_actions": 0,
-      "external_wait": 1,
+      "active_control_actions": 1,
+      "external_wait": 0,
       "automatic_provider_calls_authorized": 0,
       "scientific_authority": 0,
       "generator_reopen_authorized": 0,
@@ -38376,7 +38386,7 @@
       "gpu_authorized": 0
     },
     "source_status": {
-      "shadow_admission": "SKIPPED_SHADOW_SOURCE_TRANSACTION_ALREADY_TERMINAL",
+      "shadow_admission": "READY_FOR_SHADOW_QUALIFICATION",
       "support_release_watch": "NOT_RUN",
       "support_asset_queue": "NOT_RUN",
       "support_inventory_handoff": "NOT_RUN"
