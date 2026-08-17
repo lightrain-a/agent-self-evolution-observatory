@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "COMFYCLAW-PROMPT-ONLY-REFINEMENT-BOUNDARY",
+  "title": "ComfyClaw prompt-only repair gap reduces to richer workflow interventions plus localized verifier feedback",
+  "adjudication_date": "2026-08-18",
+  "search_primitive": "UNEXPLAINED_BOUNDARY",
+  "principle_dead_end_certified": true,
+  "experiment_run_for_this_readjudication": false,
+  "source_ai_formulation_has_scientific_authority": false,
+  "comfyclaw_skill_evolution_falsified": false,
+  "dead_end_scope": "ComfyClaw arXiv:2607.01709, restricted to the exact qualitative evidence item 'Closed-loop workflow refinement repairs failures that prompt-only rewriting often cannot.' The scoped claim to close is that this observation by itself exposes an unexplained self-evolution mechanism beyond ordinary action-space expansion and feedback control.",
+  "fresh_phenomenon_closure": {
+    "source_ref": "arXiv:2607.01709",
+    "closed_evidence_sha256": [
+      "c1edb9836a1b0773d35b84501e2b7bb2150cfadf7cec9260f57e1297cd48b68c"
+    ],
+    "closure_scope": "the exact prompt-only-vs-closed-loop workflow repair qualitative boundary only",
+    "scientific_authority": false
+  },
+  "principle_diagnosis": {
+    "status": "PRINCIPLE_DEAD_END_CERTIFIED",
+    "counter_explanation_type": "COUNTER_MECHANISM_SUPPORTED",
+    "counter_explanation": {
+      "type": "COUNTER_MECHANISM_SUPPORTED",
+      "statement": "The same primary source already identifies why the closed loop can repair cases that prompt-only rewriting cannot. ComfyClaw changes the available intervention surface: its graph interface can revise both text and the executable pipeline, including LoRA insertion/weights, regional attention and masks, sampler/guidance parameters, graph topology, and multi-pass refinement. Across 35,612 workflow events, only 39.3% are prompt-text edits and 60.7% operate on those non-prompt surfaces. The verifier additionally supplies localized failure descriptions and concrete workflow edits; the source's qualitative trajectories show those suggestions triggering structural repairs and a best-so-far buffer protecting against non-monotone retries. Thus the prompt-only gap is source-internally explained by a strictly larger action/intervention space plus localized feedback control, not left as unexplained negative space.",
+      "opposite_prediction": "If action-space expansion plus localized verifier feedback explains the prompt-only gap, successful repairs should frequently require interventions unavailable to text rewriting and should follow failure-specific feedback rather than blind repetition. The source reports exactly this: 60.7% of edits are non-prompt, including hyperparameters, regional/mask topology, LoRA/checkpoint choices and multi-pass design; concrete examples stack two LoRAs, add regional attention, change regional splits, remove ineffective LoRAs after verifier failures, and recover from worse intermediate attempts.",
+      "opposite_principle": "A richer controller repairing failures that a restricted prompt-only controller cannot is not a new self-evolution mechanism unless a residual survives matched action space, intervention budget, verifier information, and retry/best-so-far control. Treatment-surface capability must be matched before the remaining gap can be interpreted mechanistically.",
+      "opposite_search_seed": "Reopen only on matched controllers that expose the same graph edits, LoRA/regional/mask/hyperparameter operations, verifier-localized feedback, retry budget and best-so-far retention, but differ in an evolution-specific state or learned update mechanism. Require a replicated repair or generalization residual that survives these same-information controls.",
+      "scope": "ComfyClaw arXiv:2607.01709, restricted to the exact qualitative evidence item 'Closed-loop workflow refinement repairs failures that prompt-only rewriting often cannot.' The scoped claim to close is that this observation by itself exposes an unexplained self-evolution mechanism beyond ordinary action-space expansion and feedback control.",
+      "same_information_or_scope_matched": true,
+      "counter_prediction_observed": true,
+      "positive_support": true,
+      "evidence_refs": [
+        "arXiv:2607.01709",
+        "primary-fulltext:arXiv:2607.01709#sha256=18f97f89b8b61afc4c57f2141886d440f1e2998e47526d5a5cd9642e9479ffb5",
+        "primary-fulltext-evidence:arXiv:2607.01709#sha256=6cc78786fb71bdcfc51e720b7c7f07f3c6d3e112cedf82033d38a6066e97beeb",
+        "primary-fulltext-evidence:arXiv:2607.01709#sha256=88d016fd3173d186d318a1b5e644ed1ba7b7e30a07b567b752048a6bc764c05c",
+        "primary-fulltext-evidence:arXiv:2607.01709#sha256=006626c37d296235805be8715e7936de8aa11f1e8b78ae58e3ecac8a1afe1997",
+        "primary-fulltext-evidence:arXiv:2607.01709#sha256=516b29015b6e9ffaadf8d838bf3471836600d799e0ebcb910ce730aeb592be55",
+        "primary-fulltext-evidence:arXiv:2607.01709#sha256=019c506308985550a60bcb59fa74708abbade1c7bb6c46a43b2e96cc0595bdba",
+        "primary-fulltext-evidence:arXiv:2607.01709#sha256=ccb85ce8728d6f1dd7297e6deb7648636a3d2da1acb999699efa436fde032e4e",
+        "fresh-primary-evidence:arXiv:2607.01709#sha256=c1edb9836a1b0773d35b84501e2b7bb2150cfadf7cec9260f57e1297cd48b68c"
+      ],
+      "alternative_explanations_ruled_out": [
+        "The closed loop differs from prompt-only only by more attempts: false; the source explicitly exposes graph, LoRA, regional/mask, parameter, and multi-pass interventions that prompt-only cannot perform.",
+        "The repair loop is blind retry: false; each iteration consumes requirement-level, localized verifier failures and concrete workflow-edit suggestions.",
+        "The qualitative examples rely only on prompt rewriting: false; the paper documents LoRA stacking, regional-attention insertion, regional-split changes and removal of ineffective LoRAs.",
+        "The improvement can be read as monotone hill climbing alone: false; the source documents worse intermediate attempts and a best-so-far buffer that preserves the best valid candidate while later iterations recover.",
+        "Closing this prompt-only boundary falsifies ComfyClaw skill evolution: false; the closure is limited to the exact repair-vs-prompt-only evidence item and does not close the separate evolved-skill usage or skill-evolution benefit questions."
+      ],
+      "reopen_condition": "Reopen only with new primary or provenance-audited first-party evidence matching graph-edit action space, LoRA/regional/mask/hyperparameter operations, verifier feedback, iteration and render budget, best-so-far retention, image backbone, agent model, prompt difficulty and evaluation information, while varying an evolution-specific state/mechanism and showing a replicated repair residual beyond ordinary feedback-control and action-space-capability explanations."
+    },
+    "audit": {
+      "passed": true,
+      "status": "pass",
+      "type": "COUNTER_MECHANISM_SUPPORTED",
+      "blockers": [],
+      "statement": "The same primary source already identifies why the closed loop can repair cases that prompt-only rewriting cannot. ComfyClaw changes the available intervention surface: its graph interface can revise both text and the executable pipeline, including LoRA insertion/weights, regional attention and masks, sampler/guidance parameters, graph topology, and multi-pass refinement. Across 35,612 workflow events, only 39.3% are prompt-text edits and 60.7% operate on those non-prompt surfaces. The verifier additionally supplies localized failure descriptions and concrete workflow edits; the source's qualitative trajectories show those suggestions triggering structural repairs and a best-so-far buffer protecting against non-monotone retries. Thus the prompt-only gap is source-internally explained by a strictly larger action/intervention space plus localized feedback control, not left as unexplained negative space.",
+      "opposite_prediction": "If action-space expansion plus localized verifier feedback explains the prompt-only gap, successful repairs should frequently require interventions unavailable to text rewriting and should follow failure-specific feedback rather than blind repetition. The source reports exactly this: 60.7% of edits are non-prompt, including hyperparameters, regional/mask topology, LoRA/checkpoint choices and multi-pass design; concrete examples stack two LoRAs, add regional attention, change regional splits, remove ineffective LoRAs after verifier failures, and recover from worse intermediate attempts.",
+      "opposite_principle": "A richer controller repairing failures that a restricted prompt-only controller cannot is not a new self-evolution mechanism unless a residual survives matched action space, intervention budget, verifier information, and retry/best-so-far control. Treatment-surface capability must be matched before the remaining gap can be interpreted mechanistically.",
+      "opposite_search_seed": "Reopen only on matched controllers that expose the same graph edits, LoRA/regional/mask/hyperparameter operations, verifier-localized feedback, retry budget and best-so-far retention, but differ in an evolution-specific state or learned update mechanism. Require a replicated repair or generalization residual that survives these same-information controls.",
+      "scope": "ComfyClaw arXiv:2607.01709, restricted to the exact qualitative evidence item 'Closed-loop workflow refinement repairs failures that prompt-only rewriting often cannot.' The scoped claim to close is that this observation by itself exposes an unexplained self-evolution mechanism beyond ordinary action-space expansion and feedback control.",
+      "evidence_refs": [
+        "arXiv:2607.01709",
+        "primary-fulltext:arXiv:2607.01709#sha256=18f97f89b8b61afc4c57f2141886d440f1e2998e47526d5a5cd9642e9479ffb5",
+        "primary-fulltext-evidence:arXiv:2607.01709#sha256=6cc78786fb71bdcfc51e720b7c7f07f3c6d3e112cedf82033d38a6066e97beeb",
+        "primary-fulltext-evidence:arXiv:2607.01709#sha256=88d016fd3173d186d318a1b5e644ed1ba7b7e30a07b567b752048a6bc764c05c",
+        "primary-fulltext-evidence:arXiv:2607.01709#sha256=006626c37d296235805be8715e7936de8aa11f1e8b78ae58e3ecac8a1afe1997",
+        "primary-fulltext-evidence:arXiv:2607.01709#sha256=516b29015b6e9ffaadf8d838bf3471836600d799e0ebcb910ce730aeb592be55",
+        "primary-fulltext-evidence:arXiv:2607.01709#sha256=019c506308985550a60bcb59fa74708abbade1c7bb6c46a43b2e96cc0595bdba",
+        "primary-fulltext-evidence:arXiv:2607.01709#sha256=ccb85ce8728d6f1dd7297e6deb7648636a3d2da1acb999699efa436fde032e4e",
+        "fresh-primary-evidence:arXiv:2607.01709#sha256=c1edb9836a1b0773d35b84501e2b7bb2150cfadf7cec9260f57e1297cd48b68c"
+      ],
+      "reopen_condition": "Reopen only with new primary or provenance-audited first-party evidence matching graph-edit action space, LoRA/regional/mask/hyperparameter operations, verifier feedback, iteration and render budget, best-so-far retention, image backbone, agent model, prompt difficulty and evaluation information, while varying an evolution-specific state/mechanism and showing a replicated repair residual beyond ordinary feedback-control and action-space-capability explanations."
+    }
+  },
+  "scientific_interpretation": {
+    "safe_claim": "ComfyClaw's closed loop repairs prompt-only failures because it is not a prompt-only treatment: it combines a larger executable workflow-edit action space with localized verifier feedback and best-so-far retry control.",
+    "do_not_say": [
+      "workflow refinement is useless",
+      "ComfyClaw skill evolution is not beneficial",
+      "all evidence in arXiv:2607.01709 is closed",
+      "feedback-guided graph editing can never yield a novel residual"
+    ],
+    "new_search_basin": "evolution-residual-after-action-space-and-feedback-matching"
+  },
+  "authority": {
+    "ai_review_authorizes_dead_end": false,
+    "source_internal_action_space_and_feedback_evidence_authorizes_scoped_dead_end": true,
+    "automatic_problem_gate_authority": false,
+    "automatic_method_authority": false,
+    "automatic_p0_authority": false,
+    "automatic_gpu_authority": false,
+    "scientific_authority": "principle-adjudication-only"
+  },
+  "source_artifact_sha256": {
+    "primary_state": "bbd9d224f8305b90405ab1228f7f08e58002b10477296b9ffdc2c40b3ecb2646",
+    "primary_fulltext": "18f97f89b8b61afc4c57f2141886d440f1e2998e47526d5a5cd9642e9479ffb5",
+    "graph_interface_evidence": "6cc78786fb71bdcfc51e720b7c7f07f3c6d3e112cedf82033d38a6066e97beeb",
+    "verifier_feedback_evidence": "88d016fd3173d186d318a1b5e644ed1ba7b7e30a07b567b752048a6bc764c05c",
+    "edit_composition_evidence": "006626c37d296235805be8715e7936de8aa11f1e8b78ae58e3ecac8a1afe1997",
+    "structural_repair_evidence": "516b29015b6e9ffaadf8d838bf3471836600d799e0ebcb910ce730aeb592be55",
+    "best_so_far_evidence": "019c506308985550a60bcb59fa74708abbade1c7bb6c46a43b2e96cc0595bdba",
+    "verifier_driven_repair_evidence": "ccb85ce8728d6f1dd7297e6deb7648636a3d2da1acb999699efa436fde032e4e",
+    "closed_fresh_evidence": "c1edb9836a1b0773d35b84501e2b7bb2150cfadf7cec9260f57e1297cd48b68c"
+  }
+}

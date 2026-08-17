@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "status": "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT",
+  "candidate_id": "COMFYCLAW-BENCHMARK-CONDITIONED-EVOLVED-SKILL-UPTAKE",
+  "title": "ComfyClaw benchmark-conditioned evolved-skill uptake support hold",
+  "source_ref": "arXiv:2607.01709",
+  "phenomenon_id": "265a7f1100492358e7de5ce6d2c7de05738cc79c1db2f4bb296d8969cc2c166c",
+  "required_unit": "Per evaluated prompt/episode, a joinable paper-run record containing benchmark and prompt/example identity, frozen agent and image-model configuration, every read_skill event with skill identity and base-vs-evolved origin, final benchmark/verifier outcome, and workflow-edit categories; preferably paired under a matched base-only/evolved-skill availability intervention so evolved-skill uptake can be separated from benchmark task demand and predefined-library coverage.",
+  "reason": "The primary paper reports benchmark-level evolved-skill read fractions (70.0%, 56.2%, 16.3%, 7.5%) but explicitly states that usage counts are not direct measures of skill quality. The current official release provides code, summary results, and a mechanism for future evolution logs, but no paper-run unit-level benchmark/read_skill/outcome artifacts and no GitHub Release assets. Without joinable prompt-level reads and outcomes, the strongest reductions—benchmark task demand, predefined-skill coverage, conditional artifact utility, and retrieval/utilization—cannot be exactly tested.",
+  "reopen_only_if": "The official authors release provenance-audited paper-run unit-level logs (or an equivalent first-party export) that satisfy the required join keys and outcomes, enabling a same-information test of benchmark-conditioned evolved-skill utility beyond task compositionality, predefined-skill coverage, retrieval/utilization, and task-skill compatibility. A new aggregate read-rate table or code capable of producing future logs is not sufficient.",
+  "support_audit_artifact": "generated/comfyclaw-skill-uptake-support-audit-20260818.json",
+  "support_audit_sha256": "fda65415c2d104e3123f560ae9d721444d88cf0cd25a2a375d6888fbbc18ff0f",
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
