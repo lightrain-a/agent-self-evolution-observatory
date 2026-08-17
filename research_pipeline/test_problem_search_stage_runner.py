@@ -465,6 +465,28 @@ class ProblemSearchStageRunnerMemoryTest(unittest.TestCase):
         self.assertEqual(base["fresh_target_anchor_ids"],[target["seed_id"]]);self.assertEqual(base["unique_seeds"][0]["seed_id"],target["seed_id"]);self.assertTrue(base["unique_seeds"][0]["fresh_target_anchor"])
         self.assertEqual(base["parents"][0]["seed_id"],target["seed_id"]);self.assertEqual(formulation[0]["seed_id"],target["seed_id"]);self.assertEqual(base["duplicates"][0]["seed_id"],higher["seed_id"])
 
+    def test_incremental_assemble_preserves_existing_parent_prefix_when_new_fresh_anchor_arrives(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            run=Path(td)/"run";run.mkdir();control_sha="f"*64
+            first={"seed_id":"UNEXPLAINED_BOUNDARY-P1-001","discovery_lane":"UNEXPLAINED_BOUNDARY","title":"First target","problem_seed":"first target question","scientific_tension":"first tension","problem_family":"first","structural_signature":"first|target","agent_specific_constraint":"first constraint","empirical_evidence":{},"lane_evidence":{},"scores":{"importance":50,"specificity":50,"seed_distance":50,"evidence_grounding":50},"scientific_authority":False}
+            support={**json.loads(json.dumps(first)),"seed_id":"UNEXPLAINED_BOUNDARY-P1-002","title":"First support","problem_seed":"support question","structural_signature":"support|branch","scores":{"importance":90,"specificity":90,"seed_distance":90,"evidence_grounding":90}}
+            p1={"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":"UNEXPLAINED_BOUNDARY","part":1,"requested":2,"valid_seeds":2,"semantic_dead_end_block_count":0,"raw_sha256":"a"*64,"resolved_model":"kimi-k3","fresh_phenomenon_requirement_satisfied":True,"fresh_phenomenon_target_source_satisfied":True,"fresh_phenomenon_target_exact_satisfied":True,"fresh_phenomenon_target_ref":"arXiv:p1","fresh_phenomenon_target_id":"1"*64,"seeds":[first,support]}
+            (run/"expand-UNEXPLAINED_BOUNDARY-p1.json").write_text(json.dumps(p1),encoding="utf-8")
+            with patch("research_pipeline.problem_search_stage_runner._assert_run_control",return_value=control_sha):
+                runner.assemble(run_root=run,archive_capacity=8,evolution_parents=8)
+            initial=json.loads((run/"base.json").read_text(encoding="utf-8"));initial_ids=[row["seed_id"] for row in initial["parents"]]
+            second={**json.loads(json.dumps(first)),"seed_id":"UNEXPLAINED_BOUNDARY-P4-001","title":"Second target","problem_seed":"second target question","structural_signature":"second|target","scores":{"importance":100,"specificity":100,"seed_distance":100,"evidence_grounding":100}}
+            p4={"schema_version":runner.STAGE_RUNNER_ARTIFACT_SCHEMA,"control_snapshot_sha256":control_sha,"lane":"UNEXPLAINED_BOUNDARY","part":4,"requested":1,"valid_seeds":1,"semantic_dead_end_block_count":0,"raw_sha256":"b"*64,"resolved_model":"deepseek-v4-pro","fresh_phenomenon_requirement_satisfied":True,"fresh_phenomenon_target_source_satisfied":True,"fresh_phenomenon_target_exact_satisfied":True,"fresh_phenomenon_target_ref":"arXiv:p4","fresh_phenomenon_target_id":"4"*64,"seeds":[second]}
+            (run/"expand-UNEXPLAINED_BOUNDARY-p4.json").write_text(json.dumps(p4),encoding="utf-8")
+            with patch("research_pipeline.problem_search_stage_runner._assert_run_control",return_value=control_sha):
+                summary=runner.assemble(run_root=run,archive_capacity=8,evolution_parents=8);formulation=runner.formulation_pool(run,budget=8,control_sha=control_sha)
+            updated=json.loads((run/"base.json").read_text(encoding="utf-8"));updated_ids=[row["seed_id"] for row in updated["parents"]]
+        self.assertEqual(initial_ids,[first["seed_id"],support["seed_id"]])
+        self.assertEqual(updated_ids[:len(initial_ids)],initial_ids)
+        self.assertIn(second["seed_id"],updated_ids);self.assertEqual(updated["fresh_target_anchor_ids"],[first["seed_id"],second["seed_id"]])
+        self.assertEqual(updated["previous_parent_prefix_ids"],initial_ids);self.assertEqual(summary["previous_parent_prefix_preserved"],2)
+        self.assertEqual([row["seed_id"] for row in formulation[:2]],initial_ids)
+
     def test_mixed_control_snapshot_artifact_is_rejected_before_downstream_stage(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             run=Path(td)/"run";run.mkdir()

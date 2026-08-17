@@ -73,9 +73,10 @@ def _semantic_dedup(rows,threshold=.78,protected_ids=None):
     protected={str(value) for value in (protected_ids or []) if str(value)};kept=[];dropped=[];exact=defaultdict(set)
     ordered=sorted(rows,key=lambda r:(str(r.get("seed_id") or "") in protected,_score(r)),reverse=True)
     for r in ordered:
-        lane=r["discovery_lane"];key=_seed_key(r);same=[p for p in kept if p["discovery_lane"]==lane];closest=max((_jaccard(r,p) for p in same),default=0.)
-        if key in exact[lane]:dropped.append({"seed_id":r["seed_id"],"lane":lane,"reason":"exact-within-lane-duplicate"});continue
-        if closest>=threshold:dropped.append({"seed_id":r["seed_id"],"lane":lane,"reason":"semantic-within-lane-near-duplicate","similarity":round(closest,4)});continue
+        lane=r["discovery_lane"];seed_id=str(r.get("seed_id") or "");key=_seed_key(r);is_protected=seed_id in protected
+        same=[p for p in kept if p["discovery_lane"]==lane and not (is_protected and str(p.get("seed_id") or "") in protected)];closest=max((_jaccard(r,p) for p in same),default=0.)
+        if not is_protected and key in exact[lane]:dropped.append({"seed_id":r["seed_id"],"lane":lane,"reason":"exact-within-lane-duplicate"});continue
+        if not is_protected and closest>=threshold:dropped.append({"seed_id":r["seed_id"],"lane":lane,"reason":"semantic-within-lane-near-duplicate","similarity":round(closest,4)});continue
         exact[lane].add(key);kept.append(r)
     return kept,dropped
 
@@ -90,8 +91,13 @@ def _assign_structural_clusters(rows,threshold=.82):
 
 def _maxmin_select(rows,capacity,required_ids=None):
     if capacity<=0:return []
-    required={str(value) for value in (required_ids or []) if str(value)}
-    selected=sorted([r for r in rows if str(r.get("seed_id") or "") in required],key=_score,reverse=True)[:capacity]
+    required_order=[];seen_required=set()
+    for value in required_ids or []:
+        seed_id=str(value or "")
+        if seed_id and seed_id not in seen_required:
+            seen_required.add(seed_id);required_order.append(seed_id)
+    by_id={str(r.get("seed_id") or ""):r for r in rows if str(r.get("seed_id") or "")}
+    selected=[by_id[seed_id] for seed_id in required_order if seed_id in by_id][:capacity]
     if len(rows)<=capacity:return selected+[r for r in rows if r not in selected]
     by_lane=defaultdict(list)
     for r in rows:by_lane[r["discovery_lane"]].append(r)
