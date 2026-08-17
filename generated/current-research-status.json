@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T06:44:44+00:00",
-  "source_revision": "4c49b9d5558b195a2aeb91ad26c572aa2fafe797",
+  "generated_at": "2026-08-17T07:03:42+00:00",
+  "source_revision": "0d0f465fa9dc55fb23eae9e9b7f36ac393812e98",
   "as_of_date": "2026-08-17",
   "headline": {
     "paper_ready": 1,
@@ -173,9 +173,10 @@
           "unauthorized_partial_run_ingestable": false,
           "status": "HOLD_EXECUTION_ENV_AND_AUTHORITY_REQUIRED",
           "hold_reason": [
-            "Harbor SDK",
-            "agent-runtime:latest",
-            "Gemini credential for agent + host-side SkillAuthor"
+            "benchmark Python dependencies not present in the current execution Python",
+            "Harbor SDK not importable in the current execution Python",
+            "agent-runtime:latest:UNOBSERVABLE_PERMISSION_DENIED",
+            "GEMINI_API_KEY not loaded in the current execution environment"
           ]
         },
         "paper_problem_claimed": false

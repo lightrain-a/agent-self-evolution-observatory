@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T06:42:36+00:00",
+  "generated_at": "2026-08-17T07:03:00+00:00",
   "status": "F0_EXECUTION_HOLD",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -186,9 +186,10 @@
         "unauthorized_partial_run_ingestable": false,
         "status": "HOLD_EXECUTION_ENV_AND_AUTHORITY_REQUIRED",
         "hold_reason": [
-          "Harbor SDK",
-          "agent-runtime:latest",
-          "Gemini credential for agent + host-side SkillAuthor"
+          "benchmark Python dependencies not present in the current execution Python",
+          "Harbor SDK not importable in the current execution Python",
+          "agent-runtime:latest:UNOBSERVABLE_PERMISSION_DENIED",
+          "GEMINI_API_KEY not loaded in the current execution environment"
         ]
       }
     },
@@ -338,7 +339,7 @@
     },
     "skill_validation_transfer_scout": {
       "path": "generated/paper-first-skill-validation-transfer-scout-20260817.json",
-      "sha256": "e7edde1f6eaa0449cb5fe74061501cb12d36306852a8ced2e2b9ecbae69ac2ac",
+      "sha256": "4a7c2a9ce1e908380cd2c4676b5aabc3d502a643ac13a0489508c130f2840633",
       "status": "DESIGN_READY_EXECUTION_ENV_HOLD",
       "plan_sha256": "7756cb19d009b410df23a289a331e74719d0f372c5d4be84d3ec13a974a68a8c"
     },
