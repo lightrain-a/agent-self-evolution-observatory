@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import os
 import shutil
+import socket
 import subprocess
 import sys
 import time
@@ -17,8 +18,18 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-HTTP_PORT = 8123
-WEBDRIVER_PORT = 4444
+
+
+def _free_local_port() -> int:
+    # Fixed 8123/4444 ports leak across interrupted MCP/browser sessions and
+    # collide with parallel agents. Reserve an ephemeral loopback port instead.
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.bind(("127.0.0.1", 0))
+        return int(sock.getsockname()[1])
+
+
+HTTP_PORT = _free_local_port()
+WEBDRIVER_PORT = _free_local_port()
 
 
 def request(method: str, path: str, data: dict | None = None) -> dict:
@@ -46,13 +57,22 @@ def require(condition: bool, message: str) -> None:
 def main() -> None:
     firefox = shutil.which("firefox")
     geckodriver = shutil.which("geckodriver")
+    # On the 69 host, the Snap wrapper can fail before WebDriver startup when
+    # the user document-portal FUSE mount is stale. Prefer the actual binaries
+    # when present; this does not alter browser semantics and avoids wrapper-only
+    # namespace failures.
+    snap_firefox = Path("/snap/firefox/current/usr/lib/firefox/firefox")
+    snap_geckodriver = Path("/snap/firefox/current/usr/lib/firefox/geckodriver")
+    if snap_firefox.is_file() and snap_geckodriver.is_file():
+        firefox = str(snap_firefox)
+        geckodriver = str(snap_geckodriver)
     if firefox and geckodriver:
         driver_command = [geckodriver, "--port", str(WEBDRIVER_PORT)]
         capabilities = {
             "capabilities": {
                 "alwaysMatch": {
                     "acceptInsecureCerts": True,
-                    "moz:firefoxOptions": {"args": ["-headless"]},
+                    "moz:firefoxOptions": {"binary": firefox, "args": ["-headless"]},
                 }
             }
         }
@@ -461,7 +481,7 @@ def main() -> None:
         require(idea_portfolio["currentLedger"] == 1 and idea_portfolio["currentRows"] >= 7 and idea_portfolio["leadingPaperTracks"] == 1, f"unified current idea ledger is incomplete: {idea_portfolio}")
         require("STRI-P0E" in idea_portfolio["text"] and "STOP_FIXED_POLICY_DYNAMIC_BRIDGE" in idea_portfolio["text"] and "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED" in idea_portfolio["text"], "qualified STRI P0-E boundary is missing from the current ledger")
         cs=idea_portfolio["currentStatus"]
-        require((cs.get("paper_ready"),cs.get("paper_quality_hold"),cs.get("paper_quality_evidence_debt"),cs.get("canonical_live_ideas"),cs.get("launchable_formal_experiments"),cs.get("shadow_qualification_ready"),cs.get("legacy_p0_lifecycle")) == (1,0,0,0,0,0,27) and int(cs.get("shadow_dead_ends") or 0) >= 0 and int(cs.get("shadow_holds") or 0) >= 0, f"current status invariants are wrong: {cs}")
+        require((cs.get("paper_ready"),cs.get("paper_quality_hold"),cs.get("paper_quality_evidence_debt"),cs.get("canonical_live_ideas"),cs.get("launchable_formal_experiments"),cs.get("shadow_qualification_ready"),cs.get("legacy_p0_lifecycle")) == (1,0,0,0,0,1,27) and int(cs.get("shadow_dead_ends") or 0) >= 0 and int(cs.get("shadow_holds") or 0) >= 0, f"current status invariants are wrong: {cs}")
         require(idea_portfolio["legacyFinalPass"] == 20 and idea_portfolio["experimentStops"] >= 16, f"historical lineage state is unexpectedly missing: {idea_portfolio}")
         require("Historical ICLR Paper Workspace" not in idea_portfolio["text"] and "Selected ICLR Paper Workspace" not in idea_portfolio["text"], "historical paper workspace content leaked into Paper Ideas")
         require((("当前科研状态" in idea_portfolio["text"] and "正向残余现象的当前边界" in idea_portfolio["text"]) or ("Current research state" in idea_portfolio["text"] and "Positive-residual boundary" in idea_portfolio["text"])) and "20 个当前 FINAL-PASS" not in idea_portfolio["text"], "Paper Ideas current-state labels are incomplete or stale FINAL-PASS framing leaked into the current view")

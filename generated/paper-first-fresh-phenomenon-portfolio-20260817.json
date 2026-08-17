@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T11:56:38+00:00",
+  "generated_at": "2026-08-17T12:06:58+00:00",
   "status": "NO_ACTIVE_F0",
   "policy": {
     "portfolio_is_outside_canonical_problem_queue": true,
@@ -28,11 +28,11 @@
     "active_f0": 0,
     "design_ready_f0": 0,
     "scout_asset": 0,
-    "hold_support": 1,
+    "hold_support": 0,
     "hold_execution": 0,
     "hold_reduction": 0,
     "ready_for_problem_review": 0,
-    "stop_reduction": 4,
+    "stop_reduction": 5,
     "primary_verified": 32,
     "primary_empirical_fact_candidates": 107,
     "canonical_problem_gate_added": 0,
@@ -233,13 +233,13 @@
       "phenomenon": "HarnessBank reports a GDPval train/test ranking disagreement and 62-76% phantom-progress rounds under weaker crediting rules after convergence, suggesting a selection-stability boundary.",
       "strongest_reduction": "small-n ranking noise, winner's curse, adaptive validation, and ordinary selection bias",
       "cheapest_falsifier": "Sweep the frozen verification rule on released paired gene histories while matching candidate count, selection pressure, and deployment n; the required histories are not released.",
-      "support_status": "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT",
-      "status": "HOLD_SUPPORT",
+      "support_status": "PRINCIPLE_CLOSED_SELECTION_BIAS_REDUCTION",
+      "status": "STOP_REDUCTION",
       "priority": 60,
-      "why_now": "Primary-source code disclosure remains future/conditional, and the bounded current release audit found no first-party replay substrate exposing the paired gene histories required to distinguish verification-selection inversion from survivorship/selection bias.",
+      "why_now": "Scoped principle readjudication closes the current standalone object before any F0: the single GDPval train/test rank reversal is expressible by finite-sample model-selection variance/winner's curse, while the 62-76% post-convergence phantom-progress rate is exactly false adaptive selection under weaker noisy crediting and disappears under the paper's paired-2sigma gate. No harness-specific structural variable is identified by the current evidence.",
       "substrate": {},
       "evidence": {},
-      "reopen_only_if": "A first-party release exposes replayable paired gene histories/outcomes and verification lineage sufficient to reconstruct the frozen selected-versus-rejected decision unit without substituting synthetic or inferred histories.",
+      "reopen_only_if": "Reopen only if a first-party release provides replayable paired selected-versus-rejected gene histories and downstream outcomes sufficient to match candidate count, selection pressure, train sample size, adaptive search depth, verification rule, and deployment sample size, and a preregistered harness-specific structural variable yields replicated residual ranking inversion or deployment regret beyond a strongest selection-aware/winner's-curse baseline.",
       "paper_problem_claimed": false,
       "scientific_authority": false,
       "authority": {
@@ -330,13 +330,19 @@
       "valid": true,
       "validation_errors": []
     },
+    "harnessbank_selection_principle_readjudication": {
+      "path": "generated/harnessbank-selection-principle-readjudication-20260817.json",
+      "sha256": "4914b41bf47e576d7ffd5d9cf32ba1582ad3a94924d2ac86bceb9743d28711f2",
+      "principle_dead_end_certified": true,
+      "same_information_reduction_verified": true
+    },
     "primary_state": {
       "path": "generated/paper-first-primary-evidence-state.json",
       "sha256": "d61b944ab553d023fd4169a067121dda4ca1c45dad8234deafd5c1ed6b83d4d9"
     },
     "dead_end_memory": {
       "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-      "sha256": "de93e583547cd9b699f8a77411cacfa229656d38bdf6b7d25945fc14941db253"
+      "sha256": "05983bd4556489dc0820d4c53ff1785c73afe195d01b396d9d72ee632e9a6098"
     },
     "defense_principle_reduction": {
       "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",

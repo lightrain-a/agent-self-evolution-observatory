@@ -143,6 +143,26 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
             "authority": {"experiment_alone_authorizes_dead_end": False},
         }
 
+    def harness_closure(self) -> dict:
+        return {
+            "candidate_id": "PA-03-HARNESS-SELECTION-INVERSION",
+            "principle_dead_end_certified": True,
+            "experiment_run_for_this_readjudication": False,
+            "fresh_phenomenon_closure": {
+                "source_ref": "arXiv:2607.13683",
+                "closure_scope": "current aggregate ranking-reversal and phantom-progress inference only",
+            },
+            "principle_diagnosis": {
+                "counter_explanation": {
+                    "same_information_or_scope_matched": True,
+                    "same_information_reduction_verified": True,
+                    "positive_support": True,
+                    "reopen_condition": "reopen only for lineage-level residual beyond selection-aware baselines",
+                }
+            },
+            "authority": {"experiment_alone_authorizes_dead_end": False},
+        }
+
     def echo_f0_stop_result(self) -> dict:
         return {
             "candidate_id": "PA-01-EVIDENCE-ECHO",
@@ -203,8 +223,8 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertEqual(0, state["summary"]["active_f0"])
         self.assertEqual(1, state["summary"]["design_ready_f0"])
         self.assertEqual(1, state["summary"]["hold_execution"])
-        self.assertEqual(1, state["summary"]["hold_support"])
-        self.assertEqual(3, state["summary"]["stop_reduction"])
+        self.assertEqual(0, state["summary"]["hold_support"])
+        self.assertEqual(4, state["summary"]["stop_reduction"])
         echo = next(row for row in state["candidates"] if row["candidate_id"] == "PA-01-EVIDENCE-ECHO")
         self.assertEqual("HOLD_EXECUTION", echo["status"])
         self.assertFalse(echo["execution_readiness"]["execution_ready"])
@@ -219,6 +239,11 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertEqual("STOP_REDUCTION", spatial["status"])
         self.assertEqual("PRINCIPLE_CLOSED_VISUAL_GROUNDING_REDUCTION", spatial["support_status"])
         self.assertEqual("reopen only for matched compatibility residual after grounding control", spatial["reopen_only_if"])
+
+        harness = next(row for row in state["candidates"] if row["candidate_id"] == "PA-03-HARNESS-SELECTION-INVERSION")
+        self.assertEqual("STOP_REDUCTION", harness["status"])
+        self.assertEqual("PRINCIPLE_CLOSED_SELECTION_BIAS_REDUCTION", harness["support_status"])
+        self.assertIn("selection-aware/winner's-curse baseline", harness["reopen_only_if"])
 
         skill = next(row for row in state["candidates"] if row["candidate_id"] == "PA-05-SKILL-VALIDATION-TRANSFER")
         self.assertEqual("STOP_REDUCTION", skill["status"])
@@ -245,7 +270,7 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         state = self.build(evidence_echo_f0_result=self.echo_f0_stop_result())
         self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
         self.assertEqual(0, state["summary"]["active_f0"])
-        self.assertEqual(4, state["summary"]["stop_reduction"])
+        self.assertEqual(5, state["summary"]["stop_reduction"])
         echo = next(row for row in state["candidates"] if row["candidate_id"] == "PA-01-EVIDENCE-ECHO")
         self.assertEqual("STOP_REDUCTION", echo["status"])
         self.assertEqual("F0_REDUCED_BY_GENERIC_PROMPT_EFFECT", echo["support_status"])
@@ -259,8 +284,8 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertEqual(0, state["summary"]["active_f0"])
         self.assertEqual(0, state["summary"]["design_ready_f0"])
         self.assertEqual(0, state["summary"]["hold_execution"])
-        self.assertEqual(2, state["summary"]["hold_support"])
-        self.assertEqual(3, state["summary"]["stop_reduction"])
+        self.assertEqual(1, state["summary"]["hold_support"])
+        self.assertEqual(4, state["summary"]["stop_reduction"])
         echo = next(row for row in state["candidates"] if row["candidate_id"] == "PA-01-EVIDENCE-ECHO")
         self.assertEqual("HOLD_SUPPORT", echo["status"])
         self.assertEqual("INCOMPLETE_RECEIPT", echo["support_status"])
@@ -386,6 +411,14 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         spatial = next(row for row in state["candidates"] if row["candidate_id"] == "PA-04-SPATIAL-MEMORY-CONFLICT")
         self.assertEqual("HOLD_SUPPORT", spatial["status"])
         self.assertNotEqual("PRINCIPLE_CLOSED_VISUAL_GROUNDING_REDUCTION", spatial["support_status"])
+
+    def test_harness_closure_fails_closed_if_selection_reduction_is_not_verified(self) -> None:
+        closure = self.harness_closure()
+        closure["principle_diagnosis"]["counter_explanation"]["same_information_reduction_verified"] = False
+        state = self.build(harnessbank_readjudication=closure)
+        harness = next(row for row in state["candidates"] if row["candidate_id"] == "PA-03-HARNESS-SELECTION-INVERSION")
+        self.assertEqual("HOLD_SUPPORT", harness["status"])
+        self.assertNotEqual("PRINCIPLE_CLOSED_SELECTION_BIAS_REDUCTION", harness["support_status"])
 
 
 if __name__ == "__main__":

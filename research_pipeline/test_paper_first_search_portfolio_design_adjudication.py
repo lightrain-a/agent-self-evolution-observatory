@@ -168,6 +168,20 @@ class SearchPortfolioPaperDesignAdjudicationTest(unittest.TestCase):
         self.assertEqual(memory["fresh_phenomenon_closure_count"],1)
         self.assertEqual(memory["fresh_phenomenon_closed_evidence_count"],1)
 
+    def test_principle_closure_supersedes_same_candidate_support_hold(self) -> None:
+        phenomenon_sha="a"*64
+        payload={"candidate_id":"PA-03-HARNESS-SELECTION-INVERSION","title":"Harness selection inversion","principle_dead_end_certified":True,"dead_end_scope":"aggregate ranking inversion only","fresh_phenomenon_closure":{"source_ref":"arXiv:2607.13683","closed_evidence_sha256":[phenomenon_sha],"closure_scope":"aggregate ranking inversion only","scientific_authority":False},"principle_diagnosis":{"counter_explanation":{"type":"SAME_INFORMATION_REDUCTION","statement":"ordinary adaptive selection explains the current aggregate inversion","opposite_prediction":"noisy selected maxima may regress on fresh data","opposite_principle":"post-selection inference precedes a harness-specific mechanism","opposite_search_seed":"search only for a lineage-level residual","scope":"aggregate ranking inversion only","same_information_or_scope_matched":True,"same_information_reduction_verified":True,"positive_support":True,"evidence_refs":["arXiv:2607.13683"],"alternative_explanations_ruled_out":["execution noise"],"reopen_condition":"release paired lineage and beat a selection-aware baseline"}}}
+        with tempfile.TemporaryDirectory() as td:
+            p=Path(td)/"harness-principle-readjudication-test.json";p.write_text(json.dumps(payload),encoding="utf-8")
+            rows=_principle_readjudication_rows([p])
+        support_hold={"source_candidate_id":"PA-03-HARNESS-SELECTION-INVERSION","basin":"fresh-phenomenon-support-hold-demo","disposition":"HOLD_SUPPORT_UNAVAILABLE","memory_class":"REOPENABLE_HOLD","dead_end_certified":False,"strongest_reduction":"support unavailable; no scientific reduction authorized","current_source_refs":["arXiv:2607.13683"],"evidence_basis":["arXiv:2607.13683"],"reason":"lineage unavailable","reopen_only_if":"release lineage","required_unit":"paired lineage","fresh_phenomenon_hold":{"source_ref":"arXiv:2607.13683","evidence_sha256":phenomenon_sha,"scientific_authority":False},"scientific_authority":False}
+        memory=_shadow_dead_end_memory({"latest_run":{"candidates":[]}},prior_hard_veto_rows=[],prior_semantic_rows=[],prior_near_miss_rows=[],principle_readjudication_rows=rows,fresh_phenomenon_support_hold_rows=[support_hold])
+        blocked=[row for row in memory["blocked_objects"] if row.get("source_candidate_id")=="PA-03-HARNESS-SELECTION-INVERSION"]
+        holds=[row for row in memory["hold_objects"] if row.get("source_candidate_id")=="PA-03-HARNESS-SELECTION-INVERSION"]
+        self.assertEqual(len(blocked),1)
+        self.assertEqual(blocked[0]["memory_class"],"PRINCIPLE_DEAD_END")
+        self.assertEqual(holds,[])
+
     def test_r2_near_miss_preflight_compiles_into_future_shadow_search_memory(self) -> None:
         memory=self.state["shadow_dead_end_memory"]
         rows=[row for row in list(memory["blocked_objects"])+list(memory["hold_objects"]) if str(row.get("basin") or "").startswith("near-miss-")]

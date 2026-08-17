@@ -646,6 +646,17 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
     readjudication_rows = [dict(row) for row in (principle_readjudication_rows or []) if isinstance(row, dict) and row.get("dead_end_certified") is True]
     readjudication_by_basin = {str(row.get("basin") or ""): row for row in readjudication_rows if str(row.get("basin") or "")}
     memory["blocked_objects"].extend(readjudication_by_basin[key] for key in sorted(readjudication_by_basin))
+    # A certified principle closure supersedes an older support-unavailable hold for
+    # the exact same fresh candidate.  Keep the release audit as provenance/reopen
+    # evidence, but do not expose contradictory live memory saying the same object is
+    # simultaneously a PRINCIPLE_DEAD_END and a REOPENABLE_HOLD.
+    principle_closed_candidate_ids = {
+        str(row.get("source_candidate_id") or "")
+        for row in readjudication_rows
+        if str(row.get("source_candidate_id") or "")
+        and isinstance(row.get("fresh_phenomenon_closure"), dict)
+        and bool(row.get("fresh_phenomenon_closure"))
+    }
     exact_support_holds = fresh_phenomenon_support_hold_rows if fresh_phenomenon_support_hold_rows is not None else _fresh_phenomenon_support_hold_rows()
     hold_by_basin = {
         str(row.get("basin") or ""): dict(row)
@@ -654,6 +665,7 @@ def _shadow_dead_end_memory(portfolio: dict[str, Any], near_miss_state: dict[str
         and str(row.get("basin") or "").startswith("fresh-phenomenon-support-hold-")
         and row.get("scientific_authority") is False
         and row.get("dead_end_certified") is False
+        and str(row.get("source_candidate_id") or "") not in principle_closed_candidate_ids
     }
     memory["hold_objects"].extend(hold_by_basin[key] for key in sorted(hold_by_basin))
 

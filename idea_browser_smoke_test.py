@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import shutil
+import socket
 import subprocess
 import sys
 import time
@@ -11,8 +12,16 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-HTTP_PORT = 8124
-WEBDRIVER_PORT = 4445
+
+
+def _free_local_port() -> int:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.bind(("127.0.0.1", 0))
+        return int(sock.getsockname()[1])
+
+
+HTTP_PORT = _free_local_port()
+WEBDRIVER_PORT = _free_local_port()
 
 
 def request(method: str, path: str, data: dict | None = None) -> dict:
@@ -43,10 +52,14 @@ def main() -> None:
     expected_shadow_latest = ((expected_state.get("paper_first_problem_search_portfolio") or {}).get("latest_run") or {})
     expected_shadow_summary = expected_shadow_latest.get("summary") or {}
     firefox, geckodriver = shutil.which("firefox"), shutil.which("geckodriver")
+    snap_firefox = Path("/snap/firefox/current/usr/lib/firefox/firefox")
+    snap_geckodriver = Path("/snap/firefox/current/usr/lib/firefox/geckodriver")
+    if snap_firefox.is_file() and snap_geckodriver.is_file():
+        firefox, geckodriver = str(snap_firefox), str(snap_geckodriver)
     if not firefox or not geckodriver:
         raise SystemExit("SKIP: Firefox/geckodriver unavailable")
     driver_command = [geckodriver, "--port", str(WEBDRIVER_PORT)]
-    capabilities = {"capabilities": {"alwaysMatch": {"acceptInsecureCerts": True, "moz:firefoxOptions": {"args": ["-headless"]}}}}
+    capabilities = {"capabilities": {"alwaysMatch": {"acceptInsecureCerts": True, "moz:firefoxOptions": {"binary": firefox, "args": ["-headless"]}}}}
     httpd = subprocess.Popen([sys.executable, "-m", "http.server", str(HTTP_PORT), "--bind", "127.0.0.1"], cwd=ROOT, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     driver = subprocess.Popen(driver_command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     session_id = ""

@@ -29,6 +29,7 @@ EXPECTED_EVIDENCE_ECHO_F0_RESULT_SHA256 = "274d6b12e321895e96c47324811e2c80b4c9b
 DEFENSE_RESTRICTIVENESS_READJUDICATION = PROJECT_ROOT / "generated" / "hard-security-utility-collapse-principle-readjudication-20260817.json"
 SPATIAL_MEMORY_READJUDICATION = PROJECT_ROOT / "generated" / "spatial-memory-high-trs-grounding-principle-readjudication-20260817.json"
 SKILL_VALIDATION_TRANSFER_READJUDICATION = PROJECT_ROOT / "generated" / "skill-validation-transfer-distribution-shift-principle-readjudication-20260817.json"
+HARNESSBANK_SELECTION_READJUDICATION = PROJECT_ROOT / "generated" / "harnessbank-selection-principle-readjudication-20260817.json"
 EXPECTED_EVIDENCE_ECHO_F0_ORIGINAL_SHA256 = "8f3b04d09c4101335434fa7a8a50bba965ab95ce244cf24c5fe9e53ba6feadf6"
 EXPECTED_EVIDENCE_ECHO_F0_REVIEWED_SHA256 = "f64ae7c42f5e02b2f18abd67e4a784e3790b3c75107a4140666d9faa1c39842e"
 EXPECTED_EVIDENCE_ECHO_F0_GUARDED_SHA256 = "5c5e25957388b723a301cac7e78c81d972b77eb0dc62b8bb53343318c6ea6ab3"
@@ -132,6 +133,7 @@ def build_fresh_phenomenon_portfolio(
     defense_readjudication: dict[str, Any] | None = None,
     spatial_readjudication: dict[str, Any] | None = None,
     harnessbank_support_audit: dict[str, Any] | None = None,
+    harnessbank_readjudication: dict[str, Any] | None = None,
     skill_validation_scout: dict[str, Any] | None = None,
     skill_validation_readjudication: dict[str, Any] | None = None,
     skill_execution_capability: dict[str, Any] | None = None,
@@ -158,6 +160,7 @@ def build_fresh_phenomenon_portfolio(
     spatial_readjudication = spatial_readjudication or _load(SPATIAL_MEMORY_READJUDICATION)
     harnessbank_support_audit = harnessbank_support_audit or _load(HARNESSBANK_SUPPORT_AUDIT)
     harnessbank_support_errors = validate_harnessbank_support_audit(harnessbank_support_audit)
+    harnessbank_readjudication = harnessbank_readjudication or _load(HARNESSBANK_SELECTION_READJUDICATION)
     skill_validation_scout = _load(SKILL_VALIDATION_SCOUT_JSON) if skill_validation_scout is None else skill_validation_scout
     skill_validation_readjudication = _load(SKILL_VALIDATION_TRANSFER_READJUDICATION) if skill_validation_readjudication is None else skill_validation_readjudication
     if skill_execution_capability is None:
@@ -195,6 +198,19 @@ def build_fresh_phenomenon_portfolio(
         and spatial_diagnosis.get("same_information_reduction_verified") is True
         and spatial_diagnosis.get("positive_support") is True
         and ((spatial_readjudication.get("authority") or {}).get("experiment_alone_authorizes_dead_end") is False)
+    )
+    harness_closure = harnessbank_readjudication.get("fresh_phenomenon_closure") or {}
+    harness_diagnosis = ((harnessbank_readjudication.get("principle_diagnosis") or {}).get("counter_explanation") or {})
+    harness_principle_closed = bool(
+        harnessbank_readjudication.get("candidate_id") == "PA-03-HARNESS-SELECTION-INVERSION"
+        and harnessbank_readjudication.get("principle_dead_end_certified") is True
+        and harnessbank_readjudication.get("experiment_run_for_this_readjudication") is False
+        and harness_closure.get("source_ref") == "arXiv:2607.13683"
+        and str(harness_closure.get("closure_scope") or "").strip()
+        and harness_diagnosis.get("same_information_or_scope_matched") is True
+        and harness_diagnosis.get("same_information_reduction_verified") is True
+        and harness_diagnosis.get("positive_support") is True
+        and ((harnessbank_readjudication.get("authority") or {}).get("experiment_alone_authorizes_dead_end") is False)
     )
     skill_closure = skill_validation_readjudication.get("fresh_phenomenon_closure") or {}
     skill_diagnosis = ((skill_validation_readjudication.get("principle_diagnosis") or {}).get("counter_explanation") or {})
@@ -543,34 +559,46 @@ def build_fresh_phenomenon_portfolio(
                 "selection pressure, and deployment n; the required histories are not released."
             ),
             support_status=(
-                str(harnessbank_support_audit.get("status") or "")
-                if not harnessbank_support_errors
-                and harnessbank_support_audit.get("candidate_id") == "PA-03-HARNESS-SELECTION-INVERSION"
-                else str(harness_hold.get("support_status") or "SUPPORT_UNAVAILABLE")
+                "PRINCIPLE_CLOSED_SELECTION_BIAS_REDUCTION"
+                if harness_principle_closed
+                else (
+                    str(harnessbank_support_audit.get("status") or "")
+                    if not harnessbank_support_errors
+                    and harnessbank_support_audit.get("candidate_id") == "PA-03-HARNESS-SELECTION-INVERSION"
+                    else str(harness_hold.get("support_status") or "SUPPORT_UNAVAILABLE")
+                )
             ),
-            status="HOLD_SUPPORT",
+            status="STOP_REDUCTION" if harness_principle_closed else "HOLD_SUPPORT",
             priority=60,
             why_now=(
-                "Primary-source code disclosure remains future/conditional, and the bounded current release audit found no "
-                "first-party replay substrate exposing the paired gene histories required to distinguish verification-selection inversion from survivorship/selection bias."
-                if not harnessbank_support_errors
-                and harnessbank_support_audit.get("status") == "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT"
+                "Scoped principle readjudication closes the current standalone object before any F0: the single GDPval train/test rank reversal is expressible by finite-sample model-selection variance/winner's curse, while the 62-76% post-convergence phantom-progress rate is exactly false adaptive selection under weaker noisy crediting and disappears under the paper's paired-2sigma gate. No harness-specific structural variable is identified by the current evidence."
+                if harness_principle_closed
                 else (
-                    "The current primary source changed, so the refreshed paper/source assets must be reviewed before any release-support decision can be reused."
+                    "Primary-source code disclosure remains future/conditional, and the bounded current release audit found no "
+                    "first-party replay substrate exposing the paired gene histories required to distinguish verification-selection inversion from survivorship/selection bias."
                     if not harnessbank_support_errors
-                    and harnessbank_support_audit.get("status") == "HOLD_SUPPORT_PRIMARY_SOURCE_CHANGED_REVIEW_REQUIRED"
+                    and harnessbank_support_audit.get("status") == "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT"
                     else (
-                        "The public release surface changed, but the required paired histories/outcomes and verification lineage still need a first-party asset review before any F0 can be designed."
+                        "The current primary source changed, so the refreshed paper/source assets must be reviewed before any release-support decision can be reused."
                         if not harnessbank_support_errors
-                        and harnessbank_support_audit.get("status") == "HOLD_SUPPORT_RELEASE_SURFACE_CHANGED_REVIEW_REQUIRED"
-                        else "Potentially strong self-evolution-specific selection phenomenon, but current support audit is missing or invalid."
+                        and harnessbank_support_audit.get("status") == "HOLD_SUPPORT_PRIMARY_SOURCE_CHANGED_REVIEW_REQUIRED"
+                        else (
+                            "The public release surface changed, but the required paired histories/outcomes and verification lineage still need a first-party asset review before any F0 can be designed."
+                            if not harnessbank_support_errors
+                            and harnessbank_support_audit.get("status") == "HOLD_SUPPORT_RELEASE_SURFACE_CHANGED_REVIEW_REQUIRED"
+                            else "Potentially strong self-evolution-specific selection phenomenon, but current support audit is missing or invalid."
+                        )
                     )
                 )
             ),
             reopen_only_if=str(
-                (harnessbank_support_audit.get("reopen_only_if") if not harnessbank_support_errors else "")
-                or harness_hold.get("reopen_only_if")
-                or "HarnessBank releases paired run histories/outcomes."
+                harness_diagnosis.get("reopen_condition")
+                if harness_principle_closed
+                else (
+                    (harnessbank_support_audit.get("reopen_only_if") if not harnessbank_support_errors else "")
+                    or harness_hold.get("reopen_only_if")
+                    or "HarnessBank releases paired run histories/outcomes."
+                )
             ),
         ),
         _candidate(
@@ -766,6 +794,12 @@ def build_fresh_phenomenon_portfolio(
                 "valid": not harnessbank_support_errors,
                 "validation_errors": list(harnessbank_support_errors),
             },
+            "harnessbank_selection_principle_readjudication": {
+                "path": str(HARNESSBANK_SELECTION_READJUDICATION.relative_to(PROJECT_ROOT)),
+                "sha256": _sha(HARNESSBANK_SELECTION_READJUDICATION),
+                "principle_dead_end_certified": harness_principle_closed,
+                "same_information_reduction_verified": harness_diagnosis.get("same_information_reduction_verified") is True,
+            },
             "primary_state": {
                 "path": str(PRIMARY_STATE_JSON.relative_to(PROJECT_ROOT)),
                 "sha256": _sha(PRIMARY_STATE_JSON),
@@ -844,6 +878,7 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
     if dead_end_binding.get("sha256") != _sha(DEAD_END_MEMORY_JSON):
         errors.append("fresh phenomenon portfolio dead-end-memory binding is stale")
     harness_binding = bindings.get("harnessbank_support_audit") or {}
+    harness_principle_binding = bindings.get("harnessbank_selection_principle_readjudication") or {}
     harness_rows = [row for row in rows if row.get("candidate_id") == "PA-03-HARNESS-SELECTION-INVERSION"]
     if harness_rows:
         bound_harness_audit = _load(HARNESSBANK_SUPPORT_AUDIT)
@@ -858,10 +893,35 @@ def validate_fresh_phenomenon_portfolio(state: dict[str, Any]) -> list[str]:
             or list(harness_binding.get("validation_errors") or [])
         ):
             errors.append("PA-03 lacks a valid bound current-release HarnessBank support audit")
-        if harness_rows[0].get("status") != "HOLD_SUPPORT":
-            errors.append("PA-03 release-surface audit cannot auto-promote support or execution status")
-        if not harness_errors and harness_rows[0].get("support_status") != bound_harness_audit.get("status"):
-            errors.append("PA-03 support status must exactly match the bound current-release audit")
+        bound_harness_principle = _load(HARNESSBANK_SELECTION_READJUDICATION)
+        bound_counter = ((bound_harness_principle.get("principle_diagnosis") or {}).get("counter_explanation") or {})
+        bound_closure = bound_harness_principle.get("fresh_phenomenon_closure") or {}
+        bound_principle_closed = bool(
+            bound_harness_principle.get("candidate_id") == "PA-03-HARNESS-SELECTION-INVERSION"
+            and bound_harness_principle.get("principle_dead_end_certified") is True
+            and bound_harness_principle.get("experiment_run_for_this_readjudication") is False
+            and bound_closure.get("source_ref") == "arXiv:2607.13683"
+            and str(bound_closure.get("closure_scope") or "").strip()
+            and bound_counter.get("same_information_or_scope_matched") is True
+            and bound_counter.get("same_information_reduction_verified") is True
+            and bound_counter.get("positive_support") is True
+            and ((bound_harness_principle.get("authority") or {}).get("experiment_alone_authorizes_dead_end") is False)
+        )
+        if harness_rows[0].get("status") == "STOP_REDUCTION":
+            if (
+                not bound_principle_closed
+                or harness_principle_binding.get("sha256") != _sha(HARNESSBANK_SELECTION_READJUDICATION)
+                or harness_principle_binding.get("principle_dead_end_certified") is not True
+                or harness_principle_binding.get("same_information_reduction_verified") is not True
+            ):
+                errors.append("PA-03 STOP_REDUCTION lacks the bound selection-bias principle closure")
+            if harness_rows[0].get("support_status") != "PRINCIPLE_CLOSED_SELECTION_BIAS_REDUCTION":
+                errors.append("PA-03 principle-closed support status drift")
+        else:
+            if harness_rows[0].get("status") != "HOLD_SUPPORT":
+                errors.append("PA-03 release-surface audit cannot auto-promote support or execution status")
+            if not harness_errors and harness_rows[0].get("support_status") != bound_harness_audit.get("status"):
+                errors.append("PA-03 support status must exactly match the bound current-release audit")
     repair_binding = bindings.get("evidence_echo_f0_operationalization_repair") or {}
     guard_binding = bindings.get("evidence_echo_f0_governance_guard") or {}
     echo_rows = [row for row in rows if row.get("candidate_id") == "PA-01-EVIDENCE-ECHO"]

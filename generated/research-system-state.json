@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-17T11:57:17+00:00",
+  "generated_at": "2026-08-17T12:07:19+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -33863,7 +33863,7 @@
   },
   "paper_first_search_portfolio_design_adjudication": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T11:45:12+00:00",
+    "generated_at": "2026-08-17T12:06:58+00:00",
     "review_id": "search-portfolio-sp09-sp15-paper-design-20260814",
     "target_venue": "ICLR",
     "component_owner": "paper-design-contract",
@@ -33910,7 +33910,7 @@
     },
     "shadow_near_miss_preflight": {
       "schema_version": "1.0",
-      "generated_at": "2026-08-17T11:45:12+00:00",
+      "generated_at": "2026-08-17T12:06:58+00:00",
       "audit_id": "shadow-r2-near-miss-preflight-20260814",
       "policy": {
         "shadow_search_control_only": true,
@@ -34914,6 +34914,74 @@
           "source_readjudication_artifact": "generated/autodesign-dev-acceptance-feedback-principle-readjudication-20260817.json",
           "opposite_search_asset_evidence": {},
           "fresh_phenomenon_closure": {},
+          "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
+          "scientific_authority": false
+        },
+        {
+          "source_candidate_id": "PA-03-HARNESS-SELECTION-INVERSION",
+          "basin": "principle-readjudication-63cf9649bb34c1fa",
+          "search_primitive": "",
+          "title": "",
+          "avoid": [
+            "re-proposing the certified-dead-end mechanism without satisfying its reopen condition: ",
+            "using the negative experiment metric alone as the reason for the dead end",
+            "discarding the opposite principle/search seed instead of testing its fresh-evidence boundary"
+          ],
+          "strongest_reduction": "The current PA-03 evidence is already explained by ordinary noisy/adaptive model selection rather than an identified harness-specific selection-inversion mechanism. HarnessBank reports one GDPval case where a train-lower variant scores +11.5pp on test while the train-selected winner scores +9.2pp, and separately constructs post-convergence neutral-candidate rounds where weak single-run or K=3-mean crediting produces 62-76% phantom progress. The latter disappears under the paper's paired-2sigma verification rule. Finite-sample selection-criterion variance, winner's curse, and adaptive selection are sufficient to predict both rank reversal and false progress without introducing a new harness-specific causal primitive.",
+          "current_source_refs": [
+            "arXiv:1506.02629:adaptive-data-analysis-holdout-reuse",
+            "arXiv:2605.05973:selection-aware-adaptive-LLM-benchmarking",
+            "arXiv:2607.13683"
+          ],
+          "evidence_basis": [
+            "arXiv:2607.13683",
+            "primary-fulltext:arXiv:2607.13683#sha256=74082edc56e911da43e9b70b8eeaf4d6552b8fea7e15b7a0ab00d4c20aff2997",
+            "JMLR:11(70):2079-2107:Cawley-Talbot-2010-model-selection-overfitting",
+            "arXiv:1506.02629:adaptive-data-analysis-holdout-reuse",
+            "arXiv:2605.05973:selection-aware-adaptive-LLM-benchmarking"
+          ],
+          "problem_text": "HarnessBank arXiv:2607.13683v2, specifically the current standalone PA-03 inference from the GDPval aggregate train/test ranking reversal and the TB2 post-convergence phantom-progress ablation. This closure does not claim that all future harness-selection transport questions reduce to winner's curse.",
+          "reason": "The current PA-03 evidence is already explained by ordinary noisy/adaptive model selection rather than an identified harness-specific selection-inversion mechanism. HarnessBank reports one GDPval case where a train-lower variant scores +11.5pp on test while the train-selected winner scores +9.2pp, and separately constructs post-convergence neutral-candidate rounds where weak single-run or K=3-mean crediting produces 62-76% phantom progress. The latter disappears under the paper's paired-2sigma verification rule. Finite-sample selection-criterion variance, winner's curse, and adaptive selection are sufficient to predict both rank reversal and false progress without introducing a new harness-specific causal primitive.",
+          "reopen_only_if": "Reopen only if a first-party release provides replayable paired selected-versus-rejected gene histories and downstream outcomes sufficient to match candidate count, selection pressure, train sample size, adaptive search depth, verification rule, and deployment sample size, and a preregistered harness-specific structural variable yields replicated residual ranking inversion or deployment regret beyond a strongest selection-aware/winner's-curse baseline.",
+          "dead_end_certified": true,
+          "memory_class": "PRINCIPLE_DEAD_END",
+          "counter_explanation": {
+            "type": "SAME_INFORMATION_REDUCTION",
+            "statement": "The current PA-03 evidence is already explained by ordinary noisy/adaptive model selection rather than an identified harness-specific selection-inversion mechanism. HarnessBank reports one GDPval case where a train-lower variant scores +11.5pp on test while the train-selected winner scores +9.2pp, and separately constructs post-convergence neutral-candidate rounds where weak single-run or K=3-mean crediting produces 62-76% phantom progress. The latter disappears under the paper's paired-2sigma verification rule. Finite-sample selection-criterion variance, winner's curse, and adaptive selection are sufficient to predict both rank reversal and false progress without introducing a new harness-specific causal primitive.",
+            "opposite_prediction": "If many candidates are adaptively proposed and the winner is chosen by a noisy finite-sample training estimate, the selected maximum can regress or be outranked on fresh held-out data even when every candidate obeys the same underlying generalization process. After convergence, neutral candidates will also be falsely promoted at high rates by weak mean-improves rules, while a calibrated paired significance gate should suppress those false elites and permit stopping. No harness-specific inversion variable is required for these observations.",
+            "opposite_principle": "Harness selection is a post-selection inference problem before it is a new self-evolution mechanism: apparent train/test inversions and post-convergence progress must first be explained against finite-sample criterion variance, adaptive search, multiple comparisons, and winner's curse. A distinct mechanism exists only if a pre-specified harness structural variable predicts residual selection failure after those same-information controls.",
+            "opposite_search_seed": "Reopen only on first-party paired gene histories with selected and rejected candidates, verification lineage, candidate counts, per-task outcomes, and downstream held-out outcomes. Fit a selection-aware baseline that is matched on candidate count, train sample size, adaptive search depth, verification rule, and deployment sample size; then ask whether a pre-registered harness structural variable predicts replicated ranking reversals or regret beyond that baseline. Do not reopen from another aggregate train/test reversal or another weak-crediting false positive rate.",
+            "scope": "HarnessBank arXiv:2607.13683v2, specifically the current standalone PA-03 inference from the GDPval aggregate train/test ranking reversal and the TB2 post-convergence phantom-progress ablation. This closure does not claim that all future harness-selection transport questions reduce to winner's curse.",
+            "same_information_or_scope_matched": true,
+            "same_information_reduction_verified": true,
+            "positive_support": true,
+            "evidence_refs": [
+              "arXiv:2607.13683",
+              "primary-fulltext:arXiv:2607.13683#sha256=74082edc56e911da43e9b70b8eeaf4d6552b8fea7e15b7a0ab00d4c20aff2997",
+              "JMLR:11(70):2079-2107:Cawley-Talbot-2010-model-selection-overfitting",
+              "arXiv:1506.02629:adaptive-data-analysis-holdout-reuse",
+              "arXiv:2605.05973:selection-aware-adaptive-LLM-benchmarking"
+            ],
+            "alternative_explanations_ruled_out": [
+              "The 62-76% phantom-progress rate identifies a separate self-evolution failure mechanism: the primary paper defines these as post-convergence rounds with neutral candidates under weaker crediting, and reports that paired-2sigma verification prevents false elites and restores stopping.",
+              "A single GDPval train/test rank reversal establishes a systematic inversion law: the paper reports the aggregate reversal but does not release the selected/rejected gene lineage, candidate-level uncertainty, or repeated inversion units required to distinguish systematic inversion from finite-sample selection variance.",
+              "The current evidence shows the train-selected harness generally fails to generalize: HarnessBank reports positive sealed-test gains for the train-selected evolved harnesses; the cited PA-03 observation concerns ranking among variants, not collapse of the overall held-out gain.",
+              "The missing lineage can be reconstructed from public code today: the v2 primary paper says code will be public upon acceptance, and the bounded first-party release audit found no replayable paired gene-history substrate."
+            ],
+            "reopen_condition": "Reopen only if a first-party release provides replayable paired selected-versus-rejected gene histories and downstream outcomes sufficient to match candidate count, selection pressure, train sample size, adaptive search depth, verification rule, and deployment sample size, and a preregistered harness-specific structural variable yields replicated residual ranking inversion or deployment regret beyond a strongest selection-aware/winner's-curse baseline."
+          },
+          "source_readjudication_artifact": "generated/harnessbank-selection-principle-readjudication-20260817.json",
+          "opposite_search_asset_evidence": {},
+          "fresh_phenomenon_closure": {
+            "source_ref": "arXiv:2607.13683",
+            "closed_evidence_sha256": [
+              "74082edc56e911da43e9b70b8eeaf4d6552b8fea7e15b7a0ab00d4c20aff2997",
+              "75e5ef08685c7f041ab0449711779f1f2543d0c704adf99b470cb33013203377"
+            ],
+            "closure_scope": "current standalone PA-03 inference from one aggregate GDPval train/test rank reversal plus the TB2 neutral-candidate phantom-progress ablation",
+            "source_readjudication_artifact": "generated/harnessbank-selection-principle-readjudication-20260817.json",
+            "scientific_authority": false
+          },
           "search_control_scope": "prompt-inversion-prior; semantic machine block only when a typed search primitive is present",
           "scientific_authority": false
         },
@@ -36091,39 +36159,12 @@
           "hold_reason": "The revised sufficient-skill-set identifiability problem still requires provenance-audited query-level support and therefore has not earned a principle dead-end or principle pass.",
           "reopen_only_if": "A new provenance-audited query-level unit shows that the same observable or information-equivalent query is compatible with multiple task semantics requiring incompatible sufficient skill sets, and a generic partial-identification/clarification baseline using the same information cannot absorb the claim.",
           "scientific_authority": false
-        },
-        {
-          "source_candidate_id": "PA-03-HARNESS-SELECTION-INVERSION",
-          "basin": "fresh-phenomenon-support-hold-1881f99d41a67383",
-          "disposition": "HOLD_SUPPORT_UNAVAILABLE",
-          "memory_class": "REOPENABLE_HOLD",
-          "dead_end_certified": false,
-          "strongest_reduction": "support unavailable; no scientific reduction authorized",
-          "current_source_refs": [
-            "arXiv:2607.13683"
-          ],
-          "evidence_basis": [
-            "arXiv:2607.13683",
-            "repo:generated/harnessbank-support-audit-20260817.json#sha256=75e5ef08685c7f041ab0449711779f1f2543d0c704adf99b470cb33013203377"
-          ],
-          "reason": "The aggregate train/test result is insufficient to distinguish verification-selection inversion from small-n ranking noise, winner's curse, survivorship, or ordinary adaptive selection. The bound current-source audit has not confirmed a replayable first-party corpus exposing paired gene histories, outcomes, and verification lineage.",
-          "reopen_only_if": "A first-party release exposes replayable paired gene histories/outcomes and verification lineage sufficient to reconstruct the frozen selected-versus-rejected decision unit without substituting synthetic or inferred histories. A release-surface or primary-source change requests re-audit only and does not automatically clear this hold or authorize scientific progression.",
-          "required_unit": "paired per-gene harness evolution histories and downstream outcomes under the frozen verification rule, with enough lineage to reconstruct selected-versus-rejected verification decisions",
-          "fresh_phenomenon_hold": {
-            "source_ref": "arXiv:2607.13683",
-            "evidence_sha256": "03bd345821be718b2b342e2348ab18c44a91146219bdde5db2d909336cb8ce52",
-            "support_audit_artifact": "generated/harnessbank-support-audit-20260817.json",
-            "support_audit_sha256": "75e5ef08685c7f041ab0449711779f1f2543d0c704adf99b470cb33013203377",
-            "scientific_authority": false
-          },
-          "source_hold_artifact": "generated/harnessbank-fresh-phenomenon-support-hold-20260817.json",
-          "scientific_authority": false
         }
       ],
-      "principle_dead_end_count": 32,
-      "principle_readjudication_dead_end_count": 28,
-      "fresh_phenomenon_closure_count": 16,
-      "fresh_phenomenon_closed_evidence_count": 30,
+      "principle_dead_end_count": 33,
+      "principle_readjudication_dead_end_count": 29,
+      "fresh_phenomenon_closure_count": 17,
+      "fresh_phenomenon_closed_evidence_count": 32,
       "inversion_asset_evidence": [
         {
           "asset_ref": "first-party-asset:autoskill@94c47ca488d4ba4117d20272e66d49b9877e68cf",
@@ -36279,7 +36320,7 @@
       "positive_residual_asset_evidence_count": 1,
       "positive_residual_search_active_count": 0,
       "positive_residual_asset_registry_id": "positive-residual-search-assets-v4",
-      "hold_object_count": 3,
+      "hold_object_count": 2,
       "current_source_hard_veto_count": 0,
       "current_source_hard_veto_added_from_latest_run": 0,
       "current_source_hard_veto_added_from_terminal_run": 0,
@@ -36346,9 +36387,9 @@
       "revise_paper_problem": 1,
       "stop_standalone": 1,
       "support_inventory_required": 1,
-      "shadow_dead_end_objects": 32,
-      "principle_readjudication_dead_ends": 28,
-      "shadow_hold_objects": 3,
+      "shadow_dead_end_objects": 33,
+      "principle_readjudication_dead_ends": 29,
+      "shadow_hold_objects": 2,
       "current_source_hard_veto_dead_ends": 0,
       "current_source_hard_veto_added_from_latest_run": 0,
       "current_source_hard_veto_added_from_terminal_run": 0,
@@ -76405,7 +76446,7 @@
   },
   "paper_first_fresh_phenomenon_portfolio": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-17T11:56:38+00:00",
+    "generated_at": "2026-08-17T12:06:58+00:00",
     "status": "NO_ACTIVE_F0",
     "policy": {
       "portfolio_is_outside_canonical_problem_queue": true,
@@ -76433,11 +76474,11 @@
       "active_f0": 0,
       "design_ready_f0": 0,
       "scout_asset": 0,
-      "hold_support": 1,
+      "hold_support": 0,
       "hold_execution": 0,
       "hold_reduction": 0,
       "ready_for_problem_review": 0,
-      "stop_reduction": 4,
+      "stop_reduction": 5,
       "primary_verified": 32,
       "primary_empirical_fact_candidates": 107,
       "canonical_problem_gate_added": 0,
@@ -76638,13 +76679,13 @@
         "phenomenon": "HarnessBank reports a GDPval train/test ranking disagreement and 62-76% phantom-progress rounds under weaker crediting rules after convergence, suggesting a selection-stability boundary.",
         "strongest_reduction": "small-n ranking noise, winner's curse, adaptive validation, and ordinary selection bias",
         "cheapest_falsifier": "Sweep the frozen verification rule on released paired gene histories while matching candidate count, selection pressure, and deployment n; the required histories are not released.",
-        "support_status": "HOLD_SUPPORT_NO_RELEASED_REQUIRED_UNIT",
-        "status": "HOLD_SUPPORT",
+        "support_status": "PRINCIPLE_CLOSED_SELECTION_BIAS_REDUCTION",
+        "status": "STOP_REDUCTION",
         "priority": 60,
-        "why_now": "Primary-source code disclosure remains future/conditional, and the bounded current release audit found no first-party replay substrate exposing the paired gene histories required to distinguish verification-selection inversion from survivorship/selection bias.",
+        "why_now": "Scoped principle readjudication closes the current standalone object before any F0: the single GDPval train/test rank reversal is expressible by finite-sample model-selection variance/winner's curse, while the 62-76% post-convergence phantom-progress rate is exactly false adaptive selection under weaker noisy crediting and disappears under the paper's paired-2sigma gate. No harness-specific structural variable is identified by the current evidence.",
         "substrate": {},
         "evidence": {},
-        "reopen_only_if": "A first-party release exposes replayable paired gene histories/outcomes and verification lineage sufficient to reconstruct the frozen selected-versus-rejected decision unit without substituting synthetic or inferred histories.",
+        "reopen_only_if": "Reopen only if a first-party release provides replayable paired selected-versus-rejected gene histories and downstream outcomes sufficient to match candidate count, selection pressure, train sample size, adaptive search depth, verification rule, and deployment sample size, and a preregistered harness-specific structural variable yields replicated residual ranking inversion or deployment regret beyond a strongest selection-aware/winner's-curse baseline.",
         "paper_problem_claimed": false,
         "scientific_authority": false,
         "authority": {
@@ -76735,13 +76776,19 @@
         "valid": true,
         "validation_errors": []
       },
+      "harnessbank_selection_principle_readjudication": {
+        "path": "generated/harnessbank-selection-principle-readjudication-20260817.json",
+        "sha256": "4914b41bf47e576d7ffd5d9cf32ba1582ad3a94924d2ac86bceb9743d28711f2",
+        "principle_dead_end_certified": true,
+        "same_information_reduction_verified": true
+      },
       "primary_state": {
         "path": "generated/paper-first-primary-evidence-state.json",
         "sha256": "d61b944ab553d023fd4169a067121dda4ca1c45dad8234deafd5c1ed6b83d4d9"
       },
       "dead_end_memory": {
         "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-        "sha256": "de93e583547cd9b699f8a77411cacfa229656d38bdf6b7d25945fc14941db253"
+        "sha256": "05983bd4556489dc0820d4c53ff1785c73afe195d01b396d9d72ee632e9a6098"
       },
       "defense_principle_reduction": {
         "path": "generated/hard-security-utility-collapse-principle-readjudication-20260817.json",
