@@ -330,6 +330,22 @@ class FreshPhenomenonPortfolioTest(unittest.TestCase):
         self.assertIn("generic cross-framework portability", row["strongest_reduction"])
         self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
 
+    def test_skill_principle_closure_cannot_be_reactivated_by_execution_capability(self) -> None:
+        state = self.build(
+            skill_validation_scout=self.skill_scout_runtime_ready(),
+            skill_execution_capability=self.skill_execution_capability(),
+        )
+        row = next(row for row in state["candidates"] if row["candidate_id"] == "PA-05-SKILL-VALIDATION-TRANSFER")
+        self.assertEqual("STOP_REDUCTION", row["status"])
+        self.assertEqual("PRINCIPLE_CLOSED_DISTRIBUTION_SHIFT_REDUCTION", row["support_status"])
+        self.assertFalse(row["f0_design_ready"])
+        self.assertTrue(row["evidence"]["preclosure_f0_design_ready"])
+        self.assertTrue(row["evidence"]["principle_dead_end_certified"])
+        self.assertFalse(row["execution_readiness"]["execution_ready"])
+        self.assertEqual("STOP_PRINCIPLE_REDUCTION_NO_EXECUTION", row["execution_readiness"]["status"])
+        self.assertEqual(0, state["summary"]["active_f0"])
+        self.assertEqual([], validate_fresh_phenomenon_portfolio(state))
+
     def test_skill_api_docker_capability_does_not_require_fake_gpu_or_generic_lease(self) -> None:
         state = self.build(
             skill_validation_scout=self.skill_scout_runtime_ready(),
